@@ -4,25 +4,25 @@
     {
       "name": "packages/cli/dist/cli.js",
       "digest": {
-        "sha256": "68303f36caf8627a4fbf1034605526bd92d6cf43278e3b2e4b0179a5a4098b75"
+        "sha256": "cdeb34311216fc3a213023073f7363afbb9ba516ecd5e9d5fe35b48245d9a9b6"
       }
     },
     {
       "name": "packages/cli/dist/index.js",
       "digest": {
-        "sha256": "c5a47f750a6eb6957b2c748ff443f176f5c57299d550bbaa9662e0fef57f5557"
+        "sha256": "5abe0b3d2f1bd34c3e74063a935a1752f3f234ceee12887e4254914b9611e17c"
       }
     },
     {
-      "name": "packages/cli/dist/verify-DXUD-wWO.js",
+      "name": "packages/cli/dist/verify-DEyN5nNJ.js",
       "digest": {
-        "sha256": "a00f3f2f61edd0fb9fbcfac48bf7361daae098f44d87fb3e014f05226617e3b2"
+        "sha256": "89c570dad7629874fe3dd549060231617e044e9eddcaeffeefb9a651de74c0a2"
       }
     },
     {
       "name": "packages/core/dist/index.js",
       "digest": {
-        "sha256": "18fe8d7f9022d657878f0ff418acf59d4c0b8da04d9a85f8c8ea34b27fa7ff7f"
+        "sha256": "c390383e47e76fa417061e2a5fec3cf8efaef494d26e0134f525d436409bb714"
       }
     },
     {
@@ -52,7 +52,7 @@
     {
       "name": "packages/frameworks/react/dist/index.js",
       "digest": {
-        "sha256": "c3b1e5e83d81a8a0e497f47317e7ad63516cab8b845c3f0b8b8920b2c8f6a625"
+        "sha256": "ba24ca653b9d4362489cf99c112469c0985233e664137f1ea01fdef5240dd17b"
       }
     },
     {
@@ -64,7 +64,7 @@
     {
       "name": "packages/trust/dist/index.js",
       "digest": {
-        "sha256": "73a4158ae3c2f7aed8b5f0116608a6157e0f181b96bad556890b15c8eb439f37"
+        "sha256": "ad3b07a02fc64b4d2bf082819fc91ee87d4d2ffa8fa21b6fb34a760c18d4c77c"
       }
     }
   ],
@@ -84,13 +84,13 @@
         {
           "uri": "pnpm-lock.yaml",
           "digest": {
-            "sha256": "5e8473a838a0acc07c9a6e66315f408667de40e520c98d77a7957005f310e1c8"
+            "sha256": "71fb680c6febb2024b8117efadf3ca0641fafa1cc076a08a126724a1b337e166"
           }
         },
         {
           "uri": "evidence/runs/aggregate.json",
           "digest": {
-            "sha256": "8f36ce05b64db67a711b49c0c7acc347a236bc82568ab34612be7bfb6a694eb4"
+            "sha256": "9dcd961f338e5395a56559228112cf6b9bc155852d19a3181993afd068acfd08"
           }
         },
         {
@@ -102,7 +102,7 @@
         {
           "uri": "package.json",
           "digest": {
-            "sha256": "4bb51d694eae21356cbf50f0d623e381d3a82389ae537fb955895bd6fadcde22"
+            "sha256": "6acf2dd25ff7d909046736b8b78f0ca11f07e938b724756a57a00d51e5751d82"
           }
         },
         {
@@ -198,13 +198,13 @@
         {
           "uri": "evidence/runs/react-boilerplate-v4-data-flow/t054-run.json",
           "digest": {
-            "sha256": "a6c25918ed9650d3315c42501932e8e6fe26552e48bcbdf74d4987f7b384452b"
+            "sha256": "2bd6e145d611fb0bb5fb89c9d6ed164a3b30e9c0b1b2a290032f56908e5035da"
           }
         },
         {
           "uri": "evidence/runs/react-boilerplate-v4-composed/t060-run.json",
           "digest": {
-            "sha256": "9341f5e70c00ebbde65a919db5b5d31fde0fa39983e985deb01afb71ed00d1ad"
+            "sha256": "52400147929220935a9ebe47a16c8dff50b5c28e9d51c930d000c99c2bdc8a21"
           }
         },
         {
@@ -224,6 +224,12 @@
           "digest": {
             "sha256": "a018c6490cd559fab74ea402ff93660f053503dbed1a52ba9b68ed7fdc086b7c"
           }
+        },
+        {
+          "uri": "evidence/runs/witness-angular-realworld/receipt.json",
+          "digest": {
+            "sha256": "acd4f259f9372dd58b5267001469c2b68657d708c4d2a311df71a5a171b21128"
+          }
         }
       ]
     },
@@ -240,19 +246,19 @@
       "byproducts": [
         {
           "path": "packages/cli/dist/cli.js",
-          "sha256": "68303f36caf8627a4fbf1034605526bd92d6cf43278e3b2e4b0179a5a4098b75"
+          "sha256": "cdeb34311216fc3a213023073f7363afbb9ba516ecd5e9d5fe35b48245d9a9b6"
         },
         {
           "path": "packages/cli/dist/index.js",
-          "sha256": "c5a47f750a6eb6957b2c748ff443f176f5c57299d550bbaa9662e0fef57f5557"
+          "sha256": "5abe0b3d2f1bd34c3e74063a935a1752f3f234ceee12887e4254914b9611e17c"
         },
         {
-          "path": "packages/cli/dist/verify-DXUD-wWO.js",
-          "sha256": "a00f3f2f61edd0fb9fbcfac48bf7361daae098f44d87fb3e014f05226617e3b2"
+          "path": "packages/cli/dist/verify-DEyN5nNJ.js",
+          "sha256": "89c570dad7629874fe3dd549060231617e044e9eddcaeffeefb9a651de74c0a2"
         },
         {
           "path": "packages/core/dist/index.js",
-          "sha256": "18fe8d7f9022d657878f0ff418acf59d4c0b8da04d9a85f8c8ea34b27fa7ff7f"
+          "sha256": "c390383e47e76fa417061e2a5fec3cf8efaef494d26e0134f525d436409bb714"
         },
         {
           "path": "packages/experiments/dist/index.js",
@@ -272,7 +278,7 @@
         },
         {
           "path": "packages/frameworks/react/dist/index.js",
-          "sha256": "c3b1e5e83d81a8a0e497f47317e7ad63516cab8b845c3f0b8b8920b2c8f6a625"
+          "sha256": "ba24ca653b9d4362489cf99c112469c0985233e664137f1ea01fdef5240dd17b"
         },
         {
           "path": "packages/node-guard/dist/index.cjs",
@@ -280,7 +286,7 @@
         },
         {
           "path": "packages/trust/dist/index.js",
-          "sha256": "73a4158ae3c2f7aed8b5f0116608a6157e0f181b96bad556890b15c8eb439f37"
+          "sha256": "ad3b07a02fc64b4d2bf082819fc91ee87d4d2ffa8fa21b6fb34a760c18d4c77c"
         }
       ]
     }
@@ -289,6 +295,6 @@
     "slsaLevel": "not-claimed",
     "signerAuthenticity": "unknown",
     "gitProvenance": "unknown",
-    "aggregateFixtures": 11
+    "aggregateFixtures": 12
   }
 }

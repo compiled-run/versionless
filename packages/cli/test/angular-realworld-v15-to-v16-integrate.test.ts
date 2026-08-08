@@ -55,6 +55,32 @@ describe('Angular RealWorld v15-to-v16 integration', () => {
 				killed.digest = 'conflict';
 			},
 			(value: Record<string, unknown>) => {
+				const witness = (value.fixtures as Array<Record<string, unknown>>).find(
+					(item) => item.id === 'witness-angular-realworld',
+				);
+				if (!witness) throw new Error('Witness member missing');
+				(value.fixtures as Array<Record<string, unknown>>).push(structuredClone(witness));
+			},
+			(value: Record<string, unknown>) => {
+				const witness = (value.fixtures as Array<Record<string, unknown>>).find(
+					(item) => item.id === 'witness-angular-realworld',
+				);
+				if (!witness) throw new Error('Witness member missing');
+				witness.digest = 'ABC';
+			},
+			(value: Record<string, unknown>) => {
+				const witness = (value.fixtures as Array<Record<string, unknown>>).find(
+					(item) => item.id === 'witness-angular-realworld',
+				);
+				if (!witness) throw new Error('Witness member missing');
+				witness.framework = 'angularjs';
+			},
+			(value: Record<string, unknown>) => {
+				value.fixtures = (value.fixtures as Array<Record<string, unknown>>).filter(
+					(item) => item.id !== 'next-killedbygoogle-derived-state-to-memo',
+				);
+			},
+			(value: Record<string, unknown>) => {
 				const composed = (value.fixtures as Array<Record<string, unknown>>).find(
 					(item) => item.id === 'react-boilerplate-v4-composed',
 				);

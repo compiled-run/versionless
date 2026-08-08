@@ -20,6 +20,10 @@ import {
 	verifyNextKilledByGoogleEvidence,
 } from '../../core/src/receipts/next-killedbygoogle.ts';
 import {
+	WITNESS_ANGULAR_REALWORLD_RECEIPT_PATH,
+	verifyWitnessAngularRealworldEvidence,
+} from '../../core/src/receipts/witness-angular-realworld.ts';
+import {
 	SCRIPT_SURFACE_SCHEMA,
 	verifyScriptSurface,
 } from '../../core/src/enterprise/script-surface.ts';
@@ -451,6 +455,9 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 	const angularRealworldVerified = manifest.receipts.some(
 		(receipt) => receipt.path === ANGULAR_REALWORLD_V15_TO_V16_RECEIPT.path,
 	);
+	const angularRealworldWitnessVerified = manifest.receipts.some(
+		(receipt) => receipt.path === WITNESS_ANGULAR_REALWORLD_RECEIPT_PATH,
+	);
 	const angularRealworld = cells.get('angular-realworld-v15-to-v16');
 	const nextKilledByGoogle = cells.get('next-killedbygoogle-derived-state-to-memo');
 	if (
@@ -516,6 +523,21 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 		angularRealworld?.angular2Plus !== 'verified-one-adjacent-major' ||
 		angularRealworld?.angularCliAot !== 'verified' ||
 		angularRealworld?.adjacentMajor !== 'angular-15-to-16-verified' ||
+		angularRealworld?.productionReadiness !==
+			(angularRealworldWitnessVerified ? 'verified-direct-witness' : 'not-tested') ||
+		canonicalize(angularRealworld?.readinessScoreboard) !==
+			canonicalize(
+				angularRealworldWitnessVerified
+					? {
+							angularLineage: { ready: 1, total: 4 },
+							harness: { ready: 0, total: 4 },
+							phonecat: 'unsupported-visible-transition-not-counted',
+						}
+					: {
+							angularLineage: { ready: 0, total: 4 },
+							harness: { ready: 0, total: 4 },
+						},
+			) ||
 		angularRealworld?.designatedPilot !== false ||
 		(transaction.nextKilledByGoogleIntegrated
 			? nextKilledByGoogle?.framework !== 'react' ||
@@ -575,9 +597,11 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 		const result =
 			receipt.path === ANGULAR_REALWORLD_V15_TO_V16_RECEIPT.path
 				? await verifyAngularRealworldV15ToV16Evidence(root)
-				: receipt.path === NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH
-					? await verifyNextKilledByGoogleEvidence(root, true)
-					: await verifyReceipt(path.join(root, receipt.path));
+				: receipt.path === WITNESS_ANGULAR_REALWORLD_RECEIPT_PATH
+					? await verifyWitnessAngularRealworldEvidence(root)
+					: receipt.path === NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH
+						? await verifyNextKilledByGoogleEvidence(root, true)
+						: await verifyReceipt(path.join(root, receipt.path));
 		if (
 			result.digest !== receipt.digest ||
 			result.artifacts !== receipt.artifacts ||
@@ -614,7 +638,11 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 		(transaction.nextKilledByGoogleIntegrated
 			? !report.includes('Killed by Google Next.js 12 Pages/webpack production vertical')
 			: !report.includes('Next.js remains **not-tested**') ||
-				report.includes('Killed by Google Next.js 12 Pages/webpack production vertical'))
+				report.includes('Killed by Google Next.js 12 Pages/webpack production vertical')) ||
+		(transaction.angularRealworldWitnessIntegrated
+			? !report.includes('Angular-lineage production readiness: **1/4**') ||
+				!report.includes('Harness qualification: **0/4**')
+			: report.includes('Angular-lineage production readiness: **1/4**'))
 	)
 		throw new Error('Derived Markdown does not match canonical transaction state');
 	if (options.compareDir) {

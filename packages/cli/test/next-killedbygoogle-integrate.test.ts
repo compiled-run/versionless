@@ -2,7 +2,11 @@ import { access, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promise
 import os from 'node:os';
 import * as path from 'pathe';
 import { describe, expect, test } from 'vitest';
-import { canonicalize, nextKilledByGoogleAggregateMember } from '../../core/src/index.ts';
+import {
+	canonicalize,
+	nextKilledByGoogleAggregateMember,
+	witnessAngularRealworldAggregateMember,
+} from '../../core/src/index.ts';
 import {
 	integrateNextKilledByGoogleAggregate,
 	publishNextKilledByGoogleAggregateTransaction,
@@ -18,10 +22,17 @@ describe('Killed by Google integration', () => {
 			(fixture) => fixture.id === 'next-killedbygoogle-derived-state-to-memo',
 		);
 		expect(matches).toEqual([expected]);
+		const witness = fixtures.filter((fixture) => fixture.id === 'witness-angular-realworld');
+		expect(witness).toHaveLength(1);
+		expect(witness[0]).toEqual(
+			witnessAngularRealworldAggregateMember(String(witness[0]!.digest)),
+		);
 		return {
 			...structuredClone(aggregate),
 			fixtures: fixtures.filter(
-				(fixture) => fixture.id !== 'next-killedbygoogle-derived-state-to-memo',
+				(fixture) =>
+					fixture.id !== 'next-killedbygoogle-derived-state-to-memo' &&
+					fixture.id !== 'witness-angular-realworld',
 			),
 		};
 	};
@@ -69,7 +80,8 @@ describe('Killed by Google integration', () => {
 		const aggregate = prepublication(current);
 		const first = integrateNextKilledByGoogleAggregate(aggregate, canonicalDigest);
 		const second = integrateNextKilledByGoogleAggregate(first, canonicalDigest);
-		expect(canonicalize(first)).toBe(canonicalize(current));
+		const currentAgain = integrateNextKilledByGoogleAggregate(current, canonicalDigest);
+		expect(canonicalize(currentAgain)).toBe(canonicalize(current));
 		expect(canonicalize(second)).toBe(canonicalize(first));
 		const ids = (first.fixtures as Array<Record<string, unknown>>).map((fixture) => fixture.id);
 		expect(ids.indexOf('next-killedbygoogle-derived-state-to-memo')).toBe(
@@ -89,6 +101,38 @@ describe('Killed by Google integration', () => {
 		expect(() => integrateNextKilledByGoogleAggregate(conflict, canonicalDigest)).toThrow(
 			'conflicts',
 		);
+		for (const mutate of [
+			(value: Record<string, unknown>) => {
+				const witness = (value.fixtures as Array<Record<string, unknown>>).find(
+					(item) => item.id === 'witness-angular-realworld',
+				);
+				if (!witness) throw new Error('Witness member missing');
+				(value.fixtures as Array<Record<string, unknown>>).push(structuredClone(witness));
+			},
+			(value: Record<string, unknown>) => {
+				const witness = (value.fixtures as Array<Record<string, unknown>>).find(
+					(item) => item.id === 'witness-angular-realworld',
+				);
+				if (!witness) throw new Error('Witness member missing');
+				witness.digest = 'A'.repeat(64);
+			},
+			(value: Record<string, unknown>) => {
+				const witness = (value.fixtures as Array<Record<string, unknown>>).find(
+					(item) => item.id === 'witness-angular-realworld',
+				);
+				if (!witness) throw new Error('Witness member missing');
+				witness.receipt = 'evidence/runs/wrong.json';
+			},
+			(value: Record<string, unknown>) => {
+				value.fixtures = (value.fixtures as Array<Record<string, unknown>>).filter(
+					(item) => item.id !== 'next-killedbygoogle-derived-state-to-memo',
+				);
+			},
+		]) {
+			const invalid = structuredClone(current) as Record<string, unknown>;
+			mutate(invalid);
+			expect(() => integrateNextKilledByGoogleAggregate(invalid, canonicalDigest)).toThrow();
+		}
 	});
 
 	test('restores aggregate bytes and cleans stage after a post-swap failure', async () => {

@@ -29,6 +29,10 @@ import { main as runAngularFuxaTemplateCompiler } from './fixture/angular-fuxa-t
 import { main as runVite8SharedAdapterCohort } from './fixture/vite8-shared-adapter-cohort-run.ts';
 import { runDirectDomInventory } from './analysis/direct-dom-inventory.ts';
 import { runWitnessRealApps, verifyWitnessRealApps } from './witness/real-app-run.ts';
+import {
+	runWitnessAngularRealworld,
+	verifyWitnessAngularRealworld,
+} from './witness/angular-realworld-run.ts';
 import { verifyLinkedWitnessProvenance } from './witness/provenance.ts';
 
 const [command, ...rawArgs] = process.argv.slice(2);
@@ -279,6 +283,28 @@ try {
 					'witness:real-app requires --verify-provenance-only, --run-twice --publish, or --verify',
 				);
 			}
+		}
+	} else if (command === 'witness:angular-realworld') {
+		const publish = valueAfter('--publish');
+		const verify = valueAfter('--verify');
+		if (publish && args.includes('--run-twice')) {
+			const receipt = await runWitnessAngularRealworld(publish);
+			console.log(
+				JSON.stringify({
+					result: receipt.result,
+					digest: receipt.integrity.canonicalDigest,
+				}),
+			);
+		} else if (verify) {
+			const receipt = await verifyWitnessAngularRealworld(verify);
+			console.log(
+				JSON.stringify({
+					result: receipt.result,
+					digest: receipt.integrity.canonicalDigest,
+				}),
+			);
+		} else {
+			throw new Error('witness:angular-realworld requires --run-twice --publish or --verify');
 		}
 	} else if (command === 'trust:ingest') {
 		const result = await ingestTrustInputs({

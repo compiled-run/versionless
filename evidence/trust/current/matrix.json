@@ -2,7 +2,7 @@
   "schemaVersion": "versionless.trust.v1",
   "derivedFrom": {
     "path": "corpus-conformance.json",
-    "sha256": "f9676f030c572cf18fea760ce70d61601348cdcabf99880de9f656462c593edd"
+    "sha256": "2e7f7add70157d9888d020d4f98c2d036c3ca3382fb06aba55cccb1ccee35188"
   },
   "cells": [
     {
@@ -122,6 +122,18 @@
         "osWideIsolation": false,
         "successfulNonLoopback": 0,
         "browserBlockedRequests": 2
+      },
+      "productionReadiness": "verified-direct-witness",
+      "readinessScoreboard": {
+        "angularLineage": {
+          "ready": 1,
+          "total": 4
+        },
+        "harness": {
+          "ready": 0,
+          "total": 4
+        },
+        "phonecat": "unsupported-visible-transition-not-counted"
       }
     },
     {

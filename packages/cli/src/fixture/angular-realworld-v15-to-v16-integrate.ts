@@ -5,6 +5,7 @@ import {
 	ANGULAR_REALWORLD_V15_TO_V16_SUPPORT_ARTIFACTS,
 	canonicalize,
 	nextKilledByGoogleAggregateMember,
+	witnessAngularRealworldAggregateMember,
 	sha256,
 	verifyAngularRealworldV15ToV16Evidence,
 } from '../../../core/src/index.ts';
@@ -132,11 +133,23 @@ function assertAggregate(value: unknown, requireIntegrated: boolean): Record<str
 		(item) => item.id === ANGULAR_REALWORLD_V15_TO_V16_AGGREGATE_MEMBER.id,
 	);
 	const later = fixtures.filter((item) => item.id === laterKilledByGoogleMember.id);
+	const witness = fixtures.filter((item) => item.id === 'witness-angular-realworld');
+	let exactWitness: Record<string, unknown> | null = null;
+	if (witness.length === 1) {
+		const digest = witness[0]?.digest;
+		exactWitness = witnessAngularRealworldAggregateMember(
+			typeof digest === 'string' ? digest : '',
+		);
+	}
 	if (
-		fixtures.length !== historicalMembers.length + integrated.length + later.length ||
+		fixtures.length !==
+			historicalMembers.length + integrated.length + later.length + witness.length ||
 		integrated.length > 1 ||
 		later.length > 1 ||
+		witness.length > 1 ||
 		(later.length === 1 && integrated.length !== 1) ||
+		(witness.length === 1 && (integrated.length !== 1 || later.length !== 1)) ||
+		(witness.length === 1 && canonicalize(witness[0]) !== canonicalize(exactWitness)) ||
 		(later.length === 1 &&
 			canonicalize(later[0]) !== canonicalize(laterKilledByGoogleMember)) ||
 		(requireIntegrated &&

@@ -3,6 +3,10 @@ import * as path from 'pathe';
 import { assertSyntheticEvidence } from '../policy/payment-signals.ts';
 import { receiptDigest, sha256 } from './canonicalize.ts';
 import { parseMigrationReceipt } from './schema.ts';
+import {
+	WITNESS_ANGULAR_REALWORLD_SCHEMA,
+	verifyWitnessAngularRealworldEvidence,
+} from './witness-angular-realworld.ts';
 
 function markdownPath(jsonPath: string): string {
 	return jsonPath.endsWith('.json')
@@ -42,7 +46,13 @@ export async function verifyReceipt(
 	const absolute = explicitRoot
 		? resolveReceiptPath(file, explicitRoot, options.receiptPathBase ?? 'repository')
 		: path.resolve(file);
-	const receipt = parseMigrationReceipt(JSON.parse(await readFile(absolute, 'utf8')));
+	const raw = JSON.parse(await readFile(absolute, 'utf8')) as { schemaVersion?: unknown };
+	if (raw.schemaVersion === WITNESS_ANGULAR_REALWORLD_SCHEMA) {
+		const root = explicitRoot ?? path.resolve(path.dirname(absolute), '../../..');
+		const verified = await verifyWitnessAngularRealworldEvidence(root);
+		return { valid: true, digest: verified.digest, artifacts: verified.artifacts };
+	}
+	const receipt = parseMigrationReceipt(raw);
 	assertSyntheticEvidence(receipt);
 	const calculated = receiptDigest(receipt);
 	if (calculated !== receipt.integrity.canonicalDigest)

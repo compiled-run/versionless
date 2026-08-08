@@ -8,6 +8,7 @@ import {
 	verifyCorpusConformanceDigest,
 } from '../src/corpus/conformance.ts';
 import { nextKilledByGoogleAggregateMember } from '../src/receipts/next-killedbygoogle.ts';
+import { witnessAngularRealworldAggregateMember } from '../src/receipts/witness-angular-realworld.ts';
 import { receiptDigest, sha256 } from '../src/receipts/canonicalize.ts';
 import { renderReceipt } from '../src/receipts/render.ts';
 import type { MigrationReceipt } from '../src/receipts/schema.ts';
@@ -19,7 +20,14 @@ function prepublicationFixtures(fixtures: Array<Record<string, unknown>>) {
 	const expected = nextKilledByGoogleAggregateMember(killedByGoogleDigest);
 	const matches = fixtures.filter((fixture) => fixture.id === expected.id);
 	expect(matches).toEqual([expected]);
-	return fixtures.filter((fixture) => fixture.id !== expected.id);
+	const witnessMatches = fixtures.filter((fixture) => fixture.id === 'witness-angular-realworld');
+	if (witnessMatches.length === 1) {
+		const witness = witnessMatches[0]!;
+		expect(witness).toEqual(witnessAngularRealworldAggregateMember(String(witness.digest)));
+	} else expect(witnessMatches).toEqual([]);
+	return fixtures.filter(
+		(fixture) => fixture.id !== expected.id && fixture.id !== 'witness-angular-realworld',
+	);
 }
 
 async function corpusCopy(label: string): Promise<string> {
@@ -230,7 +238,7 @@ describe('canonical corpus conformance', () => {
 		}
 	});
 
-	it('derives only the exact prepublication and postintegration transaction states', async () => {
+	it('derives only the exact prepublication, postintegration and readiness states', async () => {
 		const aggregate = JSON.parse(
 			await readFile(path.join(root, 'evidence/runs/aggregate.json'), 'utf8'),
 		) as { fixtures: Array<Record<string, unknown>> };
@@ -238,6 +246,7 @@ describe('canonical corpus conformance', () => {
 		expect(deriveCorpusTransactionState(before)).toEqual({
 			kind: 'prepublication',
 			nextKilledByGoogleIntegrated: false,
+			angularRealworldWitnessIntegrated: false,
 			verticals: 10,
 			sourceApplications: 3,
 			receipts: 10,
@@ -247,16 +256,42 @@ describe('canonical corpus conformance', () => {
 		expect(deriveCorpusTransactionState([...before, nextMember])).toEqual({
 			kind: 'postintegration',
 			nextKilledByGoogleIntegrated: true,
+			angularRealworldWitnessIntegrated: false,
 			verticals: 11,
 			sourceApplications: 4,
 			receipts: 11,
 			resolvedDependencies: 24,
 		});
+		const witnessMember = witnessAngularRealworldAggregateMember('9'.repeat(64));
+		expect(deriveCorpusTransactionState([...before, nextMember, witnessMember])).toEqual({
+			kind: 'production-readiness',
+			nextKilledByGoogleIntegrated: true,
+			angularRealworldWitnessIntegrated: true,
+			verticals: 11,
+			sourceApplications: 4,
+			receipts: 12,
+			resolvedDependencies: 25,
+		});
 		for (const fixtures of [
 			[...before, before[0]],
 			[...before, { ...nextMember, framework: 'nextjs' }],
 			[...before, { ...nextMember, receipt: 'evidence/runs/misplaced.json' }],
+			[...before, witnessMember],
+			[...before, nextMember, witnessMember, witnessMember],
+			[...before, nextMember, { ...witnessMember, digest: 'malformed' }],
+			[...before, nextMember, { ...witnessMember, framework: 'angularjs' }],
+			[
+				...before,
+				nextMember,
+				{ ...witnessMember, receipt: 'evidence/runs/witness-angular-realworld/wrong.json' },
+			],
 			[...before, { id: 'unknown', receipt: 'unknown', digest: 'a'.repeat(64) }],
+			[
+				...before,
+				nextMember,
+				witnessMember,
+				{ id: 'unknown', receipt: 'unknown', digest: 'a'.repeat(64) },
+			],
 		])
 			expect(() => deriveCorpusTransactionState(fixtures)).toThrow();
 	});

@@ -75,6 +75,16 @@
       "digest": "bba54bc67cf5686445b207c530e04c5f9d56cf87f495250e97329e1eed8c6ad1"
     },
     {
+      "id": "witness-angular-realworld",
+      "framework": "angular",
+      "track": "production-readiness-direct-witness",
+      "bundler": "angular-cli-architect-aot-15-to-16",
+      "runtime": "node-18.20.8",
+      "result": "pass",
+      "receipt": "evidence/runs/witness-angular-realworld/receipt.json",
+      "digest": "acd4f259f9372dd58b5267001469c2b68657d708c4d2a311df71a5a171b21128"
+    },
+    {
       "id": "next-killedbygoogle-derived-state-to-memo",
       "framework": "react",
       "track": "next12-pages-derived-state-to-use-memo",

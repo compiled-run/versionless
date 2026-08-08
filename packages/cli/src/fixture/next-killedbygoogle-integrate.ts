@@ -3,6 +3,7 @@ import * as path from 'pathe';
 import {
 	canonicalize,
 	nextKilledByGoogleAggregateMember,
+	witnessAngularRealworldAggregateMember,
 	verifyNextKilledByGoogleEvidence,
 } from '../../../core/src/index.ts';
 import { verifyTrustPackage } from '../../../trust/src/verify.ts';
@@ -50,10 +51,22 @@ function assertAggregate(value: unknown, requireIntegrated: boolean): Record<str
 	const additions = fixtures.filter(
 		(fixture) => fixture.id === 'next-killedbygoogle-derived-state-to-memo',
 	);
+	const witnesses = fixtures.filter((fixture) => fixture.id === 'witness-angular-realworld');
+	let exactWitness: Record<string, unknown> | null = null;
+	if (witnesses.length === 1) {
+		const digest = witnesses[0]?.digest;
+		exactWitness = witnessAngularRealworldAggregateMember(
+			typeof digest === 'string' ? digest : '',
+		);
+	}
 	if (
-		fixtures.length !== historicalIds.length + (requireIntegrated ? 1 : additions.length) ||
+		fixtures.length !==
+			historicalIds.length + (requireIntegrated ? 1 : additions.length) + witnesses.length ||
 		additions.length > 1 ||
-		(requireIntegrated && additions.length !== 1)
+		witnesses.length > 1 ||
+		(requireIntegrated && additions.length !== 1) ||
+		(witnesses.length === 1 && additions.length !== 1) ||
+		(witnesses.length === 1 && canonicalize(witnesses[0]) !== canonicalize(exactWitness))
 	)
 		throw new Error('Killed by Google aggregate membership differs');
 	return aggregate;

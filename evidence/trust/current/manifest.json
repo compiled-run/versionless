@@ -1,6 +1,6 @@
 {
   "schemaVersion": "versionless.trust.v1",
-  "canonicalDigest": "bfa38d00ef46dc7a5f79d4dff4f725f5cadd75fa940c2138d58de9acb8c99c89",
+  "canonicalDigest": "3ed42dfe52bec579ee0d0602ba510c6fee93fc9691e5d40126dbfd3ebf891408",
   "integrity": {
     "algorithm": "sha256",
     "authenticity": "not-established",
@@ -8,15 +8,15 @@
   },
   "deterministicCore": {
     "algorithm": "sha256",
-    "digest": "7ef0a8f60df98311e391967c5218fc62067fd5ae913ed3aadfc4400ee60a905c",
+    "digest": "6365648f4ea4ba559d3e3a2a75b6e10b6da500fbd7a8aac3db7f957fc7dd1f99",
     "artifacts": [
       {
         "path": "dependency-graph.cdx.json",
-        "sha256": "8865db2cd7a2ace85a00576333e4be937fe5bdd0f254d764cb30f6d4530192a0"
+        "sha256": "931e64a8cc1a7d103168ebd3662ef4a1907a54ffbc0c6c692a2176bd1616c7db"
       },
       {
         "path": "licenses.json",
-        "sha256": "ac08f58be042742d148842eb1c76c3bb48d1eef8760af00abafdaa87d79c71bc"
+        "sha256": "0927c71b02957358e0b5c228e6d73906aaed98734b44b7acc65f7fe3d1b39859"
       },
       {
         "path": "vulnerabilities.json",
@@ -24,11 +24,11 @@
       },
       {
         "path": "provenance.json",
-        "sha256": "48dc4875ab072beb9653585cda52fba7e336d404e1ee744bbae00f465bd3181c"
+        "sha256": "6225fede6fc1aaf6a34fa976f040642992f20bb7b860e0393fd662b2561673a6"
       },
       {
         "path": "matrix.json",
-        "sha256": "cd6c3ea9abff524880bd8fcac3bc85fbba27d0567edbe16ef362d1a97abe7730"
+        "sha256": "e6c47304ae0ce9f7ce6574feca6b931bc748c53d76f3fe47ba405fa47a0b4cf5"
       },
       {
         "path": "controls.json",
@@ -40,15 +40,15 @@
       },
       {
         "path": "corpus-conformance.json",
-        "sha256": "d66daa8ac9f09c4c30f3366686796b67f7875f2a365f537b7da94246cf601721"
+        "sha256": "0f8ece270f80124925c8cfb52a9bbcf190925cd09dcec73679889a02a191067f"
       },
       {
         "path": "script-surface.json",
-        "sha256": "fe8a3030e0d4f794805ccff152799b53f921b00c110344bdc03296d8d5604143"
+        "sha256": "e10f554b46ddb275a94da16b89c3c265789724ad67aba3e5e5dddc8f0fa6b502"
       },
       {
         "path": "runtime-script-observation.json",
-        "sha256": "96ae2ec8eaef3b267d4ff088676ce9ce79ded230d44f45178f91522c300c2bc4"
+        "sha256": "086e0c84d48c7f53a814f67a51b7c25239b6f413306361fde1cfdfc3a0f1afc2"
       }
     ]
   },
@@ -91,13 +91,13 @@
     },
     {
       "path": "evidence/runs/react-boilerplate-v4-data-flow/t054-run.json",
-      "digest": "a6c25918ed9650d3315c42501932e8e6fe26552e48bcbdf74d4987f7b384452b",
+      "digest": "2bd6e145d611fb0bb5fb89c9d6ed164a3b30e9c0b1b2a290032f56908e5035da",
       "artifacts": 10,
       "state": "verified"
     },
     {
       "path": "evidence/runs/react-boilerplate-v4-composed/t060-run.json",
-      "digest": "9341f5e70c00ebbde65a919db5b5d31fde0fa39983e985deb01afb71ed00d1ad",
+      "digest": "52400147929220935a9ebe47a16c8dff50b5c28e9d51c930d000c99c2bdc8a21",
       "artifacts": 10,
       "state": "verified"
     },
@@ -118,10 +118,16 @@
       "digest": "a018c6490cd559fab74ea402ff93660f053503dbed1a52ba9b68ed7fdc086b7c",
       "artifacts": 13,
       "state": "verified"
+    },
+    {
+      "path": "evidence/runs/witness-angular-realworld/receipt.json",
+      "digest": "acd4f259f9372dd58b5267001469c2b68657d708c4d2a311df71a5a171b21128",
+      "artifacts": 0,
+      "state": "verified"
     }
   ],
   "observation": {
-    "generatedAt": "2026-08-08T04:00:26.717Z",
+    "generatedAt": "2026-08-08T23:11:28.622Z",
     "vulnerabilityFreshness": "verified"
   },
   "derivedReport": "report.md"

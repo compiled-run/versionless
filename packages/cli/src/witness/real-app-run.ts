@@ -101,6 +101,103 @@ type AppSpec = {
 	): Promise<WitnessTransportDecision>;
 };
 
+export const ANGULAR_REALWORLD_TERMINAL_MARKER =
+	'VERSIONLESS ANGULAR MIGRATION EVIDENCE COMPLETE' as const;
+export const ANGULAR_REALWORLD_ARTICLE_BODY = `## Baseline identity
+
+The baseline lane serves the pinned Angular 15 production-AOT output without rebuilding or rewriting application bytes. Its immutable archive, source revision, dependency closure, and generated static inventory remain bound to the canonical migration receipt.
+
+The local article is evidence data supplied through the normal RealWorld API contract. It does not modify the application, inject markup, or substitute browser behavior.
+
+## Adjacent-major migration
+
+The migrated lane serves the independently prepared Angular 16 production-AOT output. The application source delta is limited to the recorded adjacent-major migration, while this qualification compares user-observable behavior across the two retained outputs.
+
+Both lanes render the same feed record, open the same article slug, preserve the same title and author, and navigate through the same registration surface.
+
+## Direct Witness interaction
+
+Every click, type, key press, hover, and wheel action is issued through the directly linked Witness implementation. Playwright supplies the low-level browser host, but it does not replace or synthesize the selected user interactions.
+
+The journey records route changes, tracked browser events, console messages, page errors, failed requests, and owned observer shutdown for each qualification pass.
+
+## Production-static bytes
+
+Each run inventories the complete static directory before serving it and again after the browser closes. The directory digest, application document digest, file count, and absence of development controls must remain exact.
+
+The bounded loopback server rejects traversal, returns missing assets as missing, and uses the application document only for browser document navigation.
+
+## Local API projection
+
+One immutable article record is projected through exact list and detail envelopes. The comments route returns an exact empty comments envelope, while unknown article subpaths fail closed instead of inheriting a general response.
+
+External styles and the RealWorld API are fulfilled locally. Successful non-loopback traffic remains zero, and the evidence does not claim operating-system-wide isolation.
+
+## Behavioral parity
+
+Two baseline passes and two migrated passes must produce one normalized behavioral digest. Production file hashes remain lane-specific and are verified separately rather than erased from the static-byte evidence.
+
+The article title, registration heading, tracked events, navigation paths, and clean-page outcome are required in every pass.
+
+## Mutation and restoration
+
+A staged migrated copy receives one causal bootstrap-root mutation. Witness must report the intended semantic failure, after which the exact original bytes are restored and the complete journey must pass again.
+
+The mutation never touches the immutable source worktree or retained production output. Restoration is accepted only when the application document hash is byte-identical.
+
+## Assurance boundary
+
+This fixture-specific evidence establishes reproducibility and hash integrity for one Angular 15-to-16 lineage. It does not establish generic Angular support, a designated pilot, certification, signer authenticity, compliance, an earned SLSA level, or operating-system-wide isolation.
+
+${ANGULAR_REALWORLD_TERMINAL_MARKER}` as const;
+
+export const ANGULAR_REALWORLD_ARTICLE = Object.freeze({
+	slug: 'versionless-angular',
+	title: 'Versionless Angular baseline',
+	description: 'Synthetic local evidence for the immutable Angular baseline.',
+	body: ANGULAR_REALWORLD_ARTICLE_BODY,
+	tagList: Object.freeze(['migration']),
+	createdAt: '2026-08-08T00:00:00.000Z',
+	updatedAt: '2026-08-08T00:00:00.000Z',
+	favorited: false,
+	favoritesCount: 0,
+	author: Object.freeze({
+		username: 'versionless',
+		bio: '',
+		image: '',
+		following: false,
+	}),
+});
+
+function angularJson(value: unknown): WitnessTransportDecision {
+	return {
+		action: 'fulfill',
+		status: 200,
+		contentType: 'application/json',
+		body: Buffer.from(JSON.stringify(value)),
+	};
+}
+
+export async function angularRealworldTransport(
+	request: WitnessTransportRequest,
+): Promise<WitnessTransportDecision> {
+	if (request.pathname === '/api/tags') return angularJson({ tags: ['migration', 'angular'] });
+	if (request.pathname === '/api/articles/versionless-angular/comments')
+		return angularJson({ comments: [] });
+	if (request.pathname === '/api/articles/versionless-angular')
+		return angularJson({ article: ANGULAR_REALWORLD_ARTICLE });
+	if (request.pathname === '/api/articles')
+		return angularJson({ articlesCount: 1, articles: [ANGULAR_REALWORLD_ARTICLE] });
+	if (request.pathname.startsWith('/api/articles/'))
+		throw new Error(`Angular RealWorld local API refuses unknown path: ${request.pathname}`);
+	return {
+		action: 'fulfill',
+		status: 204,
+		contentType: 'text/plain',
+		body: Buffer.alloc(0),
+	};
+}
+
 type StaticInventory = {
 	files: number;
 	digest: string;
@@ -210,7 +307,7 @@ async function readStaticFile(file: string): Promise<{ file: string; body: Buffe
 	return { file: resolved, body: await readFile(resolved) };
 }
 
-async function startStaticServer(
+export async function startStaticServer(
 	staticRoot: string,
 	options: {
 		profile?: 'current-witness' | 'canonical-t060';
@@ -828,71 +925,44 @@ const apps: AppSpec[] = [
 			baseline: '.versionless/work/angular-realworld-v15-to-v16/dist/legacy',
 			migrated: '.versionless/work/angular-realworld-v15-to-v16/dist/target',
 		},
-		transport: async (request) => {
-			if (request.pathname === '/api/tags')
-				return {
-					action: 'fulfill',
-					status: 200,
-					contentType: 'application/json',
-					body: Buffer.from(JSON.stringify({ tags: ['migration', 'angular'] })),
-				};
-			if (
-				request.pathname === '/api/articles' ||
-				request.pathname.startsWith('/api/articles/')
-			)
-				return {
-					action: 'fulfill',
-					status: 200,
-					contentType: 'application/json',
-					body: Buffer.from(
-						JSON.stringify({
-							articlesCount: 1,
-							articles: [
-								{
-									slug: 'versionless-angular',
-									title: 'Versionless Angular baseline',
-									description:
-										'Synthetic local evidence for the immutable Angular baseline.',
-									body: 'Local article',
-									tagList: ['migration'],
-									createdAt: '2026-08-08T00:00:00.000Z',
-									updatedAt: '2026-08-08T00:00:00.000Z',
-									favorited: false,
-									favoritesCount: 0,
-									author: {
-										username: 'versionless',
-										bio: '',
-										image: '',
-										following: false,
-									},
-								},
-							],
-						}),
-					),
-				};
-			return {
-				action: 'fulfill',
-				status: 204,
-				contentType: 'text/plain',
-				body: Buffer.alloc(0),
-			};
-		},
+		transport: angularRealworldTransport,
 		journey: async (context, page) => {
-			await page.trackEvents('click', 'mouseover');
+			await page.trackEvents('click', 'input', 'keydown', 'mouseover');
 			await context.expect.page.bodyText(page, { contains: 'Global Feed' });
 			await page.click('a.tag-pill');
 			await page.click('a.preview-link');
 			await context.expect.page.text(page, 'h1', 'Versionless Angular baseline');
 			await page.hover('h1');
+			await context.expect.page.bodyText(page, {
+				contains: ANGULAR_REALWORLD_TERMINAL_MARKER,
+			});
 			await page.scroll(null, { y: 500 });
+			await page.click('a[routerlink="/register"]');
+			await context.expect.page.text(page, 'h1', 'Sign up');
+			await page.type('input[placeholder="Username"]', 'versionless-user');
+			await page.press('input[placeholder="Username"]', 'a', {
+				modifiers: ['Control'],
+			});
 			await context.expect.page.outcome(page, {
-				events: { click: { atLeast: 2 }, mouseover: { atLeast: 1 } },
+				events: {
+					click: { atLeast: 3 },
+					input: { atLeast: 1 },
+					keydown: { atLeast: 1 },
+					mouseover: { atLeast: 1 },
+				},
 			});
 			await page.reload();
-			await context.expect.page.text(page, 'h1', 'Versionless Angular baseline');
-			await clean(context, page, 2);
+			await context.expect.page.text(page, 'h1', 'Sign up');
+			await clean(context, page, 5);
 			return {
-				assertions: ['feed', 'tag interaction', 'article route', 'clean page'],
+				assertions: [
+					'feed',
+					'tag interaction',
+					'article route',
+					'terminal article section rendered before observed scroll',
+					'keyboard-backed registration input',
+					'clean page',
+				],
 				offlineEvidence: { state: 'not-applicable' },
 			};
 		},
@@ -1092,9 +1162,19 @@ function normalizedRecord(page: PageRecord): WitnessRealAppRun['witnessRecord'] 
 	};
 }
 
-async function executeRun(app: AppSpec, lane: Lane, pass: 1 | 2): Promise<WitnessRealAppRun> {
-	const laneRoot = join(stageRoot, 'lanes', app.app, lane);
-	const receiptDir = join(stageRoot, 'witness-receipts', app.app, lane, `pass-${pass}`);
+async function executeRun(
+	app: AppSpec,
+	lane: Lane,
+	pass: 1 | 2,
+	options: { laneRoot?: string; receiptRoot?: string } = {},
+): Promise<WitnessRealAppRun> {
+	const laneRoot = options.laneRoot ?? join(stageRoot, 'lanes', app.app, lane);
+	const receiptDir = join(
+		options.receiptRoot ?? join(stageRoot, 'witness-receipts'),
+		app.app,
+		lane,
+		`pass-${pass}`,
+	);
 	await rm(receiptDir, { recursive: true, force: true });
 	const beforeInventory = await staticInventory(laneRoot);
 	const contextProfile =
@@ -1267,6 +1347,17 @@ async function executeRun(app: AppSpec, lane: Lane, pass: 1 | 2): Promise<Witnes
 		result: 'pass',
 		semanticDigest: sha256(canonicalize(runWithoutDigest)),
 	};
+}
+
+export async function executeAngularRealworldWitnessRun(options: {
+	lane: Lane;
+	pass: 1 | 2;
+	laneRoot: string;
+	receiptRoot: string;
+}): Promise<WitnessRealAppRun> {
+	const app = apps.find((candidate) => candidate.app === 'angular-realworld');
+	if (app === undefined) throw new Error('Angular RealWorld Witness specification is absent');
+	return await executeRun(app, options.lane, options.pass, options);
 }
 
 async function mutationProof(

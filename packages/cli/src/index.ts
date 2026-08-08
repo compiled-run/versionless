@@ -13,6 +13,10 @@ export * from './fixture/react-boilerplate-v4-composed-run.ts';
 export * from './fixture/react-realworld-cra1-vite8-ingest.ts';
 export * from './enterprise/runtime-script-observation-run.ts';
 export * from './witness/real-app-run.ts';
+export {
+	runWitnessAngularRealworld,
+	verifyWitnessAngularRealworld,
+} from './witness/angular-realworld-run.ts';
 export * from './witness/provenance.ts';
 export * from './framework-classify.ts';
 export * from '../../trust/src/index.ts';

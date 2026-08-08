@@ -4,6 +4,10 @@ import * as path from 'pathe';
 import { describe, expect, it } from 'vitest';
 import { canonicalize, sha256 } from '../../core/src/receipts/canonicalize.ts';
 import {
+	verifyWitnessAngularRealworldEvidence,
+	witnessAngularRealworldAggregateMember,
+} from '../../core/src/receipts/witness-angular-realworld.ts';
+import {
 	generateTrustPackage,
 	licenseInventory,
 	NPM_LOCK_ACQUISITION_PREFLIGHT,
@@ -536,6 +540,18 @@ snapshots:
 	});
 
 	it('replays the deterministic core while keeping observations outside it', async () => {
+		const verifiedWitness = await verifyWitnessAngularRealworldEvidence(root);
+		const expectedWitnessMember = witnessAngularRealworldAggregateMember(
+			verifiedWitness.digest,
+		);
+		const aggregate = JSON.parse(
+			await readFile(path.join(root, 'evidence/runs/aggregate.json'), 'utf8'),
+		) as { fixtures: Array<Record<string, unknown>> };
+		expect(
+			aggregate.fixtures.filter(
+				(item) => item.receipt === expectedWitnessMember.receipt,
+			),
+		).toEqual([expectedWitnessMember]);
 		const fixture = await setup();
 		try {
 			const result = await verifyTrustPackage({
@@ -559,7 +575,19 @@ snapshots:
 			expect(first.deterministicCore.digest).toBe(second.deterministicCore.digest);
 			expect(first.canonicalDigest).not.toBe(second.canonicalDigest);
 			expect(first.deterministicCore.artifacts).toHaveLength(10);
-			expect(first.receipts).toHaveLength(11);
+			expect(first.receipts).toHaveLength(12);
+			expect(
+				first.receipts.filter(
+					(item) => item.path === 'evidence/runs/witness-angular-realworld/receipt.json',
+				),
+			).toEqual([
+				{
+					path: 'evidence/runs/witness-angular-realworld/receipt.json',
+					digest: verifiedWitness.digest,
+					artifacts: verifiedWitness.artifacts,
+					state: 'verified',
+				},
+			]);
 			expect(
 				first.receipts.find(
 					(item) =>
@@ -625,7 +653,17 @@ snapshots:
 			};
 			expect(provenance.subject).toHaveLength(11);
 			expect(provenance.predicate.runDetails.byproducts).toHaveLength(11);
-			expect(provenance.predicate.buildDefinition.resolvedDependencies).toHaveLength(24);
+			expect(provenance.predicate.buildDefinition.resolvedDependencies).toHaveLength(25);
+			expect(
+				provenance.predicate.buildDefinition.resolvedDependencies.filter(
+					(item) => item.uri === 'evidence/runs/witness-angular-realworld/receipt.json',
+				),
+			).toEqual([
+				{
+					uri: 'evidence/runs/witness-angular-realworld/receipt.json',
+					digest: { sha256: verifiedWitness.digest },
+				},
+			]);
 			expect(
 				provenance.predicate.buildDefinition.resolvedDependencies.filter(
 					(item) => item.uri === NPM_LOCK_ACQUISITION_PREFLIGHT.path,

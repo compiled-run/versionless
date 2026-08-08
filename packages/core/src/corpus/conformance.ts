@@ -21,6 +21,11 @@ import {
 	nextKilledByGoogleAggregateMember,
 	verifyNextKilledByGoogleEvidence,
 } from '../receipts/next-killedbygoogle.ts';
+import {
+	WITNESS_ANGULAR_REALWORLD_RECEIPT_PATH,
+	verifyWitnessAngularRealworldEvidence,
+	witnessAngularRealworldAggregateMember,
+} from '../receipts/witness-angular-realworld.ts';
 
 export const CORPUS_CONFORMANCE_SCHEMA = 'versionless.corpus-conformance.v1' as const;
 
@@ -161,6 +166,7 @@ export type CorpusTransactionState = Readonly<
 	| {
 			kind: 'prepublication';
 			nextKilledByGoogleIntegrated: false;
+			angularRealworldWitnessIntegrated: false;
 			verticals: 10;
 			sourceApplications: 3;
 			receipts: 10;
@@ -173,6 +179,16 @@ export type CorpusTransactionState = Readonly<
 			sourceApplications: 4;
 			receipts: 11;
 			resolvedDependencies: 24;
+			angularRealworldWitnessIntegrated: false;
+	  }
+	| {
+			kind: 'production-readiness';
+			nextKilledByGoogleIntegrated: true;
+			angularRealworldWitnessIntegrated: true;
+			verticals: 11;
+			sourceApplications: 4;
+			receipts: 12;
+			resolvedDependencies: 25;
 	  }
 >;
 
@@ -314,6 +330,30 @@ export function deriveCorpusTransactionState(fixtures: unknown): CorpusTransacti
 			canonicalize(nextRecord) !== canonicalize(nextKilledByGoogleAggregateMember(digest))
 		)
 			throw new Error('Killed by Google aggregate membership mismatch');
+		const witness = byPath.get(WITNESS_ANGULAR_REALWORLD_RECEIPT_PATH);
+		if (witness) {
+			const witnessRecord = record(witness, 'Witness Angular RealWorld aggregate fixture');
+			const witnessDigest = string(
+				witnessRecord.digest,
+				'Witness Angular RealWorld aggregate digest',
+			);
+			if (
+				!sha256Pattern.test(witnessDigest) ||
+				canonicalize(witnessRecord) !==
+					canonicalize(witnessAngularRealworldAggregateMember(witnessDigest)) ||
+				byPath.size !== canonicalReceipts.length + 3
+			)
+				throw new Error('Witness Angular RealWorld aggregate membership mismatch');
+			return {
+				kind: 'production-readiness',
+				nextKilledByGoogleIntegrated: true,
+				angularRealworldWitnessIntegrated: true,
+				verticals: 11,
+				sourceApplications: 4,
+				receipts: 12,
+				resolvedDependencies: 25,
+			};
+		}
 		if (byPath.size !== canonicalReceipts.length + 2)
 			throw new Error(
 				'Postintegration aggregate must contain exactly eleven canonical receipts',
@@ -321,6 +361,7 @@ export function deriveCorpusTransactionState(fixtures: unknown): CorpusTransacti
 		return {
 			kind: 'postintegration',
 			nextKilledByGoogleIntegrated: true,
+			angularRealworldWitnessIntegrated: false,
 			verticals: 11,
 			sourceApplications: 4,
 			receipts: 11,
@@ -332,6 +373,7 @@ export function deriveCorpusTransactionState(fixtures: unknown): CorpusTransacti
 	return {
 		kind: 'prepublication',
 		nextKilledByGoogleIntegrated: false,
+		angularRealworldWitnessIntegrated: false,
 		verticals: 10,
 		sourceApplications: 3,
 		receipts: 10,
@@ -806,10 +848,16 @@ export async function analyzeCorpusConformance(
 	}
 	if (
 		aggregateByPath.size !==
-		inspected.length + 1 + (transaction.nextKilledByGoogleIntegrated ? 1 : 0)
+		inspected.length +
+			1 +
+			(transaction.nextKilledByGoogleIntegrated ? 1 : 0) +
+			(transaction.angularRealworldWitnessIntegrated ? 1 : 0)
 	)
 		throw new Error('Aggregate contains an unknown or extra receipt');
 	const angularRealworld = await verifyAngularRealworldV15ToV16Evidence(root);
+	const angularRealworldWitness = transaction.angularRealworldWitnessIntegrated
+		? await verifyWitnessAngularRealworldEvidence(root)
+		: null;
 	const nextKilledByGoogle = transaction.nextKilledByGoogleIntegrated
 		? await verifyNextKilledByGoogleEvidence(root)
 		: null;
@@ -970,6 +1018,12 @@ export async function analyzeCorpusConformance(
 		track: 'angular2-plus-adjacent-major',
 		angular2Plus: 'verified-one-adjacent-major',
 		angularCliAot: 'verified',
+		productionReadiness:
+			angularRealworldWitness === null ? 'not-tested' : 'verified-direct-witness',
+		readinessScoreboard:
+			angularRealworldWitness === null
+				? { angularLineage: { ready: 0, total: 4 }, harness: { ready: 0, total: 4 } }
+				: angularRealworldWitness.receipt.readiness,
 		designatedPilot: false,
 	});
 	if (nextKilledByGoogle)
@@ -1074,6 +1128,15 @@ export async function analyzeCorpusConformance(
 					productionAot: true,
 					journeys: 4,
 					mutation: 'target-api-origin-rejection-verified',
+					productionReadiness:
+						angularRealworldWitness === null ? 'not-tested' : 'direct-witness-verified',
+					readinessScoreboard:
+						angularRealworldWitness === null
+							? {
+									angularLineage: { ready: 0, total: 4 },
+									harness: { ready: 0, total: 4 },
+								}
+							: angularRealworldWitness.receipt.readiness,
 				},
 				boundaries: {
 					track: 'angular2-plus-adjacent-major',
@@ -1123,6 +1186,14 @@ export async function analyzeCorpusConformance(
 			authenticity: 'not-established',
 			certification: 'not-claimed',
 			locality: 'process-scoped-not-os-wide',
+			productionReadiness: {
+				angularLineage: {
+					ready: angularRealworldWitness === null ? 0 : 1,
+					total: 4,
+				},
+				harness: { ready: 0, total: 4 },
+				phonecat: 'unsupported-visible-transition-not-counted',
+			},
 		},
 		integrity: { algorithm: 'sha256', canonicalDigest: '' },
 	};

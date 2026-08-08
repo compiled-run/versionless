@@ -44,6 +44,9 @@ export function renderTrustReport(inputs: RenderInputs): string {
 	const angularRealworldVerified = inputs.manifest.receipts.some(
 		(item) => item.path === 'evidence/runs/angular-realworld-v15-to-v16/receipt.json',
 	);
+	const angularRealworldWitnessVerified = inputs.manifest.receipts.some(
+		(item) => item.path === 'evidence/runs/witness-angular-realworld/receipt.json',
+	);
 	const nextKilledByGoogleVerified = inputs.transaction.nextKilledByGoogleIntegrated;
 	return `# Versionless project trust package
 
@@ -74,6 +77,7 @@ ${
 		? `- React Boilerplate maintained-runtime proof is limited to Node 24.15.0 darwin-arm64 with webpack 4.47.0${vite8ReactVerified ? ' and a separate fixture-specific Vite 8.0.16 build' : ''}; other maintained targets remain unproved.`
 		: '- React Boilerplate maintained-runtime target: **not-tested**.'
 }
+${angularRealworldWitnessVerified ? '- Angular-lineage production readiness: **1/4**; Harness qualification: **0/4**. PhoneCat remains unsupported for the required visible transition and is not counted.' : '- Angular-lineage production readiness: **0/4**; Harness qualification: **0/4**.'}
 - [Data-flow and control mappings](controls.json) — review inputs, not audit conclusions.
 - [Retention and purge status](retention.json) — unresolved policy remains unknown/not-tested.
 
@@ -100,7 +104,7 @@ ${dataFlowVerified ? '- React connect-to-hooks data-flow migration proof is limi
 ${phonecatRouteVerified ? '- PhoneCat route-resolve and one-way component-binding proof is limited to the verified AngularJS static lane.' : '- PhoneCat route-resolve/component-binding modernization: **not-tested**.'}
 ${phonecatComposedVerified ? '- PhoneCat lexical-this plus route-resolve composition is order-independent for the exact verified AngularJS special-track shapes; it is not Angular 2+ or bundler proof.' : '- PhoneCat transform composition: **not-tested**.'}
 ${phonecatViteVerified ? '- PhoneCat Vite 8 evidence uses a fixture-specific adapter; old Vite and unplugin portability are **not-tested**. Service worker and PWA behavior are **out of scope**.' : '- PhoneCat Vite 8 bundling: **not-tested**.'}
-${angularRealworldVerified ? '- Angular RealWorld proves one immutable Angular 15→16 CLI/Architect production-AOT adjacent-major vertical with process-scoped locality; it is not generic Angular support, a designated pilot, or production-readiness proof.' : '- Angular RealWorld 15→16 adjacent-major evidence: **not-tested**.'}
+${angularRealworldVerified ? `- Angular RealWorld proves one immutable Angular 15→16 CLI/Architect production-AOT adjacent-major vertical with process-scoped locality; it is not generic Angular support or a designated pilot.${angularRealworldWitnessVerified ? ' Its standalone direct-Witness production-readiness cell is verified for this exact lineage only.' : ' Production-readiness proof remains not-tested.'}` : '- Angular RealWorld 15→16 adjacent-major evidence: **not-tested**.'}
 - Locality evidence is process-scoped and does not establish OS-wide isolation.
 `;
 }
