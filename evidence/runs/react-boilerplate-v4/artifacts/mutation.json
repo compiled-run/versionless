@@ -1,0 +1,6 @@
+{
+  "mutation": "intended-failure",
+  "restoredSha256": "db70524e86f9a5983d18f6ad1f2d72fec14b71bd5701d66da475ff600703e9b3",
+  "restoration": "byte-identical",
+  "reproduced": "pass"
+}

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "versionless.react-composed-plan.v1",
+  "requestedOrders": [
+    "locale-first",
+    "data-flow-first"
+  ],
+  "executionTraces": [
+    {
+      "order": "locale-first",
+      "steps": [
+        "locale-toggle",
+        "home-page",
+        "repo-list-item",
+        "maintained-package-lock"
+      ]
+    },
+    {
+      "order": "data-flow-first",
+      "steps": [
+        "home-page",
+        "repo-list-item",
+        "locale-toggle",
+        "maintained-package-lock"
+      ]
+    }
+  ],
+  "actualOrdersExecuted": true,
+  "outputsEqual": true,
+  "latePreconditionFailure": "refused",
+  "publish": "same-filesystem-staged-directory-rename",
+  "injectedWriteFailure": "refused",
+  "stagedWritesBeforeFailure": 1,
+  "rollback": "published-target-unmodified",
+  "failedStageCleanup": true
+}

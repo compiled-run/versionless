@@ -1,0 +1,49 @@
+{
+	"schemaVersion": "versionless.nextjs-descriptor.v1",
+	"id": "synthetic-next14-app",
+	"synthetic": true,
+	"framework": "nextjs",
+	"executionRequested": false,
+	"supportClaim": false,
+	"versions": { "next": "14.x-synthetic", "react": "18.x-synthetic" },
+	"routing": {
+		"mode": "app",
+		"pages": [],
+		"app": ["app/groups/[id]/page.tsx", "app/layout.tsx", "app/page.tsx"]
+	},
+	"rendering": {
+		"ssr": { "state": "unknown", "evidence": [] },
+		"ssg": { "state": "absent", "evidence": [] },
+		"isr": { "state": "unknown", "evidence": [] },
+		"rsc": { "state": "present", "evidence": ["app/groups/[id]/page.tsx"] }
+	},
+	"boundaries": {
+		"serverComponents": ["app/groups/[id]/page.tsx", "app/layout.tsx", "app/page.tsx"],
+		"clientComponents": ["app/components/group-form.tsx"],
+		"apiRoutes": [],
+		"middleware": [],
+		"dataFetching": ["app/groups/[id]/page.tsx"],
+		"serverOnlyModules": ["app/actions.ts", "lib/database.ts"],
+		"image": { "state": "absent", "evidence": [] },
+		"staticAssets": ["public/synthetic-icon.svg"]
+	},
+	"productionStack": {
+		"owner": "nextjs",
+		"compiler": "swc",
+		"bundler": "unknown",
+		"preserved": true,
+		"viteReplacement": false,
+		"unpluginReplacement": false
+	},
+	"runtime": {
+		"node": { "state": "declared", "value": ">=20-synthetic" },
+		"packageManager": { "name": "npm", "lockfile": "package-lock.json" }
+	},
+	"localityBoundaries": {
+		"server": { "state": "present", "details": ["server actions and RSC process"] },
+		"database": { "state": "present", "details": ["synthetic database boundary"] },
+		"auth": { "state": "unknown", "details": [] },
+		"payment": { "state": "unknown", "details": [] },
+		"egress": { "state": "unknown", "details": [], "origins": [] }
+	}
+}

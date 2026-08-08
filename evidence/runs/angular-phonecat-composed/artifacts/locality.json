@@ -1,0 +1,7 @@
+{
+  "mode": "offline",
+  "scope": "Versionless-spawned Node/npm child processes and Playwright browser requests",
+  "osWideIsolation": false,
+  "successfulNonLoopback": 0,
+  "browserBlockedRequests": 0
+}

@@ -1,0 +1,164 @@
+{
+  "schemaVersion": "versionless.provenance-framework-classification.v1",
+  "closure": {
+    "fixtureId": "next-killedbygoogle",
+    "repository": "codyogden/killedbygoogle",
+    "nonFork": true,
+    "commit": "56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+    "tree": "b8ac7b4fc3a1e12240f1848f6e8d98c1c7d80763",
+    "fixtureSha256": "dd8725527ffa7f9b50826bd740cbda9bf5e2e08ee4c0fe8727505051c055d23a",
+    "provenanceSha256": "2d7b33af46e951f2e128b5dd4c440d611e0c27f593d3004b470190abc703164b",
+    "evidenceSha256": "ee5498bb5b1187371b6c58c4dfb3e0cdd58fdab8e5eea1eb09eba839c6b66843",
+    "archiveSha256": "c28878d0f65b56aa595763c852477fb0c1e3533e5c7f7ea9daa2be16f102368d",
+    "cacheManifestSha256": "04d5d4ca5f4133ecb5772c5aab9053af4f58cfcfdb2d837dcdd0f16da5eec9d8",
+    "archiveManifestSha256": "05c3677979d98740e8c76a599497e43fe2b623a43e56226edd01c53bf2bf572c",
+    "offlineReplaySha256": "faf10cb59a9b63919346d3a98250afbd8f89527fd616576c337da3e1e70bd85a",
+    "officialTreeRows": 86,
+    "archiveFiles": 72,
+    "reliedPaths": [
+      ".github/workflows/playwright.yml",
+      "LICENSE",
+      "components/Search/index.tsx",
+      "next.config.js",
+      "package.json",
+      "pages/index.tsx",
+      "yarn.lock"
+    ],
+    "rootLicense": {
+      "path": "LICENSE",
+      "sha256": "10547fb81e311e470cdcda5a273bac2a76f50ded6b33ce4362bcb05e1176d5e0",
+      "classification": "verified-compatible"
+    },
+    "licenseInventoryEntries": 1,
+    "assetClassificationEntries": 22,
+    "provenance": "verified",
+    "provenanceScope": "exact-immutable-closure-only"
+  },
+  "classification": {
+    "framework": "nextjs",
+    "adapter": "nextjs-provenance-static",
+    "sourceFacts": {
+      "next": {
+        "declaration": "^12.0.10",
+        "major": 12
+      },
+      "react": {
+        "declaration": "^17.0.2"
+      },
+      "packageManager": {
+        "name": "yarn",
+        "lockfile": "yarn.lock",
+        "format": "v1"
+      },
+      "routing": {
+        "mode": "pages",
+        "evidence": [
+          "pages/index.tsx"
+        ]
+      },
+      "staticGeneration": {
+        "kind": "getStaticProps",
+        "evidence": [
+          "pages/index.tsx"
+        ]
+      },
+      "playwright": {
+        "configuration": "playwright.config.ts",
+        "workflow": ".github/workflows/playwright.yml",
+        "state": "present-not-executed"
+      },
+      "productionStack": {
+        "owner": "candidate",
+        "framework": "nextjs",
+        "bundler": "webpack",
+        "customLoader": "@svgr/webpack",
+        "configuration": "next.config.js",
+        "preserved": true,
+        "viteReplacement": false,
+        "unpluginReplacement": false,
+        "compatibility": "not-tested"
+      },
+      "searchPath": "components/Search/index.tsx",
+      "scripts": [
+        {
+          "name": "build",
+          "command": "next build"
+        },
+        {
+          "name": "dev",
+          "command": "next dev"
+        },
+        {
+          "name": "kill",
+          "command": "bin/kill"
+        },
+        {
+          "name": "lint",
+          "command": "next lint"
+        },
+        {
+          "name": "preview",
+          "command": "bin/graveyard && yarn build && next export && npx http-server out/ -p 3000"
+        },
+        {
+          "name": "start",
+          "command": "next start"
+        },
+        {
+          "name": "test",
+          "command": "jest graveyard.test.ts"
+        },
+        {
+          "name": "test:e2e",
+          "command": "playwright test"
+        }
+      ]
+    }
+  },
+  "execution": {
+    "install": "not-tested",
+    "compiler": "not-tested",
+    "build": "not-tested",
+    "browser": "not-tested",
+    "locality": "not-tested",
+    "migration": "not-tested",
+    "tier": "not-tested",
+    "pilot": "not-tested",
+    "support": "not-tested"
+  },
+  "boundaries": {
+    "server": "unknown",
+    "api": "unknown",
+    "authentication": "unknown",
+    "payment": "unknown",
+    "analytics": "unknown",
+    "telemetry": "unknown",
+    "remoteResources": "unknown",
+    "egress": "unknown",
+    "nodeCompatibility": "not-tested"
+  },
+  "locality": {
+    "mode": "offline",
+    "networkAttempts": 0,
+    "candidateExecution": "not-requested"
+  },
+  "claims": {
+    "authenticity": "not-established",
+    "certification": "not-claimed",
+    "compliance": "not-claimed",
+    "osWideIsolation": "not-established",
+    "genericReactSupport": "not-claimed",
+    "nextjsSupport": "not-claimed",
+    "bundlerSupport": "not-claimed"
+  },
+  "limitations": [
+    "Static classification is bound only to the accepted immutable provenance closure.",
+    "No candidate dependency, script, compiler, build, server, browser, or external resource was executed.",
+    "Next.js and webpack remain the candidate-owned production stack; no Vite or unplugin replacement is proposed.",
+    "Provenance integrity does not establish authenticity, compliance, certification, runtime compatibility, migration, parity, locality, Tier, pilot, or support."
+  ],
+  "integrity": {
+    "algorithm": "sha256",
+    "canonicalDigest": "1718b1be76e9f419070c570fbaba2f7da82c9b777868e57d51b412431796a7f6"
+  }
+}

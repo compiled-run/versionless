@@ -1,0 +1,19 @@
+{
+	"name": "versionless",
+	"version": "0.0.1",
+	"bin": {
+		"versionless": "./dist/cli.js"
+	},
+	"type": "module",
+	"exports": "./dist/index.js",
+	"dependencies": {
+		"@versionless/angular": "workspace:*",
+		"@versionless/angularjs": "workspace:*",
+		"@versionless/core": "workspace:*",
+		"@versionless/nextjs": "workspace:*",
+		"@versionless/react": "workspace:*",
+		"@versionless/trust": "workspace:*",
+		"playwright": "1.58.2",
+		"yuku-analyzer": "0.7.0"
+	}
+}

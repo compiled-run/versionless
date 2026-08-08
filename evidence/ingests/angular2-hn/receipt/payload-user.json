@@ -1,0 +1,8 @@
+{
+  "id": "fixture-user",
+  "crated_time": 1500000000,
+  "created": "fixture-created",
+  "karma": 123,
+  "avg": 1,
+  "about": "Deterministic synthetic user"
+}

@@ -1,0 +1,19 @@
+[
+  {
+    "id": 1001,
+    "title": "Versionless synthetic story",
+    "points": 42,
+    "user": "fixture-user",
+    "time": 1600000000,
+    "time_ago": "1 hour ago",
+    "type": "story",
+    "url": "http://127.0.0.1/synthetic-story",
+    "domain": "127.0.0.1",
+    "comments": [],
+    "comments_count": 1,
+    "poll": [],
+    "poll_votes_count": 0,
+    "deleted": false,
+    "dead": false
+  }
+]

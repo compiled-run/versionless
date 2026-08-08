@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "versionless.immutable-fixture.v1",
+  "id": "angular-fuxa",
+  "framework": "angular",
+  "repository": "frangoteam/FUXA",
+  "repositoryUrl": "https://github.com/frangoteam/FUXA",
+  "commit": "8b323c177615c0d152a54e5ef0a6f98dae7b8ff0",
+  "tree": "6c9f146b3292a3795d5ae35c53c0f39f0fc0b490",
+  "archive": {
+    "url": "https://codeload.github.com/frangoteam/FUXA/tar.gz/8b323c177615c0d152a54e5ef0a6f98dae7b8ff0",
+    "sha256": "4913aabfec74fc990664a5d60760d8f3438ee067b682f833f5869cd2c9c3c372",
+    "byteLength": 14646918
+  },
+  "archiveManifestSha256": "f8580a18536ff8b34cf9b227f208cc6147e67323c844b234ced749962db04d30",
+  "reliedPaths": [
+    ".github/workflows/docker_release.yml",
+    "client/angular.json",
+    "client/package-lock.json",
+    "client/package.json",
+    "client/src/app/app.routing.ts",
+    "client/src/app/editor/editor.component.html",
+    "client/src/app/editor/editor.component.ts",
+    "client/src/main.ts",
+    "LICENSE",
+    "server/runtime/jobs/fonts/LICENSE.txt"
+  ],
+  "usableClosure": {
+    "assets": "Only paths classified verified-compatible are usable; excluded and unknown paths remain outside the usable closure.",
+    "nestedLicensing": "Root MIT scope is separate from the preserved nested Apache-2.0 font notice.",
+    "committedDist": "Committed dist is excluded; any future use requires a fresh source rebuild that was not performed here."
+  },
+  "localityBoundaries": [
+    "The Node server, industrial protocols, devices, and network egress are outside the usable closure.",
+    "Bundled fonts retain their independent Apache-2.0 notice boundary."
+  ],
+  "nonclaims": [
+    "Migration, build, browser parity, Node, package-manager, or bundler runtime support, Tier F, Tier P, designated pilot status, generic React, Next.js, Ionic, Nx, Analog, NativeScript, native parity, enterprise support, compliance, certification, PCI applicability, authenticity, signer identity, SLSA level, and OS-wide isolation are not established."
+  ]
+}

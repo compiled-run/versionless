@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "versionless.react-data-flow-preparation.v1",
+  "pins": {
+    "baselineReceipt": "1caf9dfa24b14b83ac63ceab9ca90829346045aac690c7b95a952ae4d9e72849",
+    "homePage": "db0413d948d68980dd24db7660e1bd854cabcc4642ec15fff710f5c95131f232",
+    "repoListItem": "21a570ed27af053040ce6b503f1af0c22bbdfea52284dccb47b2dc382844d867",
+    "package": "a3383c3ccce6bd460952c5ac8b721ed5f7087ffc5a96713b6e9103f2ba3a8d76",
+    "packageLock": "09a37fc1d35eb4cfaab46e0ac8c0d3f33824b300a731ec25f1e50998e9c14edb",
+    "runtimeArchive": "372331b969779ab5d15b949884fc6eaf88d5afe87bde8ba881d6400b9100ffc4",
+    "vitePackage": "a2b943431b51bfcc2e9386eecf8b4b3f6e4bf443e56d17b1f4c8495a61b4050c",
+    "adapterConfig": "2171a9f2681e138e1556b9e20e40ad1b9e5ed6154a6e67851c8075b53751e94c",
+    "adapterHtml": "448e3d5b18d4f16925f1f0640f7a6cfe7ecac33a11d34c888e7540f71236786d",
+    "browser": "a46b3b1e63163fa2d2437fb6ae967cb5a73b50050bca32f1964e6129b6228244"
+  },
+  "sourceRevision": "d19099afeff64ecfb09133c06c1cb18c0d40887e",
+  "runtime": "Node 24.15.0 darwin-arm64",
+  "bundler": "fixture-specific Vite 8.0.16",
+  "networkUsed": false
+}

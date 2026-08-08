@@ -1,0 +1,113 @@
+{
+  "schemaVersion": "versionless.receipt.v1",
+  "runId": "T022-react-boilerplate-v4-node24",
+  "fixture": "react-boilerplate-v4-node24",
+  "source": {
+    "repository": "https://github.com/react-boilerplate/react-boilerplate",
+    "revision": "d19099afeff64ecfb09133c06c1cb18c0d40887e",
+    "archiveSha256": "d6ca60a3c8881ae2be26a8d04e00da4d922a6653f8512f2b12ac55d48f2ce2d5",
+    "license": "MIT",
+    "licenseSha256": "e773e6b91c13f55310668e15ce178a2fcf779ff39dbcc0b910b4b5f1ecb17acb"
+  },
+  "tooling": {
+    "node": "24.15.0-darwin-arm64 maintained runtime",
+    "yukuParser": "0.7.0",
+    "yukuAnalyzer": "0.7.0",
+    "playwright": "1.58.2",
+    "chromium": "145.0.7632.6",
+    "webpack": "4.47.0",
+    "terserWebpackPlugin": "1.4.6",
+    "npmLock": "v1"
+  },
+  "consent": [
+    {
+      "id": "T022-react-node24-ingest",
+      "purpose": "pinned webpack 4.47.0 registry metadata, archive, MIT license, required terser-webpack-plugin 1.4.6 companion, deterministic npm v1 lock delta, and offline cache population for the Node 24 maintained-runtime lane",
+      "mode": "consented"
+    }
+  ],
+  "migration": {
+    "file": "app/containers/LocaleToggle/index.js",
+    "transform": "react-connect-to-hooks + maintained-webpack-runtime",
+    "edits": 5,
+    "dependency": {
+      "name": "webpack",
+      "from": "4.30.0",
+      "to": "4.47.0",
+      "license": "MIT"
+    },
+    "lockPatch": "fixtures/react-boilerplate-v4-node24/webpack-4.47.0.lock.patch"
+  },
+  "verification": {
+    "result": "pass",
+    "builds": "pass",
+    "journeys": "pass",
+    "mutation": "pass",
+    "locality": {
+      "mode": "offline",
+      "scope": "Versionless-spawned Node/npm/webpack child processes and Playwright browser requests",
+      "osWideIsolation": false,
+      "successfulNonLoopback": 0,
+      "browserBlockedRequests": 2
+    },
+    "deterministicCore": {
+      "first": "3546e44191bd78f2cbe8a7e2d63956030a4c8459d394631cd4bea0e44137b2ca",
+      "second": "3546e44191bd78f2cbe8a7e2d63956030a4c8459d394631cd4bea0e44137b2ca",
+      "equal": true
+    }
+  },
+  "artifacts": [
+    {
+      "path": "evidence/runs/react-boilerplate-v4-node24/artifacts/cache-provenance.json",
+      "sha256": "765ffd7e4b48097d192ef19952ce3499165afc4d4c5c69e15d9541f3d6b2f9c6"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-node24/artifacts/build-target.log",
+      "sha256": "2680c80f9d7bcdf4e8160cc17283eb0b41cfa8ea4e9dfd78615d221e41e42cfd"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-node24/artifacts/journey.json",
+      "sha256": "520a59a205cc4fffc034b6345c82a1fa6745a3d8cd36b40f2c60db0600ce678a"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-node24/artifacts/build-mutation.log",
+      "sha256": "614674ce949f9d210136335c9224a9d42caa5397ab9a89fb07f7751e7f382123"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-node24/artifacts/build-restored.log",
+      "sha256": "806201edc29aa19a34af4bbb7d9e2cc2cac7b7378fccd018d1ebc80b882cf717"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-node24/artifacts/mutation.json",
+      "sha256": "bc46477aeeb80c47fe88144797f5c91a841662c208d45161ac3354af94cb2097"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-node24/artifacts/migration-diff.json",
+      "sha256": "52adfee93f93d42cf7a9e8a573846c4306d222ee2fd0a6ffa491e7d466ff9970"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-node24/artifacts/locality.json",
+      "sha256": "f5cc208a064712a5827248d57083b3f1f593e97f7a54fc314ad639e84b9c8186"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-node24/artifacts/deterministic-core.json",
+      "sha256": "c4a19f3c970c5de1fe63acb80a926362c4cbe25781ee68cbe1fc670a22a40c5c"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-node24/artifacts/ingest-integrity.json",
+      "sha256": "5a1f9a4debf9accb73660b4e456dcbaef63ab02c6b1ff7d00d920b6037e99837"
+    }
+  ],
+  "integrity": {
+    "algorithm": "sha256",
+    "canonicalDigest": "815a5416b90c0a0c0a2f0adb779308c0ba0447d67c965003f15d343940d9b593",
+    "authenticity": "not-established"
+  },
+  "limitations": [
+    "Hash integrity does not establish signer authenticity or provenance beyond pinned downloads.",
+    "Network controls cover spawned children and browser routing, not OS-wide process isolation.",
+    "TakeNote, Angular2-HN, old Vite, and a second bundler remain unverified.",
+    "Governance, certification, and authenticity remain unverified or not claimed.",
+    "This receipt proves only React Boilerplate on Node 24.15.0 with webpack 4.47.0."
+  ]
+}

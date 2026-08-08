@@ -1,0 +1,16 @@
+[
+  {
+    "lane": "legacy",
+    "runtime": "v16.20.2",
+    "npm": "8.19.4",
+    "lockSha256": "29da5826ec1bc5fa1c0a0b1a5091acbcf5bb5d700adac1dc3169031e1395aeb8",
+    "copyLibsSha256": "115bd0c0c0bd3887c016e5e302221eaac23cd703febbb58c91d33871054e1198"
+  },
+  {
+    "lane": "target",
+    "runtime": "v24.15.0",
+    "npm": "11.12.1",
+    "lockSha256": "29da5826ec1bc5fa1c0a0b1a5091acbcf5bb5d700adac1dc3169031e1395aeb8",
+    "copyLibsSha256": "115bd0c0c0bd3887c016e5e302221eaac23cd703febbb58c91d33871054e1198"
+  }
+]

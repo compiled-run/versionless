@@ -1,0 +1,49 @@
+{
+	"schemaVersion": "versionless.nextjs-descriptor.v1",
+	"id": "synthetic-next12-pages",
+	"synthetic": true,
+	"framework": "nextjs",
+	"executionRequested": false,
+	"supportClaim": false,
+	"versions": { "next": "12.x-synthetic", "react": "17.x-synthetic" },
+	"routing": {
+		"mode": "pages",
+		"pages": ["pages/index.tsx", "pages/items/[id].tsx"],
+		"app": []
+	},
+	"rendering": {
+		"ssr": { "state": "present", "evidence": ["pages/items/[id].tsx"] },
+		"ssg": { "state": "present", "evidence": ["pages/index.tsx"] },
+		"isr": { "state": "unknown", "evidence": [] },
+		"rsc": { "state": "absent", "evidence": [] }
+	},
+	"boundaries": {
+		"serverComponents": [],
+		"clientComponents": ["pages/index.tsx", "pages/items/[id].tsx"],
+		"apiRoutes": [],
+		"middleware": [],
+		"dataFetching": ["pages/index.tsx", "pages/items/[id].tsx"],
+		"serverOnlyModules": [],
+		"image": { "state": "present", "evidence": ["pages/index.tsx"] },
+		"staticAssets": ["public/synthetic-logo.svg"]
+	},
+	"productionStack": {
+		"owner": "nextjs",
+		"compiler": "unknown",
+		"bundler": "webpack",
+		"preserved": true,
+		"viteReplacement": false,
+		"unpluginReplacement": false
+	},
+	"runtime": {
+		"node": { "state": "unknown", "value": null },
+		"packageManager": { "name": "yarn", "lockfile": "yarn.lock" }
+	},
+	"localityBoundaries": {
+		"server": { "state": "present", "details": ["pages rendering process"] },
+		"database": { "state": "none-declared", "details": [] },
+		"auth": { "state": "none-declared", "details": [] },
+		"payment": { "state": "unknown", "details": [] },
+		"egress": { "state": "none-declared", "details": [], "origins": [] }
+	}
+}

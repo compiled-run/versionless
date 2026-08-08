@@ -1,0 +1,28 @@
+{
+  "id": 1001,
+  "title": "Versionless synthetic story",
+  "points": 42,
+  "user": "fixture-user",
+  "time": 1600000000,
+  "time_ago": "1 hour ago",
+  "type": "story",
+  "url": "http://127.0.0.1/synthetic-story",
+  "domain": "127.0.0.1",
+  "comments": [
+    {
+      "id": 2001,
+      "level": 0,
+      "user": "fixture-commenter",
+      "time": 1600000100,
+      "time_ago": "59 minutes ago",
+      "content": "Deterministic synthetic comment",
+      "deleted": false,
+      "comments": []
+    }
+  ],
+  "comments_count": 1,
+  "poll": [],
+  "poll_votes_count": 0,
+  "deleted": false,
+  "dead": false
+}

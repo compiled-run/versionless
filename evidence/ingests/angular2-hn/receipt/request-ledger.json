@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "consentId": "T335-angular2-hn-source-runtime-acquisition",
+  "requests": [
+    {
+      "order": 1,
+      "method": "GET",
+      "url": "https://api.github.com/repos/housseindjirdeh/angular2-hn/commits/f6cc578d66c6fa7997f6ef46c7ed4488a85002d8",
+      "status": 200,
+      "bytes": 6580,
+      "sha256": "8c7f2c608bf6d0cebc42660384eea1a8e0cfe2292244bc72634339a39928793b",
+      "effectiveHost": "api.github.com",
+      "effectivePath": "/repos/housseindjirdeh/angular2-hn/commits/f6cc578d66c6fa7997f6ef46c7ed4488a85002d8",
+      "redirectFollowed": false,
+      "acceptEncoding": "identity",
+      "credentials": false,
+      "cookies": false
+    },
+    {
+      "order": 2,
+      "method": "GET",
+      "url": "https://api.github.com/repos/housseindjirdeh/angular2-hn/git/trees/ce49678369929d4bb3e084e7b925d673501bda57?recursive=1",
+      "status": 200,
+      "bytes": 31570,
+      "sha256": "f2564dc04f43a04fbfe7c094d961884ebd563c86e790853a57f72856accdd1ce",
+      "effectiveHost": "api.github.com",
+      "effectivePath": "/repos/housseindjirdeh/angular2-hn/git/trees/ce49678369929d4bb3e084e7b925d673501bda57?recursive=1",
+      "redirectFollowed": false,
+      "acceptEncoding": "identity",
+      "credentials": false,
+      "cookies": false
+    },
+    {
+      "order": 3,
+      "method": "GET",
+      "url": "https://codeload.github.com/housseindjirdeh/angular2-hn/tar.gz/f6cc578d66c6fa7997f6ef46c7ed4488a85002d8",
+      "status": 200,
+      "bytes": 258594,
+      "sha256": "d38d3a39d878456e537c18bc49db5bc29b8a755d46e52c163b09c0ead13e2876",
+      "effectiveHost": "codeload.github.com",
+      "effectivePath": "/housseindjirdeh/angular2-hn/tar.gz/f6cc578d66c6fa7997f6ef46c7ed4488a85002d8",
+      "redirectFollowed": false,
+      "acceptEncoding": "identity",
+      "credentials": false,
+      "cookies": false
+    },
+    {
+      "order": 4,
+      "method": "GET",
+      "url": "https://nodejs.org/dist/v12.22.12/SHASUMS256.txt",
+      "status": 200,
+      "bytes": 3173,
+      "sha256": "397f106d99a9f3e08ac41398e63aea182cf638f7f73fe0937ec08bc0434bb393",
+      "effectiveHost": "nodejs.org",
+      "effectivePath": "/dist/v12.22.12/SHASUMS256.txt",
+      "redirectFollowed": false,
+      "acceptEncoding": "identity",
+      "credentials": false,
+      "cookies": false
+    },
+    {
+      "order": 5,
+      "method": "GET",
+      "url": "https://nodejs.org/dist/v12.22.12/node-v12.22.12-linux-x64.tar.xz",
+      "status": 200,
+      "bytes": 14584388,
+      "sha256": "e6d052364bfa2c17da92cf31794100cfd709ba147415ddaeed2222eec9ca1469",
+      "effectiveHost": "nodejs.org",
+      "effectivePath": "/dist/v12.22.12/node-v12.22.12-linux-x64.tar.xz",
+      "redirectFollowed": false,
+      "acceptEncoding": "identity",
+      "credentials": false,
+      "cookies": false
+    }
+  ],
+  "totals": {
+    "requestCount": 5,
+    "bytes": 14884305
+  },
+  "caps": {
+    "requests": 5,
+    "bytesPerResponse": 33554432,
+    "totalBytes": 50331648
+  },
+  "undeclaredRequests": 0
+}

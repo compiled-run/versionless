@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "versionless.immutable-fixture.v1",
+  "id": "angular-contacts",
+  "framework": "angular",
+  "repository": "avatsaev/angular-contacts-app-example",
+  "repositoryUrl": "https://github.com/avatsaev/angular-contacts-app-example",
+  "commit": "875aa2df7f5f87b6731a1259b63e2b399fa5fb3f",
+  "tree": "f34816d11135fb7b3963948cd2b85c96df583d01",
+  "archive": {
+    "url": "https://codeload.github.com/avatsaev/angular-contacts-app-example/tar.gz/875aa2df7f5f87b6731a1259b63e2b399fa5fb3f",
+    "sha256": "93b2add6bbda402b86769b39a50cc4cae9050c363619ce3b5f20e8f7cd2f42f0",
+    "byteLength": 168794
+  },
+  "archiveManifestSha256": "e2cfaa622619c38005cc087a40c9103c8b962e7290f945f7797b9ae7860a8167",
+  "reliedPaths": [
+    "angular.json",
+    "LICENSE",
+    "package-lock.json",
+    "package.json",
+    "src/app/app.component.ts",
+    "src/main.ts"
+  ],
+  "usableClosure": {
+    "assets": "Only paths classified verified-compatible are usable; excluded and unknown paths remain outside the usable closure.",
+    "nestedLicensing": "Only the exact root MIT file is verified-compatible."
+  },
+  "nonclaims": [
+    "Migration, build, browser parity, runtime support, Tier F, Tier P, designated pilot status, generic bundler support, compliance, certification, PCI applicability, authenticity, and OS-wide isolation are not established."
+  ]
+}

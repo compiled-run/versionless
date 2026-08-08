@@ -1,0 +1,11 @@
+{
+  "changedFiles": [
+    "app/containers/LocaleToggle/index.js",
+    "package.json",
+    "package-lock.json"
+  ],
+  "localeToggleSha256": "db70524e86f9a5983d18f6ad1f2d72fec14b71bd5701d66da475ff600703e9b3",
+  "packageSha256": "7fb3098e57021e790638e31677d3cbfe815087f889b708cab4e1efdc9785414a",
+  "packageLockSha256": "42ffa936b19115ad380e77dcbc3800c7adf117aa560c5f678c837b7f4b09e00d",
+  "lockPatchSha256": "df5c7de0447f3ea45b45de01e489cc6133b1ea189c8f7e97aae7d59f349931bb"
+}

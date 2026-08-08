@@ -1,0 +1,294 @@
+{
+  "_type": "https://in-toto.io/Statement/v1",
+  "subject": [
+    {
+      "name": "packages/cli/dist/cli.js",
+      "digest": {
+        "sha256": "68303f36caf8627a4fbf1034605526bd92d6cf43278e3b2e4b0179a5a4098b75"
+      }
+    },
+    {
+      "name": "packages/cli/dist/index.js",
+      "digest": {
+        "sha256": "c5a47f750a6eb6957b2c748ff443f176f5c57299d550bbaa9662e0fef57f5557"
+      }
+    },
+    {
+      "name": "packages/cli/dist/verify-DXUD-wWO.js",
+      "digest": {
+        "sha256": "a00f3f2f61edd0fb9fbcfac48bf7361daae098f44d87fb3e014f05226617e3b2"
+      }
+    },
+    {
+      "name": "packages/core/dist/index.js",
+      "digest": {
+        "sha256": "18fe8d7f9022d657878f0ff418acf59d4c0b8da04d9a85f8c8ea34b27fa7ff7f"
+      }
+    },
+    {
+      "name": "packages/experiments/dist/index.js",
+      "digest": {
+        "sha256": "d8010f506021916daca5893223078a3a4ca767cdd0a091dfc71db31ea46f3440"
+      }
+    },
+    {
+      "name": "packages/frameworks/angular/dist/index.js",
+      "digest": {
+        "sha256": "45e8057d1b3e1672b2994f703ffd7c10d1a7a33a7cb5d6492570462a4ceb1956"
+      }
+    },
+    {
+      "name": "packages/frameworks/angularjs/dist/index.js",
+      "digest": {
+        "sha256": "32a156567e0e193c851cfbf12b9a3ba2346145bf624a68e422b1ef12e2120f6b"
+      }
+    },
+    {
+      "name": "packages/frameworks/nextjs/dist/index.js",
+      "digest": {
+        "sha256": "5bf951cec5b59c987d1778f69ba8ed08cb6343c889fd3ea412dc2413fec937b5"
+      }
+    },
+    {
+      "name": "packages/frameworks/react/dist/index.js",
+      "digest": {
+        "sha256": "c3b1e5e83d81a8a0e497f47317e7ad63516cab8b845c3f0b8b8920b2c8f6a625"
+      }
+    },
+    {
+      "name": "packages/node-guard/dist/index.cjs",
+      "digest": {
+        "sha256": "712511b49d6118cc33dff524dd2ea7aa9061eb80a8df0fb2c0ee4a3bc50ed8b6"
+      }
+    },
+    {
+      "name": "packages/trust/dist/index.js",
+      "digest": {
+        "sha256": "73a4158ae3c2f7aed8b5f0116608a6157e0f181b96bad556890b15c8eb439f37"
+      }
+    }
+  ],
+  "predicateType": "https://slsa.dev/provenance/v1",
+  "predicate": {
+    "buildDefinition": {
+      "buildType": "https://versionless.dev/trust/local-v1",
+      "externalParameters": {
+        "policy": "trust/policy.json",
+        "networkMode": "offline"
+      },
+      "internalParameters": {
+        "state": "not-applicable",
+        "reason": "No hidden parameters are asserted."
+      },
+      "resolvedDependencies": [
+        {
+          "uri": "pnpm-lock.yaml",
+          "digest": {
+            "sha256": "5e8473a838a0acc07c9a6e66315f408667de40e520c98d77a7957005f310e1c8"
+          }
+        },
+        {
+          "uri": "evidence/runs/aggregate.json",
+          "digest": {
+            "sha256": "8f36ce05b64db67a711b49c0c7acc347a236bc82568ab34612be7bfb6a694eb4"
+          }
+        },
+        {
+          "uri": "evidence/dependencies/dashboard-contacts/t190-preflight.json",
+          "digest": {
+            "sha256": "262abe9b19a10804808eadd5ae2dfcbc1fd9ac4119f9dc9571cb3df89df1d351"
+          }
+        },
+        {
+          "uri": "package.json",
+          "digest": {
+            "sha256": "4bb51d694eae21356cbf50f0d623e381d3a82389ae537fb955895bd6fadcde22"
+          }
+        },
+        {
+          "uri": "packages/cli/package.json",
+          "digest": {
+            "sha256": "d1aaf112a2c092a377ced3fdd1224a87392ffcb37489a152888d5a7e7a8d618a"
+          }
+        },
+        {
+          "uri": "packages/core/package.json",
+          "digest": {
+            "sha256": "8b5e656d6cded08e94742b0dfac5eb1d1a26138c148ba21f1492247a68ebbcaf"
+          }
+        },
+        {
+          "uri": "packages/experiments/package.json",
+          "digest": {
+            "sha256": "bffcc17931752b459b5afec26f687229cffd0d68765d5cd7079f52ec517816dd"
+          }
+        },
+        {
+          "uri": "packages/frameworks/angular/package.json",
+          "digest": {
+            "sha256": "bac43340d9478cef6f796f4959f4cd8ad95af1908d351466a4de957b976c63ef"
+          }
+        },
+        {
+          "uri": "packages/frameworks/angularjs/package.json",
+          "digest": {
+            "sha256": "60e5563a70588124217c1d10d629a8d177e77f13576e5d505d724c8ecc00ab49"
+          }
+        },
+        {
+          "uri": "packages/frameworks/nextjs/package.json",
+          "digest": {
+            "sha256": "0494c112f125563371503840912e3663fd92341f819aae1d9d5ccad843abd15a"
+          }
+        },
+        {
+          "uri": "packages/frameworks/react/package.json",
+          "digest": {
+            "sha256": "4484aa3fefaa7dbb22b7955b3b4c55e21c012c379a60f8499bba1e9c4e42bafd"
+          }
+        },
+        {
+          "uri": "packages/node-guard/package.json",
+          "digest": {
+            "sha256": "eeb00e7e263cdec01bea33f94fa4a5964163e2a3cf30a9f7162fc562c7acf1b4"
+          }
+        },
+        {
+          "uri": "packages/trust/package.json",
+          "digest": {
+            "sha256": "6d30ed9ed8b158495151e8736b30d0afa619a750b93bfb930ad40a1cfcb8f438"
+          }
+        },
+        {
+          "uri": "evidence/runs/react-boilerplate-v4/t008-run.json",
+          "digest": {
+            "sha256": "4d32ae0a46041e5ec2ac68aa31a9b8f86bd9d294d312ce41968ddd99dc5ee758"
+          }
+        },
+        {
+          "uri": "evidence/runs/angular-phonecat/t014-run.json",
+          "digest": {
+            "sha256": "a6798081c0b005c76534b5acd4dc647d77d497b0b649748c685b779451035f51"
+          }
+        },
+        {
+          "uri": "evidence/runs/react-boilerplate-v4-node24/t022-run.json",
+          "digest": {
+            "sha256": "815a5416b90c0a0c0a2f0adb779308c0ba0447d67c965003f15d343940d9b593"
+          }
+        },
+        {
+          "uri": "evidence/runs/react-boilerplate-v4-vite8/t028-run.json",
+          "digest": {
+            "sha256": "1caf9dfa24b14b83ac63ceab9ca90829346045aac690c7b95a952ae4d9e72849"
+          }
+        },
+        {
+          "uri": "evidence/runs/angular-phonecat-route-resolve/t032-run.json",
+          "digest": {
+            "sha256": "aa8b2923a38aa5f1adc870b48cdd938b739e107c927aac71b8c2890705f6beef"
+          }
+        },
+        {
+          "uri": "evidence/runs/angular-phonecat-composed/t048-run.json",
+          "digest": {
+            "sha256": "a7e8a9dc864085d77338f1615e3434a8a842fa5f4156a13bd2f5560bd2f8dc12"
+          }
+        },
+        {
+          "uri": "evidence/runs/react-boilerplate-v4-data-flow/t054-run.json",
+          "digest": {
+            "sha256": "a6c25918ed9650d3315c42501932e8e6fe26552e48bcbdf74d4987f7b384452b"
+          }
+        },
+        {
+          "uri": "evidence/runs/react-boilerplate-v4-composed/t060-run.json",
+          "digest": {
+            "sha256": "9341f5e70c00ebbde65a919db5b5d31fde0fa39983e985deb01afb71ed00d1ad"
+          }
+        },
+        {
+          "uri": "evidence/runs/angular-phonecat-vite8/t069-run.json",
+          "digest": {
+            "sha256": "033fc40237975e28df36117cc309625632610a399b5c0f88735079ed21fcad0d"
+          }
+        },
+        {
+          "uri": "evidence/runs/angular-realworld-v15-to-v16/receipt.json",
+          "digest": {
+            "sha256": "bba54bc67cf5686445b207c530e04c5f9d56cf87f495250e97329e1eed8c6ad1"
+          }
+        },
+        {
+          "uri": "evidence/runs/next-killedbygoogle-derived-state-to-memo/receipt.json",
+          "digest": {
+            "sha256": "a018c6490cd559fab74ea402ff93660f053503dbed1a52ba9b68ed7fdc086b7c"
+          }
+        }
+      ]
+    },
+    "runDetails": {
+      "builder": {
+        "id": "versionless-local-trust-generator",
+        "state": "verified"
+      },
+      "metadata": {
+        "invocationId": "not-applicable",
+        "startedOn": "not-applicable",
+        "finishedOn": "not-applicable"
+      },
+      "byproducts": [
+        {
+          "path": "packages/cli/dist/cli.js",
+          "sha256": "68303f36caf8627a4fbf1034605526bd92d6cf43278e3b2e4b0179a5a4098b75"
+        },
+        {
+          "path": "packages/cli/dist/index.js",
+          "sha256": "c5a47f750a6eb6957b2c748ff443f176f5c57299d550bbaa9662e0fef57f5557"
+        },
+        {
+          "path": "packages/cli/dist/verify-DXUD-wWO.js",
+          "sha256": "a00f3f2f61edd0fb9fbcfac48bf7361daae098f44d87fb3e014f05226617e3b2"
+        },
+        {
+          "path": "packages/core/dist/index.js",
+          "sha256": "18fe8d7f9022d657878f0ff418acf59d4c0b8da04d9a85f8c8ea34b27fa7ff7f"
+        },
+        {
+          "path": "packages/experiments/dist/index.js",
+          "sha256": "d8010f506021916daca5893223078a3a4ca767cdd0a091dfc71db31ea46f3440"
+        },
+        {
+          "path": "packages/frameworks/angular/dist/index.js",
+          "sha256": "45e8057d1b3e1672b2994f703ffd7c10d1a7a33a7cb5d6492570462a4ceb1956"
+        },
+        {
+          "path": "packages/frameworks/angularjs/dist/index.js",
+          "sha256": "32a156567e0e193c851cfbf12b9a3ba2346145bf624a68e422b1ef12e2120f6b"
+        },
+        {
+          "path": "packages/frameworks/nextjs/dist/index.js",
+          "sha256": "5bf951cec5b59c987d1778f69ba8ed08cb6343c889fd3ea412dc2413fec937b5"
+        },
+        {
+          "path": "packages/frameworks/react/dist/index.js",
+          "sha256": "c3b1e5e83d81a8a0e497f47317e7ad63516cab8b845c3f0b8b8920b2c8f6a625"
+        },
+        {
+          "path": "packages/node-guard/dist/index.cjs",
+          "sha256": "712511b49d6118cc33dff524dd2ea7aa9061eb80a8df0fb2c0ee4a3bc50ed8b6"
+        },
+        {
+          "path": "packages/trust/dist/index.js",
+          "sha256": "73a4158ae3c2f7aed8b5f0116608a6157e0f181b96bad556890b15c8eb439f37"
+        }
+      ]
+    }
+  },
+  "claims": {
+    "slsaLevel": "not-claimed",
+    "signerAuthenticity": "unknown",
+    "gitProvenance": "unknown",
+    "aggregateFixtures": 11
+  }
+}

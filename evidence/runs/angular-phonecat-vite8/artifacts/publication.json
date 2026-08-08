@@ -1,0 +1,7 @@
+{
+  "method": "same-filesystem-staged-directory-rename",
+  "validatedBeforePublish": true,
+  "injectedFailure": "refused",
+  "publishedTarget": "unchanged",
+  "failedStageCleanup": true
+}

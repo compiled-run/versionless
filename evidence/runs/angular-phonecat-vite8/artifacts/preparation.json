@@ -1,0 +1,33 @@
+{
+  "pins": {
+    "archive": "c7624a333ddfaa31f51385e72b8966162171e798ec63a1b991ec4bde26339eb1",
+    "license": "bab10b0aa126d9fdb81380141fc8845a74024d7c9977e5636afd06fe5edce455",
+    "package": "f4926d95954b8aa0a1670a3105cc6d4d9f2d89607191d18c6a3d606bd273bc02",
+    "lock": "29da5826ec1bc5fa1c0a0b1a5091acbcf5bb5d700adac1dc3169031e1395aeb8",
+    "appConfig": "c228269232fac2dc4b5325b46697196a70d4c03bef91dc36ee9f3275ad0f73d7",
+    "phoneList": "f51f2eb9e7b29a1233bc8f6663b67c82f48d8143bc2126cce0f4c5e04df27b92",
+    "phoneDetail": "0a14b1e0dfecf3bdbc77259a8199974b2d34b0a178943d0f920d10541a25ebb0",
+    "node16": "6a5c4108475871362d742b988566f3fe307f6a67ce14634eb3fbceb4f9eea88c",
+    "node24": "372331b969779ab5d15b949884fc6eaf88d5afe87bde8ba881d6400b9100ffc4",
+    "vite": "a2b943431b51bfcc2e9386eecf8b4b3f6e4bf443e56d17b1f4c8495a61b4050c",
+    "browser": "a46b3b1e63163fa2d2437fb6ae967cb5a73b50050bca32f1964e6129b6228244"
+  },
+  "libraryInput": {
+    "treeSha256": "811fb0f3190dc4f07398c326dfd47b501d677b8c4662621ccaefe472bf0a717b",
+    "manifestSha256": "747a69dbe4fffca6deb1eb12517c7d80e5a829b1a27616d2a04350c015373d2e",
+    "provenanceSha256": "e3f7dcb0034b6092ee5576de1a2a227c067835b39713ce93fb5ac37feff3b878",
+    "entries": 65
+  },
+  "legacy": {
+    "runtime": "v16.20.2",
+    "npm": "8.19.4",
+    "lockSha256": "29da5826ec1bc5fa1c0a0b1a5091acbcf5bb5d700adac1dc3169031e1395aeb8",
+    "copyLibsSha256": "811fb0f3190dc4f07398c326dfd47b501d677b8c4662621ccaefe472bf0a717b"
+  },
+  "target": {
+    "runtime": "v24.15.0",
+    "npm": "11.12.1",
+    "lockSha256": "29da5826ec1bc5fa1c0a0b1a5091acbcf5bb5d700adac1dc3169031e1395aeb8",
+    "copyLibsSha256": "811fb0f3190dc4f07398c326dfd47b501d677b8c4662621ccaefe472bf0a717b"
+  }
+}

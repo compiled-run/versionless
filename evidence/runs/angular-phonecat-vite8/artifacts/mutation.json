@@ -1,0 +1,18 @@
+{
+  "mutations": [
+    {
+      "seam": "composed-one-way-detail-binding",
+      "result": "intended-failure",
+      "restoration": "byte-identical",
+      "restoredSha256": "26cd79608f8fb99fef48fc4bcdb6f737e4c67626d1893797221128373217ca3e",
+      "reproduced": "pass"
+    },
+    {
+      "seam": "emitted-detail-template",
+      "result": "intended-failure",
+      "restoration": "byte-identical",
+      "restoredSha256": "5e63aa4a9686c27bef8b87da77a29d564313857de6ec10dbb9698d77c09d9dd8",
+      "reproduced": "pass"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+[
+  {
+    "lane": "legacy",
+    "run": 1,
+    "result": "pass",
+    "selectedLocale": "de",
+    "translatedHeading": "Beginnen Sie Ihr nächstes React Projekt in Sekunden",
+    "blocked": [
+      "https://fonts.googleapis.com/css?family=Open+Sans:400,700"
+    ],
+    "successfulNonLoopback": [],
+    "consoleErrors": [],
+    "pageErrors": []
+  },
+  {
+    "lane": "legacy",
+    "run": 2,
+    "result": "pass",
+    "selectedLocale": "de",
+    "translatedHeading": "Beginnen Sie Ihr nächstes React Projekt in Sekunden",
+    "blocked": [
+      "https://fonts.googleapis.com/css?family=Open+Sans:400,700"
+    ],
+    "successfulNonLoopback": [],
+    "consoleErrors": [],
+    "pageErrors": []
+  },
+  {
+    "lane": "target",
+    "run": 1,
+    "result": "pass",
+    "selectedLocale": "de",
+    "translatedHeading": "Beginnen Sie Ihr nächstes React Projekt in Sekunden",
+    "blocked": [
+      "https://fonts.googleapis.com/css?family=Open+Sans:400,700"
+    ],
+    "successfulNonLoopback": [],
+    "consoleErrors": [],
+    "pageErrors": []
+  },
+  {
+    "lane": "target",
+    "run": 2,
+    "result": "pass",
+    "selectedLocale": "de",
+    "translatedHeading": "Beginnen Sie Ihr nächstes React Projekt in Sekunden",
+    "blocked": [
+      "https://fonts.googleapis.com/css?family=Open+Sans:400,700"
+    ],
+    "successfulNonLoopback": [],
+    "consoleErrors": [],
+    "pageErrors": []
+  }
+]

@@ -1,0 +1,25 @@
+{
+  "id": "angular-phonecat-route-resolve",
+  "track": "angularjs-special-track",
+  "source": {
+    "repository": "https://github.com/angular/angular-phonecat",
+    "revision": "ef6f6eb672ded472b4e442d598f5df40d0e0642c",
+    "archiveSha256": "c7624a333ddfaa31f51385e72b8966162171e798ec63a1b991ec4bde26339eb1",
+    "license": "MIT",
+    "licenseSha256": "bab10b0aa126d9fdb81380141fc8845a74024d7c9977e5636afd06fe5edce455",
+    "packageSha256": "f4926d95954b8aa0a1670a3105cc6d4d9f2d89607191d18c6a3d606bd273bc02",
+    "packageLockSha256": "29da5826ec1bc5fa1c0a0b1a5091acbcf5bb5d700adac1dc3169031e1395aeb8",
+    "appConfigSha256": "c228269232fac2dc4b5325b46697196a70d4c03bef91dc36ee9f3275ad0f73d7",
+    "phoneListSha256": "f51f2eb9e7b29a1233bc8f6663b67c82f48d8143bc2126cce0f4c5e04df27b92",
+    "phoneDetailSha256": "0a14b1e0dfecf3bdbc77259a8199974b2d34b0a178943d0f920d10541a25ebb0"
+  },
+  "runtimes": {
+    "legacy": { "version": "16.20.2", "npm": "8.19.4", "sha256": "6a5c4108475871362d742b988566f3fe307f6a67ce14634eb3fbceb4f9eea88c" },
+    "target": { "version": "24.15.0", "sha256": "372331b969779ab5d15b949884fc6eaf88d5afe87bde8ba881d6400b9100ffc4" }
+  },
+  "browser": {
+    "executable": ".versionless/cache/react-boilerplate-v4/ms-playwright/chromium_headless_shell-1208/chrome-headless-shell-mac-arm64/chrome-headless-shell",
+    "sha256": "a46b3b1e63163fa2d2437fb6ae967cb5a73b50050bca32f1964e6129b6228244"
+  },
+  "journey": "fixtures/angular-phonecat/journey.json"
+}

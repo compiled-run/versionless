@@ -1,0 +1,1618 @@
+{
+  "schemaVersion": "versionless.cross-source-provenance.v1",
+  "fixture": "next-tailwind-starter-blog",
+  "repository": "timlrx/tailwind-nextjs-starter-blog",
+  "repositoryIdentity": {
+    "fullName": "timlrx/tailwind-nextjs-starter-blog",
+    "fork": false
+  },
+  "commit": "09ba0550caea03a8c38bc4878d05838d2a57f999",
+  "tree": "2609b3fc4a63d7bccd8f187d66c141f4a7d3cadf",
+  "archive": {
+    "url": "https://codeload.github.com/timlrx/tailwind-nextjs-starter-blog/tar.gz/09ba0550caea03a8c38bc4878d05838d2a57f999",
+    "sha256": "c227efa283b4a17d7ae76aa1b9ea259075f606128642d59f7b43ca63405ee1f7",
+    "byteLength": 1267627
+  },
+  "fileCount": 110,
+  "officialTreeRowCount": 138,
+  "officialTree": [
+    {
+      "path": ".env.example",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d0f5a837bd7c9ba23b72974462eebbe7531a7a29"
+    },
+    {
+      "path": ".eslintignore",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3c3629e647f5ddf82548912e337bea9826b434af"
+    },
+    {
+      "path": ".eslintrc.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2ea7367c5a656d9c8978aa200b03c07f23990d6b"
+    },
+    {
+      "path": ".gitattributes",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c9b1eac16897e27f54c4ab425a7cf0e843be2f25"
+    },
+    {
+      "path": ".github",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "8d5867d7e8053875964f4eec6bafcdd16cb2cdab"
+    },
+    {
+      "path": ".github/FUNDING.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8ff1b0d63d03c4adaa7464f475cedde7185e00d7"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "68a9ea997291274e3a11f3f7a3193e77fff35a64"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/bug_report.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1bcb15f9587a57307e5f2fa9756398cd6900da51"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/feature_request.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bbcbbe7d61558adde3cbfd0c7a63a67c27ed6d30"
+    },
+    {
+      "path": ".gitignore",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "10ef2ecb85f48f0646dddc59823c428005feb0fc"
+    },
+    {
+      "path": ".husky",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "c3a621005834e325906824d7e51e1e172eaf4379"
+    },
+    {
+      "path": ".husky/.gitignore",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "31354ec1389994b5f6708c7d915fdcc6bb76ba6e"
+    },
+    {
+      "path": ".husky/pre-commit",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "d37daa075e22b05c2addeeb8b414387d05ca5e84"
+    },
+    {
+      "path": ".vscode",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "7845ec3d5fba6ac75dae0d322244dc26119394ac"
+    },
+    {
+      "path": ".vscode/settings.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d0679104bdaba20520d701419228bed9fc60e7f6"
+    },
+    {
+      "path": ".yarnrc.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3186f3f0795ab612d5508593672dc9ad94bccca0"
+    },
+    {
+      "path": "LICENSE",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "215f501e4aa86a16597bb6d007fbf3c9bfd02d56"
+    },
+    {
+      "path": "README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d7c55c960fab90a3f0bda65aaddf5bb3e0c8bec4"
+    },
+    {
+      "path": "app",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "ecb19cf8bd5d4749f4cbb0ef05fa107ef86dc52b"
+    },
+    {
+      "path": "app/Main.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "aabb26b3dc5fbfe9974cff950bafea52c84a8867"
+    },
+    {
+      "path": "app/about",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "d96158f2bb3f3dcf956f2f908b977332a7636b60"
+    },
+    {
+      "path": "app/about/About.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6f1a3fc35daf41e11b22aac85242f719ce254929"
+    },
+    {
+      "path": "app/about/page.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5b2cafa5b5769a41a3cbc5c1fc69edf2ce1ffc86"
+    },
+    {
+      "path": "app/api",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "b26cda33db61b36b96c59be9dd7d12e4cf6fdcd3"
+    },
+    {
+      "path": "app/api/newsletter2",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "e041e6fce3ea705d58f0cc5ad65bad8d78ff8575"
+    },
+    {
+      "path": "app/api/newsletter2/route.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4131d3753f1a5e212ea38eeb16f20f277c8b5c4b"
+    },
+    {
+      "path": "app/blog",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "2e6f361e377fc70882a825c5e9e43cda12e2cc6e"
+    },
+    {
+      "path": "app/blog/[...slug]",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "8006cbcd61f5fba705d7862fddf7101a582b2753"
+    },
+    {
+      "path": "app/blog/[...slug]/Blog.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ebcc207cde8f5a65288149ec6d369f3026b06924"
+    },
+    {
+      "path": "app/blog/[...slug]/page.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6761d3b97afdc2c8d6c19505101ee24732b30b2a"
+    },
+    {
+      "path": "app/blog/page.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e7f241597c740b15096f4d6ed583f42d31b06922"
+    },
+    {
+      "path": "app/blog/page",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "069fda6c1bb33f6b9f052c253ed209f66be0f61e"
+    },
+    {
+      "path": "app/blog/page/[page]",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "e431ef11ff121903c8b94d2a34fbe70f5723473a"
+    },
+    {
+      "path": "app/blog/page/[page]/page.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "58c9e65e694171651e644d139a2e230d82e61009"
+    },
+    {
+      "path": "app/globals.css",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1e9b2513a8191788749150640df2cf859032b6d3"
+    },
+    {
+      "path": "app/head.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3cd643accda909d497f08371ebc47118f71f5b28"
+    },
+    {
+      "path": "app/layout.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a50602ec7dfe40d0ba7a7a03f449e452e22e9fcf"
+    },
+    {
+      "path": "app/not-found.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4dd29897aaca945a822e2c9315ed588a4f065aff"
+    },
+    {
+      "path": "app/page.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "19a37b4846642bb4742a2bf496050e8afc16a78e"
+    },
+    {
+      "path": "app/projects",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "d3aeb0c3ab2e87885e723d628e85833a9745560f"
+    },
+    {
+      "path": "app/projects/page.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1cf7b527972595e7e14bc133596d77147c440064"
+    },
+    {
+      "path": "app/tags",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "641109dcbbe6a11843490ec1a75a6cb19e707072"
+    },
+    {
+      "path": "app/tags/page.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1b8400110b340dd4d896d66e70c297c9c52aec9c"
+    },
+    {
+      "path": "app/theme-providers.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "79d31dd3daf0e9678edd521cec301c354a60ab49"
+    },
+    {
+      "path": "components",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "1c7da5b0d902ee32ba45d50ee994aba471466850"
+    },
+    {
+      "path": "components/Card.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "900c7146756bc8e127c6738a605ce3e386060e15"
+    },
+    {
+      "path": "components/Footer.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4e45fb1b8310d630891297de52c160b3cc2e18bd"
+    },
+    {
+      "path": "components/Header.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fea322f388a7823c50079be8d88f9c7046729ef9"
+    },
+    {
+      "path": "components/Image.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fde277acc374a10f62ff31125fb1bbc1b59b7803"
+    },
+    {
+      "path": "components/LayoutWrapper.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d4077661952495d8696fc2ce13607bc255c9183c"
+    },
+    {
+      "path": "components/Link.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3378d4b9c2dbddf89c359bb01450b078df0922e8"
+    },
+    {
+      "path": "components/MDXComponents.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ea3e13222c30b3277b28f6a0c4780a6b72045f78"
+    },
+    {
+      "path": "components/MobileNav.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "703586fd451bd64d8e0800102d855d7a61e0f1a5"
+    },
+    {
+      "path": "components/PageTitle.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fa05fb53b96b0f65a94928a15932b7b646e4a817"
+    },
+    {
+      "path": "components/SEO.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "71e6b9b48621eae6c5f96c4ff4efa5a233bfe7e2"
+    },
+    {
+      "path": "components/ScrollTopAndComment.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "995ddeecdde04628b49de68146d0c4cdbfac39fb"
+    },
+    {
+      "path": "components/SectionContainer.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ee6d9fe05405e2aff6a39a411d9ea538ce0ae4a4"
+    },
+    {
+      "path": "components/Tag.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bad0f80bafcbb70e51626007a1e684189b1ecc1f"
+    },
+    {
+      "path": "components/ThemeSwitch.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f9e17d2ccfbc57d8f4376c6582110e15aa2a987d"
+    },
+    {
+      "path": "components/social-icons",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "341bad6daf0903aeaf36735363fd89832cac3639"
+    },
+    {
+      "path": "components/social-icons/facebook.svg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "689721a25abae1314a1564915ca29301b0ccf309"
+    },
+    {
+      "path": "components/social-icons/github.svg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "38997125e44f4ed83ff18ad1dafc2eb97266b89b"
+    },
+    {
+      "path": "components/social-icons/index.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9f56170f9247f972e46242a192fa6b4dfa502c07"
+    },
+    {
+      "path": "components/social-icons/linkedin.svg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3dc9f68a52a3f06a525ee4e5666752b6234284f2"
+    },
+    {
+      "path": "components/social-icons/mail.svg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8729f2fff266daf6c8a65a7229aee83a806d9523"
+    },
+    {
+      "path": "components/social-icons/twitter.svg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9950f9f0e97ab41658fcf956f905bde69bfe6fb5"
+    },
+    {
+      "path": "components/social-icons/youtube.svg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4766eece96c59bd47d267c10d75103f4cb7b0b47"
+    },
+    {
+      "path": "contentlayer.config.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "99eb1e744b625de6d547d357c910b57fcd73eae7"
+    },
+    {
+      "path": "css",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "7df8ca0efffe62fd9c0b5a8af56ed3abd0bc93a9"
+    },
+    {
+      "path": "css/docsearch.css",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8a14dce56b6eb94f25e859339cf3b7d071e53d48"
+    },
+    {
+      "path": "css/prism.css",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "274931af48fd22c0cb52bf74fae8217e10310e93"
+    },
+    {
+      "path": "css/tailwind.css",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1b540e5f8011beb5dfc857741df3ce676e0ebffa"
+    },
+    {
+      "path": "data",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "379f28a34dd5fe4bf498129d7da04bd9340d78b5"
+    },
+    {
+      "path": "data/authors",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "a5aecb27ae299200a62d22269f7e46772ca9df4c"
+    },
+    {
+      "path": "data/authors/default.mdx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c518f0ad0d79ff78548716de9f33951a4afd26ba"
+    },
+    {
+      "path": "data/authors/sparrowhawk.mdx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5cef90b57a0e372fe63c2e6b90cf95a338e59f5d"
+    },
+    {
+      "path": "data/blog",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "e5e457e32d856973543a710a4745c8a2becdbff3"
+    },
+    {
+      "path": "data/blog/code-sample.mdx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a293a842a7ab790b2fb792b295081639e9d4d008"
+    },
+    {
+      "path": "data/blog/deriving-ols-estimator.mdx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4543c4cd991ce221eea3f6e44430bb584492f776"
+    },
+    {
+      "path": "data/blog/github-markdown-guide.mdx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0ce88bfbc2de54d0fae20a1e85f412b0b3ce8097"
+    },
+    {
+      "path": "data/blog/guide-to-using-images-in-nextjs.mdx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fe8ac132eed6a8e0da73db4b56bca5acc8073754"
+    },
+    {
+      "path": "data/blog/introducing-tailwind-nextjs-starter-blog.mdx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ee784f78dd13cc3792576a9a13db0d9177812370"
+    },
+    {
+      "path": "data/blog/my-fancy-title.mdx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "87a4baf7686fc6993a2a6971d2c99b7a788cb2f1"
+    },
+    {
+      "path": "data/blog/nested-route",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "90f05ee8f4b5d857db8b9d745c174b2e86d5845e"
+    },
+    {
+      "path": "data/blog/nested-route/introducing-multi-part-posts-with-nested-routing.mdx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6a840bd1753593cb8409272669523bdf9c6e6c90"
+    },
+    {
+      "path": "data/blog/new-features-in-v1.mdx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2f189d23687c29db869a78a6e8cc7e6b1572343f"
+    },
+    {
+      "path": "data/blog/pictures-of-canada.mdx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fd01ff955a881b3107f2e94bc1a7123b62fe2cee"
+    },
+    {
+      "path": "data/blog/the-time-machine.mdx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0f72790b011ac17b0c3964023e15746b5f82af3f"
+    },
+    {
+      "path": "data/headerNavLinks.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "29571f2251c0fe3cee64785f07b2109cc349cea6"
+    },
+    {
+      "path": "data/logo.svg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e8e24a4859d0db97c0c0374a8ab893bd82d1dfae"
+    },
+    {
+      "path": "data/projectsData.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "958f67688c9ba3a2f962cea9a806ca5a5d02e595"
+    },
+    {
+      "path": "data/references-data.bib",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8393fe68cf8a8adc4a45316b3c255b6ce1976e71"
+    },
+    {
+      "path": "data/siteMetadata.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6e764880e4977d1841d7a6ddb0752408a2e75c73"
+    },
+    {
+      "path": "jsconfig.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "95f1bc748046a429fa5fe2094c34fa139b0969c9"
+    },
+    {
+      "path": "layouts",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "62995ba5c594430a2577b6d101ee9c49290f5197"
+    },
+    {
+      "path": "layouts/AuthorLayout.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1e62b1a62b5674f6a664db0c7d6f6f26a2627bd5"
+    },
+    {
+      "path": "layouts/ListLayout.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "db2a5c3a8bb3de4d6330a3d2f8b204f3bb6c9e55"
+    },
+    {
+      "path": "layouts/PostLayout.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "62cd688fe93ffd5715c90cde724f13388cdf8b8a"
+    },
+    {
+      "path": "layouts/PostSimple.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "618478b30f93d4ac9fa4d661eb3e908199361ddf"
+    },
+    {
+      "path": "next-env.d.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "fd36f9494e2c202c823cdc0f25a6d2e48d352a2b"
+    },
+    {
+      "path": "next.config.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6792f13f59669be8031d58e34821d6d3fda3b448"
+    },
+    {
+      "path": "package.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6113dc18761779d691846fde59aa4dcfd7642451"
+    },
+    {
+      "path": "postcss.config.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "33ad091d26d8a9dc95ebdf616e217d985ec215b8"
+    },
+    {
+      "path": "prettier.config.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0423726a468f1644b7f14901cc830884ec0a17a4"
+    },
+    {
+      "path": "public",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "3da2e365626bee50fa205abcbe90526300ebc52b"
+    },
+    {
+      "path": "public/static",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "0f2098f6798258b84fad75f9e1b15789f725d641"
+    },
+    {
+      "path": "public/static/favicons",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "ac130920ad66f60c0040ac20a2f4870768b67a67"
+    },
+    {
+      "path": "public/static/favicons/android-chrome-96x96.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ba9dcda17fedf92820677f10f8edcffe648bc2da"
+    },
+    {
+      "path": "public/static/favicons/apple-touch-icon.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "219a69517c2b1d1cf92b70d338f08099b4445b95"
+    },
+    {
+      "path": "public/static/favicons/browserconfig.xml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b9639caf4272e389be650614c25ea514bd8bde27"
+    },
+    {
+      "path": "public/static/favicons/favicon-16x16.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bbd66d27736febb0fe4aad7d4fd53fd1963161aa"
+    },
+    {
+      "path": "public/static/favicons/favicon-32x32.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ae0339268b5c2313742d037c39821adddf07a85f"
+    },
+    {
+      "path": "public/static/favicons/favicon.ico",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2a87440cb6b27a7a154850985648309f38e64079"
+    },
+    {
+      "path": "public/static/favicons/mstile-150x150.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8b3c788a4266dcdb0d0591ab2580da603b447e83"
+    },
+    {
+      "path": "public/static/favicons/safari-pinned-tab.svg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6f8f16f54838cffc625caa14c30600179fb227a0"
+    },
+    {
+      "path": "public/static/favicons/site.webmanifest",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d88933bda6679ccc883be7c9b5d47837ed6bc7d1"
+    },
+    {
+      "path": "public/static/images",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "a99564688ae9d79c8da071c0c78adca023821754"
+    },
+    {
+      "path": "public/static/images/avatar.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9ef129356c9606a7387cfd423e251c84ea341fce"
+    },
+    {
+      "path": "public/static/images/canada",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "2dbdedbe17521581e97e1f06316f2120a420fd54"
+    },
+    {
+      "path": "public/static/images/canada/lake.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "47904723ef65d3723d1ac9fcaec795aaf8987514"
+    },
+    {
+      "path": "public/static/images/canada/maple.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "67e7c1e7ef890fb1ef7c5d7b9739c384d5d474fe"
+    },
+    {
+      "path": "public/static/images/canada/mountains.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6a9647471ed1f2947a89391767748af024412949"
+    },
+    {
+      "path": "public/static/images/canada/toronto.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "28f5169b487f0c53710cce5f4c09ae46c8f975a8"
+    },
+    {
+      "path": "public/static/images/google.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "39efd89c19ce6e6ec219c398c2c3d0c8fcb165ab"
+    },
+    {
+      "path": "public/static/images/logo.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c81a4ca876ce2e16a85ec06edcbc8f28be379ff9"
+    },
+    {
+      "path": "public/static/images/ocean.jpeg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e3e43b4f0711f6de73e663aa298223b487ca8010"
+    },
+    {
+      "path": "public/static/images/sparrowhawk-avatar.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7d09105119a51f2f284ecf89cad6ff08721ae64a"
+    },
+    {
+      "path": "public/static/images/time-machine.jpg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "32849f22c841f3641e612bfb0ea50c120a9e7304"
+    },
+    {
+      "path": "public/static/images/twitter-card.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a53cc4a6461451d85f47bfbf991c3544d101f071"
+    },
+    {
+      "path": "scripts",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "48bfd6b5201f97caaf5aaf034d5c8d1fc37140f7"
+    },
+    {
+      "path": "scripts/postbuild.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cd5fda76ca1da375ca24a77e89c024611ad188e0"
+    },
+    {
+      "path": "scripts/rss.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9edb7addded913e9a7ca6ce17290daffb762e48a"
+    },
+    {
+      "path": "scripts/search.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "53cbbccdd36e9f29bb989e100d322c3c8041e026"
+    },
+    {
+      "path": "scripts/sitemap.mjs",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1152b883d6d10be24049f839f3827aee61f9cadb"
+    },
+    {
+      "path": "tailwind.config.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b6f6f1e4bbf592590df5c4927d92bad9ef6c0a8f"
+    },
+    {
+      "path": "tsconfig.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3534c467411be6f546b1b36582e5949c28d53c08"
+    },
+    {
+      "path": "tsconfig.recipe.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "87e986cd520957d61859d383cf5e7bb655e869e2"
+    },
+    {
+      "path": "yarn.lock",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ecfbf285ac468dc8ab2892aaecbdf2fa2a7814fe"
+    }
+  ],
+  "fileManifestSha256": "8cce8b04846e0382bf1a4b2812881a998fc3d2cf061b2f43362310139da801e3",
+  "acceptedGlobalMetadata": {
+    "kind": "pax-global-comment",
+    "comment": "09ba0550caea03a8c38bc4878d05838d2a57f999",
+    "bytes": 52
+  },
+  "acceptedPathMetadata": [],
+  "files": [
+    {
+      "path": ".env.example",
+      "byteLength": 546,
+      "sha256": "2ad5eff842e918d69577306cd975bfb1f6b68b4e77f4126edab13b6ab9fffed0"
+    },
+    {
+      "path": ".eslintignore",
+      "byteLength": 13,
+      "sha256": "16d30e4462189fb14dd611bdb708c510630c576a1f35b9383e89a4352da36c97"
+    },
+    {
+      "path": ".eslintrc.js",
+      "byteLength": 980,
+      "sha256": "5cb1fb17a78a45cba2bb9fe3801fba43a3c9ee1d6fcf09871ea7c5e9bff9e9ae"
+    },
+    {
+      "path": ".gitattributes",
+      "byteLength": 4816,
+      "sha256": "313d656aca45f6cc51011e35d9cf185d9f673c8e43d1edef3e7b49889e63dac1"
+    },
+    {
+      "path": ".github/FUNDING.yml",
+      "byteLength": 62,
+      "sha256": "358db4ecc0d03a2015406f448c6d56ee054f9994cefda81c31d646833f8874df"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/bug_report.md",
+      "byteLength": 796,
+      "sha256": "0f0d3e51b040612cae4cb8f806cd6fedef2d086130f0bbbd2f1fd2fc019fcc9c"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/feature_request.md",
+      "byteLength": 595,
+      "sha256": "1f48c52f209a971b8e7eae4120144d28fcf8ee38a7778a7b4d8cf1ab356617d2"
+    },
+    {
+      "path": ".gitignore",
+      "byteLength": 545,
+      "sha256": "1b4e11cede279c9f3bf39393263852b2dd61f237f8f496c4d640785d2d307623"
+    },
+    {
+      "path": ".husky/.gitignore",
+      "byteLength": 2,
+      "sha256": "4415b7e361fc6f6ba2492adef1f27cfb00d0105e4588177470cecc4214b35284"
+    },
+    {
+      "path": ".husky/pre-commit",
+      "byteLength": 71,
+      "sha256": "2723321a34fb96760b2fa3101140fafa1d9ee0c2982297ef094bbf1df6305a39"
+    },
+    {
+      "path": ".vscode/settings.json",
+      "byteLength": 105,
+      "sha256": "c4b5d73c5dfdaf7454bc4a72fabd273a7b825bf4bf4685ae4d145340b593adcf"
+    },
+    {
+      "path": ".yarnrc.yml",
+      "byteLength": 25,
+      "sha256": "473e6def86fc03638120e0c01d0c8bbab095677256460fa4ea763e5d4697f270"
+    },
+    {
+      "path": "app/about/About.tsx",
+      "byteLength": 367,
+      "sha256": "94c0047ffa79aead96cb73db5ccaeb0aba030636b432a9b276dbf3cf07754f84"
+    },
+    {
+      "path": "app/about/page.tsx",
+      "byteLength": 213,
+      "sha256": "8525557425d106ecdc1afce605c1732d91182104b97fe1253a3e33040dadd833"
+    },
+    {
+      "path": "app/api/newsletter2/route.ts",
+      "byteLength": 421,
+      "sha256": "4507944482c08b58359925d9bdb9948158f39023a2fa68f415f8dcb57a0eb4c6"
+    },
+    {
+      "path": "app/blog/[...slug]/Blog.tsx",
+      "byteLength": 529,
+      "sha256": "899d04a55c2d29aec25e92d7ea8a5de8ad0d0eb087dcc18db20ae47a0f38bc47"
+    },
+    {
+      "path": "app/blog/[...slug]/page.tsx",
+      "byteLength": 1594,
+      "sha256": "392341491ef8b090e4002eed2f5f47d76192cc6986c96eb4f4440e2427ccea92"
+    },
+    {
+      "path": "app/blog/page.tsx",
+      "byteLength": 870,
+      "sha256": "1893c1b87ad4430d164cd31fc4b62b76372df6e5eee9c0fe8b7646f3db8b23fb"
+    },
+    {
+      "path": "app/blog/page/[page]/page.tsx",
+      "byteLength": 1323,
+      "sha256": "87d471bbe423f14f86378d60b5cea4dbc1f7b5ab9760164788851a9e8c0b05d2"
+    },
+    {
+      "path": "app/globals.css",
+      "byteLength": 552,
+      "sha256": "2435ba70df41974b77ad64e2cd23223a6e23b6450a5a887ebe08e508ac8cb338"
+    },
+    {
+      "path": "app/head.tsx",
+      "byteLength": 913,
+      "sha256": "0ae9e5f017e0a5a9bc62fcf7840414b3b135c4850c6355510de0b11194bebb21"
+    },
+    {
+      "path": "app/layout.tsx",
+      "byteLength": 1250,
+      "sha256": "2f99d37a958d6f2785b4110c2859cb0a4efefbb9e51a0be815ebf1f462d494db"
+    },
+    {
+      "path": "app/Main.tsx",
+      "byteLength": 3823,
+      "sha256": "55f2c05e99fc2080a33db45f43196accdcbd11fd6dc4ce0ab757ed723c415669"
+    },
+    {
+      "path": "app/not-found.tsx",
+      "byteLength": 1325,
+      "sha256": "a7fef04bc1cc2a004f5a85057407d71e9227c44fca9d32119832465e3ceb98df"
+    },
+    {
+      "path": "app/page.tsx",
+      "byteLength": 376,
+      "sha256": "9d3479523f5b01b23c4714d3c939fa5e38be7d73404d8e5d91fb2a192aad9c1d"
+    },
+    {
+      "path": "app/projects/page.tsx",
+      "byteLength": 1094,
+      "sha256": "8470b7295c786e0d13539a423fe64ebf2c4856e0e7515d9aba2b980f504fee80"
+    },
+    {
+      "path": "app/tags/page.tsx",
+      "byteLength": 1728,
+      "sha256": "d488d6a9abc880556373fbdd4ef7128b6af7b73072c17242ea942480b989bcae"
+    },
+    {
+      "path": "app/theme-providers.tsx",
+      "byteLength": 324,
+      "sha256": "4aa86e2f7a8713dd0564553359c60794d814cb467f160049fa783769d0330382"
+    },
+    {
+      "path": "components/Card.tsx",
+      "byteLength": 1609,
+      "sha256": "ae4d89c33cbff38649f5661e46228e4e1ab535eb2b74649fdfde8bd9fe811531"
+    },
+    {
+      "path": "components/Footer.tsx",
+      "byteLength": 1340,
+      "sha256": "83c8302fb9192a8c910d3fbb582fd3f8ea142b56ddc3ebc5db91707f6f735140"
+    },
+    {
+      "path": "components/Header.tsx",
+      "byteLength": 1367,
+      "sha256": "23d168827f7c121a5801cdc243bda3c197cb60dc343aa6911c92e529f971035a"
+    },
+    {
+      "path": "components/Image.tsx",
+      "byteLength": 141,
+      "sha256": "bcee4a8db263cd03020d0d58994fddf8b03432408ae99dbbe028d6c6fd7a036b"
+    },
+    {
+      "path": "components/LayoutWrapper.tsx",
+      "byteLength": 617,
+      "sha256": "eef14cad044a3fa91ec2aeadad126645b1683d4b4306509166ee72f5ac15495f"
+    },
+    {
+      "path": "components/Link.tsx",
+      "byteLength": 640,
+      "sha256": "deda28575b74ad15d076f5ac7c5fd86cf09fbdcd635d6b4c81cbeae1d87e1022"
+    },
+    {
+      "path": "components/MDXComponents.tsx",
+      "byteLength": 652,
+      "sha256": "1eed446278e1681a008f1935b9506267e48f58f98b6e70f1cf9068f3087dd4a8"
+    },
+    {
+      "path": "components/MobileNav.tsx",
+      "byteLength": 2606,
+      "sha256": "73d56f9865d98221c99102acc645e080ce4b620406535b5b21eeacf0e3eda532"
+    },
+    {
+      "path": "components/PageTitle.tsx",
+      "byteLength": 334,
+      "sha256": "5892d8b87565eded9324ae802fff229e4e804d14360558a1dd532d4c87aba084"
+    },
+    {
+      "path": "components/ScrollTopAndComment.tsx",
+      "byteLength": 2110,
+      "sha256": "954eec8f4c9a36474eaa2843925726f59909bb9e9a94ddbe79b5c7d121214ac5"
+    },
+    {
+      "path": "components/SectionContainer.tsx",
+      "byteLength": 257,
+      "sha256": "b60fae42119461a1dfe00eedc3c42a1673ab0b39e052e0b3699ef77df7d5ec84"
+    },
+    {
+      "path": "components/SEO.tsx",
+      "byteLength": 4979,
+      "sha256": "7d0fcae343b82c095036f604dae6d38a45d0ce9635a3cef231ba5166c2efa10e"
+    },
+    {
+      "path": "components/social-icons/facebook.svg",
+      "byteLength": 403,
+      "sha256": "4c8e3008986f028482962ef2ef4f89208a20bf27d0f71fc837efac09145c10c6"
+    },
+    {
+      "path": "components/social-icons/github.svg",
+      "byteLength": 827,
+      "sha256": "a57fdcb12cfe0cebec76c82367df14acac6b9ca50ba05b13610fb31330e14439"
+    },
+    {
+      "path": "components/social-icons/index.tsx",
+      "byteLength": 1019,
+      "sha256": "63b38c3ca0923aa9d159cba17a94984079d3cf3db0386c0c082928b9b29a6038"
+    },
+    {
+      "path": "components/social-icons/linkedin.svg",
+      "byteLength": 615,
+      "sha256": "8ed35981a42b05b85662a16a1d5f9cd6424777c9a8fc625b46dce04e549eb62d"
+    },
+    {
+      "path": "components/social-icons/mail.svg",
+      "byteLength": 224,
+      "sha256": "3483b293640c0385558ba049b313b1da004d7301451444908488b53523461e3e"
+    },
+    {
+      "path": "components/social-icons/twitter.svg",
+      "byteLength": 607,
+      "sha256": "1536e443e9759a07eec2202a58fe33d611c9f2df10e6fd9bad40b649bbcb39b7"
+    },
+    {
+      "path": "components/social-icons/youtube.svg",
+      "byteLength": 474,
+      "sha256": "14456d57347c7677a2e783d9d210624a46053aab3c1a134c36497dea8f0b0a25"
+    },
+    {
+      "path": "components/Tag.tsx",
+      "byteLength": 411,
+      "sha256": "41c8392172661897433324f1b40fe10aba2377604879eeca944a7585d4e35b05"
+    },
+    {
+      "path": "components/ThemeSwitch.tsx",
+      "byteLength": 1532,
+      "sha256": "a7aef5e96d30f0b0e61186a2ca3a0b6434f99736faff6798046fbecf07a39015"
+    },
+    {
+      "path": "contentlayer.config.ts",
+      "byteLength": 2778,
+      "sha256": "e9dd9b7e803d0768c9b08c5703ce52382dbad5fc03b90f87d1a61523471f1d51"
+    },
+    {
+      "path": "css/docsearch.css",
+      "byteLength": 2472,
+      "sha256": "348f311ff2122bdb6ce1b29b91a1186d56194eaee1b230030eb11c3139eb934b"
+    },
+    {
+      "path": "css/prism.css",
+      "byteLength": 2301,
+      "sha256": "f292cca3e002f9ae65ddaeabd9aaa0cca4ab88afe85c82251cec403776f62e60"
+    },
+    {
+      "path": "css/tailwind.css",
+      "byteLength": 541,
+      "sha256": "fea7dac2f004881405735ff4c3908494c5cc33c17a2f99b04e681e9971a18876"
+    },
+    {
+      "path": "data/authors/default.mdx",
+      "byteLength": 885,
+      "sha256": "2cb5d0d122d6434a987fcbea4e1fbcf1f8324cc4e5fcc27c36d71bf4d902d8cf"
+    },
+    {
+      "path": "data/authors/sparrowhawk.mdx",
+      "byteLength": 923,
+      "sha256": "c588a322ea54ffc8457f054e533cc21601c49ad7d53ab70c0b853fd70187be72"
+    },
+    {
+      "path": "data/blog/code-sample.mdx",
+      "byteLength": 933,
+      "sha256": "16038cf43a0f252e4dfc1c79aab81b1e6b70fc481a8d6bb9d5d74399a66719d3"
+    },
+    {
+      "path": "data/blog/deriving-ols-estimator.mdx",
+      "byteLength": 4214,
+      "sha256": "1c141a0020a95ce97ddc53fefbc2b9bd84deed7ea36f55ee501eb3dab9869504"
+    },
+    {
+      "path": "data/blog/github-markdown-guide.mdx",
+      "byteLength": 4197,
+      "sha256": "54fc357b7fb3204e55a48b18dbe88f6374b92bf3300bdad202a8f94016c47543"
+    },
+    {
+      "path": "data/blog/guide-to-using-images-in-nextjs.mdx",
+      "byteLength": 3112,
+      "sha256": "5878923620a3eec51c88bcb6d5c090c1c352ca5054c2108683ba051b54efcab1"
+    },
+    {
+      "path": "data/blog/introducing-tailwind-nextjs-starter-blog.mdx",
+      "byteLength": 10674,
+      "sha256": "66c357dc05819117fa64703b3b2ce1a325eb5498ffb879fc32769bb7d2737a33"
+    },
+    {
+      "path": "data/blog/my-fancy-title.mdx",
+      "byteLength": 145,
+      "sha256": "d7e99c0e22c2610cb84762710bd88f0048f32f876af68e6867ebd7811b57943c"
+    },
+    {
+      "path": "data/blog/nested-route/introducing-multi-part-posts-with-nested-routing.mdx",
+      "byteLength": 1483,
+      "sha256": "8da4b26b28653edc9a12413ec81c628d08cbf0c38902af133557f4dde5cbad93"
+    },
+    {
+      "path": "data/blog/new-features-in-v1.mdx",
+      "byteLength": 18390,
+      "sha256": "206715509f5a62b4e4c6e555185e17e2e01006693fda3c4fca3c251168a69c31"
+    },
+    {
+      "path": "data/blog/pictures-of-canada.mdx",
+      "byteLength": 3413,
+      "sha256": "2f7bf3ed62f9d53c2fed7d1b98411e9a56d22d14c064a8dba6886e1a9d8ea1ad"
+    },
+    {
+      "path": "data/blog/the-time-machine.mdx",
+      "byteLength": 10648,
+      "sha256": "808fdbdb4d630c62513326bc027e7c2a661eedd896c524281410da75347c0e96"
+    },
+    {
+      "path": "data/headerNavLinks.ts",
+      "byteLength": 212,
+      "sha256": "f88f33c1648e99424326e4a2544bf8bf7e34ab2983aa4d34d0fec50f7475672f"
+    },
+    {
+      "path": "data/logo.svg",
+      "byteLength": 1351,
+      "sha256": "a360c4ba6f083b64c8b1298b5c076cbea0eda4feb8214b7b07a05b2fc547b2ab"
+    },
+    {
+      "path": "data/projectsData.ts",
+      "byteLength": 731,
+      "sha256": "4b4c1a44fcbb1fb24a8939e364cadca6ee03ab79f1d8d76379340189517051e6"
+    },
+    {
+      "path": "data/references-data.bib",
+      "byteLength": 706,
+      "sha256": "31f2e00ca6854193679f2f9a5fa74e51cb4dc95eff2ab6214edc3a47d927eedf"
+    },
+    {
+      "path": "data/siteMetadata.js",
+      "byteLength": 3537,
+      "sha256": "9501fbec8a33e4a085b28bfd9ee0d307ca21f26dd8d33c89a06670b017b8e057"
+    },
+    {
+      "path": "jsconfig.json",
+      "byteLength": 298,
+      "sha256": "0cdcd5b2f1846d24c8887a0c964dac1b69fa2787ff36af24f644e0a815591868"
+    },
+    {
+      "path": "layouts/AuthorLayout.tsx",
+      "byteLength": 2056,
+      "sha256": "2cc404ca979d0d1b678e9028a583f4fe7c62e3b5ce88f133d2696fb2893ac4d8"
+    },
+    {
+      "path": "layouts/ListLayout.tsx",
+      "byteLength": 5493,
+      "sha256": "ea67b074d9d303d5e84a33cc706387a2f9f73dd8cb4a0cd5fae51fec893d05da"
+    },
+    {
+      "path": "layouts/PostLayout.tsx",
+      "byteLength": 7493,
+      "sha256": "00a54e2ca9c7127a0fa6c42376c963b8c4f3d285d90c20ab71856e40b444b199"
+    },
+    {
+      "path": "layouts/PostSimple.tsx",
+      "byteLength": 3585,
+      "sha256": "804df5b6f0c956badbf372b71d4bd6568b91114512c7172265072344c5f85c5e"
+    },
+    {
+      "path": "LICENSE",
+      "byteLength": 1068,
+      "sha256": "317b52bec9a462916d9219427552de01604be107efc60606a3046df2d2ee0ff2"
+    },
+    {
+      "path": "next-env.d.ts",
+      "byteLength": 267,
+      "sha256": "5794108d70c4cca0f46ffd2ac24b14dcd610fccde1e057b7eccb7f2bd7555fd0"
+    },
+    {
+      "path": "next.config.js",
+      "byteLength": 2402,
+      "sha256": "b9633018e6b2a05ef749315f21ac1b1af1a256a667e421ebcc5901b35a9ac46a"
+    },
+    {
+      "path": "package.json",
+      "byteLength": 2212,
+      "sha256": "cfe626f2e2b3b94346beb71e338010ff4bb0095b541e298776933be24292061f"
+    },
+    {
+      "path": "postcss.config.js",
+      "byteLength": 82,
+      "sha256": "251ecddd4672c9cf467547e3dc535de00ad2129df26e7e7ae728fa4e5ac45fc5"
+    },
+    {
+      "path": "prettier.config.js",
+      "byteLength": 157,
+      "sha256": "5b1cc7b61adf55f0f5e10acdf7a63cb6c49596fefbf29c882dfb682509154740"
+    },
+    {
+      "path": "public/static/favicons/android-chrome-96x96.png",
+      "byteLength": 3327,
+      "sha256": "34573a9ccd401130e3aa1abb8e7bf7c233caea6089388f490e70c97aa78b4e94"
+    },
+    {
+      "path": "public/static/favicons/apple-touch-icon.png",
+      "byteLength": 3738,
+      "sha256": "4626cb8dc284d77383d444ce79163a769ecc9b2ad31353abd1927154dc6e71ec"
+    },
+    {
+      "path": "public/static/favicons/browserconfig.xml",
+      "byteLength": 246,
+      "sha256": "bf28a595cabd33c5234561e1a674f65c79aa8fb94112ef9b1f21d0eda1180393"
+    },
+    {
+      "path": "public/static/favicons/favicon-16x16.png",
+      "byteLength": 1166,
+      "sha256": "2c5aca34ae9bd9dd90bfdb7841f8ae95c08c82b67756290e9320bece78c05958"
+    },
+    {
+      "path": "public/static/favicons/favicon-32x32.png",
+      "byteLength": 1461,
+      "sha256": "c107012fb480c6278af6e49435ff94deed374017c304509e08e33e6ef1a2febd"
+    },
+    {
+      "path": "public/static/favicons/favicon.ico",
+      "byteLength": 15086,
+      "sha256": "3521a07b6de7b886981a02ae41b02797fa53f33ff8a84bdacdc294af0cd789a3"
+    },
+    {
+      "path": "public/static/favicons/mstile-150x150.png",
+      "byteLength": 4362,
+      "sha256": "f030d51d58d03dd7fc55328193ad4027f4e3479596aa09829a3274bede365cdb"
+    },
+    {
+      "path": "public/static/favicons/safari-pinned-tab.svg",
+      "byteLength": 1103,
+      "sha256": "b89b3f320fa5b8ec33050f2c70c3be68a4f86fb661e1cc1e8410ee0dbcc38258"
+    },
+    {
+      "path": "public/static/favicons/site.webmanifest",
+      "byteLength": 247,
+      "sha256": "a8e9ed58b0304d7eb3e0ae8210b76db035dec9d174b159e9a95f6aea84291765"
+    },
+    {
+      "path": "public/static/images/avatar.png",
+      "byteLength": 5462,
+      "sha256": "c046d296132939b8ed72c1cff997b2036d6142cea6589047adc883e7fb3e31f7"
+    },
+    {
+      "path": "public/static/images/canada/lake.jpg",
+      "byteLength": 41767,
+      "sha256": "5758acc7491376dd26682c4339c6ccebd27c6698d6355f619a1147ea17f05350"
+    },
+    {
+      "path": "public/static/images/canada/maple.jpg",
+      "byteLength": 57747,
+      "sha256": "4b56c3bf4f857752ebd15d692f942d0fe11d58e7c2ea4adfe2da536640b4bc8f"
+    },
+    {
+      "path": "public/static/images/canada/mountains.jpg",
+      "byteLength": 86231,
+      "sha256": "b226a4a6454423cc67a2d08a69e4569aa658a12b788c2eb1c700a42080c7113b"
+    },
+    {
+      "path": "public/static/images/canada/toronto.jpg",
+      "byteLength": 79963,
+      "sha256": "fa2f7b22f8bde41c6353f3e6745ef5fe773cae849e1c855913e0b7a8bbfb7a54"
+    },
+    {
+      "path": "public/static/images/google.png",
+      "byteLength": 30353,
+      "sha256": "e7f68b8da53c628ffadf9a5b3137f47042721d7c090b19f14fb70476cea6c94f"
+    },
+    {
+      "path": "public/static/images/logo.png",
+      "byteLength": 43314,
+      "sha256": "2b96228774b90f351e18a79db880378999428b2e9e490218ac0f6fa2aa61064b"
+    },
+    {
+      "path": "public/static/images/ocean.jpeg",
+      "byteLength": 262353,
+      "sha256": "6de384e4f7707bc570ecf1dee64f619717ea832c7e9f463cd31fe1b1f3229b26"
+    },
+    {
+      "path": "public/static/images/sparrowhawk-avatar.jpg",
+      "byteLength": 15300,
+      "sha256": "f618b798291a29f694e4dd452f61a49cd4a25ff8b0c5b0ed1f4d67b9186583dd"
+    },
+    {
+      "path": "public/static/images/time-machine.jpg",
+      "byteLength": 429232,
+      "sha256": "0e36ce28a9222fb6ef7f622ec819654d8a6879c8cac68c0b70822d1692113fd4"
+    },
+    {
+      "path": "public/static/images/twitter-card.png",
+      "byteLength": 21053,
+      "sha256": "03c89584624ad09908937d2c65d3ba6502de53b39739ea0f88b6bb74543b5343"
+    },
+    {
+      "path": "README.md",
+      "byteLength": 16754,
+      "sha256": "19301beeb8951db6c228856c05f4bb739b39ee213e0e0441f1d994f846e6010a"
+    },
+    {
+      "path": "scripts/postbuild.mjs",
+      "byteLength": 193,
+      "sha256": "b5df765712981fb9cc5381553d4b670c0cacaa09502501268a36c882e5dca2c0"
+    },
+    {
+      "path": "scripts/rss.mjs",
+      "byteLength": 292,
+      "sha256": "690d0e5a9f46c0d45c53978421141e382ab6168c1412dbf74437c259fd4261ce"
+    },
+    {
+      "path": "scripts/search.mjs",
+      "byteLength": 519,
+      "sha256": "717b6af9b707ec143e1348a2f2212d9ca5fa21ddb9bde7148b42282e4372ef87"
+    },
+    {
+      "path": "scripts/sitemap.mjs",
+      "byteLength": 319,
+      "sha256": "9c12d825422ebd8c621a9c4d600ec2c3f291e135b08554e2ce403c36dbf0f33e"
+    },
+    {
+      "path": "tailwind.config.js",
+      "byteLength": 5214,
+      "sha256": "6664e58b0ebd63ff3ae5f263b8b1486107e161f7c4e5faa3cf34da9c7693b717"
+    },
+    {
+      "path": "tsconfig.json",
+      "byteLength": 1152,
+      "sha256": "26acc0a92634db2681a12a157e765613ac4ddce087f4caacce49937d89d2138f"
+    },
+    {
+      "path": "tsconfig.recipe.json",
+      "byteLength": 1020,
+      "sha256": "f92a90b37437f6743dd715d04c0f5cb1df8988ea99c337ed6fe427b89edc4cae"
+    },
+    {
+      "path": "yarn.lock",
+      "byteLength": 428668,
+      "sha256": "7ad2f000f598ae25e2ec93bd8771de96914adcf4f98ffa0da32b81b7af6b4219"
+    }
+  ],
+  "rootLicense": {
+    "path": "LICENSE",
+    "sha256": "317b52bec9a462916d9219427552de01604be107efc60606a3046df2d2ee0ff2",
+    "classification": "verified-compatible"
+  },
+  "licensing": [
+    {
+      "path": "LICENSE",
+      "sha256": "317b52bec9a462916d9219427552de01604be107efc60606a3046df2d2ee0ff2",
+      "classification": "verified-compatible",
+      "reason": "Exact root MIT text, repeated raw/archive byte identity."
+    }
+  ],
+  "assets": [
+    {
+      "path": "components/social-icons/facebook.svg",
+      "sha256": "4c8e3008986f028482962ef2ef4f89208a20bf27d0f71fc837efac09145c10c6",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "components/social-icons/github.svg",
+      "sha256": "a57fdcb12cfe0cebec76c82367df14acac6b9ca50ba05b13610fb31330e14439",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "components/social-icons/linkedin.svg",
+      "sha256": "8ed35981a42b05b85662a16a1d5f9cd6424777c9a8fc625b46dce04e549eb62d",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "components/social-icons/mail.svg",
+      "sha256": "3483b293640c0385558ba049b313b1da004d7301451444908488b53523461e3e",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "components/social-icons/twitter.svg",
+      "sha256": "1536e443e9759a07eec2202a58fe33d611c9f2df10e6fd9bad40b649bbcb39b7",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "components/social-icons/youtube.svg",
+      "sha256": "14456d57347c7677a2e783d9d210624a46053aab3c1a134c36497dea8f0b0a25",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "data/logo.svg",
+      "sha256": "a360c4ba6f083b64c8b1298b5c076cbea0eda4feb8214b7b07a05b2fc547b2ab",
+      "classification": "excluded",
+      "reason": "Potential logo, favicon, brand, avatar, trademark, or attribution material is excluded."
+    },
+    {
+      "path": "public/static/favicons/android-chrome-96x96.png",
+      "sha256": "34573a9ccd401130e3aa1abb8e7bf7c233caea6089388f490e70c97aa78b4e94",
+      "classification": "excluded",
+      "reason": "Potential logo, favicon, brand, avatar, trademark, or attribution material is excluded."
+    },
+    {
+      "path": "public/static/favicons/apple-touch-icon.png",
+      "sha256": "4626cb8dc284d77383d444ce79163a769ecc9b2ad31353abd1927154dc6e71ec",
+      "classification": "excluded",
+      "reason": "Potential logo, favicon, brand, avatar, trademark, or attribution material is excluded."
+    },
+    {
+      "path": "public/static/favicons/favicon-16x16.png",
+      "sha256": "2c5aca34ae9bd9dd90bfdb7841f8ae95c08c82b67756290e9320bece78c05958",
+      "classification": "excluded",
+      "reason": "Potential logo, favicon, brand, avatar, trademark, or attribution material is excluded."
+    },
+    {
+      "path": "public/static/favicons/favicon-32x32.png",
+      "sha256": "c107012fb480c6278af6e49435ff94deed374017c304509e08e33e6ef1a2febd",
+      "classification": "excluded",
+      "reason": "Potential logo, favicon, brand, avatar, trademark, or attribution material is excluded."
+    },
+    {
+      "path": "public/static/favicons/favicon.ico",
+      "sha256": "3521a07b6de7b886981a02ae41b02797fa53f33ff8a84bdacdc294af0cd789a3",
+      "classification": "excluded",
+      "reason": "Potential logo, favicon, brand, avatar, trademark, or attribution material is excluded."
+    },
+    {
+      "path": "public/static/favicons/mstile-150x150.png",
+      "sha256": "f030d51d58d03dd7fc55328193ad4027f4e3479596aa09829a3274bede365cdb",
+      "classification": "excluded",
+      "reason": "Potential logo, favicon, brand, avatar, trademark, or attribution material is excluded."
+    },
+    {
+      "path": "public/static/favicons/safari-pinned-tab.svg",
+      "sha256": "b89b3f320fa5b8ec33050f2c70c3be68a4f86fb661e1cc1e8410ee0dbcc38258",
+      "classification": "excluded",
+      "reason": "Potential logo, favicon, brand, avatar, trademark, or attribution material is excluded."
+    },
+    {
+      "path": "public/static/images/avatar.png",
+      "sha256": "c046d296132939b8ed72c1cff997b2036d6142cea6589047adc883e7fb3e31f7",
+      "classification": "excluded",
+      "reason": "Potential logo, favicon, brand, avatar, trademark, or attribution material is excluded."
+    },
+    {
+      "path": "public/static/images/canada/lake.jpg",
+      "sha256": "5758acc7491376dd26682c4339c6ccebd27c6698d6355f619a1147ea17f05350",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "public/static/images/canada/maple.jpg",
+      "sha256": "4b56c3bf4f857752ebd15d692f942d0fe11d58e7c2ea4adfe2da536640b4bc8f",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "public/static/images/canada/mountains.jpg",
+      "sha256": "b226a4a6454423cc67a2d08a69e4569aa658a12b788c2eb1c700a42080c7113b",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "public/static/images/canada/toronto.jpg",
+      "sha256": "fa2f7b22f8bde41c6353f3e6745ef5fe773cae849e1c855913e0b7a8bbfb7a54",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "public/static/images/google.png",
+      "sha256": "e7f68b8da53c628ffadf9a5b3137f47042721d7c090b19f14fb70476cea6c94f",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "public/static/images/logo.png",
+      "sha256": "2b96228774b90f351e18a79db880378999428b2e9e490218ac0f6fa2aa61064b",
+      "classification": "excluded",
+      "reason": "Potential logo, favicon, brand, avatar, trademark, or attribution material is excluded."
+    },
+    {
+      "path": "public/static/images/ocean.jpeg",
+      "sha256": "6de384e4f7707bc570ecf1dee64f619717ea832c7e9f463cd31fe1b1f3229b26",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "public/static/images/sparrowhawk-avatar.jpg",
+      "sha256": "f618b798291a29f694e4dd452f61a49cd4a25ff8b0c5b0ed1f4d67b9186583dd",
+      "classification": "excluded",
+      "reason": "Potential logo, favicon, brand, avatar, trademark, or attribution material is excluded."
+    },
+    {
+      "path": "public/static/images/time-machine.jpg",
+      "sha256": "0e36ce28a9222fb6ef7f622ec819654d8a6879c8cac68c0b70822d1692113fd4",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "public/static/images/twitter-card.png",
+      "sha256": "03c89584624ad09908937d2c65d3ba6502de53b39739ea0f88b6bb74543b5343",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    }
+  ],
+  "corroboratedLeadFacts": {
+    "next": "13.4.8",
+    "react": "18.2.0",
+    "packageManager": "yarn-metadata-v6-node-modules",
+    "router": "app",
+    "layoutPath": "app/layout.tsx",
+    "dynamicRoutePath": "app/blog/[...slug]/page.tsx",
+    "dataFunction": "generateStaticParams",
+    "apiRoutePath": "app/api/newsletter2/route.ts",
+    "productionBundler": "candidate-owned-custom-webpack",
+    "nodeEngine": "absent",
+    "scripts": [
+      {
+        "name": "analyze",
+        "command": "cross-env ANALYZE=true next build"
+      },
+      {
+        "name": "build",
+        "command": "cross-env INIT_CWD=$PWD next build && cross-env NODE_OPTIONS='--experimental-json-modules' node -r esbuild-register ./scripts/postbuild.mjs"
+      },
+      {
+        "name": "dev",
+        "command": "cross-env INIT_CWD=$PWD next dev"
+      },
+      {
+        "name": "lint",
+        "command": "next lint --fix --dir pages --dir components --dir lib --dir layouts --dir scripts"
+      },
+      {
+        "name": "serve",
+        "command": "next start"
+      },
+      {
+        "name": "start",
+        "command": "next dev"
+      }
+    ],
+    "scope": "provenance-only"
+  },
+  "evidenceBlockers": [
+    "Package scripts and any npx or registry behavior were recorded but not executed or resolved.",
+    "Newsletter integrations, external product links, remote images, fonts, assets, analytics, telemetry, and browser egress remain not-tested.",
+    "Server, API, data, authentication, and payment behavior remain not-tested and outside the usable closure."
+  ],
+  "nestedCompatibleLicense": null,
+  "excludedCommittedDist": []
+}

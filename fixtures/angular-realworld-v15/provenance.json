@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "versionless.fixture-provenance.v1",
+  "repository": "https://github.com/realworld-apps/angular-realworld-example-app",
+  "revision": "e28c8969aab9a27ece9873118b1ab7251f9ccb0c",
+  "licensePath": "LICENSE",
+  "license": "MIT",
+  "licenseAttribution": "Copyright (c) 2023 Thinkster",
+  "selection": "Angular 15.2.0 / Angular CLI 15.2.0 immutable production-shaped comparator",
+  "nonclaims": [
+    "Selection and acquisition do not establish migration support, general Angular support, pilot status, compliance, certification, or production readiness."
+  ]
+}

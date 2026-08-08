@@ -1,0 +1,101 @@
+{
+  "schemaVersion": "versionless.receipt.v1",
+  "runId": "T011-angular-phonecat",
+  "fixture": "angular-phonecat",
+  "source": {
+    "repository": "https://github.com/angular/angular-phonecat",
+    "revision": "ef6f6eb672ded472b4e442d598f5df40d0e0642c",
+    "archiveSha256": "c7624a333ddfaa31f51385e72b8966162171e798ec63a1b991ec4bde26339eb1",
+    "license": "MIT",
+    "licenseSha256": "bab10b0aa126d9fdb81380141fc8845a74024d7c9977e5636afd06fe5edce455"
+  },
+  "tooling": {
+    "legacyNode": "16.20.2 with npm 8.19.4 EOL compatibility sandbox",
+    "targetNode": "24.15.0 maintained target tooling lane",
+    "yukuParser": "0.7.0",
+    "yukuAnalyzer": "0.7.0",
+    "playwright": "1.58.2",
+    "chromium": "145.0.7632.6",
+    "application": "AngularJS 1.8 static application without a bundler"
+  },
+  "consent": [
+    {
+      "id": "T013-fixture-ingest",
+      "purpose": "pinned PhoneCat source and Node 16/24 runtimes plus frozen lockfile population; lifecycle scripts disabled and copy-libs invoked explicitly and identically",
+      "mode": "consented"
+    }
+  ],
+  "migration": {
+    "file": "app/phone-detail/phone-detail.component.js",
+    "transform": "phone-detail-lexical-this",
+    "edits": 3,
+    "track": "angularjs-special-track",
+    "changedFiles": [
+      "app/phone-detail/phone-detail.component.js"
+    ],
+    "outerController": "constructable-function",
+    "injectionAnnotation": "unchanged"
+  },
+  "verification": {
+    "result": "pass",
+    "builds": "pass",
+    "journeys": "pass",
+    "mutation": "pass",
+    "locality": {
+      "mode": "offline",
+      "scope": "Versionless-spawned Node/npm child processes and Playwright browser requests",
+      "osWideIsolation": false,
+      "successfulNonLoopback": 0,
+      "browserBlockedRequests": 0
+    },
+    "deterministicCore": {
+      "first": "6726979ebc735e402281131c67f3f22f8451c700f8f689438309086194466c66",
+      "second": "6726979ebc735e402281131c67f3f22f8451c700f8f689438309086194466c66",
+      "equal": true
+    }
+  },
+  "artifacts": [
+    {
+      "path": "evidence/runs/angular-phonecat/artifacts/preparation.json",
+      "sha256": "a12c35d28973404e6d2a5f2eebbe661cbe0790626d1401e805367ab684d6aeaf"
+    },
+    {
+      "path": "evidence/runs/angular-phonecat/artifacts/runtime.json",
+      "sha256": "97dae2015936f316668f530e8e2e41962e7b9dc0991f0dad6367844b756cd246"
+    },
+    {
+      "path": "evidence/runs/angular-phonecat/artifacts/journey.json",
+      "sha256": "299308578fc043f3d09d3e189c1e14a9b1d12d4f42df37dfbf89bb9c4c2e1300"
+    },
+    {
+      "path": "evidence/runs/angular-phonecat/artifacts/locality.json",
+      "sha256": "aa69f52db453ae704b9436a049a148d8042fd05a3f6b1c06e5aaf752b5b20477"
+    },
+    {
+      "path": "evidence/runs/angular-phonecat/artifacts/mutation.json",
+      "sha256": "62fb4c81d3c65f2ff2e5bcc9ac5739953220a049a3249a875c55d8bda3a6576c"
+    },
+    {
+      "path": "evidence/runs/angular-phonecat/artifacts/migration-diff.json",
+      "sha256": "10d5059b378bdf6753b6198049d81155a0de14164064ad5982594cf815c17267"
+    },
+    {
+      "path": "evidence/runs/angular-phonecat/artifacts/deterministic-core.json",
+      "sha256": "9d05110c002d26ffba39648d1845e441d26c9ea2721100286203b4eb6b54cb20"
+    }
+  ],
+  "integrity": {
+    "algorithm": "sha256",
+    "canonicalDigest": "621837a62459c1b447ca681f4052423cfa20b86db257bc285f7a0bb52571e1a7",
+    "authenticity": "not-established"
+  },
+  "limitations": [
+    "Hash integrity does not establish signer authenticity or provenance beyond pinned downloads.",
+    "Network controls cover spawned Node/npm children and browser routing, not OS-wide process isolation.",
+    "Node 16 is EOL and used only as a compatibility sandbox.",
+    "The transform is approved only for the exact proven PhoneDetail shape.",
+    "This is AngularJS special-track evidence only and does not prove the required Angular designated pilot.",
+    "This static application has no bundler and does not prove Angular CLI or AOT behavior.",
+    "This receipt is not certification or a legal attestation."
+  ]
+}

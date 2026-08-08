@@ -1,0 +1,11 @@
+{
+  "legacy": {
+    "node": "16.20.2-darwin-arm64 EOL compatibility sandbox",
+    "bundler": "webpack-4.30.0"
+  },
+  "target": {
+    "node": "24.15.0-darwin-arm64 maintained runtime",
+    "bundler": "vite-8.0.16",
+    "reactRedux": "7.1.3"
+  }
+}

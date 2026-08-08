@@ -1,0 +1,107 @@
+{
+  "schemaVersion": "versionless.aggregate.v1",
+  "fixtures": [
+    {
+      "id": "react-boilerplate-v4",
+      "framework": "react",
+      "bundler": "webpack-4",
+      "result": "pass",
+      "receipt": "evidence/runs/react-boilerplate-v4/t008-run.json",
+      "digest": "4d32ae0a46041e5ec2ac68aa31a9b8f86bd9d294d312ce41968ddd99dc5ee758"
+    },
+    {
+      "id": "angular-phonecat",
+      "framework": "angularjs",
+      "track": "angularjs-special-track",
+      "bundler": "none-static",
+      "result": "pass",
+      "receipt": "evidence/runs/angular-phonecat/t014-run.json",
+      "digest": "a6798081c0b005c76534b5acd4dc647d77d497b0b649748c685b779451035f51"
+    },
+    {
+      "id": "react-boilerplate-v4-node24",
+      "framework": "react",
+      "bundler": "webpack-4",
+      "runtime": "node-24.15.0",
+      "result": "pass",
+      "receipt": "evidence/runs/react-boilerplate-v4-node24/t022-run.json",
+      "digest": "815a5416b90c0a0c0a2f0adb779308c0ba0447d67c965003f15d343940d9b593"
+    },
+    {
+      "id": "angular-phonecat-route-resolve",
+      "framework": "angularjs",
+      "track": "angularjs-special-track",
+      "bundler": "none-static",
+      "result": "pass",
+      "receipt": "evidence/runs/angular-phonecat-route-resolve/t032-run.json",
+      "digest": "aa8b2923a38aa5f1adc870b48cdd938b739e107c927aac71b8c2890705f6beef"
+    },
+    {
+      "id": "angular-phonecat-composed",
+      "framework": "angularjs",
+      "track": "angularjs-special-track",
+      "bundler": "none-static",
+      "result": "pass",
+      "receipt": "evidence/runs/angular-phonecat-composed/t048-run.json",
+      "digest": "a7e8a9dc864085d77338f1615e3434a8a842fa5f4156a13bd2f5560bd2f8dc12"
+    },
+    {
+      "id": "react-boilerplate-v4-vite8",
+      "framework": "react",
+      "bundler": "vite-8",
+      "runtime": "node-24.15.0",
+      "result": "pass",
+      "receipt": "evidence/runs/react-boilerplate-v4-vite8/t028-run.json",
+      "digest": "1caf9dfa24b14b83ac63ceab9ca90829346045aac690c7b95a952ae4d9e72849"
+    },
+    {
+      "id": "react-boilerplate-v4-composed",
+      "framework": "react",
+      "bundler": "webpack-4-to-vite-8",
+      "runtime": "node-16.20.2-to-node-24.15.0",
+      "result": "pass",
+      "receipt": "evidence/runs/react-boilerplate-v4-composed/t060-run.json",
+      "digest": "9341f5e70c00ebbde65a919db5b5d31fde0fa39983e985deb01afb71ed00d1ad"
+    },
+    {
+      "id": "react-boilerplate-v4-data-flow",
+      "framework": "react",
+      "bundler": "vite-8",
+      "runtime": "node-24.15.0",
+      "result": "pass",
+      "receipt": "evidence/runs/react-boilerplate-v4-data-flow/t054-run.json",
+      "digest": "a6c25918ed9650d3315c42501932e8e6fe26552e48bcbdf74d4987f7b384452b"
+    },
+    {
+      "id": "angular-phonecat-vite8",
+      "framework": "angularjs",
+      "track": "angularjs-special-track",
+      "bundler": "none-static-to-vite-8",
+      "runtime": "node-16-to-node-24.15.0",
+      "result": "pass",
+      "receipt": "evidence/runs/angular-phonecat-vite8/t069-run.json",
+      "digest": "033fc40237975e28df36117cc309625632610a399b5c0f88735079ed21fcad0d"
+    },
+    {
+      "id": "angular-realworld-v15-to-v16",
+      "framework": "angular",
+      "track": "angular2-plus-adjacent-major",
+      "bundler": "angular-cli-architect-aot-15-to-16",
+      "runtime": "node-18.20.8",
+      "result": "pass",
+      "receipt": "evidence/runs/angular-realworld-v15-to-v16/receipt.json",
+      "digest": "bba54bc67cf5686445b207c530e04c5f9d56cf87f495250e97329e1eed8c6ad1"
+    },
+    {
+      "id": "next-killedbygoogle-derived-state-to-memo",
+      "framework": "react",
+      "track": "next12-pages-derived-state-to-use-memo",
+      "bundler": "next-12-webpack-5",
+      "runtime": "node-16.20.2",
+      "result": "pass",
+      "receipt": "evidence/runs/next-killedbygoogle-derived-state-to-memo/receipt.json",
+      "digest": "a018c6490cd559fab74ea402ff93660f053503dbed1a52ba9b68ed7fdc086b7c"
+    }
+  ],
+  "unsupported": []
+}

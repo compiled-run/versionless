@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "versionless.immutable-fixture.v1",
+  "id": "react-avataaars",
+  "framework": "react",
+  "repository": "fangpenlin/avataaars-generator",
+  "repositoryUrl": "https://github.com/fangpenlin/avataaars-generator",
+  "commit": "c191c6c2d27f41245e803912d43c7213436a34d3",
+  "tree": "94a3d1a024682b3f21ad30b9de8d4e1541a376d3",
+  "archive": {
+    "url": "https://codeload.github.com/fangpenlin/avataaars-generator/tar.gz/c191c6c2d27f41245e803912d43c7213436a34d3",
+    "sha256": "4863a1304b659f1105f69d8ae0c715428c41d2d64b43edfd701148ddfca900da",
+    "byteLength": 166934
+  },
+  "archiveManifestSha256": "4e96f8bfbcdb30f5474d04cdb1c57f6198ef938f3398ce1fadc9cb36258ead60",
+  "reliedPaths": [
+    "LICENSE",
+    "package.json",
+    "src/@types/react-url-query.d.ts",
+    "src/index.tsx",
+    "tsconfig.json",
+    "yarn.lock"
+  ],
+  "usableClosure": {
+    "assets": "Only paths classified verified-compatible are usable; excluded and unknown paths remain outside the usable closure.",
+    "nestedLicensing": "Only the exact root MIT file is verified-compatible."
+  },
+  "nonclaims": [
+    "Migration, build, browser parity, runtime support, Tier F, Tier P, designated pilot status, generic bundler support, compliance, certification, PCI applicability, authenticity, and OS-wide isolation are not established."
+  ]
+}

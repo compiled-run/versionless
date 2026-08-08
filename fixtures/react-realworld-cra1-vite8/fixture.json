@@ -1,0 +1,30 @@
+{
+  "id": "react-realworld-cra1-vite8",
+  "source": {
+    "repository": "https://github.com/gothinkster/react-redux-realworld-example-app",
+    "revision": "ee72eba4056392c95a27bc48d385d3f54ba38a18",
+    "archiveUrl": "https://github.com/gothinkster/react-redux-realworld-example-app/archive/ee72eba4056392c95a27bc48d385d3f54ba38a18.tar.gz",
+    "repositoryId": 56101366,
+    "licenseUrl": "https://raw.githubusercontent.com/gothinkster/react-redux-realworld-example-app/ee72eba4056392c95a27bc48d385d3f54ba38a18/LICENSE.md",
+    "license": "MIT",
+    "licenseInference": "SPDX MIT inferred from exact standard MIT bytes",
+    "archiveSha256": "67a0375d948c250a0e7d79c9024327239a223ee84c66111aae132b11144f932f",
+    "licenseSha256": "3bc29327b728ee0729f65d5b7261a7445f4a44fd7fd09462883b19e42c34caa4",
+    "licenseGitBlobSha1": "006edc881dcf9d25ae4ca05f4ccf9f630482f5ef",
+    "licenseBytes": 1068,
+    "packageSha256": "ff5a67b34128a8d69ec6efe8560746dd14a668fdcad2074941abb48435dfe6bd",
+    "upstreamLock": "absent"
+  },
+  "runtime": {
+    "legacy": "16.20.2",
+    "target": "24.15.0"
+  },
+  "bundlers": {
+    "legacy": "react-scripts 1.1.1 / webpack 3",
+    "target": "root Vite 8.0.16"
+  },
+  "browser": {
+    "executable": ".versionless/cache/react-boilerplate-v4/ms-playwright/chromium_headless_shell-1208/chrome-headless-shell-mac-arm64/chrome-headless-shell",
+    "sha256": "a46b3b1e63163fa2d2437fb6ae967cb5a73b50050bca32f1964e6129b6228244"
+  }
+}

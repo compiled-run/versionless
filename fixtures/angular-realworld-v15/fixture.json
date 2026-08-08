@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "versionless.fixture.v1",
+  "id": "angular-realworld-v15",
+  "repository": "realworld-apps/angular-realworld-example-app",
+  "revision": "e28c8969aab9a27ece9873118b1ab7251f9ccb0c",
+  "archiveUrl": "https://codeload.github.com/realworld-apps/angular-realworld-example-app/tar.gz/e28c8969aab9a27ece9873118b1ab7251f9ccb0c",
+  "runtime": {
+    "version": "v18.20.8",
+    "platform": "darwin-arm64",
+    "archiveUrl": "https://nodejs.org/dist/v18.20.8/node-v18.20.8-darwin-arm64.tar.gz",
+    "checksumUrl": "https://nodejs.org/dist/v18.20.8/SHASUMS256.txt",
+    "sha256": "bae4965d29d29bd32f96364eefbe3bca576a03e917ddbb70b9330d75f2cacd76"
+  },
+  "lock": {
+    "path": "package-lock.json",
+    "lockfileVersion": 3,
+    "entries": 994,
+    "uniqueTarballs": 865,
+    "integrity": "sha512"
+  },
+  "state": "acquisition-authorized-baseline-not-yet-established"
+}

@@ -1,0 +1,631 @@
+{
+  "schemaVersion": "versionless.cross-source-provenance.v1",
+  "fixture": "angular-contacts",
+  "repository": "avatsaev/angular-contacts-app-example",
+  "commit": "875aa2df7f5f87b6731a1259b63e2b399fa5fb3f",
+  "tree": "f34816d11135fb7b3963948cd2b85c96df583d01",
+  "archive": {
+    "url": "https://codeload.github.com/avatsaev/angular-contacts-app-example/tar.gz/875aa2df7f5f87b6731a1259b63e2b399fa5fb3f",
+    "sha256": "93b2add6bbda402b86769b39a50cc4cae9050c363619ce3b5f20e8f7cd2f42f0",
+    "byteLength": 168794
+  },
+  "fileCount": 108,
+  "fileManifestSha256": "e2cfaa622619c38005cc087a40c9103c8b962e7290f945f7797b9ae7860a8167",
+  "acceptedGlobalMetadata": {
+    "kind": "pax-global-comment",
+    "comment": "875aa2df7f5f87b6731a1259b63e2b399fa5fb3f",
+    "bytes": 52
+  },
+  "acceptedPathMetadata": [],
+  "files": [
+    {
+      "path": ".dockerignore",
+      "byteLength": 31,
+      "sha256": "7bdc09bed4f7e9d69dfb24796dd456a9a67e6f8ca996d8501b77d1dc6f104750"
+    },
+    {
+      "path": ".editorconfig",
+      "byteLength": 245,
+      "sha256": "3970ce473928bdf945236b8aa6c7cbf6b0022f5ce379b7b0ba8e7343d8fec451"
+    },
+    {
+      "path": ".github/FUNDING.yml",
+      "byteLength": 146,
+      "sha256": "63315aa2082c2140923892bd1c0def173d12c8d000eccd19a357240ed00e5997"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/bug_report.md",
+      "byteLength": 834,
+      "sha256": "0c8d64f29fb4536513653bf8c97da30f3340e2041b91c8952db1515d6b23a7b3"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/feature_request.md",
+      "byteLength": 595,
+      "sha256": "1f48c52f209a971b8e7eae4120144d28fcf8ee38a7778a7b4d8cf1ab356617d2"
+    },
+    {
+      "path": ".gitignore",
+      "byteLength": 516,
+      "sha256": "16b3de374b9a509f201827c720830841ecf5bfb992f19fa732a887a47c08a455"
+    },
+    {
+      "path": "angular.json",
+      "byteLength": 5399,
+      "sha256": "9d6fb5d2b6d178f29932a3b49142bee76deacea54dfd093a8724903a81e48bd2"
+    },
+    {
+      "path": "docker-compose.yml",
+      "byteLength": 869,
+      "sha256": "956002b7876fbeabad9bee4ebc68f64e8ef04a561c2374b2ffd9cdd5c9bbfb7e"
+    },
+    {
+      "path": "Dockerfile",
+      "byteLength": 961,
+      "sha256": "21131dcec9fc79c2a777c01477be092cc1fc2b37d1de3b7dc25b2690fd4aef30"
+    },
+    {
+      "path": "e2e/protractor.conf.js",
+      "byteLength": 752,
+      "sha256": "f9408b90f14de03fdeb1e6b60b3724b3860e42390fab22f8cc6660d20ae6e66e"
+    },
+    {
+      "path": "e2e/src/app.e2e-spec.ts",
+      "byteLength": 299,
+      "sha256": "314b47baa587bcfeb81ac930977b2cf2c0eb5ddb1bb215d07f66c21ae35380e9"
+    },
+    {
+      "path": "e2e/src/app.po.ts",
+      "byteLength": 208,
+      "sha256": "97b2b250fc61e3e48fe7b314553d1f0880b0d287758d6ab6d1dfb1801c107bcd"
+    },
+    {
+      "path": "e2e/tsconfig.e2e.json",
+      "byteLength": 213,
+      "sha256": "dc823336a6ed4b7736d57a48023db406c8cf08f1590eba31e42a99147ba1c3bf"
+    },
+    {
+      "path": "LICENSE",
+      "byteLength": 1070,
+      "sha256": "9ff0d278c18401b8a4d68198e66f074137c3b63ce6d0b4c76c5478ac58825760"
+    },
+    {
+      "path": "nginx/default.conf",
+      "byteLength": 664,
+      "sha256": "ff6b902057611e52764292df4b08b9f58107fa3af468e7339c1db32e7978e1de"
+    },
+    {
+      "path": "package-lock.json",
+      "byteLength": 561409,
+      "sha256": "d23b1a49b210c9b397194747f1a2a7d0032438e7277d710400fdabb6d8a2bb74"
+    },
+    {
+      "path": "package.json",
+      "byteLength": 1928,
+      "sha256": "4f2e53e959ff85a2e3a02803ae5903957d8485828ca4549de1f1a62e82fa79f8"
+    },
+    {
+      "path": "README.md",
+      "byteLength": 2665,
+      "sha256": "3fc71d5929ac711194419d432df0b0b17897a525ce531aaebb1965f52027ec65"
+    },
+    {
+      "path": "src/app/app-routing.module.ts",
+      "byteLength": 422,
+      "sha256": "51e4351920262dc0f72d8087aa937b4e095183ee1853eac9c3875d945c9cf976"
+    },
+    {
+      "path": "src/app/app.component.ts",
+      "byteLength": 689,
+      "sha256": "426e8daf06f1d4d212f776016e94e4ca27dff88062b4bad7abb22a52af56978b"
+    },
+    {
+      "path": "src/app/app.module.ts",
+      "byteLength": 1333,
+      "sha256": "fa70641518ac02a902ac45366b76bdf17bed49c7b9b793f3de3b1f70f73351d9"
+    },
+    {
+      "path": "src/app/core/components/contact-details/contact-details-container.component.html",
+      "byteLength": 734,
+      "sha256": "fab49bf0a66bb2334dcf7bf5dd37b74b90c07a561d51ff658dd679e83a43e337"
+    },
+    {
+      "path": "src/app/core/components/contact-details/contact-details-container.component.sass",
+      "byteLength": 53,
+      "sha256": "3d465fdafd037113c4b663be92636a3796dac406cb62b83823fafee06ac44324"
+    },
+    {
+      "path": "src/app/core/components/contact-details/contact-details-container.component.spec.ts",
+      "byteLength": 744,
+      "sha256": "f5ce137ebd8996449b61532d166386828918a67b1b4cee3b116afd976492d3d3"
+    },
+    {
+      "path": "src/app/core/components/contact-details/contact-details-container.component.ts",
+      "byteLength": 621,
+      "sha256": "f924e8a7c1e3d858152977a071e035acfa6e6f5385bece16a93723375f461587"
+    },
+    {
+      "path": "src/app/core/components/contact-form/contact-form.component.html",
+      "byteLength": 756,
+      "sha256": "d2ebe0121429e990275f6ca2b0b46836b0df3f93ecef5b9f5bcc2e26585949b3"
+    },
+    {
+      "path": "src/app/core/components/contact-form/contact-form.component.sass",
+      "byteLength": 32,
+      "sha256": "324b331b5834ba7f1fd9d766e4b7bd9ee047bedf40450f6824d0751445c31e51"
+    },
+    {
+      "path": "src/app/core/components/contact-form/contact-form.component.spec.ts",
+      "byteLength": 1490,
+      "sha256": "cabe548a91b438dc57e884a8fdcbdffd8e107d7dfc028a144be2e08536cda8fc"
+    },
+    {
+      "path": "src/app/core/components/contact-form/contact-form.component.ts",
+      "byteLength": 1146,
+      "sha256": "8572313fc4e745c0ae9bb3b657456b34fec4b27d248b691787fa271e43be1eb8"
+    },
+    {
+      "path": "src/app/core/components/contact-list/contact-list.component.html",
+      "byteLength": 959,
+      "sha256": "f5cd8ef8fa6e671ae81485992e653cf2c5173fa79439b3301eb4b83690b8730c"
+    },
+    {
+      "path": "src/app/core/components/contact-list/contact-list.component.sass",
+      "byteLength": 62,
+      "sha256": "9fb3a474a60ac93ff005ffe019c703850d0ea35900946384e35d91d5b55a744b"
+    },
+    {
+      "path": "src/app/core/components/contact-list/contact-list.component.spec.ts",
+      "byteLength": 1637,
+      "sha256": "54b04e12bd993c82beecccc95b24ae3d06d6fa734f60cfbc77760092dd41f416"
+    },
+    {
+      "path": "src/app/core/components/contact-list/contact-list.component.ts",
+      "byteLength": 897,
+      "sha256": "45c3b2923818b0e87df3a80422988318546bc3ff0a9068ce863b29cd89cd4db3"
+    },
+    {
+      "path": "src/app/core/components/footer/footer.component.html",
+      "byteLength": 287,
+      "sha256": "7e74c71963c9aca93daae800d42323dfa4e3054e630d4e7b6abff4a1b6073ad4"
+    },
+    {
+      "path": "src/app/core/components/footer/footer.component.sass",
+      "byteLength": 114,
+      "sha256": "84b4e0883ece354d0fc5820ff7dc90116d215e8ee9c04eeb7decbb01521504b5"
+    },
+    {
+      "path": "src/app/core/components/footer/footer.component.spec.ts",
+      "byteLength": 628,
+      "sha256": "39297629c94b50248236f90c2423a65eefc4c62d6f92faac749e41442a0a29e3"
+    },
+    {
+      "path": "src/app/core/components/footer/footer.component.ts",
+      "byteLength": 276,
+      "sha256": "80e39a4d3578c35bb9e3ca240028bcad3791d8dcc5a02bbd0bc8aa3857708be5"
+    },
+    {
+      "path": "src/app/core/components/toolbar/toolbar.component.html",
+      "byteLength": 1074,
+      "sha256": "c45c24d265c80c4e7a769a67de700fee484f7c0a400e5e7f063e1e4af1757922"
+    },
+    {
+      "path": "src/app/core/components/toolbar/toolbar.component.sass",
+      "byteLength": 306,
+      "sha256": "ac04cd37e8546ff7432503d2c9b3f66295e1318162ffa0b2ce80c6c11459a1fb"
+    },
+    {
+      "path": "src/app/core/components/toolbar/toolbar.component.spec.ts",
+      "byteLength": 891,
+      "sha256": "a96d649b97022c83f30c1bf213a03d9190d60ccbb47c66f2eb240ecccac0f02b"
+    },
+    {
+      "path": "src/app/core/components/toolbar/toolbar.component.ts",
+      "byteLength": 375,
+      "sha256": "031ca68bbaf5155414371a6d8330940fdfae082e8f7af7736f2a37076aaced72"
+    },
+    {
+      "path": "src/app/core/helpers/ngrx.helpers.ts",
+      "byteLength": 302,
+      "sha256": "5a83bde36e9f1af1b21eb3e5be0cd8c99c0e465fe93c147dc8e5e7f17a065f51"
+    },
+    {
+      "path": "src/app/core/models/contact.events.ts",
+      "byteLength": 199,
+      "sha256": "8a83f6b07d69ac89f32ac13f63eaee7a1aabca9c1e89b91756880ec55816692e"
+    },
+    {
+      "path": "src/app/core/models/contact.ts",
+      "byteLength": 95,
+      "sha256": "33ffee1970f865091f990f62db0aec192fd4bab26c1a657a43346d7901e759cd"
+    },
+    {
+      "path": "src/app/core/models/index.ts",
+      "byteLength": 27,
+      "sha256": "8ae710c38efccf4dbeca2014cac605a0d5a276863dd0902cb906ea9e44ea3e4f"
+    },
+    {
+      "path": "src/app/core/modules/shared.module.ts",
+      "byteLength": 1058,
+      "sha256": "00f6118d3025b80d03aeb8b1a97bff94023105fcda7bad602204cc5d6a78b68b"
+    },
+    {
+      "path": "src/app/core/resolvers/title.resolver.ts",
+      "byteLength": 675,
+      "sha256": "08ff144b7f5ad2064480e899aa9c2c76a52c3fd96da424c672729b6a16b62aca"
+    },
+    {
+      "path": "src/app/store/actions/ui-actions.ts",
+      "byteLength": 155,
+      "sha256": "554e0c35901b2597ae108d2a3acba05c3063f761e5f9bbe8e3611cec6b4f410e"
+    },
+    {
+      "path": "src/app/store/index.ts",
+      "byteLength": 629,
+      "sha256": "9ba5094a8a051b025a16a4cd816552277e6abb9508eaa3d8b147a0e661a1e7b7"
+    },
+    {
+      "path": "src/app/store/reducers/ui-reducer.ts",
+      "byteLength": 554,
+      "sha256": "5fc291d9a13a39c4f974179c645bfb65fea5c20150c0810df41abeb3503040f2"
+    },
+    {
+      "path": "src/app/views/contacts/contact-details/contact-details.component.html",
+      "byteLength": 180,
+      "sha256": "8ffa5d151265c8708e0953bdcd95c94dd200b62cd317561dba734c542b3ec03b"
+    },
+    {
+      "path": "src/app/views/contacts/contact-details/contact-details.component.sass",
+      "byteLength": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/app/views/contacts/contact-details/contact-details.component.spec.ts",
+      "byteLength": 2911,
+      "sha256": "08f48efeccad3c7756cbe71ace27aa3238fc0eaa1bec288cec698f0b0f6453e1"
+    },
+    {
+      "path": "src/app/views/contacts/contact-details/contact-details.component.ts",
+      "byteLength": 1954,
+      "sha256": "083d64d8669ad75a045c44150153d903da4822b6798b813279962d1f6de23a03"
+    },
+    {
+      "path": "src/app/views/contacts/contact-edit/contact-edit.component.html",
+      "byteLength": 219,
+      "sha256": "59b8dee3f07bd4b044eab66a660aca64d4c556e05b6ab7fc870e0dd1111aeb1a"
+    },
+    {
+      "path": "src/app/views/contacts/contact-edit/contact-edit.component.sass",
+      "byteLength": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/app/views/contacts/contact-edit/contact-edit.component.spec.ts",
+      "byteLength": 2484,
+      "sha256": "9fc8e8caa4f15ab2cf1ae4d37b18b3f70d83b057229de94a75ab887efdf7f821"
+    },
+    {
+      "path": "src/app/views/contacts/contact-edit/contact-edit.component.ts",
+      "byteLength": 1889,
+      "sha256": "49afdaba2d909cc30934b7cb2e986692278c882d5571a967c61426fde305867e"
+    },
+    {
+      "path": "src/app/views/contacts/contact-new/contact-new.component.html",
+      "byteLength": 188,
+      "sha256": "e89aac31aada8af2669f1b78aecf99fbaf0d79d9fb119cc1f310160e4b3693c1"
+    },
+    {
+      "path": "src/app/views/contacts/contact-new/contact-new.component.sass",
+      "byteLength": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/app/views/contacts/contact-new/contact-new.component.spec.ts",
+      "byteLength": 2549,
+      "sha256": "ccf9d4c3590fddf9e13e8adbc8e9a4496176f12c4a5df83b50c39e2b40e4e269"
+    },
+    {
+      "path": "src/app/views/contacts/contact-new/contact-new.component.ts",
+      "byteLength": 779,
+      "sha256": "66303499d6dacc93bab1112400724a3ac99fd578e892c1e84d64137fe9ba3f9a"
+    },
+    {
+      "path": "src/app/views/contacts/contacts-index/contacts-index.component.html",
+      "byteLength": 242,
+      "sha256": "46ca4ce195bd7480429c0d027d4d1e37a9ebc09e08ff98c9b8b17667f0fe0d09"
+    },
+    {
+      "path": "src/app/views/contacts/contacts-index/contacts-index.component.sass",
+      "byteLength": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/app/views/contacts/contacts-index/contacts-index.component.spec.ts",
+      "byteLength": 2603,
+      "sha256": "9ffc747ea50256f641ba85e093dde755c5964ff0ee98a907a84222082c924ec8"
+    },
+    {
+      "path": "src/app/views/contacts/contacts-index/contacts-index.component.ts",
+      "byteLength": 1000,
+      "sha256": "8ccad6996383117056919ebab04af54fe80b3a47bae4e1fb04f479208b575fa7"
+    },
+    {
+      "path": "src/app/views/contacts/contacts-routing.module.ts",
+      "byteLength": 1423,
+      "sha256": "7c95d295bf39c5104edc620895465271261af6702d6219127d240c2c541b9131"
+    },
+    {
+      "path": "src/app/views/contacts/contacts.component.ts",
+      "byteLength": 242,
+      "sha256": "953953224de9cec22994a9db5d0010fe2997901068f07b062adc5db1aeefdb55"
+    },
+    {
+      "path": "src/app/views/contacts/contacts.module.ts",
+      "byteLength": 1449,
+      "sha256": "8b33045f8bb46658daaab145b629528d37396e76f5d9face85ffb19b436004bd"
+    },
+    {
+      "path": "src/app/views/contacts/services/contacts-mock.service.ts",
+      "byteLength": 747,
+      "sha256": "a0601b0118882332f26e560cf68490619d573c77e3ac735a0b075ac7f93dd7c1"
+    },
+    {
+      "path": "src/app/views/contacts/services/contacts-socket.service.spec.ts",
+      "byteLength": 423,
+      "sha256": "b8f5d8e661909a6126ceb2ef4e4673ad91444a87117200d37dcbae7d7f77ad37"
+    },
+    {
+      "path": "src/app/views/contacts/services/contacts-socket.service.ts",
+      "byteLength": 668,
+      "sha256": "88e3f058df5b758194b6ff07faf2689a87cdaba500abe61a34783ead4821347f"
+    },
+    {
+      "path": "src/app/views/contacts/services/contacts.service.spec.ts",
+      "byteLength": 493,
+      "sha256": "fa7833a8f355e86212b865e8f7506c4978fcfd2cf04e866c777ce909fbc35d98"
+    },
+    {
+      "path": "src/app/views/contacts/services/contacts.service.ts",
+      "byteLength": 1027,
+      "sha256": "79695888dbb4cd90d17d1e450816d4b8b03713141121a0fb764e6ff5fe681c22"
+    },
+    {
+      "path": "src/app/views/contacts/store/contacts-actions.ts",
+      "byteLength": 1197,
+      "sha256": "2808789f867be28d226303f967f943850c0b414fb6fc7222f1340b424d6e88c5"
+    },
+    {
+      "path": "src/app/views/contacts/store/contacts-effects.spec.ts",
+      "byteLength": 3348,
+      "sha256": "3f73208eb4ebef02dcf434cb525425ec18ddfb721ae72d698552a581cbd88e05"
+    },
+    {
+      "path": "src/app/views/contacts/store/contacts-effects.ts",
+      "byteLength": 2778,
+      "sha256": "78035aecbb6e1cd1d1156791ea33c6a2ed2ec16340cba49f148a96f9439663c9"
+    },
+    {
+      "path": "src/app/views/contacts/store/contacts-reducer.ts",
+      "byteLength": 1762,
+      "sha256": "d0eb84f621c87f7051a87b7caa0158e3a73c2b6c1ed6d8a2d1b1805fcb67f4fe"
+    },
+    {
+      "path": "src/app/views/contacts/store/contacts.store-facade.ts",
+      "byteLength": 931,
+      "sha256": "85410decc4992cde4cfc296528925b1826f7d76a3d80275bdd70c3159ad94484"
+    },
+    {
+      "path": "src/app/views/contacts/store/index.ts",
+      "byteLength": 1053,
+      "sha256": "f529053c251b5aeff66142be37c7cf7dd81d28eb7e95f12fbe60b3a20b42cd67"
+    },
+    {
+      "path": "src/assets/.gitkeep",
+      "byteLength": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/assets/icons/icon-128x128.png",
+      "byteLength": 1253,
+      "sha256": "bbea3f620567a3d84f945ea88b4976b9c75b64ef15d9bde808aad81947fb6fcd"
+    },
+    {
+      "path": "src/assets/icons/icon-144x144.png",
+      "byteLength": 1394,
+      "sha256": "bdb522f1c93ea7ce2c76dc2b388792e507802650c2ac8f410ea70170e50fa310"
+    },
+    {
+      "path": "src/assets/icons/icon-152x152.png",
+      "byteLength": 1427,
+      "sha256": "fbbe4c6ada864aeeed2a97c8afd21fb05b19ee34daddfe4a5e28a380cebf4407"
+    },
+    {
+      "path": "src/assets/icons/icon-192x192.png",
+      "byteLength": 1790,
+      "sha256": "b0997a781d720f794893b0e4d54c3ed270ad28ebb39b79a8255d3eecab8ddaf0"
+    },
+    {
+      "path": "src/assets/icons/icon-384x384.png",
+      "byteLength": 3557,
+      "sha256": "08e1c2204a6fd624b825f585c13a0c79d0e0a693bb37b0c2bfc16284d5f05b55"
+    },
+    {
+      "path": "src/assets/icons/icon-512x512.png",
+      "byteLength": 5008,
+      "sha256": "7bcae9536b41c1c29e5a306bf3098bc4f3181f99b6156fa3f239327bafb85ed4"
+    },
+    {
+      "path": "src/assets/icons/icon-72x72.png",
+      "byteLength": 792,
+      "sha256": "eed1cc2cc6f46118c81b1649fce36c193ddae52ce9f38e2bb9bf177d0a6ec9ca"
+    },
+    {
+      "path": "src/assets/icons/icon-96x96.png",
+      "byteLength": 958,
+      "sha256": "dd082fd5b6bc82e0d46d64ac0d5e174a3559c0a83d48fce3d976ae319393ff66"
+    },
+    {
+      "path": "src/browserslist",
+      "byteLength": 375,
+      "sha256": "ff9a3d27576afb218b0de12c915d2283d59e9148bda7dc9533aa41dd596f7a92"
+    },
+    {
+      "path": "src/environments/environment.dev.ts",
+      "byteLength": 226,
+      "sha256": "8a91516667b531968c6f47752381b43de653f86602bb559c139bd20b6f255464"
+    },
+    {
+      "path": "src/environments/environment.local.ts",
+      "byteLength": 213,
+      "sha256": "1e4199bad5a3c47813c6d36011ef158e1e64d56d44846cf1d7e5785a2fee1fe0"
+    },
+    {
+      "path": "src/environments/environment.prod.ts",
+      "byteLength": 234,
+      "sha256": "257af4ea1aad33520bc01c6fae8a93563e053d5c882107c309d3e452d5ff0cd8"
+    },
+    {
+      "path": "src/environments/environment.ts",
+      "byteLength": 792,
+      "sha256": "07932c6c1c76beddd6dbdac4cf67cc8a234a80511b2ea8ecae914eec7f32f1b2"
+    },
+    {
+      "path": "src/favicon.ico",
+      "byteLength": 5430,
+      "sha256": "b9ccbb7100e13ae95ac18a3a9ed00857f321b63b498f1fb7abab506fc1c40e99"
+    },
+    {
+      "path": "src/index.html",
+      "byteLength": 937,
+      "sha256": "b471957a3de66623577a310c35ca3ecb16e068aea2b021cbb7f18088b69c21f4"
+    },
+    {
+      "path": "src/karma.conf.js",
+      "byteLength": 964,
+      "sha256": "db0f0f97c703e26be027ea81e2f977702a8089969293e225912a5128278f1b78"
+    },
+    {
+      "path": "src/main.ts",
+      "byteLength": 508,
+      "sha256": "446dc4034ea917866e4d00f42468b2fb581ad6ad73a321ba706ec96b945ecb00"
+    },
+    {
+      "path": "src/manifest.json",
+      "byteLength": 1090,
+      "sha256": "0541dfc8bfeeb2a628453807ee1846292fb20c9f7ce7cfb7d20c421fc167711a"
+    },
+    {
+      "path": "src/ngsw-config.json",
+      "byteLength": 775,
+      "sha256": "90ab9a16a9680d01a34790f8d87dbf2c48fc8192b5be99944da48712440ebdeb"
+    },
+    {
+      "path": "src/polyfills.ts",
+      "byteLength": 2876,
+      "sha256": "293baf2fac7a559702a94e7e0edcaa4f0c7f66421cb0aae974b67a0cfa357195"
+    },
+    {
+      "path": "src/styles.sass",
+      "byteLength": 240,
+      "sha256": "bb39ba9760bf27e7d7b0f3f8fbe5d3bc1d819eacd2d7275ee099b33464fc28cd"
+    },
+    {
+      "path": "src/test.ts",
+      "byteLength": 642,
+      "sha256": "d0e763cd3db1c76fa804d238422f1120ed648d21ed4a172c2d3476e5060a14c4"
+    },
+    {
+      "path": "src/tsconfig.app.json",
+      "byteLength": 194,
+      "sha256": "d627981453cc5673ca054e2d8ac993736111c185260428e465a63f99fad58f3f"
+    },
+    {
+      "path": "src/tsconfig.spec.json",
+      "byteLength": 282,
+      "sha256": "a8f12f3e8675cc115d5b880cbe5b0ed15be894c9f990d22aafc4d9f94fdfecf0"
+    },
+    {
+      "path": "src/tslint.json",
+      "byteLength": 314,
+      "sha256": "0963b8e3ac89e333c2646ca20e2adde926082855789479076c39184214ce4afc"
+    },
+    {
+      "path": "tsconfig.json",
+      "byteLength": 763,
+      "sha256": "b94f3165ed0bd06d7d750f5470b0daea33b1bda3a59cd5c770dba940726158e7"
+    },
+    {
+      "path": "tslint.json",
+      "byteLength": 1621,
+      "sha256": "78e56ae44d09ef083aa61547d6dfd1f44f53c3211c2d90ee2e68af42002cd478"
+    }
+  ],
+  "rootLicense": {
+    "path": "LICENSE",
+    "sha256": "9ff0d278c18401b8a4d68198e66f074137c3b63ce6d0b4c76c5478ac58825760",
+    "classification": "verified-compatible"
+  },
+  "licensing": [
+    {
+      "path": "LICENSE",
+      "sha256": "9ff0d278c18401b8a4d68198e66f074137c3b63ce6d0b4c76c5478ac58825760",
+      "classification": "verified-compatible",
+      "reason": "Exact root MIT text, repeated raw/archive byte identity."
+    }
+  ],
+  "assets": [
+    {
+      "path": "src/assets/icons/icon-128x128.png",
+      "sha256": "bbea3f620567a3d84f945ea88b4976b9c75b64ef15d9bde808aad81947fb6fcd",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "src/assets/icons/icon-144x144.png",
+      "sha256": "bdb522f1c93ea7ce2c76dc2b388792e507802650c2ac8f410ea70170e50fa310",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "src/assets/icons/icon-152x152.png",
+      "sha256": "fbbe4c6ada864aeeed2a97c8afd21fb05b19ee34daddfe4a5e28a380cebf4407",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "src/assets/icons/icon-192x192.png",
+      "sha256": "b0997a781d720f794893b0e4d54c3ed270ad28ebb39b79a8255d3eecab8ddaf0",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "src/assets/icons/icon-384x384.png",
+      "sha256": "08e1c2204a6fd624b825f585c13a0c79d0e0a693bb37b0c2bfc16284d5f05b55",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "src/assets/icons/icon-512x512.png",
+      "sha256": "7bcae9536b41c1c29e5a306bf3098bc4f3181f99b6156fa3f239327bafb85ed4",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "src/assets/icons/icon-72x72.png",
+      "sha256": "eed1cc2cc6f46118c81b1649fce36c193ddae52ce9f38e2bb9bf177d0a6ec9ca",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "src/assets/icons/icon-96x96.png",
+      "sha256": "dd082fd5b6bc82e0d46d64ac0d5e174a3559c0a83d48fce3d976ae319393ff66",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "src/favicon.ico",
+      "sha256": "b9ccbb7100e13ae95ac18a3a9ed00857f321b63b498f1fb7abab506fc1c40e99",
+      "classification": "excluded",
+      "reason": "Potential logo, favicon, brand, avatar, trademark, or attribution material is excluded."
+    }
+  ]
+}

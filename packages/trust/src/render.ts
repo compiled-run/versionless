@@ -1,0 +1,106 @@
+import type { TrustManifest } from './schema.ts';
+import type {
+	CorpusConformance,
+	CorpusTransactionState,
+} from '../../core/src/corpus/conformance.ts';
+import type { ScriptSurface } from '../../core/src/enterprise/script-surface.ts';
+import type { RuntimeScriptObservation } from '../../core/src/enterprise/runtime-script-observation.ts';
+
+interface RenderInputs {
+	manifest: TrustManifest;
+	licenses: Record<string, unknown>;
+	vulnerabilities: Record<string, unknown>;
+	matrix: Record<string, unknown>;
+	controls: Record<string, unknown>;
+	conformance: CorpusConformance;
+	scriptSurface: ScriptSurface;
+	runtimeScriptObservation: RuntimeScriptObservation;
+	transaction: CorpusTransactionState;
+}
+
+export function renderTrustReport(inputs: RenderInputs): string {
+	const freshness = inputs.manifest.observation.vulnerabilityFreshness;
+	const summary = inputs.licenses.summary as Record<string, Record<string, number>>;
+	const expressions = summary.spdxExpression ?? {};
+	const texts = summary.licenseText ?? {};
+	const maintainedReactVerified = inputs.manifest.receipts.some(
+		(item) => item.path === 'evidence/runs/react-boilerplate-v4-node24/t022-run.json',
+	);
+	const vite8ReactVerified = inputs.manifest.receipts.some(
+		(item) => item.path === 'evidence/runs/react-boilerplate-v4-vite8/t028-run.json',
+	);
+	const dataFlowVerified = inputs.manifest.receipts.some(
+		(item) => item.path === 'evidence/runs/react-boilerplate-v4-data-flow/t054-run.json',
+	);
+	const phonecatRouteVerified = inputs.manifest.receipts.some(
+		(item) => item.path === 'evidence/runs/angular-phonecat-route-resolve/t032-run.json',
+	);
+	const phonecatComposedVerified = inputs.manifest.receipts.some(
+		(item) => item.path === 'evidence/runs/angular-phonecat-composed/t048-run.json',
+	);
+	const phonecatViteVerified = inputs.manifest.receipts.some(
+		(item) => item.path === 'evidence/runs/angular-phonecat-vite8/t069-run.json',
+	);
+	const angularRealworldVerified = inputs.manifest.receipts.some(
+		(item) => item.path === 'evidence/runs/angular-realworld-v15-to-v16/receipt.json',
+	);
+	const nextKilledByGoogleVerified = inputs.transaction.nextKilledByGoogleIntegrated;
+	return `# Versionless project trust package
+
+- Canonical SHA-256: \`${inputs.manifest.canonicalDigest}\`
+- Deterministic core: \`${inputs.manifest.deterministicCore.digest}\`
+- Generated observation: \`${inputs.manifest.observation.generatedAt}\`
+- Vulnerability input freshness: **${freshness}** (seven-day maximum age)
+- Integrity: **hash-only; authenticity is not established**
+- Assurance: **this package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation**
+
+## Contents
+
+- [CycloneDX 1.7 dependency graph](dependency-graph.cdx.json) — locally profile-validated; this is not independent or official certification.
+- [License inventory](licenses.json) — SPDX expressions: ${expressions.verified ?? 0} verified, ${expressions.unknown ?? 0} unknown, ${expressions.ambiguous ?? 0} ambiguous; license texts: ${texts.verified ?? 0} verified, ${texts.unknown ?? 0} unknown, ${texts.ambiguous ?? 0} ambiguous.
+- [Vulnerability and KEV report](vulnerabilities.json) — cached OSV batch and CISA KEV observations only.
+- [SLSA/in-toto-shaped provenance](provenance.json) — shape only; no SLSA level or signer authenticity is claimed.
+- [Supported corpus/runtime/bundler matrix](matrix.json) — unsupported and untested cells remain visible.
+- [Corpus conformance](corpus-conformance.json) — \`${inputs.conformance.integrity.canonicalDigest}\`; ${inputs.conformance.summary.verticals} verified verticals grouped into exactly ${inputs.conformance.summary.sourceApplications} source applications; zero designated pilots are verified.
+${
+	nextKilledByGoogleVerified
+		? '- The immutable Killed by Google Next.js 12 Pages/webpack production vertical is verified only for its exact fixture; synthetic Next.js 12 Pages, 13 transition/App, and 14 App classification lanes remain **not-tested**, and generic Next.js support is not claimed.'
+		: '- Next.js remains **not-tested**; no Killed by Google fixture evidence is integrated or claimed.'
+}
+- [Static script/resource surface](script-surface.json) — truthfully remains scoped to the prior nine verticals, two applications, and eighteen exact static deployment entrypoints; T220 is **not included** because its script surface was not separately observed; dynamic script insertion: **not-tested**; payment-page applicability: **not established**; PCI compliance is **not claimed**.
+- [Qualified-journey runtime script observation](runtime-script-observation.json) — truthfully remains scoped to 36 runs across the prior nine verticals, two applications, and eighteen lanes; T220 is **not included** because its runtime scripts were not separately observed; this is **not global dynamic-insertion coverage**.
+${
+	maintainedReactVerified
+		? `- React Boilerplate maintained-runtime proof is limited to Node 24.15.0 darwin-arm64 with webpack 4.47.0${vite8ReactVerified ? ' and a separate fixture-specific Vite 8.0.16 build' : ''}; other maintained targets remain unproved.`
+		: '- React Boilerplate maintained-runtime target: **not-tested**.'
+}
+- [Data-flow and control mappings](controls.json) — review inputs, not audit conclusions.
+- [Retention and purge status](retention.json) — unresolved policy remains unknown/not-tested.
+
+The dependency graph is a rooted complete inventory. Exact transitive dependency topology is not proven.
+
+## Receipt preservation
+
+${inputs.manifest.receipts.map((item) => `- \`${item.path}\`: \`${item.digest}\` (${item.state})`).join('\n')}
+
+## Known gaps
+
+- Root license text: **unknown** (absent; the package manifest expression is not license text).
+- SECURITY.md: **unknown** (absent).
+- Git provenance and official CI identity: **unknown** (repository metadata is absent).
+- Project signing identity and signer authenticity: **unknown**.
+- TakeNote designated React pilot: **not-tested**.
+- Angular2-HN designated Angular 2+ pilot, Angular CLI, and AOT: **not-tested**.
+${maintainedReactVerified ? '- Maintained React target coverage is limited to the verified React Boilerplate lane.' : '- Maintained React target runtime: **not-tested**.'}
+- Old-Vite migration and generic/unplugin adapter evidence: **not-tested**.
+${nextKilledByGoogleVerified ? '- Generic Next.js support, synthetic Next.js lanes, Tier, pilot status, and production readiness remain **not-tested** or not claimed; the verified Killed by Google evidence is fixture-specific.' : '- Next.js provenance, migration, build, browser, locality, compiler/bundler runtime, Tier, pilot, and support: **not-tested**. Vite does not replace the candidate Next.js production stack.'}
+- The Vite adapter is **fixture-specific**; generic adapter: **not-tested**; unplugin portability: **not-tested**.
+${dataFlowVerified ? '- React connect-to-hooks data-flow migration proof is limited to the exact HomePage and RepoListItem shapes in the verified fixture.' : '- React connect-to-hooks data-flow migration: **not-tested**.'}
+- Angular PhoneCat is AngularJS special-track/static evidence, not Angular 2+, Angular CLI/AOT, adjacent-major, or designated Angular-pilot proof.
+${phonecatRouteVerified ? '- PhoneCat route-resolve and one-way component-binding proof is limited to the verified AngularJS static lane.' : '- PhoneCat route-resolve/component-binding modernization: **not-tested**.'}
+${phonecatComposedVerified ? '- PhoneCat lexical-this plus route-resolve composition is order-independent for the exact verified AngularJS special-track shapes; it is not Angular 2+ or bundler proof.' : '- PhoneCat transform composition: **not-tested**.'}
+${phonecatViteVerified ? '- PhoneCat Vite 8 evidence uses a fixture-specific adapter; old Vite and unplugin portability are **not-tested**. Service worker and PWA behavior are **out of scope**.' : '- PhoneCat Vite 8 bundling: **not-tested**.'}
+${angularRealworldVerified ? '- Angular RealWorld proves one immutable Angular 15→16 CLI/Architect production-AOT adjacent-major vertical with process-scoped locality; it is not generic Angular support, a designated pilot, or production-readiness proof.' : '- Angular RealWorld 15→16 adjacent-major evidence: **not-tested**.'}
+- Locality evidence is process-scoped and does not establish OS-wide isolation.
+`;
+}

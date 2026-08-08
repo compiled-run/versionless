@@ -1,0 +1,9 @@
+{
+	"name": "@versionless/trust",
+	"version": "0.0.1",
+	"type": "module",
+	"exports": "./dist/index.js",
+	"dependencies": {
+		"@versionless/core": "workspace:*"
+	}
+}

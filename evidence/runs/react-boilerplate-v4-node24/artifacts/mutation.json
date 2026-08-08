@@ -1,0 +1,12 @@
+{
+  "webpack": "4.30.0",
+  "result": "intended-failure",
+  "runtime": "v24.15.0",
+  "reason": "OpenSSL MD4 unsupported",
+  "lockSha256": "8af43b5f48d0c64f67c518a216a7d98571b1498c835ebb234d6dda845a988d33",
+  "restoration": "byte-identical",
+  "restoredPackageSha256": "7fb3098e57021e790638e31677d3cbfe815087f889b708cab4e1efdc9785414a",
+  "restoredLockSha256": "42ffa936b19115ad380e77dcbc3800c7adf117aa560c5f678c837b7f4b09e00d",
+  "reproduced": "pass",
+  "legacyOpenSslProvider": false
+}

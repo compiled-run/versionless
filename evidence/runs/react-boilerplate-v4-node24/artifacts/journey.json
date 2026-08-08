@@ -1,0 +1,24 @@
+[
+  {
+    "run": 1,
+    "result": "pass",
+    "navigationPath": "/features",
+    "selectedLocale": "de",
+    "translatedHeading": "Beginnen Sie Ihr nächstes React Projekt in Sekunden",
+    "blocked": [
+      "https://fonts.googleapis.com/css?family=Open+Sans:400,700"
+    ],
+    "successfulNonLoopback": []
+  },
+  {
+    "run": 2,
+    "result": "pass",
+    "navigationPath": "/features",
+    "selectedLocale": "de",
+    "translatedHeading": "Beginnen Sie Ihr nächstes React Projekt in Sekunden",
+    "blocked": [
+      "https://fonts.googleapis.com/css?family=Open+Sans:400,700"
+    ],
+    "successfulNonLoopback": []
+  }
+]

@@ -1,0 +1,228 @@
+[
+  {
+    "lane": "legacy",
+    "run": 1,
+    "result": "pass",
+    "selectedLocale": "de",
+    "translatedHeading": "Beginnen Sie Ihr nächstes React Projekt in Sekunden",
+    "username": "octocat",
+    "syntheticRequests": [
+      {
+        "method": "GET",
+        "url": "https://api.github.com/users/octocat/repos?type=all&sort=updated",
+        "kind": "synthetic-interception"
+      }
+    ],
+    "repositories": [
+      "owned-repo",
+      "fork-owner/forked-repo"
+    ],
+    "issueCounts": [
+      3,
+      7
+    ],
+    "blocked": [
+      "https://fonts.googleapis.com/css?family=Open+Sans:400,700"
+    ],
+    "successfulNonLoopback": [],
+    "consoleErrors": [],
+    "pageErrors": [],
+    "serviceWorker": {
+      "registration": "active",
+      "scope": "/",
+      "controller": "activated",
+      "cacheNames": [
+        "webpack-offline:versionless-deterministic"
+      ],
+      "inventory": [
+        "/",
+        "/14.2ef2b4a3d26bb1eb81fe.chunk.js",
+        "/15.63e7c613fb32f7f731ca.chunk.js",
+        "/16.87cd011ed2f020d4e6d4.chunk.js",
+        "/17.d6848cc7cc19eb7fbec4.chunk.js",
+        "/2f1a976c9c35ffed9b7e23cf2cbf8f19.jpg",
+        "/3.a9fb20e5f448e036b4ad.chunk.js",
+        "/__offline_webpack__data",
+        "/favicon.ico",
+        "/main.7bb4cda122f2e2a46418.chunk.js",
+        "/npm.babel.a75018fd1b7c886eec7f.chunk.js",
+        "/npm.connected-react-router.8fd4eda0f65262f02a5e.chunk.js",
+        "/npm.intl-messageformat.7f32d245bfcb5c0501de.chunk.js",
+        "/npm.intl-relativeformat.0c1d32cae8b23b70584f.chunk.js",
+        "/npm.intl.1601d791a7de6967584b.chunk.js",
+        "/npm.lodash.df83a9ce6a6ba2f8ebcb.chunk.js",
+        "/npm.react-app-polyfill.02ee820043fb75ec004c.chunk.js",
+        "/npm.react-intl.590480c86bf89f4d91b3.chunk.js",
+        "/npm.react-redux.cba95f2d297d6dbfe0c6.chunk.js",
+        "/npm.redux-saga.e4c67e286e17aab928d8.chunk.js",
+        "/npm.webpack.59e68e65a7ea323c5295.chunk.js",
+        "/runtime.bfb7866e5bd316b6a048.js"
+      ]
+    },
+    "offlineReload": "pass"
+  },
+  {
+    "lane": "legacy",
+    "run": 2,
+    "result": "pass",
+    "selectedLocale": "de",
+    "translatedHeading": "Beginnen Sie Ihr nächstes React Projekt in Sekunden",
+    "username": "octocat",
+    "syntheticRequests": [
+      {
+        "method": "GET",
+        "url": "https://api.github.com/users/octocat/repos?type=all&sort=updated",
+        "kind": "synthetic-interception"
+      }
+    ],
+    "repositories": [
+      "owned-repo",
+      "fork-owner/forked-repo"
+    ],
+    "issueCounts": [
+      3,
+      7
+    ],
+    "blocked": [
+      "https://fonts.googleapis.com/css?family=Open+Sans:400,700"
+    ],
+    "successfulNonLoopback": [],
+    "consoleErrors": [],
+    "pageErrors": [],
+    "serviceWorker": {
+      "registration": "active",
+      "scope": "/",
+      "controller": "activated",
+      "cacheNames": [
+        "webpack-offline:versionless-deterministic"
+      ],
+      "inventory": [
+        "/",
+        "/14.2ef2b4a3d26bb1eb81fe.chunk.js",
+        "/15.63e7c613fb32f7f731ca.chunk.js",
+        "/16.87cd011ed2f020d4e6d4.chunk.js",
+        "/17.d6848cc7cc19eb7fbec4.chunk.js",
+        "/2f1a976c9c35ffed9b7e23cf2cbf8f19.jpg",
+        "/3.a9fb20e5f448e036b4ad.chunk.js",
+        "/__offline_webpack__data",
+        "/favicon.ico",
+        "/main.7bb4cda122f2e2a46418.chunk.js",
+        "/npm.babel.a75018fd1b7c886eec7f.chunk.js",
+        "/npm.connected-react-router.8fd4eda0f65262f02a5e.chunk.js",
+        "/npm.intl-messageformat.7f32d245bfcb5c0501de.chunk.js",
+        "/npm.intl-relativeformat.0c1d32cae8b23b70584f.chunk.js",
+        "/npm.intl.1601d791a7de6967584b.chunk.js",
+        "/npm.lodash.df83a9ce6a6ba2f8ebcb.chunk.js",
+        "/npm.react-app-polyfill.02ee820043fb75ec004c.chunk.js",
+        "/npm.react-intl.590480c86bf89f4d91b3.chunk.js",
+        "/npm.react-redux.cba95f2d297d6dbfe0c6.chunk.js",
+        "/npm.redux-saga.e4c67e286e17aab928d8.chunk.js",
+        "/npm.webpack.59e68e65a7ea323c5295.chunk.js",
+        "/runtime.bfb7866e5bd316b6a048.js"
+      ]
+    },
+    "offlineReload": "pass"
+  },
+  {
+    "lane": "target",
+    "run": 1,
+    "result": "pass",
+    "selectedLocale": "de",
+    "translatedHeading": "Beginnen Sie Ihr nächstes React Projekt in Sekunden",
+    "username": "octocat",
+    "syntheticRequests": [
+      {
+        "method": "GET",
+        "url": "https://api.github.com/users/octocat/repos?type=all&sort=updated",
+        "kind": "synthetic-interception"
+      }
+    ],
+    "repositories": [
+      "owned-repo",
+      "fork-owner/forked-repo"
+    ],
+    "issueCounts": [
+      3,
+      7
+    ],
+    "blocked": [],
+    "successfulNonLoopback": [],
+    "consoleErrors": [],
+    "pageErrors": [],
+    "serviceWorker": {
+      "registration": "active",
+      "scope": "/",
+      "controller": "activated",
+      "cacheNames": [
+        "versionless-react-vite8-553cd1cc611a0851b1978bbc041ef2f8c7b9fbbd3fdd9bb68274f29364987cdc"
+      ],
+      "inventory": [
+        "/assets/FeaturePage-3koR6qyF.js",
+        "/assets/H1-DCVj1WeM.js",
+        "/assets/HomePage-BLDw2n8d.js",
+        "/assets/NotFoundPage-Co4MDuS6.js",
+        "/assets/__vite-browser-external-CvNEtdN9.js",
+        "/assets/banner-6i24qsix.jpg",
+        "/assets/de-CEvlwdXo.js",
+        "/assets/en-D7F8Da0k.js",
+        "/assets/favicon-Ba7brf7t.ico",
+        "/assets/index-BbOQy7cX.js",
+        "/assets/index-CqaBhjBI.css",
+        "/assets/intl-tJox8g0n.js",
+        "/index.html"
+      ]
+    },
+    "offlineReload": "pass"
+  },
+  {
+    "lane": "target",
+    "run": 2,
+    "result": "pass",
+    "selectedLocale": "de",
+    "translatedHeading": "Beginnen Sie Ihr nächstes React Projekt in Sekunden",
+    "username": "octocat",
+    "syntheticRequests": [
+      {
+        "method": "GET",
+        "url": "https://api.github.com/users/octocat/repos?type=all&sort=updated",
+        "kind": "synthetic-interception"
+      }
+    ],
+    "repositories": [
+      "owned-repo",
+      "fork-owner/forked-repo"
+    ],
+    "issueCounts": [
+      3,
+      7
+    ],
+    "blocked": [],
+    "successfulNonLoopback": [],
+    "consoleErrors": [],
+    "pageErrors": [],
+    "serviceWorker": {
+      "registration": "active",
+      "scope": "/",
+      "controller": "activated",
+      "cacheNames": [
+        "versionless-react-vite8-553cd1cc611a0851b1978bbc041ef2f8c7b9fbbd3fdd9bb68274f29364987cdc"
+      ],
+      "inventory": [
+        "/assets/FeaturePage-3koR6qyF.js",
+        "/assets/H1-DCVj1WeM.js",
+        "/assets/HomePage-BLDw2n8d.js",
+        "/assets/NotFoundPage-Co4MDuS6.js",
+        "/assets/__vite-browser-external-CvNEtdN9.js",
+        "/assets/banner-6i24qsix.jpg",
+        "/assets/de-CEvlwdXo.js",
+        "/assets/en-D7F8Da0k.js",
+        "/assets/favicon-Ba7brf7t.ico",
+        "/assets/index-BbOQy7cX.js",
+        "/assets/index-CqaBhjBI.css",
+        "/assets/intl-tJox8g0n.js",
+        "/index.html"
+      ]
+    },
+    "offlineReload": "pass"
+  }
+]

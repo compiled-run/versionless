@@ -1,0 +1,128 @@
+{
+  "schemaVersion": "versionless.trust.v1",
+  "canonicalDigest": "bfa38d00ef46dc7a5f79d4dff4f725f5cadd75fa940c2138d58de9acb8c99c89",
+  "integrity": {
+    "algorithm": "sha256",
+    "authenticity": "not-established",
+    "certification": "not-claimed"
+  },
+  "deterministicCore": {
+    "algorithm": "sha256",
+    "digest": "7ef0a8f60df98311e391967c5218fc62067fd5ae913ed3aadfc4400ee60a905c",
+    "artifacts": [
+      {
+        "path": "dependency-graph.cdx.json",
+        "sha256": "8865db2cd7a2ace85a00576333e4be937fe5bdd0f254d764cb30f6d4530192a0"
+      },
+      {
+        "path": "licenses.json",
+        "sha256": "ac08f58be042742d148842eb1c76c3bb48d1eef8760af00abafdaa87d79c71bc"
+      },
+      {
+        "path": "vulnerabilities.json",
+        "sha256": "41df8f77d3406dd7942e9453233a63fbacac86a97eb8c48ddbfe1ab98114d007"
+      },
+      {
+        "path": "provenance.json",
+        "sha256": "48dc4875ab072beb9653585cda52fba7e336d404e1ee744bbae00f465bd3181c"
+      },
+      {
+        "path": "matrix.json",
+        "sha256": "cd6c3ea9abff524880bd8fcac3bc85fbba27d0567edbe16ef362d1a97abe7730"
+      },
+      {
+        "path": "controls.json",
+        "sha256": "a5e61dcace162ce814347f931b6f4e4f59934ea1312df79d9c817c19e0e9bef4"
+      },
+      {
+        "path": "retention.json",
+        "sha256": "f1a7f91607bca1de4cc15e2523a3d0791116acc9cfdf853c68b9b35aa2c07568"
+      },
+      {
+        "path": "corpus-conformance.json",
+        "sha256": "d66daa8ac9f09c4c30f3366686796b67f7875f2a365f537b7da94246cf601721"
+      },
+      {
+        "path": "script-surface.json",
+        "sha256": "fe8a3030e0d4f794805ccff152799b53f921b00c110344bdc03296d8d5604143"
+      },
+      {
+        "path": "runtime-script-observation.json",
+        "sha256": "96ae2ec8eaef3b267d4ff088676ce9ce79ded230d44f45178f91522c300c2bc4"
+      }
+    ]
+  },
+  "receipts": [
+    {
+      "path": "evidence/runs/react-boilerplate-v4/t008-run.json",
+      "digest": "4d32ae0a46041e5ec2ac68aa31a9b8f86bd9d294d312ce41968ddd99dc5ee758",
+      "artifacts": 9,
+      "state": "verified"
+    },
+    {
+      "path": "evidence/runs/angular-phonecat/t014-run.json",
+      "digest": "a6798081c0b005c76534b5acd4dc647d77d497b0b649748c685b779451035f51",
+      "artifacts": 7,
+      "state": "verified"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-node24/t022-run.json",
+      "digest": "815a5416b90c0a0c0a2f0adb779308c0ba0447d67c965003f15d343940d9b593",
+      "artifacts": 10,
+      "state": "verified"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-vite8/t028-run.json",
+      "digest": "1caf9dfa24b14b83ac63ceab9ca90829346045aac690c7b95a952ae4d9e72849",
+      "artifacts": 10,
+      "state": "verified"
+    },
+    {
+      "path": "evidence/runs/angular-phonecat-route-resolve/t032-run.json",
+      "digest": "aa8b2923a38aa5f1adc870b48cdd938b739e107c927aac71b8c2890705f6beef",
+      "artifacts": 8,
+      "state": "verified"
+    },
+    {
+      "path": "evidence/runs/angular-phonecat-composed/t048-run.json",
+      "digest": "a7e8a9dc864085d77338f1615e3434a8a842fa5f4156a13bd2f5560bd2f8dc12",
+      "artifacts": 9,
+      "state": "verified"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-data-flow/t054-run.json",
+      "digest": "a6c25918ed9650d3315c42501932e8e6fe26552e48bcbdf74d4987f7b384452b",
+      "artifacts": 10,
+      "state": "verified"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-composed/t060-run.json",
+      "digest": "9341f5e70c00ebbde65a919db5b5d31fde0fa39983e985deb01afb71ed00d1ad",
+      "artifacts": 10,
+      "state": "verified"
+    },
+    {
+      "path": "evidence/runs/angular-phonecat-vite8/t069-run.json",
+      "digest": "033fc40237975e28df36117cc309625632610a399b5c0f88735079ed21fcad0d",
+      "artifacts": 10,
+      "state": "verified"
+    },
+    {
+      "path": "evidence/runs/angular-realworld-v15-to-v16/receipt.json",
+      "digest": "bba54bc67cf5686445b207c530e04c5f9d56cf87f495250e97329e1eed8c6ad1",
+      "artifacts": 20,
+      "state": "verified"
+    },
+    {
+      "path": "evidence/runs/next-killedbygoogle-derived-state-to-memo/receipt.json",
+      "digest": "a018c6490cd559fab74ea402ff93660f053503dbed1a52ba9b68ed7fdc086b7c",
+      "artifacts": 13,
+      "state": "verified"
+    }
+  ],
+  "observation": {
+    "generatedAt": "2026-08-08T04:00:26.717Z",
+    "vulnerabilityFreshness": "verified"
+  },
+  "derivedReport": "report.md"
+}

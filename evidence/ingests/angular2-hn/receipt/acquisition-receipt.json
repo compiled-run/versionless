@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "taskId": "T335",
+  "consentId": "T335-angular2-hn-source-runtime-acquisition",
+  "result": "blocked-after-verified-source-runtime-acquisition",
+  "source": {
+    "repository": "housseindjirdeh/angular2-hn",
+    "commit": "f6cc578d66c6fa7997f6ef46c7ed4488a85002d8",
+    "tree": "ce49678369929d4bb3e084e7b925d673501bda57",
+    "archiveBytes": 258594,
+    "archiveSha256": "d38d3a39d878456e537c18bc49db5bc29b8a755d46e52c163b09c0ead13e2876",
+    "verifiedGitBlobCount": 102,
+    "submodules": 0,
+    "extractedSafely": true,
+    "license": {
+      "path": "LICENSE.md",
+      "spdx": "MIT",
+      "gitBlob": "f52c984e1947a4a1024c0ec071a47cac98ae0c9f"
+    }
+  },
+  "nodeRuntime": {
+    "version": "12.22.12",
+    "platform": "linux-x64",
+    "archiveBytes": 14584388,
+    "archiveSha256": "e6d052364bfa2c17da92cf31794100cfd709ba147415ddaeed2222eec9ca1469",
+    "officialShasumsEntryMatched": true,
+    "executed": false,
+    "status": "EOL-historical-compatibility-only"
+  },
+  "sourceRuntimeValidationsSucceeded": true,
+  "packageDependencyFetches": 0,
+  "installBuildBrowserMigrationRuns": 0,
+  "publicationClaims": {
+    "baseline": false,
+    "pilot": false,
+    "support": false,
+    "pwaMigration": false,
+    "pwaParity": false
+  },
+  "blockers": [
+    "No already-retained strongly hashed Yarn 1 executable artifact paired with exact license evidence was found; unlisted Yarn acquisition is prohibited.",
+    "Exact artifact byte sizes and transfer ceilings are not derivable from Yarn v1 lock metadata.",
+    "Production package manifests/artifacts are not retained, so package licenses, lifecycle scripts, native-addon status, and platform constraints are unresolved.",
+    "The pinned configuration references absent src/manifest.webmanifest; preserve this fact and do not change service-worker/PWA bytes in this acquisition task.",
+    "No isolated verified external Linux-x64 executor is retained for Node 12.22.12 baseline execution.",
+    "Browser interception completeness and service-worker coexistence remain unexecuted and unproven."
+  ]
+}

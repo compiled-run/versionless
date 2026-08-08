@@ -1,0 +1,8 @@
+{
+  "mutation": "intended-failure",
+  "mutationKind": "service-worker-registration-disabled",
+  "expectedFailure": "service worker offline assertion failed",
+  "restoration": "byte-identical",
+  "restoredSha256": "17f8b8601929cd25a8557a6351d429ba24bd8871d557552351afb53363871c78",
+  "reproduced": "pass"
+}

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "historicalBaseline": {
+    "angularCore": "9.0.1",
+    "angularCli": "9.0.2",
+    "typescript": "3.7.5",
+    "node": "12.22.12",
+    "nodePlatform": "linux-x64",
+    "status": "EOL-historical-compatibility-only",
+    "requires": "isolated external Linux-x64 executor",
+    "executed": false,
+    "prohibited": [
+      "Node 6",
+      "unsupported Node 16+",
+      "Darwin emulation",
+      "unverified container",
+      "host node_modules"
+    ]
+  },
+  "adjacentUpgradePolicy": "Adjacent Angular core/CLI majors only, with candidate-matched Node/TypeScript/RxJS and frozen closure gates.",
+  "provisionalMaintainedDestination": {
+    "angular": "21.2.x",
+    "node": "24.15.0",
+    "executable": false,
+    "supportedClaim": false,
+    "blocker": "Official compatibility, package-manager, complete closure, build, browser, mutation, rollback, receipt, and trust evidence are not retained."
+  },
+  "yarnClassicRuntime": {
+    "retainedArtifact": false,
+    "exactVersion": null,
+    "sha256": null,
+    "licenseEvidence": null,
+    "blocker": "No already-retained strongly hashed Yarn 1 executable artifact paired with exact license evidence was found; unlisted Yarn acquisition is prohibited."
+  }
+}

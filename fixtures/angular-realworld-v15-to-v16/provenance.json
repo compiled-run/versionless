@@ -1,0 +1,7 @@
+{
+	"license": "MIT",
+	"nonclaims": [
+		"This fixture records one immutable adjacent-major experiment; it is not generic Angular support, a pilot, production readiness, certification, authenticity, signed provenance, or OS-wide isolation."
+	],
+	"repository": "https://github.com/realworld-apps/angular-realworld-example-app"
+}

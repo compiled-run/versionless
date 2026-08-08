@@ -1,0 +1,18 @@
+{
+  "mutations": [
+    {
+      "seam": "lexical-this-initial-image",
+      "result": "intended-failure",
+      "restoration": "byte-identical",
+      "restoredSha256": "14a6491146c24e28d02dd78891fea66132668e56267a55c46bfff6272e53fa4a",
+      "reproduced": "pass"
+    },
+    {
+      "seam": "route-resolve-one-way-binding",
+      "result": "intended-failure",
+      "restoration": "byte-identical",
+      "restoredSha256": "26cd79608f8fb99fef48fc4bcdb6f737e4c67626d1893797221128373217ca3e",
+      "reproduced": "pass"
+    }
+  ]
+}

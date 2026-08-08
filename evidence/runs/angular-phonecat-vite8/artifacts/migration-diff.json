@@ -1,0 +1,17 @@
+{
+  "changedFiles": [
+    "app/app.config.js",
+    "app/phone-list/phone-list.component.js",
+    "app/phone-detail/phone-detail.component.js"
+  ],
+  "sourceHashes": {
+    "app/app.config.js": "c228269232fac2dc4b5325b46697196a70d4c03bef91dc36ee9f3275ad0f73d7",
+    "app/phone-list/phone-list.component.js": "f51f2eb9e7b29a1233bc8f6663b67c82f48d8143bc2126cce0f4c5e04df27b92",
+    "app/phone-detail/phone-detail.component.js": "0a14b1e0dfecf3bdbc77259a8199974b2d34b0a178943d0f920d10541a25ebb0"
+  },
+  "targetHashes": {
+    "app/app.config.js": "26cd79608f8fb99fef48fc4bcdb6f737e4c67626d1893797221128373217ca3e",
+    "app/phone-list/phone-list.component.js": "56f2bde102867cfff70ea2e969dbfe89c2ff191345ebe9964ae84ac983951a6d",
+    "app/phone-detail/phone-detail.component.js": "14a6491146c24e28d02dd78891fea66132668e56267a55c46bfff6272e53fa4a"
+  }
+}

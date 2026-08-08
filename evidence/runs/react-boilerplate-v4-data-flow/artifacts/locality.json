@@ -1,0 +1,8 @@
+{
+  "mode": "offline",
+  "scope": "Versionless-spawned Node/Vite build and Playwright browser requests",
+  "osWideIsolation": false,
+  "successfulNonLoopback": 0,
+  "browserBlockedRequests": 0,
+  "syntheticInterceptions": 4
+}

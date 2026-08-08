@@ -1,0 +1,10 @@
+{
+  "semanticEngine": {
+    "parser": "yuku-parser@0.7.0",
+    "analyzer": "yuku-analyzer@0.7.0",
+    "diagnostics": 0
+  },
+  "dataSource": "frozen local phones/*.json through existing Phone resource",
+  "bindings": "one-way",
+  "lifecycle": "$onInit"
+}

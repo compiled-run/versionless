@@ -1,0 +1,7 @@
+{
+  "mutation": "intended-failure",
+  "mutationKind": "detail-one-way-binding-to-string",
+  "restoredSha256": "14a6491146c24e28d02dd78891fea66132668e56267a55c46bfff6272e53fa4a",
+  "restoration": "byte-identical",
+  "reproduced": "pass"
+}

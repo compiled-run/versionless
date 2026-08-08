@@ -1,0 +1,6 @@
+{
+	"name": "@versionless/node-guard",
+	"version": "0.0.1",
+	"private": true,
+	"type": "module"
+}

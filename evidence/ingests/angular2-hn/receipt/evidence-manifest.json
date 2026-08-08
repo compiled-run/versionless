@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 954,
+      "sha256": "dd405e13a06edfa85bc0213f6e823ff3c8a427cd7cbbdbc9bc29b89349bd0e21"
+    },
+    {
+      "path": "acquisition-receipt.json",
+      "bytes": 2081,
+      "sha256": "bd076d0ead15d6829ede7eefd4bd1bec275935536b6da3856348a59f39496fd1"
+    },
+    {
+      "path": "browser-interception-contract.json",
+      "bytes": 2199,
+      "sha256": "88ff6caaa69690191a5e4b0ea197cadc174c8f404594de4d7b3ad6b114bd0943"
+    },
+    {
+      "path": "payload-feed.json",
+      "bytes": 395,
+      "sha256": "9357e182479d5ec8ec180a2386594092ab6aa784ae8a7581fe7eb1b232304363"
+    },
+    {
+      "path": "payload-item.json",
+      "bytes": 602,
+      "sha256": "07b3157fdeb6ac68367ce8e3f4d97e430d8ce254c763d2c66ee4a7703bf7bd5f"
+    },
+    {
+      "path": "payload-poll.json",
+      "bytes": 56,
+      "sha256": "e8b8347892a4d8c0033ff81151a2cc8acf9d06ac2a2f67ef88fea9791b1414ec"
+    },
+    {
+      "path": "payload-user.json",
+      "bytes": 159,
+      "sha256": "7007caaf26384702444081e39445e8351b4f58564b087905933f26f666a81478"
+    },
+    {
+      "path": "production-dependency-closure.json",
+      "bytes": 20298,
+      "sha256": "3adabc05873cef2adeb4afddfc32967f7197208c7b86dd5bbdb87baa331b7b4b"
+    },
+    {
+      "path": "request-ledger.json",
+      "bytes": 2997,
+      "sha256": "ed165b85a93d5fe45d0bb6889045877bf84dc122ed589f991a62da661f402348"
+    },
+    {
+      "path": "runtime-model.json",
+      "bytes": 1227,
+      "sha256": "f7721efca18d328dacf0f735aa5831bd0475596a61789c8157db05f8ea5121ca"
+    },
+    {
+      "path": "service-worker-pwa-inventory.json",
+      "bytes": 29833,
+      "sha256": "887f272067dda7c6748e780d768555c58b63366710b2ef6bb3134d6a28fdd403"
+    }
+  ]
+}

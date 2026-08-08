@@ -1,0 +1,91 @@
+{
+  "schemaVersion": "versionless.immutable-fixture.v1",
+  "id": "next-killedbygoogle",
+  "framework": "nextjs",
+  "repository": "codyogden/killedbygoogle",
+  "repositoryUrl": "https://github.com/codyogden/killedbygoogle",
+  "commit": "56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+  "tree": "b8ac7b4fc3a1e12240f1848f6e8d98c1c7d80763",
+  "archive": {
+    "url": "https://codeload.github.com/codyogden/killedbygoogle/tar.gz/56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+    "sha256": "c28878d0f65b56aa595763c852477fb0c1e3533e5c7f7ea9daa2be16f102368d",
+    "byteLength": 370006
+  },
+  "archiveManifestSha256": "05c3677979d98740e8c76a599497e43fe2b623a43e56226edd01c53bf2bf572c",
+  "repositoryIdentity": {
+    "fullName": "codyogden/killedbygoogle",
+    "fork": false
+  },
+  "reliedPaths": [
+    ".github/workflows/playwright.yml",
+    "LICENSE",
+    "components/Search/index.tsx",
+    "next.config.js",
+    "package.json",
+    "pages/index.tsx",
+    "yarn.lock"
+  ],
+  "corroboratedLeadFacts": {
+    "nextMajor": 12,
+    "packageManager": "yarn-v1",
+    "router": "pages",
+    "dataFunction": "getStaticProps",
+    "browserWorkflow": "playwright-present-not-executed",
+    "productionBundler": "candidate-owned-custom-webpack",
+    "journeyPath": "components/Search/index.tsx",
+    "scripts": [
+      {
+        "name": "build",
+        "command": "next build"
+      },
+      {
+        "name": "dev",
+        "command": "next dev"
+      },
+      {
+        "name": "kill",
+        "command": "bin/kill"
+      },
+      {
+        "name": "lint",
+        "command": "next lint"
+      },
+      {
+        "name": "preview",
+        "command": "bin/graveyard && yarn build && next export && npx http-server out/ -p 3000"
+      },
+      {
+        "name": "start",
+        "command": "next start"
+      },
+      {
+        "name": "test",
+        "command": "jest graveyard.test.ts"
+      },
+      {
+        "name": "test:e2e",
+        "command": "playwright test"
+      }
+    ],
+    "scope": "provenance-only"
+  },
+  "evidenceBlockers": [
+    "Package scripts and any npx or registry behavior were recorded but not executed or resolved.",
+    "External product links, remote images, fonts, assets, analytics, telemetry, and browser egress remain not-tested.",
+    "Server, API, data, authentication, and payment behavior remain not-tested."
+  ],
+  "usableClosure": {
+    "assets": "Only paths classified verified-compatible are usable; excluded and unknown paths remain outside the usable closure.",
+    "nestedLicensing": "Only the exact root MIT file is verified-compatible.",
+    "committedDist": "No committed dist boundary was required."
+  },
+  "localityBoundaries": [
+    "No candidate code, dependency, script, server, API route, browser journey, or outbound behavior was executed.",
+    "Next.js runtime, compiler, bundler, routing, rendering, image, data, and server boundaries remain not-tested."
+  ],
+  "nonclaims": [
+    "No migration, install, build, server, browser, or Playwright execution or parity is established.",
+    "No Node, Yarn, Next, webpack, SWC, Turbopack, runtime, bundler, routing, rendering, SSR, SSG, ISR, RSC, API, middleware, image, data, authentication, payment, analytics, telemetry, egress, or locality support is established.",
+    "No Tier F, Tier P, pilot, generic React support, Next.js support, Ionic, Nx, Analog, NativeScript, native parity, enterprise support, compliance, certification, PCI applicability, authenticity, signer identity, SLSA level, or OS-wide isolation is established."
+  ]
+}

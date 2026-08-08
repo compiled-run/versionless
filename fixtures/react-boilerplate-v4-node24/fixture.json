@@ -1,0 +1,39 @@
+{
+  "id": "react-boilerplate-v4-node24",
+  "source": {
+    "repository": "https://github.com/react-boilerplate/react-boilerplate",
+    "revision": "d19099afeff64ecfb09133c06c1cb18c0d40887e",
+    "archiveSha256": "d6ca60a3c8881ae2be26a8d04e00da4d922a6653f8512f2b12ac55d48f2ce2d5",
+    "license": "MIT",
+    "licenseSha256": "e773e6b91c13f55310668e15ce178a2fcf779ff39dbcc0b910b4b5f1ecb17acb",
+    "localeToggleSha256": "70c2ea867367b5dbd0820413f344bcd6c19729ef04d41c1fd9e12d43d72e8dfa",
+    "packageSha256": "a3383c3ccce6bd460952c5ac8b721ed5f7087ffc5a96713b6e9103f2ba3a8d76",
+    "packageLockSha256": "09a37fc1d35eb4cfaab46e0ac8c0d3f33824b300a731ec25f1e50998e9c14edb"
+  },
+  "runtime": {
+    "version": "24.15.0",
+    "platform": "darwin-arm64",
+    "archiveSha256": "372331b969779ab5d15b949884fc6eaf88d5afe87bde8ba881d6400b9100ffc4"
+  },
+  "webpack": {
+    "from": "4.30.0",
+    "to": "4.47.0",
+    "metadataUrl": "https://registry.npmjs.org/webpack/4.47.0",
+    "archiveUrl": "https://registry.npmjs.org/webpack/-/webpack-4.47.0.tgz",
+    "integrity": "sha512-td7fYwgLSrky3fI1EuU5cneU4+pbH6GgOfuKNS1tNPcfdGinGELAqsb/BP4nnvZyKSG2i/xFGU7+n2PvZA8HJQ==",
+    "license": "MIT",
+    "licenseSha256": "9068a8782d2fb4c6e432cfa25334efa56f722822180570802bf86e71b6003b1e",
+    "releaseEvidence": "webpack 4.47.0 selects wasm-hash on Node >=18, avoiding OpenSSL MD4"
+  },
+  "bundlerCompanion": {
+    "name": "terser-webpack-plugin",
+    "from": "1.2.3",
+    "to": "1.4.6",
+    "reason": "the corpus directly invokes this plugin, whose 1.2.3 cache hash still requests OpenSSL MD4"
+  },
+  "browser": {
+    "executable": ".versionless/cache/react-boilerplate-v4/ms-playwright/chromium_headless_shell-1208/chrome-headless-shell-mac-arm64/chrome-headless-shell",
+    "sha256": "a46b3b1e63163fa2d2437fb6ae967cb5a73b50050bca32f1964e6129b6228244"
+  },
+  "journey": "fixtures/react-boilerplate-v4/journey.json"
+}

@@ -1,0 +1,135 @@
+{
+  "schemaVersion": "versionless.receipt.v1",
+  "runId": "T028-react-boilerplate-v4-vite8",
+  "fixture": "react-boilerplate-v4-vite8",
+  "source": {
+    "repository": "https://github.com/react-boilerplate/react-boilerplate",
+    "revision": "d19099afeff64ecfb09133c06c1cb18c0d40887e",
+    "archiveSha256": "d6ca60a3c8881ae2be26a8d04e00da4d922a6653f8512f2b12ac55d48f2ce2d5",
+    "license": "MIT",
+    "licenseSha256": "e773e6b91c13f55310668e15ce178a2fcf779ff39dbcc0b910b4b5f1ecb17acb"
+  },
+  "tooling": {
+    "node": "24.15.0-darwin-arm64 maintained runtime",
+    "vite": "8.0.16 root installation",
+    "adapter": "fixture-specific strict TypeScript",
+    "playwright": "1.58.2",
+    "chromium": "145.0.7632.6",
+    "webpack": "not-used"
+  },
+  "consent": [
+    {
+      "id": "T008-fixture-ingest",
+      "purpose": "reuse of the immutable licensed d19099 source and locked dependency population",
+      "mode": "consented"
+    },
+    {
+      "id": "T022-react-node24-ingest",
+      "purpose": "reuse of the pinned Node 24 runtime and verified local dependency installation",
+      "mode": "consented"
+    }
+  ],
+  "migration": {
+    "file": "app/containers/LocaleToggle/index.js",
+    "transform": "react-connect-to-hooks + fixture-specific-vite8-adapter",
+    "edits": 5,
+    "dependency": {
+      "name": "react-redux",
+      "from": "7.0.2",
+      "to": "7.1.3",
+      "license": "MIT"
+    },
+    "lockPatch": "fixtures/react-boilerplate-v4-vite8/vite.adapter.ts"
+  },
+  "verification": {
+    "result": "pass",
+    "builds": "pass",
+    "journeys": "pass",
+    "mutation": "pass",
+    "locality": {
+      "mode": "offline",
+      "scope": "Versionless-spawned Node/Vite build and Playwright browser requests",
+      "osWideIsolation": false,
+      "successfulNonLoopback": 0,
+      "browserBlockedRequests": 0
+    },
+    "deterministicCore": {
+      "first": "66acfff401f1408506ca95000cdfa0d44f92d49f90e64e90da51d193c2a31eb5",
+      "second": "66acfff401f1408506ca95000cdfa0d44f92d49f90e64e90da51d193c2a31eb5",
+      "equal": true
+    },
+    "serviceWorker": {
+      "workerPath": "sw.js",
+      "manifestPath": "precache-manifest.json",
+      "scope": "/",
+      "manifestSha256": "44023d4ca959eba5ec462cd305e6944abe03964dc836b042673bc8dc1f5ab024",
+      "cacheName": "versionless-react-vite8-44023d4ca959eba5ec462cd305e6944abe03964dc836b042673bc8dc1f5ab024",
+      "currentCacheOnly": true,
+      "inventoryMatchesManifest": true,
+      "exactCurrentCacheFetch": true,
+      "buildsEqual": true,
+      "registration": "active",
+      "controller": "activated",
+      "offlineJourney": "pass",
+      "mutation": "intended-failure",
+      "restoration": "byte-identical",
+      "coverage": "exact-qualified-journey-only"
+    }
+  },
+  "artifacts": [
+    {
+      "path": "evidence/runs/react-boilerplate-v4-vite8/artifacts/preparation.json",
+      "sha256": "94b19bfc5308a3b94c48c7736c605b1e682b488beee937bf0b49cf7eaf859e18"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-vite8/artifacts/build-target.log",
+      "sha256": "b2d471d5da7cadcb207ed3083622dca72335205ecded1b432d2ea5485e044d29"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-vite8/artifacts/service-worker.json",
+      "sha256": "5449075fac78e0cacc79640683a5272de0a75ebe793ffef3a29233b3e2f9cb53"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-vite8/artifacts/journey.json",
+      "sha256": "6f5fdce9d7a79d175e4b6be3ab0057749e94a6cad013ea477a82a893c476deaa"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-vite8/artifacts/build-mutation.log",
+      "sha256": "b4686251438646d3eabb8e96078b0f6af9ad42e4f06ab32d52781a3985208f50"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-vite8/artifacts/build-restored.log",
+      "sha256": "05efafcd42d5aff8ee52c3da15ea4441c44bd6b3c3a68a34730f7c165cd3e666"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-vite8/artifacts/mutation.json",
+      "sha256": "6f2ffa378254cf4e7ba59484f4461afb282ceaafa71b6fb3d59ba95380e506e7"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-vite8/artifacts/migration-diff.json",
+      "sha256": "a83201746c103757483db4561bcd2c2d4559329a12e56f9f28b185eb8ce7c121"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-vite8/artifacts/locality.json",
+      "sha256": "a68dbb821d7ca92d203ab8ae4ed861e83bd8b2e2558da2da1b88e701865ebb5c"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-vite8/artifacts/deterministic-core.json",
+      "sha256": "4622dcefa1c4e412316d230a66ec3d16b0bb322adb0a92c0f2f6a96e866e48e6"
+    }
+  ],
+  "integrity": {
+    "algorithm": "sha256",
+    "canonicalDigest": "1caf9dfa24b14b83ac63ceab9ca90829346045aac690c7b95a952ae4d9e72849",
+    "authenticity": "not-established"
+  },
+  "limitations": [
+    "Hash integrity does not establish signer authenticity or Git provenance.",
+    "Network controls cover spawned Node/Vite and browser routing, not OS-wide isolation.",
+    "This proves only root Vite 8.0.16 on the pinned React Boilerplate corpus.",
+    "Service-worker parity covers only the exact qualified offline journey, not global offline or PWA correctness.",
+    "Old Vite and generic or unplugin adapter portability remain not-tested.",
+    "TakeNote and Angular2-HN designated pilots remain not-tested.",
+    "Governance, signing identity, certification, and authenticity are not claimed."
+  ]
+}

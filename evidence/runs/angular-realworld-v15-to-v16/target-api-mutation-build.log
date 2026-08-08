@@ -1,0 +1,29 @@
+One or more browsers which are configured in the project's Browserslist configuration will be ignored as ES5 output is not supported by the Angular CLI.
+Ignored browsers: kaios 2.5, op_mini all
+
+Initial Chunk Files           | Names                                        |  Raw Size | Estimated Transfer Size
+main.f5bc88028f286816.js      | main                                         | 377.18 kB |               102.22 kB
+polyfills.c508560c3496377c.js | polyfills                                    |  33.33 kB |                10.79 kB
+runtime.0b229425885719f3.js   | runtime                                      |   2.82 kB |                 1.35 kB
+styles.ef46db3751d8e999.css   | styles                                       |   0 bytes |                       -
+
+| Initial Total                                | 413.33 kB |               114.35 kB
+
+Lazy Chunk Files              | Names                                        |  Raw Size | Estimated Transfer Size
+406.34cecb7417f389f2.js       | features-article-article-component           |  66.38 kB |                13.27 kB
+753.2a7e16272e9c01ad.js       | features-editor-editor-component             |  57.46 kB |                11.43 kB
+14.04a78d85de6b834e.js        | core-auth-auth-component                     |  56.45 kB |                11.06 kB
+792.4f1d72033744b2a2.js       | features-settings-settings-component         |  56.00 kB |                10.96 kB
+491.7392e55ae4e14cd2.js       | marked                                       |  37.03 kB |                10.74 kB
+259.298e4c3039d038c0.js       | features-home-home-component                 |  28.56 kB |                 8.96 kB
+965.0b292354be3462f8.js       | features-profile-profile-favorites-component |   8.14 kB |                 2.52 kB
+847.fc808e36b2f9b3a8.js       | features-profile-profile-articles-component  |   8.12 kB |                 2.51 kB
+
+Build at: 2026-08-07T13:18:19.081Z - Hash: 1b95de6241e95386 - Time: 5514ms
+Browserslist: caniuse-lite is outdated. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+- Copying assets...
+✔ Copying assets complete.
+- Generating index html...
+✔ Index html generation complete.

@@ -1,0 +1,116 @@
+[
+  {
+    "order": "base-to-data-flow",
+    "phases": [
+      {
+        "lane": "legacy",
+        "origin": "http://127.0.0.1:43440",
+        "cacheName": "versionless-react-vite8-44023d4ca959eba5ec462cd305e6944abe03964dc836b042673bc8dc1f5ab024",
+        "cacheNames": [
+          "versionless-react-vite8-44023d4ca959eba5ec462cd305e6944abe03964dc836b042673bc8dc1f5ab024"
+        ],
+        "inventory": [
+          "/assets/FeaturePage-2zyLJwLV.js",
+          "/assets/H1-BZCoji1x.js",
+          "/assets/HomePage-CZiBZHtd.js",
+          "/assets/NotFoundPage-BkMd3EGU.js",
+          "/assets/__vite-browser-external-CvNEtdN9.js",
+          "/assets/banner-6i24qsix.jpg",
+          "/assets/de-CEvlwdXo.js",
+          "/assets/en-D7F8Da0k.js",
+          "/assets/favicon-Ba7brf7t.ico",
+          "/assets/index-CqaBhjBI.css",
+          "/assets/index-D47xRHLD.js",
+          "/assets/intl-tJox8g0n.js",
+          "/index.html"
+        ],
+        "scope": "/",
+        "controller": "activated",
+        "offlineReload": "pass"
+      },
+      {
+        "lane": "target",
+        "origin": "http://127.0.0.1:43440",
+        "cacheName": "versionless-react-vite8-553cd1cc611a0851b1978bbc041ef2f8c7b9fbbd3fdd9bb68274f29364987cdc",
+        "cacheNames": [
+          "versionless-react-vite8-553cd1cc611a0851b1978bbc041ef2f8c7b9fbbd3fdd9bb68274f29364987cdc"
+        ],
+        "inventory": [
+          "/assets/FeaturePage-3koR6qyF.js",
+          "/assets/H1-DCVj1WeM.js",
+          "/assets/HomePage-BLDw2n8d.js",
+          "/assets/NotFoundPage-Co4MDuS6.js",
+          "/assets/__vite-browser-external-CvNEtdN9.js",
+          "/assets/banner-6i24qsix.jpg",
+          "/assets/de-CEvlwdXo.js",
+          "/assets/en-D7F8Da0k.js",
+          "/assets/favicon-Ba7brf7t.ico",
+          "/assets/index-BbOQy7cX.js",
+          "/assets/index-CqaBhjBI.css",
+          "/assets/intl-tJox8g0n.js",
+          "/index.html"
+        ],
+        "scope": "/",
+        "controller": "activated",
+        "offlineReload": "pass"
+      }
+    ]
+  },
+  {
+    "order": "data-flow-to-base",
+    "phases": [
+      {
+        "lane": "target",
+        "origin": "http://127.0.0.1:43440",
+        "cacheName": "versionless-react-vite8-553cd1cc611a0851b1978bbc041ef2f8c7b9fbbd3fdd9bb68274f29364987cdc",
+        "cacheNames": [
+          "versionless-react-vite8-553cd1cc611a0851b1978bbc041ef2f8c7b9fbbd3fdd9bb68274f29364987cdc"
+        ],
+        "inventory": [
+          "/assets/FeaturePage-3koR6qyF.js",
+          "/assets/H1-DCVj1WeM.js",
+          "/assets/HomePage-BLDw2n8d.js",
+          "/assets/NotFoundPage-Co4MDuS6.js",
+          "/assets/__vite-browser-external-CvNEtdN9.js",
+          "/assets/banner-6i24qsix.jpg",
+          "/assets/de-CEvlwdXo.js",
+          "/assets/en-D7F8Da0k.js",
+          "/assets/favicon-Ba7brf7t.ico",
+          "/assets/index-BbOQy7cX.js",
+          "/assets/index-CqaBhjBI.css",
+          "/assets/intl-tJox8g0n.js",
+          "/index.html"
+        ],
+        "scope": "/",
+        "controller": "activated",
+        "offlineReload": "pass"
+      },
+      {
+        "lane": "legacy",
+        "origin": "http://127.0.0.1:43440",
+        "cacheName": "versionless-react-vite8-44023d4ca959eba5ec462cd305e6944abe03964dc836b042673bc8dc1f5ab024",
+        "cacheNames": [
+          "versionless-react-vite8-44023d4ca959eba5ec462cd305e6944abe03964dc836b042673bc8dc1f5ab024"
+        ],
+        "inventory": [
+          "/assets/FeaturePage-2zyLJwLV.js",
+          "/assets/H1-BZCoji1x.js",
+          "/assets/HomePage-CZiBZHtd.js",
+          "/assets/NotFoundPage-BkMd3EGU.js",
+          "/assets/__vite-browser-external-CvNEtdN9.js",
+          "/assets/banner-6i24qsix.jpg",
+          "/assets/de-CEvlwdXo.js",
+          "/assets/en-D7F8Da0k.js",
+          "/assets/favicon-Ba7brf7t.ico",
+          "/assets/index-CqaBhjBI.css",
+          "/assets/index-D47xRHLD.js",
+          "/assets/intl-tJox8g0n.js",
+          "/index.html"
+        ],
+        "scope": "/",
+        "controller": "activated",
+        "offlineReload": "pass"
+      }
+    ]
+  }
+]

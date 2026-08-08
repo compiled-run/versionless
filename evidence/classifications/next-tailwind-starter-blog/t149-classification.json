@@ -1,0 +1,184 @@
+{
+  "schemaVersion": "versionless.next13-provenance-classification.v1",
+  "closure": {
+    "fixtureId": "next-tailwind-starter-blog",
+    "repository": "timlrx/tailwind-nextjs-starter-blog",
+    "nonFork": true,
+    "commit": "09ba0550caea03a8c38bc4878d05838d2a57f999",
+    "tree": "2609b3fc4a63d7bccd8f187d66c141f4a7d3cadf",
+    "fixtureSha256": "d24bf99d50e7f90ac53dcc7d99f04fcd9842379d94393548c7abbf486288b6c1",
+    "provenanceSha256": "b0cb4e5b597bd619d8ea76912b09a6257bb1e3be4f4d259160334518a8b5bc29",
+    "evidenceSha256": "4562e7fe0ab786cede4a40ead07666d44d085a45699443fe65da4aabed9b61f0",
+    "archiveSha256": "c227efa283b4a17d7ae76aa1b9ea259075f606128642d59f7b43ca63405ee1f7",
+    "cacheManifestSha256": "8079a31d105783e6e293402ea541c13c4fe2ff7038d010b414d322491b3dd202",
+    "archiveManifestSha256": "8cce8b04846e0382bf1a4b2812881a998fc3d2cf061b2f43362310139da801e3",
+    "offlineReplaySha256": "5b525cf6cfc447fbdd3ca0640115c7810b67de5dd1680e3d5ff624356e767a98",
+    "officialTreeRows": 138,
+    "archiveFiles": 110,
+    "reliedPaths": [
+      ".yarnrc.yml",
+      "LICENSE",
+      "app/api/newsletter2/route.ts",
+      "app/blog/[...slug]/page.tsx",
+      "app/layout.tsx",
+      "next.config.js",
+      "package.json",
+      "yarn.lock"
+    ],
+    "rootLicense": {
+      "path": "LICENSE",
+      "sha256": "317b52bec9a462916d9219427552de01604be107efc60606a3046df2d2ee0ff2",
+      "classification": "verified-compatible"
+    },
+    "licenseInventoryEntries": 1,
+    "assets": {
+      "total": 25,
+      "excluded": 11,
+      "unknown": 14,
+      "compatible": 0
+    },
+    "provenance": "verified",
+    "provenanceScope": "exact-immutable-closure-only"
+  },
+  "classification": {
+    "framework": "nextjs",
+    "adapter": "next13-provenance-static",
+    "sourceFacts": {
+      "next": {
+        "declaration": "13.4.8",
+        "major": 13
+      },
+      "react": {
+        "declaration": "18.2.0"
+      },
+      "packageManager": {
+        "name": "yarn",
+        "lockfile": "yarn.lock",
+        "metadataVersion": 6,
+        "nodeLinker": "node-modules",
+        "pinnedRelease": "absent",
+        "resolutions": 1165,
+        "checksums": 1110
+      },
+      "routing": {
+        "mode": "app",
+        "layout": "app/layout.tsx",
+        "page": "app/blog/[...slug]/page.tsx",
+        "dynamicRoute": "catch-all",
+        "generateStaticParams": "present-not-executed"
+      },
+      "apiRoute": {
+        "path": "app/api/newsletter2/route.ts",
+        "method": "POST",
+        "state": "present-not-executed"
+      },
+      "resources": {
+        "font": {
+          "module": "next/font/google",
+          "evidence": "app/layout.tsx",
+          "buildEgressRisk": "present-not-executed"
+        },
+        "contentlayer": {
+          "declaration": "0.3.4",
+          "configuration": "contentlayer.config.ts"
+        },
+        "image": {
+          "module": "next/image",
+          "evidence": "components/Image.tsx"
+        }
+      },
+      "productionStack": {
+        "owner": "candidate",
+        "framework": "nextjs",
+        "bundler": "webpack",
+        "customLoader": "@svgr/webpack",
+        "configuration": "next.config.js",
+        "preserved": true,
+        "viteReplacement": false,
+        "unpluginReplacement": false,
+        "compatibility": "not-tested"
+      },
+      "nodeEngine": "absent",
+      "scripts": [
+        {
+          "name": "analyze",
+          "command": "cross-env ANALYZE=true next build"
+        },
+        {
+          "name": "build",
+          "command": "cross-env INIT_CWD=$PWD next build && cross-env NODE_OPTIONS='--experimental-json-modules' node -r esbuild-register ./scripts/postbuild.mjs"
+        },
+        {
+          "name": "dev",
+          "command": "cross-env INIT_CWD=$PWD next dev"
+        },
+        {
+          "name": "lint",
+          "command": "next lint --fix --dir pages --dir components --dir lib --dir layouts --dir scripts"
+        },
+        {
+          "name": "serve",
+          "command": "next start"
+        },
+        {
+          "name": "start",
+          "command": "next dev"
+        }
+      ]
+    }
+  },
+  "execution": {
+    "dependencyResolution": "not-tested",
+    "install": "not-tested",
+    "compiler": "not-tested",
+    "build": "not-tested",
+    "server": "not-tested",
+    "browser": "not-tested",
+    "runtime": "not-tested",
+    "routing": "not-tested",
+    "rendering": "not-tested",
+    "api": "not-tested",
+    "locality": "not-tested",
+    "migration": "not-tested",
+    "tier": "not-tested",
+    "pilot": "not-tested",
+    "support": "not-tested"
+  },
+  "boundaries": {
+    "dependencyClosure": "absent",
+    "pinnedYarnRelease": "absent",
+    "nodeEngine": "absent",
+    "fontBuildEgress": "present-not-executed",
+    "assets": "11-excluded-14-unknown-0-compatible",
+    "authentication": "unknown",
+    "payment": "unknown",
+    "analytics": "unknown",
+    "telemetry": "unknown",
+    "remoteResources": "unknown",
+    "egress": "unknown"
+  },
+  "locality": {
+    "mode": "offline",
+    "networkAttempts": 0,
+    "candidateExecution": "not-requested"
+  },
+  "claims": {
+    "authenticity": "not-established",
+    "certification": "not-claimed",
+    "compliance": "not-claimed",
+    "osWideIsolation": "not-established",
+    "genericReactSupport": "not-claimed",
+    "nextjsSupport": "not-claimed",
+    "bundlerSupport": "not-claimed"
+  },
+  "limitations": [
+    "Static classification is bound only to the accepted immutable T142 provenance closure.",
+    "No dependency was resolved or acquired, and no install, script, compiler, build, server, browser, API, or external resource was executed.",
+    "Next.js, webpack, Contentlayer, next/font, next/image, and routing observations are source facts only; compatibility and behavior remain not-tested.",
+    "Provenance integrity and static classification establish neither migration, parity, locality, Tier, pilot, support, compliance, certification, authenticity, signer identity, SLSA level, nor OS-wide isolation."
+  ],
+  "integrity": {
+    "algorithm": "sha256",
+    "canonicalDigest": "bbeba8ded832af02c3364907804fbbdc044d1cd8a52d313b1f19fd88bc8ea7a8"
+  }
+}

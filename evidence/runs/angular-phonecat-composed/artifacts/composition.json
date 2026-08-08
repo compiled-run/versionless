@@ -1,0 +1,53 @@
+{
+  "orders": [
+    {
+      "order": [
+        "phone-detail-lexical-this",
+        "phone-route-resolve-component-binding"
+      ],
+      "outputSha256": "f08e330019bb8ce2723834edd62e656ca654f54123088a0a48e4a3b726a11da0",
+      "preconditions": [
+        [
+          "constructable named PhoneDetailController",
+          "unchanged $routeParams and Phone injection annotation",
+          "exact self alias",
+          "exact Phone.get regular callback",
+          "exact named setImage regular callback"
+        ],
+        [
+          "exact list and detail route templates",
+          "exact Phone.query list controller",
+          "exact lexical-this PhoneDetail intermediate",
+          "frozen local Phone resource service"
+        ]
+      ]
+    },
+    {
+      "order": [
+        "phone-route-resolve-component-binding",
+        "phone-detail-lexical-this"
+      ],
+      "outputSha256": "f08e330019bb8ce2723834edd62e656ca654f54123088a0a48e4a3b726a11da0",
+      "preconditions": [
+        [
+          "exact list and detail route templates",
+          "exact Phone.query list controller",
+          "exact $routeParams/Phone detail controller",
+          "frozen local Phone resource service"
+        ],
+        [
+          "exact route-resolve PhoneDetail target hash",
+          "exact constructable PhoneDetailController",
+          "exact lexical $onInit callback",
+          "exact lexical setImage callback"
+        ]
+      ]
+    }
+  ],
+  "orderIndependent": true,
+  "changedFiles": [
+    "app/app.config.js",
+    "app/phone-list/phone-list.component.js",
+    "app/phone-detail/phone-detail.component.js"
+  ]
+}

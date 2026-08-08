@@ -1,0 +1,394 @@
+[
+  {
+    "lane": "legacy",
+    "first": {
+      "log": "vite v8.0.16 building client environment for production...\n\u001b[2K\rtransforming...✓ 516 modules transformed.\nrendering chunks...\ncomputing gzip size...\nbuild-vite/index.html                                    0.49 kB │ gzip:   0.30 kB\nbuild-vite/assets/banner-6i24qsix.jpg                  205.99 kB\nbuild-vite/assets/favicon-Ba7brf7t.ico                 370.07 kB\nbuild-vite/assets/index-CqaBhjBI.css                     2.95 kB │ gzip:   1.24 kB\nbuild-vite/assets/H1-BZCoji1x.js                         0.10 kB │ gzip:   0.12 kB\nbuild-vite/assets/NotFoundPage-BkMd3EGU.js               0.42 kB │ gzip:   0.28 kB\nbuild-vite/assets/__vite-browser-external-CvNEtdN9.js    0.86 kB │ gzip:   0.48 kB\nbuild-vite/assets/FeaturePage-2zyLJwLV.js                4.08 kB │ gzip:   1.37 kB\nbuild-vite/assets/en-D7F8Da0k.js                        24.55 kB │ gzip:   4.26 kB\nbuild-vite/assets/de-CEvlwdXo.js                        24.86 kB │ gzip:   4.25 kB\nbuild-vite/assets/intl-tJox8g0n.js                      40.92 kB │ gzip:  14.17 kB\nbuild-vite/assets/HomePage-CZiBZHtd.js                  80.03 kB │ gzip:  29.25 kB\nbuild-vite/assets/index-D47xRHLD.js                    420.72 kB │ gzip: 131.81 kB\n\n✓ built in <duration>\n",
+      "digest": "504fec92988c1b2d961bce7d4af276a7d27bf3c2ba1df6b69140582104bf8f05",
+      "files": [
+        {
+          "path": "assets/FeaturePage-2zyLJwLV.js",
+          "sha256": "b37a578bedde3c9b2475d0f2b259f747fc27afcced8885314427ab033e307a74"
+        },
+        {
+          "path": "assets/H1-BZCoji1x.js",
+          "sha256": "30a32cdabcde13a0bc39224bf6ca47106dc205a1da6f79da62f015065a2017b4"
+        },
+        {
+          "path": "assets/HomePage-CZiBZHtd.js",
+          "sha256": "49ec961d8d1880535d6e19697bb88fdda363158741dee1edcf5d82de2325eead"
+        },
+        {
+          "path": "assets/NotFoundPage-BkMd3EGU.js",
+          "sha256": "0fb5f4ba0c0a370644f4d5a0e2e0296f92c9886434cef25509d38f796fb5d93a"
+        },
+        {
+          "path": "assets/__vite-browser-external-CvNEtdN9.js",
+          "sha256": "50afa8586c0e07ad1dfa96a37938ee39809a7ab9760d8e9ae18b93603ff1e397"
+        },
+        {
+          "path": "assets/banner-6i24qsix.jpg",
+          "sha256": "90890967b1997f84599b177d9787c4c9cdf9651933725f5732810e99891407bc"
+        },
+        {
+          "path": "assets/de-CEvlwdXo.js",
+          "sha256": "a43a6f9f1529edb1fd7e05b3e871f9ba4e5943738de64db40147497cd9c81031"
+        },
+        {
+          "path": "assets/en-D7F8Da0k.js",
+          "sha256": "74ed6263e654f2e2a1eb76f3bba1366fb3a516df619c95054ccc5787d7d31f41"
+        },
+        {
+          "path": "assets/favicon-Ba7brf7t.ico",
+          "sha256": "4f41a82ef5b4b3d36786a11738db0553c376f9e1078d68c14a732326a209e07a"
+        },
+        {
+          "path": "assets/index-CqaBhjBI.css",
+          "sha256": "96fbb04b0941f4fbefa051260b7953916184b9ccfda62282044121f0e20d4aa4"
+        },
+        {
+          "path": "assets/index-D47xRHLD.js",
+          "sha256": "712f487de9f84b7d704ff91258a09af5558f0f0fa77dc375655d02ef13397e90"
+        },
+        {
+          "path": "assets/intl-tJox8g0n.js",
+          "sha256": "b236f5b1a902da9ed2e087da178b3c69776708686740480cd038c76e1ce27f09"
+        },
+        {
+          "path": "index.html",
+          "sha256": "e77d403d657e36d070614c51a9db81ce7d998d3b0811126042def41210633dd4"
+        },
+        {
+          "path": "precache-manifest.json",
+          "sha256": "44023d4ca959eba5ec462cd305e6944abe03964dc836b042673bc8dc1f5ab024"
+        },
+        {
+          "path": "sw.js",
+          "sha256": "e35d5a8b81eda0f5dfc67f840130191a69fdc2b9a55ecea4cf7146d0891f6872"
+        }
+      ]
+    },
+    "second": {
+      "log": "vite v8.0.16 building client environment for production...\n\u001b[2K\rtransforming...✓ 516 modules transformed.\nrendering chunks...\ncomputing gzip size...\nbuild-vite/index.html                                    0.49 kB │ gzip:   0.30 kB\nbuild-vite/assets/banner-6i24qsix.jpg                  205.99 kB\nbuild-vite/assets/favicon-Ba7brf7t.ico                 370.07 kB\nbuild-vite/assets/index-CqaBhjBI.css                     2.95 kB │ gzip:   1.24 kB\nbuild-vite/assets/H1-BZCoji1x.js                         0.10 kB │ gzip:   0.12 kB\nbuild-vite/assets/NotFoundPage-BkMd3EGU.js               0.42 kB │ gzip:   0.28 kB\nbuild-vite/assets/__vite-browser-external-CvNEtdN9.js    0.86 kB │ gzip:   0.48 kB\nbuild-vite/assets/FeaturePage-2zyLJwLV.js                4.08 kB │ gzip:   1.37 kB\nbuild-vite/assets/en-D7F8Da0k.js                        24.55 kB │ gzip:   4.26 kB\nbuild-vite/assets/de-CEvlwdXo.js                        24.86 kB │ gzip:   4.25 kB\nbuild-vite/assets/intl-tJox8g0n.js                      40.92 kB │ gzip:  14.17 kB\nbuild-vite/assets/HomePage-CZiBZHtd.js                  80.03 kB │ gzip:  29.25 kB\nbuild-vite/assets/index-D47xRHLD.js                    420.72 kB │ gzip: 131.81 kB\n\n✓ built in <duration>\n",
+      "digest": "504fec92988c1b2d961bce7d4af276a7d27bf3c2ba1df6b69140582104bf8f05",
+      "files": [
+        {
+          "path": "assets/FeaturePage-2zyLJwLV.js",
+          "sha256": "b37a578bedde3c9b2475d0f2b259f747fc27afcced8885314427ab033e307a74"
+        },
+        {
+          "path": "assets/H1-BZCoji1x.js",
+          "sha256": "30a32cdabcde13a0bc39224bf6ca47106dc205a1da6f79da62f015065a2017b4"
+        },
+        {
+          "path": "assets/HomePage-CZiBZHtd.js",
+          "sha256": "49ec961d8d1880535d6e19697bb88fdda363158741dee1edcf5d82de2325eead"
+        },
+        {
+          "path": "assets/NotFoundPage-BkMd3EGU.js",
+          "sha256": "0fb5f4ba0c0a370644f4d5a0e2e0296f92c9886434cef25509d38f796fb5d93a"
+        },
+        {
+          "path": "assets/__vite-browser-external-CvNEtdN9.js",
+          "sha256": "50afa8586c0e07ad1dfa96a37938ee39809a7ab9760d8e9ae18b93603ff1e397"
+        },
+        {
+          "path": "assets/banner-6i24qsix.jpg",
+          "sha256": "90890967b1997f84599b177d9787c4c9cdf9651933725f5732810e99891407bc"
+        },
+        {
+          "path": "assets/de-CEvlwdXo.js",
+          "sha256": "a43a6f9f1529edb1fd7e05b3e871f9ba4e5943738de64db40147497cd9c81031"
+        },
+        {
+          "path": "assets/en-D7F8Da0k.js",
+          "sha256": "74ed6263e654f2e2a1eb76f3bba1366fb3a516df619c95054ccc5787d7d31f41"
+        },
+        {
+          "path": "assets/favicon-Ba7brf7t.ico",
+          "sha256": "4f41a82ef5b4b3d36786a11738db0553c376f9e1078d68c14a732326a209e07a"
+        },
+        {
+          "path": "assets/index-CqaBhjBI.css",
+          "sha256": "96fbb04b0941f4fbefa051260b7953916184b9ccfda62282044121f0e20d4aa4"
+        },
+        {
+          "path": "assets/index-D47xRHLD.js",
+          "sha256": "712f487de9f84b7d704ff91258a09af5558f0f0fa77dc375655d02ef13397e90"
+        },
+        {
+          "path": "assets/intl-tJox8g0n.js",
+          "sha256": "b236f5b1a902da9ed2e087da178b3c69776708686740480cd038c76e1ce27f09"
+        },
+        {
+          "path": "index.html",
+          "sha256": "e77d403d657e36d070614c51a9db81ce7d998d3b0811126042def41210633dd4"
+        },
+        {
+          "path": "precache-manifest.json",
+          "sha256": "44023d4ca959eba5ec462cd305e6944abe03964dc836b042673bc8dc1f5ab024"
+        },
+        {
+          "path": "sw.js",
+          "sha256": "e35d5a8b81eda0f5dfc67f840130191a69fdc2b9a55ecea4cf7146d0891f6872"
+        }
+      ]
+    },
+    "serviceWorker": {
+      "workerSha256": "e35d5a8b81eda0f5dfc67f840130191a69fdc2b9a55ecea4cf7146d0891f6872",
+      "manifestSha256": "44023d4ca959eba5ec462cd305e6944abe03964dc836b042673bc8dc1f5ab024",
+      "scope": "/",
+      "entries": [
+        {
+          "url": "/assets/FeaturePage-2zyLJwLV.js",
+          "sha256": "b37a578bedde3c9b2475d0f2b259f747fc27afcced8885314427ab033e307a74"
+        },
+        {
+          "url": "/assets/H1-BZCoji1x.js",
+          "sha256": "30a32cdabcde13a0bc39224bf6ca47106dc205a1da6f79da62f015065a2017b4"
+        },
+        {
+          "url": "/assets/HomePage-CZiBZHtd.js",
+          "sha256": "49ec961d8d1880535d6e19697bb88fdda363158741dee1edcf5d82de2325eead"
+        },
+        {
+          "url": "/assets/NotFoundPage-BkMd3EGU.js",
+          "sha256": "0fb5f4ba0c0a370644f4d5a0e2e0296f92c9886434cef25509d38f796fb5d93a"
+        },
+        {
+          "url": "/assets/__vite-browser-external-CvNEtdN9.js",
+          "sha256": "50afa8586c0e07ad1dfa96a37938ee39809a7ab9760d8e9ae18b93603ff1e397"
+        },
+        {
+          "url": "/assets/banner-6i24qsix.jpg",
+          "sha256": "90890967b1997f84599b177d9787c4c9cdf9651933725f5732810e99891407bc"
+        },
+        {
+          "url": "/assets/de-CEvlwdXo.js",
+          "sha256": "a43a6f9f1529edb1fd7e05b3e871f9ba4e5943738de64db40147497cd9c81031"
+        },
+        {
+          "url": "/assets/en-D7F8Da0k.js",
+          "sha256": "74ed6263e654f2e2a1eb76f3bba1366fb3a516df619c95054ccc5787d7d31f41"
+        },
+        {
+          "url": "/assets/favicon-Ba7brf7t.ico",
+          "sha256": "4f41a82ef5b4b3d36786a11738db0553c376f9e1078d68c14a732326a209e07a"
+        },
+        {
+          "url": "/assets/index-CqaBhjBI.css",
+          "sha256": "96fbb04b0941f4fbefa051260b7953916184b9ccfda62282044121f0e20d4aa4"
+        },
+        {
+          "url": "/assets/index-D47xRHLD.js",
+          "sha256": "712f487de9f84b7d704ff91258a09af5558f0f0fa77dc375655d02ef13397e90"
+        },
+        {
+          "url": "/assets/intl-tJox8g0n.js",
+          "sha256": "b236f5b1a902da9ed2e087da178b3c69776708686740480cd038c76e1ce27f09"
+        },
+        {
+          "url": "/index.html",
+          "sha256": "e77d403d657e36d070614c51a9db81ce7d998d3b0811126042def41210633dd4"
+        }
+      ]
+    },
+    "equal": true,
+    "bundler": "vite-8.0.16"
+  },
+  {
+    "lane": "target",
+    "first": {
+      "log": "vite v8.0.16 building client environment for production...\n\u001b[2K\rtransforming...✓ 516 modules transformed.\nrendering chunks...\ncomputing gzip size...\nbuild-vite/index.html                                    0.49 kB │ gzip:   0.30 kB\nbuild-vite/assets/banner-6i24qsix.jpg                  205.99 kB\nbuild-vite/assets/favicon-Ba7brf7t.ico                 370.07 kB\nbuild-vite/assets/index-CqaBhjBI.css                     2.95 kB │ gzip:   1.24 kB\nbuild-vite/assets/H1-DCVj1WeM.js                         0.10 kB │ gzip:   0.12 kB\nbuild-vite/assets/NotFoundPage-Co4MDuS6.js               0.42 kB │ gzip:   0.28 kB\nbuild-vite/assets/__vite-browser-external-CvNEtdN9.js    0.86 kB │ gzip:   0.48 kB\nbuild-vite/assets/FeaturePage-3koR6qyF.js                4.08 kB │ gzip:   1.36 kB\nbuild-vite/assets/en-D7F8Da0k.js                        24.55 kB │ gzip:   4.26 kB\nbuild-vite/assets/de-CEvlwdXo.js                        24.86 kB │ gzip:   4.25 kB\nbuild-vite/assets/intl-tJox8g0n.js                      40.92 kB │ gzip:  14.17 kB\nbuild-vite/assets/HomePage-BLDw2n8d.js                  80.20 kB │ gzip:  29.29 kB\nbuild-vite/assets/index-BbOQy7cX.js                    420.31 kB │ gzip: 131.70 kB\n\n✓ built in <duration>\n",
+      "digest": "d1f23f8d43a7ff7c02e849c2b3e5ad6ab9f99f162ac69e8f22d9eb6f36b860d1",
+      "files": [
+        {
+          "path": "assets/FeaturePage-3koR6qyF.js",
+          "sha256": "a0b93420cde8186d5fb4f5594b2210f5d79aedce53b42c25a229f5036992842a"
+        },
+        {
+          "path": "assets/H1-DCVj1WeM.js",
+          "sha256": "e56a6490fb17fceb4df0b881de7a6f6847917b11dca36a699a0e5e08e5a14265"
+        },
+        {
+          "path": "assets/HomePage-BLDw2n8d.js",
+          "sha256": "8df8d52971ba682b40b8526a78d1584287aa204ae768b388745d302c799339c5"
+        },
+        {
+          "path": "assets/NotFoundPage-Co4MDuS6.js",
+          "sha256": "c912d041010e0a159cb72e6a1c09731b8fa06e4fa97db0fe61908a7084e6ad21"
+        },
+        {
+          "path": "assets/__vite-browser-external-CvNEtdN9.js",
+          "sha256": "50afa8586c0e07ad1dfa96a37938ee39809a7ab9760d8e9ae18b93603ff1e397"
+        },
+        {
+          "path": "assets/banner-6i24qsix.jpg",
+          "sha256": "90890967b1997f84599b177d9787c4c9cdf9651933725f5732810e99891407bc"
+        },
+        {
+          "path": "assets/de-CEvlwdXo.js",
+          "sha256": "a43a6f9f1529edb1fd7e05b3e871f9ba4e5943738de64db40147497cd9c81031"
+        },
+        {
+          "path": "assets/en-D7F8Da0k.js",
+          "sha256": "74ed6263e654f2e2a1eb76f3bba1366fb3a516df619c95054ccc5787d7d31f41"
+        },
+        {
+          "path": "assets/favicon-Ba7brf7t.ico",
+          "sha256": "4f41a82ef5b4b3d36786a11738db0553c376f9e1078d68c14a732326a209e07a"
+        },
+        {
+          "path": "assets/index-BbOQy7cX.js",
+          "sha256": "b112031b7c9a216fa9a0411d5cb4c5740e1d8ede3aa703a91b0b3da454b9eca1"
+        },
+        {
+          "path": "assets/index-CqaBhjBI.css",
+          "sha256": "96fbb04b0941f4fbefa051260b7953916184b9ccfda62282044121f0e20d4aa4"
+        },
+        {
+          "path": "assets/intl-tJox8g0n.js",
+          "sha256": "b236f5b1a902da9ed2e087da178b3c69776708686740480cd038c76e1ce27f09"
+        },
+        {
+          "path": "index.html",
+          "sha256": "195389eed017d98c1e7bcdfe17b9c42be3851d745d60f7cb816109734381c5af"
+        },
+        {
+          "path": "precache-manifest.json",
+          "sha256": "553cd1cc611a0851b1978bbc041ef2f8c7b9fbbd3fdd9bb68274f29364987cdc"
+        },
+        {
+          "path": "sw.js",
+          "sha256": "62104c48681f27e88a148968f63691810605d61e11287b812f921f5986363fe7"
+        }
+      ]
+    },
+    "second": {
+      "log": "vite v8.0.16 building client environment for production...\n\u001b[2K\rtransforming...✓ 516 modules transformed.\nrendering chunks...\ncomputing gzip size...\nbuild-vite/index.html                                    0.49 kB │ gzip:   0.30 kB\nbuild-vite/assets/banner-6i24qsix.jpg                  205.99 kB\nbuild-vite/assets/favicon-Ba7brf7t.ico                 370.07 kB\nbuild-vite/assets/index-CqaBhjBI.css                     2.95 kB │ gzip:   1.24 kB\nbuild-vite/assets/H1-DCVj1WeM.js                         0.10 kB │ gzip:   0.12 kB\nbuild-vite/assets/NotFoundPage-Co4MDuS6.js               0.42 kB │ gzip:   0.28 kB\nbuild-vite/assets/__vite-browser-external-CvNEtdN9.js    0.86 kB │ gzip:   0.48 kB\nbuild-vite/assets/FeaturePage-3koR6qyF.js                4.08 kB │ gzip:   1.36 kB\nbuild-vite/assets/en-D7F8Da0k.js                        24.55 kB │ gzip:   4.26 kB\nbuild-vite/assets/de-CEvlwdXo.js                        24.86 kB │ gzip:   4.25 kB\nbuild-vite/assets/intl-tJox8g0n.js                      40.92 kB │ gzip:  14.17 kB\nbuild-vite/assets/HomePage-BLDw2n8d.js                  80.20 kB │ gzip:  29.29 kB\nbuild-vite/assets/index-BbOQy7cX.js                    420.31 kB │ gzip: 131.70 kB\n\n✓ built in <duration>\n",
+      "digest": "d1f23f8d43a7ff7c02e849c2b3e5ad6ab9f99f162ac69e8f22d9eb6f36b860d1",
+      "files": [
+        {
+          "path": "assets/FeaturePage-3koR6qyF.js",
+          "sha256": "a0b93420cde8186d5fb4f5594b2210f5d79aedce53b42c25a229f5036992842a"
+        },
+        {
+          "path": "assets/H1-DCVj1WeM.js",
+          "sha256": "e56a6490fb17fceb4df0b881de7a6f6847917b11dca36a699a0e5e08e5a14265"
+        },
+        {
+          "path": "assets/HomePage-BLDw2n8d.js",
+          "sha256": "8df8d52971ba682b40b8526a78d1584287aa204ae768b388745d302c799339c5"
+        },
+        {
+          "path": "assets/NotFoundPage-Co4MDuS6.js",
+          "sha256": "c912d041010e0a159cb72e6a1c09731b8fa06e4fa97db0fe61908a7084e6ad21"
+        },
+        {
+          "path": "assets/__vite-browser-external-CvNEtdN9.js",
+          "sha256": "50afa8586c0e07ad1dfa96a37938ee39809a7ab9760d8e9ae18b93603ff1e397"
+        },
+        {
+          "path": "assets/banner-6i24qsix.jpg",
+          "sha256": "90890967b1997f84599b177d9787c4c9cdf9651933725f5732810e99891407bc"
+        },
+        {
+          "path": "assets/de-CEvlwdXo.js",
+          "sha256": "a43a6f9f1529edb1fd7e05b3e871f9ba4e5943738de64db40147497cd9c81031"
+        },
+        {
+          "path": "assets/en-D7F8Da0k.js",
+          "sha256": "74ed6263e654f2e2a1eb76f3bba1366fb3a516df619c95054ccc5787d7d31f41"
+        },
+        {
+          "path": "assets/favicon-Ba7brf7t.ico",
+          "sha256": "4f41a82ef5b4b3d36786a11738db0553c376f9e1078d68c14a732326a209e07a"
+        },
+        {
+          "path": "assets/index-BbOQy7cX.js",
+          "sha256": "b112031b7c9a216fa9a0411d5cb4c5740e1d8ede3aa703a91b0b3da454b9eca1"
+        },
+        {
+          "path": "assets/index-CqaBhjBI.css",
+          "sha256": "96fbb04b0941f4fbefa051260b7953916184b9ccfda62282044121f0e20d4aa4"
+        },
+        {
+          "path": "assets/intl-tJox8g0n.js",
+          "sha256": "b236f5b1a902da9ed2e087da178b3c69776708686740480cd038c76e1ce27f09"
+        },
+        {
+          "path": "index.html",
+          "sha256": "195389eed017d98c1e7bcdfe17b9c42be3851d745d60f7cb816109734381c5af"
+        },
+        {
+          "path": "precache-manifest.json",
+          "sha256": "553cd1cc611a0851b1978bbc041ef2f8c7b9fbbd3fdd9bb68274f29364987cdc"
+        },
+        {
+          "path": "sw.js",
+          "sha256": "62104c48681f27e88a148968f63691810605d61e11287b812f921f5986363fe7"
+        }
+      ]
+    },
+    "serviceWorker": {
+      "workerSha256": "62104c48681f27e88a148968f63691810605d61e11287b812f921f5986363fe7",
+      "manifestSha256": "553cd1cc611a0851b1978bbc041ef2f8c7b9fbbd3fdd9bb68274f29364987cdc",
+      "scope": "/",
+      "entries": [
+        {
+          "url": "/assets/FeaturePage-3koR6qyF.js",
+          "sha256": "a0b93420cde8186d5fb4f5594b2210f5d79aedce53b42c25a229f5036992842a"
+        },
+        {
+          "url": "/assets/H1-DCVj1WeM.js",
+          "sha256": "e56a6490fb17fceb4df0b881de7a6f6847917b11dca36a699a0e5e08e5a14265"
+        },
+        {
+          "url": "/assets/HomePage-BLDw2n8d.js",
+          "sha256": "8df8d52971ba682b40b8526a78d1584287aa204ae768b388745d302c799339c5"
+        },
+        {
+          "url": "/assets/NotFoundPage-Co4MDuS6.js",
+          "sha256": "c912d041010e0a159cb72e6a1c09731b8fa06e4fa97db0fe61908a7084e6ad21"
+        },
+        {
+          "url": "/assets/__vite-browser-external-CvNEtdN9.js",
+          "sha256": "50afa8586c0e07ad1dfa96a37938ee39809a7ab9760d8e9ae18b93603ff1e397"
+        },
+        {
+          "url": "/assets/banner-6i24qsix.jpg",
+          "sha256": "90890967b1997f84599b177d9787c4c9cdf9651933725f5732810e99891407bc"
+        },
+        {
+          "url": "/assets/de-CEvlwdXo.js",
+          "sha256": "a43a6f9f1529edb1fd7e05b3e871f9ba4e5943738de64db40147497cd9c81031"
+        },
+        {
+          "url": "/assets/en-D7F8Da0k.js",
+          "sha256": "74ed6263e654f2e2a1eb76f3bba1366fb3a516df619c95054ccc5787d7d31f41"
+        },
+        {
+          "url": "/assets/favicon-Ba7brf7t.ico",
+          "sha256": "4f41a82ef5b4b3d36786a11738db0553c376f9e1078d68c14a732326a209e07a"
+        },
+        {
+          "url": "/assets/index-BbOQy7cX.js",
+          "sha256": "b112031b7c9a216fa9a0411d5cb4c5740e1d8ede3aa703a91b0b3da454b9eca1"
+        },
+        {
+          "url": "/assets/index-CqaBhjBI.css",
+          "sha256": "96fbb04b0941f4fbefa051260b7953916184b9ccfda62282044121f0e20d4aa4"
+        },
+        {
+          "url": "/assets/intl-tJox8g0n.js",
+          "sha256": "b236f5b1a902da9ed2e087da178b3c69776708686740480cd038c76e1ce27f09"
+        },
+        {
+          "url": "/index.html",
+          "sha256": "195389eed017d98c1e7bcdfe17b9c42be3851d745d60f7cb816109734381c5af"
+        }
+      ]
+    },
+    "equal": true,
+    "bundler": "vite-8.0.16"
+  }
+]

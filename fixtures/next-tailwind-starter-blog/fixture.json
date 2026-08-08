@@ -1,0 +1,87 @@
+{
+  "schemaVersion": "versionless.immutable-fixture.v1",
+  "id": "next-tailwind-starter-blog",
+  "framework": "nextjs",
+  "repository": "timlrx/tailwind-nextjs-starter-blog",
+  "repositoryUrl": "https://github.com/timlrx/tailwind-nextjs-starter-blog",
+  "commit": "09ba0550caea03a8c38bc4878d05838d2a57f999",
+  "tree": "2609b3fc4a63d7bccd8f187d66c141f4a7d3cadf",
+  "archive": {
+    "url": "https://codeload.github.com/timlrx/tailwind-nextjs-starter-blog/tar.gz/09ba0550caea03a8c38bc4878d05838d2a57f999",
+    "sha256": "c227efa283b4a17d7ae76aa1b9ea259075f606128642d59f7b43ca63405ee1f7",
+    "byteLength": 1267627
+  },
+  "archiveManifestSha256": "8cce8b04846e0382bf1a4b2812881a998fc3d2cf061b2f43362310139da801e3",
+  "repositoryIdentity": {
+    "fullName": "timlrx/tailwind-nextjs-starter-blog",
+    "fork": false
+  },
+  "reliedPaths": [
+    ".yarnrc.yml",
+    "LICENSE",
+    "app/api/newsletter2/route.ts",
+    "app/blog/[...slug]/page.tsx",
+    "app/layout.tsx",
+    "next.config.js",
+    "package.json",
+    "yarn.lock"
+  ],
+  "corroboratedLeadFacts": {
+    "next": "13.4.8",
+    "react": "18.2.0",
+    "packageManager": "yarn-metadata-v6-node-modules",
+    "router": "app",
+    "layoutPath": "app/layout.tsx",
+    "dynamicRoutePath": "app/blog/[...slug]/page.tsx",
+    "dataFunction": "generateStaticParams",
+    "apiRoutePath": "app/api/newsletter2/route.ts",
+    "productionBundler": "candidate-owned-custom-webpack",
+    "nodeEngine": "absent",
+    "scripts": [
+      {
+        "name": "analyze",
+        "command": "cross-env ANALYZE=true next build"
+      },
+      {
+        "name": "build",
+        "command": "cross-env INIT_CWD=$PWD next build && cross-env NODE_OPTIONS='--experimental-json-modules' node -r esbuild-register ./scripts/postbuild.mjs"
+      },
+      {
+        "name": "dev",
+        "command": "cross-env INIT_CWD=$PWD next dev"
+      },
+      {
+        "name": "lint",
+        "command": "next lint --fix --dir pages --dir components --dir lib --dir layouts --dir scripts"
+      },
+      {
+        "name": "serve",
+        "command": "next start"
+      },
+      {
+        "name": "start",
+        "command": "next dev"
+      }
+    ],
+    "scope": "provenance-only"
+  },
+  "evidenceBlockers": [
+    "Package scripts and any npx or registry behavior were recorded but not executed or resolved.",
+    "Newsletter integrations, external product links, remote images, fonts, assets, analytics, telemetry, and browser egress remain not-tested.",
+    "Server, API, data, authentication, and payment behavior remain not-tested and outside the usable closure."
+  ],
+  "usableClosure": {
+    "assets": "Only paths classified verified-compatible are usable; excluded and unknown paths remain outside the usable closure.",
+    "nestedLicensing": "Only the exact root MIT file is verified-compatible.",
+    "committedDist": "No committed dist boundary was required."
+  },
+  "localityBoundaries": [
+    "No candidate code, dependency, script, server, API route, browser journey, or outbound behavior was executed.",
+    "Newsletter, remote resources, server, authentication, payment, analytics, telemetry, and egress remain not-tested."
+  ],
+  "nonclaims": [
+    "No migration, install, build, server, browser, or Playwright execution or parity is established.",
+    "No Node, Yarn, Next, webpack, SWC, Turbopack, runtime, bundler, routing, rendering, SSR, SSG, ISR, RSC, API, middleware, image, data, authentication, payment, analytics, telemetry, egress, or locality support is established.",
+    "No Tier F, Tier P, pilot, generic React support, Next.js support, Ionic, Nx, Analog, NativeScript, native parity, enterprise support, compliance, certification, PCI applicability, authenticity, signer identity, SLSA level, or OS-wide isolation is established."
+  ]
+}

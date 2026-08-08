@@ -1,0 +1,298 @@
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @rx-angular/cdk@15.0.0
+npm warn Found: @angular/core@16.2.11
+npm warn node_modules/@angular/core
+npm warn   @angular/core@"16.2.11" from the root project
+npm warn   7 more (@angular/animations, @angular/common, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @angular/core@"16.2.11" from @angular/animations@16.2.11
+npm warn node_modules/@angular/animations
+npm warn   @angular/animations@"16.2.11" from the root project
+npm warn   1 more (@angular/platform-browser)
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @rx-angular/cdk@15.0.0
+npm warn Found: @angular/core@16.2.11
+npm warn node_modules/@angular/core
+npm warn   @angular/core@"16.2.11" from the root project
+npm warn   7 more (@angular/animations, @angular/common, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @angular/core@"16.2.11" from @angular/animations@16.2.11
+npm warn node_modules/@angular/animations
+npm warn   @angular/animations@"16.2.11" from the root project
+npm warn   1 more (@angular/platform-browser)
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @rx-angular/cdk@15.0.0
+npm warn Found: @angular/core@16.2.11
+npm warn node_modules/@angular/core
+npm warn   @angular/core@"16.2.11" from the root project
+npm warn   7 more (@angular/animations, @angular/common, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @angular/core@"16.2.11" from @angular/animations@16.2.11
+npm warn node_modules/@angular/animations
+npm warn   @angular/animations@"16.2.11" from the root project
+npm warn   1 more (@angular/platform-browser)
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @rx-angular/cdk@15.0.0
+npm warn Found: @angular/core@16.2.11
+npm warn node_modules/@angular/core
+npm warn   @angular/core@"16.2.11" from the root project
+npm warn   7 more (@angular/animations, @angular/common, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @angular/core@"16.2.11" from @angular/animations@16.2.11
+npm warn node_modules/@angular/animations
+npm warn   @angular/animations@"16.2.11" from the root project
+npm warn   1 more (@angular/platform-browser)
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @rx-angular/cdk@15.0.0
+npm warn Found: @angular/core@16.2.11
+npm warn node_modules/@angular/core
+npm warn   @angular/core@"16.2.11" from the root project
+npm warn   7 more (@angular/animations, @angular/common, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @angular/core@"16.2.11" from @angular/animations@16.2.11
+npm warn node_modules/@angular/animations
+npm warn   @angular/animations@"16.2.11" from the root project
+npm warn   1 more (@angular/platform-browser)
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @rx-angular/cdk@15.0.0
+npm warn Found: @angular/core@16.2.11
+npm warn node_modules/@angular/core
+npm warn   @angular/core@"16.2.11" from the root project
+npm warn   7 more (@angular/animations, @angular/common, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @angular/core@"16.2.11" from @angular/common@16.2.11
+npm warn node_modules/@angular/common
+npm warn   @angular/common@"16.2.11" from the root project
+npm warn   4 more (@angular/forms, @angular/platform-browser, ...)
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @rx-angular/cdk@15.0.0
+npm warn Found: @angular/core@16.2.11
+npm warn node_modules/@angular/core
+npm warn   @angular/core@"16.2.11" from the root project
+npm warn   7 more (@angular/animations, @angular/common, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @angular/core@"16.2.11" from @angular/common@16.2.11
+npm warn node_modules/@angular/common
+npm warn   @angular/common@"16.2.11" from the root project
+npm warn   4 more (@angular/forms, @angular/platform-browser, ...)
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @rx-angular/cdk@15.0.0
+npm warn Found: @angular/core@16.2.11
+npm warn node_modules/@angular/core
+npm warn   @angular/core@"16.2.11" from the root project
+npm warn   7 more (@angular/animations, @angular/common, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @angular/core@"16.2.11" from @angular/common@16.2.11
+npm warn node_modules/@angular/common
+npm warn   @angular/common@"16.2.11" from the root project
+npm warn   4 more (@angular/forms, @angular/platform-browser, ...)
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @rx-angular/cdk@15.0.0
+npm warn Found: @angular/core@16.2.11
+npm warn node_modules/@angular/core
+npm warn   @angular/core@"16.2.11" from the root project
+npm warn   7 more (@angular/animations, @angular/common, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @angular/core@"16.2.11" from @angular/common@16.2.11
+npm warn node_modules/@angular/common
+npm warn   @angular/common@"16.2.11" from the root project
+npm warn   4 more (@angular/forms, @angular/platform-browser, ...)
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @rx-angular/cdk@15.0.0
+npm warn Found: @angular/core@16.2.11
+npm warn node_modules/@angular/core
+npm warn   @angular/core@"16.2.11" from the root project
+npm warn   7 more (@angular/animations, @angular/common, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @angular/core@"16.2.11" from @angular/common@16.2.11
+npm warn node_modules/@angular/common
+npm warn   @angular/common@"16.2.11" from the root project
+npm warn   4 more (@angular/forms, @angular/platform-browser, ...)
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @rx-angular/cdk@15.0.0
+npm warn Found: @angular/core@16.2.11
+npm warn node_modules/@angular/core
+npm warn   @angular/core@"16.2.11" from the root project
+npm warn   7 more (@angular/animations, @angular/common, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peerOptional @angular/core@"16.2.11" from @angular/compiler@16.2.11
+npm warn node_modules/@angular/compiler
+npm warn   @angular/compiler@"16.2.11" from the root project
+npm warn   2 more (@angular/compiler-cli, @angular/platform-browser-dynamic)
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @rx-angular/cdk@15.0.0
+npm warn Found: @angular/core@16.2.11
+npm warn node_modules/@angular/core
+npm warn   @angular/core@"16.2.11" from the root project
+npm warn   7 more (@angular/animations, @angular/common, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peerOptional @angular/core@"16.2.11" from @angular/compiler@16.2.11
+npm warn node_modules/@angular/compiler
+npm warn   @angular/compiler@"16.2.11" from the root project
+npm warn   2 more (@angular/compiler-cli, @angular/platform-browser-dynamic)
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @rx-angular/cdk@15.0.0
+npm warn Found: @angular/core@16.2.11
+npm warn node_modules/@angular/core
+npm warn   @angular/core@"16.2.11" from the root project
+npm warn   7 more (@angular/animations, @angular/common, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peerOptional @angular/core@"16.2.11" from @angular/compiler@16.2.11
+npm warn node_modules/@angular/compiler
+npm warn   @angular/compiler@"16.2.11" from the root project
+npm warn   2 more (@angular/compiler-cli, @angular/platform-browser-dynamic)
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @rx-angular/cdk@15.0.0
+npm warn Found: @angular/core@16.2.11
+npm warn node_modules/@angular/core
+npm warn   @angular/core@"16.2.11" from the root project
+npm warn   7 more (@angular/animations, @angular/common, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peerOptional @angular/core@"16.2.11" from @angular/compiler@16.2.11
+npm warn node_modules/@angular/compiler
+npm warn   @angular/compiler@"16.2.11" from the root project
+npm warn   2 more (@angular/compiler-cli, @angular/platform-browser-dynamic)
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @rx-angular/cdk@15.0.0
+npm warn Found: @angular/core@16.2.11
+npm warn node_modules/@angular/core
+npm warn   @angular/core@"16.2.11" from the root project
+npm warn   7 more (@angular/animations, @angular/common, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @angular/core@"16.2.11" from @angular/forms@16.2.11
+npm warn node_modules/@angular/forms
+npm warn   @angular/forms@"16.2.11" from the root project
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @rx-angular/cdk@15.0.0
+npm warn Found: @angular/core@16.2.11
+npm warn node_modules/@angular/core
+npm warn   @angular/core@"16.2.11" from the root project
+npm warn   7 more (@angular/animations, @angular/common, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @angular/core@"16.2.11" from @angular/platform-browser@16.2.11
+npm warn node_modules/@angular/platform-browser
+npm warn   @angular/platform-browser@"16.2.11" from the root project
+npm warn   3 more (@angular/forms, @angular/platform-browser-dynamic, @angular/router)
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @rx-angular/cdk@15.0.0
+npm warn Found: @angular/core@16.2.11
+npm warn node_modules/@angular/core
+npm warn   @angular/core@"16.2.11" from the root project
+npm warn   7 more (@angular/animations, @angular/common, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @angular/core@"16.2.11" from @angular/platform-browser@16.2.11
+npm warn node_modules/@angular/platform-browser
+npm warn   @angular/platform-browser@"16.2.11" from the root project
+npm warn   3 more (@angular/forms, @angular/platform-browser-dynamic, @angular/router)
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @rx-angular/cdk@15.0.0
+npm warn Found: @angular/core@16.2.11
+npm warn node_modules/@angular/core
+npm warn   @angular/core@"16.2.11" from the root project
+npm warn   7 more (@angular/animations, @angular/common, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @angular/core@"16.2.11" from @angular/platform-browser@16.2.11
+npm warn node_modules/@angular/platform-browser
+npm warn   @angular/platform-browser@"16.2.11" from the root project
+npm warn   3 more (@angular/forms, @angular/platform-browser-dynamic, @angular/router)
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @rx-angular/cdk@15.0.0
+npm warn Found: @angular/core@16.2.11
+npm warn node_modules/@angular/core
+npm warn   @angular/core@"16.2.11" from the root project
+npm warn   7 more (@angular/animations, @angular/common, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @angular/core@"16.2.11" from @angular/platform-browser@16.2.11
+npm warn node_modules/@angular/platform-browser
+npm warn   @angular/platform-browser@"16.2.11" from the root project
+npm warn   3 more (@angular/forms, @angular/platform-browser-dynamic, @angular/router)
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @rx-angular/cdk@15.0.0
+npm warn Found: @angular/core@16.2.11
+npm warn node_modules/@angular/core
+npm warn   @angular/core@"16.2.11" from the root project
+npm warn   7 more (@angular/animations, @angular/common, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @angular/core@"16.2.11" from @angular/platform-browser-dynamic@16.2.11
+npm warn node_modules/@angular/platform-browser-dynamic
+npm warn   @angular/platform-browser-dynamic@"16.2.11" from the root project
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @rx-angular/cdk@15.0.0
+npm warn Found: @angular/core@16.2.11
+npm warn node_modules/@angular/core
+npm warn   @angular/core@"16.2.11" from the root project
+npm warn   7 more (@angular/animations, @angular/common, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @angular/core@"16.2.11" from @angular/router@16.2.11
+npm warn node_modules/@angular/router
+npm warn   @angular/router@"16.2.11" from the root project
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @rx-angular/cdk@15.0.0
+npm warn Found: @angular/core@16.2.11
+npm warn node_modules/@angular/core
+npm warn   @angular/core@"16.2.11" from the root project
+npm warn   7 more (@angular/animations, @angular/common, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @angular/core@"^15.0.0" from @rx-angular/cdk@15.0.0
+npm warn node_modules/@rx-angular/cdk
+npm warn   @rx-angular/cdk@"latest" from the root project
+npm warn   1 more (@rx-angular/template)
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @rx-angular/cdk@15.0.0
+npm warn Found: @angular/core@16.2.11
+npm warn node_modules/@angular/core
+npm warn   @angular/core@"16.2.11" from the root project
+npm warn   7 more (@angular/animations, @angular/common, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @angular/core@"^15.0.0" from @rx-angular/cdk@15.0.0
+npm warn node_modules/@rx-angular/cdk
+npm warn   @rx-angular/cdk@"latest" from the root project
+npm warn   1 more (@rx-angular/template)
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @rx-angular/cdk@15.0.0
+npm warn Found: @angular/core@16.2.11
+npm warn node_modules/@angular/core
+npm warn   @angular/core@"16.2.11" from the root project
+npm warn   7 more (@angular/animations, @angular/common, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @angular/core@"^15.0.0" from @rx-angular/template@15.1.0
+npm warn node_modules/@rx-angular/template
+npm warn   @rx-angular/template@"^15.1.0" from the root project
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @rx-angular/cdk@15.0.0
+npm warn Found: @angular/core@undefined
+npm warn node_modules/@angular/core
+npm warn   @angular/core@"16.2.11" from the root project
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @angular/core@"^15.0.0" from @rx-angular/cdk@15.0.0
+npm warn node_modules/@rx-angular/cdk
+npm warn   @rx-angular/cdk@"latest" from the root project
+npm warn   1 more (@rx-angular/template)
+npm error code ENOTCACHED
+npm error request to https://registry.npmjs.org/@angular%2fcore failed: cache mode is 'only-if-cached' but no cached response is available.
+npm error A complete log of this run can be found in: /Users/jacksm5pro/dev/open-source/versionless/.versionless/work/angular-realworld-v15-to-v16/npm-cache/target/_logs/2026-08-07T12_53_15_177Z-debug-0.log

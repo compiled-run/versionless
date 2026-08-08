@@ -1,0 +1,17 @@
+{
+  "semanticEngine": {
+    "parser": "yuku-parser@0.7.0",
+    "analyzer": "yuku-analyzer@0.7.0",
+    "diagnostics": 0
+  },
+  "preconditions": [
+    "exact list and detail route templates",
+    "exact Phone.query list controller",
+    "exact $routeParams/Phone detail controller",
+    "frozen local Phone resource service"
+  ],
+  "idempotent": true,
+  "dataSource": "frozen local phones/*.json through existing Phone resource",
+  "bindings": "one-way",
+  "lifecycle": "$onInit"
+}

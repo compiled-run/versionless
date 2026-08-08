@@ -1,0 +1,230 @@
+[
+  {
+    "lane": "legacy",
+    "run": 1,
+    "result": "pass",
+    "navigationPath": "/features",
+    "selectedLocale": "de",
+    "translatedHeading": "Beginnen Sie Ihr nächstes React Projekt in Sekunden",
+    "username": "octocat",
+    "syntheticRequests": [
+      {
+        "method": "GET",
+        "url": "https://api.github.com/users/octocat/repos?type=all&sort=updated",
+        "kind": "synthetic-interception"
+      }
+    ],
+    "repositories": [
+      "owned-repo",
+      "fork-owner/forked-repo"
+    ],
+    "issueCounts": [
+      3,
+      7
+    ],
+    "linkDestinations": [
+      "https://github.example/octocat/owned-repo",
+      "https://github.example/fork-owner/forked-repo"
+    ],
+    "loading": "complete",
+    "blocked": [],
+    "successfulNonLoopback": [],
+    "consoleErrors": [],
+    "pageErrors": [],
+    "serviceWorker": {
+      "registration": "active",
+      "scope": "/",
+      "controller": "activated",
+      "cacheNames": [
+        "versionless-react-vite8-44023d4ca959eba5ec462cd305e6944abe03964dc836b042673bc8dc1f5ab024"
+      ],
+      "inventory": [
+        "/assets/FeaturePage-2zyLJwLV.js",
+        "/assets/H1-BZCoji1x.js",
+        "/assets/HomePage-CZiBZHtd.js",
+        "/assets/NotFoundPage-BkMd3EGU.js",
+        "/assets/__vite-browser-external-CvNEtdN9.js",
+        "/assets/banner-6i24qsix.jpg",
+        "/assets/de-CEvlwdXo.js",
+        "/assets/en-D7F8Da0k.js",
+        "/assets/favicon-Ba7brf7t.ico",
+        "/assets/index-CqaBhjBI.css",
+        "/assets/index-D47xRHLD.js",
+        "/assets/intl-tJox8g0n.js",
+        "/index.html"
+      ]
+    },
+    "offlineReload": "pass"
+  },
+  {
+    "lane": "legacy",
+    "run": 2,
+    "result": "pass",
+    "navigationPath": "/features",
+    "selectedLocale": "de",
+    "translatedHeading": "Beginnen Sie Ihr nächstes React Projekt in Sekunden",
+    "username": "octocat",
+    "syntheticRequests": [
+      {
+        "method": "GET",
+        "url": "https://api.github.com/users/octocat/repos?type=all&sort=updated",
+        "kind": "synthetic-interception"
+      }
+    ],
+    "repositories": [
+      "owned-repo",
+      "fork-owner/forked-repo"
+    ],
+    "issueCounts": [
+      3,
+      7
+    ],
+    "linkDestinations": [
+      "https://github.example/octocat/owned-repo",
+      "https://github.example/fork-owner/forked-repo"
+    ],
+    "loading": "complete",
+    "blocked": [],
+    "successfulNonLoopback": [],
+    "consoleErrors": [],
+    "pageErrors": [],
+    "serviceWorker": {
+      "registration": "active",
+      "scope": "/",
+      "controller": "activated",
+      "cacheNames": [
+        "versionless-react-vite8-44023d4ca959eba5ec462cd305e6944abe03964dc836b042673bc8dc1f5ab024"
+      ],
+      "inventory": [
+        "/assets/FeaturePage-2zyLJwLV.js",
+        "/assets/H1-BZCoji1x.js",
+        "/assets/HomePage-CZiBZHtd.js",
+        "/assets/NotFoundPage-BkMd3EGU.js",
+        "/assets/__vite-browser-external-CvNEtdN9.js",
+        "/assets/banner-6i24qsix.jpg",
+        "/assets/de-CEvlwdXo.js",
+        "/assets/en-D7F8Da0k.js",
+        "/assets/favicon-Ba7brf7t.ico",
+        "/assets/index-CqaBhjBI.css",
+        "/assets/index-D47xRHLD.js",
+        "/assets/intl-tJox8g0n.js",
+        "/index.html"
+      ]
+    },
+    "offlineReload": "pass"
+  },
+  {
+    "lane": "target",
+    "run": 1,
+    "result": "pass",
+    "navigationPath": "/features",
+    "selectedLocale": "de",
+    "translatedHeading": "Beginnen Sie Ihr nächstes React Projekt in Sekunden",
+    "username": "octocat",
+    "syntheticRequests": [
+      {
+        "method": "GET",
+        "url": "https://api.github.com/users/octocat/repos?type=all&sort=updated",
+        "kind": "synthetic-interception"
+      }
+    ],
+    "repositories": [
+      "owned-repo",
+      "fork-owner/forked-repo"
+    ],
+    "issueCounts": [
+      3,
+      7
+    ],
+    "linkDestinations": [
+      "https://github.example/octocat/owned-repo",
+      "https://github.example/fork-owner/forked-repo"
+    ],
+    "loading": "complete",
+    "blocked": [],
+    "successfulNonLoopback": [],
+    "consoleErrors": [],
+    "pageErrors": [],
+    "serviceWorker": {
+      "registration": "active",
+      "scope": "/",
+      "controller": "activated",
+      "cacheNames": [
+        "versionless-react-vite8-553cd1cc611a0851b1978bbc041ef2f8c7b9fbbd3fdd9bb68274f29364987cdc"
+      ],
+      "inventory": [
+        "/assets/FeaturePage-3koR6qyF.js",
+        "/assets/H1-DCVj1WeM.js",
+        "/assets/HomePage-BLDw2n8d.js",
+        "/assets/NotFoundPage-Co4MDuS6.js",
+        "/assets/__vite-browser-external-CvNEtdN9.js",
+        "/assets/banner-6i24qsix.jpg",
+        "/assets/de-CEvlwdXo.js",
+        "/assets/en-D7F8Da0k.js",
+        "/assets/favicon-Ba7brf7t.ico",
+        "/assets/index-BbOQy7cX.js",
+        "/assets/index-CqaBhjBI.css",
+        "/assets/intl-tJox8g0n.js",
+        "/index.html"
+      ]
+    },
+    "offlineReload": "pass"
+  },
+  {
+    "lane": "target",
+    "run": 2,
+    "result": "pass",
+    "navigationPath": "/features",
+    "selectedLocale": "de",
+    "translatedHeading": "Beginnen Sie Ihr nächstes React Projekt in Sekunden",
+    "username": "octocat",
+    "syntheticRequests": [
+      {
+        "method": "GET",
+        "url": "https://api.github.com/users/octocat/repos?type=all&sort=updated",
+        "kind": "synthetic-interception"
+      }
+    ],
+    "repositories": [
+      "owned-repo",
+      "fork-owner/forked-repo"
+    ],
+    "issueCounts": [
+      3,
+      7
+    ],
+    "linkDestinations": [
+      "https://github.example/octocat/owned-repo",
+      "https://github.example/fork-owner/forked-repo"
+    ],
+    "loading": "complete",
+    "blocked": [],
+    "successfulNonLoopback": [],
+    "consoleErrors": [],
+    "pageErrors": [],
+    "serviceWorker": {
+      "registration": "active",
+      "scope": "/",
+      "controller": "activated",
+      "cacheNames": [
+        "versionless-react-vite8-553cd1cc611a0851b1978bbc041ef2f8c7b9fbbd3fdd9bb68274f29364987cdc"
+      ],
+      "inventory": [
+        "/assets/FeaturePage-3koR6qyF.js",
+        "/assets/H1-DCVj1WeM.js",
+        "/assets/HomePage-BLDw2n8d.js",
+        "/assets/NotFoundPage-Co4MDuS6.js",
+        "/assets/__vite-browser-external-CvNEtdN9.js",
+        "/assets/banner-6i24qsix.jpg",
+        "/assets/de-CEvlwdXo.js",
+        "/assets/en-D7F8Da0k.js",
+        "/assets/favicon-Ba7brf7t.ico",
+        "/assets/index-BbOQy7cX.js",
+        "/assets/index-CqaBhjBI.css",
+        "/assets/intl-tJox8g0n.js",
+        "/index.html"
+      ]
+    },
+    "offlineReload": "pass"
+  }
+]

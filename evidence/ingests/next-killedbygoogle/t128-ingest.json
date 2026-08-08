@@ -1,0 +1,348 @@
+{
+  "schemaVersion": "versionless.immutable-single-ingest.v1",
+  "fixture": "next-killedbygoogle",
+  "consent": {
+    "id": "T128-official-source-codyogden-killedbygoogle-56809c31592e6ca1edce8af9bfe842fbcdf71f4d-historical-provenance-ingest",
+    "task": "T128",
+    "authorization": "PM recorded the owner standing approval as applied on 2026-08-06 to the exact T128 historical provenance-only contract.",
+    "purpose": "Fresh immutable historical codyogden/killedbygoogle provenance, license inventory, and asset classification only.",
+    "methods": [
+      "GET"
+    ],
+    "redirects": "disabled",
+    "acceptEncoding": "identity",
+    "hosts": [
+      "api.github.com",
+      "codeload.github.com",
+      "raw.githubusercontent.com"
+    ],
+    "expires": "2026-08-08T00:00:00Z",
+    "status": "closed"
+  },
+  "freshAcquisitionSeparation": "T128 uses only its fresh 19 response bodies; T104, T106, T108, T111, T113, and T124 bodies and digests are neither imported nor compared.",
+  "ledger": [
+    {
+      "sequence": 1,
+      "fixture": "next-killedbygoogle",
+      "name": "repository-metadata",
+      "host": "api.github.com",
+      "url": "https://api.github.com/repos/codyogden/killedbygoogle",
+      "result": "pass",
+      "outcome": "success",
+      "httpStatus": 200,
+      "receivedBytes": 5629,
+      "bodyComplete": true,
+      "byteLength": 5629,
+      "sha256": "989854e380d036f784b92697b898a3e15b2ea746b1fc3049666de86287cf28ba"
+    },
+    {
+      "sequence": 2,
+      "fixture": "next-killedbygoogle",
+      "name": "commit-metadata",
+      "host": "api.github.com",
+      "url": "https://api.github.com/repos/codyogden/killedbygoogle/commits/56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+      "result": "pass",
+      "outcome": "success",
+      "httpStatus": 200,
+      "receivedBytes": 4120,
+      "bodyComplete": true,
+      "byteLength": 4120,
+      "sha256": "decd30c58f4ff2919659015ce893532e0890353a09928964d8f12f0970e721ab"
+    },
+    {
+      "sequence": 3,
+      "fixture": "next-killedbygoogle",
+      "name": "tree-metadata",
+      "host": "api.github.com",
+      "url": "https://api.github.com/repos/codyogden/killedbygoogle/git/trees/b8ac7b4fc3a1e12240f1848f6e8d98c1c7d80763?recursive=1",
+      "result": "pass",
+      "outcome": "success",
+      "httpStatus": 200,
+      "receivedBytes": 20306,
+      "bodyComplete": true,
+      "byteLength": 20306,
+      "sha256": "f8260bf89edc92d6cb0f3e7da50d25c30c39b4bda1900fc3f8edadd8c4a16e4a"
+    },
+    {
+      "sequence": 4,
+      "fixture": "next-killedbygoogle",
+      "name": "archive-copy-1",
+      "host": "codeload.github.com",
+      "url": "https://codeload.github.com/codyogden/killedbygoogle/tar.gz/56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+      "result": "pass",
+      "outcome": "success",
+      "httpStatus": 200,
+      "receivedBytes": 370006,
+      "bodyComplete": true,
+      "byteLength": 370006,
+      "sha256": "c28878d0f65b56aa595763c852477fb0c1e3533e5c7f7ea9daa2be16f102368d"
+    },
+    {
+      "sequence": 5,
+      "fixture": "next-killedbygoogle",
+      "name": "archive-copy-2",
+      "host": "codeload.github.com",
+      "url": "https://codeload.github.com/codyogden/killedbygoogle/tar.gz/56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+      "result": "pass",
+      "outcome": "success",
+      "httpStatus": 200,
+      "receivedBytes": 370006,
+      "bodyComplete": true,
+      "byteLength": 370006,
+      "sha256": "c28878d0f65b56aa595763c852477fb0c1e3533e5c7f7ea9daa2be16f102368d"
+    },
+    {
+      "sequence": 6,
+      "fixture": "next-killedbygoogle",
+      "name": "raw-copy-1:.github/workflows/playwright.yml",
+      "host": "raw.githubusercontent.com",
+      "url": "https://raw.githubusercontent.com/codyogden/killedbygoogle/56809c31592e6ca1edce8af9bfe842fbcdf71f4d/.github/workflows/playwright.yml",
+      "result": "pass",
+      "outcome": "success",
+      "httpStatus": 200,
+      "receivedBytes": 1061,
+      "bodyComplete": true,
+      "byteLength": 1061,
+      "sha256": "79ef3bfab380d28c818d67198275da9d54d7633721a1b507e04beaf81181f0f7"
+    },
+    {
+      "sequence": 7,
+      "fixture": "next-killedbygoogle",
+      "name": "raw-copy-2:.github/workflows/playwright.yml",
+      "host": "raw.githubusercontent.com",
+      "url": "https://raw.githubusercontent.com/codyogden/killedbygoogle/56809c31592e6ca1edce8af9bfe842fbcdf71f4d/.github/workflows/playwright.yml",
+      "result": "pass",
+      "outcome": "success",
+      "httpStatus": 200,
+      "receivedBytes": 1061,
+      "bodyComplete": true,
+      "byteLength": 1061,
+      "sha256": "79ef3bfab380d28c818d67198275da9d54d7633721a1b507e04beaf81181f0f7"
+    },
+    {
+      "sequence": 8,
+      "fixture": "next-killedbygoogle",
+      "name": "raw-copy-1:LICENSE",
+      "host": "raw.githubusercontent.com",
+      "url": "https://raw.githubusercontent.com/codyogden/killedbygoogle/56809c31592e6ca1edce8af9bfe842fbcdf71f4d/LICENSE",
+      "result": "pass",
+      "outcome": "success",
+      "httpStatus": 200,
+      "receivedBytes": 1067,
+      "bodyComplete": true,
+      "byteLength": 1067,
+      "sha256": "10547fb81e311e470cdcda5a273bac2a76f50ded6b33ce4362bcb05e1176d5e0"
+    },
+    {
+      "sequence": 9,
+      "fixture": "next-killedbygoogle",
+      "name": "raw-copy-2:LICENSE",
+      "host": "raw.githubusercontent.com",
+      "url": "https://raw.githubusercontent.com/codyogden/killedbygoogle/56809c31592e6ca1edce8af9bfe842fbcdf71f4d/LICENSE",
+      "result": "pass",
+      "outcome": "success",
+      "httpStatus": 200,
+      "receivedBytes": 1067,
+      "bodyComplete": true,
+      "byteLength": 1067,
+      "sha256": "10547fb81e311e470cdcda5a273bac2a76f50ded6b33ce4362bcb05e1176d5e0"
+    },
+    {
+      "sequence": 10,
+      "fixture": "next-killedbygoogle",
+      "name": "raw-copy-1:components/Search/index.tsx",
+      "host": "raw.githubusercontent.com",
+      "url": "https://raw.githubusercontent.com/codyogden/killedbygoogle/56809c31592e6ca1edce8af9bfe842fbcdf71f4d/components/Search/index.tsx",
+      "result": "pass",
+      "outcome": "success",
+      "httpStatus": 200,
+      "receivedBytes": 974,
+      "bodyComplete": true,
+      "byteLength": 974,
+      "sha256": "697678ea2415166f15335d6a092b9513b7e57d4db5e12e224d33e735a3bcabf6"
+    },
+    {
+      "sequence": 11,
+      "fixture": "next-killedbygoogle",
+      "name": "raw-copy-2:components/Search/index.tsx",
+      "host": "raw.githubusercontent.com",
+      "url": "https://raw.githubusercontent.com/codyogden/killedbygoogle/56809c31592e6ca1edce8af9bfe842fbcdf71f4d/components/Search/index.tsx",
+      "result": "pass",
+      "outcome": "success",
+      "httpStatus": 200,
+      "receivedBytes": 974,
+      "bodyComplete": true,
+      "byteLength": 974,
+      "sha256": "697678ea2415166f15335d6a092b9513b7e57d4db5e12e224d33e735a3bcabf6"
+    },
+    {
+      "sequence": 12,
+      "fixture": "next-killedbygoogle",
+      "name": "raw-copy-1:next.config.js",
+      "host": "raw.githubusercontent.com",
+      "url": "https://raw.githubusercontent.com/codyogden/killedbygoogle/56809c31592e6ca1edce8af9bfe842fbcdf71f4d/next.config.js",
+      "result": "pass",
+      "outcome": "success",
+      "httpStatus": 200,
+      "receivedBytes": 237,
+      "bodyComplete": true,
+      "byteLength": 237,
+      "sha256": "f4c7d09451907d1e288c7ddd5d41372ca2f1cc6bc1760f2c09a98ac0291d39bb"
+    },
+    {
+      "sequence": 13,
+      "fixture": "next-killedbygoogle",
+      "name": "raw-copy-2:next.config.js",
+      "host": "raw.githubusercontent.com",
+      "url": "https://raw.githubusercontent.com/codyogden/killedbygoogle/56809c31592e6ca1edce8af9bfe842fbcdf71f4d/next.config.js",
+      "result": "pass",
+      "outcome": "success",
+      "httpStatus": 200,
+      "receivedBytes": 237,
+      "bodyComplete": true,
+      "byteLength": 237,
+      "sha256": "f4c7d09451907d1e288c7ddd5d41372ca2f1cc6bc1760f2c09a98ac0291d39bb"
+    },
+    {
+      "sequence": 14,
+      "fixture": "next-killedbygoogle",
+      "name": "raw-copy-1:package.json",
+      "host": "raw.githubusercontent.com",
+      "url": "https://raw.githubusercontent.com/codyogden/killedbygoogle/56809c31592e6ca1edce8af9bfe842fbcdf71f4d/package.json",
+      "result": "pass",
+      "outcome": "success",
+      "httpStatus": 200,
+      "receivedBytes": 1300,
+      "bodyComplete": true,
+      "byteLength": 1300,
+      "sha256": "5042dd8b31a7e1b37c2e0ed529cf3db50388660c9616c08e6445664ab59481c4"
+    },
+    {
+      "sequence": 15,
+      "fixture": "next-killedbygoogle",
+      "name": "raw-copy-2:package.json",
+      "host": "raw.githubusercontent.com",
+      "url": "https://raw.githubusercontent.com/codyogden/killedbygoogle/56809c31592e6ca1edce8af9bfe842fbcdf71f4d/package.json",
+      "result": "pass",
+      "outcome": "success",
+      "httpStatus": 200,
+      "receivedBytes": 1300,
+      "bodyComplete": true,
+      "byteLength": 1300,
+      "sha256": "5042dd8b31a7e1b37c2e0ed529cf3db50388660c9616c08e6445664ab59481c4"
+    },
+    {
+      "sequence": 16,
+      "fixture": "next-killedbygoogle",
+      "name": "raw-copy-1:pages/index.tsx",
+      "host": "raw.githubusercontent.com",
+      "url": "https://raw.githubusercontent.com/codyogden/killedbygoogle/56809c31592e6ca1edce8af9bfe842fbcdf71f4d/pages/index.tsx",
+      "result": "pass",
+      "outcome": "success",
+      "httpStatus": 200,
+      "receivedBytes": 4216,
+      "bodyComplete": true,
+      "byteLength": 4216,
+      "sha256": "1b4971c9e4c935f331518ae40a2387412e7031ad2959e98c9e01133095cf4309"
+    },
+    {
+      "sequence": 17,
+      "fixture": "next-killedbygoogle",
+      "name": "raw-copy-2:pages/index.tsx",
+      "host": "raw.githubusercontent.com",
+      "url": "https://raw.githubusercontent.com/codyogden/killedbygoogle/56809c31592e6ca1edce8af9bfe842fbcdf71f4d/pages/index.tsx",
+      "result": "pass",
+      "outcome": "success",
+      "httpStatus": 200,
+      "receivedBytes": 4216,
+      "bodyComplete": true,
+      "byteLength": 4216,
+      "sha256": "1b4971c9e4c935f331518ae40a2387412e7031ad2959e98c9e01133095cf4309"
+    },
+    {
+      "sequence": 18,
+      "fixture": "next-killedbygoogle",
+      "name": "raw-copy-1:yarn.lock",
+      "host": "raw.githubusercontent.com",
+      "url": "https://raw.githubusercontent.com/codyogden/killedbygoogle/56809c31592e6ca1edce8af9bfe842fbcdf71f4d/yarn.lock",
+      "result": "pass",
+      "outcome": "success",
+      "httpStatus": 200,
+      "receivedBytes": 256958,
+      "bodyComplete": true,
+      "byteLength": 256958,
+      "sha256": "a676ee932cef5e54d469dc6d1e040e50f42f9cc88beb16ae5c72c13e26ebc48a"
+    },
+    {
+      "sequence": 19,
+      "fixture": "next-killedbygoogle",
+      "name": "raw-copy-2:yarn.lock",
+      "host": "raw.githubusercontent.com",
+      "url": "https://raw.githubusercontent.com/codyogden/killedbygoogle/56809c31592e6ca1edce8af9bfe842fbcdf71f4d/yarn.lock",
+      "result": "pass",
+      "outcome": "success",
+      "httpStatus": 200,
+      "receivedBytes": 256958,
+      "bodyComplete": true,
+      "byteLength": 256958,
+      "sha256": "a676ee932cef5e54d469dc6d1e040e50f42f9cc88beb16ae5c72c13e26ebc48a"
+    }
+  ],
+  "reconciliation": {
+    "attempts": 19,
+    "completedBodies": 19,
+    "completedBytes": 1301693,
+    "perHost": {
+      "api.github.com": {
+        "attempts": 3,
+        "completedBodies": 3,
+        "bytes": 30055
+      },
+      "codeload.github.com": {
+        "attempts": 2,
+        "completedBodies": 2,
+        "bytes": 740012
+      },
+      "raw.githubusercontent.com": {
+        "attempts": 14,
+        "completedBodies": 14,
+        "bytes": 531626
+      }
+    }
+  },
+  "limits": {
+    "requests": 19,
+    "responseBytes": 8388608,
+    "aggregateBytes": 33554432,
+    "survivors": 1
+  },
+  "fixtureReconciliation": {
+    "attempts": 19,
+    "completedBodies": 19,
+    "bytes": 1301693,
+    "perHost": {
+      "api.github.com": {
+        "attempts": 3,
+        "completedBodies": 3,
+        "bytes": 30055
+      },
+      "codeload.github.com": {
+        "attempts": 2,
+        "completedBodies": 2,
+        "bytes": 740012
+      },
+      "raw.githubusercontent.com": {
+        "attempts": 14,
+        "completedBodies": 14,
+        "bytes": 531626
+      }
+    }
+  },
+  "publication": "transactional-single-candidate",
+  "offlineVerification": "required-twice-after-publication",
+  "nonclaims": [
+    "No migration, install, build, server, browser, or Playwright execution or parity is established.",
+    "No Node, Yarn, Next, webpack, SWC, Turbopack, runtime, bundler, routing, rendering, SSR, SSG, ISR, RSC, API, middleware, image, data, authentication, payment, analytics, telemetry, egress, or locality support is established.",
+    "No Tier F, Tier P, pilot, generic React support, Next.js support, Ionic, Nx, Analog, NativeScript, native parity, enterprise support, compliance, certification, PCI applicability, authenticity, signer identity, SLSA level, or OS-wide isolation is established."
+  ]
+}

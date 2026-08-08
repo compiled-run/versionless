@@ -1,0 +1,7 @@
+{
+  "sourceSha256": "0a14b1e0dfecf3bdbc77259a8199974b2d34b0a178943d0f920d10541a25ebb0",
+  "targetSha256": "96cf123fce3709928d6edf70f1199aca1ee24c5adfaf65a737573baa548f1865",
+  "changedFiles": [
+    "app/phone-detail/phone-detail.component.js"
+  ]
+}

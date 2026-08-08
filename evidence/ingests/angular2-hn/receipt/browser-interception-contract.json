@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "sourceService": "src/app/shared/services/hackernews-api.service.ts",
+  "sourceServiceGitBlob": "e5c56536418b95b90fbddfb9c6991247524e043b",
+  "baseUrl": "https://node-hnapi.herokuapp.com",
+  "completeProductionEgressBoundary": {
+    "status": "source-static-boundary-only-not-browser-proven",
+    "centralizedServiceOccurrences": 1,
+    "browserObservationStillRequired": true
+  },
+  "allowlist": [
+    {
+      "method": "GET",
+      "urlTemplate": "https://node-hnapi.herokuapp.com/{feedType}?page={page}",
+      "constraints": {
+        "feedType": [
+          "news",
+          "newest",
+          "show",
+          "ask",
+          "jobs"
+        ],
+        "page": "positive-integer"
+      },
+      "payload": "payload-feed.json"
+    },
+    {
+      "method": "GET",
+      "urlTemplate": "https://node-hnapi.herokuapp.com/item/{id}",
+      "constraints": {
+        "id": "positive-integer"
+      },
+      "payload": "payload-item.json or payload-poll.json when the deterministic journey requests a poll option"
+    },
+    {
+      "method": "GET",
+      "urlTemplate": "https://node-hnapi.herokuapp.com/user/{id}",
+      "constraints": {
+        "id": "nonempty URL path segment"
+      },
+      "payload": "payload-user.json"
+    }
+  ],
+  "payloads": [
+    {
+      "path": "payload-feed.json",
+      "bytes": 395,
+      "sha256": "9357e182479d5ec8ec180a2386594092ab6aa784ae8a7581fe7eb1b232304363"
+    },
+    {
+      "path": "payload-item.json",
+      "bytes": 602,
+      "sha256": "07b3157fdeb6ac68367ce8e3f4d97e430d8ce254c763d2c66ee4a7703bf7bd5f"
+    },
+    {
+      "path": "payload-poll.json",
+      "bytes": 56,
+      "sha256": "e8b8347892a4d8c0033ff81151a2cc8acf9d06ac2a2f67ef88fea9791b1414ec"
+    },
+    {
+      "path": "payload-user.json",
+      "bytes": 159,
+      "sha256": "7007caaf26384702444081e39445e8351b4f58564b087905933f26f666a81478"
+    }
+  ],
+  "requiredObservation": [
+    "originalUrl",
+    "method",
+    "count",
+    "intercepted=true"
+  ],
+  "rejectEveryOtherNonloopbackRequest": true,
+  "successfulNonloopbackRequired": 0,
+  "applicationApiSourceRewriteAllowed": false,
+  "serviceWorkerBlockingOrBypassAllowed": false,
+  "executableClaim": false
+}

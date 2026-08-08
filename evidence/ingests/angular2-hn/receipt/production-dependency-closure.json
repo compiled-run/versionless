@@ -1,0 +1,543 @@
+{
+  "schemaVersion": 1,
+  "source": "yarn.lock",
+  "lockFormat": "Yarn classic v1",
+  "lockBytes": 380865,
+  "lockSha256": "c7bc9ad169330118f6b9e48b7cc2a9d8f255f3f1f15955dadc1dbf688f598502",
+  "rootProductionDependencies": {
+    "@angular/animations": "~9.0.1",
+    "@angular/common": "~9.0.1",
+    "@angular/compiler": "~9.0.1",
+    "@angular/core": "~9.0.1",
+    "@angular/forms": "~9.0.1",
+    "@angular/platform-browser": "~9.0.1",
+    "@angular/platform-browser-dynamic": "~9.0.1",
+    "@angular/router": "~9.0.1",
+    "@angular/service-worker": "~9.0.1",
+    "node-fetch": "^2.6.0",
+    "rxjs": "~6.5.4",
+    "rxjs-compat": "^6.5.2",
+    "tslib": "^1.10.0",
+    "unfetch": "^4.1.0",
+    "zone.js": "~0.10.2"
+  },
+  "counts": {
+    "allLockEntries": 1195,
+    "reachablePackages": 16,
+    "dependencyEdges": 16,
+    "unresolvedEdges": 0,
+    "duplicatePackageNames": 1,
+    "weakOrMissingIntegrity": 0,
+    "missingLicenseFacts": 16,
+    "missingArtifactSizes": 16
+  },
+  "packages": [
+    {
+      "name": "@angular/animations",
+      "version": "9.0.1",
+      "selectors": [
+        "@angular/animations@~9.0.1"
+      ],
+      "reachedVia": [
+        "@angular/animations@~9.0.1"
+      ],
+      "resolved": "https://registry.yarnpkg.com/@angular/animations/-/animations-9.0.1.tgz#7daaaab1ab518fe90689672f4845281a2c002492",
+      "artifactUrl": "https://registry.yarnpkg.com/@angular/animations/-/animations-9.0.1.tgz",
+      "resolvedSha1": "7daaaab1ab518fe90689672f4845281a2c002492",
+      "integrity": "sha512-R0FLhAfylFIiRArhtLOUokOAVtWCH20ocRXo6E8HHOc3fbaUS9ci3rIbFZQkaAv9RgZfKewrcV6Wa3TY905w5g==",
+      "integrityStrength": "strong-sha512",
+      "dependencies": {},
+      "optionalDependencies": {},
+      "artifactBytes": null,
+      "transferCeilingBytes": null,
+      "license": null,
+      "lifecycleScripts": "unknown-package-manifest-not-retained",
+      "nativeAddon": "unknown-package-manifest-and-artifact-not-retained",
+      "platformConstraints": "unknown-package-manifest-not-retained"
+    },
+    {
+      "name": "@angular/common",
+      "version": "9.0.1",
+      "selectors": [
+        "@angular/common@~9.0.1"
+      ],
+      "reachedVia": [
+        "@angular/common@~9.0.1"
+      ],
+      "resolved": "https://registry.yarnpkg.com/@angular/common/-/common-9.0.1.tgz#78457633a447c49bcc0e0bd8049cc2adbb016484",
+      "artifactUrl": "https://registry.yarnpkg.com/@angular/common/-/common-9.0.1.tgz",
+      "resolvedSha1": "78457633a447c49bcc0e0bd8049cc2adbb016484",
+      "integrity": "sha512-40jbKdCb4xi6NTzLt1kE0V/X7JxCLLo8eUEr3Z34Z9Ljnd4LC+/CkuThPdQJ3HW1Z8r5SWXj+rES+sn75YNVmA==",
+      "integrityStrength": "strong-sha512",
+      "dependencies": {},
+      "optionalDependencies": {},
+      "artifactBytes": null,
+      "transferCeilingBytes": null,
+      "license": null,
+      "lifecycleScripts": "unknown-package-manifest-not-retained",
+      "nativeAddon": "unknown-package-manifest-and-artifact-not-retained",
+      "platformConstraints": "unknown-package-manifest-not-retained"
+    },
+    {
+      "name": "@angular/compiler",
+      "version": "9.0.1",
+      "selectors": [
+        "@angular/compiler@~9.0.1"
+      ],
+      "reachedVia": [
+        "@angular/compiler@~9.0.1"
+      ],
+      "resolved": "https://registry.yarnpkg.com/@angular/compiler/-/compiler-9.0.1.tgz#19b6f83026a2b2771b7ef1b9be20bbe8828d8be9",
+      "artifactUrl": "https://registry.yarnpkg.com/@angular/compiler/-/compiler-9.0.1.tgz",
+      "resolvedSha1": "19b6f83026a2b2771b7ef1b9be20bbe8828d8be9",
+      "integrity": "sha512-ldamsPzIx+FLT/IYBqwsFL6qbP3BDgvPQa4Y3F/gFXDsoe+VTY5qwJfhr2iLbtF+fYomwOgY2kSL42BVQL873Q==",
+      "integrityStrength": "strong-sha512",
+      "dependencies": {},
+      "optionalDependencies": {},
+      "artifactBytes": null,
+      "transferCeilingBytes": null,
+      "license": null,
+      "lifecycleScripts": "unknown-package-manifest-not-retained",
+      "nativeAddon": "unknown-package-manifest-and-artifact-not-retained",
+      "platformConstraints": "unknown-package-manifest-not-retained"
+    },
+    {
+      "name": "@angular/core",
+      "version": "9.0.1",
+      "selectors": [
+        "@angular/core@~9.0.1"
+      ],
+      "reachedVia": [
+        "@angular/core@~9.0.1"
+      ],
+      "resolved": "https://registry.yarnpkg.com/@angular/core/-/core-9.0.1.tgz#8908112ce6bb22aa1ae537230240ef9a324409ad",
+      "artifactUrl": "https://registry.yarnpkg.com/@angular/core/-/core-9.0.1.tgz",
+      "resolvedSha1": "8908112ce6bb22aa1ae537230240ef9a324409ad",
+      "integrity": "sha512-q/3VLGM98euB/ZluSuMqvWyQb563iabRcVkC/DrHqCQMadV1ZpvuOgf8Gm092d8GY/iC4CGlTsN0wiVapMxplQ==",
+      "integrityStrength": "strong-sha512",
+      "dependencies": {},
+      "optionalDependencies": {},
+      "artifactBytes": null,
+      "transferCeilingBytes": null,
+      "license": null,
+      "lifecycleScripts": "unknown-package-manifest-not-retained",
+      "nativeAddon": "unknown-package-manifest-and-artifact-not-retained",
+      "platformConstraints": "unknown-package-manifest-not-retained"
+    },
+    {
+      "name": "@angular/forms",
+      "version": "9.0.1",
+      "selectors": [
+        "@angular/forms@~9.0.1"
+      ],
+      "reachedVia": [
+        "@angular/forms@~9.0.1"
+      ],
+      "resolved": "https://registry.yarnpkg.com/@angular/forms/-/forms-9.0.1.tgz#e95daa336ea93c6236fdc8863d01eaabc4070004",
+      "artifactUrl": "https://registry.yarnpkg.com/@angular/forms/-/forms-9.0.1.tgz",
+      "resolvedSha1": "e95daa336ea93c6236fdc8863d01eaabc4070004",
+      "integrity": "sha512-yzzlCslWp7IiFSYjSGNqexPmnKn9xhpT8FKzxNT0qEpQ+SieQ7apsjvMfR3TCip0Nnfus2qTh3kz1ZCaawAcjQ==",
+      "integrityStrength": "strong-sha512",
+      "dependencies": {},
+      "optionalDependencies": {},
+      "artifactBytes": null,
+      "transferCeilingBytes": null,
+      "license": null,
+      "lifecycleScripts": "unknown-package-manifest-not-retained",
+      "nativeAddon": "unknown-package-manifest-and-artifact-not-retained",
+      "platformConstraints": "unknown-package-manifest-not-retained"
+    },
+    {
+      "name": "@angular/platform-browser-dynamic",
+      "version": "9.0.1",
+      "selectors": [
+        "@angular/platform-browser-dynamic@~9.0.1"
+      ],
+      "reachedVia": [
+        "@angular/platform-browser-dynamic@~9.0.1"
+      ],
+      "resolved": "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-9.0.1.tgz#43d6679863775d4f463a67b96a83c3a619854336",
+      "artifactUrl": "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-9.0.1.tgz",
+      "resolvedSha1": "43d6679863775d4f463a67b96a83c3a619854336",
+      "integrity": "sha512-DslT339T+TBt4jUlXMblPR4IghXtykB+jQctm02G4AJUlvMa4b798N1oM6sD5F8NmBMa6beZ2dcRJ07f75LVBA==",
+      "integrityStrength": "strong-sha512",
+      "dependencies": {},
+      "optionalDependencies": {},
+      "artifactBytes": null,
+      "transferCeilingBytes": null,
+      "license": null,
+      "lifecycleScripts": "unknown-package-manifest-not-retained",
+      "nativeAddon": "unknown-package-manifest-and-artifact-not-retained",
+      "platformConstraints": "unknown-package-manifest-not-retained"
+    },
+    {
+      "name": "@angular/platform-browser",
+      "version": "9.0.1",
+      "selectors": [
+        "@angular/platform-browser@~9.0.1"
+      ],
+      "reachedVia": [
+        "@angular/platform-browser@~9.0.1"
+      ],
+      "resolved": "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-9.0.1.tgz#292306095c0e4b89927ba1b94eb1714cdbdfcb65",
+      "artifactUrl": "https://registry.yarnpkg.com/@angular/platform-browser/-/platform-browser-9.0.1.tgz",
+      "resolvedSha1": "292306095c0e4b89927ba1b94eb1714cdbdfcb65",
+      "integrity": "sha512-0o2aRxbQ3xZ/ZeLXajDqhrRK6vcICzdJ7GKvPgZxdohnnJ7JN1qp8U7J4aEotPqfSAde/aD2JvoDDtKZ0XIDWg==",
+      "integrityStrength": "strong-sha512",
+      "dependencies": {},
+      "optionalDependencies": {},
+      "artifactBytes": null,
+      "transferCeilingBytes": null,
+      "license": null,
+      "lifecycleScripts": "unknown-package-manifest-not-retained",
+      "nativeAddon": "unknown-package-manifest-and-artifact-not-retained",
+      "platformConstraints": "unknown-package-manifest-not-retained"
+    },
+    {
+      "name": "@angular/router",
+      "version": "9.0.1",
+      "selectors": [
+        "@angular/router@~9.0.1"
+      ],
+      "reachedVia": [
+        "@angular/router@~9.0.1"
+      ],
+      "resolved": "https://registry.yarnpkg.com/@angular/router/-/router-9.0.1.tgz#bc6acddf094361a7ef14aab0c94d7248d10f2949",
+      "artifactUrl": "https://registry.yarnpkg.com/@angular/router/-/router-9.0.1.tgz",
+      "resolvedSha1": "bc6acddf094361a7ef14aab0c94d7248d10f2949",
+      "integrity": "sha512-pHLDooNvXEUtjYANWtJ7fMxG9l2mDJgPphOi/S6c27U5yNf0NVk+Qh3kuuNi2hQQ5RaR4jdRyCQePD2H4g2+/g==",
+      "integrityStrength": "strong-sha512",
+      "dependencies": {},
+      "optionalDependencies": {},
+      "artifactBytes": null,
+      "transferCeilingBytes": null,
+      "license": null,
+      "lifecycleScripts": "unknown-package-manifest-not-retained",
+      "nativeAddon": "unknown-package-manifest-and-artifact-not-retained",
+      "platformConstraints": "unknown-package-manifest-not-retained"
+    },
+    {
+      "name": "@angular/service-worker",
+      "version": "9.0.1",
+      "selectors": [
+        "@angular/service-worker@~9.0.1"
+      ],
+      "reachedVia": [
+        "@angular/service-worker@~9.0.1"
+      ],
+      "resolved": "https://registry.yarnpkg.com/@angular/service-worker/-/service-worker-9.0.1.tgz#af8a0bdb9297b5b4ededf6f028aaff51b877b373",
+      "artifactUrl": "https://registry.yarnpkg.com/@angular/service-worker/-/service-worker-9.0.1.tgz",
+      "resolvedSha1": "af8a0bdb9297b5b4ededf6f028aaff51b877b373",
+      "integrity": "sha512-TH8XS8xrKIw1CslytwPC8PRWbLTmgqbfex5ZqW7a27/iCVqa4xzqayVtDZmqKKSM3dz3bLkW66m01eaon9/a7A==",
+      "integrityStrength": "strong-sha512",
+      "dependencies": {},
+      "optionalDependencies": {},
+      "artifactBytes": null,
+      "transferCeilingBytes": null,
+      "license": null,
+      "lifecycleScripts": "unknown-package-manifest-not-retained",
+      "nativeAddon": "unknown-package-manifest-and-artifact-not-retained",
+      "platformConstraints": "unknown-package-manifest-not-retained"
+    },
+    {
+      "name": "node-fetch",
+      "version": "2.6.0",
+      "selectors": [
+        "node-fetch@^2.6.0"
+      ],
+      "reachedVia": [
+        "node-fetch@^2.6.0"
+      ],
+      "resolved": "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd",
+      "artifactUrl": "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz",
+      "resolvedSha1": "e633456386d4aa55863f676a7ab0daa8fdecb0fd",
+      "integrity": "sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==",
+      "integrityStrength": "strong-sha512",
+      "dependencies": {},
+      "optionalDependencies": {},
+      "artifactBytes": null,
+      "transferCeilingBytes": null,
+      "license": null,
+      "lifecycleScripts": "unknown-package-manifest-not-retained",
+      "nativeAddon": "unknown-package-manifest-and-artifact-not-retained",
+      "platformConstraints": "unknown-package-manifest-not-retained"
+    },
+    {
+      "name": "rxjs-compat",
+      "version": "6.5.2",
+      "selectors": [
+        "rxjs-compat@^6.5.2"
+      ],
+      "reachedVia": [
+        "rxjs-compat@^6.5.2"
+      ],
+      "resolved": "https://registry.yarnpkg.com/rxjs-compat/-/rxjs-compat-6.5.2.tgz#e469070adf6260bdad195e9d4a39f444ae28b458",
+      "artifactUrl": "https://registry.yarnpkg.com/rxjs-compat/-/rxjs-compat-6.5.2.tgz",
+      "resolvedSha1": "e469070adf6260bdad195e9d4a39f444ae28b458",
+      "integrity": "sha512-TRMkTp4FgSxE2HtGvxmgRukh3JqdFM7ejAj1Ti/VdodbPGfWvZR5+KdLKRV9jVDFyu2SknM8RD+PR54KGnoLjg==",
+      "integrityStrength": "strong-sha512",
+      "dependencies": {},
+      "optionalDependencies": {},
+      "artifactBytes": null,
+      "transferCeilingBytes": null,
+      "license": null,
+      "lifecycleScripts": "unknown-package-manifest-not-retained",
+      "nativeAddon": "unknown-package-manifest-and-artifact-not-retained",
+      "platformConstraints": "unknown-package-manifest-not-retained"
+    },
+    {
+      "name": "rxjs",
+      "version": "6.5.4",
+      "selectors": [
+        "rxjs@~6.5.4"
+      ],
+      "reachedVia": [
+        "rxjs@~6.5.4"
+      ],
+      "resolved": "https://registry.yarnpkg.com/rxjs/-/rxjs-6.5.4.tgz#e0777fe0d184cec7872df147f303572d414e211c",
+      "artifactUrl": "https://registry.yarnpkg.com/rxjs/-/rxjs-6.5.4.tgz",
+      "resolvedSha1": "e0777fe0d184cec7872df147f303572d414e211c",
+      "integrity": "sha512-naMQXcgEo3csAEGvw/NydRA0fuS2nDZJiw1YUWFKU7aPPAPGZEsD4Iimit96qwCieH6y614MCLYwdkrWx7z/7Q==",
+      "integrityStrength": "strong-sha512",
+      "dependencies": {
+        "tslib": "^1.9.0"
+      },
+      "optionalDependencies": {},
+      "artifactBytes": null,
+      "transferCeilingBytes": null,
+      "license": null,
+      "lifecycleScripts": "unknown-package-manifest-not-retained",
+      "nativeAddon": "unknown-package-manifest-and-artifact-not-retained",
+      "platformConstraints": "unknown-package-manifest-not-retained"
+    },
+    {
+      "name": "tslib",
+      "version": "1.10.0",
+      "selectors": [
+        "tslib@1.10.0",
+        "tslib@^1.10.0"
+      ],
+      "reachedVia": [
+        "tslib@^1.10.0"
+      ],
+      "resolved": "https://registry.yarnpkg.com/tslib/-/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a",
+      "artifactUrl": "https://registry.yarnpkg.com/tslib/-/tslib-1.10.0.tgz",
+      "resolvedSha1": "c3c19f95973fb0a62973fb09d90d961ee43e5c8a",
+      "integrity": "sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==",
+      "integrityStrength": "strong-sha512",
+      "dependencies": {},
+      "optionalDependencies": {},
+      "artifactBytes": null,
+      "transferCeilingBytes": null,
+      "license": null,
+      "lifecycleScripts": "unknown-package-manifest-not-retained",
+      "nativeAddon": "unknown-package-manifest-and-artifact-not-retained",
+      "platformConstraints": "unknown-package-manifest-not-retained"
+    },
+    {
+      "name": "tslib",
+      "version": "1.9.3",
+      "selectors": [
+        "tslib@^1.8.0",
+        "tslib@^1.8.1",
+        "tslib@^1.9.0"
+      ],
+      "reachedVia": [
+        "tslib@^1.9.0"
+      ],
+      "resolved": "https://registry.yarnpkg.com/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286",
+      "artifactUrl": "https://registry.yarnpkg.com/tslib/-/tslib-1.9.3.tgz",
+      "resolvedSha1": "d7e4dd79245d85428c4d7e4822a79917954ca286",
+      "integrity": "sha512-4krF8scpejhaOgqzBEcGM7yDIEfi0/8+8zDRZhNZZ2kjmHJ4hv3zCbQWxoJGz1iw5U0Jl0nma13xzHXcncMavQ==",
+      "integrityStrength": "strong-sha512",
+      "dependencies": {},
+      "optionalDependencies": {},
+      "artifactBytes": null,
+      "transferCeilingBytes": null,
+      "license": null,
+      "lifecycleScripts": "unknown-package-manifest-not-retained",
+      "nativeAddon": "unknown-package-manifest-and-artifact-not-retained",
+      "platformConstraints": "unknown-package-manifest-not-retained"
+    },
+    {
+      "name": "unfetch",
+      "version": "4.1.0",
+      "selectors": [
+        "unfetch@^4.1.0"
+      ],
+      "reachedVia": [
+        "unfetch@^4.1.0"
+      ],
+      "resolved": "https://registry.yarnpkg.com/unfetch/-/unfetch-4.1.0.tgz#6ec2dd0de887e58a4dee83a050ded80ffc4137db",
+      "artifactUrl": "https://registry.yarnpkg.com/unfetch/-/unfetch-4.1.0.tgz",
+      "resolvedSha1": "6ec2dd0de887e58a4dee83a050ded80ffc4137db",
+      "integrity": "sha512-crP/n3eAPUJxZXM9T80/yv0YhkTEx2K1D3h7D1AJM6fzsWZrxdyRuLN0JH/dkZh1LNH8LxCnBzoPFCPbb2iGpg==",
+      "integrityStrength": "strong-sha512",
+      "dependencies": {},
+      "optionalDependencies": {},
+      "artifactBytes": null,
+      "transferCeilingBytes": null,
+      "license": null,
+      "lifecycleScripts": "unknown-package-manifest-not-retained",
+      "nativeAddon": "unknown-package-manifest-and-artifact-not-retained",
+      "platformConstraints": "unknown-package-manifest-not-retained"
+    },
+    {
+      "name": "zone.js",
+      "version": "0.10.2",
+      "selectors": [
+        "zone.js@~0.10.2"
+      ],
+      "reachedVia": [
+        "zone.js@~0.10.2"
+      ],
+      "resolved": "https://registry.yarnpkg.com/zone.js/-/zone.js-0.10.2.tgz#67ca084b3116fc33fc40435e0d5ea40a207e392e",
+      "artifactUrl": "https://registry.yarnpkg.com/zone.js/-/zone.js-0.10.2.tgz",
+      "resolvedSha1": "67ca084b3116fc33fc40435e0d5ea40a207e392e",
+      "integrity": "sha512-UAYfiuvxLN4oyuqhJwd21Uxb4CNawrq6fPS/05Su5L4G+1TN+HVDJMUHNMobVQDFJRir2cLAODXwluaOKB7HFg==",
+      "integrityStrength": "strong-sha512",
+      "dependencies": {},
+      "optionalDependencies": {},
+      "artifactBytes": null,
+      "transferCeilingBytes": null,
+      "license": null,
+      "lifecycleScripts": "unknown-package-manifest-not-retained",
+      "nativeAddon": "unknown-package-manifest-and-artifact-not-retained",
+      "platformConstraints": "unknown-package-manifest-not-retained"
+    }
+  ],
+  "edges": [
+    {
+      "from": "root",
+      "to": "@angular/animations",
+      "range": "~9.0.1",
+      "kind": "dependency",
+      "selector": "@angular/animations@~9.0.1"
+    },
+    {
+      "from": "root",
+      "to": "@angular/common",
+      "range": "~9.0.1",
+      "kind": "dependency",
+      "selector": "@angular/common@~9.0.1"
+    },
+    {
+      "from": "root",
+      "to": "@angular/compiler",
+      "range": "~9.0.1",
+      "kind": "dependency",
+      "selector": "@angular/compiler@~9.0.1"
+    },
+    {
+      "from": "root",
+      "to": "@angular/core",
+      "range": "~9.0.1",
+      "kind": "dependency",
+      "selector": "@angular/core@~9.0.1"
+    },
+    {
+      "from": "root",
+      "to": "@angular/forms",
+      "range": "~9.0.1",
+      "kind": "dependency",
+      "selector": "@angular/forms@~9.0.1"
+    },
+    {
+      "from": "root",
+      "to": "@angular/platform-browser",
+      "range": "~9.0.1",
+      "kind": "dependency",
+      "selector": "@angular/platform-browser@~9.0.1"
+    },
+    {
+      "from": "root",
+      "to": "@angular/platform-browser-dynamic",
+      "range": "~9.0.1",
+      "kind": "dependency",
+      "selector": "@angular/platform-browser-dynamic@~9.0.1"
+    },
+    {
+      "from": "root",
+      "to": "@angular/router",
+      "range": "~9.0.1",
+      "kind": "dependency",
+      "selector": "@angular/router@~9.0.1"
+    },
+    {
+      "from": "root",
+      "to": "@angular/service-worker",
+      "range": "~9.0.1",
+      "kind": "dependency",
+      "selector": "@angular/service-worker@~9.0.1"
+    },
+    {
+      "from": "root",
+      "to": "node-fetch",
+      "range": "^2.6.0",
+      "kind": "dependency",
+      "selector": "node-fetch@^2.6.0"
+    },
+    {
+      "from": "root",
+      "to": "rxjs",
+      "range": "~6.5.4",
+      "kind": "dependency",
+      "selector": "rxjs@~6.5.4"
+    },
+    {
+      "from": "root",
+      "to": "rxjs-compat",
+      "range": "^6.5.2",
+      "kind": "dependency",
+      "selector": "rxjs-compat@^6.5.2"
+    },
+    {
+      "from": "root",
+      "to": "tslib",
+      "range": "^1.10.0",
+      "kind": "dependency",
+      "selector": "tslib@^1.10.0"
+    },
+    {
+      "from": "root",
+      "to": "unfetch",
+      "range": "^4.1.0",
+      "kind": "dependency",
+      "selector": "unfetch@^4.1.0"
+    },
+    {
+      "from": "root",
+      "to": "zone.js",
+      "range": "~0.10.2",
+      "kind": "dependency",
+      "selector": "zone.js@~0.10.2"
+    },
+    {
+      "from": "rxjs@6.5.4",
+      "to": "tslib",
+      "range": "^1.9.0",
+      "kind": "dependency",
+      "selector": "tslib@^1.9.0"
+    }
+  ],
+  "unresolvedEdges": [],
+  "duplicates": [
+    {
+      "name": "tslib",
+      "versions": [
+        "1.10.0",
+        "1.9.3"
+      ],
+      "conflict": "multiple-resolved-versions"
+    }
+  ],
+  "conflicts": [],
+  "acquisitionReadiness": {
+    "ready": false,
+    "blockers": [
+      "Exact artifact byte sizes and transfer ceilings are not derivable from Yarn v1 lock metadata.",
+      "Production package manifests/artifacts are not retained, so package licenses, lifecycle scripts, native-addon status, and platform constraints are unresolved."
+    ],
+    "packageFetchPerformed": false
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "schemaVersion": "versionless.react-service-worker-evidence.v1",
+  "fixture": "react-boilerplate-v4-vite8",
+  "worker": {
+    "path": "sw.js",
+    "sha256": "e35d5a8b81eda0f5dfc67f840130191a69fdc2b9a55ecea4cf7146d0891f6872"
+  },
+  "manifest": {
+    "path": "precache-manifest.json",
+    "sha256": "44023d4ca959eba5ec462cd305e6944abe03964dc836b042673bc8dc1f5ab024"
+  },
+  "scope": "/",
+  "entries": [
+    {
+      "url": "/assets/FeaturePage-2zyLJwLV.js",
+      "sha256": "b37a578bedde3c9b2475d0f2b259f747fc27afcced8885314427ab033e307a74"
+    },
+    {
+      "url": "/assets/H1-BZCoji1x.js",
+      "sha256": "30a32cdabcde13a0bc39224bf6ca47106dc205a1da6f79da62f015065a2017b4"
+    },
+    {
+      "url": "/assets/HomePage-CZiBZHtd.js",
+      "sha256": "49ec961d8d1880535d6e19697bb88fdda363158741dee1edcf5d82de2325eead"
+    },
+    {
+      "url": "/assets/NotFoundPage-BkMd3EGU.js",
+      "sha256": "0fb5f4ba0c0a370644f4d5a0e2e0296f92c9886434cef25509d38f796fb5d93a"
+    },
+    {
+      "url": "/assets/__vite-browser-external-CvNEtdN9.js",
+      "sha256": "50afa8586c0e07ad1dfa96a37938ee39809a7ab9760d8e9ae18b93603ff1e397"
+    },
+    {
+      "url": "/assets/banner-6i24qsix.jpg",
+      "sha256": "90890967b1997f84599b177d9787c4c9cdf9651933725f5732810e99891407bc"
+    },
+    {
+      "url": "/assets/de-CEvlwdXo.js",
+      "sha256": "a43a6f9f1529edb1fd7e05b3e871f9ba4e5943738de64db40147497cd9c81031"
+    },
+    {
+      "url": "/assets/en-D7F8Da0k.js",
+      "sha256": "74ed6263e654f2e2a1eb76f3bba1366fb3a516df619c95054ccc5787d7d31f41"
+    },
+    {
+      "url": "/assets/favicon-Ba7brf7t.ico",
+      "sha256": "4f41a82ef5b4b3d36786a11738db0553c376f9e1078d68c14a732326a209e07a"
+    },
+    {
+      "url": "/assets/index-CqaBhjBI.css",
+      "sha256": "96fbb04b0941f4fbefa051260b7953916184b9ccfda62282044121f0e20d4aa4"
+    },
+    {
+      "url": "/assets/index-D47xRHLD.js",
+      "sha256": "712f487de9f84b7d704ff91258a09af5558f0f0fa77dc375655d02ef13397e90"
+    },
+    {
+      "url": "/assets/intl-tJox8g0n.js",
+      "sha256": "b236f5b1a902da9ed2e087da178b3c69776708686740480cd038c76e1ce27f09"
+    },
+    {
+      "url": "/index.html",
+      "sha256": "e77d403d657e36d070614c51a9db81ce7d998d3b0811126042def41210633dd4"
+    }
+  ],
+  "buildsEqual": true
+}

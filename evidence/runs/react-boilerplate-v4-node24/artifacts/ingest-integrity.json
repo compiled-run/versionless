@@ -1,0 +1,30 @@
+{
+  "source": {
+    "revision": "d19099afeff64ecfb09133c06c1cb18c0d40887e",
+    "archiveSha256": "d6ca60a3c8881ae2be26a8d04e00da4d922a6653f8512f2b12ac55d48f2ce2d5"
+  },
+  "runtime": {
+    "version": "24.15.0",
+    "archiveSha256": "372331b969779ab5d15b949884fc6eaf88d5afe87bde8ba881d6400b9100ffc4"
+  },
+  "webpack": {
+    "version": "4.47.0",
+    "registryMetadataSha256": "2d8109cd7bb46e680d077048285fb7724e4a25c51924a7a49d9c812e0332c9fa",
+    "archiveSha256": "51548beb422925796bd3d91f4b2a416ad4202d0a6460460309cd99c7f50bcbb9",
+    "integrity": "sha512-td7fYwgLSrky3fI1EuU5cneU4+pbH6GgOfuKNS1tNPcfdGinGELAqsb/BP4nnvZyKSG2i/xFGU7+n2PvZA8HJQ==",
+    "license": "MIT",
+    "licenseSha256": "9068a8782d2fb4c6e432cfa25334efa56f722822180570802bf86e71b6003b1e"
+  },
+  "bundlerCompanion": {
+    "name": "terser-webpack-plugin",
+    "from": "1.2.3",
+    "to": "1.4.6",
+    "reason": "directly invoked 1.2.3 cache hashing requests OpenSSL MD4"
+  },
+  "lock": {
+    "beforeSha256": "8af43b5f48d0c64f67c518a216a7d98571b1498c835ebb234d6dda845a988d33",
+    "afterSha256": "42ffa936b19115ad380e77dcbc3800c7adf117aa560c5f678c837b7f4b09e00d",
+    "patchSha256": "df5c7de0447f3ea45b45de01e489cc6133b1ea189c8f7e97aae7d59f349931bb",
+    "format": "npm-package-lock-v1"
+  }
+}

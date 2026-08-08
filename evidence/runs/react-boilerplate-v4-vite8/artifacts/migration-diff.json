@@ -1,0 +1,14 @@
+{
+  "changedFiles": [
+    "app/containers/LocaleToggle/index.js"
+  ],
+  "sourceSha256": "70c2ea867367b5dbd0820413f344bcd6c19729ef04d41c1fd9e12d43d72e8dfa",
+  "targetSha256": "17f8b8601929cd25a8557a6351d429ba24bd8871d557552351afb53363871c78",
+  "packageSha256": "7fb3098e57021e790638e31677d3cbfe815087f889b708cab4e1efdc9785414a",
+  "packageLockSha256": "42ffa936b19115ad380e77dcbc3800c7adf117aa560c5f678c837b7f4b09e00d",
+  "adapterFiles": [
+    "fixtures/react-boilerplate-v4-vite8/vite.adapter.ts",
+    "fixtures/react-boilerplate-v4-vite8/index.html"
+  ],
+  "webpackFallback": false
+}

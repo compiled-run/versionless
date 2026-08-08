@@ -1,0 +1,10 @@
+{
+  "changedFiles": [
+    "app/containers/HomePage/index.js",
+    "app/containers/RepoListItem/index.js"
+  ],
+  "packageSha256": "a3383c3ccce6bd460952c5ac8b721ed5f7087ffc5a96713b6e9103f2ba3a8d76",
+  "packageLockSha256": "09a37fc1d35eb4cfaab46e0ac8c0d3f33824b300a731ec25f1e50998e9c14edb",
+  "dependencyTreesEqual": true,
+  "adapter": "fixture-specific-existing-pinned-vite8"
+}

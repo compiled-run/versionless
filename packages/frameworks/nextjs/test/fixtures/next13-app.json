@@ -1,0 +1,53 @@
+{
+	"schemaVersion": "versionless.nextjs-descriptor.v1",
+	"id": "synthetic-next13-transition-app",
+	"synthetic": true,
+	"framework": "nextjs",
+	"executionRequested": false,
+	"supportClaim": false,
+	"versions": { "next": "13.x-synthetic", "react": "18.x-synthetic" },
+	"routing": {
+		"mode": "mixed",
+		"pages": ["pages/legacy.tsx"],
+		"app": ["app/layout.tsx", "app/page.tsx"]
+	},
+	"rendering": {
+		"ssr": { "state": "unknown", "evidence": [] },
+		"ssg": { "state": "unknown", "evidence": [] },
+		"isr": { "state": "absent", "evidence": [] },
+		"rsc": { "state": "present", "evidence": ["app/page.tsx"] }
+	},
+	"boundaries": {
+		"serverComponents": ["app/layout.tsx", "app/page.tsx"],
+		"clientComponents": ["app/components/search.tsx", "pages/legacy.tsx"],
+		"apiRoutes": ["app/api/search/route.ts"],
+		"middleware": ["middleware.ts"],
+		"dataFetching": ["app/page.tsx"],
+		"serverOnlyModules": ["app/api/search/route.ts"],
+		"image": { "state": "unknown", "evidence": [] },
+		"staticAssets": []
+	},
+	"productionStack": {
+		"owner": "nextjs",
+		"compiler": "swc",
+		"bundler": "unknown",
+		"preserved": true,
+		"viteReplacement": false,
+		"unpluginReplacement": false
+	},
+	"runtime": {
+		"node": { "state": "declared", "value": ">=18-synthetic" },
+		"packageManager": { "name": "yarn", "lockfile": "yarn.lock" }
+	},
+	"localityBoundaries": {
+		"server": { "state": "present", "details": ["route handler and RSC process"] },
+		"database": { "state": "unknown", "details": [] },
+		"auth": { "state": "present", "details": ["synthetic auth boundary"] },
+		"payment": { "state": "none-declared", "details": [] },
+		"egress": {
+			"state": "present",
+			"details": ["synthetic model API boundary"],
+			"origins": ["https://model.example.invalid/"]
+		}
+	}
+}

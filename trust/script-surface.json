@@ -1,0 +1,535 @@
+{
+	"schemaVersion": "versionless.script-surface.v1",
+	"verticals": [
+		{
+			"id": "react-boilerplate-v4",
+			"sourceApplication": "react-boilerplate-v4",
+			"lanes": [
+				{
+					"lane": "legacy",
+					"entrypointPath": ".versionless/work/react-boilerplate-v4/legacy/build/index.html",
+					"entrypointSha256": "d1902da2f97985976af52b9df8c907997336e83b763c1d15e1ef44fdc4d3c604",
+					"receiptPath": "evidence/runs/react-boilerplate-v4/t008-run.json",
+					"receiptDigest": "4d32ae0a46041e5ec2ac68aa31a9b8f86bd9d294d312ce41968ddd99dc5ee758",
+					"observationLane": "legacy",
+					"expectedScriptSources": [
+						"/runtime.5fe103ed48f174380b38.js",
+						"/npm.redux-saga.73330e91205282f41978.chunk.js",
+						"/npm.webpack.68b1cf86149741bfe920.chunk.js",
+						"/npm.babel.364fb6b163e5042f4cf5.chunk.js",
+						"/npm.react-app-polyfill.478cb9097f8702465774.chunk.js",
+						"/npm.react-redux.9ff69fc9264c5519d25c.chunk.js",
+						"/npm.connected-react-router.362ccb4c24f49bb54d3e.chunk.js",
+						"/npm.intl-messageformat.0f3d95f7c9084e392fc0.chunk.js",
+						"/npm.intl-relativeformat.79b9e22b60867bcb7963.chunk.js",
+						"/npm.react-intl.cae773f0a39994aa2dd4.chunk.js",
+						"/main.acaccb21687265e6f942.chunk.js"
+					],
+					"expectedResourceHrefs": [
+						"/favicon.ico",
+						"/icon_180x180.33285f999db78beed5640085c051e7b1.png",
+						"/icon_167x167.9085aba6ea24073fba72a94b7ac731a1.png",
+						"/icon_152x152.80d43cecdc663299328632b85127117b.png",
+						"/icon_120x120.2f7752bee9dcd06e998fd44640e47485.png",
+						"/manifest.47e77a2731a1bb975ed19ced8741b946.json",
+						"https://fonts.googleapis.com/css?family=Open+Sans:400,700"
+					]
+				},
+				{
+					"lane": "target",
+					"entrypointPath": ".versionless/work/react-boilerplate-v4/target/build/index.html",
+					"entrypointSha256": "4946de84df1c8107d619f5d68d012973f3278ec7b07122204af7c7855773bb2f",
+					"receiptPath": "evidence/runs/react-boilerplate-v4/t008-run.json",
+					"receiptDigest": "4d32ae0a46041e5ec2ac68aa31a9b8f86bd9d294d312ce41968ddd99dc5ee758",
+					"observationLane": "target",
+					"expectedScriptSources": [
+						"/runtime.5fe103ed48f174380b38.js",
+						"/npm.redux-saga.73330e91205282f41978.chunk.js",
+						"/npm.webpack.68b1cf86149741bfe920.chunk.js",
+						"/npm.babel.364fb6b163e5042f4cf5.chunk.js",
+						"/npm.react-app-polyfill.478cb9097f8702465774.chunk.js",
+						"/npm.react-redux.eb33175851e0345c1aec.chunk.js",
+						"/npm.connected-react-router.362ccb4c24f49bb54d3e.chunk.js",
+						"/npm.intl-messageformat.0f3d95f7c9084e392fc0.chunk.js",
+						"/npm.intl-relativeformat.79b9e22b60867bcb7963.chunk.js",
+						"/npm.react-intl.cae773f0a39994aa2dd4.chunk.js",
+						"/main.2d182714eab81dd38c71.chunk.js"
+					],
+					"expectedResourceHrefs": [
+						"/favicon.ico",
+						"/icon_180x180.33285f999db78beed5640085c051e7b1.png",
+						"/icon_167x167.9085aba6ea24073fba72a94b7ac731a1.png",
+						"/icon_152x152.80d43cecdc663299328632b85127117b.png",
+						"/icon_120x120.2f7752bee9dcd06e998fd44640e47485.png",
+						"/manifest.47e77a2731a1bb975ed19ced8741b946.json",
+						"https://fonts.googleapis.com/css?family=Open+Sans:400,700"
+					]
+				}
+			]
+		},
+		{
+			"id": "angular-phonecat",
+			"sourceApplication": "angular-phonecat",
+			"lanes": [
+				{
+					"lane": "legacy",
+					"entrypointPath": ".versionless/work/angular-phonecat/legacy/app/index.html",
+					"entrypointSha256": "dfce969bbc5c83ba136d820df778c47e789fd5304454319dac9fa087a21297b3",
+					"receiptPath": "evidence/runs/angular-phonecat/t014-run.json",
+					"receiptDigest": "a6798081c0b005c76534b5acd4dc647d77d497b0b649748c685b779451035f51",
+					"observationLane": "legacy",
+					"expectedScriptSources": [
+						"lib/jquery/dist/jquery.js",
+						"lib/angular/angular.js",
+						"lib/angular-animate/angular-animate.js",
+						"lib/angular-resource/angular-resource.js",
+						"lib/angular-route/angular-route.js",
+						"app.module.js",
+						"app.config.js",
+						"app.animations.js",
+						"core/core.module.js",
+						"core/checkmark/checkmark.filter.js",
+						"core/phone/phone.module.js",
+						"core/phone/phone.service.js",
+						"phone-list/phone-list.module.js",
+						"phone-list/phone-list.component.js",
+						"phone-detail/phone-detail.module.js",
+						"phone-detail/phone-detail.component.js"
+					],
+					"expectedResourceHrefs": [
+						"lib/bootstrap/dist/css/bootstrap.css",
+						"app.css",
+						"app.animations.css"
+					]
+				},
+				{
+					"lane": "target",
+					"entrypointPath": ".versionless/work/angular-phonecat/target/app/index.html",
+					"entrypointSha256": "dfce969bbc5c83ba136d820df778c47e789fd5304454319dac9fa087a21297b3",
+					"receiptPath": "evidence/runs/angular-phonecat/t014-run.json",
+					"receiptDigest": "a6798081c0b005c76534b5acd4dc647d77d497b0b649748c685b779451035f51",
+					"observationLane": "target",
+					"expectedScriptSources": [
+						"lib/jquery/dist/jquery.js",
+						"lib/angular/angular.js",
+						"lib/angular-animate/angular-animate.js",
+						"lib/angular-resource/angular-resource.js",
+						"lib/angular-route/angular-route.js",
+						"app.module.js",
+						"app.config.js",
+						"app.animations.js",
+						"core/core.module.js",
+						"core/checkmark/checkmark.filter.js",
+						"core/phone/phone.module.js",
+						"core/phone/phone.service.js",
+						"phone-list/phone-list.module.js",
+						"phone-list/phone-list.component.js",
+						"phone-detail/phone-detail.module.js",
+						"phone-detail/phone-detail.component.js"
+					],
+					"expectedResourceHrefs": [
+						"lib/bootstrap/dist/css/bootstrap.css",
+						"app.css",
+						"app.animations.css"
+					]
+				}
+			]
+		},
+		{
+			"id": "react-boilerplate-v4-node24",
+			"sourceApplication": "react-boilerplate-v4",
+			"lanes": [
+				{
+					"lane": "legacy",
+					"entrypointPath": ".versionless/work/react-boilerplate-v4/target/build/index.html",
+					"entrypointSha256": "4946de84df1c8107d619f5d68d012973f3278ec7b07122204af7c7855773bb2f",
+					"receiptPath": "evidence/runs/react-boilerplate-v4/t008-run.json",
+					"receiptDigest": "4d32ae0a46041e5ec2ac68aa31a9b8f86bd9d294d312ce41968ddd99dc5ee758",
+					"observationLane": "target",
+					"expectedScriptSources": [
+						"/runtime.5fe103ed48f174380b38.js",
+						"/npm.redux-saga.73330e91205282f41978.chunk.js",
+						"/npm.webpack.68b1cf86149741bfe920.chunk.js",
+						"/npm.babel.364fb6b163e5042f4cf5.chunk.js",
+						"/npm.react-app-polyfill.478cb9097f8702465774.chunk.js",
+						"/npm.react-redux.eb33175851e0345c1aec.chunk.js",
+						"/npm.connected-react-router.362ccb4c24f49bb54d3e.chunk.js",
+						"/npm.intl-messageformat.0f3d95f7c9084e392fc0.chunk.js",
+						"/npm.intl-relativeformat.79b9e22b60867bcb7963.chunk.js",
+						"/npm.react-intl.cae773f0a39994aa2dd4.chunk.js",
+						"/main.2d182714eab81dd38c71.chunk.js"
+					],
+					"expectedResourceHrefs": [
+						"/favicon.ico",
+						"/icon_180x180.33285f999db78beed5640085c051e7b1.png",
+						"/icon_167x167.9085aba6ea24073fba72a94b7ac731a1.png",
+						"/icon_152x152.80d43cecdc663299328632b85127117b.png",
+						"/icon_120x120.2f7752bee9dcd06e998fd44640e47485.png",
+						"/manifest.47e77a2731a1bb975ed19ced8741b946.json",
+						"https://fonts.googleapis.com/css?family=Open+Sans:400,700"
+					]
+				},
+				{
+					"lane": "target",
+					"entrypointPath": ".versionless/work/react-boilerplate-v4-node24/target/build/index.html",
+					"entrypointSha256": "3f90d780617a8f5e9fd83f0b9ac2950e271bcbba04395f377a4db4a45db7438d",
+					"receiptPath": "evidence/runs/react-boilerplate-v4-node24/t022-run.json",
+					"receiptDigest": "815a5416b90c0a0c0a2f0adb779308c0ba0447d67c965003f15d343940d9b593",
+					"observationLane": "all",
+					"expectedScriptSources": [
+						"/runtime.c385780371cf8e4c1dc1.js",
+						"/npm.redux-saga.6bdb1989ccc61ae536de.chunk.js",
+						"/npm.webpack.1548bd8a5b334e1e1b1d.chunk.js",
+						"/npm.babel.ba4615594a72c7f2b8ff.chunk.js",
+						"/npm.react-app-polyfill.627df85c9c910ed65bd1.chunk.js",
+						"/npm.react-redux.871cc442cb4493adddb2.chunk.js",
+						"/npm.connected-react-router.918f43a97cfcc4f59649.chunk.js",
+						"/npm.intl-messageformat.ec99a22020a1d32251a8.chunk.js",
+						"/npm.intl-relativeformat.c7f256f3f3017e9f6851.chunk.js",
+						"/npm.react-intl.269ff343481ea33c1a1b.chunk.js",
+						"/main.b5c3fd468bdbf5a6a90b.chunk.js"
+					],
+					"expectedResourceHrefs": [
+						"/favicon.ico",
+						"/icon_180x180.33285f999db78beed5640085c051e7b1.png",
+						"/icon_167x167.9085aba6ea24073fba72a94b7ac731a1.png",
+						"/icon_152x152.80d43cecdc663299328632b85127117b.png",
+						"/icon_120x120.2f7752bee9dcd06e998fd44640e47485.png",
+						"/manifest.47e77a2731a1bb975ed19ced8741b946.json",
+						"https://fonts.googleapis.com/css?family=Open+Sans:400,700"
+					]
+				}
+			]
+		},
+		{
+			"id": "react-boilerplate-v4-vite8",
+			"sourceApplication": "react-boilerplate-v4",
+			"lanes": [
+				{
+					"lane": "legacy",
+					"entrypointPath": ".versionless/work/react-boilerplate-v4-node24/target/build/index.html",
+					"entrypointSha256": "3f90d780617a8f5e9fd83f0b9ac2950e271bcbba04395f377a4db4a45db7438d",
+					"receiptPath": "evidence/runs/react-boilerplate-v4-node24/t022-run.json",
+					"receiptDigest": "815a5416b90c0a0c0a2f0adb779308c0ba0447d67c965003f15d343940d9b593",
+					"observationLane": "all",
+					"expectedScriptSources": [
+						"/runtime.c385780371cf8e4c1dc1.js",
+						"/npm.redux-saga.6bdb1989ccc61ae536de.chunk.js",
+						"/npm.webpack.1548bd8a5b334e1e1b1d.chunk.js",
+						"/npm.babel.ba4615594a72c7f2b8ff.chunk.js",
+						"/npm.react-app-polyfill.627df85c9c910ed65bd1.chunk.js",
+						"/npm.react-redux.871cc442cb4493adddb2.chunk.js",
+						"/npm.connected-react-router.918f43a97cfcc4f59649.chunk.js",
+						"/npm.intl-messageformat.ec99a22020a1d32251a8.chunk.js",
+						"/npm.intl-relativeformat.c7f256f3f3017e9f6851.chunk.js",
+						"/npm.react-intl.269ff343481ea33c1a1b.chunk.js",
+						"/main.b5c3fd468bdbf5a6a90b.chunk.js"
+					],
+					"expectedResourceHrefs": [
+						"/favicon.ico",
+						"/icon_180x180.33285f999db78beed5640085c051e7b1.png",
+						"/icon_167x167.9085aba6ea24073fba72a94b7ac731a1.png",
+						"/icon_152x152.80d43cecdc663299328632b85127117b.png",
+						"/icon_120x120.2f7752bee9dcd06e998fd44640e47485.png",
+						"/manifest.47e77a2731a1bb975ed19ced8741b946.json",
+						"https://fonts.googleapis.com/css?family=Open+Sans:400,700"
+					]
+				},
+				{
+					"lane": "target",
+					"entrypointPath": ".versionless/work/react-boilerplate-v4-vite8/target/build-vite/index.html",
+					"entrypointSha256": "e77d403d657e36d070614c51a9db81ce7d998d3b0811126042def41210633dd4",
+					"receiptPath": "evidence/runs/react-boilerplate-v4-vite8/t028-run.json",
+					"receiptDigest": "1caf9dfa24b14b83ac63ceab9ca90829346045aac690c7b95a952ae4d9e72849",
+					"observationLane": "all",
+					"expectedScriptSources": ["/assets/index-D47xRHLD.js"],
+					"expectedResourceHrefs": [
+						"/assets/__vite-browser-external-CvNEtdN9.js",
+						"/assets/index-CqaBhjBI.css"
+					]
+				}
+			]
+		},
+		{
+			"id": "angular-phonecat-route-resolve",
+			"sourceApplication": "angular-phonecat",
+			"lanes": [
+				{
+					"lane": "legacy",
+					"entrypointPath": ".versionless/work/angular-phonecat-route-resolve/legacy/app/index.html",
+					"entrypointSha256": "dfce969bbc5c83ba136d820df778c47e789fd5304454319dac9fa087a21297b3",
+					"receiptPath": "evidence/runs/angular-phonecat-route-resolve/t032-run.json",
+					"receiptDigest": "aa8b2923a38aa5f1adc870b48cdd938b739e107c927aac71b8c2890705f6beef",
+					"observationLane": "legacy",
+					"expectedScriptSources": [
+						"lib/jquery/dist/jquery.js",
+						"lib/angular/angular.js",
+						"lib/angular-animate/angular-animate.js",
+						"lib/angular-resource/angular-resource.js",
+						"lib/angular-route/angular-route.js",
+						"app.module.js",
+						"app.config.js",
+						"app.animations.js",
+						"core/core.module.js",
+						"core/checkmark/checkmark.filter.js",
+						"core/phone/phone.module.js",
+						"core/phone/phone.service.js",
+						"phone-list/phone-list.module.js",
+						"phone-list/phone-list.component.js",
+						"phone-detail/phone-detail.module.js",
+						"phone-detail/phone-detail.component.js"
+					],
+					"expectedResourceHrefs": [
+						"lib/bootstrap/dist/css/bootstrap.css",
+						"app.css",
+						"app.animations.css"
+					]
+				},
+				{
+					"lane": "target",
+					"entrypointPath": ".versionless/work/angular-phonecat-route-resolve/target/app/index.html",
+					"entrypointSha256": "dfce969bbc5c83ba136d820df778c47e789fd5304454319dac9fa087a21297b3",
+					"receiptPath": "evidence/runs/angular-phonecat-route-resolve/t032-run.json",
+					"receiptDigest": "aa8b2923a38aa5f1adc870b48cdd938b739e107c927aac71b8c2890705f6beef",
+					"observationLane": "target",
+					"expectedScriptSources": [
+						"lib/jquery/dist/jquery.js",
+						"lib/angular/angular.js",
+						"lib/angular-animate/angular-animate.js",
+						"lib/angular-resource/angular-resource.js",
+						"lib/angular-route/angular-route.js",
+						"app.module.js",
+						"app.config.js",
+						"app.animations.js",
+						"core/core.module.js",
+						"core/checkmark/checkmark.filter.js",
+						"core/phone/phone.module.js",
+						"core/phone/phone.service.js",
+						"phone-list/phone-list.module.js",
+						"phone-list/phone-list.component.js",
+						"phone-detail/phone-detail.module.js",
+						"phone-detail/phone-detail.component.js"
+					],
+					"expectedResourceHrefs": [
+						"lib/bootstrap/dist/css/bootstrap.css",
+						"app.css",
+						"app.animations.css"
+					]
+				}
+			]
+		},
+		{
+			"id": "angular-phonecat-composed",
+			"sourceApplication": "angular-phonecat",
+			"lanes": [
+				{
+					"lane": "legacy",
+					"entrypointPath": ".versionless/work/angular-phonecat-composed/legacy/app/index.html",
+					"entrypointSha256": "dfce969bbc5c83ba136d820df778c47e789fd5304454319dac9fa087a21297b3",
+					"receiptPath": "evidence/runs/angular-phonecat-composed/t048-run.json",
+					"receiptDigest": "a7e8a9dc864085d77338f1615e3434a8a842fa5f4156a13bd2f5560bd2f8dc12",
+					"observationLane": "legacy",
+					"expectedScriptSources": [
+						"lib/jquery/dist/jquery.js",
+						"lib/angular/angular.js",
+						"lib/angular-animate/angular-animate.js",
+						"lib/angular-resource/angular-resource.js",
+						"lib/angular-route/angular-route.js",
+						"app.module.js",
+						"app.config.js",
+						"app.animations.js",
+						"core/core.module.js",
+						"core/checkmark/checkmark.filter.js",
+						"core/phone/phone.module.js",
+						"core/phone/phone.service.js",
+						"phone-list/phone-list.module.js",
+						"phone-list/phone-list.component.js",
+						"phone-detail/phone-detail.module.js",
+						"phone-detail/phone-detail.component.js"
+					],
+					"expectedResourceHrefs": [
+						"lib/bootstrap/dist/css/bootstrap.css",
+						"app.css",
+						"app.animations.css"
+					]
+				},
+				{
+					"lane": "target",
+					"entrypointPath": ".versionless/work/angular-phonecat-composed/target/app/index.html",
+					"entrypointSha256": "dfce969bbc5c83ba136d820df778c47e789fd5304454319dac9fa087a21297b3",
+					"receiptPath": "evidence/runs/angular-phonecat-composed/t048-run.json",
+					"receiptDigest": "a7e8a9dc864085d77338f1615e3434a8a842fa5f4156a13bd2f5560bd2f8dc12",
+					"observationLane": "target",
+					"expectedScriptSources": [
+						"lib/jquery/dist/jquery.js",
+						"lib/angular/angular.js",
+						"lib/angular-animate/angular-animate.js",
+						"lib/angular-resource/angular-resource.js",
+						"lib/angular-route/angular-route.js",
+						"app.module.js",
+						"app.config.js",
+						"app.animations.js",
+						"core/core.module.js",
+						"core/checkmark/checkmark.filter.js",
+						"core/phone/phone.module.js",
+						"core/phone/phone.service.js",
+						"phone-list/phone-list.module.js",
+						"phone-list/phone-list.component.js",
+						"phone-detail/phone-detail.module.js",
+						"phone-detail/phone-detail.component.js"
+					],
+					"expectedResourceHrefs": [
+						"lib/bootstrap/dist/css/bootstrap.css",
+						"app.css",
+						"app.animations.css"
+					]
+				}
+			]
+		},
+		{
+			"id": "react-boilerplate-v4-data-flow",
+			"sourceApplication": "react-boilerplate-v4",
+			"lanes": [
+				{
+					"lane": "legacy",
+					"entrypointPath": ".versionless/work/react-boilerplate-v4-data-flow/legacy/build-vite/index.html",
+					"entrypointSha256": "e77d403d657e36d070614c51a9db81ce7d998d3b0811126042def41210633dd4",
+					"receiptPath": "evidence/runs/react-boilerplate-v4-data-flow/t054-run.json",
+					"receiptDigest": "a6c25918ed9650d3315c42501932e8e6fe26552e48bcbdf74d4987f7b384452b",
+					"observationLane": "legacy",
+					"expectedScriptSources": ["/assets/index-D47xRHLD.js"],
+					"expectedResourceHrefs": [
+						"/assets/__vite-browser-external-CvNEtdN9.js",
+						"/assets/index-CqaBhjBI.css"
+					]
+				},
+				{
+					"lane": "target",
+					"entrypointPath": ".versionless/work/react-boilerplate-v4-data-flow/target/build-vite/index.html",
+					"entrypointSha256": "195389eed017d98c1e7bcdfe17b9c42be3851d745d60f7cb816109734381c5af",
+					"receiptPath": "evidence/runs/react-boilerplate-v4-data-flow/t054-run.json",
+					"receiptDigest": "a6c25918ed9650d3315c42501932e8e6fe26552e48bcbdf74d4987f7b384452b",
+					"observationLane": "target",
+					"expectedScriptSources": ["/assets/index-BbOQy7cX.js"],
+					"expectedResourceHrefs": [
+						"/assets/__vite-browser-external-CvNEtdN9.js",
+						"/assets/index-CqaBhjBI.css"
+					]
+				}
+			]
+		},
+		{
+			"id": "react-boilerplate-v4-composed",
+			"sourceApplication": "react-boilerplate-v4",
+			"lanes": [
+				{
+					"lane": "legacy",
+					"entrypointPath": ".versionless/work/react-boilerplate-v4-composed/legacy/build/index.html",
+					"entrypointSha256": "ed54fefd3c0e08f77f09ac7932443da26bf8fe63b2221ffc141948b9e45b60cf",
+					"receiptPath": "evidence/runs/react-boilerplate-v4-composed/t060-run.json",
+					"receiptDigest": "9341f5e70c00ebbde65a919db5b5d31fde0fa39983e985deb01afb71ed00d1ad",
+					"observationLane": "legacy",
+					"expectedScriptSources": [
+						"/runtime.bfb7866e5bd316b6a048.js",
+						"/npm.redux-saga.e4c67e286e17aab928d8.chunk.js",
+						"/npm.webpack.59e68e65a7ea323c5295.chunk.js",
+						"/npm.babel.a75018fd1b7c886eec7f.chunk.js",
+						"/npm.react-app-polyfill.02ee820043fb75ec004c.chunk.js",
+						"/npm.react-redux.cba95f2d297d6dbfe0c6.chunk.js",
+						"/npm.connected-react-router.8fd4eda0f65262f02a5e.chunk.js",
+						"/npm.intl-messageformat.7f32d245bfcb5c0501de.chunk.js",
+						"/npm.intl-relativeformat.0c1d32cae8b23b70584f.chunk.js",
+						"/npm.react-intl.590480c86bf89f4d91b3.chunk.js",
+						"/main.7bb4cda122f2e2a46418.chunk.js"
+					],
+					"expectedResourceHrefs": [
+						"/favicon.ico",
+						"/icon_180x180.33285f999db78beed5640085c051e7b1.png",
+						"/icon_167x167.9085aba6ea24073fba72a94b7ac731a1.png",
+						"/icon_152x152.80d43cecdc663299328632b85127117b.png",
+						"/icon_120x120.2f7752bee9dcd06e998fd44640e47485.png",
+						"/manifest.47e77a2731a1bb975ed19ced8741b946.json",
+						"https://fonts.googleapis.com/css?family=Open+Sans:400,700"
+					]
+				},
+				{
+					"lane": "target",
+					"entrypointPath": ".versionless/work/react-boilerplate-v4-composed/target/build-vite/index.html",
+					"entrypointSha256": "195389eed017d98c1e7bcdfe17b9c42be3851d745d60f7cb816109734381c5af",
+					"receiptPath": "evidence/runs/react-boilerplate-v4-composed/t060-run.json",
+					"receiptDigest": "9341f5e70c00ebbde65a919db5b5d31fde0fa39983e985deb01afb71ed00d1ad",
+					"observationLane": "target",
+					"expectedScriptSources": ["/assets/index-BbOQy7cX.js"],
+					"expectedResourceHrefs": [
+						"/assets/__vite-browser-external-CvNEtdN9.js",
+						"/assets/index-CqaBhjBI.css"
+					]
+				}
+			]
+		},
+		{
+			"id": "angular-phonecat-vite8",
+			"sourceApplication": "angular-phonecat",
+			"lanes": [
+				{
+					"lane": "legacy",
+					"entrypointPath": ".versionless/work/angular-phonecat-vite8/legacy/app/index.html",
+					"entrypointSha256": "dfce969bbc5c83ba136d820df778c47e789fd5304454319dac9fa087a21297b3",
+					"receiptPath": "evidence/runs/angular-phonecat-vite8/t069-run.json",
+					"receiptDigest": "033fc40237975e28df36117cc309625632610a399b5c0f88735079ed21fcad0d",
+					"observationLane": "legacy",
+					"expectedScriptSources": [
+						"lib/jquery/dist/jquery.js",
+						"lib/angular/angular.js",
+						"lib/angular-animate/angular-animate.js",
+						"lib/angular-resource/angular-resource.js",
+						"lib/angular-route/angular-route.js",
+						"app.module.js",
+						"app.config.js",
+						"app.animations.js",
+						"core/core.module.js",
+						"core/checkmark/checkmark.filter.js",
+						"core/phone/phone.module.js",
+						"core/phone/phone.service.js",
+						"phone-list/phone-list.module.js",
+						"phone-list/phone-list.component.js",
+						"phone-detail/phone-detail.module.js",
+						"phone-detail/phone-detail.component.js"
+					],
+					"expectedResourceHrefs": [
+						"lib/bootstrap/dist/css/bootstrap.css",
+						"app.css",
+						"app.animations.css"
+					]
+				},
+				{
+					"lane": "target",
+					"entrypointPath": ".versionless/work/angular-phonecat-vite8/target/build-vite/index.html",
+					"entrypointSha256": "951b6c330e54278cf814c5c366f875e3505e487c75d3ef4abf3f7eff45a91391",
+					"receiptPath": "evidence/runs/angular-phonecat-vite8/t069-run.json",
+					"receiptDigest": "033fc40237975e28df36117cc309625632610a399b5c0f88735079ed21fcad0d",
+					"observationLane": "target",
+					"expectedScriptSources": [
+						"lib/jquery/dist/jquery.js",
+						"lib/angular/angular.js",
+						"lib/angular-animate/angular-animate.js",
+						"lib/angular-resource/angular-resource.js",
+						"lib/angular-route/angular-route.js",
+						"app.module.js",
+						"app.config.js",
+						"app.animations.js",
+						"core/core.module.js",
+						"core/checkmark/checkmark.filter.js",
+						"core/phone/phone.module.js",
+						"core/phone/phone.service.js",
+						"phone-list/phone-list.module.js",
+						"phone-list/phone-list.component.js",
+						"phone-detail/phone-detail.module.js",
+						"phone-detail/phone-detail.component.js"
+					],
+					"expectedResourceHrefs": ["/assets/index-DtcUm9Sn.css"]
+				}
+			]
+		}
+	]
+}

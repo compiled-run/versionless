@@ -1,0 +1,1103 @@
+{
+  "schemaVersion": "versionless.cross-source-provenance.v1",
+  "fixture": "next-killedbygoogle",
+  "repository": "codyogden/killedbygoogle",
+  "repositoryIdentity": {
+    "fullName": "codyogden/killedbygoogle",
+    "fork": false
+  },
+  "commit": "56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+  "tree": "b8ac7b4fc3a1e12240f1848f6e8d98c1c7d80763",
+  "archive": {
+    "url": "https://codeload.github.com/codyogden/killedbygoogle/tar.gz/56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+    "sha256": "c28878d0f65b56aa595763c852477fb0c1e3533e5c7f7ea9daa2be16f102368d",
+    "byteLength": 370006
+  },
+  "fileCount": 72,
+  "officialTreeRowCount": 86,
+  "officialTree": [
+    {
+      "path": ".babelrc",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d885c4d230eb45ab81183d244b462594ff823852"
+    },
+    {
+      "path": ".czrc",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d1bcc209ca10ad61c38b49b8a7bd644c46a5bbc7"
+    },
+    {
+      "path": ".eslintrc.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f0f3abee419ea37f9fb5a69679b3463b26e8797c"
+    },
+    {
+      "path": ".github",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "95889175dfaaf391b02e9e7743adb60494a3a483"
+    },
+    {
+      "path": ".github/CODE_OF_CONDUCT.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c74334e6113d769b1929d47f6baa987d25e967aa"
+    },
+    {
+      "path": ".github/CONTRIBUTING.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9124479f0883845adf43b74b2fdc5d44297e8c4e"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "22902b9cf06a8862818c4f5932cbbbeca9e8da47"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/add-an-obituary.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8e6a6718fabfa51a36d5bbe60570ae05f166c2e6"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/other-stuff.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3ab62cb72d3a3deedff501b5deb77d8d432a8c1a"
+    },
+    {
+      "path": ".github/PULL_REQUEST_TEMPLATE.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "61c1622cd5f1d98b4959245da127e0467ed9b2b6"
+    },
+    {
+      "path": ".github/dependabot.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "423a85150fb2361dba531755599e5de4cb694011"
+    },
+    {
+      "path": ".github/workflows",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "32d4d65e8a8b420331f4ee8b83ffc0cb3736165a"
+    },
+    {
+      "path": ".github/workflows/graveyard.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "12f4a2dead670c712825136c37631c8e06d76b40"
+    },
+    {
+      "path": ".github/workflows/playwright.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "214dc710bf453439c89e1d024add9410c66a1a9a"
+    },
+    {
+      "path": ".github/workflows/stale.yml",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "dbcfbec11f23b5a51f8e14774adff2c6a0914705"
+    },
+    {
+      "path": ".gitignore",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "35dac5ac842fb967d57c0b2af60f665b3d116986"
+    },
+    {
+      "path": "LICENSE",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a7069eeadecd0e520bc416f05ebc1a70350af5dc"
+    },
+    {
+      "path": "README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e46a25be232c85f0be95433d25d87db84024ae04"
+    },
+    {
+      "path": "bin",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "c290136440658858528120e8743fed170b0d3d5d"
+    },
+    {
+      "path": "bin/graveyard",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "58c6d76967d64bf77e54abf78931fc84e194e72d"
+    },
+    {
+      "path": "bin/kill",
+      "mode": "100755",
+      "type": "blob",
+      "sha": "052ebba9538b38229b77e7672f1942f29465cbf1"
+    },
+    {
+      "path": "components",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "96224fffd073cc90c32e476e9143491be79ced52"
+    },
+    {
+      "path": "components/App.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a3a01866954bd856e18fabde39c066abce40c1e5"
+    },
+    {
+      "path": "components/Carbon.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8316e5fe356a04911b9094d6b7f311dbb96940dd"
+    },
+    {
+      "path": "components/Controls.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e0c7063fbac572634fbf07398862fb9a38d889e7"
+    },
+    {
+      "path": "components/Filter.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c052414b7e958f00bf5679bc726253185699ca58"
+    },
+    {
+      "path": "components/Footer",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "3fc331183b315534f2c57b95f150d08efa309943"
+    },
+    {
+      "path": "components/Footer/Footer.atoms.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "70169a249764ba2f557b65b113d20a290e5a9a93"
+    },
+    {
+      "path": "components/Footer/index.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ddfccc14694e40e0124a6fd5b749d9fe60584256"
+    },
+    {
+      "path": "components/Header.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0bde064dad891364772abd3dbff2e54ca15345e2"
+    },
+    {
+      "path": "components/List",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "f54c2ed968daffb33b215592eed4117a001e0a27"
+    },
+    {
+      "path": "components/List/Item.atoms.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d97eab5e96141723f61f20efb19dc1d081c5d150"
+    },
+    {
+      "path": "components/List/Item.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a3252198291decb96d488eae48e90d4ed0c98841"
+    },
+    {
+      "path": "components/List/List.atoms.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "347ceb0b40be8a04106ec2983aef921857cafbcd"
+    },
+    {
+      "path": "components/List/index.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "944684f71857598cd2cb7f263c20fe1520e9456f"
+    },
+    {
+      "path": "components/Loader.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "951683289f37a423fbd8d0a331e01d8d21581178"
+    },
+    {
+      "path": "components/PressCoverage.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8d6dfa26e615cc8d650cd47d38cab51c58af4904"
+    },
+    {
+      "path": "components/SRT.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e07d7634b4a8b1ad45511c45f0f13bf68e4615f5"
+    },
+    {
+      "path": "components/Search",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "4c6e3ddb298d828ec8f4d25542e05767b08f2b4f"
+    },
+    {
+      "path": "components/Search/Search.atoms.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ccd33e8c15f3ba0acb51718d95430721b930f65f"
+    },
+    {
+      "path": "components/Search/index.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5e057cb69f01aa67889acab2d665a108819ec6dd"
+    },
+    {
+      "path": "components/index.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ce01af4056581e51546737cb387d3c26d1f65a5a"
+    },
+    {
+      "path": "e2e",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "efa23c8798af517aaa6df12a5e298e654539fe20"
+    },
+    {
+      "path": "e2e/filter.spec.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "963f04489476bdbb4b2322f7de4ee0e46e05572c"
+    },
+    {
+      "path": "e2e/search.spec.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3ba6ab950f3bde60d852432464df9e75a55be313"
+    },
+    {
+      "path": "graveyard.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2e1268ecc2123d96f6bf7ae1a457593396f9ef38"
+    },
+    {
+      "path": "graveyard.test.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c1a1fdd439630110113b98d97f72ea22562e28fd"
+    },
+    {
+      "path": "newsletter.http",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0f6c93aa827996025fed4ead64cb4e7d44f16909"
+    },
+    {
+      "path": "next-env.d.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4f11a03dc6cc37f2b5105c08f2e7b24c603ab2f4"
+    },
+    {
+      "path": "next.config.js",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "86f29fdbeb026cfad632b714d681ead3fbb680c1"
+    },
+    {
+      "path": "package.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "330913c760f754befa65534332c107d91d535cfd"
+    },
+    {
+      "path": "pages",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "6b0c2909754a1d1d3e8975ed36f51609c2f34904"
+    },
+    {
+      "path": "pages/_app.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a01c5728411033077653d0abe2ede78024e4be56"
+    },
+    {
+      "path": "pages/index.tsx",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "44fa7be0d5a443f25cbe0f59cff1f239a9657b53"
+    },
+    {
+      "path": "playwright.config.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "97ccf0422987e135ab633ecb09118f8899d8adbe"
+    },
+    {
+      "path": "public",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "a3098e201b1908c7a1f49031a5cd23168b3045cd"
+    },
+    {
+      "path": "public/_headers",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a736c8e7695ddc67c199733dbeca00536058139d"
+    },
+    {
+      "path": "public/envelope.svg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2cf7ee39cbec138603e9c452cb7e220bde1405eb"
+    },
+    {
+      "path": "public/favicon.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1849086abd6ec182a24f4b352c55fcd3c76bcf0b"
+    },
+    {
+      "path": "public/features",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "8b6bb3d112df45d99355a5a6277517b4152dd83f"
+    },
+    {
+      "path": "public/features/ars-technica-logo.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4107f2bba65d62d2a632df18b04f57375296d3fb"
+    },
+    {
+      "path": "public/features/bgr-logo.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "68c89551c001874a1f7a7e3cf6f5d891bebb0fff"
+    },
+    {
+      "path": "public/features/business-insider-logo.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e186eee6805c7ca54b35ef4504609705ab89dddf"
+    },
+    {
+      "path": "public/features/fast-company-logo.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c4df4331bf03f5180fcb23e63e21eee1a0b9f7b8"
+    },
+    {
+      "path": "public/features/forbes-logo.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f3b5e61e03cf9daef73e76bfa500040e12ae1542"
+    },
+    {
+      "path": "public/features/fortune-logo.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1f059907dbddf1965b1ded3061c824bd7e38405c"
+    },
+    {
+      "path": "public/features/gizmodo-logo.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "827edd46acb6775ac78aa1586cc1ebc5b810ca6d"
+    },
+    {
+      "path": "public/features/lifehacker-logo.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3aaaec79605f971627ca3c10f87732184afadb27"
+    },
+    {
+      "path": "public/features/the-next-web-logo.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "aa4e5513eff7637567dd6ed79a9feaf79940db5a"
+    },
+    {
+      "path": "public/github.svg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "069b3c2f9b60d64821934846f00781fc441f4c65"
+    },
+    {
+      "path": "public/global.css",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ef8c30642ac9a0d852c1f3c3db6fcd4e32de1566"
+    },
+    {
+      "path": "public/guillotine.svg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8578f57356bb5ac24e38cd29e864eee2bd05bd7c"
+    },
+    {
+      "path": "public/knife.svg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6fb61a570d638386e74d6efc5ee66c57b1cda12c"
+    },
+    {
+      "path": "public/loading.svg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "06e01f66d07ee564a7d642c3558ba06f1f147a57"
+    },
+    {
+      "path": "public/social",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "407860faeb1f850ce6a2df8f1f10064723a55b97"
+    },
+    {
+      "path": "public/social/card-twitter.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6d8b2f237dd0bb5beff13c145b6e42b4ecad5a89"
+    },
+    {
+      "path": "public/social/card.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9f4783d112145a71e44c805e17ea7c829ca73fd5"
+    },
+    {
+      "path": "public/tombstone-alt.svg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "dc680e644ee98f565ba62e8d4635754fc6f3b269"
+    },
+    {
+      "path": "public/tombstone.png",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "12cfffd0a8dae6e82756e3b39dc801014ba3070c"
+    },
+    {
+      "path": "public/tombstone.svg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a13048a856fe4a3bd7e4084341835bc0b981a641"
+    },
+    {
+      "path": "public/twitter-blue.svg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "630d73268afcffc02bba99b253c00249b293b8f0"
+    },
+    {
+      "path": "public/twitter.svg",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3b9ac0ed30e735727e0754ecffe728776485226c"
+    },
+    {
+      "path": "tsconfig.json",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6ca035b33ed2381726dfe20a7609ad7d22bcc4b0"
+    },
+    {
+      "path": "types",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "6bd51fbf6d7cccbab91c223066c42ef5c58f49d8"
+    },
+    {
+      "path": "types/Product.ts",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0dc814bdfda7a856f0002c3a128f67e2b250f7b0"
+    },
+    {
+      "path": "yarn.lock",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b421cdeb0a0fb65639f46f3c2710d80488fd08b0"
+    }
+  ],
+  "fileManifestSha256": "05c3677979d98740e8c76a599497e43fe2b623a43e56226edd01c53bf2bf572c",
+  "acceptedGlobalMetadata": {
+    "kind": "pax-global-comment",
+    "comment": "56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+    "bytes": 52
+  },
+  "acceptedPathMetadata": [],
+  "files": [
+    {
+      "path": ".babelrc",
+      "byteLength": 306,
+      "sha256": "c686109195bab2cb07ea4abca4125023f82f1720efb2a488dbee5116f5438977"
+    },
+    {
+      "path": ".czrc",
+      "byteLength": 42,
+      "sha256": "24d874caf85a251d3b48a4484233c85aec12f2c59b43525b146105ee43c7c542"
+    },
+    {
+      "path": ".eslintrc.json",
+      "byteLength": 97,
+      "sha256": "2fb54abd4596c6531ac7d82d7e7f07e21b6e4be0b4ec39422c1f8c6fe5a7392a"
+    },
+    {
+      "path": ".github/CODE_OF_CONDUCT.md",
+      "byteLength": 3360,
+      "sha256": "a77998c3ceeaca9f2f67a40df6bb58bf01f4761c0a4a187d812e76d3ade7f461"
+    },
+    {
+      "path": ".github/CONTRIBUTING.md",
+      "byteLength": 1423,
+      "sha256": "eff03f73eb13146b942e344afdedf9224021332b684a9fcf44cf92d6c950a953"
+    },
+    {
+      "path": ".github/dependabot.yml",
+      "byteLength": 172,
+      "sha256": "a93386a683cf75ad27ad0c72ebe87367e943bee37a5a3a71dac131b953bd9e2d"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/add-an-obituary.md",
+      "byteLength": 397,
+      "sha256": "f905be3e36f0664f9673baad2e4f1bcc1c05e39e485cc14cde4b959bf5e76719"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/other-stuff.md",
+      "byteLength": 106,
+      "sha256": "6f3f500a89f0012e9871ec44a88f18beebf4182d9eab0ece100d30d0f85be17f"
+    },
+    {
+      "path": ".github/PULL_REQUEST_TEMPLATE.md",
+      "byteLength": 188,
+      "sha256": "28d7cab7521dcd9b1d07dbdc6f4eeddbee394e13ed0306d66bb7f3960fa65fac"
+    },
+    {
+      "path": ".github/workflows/graveyard.yml",
+      "byteLength": 425,
+      "sha256": "4220a2d7db27291e5311c6f43dbe01ca9c2338a35f2439ac5f5dd34d5799b428"
+    },
+    {
+      "path": ".github/workflows/playwright.yml",
+      "byteLength": 1061,
+      "sha256": "79ef3bfab380d28c818d67198275da9d54d7633721a1b507e04beaf81181f0f7"
+    },
+    {
+      "path": ".github/workflows/stale.yml",
+      "byteLength": 367,
+      "sha256": "f3c793a9db6389415924cf736c2b3d8e10d11688e8a5c166da4cf648abaa1e16"
+    },
+    {
+      "path": ".gitignore",
+      "byteLength": 1029,
+      "sha256": "df62b0c5fb14407c3dfce2cc33cb44a3b1a8ecf65aa4b1ffecd487560001d915"
+    },
+    {
+      "path": "bin/graveyard",
+      "byteLength": 470,
+      "sha256": "44455d7cf2d72e9ce14db75aab5de72ddf92f4761faec7f1818df124acdf77db"
+    },
+    {
+      "path": "bin/kill",
+      "byteLength": 3512,
+      "sha256": "bcd1ce0c626e8d31de7fef49d0922505ecd2fbcc47f99f118a7587ffde34e7ce"
+    },
+    {
+      "path": "components/App.tsx",
+      "byteLength": 1769,
+      "sha256": "b3a48d2095754c46f64594c7d0cd49c2c65cc45a3baeaf992d6525617d27fe25"
+    },
+    {
+      "path": "components/Carbon.tsx",
+      "byteLength": 1480,
+      "sha256": "9a5c0ff76ae0842cacfbdfc182bbb6df0ecb48f5c5ee4f3939f156989b112e93"
+    },
+    {
+      "path": "components/Controls.tsx",
+      "byteLength": 480,
+      "sha256": "e4ae87ee9b227e5a3c75d06d7235dc5678689b4bac49fd3ea468928261c8a7f0"
+    },
+    {
+      "path": "components/Filter.tsx",
+      "byteLength": 1557,
+      "sha256": "5438168c6e94bef94ca9dc7d93e07c2ff210820d35aa1feb0cdaa80adc96d4b4"
+    },
+    {
+      "path": "components/Footer/Footer.atoms.ts",
+      "byteLength": 692,
+      "sha256": "11ced7832614533031c0589cc76564dee5e19d8399989fcdaa10d64465c952b1"
+    },
+    {
+      "path": "components/Footer/index.tsx",
+      "byteLength": 4919,
+      "sha256": "bc99e91d97691e3170ae1a893757d42e938c5c96816cada5bba90dd6162d08e9"
+    },
+    {
+      "path": "components/Header.tsx",
+      "byteLength": 1103,
+      "sha256": "d37b10a9b2b63f125c2ffb40fab694effecd3a74d3b3a3ed6f4ca5398c5edbf9"
+    },
+    {
+      "path": "components/index.tsx",
+      "byteLength": 437,
+      "sha256": "c983e0d4cf4e9f3dc86872c7b19c01d2950bd341c14a910c0093f30280536e71"
+    },
+    {
+      "path": "components/List/index.tsx",
+      "byteLength": 3778,
+      "sha256": "8aa775bf5c6caaeb6a2022cc33c1dcc1d37d134d24af0f3c8477562ecf39b224"
+    },
+    {
+      "path": "components/List/Item.atoms.ts",
+      "byteLength": 1004,
+      "sha256": "f9d586551de0d396aaa1b51e2ae87aeae157e03ff362bd241edd559efdc5fb13"
+    },
+    {
+      "path": "components/List/Item.tsx",
+      "byteLength": 3241,
+      "sha256": "d66d13f038a7ef8c66805ca76eb561834987f4c09dc228b1c3b8b852db285625"
+    },
+    {
+      "path": "components/List/List.atoms.ts",
+      "byteLength": 661,
+      "sha256": "6e3c496866c795af4ac91c6f41064b5c1cdd74a8f9046d82f13594db66f6c518"
+    },
+    {
+      "path": "components/Loader.tsx",
+      "byteLength": 455,
+      "sha256": "65ff823b844080821e0f27879ee34f5b60626f9da62007fc9021187007e9a1e4"
+    },
+    {
+      "path": "components/PressCoverage.tsx",
+      "byteLength": 2820,
+      "sha256": "75dd72c1bbed36c5cb14fd669937f85543501d19aef2611b0e19c84a94c8b826"
+    },
+    {
+      "path": "components/Search/index.tsx",
+      "byteLength": 974,
+      "sha256": "697678ea2415166f15335d6a092b9513b7e57d4db5e12e224d33e735a3bcabf6"
+    },
+    {
+      "path": "components/Search/Search.atoms.ts",
+      "byteLength": 1467,
+      "sha256": "071f44f7af4cfe8e85f92b152341eee084e6c6d7302e92455f1faf3b0fd7507e"
+    },
+    {
+      "path": "components/SRT.tsx",
+      "byteLength": 461,
+      "sha256": "b5494030143172d3f401f7a116b2a9f0783638e75bcea385147c4bb87d701814"
+    },
+    {
+      "path": "e2e/filter.spec.ts",
+      "byteLength": 531,
+      "sha256": "0649669471752d8ddf15caae8c71558f357a2fed4c4453af28e33f1af1b4bc5a"
+    },
+    {
+      "path": "e2e/search.spec.ts",
+      "byteLength": 278,
+      "sha256": "e4d98a29a563226a12fbfc523edc8a9c3b8f0713650f084c087da655960d7f6b"
+    },
+    {
+      "path": "graveyard.json",
+      "byteLength": 91452,
+      "sha256": "626bdcc020bf7c7952c9c92569de4431e05c22ab893f5253014140a7b1932df7"
+    },
+    {
+      "path": "graveyard.test.ts",
+      "byteLength": 2021,
+      "sha256": "f920112eda71943407c47b107411534b6d3ceabd96d4db15e7c85947606095cb"
+    },
+    {
+      "path": "LICENSE",
+      "byteLength": 1067,
+      "sha256": "10547fb81e311e470cdcda5a273bac2a76f50ded6b33ce4362bcb05e1176d5e0"
+    },
+    {
+      "path": "newsletter.http",
+      "byteLength": 224,
+      "sha256": "48076a41d90315638d920099c441b327829a9658daa597e256363441b90386a9"
+    },
+    {
+      "path": "next-env.d.ts",
+      "byteLength": 201,
+      "sha256": "9269d492817e359123ac64c8205e5d05dab63d71a3a7a229e68b5d9a0e8150bf"
+    },
+    {
+      "path": "next.config.js",
+      "byteLength": 237,
+      "sha256": "f4c7d09451907d1e288c7ddd5d41372ca2f1cc6bc1760f2c09a98ac0291d39bb"
+    },
+    {
+      "path": "package.json",
+      "byteLength": 1300,
+      "sha256": "5042dd8b31a7e1b37c2e0ed529cf3db50388660c9616c08e6445664ab59481c4"
+    },
+    {
+      "path": "pages/_app.tsx",
+      "byteLength": 296,
+      "sha256": "52814ea4c7934ff5a5fc11e47639c4753ca204238d4a2302702e0e6a65e1329d"
+    },
+    {
+      "path": "pages/index.tsx",
+      "byteLength": 4216,
+      "sha256": "1b4971c9e4c935f331518ae40a2387412e7031ad2959e98c9e01133095cf4309"
+    },
+    {
+      "path": "playwright.config.ts",
+      "byteLength": 2575,
+      "sha256": "2db284eb793a6e754686d8cd729e3b9e023c0b8937874030ab5c1fb7e2ac52bc"
+    },
+    {
+      "path": "public/_headers",
+      "byteLength": 49,
+      "sha256": "f4d43ea0d140db2e7f72da3228ab1af384f94418cff2aa35e5b9b63c0823f831"
+    },
+    {
+      "path": "public/envelope.svg",
+      "byteLength": 1280,
+      "sha256": "2bbb7cfe107bf2a7845f0cb6058102e5b21537a26234ead3c13cbb42c2675585"
+    },
+    {
+      "path": "public/favicon.png",
+      "byteLength": 1115,
+      "sha256": "145494e6aa58aae3536ac51265d28af42abc12a48c8bd07889ad4f3461cc6ac9"
+    },
+    {
+      "path": "public/features/ars-technica-logo.png",
+      "byteLength": 7818,
+      "sha256": "09e676a5f4d03d4dcf88521c0e550488ae61f287eb7f66ea23b2ae99c08940ac"
+    },
+    {
+      "path": "public/features/bgr-logo.png",
+      "byteLength": 14909,
+      "sha256": "854d39ae6c15cf1b1a4664856607799d03691d4ae3e6c7fe0580500a186d52d4"
+    },
+    {
+      "path": "public/features/business-insider-logo.png",
+      "byteLength": 19717,
+      "sha256": "7cffb126f09afb62a795134223b8a6d39c4f404ca00140a97a12543dbafebd49"
+    },
+    {
+      "path": "public/features/fast-company-logo.png",
+      "byteLength": 9961,
+      "sha256": "28ad6bb9ca2d15d033f543870da9792feef8d138a5f74f341e796a5840c722e8"
+    },
+    {
+      "path": "public/features/forbes-logo.png",
+      "byteLength": 7102,
+      "sha256": "75d0c402a667c9db9e08384bf362beb6676a70a99ef4e1f9ee5f4466dad4bfb7"
+    },
+    {
+      "path": "public/features/fortune-logo.png",
+      "byteLength": 14032,
+      "sha256": "7596bbbe2bf7bd9885591041bd672468065f95a6a32b5daf7917f2bba0ee09e8"
+    },
+    {
+      "path": "public/features/gizmodo-logo.png",
+      "byteLength": 7714,
+      "sha256": "edca5995696b501bf061384be84d4763f5929eb4ce80ac4194204346d36b3a27"
+    },
+    {
+      "path": "public/features/lifehacker-logo.png",
+      "byteLength": 21394,
+      "sha256": "d7f8c53f4b821d30e3e5461d1b5aa45e331f469f970a723773d01f4073b622a4"
+    },
+    {
+      "path": "public/features/the-next-web-logo.png",
+      "byteLength": 3463,
+      "sha256": "e06c60e3dd4f5195734a7a6ad539158c4a9b364d804976d3b3986657fbdf29c1"
+    },
+    {
+      "path": "public/github.svg",
+      "byteLength": 834,
+      "sha256": "bc5d96b5c6eac0633d61a44a7f2bbe48a87e28ae9dccb3ff7c3a4c93ec30a2ec"
+    },
+    {
+      "path": "public/global.css",
+      "byteLength": 287,
+      "sha256": "3989853a9e5f981c593eefbfe0f6cda84b5e4b3b82c2649e6626f26fe376de81"
+    },
+    {
+      "path": "public/guillotine.svg",
+      "byteLength": 1296,
+      "sha256": "b634d8bccdc5e6f07be0f150dc542b39a00b5d570e42c1918d9cb176f24d3b77"
+    },
+    {
+      "path": "public/knife.svg",
+      "byteLength": 959,
+      "sha256": "a43451898b9df386867d62fbed55a2b80761730280e6d7b7c9b7fc9d58ff5dc8"
+    },
+    {
+      "path": "public/loading.svg",
+      "byteLength": 682,
+      "sha256": "ecab06ae8837d2e34f3c72d6f7b80f49659cd374313725a77aaba6dc40f0d345"
+    },
+    {
+      "path": "public/social/card-twitter.png",
+      "byteLength": 74320,
+      "sha256": "8e8d530eefe8d11d88bf2500df1b304047ab2034b7ab8c260ea8b9c42562d9a5"
+    },
+    {
+      "path": "public/social/card.png",
+      "byteLength": 77859,
+      "sha256": "7658e4b8bb47b246650a828ccc85713faa45e0cad6b016f4ae6cf564bed32b00"
+    },
+    {
+      "path": "public/tombstone-alt.svg",
+      "byteLength": 1762,
+      "sha256": "31e28670f21aa745d25b2d66a0403d22b22f2c20163d63e899384c71748a37e7"
+    },
+    {
+      "path": "public/tombstone.png",
+      "byteLength": 1311,
+      "sha256": "947332fb25116badec7db88ef486d24b3363d2e9f721c8d29442b901549d82e7"
+    },
+    {
+      "path": "public/tombstone.svg",
+      "byteLength": 1761,
+      "sha256": "ec30fcacc40c8abe7bedcc4d1591f328e32c68203a317e5e397fd792e41279c4"
+    },
+    {
+      "path": "public/twitter-blue.svg",
+      "byteLength": 604,
+      "sha256": "4a8e3be945bea7466bfc083c737fe619c611f325f11c3a8dc28f07c13a3c8203"
+    },
+    {
+      "path": "public/twitter.svg",
+      "byteLength": 627,
+      "sha256": "b05fc5fed04f5a7c4b59e5fd3bab672c679d5d15aba3c46ee5a5db911c75fc73"
+    },
+    {
+      "path": "README.md",
+      "byteLength": 3180,
+      "sha256": "52b45332cc18599ebc140f30d106b03dba5d33bf3c430a89ed4178d0ee822af5"
+    },
+    {
+      "path": "tsconfig.json",
+      "byteLength": 617,
+      "sha256": "b647b89b66fd54ed7f4b83d2b2354575e1e6df4736cc8a8baf03043545f1adf7"
+    },
+    {
+      "path": "types/Product.ts",
+      "byteLength": 224,
+      "sha256": "a071221068de9699807a3bf9eea2e87e6e430f67cf8fd1403b730b394c16e1e3"
+    },
+    {
+      "path": "yarn.lock",
+      "byteLength": 256958,
+      "sha256": "a676ee932cef5e54d469dc6d1e040e50f42f9cc88beb16ae5c72c13e26ebc48a"
+    }
+  ],
+  "rootLicense": {
+    "path": "LICENSE",
+    "sha256": "10547fb81e311e470cdcda5a273bac2a76f50ded6b33ce4362bcb05e1176d5e0",
+    "classification": "verified-compatible"
+  },
+  "licensing": [
+    {
+      "path": "LICENSE",
+      "sha256": "10547fb81e311e470cdcda5a273bac2a76f50ded6b33ce4362bcb05e1176d5e0",
+      "classification": "verified-compatible",
+      "reason": "Exact root MIT text, repeated raw/archive byte identity."
+    }
+  ],
+  "assets": [
+    {
+      "path": "public/envelope.svg",
+      "sha256": "2bbb7cfe107bf2a7845f0cb6058102e5b21537a26234ead3c13cbb42c2675585",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "public/favicon.png",
+      "sha256": "145494e6aa58aae3536ac51265d28af42abc12a48c8bd07889ad4f3461cc6ac9",
+      "classification": "excluded",
+      "reason": "Potential logo, favicon, brand, avatar, trademark, or attribution material is excluded."
+    },
+    {
+      "path": "public/features/ars-technica-logo.png",
+      "sha256": "09e676a5f4d03d4dcf88521c0e550488ae61f287eb7f66ea23b2ae99c08940ac",
+      "classification": "excluded",
+      "reason": "Potential logo, favicon, brand, avatar, trademark, or attribution material is excluded."
+    },
+    {
+      "path": "public/features/bgr-logo.png",
+      "sha256": "854d39ae6c15cf1b1a4664856607799d03691d4ae3e6c7fe0580500a186d52d4",
+      "classification": "excluded",
+      "reason": "Potential logo, favicon, brand, avatar, trademark, or attribution material is excluded."
+    },
+    {
+      "path": "public/features/business-insider-logo.png",
+      "sha256": "7cffb126f09afb62a795134223b8a6d39c4f404ca00140a97a12543dbafebd49",
+      "classification": "excluded",
+      "reason": "Potential logo, favicon, brand, avatar, trademark, or attribution material is excluded."
+    },
+    {
+      "path": "public/features/fast-company-logo.png",
+      "sha256": "28ad6bb9ca2d15d033f543870da9792feef8d138a5f74f341e796a5840c722e8",
+      "classification": "excluded",
+      "reason": "Potential logo, favicon, brand, avatar, trademark, or attribution material is excluded."
+    },
+    {
+      "path": "public/features/forbes-logo.png",
+      "sha256": "75d0c402a667c9db9e08384bf362beb6676a70a99ef4e1f9ee5f4466dad4bfb7",
+      "classification": "excluded",
+      "reason": "Potential logo, favicon, brand, avatar, trademark, or attribution material is excluded."
+    },
+    {
+      "path": "public/features/fortune-logo.png",
+      "sha256": "7596bbbe2bf7bd9885591041bd672468065f95a6a32b5daf7917f2bba0ee09e8",
+      "classification": "excluded",
+      "reason": "Potential logo, favicon, brand, avatar, trademark, or attribution material is excluded."
+    },
+    {
+      "path": "public/features/gizmodo-logo.png",
+      "sha256": "edca5995696b501bf061384be84d4763f5929eb4ce80ac4194204346d36b3a27",
+      "classification": "excluded",
+      "reason": "Potential logo, favicon, brand, avatar, trademark, or attribution material is excluded."
+    },
+    {
+      "path": "public/features/lifehacker-logo.png",
+      "sha256": "d7f8c53f4b821d30e3e5461d1b5aa45e331f469f970a723773d01f4073b622a4",
+      "classification": "excluded",
+      "reason": "Potential logo, favicon, brand, avatar, trademark, or attribution material is excluded."
+    },
+    {
+      "path": "public/features/the-next-web-logo.png",
+      "sha256": "e06c60e3dd4f5195734a7a6ad539158c4a9b364d804976d3b3986657fbdf29c1",
+      "classification": "excluded",
+      "reason": "Potential logo, favicon, brand, avatar, trademark, or attribution material is excluded."
+    },
+    {
+      "path": "public/github.svg",
+      "sha256": "bc5d96b5c6eac0633d61a44a7f2bbe48a87e28ae9dccb3ff7c3a4c93ec30a2ec",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "public/guillotine.svg",
+      "sha256": "b634d8bccdc5e6f07be0f150dc542b39a00b5d570e42c1918d9cb176f24d3b77",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "public/knife.svg",
+      "sha256": "a43451898b9df386867d62fbed55a2b80761730280e6d7b7c9b7fc9d58ff5dc8",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "public/loading.svg",
+      "sha256": "ecab06ae8837d2e34f3c72d6f7b80f49659cd374313725a77aaba6dc40f0d345",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "public/social/card-twitter.png",
+      "sha256": "8e8d530eefe8d11d88bf2500df1b304047ab2034b7ab8c260ea8b9c42562d9a5",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "public/social/card.png",
+      "sha256": "7658e4b8bb47b246650a828ccc85713faa45e0cad6b016f4ae6cf564bed32b00",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "public/tombstone-alt.svg",
+      "sha256": "31e28670f21aa745d25b2d66a0403d22b22f2c20163d63e899384c71748a37e7",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "public/tombstone.png",
+      "sha256": "947332fb25116badec7db88ef486d24b3363d2e9f721c8d29442b901549d82e7",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "public/tombstone.svg",
+      "sha256": "ec30fcacc40c8abe7bedcc4d1591f328e32c68203a317e5e397fd792e41279c4",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "public/twitter-blue.svg",
+      "sha256": "4a8e3be945bea7466bfc083c737fe619c611f325f11c3a8dc28f07c13a3c8203",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    },
+    {
+      "path": "public/twitter.svg",
+      "sha256": "b05fc5fed04f5a7c4b59e5fd3bab672c679d5d15aba3c46ee5a5db911c75fc73",
+      "classification": "unknown",
+      "reason": "Root MIT text alone does not establish separate asset rights."
+    }
+  ],
+  "corroboratedLeadFacts": {
+    "nextMajor": 12,
+    "packageManager": "yarn-v1",
+    "router": "pages",
+    "dataFunction": "getStaticProps",
+    "browserWorkflow": "playwright-present-not-executed",
+    "productionBundler": "candidate-owned-custom-webpack",
+    "journeyPath": "components/Search/index.tsx",
+    "scripts": [
+      {
+        "name": "build",
+        "command": "next build"
+      },
+      {
+        "name": "dev",
+        "command": "next dev"
+      },
+      {
+        "name": "kill",
+        "command": "bin/kill"
+      },
+      {
+        "name": "lint",
+        "command": "next lint"
+      },
+      {
+        "name": "preview",
+        "command": "bin/graveyard && yarn build && next export && npx http-server out/ -p 3000"
+      },
+      {
+        "name": "start",
+        "command": "next start"
+      },
+      {
+        "name": "test",
+        "command": "jest graveyard.test.ts"
+      },
+      {
+        "name": "test:e2e",
+        "command": "playwright test"
+      }
+    ],
+    "scope": "provenance-only"
+  },
+  "evidenceBlockers": [
+    "Package scripts and any npx or registry behavior were recorded but not executed or resolved.",
+    "External product links, remote images, fonts, assets, analytics, telemetry, and browser egress remain not-tested.",
+    "Server, API, data, authentication, and payment behavior remain not-tested."
+  ],
+  "nestedCompatibleLicense": null,
+  "excludedCommittedDist": []
+}

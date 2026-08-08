@@ -1,0 +1,1886 @@
+{
+  "first": {
+    "digest": "78a28c2aa73e8b39fcdcb8cdc60b0d58911667f03985d20c03b0aa9ac6f58878",
+    "inventorySha256": "9e671b66db30b584e5d1f55b9cd8c3df7a8d37d829766d4ec5598c398ad3f9ab",
+    "entries": [
+      {
+        "path": "app.animations.css",
+        "url": "/app.animations.css",
+        "sha256": "75cd5760736fa954176dd7d8b297afeb5daf13c64018a39858d8fbefdfe93eb7"
+      },
+      {
+        "path": "app.animations.js",
+        "url": "/app.animations.js",
+        "sha256": "60b239bbaf0491933dd99dd5b1d8962d42bbac89f8fdbd80fc74c4133c0fae00"
+      },
+      {
+        "path": "app.config.js",
+        "url": "/app.config.js",
+        "sha256": "26cd79608f8fb99fef48fc4bcdb6f737e4c67626d1893797221128373217ca3e"
+      },
+      {
+        "path": "app.css",
+        "url": "/app.css",
+        "sha256": "4e7374c40e4222f5e1c9b8404860236fe890c6e6a01f2339f061fb8b5b5a606f"
+      },
+      {
+        "path": "app.module.js",
+        "url": "/app.module.js",
+        "sha256": "e062757ca6f5b15c20c461a6636106652133103d0daaf8e3c498e4fb1a8b0617"
+      },
+      {
+        "path": "assets/glyphicons-halflings-regular-BKjkU69z.woff",
+        "url": "/assets/glyphicons-halflings-regular-BKjkU69z.woff",
+        "sha256": "a26394f7ede100ca118eff2eda08596275a9839b959c226e15439557a5a80742"
+      },
+      {
+        "path": "assets/glyphicons-halflings-regular-BUJKDMgK.eot",
+        "url": "/assets/glyphicons-halflings-regular-BUJKDMgK.eot",
+        "sha256": "13634da87d9e23f8c3ed9108ce1724d183a39ad072e73e1b3d8cbf646d2d0407"
+      },
+      {
+        "path": "assets/glyphicons-halflings-regular-CSehLiBc.svg",
+        "url": "/assets/glyphicons-halflings-regular-CSehLiBc.svg",
+        "sha256": "42f60659d265c1a3c30f9fa42abcbb56bd4a53af4d83d316d6dd7a36903c43e5"
+      },
+      {
+        "path": "assets/glyphicons-halflings-regular-DrwTMapi.ttf",
+        "url": "/assets/glyphicons-halflings-regular-DrwTMapi.ttf",
+        "sha256": "e395044093757d82afcb138957d06a1ea9361bdcf0b442d06a18a8051af57456"
+      },
+      {
+        "path": "assets/glyphicons-halflings-regular-DzqM6ju8.woff2",
+        "url": "/assets/glyphicons-halflings-regular-DzqM6ju8.woff2",
+        "sha256": "fe185d11a49676890d47bb783312a0cda5a44c4039214094e7957b4c040ef11c"
+      },
+      {
+        "path": "assets/index-DtcUm9Sn.css",
+        "url": "/assets/index-DtcUm9Sn.css",
+        "sha256": "49109a1e52359d76b8b660d576f7b152d00703973de0f0b660556983a41080dd"
+      },
+      {
+        "path": "core/checkmark/checkmark.filter.js",
+        "url": "/core/checkmark/checkmark.filter.js",
+        "sha256": "919c19a94633486836b18425f3368c19e0396b56c86f42c94efc2c22776d6d7f"
+      },
+      {
+        "path": "core/core.module.js",
+        "url": "/core/core.module.js",
+        "sha256": "6f770775e9be688881408c24a3bcc280ebfadc41e305833153841bfd82d71ed8"
+      },
+      {
+        "path": "core/phone/phone.module.js",
+        "url": "/core/phone/phone.module.js",
+        "sha256": "28c75a90ab83daa6b40b43c046a127841b3965b42985f6f2442253993696996f"
+      },
+      {
+        "path": "core/phone/phone.service.js",
+        "url": "/core/phone/phone.service.js",
+        "sha256": "db0568274c18805924e5332accd18f41efc264f0ad08e98914f8ababa133a160"
+      },
+      {
+        "path": "img/phones/dell-streak-7.0.jpg",
+        "url": "/img/phones/dell-streak-7.0.jpg",
+        "sha256": "97d83193d298c11a07336e013e31ce15a6c22297e680b5e7a3b9966a3c86cdbc"
+      },
+      {
+        "path": "img/phones/dell-streak-7.1.jpg",
+        "url": "/img/phones/dell-streak-7.1.jpg",
+        "sha256": "0952d5e168f56d5a614ed76410fc5a9d361fad79c6ad06ff162fbefe9a570dc5"
+      },
+      {
+        "path": "img/phones/dell-streak-7.2.jpg",
+        "url": "/img/phones/dell-streak-7.2.jpg",
+        "sha256": "c3040f7533812a15661dbb0e5da4322daf0ea214b19f227f991e09b0e8d51675"
+      },
+      {
+        "path": "img/phones/dell-streak-7.3.jpg",
+        "url": "/img/phones/dell-streak-7.3.jpg",
+        "sha256": "bac6a518eca76ee31a8dd922edd604de534da38645fed2b749e130d77a57e4da"
+      },
+      {
+        "path": "img/phones/dell-streak-7.4.jpg",
+        "url": "/img/phones/dell-streak-7.4.jpg",
+        "sha256": "ea18c1f77984650ebf1b887e10d61a30f74cf5de13ab30708f82ca88e792aeda"
+      },
+      {
+        "path": "img/phones/dell-venue.0.jpg",
+        "url": "/img/phones/dell-venue.0.jpg",
+        "sha256": "1a80e79e1d7f596a3ff354be2f2b9c976ef9ddbbaebcc3888fc6445d46025fd7"
+      },
+      {
+        "path": "img/phones/dell-venue.1.jpg",
+        "url": "/img/phones/dell-venue.1.jpg",
+        "sha256": "178f393e170a50117e557ce43c0dbfad4e6c12886ebea853b47212945f741ef7"
+      },
+      {
+        "path": "img/phones/dell-venue.2.jpg",
+        "url": "/img/phones/dell-venue.2.jpg",
+        "sha256": "8115f616d54e1fc070dbd0fd7de6912b9ed979205d653aa779ce2eaab2aa6282"
+      },
+      {
+        "path": "img/phones/dell-venue.3.jpg",
+        "url": "/img/phones/dell-venue.3.jpg",
+        "sha256": "fd88b1f54c88bf95908e4d331ceb1694e2f0e3ba12628dfc72ebf445b377d1be"
+      },
+      {
+        "path": "img/phones/dell-venue.4.jpg",
+        "url": "/img/phones/dell-venue.4.jpg",
+        "sha256": "0708403c42945207ffbc7f1eb3d8207b783fb7e409e7077c38960156e41a8f9b"
+      },
+      {
+        "path": "img/phones/dell-venue.5.jpg",
+        "url": "/img/phones/dell-venue.5.jpg",
+        "sha256": "36718bc176051598ae6b9de1195e1527bca502ceaae77eb147d6fa7e678682eb"
+      },
+      {
+        "path": "img/phones/droid-2-global-by-motorola.0.jpg",
+        "url": "/img/phones/droid-2-global-by-motorola.0.jpg",
+        "sha256": "de363a3c6c6f38ae1d52dc4d6a3d91a61d8e43b29c73492cc7ae7d4cbb454db1"
+      },
+      {
+        "path": "img/phones/droid-2-global-by-motorola.1.jpg",
+        "url": "/img/phones/droid-2-global-by-motorola.1.jpg",
+        "sha256": "29d06055bff4369de730838d05fe216c883376dffd8f1e54d1261306ce0265f3"
+      },
+      {
+        "path": "img/phones/droid-2-global-by-motorola.2.jpg",
+        "url": "/img/phones/droid-2-global-by-motorola.2.jpg",
+        "sha256": "bffa563f1bad1820b9169452848ba29bab7acfabe01a0919393641aa76358b23"
+      },
+      {
+        "path": "img/phones/droid-pro-by-motorola.0.jpg",
+        "url": "/img/phones/droid-pro-by-motorola.0.jpg",
+        "sha256": "6c77dd0c0ca8db67cfca3f3af46d6e45bcdfb999ca2babb62e98995259d5d296"
+      },
+      {
+        "path": "img/phones/droid-pro-by-motorola.1.jpg",
+        "url": "/img/phones/droid-pro-by-motorola.1.jpg",
+        "sha256": "2aedcc7c2da3f8782bc8b7c9799aa251337a01f939cab04bb8754fa9e402523a"
+      },
+      {
+        "path": "img/phones/lg-axis.0.jpg",
+        "url": "/img/phones/lg-axis.0.jpg",
+        "sha256": "872ddfc6c555fb70c29e19c9404369259ec30c6482f2a93d20e17533c1b0a87c"
+      },
+      {
+        "path": "img/phones/lg-axis.1.jpg",
+        "url": "/img/phones/lg-axis.1.jpg",
+        "sha256": "b0fb40de8469d7bb3f5eeea71499d637ce722222a82e6dec4f597a1a449d63c4"
+      },
+      {
+        "path": "img/phones/lg-axis.2.jpg",
+        "url": "/img/phones/lg-axis.2.jpg",
+        "sha256": "5fbc121779c294810f3d64676b6fcc7658c57d1a5dc92fcb6688ae6ac0ef6d11"
+      },
+      {
+        "path": "img/phones/motorola-atrix-4g.0.jpg",
+        "url": "/img/phones/motorola-atrix-4g.0.jpg",
+        "sha256": "77cf6deee9706fda095db586e0ddcae9800cc2a5c8a0dc154684d293704e3de8"
+      },
+      {
+        "path": "img/phones/motorola-atrix-4g.1.jpg",
+        "url": "/img/phones/motorola-atrix-4g.1.jpg",
+        "sha256": "32176463dabc39e02e7399a68bb9be3cad756d5258a50f06b20985781b545400"
+      },
+      {
+        "path": "img/phones/motorola-atrix-4g.2.jpg",
+        "url": "/img/phones/motorola-atrix-4g.2.jpg",
+        "sha256": "bb632f2bb2803cd31da6715c51173ae1800423572ed724b1e73d56d72be62488"
+      },
+      {
+        "path": "img/phones/motorola-atrix-4g.3.jpg",
+        "url": "/img/phones/motorola-atrix-4g.3.jpg",
+        "sha256": "fc4b8a2551b626753f6a68ab6a7785dd85639ffa260821ba67ba4d046c645e4f"
+      },
+      {
+        "path": "img/phones/motorola-bravo-with-motoblur.0.jpg",
+        "url": "/img/phones/motorola-bravo-with-motoblur.0.jpg",
+        "sha256": "0ac6a0331144704a234d5f6c7aa1bc94cc042cdf92876e16e575bdbe7c344e43"
+      },
+      {
+        "path": "img/phones/motorola-bravo-with-motoblur.1.jpg",
+        "url": "/img/phones/motorola-bravo-with-motoblur.1.jpg",
+        "sha256": "ea0c3c5066aadd0c50f48d1ab2fc00460408ea49dfd4f66dbfd4a66c43242607"
+      },
+      {
+        "path": "img/phones/motorola-bravo-with-motoblur.2.jpg",
+        "url": "/img/phones/motorola-bravo-with-motoblur.2.jpg",
+        "sha256": "6a7a5ee3bcb7137b8f2152527a9d19f316dd96c5a65cfccec8e05b8007bcc1ef"
+      },
+      {
+        "path": "img/phones/motorola-charm-with-motoblur.0.jpg",
+        "url": "/img/phones/motorola-charm-with-motoblur.0.jpg",
+        "sha256": "2e4d9a96ec74ea7b3911c0592b6e74355ed9ec9e12776d45ec203d73720151f5"
+      },
+      {
+        "path": "img/phones/motorola-charm-with-motoblur.1.jpg",
+        "url": "/img/phones/motorola-charm-with-motoblur.1.jpg",
+        "sha256": "abb1e5cce37f98181e74649316dab2e0188d95304946ddc7d7b295db807f67dc"
+      },
+      {
+        "path": "img/phones/motorola-charm-with-motoblur.2.jpg",
+        "url": "/img/phones/motorola-charm-with-motoblur.2.jpg",
+        "sha256": "1354647b3ac41653c855fd6712c2f7ffbce96d523033e4df2754af1e5890c4c2"
+      },
+      {
+        "path": "img/phones/motorola-defy-with-motoblur.0.jpg",
+        "url": "/img/phones/motorola-defy-with-motoblur.0.jpg",
+        "sha256": "2544fc9f89698d11c5043cef2d34077a2652017a76a078900a0de1e5de39d4a1"
+      },
+      {
+        "path": "img/phones/motorola-defy-with-motoblur.1.jpg",
+        "url": "/img/phones/motorola-defy-with-motoblur.1.jpg",
+        "sha256": "2cb4791ecab1aa961699ace93fd2a85614d1e84463ecedec6b576729ba8fa534"
+      },
+      {
+        "path": "img/phones/motorola-defy-with-motoblur.2.jpg",
+        "url": "/img/phones/motorola-defy-with-motoblur.2.jpg",
+        "sha256": "0be75677757724b1f0571226609157febd132720ad4e1e0a67f3ea64a712e32b"
+      },
+      {
+        "path": "img/phones/motorola-xoom-with-wi-fi.0.jpg",
+        "url": "/img/phones/motorola-xoom-with-wi-fi.0.jpg",
+        "sha256": "01ab28181850903257299595a6da4f477a3bbe814287214aa04844507a796502"
+      },
+      {
+        "path": "img/phones/motorola-xoom-with-wi-fi.1.jpg",
+        "url": "/img/phones/motorola-xoom-with-wi-fi.1.jpg",
+        "sha256": "06f2b0cdb077040bfe379a83e4994cc91663a3b1a668c083a437b386d120b7f9"
+      },
+      {
+        "path": "img/phones/motorola-xoom-with-wi-fi.2.jpg",
+        "url": "/img/phones/motorola-xoom-with-wi-fi.2.jpg",
+        "sha256": "a9c5acdd3b8cc19298e32bde3bedf0e86240f3b8e022ee7349b536469eda510e"
+      },
+      {
+        "path": "img/phones/motorola-xoom-with-wi-fi.3.jpg",
+        "url": "/img/phones/motorola-xoom-with-wi-fi.3.jpg",
+        "sha256": "b979608a045a5a7629bc611e2af9b4d6fe8471faff71b3e1bdecb0e1c8b0b887"
+      },
+      {
+        "path": "img/phones/motorola-xoom-with-wi-fi.4.jpg",
+        "url": "/img/phones/motorola-xoom-with-wi-fi.4.jpg",
+        "sha256": "d5a5cec00dd6411e74d76e0528569294431154bf31cb178b842a04878b058e42"
+      },
+      {
+        "path": "img/phones/motorola-xoom-with-wi-fi.5.jpg",
+        "url": "/img/phones/motorola-xoom-with-wi-fi.5.jpg",
+        "sha256": "286bb9dbb8fa5a49cb23e35fd59f8911c6c3d5171604af4b97fd21116af804e5"
+      },
+      {
+        "path": "img/phones/motorola-xoom.0.jpg",
+        "url": "/img/phones/motorola-xoom.0.jpg",
+        "sha256": "6d4255b742955b456b0091cd975e25f020a0d1f755a5f73b20b6f3fdbbaceaec"
+      },
+      {
+        "path": "img/phones/motorola-xoom.1.jpg",
+        "url": "/img/phones/motorola-xoom.1.jpg",
+        "sha256": "69c64d3cc9b4e96b4a38f18b04023c2e8efdff2397de0b623116fa88ba7d7fbe"
+      },
+      {
+        "path": "img/phones/motorola-xoom.2.jpg",
+        "url": "/img/phones/motorola-xoom.2.jpg",
+        "sha256": "8a1c065308c30863529b28975150c7ea9264421f6ccb4a097b9a1e375c0fb61a"
+      },
+      {
+        "path": "img/phones/nexus-s.0.jpg",
+        "url": "/img/phones/nexus-s.0.jpg",
+        "sha256": "e40fe55875fe785b0d954fc33a06b0279ac7c8975312da1bd0453f60ca724939"
+      },
+      {
+        "path": "img/phones/nexus-s.1.jpg",
+        "url": "/img/phones/nexus-s.1.jpg",
+        "sha256": "5fc88e62ff38e0be2661b7d142ac951f120512ac567e2aa876321d24af539a78"
+      },
+      {
+        "path": "img/phones/nexus-s.2.jpg",
+        "url": "/img/phones/nexus-s.2.jpg",
+        "sha256": "febc8d2040bd32e585364f4a74b31444ae7f295585b6674320821be8445c2c7c"
+      },
+      {
+        "path": "img/phones/nexus-s.3.jpg",
+        "url": "/img/phones/nexus-s.3.jpg",
+        "sha256": "0eb005d5cb4d4c2249f140cbfb2bdf1dd6052e4464aa3d6fd0eca0f3228651bd"
+      },
+      {
+        "path": "img/phones/samsung-galaxy-tab.0.jpg",
+        "url": "/img/phones/samsung-galaxy-tab.0.jpg",
+        "sha256": "521ce306913f88fe932e7e72834d2e950f7ea5320f345413a274f68339e75c20"
+      },
+      {
+        "path": "img/phones/samsung-galaxy-tab.1.jpg",
+        "url": "/img/phones/samsung-galaxy-tab.1.jpg",
+        "sha256": "966d9f60d16b6d1c0c787d6192c7083cf4409d6f140bce059bb7218af69e6afc"
+      },
+      {
+        "path": "img/phones/samsung-galaxy-tab.2.jpg",
+        "url": "/img/phones/samsung-galaxy-tab.2.jpg",
+        "sha256": "7e23eff683c1fe27b16fdfaf2b19b73325b6eb8560cede8a5ab3a92b6fecc73d"
+      },
+      {
+        "path": "img/phones/samsung-galaxy-tab.3.jpg",
+        "url": "/img/phones/samsung-galaxy-tab.3.jpg",
+        "sha256": "0e9921ed50cd9a7122f10b1864aa0d4ad43c844aeaabec07e4340e0b043de0a9"
+      },
+      {
+        "path": "img/phones/samsung-galaxy-tab.4.jpg",
+        "url": "/img/phones/samsung-galaxy-tab.4.jpg",
+        "sha256": "175e501b2eb50c477d58bc5b1b326542af0d2255890f9dd711a614f4c64be6b0"
+      },
+      {
+        "path": "img/phones/samsung-galaxy-tab.5.jpg",
+        "url": "/img/phones/samsung-galaxy-tab.5.jpg",
+        "sha256": "4a67b9093d33b085adf2bcaa95b0acec8c69188e9051a1107565ebac6ae90361"
+      },
+      {
+        "path": "img/phones/samsung-galaxy-tab.6.jpg",
+        "url": "/img/phones/samsung-galaxy-tab.6.jpg",
+        "sha256": "9f3d9097d6c1641789510b565b185564b77f62a9ae428e9482cda6555be16c7f"
+      },
+      {
+        "path": "img/phones/samsung-gem.0.jpg",
+        "url": "/img/phones/samsung-gem.0.jpg",
+        "sha256": "01210bc73639811f2d2423a843450a0068fc712d585f31bf63448fde2506ad66"
+      },
+      {
+        "path": "img/phones/samsung-gem.1.jpg",
+        "url": "/img/phones/samsung-gem.1.jpg",
+        "sha256": "19ec340541a84afbf946fcef20d1125fc725077019d538505993cdd5bd281f95"
+      },
+      {
+        "path": "img/phones/samsung-gem.2.jpg",
+        "url": "/img/phones/samsung-gem.2.jpg",
+        "sha256": "f38e3727e630b9555e9b2666382b5c4ca31d2aaaf013c4591d88613eff89c5f7"
+      },
+      {
+        "path": "img/phones/samsung-mesmerize-a-galaxy-s-phone.0.jpg",
+        "url": "/img/phones/samsung-mesmerize-a-galaxy-s-phone.0.jpg",
+        "sha256": "5787e2171901a19d1ffeabedc0d1f906884b9c07cb882e0d9355a064ad6943dc"
+      },
+      {
+        "path": "img/phones/samsung-mesmerize-a-galaxy-s-phone.1.jpg",
+        "url": "/img/phones/samsung-mesmerize-a-galaxy-s-phone.1.jpg",
+        "sha256": "953df76d04efb1d62bb25043a7f2f4f428ebb2e2401a64649d24625dc80cea1b"
+      },
+      {
+        "path": "img/phones/samsung-mesmerize-a-galaxy-s-phone.2.jpg",
+        "url": "/img/phones/samsung-mesmerize-a-galaxy-s-phone.2.jpg",
+        "sha256": "995a337809a403625d6aa2a977bab57f7b911795228c7453fa6ed3d51d7149a0"
+      },
+      {
+        "path": "img/phones/samsung-mesmerize-a-galaxy-s-phone.3.jpg",
+        "url": "/img/phones/samsung-mesmerize-a-galaxy-s-phone.3.jpg",
+        "sha256": "529a84ccc83be38b898acc2e9fba401b64a336998777ccc268f04322cd581cf5"
+      },
+      {
+        "path": "img/phones/samsung-showcase-a-galaxy-s-phone.0.jpg",
+        "url": "/img/phones/samsung-showcase-a-galaxy-s-phone.0.jpg",
+        "sha256": "5787e2171901a19d1ffeabedc0d1f906884b9c07cb882e0d9355a064ad6943dc"
+      },
+      {
+        "path": "img/phones/samsung-showcase-a-galaxy-s-phone.1.jpg",
+        "url": "/img/phones/samsung-showcase-a-galaxy-s-phone.1.jpg",
+        "sha256": "953df76d04efb1d62bb25043a7f2f4f428ebb2e2401a64649d24625dc80cea1b"
+      },
+      {
+        "path": "img/phones/samsung-showcase-a-galaxy-s-phone.2.jpg",
+        "url": "/img/phones/samsung-showcase-a-galaxy-s-phone.2.jpg",
+        "sha256": "995a337809a403625d6aa2a977bab57f7b911795228c7453fa6ed3d51d7149a0"
+      },
+      {
+        "path": "img/phones/samsung-transform.0.jpg",
+        "url": "/img/phones/samsung-transform.0.jpg",
+        "sha256": "5f1c264d76306075c445c59ec8f3e5ab7760d5e27977e6e0559ac8d932c29bd0"
+      },
+      {
+        "path": "img/phones/samsung-transform.1.jpg",
+        "url": "/img/phones/samsung-transform.1.jpg",
+        "sha256": "14f141bf3320593964a177e84a0f9c83115dacdcb24bda16e08c643ef1c21617"
+      },
+      {
+        "path": "img/phones/samsung-transform.2.jpg",
+        "url": "/img/phones/samsung-transform.2.jpg",
+        "sha256": "210bd9200a9463e76f4f01b007295ac0f1b1a66dec9c264efb4d5590aedd47f4"
+      },
+      {
+        "path": "img/phones/samsung-transform.3.jpg",
+        "url": "/img/phones/samsung-transform.3.jpg",
+        "sha256": "025c22b20a08b23838248a2d3e37820009c96a4557593d34b05bfc18c7a3a17e"
+      },
+      {
+        "path": "img/phones/samsung-transform.4.jpg",
+        "url": "/img/phones/samsung-transform.4.jpg",
+        "sha256": "558d44e3a3f6975d3b468e2e2da612ed8fe6ffeeada739c557a75616115cb196"
+      },
+      {
+        "path": "img/phones/sanyo-zio.0.jpg",
+        "url": "/img/phones/sanyo-zio.0.jpg",
+        "sha256": "c7f180020a329a69f6eb5c0121dc1344761daf69795cf807b4269cd1bfd27793"
+      },
+      {
+        "path": "img/phones/sanyo-zio.1.jpg",
+        "url": "/img/phones/sanyo-zio.1.jpg",
+        "sha256": "207d06f72bc4f628af849ffea98512b4fdd1db5ce73d0f416293982138910815"
+      },
+      {
+        "path": "img/phones/sanyo-zio.2.jpg",
+        "url": "/img/phones/sanyo-zio.2.jpg",
+        "sha256": "40b2cb7be559669f8a633c3b8e8132ebce1e550f0de84e570e86a7ec84a5cd13"
+      },
+      {
+        "path": "img/phones/t-mobile-g2.0.jpg",
+        "url": "/img/phones/t-mobile-g2.0.jpg",
+        "sha256": "34e0423633caf9b2b19e5d760e6d9ba458a1a84e99a178b61d8283bf76a23a94"
+      },
+      {
+        "path": "img/phones/t-mobile-g2.1.jpg",
+        "url": "/img/phones/t-mobile-g2.1.jpg",
+        "sha256": "0834f23a272daa25ae7fa0d66ef91fa33ba43d8d21b34e4c56d86f9c01ddfb0c"
+      },
+      {
+        "path": "img/phones/t-mobile-g2.2.jpg",
+        "url": "/img/phones/t-mobile-g2.2.jpg",
+        "sha256": "2f6ef94aa3b57e350833a7734872be950c7299ad9bc9bd0d1d0c5887fdc7b5cc"
+      },
+      {
+        "path": "img/phones/t-mobile-mytouch-4g.0.jpg",
+        "url": "/img/phones/t-mobile-mytouch-4g.0.jpg",
+        "sha256": "6375f9a86e7ccd4095ad92fa2de90be94af95f604507c6083e9f848db4e0d5ea"
+      },
+      {
+        "path": "img/phones/t-mobile-mytouch-4g.1.jpg",
+        "url": "/img/phones/t-mobile-mytouch-4g.1.jpg",
+        "sha256": "04921749bacb0880c1231644b00c4b5f7bdd343c8603bcfefe0c7f172cef33f8"
+      },
+      {
+        "path": "img/phones/t-mobile-mytouch-4g.2.jpg",
+        "url": "/img/phones/t-mobile-mytouch-4g.2.jpg",
+        "sha256": "da5a4def5e02450eed19dd55736119c801eaf0435f0c3cf0c8a42e686438b46f"
+      },
+      {
+        "path": "img/phones/t-mobile-mytouch-4g.3.jpg",
+        "url": "/img/phones/t-mobile-mytouch-4g.3.jpg",
+        "sha256": "0113b45be85d19f83a46a7eba18a74e246015af56db4b940b098f598f7c2bef9"
+      },
+      {
+        "path": "img/phones/t-mobile-mytouch-4g.4.jpg",
+        "url": "/img/phones/t-mobile-mytouch-4g.4.jpg",
+        "sha256": "fa656f395f7f0b19b883b2dc8ac28ad6751d59b95e5375d464e4dee57bd8a654"
+      },
+      {
+        "path": "img/phones/t-mobile-mytouch-4g.5.jpg",
+        "url": "/img/phones/t-mobile-mytouch-4g.5.jpg",
+        "sha256": "6375f9a86e7ccd4095ad92fa2de90be94af95f604507c6083e9f848db4e0d5ea"
+      },
+      {
+        "path": "index.html",
+        "url": "/index.html",
+        "sha256": "951b6c330e54278cf814c5c366f875e3505e487c75d3ef4abf3f7eff45a91391"
+      },
+      {
+        "path": "lib/angular-animate/LICENSE.md",
+        "url": "/lib/angular-animate/LICENSE.md",
+        "sha256": "f64ba8a51fa64d7f4616e88d0850eca2aa43c4ca73a798ff92f744012d0ff4df"
+      },
+      {
+        "path": "lib/angular-animate/README.md",
+        "url": "/lib/angular-animate/README.md",
+        "sha256": "147c5313ecf61739b728cfe3bceae9b6d4d2a9a56a5a782e0d07576dc6dad2e4"
+      },
+      {
+        "path": "lib/angular-animate/angular-animate.js",
+        "url": "/lib/angular-animate/angular-animate.js",
+        "sha256": "03375fd30d12158157e46102b0b8782f812408106456fe6e350fe498ebaa00d5"
+      },
+      {
+        "path": "lib/angular-animate/angular-animate.min.js",
+        "url": "/lib/angular-animate/angular-animate.min.js",
+        "sha256": "339cd3ae8400350d035c2bde69954c46394041a9f1fa7ef79229f355a3ccdfc7"
+      },
+      {
+        "path": "lib/angular-animate/angular-animate.min.js.map",
+        "url": "/lib/angular-animate/angular-animate.min.js.map",
+        "sha256": "6697882bda47681ff6203635973ca9b83ba3500f1baf4f05eabd3f19bf108cdc"
+      },
+      {
+        "path": "lib/angular-animate/bower.json",
+        "url": "/lib/angular-animate/bower.json",
+        "sha256": "8b11a8f99237ac2bc97da62c4419c32f4fae3548d3a4884065474fae6c311bbf"
+      },
+      {
+        "path": "lib/angular-animate/index.js",
+        "url": "/lib/angular-animate/index.js",
+        "sha256": "7f2f9350e5624bf86e8760d1deae03fae4477949284b49471eb67e2b6498cb7d"
+      },
+      {
+        "path": "lib/angular-animate/package.json",
+        "url": "/lib/angular-animate/package.json",
+        "sha256": "7414b80380eb1c5aeaf282c5f138baaba022526df429562e651f7cb8d119ad05"
+      },
+      {
+        "path": "lib/angular-mocks/LICENSE.md",
+        "url": "/lib/angular-mocks/LICENSE.md",
+        "sha256": "f64ba8a51fa64d7f4616e88d0850eca2aa43c4ca73a798ff92f744012d0ff4df"
+      },
+      {
+        "path": "lib/angular-mocks/README.md",
+        "url": "/lib/angular-mocks/README.md",
+        "sha256": "2b3ce4384ebe4f7a2bab37d839e2151bc23e915e1993f3b683496ec08ae94496"
+      },
+      {
+        "path": "lib/angular-mocks/angular-mocks.js",
+        "url": "/lib/angular-mocks/angular-mocks.js",
+        "sha256": "d890518b962df6176731165510fc91b69d3d3501526431e14738b941fea639e0"
+      },
+      {
+        "path": "lib/angular-mocks/bower.json",
+        "url": "/lib/angular-mocks/bower.json",
+        "sha256": "e69aa16edbb61b8de58425f0b75ef629301bd5a36979fe53bdc44f375a47a6f9"
+      },
+      {
+        "path": "lib/angular-mocks/ngAnimateMock.js",
+        "url": "/lib/angular-mocks/ngAnimateMock.js",
+        "sha256": "2bfb23e966134314b46b1b536987542e418ebcf3ae61c0dba6e77c3db33d160a"
+      },
+      {
+        "path": "lib/angular-mocks/ngMock.js",
+        "url": "/lib/angular-mocks/ngMock.js",
+        "sha256": "aafff8ac96ea595e93a0c44570e879f0bad4c9c274113b5964dff9d2cfb65449"
+      },
+      {
+        "path": "lib/angular-mocks/ngMockE2E.js",
+        "url": "/lib/angular-mocks/ngMockE2E.js",
+        "sha256": "f740e0b8e9310c5d680b95304b4696831d36cc6b318551a1dcbfdc64e4fc238c"
+      },
+      {
+        "path": "lib/angular-mocks/package.json",
+        "url": "/lib/angular-mocks/package.json",
+        "sha256": "785796c4bc3dffa5b773f7eaa30602cc44aa887eb0b5022c606f38401d9e7611"
+      },
+      {
+        "path": "lib/angular-resource/LICENSE.md",
+        "url": "/lib/angular-resource/LICENSE.md",
+        "sha256": "f64ba8a51fa64d7f4616e88d0850eca2aa43c4ca73a798ff92f744012d0ff4df"
+      },
+      {
+        "path": "lib/angular-resource/README.md",
+        "url": "/lib/angular-resource/README.md",
+        "sha256": "727cc4ffba37a003edcc35543196f0546d6039b0b2943b9555297d0563916f37"
+      },
+      {
+        "path": "lib/angular-resource/angular-resource.js",
+        "url": "/lib/angular-resource/angular-resource.js",
+        "sha256": "8476756a8b13d4c7b8b129877ca1f3df2f51752f5b60d649485f0bb5752739ea"
+      },
+      {
+        "path": "lib/angular-resource/angular-resource.min.js",
+        "url": "/lib/angular-resource/angular-resource.min.js",
+        "sha256": "3a61f95c630f63b39aacf3f8ee66bc13bc9b820d11f749591d1c3d07125ec184"
+      },
+      {
+        "path": "lib/angular-resource/angular-resource.min.js.map",
+        "url": "/lib/angular-resource/angular-resource.min.js.map",
+        "sha256": "087f60b2024c267e1904f9e137f84e1b0a83d6ecaa107a19aa2b806f97c083c2"
+      },
+      {
+        "path": "lib/angular-resource/bower.json",
+        "url": "/lib/angular-resource/bower.json",
+        "sha256": "bef041d6572c8fa5174912659a0c52c71fa0ad1039d74accb48bdc1e027b4830"
+      },
+      {
+        "path": "lib/angular-resource/index.js",
+        "url": "/lib/angular-resource/index.js",
+        "sha256": "46892a6b163220ffb0c21203ce53b3d84699fbcc474a44fdabd1ecd2d58c5a2d"
+      },
+      {
+        "path": "lib/angular-resource/package.json",
+        "url": "/lib/angular-resource/package.json",
+        "sha256": "d235b0f0178b5946025154b6a0a44186ae664fe81c945888461d7927a05bd191"
+      },
+      {
+        "path": "lib/angular-route/LICENSE.md",
+        "url": "/lib/angular-route/LICENSE.md",
+        "sha256": "f64ba8a51fa64d7f4616e88d0850eca2aa43c4ca73a798ff92f744012d0ff4df"
+      },
+      {
+        "path": "lib/angular-route/README.md",
+        "url": "/lib/angular-route/README.md",
+        "sha256": "466e3ce3945f417b1a2e81cdfc853660b001f20b4f889932d5ad79e29ad53785"
+      },
+      {
+        "path": "lib/angular-route/angular-route.js",
+        "url": "/lib/angular-route/angular-route.js",
+        "sha256": "55e5d7d110f8ee8bcdb1f00c9a1aa3122fa09e9fcaa4b93da85d27c10ee5fdfa"
+      },
+      {
+        "path": "lib/angular-route/angular-route.min.js",
+        "url": "/lib/angular-route/angular-route.min.js",
+        "sha256": "3422eae4c737ff2d30abfe3df6c30e6b11869d3a30683c5efced151248eb9661"
+      },
+      {
+        "path": "lib/angular-route/angular-route.min.js.map",
+        "url": "/lib/angular-route/angular-route.min.js.map",
+        "sha256": "e9decef1649b6f4833484544a7d2b7082d79dbdca25ca4fc89c8ec432efaa4e2"
+      },
+      {
+        "path": "lib/angular-route/bower.json",
+        "url": "/lib/angular-route/bower.json",
+        "sha256": "4de575e4282813501d401ecfdd6c132cb6df856d73fc219e1eda83ad5a1ab1ff"
+      },
+      {
+        "path": "lib/angular-route/index.js",
+        "url": "/lib/angular-route/index.js",
+        "sha256": "55538f9fa9c56229c800c178f5bfebccddcdd53fef1e1eb1289058523ddee142"
+      },
+      {
+        "path": "lib/angular-route/package.json",
+        "url": "/lib/angular-route/package.json",
+        "sha256": "650c5f1a850f9fe0971c0044a1c82d697627bf4493fc17071358006784a84471"
+      },
+      {
+        "path": "lib/angular/LICENSE.md",
+        "url": "/lib/angular/LICENSE.md",
+        "sha256": "f64ba8a51fa64d7f4616e88d0850eca2aa43c4ca73a798ff92f744012d0ff4df"
+      },
+      {
+        "path": "lib/angular/README.md",
+        "url": "/lib/angular/README.md",
+        "sha256": "18669818dec4f33339acc3725e16a6d422d7536e20f0f7fbe8a5f20b2bb3e844"
+      },
+      {
+        "path": "lib/angular/angular-csp.css",
+        "url": "/lib/angular/angular-csp.css",
+        "sha256": "507a4746eb1b82f9a04a3d9e7cce74cc71c2c63c9b8c717560a0aae5ec019927"
+      },
+      {
+        "path": "lib/angular/angular.js",
+        "url": "/lib/angular/angular.js",
+        "sha256": "c7df41bc00628bec220b0378dc1f2f5041980758403b6f24b9774ac43a9186d8"
+      },
+      {
+        "path": "lib/angular/angular.min.js",
+        "url": "/lib/angular/angular.min.js",
+        "sha256": "566f18cb8bc23558701c2cc4f934fe50bcc85629d1aaf5d589f835f2b3e57a9f"
+      },
+      {
+        "path": "lib/angular/angular.min.js.gzip",
+        "url": "/lib/angular/angular.min.js.gzip",
+        "sha256": "84933e5ce381d45491f14fc92488bd927139fdfd77f19cc822b03c3e6a78a4c1"
+      },
+      {
+        "path": "lib/angular/angular.min.js.map",
+        "url": "/lib/angular/angular.min.js.map",
+        "sha256": "de9efcd2d490f87bfe367dd8e391c32db0fb8628935bf76e3b4607fa7aae81d0"
+      },
+      {
+        "path": "lib/angular/bower.json",
+        "url": "/lib/angular/bower.json",
+        "sha256": "335c995ed0205af4609c1dd6d54f9448684a93c13142646b5ac8f977d672b1b8"
+      },
+      {
+        "path": "lib/angular/index.js",
+        "url": "/lib/angular/index.js",
+        "sha256": "d469f8e93a4c345f01d81d162a803116de1bc6afd4bfeba8b45951449956b686"
+      },
+      {
+        "path": "lib/angular/package.json",
+        "url": "/lib/angular/package.json",
+        "sha256": "2094aac1e0951a22e67131b921ec16f2d4d685476792294e7f0b88b9d5a937f1"
+      },
+      {
+        "path": "lib/bootstrap/dist/css/bootstrap-theme.css",
+        "url": "/lib/bootstrap/dist/css/bootstrap-theme.css",
+        "sha256": "c4ea52f9efdd111f33ef6c3eaabc8289e386cac408f1c10b015b773071b4a616"
+      },
+      {
+        "path": "lib/bootstrap/dist/css/bootstrap-theme.css.map",
+        "url": "/lib/bootstrap/dist/css/bootstrap-theme.css.map",
+        "sha256": "71941b253b8942374cd57b8a85d473489f21311438ba9e3dd4fefa22adbf0f53"
+      },
+      {
+        "path": "lib/bootstrap/dist/css/bootstrap-theme.min.css",
+        "url": "/lib/bootstrap/dist/css/bootstrap-theme.min.css",
+        "sha256": "653e073e97423adda5bc3917a241ee8497dd38a48f14bcde0098a4e54fd0fa5e"
+      },
+      {
+        "path": "lib/bootstrap/dist/css/bootstrap-theme.min.css.map",
+        "url": "/lib/bootstrap/dist/css/bootstrap-theme.min.css.map",
+        "sha256": "9851e169f044bfc0d5e4a8a761ded531d415ceb7febc1ea585fab070b846d738"
+      },
+      {
+        "path": "lib/bootstrap/dist/css/bootstrap.css",
+        "url": "/lib/bootstrap/dist/css/bootstrap.css",
+        "sha256": "7e630d90c7234b0df1729f62b8f9e4bbfaf293d91a5a0ac46df25f2a6759e39a"
+      },
+      {
+        "path": "lib/bootstrap/dist/css/bootstrap.css.map",
+        "url": "/lib/bootstrap/dist/css/bootstrap.css.map",
+        "sha256": "9cd84a2a5162c816a8bbbd79cf9dc0605bc0ea86e4cd2bab43aee069bb83d266"
+      },
+      {
+        "path": "lib/bootstrap/dist/css/bootstrap.min.css",
+        "url": "/lib/bootstrap/dist/css/bootstrap.min.css",
+        "sha256": "f75e846cc83bd11432f4b1e21a45f31bc85283d11d372f7b19accd1bf6a2635c"
+      },
+      {
+        "path": "lib/bootstrap/dist/css/bootstrap.min.css.map",
+        "url": "/lib/bootstrap/dist/css/bootstrap.min.css.map",
+        "sha256": "b4a35d19793de445f4622f4d28db279c0242b60228ef304340aad833d012a77d"
+      },
+      {
+        "path": "lib/bootstrap/dist/fonts/glyphicons-halflings-regular.eot",
+        "url": "/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.eot",
+        "sha256": "13634da87d9e23f8c3ed9108ce1724d183a39ad072e73e1b3d8cbf646d2d0407"
+      },
+      {
+        "path": "lib/bootstrap/dist/fonts/glyphicons-halflings-regular.svg",
+        "url": "/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.svg",
+        "sha256": "42f60659d265c1a3c30f9fa42abcbb56bd4a53af4d83d316d6dd7a36903c43e5"
+      },
+      {
+        "path": "lib/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf",
+        "url": "/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf",
+        "sha256": "e395044093757d82afcb138957d06a1ea9361bdcf0b442d06a18a8051af57456"
+      },
+      {
+        "path": "lib/bootstrap/dist/fonts/glyphicons-halflings-regular.woff",
+        "url": "/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.woff",
+        "sha256": "a26394f7ede100ca118eff2eda08596275a9839b959c226e15439557a5a80742"
+      },
+      {
+        "path": "lib/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2",
+        "url": "/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2",
+        "sha256": "fe185d11a49676890d47bb783312a0cda5a44c4039214094e7957b4c040ef11c"
+      },
+      {
+        "path": "lib/bootstrap/dist/js/bootstrap.js",
+        "url": "/lib/bootstrap/dist/js/bootstrap.js",
+        "sha256": "0abe8deb334de1ba743b04d0399e99eba336afed9da72fc4c0a302c99f9238c8"
+      },
+      {
+        "path": "lib/bootstrap/dist/js/bootstrap.min.js",
+        "url": "/lib/bootstrap/dist/js/bootstrap.min.js",
+        "sha256": "53964478a7c634e8dad34ecc303dd8048d00dce4993906de1bacf67f663486ef"
+      },
+      {
+        "path": "lib/bootstrap/dist/js/npm.js",
+        "url": "/lib/bootstrap/dist/js/npm.js",
+        "sha256": "c7aa82a1aa7d45224a38d926d2adaff7fe4aef5bcdafa2a47bdac057f4422c2d"
+      },
+      {
+        "path": "lib/jquery/dist/core.js",
+        "url": "/lib/jquery/dist/core.js",
+        "sha256": "6026ca247eaee2c88fa54964d77d2e76efc97a974a5695e3744cb38defb3d691"
+      },
+      {
+        "path": "lib/jquery/dist/jquery.js",
+        "url": "/lib/jquery/dist/jquery.js",
+        "sha256": "d8aa24ecc6cecb1a60515bc093f1c9da38a0392612d9ab8ae0f7f36e6eee1fad"
+      },
+      {
+        "path": "lib/jquery/dist/jquery.min.js",
+        "url": "/lib/jquery/dist/jquery.min.js",
+        "sha256": "160a426ff2894252cd7cebbdd6d6b7da8fcd319c65b70468f10b6690c45d02ef"
+      },
+      {
+        "path": "lib/jquery/dist/jquery.min.map",
+        "url": "/lib/jquery/dist/jquery.min.map",
+        "sha256": "d5e886300d32d640f93ff6d79d36a24ca93cbedbd0f080b69d70282351c95f21"
+      },
+      {
+        "path": "lib/jquery/dist/jquery.slim.js",
+        "url": "/lib/jquery/dist/jquery.slim.js",
+        "sha256": "7cd5c914895c6b4e4120ed98e73875c6b4a12b7304fbf9586748fe0a1c57d830"
+      },
+      {
+        "path": "lib/jquery/dist/jquery.slim.min.js",
+        "url": "/lib/jquery/dist/jquery.slim.min.js",
+        "sha256": "dde76b9b2b90d30eb97fc81f06caa8c338c97b688cea7d2729c88f529f32fbb1"
+      },
+      {
+        "path": "lib/jquery/dist/jquery.slim.min.map",
+        "url": "/lib/jquery/dist/jquery.slim.min.map",
+        "sha256": "47d883d816632eedcecf0ac4ad044db713cae6d52e19db416b689e7d3efc8367"
+      },
+      {
+        "path": "phone-detail/phone-detail.component.js",
+        "url": "/phone-detail/phone-detail.component.js",
+        "sha256": "14a6491146c24e28d02dd78891fea66132668e56267a55c46bfff6272e53fa4a"
+      },
+      {
+        "path": "phone-detail/phone-detail.module.js",
+        "url": "/phone-detail/phone-detail.module.js",
+        "sha256": "270cb00e90e8a5eb27e5b6036f77273ccf6d0d565b8664d35df3e62fd6aa9afe"
+      },
+      {
+        "path": "phone-detail/phone-detail.template.html",
+        "url": "/phone-detail/phone-detail.template.html",
+        "sha256": "5e63aa4a9686c27bef8b87da77a29d564313857de6ec10dbb9698d77c09d9dd8"
+      },
+      {
+        "path": "phone-list/phone-list.component.js",
+        "url": "/phone-list/phone-list.component.js",
+        "sha256": "56f2bde102867cfff70ea2e969dbfe89c2ff191345ebe9964ae84ac983951a6d"
+      },
+      {
+        "path": "phone-list/phone-list.module.js",
+        "url": "/phone-list/phone-list.module.js",
+        "sha256": "364eb45cd51b52c3b566eef5c6962201970e5330e2659c3416f5ca773091e863"
+      },
+      {
+        "path": "phone-list/phone-list.template.html",
+        "url": "/phone-list/phone-list.template.html",
+        "sha256": "2c47edfd7d25b45c504da053df35074eb826e7f45202bf39a89159229f89d8ea"
+      },
+      {
+        "path": "phones/dell-streak-7.json",
+        "url": "/phones/dell-streak-7.json",
+        "sha256": "9a8c99da0c354937b46b1676eaceed81e75f53b39038489ae63f8bf3163722eb"
+      },
+      {
+        "path": "phones/dell-venue.json",
+        "url": "/phones/dell-venue.json",
+        "sha256": "3b0275f9cae7451d16e12f27c784dc7ce5d3d3a9c6a15b445bb7031e7dd1fd3b"
+      },
+      {
+        "path": "phones/droid-2-global-by-motorola.json",
+        "url": "/phones/droid-2-global-by-motorola.json",
+        "sha256": "df235338d82fe96c43dc6401aff38265423dfbc40416ff5937a98a462d5777d3"
+      },
+      {
+        "path": "phones/droid-pro-by-motorola.json",
+        "url": "/phones/droid-pro-by-motorola.json",
+        "sha256": "9c32e1b64d8e6658da93010d0639b681757692d2bb3aa3871eb0b9ab3f14d6ad"
+      },
+      {
+        "path": "phones/lg-axis.json",
+        "url": "/phones/lg-axis.json",
+        "sha256": "133a7571c4197a8d3d7da6c23aabe4deca2d7fb5ebe80089e8468e49fcb83fbb"
+      },
+      {
+        "path": "phones/motorola-atrix-4g.json",
+        "url": "/phones/motorola-atrix-4g.json",
+        "sha256": "8159e34b1a16817de9705725fff61d8d1d895c884cf0c4da05718a5f1cbcea3a"
+      },
+      {
+        "path": "phones/motorola-bravo-with-motoblur.json",
+        "url": "/phones/motorola-bravo-with-motoblur.json",
+        "sha256": "58589785fea34aaf7b5747606d55305bc05f3961fefbacbb9cf2e8eaa3ed47f0"
+      },
+      {
+        "path": "phones/motorola-charm-with-motoblur.json",
+        "url": "/phones/motorola-charm-with-motoblur.json",
+        "sha256": "492764211be4a9a5bef028a12fec4ebe421c28aa6389ad1c154de24528c91e89"
+      },
+      {
+        "path": "phones/motorola-defy-with-motoblur.json",
+        "url": "/phones/motorola-defy-with-motoblur.json",
+        "sha256": "74f66814442a7aadc710541500adcad67e248d0f49f0a15ab787c05daecfe2ad"
+      },
+      {
+        "path": "phones/motorola-xoom-with-wi-fi.json",
+        "url": "/phones/motorola-xoom-with-wi-fi.json",
+        "sha256": "c1cdd47f7a39511ed0e2fef505f169176a547fbac475b3b5a3ccdf666a70d9ca"
+      },
+      {
+        "path": "phones/motorola-xoom.json",
+        "url": "/phones/motorola-xoom.json",
+        "sha256": "76c4d51602efa89a659bc315eafb39b636bd5f2c5f3b39293ecdef18f493a71b"
+      },
+      {
+        "path": "phones/nexus-s.json",
+        "url": "/phones/nexus-s.json",
+        "sha256": "12c3f904f286227e25d115165dfabf2ea997d5116a2b8db1c2f5bed609f96761"
+      },
+      {
+        "path": "phones/phones.json",
+        "url": "/phones/phones.json",
+        "sha256": "67aab35aa42f7adcffd7c1a2ed73cf979cf02e76c8b22722622dd040e64b54b9"
+      },
+      {
+        "path": "phones/samsung-galaxy-tab.json",
+        "url": "/phones/samsung-galaxy-tab.json",
+        "sha256": "47f898aac6a0db774bb0aeb9004b9b8acbf3dcc9cbdf2f4ef66c21946bc4cf3a"
+      },
+      {
+        "path": "phones/samsung-gem.json",
+        "url": "/phones/samsung-gem.json",
+        "sha256": "2085373ec603faf241474e0e0c1b1a115f7dcaddebae57721cb1c61d886beec5"
+      },
+      {
+        "path": "phones/samsung-mesmerize-a-galaxy-s-phone.json",
+        "url": "/phones/samsung-mesmerize-a-galaxy-s-phone.json",
+        "sha256": "b0ed0420a33288aaaacd36e54f342f81ee95dda2b58965f6a60a5afa96baa94a"
+      },
+      {
+        "path": "phones/samsung-showcase-a-galaxy-s-phone.json",
+        "url": "/phones/samsung-showcase-a-galaxy-s-phone.json",
+        "sha256": "ef691f5db3a4f2e49d301f9f4d3472843f4df7f6b4cb88de65562c9902d23e7d"
+      },
+      {
+        "path": "phones/samsung-transform.json",
+        "url": "/phones/samsung-transform.json",
+        "sha256": "9a90c9d28de290775c4384c22b311f8d39e56c54814cf5cc847454f839f3b4b4"
+      },
+      {
+        "path": "phones/sanyo-zio.json",
+        "url": "/phones/sanyo-zio.json",
+        "sha256": "1b0021061883973504dc68a49c776bd3250584720fbb860df476de901576acee"
+      },
+      {
+        "path": "phones/t-mobile-g2.json",
+        "url": "/phones/t-mobile-g2.json",
+        "sha256": "a9c687c3a0f8de5fb05b30bf2897311590fcf24f8515a979d4de16d26570e105"
+      },
+      {
+        "path": "phones/t-mobile-mytouch-4g.json",
+        "url": "/phones/t-mobile-mytouch-4g.json",
+        "sha256": "13072688a5daba3956348ad2ec11c6b1614c94da1065d66419512dca7160752c"
+      }
+    ]
+  },
+  "second": {
+    "digest": "78a28c2aa73e8b39fcdcb8cdc60b0d58911667f03985d20c03b0aa9ac6f58878",
+    "inventorySha256": "9e671b66db30b584e5d1f55b9cd8c3df7a8d37d829766d4ec5598c398ad3f9ab",
+    "entries": [
+      {
+        "path": "app.animations.css",
+        "url": "/app.animations.css",
+        "sha256": "75cd5760736fa954176dd7d8b297afeb5daf13c64018a39858d8fbefdfe93eb7"
+      },
+      {
+        "path": "app.animations.js",
+        "url": "/app.animations.js",
+        "sha256": "60b239bbaf0491933dd99dd5b1d8962d42bbac89f8fdbd80fc74c4133c0fae00"
+      },
+      {
+        "path": "app.config.js",
+        "url": "/app.config.js",
+        "sha256": "26cd79608f8fb99fef48fc4bcdb6f737e4c67626d1893797221128373217ca3e"
+      },
+      {
+        "path": "app.css",
+        "url": "/app.css",
+        "sha256": "4e7374c40e4222f5e1c9b8404860236fe890c6e6a01f2339f061fb8b5b5a606f"
+      },
+      {
+        "path": "app.module.js",
+        "url": "/app.module.js",
+        "sha256": "e062757ca6f5b15c20c461a6636106652133103d0daaf8e3c498e4fb1a8b0617"
+      },
+      {
+        "path": "assets/glyphicons-halflings-regular-BKjkU69z.woff",
+        "url": "/assets/glyphicons-halflings-regular-BKjkU69z.woff",
+        "sha256": "a26394f7ede100ca118eff2eda08596275a9839b959c226e15439557a5a80742"
+      },
+      {
+        "path": "assets/glyphicons-halflings-regular-BUJKDMgK.eot",
+        "url": "/assets/glyphicons-halflings-regular-BUJKDMgK.eot",
+        "sha256": "13634da87d9e23f8c3ed9108ce1724d183a39ad072e73e1b3d8cbf646d2d0407"
+      },
+      {
+        "path": "assets/glyphicons-halflings-regular-CSehLiBc.svg",
+        "url": "/assets/glyphicons-halflings-regular-CSehLiBc.svg",
+        "sha256": "42f60659d265c1a3c30f9fa42abcbb56bd4a53af4d83d316d6dd7a36903c43e5"
+      },
+      {
+        "path": "assets/glyphicons-halflings-regular-DrwTMapi.ttf",
+        "url": "/assets/glyphicons-halflings-regular-DrwTMapi.ttf",
+        "sha256": "e395044093757d82afcb138957d06a1ea9361bdcf0b442d06a18a8051af57456"
+      },
+      {
+        "path": "assets/glyphicons-halflings-regular-DzqM6ju8.woff2",
+        "url": "/assets/glyphicons-halflings-regular-DzqM6ju8.woff2",
+        "sha256": "fe185d11a49676890d47bb783312a0cda5a44c4039214094e7957b4c040ef11c"
+      },
+      {
+        "path": "assets/index-DtcUm9Sn.css",
+        "url": "/assets/index-DtcUm9Sn.css",
+        "sha256": "49109a1e52359d76b8b660d576f7b152d00703973de0f0b660556983a41080dd"
+      },
+      {
+        "path": "core/checkmark/checkmark.filter.js",
+        "url": "/core/checkmark/checkmark.filter.js",
+        "sha256": "919c19a94633486836b18425f3368c19e0396b56c86f42c94efc2c22776d6d7f"
+      },
+      {
+        "path": "core/core.module.js",
+        "url": "/core/core.module.js",
+        "sha256": "6f770775e9be688881408c24a3bcc280ebfadc41e305833153841bfd82d71ed8"
+      },
+      {
+        "path": "core/phone/phone.module.js",
+        "url": "/core/phone/phone.module.js",
+        "sha256": "28c75a90ab83daa6b40b43c046a127841b3965b42985f6f2442253993696996f"
+      },
+      {
+        "path": "core/phone/phone.service.js",
+        "url": "/core/phone/phone.service.js",
+        "sha256": "db0568274c18805924e5332accd18f41efc264f0ad08e98914f8ababa133a160"
+      },
+      {
+        "path": "img/phones/dell-streak-7.0.jpg",
+        "url": "/img/phones/dell-streak-7.0.jpg",
+        "sha256": "97d83193d298c11a07336e013e31ce15a6c22297e680b5e7a3b9966a3c86cdbc"
+      },
+      {
+        "path": "img/phones/dell-streak-7.1.jpg",
+        "url": "/img/phones/dell-streak-7.1.jpg",
+        "sha256": "0952d5e168f56d5a614ed76410fc5a9d361fad79c6ad06ff162fbefe9a570dc5"
+      },
+      {
+        "path": "img/phones/dell-streak-7.2.jpg",
+        "url": "/img/phones/dell-streak-7.2.jpg",
+        "sha256": "c3040f7533812a15661dbb0e5da4322daf0ea214b19f227f991e09b0e8d51675"
+      },
+      {
+        "path": "img/phones/dell-streak-7.3.jpg",
+        "url": "/img/phones/dell-streak-7.3.jpg",
+        "sha256": "bac6a518eca76ee31a8dd922edd604de534da38645fed2b749e130d77a57e4da"
+      },
+      {
+        "path": "img/phones/dell-streak-7.4.jpg",
+        "url": "/img/phones/dell-streak-7.4.jpg",
+        "sha256": "ea18c1f77984650ebf1b887e10d61a30f74cf5de13ab30708f82ca88e792aeda"
+      },
+      {
+        "path": "img/phones/dell-venue.0.jpg",
+        "url": "/img/phones/dell-venue.0.jpg",
+        "sha256": "1a80e79e1d7f596a3ff354be2f2b9c976ef9ddbbaebcc3888fc6445d46025fd7"
+      },
+      {
+        "path": "img/phones/dell-venue.1.jpg",
+        "url": "/img/phones/dell-venue.1.jpg",
+        "sha256": "178f393e170a50117e557ce43c0dbfad4e6c12886ebea853b47212945f741ef7"
+      },
+      {
+        "path": "img/phones/dell-venue.2.jpg",
+        "url": "/img/phones/dell-venue.2.jpg",
+        "sha256": "8115f616d54e1fc070dbd0fd7de6912b9ed979205d653aa779ce2eaab2aa6282"
+      },
+      {
+        "path": "img/phones/dell-venue.3.jpg",
+        "url": "/img/phones/dell-venue.3.jpg",
+        "sha256": "fd88b1f54c88bf95908e4d331ceb1694e2f0e3ba12628dfc72ebf445b377d1be"
+      },
+      {
+        "path": "img/phones/dell-venue.4.jpg",
+        "url": "/img/phones/dell-venue.4.jpg",
+        "sha256": "0708403c42945207ffbc7f1eb3d8207b783fb7e409e7077c38960156e41a8f9b"
+      },
+      {
+        "path": "img/phones/dell-venue.5.jpg",
+        "url": "/img/phones/dell-venue.5.jpg",
+        "sha256": "36718bc176051598ae6b9de1195e1527bca502ceaae77eb147d6fa7e678682eb"
+      },
+      {
+        "path": "img/phones/droid-2-global-by-motorola.0.jpg",
+        "url": "/img/phones/droid-2-global-by-motorola.0.jpg",
+        "sha256": "de363a3c6c6f38ae1d52dc4d6a3d91a61d8e43b29c73492cc7ae7d4cbb454db1"
+      },
+      {
+        "path": "img/phones/droid-2-global-by-motorola.1.jpg",
+        "url": "/img/phones/droid-2-global-by-motorola.1.jpg",
+        "sha256": "29d06055bff4369de730838d05fe216c883376dffd8f1e54d1261306ce0265f3"
+      },
+      {
+        "path": "img/phones/droid-2-global-by-motorola.2.jpg",
+        "url": "/img/phones/droid-2-global-by-motorola.2.jpg",
+        "sha256": "bffa563f1bad1820b9169452848ba29bab7acfabe01a0919393641aa76358b23"
+      },
+      {
+        "path": "img/phones/droid-pro-by-motorola.0.jpg",
+        "url": "/img/phones/droid-pro-by-motorola.0.jpg",
+        "sha256": "6c77dd0c0ca8db67cfca3f3af46d6e45bcdfb999ca2babb62e98995259d5d296"
+      },
+      {
+        "path": "img/phones/droid-pro-by-motorola.1.jpg",
+        "url": "/img/phones/droid-pro-by-motorola.1.jpg",
+        "sha256": "2aedcc7c2da3f8782bc8b7c9799aa251337a01f939cab04bb8754fa9e402523a"
+      },
+      {
+        "path": "img/phones/lg-axis.0.jpg",
+        "url": "/img/phones/lg-axis.0.jpg",
+        "sha256": "872ddfc6c555fb70c29e19c9404369259ec30c6482f2a93d20e17533c1b0a87c"
+      },
+      {
+        "path": "img/phones/lg-axis.1.jpg",
+        "url": "/img/phones/lg-axis.1.jpg",
+        "sha256": "b0fb40de8469d7bb3f5eeea71499d637ce722222a82e6dec4f597a1a449d63c4"
+      },
+      {
+        "path": "img/phones/lg-axis.2.jpg",
+        "url": "/img/phones/lg-axis.2.jpg",
+        "sha256": "5fbc121779c294810f3d64676b6fcc7658c57d1a5dc92fcb6688ae6ac0ef6d11"
+      },
+      {
+        "path": "img/phones/motorola-atrix-4g.0.jpg",
+        "url": "/img/phones/motorola-atrix-4g.0.jpg",
+        "sha256": "77cf6deee9706fda095db586e0ddcae9800cc2a5c8a0dc154684d293704e3de8"
+      },
+      {
+        "path": "img/phones/motorola-atrix-4g.1.jpg",
+        "url": "/img/phones/motorola-atrix-4g.1.jpg",
+        "sha256": "32176463dabc39e02e7399a68bb9be3cad756d5258a50f06b20985781b545400"
+      },
+      {
+        "path": "img/phones/motorola-atrix-4g.2.jpg",
+        "url": "/img/phones/motorola-atrix-4g.2.jpg",
+        "sha256": "bb632f2bb2803cd31da6715c51173ae1800423572ed724b1e73d56d72be62488"
+      },
+      {
+        "path": "img/phones/motorola-atrix-4g.3.jpg",
+        "url": "/img/phones/motorola-atrix-4g.3.jpg",
+        "sha256": "fc4b8a2551b626753f6a68ab6a7785dd85639ffa260821ba67ba4d046c645e4f"
+      },
+      {
+        "path": "img/phones/motorola-bravo-with-motoblur.0.jpg",
+        "url": "/img/phones/motorola-bravo-with-motoblur.0.jpg",
+        "sha256": "0ac6a0331144704a234d5f6c7aa1bc94cc042cdf92876e16e575bdbe7c344e43"
+      },
+      {
+        "path": "img/phones/motorola-bravo-with-motoblur.1.jpg",
+        "url": "/img/phones/motorola-bravo-with-motoblur.1.jpg",
+        "sha256": "ea0c3c5066aadd0c50f48d1ab2fc00460408ea49dfd4f66dbfd4a66c43242607"
+      },
+      {
+        "path": "img/phones/motorola-bravo-with-motoblur.2.jpg",
+        "url": "/img/phones/motorola-bravo-with-motoblur.2.jpg",
+        "sha256": "6a7a5ee3bcb7137b8f2152527a9d19f316dd96c5a65cfccec8e05b8007bcc1ef"
+      },
+      {
+        "path": "img/phones/motorola-charm-with-motoblur.0.jpg",
+        "url": "/img/phones/motorola-charm-with-motoblur.0.jpg",
+        "sha256": "2e4d9a96ec74ea7b3911c0592b6e74355ed9ec9e12776d45ec203d73720151f5"
+      },
+      {
+        "path": "img/phones/motorola-charm-with-motoblur.1.jpg",
+        "url": "/img/phones/motorola-charm-with-motoblur.1.jpg",
+        "sha256": "abb1e5cce37f98181e74649316dab2e0188d95304946ddc7d7b295db807f67dc"
+      },
+      {
+        "path": "img/phones/motorola-charm-with-motoblur.2.jpg",
+        "url": "/img/phones/motorola-charm-with-motoblur.2.jpg",
+        "sha256": "1354647b3ac41653c855fd6712c2f7ffbce96d523033e4df2754af1e5890c4c2"
+      },
+      {
+        "path": "img/phones/motorola-defy-with-motoblur.0.jpg",
+        "url": "/img/phones/motorola-defy-with-motoblur.0.jpg",
+        "sha256": "2544fc9f89698d11c5043cef2d34077a2652017a76a078900a0de1e5de39d4a1"
+      },
+      {
+        "path": "img/phones/motorola-defy-with-motoblur.1.jpg",
+        "url": "/img/phones/motorola-defy-with-motoblur.1.jpg",
+        "sha256": "2cb4791ecab1aa961699ace93fd2a85614d1e84463ecedec6b576729ba8fa534"
+      },
+      {
+        "path": "img/phones/motorola-defy-with-motoblur.2.jpg",
+        "url": "/img/phones/motorola-defy-with-motoblur.2.jpg",
+        "sha256": "0be75677757724b1f0571226609157febd132720ad4e1e0a67f3ea64a712e32b"
+      },
+      {
+        "path": "img/phones/motorola-xoom-with-wi-fi.0.jpg",
+        "url": "/img/phones/motorola-xoom-with-wi-fi.0.jpg",
+        "sha256": "01ab28181850903257299595a6da4f477a3bbe814287214aa04844507a796502"
+      },
+      {
+        "path": "img/phones/motorola-xoom-with-wi-fi.1.jpg",
+        "url": "/img/phones/motorola-xoom-with-wi-fi.1.jpg",
+        "sha256": "06f2b0cdb077040bfe379a83e4994cc91663a3b1a668c083a437b386d120b7f9"
+      },
+      {
+        "path": "img/phones/motorola-xoom-with-wi-fi.2.jpg",
+        "url": "/img/phones/motorola-xoom-with-wi-fi.2.jpg",
+        "sha256": "a9c5acdd3b8cc19298e32bde3bedf0e86240f3b8e022ee7349b536469eda510e"
+      },
+      {
+        "path": "img/phones/motorola-xoom-with-wi-fi.3.jpg",
+        "url": "/img/phones/motorola-xoom-with-wi-fi.3.jpg",
+        "sha256": "b979608a045a5a7629bc611e2af9b4d6fe8471faff71b3e1bdecb0e1c8b0b887"
+      },
+      {
+        "path": "img/phones/motorola-xoom-with-wi-fi.4.jpg",
+        "url": "/img/phones/motorola-xoom-with-wi-fi.4.jpg",
+        "sha256": "d5a5cec00dd6411e74d76e0528569294431154bf31cb178b842a04878b058e42"
+      },
+      {
+        "path": "img/phones/motorola-xoom-with-wi-fi.5.jpg",
+        "url": "/img/phones/motorola-xoom-with-wi-fi.5.jpg",
+        "sha256": "286bb9dbb8fa5a49cb23e35fd59f8911c6c3d5171604af4b97fd21116af804e5"
+      },
+      {
+        "path": "img/phones/motorola-xoom.0.jpg",
+        "url": "/img/phones/motorola-xoom.0.jpg",
+        "sha256": "6d4255b742955b456b0091cd975e25f020a0d1f755a5f73b20b6f3fdbbaceaec"
+      },
+      {
+        "path": "img/phones/motorola-xoom.1.jpg",
+        "url": "/img/phones/motorola-xoom.1.jpg",
+        "sha256": "69c64d3cc9b4e96b4a38f18b04023c2e8efdff2397de0b623116fa88ba7d7fbe"
+      },
+      {
+        "path": "img/phones/motorola-xoom.2.jpg",
+        "url": "/img/phones/motorola-xoom.2.jpg",
+        "sha256": "8a1c065308c30863529b28975150c7ea9264421f6ccb4a097b9a1e375c0fb61a"
+      },
+      {
+        "path": "img/phones/nexus-s.0.jpg",
+        "url": "/img/phones/nexus-s.0.jpg",
+        "sha256": "e40fe55875fe785b0d954fc33a06b0279ac7c8975312da1bd0453f60ca724939"
+      },
+      {
+        "path": "img/phones/nexus-s.1.jpg",
+        "url": "/img/phones/nexus-s.1.jpg",
+        "sha256": "5fc88e62ff38e0be2661b7d142ac951f120512ac567e2aa876321d24af539a78"
+      },
+      {
+        "path": "img/phones/nexus-s.2.jpg",
+        "url": "/img/phones/nexus-s.2.jpg",
+        "sha256": "febc8d2040bd32e585364f4a74b31444ae7f295585b6674320821be8445c2c7c"
+      },
+      {
+        "path": "img/phones/nexus-s.3.jpg",
+        "url": "/img/phones/nexus-s.3.jpg",
+        "sha256": "0eb005d5cb4d4c2249f140cbfb2bdf1dd6052e4464aa3d6fd0eca0f3228651bd"
+      },
+      {
+        "path": "img/phones/samsung-galaxy-tab.0.jpg",
+        "url": "/img/phones/samsung-galaxy-tab.0.jpg",
+        "sha256": "521ce306913f88fe932e7e72834d2e950f7ea5320f345413a274f68339e75c20"
+      },
+      {
+        "path": "img/phones/samsung-galaxy-tab.1.jpg",
+        "url": "/img/phones/samsung-galaxy-tab.1.jpg",
+        "sha256": "966d9f60d16b6d1c0c787d6192c7083cf4409d6f140bce059bb7218af69e6afc"
+      },
+      {
+        "path": "img/phones/samsung-galaxy-tab.2.jpg",
+        "url": "/img/phones/samsung-galaxy-tab.2.jpg",
+        "sha256": "7e23eff683c1fe27b16fdfaf2b19b73325b6eb8560cede8a5ab3a92b6fecc73d"
+      },
+      {
+        "path": "img/phones/samsung-galaxy-tab.3.jpg",
+        "url": "/img/phones/samsung-galaxy-tab.3.jpg",
+        "sha256": "0e9921ed50cd9a7122f10b1864aa0d4ad43c844aeaabec07e4340e0b043de0a9"
+      },
+      {
+        "path": "img/phones/samsung-galaxy-tab.4.jpg",
+        "url": "/img/phones/samsung-galaxy-tab.4.jpg",
+        "sha256": "175e501b2eb50c477d58bc5b1b326542af0d2255890f9dd711a614f4c64be6b0"
+      },
+      {
+        "path": "img/phones/samsung-galaxy-tab.5.jpg",
+        "url": "/img/phones/samsung-galaxy-tab.5.jpg",
+        "sha256": "4a67b9093d33b085adf2bcaa95b0acec8c69188e9051a1107565ebac6ae90361"
+      },
+      {
+        "path": "img/phones/samsung-galaxy-tab.6.jpg",
+        "url": "/img/phones/samsung-galaxy-tab.6.jpg",
+        "sha256": "9f3d9097d6c1641789510b565b185564b77f62a9ae428e9482cda6555be16c7f"
+      },
+      {
+        "path": "img/phones/samsung-gem.0.jpg",
+        "url": "/img/phones/samsung-gem.0.jpg",
+        "sha256": "01210bc73639811f2d2423a843450a0068fc712d585f31bf63448fde2506ad66"
+      },
+      {
+        "path": "img/phones/samsung-gem.1.jpg",
+        "url": "/img/phones/samsung-gem.1.jpg",
+        "sha256": "19ec340541a84afbf946fcef20d1125fc725077019d538505993cdd5bd281f95"
+      },
+      {
+        "path": "img/phones/samsung-gem.2.jpg",
+        "url": "/img/phones/samsung-gem.2.jpg",
+        "sha256": "f38e3727e630b9555e9b2666382b5c4ca31d2aaaf013c4591d88613eff89c5f7"
+      },
+      {
+        "path": "img/phones/samsung-mesmerize-a-galaxy-s-phone.0.jpg",
+        "url": "/img/phones/samsung-mesmerize-a-galaxy-s-phone.0.jpg",
+        "sha256": "5787e2171901a19d1ffeabedc0d1f906884b9c07cb882e0d9355a064ad6943dc"
+      },
+      {
+        "path": "img/phones/samsung-mesmerize-a-galaxy-s-phone.1.jpg",
+        "url": "/img/phones/samsung-mesmerize-a-galaxy-s-phone.1.jpg",
+        "sha256": "953df76d04efb1d62bb25043a7f2f4f428ebb2e2401a64649d24625dc80cea1b"
+      },
+      {
+        "path": "img/phones/samsung-mesmerize-a-galaxy-s-phone.2.jpg",
+        "url": "/img/phones/samsung-mesmerize-a-galaxy-s-phone.2.jpg",
+        "sha256": "995a337809a403625d6aa2a977bab57f7b911795228c7453fa6ed3d51d7149a0"
+      },
+      {
+        "path": "img/phones/samsung-mesmerize-a-galaxy-s-phone.3.jpg",
+        "url": "/img/phones/samsung-mesmerize-a-galaxy-s-phone.3.jpg",
+        "sha256": "529a84ccc83be38b898acc2e9fba401b64a336998777ccc268f04322cd581cf5"
+      },
+      {
+        "path": "img/phones/samsung-showcase-a-galaxy-s-phone.0.jpg",
+        "url": "/img/phones/samsung-showcase-a-galaxy-s-phone.0.jpg",
+        "sha256": "5787e2171901a19d1ffeabedc0d1f906884b9c07cb882e0d9355a064ad6943dc"
+      },
+      {
+        "path": "img/phones/samsung-showcase-a-galaxy-s-phone.1.jpg",
+        "url": "/img/phones/samsung-showcase-a-galaxy-s-phone.1.jpg",
+        "sha256": "953df76d04efb1d62bb25043a7f2f4f428ebb2e2401a64649d24625dc80cea1b"
+      },
+      {
+        "path": "img/phones/samsung-showcase-a-galaxy-s-phone.2.jpg",
+        "url": "/img/phones/samsung-showcase-a-galaxy-s-phone.2.jpg",
+        "sha256": "995a337809a403625d6aa2a977bab57f7b911795228c7453fa6ed3d51d7149a0"
+      },
+      {
+        "path": "img/phones/samsung-transform.0.jpg",
+        "url": "/img/phones/samsung-transform.0.jpg",
+        "sha256": "5f1c264d76306075c445c59ec8f3e5ab7760d5e27977e6e0559ac8d932c29bd0"
+      },
+      {
+        "path": "img/phones/samsung-transform.1.jpg",
+        "url": "/img/phones/samsung-transform.1.jpg",
+        "sha256": "14f141bf3320593964a177e84a0f9c83115dacdcb24bda16e08c643ef1c21617"
+      },
+      {
+        "path": "img/phones/samsung-transform.2.jpg",
+        "url": "/img/phones/samsung-transform.2.jpg",
+        "sha256": "210bd9200a9463e76f4f01b007295ac0f1b1a66dec9c264efb4d5590aedd47f4"
+      },
+      {
+        "path": "img/phones/samsung-transform.3.jpg",
+        "url": "/img/phones/samsung-transform.3.jpg",
+        "sha256": "025c22b20a08b23838248a2d3e37820009c96a4557593d34b05bfc18c7a3a17e"
+      },
+      {
+        "path": "img/phones/samsung-transform.4.jpg",
+        "url": "/img/phones/samsung-transform.4.jpg",
+        "sha256": "558d44e3a3f6975d3b468e2e2da612ed8fe6ffeeada739c557a75616115cb196"
+      },
+      {
+        "path": "img/phones/sanyo-zio.0.jpg",
+        "url": "/img/phones/sanyo-zio.0.jpg",
+        "sha256": "c7f180020a329a69f6eb5c0121dc1344761daf69795cf807b4269cd1bfd27793"
+      },
+      {
+        "path": "img/phones/sanyo-zio.1.jpg",
+        "url": "/img/phones/sanyo-zio.1.jpg",
+        "sha256": "207d06f72bc4f628af849ffea98512b4fdd1db5ce73d0f416293982138910815"
+      },
+      {
+        "path": "img/phones/sanyo-zio.2.jpg",
+        "url": "/img/phones/sanyo-zio.2.jpg",
+        "sha256": "40b2cb7be559669f8a633c3b8e8132ebce1e550f0de84e570e86a7ec84a5cd13"
+      },
+      {
+        "path": "img/phones/t-mobile-g2.0.jpg",
+        "url": "/img/phones/t-mobile-g2.0.jpg",
+        "sha256": "34e0423633caf9b2b19e5d760e6d9ba458a1a84e99a178b61d8283bf76a23a94"
+      },
+      {
+        "path": "img/phones/t-mobile-g2.1.jpg",
+        "url": "/img/phones/t-mobile-g2.1.jpg",
+        "sha256": "0834f23a272daa25ae7fa0d66ef91fa33ba43d8d21b34e4c56d86f9c01ddfb0c"
+      },
+      {
+        "path": "img/phones/t-mobile-g2.2.jpg",
+        "url": "/img/phones/t-mobile-g2.2.jpg",
+        "sha256": "2f6ef94aa3b57e350833a7734872be950c7299ad9bc9bd0d1d0c5887fdc7b5cc"
+      },
+      {
+        "path": "img/phones/t-mobile-mytouch-4g.0.jpg",
+        "url": "/img/phones/t-mobile-mytouch-4g.0.jpg",
+        "sha256": "6375f9a86e7ccd4095ad92fa2de90be94af95f604507c6083e9f848db4e0d5ea"
+      },
+      {
+        "path": "img/phones/t-mobile-mytouch-4g.1.jpg",
+        "url": "/img/phones/t-mobile-mytouch-4g.1.jpg",
+        "sha256": "04921749bacb0880c1231644b00c4b5f7bdd343c8603bcfefe0c7f172cef33f8"
+      },
+      {
+        "path": "img/phones/t-mobile-mytouch-4g.2.jpg",
+        "url": "/img/phones/t-mobile-mytouch-4g.2.jpg",
+        "sha256": "da5a4def5e02450eed19dd55736119c801eaf0435f0c3cf0c8a42e686438b46f"
+      },
+      {
+        "path": "img/phones/t-mobile-mytouch-4g.3.jpg",
+        "url": "/img/phones/t-mobile-mytouch-4g.3.jpg",
+        "sha256": "0113b45be85d19f83a46a7eba18a74e246015af56db4b940b098f598f7c2bef9"
+      },
+      {
+        "path": "img/phones/t-mobile-mytouch-4g.4.jpg",
+        "url": "/img/phones/t-mobile-mytouch-4g.4.jpg",
+        "sha256": "fa656f395f7f0b19b883b2dc8ac28ad6751d59b95e5375d464e4dee57bd8a654"
+      },
+      {
+        "path": "img/phones/t-mobile-mytouch-4g.5.jpg",
+        "url": "/img/phones/t-mobile-mytouch-4g.5.jpg",
+        "sha256": "6375f9a86e7ccd4095ad92fa2de90be94af95f604507c6083e9f848db4e0d5ea"
+      },
+      {
+        "path": "index.html",
+        "url": "/index.html",
+        "sha256": "951b6c330e54278cf814c5c366f875e3505e487c75d3ef4abf3f7eff45a91391"
+      },
+      {
+        "path": "lib/angular-animate/LICENSE.md",
+        "url": "/lib/angular-animate/LICENSE.md",
+        "sha256": "f64ba8a51fa64d7f4616e88d0850eca2aa43c4ca73a798ff92f744012d0ff4df"
+      },
+      {
+        "path": "lib/angular-animate/README.md",
+        "url": "/lib/angular-animate/README.md",
+        "sha256": "147c5313ecf61739b728cfe3bceae9b6d4d2a9a56a5a782e0d07576dc6dad2e4"
+      },
+      {
+        "path": "lib/angular-animate/angular-animate.js",
+        "url": "/lib/angular-animate/angular-animate.js",
+        "sha256": "03375fd30d12158157e46102b0b8782f812408106456fe6e350fe498ebaa00d5"
+      },
+      {
+        "path": "lib/angular-animate/angular-animate.min.js",
+        "url": "/lib/angular-animate/angular-animate.min.js",
+        "sha256": "339cd3ae8400350d035c2bde69954c46394041a9f1fa7ef79229f355a3ccdfc7"
+      },
+      {
+        "path": "lib/angular-animate/angular-animate.min.js.map",
+        "url": "/lib/angular-animate/angular-animate.min.js.map",
+        "sha256": "6697882bda47681ff6203635973ca9b83ba3500f1baf4f05eabd3f19bf108cdc"
+      },
+      {
+        "path": "lib/angular-animate/bower.json",
+        "url": "/lib/angular-animate/bower.json",
+        "sha256": "8b11a8f99237ac2bc97da62c4419c32f4fae3548d3a4884065474fae6c311bbf"
+      },
+      {
+        "path": "lib/angular-animate/index.js",
+        "url": "/lib/angular-animate/index.js",
+        "sha256": "7f2f9350e5624bf86e8760d1deae03fae4477949284b49471eb67e2b6498cb7d"
+      },
+      {
+        "path": "lib/angular-animate/package.json",
+        "url": "/lib/angular-animate/package.json",
+        "sha256": "7414b80380eb1c5aeaf282c5f138baaba022526df429562e651f7cb8d119ad05"
+      },
+      {
+        "path": "lib/angular-mocks/LICENSE.md",
+        "url": "/lib/angular-mocks/LICENSE.md",
+        "sha256": "f64ba8a51fa64d7f4616e88d0850eca2aa43c4ca73a798ff92f744012d0ff4df"
+      },
+      {
+        "path": "lib/angular-mocks/README.md",
+        "url": "/lib/angular-mocks/README.md",
+        "sha256": "2b3ce4384ebe4f7a2bab37d839e2151bc23e915e1993f3b683496ec08ae94496"
+      },
+      {
+        "path": "lib/angular-mocks/angular-mocks.js",
+        "url": "/lib/angular-mocks/angular-mocks.js",
+        "sha256": "d890518b962df6176731165510fc91b69d3d3501526431e14738b941fea639e0"
+      },
+      {
+        "path": "lib/angular-mocks/bower.json",
+        "url": "/lib/angular-mocks/bower.json",
+        "sha256": "e69aa16edbb61b8de58425f0b75ef629301bd5a36979fe53bdc44f375a47a6f9"
+      },
+      {
+        "path": "lib/angular-mocks/ngAnimateMock.js",
+        "url": "/lib/angular-mocks/ngAnimateMock.js",
+        "sha256": "2bfb23e966134314b46b1b536987542e418ebcf3ae61c0dba6e77c3db33d160a"
+      },
+      {
+        "path": "lib/angular-mocks/ngMock.js",
+        "url": "/lib/angular-mocks/ngMock.js",
+        "sha256": "aafff8ac96ea595e93a0c44570e879f0bad4c9c274113b5964dff9d2cfb65449"
+      },
+      {
+        "path": "lib/angular-mocks/ngMockE2E.js",
+        "url": "/lib/angular-mocks/ngMockE2E.js",
+        "sha256": "f740e0b8e9310c5d680b95304b4696831d36cc6b318551a1dcbfdc64e4fc238c"
+      },
+      {
+        "path": "lib/angular-mocks/package.json",
+        "url": "/lib/angular-mocks/package.json",
+        "sha256": "785796c4bc3dffa5b773f7eaa30602cc44aa887eb0b5022c606f38401d9e7611"
+      },
+      {
+        "path": "lib/angular-resource/LICENSE.md",
+        "url": "/lib/angular-resource/LICENSE.md",
+        "sha256": "f64ba8a51fa64d7f4616e88d0850eca2aa43c4ca73a798ff92f744012d0ff4df"
+      },
+      {
+        "path": "lib/angular-resource/README.md",
+        "url": "/lib/angular-resource/README.md",
+        "sha256": "727cc4ffba37a003edcc35543196f0546d6039b0b2943b9555297d0563916f37"
+      },
+      {
+        "path": "lib/angular-resource/angular-resource.js",
+        "url": "/lib/angular-resource/angular-resource.js",
+        "sha256": "8476756a8b13d4c7b8b129877ca1f3df2f51752f5b60d649485f0bb5752739ea"
+      },
+      {
+        "path": "lib/angular-resource/angular-resource.min.js",
+        "url": "/lib/angular-resource/angular-resource.min.js",
+        "sha256": "3a61f95c630f63b39aacf3f8ee66bc13bc9b820d11f749591d1c3d07125ec184"
+      },
+      {
+        "path": "lib/angular-resource/angular-resource.min.js.map",
+        "url": "/lib/angular-resource/angular-resource.min.js.map",
+        "sha256": "087f60b2024c267e1904f9e137f84e1b0a83d6ecaa107a19aa2b806f97c083c2"
+      },
+      {
+        "path": "lib/angular-resource/bower.json",
+        "url": "/lib/angular-resource/bower.json",
+        "sha256": "bef041d6572c8fa5174912659a0c52c71fa0ad1039d74accb48bdc1e027b4830"
+      },
+      {
+        "path": "lib/angular-resource/index.js",
+        "url": "/lib/angular-resource/index.js",
+        "sha256": "46892a6b163220ffb0c21203ce53b3d84699fbcc474a44fdabd1ecd2d58c5a2d"
+      },
+      {
+        "path": "lib/angular-resource/package.json",
+        "url": "/lib/angular-resource/package.json",
+        "sha256": "d235b0f0178b5946025154b6a0a44186ae664fe81c945888461d7927a05bd191"
+      },
+      {
+        "path": "lib/angular-route/LICENSE.md",
+        "url": "/lib/angular-route/LICENSE.md",
+        "sha256": "f64ba8a51fa64d7f4616e88d0850eca2aa43c4ca73a798ff92f744012d0ff4df"
+      },
+      {
+        "path": "lib/angular-route/README.md",
+        "url": "/lib/angular-route/README.md",
+        "sha256": "466e3ce3945f417b1a2e81cdfc853660b001f20b4f889932d5ad79e29ad53785"
+      },
+      {
+        "path": "lib/angular-route/angular-route.js",
+        "url": "/lib/angular-route/angular-route.js",
+        "sha256": "55e5d7d110f8ee8bcdb1f00c9a1aa3122fa09e9fcaa4b93da85d27c10ee5fdfa"
+      },
+      {
+        "path": "lib/angular-route/angular-route.min.js",
+        "url": "/lib/angular-route/angular-route.min.js",
+        "sha256": "3422eae4c737ff2d30abfe3df6c30e6b11869d3a30683c5efced151248eb9661"
+      },
+      {
+        "path": "lib/angular-route/angular-route.min.js.map",
+        "url": "/lib/angular-route/angular-route.min.js.map",
+        "sha256": "e9decef1649b6f4833484544a7d2b7082d79dbdca25ca4fc89c8ec432efaa4e2"
+      },
+      {
+        "path": "lib/angular-route/bower.json",
+        "url": "/lib/angular-route/bower.json",
+        "sha256": "4de575e4282813501d401ecfdd6c132cb6df856d73fc219e1eda83ad5a1ab1ff"
+      },
+      {
+        "path": "lib/angular-route/index.js",
+        "url": "/lib/angular-route/index.js",
+        "sha256": "55538f9fa9c56229c800c178f5bfebccddcdd53fef1e1eb1289058523ddee142"
+      },
+      {
+        "path": "lib/angular-route/package.json",
+        "url": "/lib/angular-route/package.json",
+        "sha256": "650c5f1a850f9fe0971c0044a1c82d697627bf4493fc17071358006784a84471"
+      },
+      {
+        "path": "lib/angular/LICENSE.md",
+        "url": "/lib/angular/LICENSE.md",
+        "sha256": "f64ba8a51fa64d7f4616e88d0850eca2aa43c4ca73a798ff92f744012d0ff4df"
+      },
+      {
+        "path": "lib/angular/README.md",
+        "url": "/lib/angular/README.md",
+        "sha256": "18669818dec4f33339acc3725e16a6d422d7536e20f0f7fbe8a5f20b2bb3e844"
+      },
+      {
+        "path": "lib/angular/angular-csp.css",
+        "url": "/lib/angular/angular-csp.css",
+        "sha256": "507a4746eb1b82f9a04a3d9e7cce74cc71c2c63c9b8c717560a0aae5ec019927"
+      },
+      {
+        "path": "lib/angular/angular.js",
+        "url": "/lib/angular/angular.js",
+        "sha256": "c7df41bc00628bec220b0378dc1f2f5041980758403b6f24b9774ac43a9186d8"
+      },
+      {
+        "path": "lib/angular/angular.min.js",
+        "url": "/lib/angular/angular.min.js",
+        "sha256": "566f18cb8bc23558701c2cc4f934fe50bcc85629d1aaf5d589f835f2b3e57a9f"
+      },
+      {
+        "path": "lib/angular/angular.min.js.gzip",
+        "url": "/lib/angular/angular.min.js.gzip",
+        "sha256": "84933e5ce381d45491f14fc92488bd927139fdfd77f19cc822b03c3e6a78a4c1"
+      },
+      {
+        "path": "lib/angular/angular.min.js.map",
+        "url": "/lib/angular/angular.min.js.map",
+        "sha256": "de9efcd2d490f87bfe367dd8e391c32db0fb8628935bf76e3b4607fa7aae81d0"
+      },
+      {
+        "path": "lib/angular/bower.json",
+        "url": "/lib/angular/bower.json",
+        "sha256": "335c995ed0205af4609c1dd6d54f9448684a93c13142646b5ac8f977d672b1b8"
+      },
+      {
+        "path": "lib/angular/index.js",
+        "url": "/lib/angular/index.js",
+        "sha256": "d469f8e93a4c345f01d81d162a803116de1bc6afd4bfeba8b45951449956b686"
+      },
+      {
+        "path": "lib/angular/package.json",
+        "url": "/lib/angular/package.json",
+        "sha256": "2094aac1e0951a22e67131b921ec16f2d4d685476792294e7f0b88b9d5a937f1"
+      },
+      {
+        "path": "lib/bootstrap/dist/css/bootstrap-theme.css",
+        "url": "/lib/bootstrap/dist/css/bootstrap-theme.css",
+        "sha256": "c4ea52f9efdd111f33ef6c3eaabc8289e386cac408f1c10b015b773071b4a616"
+      },
+      {
+        "path": "lib/bootstrap/dist/css/bootstrap-theme.css.map",
+        "url": "/lib/bootstrap/dist/css/bootstrap-theme.css.map",
+        "sha256": "71941b253b8942374cd57b8a85d473489f21311438ba9e3dd4fefa22adbf0f53"
+      },
+      {
+        "path": "lib/bootstrap/dist/css/bootstrap-theme.min.css",
+        "url": "/lib/bootstrap/dist/css/bootstrap-theme.min.css",
+        "sha256": "653e073e97423adda5bc3917a241ee8497dd38a48f14bcde0098a4e54fd0fa5e"
+      },
+      {
+        "path": "lib/bootstrap/dist/css/bootstrap-theme.min.css.map",
+        "url": "/lib/bootstrap/dist/css/bootstrap-theme.min.css.map",
+        "sha256": "9851e169f044bfc0d5e4a8a761ded531d415ceb7febc1ea585fab070b846d738"
+      },
+      {
+        "path": "lib/bootstrap/dist/css/bootstrap.css",
+        "url": "/lib/bootstrap/dist/css/bootstrap.css",
+        "sha256": "7e630d90c7234b0df1729f62b8f9e4bbfaf293d91a5a0ac46df25f2a6759e39a"
+      },
+      {
+        "path": "lib/bootstrap/dist/css/bootstrap.css.map",
+        "url": "/lib/bootstrap/dist/css/bootstrap.css.map",
+        "sha256": "9cd84a2a5162c816a8bbbd79cf9dc0605bc0ea86e4cd2bab43aee069bb83d266"
+      },
+      {
+        "path": "lib/bootstrap/dist/css/bootstrap.min.css",
+        "url": "/lib/bootstrap/dist/css/bootstrap.min.css",
+        "sha256": "f75e846cc83bd11432f4b1e21a45f31bc85283d11d372f7b19accd1bf6a2635c"
+      },
+      {
+        "path": "lib/bootstrap/dist/css/bootstrap.min.css.map",
+        "url": "/lib/bootstrap/dist/css/bootstrap.min.css.map",
+        "sha256": "b4a35d19793de445f4622f4d28db279c0242b60228ef304340aad833d012a77d"
+      },
+      {
+        "path": "lib/bootstrap/dist/fonts/glyphicons-halflings-regular.eot",
+        "url": "/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.eot",
+        "sha256": "13634da87d9e23f8c3ed9108ce1724d183a39ad072e73e1b3d8cbf646d2d0407"
+      },
+      {
+        "path": "lib/bootstrap/dist/fonts/glyphicons-halflings-regular.svg",
+        "url": "/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.svg",
+        "sha256": "42f60659d265c1a3c30f9fa42abcbb56bd4a53af4d83d316d6dd7a36903c43e5"
+      },
+      {
+        "path": "lib/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf",
+        "url": "/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf",
+        "sha256": "e395044093757d82afcb138957d06a1ea9361bdcf0b442d06a18a8051af57456"
+      },
+      {
+        "path": "lib/bootstrap/dist/fonts/glyphicons-halflings-regular.woff",
+        "url": "/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.woff",
+        "sha256": "a26394f7ede100ca118eff2eda08596275a9839b959c226e15439557a5a80742"
+      },
+      {
+        "path": "lib/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2",
+        "url": "/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2",
+        "sha256": "fe185d11a49676890d47bb783312a0cda5a44c4039214094e7957b4c040ef11c"
+      },
+      {
+        "path": "lib/bootstrap/dist/js/bootstrap.js",
+        "url": "/lib/bootstrap/dist/js/bootstrap.js",
+        "sha256": "0abe8deb334de1ba743b04d0399e99eba336afed9da72fc4c0a302c99f9238c8"
+      },
+      {
+        "path": "lib/bootstrap/dist/js/bootstrap.min.js",
+        "url": "/lib/bootstrap/dist/js/bootstrap.min.js",
+        "sha256": "53964478a7c634e8dad34ecc303dd8048d00dce4993906de1bacf67f663486ef"
+      },
+      {
+        "path": "lib/bootstrap/dist/js/npm.js",
+        "url": "/lib/bootstrap/dist/js/npm.js",
+        "sha256": "c7aa82a1aa7d45224a38d926d2adaff7fe4aef5bcdafa2a47bdac057f4422c2d"
+      },
+      {
+        "path": "lib/jquery/dist/core.js",
+        "url": "/lib/jquery/dist/core.js",
+        "sha256": "6026ca247eaee2c88fa54964d77d2e76efc97a974a5695e3744cb38defb3d691"
+      },
+      {
+        "path": "lib/jquery/dist/jquery.js",
+        "url": "/lib/jquery/dist/jquery.js",
+        "sha256": "d8aa24ecc6cecb1a60515bc093f1c9da38a0392612d9ab8ae0f7f36e6eee1fad"
+      },
+      {
+        "path": "lib/jquery/dist/jquery.min.js",
+        "url": "/lib/jquery/dist/jquery.min.js",
+        "sha256": "160a426ff2894252cd7cebbdd6d6b7da8fcd319c65b70468f10b6690c45d02ef"
+      },
+      {
+        "path": "lib/jquery/dist/jquery.min.map",
+        "url": "/lib/jquery/dist/jquery.min.map",
+        "sha256": "d5e886300d32d640f93ff6d79d36a24ca93cbedbd0f080b69d70282351c95f21"
+      },
+      {
+        "path": "lib/jquery/dist/jquery.slim.js",
+        "url": "/lib/jquery/dist/jquery.slim.js",
+        "sha256": "7cd5c914895c6b4e4120ed98e73875c6b4a12b7304fbf9586748fe0a1c57d830"
+      },
+      {
+        "path": "lib/jquery/dist/jquery.slim.min.js",
+        "url": "/lib/jquery/dist/jquery.slim.min.js",
+        "sha256": "dde76b9b2b90d30eb97fc81f06caa8c338c97b688cea7d2729c88f529f32fbb1"
+      },
+      {
+        "path": "lib/jquery/dist/jquery.slim.min.map",
+        "url": "/lib/jquery/dist/jquery.slim.min.map",
+        "sha256": "47d883d816632eedcecf0ac4ad044db713cae6d52e19db416b689e7d3efc8367"
+      },
+      {
+        "path": "phone-detail/phone-detail.component.js",
+        "url": "/phone-detail/phone-detail.component.js",
+        "sha256": "14a6491146c24e28d02dd78891fea66132668e56267a55c46bfff6272e53fa4a"
+      },
+      {
+        "path": "phone-detail/phone-detail.module.js",
+        "url": "/phone-detail/phone-detail.module.js",
+        "sha256": "270cb00e90e8a5eb27e5b6036f77273ccf6d0d565b8664d35df3e62fd6aa9afe"
+      },
+      {
+        "path": "phone-detail/phone-detail.template.html",
+        "url": "/phone-detail/phone-detail.template.html",
+        "sha256": "5e63aa4a9686c27bef8b87da77a29d564313857de6ec10dbb9698d77c09d9dd8"
+      },
+      {
+        "path": "phone-list/phone-list.component.js",
+        "url": "/phone-list/phone-list.component.js",
+        "sha256": "56f2bde102867cfff70ea2e969dbfe89c2ff191345ebe9964ae84ac983951a6d"
+      },
+      {
+        "path": "phone-list/phone-list.module.js",
+        "url": "/phone-list/phone-list.module.js",
+        "sha256": "364eb45cd51b52c3b566eef5c6962201970e5330e2659c3416f5ca773091e863"
+      },
+      {
+        "path": "phone-list/phone-list.template.html",
+        "url": "/phone-list/phone-list.template.html",
+        "sha256": "2c47edfd7d25b45c504da053df35074eb826e7f45202bf39a89159229f89d8ea"
+      },
+      {
+        "path": "phones/dell-streak-7.json",
+        "url": "/phones/dell-streak-7.json",
+        "sha256": "9a8c99da0c354937b46b1676eaceed81e75f53b39038489ae63f8bf3163722eb"
+      },
+      {
+        "path": "phones/dell-venue.json",
+        "url": "/phones/dell-venue.json",
+        "sha256": "3b0275f9cae7451d16e12f27c784dc7ce5d3d3a9c6a15b445bb7031e7dd1fd3b"
+      },
+      {
+        "path": "phones/droid-2-global-by-motorola.json",
+        "url": "/phones/droid-2-global-by-motorola.json",
+        "sha256": "df235338d82fe96c43dc6401aff38265423dfbc40416ff5937a98a462d5777d3"
+      },
+      {
+        "path": "phones/droid-pro-by-motorola.json",
+        "url": "/phones/droid-pro-by-motorola.json",
+        "sha256": "9c32e1b64d8e6658da93010d0639b681757692d2bb3aa3871eb0b9ab3f14d6ad"
+      },
+      {
+        "path": "phones/lg-axis.json",
+        "url": "/phones/lg-axis.json",
+        "sha256": "133a7571c4197a8d3d7da6c23aabe4deca2d7fb5ebe80089e8468e49fcb83fbb"
+      },
+      {
+        "path": "phones/motorola-atrix-4g.json",
+        "url": "/phones/motorola-atrix-4g.json",
+        "sha256": "8159e34b1a16817de9705725fff61d8d1d895c884cf0c4da05718a5f1cbcea3a"
+      },
+      {
+        "path": "phones/motorola-bravo-with-motoblur.json",
+        "url": "/phones/motorola-bravo-with-motoblur.json",
+        "sha256": "58589785fea34aaf7b5747606d55305bc05f3961fefbacbb9cf2e8eaa3ed47f0"
+      },
+      {
+        "path": "phones/motorola-charm-with-motoblur.json",
+        "url": "/phones/motorola-charm-with-motoblur.json",
+        "sha256": "492764211be4a9a5bef028a12fec4ebe421c28aa6389ad1c154de24528c91e89"
+      },
+      {
+        "path": "phones/motorola-defy-with-motoblur.json",
+        "url": "/phones/motorola-defy-with-motoblur.json",
+        "sha256": "74f66814442a7aadc710541500adcad67e248d0f49f0a15ab787c05daecfe2ad"
+      },
+      {
+        "path": "phones/motorola-xoom-with-wi-fi.json",
+        "url": "/phones/motorola-xoom-with-wi-fi.json",
+        "sha256": "c1cdd47f7a39511ed0e2fef505f169176a547fbac475b3b5a3ccdf666a70d9ca"
+      },
+      {
+        "path": "phones/motorola-xoom.json",
+        "url": "/phones/motorola-xoom.json",
+        "sha256": "76c4d51602efa89a659bc315eafb39b636bd5f2c5f3b39293ecdef18f493a71b"
+      },
+      {
+        "path": "phones/nexus-s.json",
+        "url": "/phones/nexus-s.json",
+        "sha256": "12c3f904f286227e25d115165dfabf2ea997d5116a2b8db1c2f5bed609f96761"
+      },
+      {
+        "path": "phones/phones.json",
+        "url": "/phones/phones.json",
+        "sha256": "67aab35aa42f7adcffd7c1a2ed73cf979cf02e76c8b22722622dd040e64b54b9"
+      },
+      {
+        "path": "phones/samsung-galaxy-tab.json",
+        "url": "/phones/samsung-galaxy-tab.json",
+        "sha256": "47f898aac6a0db774bb0aeb9004b9b8acbf3dcc9cbdf2f4ef66c21946bc4cf3a"
+      },
+      {
+        "path": "phones/samsung-gem.json",
+        "url": "/phones/samsung-gem.json",
+        "sha256": "2085373ec603faf241474e0e0c1b1a115f7dcaddebae57721cb1c61d886beec5"
+      },
+      {
+        "path": "phones/samsung-mesmerize-a-galaxy-s-phone.json",
+        "url": "/phones/samsung-mesmerize-a-galaxy-s-phone.json",
+        "sha256": "b0ed0420a33288aaaacd36e54f342f81ee95dda2b58965f6a60a5afa96baa94a"
+      },
+      {
+        "path": "phones/samsung-showcase-a-galaxy-s-phone.json",
+        "url": "/phones/samsung-showcase-a-galaxy-s-phone.json",
+        "sha256": "ef691f5db3a4f2e49d301f9f4d3472843f4df7f6b4cb88de65562c9902d23e7d"
+      },
+      {
+        "path": "phones/samsung-transform.json",
+        "url": "/phones/samsung-transform.json",
+        "sha256": "9a90c9d28de290775c4384c22b311f8d39e56c54814cf5cc847454f839f3b4b4"
+      },
+      {
+        "path": "phones/sanyo-zio.json",
+        "url": "/phones/sanyo-zio.json",
+        "sha256": "1b0021061883973504dc68a49c776bd3250584720fbb860df476de901576acee"
+      },
+      {
+        "path": "phones/t-mobile-g2.json",
+        "url": "/phones/t-mobile-g2.json",
+        "sha256": "a9c687c3a0f8de5fb05b30bf2897311590fcf24f8515a979d4de16d26570e105"
+      },
+      {
+        "path": "phones/t-mobile-mytouch-4g.json",
+        "url": "/phones/t-mobile-mytouch-4g.json",
+        "sha256": "13072688a5daba3956348ad2ec11c6b1614c94da1065d66419512dca7160752c"
+      }
+    ]
+  },
+  "equal": true,
+  "serviceWorker": "out-of-scope-not-emitted"
+}

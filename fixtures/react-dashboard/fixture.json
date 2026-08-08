@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "versionless.immutable-fixture.v1",
+  "id": "react-dashboard",
+  "framework": "react",
+  "repository": "darekkay/dashboard",
+  "repositoryUrl": "https://github.com/darekkay/dashboard",
+  "commit": "4b8be9f7e0080d680598c74d7e6cfbe080566059",
+  "tree": "adc596cb1c3834a0ebf9cea580c87eb9b002ddfa",
+  "archive": {
+    "url": "https://codeload.github.com/darekkay/dashboard/tar.gz/4b8be9f7e0080d680598c74d7e6cfbe080566059",
+    "sha256": "84a3a8a5e3e39803a25cc7d35e862f99f22aa3fd4e0c39e413a7a2d0e68901e0",
+    "byteLength": 19362785
+  },
+  "archiveManifestSha256": "b138389c7578b6cdcb7ab7aad74ec8bc6d602eb50f5a7d2c3c907d39e1731245",
+  "reliedPaths": [
+    ".github/workflows/ci.yml",
+    "app/package-lock.json",
+    "app/package.json",
+    "app/src/components/dashboard/index.tsx",
+    "app/src/index.tsx",
+    "app/vite.config.js",
+    "LICENSE"
+  ],
+  "usableClosure": {
+    "assets": "Only paths classified verified-compatible are usable; excluded and unknown paths remain outside the usable closure.",
+    "nestedLicensing": "Only the exact root MIT file is verified-compatible.",
+    "committedDist": "No committed dist boundary was required."
+  },
+  "localityBoundaries": [
+    "Server packages are outside the local browser-only usable closure.",
+    "Optional remote widgets remain locality blockers until independently intercepted and tested."
+  ],
+  "nonclaims": [
+    "Migration, build, browser parity, Node, package-manager, or bundler runtime support, Tier F, Tier P, designated pilot status, generic React, Next.js, Ionic, Nx, Analog, NativeScript, native parity, enterprise support, compliance, certification, PCI applicability, authenticity, signer identity, SLSA level, and OS-wide isolation are not established."
+  ]
+}

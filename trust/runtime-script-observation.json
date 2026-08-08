@@ -1,0 +1,34 @@
+{
+	"schemaVersion": "versionless.runtime-script-observation.v1",
+	"browser": {
+		"executable": ".versionless/cache/react-boilerplate-v4/ms-playwright/chromium_headless_shell-1208/chrome-headless-shell-mac-arm64/chrome-headless-shell",
+		"sha256": "a46b3b1e63163fa2d2437fb6ae967cb5a73b50050bca32f1964e6129b6228244"
+	},
+	"profiles": {
+		"react-locale": {
+			"journey": "fixtures/react-boilerplate-v4/journey.json",
+			"journeySha256": "53bc6577ed9056ad397b768afde2a04a2cec36ad6d8fa410fa7027168958e751"
+		},
+		"react-data-flow": {
+			"journey": "fixtures/react-boilerplate-v4-data-flow/journey.json",
+			"journeySha256": "ae221e3605e86a16a5db33baac9126a1b0bc9a63131b4ea3b46c68581f7f4dcd",
+			"payload": "fixtures/react-boilerplate-v4-data-flow/repos.json",
+			"payloadSha256": "b12675b7f7b0819f4ae12d2e48119a8e94016a0da3e0fa245e7f216a89715c06"
+		},
+		"angular-phonecat": {
+			"journey": "fixtures/angular-phonecat/journey.json",
+			"journeySha256": "24ff1c763c18700c0b9f7449078da3cd7cf3f85141117cb68a38c83e2386ab3b"
+		}
+	},
+	"verticals": [
+		{ "id": "react-boilerplate-v4", "profile": "react-locale" },
+		{ "id": "angular-phonecat", "profile": "angular-phonecat" },
+		{ "id": "react-boilerplate-v4-node24", "profile": "react-locale" },
+		{ "id": "react-boilerplate-v4-vite8", "profile": "react-locale" },
+		{ "id": "angular-phonecat-route-resolve", "profile": "angular-phonecat" },
+		{ "id": "angular-phonecat-composed", "profile": "angular-phonecat" },
+		{ "id": "react-boilerplate-v4-data-flow", "profile": "react-data-flow" },
+		{ "id": "react-boilerplate-v4-composed", "profile": "react-data-flow" },
+		{ "id": "angular-phonecat-vite8", "profile": "angular-phonecat" }
+	]
+}

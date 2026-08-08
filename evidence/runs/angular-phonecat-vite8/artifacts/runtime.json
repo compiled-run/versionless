@@ -1,0 +1,6 @@
+{
+  "legacyNode": "16.20.2",
+  "targetNode": "24.15.0",
+  "vite": "8.0.16",
+  "browser": ".versionless/cache/react-boilerplate-v4/ms-playwright/chromium_headless_shell-1208/chrome-headless-shell-mac-arm64/chrome-headless-shell"
+}

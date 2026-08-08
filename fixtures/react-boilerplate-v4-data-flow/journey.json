@@ -1,0 +1,16 @@
+{
+  "qualificationRuns": 2,
+  "initialPath": "/",
+  "initialHeading": "Start your next react project in seconds",
+  "navigationName": "Features",
+  "navigationPath": "/features",
+  "returnName": "Home",
+  "localeControl": "select",
+  "targetLocale": "de",
+  "translatedHeading": "Beginnen Sie Ihr nächstes React Projekt in Sekunden",
+  "username": "octocat",
+  "requestUrl": "https://api.github.com/users/octocat/repos?type=all&sort=updated",
+  "locale": "en-US",
+  "timezoneId": "America/Chicago",
+  "viewport": { "width": 1280, "height": 720 }
+}

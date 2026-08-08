@@ -1,0 +1,18 @@
+{
+  "id": "phone-list-detail-images",
+  "qualificationRuns": 2,
+  "initialPath": "/",
+  "redirectPath": "/#!/phones",
+  "filterText": "nexus",
+  "expectedFilteredCount": 1,
+  "orderValue": "name",
+  "firstOrderedPhone": "Dell Streak 7",
+  "detailLink": "Nexus S",
+  "detailPath": "/#!/phones/nexus-s",
+  "detailHeading": "Nexus S",
+  "initialImageSuffix": "img/phones/nexus-s.0.jpg",
+  "thumbnailSwapSuffixes": ["img/phones/nexus-s.1.jpg", "img/phones/nexus-s.2.jpg"],
+  "locale": "en-US",
+  "timezoneId": "America/Chicago",
+  "viewport": { "width": 1280, "height": 720 }
+}

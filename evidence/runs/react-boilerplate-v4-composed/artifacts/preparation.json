@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "versionless.react-composed-preparation.v1",
+  "pins": {
+    "node24Archive": "372331b969779ab5d15b949884fc6eaf88d5afe87bde8ba881d6400b9100ffc4",
+    "vitePackage": "a2b943431b51bfcc2e9386eecf8b4b3f6e4bf443e56d17b1f4c8495a61b4050c",
+    "viteConfig": "2171a9f2681e138e1556b9e20e40ad1b9e5ed6154a6e67851c8075b53751e94c",
+    "viteHtml": "448e3d5b18d4f16925f1f0640f7a6cfe7ecac33a11d34c888e7540f71236786d",
+    "browser": "a46b3b1e63163fa2d2437fb6ae967cb5a73b50050bca32f1964e6129b6228244"
+  },
+  "sourceHashes": {
+    "app/containers/LocaleToggle/index.js": "70c2ea867367b5dbd0820413f344bcd6c19729ef04d41c1fd9e12d43d72e8dfa",
+    "app/containers/HomePage/index.js": "db0413d948d68980dd24db7660e1bd854cabcc4642ec15fff710f5c95131f232",
+    "app/containers/RepoListItem/index.js": "21a570ed27af053040ce6b503f1af0c22bbdfea52284dccb47b2dc382844d867",
+    "package.json": "a3383c3ccce6bd460952c5ac8b721ed5f7087ffc5a96713b6e9103f2ba3a8d76",
+    "package-lock.json": "09a37fc1d35eb4cfaab46e0ac8c0d3f33824b300a731ec25f1e50998e9c14edb"
+  },
+  "targetHashes": {
+    "app/containers/LocaleToggle/index.js": "db70524e86f9a5983d18f6ad1f2d72fec14b71bd5701d66da475ff600703e9b3",
+    "app/containers/HomePage/index.js": "9132cb8b6ab4af9c88499ae4daa6783229a8d4898266f2953d0bc99a5ff168c1",
+    "app/containers/RepoListItem/index.js": "5669977385fb57491fcb117cd65ffaa2a4ab86d2258bf36c7fa81ff880387517",
+    "package.json": "7fb3098e57021e790638e31677d3cbfe815087f889b708cab4e1efdc9785414a",
+    "package-lock.json": "42ffa936b19115ad380e77dcbc3800c7adf117aa560c5f678c837b7f4b09e00d"
+  },
+  "allInputsPreflightedBeforeWrites": true,
+  "networkUsed": false
+}

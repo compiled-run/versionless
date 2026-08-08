@@ -1,0 +1,74 @@
+[
+  {
+    "lane": "legacy",
+    "run": 1,
+    "result": "pass",
+    "redirectPath": "/#!/phones",
+    "filterText": "nexus",
+    "orderValue": "name",
+    "detail": "Nexus S",
+    "initialImage": "img/phones/nexus-s.0.jpg",
+    "thumbnailSwaps": [
+      "img/phones/nexus-s.1.jpg",
+      "img/phones/nexus-s.2.jpg"
+    ],
+    "blocked": [],
+    "successfulNonLoopback": [],
+    "consoleErrors": [],
+    "pageErrors": []
+  },
+  {
+    "lane": "legacy",
+    "run": 2,
+    "result": "pass",
+    "redirectPath": "/#!/phones",
+    "filterText": "nexus",
+    "orderValue": "name",
+    "detail": "Nexus S",
+    "initialImage": "img/phones/nexus-s.0.jpg",
+    "thumbnailSwaps": [
+      "img/phones/nexus-s.1.jpg",
+      "img/phones/nexus-s.2.jpg"
+    ],
+    "blocked": [],
+    "successfulNonLoopback": [],
+    "consoleErrors": [],
+    "pageErrors": []
+  },
+  {
+    "lane": "target",
+    "run": 1,
+    "result": "pass",
+    "redirectPath": "/#!/phones",
+    "filterText": "nexus",
+    "orderValue": "name",
+    "detail": "Nexus S",
+    "initialImage": "img/phones/nexus-s.0.jpg",
+    "thumbnailSwaps": [
+      "img/phones/nexus-s.1.jpg",
+      "img/phones/nexus-s.2.jpg"
+    ],
+    "blocked": [],
+    "successfulNonLoopback": [],
+    "consoleErrors": [],
+    "pageErrors": []
+  },
+  {
+    "lane": "target",
+    "run": 2,
+    "result": "pass",
+    "redirectPath": "/#!/phones",
+    "filterText": "nexus",
+    "orderValue": "name",
+    "detail": "Nexus S",
+    "initialImage": "img/phones/nexus-s.0.jpg",
+    "thumbnailSwaps": [
+      "img/phones/nexus-s.1.jpg",
+      "img/phones/nexus-s.2.jpg"
+    ],
+    "blocked": [],
+    "successfulNonLoopback": [],
+    "consoleErrors": [],
+    "pageErrors": []
+  }
+]

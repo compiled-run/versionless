@@ -1,0 +1,189 @@
+{
+  "schemaVersion": "versionless.cross-source-provenance.v1",
+  "fixture": "react-avataaars",
+  "repository": "fangpenlin/avataaars-generator",
+  "commit": "c191c6c2d27f41245e803912d43c7213436a34d3",
+  "tree": "94a3d1a024682b3f21ad30b9de8d4e1541a376d3",
+  "archive": {
+    "url": "https://codeload.github.com/fangpenlin/avataaars-generator/tar.gz/c191c6c2d27f41245e803912d43c7213436a34d3",
+    "sha256": "4863a1304b659f1105f69d8ae0c715428c41d2d64b43edfd701148ddfca900da",
+    "byteLength": 166934
+  },
+  "fileCount": 28,
+  "fileManifestSha256": "4e96f8bfbcdb30f5474d04cdb1c57f6198ef938f3398ce1fadc9cb36258ead60",
+  "acceptedGlobalMetadata": {
+    "kind": "pax-global-comment",
+    "comment": "c191c6c2d27f41245e803912d43c7213436a34d3",
+    "bytes": 52
+  },
+  "acceptedPathMetadata": [],
+  "files": [
+    {
+      "path": ".env",
+      "byteLength": 68,
+      "sha256": "ee404f625aa5d90612918046a719913c1a976d68cd215d3c97c3854ce399db40"
+    },
+    {
+      "path": ".gitignore",
+      "byteLength": 285,
+      "sha256": "f5fd985d5e5beb0079293a92d88701b6a78aac7d6290084ffc689dc06b06bb1a"
+    },
+    {
+      "path": ".vscode/extensions.json",
+      "byteLength": 110,
+      "sha256": "3f6c9eced44546e610b6fbc977d1b9ed25bfcc55a61a5a1a3c8eed8bededd899"
+    },
+    {
+      "path": ".vscode/settings.json",
+      "byteLength": 971,
+      "sha256": "efb9168e14a65778b6dd20f1670773239eec808caa97568e532b4e29d8869c78"
+    },
+    {
+      "path": "LICENSE",
+      "byteLength": 1069,
+      "sha256": "479dc70764e2e2213229618168810342d8b2fe362cfeb8353fede23630d22e48"
+    },
+    {
+      "path": "package.json",
+      "byteLength": 1648,
+      "sha256": "ab38720b2b8fe9529a49040d6d20fe23627d0cdf2699195bf9f2eaf58b5d0b18"
+    },
+    {
+      "path": "public/favicon.png",
+      "byteLength": 5667,
+      "sha256": "7b5a703994fe45c5c180c9407b67e2d8aa3424714f6cb5aa7e03d956c12e2c57"
+    },
+    {
+      "path": "public/index.html",
+      "byteLength": 3788,
+      "sha256": "cf2457f8884552cb1aee5ce77056b8bddf697747a4a02b27593d82f2e1ebc499"
+    },
+    {
+      "path": "public/manifest.json",
+      "byteLength": 298,
+      "sha256": "b507855491c84e19a893790301ea749e709be2b44eb7b771682330e07e0808d2"
+    },
+    {
+      "path": "README.md",
+      "byteLength": 635,
+      "sha256": "707593fbd36fd5713934ead40ad2a920470dd07e997c3cbfbfc6967da03f1e97"
+    },
+    {
+      "path": "src/@types/react-url-query.d.ts",
+      "byteLength": 536,
+      "sha256": "1f8c3a10c605411aaf7b3636b108e66a3df9982d84c9481cac3ddb707da5ccae"
+    },
+    {
+      "path": "src/assets/App.css",
+      "byteLength": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    {
+      "path": "src/assets/index.css",
+      "byteLength": 1435,
+      "sha256": "06bf499e71366792521b88168ee9a623796e766f23c851707fbda9cc061b13b8"
+    },
+    {
+      "path": "src/assets/logo.svg",
+      "byteLength": 2671,
+      "sha256": "ecc203fbd1d0b912e7653108ff7d6e4f98da8a17b94d9f7045d06eccfad93a85"
+    },
+    {
+      "path": "src/components/App.tsx",
+      "byteLength": 300,
+      "sha256": "78f34e49e318159358d450fc631f3ab07138498bd1e3f63e668720f4c90bfd74"
+    },
+    {
+      "path": "src/components/AvatarForm.tsx",
+      "byteLength": 6996,
+      "sha256": "8e8b528cd024b021b856dc799377784c69529e8033490705650aba044246904a"
+    },
+    {
+      "path": "src/components/ComponentCode.tsx",
+      "byteLength": 2547,
+      "sha256": "793d7ba383a2cc5b8dddede4aa70468ff2aaf86656aa1dcdb35356ee99919a6e"
+    },
+    {
+      "path": "src/components/ComponentImg.tsx",
+      "byteLength": 2151,
+      "sha256": "ce0b63201352083471d5c334551239dc3e7266839585bc73557e6658872af0ae"
+    },
+    {
+      "path": "src/components/Main.tsx",
+      "byteLength": 8048,
+      "sha256": "4a780cfd92fd6f62625d9c425872940e38ed7f23388d2dfba8182a169edd16fb"
+    },
+    {
+      "path": "src/components/Renderer.tsx",
+      "byteLength": 2040,
+      "sha256": "df02c391baad6cf5c8086c45f7d492adbb81d42b9defef6f881a51da157a31ab"
+    },
+    {
+      "path": "src/history.ts",
+      "byteLength": 119,
+      "sha256": "39e1a131c7f3958eed80d2bd82637ea16499760e19497e9c718b1d4affec8a5f"
+    },
+    {
+      "path": "src/index.tsx",
+      "byteLength": 730,
+      "sha256": "d685c7683cf2a5037dceab162e2cb6d1f0a872821f758c54c5c5629c11acff79"
+    },
+    {
+      "path": "src/registerServiceWorker.ts",
+      "byteLength": 4378,
+      "sha256": "ba4c1de8b7e8ab5224657dc449ba9c17062de15abbd1cf149ea064710730e5f3"
+    },
+    {
+      "path": "tools/component-extractor.html",
+      "byteLength": 16882,
+      "sha256": "21e3e660383d7f0fba7a8fba3d095dd030933df241a89a98b719d8cd4ca5906e"
+    },
+    {
+      "path": "tsconfig.json",
+      "byteLength": 702,
+      "sha256": "731f648ce3b5d6a9796f5899508939fa9e2c9086f6507168e9d537e7f76eb3ef"
+    },
+    {
+      "path": "tsconfig.test.json",
+      "byteLength": 87,
+      "sha256": "fdc5d9ffac1fa7c458b9d4a4bb777724cd1a442dbcf6b1cbf899128575c5042f"
+    },
+    {
+      "path": "tslint.json",
+      "byteLength": 369,
+      "sha256": "39b10bcd94a4b0dd437029df57c0d688e4f39b7935a7b1485b82aa7d5921b375"
+    },
+    {
+      "path": "yarn.lock",
+      "byteLength": 373962,
+      "sha256": "d53edb62306b30bc2888ebb06c028f4b1452df9e39819c4d98f00857655f5156"
+    }
+  ],
+  "rootLicense": {
+    "path": "LICENSE",
+    "sha256": "479dc70764e2e2213229618168810342d8b2fe362cfeb8353fede23630d22e48",
+    "classification": "verified-compatible"
+  },
+  "licensing": [
+    {
+      "path": "LICENSE",
+      "sha256": "479dc70764e2e2213229618168810342d8b2fe362cfeb8353fede23630d22e48",
+      "classification": "verified-compatible",
+      "reason": "Exact root MIT text, repeated raw/archive byte identity."
+    }
+  ],
+  "assets": [
+    {
+      "path": "public/favicon.png",
+      "sha256": "7b5a703994fe45c5c180c9407b67e2d8aa3424714f6cb5aa7e03d956c12e2c57",
+      "classification": "excluded",
+      "reason": "Potential logo, favicon, brand, avatar, trademark, or attribution material is excluded."
+    },
+    {
+      "path": "src/assets/logo.svg",
+      "sha256": "ecc203fbd1d0b912e7653108ff7d6e4f98da8a17b94d9f7045d06eccfad93a85",
+      "classification": "excluded",
+      "reason": "Potential logo, favicon, brand, avatar, trademark, or attribution material is excluded."
+    }
+  ]
+}

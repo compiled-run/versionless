@@ -1,0 +1,35 @@
+{
+  "mutations": [
+    {
+      "seam": "home-load-repos-dispatch",
+      "result": "intended-failure",
+      "restoration": "byte-identical",
+      "restoredSha256": "9132cb8b6ab4af9c88499ae4daa6783229a8d4898266f2953d0bc99a5ff168c1",
+      "reproduced": "pass",
+      "syntheticRequests": []
+    },
+    {
+      "seam": "repo-current-user-selector",
+      "result": "intended-failure",
+      "restoration": "byte-identical",
+      "restoredSha256": "5669977385fb57491fcb117cd65ffaa2a4ab86d2258bf36c7fa81ff880387517",
+      "reproduced": "pass",
+      "syntheticRequests": [
+        {
+          "method": "GET",
+          "url": "https://api.github.com/users/octocat/repos?type=all&sort=updated",
+          "kind": "synthetic-interception"
+        }
+      ]
+    },
+    {
+      "seam": "service-worker-registration",
+      "result": "intended-failure",
+      "restoration": "byte-identical",
+      "restoredSha256": "17f8b8601929cd25a8557a6351d429ba24bd8871d557552351afb53363871c78",
+      "reproduced": "pass",
+      "syntheticRequests": []
+    }
+  ],
+  "isolated": true
+}

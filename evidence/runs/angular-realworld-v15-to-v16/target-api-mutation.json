@@ -1,0 +1,1 @@
+{"reason":"unexpected-nonloopback-api-binding","rejectedUrls":["https://invalid.versionless.test/api/articles?limit=10&offset=0","https://invalid.versionless.test/api/tags"],"result":"rejected","schemaVersion":"versionless.angular-realworld-v15-to-v16-mutation.v1","successfulNonLoopback":0}

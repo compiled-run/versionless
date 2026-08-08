@@ -1,0 +1,108 @@
+{
+  "schemaVersion": "versionless.receipt.v1",
+  "runId": "T008-react-boilerplate-v4",
+  "fixture": "react-boilerplate-v4",
+  "source": {
+    "repository": "https://github.com/react-boilerplate/react-boilerplate",
+    "revision": "d19099afeff64ecfb09133c06c1cb18c0d40887e",
+    "archiveSha256": "d6ca60a3c8881ae2be26a8d04e00da4d922a6653f8512f2b12ac55d48f2ce2d5",
+    "license": "MIT",
+    "licenseSha256": "e773e6b91c13f55310668e15ce178a2fcf779ff39dbcc0b910b4b5f1ecb17acb"
+  },
+  "tooling": {
+    "node": "16.20.2-darwin-arm64 EOL compatibility sandbox",
+    "yukuParser": "0.7.0",
+    "yukuAnalyzer": "0.7.0",
+    "playwright": "1.58.2",
+    "chromium": "145.0.7632.6",
+    "webpack": "4.30.0"
+  },
+  "consent": [
+    {
+      "id": "T008-fixture-ingest",
+      "purpose": "immutable fixture, EOL Node 16 compatibility sandbox, target dependency, and locked npm population; lifecycle scripts disabled uniformly because optional ngrok@3.1.1 rejects darwin-arm64",
+      "mode": "consented"
+    }
+  ],
+  "migration": {
+    "file": "app/containers/LocaleToggle/index.js",
+    "transform": "react-connect-to-hooks",
+    "edits": 5,
+    "dependency": {
+      "name": "react-redux",
+      "from": "7.0.2",
+      "to": "7.1.3",
+      "license": "MIT"
+    },
+    "lockPatch": "fixtures/react-boilerplate-v4/react-redux-7.1.3.lock.patch"
+  },
+  "verification": {
+    "result": "pass",
+    "builds": "pass",
+    "journeys": "pass",
+    "mutation": "pass",
+    "locality": {
+      "mode": "offline",
+      "scope": "Versionless-spawned Node/npm/webpack child processes and Playwright browser requests",
+      "osWideIsolation": false,
+      "successfulNonLoopback": 0,
+      "browserBlockedRequests": 4
+    },
+    "deterministicCore": {
+      "first": "7b9b0cddc5a48e16beced73f2bac8264ba82732f49f8dc86fc5cd92fcfdd3a16",
+      "second": "7b9b0cddc5a48e16beced73f2bac8264ba82732f49f8dc86fc5cd92fcfdd3a16",
+      "equal": true
+    }
+  },
+  "artifacts": [
+    {
+      "path": "evidence/runs/react-boilerplate-v4/artifacts/build-legacy.log",
+      "sha256": "2f035e449c6c708c6815108d89da02549df07e4ea6413a3a099912d6b41b1d16"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4/artifacts/build-target.log",
+      "sha256": "abba8d6f7ef48ba9500eaa69cc524193d489ab4b8801de0072ad9fc574446d3f"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4/artifacts/journey.json",
+      "sha256": "11a6d35d47da2476c39ee8134a5f00bffdec86560c2218482331e50d1551e942"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4/artifacts/build-mutation.log",
+      "sha256": "7708234d337cda6d9edd0c693ecf31b3dc9807cd861d67b08e94e1725b673c13"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4/artifacts/build-restored.log",
+      "sha256": "66d4aa398182d5f61b76abc1dbd52567667e3cb7606cb9cde47dcd9e30c3ae01"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4/artifacts/mutation.json",
+      "sha256": "9f099fde1db9996aefc7057a360b3aa602e3f5656fac38052d7d880664ba4223"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4/artifacts/migration-diff.json",
+      "sha256": "167929229973a94096755edcaf7c450ab5dc5ee9308a6c691933ed5a9a8594db"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4/artifacts/locality.json",
+      "sha256": "eea430bc25157edb67e13480e94ee0f61b4bc356838d2816f8f3d99be407f154"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4/artifacts/deterministic-core.json",
+      "sha256": "2c33b8884edf23ab01d204a13d911c75a7cdc2bc227261dcd615530278e5d5b7"
+    }
+  ],
+  "integrity": {
+    "algorithm": "sha256",
+    "canonicalDigest": "4d32ae0a46041e5ec2ac68aa31a9b8f86bd9d294d312ce41968ddd99dc5ee758",
+    "authenticity": "not-established"
+  },
+  "limitations": [
+    "Hash integrity does not establish signer authenticity or provenance beyond pinned downloads.",
+    "Network controls cover spawned Node children and browser routing, not OS-wide process isolation.",
+    "Node 16 is EOL and used only as a compatibility sandbox.",
+    "The transform is approved only for the exact proven LocaleToggle shape.",
+    "npm lifecycle scripts are disabled identically in both lanes because unused optional ngrok@3.1.1 rejects darwin-arm64; production webpack build and parity are acceptance gates.",
+    "This receipt proves one React webpack fixture only, not the full corpus outcome."
+  ]
+}

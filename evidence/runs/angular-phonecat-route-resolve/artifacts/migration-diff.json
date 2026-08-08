@@ -1,0 +1,27 @@
+{
+  "changedFiles": [
+    "app/app.config.js",
+    "app/phone-list/phone-list.component.js",
+    "app/phone-detail/phone-detail.component.js"
+  ],
+  "files": [
+    {
+      "path": "app/app.config.js",
+      "sourceSha256": "c228269232fac2dc4b5325b46697196a70d4c03bef91dc36ee9f3275ad0f73d7",
+      "targetSha256": "26cd79608f8fb99fef48fc4bcdb6f737e4c67626d1893797221128373217ca3e",
+      "edits": 2
+    },
+    {
+      "path": "app/phone-list/phone-list.component.js",
+      "sourceSha256": "f51f2eb9e7b29a1233bc8f6663b67c82f48d8143bc2126cce0f4c5e04df27b92",
+      "targetSha256": "56f2bde102867cfff70ea2e969dbfe89c2ff191345ebe9964ae84ac983951a6d",
+      "edits": 1
+    },
+    {
+      "path": "app/phone-detail/phone-detail.component.js",
+      "sourceSha256": "0a14b1e0dfecf3bdbc77259a8199974b2d34b0a178943d0f920d10541a25ebb0",
+      "targetSha256": "14a6491146c24e28d02dd78891fea66132668e56267a55c46bfff6272e53fa4a",
+      "edits": 1
+    }
+  ]
+}

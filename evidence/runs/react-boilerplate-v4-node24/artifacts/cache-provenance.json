@@ -1,0 +1,1393 @@
+{
+  "schemaVersion": "versionless.npm-cache-provenance.v1",
+  "closureDigest": "6f7a41ea3d7b654e157237d1cc670bee235b312ca18a31198eddaa51b8889cf2",
+  "lockEntries": 1516,
+  "canonicalizedHttpEntries": 10,
+  "entries": [
+    {
+      "package": "@webassemblyjs/ast@1.8.5",
+      "url": "https://registry.npmjs.org/@webassemblyjs/ast/-/ast-1.8.5.tgz",
+      "integrity": "sha512-aJMfngIZ65+t71C3y2nBBg5FFG0Okt9m0XEgWZ7Ywgn1oMAT8cNwx00Uv1cQyHtidq0Xn94R4TAywO+LCQ+ZAQ==",
+      "size": 63818,
+      "contentSha256": "aad423fc83163d153fe9b4a05fbe08d8574d3b78743ff2b90bead3190609d1d5",
+      "indexSha256": "296b0c26a36b3d4690eddb52ce1e2ac68fb261fa82b32fe64e93b2b6b0acee19",
+      "packageManifestSha256": "86a5a47d23921ac41e6427cd00ca7631a110cf1d22154c21978422ebeb3150d7",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "6d651b5b749b483278531be91623014bdfc12951278a33d6e43477db60a620ef"
+          }
+        ]
+      },
+      "indexKey": "4e/17/d0f3730a019605a82e99791d5858a4e6d15dd86fcf726b270091a33b6371",
+      "contentKey": "sha512/68/93/1f9e0219eb9fadef50b7cb69c1060e45146d0e92df66d17120599ed8c209f5a0c013f1c370c74d14bf5710c87b6276ad179fde11e13032c0ef8b090f9901",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/4e/17/d0f3730a019605a82e99791d5858a4e6d15dd86fcf726b270091a33b6371",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/68/93/1f9e0219eb9fadef50b7cb69c1060e45146d0e92df66d17120599ed8c209f5a0c013f1c370c74d14bf5710c87b6276ad179fde11e13032c0ef8b090f9901"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/4e/17/d0f3730a019605a82e99791d5858a4e6d15dd86fcf726b270091a33b6371",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/68/93/1f9e0219eb9fadef50b7cb69c1060e45146d0e92df66d17120599ed8c209f5a0c013f1c370c74d14bf5710c87b6276ad179fde11e13032c0ef8b090f9901"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "@webassemblyjs/floating-point-hex-parser@1.8.5",
+      "url": "https://registry.npmjs.org/@webassemblyjs/floating-point-hex-parser/-/floating-point-hex-parser-1.8.5.tgz",
+      "integrity": "sha512-9p+79WHru1oqBh9ewP9zW95E3XAo+90oth7S5Re3eQnECGq59ly1Ri5tsIipKGpiStHsUYmY3zMLqtk3gTcOtQ==",
+      "size": 2529,
+      "contentSha256": "304fa9dba543b6e7ccb0bfed9a63a703b66453965106dd6073a3917c70222489",
+      "indexSha256": "5d4fc58c86618159e53d0e0af2b42a3c3b61cc38569fc9b1794e58b20fe20d30",
+      "packageManifestSha256": "ba2bfa0980cc288a64a5ed20a4153ec71a27684b2971eed78c0094fb1571d6fb",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "8eba52066621ef20c89c488812ed5cae70f36a84c071fa5dc198c7f25e18b3ad"
+          }
+        ]
+      },
+      "indexKey": "22/d8/0366a742cc0b274c3cbecc042007f78c24892b0ce6524bf5876e24928926",
+      "contentKey": "sha512/f6/9f/bbf561ebbb5a2a061f5ec0ff735bde44dd7028fbdd28b61ed2e517b77909c4086ab9f65cb5462e6db088a9286a624ad1ec518998df330baad93781370eb5",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/22/d8/0366a742cc0b274c3cbecc042007f78c24892b0ce6524bf5876e24928926",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/f6/9f/bbf561ebbb5a2a061f5ec0ff735bde44dd7028fbdd28b61ed2e517b77909c4086ab9f65cb5462e6db088a9286a624ad1ec518998df330baad93781370eb5"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/22/d8/0366a742cc0b274c3cbecc042007f78c24892b0ce6524bf5876e24928926",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/f6/9f/bbf561ebbb5a2a061f5ec0ff735bde44dd7028fbdd28b61ed2e517b77909c4086ab9f65cb5462e6db088a9286a624ad1ec518998df330baad93781370eb5"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "@webassemblyjs/helper-api-error@1.8.5",
+      "url": "https://registry.npmjs.org/@webassemblyjs/helper-api-error/-/helper-api-error-1.8.5.tgz",
+      "integrity": "sha512-Za/tnzsvnqdaSPOUXHyKJ2XI7PDX64kWtURyGiJJZKVEdFOsdKUCPTNEVFZq3zJ2R0G5wc2PZ5gvdTRFgm81zA==",
+      "size": 1838,
+      "contentSha256": "f5b6f01c4897626e146bc669bf76658d7494e0b020cc3a36835d3e53f9e4a3d6",
+      "indexSha256": "ce770497f3c550e11244c4c285afbf662184de17fe858431d112bdfcd135df4f",
+      "packageManifestSha256": "13de9bcf4ac83d3c14a3cad5ea9c18ce75880be7226b7b1bbf3036c02b706ea8",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "6d651b5b749b483278531be91623014bdfc12951278a33d6e43477db60a620ef"
+          }
+        ]
+      },
+      "indexKey": "56/d3/f1d0d51a3a15bb432723f38c04760d361ea1e3ad3b20c14da93d63046364",
+      "contentKey": "sha512/65/af/ed9f3b2f9ea75a48f3945c7c8a2765c8ecf0d7eb8916b544721a224964a5447453ac74a5023d334454566adf32764741b9c1cd8f67982f753445826f35cc",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/56/d3/f1d0d51a3a15bb432723f38c04760d361ea1e3ad3b20c14da93d63046364",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/65/af/ed9f3b2f9ea75a48f3945c7c8a2765c8ecf0d7eb8916b544721a224964a5447453ac74a5023d334454566adf32764741b9c1cd8f67982f753445826f35cc"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/56/d3/f1d0d51a3a15bb432723f38c04760d361ea1e3ad3b20c14da93d63046364",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/65/af/ed9f3b2f9ea75a48f3945c7c8a2765c8ecf0d7eb8916b544721a224964a5447453ac74a5023d334454566adf32764741b9c1cd8f67982f753445826f35cc"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "@webassemblyjs/helper-buffer@1.8.5",
+      "url": "https://registry.npmjs.org/@webassemblyjs/helper-buffer/-/helper-buffer-1.8.5.tgz",
+      "integrity": "sha512-Ri2R8nOS0U6G49Q86goFIPNgjyl6+oE1abW1pS84BuhP1Qcr5JqMwRFT3Ah3ADDDYGEgGs1iyb1DGX+kAi/c/Q==",
+      "size": 2480,
+      "contentSha256": "f7ba1c0ea503a439420520904ef87b71b814f1389db68283c9b84b8a442f205e",
+      "indexSha256": "07df9456a905d6656ddc96de999684dc2fd135aee213e1a9860e9d716c797dd8",
+      "packageManifestSha256": "5d7439679850555044cf02dcb6cedd7090a1f21edb00708d6a2e4b2678b1ab4d",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "6d651b5b749b483278531be91623014bdfc12951278a33d6e43477db60a620ef"
+          }
+        ]
+      },
+      "indexKey": "db/f1/6d1a533bc9b0e618b5aba1106992036e0b8ad37bb67e0eabe8decd65ad58",
+      "contentKey": "sha512/46/2d/91f27392d14e86e3d43cea0a0520f3608f297afa813569b5b5a52f3806e84fd5072be49a8cc11153dc08770030c36061201acd62c9bd43197fa4022fdcfd",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/db/f1/6d1a533bc9b0e618b5aba1106992036e0b8ad37bb67e0eabe8decd65ad58",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/46/2d/91f27392d14e86e3d43cea0a0520f3608f297afa813569b5b5a52f3806e84fd5072be49a8cc11153dc08770030c36061201acd62c9bd43197fa4022fdcfd"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/db/f1/6d1a533bc9b0e618b5aba1106992036e0b8ad37bb67e0eabe8decd65ad58",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/46/2d/91f27392d14e86e3d43cea0a0520f3608f297afa813569b5b5a52f3806e84fd5072be49a8cc11153dc08770030c36061201acd62c9bd43197fa4022fdcfd"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "@webassemblyjs/helper-code-frame@1.8.5",
+      "url": "https://registry.npmjs.org/@webassemblyjs/helper-code-frame/-/helper-code-frame-1.8.5.tgz",
+      "integrity": "sha512-VQAadSubZIhNpH46IR3yWO4kZZjMxN1opDrzePLdVKAZ+DFjkGD/rf4v1jap744uPVU6yjL/smZbRIIJTOUnKQ==",
+      "size": 3813,
+      "contentSha256": "c2b55ae388bbb063684c631176de733c6d6f72b56dc9d9a7d34f4d2363df548a",
+      "indexSha256": "16cd7f327d4673f7c07eb35107b9f02f46475f43201f6cf8bd8a4c74fe72ecc3",
+      "packageManifestSha256": "b22c64877f1d9bb722d82e2cb08941dd2cf15ef82d00918a1efe45c1338b4e58",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "6d651b5b749b483278531be91623014bdfc12951278a33d6e43477db60a620ef"
+          }
+        ]
+      },
+      "indexKey": "fb/84/d79795a5264b50e7260f4bb43defe7b93e1efacb4cbaff4d17e9beb1b144",
+      "contentKey": "sha512/55/00/1a752b9b64884da47e3a211df258ee246598ccc4dd68a43af378f2dd54a019f831639060ffadfe2fd636a9ef8e2e3d553aca32ffb2665b4482094ce52729",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/fb/84/d79795a5264b50e7260f4bb43defe7b93e1efacb4cbaff4d17e9beb1b144",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/55/00/1a752b9b64884da47e3a211df258ee246598ccc4dd68a43af378f2dd54a019f831639060ffadfe2fd636a9ef8e2e3d553aca32ffb2665b4482094ce52729"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/fb/84/d79795a5264b50e7260f4bb43defe7b93e1efacb4cbaff4d17e9beb1b144",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/55/00/1a752b9b64884da47e3a211df258ee246598ccc4dd68a43af378f2dd54a019f831639060ffadfe2fd636a9ef8e2e3d553aca32ffb2665b4482094ce52729"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "@webassemblyjs/helper-fsm@1.8.5",
+      "url": "https://registry.npmjs.org/@webassemblyjs/helper-fsm/-/helper-fsm-1.8.5.tgz",
+      "integrity": "sha512-kRuX/saORcg8se/ft6Q2UbRpZwP4y7YrWsLXPbbmtepKr22i8Z4O3V5QE9DbZK908dh5Xya4Un57SDIKwB9eow==",
+      "size": 2415,
+      "contentSha256": "4194e3a75ae8905c1d315bc3274ea2ac505619f10e73deb8606600e909864e7d",
+      "indexSha256": "a000f6d9b3c8217f6af24fe64ab31d78e8028b0170b13d9a5e8e1f47561fc31b",
+      "packageManifestSha256": "b14232085282d15eceec9c35c67a2bd586a66f6e5b4f029fd4caeae9b4e48a8b",
+      "license": {
+        "expression": "ISC",
+        "expressionSha256": "d8d62d58d661d5ddeff06fdf1ebc08968da4743e369c74cef96eff0241eaea05",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "6d651b5b749b483278531be91623014bdfc12951278a33d6e43477db60a620ef"
+          }
+        ]
+      },
+      "indexKey": "f5/4b/e1c328a3b0e8c36a7b83a40bb9bc5910b0bcd02785fea8b7cdcc4493a2b8",
+      "contentKey": "sha512/91/1b/97fec68e45c83cb1efdfb7a43651b4696703f8cbb62b5ac2d73db6e6b5ea4aaf6da2f19e0edd5e5013d0db64af74f1d8795f26b8527e7b48320ac01f5ea3",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/f5/4b/e1c328a3b0e8c36a7b83a40bb9bc5910b0bcd02785fea8b7cdcc4493a2b8",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/91/1b/97fec68e45c83cb1efdfb7a43651b4696703f8cbb62b5ac2d73db6e6b5ea4aaf6da2f19e0edd5e5013d0db64af74f1d8795f26b8527e7b48320ac01f5ea3"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/f5/4b/e1c328a3b0e8c36a7b83a40bb9bc5910b0bcd02785fea8b7cdcc4493a2b8",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/91/1b/97fec68e45c83cb1efdfb7a43651b4696703f8cbb62b5ac2d73db6e6b5ea4aaf6da2f19e0edd5e5013d0db64af74f1d8795f26b8527e7b48320ac01f5ea3"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "@webassemblyjs/helper-module-context@1.8.5",
+      "url": "https://registry.npmjs.org/@webassemblyjs/helper-module-context/-/helper-module-context-1.8.5.tgz",
+      "integrity": "sha512-/O1B236mN7UNEU4t9X7Pj38i4VoU8CcMHyy3l2cV/kIF4U5KoHXDVqcDuOs1ltkac90IM4vZdHc52t1x8Yfs3g==",
+      "size": 4792,
+      "contentSha256": "1be1ee85f6a2a1daac8d2a68491e5d1d7e58fe1b8cd7a0c69e533f0e360a2e2f",
+      "indexSha256": "d56c2eaf42b13a23de3000e44559f99bca89fdf3972a252c978bf3b4dc45e05c",
+      "packageManifestSha256": "323b06b681d9c22d2ad06384832b135cc93ac07bd1a9863b2022b99ab49b847a",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "6d651b5b749b483278531be91623014bdfc12951278a33d6e43477db60a620ef"
+          }
+        ]
+      },
+      "indexKey": "c5/bb/17207c27fb3d9011ab10b80d4b7e894c711b58d94eb5e6ab4c56a0487a55",
+      "contentKey": "sha512/fc/ed/41db7ea637b50d114e2df57ecf8f7f22e15a14f0270c1f2cb7976715fe4205e14e4aa075c356a703b8eb3596d91a73dd08338bd9747739dadd71f187ecde",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/c5/bb/17207c27fb3d9011ab10b80d4b7e894c711b58d94eb5e6ab4c56a0487a55",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/fc/ed/41db7ea637b50d114e2df57ecf8f7f22e15a14f0270c1f2cb7976715fe4205e14e4aa075c356a703b8eb3596d91a73dd08338bd9747739dadd71f187ecde"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/c5/bb/17207c27fb3d9011ab10b80d4b7e894c711b58d94eb5e6ab4c56a0487a55",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/fc/ed/41db7ea637b50d114e2df57ecf8f7f22e15a14f0270c1f2cb7976715fe4205e14e4aa075c356a703b8eb3596d91a73dd08338bd9747739dadd71f187ecde"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "@webassemblyjs/helper-wasm-bytecode@1.8.5",
+      "url": "https://registry.npmjs.org/@webassemblyjs/helper-wasm-bytecode/-/helper-wasm-bytecode-1.8.5.tgz",
+      "integrity": "sha512-Cu4YMYG3Ddl72CbmpjU/wbP6SACcOPVbHN1dI4VJNJVgFwaKf1ppeFJrwydOG3NDHxVGuCfPlLZNyEdIYlQ6QQ==",
+      "size": 8198,
+      "contentSha256": "c8dba599f27978a6c313a3911020df67b4a1ca3ead353bc02afa6a4f054d0ca4",
+      "indexSha256": "ba3a0707b74041e74f1e44813aeaa84e5ce347ee5836a76936fb6ad96e725a63",
+      "packageManifestSha256": "8bdf521d1ed2e2557b2eb728ce6ec175851db18e6399daf6ea6f6bcec475ca2a",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "6d651b5b749b483278531be91623014bdfc12951278a33d6e43477db60a620ef"
+          }
+        ]
+      },
+      "indexKey": "11/ef/2181ede03bbf2c3597307352354e4b2b40ba9683b5a32a9cefc1a047c7c9",
+      "contentKey": "sha512/0a/ee/183181b70dd97bd826e6a6353fc1b3fa48009c38f55b1cdd5d23854934956017068a7f5a6978526bc3274e1b73431f1546b827cf94b64dc8474862543a41",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/11/ef/2181ede03bbf2c3597307352354e4b2b40ba9683b5a32a9cefc1a047c7c9",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/0a/ee/183181b70dd97bd826e6a6353fc1b3fa48009c38f55b1cdd5d23854934956017068a7f5a6978526bc3274e1b73431f1546b827cf94b64dc8474862543a41"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/11/ef/2181ede03bbf2c3597307352354e4b2b40ba9683b5a32a9cefc1a047c7c9",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/0a/ee/183181b70dd97bd826e6a6353fc1b3fa48009c38f55b1cdd5d23854934956017068a7f5a6978526bc3274e1b73431f1546b827cf94b64dc8474862543a41"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "@webassemblyjs/helper-wasm-section@1.8.5",
+      "url": "https://registry.npmjs.org/@webassemblyjs/helper-wasm-section/-/helper-wasm-section-1.8.5.tgz",
+      "integrity": "sha512-VV083zwR+VTrIWWtgIUpqfvVdK4ff38loRmrdDBgBT8ADXYsEZ5mPQ4Nde90N3UYatHdYoDIFb7oHzMncI02tA==",
+      "size": 8363,
+      "contentSha256": "e63bf13fee75fb2c84546d3d39a625dfe48e250b893f96e4c181916d6a97b8c6",
+      "indexSha256": "1658b849e2553e70cdc67b310db975aff16a1e3e2396a72d613e7d682fc63ff9",
+      "packageManifestSha256": "98ae292ecdd178add53e085017f443ae1fcd6b5ab819016f1e101d08baed4158",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "6d651b5b749b483278531be91623014bdfc12951278a33d6e43477db60a620ef"
+          }
+        ]
+      },
+      "indexKey": "66/3f/1a1d8ca7c8993ef4c5cda4f55b9082cc1a59237549d3943ee1f63a521a3b",
+      "contentKey": "sha512/55/5d/3cdf3c11f954eb2165ad808529a9fbd574ae1f7f7f25a119ab743060053f000d762c119e663d0e0d75ef743775186ad1dd6280c815bee81f3327708d36b4",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/66/3f/1a1d8ca7c8993ef4c5cda4f55b9082cc1a59237549d3943ee1f63a521a3b",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/55/5d/3cdf3c11f954eb2165ad808529a9fbd574ae1f7f7f25a119ab743060053f000d762c119e663d0e0d75ef743775186ad1dd6280c815bee81f3327708d36b4"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/66/3f/1a1d8ca7c8993ef4c5cda4f55b9082cc1a59237549d3943ee1f63a521a3b",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/55/5d/3cdf3c11f954eb2165ad808529a9fbd574ae1f7f7f25a119ab743060053f000d762c119e663d0e0d75ef743775186ad1dd6280c815bee81f3327708d36b4"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "@webassemblyjs/ieee754@1.8.5",
+      "url": "https://registry.npmjs.org/@webassemblyjs/ieee754/-/ieee754-1.8.5.tgz",
+      "integrity": "sha512-aaCvQYrvKbY/n6wKHb/ylAJr27GglahUO89CcGXMItrOBqRarUMxWLJgxm9PJNuKULwN5n1csT9bYoMeZOGF3g==",
+      "size": 1745,
+      "contentSha256": "cbbdd94e4ed84d6620566411cf7782b6d4b1d34b722ced905028fcfbc0814fc6",
+      "indexSha256": "ad0f229ccedd1f86b5c427601a50444cd80e03327de6cd015a181d3968b46d8a",
+      "packageManifestSha256": "f7f940c3ee5318aa1a02bba8388522727201cddcdbfeab8c671b495fc30640e0",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "6d651b5b749b483278531be91623014bdfc12951278a33d6e43477db60a620ef"
+          }
+        ]
+      },
+      "indexKey": "94/75/d5efa02e488a3b70318ac9b8c2e84ffb384302a3355c55efde920bdfbd73",
+      "contentKey": "sha512/69/a0/af418aef29b63f9fac0a1dbff294026bdbb1a095a8543bcf427065cc22dace06a45aad433158b260c66f4f24db8a50bc0de67d5cb13f5b62831e64e185de",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/94/75/d5efa02e488a3b70318ac9b8c2e84ffb384302a3355c55efde920bdfbd73",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/69/a0/af418aef29b63f9fac0a1dbff294026bdbb1a095a8543bcf427065cc22dace06a45aad433158b260c66f4f24db8a50bc0de67d5cb13f5b62831e64e185de"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/94/75/d5efa02e488a3b70318ac9b8c2e84ffb384302a3355c55efde920bdfbd73",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/69/a0/af418aef29b63f9fac0a1dbff294026bdbb1a095a8543bcf427065cc22dace06a45aad433158b260c66f4f24db8a50bc0de67d5cb13f5b62831e64e185de"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "@webassemblyjs/leb128@1.8.5",
+      "url": "https://registry.npmjs.org/@webassemblyjs/leb128/-/leb128-1.8.5.tgz",
+      "integrity": "sha512-plYUuUwleLIziknvlP8VpTgO4kqNaH57Y3JnNa6DLpu/sGcP6hbVdfdX5aHAV716pQBKrfuU26BJK29qY37J7A==",
+      "size": 9548,
+      "contentSha256": "ae17841d5062c4665f683bcf21df13499e905eab7289792922a46f6828274a56",
+      "indexSha256": "4a90fa5d4806066f37bc661329e8f23ff9c5a67246c6377eaf86ae8e5e0c6d9a",
+      "packageManifestSha256": "6beb8bd55cd058a42bce85e4a5494865d987cbaf2f2f8bce36675fab1502276a",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE.txt",
+            "sha256": "d1933b0432a1e0f27baf23df3b655330b0a6571bd846d4bfc6f1902cbe0ffb16"
+          }
+        ]
+      },
+      "indexKey": "a8/8f/3132c2991e524ed462ee39bc2ed5262fe100ff06f47fb91dcd45deacda14",
+      "contentKey": "sha512/a6/56/14b94c2578b2338a49ef94ff15a5380ee24a8d687e7b63726735ae832e9bbfb0670fea16d575f757e5a1c057bd7aa5004aadfb94dba0492b6f6a637ec9ec",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/a8/8f/3132c2991e524ed462ee39bc2ed5262fe100ff06f47fb91dcd45deacda14",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/a6/56/14b94c2578b2338a49ef94ff15a5380ee24a8d687e7b63726735ae832e9bbfb0670fea16d575f757e5a1c057bd7aa5004aadfb94dba0492b6f6a637ec9ec"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/a8/8f/3132c2991e524ed462ee39bc2ed5262fe100ff06f47fb91dcd45deacda14",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/a6/56/14b94c2578b2338a49ef94ff15a5380ee24a8d687e7b63726735ae832e9bbfb0670fea16d575f757e5a1c057bd7aa5004aadfb94dba0492b6f6a637ec9ec"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "@webassemblyjs/utf8@1.8.5",
+      "url": "https://registry.npmjs.org/@webassemblyjs/utf8/-/utf8-1.8.5.tgz",
+      "integrity": "sha512-U7zgftmQriw37tfD934UNInokz6yTmn29inT2cAetAsaU9YeVCveWEwhKL1Mg4yS7q//NGdzy79nlXh3bT8Kjw==",
+      "size": 2823,
+      "contentSha256": "91c9334f2e0693e87a40b29c2135d6ed2fb318566a774ce1c07cd0c7bda2e1c0",
+      "indexSha256": "a3896909f4394c0700136c706c4d242397ba884e8909ca59d284d9c6ba187c75",
+      "packageManifestSha256": "cfe87da6ddc59462aa728132ce5de6d37ec723881fadabf155799dadc7900775",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "6d651b5b749b483278531be91623014bdfc12951278a33d6e43477db60a620ef"
+          }
+        ]
+      },
+      "indexKey": "14/c5/8b4e0c746f9dcf84bef48aeba6071577e3780a1cb841037d6ad06f68751e",
+      "contentKey": "sha512/53/bc/e07ed990ae2c37eed7c3f77e143489e8933eb24e69f6f629d3d9c01eb40b1a53d61e542bde584c2128bd4c838c92eeafff346773cbbf679578776d3f0a8f",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/14/c5/8b4e0c746f9dcf84bef48aeba6071577e3780a1cb841037d6ad06f68751e",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/53/bc/e07ed990ae2c37eed7c3f77e143489e8933eb24e69f6f629d3d9c01eb40b1a53d61e542bde584c2128bd4c838c92eeafff346773cbbf679578776d3f0a8f"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/14/c5/8b4e0c746f9dcf84bef48aeba6071577e3780a1cb841037d6ad06f68751e",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/53/bc/e07ed990ae2c37eed7c3f77e143489e8933eb24e69f6f629d3d9c01eb40b1a53d61e542bde584c2128bd4c838c92eeafff346773cbbf679578776d3f0a8f"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "@webassemblyjs/wasm-edit@1.8.5",
+      "url": "https://registry.npmjs.org/@webassemblyjs/wasm-edit/-/wasm-edit-1.8.5.tgz",
+      "integrity": "sha512-A41EMy8MWw5yvqj7MQzkDjU29K7UJq1VrX2vWLzfpRHt3ISftOXqrtojn7nlPsZ9Ijhp5NwuODuycSvfAO/26Q==",
+      "size": 12211,
+      "contentSha256": "8f7d9652782529cb48eaa809d6b48af5c6a29fb96dbd3dfb209c35be14360db5",
+      "indexSha256": "f7631520c4590d500789c93361de3af00d781ddf340d0f71803b46ee6af866ce",
+      "packageManifestSha256": "3a0922f623848247b8b258f134019c8f6f83489a1be3f6d45451e462b8d1ed6c",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "6d651b5b749b483278531be91623014bdfc12951278a33d6e43477db60a620ef"
+          }
+        ]
+      },
+      "indexKey": "3d/34/fd3761c0962aab78eb1ac6fb3cc9150af29fb11e8eb2cfb3dc1edb10a612",
+      "contentKey": "sha512/03/8d/44332f0c5b0e72bea8fb310ce40e3536f4aed426ad55ad7daf58bcdfa511eddc849fb4e5eaaeda239fb9e53ec67d223869e4dc2e383bb2712bdf00eff6e9",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/3d/34/fd3761c0962aab78eb1ac6fb3cc9150af29fb11e8eb2cfb3dc1edb10a612",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/03/8d/44332f0c5b0e72bea8fb310ce40e3536f4aed426ad55ad7daf58bcdfa511eddc849fb4e5eaaeda239fb9e53ec67d223869e4dc2e383bb2712bdf00eff6e9"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/3d/34/fd3761c0962aab78eb1ac6fb3cc9150af29fb11e8eb2cfb3dc1edb10a612",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/03/8d/44332f0c5b0e72bea8fb310ce40e3536f4aed426ad55ad7daf58bcdfa511eddc849fb4e5eaaeda239fb9e53ec67d223869e4dc2e383bb2712bdf00eff6e9"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "@webassemblyjs/wasm-gen@1.8.5",
+      "url": "https://registry.npmjs.org/@webassemblyjs/wasm-gen/-/wasm-gen-1.8.5.tgz",
+      "integrity": "sha512-BCZBT0LURC0CXDzj5FXSc2FPTsxwp3nWcqXQdOZE4U7h7i8FqtFK5Egia6f9raQLpEKT1VL7zr4r3+QX6zArWg==",
+      "size": 8964,
+      "contentSha256": "6ced1bd0ee7bc3cd1d16d40965c274b7193414667d822c1c57bffc877992122b",
+      "indexSha256": "bf61e495d920ab154a3e1a0fa5c174923489d1315592b69d8d5c30b333cc66c7",
+      "packageManifestSha256": "57276a8ee2d862405df53069ce0e99f2f913aae9e7fc865e7085f0e55e31ee43",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "6d651b5b749b483278531be91623014bdfc12951278a33d6e43477db60a620ef"
+          }
+        ]
+      },
+      "indexKey": "df/18/efd71b81125468ffd8e93b2ecfc460e68c27635e1264f17ab93f800c62fb",
+      "contentKey": "sha512/04/26/414f42d4442d025c3ce3e455d273614f4ecc70a779d672a5d074e644e14ee1ee2f05aad14ae448226ba7fdada40ba44293d552fbcebe2bdfe417eb302b5a",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/df/18/efd71b81125468ffd8e93b2ecfc460e68c27635e1264f17ab93f800c62fb",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/04/26/414f42d4442d025c3ce3e455d273614f4ecc70a779d672a5d074e644e14ee1ee2f05aad14ae448226ba7fdada40ba44293d552fbcebe2bdfe417eb302b5a"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/df/18/efd71b81125468ffd8e93b2ecfc460e68c27635e1264f17ab93f800c62fb",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/04/26/414f42d4442d025c3ce3e455d273614f4ecc70a779d672a5d074e644e14ee1ee2f05aad14ae448226ba7fdada40ba44293d552fbcebe2bdfe417eb302b5a"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "@webassemblyjs/wasm-opt@1.8.5",
+      "url": "https://registry.npmjs.org/@webassemblyjs/wasm-opt/-/wasm-opt-1.8.5.tgz",
+      "integrity": "sha512-HKo2mO/Uh9A6ojzu7cjslGaHaUU14LdLbGEKqTR7PBKwT6LdPtLLh9fPY33rmr5wcOMrsWDbbdCHq4hQUdd37Q==",
+      "size": 5825,
+      "contentSha256": "260f7399dd71967b582f4f6e117b7e3fb4d1d6b8ef3435be90e7341ba3fd4181",
+      "indexSha256": "76be9c5066d5a729d8ad4b3e7384d25b833b76db281c9059d34055a137e3afdf",
+      "packageManifestSha256": "2b9184a74a2ac79b1cbc93b3484aa98028e52681af527b9c14c9114c672c183e",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "6d651b5b749b483278531be91623014bdfc12951278a33d6e43477db60a620ef"
+          }
+        ]
+      },
+      "indexKey": "ca/4c/c1c21d686c2972923fa8f5446b7b609bb5eef75009c44d3b863795137e82",
+      "contentKey": "sha512/1c/aa/3698efd487d03aa23ceeedc8ec946687694535e0b74b6c610aa9347b3c12b04fa2dd3ed2cb87d7cf637deb9abe7070e32bb160db6dd087ab885051d777ed",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/ca/4c/c1c21d686c2972923fa8f5446b7b609bb5eef75009c44d3b863795137e82",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/1c/aa/3698efd487d03aa23ceeedc8ec946687694535e0b74b6c610aa9347b3c12b04fa2dd3ed2cb87d7cf637deb9abe7070e32bb160db6dd087ab885051d777ed"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/ca/4c/c1c21d686c2972923fa8f5446b7b609bb5eef75009c44d3b863795137e82",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/1c/aa/3698efd487d03aa23ceeedc8ec946687694535e0b74b6c610aa9347b3c12b04fa2dd3ed2cb87d7cf637deb9abe7070e32bb160db6dd087ab885051d777ed"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "@webassemblyjs/wasm-parser@1.8.5",
+      "url": "https://registry.npmjs.org/@webassemblyjs/wasm-parser/-/wasm-parser-1.8.5.tgz",
+      "integrity": "sha512-pi0SYE9T6tfcMkthwcgCpL0cM9nRYr6/6fjgDtL6q/ZqKHdMWvxitRi5JcZ7RI4SNJJYnYNaWy5UUrHQy998lw==",
+      "size": 46269,
+      "contentSha256": "4a2451674eff87009de535def7054c0145e958752a7af2f146ae12868562d9ae",
+      "indexSha256": "a8e9a7302d9b0bdbc90830ede338b592a42cb51313d43ee9ef14556a9ebae046",
+      "packageManifestSha256": "bd5f93f8dbc73b7a5d24567724873cb5643ed996e0cd33de454298f5e57f2b88",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "6d651b5b749b483278531be91623014bdfc12951278a33d6e43477db60a620ef"
+          }
+        ]
+      },
+      "indexKey": "38/55/226f16bac7f33a8945deeb93fb7f05db60a0c0b5ac2eb2f3bc195a67e6ce",
+      "contentKey": "sha512/a6/2d/12604f53ead7dc324b61c1c802a4bd1c33d9d162bebfe9f8e00ed2faabf66a28774c5afc62b518b925c67b448e123492589d835a5b2e5452b1d0cbdf7c97",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/38/55/226f16bac7f33a8945deeb93fb7f05db60a0c0b5ac2eb2f3bc195a67e6ce",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/a6/2d/12604f53ead7dc324b61c1c802a4bd1c33d9d162bebfe9f8e00ed2faabf66a28774c5afc62b518b925c67b448e123492589d835a5b2e5452b1d0cbdf7c97"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/38/55/226f16bac7f33a8945deeb93fb7f05db60a0c0b5ac2eb2f3bc195a67e6ce",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/a6/2d/12604f53ead7dc324b61c1c802a4bd1c33d9d162bebfe9f8e00ed2faabf66a28774c5afc62b518b925c67b448e123492589d835a5b2e5452b1d0cbdf7c97"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "@webassemblyjs/wast-parser@1.8.5",
+      "url": "https://registry.npmjs.org/@webassemblyjs/wast-parser/-/wast-parser-1.8.5.tgz",
+      "integrity": "sha512-daXC1FyKWHF1i11obK086QRlsMsY4+tIOKgBqI1lxAnkp9xe9YMcgOxm9kLe+ttjs5aWV2KKE1TWJCN57/Btsg==",
+      "size": 52001,
+      "contentSha256": "8e376678f79a7dfe66b113986704a7bfa69dc976d33db63ea9e048ebcf80da6d",
+      "indexSha256": "6a2fdf3da3b05fec4ab2580f04af3546475b2eda759b374918b5ff461a14ad16",
+      "packageManifestSha256": "0ce5dc79d58041817ef05c72a7fa94418aba756e233fca223a4843733959bc9f",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "6d651b5b749b483278531be91623014bdfc12951278a33d6e43477db60a620ef"
+          }
+        ]
+      },
+      "indexKey": "6f/b2/c1c862ab8cbd0e6f431642737c81421bf0d69e8c1e99b954c2c60aa4b0a2",
+      "contentKey": "sha512/75/a5/c2d45c8a5871758b5d686cad3ce90465b0cb18e3eb4838a801a88d65c409e4a7dc5ef5831c80ec66f642defadb63b3969657628a1354d6242379eff06db2",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/6f/b2/c1c862ab8cbd0e6f431642737c81421bf0d69e8c1e99b954c2c60aa4b0a2",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/75/a5/c2d45c8a5871758b5d686cad3ce90465b0cb18e3eb4838a801a88d65c409e4a7dc5ef5831c80ec66f642defadb63b3969657628a1354d6242379eff06db2"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/6f/b2/c1c862ab8cbd0e6f431642737c81421bf0d69e8c1e99b954c2c60aa4b0a2",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/75/a5/c2d45c8a5871758b5d686cad3ce90465b0cb18e3eb4838a801a88d65c409e4a7dc5ef5831c80ec66f642defadb63b3969657628a1354d6242379eff06db2"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "@webassemblyjs/wast-printer@1.8.5",
+      "url": "https://registry.npmjs.org/@webassemblyjs/wast-printer/-/wast-printer-1.8.5.tgz",
+      "integrity": "sha512-w0U0pD4EhlnvRyeJzBqaVSJAo9w/ce7/WPogeXLzGkO6hzhr4GnQIZ4W4uUt5b9ooAaXPtnXlj0gzsXEOUNYMg==",
+      "size": 10112,
+      "contentSha256": "d97abbcc962d8bfe3ad70f711d6ac792e979765c84793890476bda5553a11172",
+      "indexSha256": "e2b1281ee1ae312f174080e07dde406cbf23d888910c7516f01f5825768c0943",
+      "packageManifestSha256": "6270fb53009e7a803e86cbe62da67d039a4e340db8a0a393e1b5ddeeaa378e0c",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "6d651b5b749b483278531be91623014bdfc12951278a33d6e43477db60a620ef"
+          }
+        ]
+      },
+      "indexKey": "3d/62/e0c0eab33be8860c680a4ab6da07443eb25d491fced2293398fda8445595",
+      "contentKey": "sha512/c3/45/34a43e048659ef472789cc1a9a552240a3dc3f71eeff58fa207972f31a43ba87386be069d0219e16e2e52de5bf68a006973ed9d7963d20cec5c439435832",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/3d/62/e0c0eab33be8860c680a4ab6da07443eb25d491fced2293398fda8445595",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/c3/45/34a43e048659ef472789cc1a9a552240a3dc3f71eeff58fa207972f31a43ba87386be069d0219e16e2e52de5bf68a006973ed9d7963d20cec5c439435832"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/3d/62/e0c0eab33be8860c680a4ab6da07443eb25d491fced2293398fda8445595",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/c3/45/34a43e048659ef472789cc1a9a552240a3dc3f71eeff58fa207972f31a43ba87386be069d0219e16e2e52de5bf68a006973ed9d7963d20cec5c439435832"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "acorn-dynamic-import@4.0.0",
+      "url": "https://registry.npmjs.org/acorn-dynamic-import/-/acorn-dynamic-import-4.0.0.tgz",
+      "integrity": "sha512-d3OEjQV4ROpoflsnUA8HozoIR504TFxNivYEUi6uwz0IYhBkTDXGuWlNdMtybRt3nqVx/L6XqMt0FxkXuWKZhw==",
+      "size": 3839,
+      "contentSha256": "56c1484216fabce0cb5c0ae1585c29a2e443469c9a4cf4b3b165b82ff5bbd36e",
+      "indexSha256": "b9d8929a65bfa41e69ae63dd261f589325819695d4b2e5f2e8ad8255f258bcf0",
+      "packageManifestSha256": "52359009b86fa4f2f936b68a79aa498908d31ac50bddf39200d004e21e985f92",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "5ff2d588c138211950a11a4c737dbadb121ab1d239f7633cf40db49035b06033"
+          }
+        ]
+      },
+      "indexKey": "ca/fb/451b870eb9effcc32a682a36eecd5bab6481dcc657b823d64f6f7b2fe704",
+      "contentKey": "sha512/77/73/848d057844ea687e5b27500f07a33a08479d384c5c4d8af604522eaec33d086210644c35c6b9694d74cb726d1b779ea571fcbe97a8cb74171917b9629987",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/ca/fb/451b870eb9effcc32a682a36eecd5bab6481dcc657b823d64f6f7b2fe704",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/77/73/848d057844ea687e5b27500f07a33a08479d384c5c4d8af604522eaec33d086210644c35c6b9694d74cb726d1b779ea571fcbe97a8cb74171917b9629987"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/ca/fb/451b870eb9effcc32a682a36eecd5bab6481dcc657b823d64f6f7b2fe704",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/77/73/848d057844ea687e5b27500f07a33a08479d384c5c4d8af604522eaec33d086210644c35c6b9694d74cb726d1b779ea571fcbe97a8cb74171917b9629987"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "acorn@6.1.1",
+      "url": "https://registry.npmjs.org/acorn/-/acorn-6.1.1.tgz",
+      "integrity": "sha512-jPTiwtOxaHNaAPg/dmrJ/beuzLRnXtB0kQPQ8JpotKJgTB6rX6c8mlf315941pyjBSaPg8NHXS9fhP4u17DpGA==",
+      "size": 247789,
+      "contentSha256": "bb2ca2becf529692e632f4d2a47b8ec296292e2035de5be466320815dbfefba8",
+      "indexSha256": "24699474aabd344e3e44fdc8856e6d6e5482c75d270487341e343156d7a1f7d4",
+      "packageManifestSha256": "78d123638e93515fa94d00947ed30764d63250993d7f71b0276a1375f2e91c14",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "7cdb44aabddbdd78998119d68a39c87424119b663945c79891fc1b022301824c"
+          }
+        ]
+      },
+      "indexKey": "72/3f/863188bd2c615a20742d40888f9720cbe24273d9f566ee56be2605a75b41",
+      "contentKey": "sha512/8c/f4/e2c2d3b168735a00f83f766ac9fdb7aeccb4675ed0749103d0f09a68b4a2604c1eab5fa73c9a57f7d79f78d69ca305268f83c3475d2f5f84fe2ed7b0e918",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/72/3f/863188bd2c615a20742d40888f9720cbe24273d9f566ee56be2605a75b41",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/8c/f4/e2c2d3b168735a00f83f766ac9fdb7aeccb4675ed0749103d0f09a68b4a2604c1eab5fa73c9a57f7d79f78d69ca305268f83c3475d2f5f84fe2ed7b0e918"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/72/3f/863188bd2c615a20742d40888f9720cbe24273d9f566ee56be2605a75b41",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/8c/f4/e2c2d3b168735a00f83f766ac9fdb7aeccb4675ed0749103d0f09a68b4a2604c1eab5fa73c9a57f7d79f78d69ca305268f83c3475d2f5f84fe2ed7b0e918"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "ajv-keywords@3.2.0",
+      "url": "https://registry.npmjs.org/ajv-keywords/-/ajv-keywords-3.2.0.tgz",
+      "integrity": "sha1-6GuBnGAs+IIa1jdBNpjx3sAhhHo=",
+      "size": 16291,
+      "contentSha256": "2bbf0d08ecaae273a269cf2fc4604c747777b5fbb4368158a2b2b3e1924dc4f2",
+      "indexSha256": "600885415ec1d6f8164f3e941bceda10752812782e38b26731effe8bc48bc4f3",
+      "packageManifestSha256": "5aef0f1025339cbf699e43a596321653b3fab59236620d303e31d374d2d7195e",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "a25dce9c94c3ad622574cffbefd4b8845b418aa65df966d97e3204ad276ed240"
+          }
+        ]
+      },
+      "indexKey": "e5/c2/73ed419bc9352327e7a6a699a765c510355cd458e264db519f86fc3663b8",
+      "contentKey": "sha1/e8/6b/819c602cf8821ad637413698f1dec021847a",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/e5/c2/73ed419bc9352327e7a6a699a765c510355cd458e264db519f86fc3663b8",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha1/e8/6b/819c602cf8821ad637413698f1dec021847a"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/e5/c2/73ed419bc9352327e7a6a699a765c510355cd458e264db519f86fc3663b8",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha1/e8/6b/819c602cf8821ad637413698f1dec021847a"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "ajv@6.5.3",
+      "url": "https://registry.npmjs.org/ajv/-/ajv-6.5.3.tgz",
+      "integrity": "sha512-LqZ9wY+fx3UMiiPd741yB2pj3hhil+hQc8taf4o2QGRFpWgZ2V5C8HA165DY9sS3fJwsk7uT7ZlFEyC3Ig3lLg==",
+      "size": 193284,
+      "contentSha256": "59a23f5a24f03623b41f760594d943fc4ed0439cef468e5d903e471bb1e96e29",
+      "indexSha256": "a68499853bf0ecd71d7c354baca34a1dba5397a1ee05e13694f7be474ac03642",
+      "packageManifestSha256": "91b4016b23e0dd05445fa8fb12eae8d48e778bd11a2f8f60d39f29f6c4905f17",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "e85e131fa4ed25538ff1f4962ced1fb6f68b079bd9164a790597a0f30b8fd030"
+          }
+        ]
+      },
+      "indexKey": "0a/a1/e9c5af69d8d03d9ff0a302f5c8e300ae3ed3785edfd8115f8a5f2c02fb2b",
+      "contentKey": "sha512/2e/a6/7dc18f9fc7750c8a23ddef8d72076a63de186297e85073cb5a7f8a36406445a56819d95e42f07035eb90d8f6c4b77c9c2c93bb93ed99451320b7220de52e",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/0a/a1/e9c5af69d8d03d9ff0a302f5c8e300ae3ed3785edfd8115f8a5f2c02fb2b",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/2e/a6/7dc18f9fc7750c8a23ddef8d72076a63de186297e85073cb5a7f8a36406445a56819d95e42f07035eb90d8f6c4b77c9c2c93bb93ed99451320b7220de52e"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/0a/a1/e9c5af69d8d03d9ff0a302f5c8e300ae3ed3785edfd8115f8a5f2c02fb2b",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/2e/a6/7dc18f9fc7750c8a23ddef8d72076a63de186297e85073cb5a7f8a36406445a56819d95e42f07035eb90d8f6c4b77c9c2c93bb93ed99451320b7220de52e"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "ajv@6.9.2",
+      "url": "https://registry.npmjs.org/ajv/-/ajv-6.9.2.tgz",
+      "integrity": "sha512-4UFy0/LgDo7Oa/+wOAlj44tp9K78u38E5/359eSrqEp1Z5PdVfimCcs7SluXMP755RUQu6d2b4AvF0R1C9RZjg==",
+      "size": 197064,
+      "contentSha256": "15cdc1fa7eed686be296735c7c330840ac32fb7e307a857941492292134bf6c6",
+      "indexSha256": "56a8db19cbb46476e05b361dbeb084d9e4433f18dc63b322042312ea9dff891e",
+      "packageManifestSha256": "aa76c77d80fe379939db8cf582f07d8034b9438387626c31b7e74a6914389d38",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "e85e131fa4ed25538ff1f4962ced1fb6f68b079bd9164a790597a0f30b8fd030"
+          }
+        ]
+      },
+      "indexKey": "cd/c4/100d20dc40f0efa72b2b677b690cc3990e51a13cbd37c0e5d55ef6d52c7f",
+      "contentKey": "sha512/e1/41/72d3f2e00e8ece6bffb0380963e38b69f4aefcbb7f04e7fdf9f5e4aba84a756793dd55f8a609cb3b4a5b9730fef9e51510bba7766f802f1744750bd4598e",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/cd/c4/100d20dc40f0efa72b2b677b690cc3990e51a13cbd37c0e5d55ef6d52c7f",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/e1/41/72d3f2e00e8ece6bffb0380963e38b69f4aefcbb7f04e7fdf9f5e4aba84a756793dd55f8a609cb3b4a5b9730fef9e51510bba7766f802f1744750bd4598e"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/cd/c4/100d20dc40f0efa72b2b677b690cc3990e51a13cbd37c0e5d55ef6d52c7f",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/e1/41/72d3f2e00e8ece6bffb0380963e38b69f4aefcbb7f04e7fdf9f5e4aba84a756793dd55f8a609cb3b4a5b9730fef9e51510bba7766f802f1744750bd4598e"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "bluebird@3.5.2",
+      "url": "https://registry.npmjs.org/bluebird/-/bluebird-3.5.2.tgz",
+      "integrity": "sha512-dhHTWMI7kMx5whMQntl7Vr9C6BvV10lFXDAasnqnrMYhXVCzzk6IO9Fo2L75jXHT07WrOngL1WDXOp+yYS91Yg==",
+      "size": 136014,
+      "contentSha256": "ba87d5e743289e4a337dc7c60a34df1e2bacd83c6d36726144397c6e89aaec15",
+      "indexSha256": "9eed5d2e7a8d63ccf869b50c7687ef762a9ea15db4693c56185d964ada26821a",
+      "packageManifestSha256": "32686cdf9df75e3678f48d51a8c7778496c47cf74a270e75c4e68388f364d882",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "87092fe7ffd1e92eba5d1dd39b73a73fdb4fdd4df3474beacc3d9f6b08ece82c"
+          }
+        ]
+      },
+      "indexKey": "4c/7e/b9f0a44f025dd5e4fdb63517a29b4c3c8e873a5b88772bad45de65de5727",
+      "contentKey": "sha512/76/11/d358c23b90cc79c213109ed97b56bf42e81bd5d749455c301ab27aa7acc6215d50b3ce4e883bd168d8bef98d71d3d3b5ab3a780bd560d73a9fb2612f7562",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/4c/7e/b9f0a44f025dd5e4fdb63517a29b4c3c8e873a5b88772bad45de65de5727",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/76/11/d358c23b90cc79c213109ed97b56bf42e81bd5d749455c301ab27aa7acc6215d50b3ce4e883bd168d8bef98d71d3d3b5ab3a780bd560d73a9fb2612f7562"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/4c/7e/b9f0a44f025dd5e4fdb63517a29b4c3c8e873a5b88772bad45de65de5727",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/76/11/d358c23b90cc79c213109ed97b56bf42e81bd5d749455c301ab27aa7acc6215d50b3ce4e883bd168d8bef98d71d3d3b5ab3a780bd560d73a9fb2612f7562"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "chokidar@2.1.2",
+      "url": "https://registry.npmjs.org/chokidar/-/chokidar-2.1.2.tgz",
+      "integrity": "sha512-IwXUx0FXc5ibYmPC2XeEj5mpXoV66sR+t3jqu2NS2GYwCktt3KF1/Qqjws/NkegajBA4RbZ5+DDwlOiJsxDHEg==",
+      "size": 25878,
+      "contentSha256": "c45b7ce69e53673d977e65460e6f73f7d38386c807ced24751000e97f2bf5c78",
+      "indexSha256": "14515c81f2c9b252f3bd4599d00430597d1cd05e003be2cf52d1e7982b983e77",
+      "packageManifestSha256": "a691bf8a96a340cabfe38f233c97f2ac0eec7b1a758a6586de80ba6abba62fcf",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": []
+      },
+      "indexKey": "f5/28/b738ee98dd43e6c8313f9fff7fd7ee68c39369af6abe3ea5a3af89795b66",
+      "contentKey": "sha512/23/05/d4c7415773989b6263c2d977848f99a95e857aeac47eb778eabb6352d866300a4b6ddca175fd0aa3c2cfcd91e81a8c103845b679f830f094e889b310c712",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/f5/28/b738ee98dd43e6c8313f9fff7fd7ee68c39369af6abe3ea5a3af89795b66",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/23/05/d4c7415773989b6263c2d977848f99a95e857aeac47eb778eabb6352d866300a4b6ddca175fd0aa3c2cfcd91e81a8c103845b679f830f094e889b310c712"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/f5/28/b738ee98dd43e6c8313f9fff7fd7ee68c39369af6abe3ea5a3af89795b66",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/23/05/d4c7415773989b6263c2d977848f99a95e857aeac47eb778eabb6352d866300a4b6ddca175fd0aa3c2cfcd91e81a8c103845b679f830f094e889b310c712"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "chrome-trace-event@1.0.0",
+      "url": "https://registry.npmjs.org/chrome-trace-event/-/chrome-trace-event-1.0.0.tgz",
+      "integrity": "sha512-xDbVgyfDTT2piup/h8dK/y4QZfJRSa73bw1WZ8b4XM1o7fsFubUVGYcE+1ANtOzJJELGpYoG2961z0Z6OAld9A==",
+      "size": 9369,
+      "contentSha256": "04238a15b96fa6eb3e490aa1eed60184efbb0a80e686942025a9d893f8f2d156",
+      "indexSha256": "20b29e603b24decfca09dcdf0caee97d843d94ff3daa5cfafedae25f16d62f64",
+      "packageManifestSha256": "5f12f83645fe6d437ceaccd7326f97edc3a6249467ff826b26ce9413c018670d",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE.txt",
+            "sha256": "a4c8acbaf3b79d675ebd260276a91754da8f291b5253421ab9f6897c4e2ec8b2"
+          }
+        ]
+      },
+      "indexKey": "1d/5e/3b1fd075ba5a613703c36d158a57acabf2efda6adac29032f87f60bc6481",
+      "contentKey": "sha512/c4/36/d58327c34d3da98aea7f87c74aff2e1065f25149aef76f0d5667c6f85ccd68edfb05b9b515198704fb500db4ecc92442c6a58a06dbdeb5cf467a38095df4",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/1d/5e/3b1fd075ba5a613703c36d158a57acabf2efda6adac29032f87f60bc6481",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/c4/36/d58327c34d3da98aea7f87c74aff2e1065f25149aef76f0d5667c6f85ccd68edfb05b9b515198704fb500db4ecc92442c6a58a06dbdeb5cf467a38095df4"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/1d/5e/3b1fd075ba5a613703c36d158a57acabf2efda6adac29032f87f60bc6481",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/c4/36/d58327c34d3da98aea7f87c74aff2e1065f25149aef76f0d5667c6f85ccd68edfb05b9b515198704fb500db4ecc92442c6a58a06dbdeb5cf467a38095df4"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "fast-deep-equal@2.0.1",
+      "url": "https://registry.npmjs.org/fast-deep-equal/-/fast-deep-equal-2.0.1.tgz",
+      "integrity": "sha1-ewUhjd+WZ79/Nwv3/bLLFf3Qqkk=",
+      "size": 2530,
+      "contentSha256": "af904cb3b39d675ab2828b5b873f74e52aa682bb612078489ffbf71fb0a47128",
+      "indexSha256": "637cd65c3d06195d4773a2898bd44e1e9497bff66be00264e841e4f63017b468",
+      "packageManifestSha256": "1347fdf19c1f68b6cc4ea4bbac9614b1faaaab15d7d9bb2a950aa91c0f53edbd",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "7bf9b2de73a6b356761c948d0e9eeb4be6c1270bd04c79cd489c1e400ffdfc1a"
+          }
+        ]
+      },
+      "indexKey": "2a/77/806ed9fdeb8a41481a6d1cffd72e7b8b8dde3853a7ea1ce4abd0760dec8c",
+      "contentKey": "sha1/7b/05/218ddf9667bf7f370bf7fdb2cb15fdd0aa49",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/2a/77/806ed9fdeb8a41481a6d1cffd72e7b8b8dde3853a7ea1ce4abd0760dec8c",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha1/7b/05/218ddf9667bf7f370bf7fdb2cb15fdd0aa49"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/2a/77/806ed9fdeb8a41481a6d1cffd72e7b8b8dde3853a7ea1ce4abd0760dec8c",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha1/7b/05/218ddf9667bf7f370bf7fdb2cb15fdd0aa49"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "glob@7.1.3",
+      "url": "https://registry.npmjs.org/glob/-/glob-7.1.3.tgz",
+      "integrity": "sha512-vcfuiIxogLV4DlGBHIUOwI0IbrJ8HWPc4MU7HzviGeNho/UJDfi6B5p3sHeWIQ0KGIU0Jpxi5ZHxemQfLkkAwQ==",
+      "size": 15862,
+      "contentSha256": "deddc4cfaf4dac3c1e26486746680e9130ad90e116b3b2fc13d8b0961c25a5e1",
+      "indexSha256": "db46a33acfe10bbfe63860790234421eaf2925c30f63bcc62ff23bfa37c0f1c2",
+      "packageManifestSha256": "2c0de8137adb202f02e47ec144d7b95c7bdfaa1d22283bf6907e7181b60dd568",
+      "license": {
+        "expression": "ISC",
+        "expressionSha256": "d8d62d58d661d5ddeff06fdf1ebc08968da4743e369c74cef96eff0241eaea05",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "4ec3d4c66cd87f5c8d8ad911b10f99bf27cb00cdfcff82621956e379186b016b"
+          }
+        ]
+      },
+      "indexKey": "58/c9/9f8c27572bf3034e8fa9cc74fc00878e45fa7d75d4570d4430e82bfb5ef3",
+      "contentKey": "sha512/bd/c7/ee888c6880b5780e51811c850ec08d086eb27c1d63dce0c53b1f3be219e361a3f5090df8ba079a77b07796210d0a188534269c62e591f17a641f2e4900c1",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/58/c9/9f8c27572bf3034e8fa9cc74fc00878e45fa7d75d4570d4430e82bfb5ef3",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/bd/c7/ee888c6880b5780e51811c850ec08d086eb27c1d63dce0c53b1f3be219e361a3f5090df8ba079a77b07796210d0a188534269c62e591f17a641f2e4900c1"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/58/c9/9f8c27572bf3034e8fa9cc74fc00878e45fa7d75d4570d4430e82bfb5ef3",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/bd/c7/ee888c6880b5780e51811c850ec08d086eb27c1d63dce0c53b1f3be219e361a3f5090df8ba079a77b07796210d0a188534269c62e591f17a641f2e4900c1"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "graceful-fs@4.1.11",
+      "url": "https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.1.11.tgz",
+      "integrity": "sha1-Dovf5NHduIVNZOBOp8AOKgJuVlg=",
+      "size": 7905,
+      "contentSha256": "6ab070270ef8dd8edd446df87425829ed31091dc7e5f30787f5abb9cb5c2b6b8",
+      "indexSha256": "f96cc965546de027f520093df74b878cda8094e0c2a2b8c38c363e89dea6424e",
+      "packageManifestSha256": "54559463c373ca3ba6072fc040bb7fe29e62a2af27096d71b246cbbf2e992017",
+      "license": {
+        "expression": "ISC",
+        "expressionSha256": "d8d62d58d661d5ddeff06fdf1ebc08968da4743e369c74cef96eff0241eaea05",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "2fc5460f1526810979054ecd18cd01349b57f38ea56d1e920afdea34d104540c"
+          }
+        ]
+      },
+      "indexKey": "89/f2/c5e0a83946ee4869fbc432ef13a35aa6a3f30fb37c4c8afc39d7e5365c62",
+      "contentKey": "sha1/0e/8b/dfe4d1ddb8854d64e04ea7c00e2a026e5658",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/89/f2/c5e0a83946ee4869fbc432ef13a35aa6a3f30fb37c4c8afc39d7e5365c62",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha1/0e/8b/dfe4d1ddb8854d64e04ea7c00e2a026e5658"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/89/f2/c5e0a83946ee4869fbc432ef13a35aa6a3f30fb37c4c8afc39d7e5365c62",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha1/0e/8b/dfe4d1ddb8854d64e04ea7c00e2a026e5658"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "graceful-fs@4.1.15",
+      "url": "https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.1.15.tgz",
+      "integrity": "sha512-6uHUhOPEBgQ24HM+r6b/QwWfZq+yiFcipKFrOFiBEnWdy5sdzYoi+pJeQaPI5qOLRFqWmAXUPQNsielzdLoecA==",
+      "size": 8190,
+      "contentSha256": "13ae44de724d997157b423deee10517a869196581779ef61957e4a19a56edcca",
+      "indexSha256": "23abedf1b8e07770a3ad61d2de8d9f1e73be5fad1b08cd215a973f7b357ec624",
+      "packageManifestSha256": "5ac56ddb7ea3722cd1b3f736726a127bdeb7b13d177f23a50855533b31b8dd93",
+      "license": {
+        "expression": "ISC",
+        "expressionSha256": "d8d62d58d661d5ddeff06fdf1ebc08968da4743e369c74cef96eff0241eaea05",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "2fc5460f1526810979054ecd18cd01349b57f38ea56d1e920afdea34d104540c"
+          }
+        ]
+      },
+      "indexKey": "17/0e/73ba5d4a2dacceb4cb1243a96fe1be61c527dfb28cea3a0102187243abd2",
+      "contentKey": "sha512/ea/e1/d484e3c4060436e0733eafa6ff43059f66afb2885722a4a16b38588112759dcb9b1dcd8a22fa925e41a3c8e6a38b445a969805d43d036c89e97374ba1e70",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/17/0e/73ba5d4a2dacceb4cb1243a96fe1be61c527dfb28cea3a0102187243abd2",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/ea/e1/d484e3c4060436e0733eafa6ff43059f66afb2885722a4a16b38588112759dcb9b1dcd8a22fa925e41a3c8e6a38b445a969805d43d036c89e97374ba1e70"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/17/0e/73ba5d4a2dacceb4cb1243a96fe1be61c527dfb28cea3a0102187243abd2",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/ea/e1/d484e3c4060436e0733eafa6ff43059f66afb2885722a4a16b38588112759dcb9b1dcd8a22fa925e41a3c8e6a38b445a969805d43d036c89e97374ba1e70"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "indexof@0.0.1",
+      "url": "https://registry.npmjs.org/indexof/-/indexof-0.0.1.tgz",
+      "integrity": "sha1-gtwzbSMrkGIXnQWrMpOmYFn9Q10=",
+      "size": 698,
+      "contentSha256": "9c34ba36afcc7ae8a40bece80885a306ae85b70c7abba786f856b2e501db2817",
+      "indexSha256": "4a845e4c48954bf91dc9b67f0b85ca3e2b95d4d7fd1ee860b322363cee3d75ab",
+      "packageManifestSha256": "c22ef5f9761b902ced4b404f8d1431932e431f023910ad0e0629f5b6c9665b53",
+      "license": {
+        "expression": null,
+        "expressionSha256": null,
+        "files": []
+      },
+      "indexKey": "c2/ff/01a1c9d3bd9a7f597ba59c92069319c266eb614df9ca33b3c1efed7c734d",
+      "contentKey": "sha1/82/dc/336d232b9062179d05ab3293a66059fd435d",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/c2/ff/01a1c9d3bd9a7f597ba59c92069319c266eb614df9ca33b3c1efed7c734d",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha1/82/dc/336d232b9062179d05ab3293a66059fd435d"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/c2/ff/01a1c9d3bd9a7f597ba59c92069319c266eb614df9ca33b3c1efed7c734d",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha1/82/dc/336d232b9062179d05ab3293a66059fd435d"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "is-glob@4.0.0",
+      "url": "https://registry.npmjs.org/is-glob/-/is-glob-4.0.0.tgz",
+      "integrity": "sha1-lSHHaEXMJhCoUgPd8ICpWML/q8A=",
+      "size": 3927,
+      "contentSha256": "7c092d5b94338d42fa25dff0ece2f61e0f84824445caf8f4cd825b75cc8e50c2",
+      "indexSha256": "44db00a02d73a9aa6ec23cb5c7c9718d2e6cf0f2378dac0acd8ff8e2f3597519",
+      "packageManifestSha256": "981bd2dab41013b962a1c93bbeffe4b9a40fcbe5c488e95ef9d67d928c1ca117",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "4cd903859549d4b20b571041f96dfae1136ed079c476126268f9d7cc1b611150"
+          }
+        ]
+      },
+      "indexKey": "d4/69/831a5526fdda1e23bf6557668fa950ba538928a3753436a04101d8a2f5ba",
+      "contentKey": "sha1/95/21/c76845cc2610a85203ddf080a958c2ffabc0",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/d4/69/831a5526fdda1e23bf6557668fa950ba538928a3753436a04101d8a2f5ba",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha1/95/21/c76845cc2610a85203ddf080a958c2ffabc0"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/d4/69/831a5526fdda1e23bf6557668fa950ba538928a3753436a04101d8a2f5ba",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha1/95/21/c76845cc2610a85203ddf080a958c2ffabc0"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "mamacro@0.0.3",
+      "url": "https://registry.npmjs.org/mamacro/-/mamacro-0.0.3.tgz",
+      "integrity": "sha512-qMEwh+UujcQ+kbz3T6V+wAmO2U8veoq2w+3wY8MquqwVA3jChfwY+Tk52GZKDfACEPjuZ7r2oJLejwpt8jtwTA==",
+      "size": 376,
+      "contentSha256": "b32b0f94e770ef70021589652e12a828257557fd44a7d1cb4ea6a3efbbb2081c",
+      "indexSha256": "9d6ae95073b985d61239b41a4b2d452bc1f7387340fb4b4d66ffb0d292f49460",
+      "packageManifestSha256": "be413e88c6a87b7b7272a38a40acdc187886859db46138130ebc20e90a227616",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": []
+      },
+      "indexKey": "2c/fd/e248bcbf63b2cdb754cd8399814b065206d86b7ffc9d0b082de1bf47ddf9",
+      "contentKey": "sha512/a8/c1/3087e52e8dc43e91bcf74fa57ec0098ed94f2f7a8ab6c3edf063c32abaac150378c285fc18f93939d8664a0df00210f8ee67baf6a092de8f0a6df23b704c",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/2c/fd/e248bcbf63b2cdb754cd8399814b065206d86b7ffc9d0b082de1bf47ddf9",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/a8/c1/3087e52e8dc43e91bcf74fa57ec0098ed94f2f7a8ab6c3edf063c32abaac150378c285fc18f93939d8664a0df00210f8ee67baf6a092de8f0a6df23b704c"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/2c/fd/e248bcbf63b2cdb754cd8399814b065206d86b7ffc9d0b082de1bf47ddf9",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/a8/c1/3087e52e8dc43e91bcf74fa57ec0098ed94f2f7a8ab6c3edf063c32abaac150378c285fc18f93939d8664a0df00210f8ee67baf6a092de8f0a6df23b704c"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "minimatch@3.0.4",
+      "url": "https://registry.npmjs.org/minimatch/-/minimatch-3.0.4.tgz",
+      "integrity": "sha512-yJHVQEhyqPLUTgt9B83PXu6W3rx4MvvHvSUvToogpwoGDOUQ+yDrR0HRot+yOCdCO7u4hX3pWft6kWBBcqh0UA==",
+      "size": 11423,
+      "contentSha256": "426a24d79bb6f0d3bb133e62cec69021836d254b39d931c104ddd7c464adea71",
+      "indexSha256": "e719f45c2eeed3d70cfa6693f26b1679b2e14ce54ece8f87c3f90d1e05ce7aa4",
+      "packageManifestSha256": "a17bf4f3496a63c8b0624dd66854b8eaa4417b2bd15c5a47f1bea7b7e2815573",
+      "license": {
+        "expression": "ISC",
+        "expressionSha256": "d8d62d58d661d5ddeff06fdf1ebc08968da4743e369c74cef96eff0241eaea05",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "4ec3d4c66cd87f5c8d8ad911b10f99bf27cb00cdfcff82621956e379186b016b"
+          }
+        ]
+      },
+      "indexKey": "13/ec/2beec1b1ea4a773b7e444068011c58085a802e2d35f5f6ff233eb0d8e630",
+      "contentKey": "sha512/c8/91/d5404872a8f2d44e0b7d07cdcf5eee96debc7832fbc7bd252f4e8a20a70a060ce510fb20eb4741d1a2dfb23827423bbbb8857de959fb7a91604172a87450",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/13/ec/2beec1b1ea4a773b7e444068011c58085a802e2d35f5f6ff233eb0d8e630",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/c8/91/d5404872a8f2d44e0b7d07cdcf5eee96debc7832fbc7bd252f4e8a20a70a060ce510fb20eb4741d1a2dfb23827423bbbb8857de959fb7a91604172a87450"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/13/ec/2beec1b1ea4a773b7e444068011c58085a802e2d35f5f6ff233eb0d8e630",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/c8/91/d5404872a8f2d44e0b7d07cdcf5eee96debc7832fbc7bd252f4e8a20a70a060ce510fb20eb4741d1a2dfb23827423bbbb8857de959fb7a91604172a87450"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "neo-async@2.6.0",
+      "url": "https://registry.npmjs.org/neo-async/-/neo-async-2.6.0.tgz",
+      "integrity": "sha512-MFh0d/Wa7vkKO3Y3LlacqAEeHK0mckVqzDieUKTT+KGxi+zIpeVsFxymkIiRpbpDziHc290Xr9A1O4Om7otoRA==",
+      "size": 38531,
+      "contentSha256": "d677344e92fa29df66dd5bdb0cbdc9932b7a605637c8ba4a6043c1ba7b73d03b",
+      "indexSha256": "dc23ce3c616fb4e232b30b7b7d9b12994851c4df3ad129c062b969f8838337db",
+      "packageManifestSha256": "c7b243f03b58556c637364e0001374142e6aee4458714752052eba4f425c86b4",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "811238ba7d85f6fe6b820703a32f92705bcf77bc352ddc3476783491c64a129a"
+          }
+        ]
+      },
+      "indexKey": "f8/e6/ee3ed9a77e5a7889fd04016a63b8742f872fbcd7bfeb57a687c9df5498ef",
+      "contentKey": "sha512/30/58/7477f59aeef90a3b76372e569ca8011e1cad2672456acc389e50a4d3f8a1b18becc8a5e56c171ca6908891a5ba43ce21dcdbdd17afd0353b83a6ee8b6844",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/f8/e6/ee3ed9a77e5a7889fd04016a63b8742f872fbcd7bfeb57a687c9df5498ef",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/30/58/7477f59aeef90a3b76372e569ca8011e1cad2672456acc389e50a4d3f8a1b18becc8a5e56c171ca6908891a5ba43ce21dcdbdd17afd0353b83a6ee8b6844"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/f8/e6/ee3ed9a77e5a7889fd04016a63b8742f872fbcd7bfeb57a687c9df5498ef",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/30/58/7477f59aeef90a3b76372e569ca8011e1cad2672456acc389e50a4d3f8a1b18becc8a5e56c171ca6908891a5ba43ce21dcdbdd17afd0353b83a6ee8b6844"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "node-libs-browser@2.2.0",
+      "url": "https://registry.npmjs.org/node-libs-browser/-/node-libs-browser-2.2.0.tgz",
+      "integrity": "sha512-5MQunG/oyOaBdttrL40dA7bUfPORLRWMUJLQtMg7nluxUvk5XwnLdL9twQHFAjRx/y7mIMkLKT9++qPbbk6BZA==",
+      "size": 3832,
+      "contentSha256": "688d3e271a70fd294f6866f1325ad373656b921ca27a6e98636a71f14a57e801",
+      "indexSha256": "cca8ce590e1739d36b5eda2ebb35c7dc1b53e31e26b0bbf63d909db23848da03",
+      "packageManifestSha256": "7bec758d6a15261e65229032e711da60924ce4dce44451d032097a5ded35ba78",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "ee663df5bd50f59b8a967b7ebd4db26c5eb6ffcbc7669937f6a8c185f7287a0c"
+          }
+        ]
+      },
+      "indexKey": "3a/86/6862f1b58b46f239fa63a47ca9322265af6b30bdec54b0851bbab5780a04",
+      "contentKey": "sha512/e4/c4/2e9c6fe8c8e68176db6b2f8d1d03b6d47cf3912d158c5092d0b4c83b9e5bb152f9395f09cb74bf6dc101c5023471ff2ee620c90b293f7efaa3db6e4e8164",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/3a/86/6862f1b58b46f239fa63a47ca9322265af6b30bdec54b0851bbab5780a04",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/e4/c4/2e9c6fe8c8e68176db6b2f8d1d03b6d47cf3912d158c5092d0b4c83b9e5bb152f9395f09cb74bf6dc101c5023471ff2ee620c90b293f7efaa3db6e4e8164"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/3a/86/6862f1b58b46f239fa63a47ca9322265af6b30bdec54b0851bbab5780a04",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/e4/c4/2e9c6fe8c8e68176db6b2f8d1d03b6d47cf3912d158c5092d0b4c83b9e5bb152f9395f09cb74bf6dc101c5023471ff2ee620c90b293f7efaa3db6e4e8164"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "path-browserify@0.0.0",
+      "url": "https://registry.npmjs.org/path-browserify/-/path-browserify-0.0.0.tgz",
+      "integrity": "sha1-oLhwcpquIUAFt9UDLsLLuw+0RRo=",
+      "size": 3059,
+      "contentSha256": "0b5e658c29cd602879ea50a9edae38e392fe8de5a5600da39be114f69dd0d2f5",
+      "indexSha256": "e14aa99587991077d96bd0505343559c88dd6fc1afe5045bb970f1db5a59687c",
+      "packageManifestSha256": "96c55322c00afac34fc13798f67711e0726cb33d1c32fdc573cdeafa169f0446",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "435a6722c786b0a56fbe7387028f1d9d3f3a2d0fb615bb8fee118727c3f59b7b"
+          }
+        ]
+      },
+      "indexKey": "77/1e/92fdf3dc00ea23335f8c6a675d3876980b334e1540d8f1060858d6371277",
+      "contentKey": "sha1/a0/b8/70729aae214005b7d5032ec2cbbb0fb4451a",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/77/1e/92fdf3dc00ea23335f8c6a675d3876980b334e1540d8f1060858d6371277",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha1/a0/b8/70729aae214005b7d5032ec2cbbb0fb4451a"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/77/1e/92fdf3dc00ea23335f8c6a675d3876980b334e1540d8f1060858d6371277",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha1/a0/b8/70729aae214005b7d5032ec2cbbb0fb4451a"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "picomatch@2.0.4",
+      "url": "https://registry.npmjs.org/picomatch/-/picomatch-2.0.4.tgz",
+      "integrity": "sha512-lN1llt2d+xBz96Vp+yj0qMUVMyDsqvNSecdRDIEuh72kQi1N6ttkxPJ7zDVwKR4ehD2R3WhMKqdp/5LeRfc+PA==",
+      "size": 20131,
+      "contentSha256": "b22b32b3b6ecad545016e5f0a5731cc61cbd8348369f5f504671990dcfda0d33",
+      "indexSha256": "fd809c9783438efd9b509c607c06c4a28c1b7d9ecad3c113ccc25122e329372b",
+      "packageManifestSha256": "2c0fffd19ef1f13f88d3573f12bc9b86574fceff74d469ce63ed37b00e0ba8aa",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "d0cd141b0c322fded5dfad1d4645bb2fedfc05b7321fe1009469638190d59ef9"
+          }
+        ]
+      },
+      "indexKey": "4a/df/8d140259d8c23fc53d9a80b04d9459924d95528dd1da64d4694857809629",
+      "contentKey": "sha512/94/dd/6596dd9dfb1073f7a569fb28f4a8c5153320ecaaf35279c7510c812e87bda4422d4deadb64c4f27bcc3570291e1e843d91dd684c2aa769ff92de45f73e3c",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/4a/df/8d140259d8c23fc53d9a80b04d9459924d95528dd1da64d4694857809629",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/94/dd/6596dd9dfb1073f7a569fb28f4a8c5153320ecaaf35279c7510c812e87bda4422d4deadb64c4f27bcc3570291e1e843d91dd684c2aa769ff92de45f73e3c"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/4a/df/8d140259d8c23fc53d9a80b04d9459924d95528dd1da64d4694857809629",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/94/dd/6596dd9dfb1073f7a569fb28f4a8c5153320ecaaf35279c7510c812e87bda4422d4deadb64c4f27bcc3570291e1e843d91dd684c2aa769ff92de45f73e3c"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "source-map-support@0.5.9",
+      "url": "https://registry.npmjs.org/source-map-support/-/source-map-support-0.5.9.tgz",
+      "integrity": "sha512-gR6Rw4MvUlYy83vP0vxoVNzM6t8MUXqNuRsuBmBHQDu1Fh6X015FrLdgoDKcNdkwGubozq0P4N0Q37UyFVr1EA==",
+      "size": 25433,
+      "contentSha256": "4b9a4fa3665462f412dad1af2ffd4b890b0d0647668cc21d73a8a1449a5eecb0",
+      "indexSha256": "5a4cb0cb667d0c8e63a8cc44431182d5cbb3933456c76685089f7b3c4b2c0dfb",
+      "packageManifestSha256": "e56b8af63c21a9f3401c6ca4e7c21c881c24a0bb98eb659df7d338f78b25bbc4",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE.md",
+            "sha256": "3a7d3bb198e909ed642bd68bd29a7d7c09a636d27a51ec663d35f00c4760ec42"
+          }
+        ]
+      },
+      "indexKey": "02/69/d7dc90e08b33c2f92bbe7d13389ec47765afedc55107f511bf2a9e226c82",
+      "contentKey": "sha512/81/1e/91c3832f525632f37bcfd2fc6854dccceadf0c517a8db91b2e066047403bb5161e97d35e45acb760a0329c35d9301ae6e8cead0fe0dd10dfb532155af510",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/02/69/d7dc90e08b33c2f92bbe7d13389ec47765afedc55107f511bf2a9e226c82",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/81/1e/91c3832f525632f37bcfd2fc6854dccceadf0c517a8db91b2e066047403bb5161e97d35e45acb760a0329c35d9301ae6e8cead0fe0dd10dfb532155af510"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/02/69/d7dc90e08b33c2f92bbe7d13389ec47765afedc55107f511bf2a9e226c82",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/81/1e/91c3832f525632f37bcfd2fc6854dccceadf0c517a8db91b2e066047403bb5161e97d35e45acb760a0329c35d9301ae6e8cead0fe0dd10dfb532155af510"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "upath@1.1.0",
+      "url": "https://registry.npmjs.org/upath/-/upath-1.1.0.tgz",
+      "integrity": "sha512-bzpH/oBhoS/QI/YtbkqCg6VEiPYjSZtrHQM6/QnJS6OL9pKUFLqb3aFh4Scvwm45+7iAgiMkLhSbaZxUqmrprw==",
+      "size": 7897,
+      "contentSha256": "815d6a367cda0e1bde78cae39bea99e8f48f1c27827f3d5d218a3251fedb4383",
+      "indexSha256": "aca382105082453fda81ff4b857ea38a35a7a30bfc99859c67fe9fe8d6c181cf",
+      "packageManifestSha256": "47b519649edc3dd8a6b8ec98355dff5eddd4be92e9869c04f4228236d50e0c47",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "75d5430bed3fe71800ad03b2824d416c53e446d00d522f94f88973f505c7d946"
+          }
+        ]
+      },
+      "indexKey": "24/7a/c263c0bd1679c93caee5015a5da02e996eb0fc4dfe4a2bc1d3057488454a",
+      "contentKey": "sha512/6f/3a/47fe8061a12fd023f62d6e4a8283a54488f623499b6b1d033afd09c94ba38bf6929414ba9bdda161e1272fc26e39fbb8808223242e149b699c54aa6ae9af",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/24/7a/c263c0bd1679c93caee5015a5da02e996eb0fc4dfe4a2bc1d3057488454a",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/6f/3a/47fe8061a12fd023f62d6e4a8283a54488f623499b6b1d033afd09c94ba38bf6929414ba9bdda161e1272fc26e39fbb8808223242e149b699c54aa6ae9af"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/24/7a/c263c0bd1679c93caee5015a5da02e996eb0fc4dfe4a2bc1d3057488454a",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/6f/3a/47fe8061a12fd023f62d6e4a8283a54488f623499b6b1d033afd09c94ba38bf6929414ba9bdda161e1272fc26e39fbb8808223242e149b699c54aa6ae9af"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "vm-browserify@0.0.4",
+      "url": "https://registry.npmjs.org/vm-browserify/-/vm-browserify-0.0.4.tgz",
+      "integrity": "sha1-XX6kW7755Kb/ZflUOOCofDV9WnM=",
+      "size": 6846,
+      "contentSha256": "a9b1f579eb4096ec3535cceae251f24c26a122c82844e98551b57c634d1b1e73",
+      "indexSha256": "e99c3df1914299508e53b98095cf04c90c43598354851026bdebdcd192a81ec1",
+      "packageManifestSha256": "22508d5bd117fa8382577e87a71c0e698dc243e2a81bd3a3402250275463d16e",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "435a6722c786b0a56fbe7387028f1d9d3f3a2d0fb615bb8fee118727c3f59b7b"
+          }
+        ]
+      },
+      "indexKey": "1e/7d/e2d4eb29cd547d7ee7c60420cc7b5ee530592d8a9ff06dc9005c8f43c31d",
+      "contentKey": "sha1/5d/7e/a45bbef9e4a6ff65f95438e0a87c357d5a73",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/1e/7d/e2d4eb29cd547d7ee7c60420cc7b5ee530592d8a9ff06dc9005c8f43c31d",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha1/5d/7e/a45bbef9e4a6ff65f95438e0a87c357d5a73"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/1e/7d/e2d4eb29cd547d7ee7c60420cc7b5ee530592d8a9ff06dc9005c8f43c31d",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha1/5d/7e/a45bbef9e4a6ff65f95438e0a87c357d5a73"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "watchpack@1.6.0",
+      "url": "https://registry.npmjs.org/watchpack/-/watchpack-1.6.0.tgz",
+      "integrity": "sha512-i6dHe3EyLjMmDlU1/bGQpEw25XSjkJULPuAVKCbNRefQVq48yXKUpwg538F7AZTf9kyr57zj++pQFltUa5H7yA==",
+      "size": 5979,
+      "contentSha256": "3b53adc3836b8de62b9f6f01b44ffbda2aa08560bce68161c543bcf35aa398f6",
+      "indexSha256": "27ddd6503c879a40e65577208d3a0924505cdfaadc0ac295c22abfdb50d2e48a",
+      "packageManifestSha256": "9302390ba5b788583b0985aa1ab4131c5608e581a88daa44a0ae5f39795a2ebc",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "779c29bfeac6f3acbb9cd58d800d22d31f3f2b3e1bd736379bd1cc6cdf9b888a"
+          }
+        ]
+      },
+      "indexKey": "9c/4f/34c34c9fa3692eac3e88ec91970ce4c3aad4e64d82417297685620bc7d81",
+      "contentKey": "sha512/8b/a7/477b71322e33260e5535fdb190a44c36e574a390950b3ee0152826cd45e7d056ae3cc97294a70839dfc17b0194dff64cabe7bce3fbea50165b546b91fbc8",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/9c/4f/34c34c9fa3692eac3e88ec91970ce4c3aad4e64d82417297685620bc7d81",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/8b/a7/477b71322e33260e5535fdb190a44c36e574a390950b3ee0152826cd45e7d056ae3cc97294a70839dfc17b0194dff64cabe7bce3fbea50165b546b91fbc8"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/9c/4f/34c34c9fa3692eac3e88ec91970ce4c3aad4e64d82417297685620bc7d81",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/8b/a7/477b71322e33260e5535fdb190a44c36e574a390950b3ee0152826cd45e7d056ae3cc97294a70839dfc17b0194dff64cabe7bce3fbea50165b546b91fbc8"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "webpack-sources@1.3.0",
+      "url": "https://registry.npmjs.org/webpack-sources/-/webpack-sources-1.3.0.tgz",
+      "integrity": "sha512-OiVgSrbGu7NEnEvQJJgdSFPl2qWKkWq5lHMhgiToIiN9w34EBnjYzSYs+VbL5KoYiLNtFFa7BZIKxRED3I32pA==",
+      "size": 8016,
+      "contentSha256": "9f6cd0fe4214fb9fdf735ff73632649be1e17efe76048f2c01ca2f7536cfc47f",
+      "indexSha256": "cecc54ef36ba41dd6adfc125c6ec5711a93132929dfac0d9c11e65d3c5e26c7b",
+      "packageManifestSha256": "b1fc1c14b289b34704b9c177288017a63b97d1bf3efc91f882d4e949b62492e5",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "214d0ac13edb475ec426df1979d96fd46b443debc466c0fb592e32152ae5a940"
+          }
+        ]
+      },
+      "indexKey": "5f/57/2c513467695d25eb7efab534cbb805e912cbb599ae0c76de838bbc7a26e0",
+      "contentKey": "sha512/3a/25/604ab6c6bbb3449c4bd024981d4853e5daa58a916ab99473218224e822237dc37e040678d8cd262cf956cbe4aa1888b36d1456bb05920ac51103dc8df6a4",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/5f/57/2c513467695d25eb7efab534cbb805e912cbb599ae0c76de838bbc7a26e0",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/3a/25/604ab6c6bbb3449c4bd024981d4853e5daa58a916ab99473218224e822237dc37e040678d8cd262cf956cbe4aa1888b36d1456bb05920ac51103dc8df6a4"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/5f/57/2c513467695d25eb7efab534cbb805e912cbb599ae0c76de838bbc7a26e0",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/3a/25/604ab6c6bbb3449c4bd024981d4853e5daa58a916ab99473218224e822237dc37e040678d8cd262cf956cbe4aa1888b36d1456bb05920ac51103dc8df6a4"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "webpack@4.30.0",
+      "url": "https://registry.npmjs.org/webpack/-/webpack-4.30.0.tgz",
+      "integrity": "sha512-4hgvO2YbAFUhyTdlR4FNyt2+YaYBYHavyzjCMbZzgglo02rlKi/pcsEzwCuCpsn1ryzIl1cq/u8ArIKu8JBYMg==",
+      "size": 285639,
+      "contentSha256": "201eb09e101ca52bb9a67f1f3d0a033a8a275261f522fc6131247ead4115578b",
+      "indexSha256": "6a015d8c5c6f8ae235374cdd91bf247dee0f1e183d1578cd9f162bdc827cff67",
+      "packageManifestSha256": "14ae1b58a715f4a081b56e091f99c8dd793177af36f68ffb68cb650c949b3162",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE",
+            "sha256": "9068a8782d2fb4c6e432cfa25334efa56f722822180570802bf86e71b6003b1e"
+          }
+        ]
+      },
+      "indexKey": "06/21/98dd1630feb2947513b0fb50669abc9457d9fb4eb5da97c672609b887148",
+      "contentKey": "sha512/e2/18/2f3b661b005521c9376547814dcaddbe61a6016076afcb38c231b673820968d36ae52a2fe972c133c02b82a6c9f5af2cc897572afeef00ac82aef0905832",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/06/21/98dd1630feb2947513b0fb50669abc9457d9fb4eb5da97c672609b887148",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/e2/18/2f3b661b005521c9376547814dcaddbe61a6016076afcb38c231b673820968d36ae52a2fe972c133c02b82a6c9f5af2cc897572afeef00ac82aef0905832"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/06/21/98dd1630feb2947513b0fb50669abc9457d9fb4eb5da97c672609b887148",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/e2/18/2f3b661b005521c9376547814dcaddbe61a6016076afcb38c231b673820968d36ae52a2fe972c133c02b82a6c9f5af2cc897572afeef00ac82aef0905832"
+      },
+      "status": "copied",
+      "bytesEqual": true
+    },
+    {
+      "package": "worker-farm@1.6.0",
+      "url": "https://registry.npmjs.org/worker-farm/-/worker-farm-1.6.0.tgz",
+      "integrity": "sha512-6w+3tHbM87WnSWnENBUvA2pxJPLhQUg5LKwUQHq3r+XPhIM+Gh2R5ycbwPCyuGbNg+lPgdcnQUhuC02kJCvffQ==",
+      "size": 13755,
+      "contentSha256": "22405b907e9c7a0f455256cab2487b441b6717953b72718d26f207bf4b8443a3",
+      "indexSha256": "2f951624664f25201c6254c10a0a6ca482bff973d5e4b08080ed12f775ac311f",
+      "packageManifestSha256": "cdc035b53c9819d81822157d8f3a2b064e19a6e73e25385d8f4e267edd32f141",
+      "license": {
+        "expression": "MIT",
+        "expressionSha256": "e5dcffe836b6ec8a58e492419b550e65fb8cbdc308503979e5dacb33ac7ea3b7",
+        "files": [
+          {
+            "path": "package/LICENSE.md",
+            "sha256": "e3a9b7da09135552489d22bef2730f8485b4eb80033c78cc4bf75ee7d8dcc811"
+          }
+        ]
+      },
+      "indexKey": "86/52/d85ddb36b1a7c45104eb0e86d417df6241bb58e432e0557d6d5cef0310e7",
+      "contentKey": "sha512/eb/0f/b7b476ccf3b5a74969c434152f036a7124f2e14148392cac14407ab7afe5cf84833e1a1d91e7271bc0f0b2b866cd83e94f81d72741486e0b4da4242bdf7d",
+      "source": {
+        "index": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/index-v5/86/52/d85ddb36b1a7c45104eb0e86d417df6241bb58e432e0557d6d5cef0310e7",
+        "content": ".versionless/cache/react-boilerplate-v4/npm-cache/_cacache/content-v2/sha512/eb/0f/b7b476ccf3b5a74969c434152f036a7124f2e14148392cac14407ab7afe5cf84833e1a1d91e7271bc0f0b2b866cd83e94f81d72741486e0b4da4242bdf7d"
+      },
+      "destination": {
+        "index": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/index-v5/86/52/d85ddb36b1a7c45104eb0e86d417df6241bb58e432e0557d6d5cef0310e7",
+        "content": ".versionless/cache/react-boilerplate-v4-node24/npm-cache/_cacache/content-v2/sha512/eb/0f/b7b476ccf3b5a74969c434152f036a7124f2e14148392cac14407ab7afe5cf84833e1a1d91e7271bc0f0b2b866cd83e94f81d72741486e0b4da4242bdf7d"
+      },
+      "status": "pre-existing",
+      "bytesEqual": true
+    }
+  ],
+  "copied": 44,
+  "preExisting": 1,
+  "missing": 0,
+  "bytesEqual": true,
+  "networkUsed": false
+}

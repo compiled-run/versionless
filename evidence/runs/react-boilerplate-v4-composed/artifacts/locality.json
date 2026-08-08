@@ -1,0 +1,8 @@
+{
+  "mode": "offline",
+  "scope": "Versionless-spawned Node/npm/webpack/Vite child processes and Playwright browser requests",
+  "osWideIsolation": false,
+  "successfulNonLoopback": 0,
+  "browserBlockedRequests": 2,
+  "syntheticInterceptions": 4
+}

@@ -1,0 +1,34 @@
+{
+  "orders": [
+    {
+      "order": [
+        "phone-detail-lexical-this",
+        "phone-route-resolve-component-binding"
+      ],
+      "trace": [
+        "phone-detail",
+        "app-config",
+        "phone-list"
+      ],
+      "outputSha256": "f08e330019bb8ce2723834edd62e656ca654f54123088a0a48e4a3b726a11da0"
+    },
+    {
+      "order": [
+        "phone-route-resolve-component-binding",
+        "phone-detail-lexical-this"
+      ],
+      "trace": [
+        "app-config",
+        "phone-list",
+        "phone-detail"
+      ],
+      "outputSha256": "f08e330019bb8ce2723834edd62e656ca654f54123088a0a48e4a3b726a11da0"
+    }
+  ],
+  "orderIndependent": true,
+  "changedFiles": [
+    "app/app.config.js",
+    "app/phone-list/phone-list.component.js",
+    "app/phone-detail/phone-detail.component.js"
+  ]
+}

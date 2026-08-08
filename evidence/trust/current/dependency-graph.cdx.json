@@ -1,0 +1,3491 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.7",
+  "version": 1,
+  "metadata": {
+    "component": {
+      "type": "application",
+      "bom-ref": "workspace:.",
+      "name": "versionless-workspace",
+      "version": "0.0.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "4bb51d694eae21356cbf50f0d623e381d3a82389ae537fb955895bd6fadcde22"
+        }
+      ],
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "package.json"
+        },
+        {
+          "name": "versionless:state",
+          "value": "verified"
+        }
+      ]
+    },
+    "properties": [
+      {
+        "name": "versionless:validation",
+        "value": "local-profile"
+      },
+      {
+        "name": "versionless:validation-claim",
+        "value": "not-independent-or-official"
+      },
+      {
+        "name": "versionless:graph-model",
+        "value": "complete-resolved-inventory-rooted"
+      },
+      {
+        "name": "versionless:topology",
+        "value": "exact-transitive-topology-not-proven"
+      }
+    ]
+  },
+  "components": [
+    {
+      "type": "application",
+      "bom-ref": "workspace:.",
+      "name": "versionless-workspace",
+      "version": "0.0.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "4bb51d694eae21356cbf50f0d623e381d3a82389ae537fb955895bd6fadcde22"
+        }
+      ],
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "package.json"
+        },
+        {
+          "name": "versionless:state",
+          "value": "verified"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "workspace:packages/cli",
+      "name": "versionless",
+      "version": "0.0.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "d1aaf112a2c092a377ced3fdd1224a87392ffcb37489a152888d5a7e7a8d618a"
+        }
+      ],
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "packages/cli/package.json"
+        },
+        {
+          "name": "versionless:state",
+          "value": "verified"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "workspace:packages/core",
+      "name": "@versionless/core",
+      "version": "0.0.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "8b5e656d6cded08e94742b0dfac5eb1d1a26138c148ba21f1492247a68ebbcaf"
+        }
+      ],
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "packages/core/package.json"
+        },
+        {
+          "name": "versionless:state",
+          "value": "verified"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "workspace:packages/experiments",
+      "name": "@versionless/experiments",
+      "version": "0.0.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "bffcc17931752b459b5afec26f687229cffd0d68765d5cd7079f52ec517816dd"
+        }
+      ],
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "packages/experiments/package.json"
+        },
+        {
+          "name": "versionless:state",
+          "value": "verified"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "workspace:packages/frameworks/angular",
+      "name": "@versionless/angular",
+      "version": "0.0.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "bac43340d9478cef6f796f4959f4cd8ad95af1908d351466a4de957b976c63ef"
+        }
+      ],
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "packages/frameworks/angular/package.json"
+        },
+        {
+          "name": "versionless:state",
+          "value": "verified"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "workspace:packages/frameworks/angularjs",
+      "name": "@versionless/angularjs",
+      "version": "0.0.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "60e5563a70588124217c1d10d629a8d177e77f13576e5d505d724c8ecc00ab49"
+        }
+      ],
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "packages/frameworks/angularjs/package.json"
+        },
+        {
+          "name": "versionless:state",
+          "value": "verified"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "workspace:packages/frameworks/nextjs",
+      "name": "@versionless/nextjs",
+      "version": "0.0.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "0494c112f125563371503840912e3663fd92341f819aae1d9d5ccad843abd15a"
+        }
+      ],
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "packages/frameworks/nextjs/package.json"
+        },
+        {
+          "name": "versionless:state",
+          "value": "verified"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "workspace:packages/frameworks/react",
+      "name": "@versionless/react",
+      "version": "0.0.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "4484aa3fefaa7dbb22b7955b3b4c55e21c012c379a60f8499bba1e9c4e42bafd"
+        }
+      ],
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "packages/frameworks/react/package.json"
+        },
+        {
+          "name": "versionless:state",
+          "value": "verified"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "workspace:packages/node-guard",
+      "name": "@versionless/node-guard",
+      "version": "0.0.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "eeb00e7e263cdec01bea33f94fa4a5964163e2a3cf30a9f7162fc562c7acf1b4"
+        }
+      ],
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "packages/node-guard/package.json"
+        },
+        {
+          "name": "versionless:state",
+          "value": "verified"
+        }
+      ]
+    },
+    {
+      "type": "application",
+      "bom-ref": "workspace:packages/trust",
+      "name": "@versionless/trust",
+      "version": "0.0.1",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "6d30ed9ed8b158495151e8736b30d0afa619a750b93bfb930ad40a1cfcb8f438"
+        }
+      ],
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "packages/trust/package.json"
+        },
+        {
+          "name": "versionless:state",
+          "value": "verified"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40angular/compiler@22.1.0",
+      "name": "@angular/compiler",
+      "version": "22.1.0",
+      "purl": "pkg:npm/%40angular/compiler@22.1.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40emnapi/core@1.10.0",
+      "name": "@emnapi/core",
+      "version": "1.10.0",
+      "purl": "pkg:npm/%40emnapi/core@1.10.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40emnapi/runtime@1.10.0",
+      "name": "@emnapi/runtime",
+      "version": "1.10.0",
+      "purl": "pkg:npm/%40emnapi/runtime@1.10.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40emnapi/wasi-threads@1.2.1",
+      "name": "@emnapi/wasi-threads",
+      "version": "1.2.1",
+      "purl": "pkg:npm/%40emnapi/wasi-threads@1.2.1",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40jridgewell/gen-mapping@0.3.13",
+      "name": "@jridgewell/gen-mapping",
+      "version": "0.3.13",
+      "purl": "pkg:npm/%40jridgewell/gen-mapping@0.3.13",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40jridgewell/remapping@2.3.5",
+      "name": "@jridgewell/remapping",
+      "version": "2.3.5",
+      "purl": "pkg:npm/%40jridgewell/remapping@2.3.5",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40jridgewell/resolve-uri@3.1.2",
+      "name": "@jridgewell/resolve-uri",
+      "version": "3.1.2",
+      "purl": "pkg:npm/%40jridgewell/resolve-uri@3.1.2",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40jridgewell/sourcemap-codec@1.5.5",
+      "name": "@jridgewell/sourcemap-codec",
+      "version": "1.5.5",
+      "purl": "pkg:npm/%40jridgewell/sourcemap-codec@1.5.5",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40jridgewell/trace-mapping@0.3.31",
+      "name": "@jridgewell/trace-mapping",
+      "version": "0.3.31",
+      "purl": "pkg:npm/%40jridgewell/trace-mapping@0.3.31",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40napi-rs/wasm-runtime@1.2.2",
+      "name": "@napi-rs/wasm-runtime",
+      "version": "1.2.2",
+      "purl": "pkg:npm/%40napi-rs/wasm-runtime@1.2.2",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxc-project/runtime@0.127.0",
+      "name": "@oxc-project/runtime",
+      "version": "0.127.0",
+      "purl": "pkg:npm/%40oxc-project/runtime@0.127.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxc-project/types@0.127.0",
+      "name": "@oxc-project/types",
+      "version": "0.127.0",
+      "purl": "pkg:npm/%40oxc-project/types@0.127.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxc-project/types@0.133.0",
+      "name": "@oxc-project/types",
+      "version": "0.133.0",
+      "purl": "pkg:npm/%40oxc-project/types@0.133.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxfmt/binding-android-arm-eabi@0.46.0",
+      "name": "@oxfmt/binding-android-arm-eabi",
+      "version": "0.46.0",
+      "purl": "pkg:npm/%40oxfmt/binding-android-arm-eabi@0.46.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxfmt/binding-android-arm64@0.46.0",
+      "name": "@oxfmt/binding-android-arm64",
+      "version": "0.46.0",
+      "purl": "pkg:npm/%40oxfmt/binding-android-arm64@0.46.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxfmt/binding-darwin-arm64@0.46.0",
+      "name": "@oxfmt/binding-darwin-arm64",
+      "version": "0.46.0",
+      "purl": "pkg:npm/%40oxfmt/binding-darwin-arm64@0.46.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxfmt/binding-darwin-x64@0.46.0",
+      "name": "@oxfmt/binding-darwin-x64",
+      "version": "0.46.0",
+      "purl": "pkg:npm/%40oxfmt/binding-darwin-x64@0.46.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxfmt/binding-freebsd-x64@0.46.0",
+      "name": "@oxfmt/binding-freebsd-x64",
+      "version": "0.46.0",
+      "purl": "pkg:npm/%40oxfmt/binding-freebsd-x64@0.46.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxfmt/binding-linux-arm-gnueabihf@0.46.0",
+      "name": "@oxfmt/binding-linux-arm-gnueabihf",
+      "version": "0.46.0",
+      "purl": "pkg:npm/%40oxfmt/binding-linux-arm-gnueabihf@0.46.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxfmt/binding-linux-arm-musleabihf@0.46.0",
+      "name": "@oxfmt/binding-linux-arm-musleabihf",
+      "version": "0.46.0",
+      "purl": "pkg:npm/%40oxfmt/binding-linux-arm-musleabihf@0.46.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxfmt/binding-linux-arm64-gnu@0.46.0",
+      "name": "@oxfmt/binding-linux-arm64-gnu",
+      "version": "0.46.0",
+      "purl": "pkg:npm/%40oxfmt/binding-linux-arm64-gnu@0.46.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxfmt/binding-linux-arm64-musl@0.46.0",
+      "name": "@oxfmt/binding-linux-arm64-musl",
+      "version": "0.46.0",
+      "purl": "pkg:npm/%40oxfmt/binding-linux-arm64-musl@0.46.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxfmt/binding-linux-ppc64-gnu@0.46.0",
+      "name": "@oxfmt/binding-linux-ppc64-gnu",
+      "version": "0.46.0",
+      "purl": "pkg:npm/%40oxfmt/binding-linux-ppc64-gnu@0.46.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxfmt/binding-linux-riscv64-gnu@0.46.0",
+      "name": "@oxfmt/binding-linux-riscv64-gnu",
+      "version": "0.46.0",
+      "purl": "pkg:npm/%40oxfmt/binding-linux-riscv64-gnu@0.46.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxfmt/binding-linux-riscv64-musl@0.46.0",
+      "name": "@oxfmt/binding-linux-riscv64-musl",
+      "version": "0.46.0",
+      "purl": "pkg:npm/%40oxfmt/binding-linux-riscv64-musl@0.46.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxfmt/binding-linux-s390x-gnu@0.46.0",
+      "name": "@oxfmt/binding-linux-s390x-gnu",
+      "version": "0.46.0",
+      "purl": "pkg:npm/%40oxfmt/binding-linux-s390x-gnu@0.46.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxfmt/binding-linux-x64-gnu@0.46.0",
+      "name": "@oxfmt/binding-linux-x64-gnu",
+      "version": "0.46.0",
+      "purl": "pkg:npm/%40oxfmt/binding-linux-x64-gnu@0.46.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxfmt/binding-linux-x64-musl@0.46.0",
+      "name": "@oxfmt/binding-linux-x64-musl",
+      "version": "0.46.0",
+      "purl": "pkg:npm/%40oxfmt/binding-linux-x64-musl@0.46.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxfmt/binding-openharmony-arm64@0.46.0",
+      "name": "@oxfmt/binding-openharmony-arm64",
+      "version": "0.46.0",
+      "purl": "pkg:npm/%40oxfmt/binding-openharmony-arm64@0.46.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxfmt/binding-win32-arm64-msvc@0.46.0",
+      "name": "@oxfmt/binding-win32-arm64-msvc",
+      "version": "0.46.0",
+      "purl": "pkg:npm/%40oxfmt/binding-win32-arm64-msvc@0.46.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxfmt/binding-win32-ia32-msvc@0.46.0",
+      "name": "@oxfmt/binding-win32-ia32-msvc",
+      "version": "0.46.0",
+      "purl": "pkg:npm/%40oxfmt/binding-win32-ia32-msvc@0.46.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxfmt/binding-win32-x64-msvc@0.46.0",
+      "name": "@oxfmt/binding-win32-x64-msvc",
+      "version": "0.46.0",
+      "purl": "pkg:npm/%40oxfmt/binding-win32-x64-msvc@0.46.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxlint-tsgolint/darwin-arm64@0.22.0",
+      "name": "@oxlint-tsgolint/darwin-arm64",
+      "version": "0.22.0",
+      "purl": "pkg:npm/%40oxlint-tsgolint/darwin-arm64@0.22.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxlint-tsgolint/darwin-x64@0.22.0",
+      "name": "@oxlint-tsgolint/darwin-x64",
+      "version": "0.22.0",
+      "purl": "pkg:npm/%40oxlint-tsgolint/darwin-x64@0.22.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxlint-tsgolint/linux-arm64@0.22.0",
+      "name": "@oxlint-tsgolint/linux-arm64",
+      "version": "0.22.0",
+      "purl": "pkg:npm/%40oxlint-tsgolint/linux-arm64@0.22.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxlint-tsgolint/linux-x64@0.22.0",
+      "name": "@oxlint-tsgolint/linux-x64",
+      "version": "0.22.0",
+      "purl": "pkg:npm/%40oxlint-tsgolint/linux-x64@0.22.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxlint-tsgolint/win32-arm64@0.22.0",
+      "name": "@oxlint-tsgolint/win32-arm64",
+      "version": "0.22.0",
+      "purl": "pkg:npm/%40oxlint-tsgolint/win32-arm64@0.22.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxlint-tsgolint/win32-x64@0.22.0",
+      "name": "@oxlint-tsgolint/win32-x64",
+      "version": "0.22.0",
+      "purl": "pkg:npm/%40oxlint-tsgolint/win32-x64@0.22.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxlint/binding-android-arm-eabi@1.61.0",
+      "name": "@oxlint/binding-android-arm-eabi",
+      "version": "1.61.0",
+      "purl": "pkg:npm/%40oxlint/binding-android-arm-eabi@1.61.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxlint/binding-android-arm64@1.61.0",
+      "name": "@oxlint/binding-android-arm64",
+      "version": "1.61.0",
+      "purl": "pkg:npm/%40oxlint/binding-android-arm64@1.61.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxlint/binding-darwin-arm64@1.61.0",
+      "name": "@oxlint/binding-darwin-arm64",
+      "version": "1.61.0",
+      "purl": "pkg:npm/%40oxlint/binding-darwin-arm64@1.61.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxlint/binding-darwin-x64@1.61.0",
+      "name": "@oxlint/binding-darwin-x64",
+      "version": "1.61.0",
+      "purl": "pkg:npm/%40oxlint/binding-darwin-x64@1.61.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxlint/binding-freebsd-x64@1.61.0",
+      "name": "@oxlint/binding-freebsd-x64",
+      "version": "1.61.0",
+      "purl": "pkg:npm/%40oxlint/binding-freebsd-x64@1.61.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxlint/binding-linux-arm-gnueabihf@1.61.0",
+      "name": "@oxlint/binding-linux-arm-gnueabihf",
+      "version": "1.61.0",
+      "purl": "pkg:npm/%40oxlint/binding-linux-arm-gnueabihf@1.61.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxlint/binding-linux-arm-musleabihf@1.61.0",
+      "name": "@oxlint/binding-linux-arm-musleabihf",
+      "version": "1.61.0",
+      "purl": "pkg:npm/%40oxlint/binding-linux-arm-musleabihf@1.61.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxlint/binding-linux-arm64-gnu@1.61.0",
+      "name": "@oxlint/binding-linux-arm64-gnu",
+      "version": "1.61.0",
+      "purl": "pkg:npm/%40oxlint/binding-linux-arm64-gnu@1.61.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxlint/binding-linux-arm64-musl@1.61.0",
+      "name": "@oxlint/binding-linux-arm64-musl",
+      "version": "1.61.0",
+      "purl": "pkg:npm/%40oxlint/binding-linux-arm64-musl@1.61.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxlint/binding-linux-ppc64-gnu@1.61.0",
+      "name": "@oxlint/binding-linux-ppc64-gnu",
+      "version": "1.61.0",
+      "purl": "pkg:npm/%40oxlint/binding-linux-ppc64-gnu@1.61.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxlint/binding-linux-riscv64-gnu@1.61.0",
+      "name": "@oxlint/binding-linux-riscv64-gnu",
+      "version": "1.61.0",
+      "purl": "pkg:npm/%40oxlint/binding-linux-riscv64-gnu@1.61.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxlint/binding-linux-riscv64-musl@1.61.0",
+      "name": "@oxlint/binding-linux-riscv64-musl",
+      "version": "1.61.0",
+      "purl": "pkg:npm/%40oxlint/binding-linux-riscv64-musl@1.61.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxlint/binding-linux-s390x-gnu@1.61.0",
+      "name": "@oxlint/binding-linux-s390x-gnu",
+      "version": "1.61.0",
+      "purl": "pkg:npm/%40oxlint/binding-linux-s390x-gnu@1.61.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxlint/binding-linux-x64-gnu@1.61.0",
+      "name": "@oxlint/binding-linux-x64-gnu",
+      "version": "1.61.0",
+      "purl": "pkg:npm/%40oxlint/binding-linux-x64-gnu@1.61.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxlint/binding-linux-x64-musl@1.61.0",
+      "name": "@oxlint/binding-linux-x64-musl",
+      "version": "1.61.0",
+      "purl": "pkg:npm/%40oxlint/binding-linux-x64-musl@1.61.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxlint/binding-openharmony-arm64@1.61.0",
+      "name": "@oxlint/binding-openharmony-arm64",
+      "version": "1.61.0",
+      "purl": "pkg:npm/%40oxlint/binding-openharmony-arm64@1.61.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxlint/binding-win32-arm64-msvc@1.61.0",
+      "name": "@oxlint/binding-win32-arm64-msvc",
+      "version": "1.61.0",
+      "purl": "pkg:npm/%40oxlint/binding-win32-arm64-msvc@1.61.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxlint/binding-win32-ia32-msvc@1.61.0",
+      "name": "@oxlint/binding-win32-ia32-msvc",
+      "version": "1.61.0",
+      "purl": "pkg:npm/%40oxlint/binding-win32-ia32-msvc@1.61.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40oxlint/binding-win32-x64-msvc@1.61.0",
+      "name": "@oxlint/binding-win32-x64-msvc",
+      "version": "1.61.0",
+      "purl": "pkg:npm/%40oxlint/binding-win32-x64-msvc@1.61.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40polka/url@1.0.0-next.29",
+      "name": "@polka/url",
+      "version": "1.0.0-next.29",
+      "purl": "pkg:npm/%40polka/url@1.0.0-next.29",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40rolldown/binding-android-arm64@1.0.3",
+      "name": "@rolldown/binding-android-arm64",
+      "version": "1.0.3",
+      "purl": "pkg:npm/%40rolldown/binding-android-arm64@1.0.3",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40rolldown/binding-darwin-arm64@1.0.3",
+      "name": "@rolldown/binding-darwin-arm64",
+      "version": "1.0.3",
+      "purl": "pkg:npm/%40rolldown/binding-darwin-arm64@1.0.3",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40rolldown/binding-darwin-x64@1.0.3",
+      "name": "@rolldown/binding-darwin-x64",
+      "version": "1.0.3",
+      "purl": "pkg:npm/%40rolldown/binding-darwin-x64@1.0.3",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40rolldown/binding-freebsd-x64@1.0.3",
+      "name": "@rolldown/binding-freebsd-x64",
+      "version": "1.0.3",
+      "purl": "pkg:npm/%40rolldown/binding-freebsd-x64@1.0.3",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40rolldown/binding-linux-arm-gnueabihf@1.0.3",
+      "name": "@rolldown/binding-linux-arm-gnueabihf",
+      "version": "1.0.3",
+      "purl": "pkg:npm/%40rolldown/binding-linux-arm-gnueabihf@1.0.3",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40rolldown/binding-linux-arm64-gnu@1.0.3",
+      "name": "@rolldown/binding-linux-arm64-gnu",
+      "version": "1.0.3",
+      "purl": "pkg:npm/%40rolldown/binding-linux-arm64-gnu@1.0.3",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40rolldown/binding-linux-arm64-musl@1.0.3",
+      "name": "@rolldown/binding-linux-arm64-musl",
+      "version": "1.0.3",
+      "purl": "pkg:npm/%40rolldown/binding-linux-arm64-musl@1.0.3",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40rolldown/binding-linux-ppc64-gnu@1.0.3",
+      "name": "@rolldown/binding-linux-ppc64-gnu",
+      "version": "1.0.3",
+      "purl": "pkg:npm/%40rolldown/binding-linux-ppc64-gnu@1.0.3",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40rolldown/binding-linux-s390x-gnu@1.0.3",
+      "name": "@rolldown/binding-linux-s390x-gnu",
+      "version": "1.0.3",
+      "purl": "pkg:npm/%40rolldown/binding-linux-s390x-gnu@1.0.3",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40rolldown/binding-linux-x64-gnu@1.0.3",
+      "name": "@rolldown/binding-linux-x64-gnu",
+      "version": "1.0.3",
+      "purl": "pkg:npm/%40rolldown/binding-linux-x64-gnu@1.0.3",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40rolldown/binding-linux-x64-musl@1.0.3",
+      "name": "@rolldown/binding-linux-x64-musl",
+      "version": "1.0.3",
+      "purl": "pkg:npm/%40rolldown/binding-linux-x64-musl@1.0.3",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40rolldown/binding-openharmony-arm64@1.0.3",
+      "name": "@rolldown/binding-openharmony-arm64",
+      "version": "1.0.3",
+      "purl": "pkg:npm/%40rolldown/binding-openharmony-arm64@1.0.3",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40rolldown/binding-wasm32-wasi@1.0.3",
+      "name": "@rolldown/binding-wasm32-wasi",
+      "version": "1.0.3",
+      "purl": "pkg:npm/%40rolldown/binding-wasm32-wasi@1.0.3",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40rolldown/binding-win32-arm64-msvc@1.0.3",
+      "name": "@rolldown/binding-win32-arm64-msvc",
+      "version": "1.0.3",
+      "purl": "pkg:npm/%40rolldown/binding-win32-arm64-msvc@1.0.3",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40rolldown/binding-win32-x64-msvc@1.0.3",
+      "name": "@rolldown/binding-win32-x64-msvc",
+      "version": "1.0.3",
+      "purl": "pkg:npm/%40rolldown/binding-win32-x64-msvc@1.0.3",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40rolldown/pluginutils@1.0.1",
+      "name": "@rolldown/pluginutils",
+      "version": "1.0.1",
+      "purl": "pkg:npm/%40rolldown/pluginutils@1.0.1",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40standard-schema/spec@1.1.0",
+      "name": "@standard-schema/spec",
+      "version": "1.1.0",
+      "purl": "pkg:npm/%40standard-schema/spec@1.1.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40tybys/wasm-util@0.10.3",
+      "name": "@tybys/wasm-util",
+      "version": "0.10.3",
+      "purl": "pkg:npm/%40tybys/wasm-util@0.10.3",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40types/chai@5.2.3",
+      "name": "@types/chai",
+      "version": "5.2.3",
+      "purl": "pkg:npm/%40types/chai@5.2.3",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40types/deep-eql@4.0.2",
+      "name": "@types/deep-eql",
+      "version": "4.0.2",
+      "purl": "pkg:npm/%40types/deep-eql@4.0.2",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40types/estree@1.0.9",
+      "name": "@types/estree",
+      "version": "1.0.9",
+      "purl": "pkg:npm/%40types/estree@1.0.9",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40types/node@24.12.2",
+      "name": "@types/node",
+      "version": "24.12.2",
+      "purl": "pkg:npm/%40types/node@24.12.2",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40vitest/expect@4.1.5",
+      "name": "@vitest/expect",
+      "version": "4.1.5",
+      "purl": "pkg:npm/%40vitest/expect@4.1.5",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40vitest/mocker@4.1.5",
+      "name": "@vitest/mocker",
+      "version": "4.1.5",
+      "purl": "pkg:npm/%40vitest/mocker@4.1.5",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40vitest/pretty-format@4.1.5",
+      "name": "@vitest/pretty-format",
+      "version": "4.1.5",
+      "purl": "pkg:npm/%40vitest/pretty-format@4.1.5",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40vitest/runner@4.1.5",
+      "name": "@vitest/runner",
+      "version": "4.1.5",
+      "purl": "pkg:npm/%40vitest/runner@4.1.5",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40vitest/snapshot@4.1.5",
+      "name": "@vitest/snapshot",
+      "version": "4.1.5",
+      "purl": "pkg:npm/%40vitest/snapshot@4.1.5",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40vitest/spy@4.1.5",
+      "name": "@vitest/spy",
+      "version": "4.1.5",
+      "purl": "pkg:npm/%40vitest/spy@4.1.5",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40vitest/utils@4.1.5",
+      "name": "@vitest/utils",
+      "version": "4.1.5",
+      "purl": "pkg:npm/%40vitest/utils@4.1.5",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40voidzero-dev/vite-plus-core@0.1.20",
+      "name": "@voidzero-dev/vite-plus-core",
+      "version": "0.1.20",
+      "purl": "pkg:npm/%40voidzero-dev/vite-plus-core@0.1.20",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40voidzero-dev/vite-plus-darwin-arm64@0.1.20",
+      "name": "@voidzero-dev/vite-plus-darwin-arm64",
+      "version": "0.1.20",
+      "purl": "pkg:npm/%40voidzero-dev/vite-plus-darwin-arm64@0.1.20",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40voidzero-dev/vite-plus-darwin-x64@0.1.20",
+      "name": "@voidzero-dev/vite-plus-darwin-x64",
+      "version": "0.1.20",
+      "purl": "pkg:npm/%40voidzero-dev/vite-plus-darwin-x64@0.1.20",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40voidzero-dev/vite-plus-linux-arm64-gnu@0.1.20",
+      "name": "@voidzero-dev/vite-plus-linux-arm64-gnu",
+      "version": "0.1.20",
+      "purl": "pkg:npm/%40voidzero-dev/vite-plus-linux-arm64-gnu@0.1.20",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40voidzero-dev/vite-plus-linux-arm64-musl@0.1.20",
+      "name": "@voidzero-dev/vite-plus-linux-arm64-musl",
+      "version": "0.1.20",
+      "purl": "pkg:npm/%40voidzero-dev/vite-plus-linux-arm64-musl@0.1.20",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40voidzero-dev/vite-plus-linux-x64-gnu@0.1.20",
+      "name": "@voidzero-dev/vite-plus-linux-x64-gnu",
+      "version": "0.1.20",
+      "purl": "pkg:npm/%40voidzero-dev/vite-plus-linux-x64-gnu@0.1.20",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40voidzero-dev/vite-plus-linux-x64-musl@0.1.20",
+      "name": "@voidzero-dev/vite-plus-linux-x64-musl",
+      "version": "0.1.20",
+      "purl": "pkg:npm/%40voidzero-dev/vite-plus-linux-x64-musl@0.1.20",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40voidzero-dev/vite-plus-test@0.1.20",
+      "name": "@voidzero-dev/vite-plus-test",
+      "version": "0.1.20",
+      "purl": "pkg:npm/%40voidzero-dev/vite-plus-test@0.1.20",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40voidzero-dev/vite-plus-win32-arm64-msvc@0.1.20",
+      "name": "@voidzero-dev/vite-plus-win32-arm64-msvc",
+      "version": "0.1.20",
+      "purl": "pkg:npm/%40voidzero-dev/vite-plus-win32-arm64-msvc@0.1.20",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40voidzero-dev/vite-plus-win32-x64-msvc@0.1.20",
+      "name": "@voidzero-dev/vite-plus-win32-x64-msvc",
+      "version": "0.1.20",
+      "purl": "pkg:npm/%40voidzero-dev/vite-plus-win32-x64-msvc@0.1.20",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40yuku-analyzer/binding-darwin-arm64@0.7.0",
+      "name": "@yuku-analyzer/binding-darwin-arm64",
+      "version": "0.7.0",
+      "purl": "pkg:npm/%40yuku-analyzer/binding-darwin-arm64@0.7.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40yuku-analyzer/binding-darwin-x64@0.7.0",
+      "name": "@yuku-analyzer/binding-darwin-x64",
+      "version": "0.7.0",
+      "purl": "pkg:npm/%40yuku-analyzer/binding-darwin-x64@0.7.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40yuku-analyzer/binding-freebsd-x64@0.7.0",
+      "name": "@yuku-analyzer/binding-freebsd-x64",
+      "version": "0.7.0",
+      "purl": "pkg:npm/%40yuku-analyzer/binding-freebsd-x64@0.7.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40yuku-analyzer/binding-linux-arm-gnu@0.7.0",
+      "name": "@yuku-analyzer/binding-linux-arm-gnu",
+      "version": "0.7.0",
+      "purl": "pkg:npm/%40yuku-analyzer/binding-linux-arm-gnu@0.7.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40yuku-analyzer/binding-linux-arm-musl@0.7.0",
+      "name": "@yuku-analyzer/binding-linux-arm-musl",
+      "version": "0.7.0",
+      "purl": "pkg:npm/%40yuku-analyzer/binding-linux-arm-musl@0.7.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40yuku-analyzer/binding-linux-arm64-gnu@0.7.0",
+      "name": "@yuku-analyzer/binding-linux-arm64-gnu",
+      "version": "0.7.0",
+      "purl": "pkg:npm/%40yuku-analyzer/binding-linux-arm64-gnu@0.7.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40yuku-analyzer/binding-linux-arm64-musl@0.7.0",
+      "name": "@yuku-analyzer/binding-linux-arm64-musl",
+      "version": "0.7.0",
+      "purl": "pkg:npm/%40yuku-analyzer/binding-linux-arm64-musl@0.7.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40yuku-analyzer/binding-linux-x64-gnu@0.7.0",
+      "name": "@yuku-analyzer/binding-linux-x64-gnu",
+      "version": "0.7.0",
+      "purl": "pkg:npm/%40yuku-analyzer/binding-linux-x64-gnu@0.7.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40yuku-analyzer/binding-linux-x64-musl@0.7.0",
+      "name": "@yuku-analyzer/binding-linux-x64-musl",
+      "version": "0.7.0",
+      "purl": "pkg:npm/%40yuku-analyzer/binding-linux-x64-musl@0.7.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40yuku-analyzer/binding-win32-arm64@0.7.0",
+      "name": "@yuku-analyzer/binding-win32-arm64",
+      "version": "0.7.0",
+      "purl": "pkg:npm/%40yuku-analyzer/binding-win32-arm64@0.7.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40yuku-analyzer/binding-win32-x64@0.7.0",
+      "name": "@yuku-analyzer/binding-win32-x64",
+      "version": "0.7.0",
+      "purl": "pkg:npm/%40yuku-analyzer/binding-win32-x64@0.7.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40yuku-parser/binding-darwin-arm64@0.7.0",
+      "name": "@yuku-parser/binding-darwin-arm64",
+      "version": "0.7.0",
+      "purl": "pkg:npm/%40yuku-parser/binding-darwin-arm64@0.7.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40yuku-parser/binding-darwin-x64@0.7.0",
+      "name": "@yuku-parser/binding-darwin-x64",
+      "version": "0.7.0",
+      "purl": "pkg:npm/%40yuku-parser/binding-darwin-x64@0.7.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40yuku-parser/binding-freebsd-x64@0.7.0",
+      "name": "@yuku-parser/binding-freebsd-x64",
+      "version": "0.7.0",
+      "purl": "pkg:npm/%40yuku-parser/binding-freebsd-x64@0.7.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40yuku-parser/binding-linux-arm-gnu@0.7.0",
+      "name": "@yuku-parser/binding-linux-arm-gnu",
+      "version": "0.7.0",
+      "purl": "pkg:npm/%40yuku-parser/binding-linux-arm-gnu@0.7.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40yuku-parser/binding-linux-arm-musl@0.7.0",
+      "name": "@yuku-parser/binding-linux-arm-musl",
+      "version": "0.7.0",
+      "purl": "pkg:npm/%40yuku-parser/binding-linux-arm-musl@0.7.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40yuku-parser/binding-linux-arm64-gnu@0.7.0",
+      "name": "@yuku-parser/binding-linux-arm64-gnu",
+      "version": "0.7.0",
+      "purl": "pkg:npm/%40yuku-parser/binding-linux-arm64-gnu@0.7.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40yuku-parser/binding-linux-arm64-musl@0.7.0",
+      "name": "@yuku-parser/binding-linux-arm64-musl",
+      "version": "0.7.0",
+      "purl": "pkg:npm/%40yuku-parser/binding-linux-arm64-musl@0.7.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40yuku-parser/binding-linux-x64-gnu@0.7.0",
+      "name": "@yuku-parser/binding-linux-x64-gnu",
+      "version": "0.7.0",
+      "purl": "pkg:npm/%40yuku-parser/binding-linux-x64-gnu@0.7.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40yuku-parser/binding-linux-x64-musl@0.7.0",
+      "name": "@yuku-parser/binding-linux-x64-musl",
+      "version": "0.7.0",
+      "purl": "pkg:npm/%40yuku-parser/binding-linux-x64-musl@0.7.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40yuku-parser/binding-win32-arm64@0.7.0",
+      "name": "@yuku-parser/binding-win32-arm64",
+      "version": "0.7.0",
+      "purl": "pkg:npm/%40yuku-parser/binding-win32-arm64@0.7.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40yuku-parser/binding-win32-x64@0.7.0",
+      "name": "@yuku-parser/binding-win32-x64",
+      "version": "0.7.0",
+      "purl": "pkg:npm/%40yuku-parser/binding-win32-x64@0.7.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/%40yuku-toolchain/types@0.7.0",
+      "name": "@yuku-toolchain/types",
+      "version": "0.7.0",
+      "purl": "pkg:npm/%40yuku-toolchain/types@0.7.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/assertion-error@2.0.1",
+      "name": "assertion-error",
+      "version": "2.0.1",
+      "purl": "pkg:npm/assertion-error@2.0.1",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/chai@6.2.2",
+      "name": "chai",
+      "version": "6.2.2",
+      "purl": "pkg:npm/chai@6.2.2",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/convert-source-map@2.0.0",
+      "name": "convert-source-map",
+      "version": "2.0.0",
+      "purl": "pkg:npm/convert-source-map@2.0.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/detect-libc@2.1.2",
+      "name": "detect-libc",
+      "version": "2.1.2",
+      "purl": "pkg:npm/detect-libc@2.1.2",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/es-module-lexer@1.7.0",
+      "name": "es-module-lexer",
+      "version": "1.7.0",
+      "purl": "pkg:npm/es-module-lexer@1.7.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/es-module-lexer@2.3.1",
+      "name": "es-module-lexer",
+      "version": "2.3.1",
+      "purl": "pkg:npm/es-module-lexer@2.3.1",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/estree-walker@3.0.3",
+      "name": "estree-walker",
+      "version": "3.0.3",
+      "purl": "pkg:npm/estree-walker@3.0.3",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/expect-type@1.4.0",
+      "name": "expect-type",
+      "version": "1.4.0",
+      "purl": "pkg:npm/expect-type@1.4.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/fdir@6.5.0",
+      "name": "fdir",
+      "version": "6.5.0",
+      "purl": "pkg:npm/fdir@6.5.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/fsevents@2.3.2",
+      "name": "fsevents",
+      "version": "2.3.2",
+      "purl": "pkg:npm/fsevents@2.3.2",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/fsevents@2.3.3",
+      "name": "fsevents",
+      "version": "2.3.3",
+      "purl": "pkg:npm/fsevents@2.3.3",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/lightningcss-android-arm64@1.33.0",
+      "name": "lightningcss-android-arm64",
+      "version": "1.33.0",
+      "purl": "pkg:npm/lightningcss-android-arm64@1.33.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/lightningcss-darwin-arm64@1.33.0",
+      "name": "lightningcss-darwin-arm64",
+      "version": "1.33.0",
+      "purl": "pkg:npm/lightningcss-darwin-arm64@1.33.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/lightningcss-darwin-x64@1.33.0",
+      "name": "lightningcss-darwin-x64",
+      "version": "1.33.0",
+      "purl": "pkg:npm/lightningcss-darwin-x64@1.33.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/lightningcss-freebsd-x64@1.33.0",
+      "name": "lightningcss-freebsd-x64",
+      "version": "1.33.0",
+      "purl": "pkg:npm/lightningcss-freebsd-x64@1.33.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/lightningcss-linux-arm-gnueabihf@1.33.0",
+      "name": "lightningcss-linux-arm-gnueabihf",
+      "version": "1.33.0",
+      "purl": "pkg:npm/lightningcss-linux-arm-gnueabihf@1.33.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/lightningcss-linux-arm64-gnu@1.33.0",
+      "name": "lightningcss-linux-arm64-gnu",
+      "version": "1.33.0",
+      "purl": "pkg:npm/lightningcss-linux-arm64-gnu@1.33.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/lightningcss-linux-arm64-musl@1.33.0",
+      "name": "lightningcss-linux-arm64-musl",
+      "version": "1.33.0",
+      "purl": "pkg:npm/lightningcss-linux-arm64-musl@1.33.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/lightningcss-linux-x64-gnu@1.33.0",
+      "name": "lightningcss-linux-x64-gnu",
+      "version": "1.33.0",
+      "purl": "pkg:npm/lightningcss-linux-x64-gnu@1.33.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/lightningcss-linux-x64-musl@1.33.0",
+      "name": "lightningcss-linux-x64-musl",
+      "version": "1.33.0",
+      "purl": "pkg:npm/lightningcss-linux-x64-musl@1.33.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/lightningcss-win32-arm64-msvc@1.33.0",
+      "name": "lightningcss-win32-arm64-msvc",
+      "version": "1.33.0",
+      "purl": "pkg:npm/lightningcss-win32-arm64-msvc@1.33.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/lightningcss-win32-x64-msvc@1.33.0",
+      "name": "lightningcss-win32-x64-msvc",
+      "version": "1.33.0",
+      "purl": "pkg:npm/lightningcss-win32-x64-msvc@1.33.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/lightningcss@1.33.0",
+      "name": "lightningcss",
+      "version": "1.33.0",
+      "purl": "pkg:npm/lightningcss@1.33.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/magic-regexp@0.11.0",
+      "name": "magic-regexp",
+      "version": "0.11.0",
+      "purl": "pkg:npm/magic-regexp@0.11.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/magic-string@0.30.21",
+      "name": "magic-string",
+      "version": "0.30.21",
+      "purl": "pkg:npm/magic-string@0.30.21",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/mrmime@2.0.1",
+      "name": "mrmime",
+      "version": "2.0.1",
+      "purl": "pkg:npm/mrmime@2.0.1",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/nanoid@3.3.17",
+      "name": "nanoid",
+      "version": "3.3.17",
+      "purl": "pkg:npm/nanoid@3.3.17",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/obug@2.1.4",
+      "name": "obug",
+      "version": "2.1.4",
+      "purl": "pkg:npm/obug@2.1.4",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/oxfmt@0.46.0",
+      "name": "oxfmt",
+      "version": "0.46.0",
+      "purl": "pkg:npm/oxfmt@0.46.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/oxlint-tsgolint@0.22.0",
+      "name": "oxlint-tsgolint",
+      "version": "0.22.0",
+      "purl": "pkg:npm/oxlint-tsgolint@0.22.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/oxlint@1.61.0",
+      "name": "oxlint",
+      "version": "1.61.0",
+      "purl": "pkg:npm/oxlint@1.61.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/pathe@2.0.3",
+      "name": "pathe",
+      "version": "2.0.3",
+      "purl": "pkg:npm/pathe@2.0.3",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/picocolors@1.1.1",
+      "name": "picocolors",
+      "version": "1.1.1",
+      "purl": "pkg:npm/picocolors@1.1.1",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/picomatch@4.0.5",
+      "name": "picomatch",
+      "version": "4.0.5",
+      "purl": "pkg:npm/picomatch@4.0.5",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/pixelmatch@7.2.0",
+      "name": "pixelmatch",
+      "version": "7.2.0",
+      "purl": "pkg:npm/pixelmatch@7.2.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/playwright-core@1.58.2",
+      "name": "playwright-core",
+      "version": "1.58.2",
+      "purl": "pkg:npm/playwright-core@1.58.2",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/playwright@1.58.2",
+      "name": "playwright",
+      "version": "1.58.2",
+      "purl": "pkg:npm/playwright@1.58.2",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/pngjs@7.0.0",
+      "name": "pngjs",
+      "version": "7.0.0",
+      "purl": "pkg:npm/pngjs@7.0.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/postcss@8.5.25",
+      "name": "postcss",
+      "version": "8.5.25",
+      "purl": "pkg:npm/postcss@8.5.25",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/regexp-tree@0.1.27",
+      "name": "regexp-tree",
+      "version": "0.1.27",
+      "purl": "pkg:npm/regexp-tree@0.1.27",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/rolldown@1.0.3",
+      "name": "rolldown",
+      "version": "1.0.3",
+      "purl": "pkg:npm/rolldown@1.0.3",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/siginfo@2.0.0",
+      "name": "siginfo",
+      "version": "2.0.0",
+      "purl": "pkg:npm/siginfo@2.0.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/sirv@3.0.2",
+      "name": "sirv",
+      "version": "3.0.2",
+      "purl": "pkg:npm/sirv@3.0.2",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/source-map-js@1.2.1",
+      "name": "source-map-js",
+      "version": "1.2.1",
+      "purl": "pkg:npm/source-map-js@1.2.1",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/stackback@0.0.2",
+      "name": "stackback",
+      "version": "0.0.2",
+      "purl": "pkg:npm/stackback@0.0.2",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/std-env@4.2.0",
+      "name": "std-env",
+      "version": "4.2.0",
+      "purl": "pkg:npm/std-env@4.2.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/tinybench@2.9.0",
+      "name": "tinybench",
+      "version": "2.9.0",
+      "purl": "pkg:npm/tinybench@2.9.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/tinyexec@1.3.0",
+      "name": "tinyexec",
+      "version": "1.3.0",
+      "purl": "pkg:npm/tinyexec@1.3.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/tinyglobby@0.2.17",
+      "name": "tinyglobby",
+      "version": "0.2.17",
+      "purl": "pkg:npm/tinyglobby@0.2.17",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/tinypool@2.1.0",
+      "name": "tinypool",
+      "version": "2.1.0",
+      "purl": "pkg:npm/tinypool@2.1.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/tinyrainbow@3.1.1",
+      "name": "tinyrainbow",
+      "version": "3.1.1",
+      "purl": "pkg:npm/tinyrainbow@3.1.1",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/totalist@3.0.1",
+      "name": "totalist",
+      "version": "3.0.1",
+      "purl": "pkg:npm/totalist@3.0.1",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/tslib@2.8.1",
+      "name": "tslib",
+      "version": "2.8.1",
+      "purl": "pkg:npm/tslib@2.8.1",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/type-level-regexp@0.1.17",
+      "name": "type-level-regexp",
+      "version": "0.1.17",
+      "purl": "pkg:npm/type-level-regexp@0.1.17",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/typescript@5.9.3",
+      "name": "typescript",
+      "version": "5.9.3",
+      "purl": "pkg:npm/typescript@5.9.3",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/ufo@1.6.4",
+      "name": "ufo",
+      "version": "1.6.4",
+      "purl": "pkg:npm/ufo@1.6.4",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/undici-types@7.16.0",
+      "name": "undici-types",
+      "version": "7.16.0",
+      "purl": "pkg:npm/undici-types@7.16.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/unplugin@3.3.0",
+      "name": "unplugin",
+      "version": "3.3.0",
+      "purl": "pkg:npm/unplugin@3.3.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/vite-plus@0.1.20",
+      "name": "vite-plus",
+      "version": "0.1.20",
+      "purl": "pkg:npm/vite-plus@0.1.20",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/vite@8.0.16",
+      "name": "vite",
+      "version": "8.0.16",
+      "purl": "pkg:npm/vite@8.0.16",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/vitest@4.1.5",
+      "name": "vitest",
+      "version": "4.1.5",
+      "purl": "pkg:npm/vitest@4.1.5",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/webpack-virtual-modules@0.6.2",
+      "name": "webpack-virtual-modules",
+      "version": "0.6.2",
+      "purl": "pkg:npm/webpack-virtual-modules@0.6.2",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/why-is-node-running@2.3.0",
+      "name": "why-is-node-running",
+      "version": "2.3.0",
+      "purl": "pkg:npm/why-is-node-running@2.3.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/ws@8.21.2",
+      "name": "ws",
+      "version": "8.21.2",
+      "purl": "pkg:npm/ws@8.21.2",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/yuku-analyzer@0.7.0",
+      "name": "yuku-analyzer",
+      "version": "0.7.0",
+      "purl": "pkg:npm/yuku-analyzer@0.7.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/yuku-ast@0.7.0",
+      "name": "yuku-ast",
+      "version": "0.7.0",
+      "purl": "pkg:npm/yuku-ast@0.7.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "pkg:npm/yuku-parser@0.7.0",
+      "name": "yuku-parser",
+      "version": "0.7.0",
+      "purl": "pkg:npm/yuku-parser@0.7.0",
+      "properties": [
+        {
+          "name": "versionless:source",
+          "value": "pnpm-lock.yaml"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "workspace:.",
+      "dependsOn": [
+        "workspace:packages/cli",
+        "workspace:packages/core",
+        "workspace:packages/experiments",
+        "workspace:packages/frameworks/angular",
+        "workspace:packages/frameworks/angularjs",
+        "workspace:packages/frameworks/nextjs",
+        "workspace:packages/frameworks/react",
+        "workspace:packages/node-guard",
+        "workspace:packages/trust",
+        "pkg:npm/%40angular/compiler@22.1.0",
+        "pkg:npm/%40emnapi/core@1.10.0",
+        "pkg:npm/%40emnapi/runtime@1.10.0",
+        "pkg:npm/%40emnapi/wasi-threads@1.2.1",
+        "pkg:npm/%40jridgewell/gen-mapping@0.3.13",
+        "pkg:npm/%40jridgewell/remapping@2.3.5",
+        "pkg:npm/%40jridgewell/resolve-uri@3.1.2",
+        "pkg:npm/%40jridgewell/sourcemap-codec@1.5.5",
+        "pkg:npm/%40jridgewell/trace-mapping@0.3.31",
+        "pkg:npm/%40napi-rs/wasm-runtime@1.2.2",
+        "pkg:npm/%40oxc-project/runtime@0.127.0",
+        "pkg:npm/%40oxc-project/types@0.127.0",
+        "pkg:npm/%40oxc-project/types@0.133.0",
+        "pkg:npm/%40oxfmt/binding-android-arm-eabi@0.46.0",
+        "pkg:npm/%40oxfmt/binding-android-arm64@0.46.0",
+        "pkg:npm/%40oxfmt/binding-darwin-arm64@0.46.0",
+        "pkg:npm/%40oxfmt/binding-darwin-x64@0.46.0",
+        "pkg:npm/%40oxfmt/binding-freebsd-x64@0.46.0",
+        "pkg:npm/%40oxfmt/binding-linux-arm-gnueabihf@0.46.0",
+        "pkg:npm/%40oxfmt/binding-linux-arm-musleabihf@0.46.0",
+        "pkg:npm/%40oxfmt/binding-linux-arm64-gnu@0.46.0",
+        "pkg:npm/%40oxfmt/binding-linux-arm64-musl@0.46.0",
+        "pkg:npm/%40oxfmt/binding-linux-ppc64-gnu@0.46.0",
+        "pkg:npm/%40oxfmt/binding-linux-riscv64-gnu@0.46.0",
+        "pkg:npm/%40oxfmt/binding-linux-riscv64-musl@0.46.0",
+        "pkg:npm/%40oxfmt/binding-linux-s390x-gnu@0.46.0",
+        "pkg:npm/%40oxfmt/binding-linux-x64-gnu@0.46.0",
+        "pkg:npm/%40oxfmt/binding-linux-x64-musl@0.46.0",
+        "pkg:npm/%40oxfmt/binding-openharmony-arm64@0.46.0",
+        "pkg:npm/%40oxfmt/binding-win32-arm64-msvc@0.46.0",
+        "pkg:npm/%40oxfmt/binding-win32-ia32-msvc@0.46.0",
+        "pkg:npm/%40oxfmt/binding-win32-x64-msvc@0.46.0",
+        "pkg:npm/%40oxlint-tsgolint/darwin-arm64@0.22.0",
+        "pkg:npm/%40oxlint-tsgolint/darwin-x64@0.22.0",
+        "pkg:npm/%40oxlint-tsgolint/linux-arm64@0.22.0",
+        "pkg:npm/%40oxlint-tsgolint/linux-x64@0.22.0",
+        "pkg:npm/%40oxlint-tsgolint/win32-arm64@0.22.0",
+        "pkg:npm/%40oxlint-tsgolint/win32-x64@0.22.0",
+        "pkg:npm/%40oxlint/binding-android-arm-eabi@1.61.0",
+        "pkg:npm/%40oxlint/binding-android-arm64@1.61.0",
+        "pkg:npm/%40oxlint/binding-darwin-arm64@1.61.0",
+        "pkg:npm/%40oxlint/binding-darwin-x64@1.61.0",
+        "pkg:npm/%40oxlint/binding-freebsd-x64@1.61.0",
+        "pkg:npm/%40oxlint/binding-linux-arm-gnueabihf@1.61.0",
+        "pkg:npm/%40oxlint/binding-linux-arm-musleabihf@1.61.0",
+        "pkg:npm/%40oxlint/binding-linux-arm64-gnu@1.61.0",
+        "pkg:npm/%40oxlint/binding-linux-arm64-musl@1.61.0",
+        "pkg:npm/%40oxlint/binding-linux-ppc64-gnu@1.61.0",
+        "pkg:npm/%40oxlint/binding-linux-riscv64-gnu@1.61.0",
+        "pkg:npm/%40oxlint/binding-linux-riscv64-musl@1.61.0",
+        "pkg:npm/%40oxlint/binding-linux-s390x-gnu@1.61.0",
+        "pkg:npm/%40oxlint/binding-linux-x64-gnu@1.61.0",
+        "pkg:npm/%40oxlint/binding-linux-x64-musl@1.61.0",
+        "pkg:npm/%40oxlint/binding-openharmony-arm64@1.61.0",
+        "pkg:npm/%40oxlint/binding-win32-arm64-msvc@1.61.0",
+        "pkg:npm/%40oxlint/binding-win32-ia32-msvc@1.61.0",
+        "pkg:npm/%40oxlint/binding-win32-x64-msvc@1.61.0",
+        "pkg:npm/%40polka/url@1.0.0-next.29",
+        "pkg:npm/%40rolldown/binding-android-arm64@1.0.3",
+        "pkg:npm/%40rolldown/binding-darwin-arm64@1.0.3",
+        "pkg:npm/%40rolldown/binding-darwin-x64@1.0.3",
+        "pkg:npm/%40rolldown/binding-freebsd-x64@1.0.3",
+        "pkg:npm/%40rolldown/binding-linux-arm-gnueabihf@1.0.3",
+        "pkg:npm/%40rolldown/binding-linux-arm64-gnu@1.0.3",
+        "pkg:npm/%40rolldown/binding-linux-arm64-musl@1.0.3",
+        "pkg:npm/%40rolldown/binding-linux-ppc64-gnu@1.0.3",
+        "pkg:npm/%40rolldown/binding-linux-s390x-gnu@1.0.3",
+        "pkg:npm/%40rolldown/binding-linux-x64-gnu@1.0.3",
+        "pkg:npm/%40rolldown/binding-linux-x64-musl@1.0.3",
+        "pkg:npm/%40rolldown/binding-openharmony-arm64@1.0.3",
+        "pkg:npm/%40rolldown/binding-wasm32-wasi@1.0.3",
+        "pkg:npm/%40rolldown/binding-win32-arm64-msvc@1.0.3",
+        "pkg:npm/%40rolldown/binding-win32-x64-msvc@1.0.3",
+        "pkg:npm/%40rolldown/pluginutils@1.0.1",
+        "pkg:npm/%40standard-schema/spec@1.1.0",
+        "pkg:npm/%40tybys/wasm-util@0.10.3",
+        "pkg:npm/%40types/chai@5.2.3",
+        "pkg:npm/%40types/deep-eql@4.0.2",
+        "pkg:npm/%40types/estree@1.0.9",
+        "pkg:npm/%40types/node@24.12.2",
+        "pkg:npm/%40vitest/expect@4.1.5",
+        "pkg:npm/%40vitest/mocker@4.1.5",
+        "pkg:npm/%40vitest/pretty-format@4.1.5",
+        "pkg:npm/%40vitest/runner@4.1.5",
+        "pkg:npm/%40vitest/snapshot@4.1.5",
+        "pkg:npm/%40vitest/spy@4.1.5",
+        "pkg:npm/%40vitest/utils@4.1.5",
+        "pkg:npm/%40voidzero-dev/vite-plus-core@0.1.20",
+        "pkg:npm/%40voidzero-dev/vite-plus-darwin-arm64@0.1.20",
+        "pkg:npm/%40voidzero-dev/vite-plus-darwin-x64@0.1.20",
+        "pkg:npm/%40voidzero-dev/vite-plus-linux-arm64-gnu@0.1.20",
+        "pkg:npm/%40voidzero-dev/vite-plus-linux-arm64-musl@0.1.20",
+        "pkg:npm/%40voidzero-dev/vite-plus-linux-x64-gnu@0.1.20",
+        "pkg:npm/%40voidzero-dev/vite-plus-linux-x64-musl@0.1.20",
+        "pkg:npm/%40voidzero-dev/vite-plus-test@0.1.20",
+        "pkg:npm/%40voidzero-dev/vite-plus-win32-arm64-msvc@0.1.20",
+        "pkg:npm/%40voidzero-dev/vite-plus-win32-x64-msvc@0.1.20",
+        "pkg:npm/%40yuku-analyzer/binding-darwin-arm64@0.7.0",
+        "pkg:npm/%40yuku-analyzer/binding-darwin-x64@0.7.0",
+        "pkg:npm/%40yuku-analyzer/binding-freebsd-x64@0.7.0",
+        "pkg:npm/%40yuku-analyzer/binding-linux-arm-gnu@0.7.0",
+        "pkg:npm/%40yuku-analyzer/binding-linux-arm-musl@0.7.0",
+        "pkg:npm/%40yuku-analyzer/binding-linux-arm64-gnu@0.7.0",
+        "pkg:npm/%40yuku-analyzer/binding-linux-arm64-musl@0.7.0",
+        "pkg:npm/%40yuku-analyzer/binding-linux-x64-gnu@0.7.0",
+        "pkg:npm/%40yuku-analyzer/binding-linux-x64-musl@0.7.0",
+        "pkg:npm/%40yuku-analyzer/binding-win32-arm64@0.7.0",
+        "pkg:npm/%40yuku-analyzer/binding-win32-x64@0.7.0",
+        "pkg:npm/%40yuku-parser/binding-darwin-arm64@0.7.0",
+        "pkg:npm/%40yuku-parser/binding-darwin-x64@0.7.0",
+        "pkg:npm/%40yuku-parser/binding-freebsd-x64@0.7.0",
+        "pkg:npm/%40yuku-parser/binding-linux-arm-gnu@0.7.0",
+        "pkg:npm/%40yuku-parser/binding-linux-arm-musl@0.7.0",
+        "pkg:npm/%40yuku-parser/binding-linux-arm64-gnu@0.7.0",
+        "pkg:npm/%40yuku-parser/binding-linux-arm64-musl@0.7.0",
+        "pkg:npm/%40yuku-parser/binding-linux-x64-gnu@0.7.0",
+        "pkg:npm/%40yuku-parser/binding-linux-x64-musl@0.7.0",
+        "pkg:npm/%40yuku-parser/binding-win32-arm64@0.7.0",
+        "pkg:npm/%40yuku-parser/binding-win32-x64@0.7.0",
+        "pkg:npm/%40yuku-toolchain/types@0.7.0",
+        "pkg:npm/assertion-error@2.0.1",
+        "pkg:npm/chai@6.2.2",
+        "pkg:npm/convert-source-map@2.0.0",
+        "pkg:npm/detect-libc@2.1.2",
+        "pkg:npm/es-module-lexer@1.7.0",
+        "pkg:npm/es-module-lexer@2.3.1",
+        "pkg:npm/estree-walker@3.0.3",
+        "pkg:npm/expect-type@1.4.0",
+        "pkg:npm/fdir@6.5.0",
+        "pkg:npm/fsevents@2.3.2",
+        "pkg:npm/fsevents@2.3.3",
+        "pkg:npm/lightningcss-android-arm64@1.33.0",
+        "pkg:npm/lightningcss-darwin-arm64@1.33.0",
+        "pkg:npm/lightningcss-darwin-x64@1.33.0",
+        "pkg:npm/lightningcss-freebsd-x64@1.33.0",
+        "pkg:npm/lightningcss-linux-arm-gnueabihf@1.33.0",
+        "pkg:npm/lightningcss-linux-arm64-gnu@1.33.0",
+        "pkg:npm/lightningcss-linux-arm64-musl@1.33.0",
+        "pkg:npm/lightningcss-linux-x64-gnu@1.33.0",
+        "pkg:npm/lightningcss-linux-x64-musl@1.33.0",
+        "pkg:npm/lightningcss-win32-arm64-msvc@1.33.0",
+        "pkg:npm/lightningcss-win32-x64-msvc@1.33.0",
+        "pkg:npm/lightningcss@1.33.0",
+        "pkg:npm/magic-regexp@0.11.0",
+        "pkg:npm/magic-string@0.30.21",
+        "pkg:npm/mrmime@2.0.1",
+        "pkg:npm/nanoid@3.3.17",
+        "pkg:npm/obug@2.1.4",
+        "pkg:npm/oxfmt@0.46.0",
+        "pkg:npm/oxlint-tsgolint@0.22.0",
+        "pkg:npm/oxlint@1.61.0",
+        "pkg:npm/pathe@2.0.3",
+        "pkg:npm/picocolors@1.1.1",
+        "pkg:npm/picomatch@4.0.5",
+        "pkg:npm/pixelmatch@7.2.0",
+        "pkg:npm/playwright-core@1.58.2",
+        "pkg:npm/playwright@1.58.2",
+        "pkg:npm/pngjs@7.0.0",
+        "pkg:npm/postcss@8.5.25",
+        "pkg:npm/regexp-tree@0.1.27",
+        "pkg:npm/rolldown@1.0.3",
+        "pkg:npm/siginfo@2.0.0",
+        "pkg:npm/sirv@3.0.2",
+        "pkg:npm/source-map-js@1.2.1",
+        "pkg:npm/stackback@0.0.2",
+        "pkg:npm/std-env@4.2.0",
+        "pkg:npm/tinybench@2.9.0",
+        "pkg:npm/tinyexec@1.3.0",
+        "pkg:npm/tinyglobby@0.2.17",
+        "pkg:npm/tinypool@2.1.0",
+        "pkg:npm/tinyrainbow@3.1.1",
+        "pkg:npm/totalist@3.0.1",
+        "pkg:npm/tslib@2.8.1",
+        "pkg:npm/type-level-regexp@0.1.17",
+        "pkg:npm/typescript@5.9.3",
+        "pkg:npm/ufo@1.6.4",
+        "pkg:npm/undici-types@7.16.0",
+        "pkg:npm/unplugin@3.3.0",
+        "pkg:npm/vite-plus@0.1.20",
+        "pkg:npm/vite@8.0.16",
+        "pkg:npm/vitest@4.1.5",
+        "pkg:npm/webpack-virtual-modules@0.6.2",
+        "pkg:npm/why-is-node-running@2.3.0",
+        "pkg:npm/ws@8.21.2",
+        "pkg:npm/yuku-analyzer@0.7.0",
+        "pkg:npm/yuku-ast@0.7.0",
+        "pkg:npm/yuku-parser@0.7.0"
+      ]
+    },
+    {
+      "ref": "workspace:packages/cli"
+    },
+    {
+      "ref": "workspace:packages/core"
+    },
+    {
+      "ref": "workspace:packages/experiments"
+    },
+    {
+      "ref": "workspace:packages/frameworks/angular"
+    },
+    {
+      "ref": "workspace:packages/frameworks/angularjs"
+    },
+    {
+      "ref": "workspace:packages/frameworks/nextjs"
+    },
+    {
+      "ref": "workspace:packages/frameworks/react"
+    },
+    {
+      "ref": "workspace:packages/node-guard"
+    },
+    {
+      "ref": "workspace:packages/trust"
+    },
+    {
+      "ref": "pkg:npm/%40angular/compiler@22.1.0"
+    },
+    {
+      "ref": "pkg:npm/%40emnapi/core@1.10.0"
+    },
+    {
+      "ref": "pkg:npm/%40emnapi/runtime@1.10.0"
+    },
+    {
+      "ref": "pkg:npm/%40emnapi/wasi-threads@1.2.1"
+    },
+    {
+      "ref": "pkg:npm/%40jridgewell/gen-mapping@0.3.13"
+    },
+    {
+      "ref": "pkg:npm/%40jridgewell/remapping@2.3.5"
+    },
+    {
+      "ref": "pkg:npm/%40jridgewell/resolve-uri@3.1.2"
+    },
+    {
+      "ref": "pkg:npm/%40jridgewell/sourcemap-codec@1.5.5"
+    },
+    {
+      "ref": "pkg:npm/%40jridgewell/trace-mapping@0.3.31"
+    },
+    {
+      "ref": "pkg:npm/%40napi-rs/wasm-runtime@1.2.2"
+    },
+    {
+      "ref": "pkg:npm/%40oxc-project/runtime@0.127.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxc-project/types@0.127.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxc-project/types@0.133.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxfmt/binding-android-arm-eabi@0.46.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxfmt/binding-android-arm64@0.46.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxfmt/binding-darwin-arm64@0.46.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxfmt/binding-darwin-x64@0.46.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxfmt/binding-freebsd-x64@0.46.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxfmt/binding-linux-arm-gnueabihf@0.46.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxfmt/binding-linux-arm-musleabihf@0.46.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxfmt/binding-linux-arm64-gnu@0.46.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxfmt/binding-linux-arm64-musl@0.46.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxfmt/binding-linux-ppc64-gnu@0.46.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxfmt/binding-linux-riscv64-gnu@0.46.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxfmt/binding-linux-riscv64-musl@0.46.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxfmt/binding-linux-s390x-gnu@0.46.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxfmt/binding-linux-x64-gnu@0.46.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxfmt/binding-linux-x64-musl@0.46.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxfmt/binding-openharmony-arm64@0.46.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxfmt/binding-win32-arm64-msvc@0.46.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxfmt/binding-win32-ia32-msvc@0.46.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxfmt/binding-win32-x64-msvc@0.46.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxlint-tsgolint/darwin-arm64@0.22.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxlint-tsgolint/darwin-x64@0.22.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxlint-tsgolint/linux-arm64@0.22.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxlint-tsgolint/linux-x64@0.22.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxlint-tsgolint/win32-arm64@0.22.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxlint-tsgolint/win32-x64@0.22.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxlint/binding-android-arm-eabi@1.61.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxlint/binding-android-arm64@1.61.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxlint/binding-darwin-arm64@1.61.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxlint/binding-darwin-x64@1.61.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxlint/binding-freebsd-x64@1.61.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxlint/binding-linux-arm-gnueabihf@1.61.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxlint/binding-linux-arm-musleabihf@1.61.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxlint/binding-linux-arm64-gnu@1.61.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxlint/binding-linux-arm64-musl@1.61.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxlint/binding-linux-ppc64-gnu@1.61.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxlint/binding-linux-riscv64-gnu@1.61.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxlint/binding-linux-riscv64-musl@1.61.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxlint/binding-linux-s390x-gnu@1.61.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxlint/binding-linux-x64-gnu@1.61.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxlint/binding-linux-x64-musl@1.61.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxlint/binding-openharmony-arm64@1.61.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxlint/binding-win32-arm64-msvc@1.61.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxlint/binding-win32-ia32-msvc@1.61.0"
+    },
+    {
+      "ref": "pkg:npm/%40oxlint/binding-win32-x64-msvc@1.61.0"
+    },
+    {
+      "ref": "pkg:npm/%40polka/url@1.0.0-next.29"
+    },
+    {
+      "ref": "pkg:npm/%40rolldown/binding-android-arm64@1.0.3"
+    },
+    {
+      "ref": "pkg:npm/%40rolldown/binding-darwin-arm64@1.0.3"
+    },
+    {
+      "ref": "pkg:npm/%40rolldown/binding-darwin-x64@1.0.3"
+    },
+    {
+      "ref": "pkg:npm/%40rolldown/binding-freebsd-x64@1.0.3"
+    },
+    {
+      "ref": "pkg:npm/%40rolldown/binding-linux-arm-gnueabihf@1.0.3"
+    },
+    {
+      "ref": "pkg:npm/%40rolldown/binding-linux-arm64-gnu@1.0.3"
+    },
+    {
+      "ref": "pkg:npm/%40rolldown/binding-linux-arm64-musl@1.0.3"
+    },
+    {
+      "ref": "pkg:npm/%40rolldown/binding-linux-ppc64-gnu@1.0.3"
+    },
+    {
+      "ref": "pkg:npm/%40rolldown/binding-linux-s390x-gnu@1.0.3"
+    },
+    {
+      "ref": "pkg:npm/%40rolldown/binding-linux-x64-gnu@1.0.3"
+    },
+    {
+      "ref": "pkg:npm/%40rolldown/binding-linux-x64-musl@1.0.3"
+    },
+    {
+      "ref": "pkg:npm/%40rolldown/binding-openharmony-arm64@1.0.3"
+    },
+    {
+      "ref": "pkg:npm/%40rolldown/binding-wasm32-wasi@1.0.3"
+    },
+    {
+      "ref": "pkg:npm/%40rolldown/binding-win32-arm64-msvc@1.0.3"
+    },
+    {
+      "ref": "pkg:npm/%40rolldown/binding-win32-x64-msvc@1.0.3"
+    },
+    {
+      "ref": "pkg:npm/%40rolldown/pluginutils@1.0.1"
+    },
+    {
+      "ref": "pkg:npm/%40standard-schema/spec@1.1.0"
+    },
+    {
+      "ref": "pkg:npm/%40tybys/wasm-util@0.10.3"
+    },
+    {
+      "ref": "pkg:npm/%40types/chai@5.2.3"
+    },
+    {
+      "ref": "pkg:npm/%40types/deep-eql@4.0.2"
+    },
+    {
+      "ref": "pkg:npm/%40types/estree@1.0.9"
+    },
+    {
+      "ref": "pkg:npm/%40types/node@24.12.2"
+    },
+    {
+      "ref": "pkg:npm/%40vitest/expect@4.1.5"
+    },
+    {
+      "ref": "pkg:npm/%40vitest/mocker@4.1.5"
+    },
+    {
+      "ref": "pkg:npm/%40vitest/pretty-format@4.1.5"
+    },
+    {
+      "ref": "pkg:npm/%40vitest/runner@4.1.5"
+    },
+    {
+      "ref": "pkg:npm/%40vitest/snapshot@4.1.5"
+    },
+    {
+      "ref": "pkg:npm/%40vitest/spy@4.1.5"
+    },
+    {
+      "ref": "pkg:npm/%40vitest/utils@4.1.5"
+    },
+    {
+      "ref": "pkg:npm/%40voidzero-dev/vite-plus-core@0.1.20"
+    },
+    {
+      "ref": "pkg:npm/%40voidzero-dev/vite-plus-darwin-arm64@0.1.20"
+    },
+    {
+      "ref": "pkg:npm/%40voidzero-dev/vite-plus-darwin-x64@0.1.20"
+    },
+    {
+      "ref": "pkg:npm/%40voidzero-dev/vite-plus-linux-arm64-gnu@0.1.20"
+    },
+    {
+      "ref": "pkg:npm/%40voidzero-dev/vite-plus-linux-arm64-musl@0.1.20"
+    },
+    {
+      "ref": "pkg:npm/%40voidzero-dev/vite-plus-linux-x64-gnu@0.1.20"
+    },
+    {
+      "ref": "pkg:npm/%40voidzero-dev/vite-plus-linux-x64-musl@0.1.20"
+    },
+    {
+      "ref": "pkg:npm/%40voidzero-dev/vite-plus-test@0.1.20"
+    },
+    {
+      "ref": "pkg:npm/%40voidzero-dev/vite-plus-win32-arm64-msvc@0.1.20"
+    },
+    {
+      "ref": "pkg:npm/%40voidzero-dev/vite-plus-win32-x64-msvc@0.1.20"
+    },
+    {
+      "ref": "pkg:npm/%40yuku-analyzer/binding-darwin-arm64@0.7.0"
+    },
+    {
+      "ref": "pkg:npm/%40yuku-analyzer/binding-darwin-x64@0.7.0"
+    },
+    {
+      "ref": "pkg:npm/%40yuku-analyzer/binding-freebsd-x64@0.7.0"
+    },
+    {
+      "ref": "pkg:npm/%40yuku-analyzer/binding-linux-arm-gnu@0.7.0"
+    },
+    {
+      "ref": "pkg:npm/%40yuku-analyzer/binding-linux-arm-musl@0.7.0"
+    },
+    {
+      "ref": "pkg:npm/%40yuku-analyzer/binding-linux-arm64-gnu@0.7.0"
+    },
+    {
+      "ref": "pkg:npm/%40yuku-analyzer/binding-linux-arm64-musl@0.7.0"
+    },
+    {
+      "ref": "pkg:npm/%40yuku-analyzer/binding-linux-x64-gnu@0.7.0"
+    },
+    {
+      "ref": "pkg:npm/%40yuku-analyzer/binding-linux-x64-musl@0.7.0"
+    },
+    {
+      "ref": "pkg:npm/%40yuku-analyzer/binding-win32-arm64@0.7.0"
+    },
+    {
+      "ref": "pkg:npm/%40yuku-analyzer/binding-win32-x64@0.7.0"
+    },
+    {
+      "ref": "pkg:npm/%40yuku-parser/binding-darwin-arm64@0.7.0"
+    },
+    {
+      "ref": "pkg:npm/%40yuku-parser/binding-darwin-x64@0.7.0"
+    },
+    {
+      "ref": "pkg:npm/%40yuku-parser/binding-freebsd-x64@0.7.0"
+    },
+    {
+      "ref": "pkg:npm/%40yuku-parser/binding-linux-arm-gnu@0.7.0"
+    },
+    {
+      "ref": "pkg:npm/%40yuku-parser/binding-linux-arm-musl@0.7.0"
+    },
+    {
+      "ref": "pkg:npm/%40yuku-parser/binding-linux-arm64-gnu@0.7.0"
+    },
+    {
+      "ref": "pkg:npm/%40yuku-parser/binding-linux-arm64-musl@0.7.0"
+    },
+    {
+      "ref": "pkg:npm/%40yuku-parser/binding-linux-x64-gnu@0.7.0"
+    },
+    {
+      "ref": "pkg:npm/%40yuku-parser/binding-linux-x64-musl@0.7.0"
+    },
+    {
+      "ref": "pkg:npm/%40yuku-parser/binding-win32-arm64@0.7.0"
+    },
+    {
+      "ref": "pkg:npm/%40yuku-parser/binding-win32-x64@0.7.0"
+    },
+    {
+      "ref": "pkg:npm/%40yuku-toolchain/types@0.7.0"
+    },
+    {
+      "ref": "pkg:npm/assertion-error@2.0.1"
+    },
+    {
+      "ref": "pkg:npm/chai@6.2.2"
+    },
+    {
+      "ref": "pkg:npm/convert-source-map@2.0.0"
+    },
+    {
+      "ref": "pkg:npm/detect-libc@2.1.2"
+    },
+    {
+      "ref": "pkg:npm/es-module-lexer@1.7.0"
+    },
+    {
+      "ref": "pkg:npm/es-module-lexer@2.3.1"
+    },
+    {
+      "ref": "pkg:npm/estree-walker@3.0.3"
+    },
+    {
+      "ref": "pkg:npm/expect-type@1.4.0"
+    },
+    {
+      "ref": "pkg:npm/fdir@6.5.0"
+    },
+    {
+      "ref": "pkg:npm/fsevents@2.3.2"
+    },
+    {
+      "ref": "pkg:npm/fsevents@2.3.3"
+    },
+    {
+      "ref": "pkg:npm/lightningcss-android-arm64@1.33.0"
+    },
+    {
+      "ref": "pkg:npm/lightningcss-darwin-arm64@1.33.0"
+    },
+    {
+      "ref": "pkg:npm/lightningcss-darwin-x64@1.33.0"
+    },
+    {
+      "ref": "pkg:npm/lightningcss-freebsd-x64@1.33.0"
+    },
+    {
+      "ref": "pkg:npm/lightningcss-linux-arm-gnueabihf@1.33.0"
+    },
+    {
+      "ref": "pkg:npm/lightningcss-linux-arm64-gnu@1.33.0"
+    },
+    {
+      "ref": "pkg:npm/lightningcss-linux-arm64-musl@1.33.0"
+    },
+    {
+      "ref": "pkg:npm/lightningcss-linux-x64-gnu@1.33.0"
+    },
+    {
+      "ref": "pkg:npm/lightningcss-linux-x64-musl@1.33.0"
+    },
+    {
+      "ref": "pkg:npm/lightningcss-win32-arm64-msvc@1.33.0"
+    },
+    {
+      "ref": "pkg:npm/lightningcss-win32-x64-msvc@1.33.0"
+    },
+    {
+      "ref": "pkg:npm/lightningcss@1.33.0"
+    },
+    {
+      "ref": "pkg:npm/magic-regexp@0.11.0"
+    },
+    {
+      "ref": "pkg:npm/magic-string@0.30.21"
+    },
+    {
+      "ref": "pkg:npm/mrmime@2.0.1"
+    },
+    {
+      "ref": "pkg:npm/nanoid@3.3.17"
+    },
+    {
+      "ref": "pkg:npm/obug@2.1.4"
+    },
+    {
+      "ref": "pkg:npm/oxfmt@0.46.0"
+    },
+    {
+      "ref": "pkg:npm/oxlint-tsgolint@0.22.0"
+    },
+    {
+      "ref": "pkg:npm/oxlint@1.61.0"
+    },
+    {
+      "ref": "pkg:npm/pathe@2.0.3"
+    },
+    {
+      "ref": "pkg:npm/picocolors@1.1.1"
+    },
+    {
+      "ref": "pkg:npm/picomatch@4.0.5"
+    },
+    {
+      "ref": "pkg:npm/pixelmatch@7.2.0"
+    },
+    {
+      "ref": "pkg:npm/playwright-core@1.58.2"
+    },
+    {
+      "ref": "pkg:npm/playwright@1.58.2"
+    },
+    {
+      "ref": "pkg:npm/pngjs@7.0.0"
+    },
+    {
+      "ref": "pkg:npm/postcss@8.5.25"
+    },
+    {
+      "ref": "pkg:npm/regexp-tree@0.1.27"
+    },
+    {
+      "ref": "pkg:npm/rolldown@1.0.3"
+    },
+    {
+      "ref": "pkg:npm/siginfo@2.0.0"
+    },
+    {
+      "ref": "pkg:npm/sirv@3.0.2"
+    },
+    {
+      "ref": "pkg:npm/source-map-js@1.2.1"
+    },
+    {
+      "ref": "pkg:npm/stackback@0.0.2"
+    },
+    {
+      "ref": "pkg:npm/std-env@4.2.0"
+    },
+    {
+      "ref": "pkg:npm/tinybench@2.9.0"
+    },
+    {
+      "ref": "pkg:npm/tinyexec@1.3.0"
+    },
+    {
+      "ref": "pkg:npm/tinyglobby@0.2.17"
+    },
+    {
+      "ref": "pkg:npm/tinypool@2.1.0"
+    },
+    {
+      "ref": "pkg:npm/tinyrainbow@3.1.1"
+    },
+    {
+      "ref": "pkg:npm/totalist@3.0.1"
+    },
+    {
+      "ref": "pkg:npm/tslib@2.8.1"
+    },
+    {
+      "ref": "pkg:npm/type-level-regexp@0.1.17"
+    },
+    {
+      "ref": "pkg:npm/typescript@5.9.3"
+    },
+    {
+      "ref": "pkg:npm/ufo@1.6.4"
+    },
+    {
+      "ref": "pkg:npm/undici-types@7.16.0"
+    },
+    {
+      "ref": "pkg:npm/unplugin@3.3.0"
+    },
+    {
+      "ref": "pkg:npm/vite-plus@0.1.20"
+    },
+    {
+      "ref": "pkg:npm/vite@8.0.16"
+    },
+    {
+      "ref": "pkg:npm/vitest@4.1.5"
+    },
+    {
+      "ref": "pkg:npm/webpack-virtual-modules@0.6.2"
+    },
+    {
+      "ref": "pkg:npm/why-is-node-running@2.3.0"
+    },
+    {
+      "ref": "pkg:npm/ws@8.21.2"
+    },
+    {
+      "ref": "pkg:npm/yuku-analyzer@0.7.0"
+    },
+    {
+      "ref": "pkg:npm/yuku-ast@0.7.0"
+    },
+    {
+      "ref": "pkg:npm/yuku-parser@0.7.0"
+    }
+  ]
+}

@@ -1,0 +1,176 @@
+{
+  "schemaVersion": "versionless.receipt.v1",
+  "runId": "T060-react-boilerplate-v4-composed",
+  "fixture": "react-boilerplate-v4-composed",
+  "source": {
+    "repository": "https://github.com/react-boilerplate/react-boilerplate",
+    "revision": "d19099afeff64ecfb09133c06c1cb18c0d40887e",
+    "archiveSha256": "d6ca60a3c8881ae2be26a8d04e00da4d922a6653f8512f2b12ac55d48f2ce2d5",
+    "license": "MIT",
+    "licenseSha256": "e773e6b91c13f55310668e15ce178a2fcf779ff39dbcc0b910b4b5f1ecb17acb"
+  },
+  "tooling": {
+    "legacyNode": "16.20.2-darwin-arm64 EOL compatibility sandbox",
+    "targetNode": "24.15.0-darwin-arm64 maintained runtime",
+    "legacyBundler": "webpack-4.30.0",
+    "targetBundler": "Vite-8.0.16 fixture-specific adapter",
+    "playwright": "1.58.2",
+    "chromium": "145.0.7632.6",
+    "yuku": "parser/analyzer 0.7.0"
+  },
+  "consent": [
+    {
+      "id": "T008-fixture-ingest",
+      "purpose": "reuse immutable licensed d19099 source and locked dependencies",
+      "mode": "consented"
+    },
+    {
+      "id": "T022-react-node24-ingest",
+      "purpose": "reuse pinned Node 24 runtime and maintained dependency closure",
+      "mode": "consented"
+    }
+  ],
+  "migration": {
+    "file": "app/containers/LocaleToggle/index.js + app/containers/HomePage/index.js + app/containers/RepoListItem/index.js + package.json + package-lock.json",
+    "transform": "react-composed-connect-to-hooks",
+    "edits": 11,
+    "changedFiles": [
+      "app/containers/LocaleToggle/index.js",
+      "app/containers/HomePage/index.js",
+      "app/containers/RepoListItem/index.js",
+      "package.json",
+      "package-lock.json"
+    ],
+    "orders": [
+      "locale-first",
+      "data-flow-first"
+    ],
+    "executionTraces": [
+      [
+        "locale-toggle",
+        "home-page",
+        "repo-list-item",
+        "maintained-package-lock"
+      ],
+      [
+        "home-page",
+        "repo-list-item",
+        "locale-toggle",
+        "maintained-package-lock"
+      ]
+    ],
+    "actualOrdersExecuted": true,
+    "atomic": true,
+    "publication": "same-filesystem-staged-directory-rename",
+    "injectedWriteFailure": "refused",
+    "lateFailureRollback": "published-target-unmodified",
+    "failedStageCleanup": true,
+    "harnessOnlyAdapterExcluded": true,
+    "sourceHashes": {
+      "app/containers/LocaleToggle/index.js": "70c2ea867367b5dbd0820413f344bcd6c19729ef04d41c1fd9e12d43d72e8dfa",
+      "app/containers/HomePage/index.js": "db0413d948d68980dd24db7660e1bd854cabcc4642ec15fff710f5c95131f232",
+      "app/containers/RepoListItem/index.js": "21a570ed27af053040ce6b503f1af0c22bbdfea52284dccb47b2dc382844d867",
+      "package.json": "a3383c3ccce6bd460952c5ac8b721ed5f7087ffc5a96713b6e9103f2ba3a8d76",
+      "package-lock.json": "09a37fc1d35eb4cfaab46e0ac8c0d3f33824b300a731ec25f1e50998e9c14edb"
+    },
+    "targetHashes": {
+      "app/containers/LocaleToggle/index.js": "db70524e86f9a5983d18f6ad1f2d72fec14b71bd5701d66da475ff600703e9b3",
+      "app/containers/HomePage/index.js": "9132cb8b6ab4af9c88499ae4daa6783229a8d4898266f2953d0bc99a5ff168c1",
+      "app/containers/RepoListItem/index.js": "5669977385fb57491fcb117cd65ffaa2a4ab86d2258bf36c7fa81ff880387517",
+      "package.json": "7fb3098e57021e790638e31677d3cbfe815087f889b708cab4e1efdc9785414a",
+      "package-lock.json": "42ffa936b19115ad380e77dcbc3800c7adf117aa560c5f678c837b7f4b09e00d"
+    }
+  },
+  "verification": {
+    "result": "pass",
+    "builds": "pass",
+    "journeys": "pass",
+    "mutation": "pass",
+    "locality": {
+      "mode": "offline",
+      "scope": "Versionless-spawned Node/npm/webpack/Vite child processes and Playwright browser requests",
+      "osWideIsolation": false,
+      "successfulNonLoopback": 0,
+      "browserBlockedRequests": 2,
+      "syntheticInterceptions": 4
+    },
+    "deterministicCore": {
+      "first": "49e72dbbcafed3983c1951d00024b9ad32eadf08f6a1e8d0c470a6bf6e72a194",
+      "second": "49e72dbbcafed3983c1951d00024b9ad32eadf08f6a1e8d0c470a6bf6e72a194",
+      "equal": true
+    },
+    "serviceWorker": {
+      "workerPath": "sw.js",
+      "manifestPath": "precache-manifest.json",
+      "scope": "/",
+      "manifestSha256": "553cd1cc611a0851b1978bbc041ef2f8c7b9fbbd3fdd9bb68274f29364987cdc",
+      "cacheName": "versionless-react-vite8-553cd1cc611a0851b1978bbc041ef2f8c7b9fbbd3fdd9bb68274f29364987cdc",
+      "currentCacheOnly": true,
+      "inventoryMatchesManifest": true,
+      "exactCurrentCacheFetch": true,
+      "buildsEqual": true,
+      "registration": "active",
+      "controller": "activated",
+      "offlineJourney": "pass",
+      "mutation": "intended-failure",
+      "restoration": "byte-identical",
+      "coverage": "exact-qualified-journey-only"
+    }
+  },
+  "artifacts": [
+    {
+      "path": "evidence/runs/react-boilerplate-v4-composed/artifacts/preparation.json",
+      "sha256": "b793c9290e8bd5831f56d276913d11f425e34ed08422d351f883aa2759dbb73b"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-composed/artifacts/composition.json",
+      "sha256": "af33c902117583185fb9504557781c7c0242ba63e0d51f23679e7fac2d5f4883"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-composed/artifacts/transform.json",
+      "sha256": "1bc421418715292c81a70949bc149e328a5cde60b1558ab36c62dc9f08c63e5e"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-composed/artifacts/build.json",
+      "sha256": "c7a4ccf8b84229ebf26e98fc8450fc653bef8f0031c74d4b22b1263e728c79fb"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-composed/artifacts/journey.json",
+      "sha256": "5c3486b366dd9fadda9044b97d438bbc89f851fc287bef6bc86a0de35590f924"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-composed/artifacts/mutation.json",
+      "sha256": "80fe6d3ff964f5c9a28a1b360021d2de780b8e4121dfc59f2a80fde00de2c07b"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-composed/artifacts/migration-diff.json",
+      "sha256": "cbc98ab8ca8d731bfffc9ee2d71ae836fb66f701c4c6ad0e324ceffd1438bced"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-composed/artifacts/locality.json",
+      "sha256": "262a3d7ae6bae875dea00b6eb1cfd5edf77085d0ef3b4368362316201cd35ba1"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-composed/artifacts/runtime.json",
+      "sha256": "9e28877bcb6b0830711e48065e6e0f00d3021237c02af36471f49e5a6c81b6ab"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-composed/artifacts/deterministic-core.json",
+      "sha256": "4ddc7d257567ebf50e65459134020120d2f966ae0bc1a55c6a9368c4137f04da"
+    }
+  ],
+  "integrity": {
+    "algorithm": "sha256",
+    "canonicalDigest": "9341f5e70c00ebbde65a919db5b5d31fde0fa39983e985deb01afb71ed00d1ad",
+    "authenticity": "not-established"
+  },
+  "limitations": [
+    "This cumulative vertical remains one React Boilerplate source application and is not a designated pilot or third application.",
+    "The target Vite adapter is fixture-specific; no generic, unplugin, old-Vite, or additional bundler support is established.",
+    "Synthetic GitHub interception proves no live API access.",
+    "Payment-page applicability and global dynamic insertion are not established; PCI compliance and certification are not claimed.",
+    "Hash integrity does not establish authenticity, signer identity, signed or Git provenance.",
+    "Network controls are process-scoped and do not establish OS-wide isolation.",
+    "Service-worker parity covers only the exact qualified offline journey, not global offline or PWA correctness."
+  ]
+}

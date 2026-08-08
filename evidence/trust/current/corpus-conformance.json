@@ -1,0 +1,851 @@
+{
+  "schemaVersion": "versionless.corpus-conformance.v1",
+  "summary": {
+    "verticals": 11,
+    "sourceApplications": 4,
+    "designatedPilotsVerified": 0
+  },
+  "verticals": [
+    {
+      "id": "react-boilerplate-v4",
+      "application": "react-boilerplate",
+      "framework": "react",
+      "receiptPath": "evidence/runs/react-boilerplate-v4/t008-run.json",
+      "receiptDigest": "4d32ae0a46041e5ec2ac68aa31a9b8f86bd9d294d312ce41968ddd99dc5ee758",
+      "receiptSchema": {
+        "schemaVersion": "versionless.receipt.v1",
+        "toolingFields": [
+          "chromium",
+          "node",
+          "playwright",
+          "webpack",
+          "yukuAnalyzer",
+          "yukuParser"
+        ],
+        "migrationFields": [
+          "dependency",
+          "edits",
+          "file",
+          "lockPatch",
+          "transform"
+        ],
+        "journeyFields": [
+          [
+            "blocked",
+            "consoleErrors",
+            "lane",
+            "pageErrors",
+            "result",
+            "run",
+            "selectedLocale",
+            "successfulNonLoopback",
+            "translatedHeading"
+          ]
+        ]
+      },
+      "runtime": "Node 16.20.2 EOL compatibility sandbox",
+      "bundler": "webpack 4.30.0",
+      "locality": {
+        "mode": "offline",
+        "scope": "Versionless-spawned Node/npm/webpack child processes and Playwright browser requests",
+        "osWideIsolation": false,
+        "successfulNonLoopback": 0,
+        "browserBlockedRequests": 4
+      },
+      "designatedPilot": false
+    },
+    {
+      "id": "angular-phonecat",
+      "application": "angular-phonecat",
+      "framework": "angularjs",
+      "receiptPath": "evidence/runs/angular-phonecat/t014-run.json",
+      "receiptDigest": "a6798081c0b005c76534b5acd4dc647d77d497b0b649748c685b779451035f51",
+      "receiptSchema": {
+        "schemaVersion": "versionless.receipt.v1",
+        "toolingFields": [
+          "application",
+          "chromium",
+          "legacyNode",
+          "playwright",
+          "targetNode",
+          "yukuAnalyzer",
+          "yukuParser"
+        ],
+        "migrationFields": [
+          "changedFiles",
+          "edits",
+          "file",
+          "injectionAnnotation",
+          "outerController",
+          "track",
+          "transform"
+        ],
+        "journeyFields": [
+          [
+            "blocked",
+            "consoleErrors",
+            "detail",
+            "filterText",
+            "initialImage",
+            "lane",
+            "orderValue",
+            "pageErrors",
+            "redirectPath",
+            "result",
+            "run",
+            "successfulNonLoopback",
+            "thumbnailSwaps"
+          ]
+        ]
+      },
+      "runtime": "Node 16 legacy / Node 24 target tooling",
+      "bundler": "none-static",
+      "locality": {
+        "mode": "offline",
+        "scope": "Versionless-spawned Node/npm child processes and Playwright browser requests",
+        "osWideIsolation": false,
+        "successfulNonLoopback": 0,
+        "browserBlockedRequests": 0
+      },
+      "lexicalThis": "verified",
+      "track": "angularjs-special-track",
+      "angular2Plus": "not-applicable",
+      "angularCliAot": "not-applicable",
+      "designatedPilot": false
+    },
+    {
+      "id": "react-boilerplate-v4-node24",
+      "application": "react-boilerplate",
+      "framework": "react",
+      "receiptPath": "evidence/runs/react-boilerplate-v4-node24/t022-run.json",
+      "receiptDigest": "815a5416b90c0a0c0a2f0adb779308c0ba0447d67c965003f15d343940d9b593",
+      "receiptSchema": {
+        "schemaVersion": "versionless.receipt.v1",
+        "toolingFields": [
+          "chromium",
+          "node",
+          "npmLock",
+          "playwright",
+          "terserWebpackPlugin",
+          "webpack",
+          "yukuAnalyzer",
+          "yukuParser"
+        ],
+        "migrationFields": [
+          "dependency",
+          "edits",
+          "file",
+          "lockPatch",
+          "transform"
+        ],
+        "journeyFields": [
+          [
+            "blocked",
+            "navigationPath",
+            "result",
+            "run",
+            "selectedLocale",
+            "successfulNonLoopback",
+            "translatedHeading"
+          ]
+        ]
+      },
+      "runtime": "Node 24.15.0 darwin-arm64",
+      "bundler": "webpack 4.47.0",
+      "locality": {
+        "mode": "offline",
+        "scope": "Versionless-spawned Node/npm/webpack child processes and Playwright browser requests",
+        "osWideIsolation": false,
+        "successfulNonLoopback": 0,
+        "browserBlockedRequests": 2
+      },
+      "designatedPilot": false
+    },
+    {
+      "id": "react-boilerplate-v4-vite8",
+      "application": "react-boilerplate",
+      "framework": "react",
+      "receiptPath": "evidence/runs/react-boilerplate-v4-vite8/t028-run.json",
+      "receiptDigest": "1caf9dfa24b14b83ac63ceab9ca90829346045aac690c7b95a952ae4d9e72849",
+      "receiptSchema": {
+        "schemaVersion": "versionless.receipt.v1",
+        "toolingFields": [
+          "adapter",
+          "chromium",
+          "node",
+          "playwright",
+          "vite",
+          "webpack"
+        ],
+        "migrationFields": [
+          "dependency",
+          "edits",
+          "file",
+          "lockPatch",
+          "transform"
+        ],
+        "journeyFields": [
+          [
+            "blocked",
+            "bundler",
+            "consoleErrors",
+            "navigationPath",
+            "offlineReload",
+            "pageErrors",
+            "result",
+            "run",
+            "selectedLocale",
+            "serviceWorker",
+            "successfulNonLoopback",
+            "translatedHeading"
+          ]
+        ]
+      },
+      "runtime": "Node 24.15.0 darwin-arm64",
+      "bundler": "Vite 8.0.16",
+      "locality": {
+        "mode": "offline",
+        "scope": "Versionless-spawned Node/Vite build and Playwright browser requests",
+        "osWideIsolation": false,
+        "successfulNonLoopback": 0,
+        "browserBlockedRequests": 0
+      },
+      "adapter": "fixture-specific",
+      "oldVite": "not-tested",
+      "genericAdapter": "not-tested",
+      "unplugin": "not-tested",
+      "designatedPilot": false
+    },
+    {
+      "id": "angular-phonecat-route-resolve",
+      "application": "angular-phonecat",
+      "framework": "angularjs",
+      "receiptPath": "evidence/runs/angular-phonecat-route-resolve/t032-run.json",
+      "receiptDigest": "aa8b2923a38aa5f1adc870b48cdd938b739e107c927aac71b8c2890705f6beef",
+      "receiptSchema": {
+        "schemaVersion": "versionless.receipt.v1",
+        "toolingFields": [
+          "application",
+          "chromium",
+          "legacyNode",
+          "playwright",
+          "targetNode",
+          "yukuAnalyzer",
+          "yukuParser"
+        ],
+        "migrationFields": [
+          "changedFiles",
+          "edits",
+          "file",
+          "injectionAnnotation",
+          "outerController",
+          "track",
+          "transform"
+        ],
+        "journeyFields": [
+          [
+            "blocked",
+            "consoleErrors",
+            "detail",
+            "filterText",
+            "initialImage",
+            "lane",
+            "orderValue",
+            "pageErrors",
+            "redirectPath",
+            "result",
+            "run",
+            "successfulNonLoopback",
+            "thumbnailSwaps"
+          ]
+        ]
+      },
+      "runtime": "Node 16 legacy / Node 24 target tooling",
+      "bundler": "none-static",
+      "locality": {
+        "mode": "offline",
+        "scope": "Versionless-spawned Node/npm child processes and Playwright browser requests",
+        "osWideIsolation": false,
+        "successfulNonLoopback": 0,
+        "browserBlockedRequests": 0
+      },
+      "routeResolves": "verified",
+      "componentBindings": "one-way-verified",
+      "track": "angularjs-special-track",
+      "angular2Plus": "not-applicable",
+      "angularCliAot": "not-applicable",
+      "designatedPilot": false
+    },
+    {
+      "id": "angular-phonecat-composed",
+      "application": "angular-phonecat",
+      "framework": "angularjs",
+      "receiptPath": "evidence/runs/angular-phonecat-composed/t048-run.json",
+      "receiptDigest": "a7e8a9dc864085d77338f1615e3434a8a842fa5f4156a13bd2f5560bd2f8dc12",
+      "receiptSchema": {
+        "schemaVersion": "versionless.receipt.v1",
+        "toolingFields": [
+          "application",
+          "chromium",
+          "legacyNode",
+          "playwright",
+          "targetNode",
+          "yukuAnalyzer",
+          "yukuParser"
+        ],
+        "migrationFields": [
+          "changedFiles",
+          "edits",
+          "file",
+          "injectionAnnotation",
+          "outerController",
+          "track",
+          "transform"
+        ],
+        "journeyFields": [
+          [
+            "blocked",
+            "consoleErrors",
+            "detail",
+            "filterText",
+            "initialImage",
+            "lane",
+            "orderValue",
+            "pageErrors",
+            "redirectPath",
+            "result",
+            "run",
+            "successfulNonLoopback",
+            "thumbnailSwaps"
+          ]
+        ]
+      },
+      "runtime": "Node 16 legacy / Node 24 target tooling",
+      "bundler": "none-static",
+      "locality": {
+        "mode": "offline",
+        "scope": "Versionless-spawned Node/npm child processes and Playwright browser requests",
+        "osWideIsolation": false,
+        "successfulNonLoopback": 0,
+        "browserBlockedRequests": 0
+      },
+      "composition": "verified",
+      "orderIndependent": true,
+      "lexicalThis": "verified",
+      "routeResolves": "verified",
+      "componentBindings": "one-way-verified",
+      "track": "angularjs-special-track",
+      "angular2Plus": "not-applicable",
+      "angularCliAot": "not-applicable",
+      "designatedPilot": false
+    },
+    {
+      "id": "react-boilerplate-v4-data-flow",
+      "application": "react-boilerplate",
+      "framework": "react",
+      "receiptPath": "evidence/runs/react-boilerplate-v4-data-flow/t054-run.json",
+      "receiptDigest": "a6c25918ed9650d3315c42501932e8e6fe26552e48bcbdf74d4987f7b384452b",
+      "receiptSchema": {
+        "schemaVersion": "versionless.receipt.v1",
+        "toolingFields": [
+          "adapter",
+          "chromium",
+          "node",
+          "playwright",
+          "vite",
+          "yuku"
+        ],
+        "migrationFields": [
+          "changedFiles",
+          "edits",
+          "file",
+          "sourceHashes",
+          "transform"
+        ],
+        "journeyFields": [
+          [
+            "blocked",
+            "consoleErrors",
+            "issueCounts",
+            "lane",
+            "linkDestinations",
+            "loading",
+            "navigationPath",
+            "offlineReload",
+            "pageErrors",
+            "repositories",
+            "result",
+            "run",
+            "selectedLocale",
+            "serviceWorker",
+            "successfulNonLoopback",
+            "syntheticRequests",
+            "translatedHeading",
+            "username"
+          ]
+        ]
+      },
+      "runtime": "Node 24.15.0 darwin-arm64",
+      "bundler": "Vite 8.0.16",
+      "locality": {
+        "mode": "offline",
+        "scope": "Versionless-spawned Node/Vite build and Playwright browser requests",
+        "osWideIsolation": false,
+        "successfulNonLoopback": 0,
+        "browserBlockedRequests": 0
+      },
+      "adapter": "fixture-specific",
+      "oldVite": "not-tested",
+      "genericAdapter": "not-tested",
+      "unplugin": "not-tested",
+      "designatedPilot": false
+    },
+    {
+      "id": "react-boilerplate-v4-composed",
+      "application": "react-boilerplate",
+      "framework": "react",
+      "receiptPath": "evidence/runs/react-boilerplate-v4-composed/t060-run.json",
+      "receiptDigest": "9341f5e70c00ebbde65a919db5b5d31fde0fa39983e985deb01afb71ed00d1ad",
+      "receiptSchema": {
+        "schemaVersion": "versionless.receipt.v1",
+        "toolingFields": [
+          "chromium",
+          "legacyBundler",
+          "legacyNode",
+          "playwright",
+          "targetBundler",
+          "targetNode",
+          "yuku"
+        ],
+        "migrationFields": [
+          "actualOrdersExecuted",
+          "atomic",
+          "changedFiles",
+          "edits",
+          "executionTraces",
+          "failedStageCleanup",
+          "file",
+          "harnessOnlyAdapterExcluded",
+          "injectedWriteFailure",
+          "lateFailureRollback",
+          "orders",
+          "publication",
+          "sourceHashes",
+          "targetHashes",
+          "transform"
+        ],
+        "journeyFields": [
+          [
+            "blocked",
+            "consoleErrors",
+            "issueCounts",
+            "lane",
+            "offlineReload",
+            "pageErrors",
+            "repositories",
+            "result",
+            "run",
+            "selectedLocale",
+            "serviceWorker",
+            "successfulNonLoopback",
+            "syntheticRequests",
+            "translatedHeading",
+            "username"
+          ]
+        ]
+      },
+      "runtime": "Node 16.20.2 legacy / Node 24.15.0 target",
+      "bundler": "webpack 4.30.0 / Vite 8.0.16",
+      "locality": {
+        "mode": "offline",
+        "scope": "Versionless-spawned Node/npm/webpack/Vite child processes and Playwright browser requests",
+        "osWideIsolation": false,
+        "successfulNonLoopback": 0,
+        "browserBlockedRequests": 2
+      },
+      "adapter": "fixture-specific",
+      "oldVite": "not-tested",
+      "genericAdapter": "not-tested",
+      "unplugin": "not-tested",
+      "designatedPilot": false
+    },
+    {
+      "id": "angular-phonecat-vite8",
+      "application": "angular-phonecat",
+      "framework": "angularjs",
+      "receiptPath": "evidence/runs/angular-phonecat-vite8/t069-run.json",
+      "receiptDigest": "033fc40237975e28df36117cc309625632610a399b5c0f88735079ed21fcad0d",
+      "receiptSchema": {
+        "schemaVersion": "versionless.receipt.v1",
+        "toolingFields": [
+          "chromium",
+          "legacyNode",
+          "playwright",
+          "targetNode",
+          "vite",
+          "yukuAnalyzer",
+          "yukuParser"
+        ],
+        "migrationFields": [
+          "actualOrdersExecuted",
+          "atomic",
+          "changedFiles",
+          "edits",
+          "executionTraces",
+          "file",
+          "injectionAnnotation",
+          "orders",
+          "outerController",
+          "publication",
+          "serviceWorker",
+          "track",
+          "transform",
+          "viteOutput"
+        ],
+        "journeyFields": [
+          [
+            "blocked",
+            "consoleErrors",
+            "detail",
+            "filterText",
+            "initialImage",
+            "lane",
+            "orderValue",
+            "pageErrors",
+            "redirectPath",
+            "result",
+            "run",
+            "successfulNonLoopback",
+            "thumbnailSwaps"
+          ]
+        ]
+      },
+      "runtime": "Node 16.20.2 legacy / Node 24.15.0 target",
+      "bundler": "none-static / Vite 8.0.16",
+      "locality": {
+        "mode": "offline",
+        "scope": "Versionless-spawned Node/npm/Vite children and Playwright browser requests",
+        "osWideIsolation": false,
+        "successfulNonLoopback": 0,
+        "browserBlockedRequests": 0
+      },
+      "adapter": "fixture-specific",
+      "oldVite": "not-tested",
+      "genericAdapter": "not-tested",
+      "unplugin": "not-tested",
+      "composition": "verified",
+      "orderIndependent": true,
+      "lexicalThis": "verified",
+      "routeResolves": "verified",
+      "componentBindings": "one-way-verified",
+      "viteOutput": "self-contained-rehashable",
+      "serviceWorker": "out-of-scope-not-emitted",
+      "track": "angularjs-special-track",
+      "angular2Plus": "not-applicable",
+      "angularCliAot": "not-applicable",
+      "designatedPilot": false
+    },
+    {
+      "id": "angular-realworld-v15-to-v16",
+      "application": "angular-realworld",
+      "framework": "angular",
+      "receiptPath": "evidence/runs/angular-realworld-v15-to-v16/receipt.json",
+      "receiptDigest": "bba54bc67cf5686445b207c530e04c5f9d56cf87f495250e97329e1eed8c6ad1",
+      "receiptSchema": {
+        "schemaVersion": "versionless.angular-realworld-v15-to-v16.v1",
+        "toolingFields": [
+          "npmVersion",
+          "legacyPeerDeps",
+          "compatibilityReason"
+        ],
+        "migrationFields": [
+          "applicationFilesChanged",
+          "changedFiles"
+        ],
+        "journeyFields": [
+          [
+            "articlesRequests",
+            "externalStylesheets",
+            "lane",
+            "observations",
+            "pageErrors",
+            "pass",
+            "rejectedRequests",
+            "result",
+            "storageInitiallyEmpty",
+            "successfulNonLoopback",
+            "tagsRequests"
+          ]
+        ]
+      },
+      "runtime": "Node 18.20.8",
+      "bundler": "Angular CLI/Architect production AOT 15-to-16",
+      "locality": {
+        "mode": "offline",
+        "scope": "process-scoped",
+        "osWideIsolation": false,
+        "successfulNonLoopback": 0,
+        "browserBlockedRequests": 2
+      },
+      "track": "angular2-plus-adjacent-major",
+      "angular2Plus": "verified-one-adjacent-major",
+      "angularCliAot": "verified",
+      "designatedPilot": false
+    },
+    {
+      "id": "next-killedbygoogle-derived-state-to-memo",
+      "application": "killedbygoogle",
+      "framework": "react",
+      "receiptPath": "evidence/runs/next-killedbygoogle-derived-state-to-memo/receipt.json",
+      "receiptDigest": "a018c6490cd559fab74ea402ff93660f053503dbed1a52ba9b68ed7fdc086b7c",
+      "receiptSchema": {
+        "schemaVersion": "versionless.receipt.v1",
+        "toolingFields": [
+          "next",
+          "node",
+          "playwright",
+          "react",
+          "typescript",
+          "yarn"
+        ],
+        "migrationFields": [
+          "changedFiles",
+          "edits",
+          "file",
+          "sourceSha256",
+          "targetSha256",
+          "transform"
+        ],
+        "journeyFields": [
+          "baseline",
+          "migrated",
+          "normalizedEquivalent",
+          "restored"
+        ]
+      },
+      "runtime": "Node 16.20.2 EOL compatibility sandbox",
+      "bundler": "Next 12.0.10 webpack 5",
+      "locality": {
+        "mode": "offline",
+        "scope": "process-scoped",
+        "osWideIsolation": false,
+        "successfulNonLoopback": 0
+      },
+      "track": "next12-pages-derived-state-to-use-memo",
+      "traceDiagnosticReproducibility": "not-claimed",
+      "designatedPilot": false
+    }
+  ],
+  "applications": [
+    {
+      "id": "react-boilerplate",
+      "source": {
+        "repository": "https://github.com/react-boilerplate/react-boilerplate",
+        "revision": "d19099afeff64ecfb09133c06c1cb18c0d40887e",
+        "archiveSha256": "d6ca60a3c8881ae2be26a8d04e00da4d922a6653f8512f2b12ac55d48f2ce2d5",
+        "license": "MIT",
+        "licenseSha256": "e773e6b91c13f55310668e15ce178a2fcf779ff39dbcc0b910b4b5f1ecb17acb"
+      },
+      "verticals": [
+        "react-boilerplate-v4",
+        "react-boilerplate-v4-node24",
+        "react-boilerplate-v4-vite8",
+        "react-boilerplate-v4-data-flow",
+        "react-boilerplate-v4-composed"
+      ],
+      "conformance": {
+        "scope": "common-user-observable-projection-only",
+        "projection": {
+          "result": "pass",
+          "selectedLocale": "de",
+          "translatedHeading": "Beginnen Sie Ihr nächstes React Projekt in Sekunden"
+        },
+        "projectionSha256": "ae8e56f535f8fed4a061cfefce40837ecc20ce4787da2b448cedb7f2429ac609",
+        "blockedNetworkObservations": [
+          {
+            "vertical": "react-boilerplate-v4",
+            "browserBlockedRequests": 4,
+            "blockedUrls": [
+              "https://fonts.googleapis.com/css?family=Open+Sans:400,700"
+            ]
+          },
+          {
+            "vertical": "react-boilerplate-v4-node24",
+            "browserBlockedRequests": 2,
+            "blockedUrls": [
+              "https://fonts.googleapis.com/css?family=Open+Sans:400,700"
+            ]
+          },
+          {
+            "vertical": "react-boilerplate-v4-vite8",
+            "browserBlockedRequests": 0,
+            "blockedUrls": []
+          },
+          {
+            "vertical": "react-boilerplate-v4-data-flow",
+            "browserBlockedRequests": 0,
+            "blockedUrls": []
+          },
+          {
+            "vertical": "react-boilerplate-v4-composed",
+            "browserBlockedRequests": 2,
+            "blockedUrls": [
+              "https://fonts.googleapis.com/css?family=Open+Sans:400,700"
+            ]
+          }
+        ]
+      },
+      "boundaries": {
+        "viteAdapter": "fixture-specific",
+        "oldVite": "not-tested",
+        "genericAdapter": "not-tested",
+        "unplugin": "not-tested",
+        "fullEquivalence": "not-claimed"
+      }
+    },
+    {
+      "id": "angular-phonecat",
+      "source": {
+        "repository": "https://github.com/angular/angular-phonecat",
+        "revision": "ef6f6eb672ded472b4e442d598f5df40d0e0642c",
+        "archiveSha256": "c7624a333ddfaa31f51385e72b8966162171e798ec63a1b991ec4bde26339eb1",
+        "license": "MIT",
+        "licenseSha256": "bab10b0aa126d9fdb81380141fc8845a74024d7c9977e5636afd06fe5edce455"
+      },
+      "verticals": [
+        "angular-phonecat",
+        "angular-phonecat-route-resolve",
+        "angular-phonecat-composed",
+        "angular-phonecat-vite8"
+      ],
+      "conformance": {
+        "journeySha256": "299308578fc043f3d09d3e189c1e14a9b1d12d4f42df37dfbf89bb9c4c2e1300",
+        "journeyDigestIdentical": true,
+        "migrationsRemainDistinct": true
+      },
+      "boundaries": {
+        "track": "angularjs-special-track",
+        "bundler": "none-static / Vite 8.0.16",
+        "angular2Plus": "not-applicable",
+        "angularCliAot": "not-applicable",
+        "adjacentMajor": "not-applicable",
+        "designatedPilot": false
+      }
+    },
+    {
+      "id": "angular-realworld",
+      "source": {
+        "repository": "https://github.com/realworld-apps/angular-realworld-example-app",
+        "parentRevision": "e28c8969aab9a27ece9873118b1ab7251f9ccb0c",
+        "targetRevision": "0d28f5c63b9cd678a3f1f724f68d6e41363bdd5a",
+        "archiveSha256": "b834410ded0baae07950ba680d2ee82a5d7b797ee01bd86d9a901d3e696544a2",
+        "license": "MIT",
+        "licenseSha256": "dd241fc76d00987f9a025558ec977a2df69875320ab0379bd8f5865ad1033c7b"
+      },
+      "verticals": [
+        "angular-realworld-v15-to-v16"
+      ],
+      "conformance": {
+        "adjacentMajor": "angular-15-to-16-verified",
+        "productionAot": true,
+        "journeys": 4,
+        "mutation": "target-api-origin-rejection-verified"
+      },
+      "boundaries": {
+        "track": "angular2-plus-adjacent-major",
+        "designatedPilot": false,
+        "genericAngularSupport": "not-claimed",
+        "locality": "process-scoped-not-os-wide"
+      }
+    },
+    {
+      "id": "killedbygoogle",
+      "source": {
+        "repository": "https://github.com/codyogden/killedbygoogle",
+        "revision": "56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+        "archiveSha256": "c28878d0f65b56aa595763c852477fb0c1e3533e5c7f7ea9daa2be16f102368d",
+        "license": "MIT"
+      },
+      "verticals": [
+        "next-killedbygoogle-derived-state-to-memo"
+      ],
+      "conformance": {
+        "productionBuild": true,
+        "browserJourneys": 4,
+        "mutationRestoration": "verified",
+        "productionOutputConformance": "verified"
+      },
+      "boundaries": {
+        "traceDiagnosticReproducibility": "not-claimed",
+        "genericNextSupport": "not-claimed",
+        "productionReadiness": "not-claimed",
+        "locality": "process-scoped-not-os-wide"
+      }
+    }
+  ],
+  "frameworkLanes": [
+    {
+      "id": "synthetic-next12-pages",
+      "nextLane": "12",
+      "routing": "pages",
+      "framework": "nextjs",
+      "synthetic": true,
+      "provenance": "not-tested",
+      "migration": "not-tested",
+      "build": "not-tested",
+      "browser": "not-tested",
+      "locality": "not-tested",
+      "compilerBundlerRuntime": "not-tested",
+      "tier": "not-tested",
+      "pilot": "not-tested",
+      "support": "not-tested"
+    },
+    {
+      "id": "synthetic-next13-transition-app",
+      "nextLane": "13",
+      "routing": "mixed",
+      "framework": "nextjs",
+      "synthetic": true,
+      "provenance": "not-tested",
+      "migration": "not-tested",
+      "build": "not-tested",
+      "browser": "not-tested",
+      "locality": "not-tested",
+      "compilerBundlerRuntime": "not-tested",
+      "tier": "not-tested",
+      "pilot": "not-tested",
+      "support": "not-tested"
+    },
+    {
+      "id": "synthetic-next14-app",
+      "nextLane": "14",
+      "routing": "app",
+      "framework": "nextjs",
+      "synthetic": true,
+      "provenance": "not-tested",
+      "migration": "not-tested",
+      "build": "not-tested",
+      "browser": "not-tested",
+      "locality": "not-tested",
+      "compilerBundlerRuntime": "not-tested",
+      "tier": "not-tested",
+      "pilot": "not-tested",
+      "support": "not-tested"
+    }
+  ],
+  "coverage": {
+    "takenote": "not-tested",
+    "angular2Hn": "not-tested",
+    "oldVite": "not-tested",
+    "genericAdapter": "not-tested",
+    "unplugin": "not-tested",
+    "nextjs": "fixture-specific-next12-pages-verified",
+    "authenticity": "not-established",
+    "certification": "not-claimed",
+    "locality": "process-scoped-not-os-wide"
+  },
+  "integrity": {
+    "algorithm": "sha256",
+    "canonicalDigest": "f9676f030c572cf18fea760ce70d61601348cdcabf99880de9f656462c593edd"
+  }
+}

@@ -1,0 +1,141 @@
+{
+  "schemaVersion": "versionless.receipt.v1",
+  "runId": "T054-react-boilerplate-v4-data-flow",
+  "fixture": "react-boilerplate-v4-data-flow",
+  "source": {
+    "repository": "https://github.com/react-boilerplate/react-boilerplate",
+    "revision": "d19099afeff64ecfb09133c06c1cb18c0d40887e",
+    "archiveSha256": "d6ca60a3c8881ae2be26a8d04e00da4d922a6653f8512f2b12ac55d48f2ce2d5",
+    "license": "MIT",
+    "licenseSha256": "e773e6b91c13f55310668e15ce178a2fcf779ff39dbcc0b910b4b5f1ecb17acb"
+  },
+  "tooling": {
+    "node": "24.15.0-darwin-arm64 maintained runtime",
+    "vite": "8.0.16 root installation",
+    "adapter": "fixture-specific existing pinned adapter",
+    "playwright": "1.58.2",
+    "chromium": "145.0.7632.6",
+    "yuku": "parser/analyzer 0.7.0"
+  },
+  "consent": [
+    {
+      "id": "T008-fixture-ingest",
+      "purpose": "reuse immutable licensed d19099 source and locked dependencies",
+      "mode": "consented"
+    },
+    {
+      "id": "T022-react-node24-ingest",
+      "purpose": "reuse pinned Node 24 runtime and verified local dependency installation",
+      "mode": "consented"
+    }
+  ],
+  "migration": {
+    "file": "app/containers/HomePage/index.js + app/containers/RepoListItem/index.js",
+    "transform": "react-data-flow-connect-to-hooks",
+    "edits": 4,
+    "changedFiles": [
+      "app/containers/HomePage/index.js",
+      "app/containers/RepoListItem/index.js"
+    ],
+    "sourceHashes": {
+      "homePage": "db0413d948d68980dd24db7660e1bd854cabcc4642ec15fff710f5c95131f232",
+      "repoListItem": "21a570ed27af053040ce6b503f1af0c22bbdfea52284dccb47b2dc382844d867"
+    }
+  },
+  "verification": {
+    "result": "pass",
+    "builds": "pass",
+    "journeys": "pass",
+    "mutation": "pass",
+    "locality": {
+      "mode": "offline",
+      "scope": "Versionless-spawned Node/Vite build and Playwright browser requests",
+      "osWideIsolation": false,
+      "successfulNonLoopback": 0,
+      "browserBlockedRequests": 0,
+      "syntheticInterceptions": 4
+    },
+    "deterministicCore": {
+      "first": "9857ed4c1206568447809ed9af2f88572c69ae936d2e4acd7630462a30ca7c71",
+      "second": "9857ed4c1206568447809ed9af2f88572c69ae936d2e4acd7630462a30ca7c71",
+      "equal": true
+    },
+    "serviceWorker": {
+      "workerPath": "sw.js",
+      "manifestPath": "precache-manifest.json",
+      "scope": "/",
+      "manifestSha256": "553cd1cc611a0851b1978bbc041ef2f8c7b9fbbd3fdd9bb68274f29364987cdc",
+      "cacheName": "versionless-react-vite8-553cd1cc611a0851b1978bbc041ef2f8c7b9fbbd3fdd9bb68274f29364987cdc",
+      "currentCacheOnly": true,
+      "inventoryMatchesManifest": true,
+      "exactCurrentCacheFetch": true,
+      "upgradeOrders": [
+        "base-to-data-flow",
+        "data-flow-to-base"
+      ],
+      "buildsEqual": true,
+      "registration": "active",
+      "controller": "activated",
+      "offlineJourney": "pass",
+      "mutation": "intended-failure",
+      "restoration": "byte-identical",
+      "coverage": "exact-qualified-journey-only"
+    }
+  },
+  "artifacts": [
+    {
+      "path": "evidence/runs/react-boilerplate-v4-data-flow/artifacts/preparation.json",
+      "sha256": "e429c08ad1cac7aa37269ab01925ce988e1e26a022c6256ef0256be9106200ae"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-data-flow/artifacts/transform.json",
+      "sha256": "fbc23cec36c19da3c0429835b192b64a42de8b74f1cae5d485b381cc2775cb39"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-data-flow/artifacts/build.json",
+      "sha256": "0b58bdbbf7fdf8149f7845d74142449e4eca2ec45e756da0729b708607742b0c"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-data-flow/artifacts/upgrade.json",
+      "sha256": "7a50868de8924839eb5006a286e275303e2028b07c9fb3d03cd285160a229fd0"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-data-flow/artifacts/journey.json",
+      "sha256": "4d3a11cf56342b482ec3c93f25d360811a79f5859ec9416e818a229f773cc7f1"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-data-flow/artifacts/mutation.json",
+      "sha256": "b178d5d3e0a940191b550c54ed0b1f601f1658f0e521a9ed81720b5f49638481"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-data-flow/artifacts/migration-diff.json",
+      "sha256": "2a84c7649d941abefcd9ed6ef4deb558fd0d720196295ff02bd38406d6669e99"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-data-flow/artifacts/locality.json",
+      "sha256": "5317302fe5ede1d84e725ca370ddf68d0d9a157bc47d5b3d7dbc8229ce551dd5"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-data-flow/artifacts/runtime.json",
+      "sha256": "08badc321fe960311804c25bbc292deef4061e66e67a8a79479975975fc5dfe1"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-data-flow/artifacts/deterministic-core.json",
+      "sha256": "c3315e20ee32e63a9221b4dd90a3f2a94bfc1a4ef15958ea2f0a8cc7c6ef1b80"
+    }
+  ],
+  "integrity": {
+    "algorithm": "sha256",
+    "canonicalDigest": "a6c25918ed9650d3315c42501932e8e6fe26552e48bcbdf74d4987f7b384452b",
+    "authenticity": "not-established"
+  },
+  "limitations": [
+    "This is a deeper vertical on the existing React Boilerplate source, not a third application or designated pilot.",
+    "The Vite adapter remains fixture-specific; generic, unplugin, and old-Vite portability are not-tested.",
+    "GitHub behavior uses a pinned synthetic interception and proves no live API access.",
+    "Hash integrity does not establish authenticity, signer identity, certification, or Git provenance.",
+    "Network controls are process-scoped and do not establish OS-wide isolation.",
+    "Payment-page applicability is not established; dynamic script insertion is not-tested; PCI compliance is not claimed.",
+    "Service-worker parity covers only the exact qualified offline journey, not global offline or PWA correctness."
+  ]
+}

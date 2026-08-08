@@ -1,0 +1,100 @@
+{
+  "schemaVersion": "versionless.trust.v1",
+  "policy": {
+    "schemaVersion": "versionless.trust-policy.v1",
+    "owner": {
+      "state": "unknown",
+      "reason": "No project trust-package owner is designated."
+    },
+    "retention": {
+      "state": "unknown",
+      "reason": "No approved retention duration or purge authority is recorded.",
+      "purge": "not-tested"
+    },
+    "vulnerabilityDisposition": {
+      "state": "unknown",
+      "reason": "No project vulnerability-disposition owner or SLA is recorded."
+    },
+    "controls": [
+      {
+        "id": "change-evidence",
+        "concern": "SOX change-management review input",
+        "state": "verified",
+        "evidence": [
+          "evidence/runs/react-boilerplate-v4/t008-run.json",
+          "evidence/runs/angular-phonecat/t014-run.json"
+        ],
+        "claim": "Evidence input only; not an audit opinion or certification."
+      },
+      {
+        "id": "payment-page-script-inventory",
+        "concern": "PCI DSS 6.4.3 and 11.6.1 review input",
+        "state": "not-tested",
+        "evidence": [],
+        "claim": "No PCI compliance or legal assurance is claimed."
+      },
+      {
+        "id": "security-program",
+        "concern": "Security policy and vulnerability handling",
+        "state": "unknown",
+        "evidence": [],
+        "claim": "SECURITY.md and a vulnerability-disposition owner are absent."
+      }
+    ],
+    "dataFlows": [
+      {
+        "source": "local repository",
+        "destination": "local trust artifact directory",
+        "data": "manifests, lockfile, build hashes, aggregate, receipts, and linked artifacts",
+        "mode": "offline",
+        "state": "verified"
+      },
+      {
+        "source": "OSV batch and CISA KEV",
+        "destination": ".versionless/cache/trust",
+        "data": "public package coordinates and public vulnerability records",
+        "mode": "explicit-consent-ingest-only",
+        "state": "verified"
+      }
+    ]
+  },
+  "securityPolicy": {
+    "state": "unknown",
+    "reason": "SECURITY.md is absent."
+  },
+  "gitProvenance": {
+    "state": "unknown",
+    "reason": "Git metadata is absent."
+  },
+  "signingIdentity": {
+    "state": "unknown",
+    "reason": "No project signing identity is designated."
+  },
+  "locality": {
+    "state": "verified",
+    "scope": "Versionless-spawned processes and browser routing",
+    "osWideIsolation": false
+  },
+  "scriptSurface": {
+    "state": "verified",
+    "scope": "eighteen exact static deployment entrypoints",
+    "excludedVerticals": [
+      "angular-realworld-v15-to-v16"
+    ],
+    "exclusionReason": "T220 static script surface was not separately observed.",
+    "paymentPageApplicability": "not-established",
+    "dynamicScriptInsertion": "not-tested",
+    "pciCompliance": "not-claimed"
+  },
+  "runtimeScriptObservation": {
+    "state": "verified",
+    "scope": "exact qualified journeys",
+    "excludedVerticals": [
+      "angular-realworld-v15-to-v16"
+    ],
+    "exclusionReason": "T220 qualified runtime scripts were not separately observed.",
+    "globalDynamicInsertionCoverage": "not-established",
+    "paymentPageApplicability": "not-established",
+    "pciCompliance": "not-claimed"
+  }
+}

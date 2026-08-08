@@ -1,0 +1,9 @@
+{
+	"archiveSha256": "b834410ded0baae07950ba680d2ee82a5d7b797ee01bd86d9a901d3e696544a2",
+	"archiveUrl": "https://codeload.github.com/realworld-apps/angular-realworld-example-app/tar.gz/0d28f5c63b9cd678a3f1f724f68d6e41363bdd5a",
+	"commitApiUrl": "https://api.github.com/repos/realworld-apps/angular-realworld-example-app/git/commits/0d28f5c63b9cd678a3f1f724f68d6e41363bdd5a",
+	"fixture": "angular-realworld-v15-to-v16",
+	"parentCommit": "e28c8969aab9a27ece9873118b1ab7251f9ccb0c",
+	"targetCommit": "0d28f5c63b9cd678a3f1f724f68d6e41363bdd5a",
+	"tree": "8ed918dfdf28dcf7ee4b76a206b3967a2cc65cf5"
+}

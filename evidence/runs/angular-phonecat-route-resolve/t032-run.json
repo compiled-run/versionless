@@ -1,0 +1,104 @@
+{
+  "schemaVersion": "versionless.receipt.v1",
+  "runId": "T032-angular-phonecat-route-resolve",
+  "fixture": "angular-phonecat-route-resolve",
+  "source": {
+    "repository": "https://github.com/angular/angular-phonecat",
+    "revision": "ef6f6eb672ded472b4e442d598f5df40d0e0642c",
+    "archiveSha256": "c7624a333ddfaa31f51385e72b8966162171e798ec63a1b991ec4bde26339eb1",
+    "license": "MIT",
+    "licenseSha256": "bab10b0aa126d9fdb81380141fc8845a74024d7c9977e5636afd06fe5edce455"
+  },
+  "tooling": {
+    "legacyNode": "16.20.2 with npm 8.19.4 EOL compatibility sandbox",
+    "targetNode": "24.15.0 maintained target tooling lane",
+    "yukuParser": "0.7.0",
+    "yukuAnalyzer": "0.7.0",
+    "playwright": "1.58.2",
+    "chromium": "145.0.7632.6",
+    "application": "AngularJS 1.8 static application without a bundler"
+  },
+  "consent": [
+    {
+      "id": "T014-fixture-ingest",
+      "purpose": "pinned PhoneCat source and Node 16/24 runtimes plus frozen lockfile population; lifecycle scripts disabled and copy-libs invoked explicitly and identically",
+      "mode": "consented"
+    }
+  ],
+  "migration": {
+    "file": "app/app.config.js + app/phone-list/phone-list.component.js + app/phone-detail/phone-detail.component.js",
+    "transform": "phone-route-resolve-component-binding",
+    "edits": 4,
+    "track": "angularjs-special-track",
+    "changedFiles": [
+      "app/app.config.js + app/phone-list/phone-list.component.js + app/phone-detail/phone-detail.component.js"
+    ],
+    "outerController": "constructable-function",
+    "injectionAnnotation": "unchanged"
+  },
+  "verification": {
+    "result": "pass",
+    "builds": "pass",
+    "journeys": "pass",
+    "mutation": "pass",
+    "locality": {
+      "mode": "offline",
+      "scope": "Versionless-spawned Node/npm child processes and Playwright browser requests",
+      "osWideIsolation": false,
+      "successfulNonLoopback": 0,
+      "browserBlockedRequests": 0
+    },
+    "deterministicCore": {
+      "first": "81cf108c8e3ff004bef8efae2ce36bda791923994e81b93c7373f01a3a4ec175",
+      "second": "81cf108c8e3ff004bef8efae2ce36bda791923994e81b93c7373f01a3a4ec175",
+      "equal": true
+    }
+  },
+  "artifacts": [
+    {
+      "path": "evidence/runs/angular-phonecat-route-resolve/artifacts/preparation.json",
+      "sha256": "a12c35d28973404e6d2a5f2eebbe661cbe0790626d1401e805367ab684d6aeaf"
+    },
+    {
+      "path": "evidence/runs/angular-phonecat-route-resolve/artifacts/runtime.json",
+      "sha256": "97dae2015936f316668f530e8e2e41962e7b9dc0991f0dad6367844b756cd246"
+    },
+    {
+      "path": "evidence/runs/angular-phonecat-route-resolve/artifacts/journey.json",
+      "sha256": "299308578fc043f3d09d3e189c1e14a9b1d12d4f42df37dfbf89bb9c4c2e1300"
+    },
+    {
+      "path": "evidence/runs/angular-phonecat-route-resolve/artifacts/locality.json",
+      "sha256": "aa69f52db453ae704b9436a049a148d8042fd05a3f6b1c06e5aaf752b5b20477"
+    },
+    {
+      "path": "evidence/runs/angular-phonecat-route-resolve/artifacts/mutation.json",
+      "sha256": "6376aed232a6c30441e50d4d878116e65e45d2b69c807f280b1a8066d9ad4df2"
+    },
+    {
+      "path": "evidence/runs/angular-phonecat-route-resolve/artifacts/migration-diff.json",
+      "sha256": "daca0cba1142c6dc940df65321f9f4f816fad4ccf901e88f84e67b98855d90ce"
+    },
+    {
+      "path": "evidence/runs/angular-phonecat-route-resolve/artifacts/transform.json",
+      "sha256": "c87fc4ca5afa12343c0b07e31d43388c3d56143b441b197d8d331ddbd2ed04aa"
+    },
+    {
+      "path": "evidence/runs/angular-phonecat-route-resolve/artifacts/deterministic-core.json",
+      "sha256": "fc2e3e6ec2696af81a8576d3d8096259e4d94251b719f09794acefecfa8d1e13"
+    }
+  ],
+  "integrity": {
+    "algorithm": "sha256",
+    "canonicalDigest": "aa8b2923a38aa5f1adc870b48cdd938b739e107c927aac71b8c2890705f6beef",
+    "authenticity": "not-established"
+  },
+  "limitations": [
+    "Hash integrity does not establish signer authenticity or Git provenance.",
+    "Network controls cover spawned children and browser routing, not OS-wide isolation.",
+    "Node 16 is EOL and used only as a compatibility sandbox.",
+    "This is AngularJS special-track static evidence, not Angular 2+, Angular CLI/AOT, or adjacent-major proof.",
+    "This does not prove a designated Angular pilot or new bundler support.",
+    "Certification, signing identity, and authenticity are not claimed."
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "versionless.synthetic-journey.v1",
+  "id": "angular-realworld-v15-home",
+  "entry": "/",
+  "storage": "fresh-empty-context",
+  "api": {
+    "tags": ["migration", "angular"],
+    "articleTitle": "Versionless Angular baseline",
+    "articleDescription": "Synthetic local evidence for the immutable Angular baseline."
+  },
+  "assertions": [
+    "conduit",
+    "A place to share your Angular knowledge.",
+    "Global Feed",
+    "Popular Tags",
+    "migration",
+    "Versionless Angular baseline",
+    "Synthetic local evidence for the immutable Angular baseline."
+  ],
+  "boundaries": {
+    "credentials": "absent",
+    "realApi": "forbidden",
+    "nonLoopback": "locally-fulfilled-or-rejected-and-recorded",
+    "authentication": "not-exercised",
+    "mutations": "not-exercised"
+  }
+}

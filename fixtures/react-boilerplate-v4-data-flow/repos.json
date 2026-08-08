@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1001,
+    "name": "owned-repo",
+    "full_name": "octocat/owned-repo",
+    "html_url": "https://github.example/octocat/owned-repo",
+    "open_issues_count": 3,
+    "owner": { "login": "octocat" }
+  },
+  {
+    "id": 1002,
+    "name": "forked-repo",
+    "full_name": "fork-owner/forked-repo",
+    "html_url": "https://github.example/fork-owner/forked-repo",
+    "open_issues_count": 7,
+    "owner": { "login": "fork-owner" }
+  }
+]

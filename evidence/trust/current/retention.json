@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "versionless.trust.v1",
+  "retention": {
+    "state": "unknown",
+    "reason": "No approved retention duration or purge authority is recorded.",
+    "purge": "not-tested"
+  },
+  "purgeStatus": {
+    "state": "not-tested",
+    "reason": "No approved retention duration or purge exercise exists."
+  }
+}
