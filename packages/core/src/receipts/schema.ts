@@ -86,7 +86,7 @@ export const REACT_COMPOSED_TARGET_HASHES = {
 	'app/containers/LocaleToggle/index.js':
 		'db70524e86f9a5983d18f6ad1f2d72fec14b71bd5701d66da475ff600703e9b3',
 	'app/containers/HomePage/index.js':
-		'9132cb8b6ab4af9c88499ae4daa6783229a8d4898266f2953d0bc99a5ff168c1',
+		'4d5f28e30df04e4e85e2791ee34c9e3d27e68a398ab0e400624fade4b51398c2',
 	'app/containers/RepoListItem/index.js':
 		'5669977385fb57491fcb117cd65ffaa2a4ab86d2258bf36c7fa81ff880387517',
 	'package.json': '7fb3098e57021e790638e31677d3cbfe815087f889b708cab4e1efdc9785414a',
@@ -231,6 +231,7 @@ export function parseMigrationReceipt(value: unknown): MigrationReceipt {
 		if (
 			root.runId !== 'T060-react-boilerplate-v4-composed' ||
 			root.fixture !== 'react-boilerplate-v4-composed' ||
+			migration.edits !== 13 ||
 			!exact(migration.changedFiles, REACT_COMPOSED_CHANGED_FILES) ||
 			migration.file !== (migration.changedFiles as string[]).join(' + ') ||
 			!exact(migration.orders, ['locale-first', 'data-flow-first']) ||

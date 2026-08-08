@@ -154,20 +154,20 @@
       "scope": "/",
       "controller": "activated",
       "cacheNames": [
-        "versionless-react-vite8-553cd1cc611a0851b1978bbc041ef2f8c7b9fbbd3fdd9bb68274f29364987cdc"
+        "versionless-react-vite8-88686f59deca2cf956e7ef502b0cd4aea498001352fcf06affdbaf0178ef8599"
       ],
       "inventory": [
-        "/assets/FeaturePage-3koR6qyF.js",
-        "/assets/H1-DCVj1WeM.js",
-        "/assets/HomePage-BLDw2n8d.js",
-        "/assets/NotFoundPage-Co4MDuS6.js",
+        "/assets/FeaturePage-Col5ln_q.js",
+        "/assets/H1-4XVEaF5h.js",
+        "/assets/HomePage-CPCHELWv.js",
+        "/assets/NotFoundPage-BVtjd4E1.js",
         "/assets/__vite-browser-external-CvNEtdN9.js",
         "/assets/banner-6i24qsix.jpg",
         "/assets/de-CEvlwdXo.js",
         "/assets/en-D7F8Da0k.js",
         "/assets/favicon-Ba7brf7t.ico",
-        "/assets/index-BbOQy7cX.js",
         "/assets/index-CqaBhjBI.css",
+        "/assets/index-U4Un0wt4.js",
         "/assets/intl-tJox8g0n.js",
         "/index.html"
       ]
@@ -205,20 +205,20 @@
       "scope": "/",
       "controller": "activated",
       "cacheNames": [
-        "versionless-react-vite8-553cd1cc611a0851b1978bbc041ef2f8c7b9fbbd3fdd9bb68274f29364987cdc"
+        "versionless-react-vite8-88686f59deca2cf956e7ef502b0cd4aea498001352fcf06affdbaf0178ef8599"
       ],
       "inventory": [
-        "/assets/FeaturePage-3koR6qyF.js",
-        "/assets/H1-DCVj1WeM.js",
-        "/assets/HomePage-BLDw2n8d.js",
-        "/assets/NotFoundPage-Co4MDuS6.js",
+        "/assets/FeaturePage-Col5ln_q.js",
+        "/assets/H1-4XVEaF5h.js",
+        "/assets/HomePage-CPCHELWv.js",
+        "/assets/NotFoundPage-BVtjd4E1.js",
         "/assets/__vite-browser-external-CvNEtdN9.js",
         "/assets/banner-6i24qsix.jpg",
         "/assets/de-CEvlwdXo.js",
         "/assets/en-D7F8Da0k.js",
         "/assets/favicon-Ba7brf7t.ico",
-        "/assets/index-BbOQy7cX.js",
         "/assets/index-CqaBhjBI.css",
+        "/assets/index-U4Un0wt4.js",
         "/assets/intl-tJox8g0n.js",
         "/index.html"
       ]

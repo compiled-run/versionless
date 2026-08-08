@@ -28,6 +28,7 @@ import { verifyReceipt } from '../../../core/src/receipts/verify.ts';
 import {
 	planReactComposedMigration,
 	REACT_COMPOSED_PATHS,
+	REACT_COMPOSED_TARGET_HASHES,
 	type ReactComposedInputs,
 } from '../../../frameworks/react/src/react-composed-migration.ts';
 
@@ -66,6 +67,13 @@ interface Manifest {
 	};
 	originalWorktree: string;
 	maintainedWorktree: string;
+	targetHashes: {
+		localeToggle: string;
+		homePage: string;
+		repoListItem: string;
+		package: string;
+		packageLock: string;
+	};
 	runtime: { legacy: string; target: string; node24Archive: string; node24ArchiveSha256: string };
 	vite: {
 		version: string;
@@ -98,7 +106,11 @@ interface Journey {
 }
 
 type LaneName = 'legacy' | 'target';
-type MutationSeam = 'locale-dispatch' | 'repository-load' | 'service-worker-registration';
+type MutationSeam =
+	| 'locale-dispatch'
+	| 'home-reducer-injection'
+	| 'repository-load'
+	| 'service-worker-registration';
 
 export function isExpectedReactComposedMutationFailure(
 	seam: MutationSeam,
@@ -106,6 +118,7 @@ export function isExpectedReactComposedMutationFailure(
 ): boolean {
 	const expected = {
 		'locale-dispatch': 'locale dispatch assertion failed',
+		'home-reducer-injection': 'repository load assertion failed',
 		'repository-load': 'repository load assertion failed',
 		'service-worker-registration': 'service worker offline assertion failed',
 	};
@@ -214,6 +227,19 @@ async function preflight(manifest: Manifest) {
 		maintainedPackageLock,
 		order: 'data-flow-first',
 	});
+	const expectedManifestTargetHashes = {
+		localeToggle: REACT_COMPOSED_TARGET_HASHES['app/containers/LocaleToggle/index.js'],
+		homePage: REACT_COMPOSED_TARGET_HASHES['app/containers/HomePage/index.js'],
+		repoListItem: REACT_COMPOSED_TARGET_HASHES['app/containers/RepoListItem/index.js'],
+		package: REACT_COMPOSED_TARGET_HASHES['package.json'],
+		packageLock: REACT_COMPOSED_TARGET_HASHES['package-lock.json'],
+	};
+	if (
+		localeFirst.edits !== 13 ||
+		dataFirst.edits !== 13 ||
+		canonicalize(manifest.targetHashes) !== canonicalize(expectedManifestTargetHashes)
+	)
+		throw new Error('Refused: composed exact target binding or edit count changed');
 	if (canonicalize(localeFirst.outputs) !== canonicalize(dataFirst.outputs))
 		throw new Error('Composed transform orders differ');
 	const pins = {
@@ -800,6 +826,12 @@ export async function verifyReactBoilerplateComposed({
 	const mutations = [];
 	for (const mutation of [
 		{
+			seam: 'home-reducer-injection' as const,
+			file: 'app/containers/HomePage/index.js',
+			before: 'const withReducer = injectReducer({ key, reducer });',
+			after: 'const withReducer = injectReducer({ key, reducer: (state = reducer(undefined, {})) => state });',
+		},
+		{
 			seam: 'locale-dispatch' as const,
 			file: 'app/containers/LocaleToggle/index.js',
 			before: 'const onLocaleToggle = evt => dispatch(changeLocale(evt.target.value));',
@@ -862,6 +894,16 @@ export async function verifyReactBoilerplateComposed({
 			reproduced: reproduced.result,
 		});
 	}
+	if (
+		canonicalize(mutations.map((mutation) => mutation.seam)) !==
+		canonicalize([
+			'home-reducer-injection',
+			'locale-dispatch',
+			'repository-load',
+			'service-worker-registration',
+		])
+	)
+		throw new Error('React composed mutation order or membership changed');
 	artifacts.push(await artifact('mutation.json', { mutations, isolated: true }));
 	artifacts.push(
 		await artifact('migration-diff.json', {

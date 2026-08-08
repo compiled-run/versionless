@@ -52,6 +52,17 @@ const intendedJourneyFailure = createRegExp(
 	anyOf('synthetic request count assertion failed', 'owned repository name assertion failed'),
 );
 
+export function isExpectedReactDataFlowMutationFailure(
+	seam:
+		| 'home-load-repos-dispatch'
+		| 'home-reducer-injection'
+		| 'repo-current-user-selector'
+		| 'service-worker-registration',
+	message: string,
+): boolean {
+	return seam === 'home-reducer-injection' && message === 'Username input-state assertion failed';
+}
+
 interface FixtureManifest {
 	id: string;
 	source: {
@@ -515,6 +526,7 @@ async function browserJourney(options: {
 	run: number;
 	expectedFailure?:
 		| 'home-load-repos-dispatch'
+		| 'home-reducer-injection'
 		| 'repo-current-user-selector'
 		| 'service-worker-registration';
 }) {
@@ -668,7 +680,8 @@ async function browserJourney(options: {
 		else if (
 			options.expectedFailure &&
 			error instanceof Error &&
-			intendedJourneyFailure.test(error.message)
+			(intendedJourneyFailure.test(error.message) ||
+				isExpectedReactDataFlowMutationFailure(options.expectedFailure, error.message))
 		)
 			intendedFailure = true;
 		else throw error;
@@ -828,6 +841,12 @@ export async function verifyReactBoilerplateDataFlow({
 
 	const mutations = [];
 	const mutationCases = [
+		{
+			seam: 'home-reducer-injection' as const,
+			file: path.join(prepared.target, 'app/containers/HomePage/index.js'),
+			before: 'const withReducer = injectReducer({ key, reducer });',
+			after: 'const withReducer = injectReducer({ key, reducer: (state = reducer(undefined, {})) => state });',
+		},
 		{
 			seam: 'home-load-repos-dispatch' as const,
 			file: path.join(prepared.target, 'app/containers/HomePage/index.js'),

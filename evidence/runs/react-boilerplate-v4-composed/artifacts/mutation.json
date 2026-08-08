@@ -1,6 +1,13 @@
 {
   "mutations": [
     {
+      "seam": "home-reducer-injection",
+      "result": "intended-failure",
+      "restoration": "byte-identical",
+      "restoredSha256": "4d5f28e30df04e4e85e2791ee34c9e3d27e68a398ab0e400624fade4b51398c2",
+      "reproduced": "pass"
+    },
+    {
       "seam": "locale-dispatch",
       "result": "intended-failure",
       "restoration": "byte-identical",
@@ -11,7 +18,7 @@
       "seam": "repository-load",
       "result": "intended-failure",
       "restoration": "byte-identical",
-      "restoredSha256": "9132cb8b6ab4af9c88499ae4daa6783229a8d4898266f2953d0bc99a5ff168c1",
+      "restoredSha256": "4d5f28e30df04e4e85e2791ee34c9e3d27e68a398ab0e400624fade4b51398c2",
       "reproduced": "pass"
     },
     {

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+	validateWitnessQualificationTypingMode,
 	validateWitnessTransportDecision,
 	type WitnessTransportDecision,
 } from '../src/witness/playwright-host.ts';
@@ -27,5 +28,17 @@ describe('Witness real-app host boundary', () => {
 				body: Buffer.alloc(1_048_577),
 			}),
 		).toThrow('fixed boundary');
+	});
+
+	it('rejects fill-backed qualification typing modes', () => {
+		expect(() =>
+			validateWitnessQualificationTypingMode({ clear: true, keyEvents: true }),
+		).toThrow('rejects fill-backed typing modes');
+		expect(() =>
+			validateWitnessQualificationTypingMode({ clear: false, keyEvents: false }),
+		).toThrow('rejects fill-backed typing modes');
+		expect(() =>
+			validateWitnessQualificationTypingMode({ clear: false, keyEvents: true }),
+		).not.toThrow();
 	});
 });

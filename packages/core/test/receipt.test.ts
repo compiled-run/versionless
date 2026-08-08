@@ -224,7 +224,7 @@ describe('receipts', () => {
 		const parsed = parseMigrationReceipt(raw);
 		expect(parsed.migration).toMatchObject({
 			transform: 'react-data-flow-connect-to-hooks',
-			edits: 4,
+			edits: 6,
 			changedFiles: [
 				'app/containers/HomePage/index.js',
 				'app/containers/RepoListItem/index.js',
@@ -244,7 +244,16 @@ describe('receipts', () => {
 					64,
 				)),
 			(value) =>
-				(value.migration.targetHashes['app/containers/HomePage/index.js'] = '0'.repeat(64)),
+				(value.migration.targetHashes['app/containers/HomePage/index.js'] =
+					'9132cb8b6ab4af9c88499ae4daa6783229a8d4898266f2953d0bc99a5ff168c1'),
+			(value) => delete value.migration.targetHashes['app/containers/HomePage/index.js'],
+			(value) => {
+				value.migration.targetHashes['app/containers/HomePage/renamed.js'] =
+					value.migration.targetHashes['app/containers/HomePage/index.js'];
+				delete value.migration.targetHashes['app/containers/HomePage/index.js'];
+			},
+			(value) => (value.migration.targetHashes.extra = '0'.repeat(64)),
+			(value) => (value.migration.edits = 12),
 			(value) => value.migration.executionTraces.reverse(),
 			(value) => (value.migration.actualOrdersExecuted = false),
 			(value) => (value.migration.publication = 'five-sequential-writes'),

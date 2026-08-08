@@ -32,7 +32,7 @@
   "migration": {
     "file": "app/containers/HomePage/index.js + app/containers/RepoListItem/index.js",
     "transform": "react-data-flow-connect-to-hooks",
-    "edits": 4,
+    "edits": 6,
     "changedFiles": [
       "app/containers/HomePage/index.js",
       "app/containers/RepoListItem/index.js"
@@ -56,16 +56,16 @@
       "syntheticInterceptions": 4
     },
     "deterministicCore": {
-      "first": "9857ed4c1206568447809ed9af2f88572c69ae936d2e4acd7630462a30ca7c71",
-      "second": "9857ed4c1206568447809ed9af2f88572c69ae936d2e4acd7630462a30ca7c71",
+      "first": "7517fe41c96fa6373ddbc73c241b4c58d4ac5537abc5a2e20959e7026bd18327",
+      "second": "7517fe41c96fa6373ddbc73c241b4c58d4ac5537abc5a2e20959e7026bd18327",
       "equal": true
     },
     "serviceWorker": {
       "workerPath": "sw.js",
       "manifestPath": "precache-manifest.json",
       "scope": "/",
-      "manifestSha256": "553cd1cc611a0851b1978bbc041ef2f8c7b9fbbd3fdd9bb68274f29364987cdc",
-      "cacheName": "versionless-react-vite8-553cd1cc611a0851b1978bbc041ef2f8c7b9fbbd3fdd9bb68274f29364987cdc",
+      "manifestSha256": "88686f59deca2cf956e7ef502b0cd4aea498001352fcf06affdbaf0178ef8599",
+      "cacheName": "versionless-react-vite8-88686f59deca2cf956e7ef502b0cd4aea498001352fcf06affdbaf0178ef8599",
       "currentCacheOnly": true,
       "inventoryMatchesManifest": true,
       "exactCurrentCacheFetch": true,
@@ -89,23 +89,23 @@
     },
     {
       "path": "evidence/runs/react-boilerplate-v4-data-flow/artifacts/transform.json",
-      "sha256": "fbc23cec36c19da3c0429835b192b64a42de8b74f1cae5d485b381cc2775cb39"
+      "sha256": "f36845d5a42064c2554be14a4cc4359ac4e731d7e2a81649c6c710d25278aaa9"
     },
     {
       "path": "evidence/runs/react-boilerplate-v4-data-flow/artifacts/build.json",
-      "sha256": "0b58bdbbf7fdf8149f7845d74142449e4eca2ec45e756da0729b708607742b0c"
+      "sha256": "dbfb2bc87ff491117a18f5364927186550c0d3f6a7227f7b313f88e1f5994f91"
     },
     {
       "path": "evidence/runs/react-boilerplate-v4-data-flow/artifacts/upgrade.json",
-      "sha256": "7a50868de8924839eb5006a286e275303e2028b07c9fb3d03cd285160a229fd0"
+      "sha256": "db9f8fa01d84fd54ceb39cf2277d7acf3333886639b5975f7e60f9af0b175641"
     },
     {
       "path": "evidence/runs/react-boilerplate-v4-data-flow/artifacts/journey.json",
-      "sha256": "4d3a11cf56342b482ec3c93f25d360811a79f5859ec9416e818a229f773cc7f1"
+      "sha256": "68091085ea748d7be4821e84b83c26fa7e059a301691c6b082918804970a0667"
     },
     {
       "path": "evidence/runs/react-boilerplate-v4-data-flow/artifacts/mutation.json",
-      "sha256": "b178d5d3e0a940191b550c54ed0b1f601f1658f0e521a9ed81720b5f49638481"
+      "sha256": "c550ff37010fc5725ea6b55d378174e0e9c4d93e7ab018026fd2dfc6609f2bab"
     },
     {
       "path": "evidence/runs/react-boilerplate-v4-data-flow/artifacts/migration-diff.json",
@@ -121,12 +121,12 @@
     },
     {
       "path": "evidence/runs/react-boilerplate-v4-data-flow/artifacts/deterministic-core.json",
-      "sha256": "c3315e20ee32e63a9221b4dd90a3f2a94bfc1a4ef15958ea2f0a8cc7c6ef1b80"
+      "sha256": "93638e00f37ec8942e5a283adb2915d9992e24a9610c4180c1381834792ce602"
     }
   ],
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "a6c25918ed9650d3315c42501932e8e6fe26552e48bcbdf74d4987f7b384452b",
+    "canonicalDigest": "2bd6e145d611fb0bb5fb89c9d6ed164a3b30e9c0b1b2a290032f56908e5035da",
     "authenticity": "not-established"
   },
   "limitations": [

@@ -383,21 +383,25 @@ describe('canonical corpus conformance', () => {
 	});
 
 	it('rejects recomputed composed artifact and aggregate rebinding', async () => {
-		for (const [name, mutate] of [
+		for (const [label, name, mutate] of [
 			[
+				'composition-publish',
 				'composition.json',
 				(value: Record<string, unknown>) => (value.publish = 'five-sequential-writes'),
 			],
 			[
+				'transform-file',
 				'transform.json',
 				(value: Record<string, unknown>) =>
 					((value.changedFiles as string[])[0] = 'app/containers/Wrong/index.js'),
 			],
 			[
+				'migration-diff-adapter',
 				'migration-diff.json',
 				(value: Record<string, unknown>) => (value.harnessOnlyAdapterExcluded = false),
 			],
 			[
+				'journey-method',
 				'journey.json',
 				(value: Record<string, unknown>) =>
 					((
@@ -406,13 +410,44 @@ describe('canonical corpus conformance', () => {
 					)[0]!.method = 'POST'),
 			],
 			[
+				'mutation-renamed',
 				'mutation.json',
 				(value: Record<string, unknown>) =>
-					((value.mutations as Array<Record<string, unknown>>)[0]!.seam =
-						'repository-load'),
+					((value.mutations as Array<Record<string, unknown>>)[0]!.seam = 'renamed'),
+			],
+			[
+				'mutation-missing',
+				'mutation.json',
+				(value: Record<string, unknown>) =>
+					(value.mutations as Array<Record<string, unknown>>).splice(1, 1),
+			],
+			[
+				'mutation-reordered',
+				'mutation.json',
+				(value: Record<string, unknown>) =>
+					(value.mutations as Array<Record<string, unknown>>).reverse(),
+			],
+			[
+				'mutation-extra',
+				'mutation.json',
+				(value: Record<string, unknown>) =>
+					(value.mutations as Array<Record<string, unknown>>).push({
+						seam: 'extra',
+						result: 'intended-failure',
+						restoration: 'byte-identical',
+						restoredSha256: '0'.repeat(64),
+						reproduced: 'pass',
+					}),
+			],
+			[
+				'mutation-restoration-rebound',
+				'mutation.json',
+				(value: Record<string, unknown>) =>
+					((value.mutations as Array<Record<string, unknown>>)[0]!.restoredSha256 =
+						'0'.repeat(64)),
 			],
 		] as const) {
-			const directory = await corpusCopy(`rebound-${name}`);
+			const directory = await corpusCopy(`rebound-${label}`);
 			try {
 				await rebindComposedArtifact(directory, name, mutate);
 				await expect(analyzeCorpusConformance({ rootDir: directory })).rejects.toThrow(

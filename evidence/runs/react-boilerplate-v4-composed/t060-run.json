@@ -33,7 +33,7 @@
   "migration": {
     "file": "app/containers/LocaleToggle/index.js + app/containers/HomePage/index.js + app/containers/RepoListItem/index.js + package.json + package-lock.json",
     "transform": "react-composed-connect-to-hooks",
-    "edits": 11,
+    "edits": 13,
     "changedFiles": [
       "app/containers/LocaleToggle/index.js",
       "app/containers/HomePage/index.js",
@@ -75,7 +75,7 @@
     },
     "targetHashes": {
       "app/containers/LocaleToggle/index.js": "db70524e86f9a5983d18f6ad1f2d72fec14b71bd5701d66da475ff600703e9b3",
-      "app/containers/HomePage/index.js": "9132cb8b6ab4af9c88499ae4daa6783229a8d4898266f2953d0bc99a5ff168c1",
+      "app/containers/HomePage/index.js": "4d5f28e30df04e4e85e2791ee34c9e3d27e68a398ab0e400624fade4b51398c2",
       "app/containers/RepoListItem/index.js": "5669977385fb57491fcb117cd65ffaa2a4ab86d2258bf36c7fa81ff880387517",
       "package.json": "7fb3098e57021e790638e31677d3cbfe815087f889b708cab4e1efdc9785414a",
       "package-lock.json": "42ffa936b19115ad380e77dcbc3800c7adf117aa560c5f678c837b7f4b09e00d"
@@ -95,16 +95,16 @@
       "syntheticInterceptions": 4
     },
     "deterministicCore": {
-      "first": "49e72dbbcafed3983c1951d00024b9ad32eadf08f6a1e8d0c470a6bf6e72a194",
-      "second": "49e72dbbcafed3983c1951d00024b9ad32eadf08f6a1e8d0c470a6bf6e72a194",
+      "first": "f823f696c60b62319fe31888f0a9dc0486dbab5467c61b777b838cbdb9742bb7",
+      "second": "f823f696c60b62319fe31888f0a9dc0486dbab5467c61b777b838cbdb9742bb7",
       "equal": true
     },
     "serviceWorker": {
       "workerPath": "sw.js",
       "manifestPath": "precache-manifest.json",
       "scope": "/",
-      "manifestSha256": "553cd1cc611a0851b1978bbc041ef2f8c7b9fbbd3fdd9bb68274f29364987cdc",
-      "cacheName": "versionless-react-vite8-553cd1cc611a0851b1978bbc041ef2f8c7b9fbbd3fdd9bb68274f29364987cdc",
+      "manifestSha256": "88686f59deca2cf956e7ef502b0cd4aea498001352fcf06affdbaf0178ef8599",
+      "cacheName": "versionless-react-vite8-88686f59deca2cf956e7ef502b0cd4aea498001352fcf06affdbaf0178ef8599",
       "currentCacheOnly": true,
       "inventoryMatchesManifest": true,
       "exactCurrentCacheFetch": true,
@@ -120,7 +120,7 @@
   "artifacts": [
     {
       "path": "evidence/runs/react-boilerplate-v4-composed/artifacts/preparation.json",
-      "sha256": "b793c9290e8bd5831f56d276913d11f425e34ed08422d351f883aa2759dbb73b"
+      "sha256": "95eb9d9719d22cd9742f574c10c89dac668582d4e86973f126fd1c0b606a6d6a"
     },
     {
       "path": "evidence/runs/react-boilerplate-v4-composed/artifacts/composition.json",
@@ -128,23 +128,23 @@
     },
     {
       "path": "evidence/runs/react-boilerplate-v4-composed/artifacts/transform.json",
-      "sha256": "1bc421418715292c81a70949bc149e328a5cde60b1558ab36c62dc9f08c63e5e"
+      "sha256": "088bae4dab498a12d10145ce49e7bc738d3167953ead312ae0abdd08ed0eb180"
     },
     {
       "path": "evidence/runs/react-boilerplate-v4-composed/artifacts/build.json",
-      "sha256": "c7a4ccf8b84229ebf26e98fc8450fc653bef8f0031c74d4b22b1263e728c79fb"
+      "sha256": "bbc65c3f9893ba9de6e4fef70ee1d51608cf38ba569399e1bbbfdfbe8df5513c"
     },
     {
       "path": "evidence/runs/react-boilerplate-v4-composed/artifacts/journey.json",
-      "sha256": "5c3486b366dd9fadda9044b97d438bbc89f851fc287bef6bc86a0de35590f924"
+      "sha256": "d7f3e6d7053990c212f3ee1a0b14b8787d0bad0b741ee01c6febc2165e83dec7"
     },
     {
       "path": "evidence/runs/react-boilerplate-v4-composed/artifacts/mutation.json",
-      "sha256": "80fe6d3ff964f5c9a28a1b360021d2de780b8e4121dfc59f2a80fde00de2c07b"
+      "sha256": "221c425a05a401534a2295b5253231109e385da017fa4f569632c0dab91022ff"
     },
     {
       "path": "evidence/runs/react-boilerplate-v4-composed/artifacts/migration-diff.json",
-      "sha256": "cbc98ab8ca8d731bfffc9ee2d71ae836fb66f701c4c6ad0e324ceffd1438bced"
+      "sha256": "dc2049a2a2dbba41c4057e17d642566eca0bac8a3cf7ff9373343e226e965797"
     },
     {
       "path": "evidence/runs/react-boilerplate-v4-composed/artifacts/locality.json",
@@ -156,12 +156,12 @@
     },
     {
       "path": "evidence/runs/react-boilerplate-v4-composed/artifacts/deterministic-core.json",
-      "sha256": "4ddc7d257567ebf50e65459134020120d2f966ae0bc1a55c6a9368c4137f04da"
+      "sha256": "44256362d160bfff11d8999777d1715913dc1fb2f9f71b2cc769de3c7f37e778"
     }
   ],
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "9341f5e70c00ebbde65a919db5b5d31fde0fa39983e985deb01afb71ed00d1ad",
+    "canonicalDigest": "52400147929220935a9ebe47a16c8dff50b5c28e9d51c930d000c99c2bdc8a21",
     "authenticity": "not-established"
   },
   "limitations": [

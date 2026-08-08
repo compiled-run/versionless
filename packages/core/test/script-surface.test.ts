@@ -181,6 +181,28 @@ describe('static deployment script surface', () => {
 				if (lanes[1]) lanes[1].receiptDigest = '0'.repeat(64);
 			},
 			(value) => {
+				const lanes = value.verticals[6]?.lanes as Array<Record<string, unknown>>;
+				if (lanes[1])
+					lanes[1].receiptDigest =
+						'a6c25918ed9650d3315c42501932e8e6fe26552e48bcbdf74d4987f7b384452b';
+			},
+			(value) => {
+				const lanes = value.verticals[6]?.lanes as Array<Record<string, unknown>>;
+				if (lanes[1])
+					lanes[1].entrypointSha256 =
+						'195389eed017d98c1e7bcdfe17b9c42be3851d745d60f7cb816109734381c5af';
+			},
+			(value) => {
+				const lanes = value.verticals[6]?.lanes as Array<Record<string, unknown>>;
+				if (lanes[1]) lanes[1].expectedScriptSources = ['/assets/index-BbOQy7cX.js'];
+			},
+			(value) => {
+				const lanes = value.verticals[7]?.lanes as Array<Record<string, unknown>>;
+				if (lanes[1])
+					lanes[1].receiptDigest =
+						'9341f5e70c00ebbde65a919db5b5d31fde0fa39983e985deb01afb71ed00d1ad';
+			},
+			(value) => {
 				const lanes = value.verticals[8]?.lanes as Array<Record<string, unknown>>;
 				if (lanes[0]) lanes[0].lane = 'target';
 			},

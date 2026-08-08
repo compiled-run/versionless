@@ -105,7 +105,7 @@ const canonicalReceipts = [
 	{
 		id: 'react-boilerplate-v4-data-flow',
 		path: 'evidence/runs/react-boilerplate-v4-data-flow/t054-run.json',
-		digest: 'a6c25918ed9650d3315c42501932e8e6fe26552e48bcbdf74d4987f7b384452b',
+		digest: '2bd6e145d611fb0bb5fb89c9d6ed164a3b30e9c0b1b2a290032f56908e5035da',
 		application: 'react-boilerplate',
 		framework: 'react',
 		bundler: 'Vite 8.0.16',
@@ -114,7 +114,7 @@ const canonicalReceipts = [
 	{
 		id: 'react-boilerplate-v4-composed',
 		path: 'evidence/runs/react-boilerplate-v4-composed/t060-run.json',
-		digest: '9341f5e70c00ebbde65a919db5b5d31fde0fa39983e985deb01afb71ed00d1ad',
+		digest: '52400147929220935a9ebe47a16c8dff50b5c28e9d51c930d000c99c2bdc8a21',
 		application: 'react-boilerplate',
 		framework: 'react',
 		bundler: 'webpack 4.30.0 / Vite 8.0.16',
@@ -691,7 +691,7 @@ export async function analyzeCorpusConformance(
 				canonicalize(composition) !== canonicalize(expectedComposition) ||
 				canonicalize(transform.changedFiles) !==
 					canonicalize(REACT_COMPOSED_CHANGED_FILES) ||
-				transform.edits !== 11 ||
+				transform.edits !== 13 ||
 				canonicalize(transform.semanticEngine) !==
 					canonicalize({
 						parser: 'yuku-parser@0.7.0',
@@ -712,6 +712,16 @@ export async function analyzeCorpusConformance(
 				canonicalize(mutation) !==
 					canonicalize({
 						mutations: [
+							{
+								seam: 'home-reducer-injection',
+								result: 'intended-failure',
+								restoration: 'byte-identical',
+								restoredSha256:
+									REACT_COMPOSED_TARGET_HASHES[
+										'app/containers/HomePage/index.js'
+									],
+								reproduced: 'pass',
+							},
 							{
 								seam: 'locale-dispatch',
 								result: 'intended-failure',

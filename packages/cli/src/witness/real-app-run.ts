@@ -71,6 +71,16 @@ type JourneyLifecycle = {
 		cacheNames: string[];
 		cacheEntries: Array<{ name: string; paths: string[] }>;
 	} | null;
+	phonecatOrdering: {
+		names: string[];
+		datasetSha256: string;
+		orderSha256: string;
+	} | null;
+	phonecatImages: {
+		detailSha256: string;
+		defaultImage: string;
+		nonDefaultImage: string;
+	} | null;
 };
 type AppSpec = {
 	app: App;
@@ -456,6 +466,57 @@ async function expectedReactTelemetry(
 	};
 }
 
+async function expectedPhonecatOrdering(laneRoot: string): Promise<{
+	names: string[];
+	datasetSha256: string;
+	orderSha256: string;
+}> {
+	const dataset = await readFile(join(laneRoot, 'phones/phones.json'));
+	const phones = JSON.parse(dataset.toString('utf8')) as Array<{ name?: unknown }>;
+	if (
+		phones.length !== 20 ||
+		phones.some((phone) => typeof phone.name !== 'string' || phone.name.length === 0)
+	)
+		throw new Error('PhoneCat immutable phone-name dataset differs');
+	const names = phones
+		.map((phone, sourceIndex) => ({ name: phone.name as string, sourceIndex }))
+		.sort((left, right) => {
+			const leftName = left.name.toLowerCase();
+			const rightName = right.name.toLowerCase();
+			if (leftName < rightName) return -1;
+			if (leftName > rightName) return 1;
+			return left.sourceIndex - right.sourceIndex;
+		})
+		.map((phone) => phone.name);
+	return {
+		names,
+		datasetSha256: sha256(dataset),
+		orderSha256: sha256(canonicalize(names)),
+	};
+}
+
+async function expectedPhonecatImages(laneRoot: string): Promise<{
+	detailSha256: string;
+	defaultImage: string;
+	nonDefaultImage: string;
+}> {
+	const detail = await readFile(join(laneRoot, 'phones/nexus-s.json'));
+	const phone = JSON.parse(detail.toString('utf8')) as { images?: unknown };
+	if (
+		!Array.isArray(phone.images) ||
+		phone.images.length < 2 ||
+		phone.images.some((image) => typeof image !== 'string' || image.length === 0)
+	)
+		throw new Error('PhoneCat immutable Nexus S image dataset differs');
+	const defaultImage = phone.images[0] as string;
+	const nonDefaultImage = phone.images.find((image) => image !== defaultImage) as
+		| string
+		| undefined;
+	if (nonDefaultImage === undefined)
+		throw new Error('PhoneCat immutable Nexus S non-default image is absent');
+	return { detailSha256: sha256(detail), defaultImage, nonDefaultImage };
+}
+
 const clean = async (context: BoxContext, page: PageHandle, navigations: number): Promise<void> => {
 	await context.expect.page.outcome(page, {
 		navigations,
@@ -469,7 +530,7 @@ const apps: AppSpec[] = [
 		app: 'react-boilerplate',
 		framework: 'react',
 		canonicalReceipt: 'evidence/runs/react-boilerplate-v4-composed/t060-run.json',
-		canonicalDigest: '9341f5e70c00ebbde65a919db5b5d31fde0fa39983e985deb01afb71ed00d1ad',
+		canonicalDigest: '52400147929220935a9ebe47a16c8dff50b5c28e9d51c930d000c99c2bdc8a21',
 		sources: {
 			baseline: '.versionless/work/react-boilerplate-v4-composed/legacy/build',
 			migrated: '.versionless/work/react-boilerplate-v4-composed/target/build-vite',
@@ -629,7 +690,7 @@ const apps: AppSpec[] = [
 						source: 'canonical-t060',
 						receiptPath: 'evidence/runs/react-boilerplate-v4-composed/t060-run.json',
 						canonicalDigest:
-							'9341f5e70c00ebbde65a919db5b5d31fde0fa39983e985deb01afb71ed00d1ad',
+							'52400147929220935a9ebe47a16c8dff50b5c28e9d51c930d000c99c2bdc8a21',
 						newProof: false,
 					},
 					lifecycle: {
@@ -653,20 +714,48 @@ const apps: AppSpec[] = [
 			migrated: '.versionless/work/angular-phonecat-composed/target/app',
 		},
 		initialRoute: '/#!/phones',
-		journey: async (context, page) => {
+		journey: async (context, page, _transportEvidence, lifecycle) => {
 			const query = 'input[ng-model="$ctrl.query"]';
 			await page.trackEvents('click', 'input', 'change', 'keydown', 'mouseover');
 			await page.type(query, 'nexus');
 			await context.expect.page.count(page, 'ul.phones > li', 1);
-			await page.press(query, 'a', { modifiers: ['Control'] });
-			await page.press(query, 'Backspace');
+			for (let index = 0; index < 5; index += 1) await page.press(query, 'Backspace');
+			await context.expect.page.count(page, 'ul.phones > li', 20);
 			await page.click('select');
-			await page.press('select', 'n');
+			await page.press('select', 'a');
 			await context.expect.page.exists(page, 'select option[value="name"]:checked');
+			await context.expect.page.outcome(page, { events: { change: { atLeast: 1 } } });
+			if (lifecycle.phonecatOrdering === null)
+				throw new Error('PhoneCat data-derived ordering expectation is absent');
+			for (const [index, name] of lifecycle.phonecatOrdering.names.entries())
+				await context.expect.page.text(
+					page,
+					`ul.phones > li:nth-child(${index + 1}) a:not(.thumb)`,
+					name,
+				);
 			await page.type(query, 'nexus');
 			await page.click('ul.phones a:not(.thumb)');
 			await context.expect.page.text(page, 'h1', 'Nexus S');
-			await page.click('ul.phone-thumbs li:nth-child(2) img');
+			if (lifecycle.phonecatImages === null)
+				throw new Error('PhoneCat data-derived image expectation is absent');
+			await context.expect.page.attribute(
+				page,
+				'img.phone.selected',
+				'src',
+				lifecycle.phonecatImages.defaultImage,
+			);
+			const nonDefaultThumbnail = `ul.phone-thumbs img[ng-src=${JSON.stringify(
+				lifecycle.phonecatImages.nonDefaultImage,
+			)}]`;
+			await page.hover(nonDefaultThumbnail);
+			await context.expect.page.outcome(page, { events: { mouseover: { atLeast: 1 } } });
+			await page.click(nonDefaultThumbnail);
+			await context.expect.page.attribute(
+				page,
+				'img.phone.selected',
+				'src',
+				lifecycle.phonecatImages.nonDefaultImage,
+			);
 			await page.hover('img.phone.selected');
 			await page.scroll(null, { y: 500 });
 			await context.expect.page.outcome(page, {
@@ -684,7 +773,7 @@ const apps: AppSpec[] = [
 			return {
 				assertions: [
 					'filter',
-					'keyboard selection',
+					'keyboard selection change and alphabetical ordering',
 					'detail route',
 					'thumbnail swap',
 					'clean page',
@@ -1017,6 +1106,10 @@ async function executeRun(app: AppSpec, lane: Lane, pass: 1 | 2): Promise<Witnes
 	const transportEvidence: JourneyTransportEvidence = { apiUsernames: [] };
 	const expectedServiceWorker =
 		app.app === 'react-boilerplate' ? await expectedReactTelemetry(laneRoot, lane) : null;
+	const phonecatOrdering =
+		app.app === 'angular-phonecat' ? await expectedPhonecatOrdering(laneRoot) : null;
+	const phonecatImages =
+		app.app === 'angular-phonecat' ? await expectedPhonecatImages(laneRoot) : null;
 	const host = createPlaywrightWitnessHost({
 		chromiumExecutable,
 		contextProfile,
@@ -1032,6 +1125,8 @@ async function executeRun(app: AppSpec, lane: Lane, pass: 1 | 2): Promise<Witnes
 			serviceWorkerTelemetry: host.serviceWorkerTelemetry,
 			staticRequests: staticServer.requests,
 			expectedServiceWorker,
+			phonecatOrdering,
+			phonecatImages,
 		});
 		await context.receipt.capture('journey-complete');
 	});
@@ -1140,6 +1235,28 @@ async function executeRun(app: AppSpec, lane: Lane, pass: 1 | 2): Promise<Witnes
 			byteIdentical: true as const,
 			hmrControls: false as const,
 			legacyMainPrecache,
+			phonecatOrdering:
+				phonecatOrdering === null
+					? { state: 'not-applicable' as const }
+					: {
+							state: 'data-derived-full-order' as const,
+							datasetSha256: phonecatOrdering.datasetSha256,
+							orderSha256: phonecatOrdering.orderSha256,
+							rows: 20 as const,
+							comparator: 'stable-lowercase-utf16-source-order-ties' as const,
+						},
+			phonecatImageTransition:
+				phonecatImages === null
+					? { state: 'not-applicable' as const }
+					: {
+							state: 'data-derived-visible-transition' as const,
+							detailSha256: phonecatImages.detailSha256,
+							defaultImage: phonecatImages.defaultImage,
+							nonDefaultImage: phonecatImages.nonDefaultImage,
+							hover: 'genuine-thumbnail-mouseover' as const,
+							transition: 'genuine-ng-click' as const,
+							heroVisibility: 'genuine-hover' as const,
+						},
 		},
 		observerFinalization,
 		successfulNonLoopback: host.locality().successfulNonLoopback,
@@ -1272,6 +1389,8 @@ async function runReactBaselineDifferentialProfile(
 				serviceWorkerTelemetry: host.serviceWorkerTelemetry,
 				staticRequests: staticServer.requests,
 				expectedServiceWorker,
+				phonecatOrdering: null,
+				phonecatImages: null,
 			});
 			telemetry =
 				journey.timeoutTelemetry ??

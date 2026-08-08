@@ -53,7 +53,7 @@ function fixture(): WitnessRealAppReceipt {
 									receiptPath:
 										'evidence/runs/react-boilerplate-v4-composed/t060-run.json',
 									canonicalDigest:
-										'9341f5e70c00ebbde65a919db5b5d31fde0fa39983e985deb01afb71ed00d1ad',
+										'52400147929220935a9ebe47a16c8dff50b5c28e9d51c930d000c99c2bdc8a21',
 									newProof: false,
 								},
 								lifecycle: {
@@ -174,6 +174,28 @@ function fixture(): WitnessRealAppReceipt {
 									})),
 								}
 							: { state: 'not-applicable' as const },
+					phonecatOrdering:
+						app === 'angular-phonecat'
+							? {
+									state: 'data-derived-full-order' as const,
+									datasetSha256: '1'.repeat(64),
+									orderSha256: '2'.repeat(64),
+									rows: 20 as const,
+									comparator: 'stable-lowercase-utf16-source-order-ties' as const,
+								}
+							: { state: 'not-applicable' as const },
+					phonecatImageTransition:
+						app === 'angular-phonecat'
+							? {
+									state: 'data-derived-visible-transition' as const,
+									detailSha256: '3'.repeat(64),
+									defaultImage: 'img/phones/default.jpg',
+									nonDefaultImage: 'img/phones/non-default.jpg',
+									hover: 'genuine-thumbnail-mouseover' as const,
+									transition: 'genuine-ng-click' as const,
+									heroVisibility: 'genuine-hover' as const,
+								}
+							: { state: 'not-applicable' as const },
 				},
 				observerFinalization: {
 					state: 'target-closed' as const,
@@ -278,6 +300,26 @@ describe('linked Witness real-app receipt', () => {
 		)!;
 		if (run.servedStatic.legacyMainPrecache.state !== 'exact-completed') throw new Error();
 		run.servedStatic.legacyMainPrecache.responses.pop();
+		receipt.integrity.canonicalDigest = witnessRealAppDigest(receipt);
+		expect(() => parseWitnessRealAppReceipt(receipt)).toThrow('run differs');
+	});
+
+	it('rejects a weakened PhoneCat ordering digest', () => {
+		const receipt = fixture();
+		const run = receipt.runs.find((candidate) => candidate.app === 'angular-phonecat')!;
+		if (run.servedStatic.phonecatOrdering.state !== 'data-derived-full-order')
+			throw new Error();
+		run.servedStatic.phonecatOrdering.orderSha256 = 'short';
+		receipt.integrity.canonicalDigest = witnessRealAppDigest(receipt);
+		expect(() => parseWitnessRealAppReceipt(receipt)).toThrow('run differs');
+	});
+
+	it('rejects a weakened PhoneCat image transition', () => {
+		const receipt = fixture();
+		const run = receipt.runs.find((candidate) => candidate.app === 'angular-phonecat')!;
+		if (run.servedStatic.phonecatImageTransition.state !== 'data-derived-visible-transition')
+			throw new Error();
+		run.servedStatic.phonecatImageTransition.heroVisibility = 'not-tested' as 'genuine-hover';
 		receipt.integrity.canonicalDigest = witnessRealAppDigest(receipt);
 		expect(() => parseWitnessRealAppReceipt(receipt)).toThrow('run differs');
 	});

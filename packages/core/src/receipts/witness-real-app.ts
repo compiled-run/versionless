@@ -46,7 +46,7 @@ export type WitnessOfflineEvidence =
 			serviceWorkerEvidence: {
 				source: 'canonical-t060';
 				receiptPath: 'evidence/runs/react-boilerplate-v4-composed/t060-run.json';
-				canonicalDigest: '9341f5e70c00ebbde65a919db5b5d31fde0fa39983e985deb01afb71ed00d1ad';
+				canonicalDigest: '52400147929220935a9ebe47a16c8dff50b5c28e9d51c930d000c99c2bdc8a21';
 				newProof: false;
 			};
 			lifecycle: {
@@ -104,6 +104,26 @@ export type WitnessRealAppRun = {
 						urlPath: string;
 						source: 'production-static-origin';
 					}>;
+			  }
+			| { state: 'not-applicable' };
+		phonecatOrdering:
+			| {
+					state: 'data-derived-full-order';
+					datasetSha256: string;
+					orderSha256: string;
+					rows: 20;
+					comparator: 'stable-lowercase-utf16-source-order-ties';
+			  }
+			| { state: 'not-applicable' };
+		phonecatImageTransition:
+			| {
+					state: 'data-derived-visible-transition';
+					detailSha256: string;
+					defaultImage: string;
+					nonDefaultImage: string;
+					hover: 'genuine-thumbnail-mouseover';
+					transition: 'genuine-ng-click';
+					heroVisibility: 'genuine-hover';
 			  }
 			| { state: 'not-applicable' };
 	};
@@ -274,6 +294,27 @@ export function parseWitnessRealAppReceipt(value: unknown): WitnessRealAppReceip
 						);
 					})
 				: served.legacyMainPrecache?.state !== 'not-applicable';
+		const phonecatOrderingDiffers =
+			run.app === 'angular-phonecat'
+				? served.phonecatOrdering?.state !== 'data-derived-full-order' ||
+					!sha256Digest(served.phonecatOrdering.datasetSha256) ||
+					!sha256Digest(served.phonecatOrdering.orderSha256) ||
+					served.phonecatOrdering.rows !== 20 ||
+					served.phonecatOrdering.comparator !==
+						'stable-lowercase-utf16-source-order-ties'
+				: served.phonecatOrdering?.state !== 'not-applicable';
+		const phonecatImageTransitionDiffers =
+			run.app === 'angular-phonecat'
+				? served.phonecatImageTransition?.state !== 'data-derived-visible-transition' ||
+					!sha256Digest(served.phonecatImageTransition.detailSha256) ||
+					!served.phonecatImageTransition.defaultImage.startsWith('img/phones/') ||
+					!served.phonecatImageTransition.nonDefaultImage.startsWith('img/phones/') ||
+					served.phonecatImageTransition.defaultImage ===
+						served.phonecatImageTransition.nonDefaultImage ||
+					served.phonecatImageTransition.hover !== 'genuine-thumbnail-mouseover' ||
+					served.phonecatImageTransition.transition !== 'genuine-ng-click' ||
+					served.phonecatImageTransition.heroVisibility !== 'genuine-hover'
+				: served.phonecatImageTransition?.state !== 'not-applicable';
 		const observerFinalizationDiffers =
 			run.observerFinalization?.state !== 'target-closed' ||
 			run.observerFinalization.detach !== 'owned-detach-complete' ||
@@ -317,6 +358,8 @@ export function parseWitnessRealAppReceipt(value: unknown): WitnessRealAppReceip
 			run.assertions.length === 0 ||
 			servedStaticDiffers ||
 			legacyMainPrecacheDiffers ||
+			phonecatOrderingDiffers ||
+			phonecatImageTransitionDiffers ||
 			observerFinalizationDiffers ||
 			lifecycleDiffers ||
 			run.cleanPage !== true ||
@@ -334,7 +377,7 @@ export function parseWitnessRealAppReceipt(value: unknown): WitnessRealAppReceip
 					run.offlineEvidence.serviceWorkerEvidence.receiptPath !==
 						'evidence/runs/react-boilerplate-v4-composed/t060-run.json' ||
 					run.offlineEvidence.serviceWorkerEvidence.canonicalDigest !==
-						'9341f5e70c00ebbde65a919db5b5d31fde0fa39983e985deb01afb71ed00d1ad' ||
+						'52400147929220935a9ebe47a16c8dff50b5c28e9d51c930d000c99c2bdc8a21' ||
 					run.offlineEvidence.serviceWorkerEvidence.newProof !== false
 				: run.offlineEvidence?.state !== 'not-applicable') ||
 			run.semanticDigest !==

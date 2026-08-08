@@ -54,6 +54,22 @@ describe('Angular RealWorld v15-to-v16 integration', () => {
 				if (!killed) throw new Error('Killed by Google member missing');
 				killed.digest = 'conflict';
 			},
+			(value: Record<string, unknown>) => {
+				const composed = (value.fixtures as Array<Record<string, unknown>>).find(
+					(item) => item.id === 'react-boilerplate-v4-composed',
+				);
+				if (!composed) throw new Error('React composed member missing');
+				composed.digest =
+					'9341f5e70c00ebbde65a919db5b5d31fde0fa39983e985deb01afb71ed00d1ad';
+			},
+			(value: Record<string, unknown>) => {
+				const dataFlow = (value.fixtures as Array<Record<string, unknown>>).find(
+					(item) => item.id === 'react-boilerplate-v4-data-flow',
+				);
+				if (!dataFlow) throw new Error('React data-flow member missing');
+				dataFlow.digest =
+					'a6c25918ed9650d3315c42501932e8e6fe26552e48bcbdf74d4987f7b384452b';
+			},
 		]) {
 			const invalid = structuredClone(first);
 			mutate(invalid);

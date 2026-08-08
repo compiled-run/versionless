@@ -55,24 +55,6 @@
       "digest": "1caf9dfa24b14b83ac63ceab9ca90829346045aac690c7b95a952ae4d9e72849"
     },
     {
-      "id": "react-boilerplate-v4-composed",
-      "framework": "react",
-      "bundler": "webpack-4-to-vite-8",
-      "runtime": "node-16.20.2-to-node-24.15.0",
-      "result": "pass",
-      "receipt": "evidence/runs/react-boilerplate-v4-composed/t060-run.json",
-      "digest": "9341f5e70c00ebbde65a919db5b5d31fde0fa39983e985deb01afb71ed00d1ad"
-    },
-    {
-      "id": "react-boilerplate-v4-data-flow",
-      "framework": "react",
-      "bundler": "vite-8",
-      "runtime": "node-24.15.0",
-      "result": "pass",
-      "receipt": "evidence/runs/react-boilerplate-v4-data-flow/t054-run.json",
-      "digest": "a6c25918ed9650d3315c42501932e8e6fe26552e48bcbdf74d4987f7b384452b"
-    },
-    {
       "id": "angular-phonecat-vite8",
       "framework": "angularjs",
       "track": "angularjs-special-track",
@@ -101,6 +83,24 @@
       "result": "pass",
       "receipt": "evidence/runs/next-killedbygoogle-derived-state-to-memo/receipt.json",
       "digest": "a018c6490cd559fab74ea402ff93660f053503dbed1a52ba9b68ed7fdc086b7c"
+    },
+    {
+      "id": "react-boilerplate-v4-data-flow",
+      "framework": "react",
+      "bundler": "vite-8",
+      "runtime": "node-24.15.0",
+      "result": "pass",
+      "receipt": "evidence/runs/react-boilerplate-v4-data-flow/t054-run.json",
+      "digest": "2bd6e145d611fb0bb5fb89c9d6ed164a3b30e9c0b1b2a290032f56908e5035da"
+    },
+    {
+      "id": "react-boilerplate-v4-composed",
+      "framework": "react",
+      "bundler": "webpack-4-to-vite-8",
+      "runtime": "node-16.20.2-to-node-24.15.0",
+      "result": "pass",
+      "receipt": "evidence/runs/react-boilerplate-v4-composed/t060-run.json",
+      "digest": "52400147929220935a9ebe47a16c8dff50b5c28e9d51c930d000c99c2bdc8a21"
     }
   ],
   "unsupported": []

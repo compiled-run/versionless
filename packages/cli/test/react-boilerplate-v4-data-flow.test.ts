@@ -5,10 +5,32 @@ import {
 	transformHomePageConnectToHooks,
 	transformRepoListItemConnectToHooks,
 } from '../../frameworks/react/src/react-data-flow-connect-to-hooks.ts';
+import { isExpectedReactDataFlowMutationFailure } from '../src/fixture/react-boilerplate-v4-data-flow-run.ts';
 
 const root = path.resolve(import.meta.dirname, '../../..');
 
 describe('React Boilerplate data-flow fixture', () => {
+	it('accepts only the exact reducer-injection reset-state failure', () => {
+		expect(
+			isExpectedReactDataFlowMutationFailure(
+				'home-reducer-injection',
+				'Username input-state assertion failed',
+			),
+		).toBe(true);
+		expect(
+			isExpectedReactDataFlowMutationFailure(
+				'home-reducer-injection',
+				'owned repository name assertion failed',
+			),
+		).toBe(false);
+		expect(
+			isExpectedReactDataFlowMutationFailure(
+				'home-load-repos-dispatch',
+				'Username input-state assertion failed',
+			),
+		).toBe(false);
+	});
+
 	it('pins the T028 baseline, synthetic payload, runtime, and existing adapter', async () => {
 		const manifest = JSON.parse(
 			await readFile(
@@ -48,6 +70,10 @@ describe('React Boilerplate data-flow fixture', () => {
 		);
 		expect(home.code).toContain('useDispatch()');
 		expect(home.code).toContain('useSelector(selectRepos)');
+		expect(home.code).toContain('const withReducer = injectReducer({ key, reducer });');
+		expect(home.code).toContain('const withSaga = injectSaga({ key, saga });');
+		expect(home.code).not.toContain('useInjectReducer');
+		expect(home.code).not.toContain('useInjectSaga');
 		expect(repo.code).toContain('useSelector(selectCurrentUser)');
 		expect(home.semanticEngine.diagnostics).toBe(0);
 		expect(repo.semanticEngine.diagnostics).toBe(0);

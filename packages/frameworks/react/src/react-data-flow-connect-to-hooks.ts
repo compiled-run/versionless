@@ -68,6 +68,8 @@ function transform(
 		'createStructuredSelector',
 		'mapStateToProps',
 		'mapDispatchToProps',
+		'useInjectReducer',
+		'useInjectSaga',
 	])
 		if (target.rootScope.find(legacy))
 			throw new Error(`Refused: legacy wiring remains: ${legacy}`);
@@ -87,7 +89,18 @@ function transform(
 const homeReplacements = [
 	[
 		"import { connect } from 'react-redux';\nimport { compose } from 'redux';\nimport { createStructuredSelector } from 'reselect';",
-		"import { useDispatch, useSelector } from 'react-redux';",
+		"import { useDispatch, useSelector } from 'react-redux';\nimport { compose } from 'redux';",
+	],
+	[
+		"import { useInjectReducer } from 'utils/injectReducer';\nimport { useInjectSaga } from 'utils/injectSaga';",
+		"import injectReducer from 'utils/injectReducer';\nimport injectSaga from 'utils/injectSaga';",
+	],
+	[
+		`  useInjectReducer({ key, reducer });
+  useInjectSaga({ key, saga });
+
+`,
+		'',
 	],
 	[
 		`const mapStateToProps = createStructuredSelector({
@@ -145,7 +158,14 @@ export function HomePageHooks() {
   );
 }
 
-export default memo(HomePageHooks);`,
+const withReducer = injectReducer({ key, reducer });
+const withSaga = injectSaga({ key, saga });
+
+export default compose(
+  withReducer,
+  withSaga,
+  memo,
+)(HomePageHooks);`,
 	],
 ] as const;
 
@@ -188,6 +208,8 @@ export function transformHomePageConnectToHooks(
 			['connect', { imported: true, references: 1 }],
 			['compose', { imported: true, references: 1 }],
 			['createStructuredSelector', { imported: true, references: 1 }],
+			['useInjectReducer', { imported: true, references: 1 }],
+			['useInjectSaga', { imported: true, references: 1 }],
 			['makeSelectRepos', { imported: true, references: 1 }],
 			['makeSelectUsername', { imported: true, references: 1 }],
 			['makeSelectLoading', { imported: true, references: 1 }],
@@ -202,6 +224,9 @@ export function transformHomePageConnectToHooks(
 			['HomePageHooks', { references: 1 }],
 			['useSelector', { imported: true, references: 4 }],
 			['useDispatch', { imported: true, references: 1 }],
+			['compose', { imported: true, references: 1 }],
+			['injectReducer', { imported: true, references: 1 }],
+			['injectSaga', { imported: true, references: 1 }],
 			['loadRepos', { imported: true, references: 1 }],
 			['changeUsername', { imported: true, references: 1 }],
 		],

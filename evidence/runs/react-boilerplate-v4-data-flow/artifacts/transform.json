@@ -5,7 +5,7 @@
     "repoListItem": "21a570ed27af053040ce6b503f1af0c22bbdfea52284dccb47b2dc382844d867"
   },
   "targetHashes": {
-    "homePage": "9132cb8b6ab4af9c88499ae4daa6783229a8d4898266f2953d0bc99a5ff168c1",
+    "homePage": "4d5f28e30df04e4e85e2791ee34c9e3d27e68a398ab0e400624fade4b51398c2",
     "repoListItem": "5669977385fb57491fcb117cd65ffaa2a4ab86d2258bf36c7fa81ff880387517"
   },
   "edits": {
@@ -14,13 +14,25 @@
         "start": 259,
         "end": 383,
         "beforeSha256": "7dc502ec19ab5aaf93f859b627a414d8be3b430b766d56435504dfcdb67f3206",
-        "afterSha256": "cebdaede483bad46082a715edc5457b6d242153c74117f51629d3d632dcc7d56"
+        "afterSha256": "f44af08d49e1748cfb638fb89f7413e83b538a29a414995dd7c1ef072df3d55d"
       },
       {
-        "start": 2914,
-        "end": 3500,
+        "start": 349,
+        "end": 454,
+        "beforeSha256": "880c23af6963484f5bfc783cee1e0c57032062768e703556daaac44ba1c60ea9",
+        "afterSha256": "1cac0bd5211c3b18542270acbfe17f4fe76e956a4bd5de1fb70df6abd8195f04"
+      },
+      {
+        "start": 1159,
+        "end": 1230,
+        "beforeSha256": "a573be9e9ea32335f7c49b340b54e2848010dc030cf008bc314ab11ed8085562",
+        "afterSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "start": 2862,
+        "end": 3448,
         "beforeSha256": "cc055194df97d9d390673500172eacab4cdd0d61b3b920adfce80ac3b15e5175",
-        "afterSha256": "a93ef69b20fd073ff07ac53e2f9de60f8095f405976aa2ca44da066c1d571cbf"
+        "afterSha256": "4ec2715db3d772fc78f1633615f62035e58a7a8215e956ba3d57cfd71846b15b"
       }
     ],
     "repoListItem": [

@@ -22,7 +22,7 @@ describe('React Boilerplate cumulative fixture', () => {
 		});
 		expect(manifest.targetHashes).toEqual({
 			localeToggle: 'db70524e86f9a5983d18f6ad1f2d72fec14b71bd5701d66da475ff600703e9b3',
-			homePage: '9132cb8b6ab4af9c88499ae4daa6783229a8d4898266f2953d0bc99a5ff168c1',
+			homePage: '4d5f28e30df04e4e85e2791ee34c9e3d27e68a398ab0e400624fade4b51398c2',
 			repoListItem: '5669977385fb57491fcb117cd65ffaa2a4ab86d2258bf36c7fa81ff880387517',
 			package: '7fb3098e57021e790638e31677d3cbfe815087f889b708cab4e1efdc9785414a',
 			packageLock: '42ffa936b19115ad380e77dcbc3800c7adf117aa560c5f678c837b7f4b09e00d',
@@ -63,7 +63,43 @@ describe('React Boilerplate cumulative fixture', () => {
 		]);
 	});
 
+	it('records exactly four ordered causal mutations', async () => {
+		const mutation = JSON.parse(
+			await readFile(
+				path.join(
+					root,
+					'evidence/runs/react-boilerplate-v4-composed/artifacts/mutation.json',
+				),
+				'utf8',
+			),
+		) as { mutations: Array<Record<string, unknown>> };
+		expect(mutation.mutations.map((row) => row.seam)).toEqual([
+			'home-reducer-injection',
+			'locale-dispatch',
+			'repository-load',
+			'service-worker-registration',
+		]);
+		for (const row of mutation.mutations)
+			expect(row).toMatchObject({
+				result: 'intended-failure',
+				restoration: 'byte-identical',
+				reproduced: 'pass',
+			});
+	});
+
 	it('accepts only the expected failure for each mutation seam', () => {
+		expect(
+			isExpectedReactComposedMutationFailure(
+				'home-reducer-injection',
+				'repository load assertion failed',
+			),
+		).toBe(true);
+		expect(
+			isExpectedReactComposedMutationFailure(
+				'home-reducer-injection',
+				'locale dispatch assertion failed',
+			),
+		).toBe(false);
 		expect(
 			isExpectedReactComposedMutationFailure(
 				'locale-dispatch',

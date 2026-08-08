@@ -168,7 +168,7 @@ const CANONICAL_BINDINGS = [
 				entrypointSha256:
 					'e77d403d657e36d070614c51a9db81ce7d998d3b0811126042def41210633dd4',
 				receiptPath: 'evidence/runs/react-boilerplate-v4-data-flow/t054-run.json',
-				receiptDigest: 'a6c25918ed9650d3315c42501932e8e6fe26552e48bcbdf74d4987f7b384452b',
+				receiptDigest: '2bd6e145d611fb0bb5fb89c9d6ed164a3b30e9c0b1b2a290032f56908e5035da',
 				observationLane: 'legacy',
 			},
 			{
@@ -176,9 +176,9 @@ const CANONICAL_BINDINGS = [
 				entrypointPath:
 					'.versionless/work/react-boilerplate-v4-data-flow/target/build-vite/index.html',
 				entrypointSha256:
-					'195389eed017d98c1e7bcdfe17b9c42be3851d745d60f7cb816109734381c5af',
+					'37cff63759f9234c943830b4286184decd13051fb34ffef9639c8b6b83a3fc42',
 				receiptPath: 'evidence/runs/react-boilerplate-v4-data-flow/t054-run.json',
-				receiptDigest: 'a6c25918ed9650d3315c42501932e8e6fe26552e48bcbdf74d4987f7b384452b',
+				receiptDigest: '2bd6e145d611fb0bb5fb89c9d6ed164a3b30e9c0b1b2a290032f56908e5035da',
 				observationLane: 'target',
 			},
 		],
@@ -194,7 +194,7 @@ const CANONICAL_BINDINGS = [
 				entrypointSha256:
 					'ed54fefd3c0e08f77f09ac7932443da26bf8fe63b2221ffc141948b9e45b60cf',
 				receiptPath: 'evidence/runs/react-boilerplate-v4-composed/t060-run.json',
-				receiptDigest: '9341f5e70c00ebbde65a919db5b5d31fde0fa39983e985deb01afb71ed00d1ad',
+				receiptDigest: '52400147929220935a9ebe47a16c8dff50b5c28e9d51c930d000c99c2bdc8a21',
 				observationLane: 'legacy',
 			},
 			{
@@ -202,9 +202,9 @@ const CANONICAL_BINDINGS = [
 				entrypointPath:
 					'.versionless/work/react-boilerplate-v4-composed/target/build-vite/index.html',
 				entrypointSha256:
-					'195389eed017d98c1e7bcdfe17b9c42be3851d745d60f7cb816109734381c5af',
+					'37cff63759f9234c943830b4286184decd13051fb34ffef9639c8b6b83a3fc42',
 				receiptPath: 'evidence/runs/react-boilerplate-v4-composed/t060-run.json',
-				receiptDigest: '9341f5e70c00ebbde65a919db5b5d31fde0fa39983e985deb01afb71ed00d1ad',
+				receiptDigest: '52400147929220935a9ebe47a16c8dff50b5c28e9d51c930d000c99c2bdc8a21',
 				observationLane: 'target',
 			},
 		],

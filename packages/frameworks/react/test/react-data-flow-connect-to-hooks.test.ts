@@ -23,10 +23,15 @@ describe('React data-flow connect-to-hooks transforms', () => {
 		);
 		const homeResult = transformHomePageConnectToHooks(home);
 		const repoResult = transformRepoListItemConnectToHooks(repo);
-		expect(homeResult.edits).toHaveLength(2);
+		expect(homeResult.edits).toHaveLength(4);
 		expect(repoResult.edits).toHaveLength(2);
 		expect(homeResult.code).toContain('export function HomePage({');
 		expect(homeResult.code).toContain('dispatch(loadRepos())');
+		expect(homeResult.code).toContain('const withReducer = injectReducer({ key, reducer });');
+		expect(homeResult.code).toContain('const withSaga = injectSaga({ key, saga });');
+		expect(homeResult.code).toContain(')(HomePageHooks);');
+		expect(homeResult.code).not.toContain('useInjectReducer');
+		expect(homeResult.code).not.toContain('useInjectSaga');
 		expect(repoResult.code).toContain('export function RepoListItem(props)');
 		expect(repoResult.code).toContain('useSelector(selectCurrentUser)');
 		for (const code of [homeResult.code, repoResult.code]) {
@@ -69,5 +74,26 @@ describe('React data-flow connect-to-hooks transforms', () => {
 		expect(() =>
 			transformHomePageConnectToHooks(ambiguous, { expectedSha256: hash(ambiguous) }),
 		).toThrow();
+		for (const drifted of [
+			home.replace(
+				"import { useInjectReducer } from 'utils/injectReducer';",
+				"import { useInjectReducer as installReducer } from 'utils/injectReducer';",
+			),
+			home.replace(
+				'useInjectReducer({ key, reducer });',
+				'useInjectReducer({ key: otherKey, reducer });',
+			),
+			home.replace(
+				'useInjectReducer({ key, reducer });',
+				'useInjectReducer({ key, reducer: otherReducer });',
+			),
+			home.replace(
+				'useInjectSaga({ key, saga });',
+				'useInjectSaga({ key, saga: otherSaga });',
+			),
+		])
+			expect(() =>
+				transformHomePageConnectToHooks(drifted, { expectedSha256: hash(drifted) }),
+			).toThrow('Refused');
 	});
 });

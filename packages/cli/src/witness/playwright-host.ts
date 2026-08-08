@@ -99,6 +99,14 @@ export function validateWitnessTransportDecision(
 	return decision;
 }
 
+export function validateWitnessQualificationTypingMode(options: {
+	clear: boolean;
+	keyEvents: boolean;
+}): void {
+	if (options.clear || !options.keyEvents)
+		throw new Error('Witness qualification host rejects fill-backed typing modes');
+}
+
 function boundedTelemetryTimeout(timeoutMs: number): number {
 	if (!Number.isInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > MAX_TELEMETRY_TIMEOUT_MS)
 		throw new Error('Witness service-worker telemetry timeout is outside its fixed boundary');
@@ -356,9 +364,8 @@ function adaptPage(
 		type: async (selector, text, options, timeoutMs) => {
 			const locator = page.locator(selector).first();
 			const type = await locator.getAttribute('type');
-			if (options.clear) await locator.fill('', { timeout: timeoutMs });
-			if (options.keyEvents) await locator.pressSequentially(text, { timeout: timeoutMs });
-			else await locator.fill(`${await locator.inputValue()}${text}`, { timeout: timeoutMs });
+			validateWitnessQualificationTypingMode(options);
+			for (const character of text) await locator.press(character, { timeout: timeoutMs });
 			return { passwordField: type === 'password' };
 		},
 		hover: async (selector, modifierMask, timeoutMs) =>

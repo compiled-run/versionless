@@ -71,6 +71,10 @@ describe('Killed by Google integration', () => {
 		const second = integrateNextKilledByGoogleAggregate(first, canonicalDigest);
 		expect(canonicalize(first)).toBe(canonicalize(current));
 		expect(canonicalize(second)).toBe(canonicalize(first));
+		const ids = (first.fixtures as Array<Record<string, unknown>>).map((fixture) => fixture.id);
+		expect(ids.indexOf('next-killedbygoogle-derived-state-to-memo')).toBe(
+			ids.indexOf('react-boilerplate-v4-data-flow') - 1,
+		);
 		expect(
 			(first.fixtures as Array<Record<string, unknown>>).filter(
 				(fixture) => fixture.id === 'next-killedbygoogle-derived-state-to-memo',

@@ -62,12 +62,12 @@ const historicalMembers = [
 	[
 		'react-boilerplate-v4-composed',
 		'evidence/runs/react-boilerplate-v4-composed/t060-run.json',
-		'9341f5e70c00ebbde65a919db5b5d31fde0fa39983e985deb01afb71ed00d1ad',
+		'52400147929220935a9ebe47a16c8dff50b5c28e9d51c930d000c99c2bdc8a21',
 	],
 	[
 		'react-boilerplate-v4-data-flow',
 		'evidence/runs/react-boilerplate-v4-data-flow/t054-run.json',
-		'a6c25918ed9650d3315c42501932e8e6fe26552e48bcbdf74d4987f7b384452b',
+		'2bd6e145d611fb0bb5fb89c9d6ed164a3b30e9c0b1b2a290032f56908e5035da',
 	],
 	[
 		'angular-phonecat-vite8',

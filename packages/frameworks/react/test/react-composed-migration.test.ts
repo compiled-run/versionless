@@ -53,6 +53,14 @@ describe('React composed migration planning', () => {
 			'maintained-package-lock',
 		]);
 		expect(dataFirst.executionTrace).not.toEqual(localeFirst.executionTrace);
+		expect(localeFirst.edits).toBe(13);
+		expect(dataFirst.edits).toBe(13);
+		expect(localeFirst.targetHashes['app/containers/HomePage/index.js']).toBe(
+			'4d5f28e30df04e4e85e2791ee34c9e3d27e68a398ab0e400624fade4b51398c2',
+		);
+		expect(localeFirst.outputs['app/containers/HomePage/index.js']).toContain(
+			'const withReducer = injectReducer({ key, reducer });',
+		);
 	});
 
 	it('refuses a late source mismatch without exposing outputs', async () => {

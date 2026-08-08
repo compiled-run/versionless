@@ -71,7 +71,19 @@ export function integrateNextKilledByGoogleAggregate(value: unknown, digest: str
 			throw new Error('Killed by Google aggregate member conflicts');
 		return aggregate;
 	}
-	const integrated = { ...aggregate, fixtures: [...fixtures, expected] };
+	const insertionIndex = fixtures.findIndex(
+		(fixture) => fixture.id === 'react-boilerplate-v4-data-flow',
+	);
+	if (insertionIndex < 0)
+		throw new Error('Killed by Google canonical insertion anchor is missing');
+	const integrated = {
+		...aggregate,
+		fixtures: [
+			...fixtures.slice(0, insertionIndex),
+			expected,
+			...fixtures.slice(insertionIndex),
+		],
+	};
 	assertAggregate(integrated, true);
 	return integrated;
 }

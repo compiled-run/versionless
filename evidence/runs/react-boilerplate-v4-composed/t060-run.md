@@ -4,12 +4,12 @@
 - Fixture: `react-boilerplate-v4-composed`
 - Result: **pass**
 - Source revision: `d19099afeff64ecfb09133c06c1cb18c0d40887e`
-- Canonical SHA-256: `9341f5e70c00ebbde65a919db5b5d31fde0fa39983e985deb01afb71ed00d1ad`
+- Canonical SHA-256: `52400147929220935a9ebe47a16c8dff50b5c28e9d51c930d000c99c2bdc8a21`
 - Authenticity: **not established** (hash integrity only)
 
 ## Migration
 
-The exact five-file cumulative React target executed distinct locale-first and data-flow-first transform traces with identical bytes. A staged-write failure left the published target untouched and cleaned its stage; the validated complete target was then published by one same-filesystem directory rename. The harness-only Vite adapter is excluded from migrated source. 11 Yuku-gated and maintained-package edits were composed.
+The exact five-file cumulative React target executed distinct locale-first and data-flow-first transform traces with identical bytes. A staged-write failure left the published target untouched and cleaned its stage; the validated complete target was then published by one same-filesystem directory rename. The harness-only Vite adapter is excluded from migrated source. 13 Yuku-gated and maintained-package edits were composed.
 
 ## Verification
 
@@ -19,7 +19,7 @@ The exact five-file cumulative React target executed distinct locale-first and d
 - Successful non-loopback traffic: 0
 - Deterministic-core digest reproduced: true
 - Same-origin service worker: active, scope `/`, controller activated
-- Content-addressed cache: `versionless-react-vite8-553cd1cc611a0851b1978bbc041ef2f8c7b9fbbd3fdd9bb68274f29364987cdc` (exact manifest and current-cache-only inventory)
+- Content-addressed cache: `versionless-react-vite8-88686f59deca2cf956e7ef502b0cd4aea498001352fcf06affdbaf0178ef8599` (exact manifest and current-cache-only inventory)
 - Offline reload and exact qualified journey: pass
 - Coverage: exact qualified journey only; global offline/PWA correctness is not claimed
 
@@ -29,16 +29,16 @@ Locality enforcement is scoped to Versionless-spawned Node/npm/webpack/Vite chil
 
 | Path | SHA-256 |
 |---|---|
-| `evidence/runs/react-boilerplate-v4-composed/artifacts/preparation.json` | `b793c9290e8bd5831f56d276913d11f425e34ed08422d351f883aa2759dbb73b` |
+| `evidence/runs/react-boilerplate-v4-composed/artifacts/preparation.json` | `95eb9d9719d22cd9742f574c10c89dac668582d4e86973f126fd1c0b606a6d6a` |
 | `evidence/runs/react-boilerplate-v4-composed/artifacts/composition.json` | `af33c902117583185fb9504557781c7c0242ba63e0d51f23679e7fac2d5f4883` |
-| `evidence/runs/react-boilerplate-v4-composed/artifacts/transform.json` | `1bc421418715292c81a70949bc149e328a5cde60b1558ab36c62dc9f08c63e5e` |
-| `evidence/runs/react-boilerplate-v4-composed/artifacts/build.json` | `c7a4ccf8b84229ebf26e98fc8450fc653bef8f0031c74d4b22b1263e728c79fb` |
-| `evidence/runs/react-boilerplate-v4-composed/artifacts/journey.json` | `5c3486b366dd9fadda9044b97d438bbc89f851fc287bef6bc86a0de35590f924` |
-| `evidence/runs/react-boilerplate-v4-composed/artifacts/mutation.json` | `80fe6d3ff964f5c9a28a1b360021d2de780b8e4121dfc59f2a80fde00de2c07b` |
-| `evidence/runs/react-boilerplate-v4-composed/artifacts/migration-diff.json` | `cbc98ab8ca8d731bfffc9ee2d71ae836fb66f701c4c6ad0e324ceffd1438bced` |
+| `evidence/runs/react-boilerplate-v4-composed/artifacts/transform.json` | `088bae4dab498a12d10145ce49e7bc738d3167953ead312ae0abdd08ed0eb180` |
+| `evidence/runs/react-boilerplate-v4-composed/artifacts/build.json` | `bbc65c3f9893ba9de6e4fef70ee1d51608cf38ba569399e1bbbfdfbe8df5513c` |
+| `evidence/runs/react-boilerplate-v4-composed/artifacts/journey.json` | `d7f3e6d7053990c212f3ee1a0b14b8787d0bad0b741ee01c6febc2165e83dec7` |
+| `evidence/runs/react-boilerplate-v4-composed/artifacts/mutation.json` | `221c425a05a401534a2295b5253231109e385da017fa4f569632c0dab91022ff` |
+| `evidence/runs/react-boilerplate-v4-composed/artifacts/migration-diff.json` | `dc2049a2a2dbba41c4057e17d642566eca0bac8a3cf7ff9373343e226e965797` |
 | `evidence/runs/react-boilerplate-v4-composed/artifacts/locality.json` | `262a3d7ae6bae875dea00b6eb1cfd5edf77085d0ef3b4368362316201cd35ba1` |
 | `evidence/runs/react-boilerplate-v4-composed/artifacts/runtime.json` | `9e28877bcb6b0830711e48065e6e0f00d3021237c02af36471f49e5a6c81b6ab` |
-| `evidence/runs/react-boilerplate-v4-composed/artifacts/deterministic-core.json` | `4ddc7d257567ebf50e65459134020120d2f966ae0bc1a55c6a9368c4137f04da` |
+| `evidence/runs/react-boilerplate-v4-composed/artifacts/deterministic-core.json` | `44256362d160bfff11d8999777d1715913dc1fb2f9f71b2cc769de3c7f37e778` |
 
 ## Limitations
 
