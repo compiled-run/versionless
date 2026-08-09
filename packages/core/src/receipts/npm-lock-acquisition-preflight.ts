@@ -276,6 +276,29 @@ function paxPath(bytes: Buffer): string | undefined {
 	return result;
 }
 
+function isExactTarField(header: Buffer, start: number, length: number, value: string): boolean {
+	const expected = Buffer.from(value, 'ascii');
+	return (
+		expected.byteLength <= length &&
+		header.subarray(start, start + expected.byteLength).equals(expected) &&
+		header.subarray(start + expected.byteLength, start + length).every((byte) => byte === 0)
+	);
+}
+
+function isExactGlobalPaxComment(bytes: Buffer): boolean {
+	const prefix = Buffer.from('52 comment=', 'ascii');
+	if (
+		bytes.byteLength !== 52 ||
+		!bytes.subarray(0, prefix.byteLength).equals(prefix) ||
+		bytes[51] !== 10
+	)
+		return false;
+	for (const byte of bytes.subarray(prefix.byteLength, 51)) {
+		if (!((byte >= 48 && byte <= 57) || (byte >= 97 && byte <= 102))) return false;
+	}
+	return true;
+}
+
 function stringMap(value: unknown): Readonly<{
 	state: 'declared' | 'absent' | 'ambiguous';
 	values: Readonly<Record<string, string>>;
@@ -359,10 +382,26 @@ export function inspectNpmPackageTarball(
 		const bodyStart = offset + 512;
 		const bodyEnd = bodyStart + size;
 		if (bodyEnd > archive.byteLength) throw new Error('npm package tarball entry is truncated');
+		const paddedBodyEnd = bodyStart + Math.ceil(size / 512) * 512;
+		if (type === 'g') {
+			if (
+				entries !== 1 ||
+				offset !== 0 ||
+				!isExactTarField(header, 0, 100, 'pax_global_header') ||
+				!isExactTarField(header, 345, 155, '') ||
+				!isExactTarField(header, 157, 100, '') ||
+				size !== 52 ||
+				!isExactGlobalPaxComment(archive.subarray(bodyStart, bodyEnd)) ||
+				!archive.subarray(bodyEnd, paddedBodyEnd).every((byte) => byte === 0)
+			)
+				throw new Error('npm package tarball global PAX comment is invalid');
+			offset = paddedBodyEnd;
+			continue;
+		}
 		if (type === 'x') {
 			if (pendingPath) throw new Error('npm package tarball PAX path is already pending');
 			pendingPath = paxPath(archive.subarray(bodyStart, bodyEnd));
-			offset = bodyStart + Math.ceil(size / 512) * 512;
+			offset = paddedBodyEnd;
 			continue;
 		}
 		const rawZeroBodyDirectoryWithOneTerminator =
@@ -385,7 +424,7 @@ export function inspectNpmPackageTarball(
 		} else {
 			throw new Error('npm package tarball entry type is unsupported');
 		}
-		offset = bodyStart + Math.ceil(size / 512) * 512;
+		offset = paddedBodyEnd;
 	}
 	if (!ended || pendingPath) throw new Error('npm package tarball terminator is absent');
 	const manifestCandidates = [...files.keys()].filter(

@@ -7,6 +7,7 @@ import {
 	deriveCorpusTransactionState,
 	type CorpusConformance,
 } from '../../core/src/corpus/conformance.ts';
+import { compareUtf16CodeUnits } from '../../core/src/bundlers/vite8-adapter.ts';
 import { assertSyntheticEvidence } from '../../core/src/policy/payment-signals.ts';
 import { canonicalize, sha256 } from '../../core/src/receipts/canonicalize.ts';
 import { verifyReceipt } from '../../core/src/receipts/verify.ts';
@@ -118,6 +119,74 @@ export const NPM_LOCK_ACQUISITION_PREFLIGHT = {
 	sha256: '262abe9b19a10804808eadd5ae2dfcbc1fd9ac4119f9dc9571cb3df89df1d351',
 	canonicalDigest: 'a14e94d4729f50cf6260431d5dea53e0ac72fa77668e9612ea17cc216c9ed044',
 } as const;
+export const NEXT_TAILWIND_CONSENT_FAILURE = {
+	path: 'evidence/dependencies/next-tailwind-starter-blog/t465-consent-failure.json',
+	sha256: '6879a532235cbdde39890676b75667ad94051b39ffb0428ea16b82dfcec87628',
+	bytes: 449,
+} as const;
+export const NEXT_TAILWIND_EXCLUSION = {
+	json: {
+		path: 'evidence/dependencies/next-tailwind-starter-blog/t506-exclusion.json',
+		sha256: '96f470c55a42c609a8eac9056e449e6cc74c37f8c323d3aeef80a42586b7bf40',
+		bytes: 1_429,
+	},
+	markdown: {
+		path: 'evidence/dependencies/next-tailwind-starter-blog/t506-exclusion.md',
+		sha256: 'd3b104f67ca756335be46de5f790fc0018164df24bb1d75b97d23ecfb47b1688',
+		bytes: 1_283,
+	},
+} as const;
+const NEXT_TAILWIND_EXCLUSION_DOCUMENT = {
+	assetProvenance: [
+		{
+			asset: 'mail',
+			provenance: 'unmatched',
+			sha256: '3483b293640c0385558ba049b313b1da004d7301451444908488b53523461e3e',
+		},
+		{
+			asset: 'github',
+			provenance: 'unproven',
+			sha256: 'a57fdcb12cfe0cebec76c82367df14acac6b9ca50ba05b13610fb31330e14439',
+		},
+		{
+			asset: 'facebook',
+			provenance: 'unproven',
+			sha256: '4c8e3008986f028482962ef2ef4f89208a20bf27d0f71fc837efac09145c10c6',
+		},
+		{
+			asset: 'youtube',
+			provenance: 'unproven',
+			sha256: '14456d57347c7677a2e783d9d210624a46053aab3c1a134c36497dea8f0b0a25',
+		},
+		{
+			asset: 'linkedin',
+			provenance: 'unproven',
+			sha256: '8ed35981a42b05b85662a16a1d5f9cd6424777c9a8fc625b46dce04e549eb62d',
+		},
+		{
+			asset: 'twitter',
+			provenance: 'unproven',
+			sha256: '1536e443e9759a07eec2202a58fe33d611c9f2df10e6fd9bad40b649bbcb39b7',
+		},
+	],
+	browser: { state: 'not-run' },
+	candidate: 'next-tailwind-starter-blog',
+	consumedState: { reusable: false, seeding: false },
+	counted: false,
+	decision: 'excluded',
+	nonclaims: [
+		'No install, build, browser journey, migration parity, locality, runtime, bundler, routing, rendering, API, pilot, framework, or enterprise support is established.',
+		'The exclusion evidence is not certification, legal clearance, signer authenticity, compliance, or an earned SLSA level.',
+	],
+	provenanceComplete: false,
+	readiness: 'unchanged',
+	schemaVersion: 'versionless.candidate-exclusion.v1',
+	scoreboard: {
+		nextPilot: { accepted: 0, required: 1 },
+		olderNext: { accepted: 1, required: 4 },
+	},
+	support: 'not-established',
+} as const;
 const workspaceReference = createRegExp(
 	exactly('workspace:')
 		.at.lineStart()
@@ -162,7 +231,7 @@ async function filesBelow(directory: string): Promise<string[]> {
 		if (entry.isDirectory()) output.push(...(await filesBelow(item)));
 		else if (entry.isFile()) output.push(item);
 	}
-	return output.sort();
+	return output.sort(compareUtf16CodeUnits);
 }
 
 export function validateNpmLockAcquisitionPreflight(bytes: Buffer): void {
@@ -204,6 +273,58 @@ export function validateNpmLockAcquisitionPreflight(bytes: Buffer): void {
 		throw new Error('T190 npm lock acquisition preflight canonical digest differs');
 	if (sha256(bytes) !== NPM_LOCK_ACQUISITION_PREFLIGHT.sha256)
 		throw new Error('T190 npm lock acquisition preflight file digest differs');
+}
+
+export function validateNextTailwindConsentFailure(bytes: Buffer): void {
+	let value: unknown;
+	try {
+		value = JSON.parse(bytes.toString('utf8'));
+	} catch {
+		throw new Error('T465 consent failure disclosure is invalid JSON');
+	}
+	const disclosure = asRecord(value, 'T465 consent failure disclosure');
+	if (
+		bytes.length !== NEXT_TAILWIND_CONSENT_FAILURE.bytes ||
+		sha256(bytes) !== NEXT_TAILWIND_CONSENT_FAILURE.sha256 ||
+		disclosure.schemaVersion !== 'versionless.consent-failure.v1' ||
+		disclosure.consentId !== 'T465-next-tailwind-yarn3-font-closure' ||
+		disclosure.status !== 'consumed-failed' ||
+		disclosure.partialBytes !== 'non-evidence' ||
+		disclosure.reusable !== false ||
+		disclosure.exactSourceLedger !== 'unavailable'
+	)
+		throw new Error('T465 consent failure disclosure safety facts differ');
+}
+
+export function renderNextTailwindExclusionMarkdown(): string {
+	const document = NEXT_TAILWIND_EXCLUSION_DOCUMENT;
+	return `# Tailwind/Next candidate exclusion\n\n- Candidate: \`${document.candidate}\`\n- Decision: **${document.decision}**\n- Counted: **${document.counted}**\n- Provenance complete: **${document.provenanceComplete}**\n- Browser: **${document.browser.state}**\n- Support: **${document.support}**\n- Readiness: **${document.readiness}**\n- Older Next scoreboard: **${document.scoreboard.olderNext.accepted}/${document.scoreboard.olderNext.required}**\n- Next pilot scoreboard: **${document.scoreboard.nextPilot.accepted}/${document.scoreboard.nextPilot.required}**\n- Consumed acquisition trees: **non-reusable and non-seeding**\n\n## Six unresolved asset identities\n\n${document.assetProvenance.map((asset) => `- \`${asset.asset}\` — \`${asset.sha256}\` — ${asset.provenance}`).join('\n')}\n\n## Boundaries\n\n${document.nonclaims.map((claim) => `- ${claim}`).join('\n')}\n`;
+}
+
+export function validateNextTailwindExclusion(json: Buffer, markdown: Buffer): void {
+	let value: unknown;
+	try {
+		value = JSON.parse(json.toString('utf8'));
+	} catch {
+		throw new Error('T506 exclusion is invalid JSON');
+	}
+	if (
+		json.byteLength !== NEXT_TAILWIND_EXCLUSION.json.bytes ||
+		sha256(json) !== NEXT_TAILWIND_EXCLUSION.json.sha256 ||
+		json.toString('utf8') !== `${canonicalize(value)}\n` ||
+		canonicalize(value) !== canonicalize(NEXT_TAILWIND_EXCLUSION_DOCUMENT) ||
+		markdown.byteLength !== NEXT_TAILWIND_EXCLUSION.markdown.bytes ||
+		sha256(markdown) !== NEXT_TAILWIND_EXCLUSION.markdown.sha256 ||
+		markdown.toString('utf8') !== renderNextTailwindExclusionMarkdown()
+	)
+		throw new Error('T506 exclusion evidence differs');
+}
+
+export function compareTrustResolvedDependencies(
+	left: Readonly<{ uri: unknown }>,
+	right: Readonly<{ uri: unknown }>,
+): number {
+	return compareUtf16CodeUnits(String(left.uri), String(right.uri));
 }
 
 export async function workspaceManifestPaths(root: string): Promise<string[]> {
@@ -928,6 +1049,15 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 		path.join(root, NPM_LOCK_ACQUISITION_PREFLIGHT.path),
 	);
 	validateNpmLockAcquisitionPreflight(acquisitionPreflightBytes);
+	const nextTailwindFailureBytes = await readFile(
+		path.join(root, NEXT_TAILWIND_CONSENT_FAILURE.path),
+	);
+	validateNextTailwindConsentFailure(nextTailwindFailureBytes);
+	const [nextTailwindExclusionJson, nextTailwindExclusionMarkdown] = await Promise.all([
+		readFile(path.join(root, NEXT_TAILWIND_EXCLUSION.json.path)),
+		readFile(path.join(root, NEXT_TAILWIND_EXCLUSION.markdown.path)),
+	]);
+	validateNextTailwindExclusion(nextTailwindExclusionJson, nextTailwindExclusionMarkdown);
 	assertSyntheticEvidence(aggregate);
 	const aggregateRecord = asRecord(aggregate, 'aggregate evidence');
 	if (!Array.isArray(aggregateRecord.fixtures))
@@ -1103,6 +1233,40 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 		{ rootDir: root, config: runtimeObservationConfig, surface: scriptSurface },
 	)) as RuntimeScriptObservation;
 	const corpus = matrix(conformance);
+	const resolvedDependencies = [
+		{ uri: 'pnpm-lock.yaml', digest: { sha256: sha256(lockText) } },
+		{
+			uri: 'evidence/runs/aggregate.json',
+			digest: {
+				sha256: sha256(await readFile(path.join(root, 'evidence/runs/aggregate.json'))),
+			},
+		},
+		{
+			uri: NPM_LOCK_ACQUISITION_PREFLIGHT.path,
+			digest: { sha256: NPM_LOCK_ACQUISITION_PREFLIGHT.sha256 },
+		},
+		{
+			uri: NEXT_TAILWIND_CONSENT_FAILURE.path,
+			digest: { sha256: NEXT_TAILWIND_CONSENT_FAILURE.sha256 },
+		},
+		{
+			uri: NEXT_TAILWIND_EXCLUSION.json.path,
+			digest: { sha256: NEXT_TAILWIND_EXCLUSION.json.sha256 },
+		},
+		{
+			uri: NEXT_TAILWIND_EXCLUSION.markdown.path,
+			digest: { sha256: NEXT_TAILWIND_EXCLUSION.markdown.sha256 },
+		},
+		...(await Promise.all(
+			manifests.map(async (item) => ({
+				uri: path.relative(root, item.path),
+				digest: { sha256: sha256(await readFile(item.path)) },
+			})),
+		)),
+		...verifiedReceipts.map((item) => ({ uri: item.path, digest: { sha256: item.digest } })),
+	].sort(compareTrustResolvedDependencies);
+	if (new Set(resolvedDependencies.map((item) => item.uri)).size !== resolvedDependencies.length)
+		throw new Error('Trust resolved dependency inventory contains duplicates');
 	const provenance = {
 		_type: 'https://in-toto.io/Statement/v1',
 		subject: buildArtifacts.map((item) => ({
@@ -1118,31 +1282,7 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 					state: 'not-applicable',
 					reason: 'No hidden parameters are asserted.',
 				},
-				resolvedDependencies: [
-					{ uri: 'pnpm-lock.yaml', digest: { sha256: sha256(lockText) } },
-					{
-						uri: 'evidence/runs/aggregate.json',
-						digest: {
-							sha256: sha256(
-								await readFile(path.join(root, 'evidence/runs/aggregate.json')),
-							),
-						},
-					},
-					{
-						uri: NPM_LOCK_ACQUISITION_PREFLIGHT.path,
-						digest: { sha256: NPM_LOCK_ACQUISITION_PREFLIGHT.sha256 },
-					},
-					...(await Promise.all(
-						manifests.map(async (item) => ({
-							uri: path.relative(root, item.path),
-							digest: { sha256: sha256(await readFile(item.path)) },
-						})),
-					)),
-					...verifiedReceipts.map((item) => ({
-						uri: item.path,
-						digest: { sha256: item.digest },
-					})),
-				],
+				resolvedDependencies,
 			},
 			runDetails: {
 				builder: { id: 'versionless-local-trust-generator', state: 'verified' },

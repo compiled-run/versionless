@@ -1,4 +1,4 @@
-import { readFile } from 'node:fs/promises';
+import { access, readFile, readdir } from 'node:fs/promises';
 import * as path from 'pathe';
 import {
 	analyzeCorpusConformance,
@@ -8,6 +8,7 @@ import {
 	type CorpusConformance,
 	verifyCorpusConformanceDigest,
 } from '../../core/src/corpus/conformance.ts';
+import { compareUtf16CodeUnits } from '../../core/src/bundlers/vite8-adapter.ts';
 import { assertSyntheticEvidence } from '../../core/src/policy/payment-signals.ts';
 import { canonicalize, sha256 } from '../../core/src/receipts/canonicalize.ts';
 import { verifyReceipt } from '../../core/src/receipts/verify.ts';
@@ -41,8 +42,13 @@ import {
 } from '../../core/src/enterprise/runtime-script-observation.ts';
 import {
 	NPM_LOCK_ACQUISITION_PREFLIGHT,
+	NEXT_TAILWIND_CONSENT_FAILURE,
+	NEXT_TAILWIND_EXCLUSION,
+	compareTrustResolvedDependencies,
 	validateCycloneDx17,
 	validateNpmLockAcquisitionPreflight,
+	validateNextTailwindConsentFailure,
+	validateNextTailwindExclusion,
 	workspaceManifestPaths,
 } from './generate.ts';
 import { lockPackages, osvRequest } from './ingest.ts';
@@ -55,6 +61,21 @@ import {
 	type TrustManifest,
 	validatePackageCoordinate,
 } from './schema.ts';
+
+async function filesBelow(directory: string): Promise<string[]> {
+	try {
+		await access(directory);
+	} catch {
+		return [];
+	}
+	const files: string[] = [];
+	for (const entry of await readdir(directory, { withFileTypes: true })) {
+		const item = path.join(directory, entry.name);
+		if (entry.isDirectory()) files.push(...(await filesBelow(item)));
+		else if (entry.isFile()) files.push(item);
+	}
+	return files.sort(compareUtf16CodeUnits);
+}
 
 export interface VerifyTrustOptions {
 	rootDir?: string;
@@ -290,8 +311,8 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 		provenanceClaims.aggregateFixtures !== transaction.receipts
 	)
 		throw new Error('Provenance contains an unsupported assurance state');
-	if (!Array.isArray(provenance.subject) || provenance.subject.length !== 11)
-		throw new Error('Provenance must attest exactly eleven generated package artifacts');
+	if (!Array.isArray(provenance.subject))
+		throw new Error('Provenance generated package subjects are absent');
 	const predicate = asRecord(provenance.predicate, 'provenance predicate');
 	const buildDefinition = asRecord(predicate.buildDefinition, 'provenance build definition');
 	if (!Array.isArray(buildDefinition.resolvedDependencies))
@@ -299,8 +320,15 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 	const resolvedDependencies = buildDefinition.resolvedDependencies.map((value) =>
 		asRecord(value, 'provenance resolved dependency'),
 	);
-	if (resolvedDependencies.length !== transaction.resolvedDependencies)
-		throw new Error('Provenance resolved dependencies do not match transaction state');
+	const nextTailwindFailureBytes = await readFile(
+		path.join(root, NEXT_TAILWIND_CONSENT_FAILURE.path),
+	);
+	validateNextTailwindConsentFailure(nextTailwindFailureBytes);
+	const [nextTailwindExclusionJson, nextTailwindExclusionMarkdown] = await Promise.all([
+		readFile(path.join(root, NEXT_TAILWIND_EXCLUSION.json.path)),
+		readFile(path.join(root, NEXT_TAILWIND_EXCLUSION.markdown.path)),
+	]);
+	validateNextTailwindExclusion(nextTailwindExclusionJson, nextTailwindExclusionMarkdown);
 	const acquisitionDependencies = resolvedDependencies.filter(
 		(dependency) => dependency.uri === NPM_LOCK_ACQUISITION_PREFLIGHT.path,
 	);
@@ -315,11 +343,28 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 	validateNpmLockAcquisitionPreflight(
 		await readFile(path.join(root, NPM_LOCK_ACQUISITION_PREFLIGHT.path)),
 	);
+	const failureDependencies = resolvedDependencies.filter(
+		(dependency) => dependency.uri === NEXT_TAILWIND_CONSENT_FAILURE.path,
+	);
+	if (
+		failureDependencies.length !== 1 ||
+		asRecord(failureDependencies[0]!.digest, 'T465 disclosure dependency digest').sha256 !==
+			NEXT_TAILWIND_CONSENT_FAILURE.sha256
+	)
+		throw new Error('Provenance must contain exactly one T465 disclosure dependency');
 	if (
 		manifest.receipts.length !== transaction.receipts ||
-		manifest.receipts.some((receipt) => receipt.path === NPM_LOCK_ACQUISITION_PREFLIGHT.path)
+		manifest.receipts.some(
+			(receipt) =>
+				receipt.path === NPM_LOCK_ACQUISITION_PREFLIGHT.path ||
+				receipt.path === NEXT_TAILWIND_CONSENT_FAILURE.path ||
+				receipt.path === NEXT_TAILWIND_EXCLUSION.json.path ||
+				receipt.path === NEXT_TAILWIND_EXCLUSION.markdown.path,
+		)
 	)
-		throw new Error('T190 preflight must remain outside canonical migration receipts');
+		throw new Error(
+			'T190 preflight and Tailwind negative evidence must remain outside migration receipts',
+		);
 	const aggregateReceiptPaths = (aggregate.fixtures as unknown[])
 		.map((value) => String(asRecord(value, 'aggregate fixture').receipt))
 		.sort();
@@ -328,9 +373,61 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 		canonicalize(aggregateReceiptPaths)
 	)
 		throw new Error('Trust manifest receipts do not match canonical aggregate membership');
+	const expectedResolvedDependencies = [
+		{
+			uri: 'pnpm-lock.yaml',
+			digest: { sha256: sha256(await readFile(path.join(root, 'pnpm-lock.yaml'))) },
+		},
+		{
+			uri: 'evidence/runs/aggregate.json',
+			digest: {
+				sha256: sha256(await readFile(path.join(root, 'evidence/runs/aggregate.json'))),
+			},
+		},
+		{
+			uri: NPM_LOCK_ACQUISITION_PREFLIGHT.path,
+			digest: { sha256: NPM_LOCK_ACQUISITION_PREFLIGHT.sha256 },
+		},
+		{
+			uri: NEXT_TAILWIND_CONSENT_FAILURE.path,
+			digest: { sha256: NEXT_TAILWIND_CONSENT_FAILURE.sha256 },
+		},
+		{
+			uri: NEXT_TAILWIND_EXCLUSION.json.path,
+			digest: { sha256: NEXT_TAILWIND_EXCLUSION.json.sha256 },
+		},
+		{
+			uri: NEXT_TAILWIND_EXCLUSION.markdown.path,
+			digest: { sha256: NEXT_TAILWIND_EXCLUSION.markdown.sha256 },
+		},
+		...(await Promise.all(
+			(
+				await workspaceManifestPaths(root)
+			).map(async (file) => ({
+				uri: path.relative(root, file),
+				digest: { sha256: sha256(await readFile(file)) },
+			})),
+		)),
+		...manifest.receipts.map((receipt) => ({
+			uri: receipt.path,
+			digest: { sha256: receipt.digest },
+		})),
+	].sort(compareTrustResolvedDependencies);
+	const actualResolvedDependencies = resolvedDependencies
+		.map((dependency) => ({
+			uri: dependency.uri,
+			digest: { sha256: asRecord(dependency.digest, 'resolved dependency digest').sha256 },
+		}))
+		.sort(compareTrustResolvedDependencies);
+	if (
+		new Set(actualResolvedDependencies.map((item) => item.uri)).size !==
+			actualResolvedDependencies.length ||
+		canonicalize(actualResolvedDependencies) !== canonicalize(expectedResolvedDependencies)
+	)
+		throw new Error('Provenance resolved dependencies differ from the exact source inventory');
 	const runDetails = asRecord(predicate.runDetails, 'provenance run details');
-	if (!Array.isArray(runDetails.byproducts) || runDetails.byproducts.length !== 11)
-		throw new Error('Provenance must contain exactly eleven build byproducts');
+	if (!Array.isArray(runDetails.byproducts))
+		throw new Error('Provenance build byproducts are absent');
 	const subjectInventory = provenance.subject
 		.map((value) => {
 			const subject = asRecord(value, 'provenance subject');
@@ -339,15 +436,28 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 				sha256: asRecord(subject.digest, 'provenance subject digest').sha256,
 			};
 		})
-		.sort((left, right) => String(left.path).localeCompare(String(right.path)));
+		.sort((left, right) => compareUtf16CodeUnits(String(left.path), String(right.path)));
 	const byproductInventory = runDetails.byproducts
 		.map((value) => {
 			const byproduct = asRecord(value, 'provenance byproduct');
 			return { path: byproduct.path, sha256: byproduct.sha256 };
 		})
-		.sort((left, right) => String(left.path).localeCompare(String(right.path)));
+		.sort((left, right) => compareUtf16CodeUnits(String(left.path), String(right.path)));
 	if (canonicalize(subjectInventory) !== canonicalize(byproductInventory))
 		throw new Error('Provenance subjects and byproducts differ');
+	const expectedDistributionInventory = await Promise.all(
+		(await filesBelow(path.join(root, 'packages')))
+			.filter((file) => file.includes(`${path.sep}dist${path.sep}`))
+			.map(async (file) => ({
+				path: path.relative(root, file),
+				sha256: sha256(await readFile(file)),
+			})),
+	);
+	if (
+		new Set(subjectInventory.map((item) => item.path)).size !== subjectInventory.length ||
+		canonicalize(subjectInventory) !== canonicalize(expectedDistributionInventory)
+	)
+		throw new Error('Provenance subjects differ from the exact distribution inventory');
 	for (const value of provenance.subject) {
 		const subject = asRecord(value, 'provenance subject');
 		const digest = asRecord(subject.digest, 'provenance subject digest');

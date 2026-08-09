@@ -1,9 +1,10 @@
-import { cp, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { cp, mkdir, mkdtemp, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import * as path from 'pathe';
 import { describe, expect, it } from 'vitest';
 import { canonicalize, sha256 } from '../../core/src/receipts/canonicalize.ts';
 import { deriveCorpusTransactionState } from '../../core/src/corpus/conformance.ts';
+import { compareUtf16CodeUnits } from '../../core/src/bundlers/vite8-adapter.ts';
 import {
 	verifyWitnessAngularRealworldEvidence,
 	witnessAngularRealworldAggregateMember,
@@ -20,8 +21,14 @@ import {
 	generateTrustPackage,
 	licenseInventory,
 	NPM_LOCK_ACQUISITION_PREFLIGHT,
+	NEXT_TAILWIND_CONSENT_FAILURE,
+	NEXT_TAILWIND_EXCLUSION,
+	compareTrustResolvedDependencies,
+	renderNextTailwindExclusionMarkdown,
 	validateCycloneDx17,
 	validateNpmLockAcquisitionPreflight,
+	validateNextTailwindConsentFailure,
+	validateNextTailwindExclusion,
 } from '../src/generate.ts';
 import { ingestTrustInputs, lockPackages, osvRequest } from '../src/ingest.ts';
 import { verifyTrustPackage } from '../src/verify.ts';
@@ -32,6 +39,27 @@ const offline = { VERSIONLESS_NETWORK_MODE: 'offline' };
 const expectedResolvedPackages = 187;
 const expectedWorkspacePackages = 10;
 const expectedComponents = expectedResolvedPackages + expectedWorkspacePackages;
+
+async function distributionInventory(
+	directory = path.join(root, 'packages'),
+): Promise<Array<{ path: string; sha256: string }>> {
+	const files: string[] = [];
+	const visit = async (current: string): Promise<void> => {
+		for (const entry of await readdir(current, { withFileTypes: true })) {
+			const item = path.join(current, entry.name);
+			if (entry.isDirectory()) await visit(item);
+			else if (entry.isFile() && item.includes(`${path.sep}dist${path.sep}`))
+				files.push(item);
+		}
+	};
+	await visit(directory);
+	return await Promise.all(
+		files.sort(compareUtf16CodeUnits).map(async (file) => ({
+			path: path.relative(root, file),
+			sha256: sha256(await readFile(file)),
+		})),
+	);
+}
 
 async function setup(): Promise<{
 	directory: string;
@@ -129,6 +157,34 @@ async function rewriteArtifact(
 }
 
 describe('offline-first trust package', () => {
+	it('orders mixed-case BV/Bh distribution paths by raw UTF-16 code units', async () => {
+		const directory = await mkdtemp(path.join(os.tmpdir(), 'versionless-dist-order-'));
+		const upper = 'packages/cli/dist/BV-ordering-fixture.js';
+		const lower = 'packages/cli/dist/Bh-ordering-fixture.js';
+		expect([lower, upper].sort(compareUtf16CodeUnits)).toEqual([upper, lower]);
+		try {
+			await mkdir(path.join(directory, 'packages/cli/dist'), { recursive: true });
+			await writeFile(path.join(directory, upper), 'upper-fixture\n');
+			await writeFile(path.join(directory, lower), 'lower-fixture\n');
+			expect(await distributionInventory(directory)).toEqual([
+				{
+					path: path.relative(root, path.join(directory, upper)),
+					sha256: '707f7ec53b3c5e72d810fb4db227b7d68e7f9be765b19207e86b2a11fc538e31',
+				},
+				{
+					path: path.relative(root, path.join(directory, lower)),
+					sha256: '8a7586b8022bd2445bc49f52eb37d45b7305486cc1575159309bbb26b91e2224',
+				},
+			]);
+		} finally {
+			await rm(directory, { recursive: true, force: true });
+		}
+	});
+	it('orders mixed-case resolved dependency URIs by raw UTF-16 code units', () => {
+		const upper = { uri: 'packages/cli/dist/BV-ordering-fixture.js' };
+		const lower = { uri: 'packages/cli/dist/Bh-ordering-fixture.js' };
+		expect([lower, upper].sort(compareTrustResolvedDependencies)).toEqual([upper, lower]);
+	});
 	it('parses only deterministic top-level pnpm package coordinates', async () => {
 		const fixture = `lockfileVersion: '9.0'
 
@@ -714,11 +770,18 @@ snapshots:
 					runDetails: { byproducts: unknown[] };
 				};
 			};
-			expect(provenance.subject).toHaveLength(11);
-			expect(provenance.predicate.runDetails.byproducts).toHaveLength(11);
-			expect(provenance.predicate.buildDefinition.resolvedDependencies).toHaveLength(
-				transaction.resolvedDependencies,
+			const distributions = await distributionInventory();
+			expect(provenance.subject).toEqual(
+				distributions.map((item) => ({ name: item.path, digest: { sha256: item.sha256 } })),
 			);
+			expect(provenance.predicate.runDetails.byproducts).toEqual(distributions);
+			const dependencyUris = provenance.predicate.buildDefinition.resolvedDependencies.map(
+				(item) => item.uri,
+			);
+			expect(new Set(dependencyUris).size).toBe(dependencyUris.length);
+			expect(
+				dependencyUris.filter((uri) => uri === NEXT_TAILWIND_CONSENT_FAILURE.path),
+			).toEqual([NEXT_TAILWIND_CONSENT_FAILURE.path]);
 			expect(
 				provenance.predicate.buildDefinition.resolvedDependencies.filter(
 					(item) => item.uri === 'evidence/runs/witness-angular-realworld/receipt.json',
@@ -727,6 +790,16 @@ snapshots:
 				{
 					uri: 'evidence/runs/witness-angular-realworld/receipt.json',
 					digest: { sha256: verifiedWitness.digest },
+				},
+			]);
+			expect(
+				provenance.predicate.buildDefinition.resolvedDependencies.filter(
+					(item) => item.uri === NEXT_TAILWIND_CONSENT_FAILURE.path,
+				),
+			).toEqual([
+				{
+					uri: NEXT_TAILWIND_CONSENT_FAILURE.path,
+					digest: { sha256: NEXT_TAILWIND_CONSENT_FAILURE.sha256 },
 				},
 			]);
 			expect(
@@ -934,6 +1007,48 @@ snapshots:
 			await rm(fixture.directory, { recursive: true, force: true });
 		}
 	}, 30_000);
+
+	it('preserves T465 exactly once as a non-reusable disclosure dependency', async () => {
+		const bytes = await readFile(path.join(root, NEXT_TAILWIND_CONSENT_FAILURE.path));
+		expect(bytes).toHaveLength(NEXT_TAILWIND_CONSENT_FAILURE.bytes);
+		expect(sha256(bytes)).toBe(NEXT_TAILWIND_CONSENT_FAILURE.sha256);
+		expect(() => validateNextTailwindConsentFailure(bytes)).not.toThrow();
+		for (const mutation of [
+			(value: Record<string, unknown>) => (value.reusable = true),
+			(value: Record<string, unknown>) => (value.status = 'consumed-closed'),
+			(value: Record<string, unknown>) => (value.partialBytes = 'evidence'),
+		]) {
+			const value = JSON.parse(bytes.toString('utf8')) as Record<string, unknown>;
+			mutation(value);
+			expect(() =>
+				validateNextTailwindConsentFailure(Buffer.from(canonicalize(value))),
+			).toThrow();
+		}
+	});
+
+	it('binds canonical T506 exclusion JSON to its derived Markdown and nonclaims', async () => {
+		const [json, markdown] = await Promise.all([
+			readFile(path.join(root, NEXT_TAILWIND_EXCLUSION.json.path)),
+			readFile(path.join(root, NEXT_TAILWIND_EXCLUSION.markdown.path)),
+		]);
+		expect(() => validateNextTailwindExclusion(json, markdown)).not.toThrow();
+		expect(markdown.toString('utf8')).toBe(renderNextTailwindExclusionMarkdown());
+		const value = JSON.parse(json.toString('utf8')) as Record<string, unknown>;
+		for (const mutation of [
+			(document: Record<string, unknown>) => (document.counted = true),
+			(document: Record<string, unknown>) => (document.provenanceComplete = true),
+			(document: Record<string, unknown>) => (document.support = 'established'),
+		]) {
+			const altered = structuredClone(value);
+			mutation(altered);
+			expect(() =>
+				validateNextTailwindExclusion(Buffer.from(`${canonicalize(altered)}\n`), markdown),
+			).toThrow('exclusion');
+		}
+		expect(() =>
+			validateNextTailwindExclusion(json, Buffer.from(`${markdown.toString('utf8')} `)),
+		).toThrow('exclusion');
+	});
 
 	it('rejects T190 safety-fact and single-provenance-boundary tampering', async () => {
 		const source = await readFile(path.join(root, NPM_LOCK_ACQUISITION_PREFLIGHT.path));

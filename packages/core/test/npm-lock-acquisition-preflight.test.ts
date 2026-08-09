@@ -23,8 +23,12 @@ type TarEntry = Readonly<{
 	name: string;
 	prefix?: string;
 	body?: string | Buffer;
-	type?: '0' | '1' | '2' | '5' | 'x';
+	type?: '0' | '1' | '2' | '5' | 'g' | 'x';
 	linkName?: string;
+	declaredSize?: number;
+	paddingByte?: number;
+	checksumDelta?: number;
+	headerEdits?: readonly Readonly<{ offset: number; bytes: Buffer }>[];
 }>;
 
 function octal(header: Buffer, offset: number, length: number, value: number): void {
@@ -43,19 +47,25 @@ function tarGzip(entries: readonly TarEntry[], trailing?: Buffer): Buffer {
 		octal(header, 100, 8, 0o644);
 		octal(header, 108, 8, 0);
 		octal(header, 116, 8, 0);
-		octal(header, 124, 12, body.byteLength);
+		octal(header, 124, 12, entry.declaredSize ?? body.byteLength);
 		octal(header, 136, 12, 0);
 		header.fill(32, 148, 156);
 		header[156] = (entry.type ?? '0').charCodeAt(0);
 		if (entry.linkName) header.write(entry.linkName, 157, 100, 'utf8');
 		header.write('ustar', 257, 5, 'ascii');
 		header.write('00', 263, 2, 'ascii');
+		for (const edit of entry.headerEdits ?? []) edit.bytes.copy(header, edit.offset);
 		let checksum = 0;
 		for (const byte of header) checksum += byte;
 		header.write(checksum.toString(8).padStart(6, '0'), 148, 6, 'ascii');
 		header[154] = 0;
 		header[155] = 32;
-		blocks.push(header, body, Buffer.alloc((512 - (body.byteLength % 512)) % 512));
+		if (entry.checksumDelta) header[148] = header[148]! + entry.checksumDelta;
+		blocks.push(
+			header,
+			body,
+			Buffer.alloc((512 - (body.byteLength % 512)) % 512, entry.paddingByte ?? 0),
+		);
 	}
 	blocks.push(Buffer.alloc(1_024));
 	if (trailing) blocks.push(trailing);
@@ -84,6 +94,23 @@ function paxRecord(key: string, value: string): string {
 	while (`${length} `.length + payload.length !== length)
 		length = `${length} `.length + payload.length;
 	return `${length} ${payload}`;
+}
+
+const exactGlobalPaxComment = '52 comment=9aadb7afbcb8c70c81c93b1018313c1b1835afb0\n';
+
+function globalPaxComment(overrides: Partial<TarEntry> = {}): TarEntry {
+	return {
+		name: 'pax_global_header',
+		type: 'g',
+		body: exactGlobalPaxComment,
+		...overrides,
+	};
+}
+
+function invalidUtf8GlobalPaxComment(): Buffer {
+	const bytes = Buffer.from(exactGlobalPaxComment);
+	bytes[20] = 0xc3;
+	return bytes;
 }
 
 describe('npm lock acquisition preflight', () => {
@@ -340,6 +367,102 @@ describe('npm lock acquisition preflight', () => {
 				identities,
 			),
 		).toThrow('terminator');
+	});
+
+	it('accepts only one byte-exact initial global PAX comment without changing metadata', () => {
+		const manifest = {
+			name: 'busboy',
+			version: '1.6.0',
+			license: 'MIT',
+			scripts: { install: 'node-gyp rebuild' },
+			gypfile: true,
+			engines: { node: '>=10.16.0' },
+			os: ['darwin'],
+			cpu: ['arm64'],
+			optionalDependencies: { optional: '1.0.0' },
+		};
+		const ordinary = manifestTar('package', manifest, [
+			{ name: 'package/LICENSE', body: 'license bytes' },
+			{ name: 'package/body.txt', body: 'body bytes' },
+		]);
+		const annotated = tarGzip([
+			globalPaxComment(),
+			{ name: 'package/package.json', body: JSON.stringify(manifest) },
+			{ name: 'package/LICENSE', body: 'license bytes' },
+			{ name: 'package/body.txt', body: 'body bytes' },
+		]);
+		const identities = identity('busboy', '1.6.0');
+		expect(inspectNpmPackageTarball(annotated, identities)).toEqual(
+			inspectNpmPackageTarball(ordinary, identities),
+		);
+
+		const rejectedEntries: readonly TarEntry[] = [
+			globalPaxComment({ name: 'other' }),
+			globalPaxComment({ prefix: 'prefix' }),
+			globalPaxComment({ linkName: 'target' }),
+			globalPaxComment({ declaredSize: 51 }),
+			globalPaxComment({ declaredSize: 53 }),
+			globalPaxComment({ paddingByte: 1 }),
+			globalPaxComment({ body: '51 comment=9aadb7afbcb8c70c81c93b1018313c1b1835afb0' }),
+			globalPaxComment({ body: '52 comment=9aadb7afbcb8c70c81c93b1018313c1b1835afb0' }),
+			globalPaxComment({ body: '52 comment=9AADB7Afbcb8c70c81c93b1018313c1b1835afb0\n' }),
+			globalPaxComment({ body: '52 comment=9aadb7afbcb8c70c81c93b1018313c1b1835afb\n' }),
+			globalPaxComment({ body: '52 comment=9aadb7afbcb8c70c81c93b1018313c1b1835afb00\n' }),
+			globalPaxComment({ body: '52 comment=9aadb7afbcb8c70c81c93b1018313c1b1835afg0\n' }),
+			globalPaxComment({
+				body: '52 comment=9aadb7afbcb8c70c81c93b1018313c1b1835af\u00000\n',
+			}),
+			globalPaxComment({
+				body: invalidUtf8GlobalPaxComment(),
+			}),
+			globalPaxComment({ body: paxRecord('path', 'package/other.json') }),
+			globalPaxComment({ body: paxRecord('linkpath', 'package/target') }),
+			globalPaxComment({ body: paxRecord('size', '1') }),
+			globalPaxComment({ body: paxRecord('uid', '0') }),
+			globalPaxComment({ body: paxRecord('gid', '0') }),
+			globalPaxComment({ body: paxRecord('uname', 'owner') }),
+			globalPaxComment({ body: paxRecord('gname', 'group') }),
+			globalPaxComment({ body: paxRecord('mtime', '0') }),
+			globalPaxComment({ body: paxRecord('vendor.key', 'value') }),
+			globalPaxComment({
+				body: `${paxRecord('comment', 'first')}${paxRecord('comment', 'second')}`,
+			}),
+			globalPaxComment({
+				headerEdits: [{ offset: 18, bytes: Buffer.from([0, 120]) }],
+			}),
+		];
+		for (const entry of rejectedEntries)
+			expect(() =>
+				inspectNpmPackageTarball(
+					tarGzip([
+						entry,
+						{ name: 'package/package.json', body: JSON.stringify(manifest) },
+					]),
+					identities,
+				),
+			).toThrow('global PAX comment is invalid');
+
+		expect(() =>
+			inspectNpmPackageTarball(
+				tarGzip([
+					globalPaxComment({ checksumDelta: 1 }),
+					{ name: 'package/package.json', body: JSON.stringify(manifest) },
+				]),
+				identities,
+			),
+		).toThrow('checksum differs');
+
+		for (const entries of [
+			[{ name: 'package/package.json', body: JSON.stringify(manifest) }, globalPaxComment()],
+			[
+				globalPaxComment(),
+				globalPaxComment(),
+				{ name: 'package/package.json', body: JSON.stringify(manifest) },
+			],
+		])
+			expect(() => inspectNpmPackageTarball(tarGzip(entries), identities)).toThrow(
+				'global PAX comment is invalid',
+			);
 	});
 
 	it('uses an exact URL index only to locate content and then verifies every lock SRI', async () => {
