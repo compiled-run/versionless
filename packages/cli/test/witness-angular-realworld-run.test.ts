@@ -18,6 +18,7 @@ import {
 	parseWitnessAngularRealworldReceipt,
 	witnessAngularRealworldDigest,
 } from '../../core/src/receipts/witness-angular-realworld.ts';
+import { witnessReactBoilerplateAggregateMember } from '../../core/src/receipts/witness-react-boilerplate.ts';
 
 const repositoryRoot = path.resolve(import.meta.dirname, '../../..');
 
@@ -115,9 +116,13 @@ describe('standalone Angular RealWorld Witness command', () => {
 			const aggregate = JSON.parse(
 				await readFile(path.join(repositoryRoot, 'evidence/runs/aggregate.json'), 'utf8'),
 			) as { fixtures: Array<Record<string, unknown>> };
+			const current = structuredClone(aggregate);
 			aggregate.fixtures = aggregate.fixtures.filter(
-				(item) => item.id !== 'witness-angular-realworld',
+				(item) =>
+					item.id !== 'witness-angular-realworld' &&
+					item.id !== 'witness-react-boilerplate',
 			);
+			expect(aggregate.fixtures).toHaveLength(11);
 			await writeFile(aggregatePath, `${JSON.stringify(aggregate, null, 2)}\n`);
 			const receipt = parseWitnessAngularRealworldReceipt(
 				JSON.parse(
@@ -155,6 +160,21 @@ describe('standalone Angular RealWorld Witness command', () => {
 			expect(await readFile(aggregatePath, 'utf8')).toContain(
 				updated.integrity.canonicalDigest,
 			);
+
+			await writeFile(aggregatePath, `${JSON.stringify(current, null, 2)}\n`);
+			const expectedReact = current.fixtures.find(
+				(item) => item.id === 'witness-react-boilerplate',
+			);
+			if (!expectedReact) throw new Error('React Witness member missing');
+			expect(expectedReact).toEqual(
+				witnessReactBoilerplateAggregateMember(String(expectedReact.digest)),
+			);
+			await publish(receipt);
+			const refreshed = JSON.parse(await readFile(aggregatePath, 'utf8')) as {
+				fixtures: Array<Record<string, unknown>>;
+			};
+			expect(refreshed.fixtures).toHaveLength(13);
+			expect(refreshed.fixtures.at(-1)).toEqual(expectedReact);
 		} finally {
 			await rm(directory, { recursive: true, force: true });
 		}

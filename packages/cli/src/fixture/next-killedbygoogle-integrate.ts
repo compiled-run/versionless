@@ -2,8 +2,10 @@ import { access, cp, mkdir, readFile, rename, rm, unlink, writeFile } from 'node
 import * as path from 'pathe';
 import {
 	canonicalize,
+	deriveCorpusTransactionState,
 	nextKilledByGoogleAggregateMember,
 	witnessAngularRealworldAggregateMember,
+	witnessReactBoilerplateAggregateMember,
 	verifyNextKilledByGoogleEvidence,
 } from '../../../core/src/index.ts';
 import { verifyTrustPackage } from '../../../trust/src/verify.ts';
@@ -52,6 +54,7 @@ function assertAggregate(value: unknown, requireIntegrated: boolean): Record<str
 		(fixture) => fixture.id === 'next-killedbygoogle-derived-state-to-memo',
 	);
 	const witnesses = fixtures.filter((fixture) => fixture.id === 'witness-angular-realworld');
+	const reactWitnesses = fixtures.filter((fixture) => fixture.id === 'witness-react-boilerplate');
 	let exactWitness: Record<string, unknown> | null = null;
 	if (witnesses.length === 1) {
 		const digest = witnesses[0]?.digest;
@@ -59,14 +62,29 @@ function assertAggregate(value: unknown, requireIntegrated: boolean): Record<str
 			typeof digest === 'string' ? digest : '',
 		);
 	}
+	let exactReactWitness: Record<string, unknown> | null = null;
+	if (reactWitnesses.length === 1) {
+		const digest = reactWitnesses[0]?.digest;
+		exactReactWitness = witnessReactBoilerplateAggregateMember(
+			typeof digest === 'string' ? digest : '',
+		);
+	}
 	if (
 		fixtures.length !==
-			historicalIds.length + (requireIntegrated ? 1 : additions.length) + witnesses.length ||
+			historicalIds.length +
+				(requireIntegrated ? 1 : additions.length) +
+				witnesses.length +
+				reactWitnesses.length ||
 		additions.length > 1 ||
 		witnesses.length > 1 ||
+		reactWitnesses.length > 1 ||
 		(requireIntegrated && additions.length !== 1) ||
 		(witnesses.length === 1 && additions.length !== 1) ||
-		(witnesses.length === 1 && canonicalize(witnesses[0]) !== canonicalize(exactWitness))
+		(witnesses.length === 1 && canonicalize(witnesses[0]) !== canonicalize(exactWitness)) ||
+		(reactWitnesses.length === 1 &&
+			(witnesses.length !== 1 ||
+				canonicalize(reactWitnesses[0]) !== canonicalize(exactReactWitness) ||
+				deriveCorpusTransactionState(fixtures).kind !== 'react-candidate'))
 	)
 		throw new Error('Killed by Google aggregate membership differs');
 	return aggregate;

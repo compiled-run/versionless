@@ -1,6 +1,6 @@
 {
   "schemaVersion": "versionless.trust.v1",
-  "canonicalDigest": "3ed42dfe52bec579ee0d0602ba510c6fee93fc9691e5d40126dbfd3ebf891408",
+  "canonicalDigest": "6f1f3fbd21177fc20c6bcc3546669d8d1cb0c60f2c0f81edcac9f057cd9bea6d",
   "integrity": {
     "algorithm": "sha256",
     "authenticity": "not-established",
@@ -8,7 +8,7 @@
   },
   "deterministicCore": {
     "algorithm": "sha256",
-    "digest": "6365648f4ea4ba559d3e3a2a75b6e10b6da500fbd7a8aac3db7f957fc7dd1f99",
+    "digest": "fc7f0f5f3775692c0d583f674083f376c2e2d61f3a49202f61b3f99f4fe9b761",
     "artifacts": [
       {
         "path": "dependency-graph.cdx.json",
@@ -24,11 +24,11 @@
       },
       {
         "path": "provenance.json",
-        "sha256": "6225fede6fc1aaf6a34fa976f040642992f20bb7b860e0393fd662b2561673a6"
+        "sha256": "a81e932e8c469d3d33a2332c92ab63d90d5c978566cfd77beceef19b7e361282"
       },
       {
         "path": "matrix.json",
-        "sha256": "e6c47304ae0ce9f7ce6574feca6b931bc748c53d76f3fe47ba405fa47a0b4cf5"
+        "sha256": "5431ff58716ff3bc0cd093973cd3e4a0b283364c0483d6c3c3e7e5eeecb7db08"
       },
       {
         "path": "controls.json",
@@ -40,7 +40,7 @@
       },
       {
         "path": "corpus-conformance.json",
-        "sha256": "0f8ece270f80124925c8cfb52a9bbcf190925cd09dcec73679889a02a191067f"
+        "sha256": "8c290274714752372d4438e6394f1e0913871189a0427d5d79bb614539869019"
       },
       {
         "path": "script-surface.json",
@@ -124,10 +124,16 @@
       "digest": "acd4f259f9372dd58b5267001469c2b68657d708c4d2a311df71a5a171b21128",
       "artifacts": 0,
       "state": "verified"
+    },
+    {
+      "path": "evidence/runs/witness-react-boilerplate/receipt.json",
+      "digest": "bfa48f718ee86566f120cb0bc42645b22c989a27d87c102b9c2f256d15661ed7",
+      "artifacts": 0,
+      "state": "verified"
     }
   ],
   "observation": {
-    "generatedAt": "2026-08-08T23:11:28.622Z",
+    "generatedAt": "2026-08-09T00:02:16.269Z",
     "vulnerabilityFreshness": "verified"
   },
   "derivedReport": "report.md"

@@ -1,8 +1,8 @@
 # Versionless project trust package
 
-- Canonical SHA-256: `3ed42dfe52bec579ee0d0602ba510c6fee93fc9691e5d40126dbfd3ebf891408`
-- Deterministic core: `6365648f4ea4ba559d3e3a2a75b6e10b6da500fbd7a8aac3db7f957fc7dd1f99`
-- Generated observation: `2026-08-08T23:11:28.622Z`
+- Canonical SHA-256: `6f1f3fbd21177fc20c6bcc3546669d8d1cb0c60f2c0f81edcac9f057cd9bea6d`
+- Deterministic core: `fc7f0f5f3775692c0d583f674083f376c2e2d61f3a49202f61b3f99f4fe9b761`
+- Generated observation: `2026-08-09T00:02:16.269Z`
 - Vulnerability input freshness: **verified** (seven-day maximum age)
 - Integrity: **hash-only; authenticity is not established**
 - Assurance: **this package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation**
@@ -14,12 +14,13 @@
 - [Vulnerability and KEV report](vulnerabilities.json) — cached OSV batch and CISA KEV observations only.
 - [SLSA/in-toto-shaped provenance](provenance.json) — shape only; no SLSA level or signer authenticity is claimed.
 - [Supported corpus/runtime/bundler matrix](matrix.json) — unsupported and untested cells remain visible.
-- [Corpus conformance](corpus-conformance.json) — `2e7f7add70157d9888d020d4f98c2d036c3ca3382fb06aba55cccb1ccee35188`; 11 verified verticals grouped into exactly 4 source applications; zero designated pilots are verified.
+- [Corpus conformance](corpus-conformance.json) — `c8dd53a77088eb242bb76fb68ea1e504ce3aa66025aa9e732fdf36c7f2aa8082`; 11 verified verticals grouped into exactly 4 source applications; zero designated pilots are verified.
 - The immutable Killed by Google Next.js 12 Pages/webpack production vertical is verified only for its exact fixture; synthetic Next.js 12 Pages, 13 transition/App, and 14 App classification lanes remain **not-tested**, and generic Next.js support is not claimed.
 - [Static script/resource surface](script-surface.json) — truthfully remains scoped to the prior nine verticals, two applications, and eighteen exact static deployment entrypoints; T220 is **not included** because its script surface was not separately observed; dynamic script insertion: **not-tested**; payment-page applicability: **not established**; PCI compliance is **not claimed**.
 - [Qualified-journey runtime script observation](runtime-script-observation.json) — truthfully remains scoped to 36 runs across the prior nine verticals, two applications, and eighteen lanes; T220 is **not included** because its runtime scripts were not separately observed; this is **not global dynamic-insertion coverage**.
 - React Boilerplate maintained-runtime proof is limited to Node 24.15.0 darwin-arm64 with webpack 4.47.0 and a separate fixture-specific Vite 8.0.16 build; other maintained targets remain unproved.
 - Angular-lineage production readiness: **1/4**; Harness qualification: **0/4**. PhoneCat remains unsupported for the required visible transition and is not counted.
+- React-lineage direct-Witness candidate: **verified, not counted (0/4) pending final Judge audit**.
 - [Data-flow and control mappings](controls.json) — review inputs, not audit conclusions.
 - [Retention and purge status](retention.json) — unresolved policy remains unknown/not-tested.
 
@@ -39,6 +40,7 @@ The dependency graph is a rooted complete inventory. Exact transitive dependency
 - `evidence/runs/angular-realworld-v15-to-v16/receipt.json`: `bba54bc67cf5686445b207c530e04c5f9d56cf87f495250e97329e1eed8c6ad1` (verified)
 - `evidence/runs/next-killedbygoogle-derived-state-to-memo/receipt.json`: `a018c6490cd559fab74ea402ff93660f053503dbed1a52ba9b68ed7fdc086b7c` (verified)
 - `evidence/runs/witness-angular-realworld/receipt.json`: `acd4f259f9372dd58b5267001469c2b68657d708c4d2a311df71a5a171b21128` (verified)
+- `evidence/runs/witness-react-boilerplate/receipt.json`: `bfa48f718ee86566f120cb0bc42645b22c989a27d87c102b9c2f256d15661ed7` (verified)
 
 ## Known gaps
 

@@ -3,10 +3,15 @@ import os from 'node:os';
 import * as path from 'pathe';
 import { describe, expect, it } from 'vitest';
 import { canonicalize, sha256 } from '../../core/src/receipts/canonicalize.ts';
+import { deriveCorpusTransactionState } from '../../core/src/corpus/conformance.ts';
 import {
 	verifyWitnessAngularRealworldEvidence,
 	witnessAngularRealworldAggregateMember,
 } from '../../core/src/receipts/witness-angular-realworld.ts';
+import {
+	verifyWitnessReactBoilerplateEvidence,
+	witnessReactBoilerplateAggregateMember,
+} from '../../core/src/receipts/witness-react-boilerplate.ts';
 import {
 	generateTrustPackage,
 	licenseInventory,
@@ -547,11 +552,21 @@ snapshots:
 		const aggregate = JSON.parse(
 			await readFile(path.join(root, 'evidence/runs/aggregate.json'), 'utf8'),
 		) as { fixtures: Array<Record<string, unknown>> };
+		const transaction = deriveCorpusTransactionState(aggregate.fixtures);
+		const verifiedReact = transaction.reactBoilerplateWitnessIntegrated
+			? await verifyWitnessReactBoilerplateEvidence(root)
+			: null;
 		expect(
-			aggregate.fixtures.filter(
-				(item) => item.receipt === expectedWitnessMember.receipt,
-			),
+			aggregate.fixtures.filter((item) => item.receipt === expectedWitnessMember.receipt),
 		).toEqual([expectedWitnessMember]);
+		if (verifiedReact !== null) {
+			const expectedReactMember = witnessReactBoilerplateAggregateMember(
+				verifiedReact.digest,
+			);
+			expect(
+				aggregate.fixtures.filter((item) => item.receipt === expectedReactMember.receipt),
+			).toEqual([expectedReactMember]);
+		}
 		const fixture = await setup();
 		try {
 			const result = await verifyTrustPackage({
@@ -575,7 +590,7 @@ snapshots:
 			expect(first.deterministicCore.digest).toBe(second.deterministicCore.digest);
 			expect(first.canonicalDigest).not.toBe(second.canonicalDigest);
 			expect(first.deterministicCore.artifacts).toHaveLength(10);
-			expect(first.receipts).toHaveLength(12);
+			expect(first.receipts).toHaveLength(transaction.receipts);
 			expect(
 				first.receipts.filter(
 					(item) => item.path === 'evidence/runs/witness-angular-realworld/receipt.json',
@@ -588,6 +603,22 @@ snapshots:
 					state: 'verified',
 				},
 			]);
+			expect(
+				first.receipts.filter(
+					(item) => item.path === 'evidence/runs/witness-react-boilerplate/receipt.json',
+				),
+			).toEqual(
+				verifiedReact === null
+					? []
+					: [
+							{
+								path: 'evidence/runs/witness-react-boilerplate/receipt.json',
+								digest: verifiedReact.digest,
+								artifacts: verifiedReact.artifacts,
+								state: 'verified',
+							},
+						],
+			);
 			expect(
 				first.receipts.find(
 					(item) =>
@@ -653,7 +684,9 @@ snapshots:
 			};
 			expect(provenance.subject).toHaveLength(11);
 			expect(provenance.predicate.runDetails.byproducts).toHaveLength(11);
-			expect(provenance.predicate.buildDefinition.resolvedDependencies).toHaveLength(25);
+			expect(provenance.predicate.buildDefinition.resolvedDependencies).toHaveLength(
+				transaction.resolvedDependencies,
+			);
 			expect(
 				provenance.predicate.buildDefinition.resolvedDependencies.filter(
 					(item) => item.uri === 'evidence/runs/witness-angular-realworld/receipt.json',
@@ -664,6 +697,20 @@ snapshots:
 					digest: { sha256: verifiedWitness.digest },
 				},
 			]);
+			expect(
+				provenance.predicate.buildDefinition.resolvedDependencies.filter(
+					(item) => item.uri === 'evidence/runs/witness-react-boilerplate/receipt.json',
+				),
+			).toEqual(
+				verifiedReact === null
+					? []
+					: [
+							{
+								uri: 'evidence/runs/witness-react-boilerplate/receipt.json',
+								digest: { sha256: verifiedReact.digest },
+							},
+						],
+			);
 			expect(
 				provenance.predicate.buildDefinition.resolvedDependencies.filter(
 					(item) => item.uri === NPM_LOCK_ACQUISITION_PREFLIGHT.path,

@@ -868,6 +868,12 @@
     "certification": "not-claimed",
     "locality": "process-scoped-not-os-wide",
     "productionReadiness": {
+      "reactLineage": {
+        "ready": 0,
+        "total": 4,
+        "counted": false,
+        "candidate": "verified-pending-judge"
+      },
       "angularLineage": {
         "ready": 1,
         "total": 4
@@ -881,6 +887,6 @@
   },
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "2e7f7add70157d9888d020d4f98c2d036c3ca3382fb06aba55cccb1ccee35188"
+    "canonicalDigest": "c8dd53a77088eb242bb76fb68ea1e504ce3aa66025aa9e732fdf36c7f2aa8082"
   }
 }

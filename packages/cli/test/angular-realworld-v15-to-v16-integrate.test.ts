@@ -22,10 +22,20 @@ describe('Angular RealWorld v15-to-v16 integration', () => {
 	});
 
 	it('is idempotent and refuses a conflicting aggregate member', async () => {
-		const aggregate = JSON.parse(
+		const current = JSON.parse(
 			await readFile(path.join(root, 'evidence/runs/aggregate.json'), 'utf8'),
 		) as Record<string, unknown>;
-		const first = integrateAngularRealworldAggregate(aggregate);
+		const currentFixtures = current.fixtures as Array<Record<string, unknown>>;
+		expect(currentFixtures).toHaveLength(13);
+		expect(canonicalize(integrateAngularRealworldAggregate(current))).toBe(
+			canonicalize(current),
+		);
+		const productionReadiness = structuredClone(current);
+		productionReadiness.fixtures = (
+			productionReadiness.fixtures as Array<Record<string, unknown>>
+		).filter((item) => item.id !== 'witness-react-boilerplate');
+		expect(productionReadiness.fixtures as Array<Record<string, unknown>>).toHaveLength(12);
+		const first = integrateAngularRealworldAggregate(productionReadiness);
 		const second = integrateAngularRealworldAggregate(first);
 		expect(canonicalize(second)).toBe(canonicalize(first));
 		expect(
@@ -97,8 +107,25 @@ describe('Angular RealWorld v15-to-v16 integration', () => {
 					'a6c25918ed9650d3315c42501932e8e6fe26552e48bcbdf74d4987f7b384452b';
 			},
 		]) {
-			const invalid = structuredClone(first);
+			const invalid = structuredClone(current);
 			mutate(invalid);
+			expect(() => integrateAngularRealworldAggregate(invalid)).toThrow();
+		}
+		for (const mutateReact of [
+			(value: Record<string, unknown>) => {
+				const react = (value.fixtures as Array<Record<string, unknown>>).find(
+					(item) => item.id === 'witness-react-boilerplate',
+				);
+				if (!react) throw new Error('React Witness member missing');
+				react.digest = 'A'.repeat(64);
+			},
+			(value: Record<string, unknown>) => {
+				const fixtures = value.fixtures as Array<Record<string, unknown>>;
+				fixtures.unshift(fixtures.pop()!);
+			},
+		]) {
+			const invalid = structuredClone(current);
+			mutateReact(invalid);
 			expect(() => integrateAngularRealworldAggregate(invalid)).toThrow();
 		}
 	});

@@ -47,6 +47,9 @@ export function renderTrustReport(inputs: RenderInputs): string {
 	const angularRealworldWitnessVerified = inputs.manifest.receipts.some(
 		(item) => item.path === 'evidence/runs/witness-angular-realworld/receipt.json',
 	);
+	const reactBoilerplateWitnessVerified = inputs.manifest.receipts.some(
+		(item) => item.path === 'evidence/runs/witness-react-boilerplate/receipt.json',
+	);
 	const nextKilledByGoogleVerified = inputs.transaction.nextKilledByGoogleIntegrated;
 	return `# Versionless project trust package
 
@@ -78,6 +81,7 @@ ${
 		: '- React Boilerplate maintained-runtime target: **not-tested**.'
 }
 ${angularRealworldWitnessVerified ? '- Angular-lineage production readiness: **1/4**; Harness qualification: **0/4**. PhoneCat remains unsupported for the required visible transition and is not counted.' : '- Angular-lineage production readiness: **0/4**; Harness qualification: **0/4**.'}
+${reactBoilerplateWitnessVerified ? '- React-lineage direct-Witness candidate: **verified, not counted (0/4) pending final Judge audit**.' : '- React-lineage production readiness: **0/4; not-tested**.'}
 - [Data-flow and control mappings](controls.json) — review inputs, not audit conclusions.
 - [Retention and purge status](retention.json) — unresolved policy remains unknown/not-tested.
 

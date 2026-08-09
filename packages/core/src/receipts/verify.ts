@@ -7,6 +7,10 @@ import {
 	WITNESS_ANGULAR_REALWORLD_SCHEMA,
 	verifyWitnessAngularRealworldEvidence,
 } from './witness-angular-realworld.ts';
+import {
+	WITNESS_REACT_BOILERPLATE_SCHEMA,
+	verifyWitnessReactBoilerplateEvidence,
+} from './witness-react-boilerplate.ts';
 
 function markdownPath(jsonPath: string): string {
 	return jsonPath.endsWith('.json')
@@ -50,6 +54,11 @@ export async function verifyReceipt(
 	if (raw.schemaVersion === WITNESS_ANGULAR_REALWORLD_SCHEMA) {
 		const root = explicitRoot ?? path.resolve(path.dirname(absolute), '../../..');
 		const verified = await verifyWitnessAngularRealworldEvidence(root);
+		return { valid: true, digest: verified.digest, artifacts: verified.artifacts };
+	}
+	if (raw.schemaVersion === WITNESS_REACT_BOILERPLATE_SCHEMA) {
+		const root = explicitRoot ?? path.resolve(path.dirname(absolute), '../../..');
+		const verified = await verifyWitnessReactBoilerplateEvidence(root);
 		return { valid: true, digest: verified.digest, artifacts: verified.artifacts };
 	}
 	const receipt = parseMigrationReceipt(raw);

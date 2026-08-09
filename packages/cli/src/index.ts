@@ -17,6 +17,10 @@ export {
 	runWitnessAngularRealworld,
 	verifyWitnessAngularRealworld,
 } from './witness/angular-realworld-run.ts';
+export {
+	runWitnessReactBoilerplate,
+	verifyWitnessReactBoilerplate,
+} from './witness/react-boilerplate-run.ts';
 export * from './witness/provenance.ts';
 export * from './framework-classify.ts';
 export * from '../../trust/src/index.ts';

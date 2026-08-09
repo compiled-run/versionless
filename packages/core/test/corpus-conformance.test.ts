@@ -9,6 +9,7 @@ import {
 } from '../src/corpus/conformance.ts';
 import { nextKilledByGoogleAggregateMember } from '../src/receipts/next-killedbygoogle.ts';
 import { witnessAngularRealworldAggregateMember } from '../src/receipts/witness-angular-realworld.ts';
+import { witnessReactBoilerplateAggregateMember } from '../src/receipts/witness-react-boilerplate.ts';
 import { receiptDigest, sha256 } from '../src/receipts/canonicalize.ts';
 import { renderReceipt } from '../src/receipts/render.ts';
 import type { MigrationReceipt } from '../src/receipts/schema.ts';
@@ -25,8 +26,16 @@ function prepublicationFixtures(fixtures: Array<Record<string, unknown>>) {
 		const witness = witnessMatches[0]!;
 		expect(witness).toEqual(witnessAngularRealworldAggregateMember(String(witness.digest)));
 	} else expect(witnessMatches).toEqual([]);
+	const reactMatches = fixtures.filter((fixture) => fixture.id === 'witness-react-boilerplate');
+	if (reactMatches.length === 1) {
+		const witness = reactMatches[0]!;
+		expect(witness).toEqual(witnessReactBoilerplateAggregateMember(String(witness.digest)));
+	} else expect(reactMatches).toEqual([]);
 	return fixtures.filter(
-		(fixture) => fixture.id !== expected.id && fixture.id !== 'witness-angular-realworld',
+		(fixture) =>
+			fixture.id !== expected.id &&
+			fixture.id !== 'witness-angular-realworld' &&
+			fixture.id !== 'witness-react-boilerplate',
 	);
 }
 
@@ -247,51 +256,73 @@ describe('canonical corpus conformance', () => {
 			kind: 'prepublication',
 			nextKilledByGoogleIntegrated: false,
 			angularRealworldWitnessIntegrated: false,
+			reactBoilerplateWitnessIntegrated: false,
 			verticals: 10,
 			sourceApplications: 3,
 			receipts: 10,
 			resolvedDependencies: 23,
 		});
 		const nextMember = nextKilledByGoogleAggregateMember(killedByGoogleDigest);
-		expect(deriveCorpusTransactionState([...before, nextMember])).toEqual({
+		const afterNext = [...before.slice(0, 8), nextMember, ...before.slice(8)];
+		expect(deriveCorpusTransactionState(afterNext)).toEqual({
 			kind: 'postintegration',
 			nextKilledByGoogleIntegrated: true,
 			angularRealworldWitnessIntegrated: false,
+			reactBoilerplateWitnessIntegrated: false,
 			verticals: 11,
 			sourceApplications: 4,
 			receipts: 11,
 			resolvedDependencies: 24,
 		});
 		const witnessMember = witnessAngularRealworldAggregateMember('9'.repeat(64));
-		expect(deriveCorpusTransactionState([...before, nextMember, witnessMember])).toEqual({
+		const readiness = [...before.slice(0, 8), witnessMember, nextMember, ...before.slice(8)];
+		expect(deriveCorpusTransactionState(readiness)).toEqual({
 			kind: 'production-readiness',
 			nextKilledByGoogleIntegrated: true,
 			angularRealworldWitnessIntegrated: true,
+			reactBoilerplateWitnessIntegrated: false,
 			verticals: 11,
 			sourceApplications: 4,
 			receipts: 12,
 			resolvedDependencies: 25,
+		});
+		const reactMember = witnessReactBoilerplateAggregateMember('8'.repeat(64));
+		expect(deriveCorpusTransactionState([...readiness, reactMember])).toEqual({
+			kind: 'react-candidate',
+			nextKilledByGoogleIntegrated: true,
+			angularRealworldWitnessIntegrated: true,
+			reactBoilerplateWitnessIntegrated: true,
+			verticals: 11,
+			sourceApplications: 4,
+			receipts: 13,
+			resolvedDependencies: 26,
 		});
 		for (const fixtures of [
 			[...before, before[0]],
 			[...before, { ...nextMember, framework: 'nextjs' }],
 			[...before, { ...nextMember, receipt: 'evidence/runs/misplaced.json' }],
 			[...before, witnessMember],
-			[...before, nextMember, witnessMember, witnessMember],
-			[...before, nextMember, { ...witnessMember, digest: 'malformed' }],
-			[...before, nextMember, { ...witnessMember, framework: 'angularjs' }],
+			[...readiness, witnessMember],
 			[
-				...before,
-				nextMember,
+				...readiness.slice(0, 8),
+				{ ...witnessMember, digest: 'malformed' },
+				...readiness.slice(9),
+			],
+			[
+				...readiness.slice(0, 8),
+				{ ...witnessMember, framework: 'angularjs' },
+				...readiness.slice(9),
+			],
+			[
+				...readiness.slice(0, 8),
 				{ ...witnessMember, receipt: 'evidence/runs/witness-angular-realworld/wrong.json' },
+				...readiness.slice(9),
 			],
 			[...before, { id: 'unknown', receipt: 'unknown', digest: 'a'.repeat(64) }],
-			[
-				...before,
-				nextMember,
-				witnessMember,
-				{ id: 'unknown', receipt: 'unknown', digest: 'a'.repeat(64) },
-			],
+			[...readiness, { id: 'unknown', receipt: 'unknown', digest: 'a'.repeat(64) }],
+			[reactMember, ...readiness],
+			[...readiness, { ...reactMember, framework: 'preact' }],
+			[...readiness, reactMember, reactMember],
 		])
 			expect(() => deriveCorpusTransactionState(fixtures)).toThrow();
 	});

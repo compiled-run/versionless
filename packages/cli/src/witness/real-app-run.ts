@@ -1360,6 +1360,17 @@ export async function executeAngularRealworldWitnessRun(options: {
 	return await executeRun(app, options.lane, options.pass, options);
 }
 
+export async function executeReactBoilerplateWitnessRun(options: {
+	lane: Lane;
+	pass: 1 | 2;
+	laneRoot: string;
+	receiptRoot: string;
+}): Promise<WitnessRealAppRun> {
+	const app = apps.find((candidate) => candidate.app === 'react-boilerplate');
+	if (app === undefined) throw new Error('React Boilerplate Witness specification is absent');
+	return await executeRun(app, options.lane, options.pass, options);
+}
+
 async function mutationProof(
 	app: 'react-boilerplate' | 'angular-realworld',
 ): Promise<WitnessMutationProof> {

@@ -6,6 +6,7 @@ import {
 	canonicalize,
 	nextKilledByGoogleAggregateMember,
 	witnessAngularRealworldAggregateMember,
+	witnessReactBoilerplateAggregateMember,
 } from '../../core/src/index.ts';
 import {
 	integrateNextKilledByGoogleAggregate,
@@ -27,12 +28,16 @@ describe('Killed by Google integration', () => {
 		expect(witness[0]).toEqual(
 			witnessAngularRealworldAggregateMember(String(witness[0]!.digest)),
 		);
+		const react = fixtures.filter((fixture) => fixture.id === 'witness-react-boilerplate');
+		expect(react).toHaveLength(1);
+		expect(react[0]).toEqual(witnessReactBoilerplateAggregateMember(String(react[0]!.digest)));
 		return {
 			...structuredClone(aggregate),
 			fixtures: fixtures.filter(
 				(fixture) =>
 					fixture.id !== 'next-killedbygoogle-derived-state-to-memo' &&
-					fixture.id !== 'witness-angular-realworld',
+					fixture.id !== 'witness-angular-realworld' &&
+					fixture.id !== 'witness-react-boilerplate',
 			),
 		};
 	};
@@ -78,6 +83,7 @@ describe('Killed by Google integration', () => {
 	test('adds exactly one member and is idempotent', async () => {
 		const current = JSON.parse(await readFile('evidence/runs/aggregate.json', 'utf8'));
 		const aggregate = prepublication(current);
+		expect(aggregate.fixtures as Array<Record<string, unknown>>).toHaveLength(10);
 		const first = integrateNextKilledByGoogleAggregate(aggregate, canonicalDigest);
 		const second = integrateNextKilledByGoogleAggregate(first, canonicalDigest);
 		const currentAgain = integrateNextKilledByGoogleAggregate(current, canonicalDigest);
@@ -127,6 +133,17 @@ describe('Killed by Google integration', () => {
 				value.fixtures = (value.fixtures as Array<Record<string, unknown>>).filter(
 					(item) => item.id !== 'next-killedbygoogle-derived-state-to-memo',
 				);
+			},
+			(value: Record<string, unknown>) => {
+				const react = (value.fixtures as Array<Record<string, unknown>>).find(
+					(item) => item.id === 'witness-react-boilerplate',
+				);
+				if (!react) throw new Error('React Witness member missing');
+				react.framework = 'preact';
+			},
+			(value: Record<string, unknown>) => {
+				const fixtures = value.fixtures as Array<Record<string, unknown>>;
+				fixtures.unshift(fixtures.pop()!);
 			},
 		]) {
 			const invalid = structuredClone(current) as Record<string, unknown>;

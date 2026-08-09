@@ -4,8 +4,10 @@ import {
 	ANGULAR_REALWORLD_V15_TO_V16_RECEIPT,
 	ANGULAR_REALWORLD_V15_TO_V16_SUPPORT_ARTIFACTS,
 	canonicalize,
+	deriveCorpusTransactionState,
 	nextKilledByGoogleAggregateMember,
 	witnessAngularRealworldAggregateMember,
+	witnessReactBoilerplateAggregateMember,
 	sha256,
 	verifyAngularRealworldV15ToV16Evidence,
 } from '../../../core/src/index.ts';
@@ -134,6 +136,7 @@ function assertAggregate(value: unknown, requireIntegrated: boolean): Record<str
 	);
 	const later = fixtures.filter((item) => item.id === laterKilledByGoogleMember.id);
 	const witness = fixtures.filter((item) => item.id === 'witness-angular-realworld');
+	const reactWitness = fixtures.filter((item) => item.id === 'witness-react-boilerplate');
 	let exactWitness: Record<string, unknown> | null = null;
 	if (witness.length === 1) {
 		const digest = witness[0]?.digest;
@@ -141,15 +144,32 @@ function assertAggregate(value: unknown, requireIntegrated: boolean): Record<str
 			typeof digest === 'string' ? digest : '',
 		);
 	}
+	let exactReactWitness: Record<string, unknown> | null = null;
+	if (reactWitness.length === 1) {
+		const digest = reactWitness[0]?.digest;
+		exactReactWitness = witnessReactBoilerplateAggregateMember(
+			typeof digest === 'string' ? digest : '',
+		);
+	}
 	if (
 		fixtures.length !==
-			historicalMembers.length + integrated.length + later.length + witness.length ||
+			historicalMembers.length +
+				integrated.length +
+				later.length +
+				witness.length +
+				reactWitness.length ||
 		integrated.length > 1 ||
 		later.length > 1 ||
 		witness.length > 1 ||
+		reactWitness.length > 1 ||
 		(later.length === 1 && integrated.length !== 1) ||
 		(witness.length === 1 && (integrated.length !== 1 || later.length !== 1)) ||
 		(witness.length === 1 && canonicalize(witness[0]) !== canonicalize(exactWitness)) ||
+		(reactWitness.length === 1 &&
+			(witness.length !== 1 ||
+				later.length !== 1 ||
+				canonicalize(reactWitness[0]) !== canonicalize(exactReactWitness) ||
+				deriveCorpusTransactionState(fixtures).kind !== 'react-candidate')) ||
 		(later.length === 1 &&
 			canonicalize(later[0]) !== canonicalize(laterKilledByGoogleMember)) ||
 		(requireIntegrated &&

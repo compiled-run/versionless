@@ -4,25 +4,25 @@
     {
       "name": "packages/cli/dist/cli.js",
       "digest": {
-        "sha256": "cdeb34311216fc3a213023073f7363afbb9ba516ecd5e9d5fe35b48245d9a9b6"
+        "sha256": "945be011a9051c3464e403cee691b3d609391585de702d0e4a3f26d3a10705c3"
       }
     },
     {
       "name": "packages/cli/dist/index.js",
       "digest": {
-        "sha256": "5abe0b3d2f1bd34c3e74063a935a1752f3f234ceee12887e4254914b9611e17c"
+        "sha256": "305ee6c588a325ea5578c7fe7385e6822c770bf8886fb974ca4bd52bb3366337"
       }
     },
     {
-      "name": "packages/cli/dist/verify-DEyN5nNJ.js",
+      "name": "packages/cli/dist/verify-CfqU7qjM.js",
       "digest": {
-        "sha256": "89c570dad7629874fe3dd549060231617e044e9eddcaeffeefb9a651de74c0a2"
+        "sha256": "b3a08c5accac97e2347810db1c67e63495b07842f1facd00432612b86ed171df"
       }
     },
     {
       "name": "packages/core/dist/index.js",
       "digest": {
-        "sha256": "c390383e47e76fa417061e2a5fec3cf8efaef494d26e0134f525d436409bb714"
+        "sha256": "1294dc65aa0bd4ac873d00fe15e162f7f3960106e15299fcf11ede4d01d212fd"
       }
     },
     {
@@ -64,7 +64,7 @@
     {
       "name": "packages/trust/dist/index.js",
       "digest": {
-        "sha256": "ad3b07a02fc64b4d2bf082819fc91ee87d4d2ffa8fa21b6fb34a760c18d4c77c"
+        "sha256": "b75249a042b76e0a2dcb53ac5aacb6ac73c0ea34b2ba453be4efe09a69703ff9"
       }
     }
   ],
@@ -90,7 +90,7 @@
         {
           "uri": "evidence/runs/aggregate.json",
           "digest": {
-            "sha256": "9dcd961f338e5395a56559228112cf6b9bc155852d19a3181993afd068acfd08"
+            "sha256": "847d2ebaec4147d0fbcfbc09cabb48bbb853d0a137ba8578b28a2ba4edeb86ad"
           }
         },
         {
@@ -230,6 +230,12 @@
           "digest": {
             "sha256": "acd4f259f9372dd58b5267001469c2b68657d708c4d2a311df71a5a171b21128"
           }
+        },
+        {
+          "uri": "evidence/runs/witness-react-boilerplate/receipt.json",
+          "digest": {
+            "sha256": "bfa48f718ee86566f120cb0bc42645b22c989a27d87c102b9c2f256d15661ed7"
+          }
         }
       ]
     },
@@ -246,19 +252,19 @@
       "byproducts": [
         {
           "path": "packages/cli/dist/cli.js",
-          "sha256": "cdeb34311216fc3a213023073f7363afbb9ba516ecd5e9d5fe35b48245d9a9b6"
+          "sha256": "945be011a9051c3464e403cee691b3d609391585de702d0e4a3f26d3a10705c3"
         },
         {
           "path": "packages/cli/dist/index.js",
-          "sha256": "5abe0b3d2f1bd34c3e74063a935a1752f3f234ceee12887e4254914b9611e17c"
+          "sha256": "305ee6c588a325ea5578c7fe7385e6822c770bf8886fb974ca4bd52bb3366337"
         },
         {
-          "path": "packages/cli/dist/verify-DEyN5nNJ.js",
-          "sha256": "89c570dad7629874fe3dd549060231617e044e9eddcaeffeefb9a651de74c0a2"
+          "path": "packages/cli/dist/verify-CfqU7qjM.js",
+          "sha256": "b3a08c5accac97e2347810db1c67e63495b07842f1facd00432612b86ed171df"
         },
         {
           "path": "packages/core/dist/index.js",
-          "sha256": "c390383e47e76fa417061e2a5fec3cf8efaef494d26e0134f525d436409bb714"
+          "sha256": "1294dc65aa0bd4ac873d00fe15e162f7f3960106e15299fcf11ede4d01d212fd"
         },
         {
           "path": "packages/experiments/dist/index.js",
@@ -286,7 +292,7 @@
         },
         {
           "path": "packages/trust/dist/index.js",
-          "sha256": "ad3b07a02fc64b4d2bf082819fc91ee87d4d2ffa8fa21b6fb34a760c18d4c77c"
+          "sha256": "b75249a042b76e0a2dcb53ac5aacb6ac73c0ea34b2ba453be4efe09a69703ff9"
         }
       ]
     }
@@ -295,6 +301,6 @@
     "slsaLevel": "not-claimed",
     "signerAuthenticity": "unknown",
     "gitProvenance": "unknown",
-    "aggregateFixtures": 12
+    "aggregateFixtures": 13
   }
 }

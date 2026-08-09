@@ -111,6 +111,16 @@
       "result": "pass",
       "receipt": "evidence/runs/react-boilerplate-v4-composed/t060-run.json",
       "digest": "52400147929220935a9ebe47a16c8dff50b5c28e9d51c930d000c99c2bdc8a21"
+    },
+    {
+      "id": "witness-react-boilerplate",
+      "framework": "react",
+      "track": "production-readiness-direct-witness-candidate",
+      "bundler": "webpack-4.30.0-to-vite-8.0.16",
+      "runtime": "node-16.20.2-to-node-24.15.0",
+      "result": "pass",
+      "receipt": "evidence/runs/witness-react-boilerplate/receipt.json",
+      "digest": "bfa48f718ee86566f120cb0bc42645b22c989a27d87c102b9c2f256d15661ed7"
     }
   ],
   "unsupported": []

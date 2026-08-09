@@ -24,6 +24,10 @@ import {
 	verifyWitnessAngularRealworldEvidence,
 } from '../../core/src/receipts/witness-angular-realworld.ts';
 import {
+	WITNESS_REACT_BOILERPLATE_RECEIPT_PATH,
+	verifyWitnessReactBoilerplateEvidence,
+} from '../../core/src/receipts/witness-react-boilerplate.ts';
+import {
 	SCRIPT_SURFACE_SCHEMA,
 	verifyScriptSurface,
 } from '../../core/src/enterprise/script-surface.ts';
@@ -599,9 +603,11 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 				? await verifyAngularRealworldV15ToV16Evidence(root)
 				: receipt.path === WITNESS_ANGULAR_REALWORLD_RECEIPT_PATH
 					? await verifyWitnessAngularRealworldEvidence(root)
-					: receipt.path === NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH
-						? await verifyNextKilledByGoogleEvidence(root, true)
-						: await verifyReceipt(path.join(root, receipt.path));
+					: receipt.path === WITNESS_REACT_BOILERPLATE_RECEIPT_PATH
+						? await verifyWitnessReactBoilerplateEvidence(root)
+						: receipt.path === NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH
+							? await verifyNextKilledByGoogleEvidence(root, true)
+							: await verifyReceipt(path.join(root, receipt.path));
 		if (
 			result.digest !== receipt.digest ||
 			result.artifacts !== receipt.artifacts ||

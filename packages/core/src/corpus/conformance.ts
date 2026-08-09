@@ -26,6 +26,12 @@ import {
 	verifyWitnessAngularRealworldEvidence,
 	witnessAngularRealworldAggregateMember,
 } from '../receipts/witness-angular-realworld.ts';
+import {
+	REACT_BOILERPLATE_CANONICAL_RECEIPT_PATH,
+	WITNESS_REACT_BOILERPLATE_RECEIPT_PATH,
+	verifyWitnessReactBoilerplateEvidence,
+	witnessReactBoilerplateAggregateMember,
+} from '../receipts/witness-react-boilerplate.ts';
 
 export const CORPUS_CONFORMANCE_SCHEMA = 'versionless.corpus-conformance.v1' as const;
 
@@ -136,6 +142,28 @@ const canonicalReceipts = [
 	},
 ] as const;
 
+const orderedPrepublicationReceipts = [
+	'evidence/runs/react-boilerplate-v4/t008-run.json',
+	'evidence/runs/angular-phonecat/t014-run.json',
+	'evidence/runs/react-boilerplate-v4-node24/t022-run.json',
+	'evidence/runs/angular-phonecat-route-resolve/t032-run.json',
+	'evidence/runs/angular-phonecat-composed/t048-run.json',
+	'evidence/runs/react-boilerplate-v4-vite8/t028-run.json',
+	'evidence/runs/angular-phonecat-vite8/t069-run.json',
+	ANGULAR_REALWORLD_V15_TO_V16_RECEIPT.path,
+	'evidence/runs/react-boilerplate-v4-data-flow/t054-run.json',
+	REACT_BOILERPLATE_CANONICAL_RECEIPT_PATH,
+] as const;
+
+function assertOrderedAggregate(
+	actual: string[],
+	expected: readonly string[],
+	label: string,
+): void {
+	if (canonicalize(actual) !== canonicalize(expected))
+		throw new Error(`${label} aggregate receipt order differs`);
+}
+
 type CanonicalReceipt = (typeof canonicalReceipts)[number];
 
 interface CorpusConformanceOptions {
@@ -167,6 +195,7 @@ export type CorpusTransactionState = Readonly<
 			kind: 'prepublication';
 			nextKilledByGoogleIntegrated: false;
 			angularRealworldWitnessIntegrated: false;
+			reactBoilerplateWitnessIntegrated: false;
 			verticals: 10;
 			sourceApplications: 3;
 			receipts: 10;
@@ -180,6 +209,7 @@ export type CorpusTransactionState = Readonly<
 			receipts: 11;
 			resolvedDependencies: 24;
 			angularRealworldWitnessIntegrated: false;
+			reactBoilerplateWitnessIntegrated: false;
 	  }
 	| {
 			kind: 'production-readiness';
@@ -189,6 +219,17 @@ export type CorpusTransactionState = Readonly<
 			sourceApplications: 4;
 			receipts: 12;
 			resolvedDependencies: 25;
+			reactBoilerplateWitnessIntegrated: false;
+	  }
+	| {
+			kind: 'react-candidate';
+			nextKilledByGoogleIntegrated: true;
+			angularRealworldWitnessIntegrated: true;
+			reactBoilerplateWitnessIntegrated: true;
+			verticals: 11;
+			sourceApplications: 4;
+			receipts: 13;
+			resolvedDependencies: 26;
 	  }
 >;
 
@@ -290,12 +331,14 @@ function assertAggregateFixture(
 export function deriveCorpusTransactionState(fixtures: unknown): CorpusTransactionState {
 	if (!Array.isArray(fixtures)) throw new Error('Aggregate fixtures must be an array');
 	const byPath = new Map<string, unknown>();
+	const orderedPaths: string[] = [];
 	for (const value of fixtures) {
 		const fixture = record(value, 'aggregate fixture');
 		const receiptPath = string(fixture.receipt, 'aggregate receipt path');
 		if (byPath.has(receiptPath))
 			throw new Error('Aggregate membership contains duplicate receipts');
 		byPath.set(receiptPath, value);
+		orderedPaths.push(receiptPath);
 	}
 	for (const expected of canonicalReceipts) {
 		const value = byPath.get(expected.path);
@@ -340,10 +383,61 @@ export function deriveCorpusTransactionState(fixtures: unknown): CorpusTransacti
 			if (
 				!sha256Pattern.test(witnessDigest) ||
 				canonicalize(witnessRecord) !==
-					canonicalize(witnessAngularRealworldAggregateMember(witnessDigest)) ||
-				byPath.size !== canonicalReceipts.length + 3
+					canonicalize(witnessAngularRealworldAggregateMember(witnessDigest))
 			)
 				throw new Error('Witness Angular RealWorld aggregate membership mismatch');
+			const react = byPath.get(WITNESS_REACT_BOILERPLATE_RECEIPT_PATH);
+			if (react) {
+				const reactRecord = record(react, 'Witness React Boilerplate aggregate fixture');
+				const reactDigest = string(
+					reactRecord.digest,
+					'Witness React Boilerplate aggregate digest',
+				);
+				if (
+					!sha256Pattern.test(reactDigest) ||
+					canonicalize(reactRecord) !==
+						canonicalize(witnessReactBoilerplateAggregateMember(reactDigest)) ||
+					byPath.size !== canonicalReceipts.length + 4 ||
+					orderedPaths.at(-1) !== WITNESS_REACT_BOILERPLATE_RECEIPT_PATH ||
+					!orderedPaths.includes(REACT_BOILERPLATE_CANONICAL_RECEIPT_PATH)
+				)
+					throw new Error('Witness React Boilerplate aggregate membership mismatch');
+				assertOrderedAggregate(
+					orderedPaths,
+					[
+						...orderedPrepublicationReceipts.slice(0, 8),
+						WITNESS_ANGULAR_REALWORLD_RECEIPT_PATH,
+						NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH,
+						...orderedPrepublicationReceipts.slice(8),
+						WITNESS_REACT_BOILERPLATE_RECEIPT_PATH,
+					],
+					'React candidate',
+				);
+				return {
+					kind: 'react-candidate',
+					nextKilledByGoogleIntegrated: true,
+					angularRealworldWitnessIntegrated: true,
+					reactBoilerplateWitnessIntegrated: true,
+					verticals: 11,
+					sourceApplications: 4,
+					receipts: 13,
+					resolvedDependencies: 26,
+				};
+			}
+			if (byPath.size !== canonicalReceipts.length + 3)
+				throw new Error(
+					'Production-readiness aggregate must contain exactly twelve receipts',
+				);
+			assertOrderedAggregate(
+				orderedPaths,
+				[
+					...orderedPrepublicationReceipts.slice(0, 8),
+					WITNESS_ANGULAR_REALWORLD_RECEIPT_PATH,
+					NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH,
+					...orderedPrepublicationReceipts.slice(8),
+				],
+				'Production-readiness',
+			);
 			return {
 				kind: 'production-readiness',
 				nextKilledByGoogleIntegrated: true,
@@ -352,16 +446,27 @@ export function deriveCorpusTransactionState(fixtures: unknown): CorpusTransacti
 				sourceApplications: 4,
 				receipts: 12,
 				resolvedDependencies: 25,
+				reactBoilerplateWitnessIntegrated: false,
 			};
 		}
 		if (byPath.size !== canonicalReceipts.length + 2)
 			throw new Error(
 				'Postintegration aggregate must contain exactly eleven canonical receipts',
 			);
+		assertOrderedAggregate(
+			orderedPaths,
+			[
+				...orderedPrepublicationReceipts.slice(0, 8),
+				NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH,
+				...orderedPrepublicationReceipts.slice(8),
+			],
+			'Postintegration',
+		);
 		return {
 			kind: 'postintegration',
 			nextKilledByGoogleIntegrated: true,
 			angularRealworldWitnessIntegrated: false,
+			reactBoilerplateWitnessIntegrated: false,
 			verticals: 11,
 			sourceApplications: 4,
 			receipts: 11,
@@ -370,10 +475,12 @@ export function deriveCorpusTransactionState(fixtures: unknown): CorpusTransacti
 	}
 	if (byPath.size !== canonicalReceipts.length + 1)
 		throw new Error('Prepublication aggregate must contain exactly ten canonical receipts');
+	assertOrderedAggregate(orderedPaths, orderedPrepublicationReceipts, 'Prepublication');
 	return {
 		kind: 'prepublication',
 		nextKilledByGoogleIntegrated: false,
 		angularRealworldWitnessIntegrated: false,
+		reactBoilerplateWitnessIntegrated: false,
 		verticals: 10,
 		sourceApplications: 3,
 		receipts: 10,
@@ -851,12 +958,16 @@ export async function analyzeCorpusConformance(
 		inspected.length +
 			1 +
 			(transaction.nextKilledByGoogleIntegrated ? 1 : 0) +
-			(transaction.angularRealworldWitnessIntegrated ? 1 : 0)
+			(transaction.angularRealworldWitnessIntegrated ? 1 : 0) +
+			(transaction.reactBoilerplateWitnessIntegrated ? 1 : 0)
 	)
 		throw new Error('Aggregate contains an unknown or extra receipt');
 	const angularRealworld = await verifyAngularRealworldV15ToV16Evidence(root);
 	const angularRealworldWitness = transaction.angularRealworldWitnessIntegrated
 		? await verifyWitnessAngularRealworldEvidence(root)
+		: null;
+	const reactBoilerplateWitness = transaction.reactBoilerplateWitnessIntegrated
+		? await verifyWitnessReactBoilerplateEvidence(root)
 		: null;
 	const nextKilledByGoogle = transaction.nextKilledByGoogleIntegrated
 		? await verifyNextKilledByGoogleEvidence(root)
@@ -1187,6 +1298,13 @@ export async function analyzeCorpusConformance(
 			certification: 'not-claimed',
 			locality: 'process-scoped-not-os-wide',
 			productionReadiness: {
+				reactLineage: {
+					ready: 0,
+					total: 4,
+					counted: false,
+					candidate:
+						reactBoilerplateWitness === null ? 'not-tested' : 'verified-pending-judge',
+				},
 				angularLineage: {
 					ready: angularRealworldWitness === null ? 0 : 1,
 					total: 4,
