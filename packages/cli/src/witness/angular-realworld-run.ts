@@ -205,7 +205,8 @@ export async function publishWitnessAngularRealworldTransaction(options: {
 	if (
 		current.kind !== 'postintegration' &&
 		current.kind !== 'production-readiness' &&
-		current.kind !== 'react-candidate'
+		current.kind !== 'react-candidate' &&
+		current.kind !== 'next-candidate'
 	)
 		throw new Error(
 			'Angular RealWorld Witness publication requires Angular and Next predecessors',
@@ -231,7 +232,11 @@ export async function publishWitnessAngularRealworldTransaction(options: {
 	}
 	const integrated = { ...aggregate, fixtures: nextFixtures };
 	const expectedKind =
-		current.kind === 'react-candidate' ? 'react-candidate' : 'production-readiness';
+		current.kind === 'next-candidate'
+			? 'next-candidate'
+			: current.kind === 'react-candidate'
+				? 'react-candidate'
+				: 'production-readiness';
 	if (deriveCorpusTransactionState(integrated.fixtures).kind !== expectedKind)
 		throw new Error('Angular RealWorld Witness staged aggregate state differs');
 	await writeFile(stagedAggregate, `${JSON.stringify(integrated, null, 2)}\n`, { flag: 'wx' });

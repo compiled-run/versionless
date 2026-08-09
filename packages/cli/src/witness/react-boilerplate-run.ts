@@ -174,7 +174,11 @@ export async function publishWitnessReactBoilerplateTransaction(options: {
 		unsupported?: unknown;
 	};
 	const current = deriveCorpusTransactionState(aggregate.fixtures);
-	if (current.kind !== 'production-readiness' && current.kind !== 'react-candidate')
+	if (
+		current.kind !== 'production-readiness' &&
+		current.kind !== 'react-candidate' &&
+		current.kind !== 'next-candidate'
+	)
 		throw new Error('React Boilerplate Witness publication requires all predecessors');
 	if (!Array.isArray(aggregate.fixtures))
 		throw new Error('React Boilerplate Witness aggregate fixtures are absent');
@@ -187,12 +191,15 @@ export async function publishWitnessReactBoilerplateTransaction(options: {
 	);
 	const nextFixtures = [...fixtures];
 	if (existingIndex >= 0) {
-		if (existingIndex !== nextFixtures.length - 1)
+		const expectedIndex =
+			current.kind === 'next-candidate' ? nextFixtures.length - 2 : nextFixtures.length - 1;
+		if (existingIndex !== expectedIndex)
 			throw new Error('React Boilerplate Witness aggregate order differs');
 		nextFixtures[existingIndex] = expected;
 	} else nextFixtures.push(expected);
 	const integrated = { ...aggregate, fixtures: nextFixtures };
-	if (deriveCorpusTransactionState(integrated.fixtures).kind !== 'react-candidate')
+	const expectedKind = current.kind === 'next-candidate' ? 'next-candidate' : 'react-candidate';
+	if (deriveCorpusTransactionState(integrated.fixtures).kind !== expectedKind)
 		throw new Error('React Boilerplate Witness staged aggregate state differs');
 	await writeFile(stagedAggregate, `${JSON.stringify(integrated, null, 2)}\n`, { flag: 'wx' });
 
@@ -217,7 +224,7 @@ export async function publishWitnessReactBoilerplateTransaction(options: {
 						fixtures?: unknown;
 					}
 				).fixtures,
-			).kind !== 'react-candidate'
+			).kind !== expectedKind
 		)
 			throw new Error('React Boilerplate Witness published transaction differs');
 		await options.verifyPublished?.();

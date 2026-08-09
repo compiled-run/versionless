@@ -121,6 +121,16 @@
       "result": "pass",
       "receipt": "evidence/runs/witness-react-boilerplate/receipt.json",
       "digest": "bfa48f718ee86566f120cb0bc42645b22c989a27d87c102b9c2f256d15661ed7"
+    },
+    {
+      "id": "witness-next-killedbygoogle",
+      "framework": "nextjs",
+      "track": "older-next-production-readiness-direct-witness-candidate",
+      "bundler": "next-12.0.10-webpack-production-static",
+      "runtime": "node-16.20.2",
+      "result": "pass",
+      "receipt": "evidence/runs/witness-next-killedbygoogle/receipt.json",
+      "digest": "da376ad77386a9f48c9be076fbe2131ebc249338df8f38f415e5830659a3f2ef"
     }
   ],
   "unsupported": []

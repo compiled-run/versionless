@@ -1,6 +1,6 @@
 {
   "schemaVersion": "versionless.trust.v1",
-  "canonicalDigest": "6f1f3fbd21177fc20c6bcc3546669d8d1cb0c60f2c0f81edcac9f057cd9bea6d",
+  "canonicalDigest": "b843e37c6388c0b2de5bd630e635110655fcc49e2f27302c5e3dbf27b18418be",
   "integrity": {
     "algorithm": "sha256",
     "authenticity": "not-established",
@@ -8,7 +8,7 @@
   },
   "deterministicCore": {
     "algorithm": "sha256",
-    "digest": "fc7f0f5f3775692c0d583f674083f376c2e2d61f3a49202f61b3f99f4fe9b761",
+    "digest": "abf4dd55764cd886eb28f62b0a08ee308bbd960e72ffc60da5baa056969a2c7d",
     "artifacts": [
       {
         "path": "dependency-graph.cdx.json",
@@ -24,11 +24,11 @@
       },
       {
         "path": "provenance.json",
-        "sha256": "a81e932e8c469d3d33a2332c92ab63d90d5c978566cfd77beceef19b7e361282"
+        "sha256": "e426be3090e3f771ad8c038b1fb02f40a6dba457ab3ac768cf5f50e32afb8fbb"
       },
       {
         "path": "matrix.json",
-        "sha256": "5431ff58716ff3bc0cd093973cd3e4a0b283364c0483d6c3c3e7e5eeecb7db08"
+        "sha256": "f3f30edfb56a869b4ba40273f05bdfa1c8b4e43aaea4827bad81d14a85e884ac"
       },
       {
         "path": "controls.json",
@@ -40,7 +40,7 @@
       },
       {
         "path": "corpus-conformance.json",
-        "sha256": "8c290274714752372d4438e6394f1e0913871189a0427d5d79bb614539869019"
+        "sha256": "750e651dbc5924f116825afecd146c118631fca48d20b7dfd9081b1c7d8e81f8"
       },
       {
         "path": "script-surface.json",
@@ -130,10 +130,16 @@
       "digest": "bfa48f718ee86566f120cb0bc42645b22c989a27d87c102b9c2f256d15661ed7",
       "artifacts": 0,
       "state": "verified"
+    },
+    {
+      "path": "evidence/runs/witness-next-killedbygoogle/receipt.json",
+      "digest": "da376ad77386a9f48c9be076fbe2131ebc249338df8f38f415e5830659a3f2ef",
+      "artifacts": 0,
+      "state": "verified"
     }
   ],
   "observation": {
-    "generatedAt": "2026-08-09T00:02:16.269Z",
+    "generatedAt": "2026-08-09T01:12:41.928Z",
     "vulnerabilityFreshness": "verified"
   },
   "derivedReport": "report.md"

@@ -58,6 +58,35 @@ export type WitnessOfflineEvidence =
 			};
 	  }
 	| { state: 'not-applicable' };
+export type WitnessNextPrerenderPayloadEvidence =
+	| {
+			state: 'exact-lane-bound-next-prerender';
+			lane: 'baseline' | 'migrated';
+			buildId: string;
+			buildIdSha256: string;
+			retainedIndexSha256: string;
+			prerenderManifestSha256: string;
+			dataRoute: string;
+			sourcePath: string;
+			stagedPath: string;
+			payload: {
+				bytes: number;
+				sha256: string;
+				keys: ['__N_SSG', 'pageProps'];
+			};
+			response: {
+				method: 'GET';
+				pathname: string;
+				query: '';
+				destination: 'empty';
+				resolvedFile: string;
+				status: 200;
+				mime: 'application/json';
+				bytes: number;
+				sha256: string;
+			};
+	  }
+	| { state: 'not-applicable' };
 export type WitnessRealAppRun = {
 	app: (typeof WITNESS_REAL_APP_NAMES)[number];
 	framework: 'react' | 'angularjs' | 'next' | 'angular';
@@ -126,6 +155,7 @@ export type WitnessRealAppRun = {
 					heroVisibility: 'genuine-hover';
 			  }
 			| { state: 'not-applicable' };
+		nextPrerenderPayload?: WitnessNextPrerenderPayloadEvidence;
 	};
 	observerFinalization: {
 		state: 'target-closed';

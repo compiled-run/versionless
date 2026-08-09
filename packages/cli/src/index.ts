@@ -21,6 +21,10 @@ export {
 	runWitnessReactBoilerplate,
 	verifyWitnessReactBoilerplate,
 } from './witness/react-boilerplate-run.ts';
+export {
+	runWitnessNextKilledByGoogle,
+	verifyWitnessNextKilledByGoogle,
+} from './witness/next-killedbygoogle-run.ts';
 export * from './witness/provenance.ts';
 export * from './framework-classify.ts';
 export * from '../../trust/src/index.ts';

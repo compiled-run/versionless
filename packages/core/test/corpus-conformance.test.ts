@@ -10,6 +10,7 @@ import {
 import { nextKilledByGoogleAggregateMember } from '../src/receipts/next-killedbygoogle.ts';
 import { witnessAngularRealworldAggregateMember } from '../src/receipts/witness-angular-realworld.ts';
 import { witnessReactBoilerplateAggregateMember } from '../src/receipts/witness-react-boilerplate.ts';
+import { witnessNextKilledByGoogleAggregateMember } from '../src/receipts/witness-next-killedbygoogle.ts';
 import { receiptDigest, sha256 } from '../src/receipts/canonicalize.ts';
 import { renderReceipt } from '../src/receipts/render.ts';
 import type { MigrationReceipt } from '../src/receipts/schema.ts';
@@ -31,11 +32,19 @@ function prepublicationFixtures(fixtures: Array<Record<string, unknown>>) {
 		const witness = reactMatches[0]!;
 		expect(witness).toEqual(witnessReactBoilerplateAggregateMember(String(witness.digest)));
 	} else expect(reactMatches).toEqual([]);
+	const nextWitnessMatches = fixtures.filter(
+		(fixture) => fixture.id === 'witness-next-killedbygoogle',
+	);
+	if (nextWitnessMatches.length === 1) {
+		const witness = nextWitnessMatches[0]!;
+		expect(witness).toEqual(witnessNextKilledByGoogleAggregateMember(String(witness.digest)));
+	} else expect(nextWitnessMatches).toEqual([]);
 	return fixtures.filter(
 		(fixture) =>
 			fixture.id !== expected.id &&
 			fixture.id !== 'witness-angular-realworld' &&
-			fixture.id !== 'witness-react-boilerplate',
+			fixture.id !== 'witness-react-boilerplate' &&
+			fixture.id !== 'witness-next-killedbygoogle',
 	);
 }
 
@@ -257,6 +266,7 @@ describe('canonical corpus conformance', () => {
 			nextKilledByGoogleIntegrated: false,
 			angularRealworldWitnessIntegrated: false,
 			reactBoilerplateWitnessIntegrated: false,
+			nextKilledByGoogleWitnessIntegrated: false,
 			verticals: 10,
 			sourceApplications: 3,
 			receipts: 10,
@@ -269,6 +279,7 @@ describe('canonical corpus conformance', () => {
 			nextKilledByGoogleIntegrated: true,
 			angularRealworldWitnessIntegrated: false,
 			reactBoilerplateWitnessIntegrated: false,
+			nextKilledByGoogleWitnessIntegrated: false,
 			verticals: 11,
 			sourceApplications: 4,
 			receipts: 11,
@@ -281,6 +292,7 @@ describe('canonical corpus conformance', () => {
 			nextKilledByGoogleIntegrated: true,
 			angularRealworldWitnessIntegrated: true,
 			reactBoilerplateWitnessIntegrated: false,
+			nextKilledByGoogleWitnessIntegrated: false,
 			verticals: 11,
 			sourceApplications: 4,
 			receipts: 12,
@@ -292,10 +304,25 @@ describe('canonical corpus conformance', () => {
 			nextKilledByGoogleIntegrated: true,
 			angularRealworldWitnessIntegrated: true,
 			reactBoilerplateWitnessIntegrated: true,
+			nextKilledByGoogleWitnessIntegrated: false,
 			verticals: 11,
 			sourceApplications: 4,
 			receipts: 13,
 			resolvedDependencies: 26,
+		});
+		const nextWitnessMember = witnessNextKilledByGoogleAggregateMember('7'.repeat(64));
+		expect(
+			deriveCorpusTransactionState([...readiness, reactMember, nextWitnessMember]),
+		).toEqual({
+			kind: 'next-candidate',
+			nextKilledByGoogleIntegrated: true,
+			angularRealworldWitnessIntegrated: true,
+			reactBoilerplateWitnessIntegrated: true,
+			nextKilledByGoogleWitnessIntegrated: true,
+			verticals: 11,
+			sourceApplications: 4,
+			receipts: 14,
+			resolvedDependencies: 27,
 		});
 		for (const fixtures of [
 			[...before, before[0]],
@@ -323,6 +350,9 @@ describe('canonical corpus conformance', () => {
 			[reactMember, ...readiness],
 			[...readiness, { ...reactMember, framework: 'preact' }],
 			[...readiness, reactMember, reactMember],
+			[nextWitnessMember, ...readiness, reactMember],
+			[...readiness, reactMember, { ...nextWitnessMember, digest: 'A'.repeat(64) }],
+			[...readiness, reactMember, nextWitnessMember, nextWitnessMember],
 		])
 			expect(() => deriveCorpusTransactionState(fixtures)).toThrow();
 	});

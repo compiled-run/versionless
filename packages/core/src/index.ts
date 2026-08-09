@@ -17,6 +17,7 @@ export * from './receipts/next-killedbygoogle.ts';
 export * from './receipts/witness-real-app.ts';
 export * from './receipts/witness-angular-realworld.ts';
 export * from './receipts/witness-react-boilerplate.ts';
+export * from './receipts/witness-next-killedbygoogle.ts';
 export * from './migrations/angular-standalone-component.ts';
 export * from './bundlers/vite8-adapter.ts';
 export * from './analysis/direct-dom-access.ts';

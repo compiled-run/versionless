@@ -7,6 +7,7 @@ import {
 	nextKilledByGoogleAggregateMember,
 	witnessAngularRealworldAggregateMember,
 	witnessReactBoilerplateAggregateMember,
+	witnessNextKilledByGoogleAggregateMember,
 } from '../../core/src/index.ts';
 import {
 	integrateNextKilledByGoogleAggregate,
@@ -31,13 +32,22 @@ describe('Killed by Google integration', () => {
 		const react = fixtures.filter((fixture) => fixture.id === 'witness-react-boilerplate');
 		expect(react).toHaveLength(1);
 		expect(react[0]).toEqual(witnessReactBoilerplateAggregateMember(String(react[0]!.digest)));
+		const nextWitness = fixtures.filter(
+			(fixture) => fixture.id === 'witness-next-killedbygoogle',
+		);
+		if (nextWitness.length === 1)
+			expect(nextWitness[0]).toEqual(
+				witnessNextKilledByGoogleAggregateMember(String(nextWitness[0]!.digest)),
+			);
+		else expect(nextWitness).toEqual([]);
 		return {
 			...structuredClone(aggregate),
 			fixtures: fixtures.filter(
 				(fixture) =>
 					fixture.id !== 'next-killedbygoogle-derived-state-to-memo' &&
 					fixture.id !== 'witness-angular-realworld' &&
-					fixture.id !== 'witness-react-boilerplate',
+					fixture.id !== 'witness-react-boilerplate' &&
+					fixture.id !== 'witness-next-killedbygoogle',
 			),
 		};
 	};

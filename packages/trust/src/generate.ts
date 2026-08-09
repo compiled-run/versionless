@@ -26,6 +26,10 @@ import {
 	WITNESS_REACT_BOILERPLATE_RECEIPT_PATH,
 	verifyWitnessReactBoilerplateEvidence,
 } from '../../core/src/receipts/witness-react-boilerplate.ts';
+import {
+	WITNESS_NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH,
+	verifyWitnessNextKilledByGoogleEvidence,
+} from '../../core/src/receipts/witness-next-killedbygoogle.ts';
 import { verifyScriptSurface } from '../../core/src/enterprise/script-surface.ts';
 import {
 	parseRuntimeObservationConfig,
@@ -103,6 +107,10 @@ const WITNESS_ANGULAR_REALWORLD_RECEIPT = {
 } as const;
 const WITNESS_REACT_BOILERPLATE_RECEIPT = {
 	path: WITNESS_REACT_BOILERPLATE_RECEIPT_PATH,
+	digest: null,
+} as const;
+const WITNESS_NEXT_KILLED_BY_GOOGLE_RECEIPT = {
+	path: WITNESS_NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH,
 	digest: null,
 } as const;
 export const NPM_LOCK_ACQUISITION_PREFLIGHT = {
@@ -971,6 +979,7 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 	const hasNextKilledByGoogleReceipt = transaction.nextKilledByGoogleIntegrated;
 	const hasWitnessAngularRealworldReceipt = transaction.angularRealworldWitnessIntegrated;
 	const hasWitnessReactBoilerplateReceipt = transaction.reactBoilerplateWitnessIntegrated;
+	const hasWitnessNextKilledByGoogleReceipt = transaction.nextKilledByGoogleWitnessIntegrated;
 	const receipts = [
 		...PRESERVED_RECEIPTS,
 		...(hasMaintainedReceipt ? [MAINTAINED_RECEIPT] : []),
@@ -984,6 +993,7 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 		...(hasNextKilledByGoogleReceipt ? [NEXT_KILLED_BY_GOOGLE_RECEIPT] : []),
 		...(hasWitnessAngularRealworldReceipt ? [WITNESS_ANGULAR_REALWORLD_RECEIPT] : []),
 		...(hasWitnessReactBoilerplateReceipt ? [WITNESS_REACT_BOILERPLATE_RECEIPT] : []),
+		...(hasWitnessNextKilledByGoogleReceipt ? [WITNESS_NEXT_KILLED_BY_GOOGLE_RECEIPT] : []),
 	];
 	if (receipts.length !== transaction.receipts)
 		throw new Error('Aggregate evidence does not preserve the required receipts');
@@ -996,9 +1006,11 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 					? await verifyWitnessAngularRealworldEvidence(root)
 					: expected.path === WITNESS_REACT_BOILERPLATE_RECEIPT.path
 						? await verifyWitnessReactBoilerplateEvidence(root)
-						: expected.path === NEXT_KILLED_BY_GOOGLE_RECEIPT.path
-							? await verifyNextKilledByGoogleEvidence(root, true)
-							: await verifyReceipt(path.join(root, expected.path));
+						: expected.path === WITNESS_NEXT_KILLED_BY_GOOGLE_RECEIPT.path
+							? await verifyWitnessNextKilledByGoogleEvidence(root)
+							: expected.path === NEXT_KILLED_BY_GOOGLE_RECEIPT.path
+								? await verifyNextKilledByGoogleEvidence(root, true)
+								: await verifyReceipt(path.join(root, expected.path));
 		const aggregateFixture = aggregateFixtures.find(
 			(value) => asRecord(value, 'aggregate fixture').receipt === expected.path,
 		);

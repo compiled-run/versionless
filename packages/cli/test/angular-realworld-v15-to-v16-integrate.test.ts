@@ -26,7 +26,10 @@ describe('Angular RealWorld v15-to-v16 integration', () => {
 			await readFile(path.join(root, 'evidence/runs/aggregate.json'), 'utf8'),
 		) as Record<string, unknown>;
 		const currentFixtures = current.fixtures as Array<Record<string, unknown>>;
-		expect(currentFixtures).toHaveLength(13);
+		const hasNextWitness = currentFixtures.some(
+			(item) => item.id === 'witness-next-killedbygoogle',
+		);
+		expect(currentFixtures).toHaveLength(hasNextWitness ? 14 : 13);
 		expect(canonicalize(integrateAngularRealworldAggregate(current))).toBe(
 			canonicalize(current),
 		);
@@ -34,6 +37,9 @@ describe('Angular RealWorld v15-to-v16 integration', () => {
 		productionReadiness.fixtures = (
 			productionReadiness.fixtures as Array<Record<string, unknown>>
 		).filter((item) => item.id !== 'witness-react-boilerplate');
+		productionReadiness.fixtures = (
+			productionReadiness.fixtures as Array<Record<string, unknown>>
+		).filter((item) => item.id !== 'witness-next-killedbygoogle');
 		expect(productionReadiness.fixtures as Array<Record<string, unknown>>).toHaveLength(12);
 		const first = integrateAngularRealworldAggregate(productionReadiness);
 		const second = integrateAngularRealworldAggregate(first);

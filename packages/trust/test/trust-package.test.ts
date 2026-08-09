@@ -13,6 +13,10 @@ import {
 	witnessReactBoilerplateAggregateMember,
 } from '../../core/src/receipts/witness-react-boilerplate.ts';
 import {
+	verifyWitnessNextKilledByGoogleEvidence,
+	witnessNextKilledByGoogleAggregateMember,
+} from '../../core/src/receipts/witness-next-killedbygoogle.ts';
+import {
 	generateTrustPackage,
 	licenseInventory,
 	NPM_LOCK_ACQUISITION_PREFLIGHT,
@@ -556,6 +560,9 @@ snapshots:
 		const verifiedReact = transaction.reactBoilerplateWitnessIntegrated
 			? await verifyWitnessReactBoilerplateEvidence(root)
 			: null;
+		const verifiedNextWitness = transaction.nextKilledByGoogleWitnessIntegrated
+			? await verifyWitnessNextKilledByGoogleEvidence(root)
+			: null;
 		expect(
 			aggregate.fixtures.filter((item) => item.receipt === expectedWitnessMember.receipt),
 		).toEqual([expectedWitnessMember]);
@@ -566,6 +573,14 @@ snapshots:
 			expect(
 				aggregate.fixtures.filter((item) => item.receipt === expectedReactMember.receipt),
 			).toEqual([expectedReactMember]);
+		}
+		if (verifiedNextWitness !== null) {
+			const expectedNextWitness = witnessNextKilledByGoogleAggregateMember(
+				verifiedNextWitness.digest,
+			);
+			expect(
+				aggregate.fixtures.filter((item) => item.receipt === expectedNextWitness.receipt),
+			).toEqual([expectedNextWitness]);
 		}
 		const fixture = await setup();
 		try {
@@ -615,6 +630,23 @@ snapshots:
 								path: 'evidence/runs/witness-react-boilerplate/receipt.json',
 								digest: verifiedReact.digest,
 								artifacts: verifiedReact.artifacts,
+								state: 'verified',
+							},
+						],
+			);
+			expect(
+				first.receipts.filter(
+					(item) =>
+						item.path === 'evidence/runs/witness-next-killedbygoogle/receipt.json',
+				),
+			).toEqual(
+				verifiedNextWitness === null
+					? []
+					: [
+							{
+								path: 'evidence/runs/witness-next-killedbygoogle/receipt.json',
+								digest: verifiedNextWitness.digest,
+								artifacts: verifiedNextWitness.artifacts,
 								state: 'verified',
 							},
 						],
@@ -708,6 +740,20 @@ snapshots:
 							{
 								uri: 'evidence/runs/witness-react-boilerplate/receipt.json',
 								digest: { sha256: verifiedReact.digest },
+							},
+						],
+			);
+			expect(
+				provenance.predicate.buildDefinition.resolvedDependencies.filter(
+					(item) => item.uri === 'evidence/runs/witness-next-killedbygoogle/receipt.json',
+				),
+			).toEqual(
+				verifiedNextWitness === null
+					? []
+					: [
+							{
+								uri: 'evidence/runs/witness-next-killedbygoogle/receipt.json',
+								digest: { sha256: verifiedNextWitness.digest },
 							},
 						],
 			);

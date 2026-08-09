@@ -32,6 +32,11 @@ import {
 	verifyWitnessReactBoilerplateEvidence,
 	witnessReactBoilerplateAggregateMember,
 } from '../receipts/witness-react-boilerplate.ts';
+import {
+	WITNESS_NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH,
+	verifyWitnessNextKilledByGoogleEvidence,
+	witnessNextKilledByGoogleAggregateMember,
+} from '../receipts/witness-next-killedbygoogle.ts';
 
 export const CORPUS_CONFORMANCE_SCHEMA = 'versionless.corpus-conformance.v1' as const;
 
@@ -196,6 +201,7 @@ export type CorpusTransactionState = Readonly<
 			nextKilledByGoogleIntegrated: false;
 			angularRealworldWitnessIntegrated: false;
 			reactBoilerplateWitnessIntegrated: false;
+			nextKilledByGoogleWitnessIntegrated: false;
 			verticals: 10;
 			sourceApplications: 3;
 			receipts: 10;
@@ -210,6 +216,7 @@ export type CorpusTransactionState = Readonly<
 			resolvedDependencies: 24;
 			angularRealworldWitnessIntegrated: false;
 			reactBoilerplateWitnessIntegrated: false;
+			nextKilledByGoogleWitnessIntegrated: false;
 	  }
 	| {
 			kind: 'production-readiness';
@@ -220,6 +227,7 @@ export type CorpusTransactionState = Readonly<
 			receipts: 12;
 			resolvedDependencies: 25;
 			reactBoilerplateWitnessIntegrated: false;
+			nextKilledByGoogleWitnessIntegrated: false;
 	  }
 	| {
 			kind: 'react-candidate';
@@ -230,6 +238,18 @@ export type CorpusTransactionState = Readonly<
 			sourceApplications: 4;
 			receipts: 13;
 			resolvedDependencies: 26;
+			nextKilledByGoogleWitnessIntegrated: false;
+	  }
+	| {
+			kind: 'next-candidate';
+			nextKilledByGoogleIntegrated: true;
+			angularRealworldWitnessIntegrated: true;
+			reactBoilerplateWitnessIntegrated: true;
+			nextKilledByGoogleWitnessIntegrated: true;
+			verticals: 11;
+			sourceApplications: 4;
+			receipts: 14;
+			resolvedDependencies: 27;
 	  }
 >;
 
@@ -396,7 +416,55 @@ export function deriveCorpusTransactionState(fixtures: unknown): CorpusTransacti
 				if (
 					!sha256Pattern.test(reactDigest) ||
 					canonicalize(reactRecord) !==
-						canonicalize(witnessReactBoilerplateAggregateMember(reactDigest)) ||
+						canonicalize(witnessReactBoilerplateAggregateMember(reactDigest))
+				)
+					throw new Error('Witness React Boilerplate aggregate membership mismatch');
+				const nextWitness = byPath.get(WITNESS_NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH);
+				if (nextWitness) {
+					const nextWitnessRecord = record(
+						nextWitness,
+						'Witness Next KilledByGoogle aggregate fixture',
+					);
+					const nextWitnessDigest = string(
+						nextWitnessRecord.digest,
+						'Witness Next KilledByGoogle aggregate digest',
+					);
+					if (
+						!sha256Pattern.test(nextWitnessDigest) ||
+						canonicalize(nextWitnessRecord) !==
+							canonicalize(
+								witnessNextKilledByGoogleAggregateMember(nextWitnessDigest),
+							) ||
+						byPath.size !== canonicalReceipts.length + 5
+					)
+						throw new Error(
+							'Witness Next KilledByGoogle aggregate membership mismatch',
+						);
+					assertOrderedAggregate(
+						orderedPaths,
+						[
+							...orderedPrepublicationReceipts.slice(0, 8),
+							WITNESS_ANGULAR_REALWORLD_RECEIPT_PATH,
+							NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH,
+							...orderedPrepublicationReceipts.slice(8),
+							WITNESS_REACT_BOILERPLATE_RECEIPT_PATH,
+							WITNESS_NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH,
+						],
+						'Next candidate',
+					);
+					return {
+						kind: 'next-candidate',
+						nextKilledByGoogleIntegrated: true,
+						angularRealworldWitnessIntegrated: true,
+						reactBoilerplateWitnessIntegrated: true,
+						nextKilledByGoogleWitnessIntegrated: true,
+						verticals: 11,
+						sourceApplications: 4,
+						receipts: 14,
+						resolvedDependencies: 27,
+					};
+				}
+				if (
 					byPath.size !== canonicalReceipts.length + 4 ||
 					orderedPaths.at(-1) !== WITNESS_REACT_BOILERPLATE_RECEIPT_PATH ||
 					!orderedPaths.includes(REACT_BOILERPLATE_CANONICAL_RECEIPT_PATH)
@@ -422,6 +490,7 @@ export function deriveCorpusTransactionState(fixtures: unknown): CorpusTransacti
 					sourceApplications: 4,
 					receipts: 13,
 					resolvedDependencies: 26,
+					nextKilledByGoogleWitnessIntegrated: false,
 				};
 			}
 			if (byPath.size !== canonicalReceipts.length + 3)
@@ -447,6 +516,7 @@ export function deriveCorpusTransactionState(fixtures: unknown): CorpusTransacti
 				receipts: 12,
 				resolvedDependencies: 25,
 				reactBoilerplateWitnessIntegrated: false,
+				nextKilledByGoogleWitnessIntegrated: false,
 			};
 		}
 		if (byPath.size !== canonicalReceipts.length + 2)
@@ -467,6 +537,7 @@ export function deriveCorpusTransactionState(fixtures: unknown): CorpusTransacti
 			nextKilledByGoogleIntegrated: true,
 			angularRealworldWitnessIntegrated: false,
 			reactBoilerplateWitnessIntegrated: false,
+			nextKilledByGoogleWitnessIntegrated: false,
 			verticals: 11,
 			sourceApplications: 4,
 			receipts: 11,
@@ -481,6 +552,7 @@ export function deriveCorpusTransactionState(fixtures: unknown): CorpusTransacti
 		nextKilledByGoogleIntegrated: false,
 		angularRealworldWitnessIntegrated: false,
 		reactBoilerplateWitnessIntegrated: false,
+		nextKilledByGoogleWitnessIntegrated: false,
 		verticals: 10,
 		sourceApplications: 3,
 		receipts: 10,
@@ -959,7 +1031,8 @@ export async function analyzeCorpusConformance(
 			1 +
 			(transaction.nextKilledByGoogleIntegrated ? 1 : 0) +
 			(transaction.angularRealworldWitnessIntegrated ? 1 : 0) +
-			(transaction.reactBoilerplateWitnessIntegrated ? 1 : 0)
+			(transaction.reactBoilerplateWitnessIntegrated ? 1 : 0) +
+			(transaction.nextKilledByGoogleWitnessIntegrated ? 1 : 0)
 	)
 		throw new Error('Aggregate contains an unknown or extra receipt');
 	const angularRealworld = await verifyAngularRealworldV15ToV16Evidence(root);
@@ -968,6 +1041,9 @@ export async function analyzeCorpusConformance(
 		: null;
 	const reactBoilerplateWitness = transaction.reactBoilerplateWitnessIntegrated
 		? await verifyWitnessReactBoilerplateEvidence(root)
+		: null;
+	const nextKilledByGoogleWitness = transaction.nextKilledByGoogleWitnessIntegrated
+		? await verifyWitnessNextKilledByGoogleEvidence(root)
 		: null;
 	const nextKilledByGoogle = transaction.nextKilledByGoogleIntegrated
 		? await verifyNextKilledByGoogleEvidence(root)
@@ -1299,15 +1375,23 @@ export async function analyzeCorpusConformance(
 			locality: 'process-scoped-not-os-wide',
 			productionReadiness: {
 				reactLineage: {
-					ready: 0,
+					ready: reactBoilerplateWitness === null ? 0 : 1,
 					total: 4,
-					counted: false,
-					candidate:
-						reactBoilerplateWitness === null ? 'not-tested' : 'verified-pending-judge',
+					counted: reactBoilerplateWitness !== null,
+					candidate: reactBoilerplateWitness === null ? 'not-tested' : 'judge-approved',
 				},
 				angularLineage: {
 					ready: angularRealworldWitness === null ? 0 : 1,
 					total: 4,
+				},
+				olderNext: {
+					ready: 0,
+					total: 4,
+					counted: false,
+					candidate:
+						nextKilledByGoogleWitness === null
+							? 'not-tested'
+							: 'verified-pending-judge',
 				},
 				harness: { ready: 0, total: 4 },
 				phonecat: 'unsupported-visible-transition-not-counted',

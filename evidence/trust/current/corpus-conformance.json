@@ -869,14 +869,20 @@
     "locality": "process-scoped-not-os-wide",
     "productionReadiness": {
       "reactLineage": {
-        "ready": 0,
+        "ready": 1,
         "total": 4,
-        "counted": false,
-        "candidate": "verified-pending-judge"
+        "counted": true,
+        "candidate": "judge-approved"
       },
       "angularLineage": {
         "ready": 1,
         "total": 4
+      },
+      "olderNext": {
+        "ready": 0,
+        "total": 4,
+        "counted": false,
+        "candidate": "verified-pending-judge"
       },
       "harness": {
         "ready": 0,
@@ -887,6 +893,6 @@
   },
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "c8dd53a77088eb242bb76fb68ea1e504ce3aa66025aa9e732fdf36c7f2aa8082"
+    "canonicalDigest": "e74c36bce753d7f0c0193fffb562ae3803458c4682426021b9a26a166eb8c032"
   }
 }

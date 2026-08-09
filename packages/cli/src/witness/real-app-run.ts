@@ -22,6 +22,7 @@ import {
 	WITNESS_REAL_APP_SCHEMA,
 	witnessRealAppDigest,
 	type WitnessMutationProof,
+	type WitnessNextPrerenderPayloadEvidence,
 	type WitnessOfflineEvidence,
 	type WitnessRealAppReceipt,
 	type WitnessRealAppRun,
@@ -229,6 +230,10 @@ type LegacyMainPrecacheResponse = {
 	urlPath: string;
 	source: 'production-static-origin';
 };
+type NextPrerenderPayloadInput = Omit<
+	Extract<WitnessNextPrerenderPayloadEvidence, { state: 'exact-lane-bound-next-prerender' }>,
+	'response'
+>;
 
 const CONTENT_TYPES: Record<string, string> = {
 	'.css': 'text/css',
@@ -527,6 +532,52 @@ async function exactLegacyMainPrecacheResponses(
 		});
 	}
 	return responses;
+}
+
+function exactNextPrerenderPayloadEvidence(
+	laneRoot: string,
+	ledger: StaticResponseLedgerEntry[],
+	input: NextPrerenderPayloadInput,
+): Extract<WitnessNextPrerenderPayloadEvidence, { state: 'exact-lane-bound-next-prerender' }> {
+	const failed = ledger.filter((entry) => entry.status !== 200);
+	if (failed.length !== 0)
+		throw new Error(
+			`KilledByGoogle local production-static response failed: ${canonicalize(failed)}`,
+		);
+	const matches = ledger.filter(
+		(entry) => entry.pathname === input.dataRoute && entry.query === '',
+	);
+	if (matches.length !== 1)
+		throw new Error(
+			`KilledByGoogle prerender response cardinality differs: ${input.dataRoute}`,
+		);
+	const [entry] = matches;
+	const stagedFile = join(laneRoot, input.stagedPath);
+	if (
+		entry === undefined ||
+		entry.method !== 'GET' ||
+		entry.destination !== 'empty' ||
+		entry.resolvedFile !== input.stagedPath ||
+		entry.status !== 200 ||
+		entry.mime !== 'application/json' ||
+		entry.bytes !== input.payload.bytes ||
+		entry.sha256 !== input.payload.sha256
+	)
+		throw new Error(`KilledByGoogle prerender response differs: ${input.dataRoute}`);
+	return {
+		...input,
+		response: {
+			method: 'GET',
+			pathname: entry.pathname,
+			query: '',
+			destination: 'empty',
+			resolvedFile: relative(laneRoot, stagedFile),
+			status: 200,
+			mime: 'application/json',
+			bytes: entry.bytes,
+			sha256: entry.sha256,
+		},
+	};
 }
 
 async function expectedReactTelemetry(
@@ -891,14 +942,19 @@ const apps: AppSpec[] = [
 		journey: async (context, page) => {
 			const filter = '#react-select-filter-select-input';
 			await page.trackEvents('click', 'input', 'change', 'keydown', 'mouseover');
+			await context.expect.page.count(page, 'ul > li h2', 263);
 			await page.type('#searchBox', 'Google+');
 			await context.expect.page.bodyText(page, { contains: 'Google+' });
-			await page.press('#searchBox', 'a', { modifiers: ['Control'] });
+			await context.expect.page.count(page, 'ul > li h2', 1);
+			await page.press('#searchBox', 'a', {
+				modifiers: process.platform === 'darwin' ? ['Meta'] : ['Control'],
+			});
 			await page.press('#searchBox', 'Backspace');
 			await page.click(filter);
 			await page.type(filter, 'Apps');
 			await page.press(filter, 'Enter');
 			await context.expect.page.bodyText(page, { contains: 'Apps (50)' });
+			await context.expect.page.count(page, 'ul > li h2', 50);
 			await page.hover('ul > li h2');
 			await page.scroll(null, { y: 500 });
 			await context.expect.page.outcome(page, {
@@ -1166,7 +1222,11 @@ async function executeRun(
 	app: AppSpec,
 	lane: Lane,
 	pass: 1 | 2,
-	options: { laneRoot?: string; receiptRoot?: string } = {},
+	options: {
+		laneRoot?: string;
+		receiptRoot?: string;
+		nextPrerenderPayload?: NextPrerenderPayloadInput;
+	} = {},
 ): Promise<WitnessRealAppRun> {
 	const laneRoot = options.laneRoot ?? join(stageRoot, 'lanes', app.app, lane);
 	const receiptDir = join(
@@ -1274,6 +1334,14 @@ async function executeRun(
 					),
 				}
 			: { state: 'not-applicable' as const };
+	const nextPrerenderPayload =
+		options.nextPrerenderPayload === undefined
+			? ({ state: 'not-applicable' } as const)
+			: exactNextPrerenderPayloadEvidence(
+					laneRoot,
+					staticServer.ledger(),
+					options.nextPrerenderPayload,
+				);
 	assertHmrFree(pageRecord);
 	const witnessRecord = normalizedRecord(pageRecord);
 	const interactions = witnessRecord.interactions;
@@ -1337,6 +1405,7 @@ async function executeRun(
 							transition: 'genuine-ng-click' as const,
 							heroVisibility: 'genuine-hover' as const,
 						},
+			nextPrerenderPayload,
 		},
 		observerFinalization,
 		successfulNonLoopback: host.locality().successfulNonLoopback,
@@ -1368,6 +1437,18 @@ export async function executeReactBoilerplateWitnessRun(options: {
 }): Promise<WitnessRealAppRun> {
 	const app = apps.find((candidate) => candidate.app === 'react-boilerplate');
 	if (app === undefined) throw new Error('React Boilerplate Witness specification is absent');
+	return await executeRun(app, options.lane, options.pass, options);
+}
+
+export async function executeNextKilledByGoogleWitnessRun(options: {
+	lane: Lane;
+	pass: 1 | 2;
+	laneRoot: string;
+	receiptRoot: string;
+	nextPrerenderPayload: NextPrerenderPayloadInput;
+}): Promise<WitnessRealAppRun> {
+	const app = apps.find((candidate) => candidate.app === 'killedbygoogle');
+	if (app === undefined) throw new Error('KilledByGoogle Witness specification is absent');
 	return await executeRun(app, options.lane, options.pass, options);
 }
 

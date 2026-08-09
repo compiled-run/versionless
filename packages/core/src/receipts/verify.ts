@@ -11,6 +11,10 @@ import {
 	WITNESS_REACT_BOILERPLATE_SCHEMA,
 	verifyWitnessReactBoilerplateEvidence,
 } from './witness-react-boilerplate.ts';
+import {
+	WITNESS_NEXT_KILLED_BY_GOOGLE_SCHEMA,
+	verifyWitnessNextKilledByGoogleEvidence,
+} from './witness-next-killedbygoogle.ts';
 
 function markdownPath(jsonPath: string): string {
 	return jsonPath.endsWith('.json')
@@ -59,6 +63,11 @@ export async function verifyReceipt(
 	if (raw.schemaVersion === WITNESS_REACT_BOILERPLATE_SCHEMA) {
 		const root = explicitRoot ?? path.resolve(path.dirname(absolute), '../../..');
 		const verified = await verifyWitnessReactBoilerplateEvidence(root);
+		return { valid: true, digest: verified.digest, artifacts: verified.artifacts };
+	}
+	if (raw.schemaVersion === WITNESS_NEXT_KILLED_BY_GOOGLE_SCHEMA) {
+		const root = explicitRoot ?? path.resolve(path.dirname(absolute), '../../..');
+		const verified = await verifyWitnessNextKilledByGoogleEvidence(root);
 		return { valid: true, digest: verified.digest, artifacts: verified.artifacts };
 	}
 	const receipt = parseMigrationReceipt(raw);
