@@ -1,6 +1,6 @@
 {
   "schemaVersion": "versionless.trust.v1",
-  "canonicalDigest": "97bac906905b1f12220bf700949b21684901cf872a3cdadcad0ed588856466ad",
+  "canonicalDigest": "538164fd79b7403b20cbee70a79d97dd62cef1d9bb55a38e4f741e5c6dcefbaf",
   "integrity": {
     "algorithm": "sha256",
     "authenticity": "not-established",
@@ -8,7 +8,7 @@
   },
   "deterministicCore": {
     "algorithm": "sha256",
-    "digest": "2e105b1dd044a4e49500d8dc4a946c29546a9df04602ce78c58f313812e8d649",
+    "digest": "f2720d8de4ac3100a8555cd9096d54a17ea319d7e63802e5c8a343a43ca87f99",
     "artifacts": [
       {
         "path": "dependency-graph.cdx.json",
@@ -24,7 +24,7 @@
       },
       {
         "path": "provenance.json",
-        "sha256": "0995717b9b77244995b09889b625e7546efd15b78d0e0d84af2013273468e5fa"
+        "sha256": "8527af5252a3edb418a743d3c682096a7db533c0a3300e047baa3d6300129d83"
       },
       {
         "path": "matrix.json",
@@ -151,7 +151,7 @@
     }
   ],
   "observation": {
-    "generatedAt": "2026-08-10T21:05:13.174Z",
+    "generatedAt": "2026-08-10T21:17:58.917Z",
     "vulnerabilityFreshness": "verified"
   },
   "derivedReport": "report.md"

@@ -1,8 +1,8 @@
 # Versionless project trust package
 
-- Canonical SHA-256: `97bac906905b1f12220bf700949b21684901cf872a3cdadcad0ed588856466ad`
-- Deterministic core: `2e105b1dd044a4e49500d8dc4a946c29546a9df04602ce78c58f313812e8d649`
-- Generated observation: `2026-08-10T21:05:13.174Z`
+- Canonical SHA-256: `538164fd79b7403b20cbee70a79d97dd62cef1d9bb55a38e4f741e5c6dcefbaf`
+- Deterministic core: `f2720d8de4ac3100a8555cd9096d54a17ea319d7e63802e5c8a343a43ca87f99`
+- Generated observation: `2026-08-10T21:17:58.917Z`
 - Vulnerability input freshness: **verified** (seven-day maximum age)
 - Integrity: **hash-only; authenticity is not established**
 - Assurance: **this package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation**
