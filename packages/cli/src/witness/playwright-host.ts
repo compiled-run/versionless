@@ -49,6 +49,7 @@ export type WitnessTransportRequest = {
 	protocol: string;
 	host: string;
 	pathname: string;
+	search: string;
 	method: string;
 	resourceType: string;
 };
@@ -445,6 +446,7 @@ export function createPlaywrightWitnessHost(options: {
 				protocol: parsed.protocol ?? '',
 				host: parsed.host ?? '',
 				pathname: parsed.pathname,
+				search: parsed.search ?? '',
 				method: request.method(),
 				resourceType: request.resourceType(),
 			})) ?? {

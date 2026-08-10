@@ -26,6 +26,7 @@ const request = (pathname: string) => ({
 	protocol: 'https:',
 	host: 'api.realworld.io',
 	pathname,
+	search: '',
 	method: 'GET',
 	resourceType: 'xhr',
 });

@@ -10,8 +10,9 @@ import {
 	rm,
 	writeFile,
 } from 'node:fs/promises';
-import { createServer, type Server } from 'node:http';
+import { createServer, type IncomingMessage, type Server } from 'node:http';
 import type { AddressInfo } from 'node:net';
+import type { Duplex } from 'node:stream';
 import { dirname, extname, isAbsolute, join, normalize, relative, resolve } from 'pathe';
 import { box, runBoxes, type BoxContext, type PageHandle, type PageRecord } from '@async/witness';
 import { joinURL, parseURL, stringifyParsedURL } from 'ufo';
@@ -322,6 +323,17 @@ async function readStaticFile(file: string): Promise<{ file: string; body: Buffe
 	return { file: resolved, body: await readFile(resolved) };
 }
 
+export type StaticServerApiResponse = {
+	status: number;
+	contentType: string;
+	body: Buffer;
+};
+export type StaticServerApiRequest = {
+	method: string;
+	pathname: string;
+	search: string;
+};
+
 export async function startStaticServer(
 	staticRoot: string,
 	options: {
@@ -329,6 +341,12 @@ export async function startStaticServer(
 		diagnosticEvent?: (
 			event: Omit<WitnessDifferentialEvent, 'sequence' | 'timestampMs'>,
 		) => void;
+		api?: (request: StaticServerApiRequest) => Promise<StaticServerApiResponse | null>;
+		upgrade?: (
+			request: IncomingMessage,
+			socket: Duplex,
+			head: Buffer,
+		) => void | Promise<void>;
 	} = {},
 ): Promise<{
 	origin: string;
@@ -400,6 +418,17 @@ export async function startStaticServer(
 				});
 				response.end(body);
 			};
+			if (options.api !== undefined) {
+				const fulfilled = await options.api({
+					method: request.method ?? 'GET',
+					pathname,
+					search: parsedRequest.search ?? '',
+				});
+				if (fulfilled !== null) {
+					complete(fulfilled.status, fulfilled.contentType, fulfilled.body, null);
+					return;
+				}
+			}
 			const requestedFile = safeStaticPath(staticRoot, request.url ?? '/');
 			if (requestedFile === null) {
 				complete(400, 'text/plain', Buffer.from('invalid path'), null);
@@ -426,6 +455,17 @@ export async function startStaticServer(
 	});
 	server.requestTimeout = 15_000;
 	server.headersTimeout = 10_000;
+	if (options.upgrade !== undefined) {
+		const upgrade = options.upgrade;
+		server.on('upgrade', (request, socket, head) => {
+			void (async () => {
+				await upgrade(request, socket, head);
+			})().catch((error: unknown) => {
+				failures.push(error instanceof Error ? error.message : String(error));
+				socket.destroy();
+			});
+		});
+	}
 	await new Promise<void>((resolveListen, rejectListen) => {
 		server.once('error', rejectListen);
 		server.listen(0, '127.0.0.1', () => {
