@@ -1,0 +1,263 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-admission.v1",
+  "unit": "lrapr-t1/t004-a1-candidate-ingest-a",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "networkMode": "consented",
+  "slug": "react-papercups-v1-0-0",
+  "candidateOrder": [
+    {
+      "rank": 1,
+      "candidate": "papercups-io/papercups",
+      "prefix": "react-papercups",
+      "decision": "admitted",
+      "fullyAttempted": true
+    },
+    {
+      "rank": 2,
+      "candidate": "mattermost/focalboard",
+      "prefix": "react-focalboard",
+      "decision": "not-reached",
+      "fullyAttempted": false
+    },
+    {
+      "rank": 3,
+      "candidate": "PostHog/posthog",
+      "prefix": "react-posthog",
+      "decision": "not-reached",
+      "fullyAttempted": false
+    }
+  ],
+  "admitted": {
+    "repository": "papercups-io/papercups",
+    "product": "Papercups — self-hosted customer messaging / shared inbox",
+    "ref": "refs/tags/v1.0.0",
+    "tagKind": "lightweight",
+    "commitSha": "3546a5f60c52fcc86fe9cbcc3bbac07356ba134f",
+    "commitDate": "2020-07-28T03:11:00Z",
+    "frontendRoot": "assets"
+  },
+  "gates": [
+    {
+      "gate": "mit-license-at-pinned-revision",
+      "result": "pass",
+      "evidence": {
+        "rootLicensePath": "LICENSE",
+        "gitBlobSha": "3349ffbd98da535072e12b3f15acdc9f2c28e9dd",
+        "fileSha256": "cd94b1bf29eec689bd048f0f202c038d2d3033d80102a7ff47ddf65d2890291c",
+        "spdxHeaderLine": "MIT License",
+        "copyrightLine": "Copyright (c) 2020 Papercups",
+        "frontendManifestLicenseField": "MIT",
+        "otherLicenseFilesInTree": 0,
+        "detail": "see license.json"
+      }
+    },
+    {
+      "gate": "real-substantive-application-not-template-demo-or-library",
+      "result": "pass",
+      "evidence": {
+        "repositoryShape": "Elixir/Phoenix backend (lib/chat_api, lib/chat_api_web, priv/repo migrations, test/) with a React/TypeScript operator console under assets/",
+        "frontendSourceFiles": 38,
+        "frontendSourceBytes": 110000,
+        "hasHttpApiLayer": "assets/src/api.ts",
+        "hasRealtimeLayer": "assets/src/socket.ts (Phoenix channels)",
+        "hasAuthSession": "assets/src/components/auth/AuthProvider.tsx",
+        "publishedAsLibrary": false,
+        "isStarterTemplate": false,
+        "notes": "The frontend is the product's operator console, not a scaffold; it ships against a real backend API and a websocket transport."
+      }
+    },
+    {
+      "gate": "react-15-to-17",
+      "result": "pass",
+      "evidence": {
+        "declaredReact": "^16.13.1",
+        "declaredReactDom": "^16.13.1",
+        "declaredTypes": "@types/react ^16.9.41",
+        "source": "assets/package.json at the pinned revision"
+      }
+    },
+    {
+      "gate": "webpack-le-4-or-create-react-app",
+      "result": "pass",
+      "evidence": {
+        "toolchain": "create-react-app",
+        "declaredReactScripts": "3.4.1",
+        "reactScriptsPinnedExactly": true,
+        "ejected": false,
+        "webpackFromLockfile": "see closure.json (react-scripts 3.4.1 bundles the webpack 4 line)",
+        "scripts": {
+          "start": "react-scripts start",
+          "build": "react-scripts build",
+          "test": "react-scripts test"
+        }
+      }
+    },
+    {
+      "gate": "pinned-revision-at-least-three-years-old",
+      "result": "pass",
+      "evidence": {
+        "ref": "refs/tags/v1.0.0",
+        "commitSha": "3546a5f60c52fcc86fe9cbcc3bbac07356ba134f",
+        "commitDate": "2020-07-28T03:11:00Z",
+        "evaluatedOn": "2026-08-10",
+        "ageYearsApproximate": 6.0,
+        "tagKind": "lightweight",
+        "tagVerification": "unsigned",
+        "unknownPreserved": "A lightweight, unsigned tag carries no signer identity; that is recorded, not resolved."
+      }
+    },
+    {
+      "gate": "browser-ui-plausibly-supporting-three-or-more-substantive-user-journeys",
+      "result": "pass",
+      "evidence": {
+        "routerLibrary": "react-router-dom ^5.2.0",
+        "topLevelRoutes": [
+          "/login",
+          "/register",
+          "/register/:invite",
+          "/demo",
+          "/widget",
+          "/ (Dashboard)"
+        ],
+        "dashboardRoutes": [
+          "/conversations/all",
+          "/conversations/me",
+          "/conversations/priority",
+          "/conversations/closed",
+          "/account/overview",
+          "/account/getting-started",
+          "/integrations",
+          "/integrations/:type"
+        ],
+        "candidateJourneys": [
+          {
+            "journey": "Register an account (optionally via invite) and sign in",
+            "surfaces": [
+              "assets/src/components/auth/Register.tsx",
+              "assets/src/components/auth/Login.tsx",
+              "assets/src/components/auth/AuthProvider.tsx"
+            ]
+          },
+          {
+            "journey": "Triage the shared inbox — list all/mine/priority/closed conversations, open one, read the thread",
+            "surfaces": [
+              "assets/src/components/conversations/ConversationsContainer.tsx",
+              "assets/src/components/conversations/ConversationsProvider.tsx",
+              "assets/src/components/conversations/ConversationItem.tsx",
+              "assets/src/components/conversations/ChatMessage.tsx"
+            ]
+          },
+          {
+            "journey": "Reply to a customer conversation and change its state (assign, prioritise, close)",
+            "surfaces": [
+              "assets/src/components/conversations/ConversationFooter.tsx",
+              "assets/src/components/conversations/ConversationHeader.tsx"
+            ]
+          },
+          {
+            "journey": "Configure the account and complete onboarding",
+            "surfaces": [
+              "assets/src/components/account/AccountOverview.tsx",
+              "assets/src/components/account/GettingStartedOverview.tsx"
+            ]
+          },
+          {
+            "journey": "Configure and preview the embeddable chat widget / integrations",
+            "surfaces": [
+              "assets/src/components/integrations/IntegrationsOverview.tsx",
+              "assets/src/components/demo/Widget.tsx",
+              "assets/src/components/demo/EmbeddableWidget.tsx"
+            ]
+          }
+        ],
+        "journeyCount": 5,
+        "unknownPreserved": "Journeys are read from routes and components at the pinned revision. No journey has been executed in a browser by this unit, and none is claimed to work."
+      }
+    }
+  ],
+  "graveyardCheck": {
+    "excludedSlugs": [
+      "netlify-cms",
+      "redux-realworld",
+      "shlink",
+      "flagsmith",
+      "jira-clone",
+      "sqlpad",
+      "taskcafe",
+      "parse-dashboard",
+      "graphql-playground",
+      "graphiql",
+      "calculator",
+      "avataaars",
+      "dashboard",
+      "tetris",
+      "takenote",
+      "excalidraw",
+      "openchakra",
+      "shopping-cart",
+      "actual-budget",
+      "quiz-app",
+      "dejavu",
+      "saleor",
+      "appsmith",
+      "strapi",
+      "unleash",
+      "verdaccio",
+      "jaeger",
+      "kafka-ui",
+      "mattermost",
+      "apisix",
+      "kubernetes-dashboard"
+    ],
+    "candidateMatchesExcluded": false,
+    "note": "papercups-io/papercups appears in no prior evidence/ingests directory and matches no excluded slug."
+  },
+  "remoteAccess": {
+    "policy": "acquisition only, purpose-bound, GET only, identity encoding, no credentials",
+    "hostsTouched": ["api.github.com", "codeload.github.com", "registry.npmjs.org"],
+    "records": [
+      {
+        "url": "https://api.github.com/repos/papercups-io/papercups",
+        "phase": "reachability-probe",
+        "status": 200,
+        "bytes": null,
+        "sha256": null,
+        "unknownPreserved": "Body was discarded by the reachability probe; its digest was not captured. The same endpoint was re-fetched and digested during acquisition (see source.json requests[0])."
+      },
+      {
+        "url": "https://api.github.com/repos/papercups-io/papercups/tags?per_page=100",
+        "phase": "candidate-discovery",
+        "status": 200,
+        "bytes": 431,
+        "sha256": "3e9509048fd1bb54645ce53625b2c679fec903248e056644c18a6da861313253"
+      },
+      {
+        "url": "probe-ledger.ndjson",
+        "phase": "admission-gate-probe",
+        "note": "Five ledgered GETs (ref, commit, recursive tree, LICENSE blob, assets/package.json blob) with byte counts and sha256 digests."
+      },
+      {
+        "url": "source.json#requests",
+        "phase": "acquisition",
+        "note": "Six ledgered GETs including the archive fetched twice; byte counts and sha256 digests recorded there."
+      },
+      {
+        "url": "https://registry.npmjs.org/",
+        "phase": "baseline-install",
+        "note": "npm ci resolved the committed lockfile against the public npm registry inside the consented window. Per-artifact byte digests were not independently mirrored by this unit; npm enforced the lockfile-declared integrity hashes. See closure.json."
+      }
+    ],
+    "reusedOffline": [
+      {
+        "artifact": "node-v16.20.2-darwin-arm64",
+        "sha256": "6a5c4108475871362d742b988566f3fe307f6a67ce14634eb3fbceb4f9eea88c",
+        "note": "Taken from the workspace's already-pinned runtime (fixtures/react-boilerplate-v4/fixture.json). No network request was made for it."
+      }
+    ]
+  },
+  "nonclaims": [
+    "Admission records that the gates were evaluated against the pinned revision; it establishes no migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "No browser journey was executed and no journey is asserted to work.",
+    "Licence findings cover the repository's own files at the pinned revision only, not its transitive dependency closure."
+  ]
+}

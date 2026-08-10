@@ -1,0 +1,108 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-provenance.v1",
+  "slug": "react-mycrypto",
+  "unit": "lrapr-t004/t004-b2-candidate-ingest",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "networkMode": "consented",
+  "purpose": "Admit and immutably ingest one webpack-era legacy React MIT application for the Versionless production-readiness portfolio (T004).",
+  "upstream": {
+    "repository": "MyCryptoHQ/MyCrypto",
+    "repositoryId": 75510908,
+    "metadataEndpoint": "https://api.github.com/repos/MyCryptoHQ/MyCrypto",
+    "archivedUpstream": false,
+    "ref": "refs/tags/2.5.64",
+    "tagKind": "annotated",
+    "tagObjectSha": "586884b76d6efdc1fea08ed87ac35fc58ada3d7b",
+    "tagDate": "2022-02-24T18:40:37Z",
+    "tagVerification": "unsigned",
+    "commitSha": "1ff2fef4df5a90bf9ba003070b62a91d6817090f",
+    "commitDate": "2022-02-22T10:09:33Z",
+    "commitVerification": "verified-signature-reported-by-host",
+    "rootTreeSha": "48cd41a404336fddd14780c2445559bfc8e93132"
+  },
+  "archive": {
+    "endpoint": "https://codeload.github.com/MyCryptoHQ/MyCrypto/tar.gz/1ff2fef4df5a90bf9ba003070b62a91d6817090f",
+    "mediaType": "application/x-gzip",
+    "bytes": 3537730,
+    "sha256": "62eea670ce0ebd6c0c56c60bfc85ac1311a6f4291375ac1abb45508412fc1ccd",
+    "streamsFetched": 2,
+    "streamsByteIdentical": true,
+    "singleRoot": "MyCrypto-1ff2fef4df5a90bf9ba003070b62a91d6817090f",
+    "regularFiles": 1613,
+    "directories": 209,
+    "normalizedManifestSha256": "30a28d5274bac1be2f3e3415de16395dbe5da94536151b274f917d8295b66835"
+  },
+  "reconciliation": {
+    "method": "every extracted regular file was hashed as a git blob object and compared against the recursive tree at the pinned revision",
+    "gitBlobs": 1613,
+    "extractedFiles": 1613,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "specialEntries": 0,
+    "symlinks": 0,
+    "gitlinks": 0,
+    "treeTruncated": false,
+    "archiveMatchesGitTree": true,
+    "detail": "reconciliation.json"
+  },
+  "chain": [
+    {
+      "step": "admission-gate-probe",
+      "producedBy": "ad-hoc node -e invocations (repository, tag ref, tag object, commit, recursive tree, LICENSE blob, manifest blob)",
+      "records": "probe-ledger.ndjson, probe-tree.json, admission.json, license.json"
+    },
+    {
+      "step": "acquisition",
+      "producedBy": "ad-hoc node -e invocation fetching the archive twice and extracting stream one",
+      "records": "attempt.json, source.json, probe-ledger.ndjson"
+    },
+    {
+      "step": "reconciliation",
+      "producedBy": "ad-hoc node -e invocation, offline, over the extracted archive",
+      "records": "reconciliation.json"
+    },
+    {
+      "step": "dependency-closure",
+      "producedBy": "ad-hoc node -e invocation, offline, over the committed yarn lockfile",
+      "records": "closure.json"
+    },
+    {
+      "step": "baseline-install-and-build",
+      "producedBy": "ad-hoc node -e invocation driving yarn classic under the substituted legacy runtime",
+      "records": "baseline-attempt.json, baseline-deviation.json"
+    }
+  ],
+  "drivers": {
+    "form": "no driver file was written to this repository",
+    "reason": "The packet forbids creating .js, .mjs, or .cjs files anywhere, so every acquisition step was issued as an ad-hoc node -e invocation instead of a published script.",
+    "reproducibility": "transcript.ndjson records, for each step, the argv the process was actually started with, read back from the operating system process table at the top of that process. Replaying those argv strings in order from the repository root reproduces the ingest.",
+    "unknownPreserved": "argv is captured as the operating system reports it, which means the shell has already removed the outer quoting. A replayer must re-quote each invocation for their own shell."
+  },
+  "machineryReused": [
+    "packages/cli/src/acquisition/https-transaction.ts (acquisition shape: exact GET, identity encoding, no redirects, per-response ledger with byte count and digest, cap enforcement)",
+    "packages/cli/src/fixture/tier-f-ingest.ts (evidence shape: attempt and source documents, archive-to-git-tree parity, transactional publication, non-claim discipline)",
+    "evidence/ingests/react-papercups-v1-0-0 (document set and wording conventions for this tranche)"
+  ],
+  "notWritten": [
+    "No module was added under packages/**; the packet places product modules out of contract.",
+    "No file under docs/**, scripts/**, evidence/runs/**, or evidence/trust/** was touched."
+  ],
+  "cache": {
+    "root": ".versionless/cache/react-mycrypto-source",
+    "verifiedSource": ".versionless/cache/react-mycrypto-source/verify/extracted/MyCrypto-1ff2fef4df5a90bf9ba003070b62a91d6817090f",
+    "work": ".versionless/work/react-mycrypto/legacy",
+    "gitIgnored": true,
+    "note": "Cache and work trees are git-ignored; the durable record is this evidence directory plus fixtures/react-mycrypto/fixture.json."
+  },
+  "sensitiveMaterialHandling": {
+    "applicationClass": "cryptocurrency wallet",
+    "policy": "No key material, mnemonic, seed phrase, private key, keystore, or address fixture from the upstream repository was copied into this evidence directory.",
+    "upstreamAuthorshipIdentifiers": "Tagger and committer names and email addresses were returned by the host during verification and deliberately not written into this evidence."
+  },
+  "nonclaims": [
+    "Byte-identical duplicate fetches and blob-level git-tree parity establish source integrity for this revision only. The annotated tag is unsigned, so no signer authenticity is established.",
+    "This provenance record establishes no migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "The declared legacy cell was not executable on this platform; see baseline-attempt.json for what was run instead and what that does and does not show."
+  ]
+}

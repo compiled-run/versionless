@@ -1,0 +1,43 @@
+{
+  "schemaVersion": "versionless.legacy-dependency-closure.v1",
+  "slug": "react-papercups-v1-0-0",
+  "frontendRoot": "assets",
+  "source": {
+    "verifiedSourceRoot": ".versionless/cache/react-papercups-v1-0-0-source/verify/extracted/papercups-3546a5f60c52fcc86fe9cbcc3bbac07356ba134f",
+    "packageJsonSha256": "817e6a3deb6aebbd89c35254aae57aeca4c3d17ed3387264bf6c8cf27012bf35",
+    "packageLockSha256": "210db3017977d391aa49968787cc674f5ed135fd658aa9f56563288ea5e9848f",
+    "packageLockBytes": 700549
+  },
+  "lockState": {
+    "file": "package-lock.json",
+    "lockfileVersion": 1,
+    "requiresField": true,
+    "committedWithSource": true,
+    "coversDevDependencies": true,
+    "everyEntryHasResolvedUrl": true,
+    "everyEntryHasIntegrityHash": true,
+    "entriesWithoutResolvedUrl": [],
+    "entriesWithoutIntegrityHash": [],
+    "lockfileIntegrityAlgorithms": [
+      "sha1",
+      "sha512"
+    ]
+  },
+  "counts": {
+    "declaredDependencies": 26,
+    "declaredDevDependencies": 7,
+    "lockedPlacements": 2001,
+    "distinctNameVersionPairs": 1647,
+    "devPlacements": 157,
+    "optionalPlacements": 24,
+    "bundledPlacements": 0
+  },
+  "registryHosts": {
+    "registry.npmjs.org": 2001
+  },
+  "closureSha256": "8e586c09b51ddbee7fb97bbad83100422c6543fcaaad5abd526fa0c8669cb57d",
+  "nonclaims": [
+    "Per-artifact byte digests were not independently mirrored in this unit; the recorded integrity hashes are the ones the committed lockfile declares.",
+    "A resolvable closure establishes no build, browser behavior, licence compatibility of transitive dependencies, migration feasibility, or production readiness."
+  ]
+}

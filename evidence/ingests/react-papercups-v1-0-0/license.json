@@ -1,0 +1,66 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-rights.v1",
+  "slug": "react-papercups-v1-0-0",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "revision": {
+    "repository": "papercups-io/papercups",
+    "ref": "refs/tags/v1.0.0",
+    "commitSha": "3546a5f60c52fcc86fe9cbcc3bbac07356ba134f",
+    "rootTreeSha": "b931a606a24f0e9f43ac6ddcfb8f6a3b2dc47372"
+  },
+  "declaration": {
+    "identifier": "MIT",
+    "identifierSource": "verbatim MIT text in the repository root LICENSE file at the pinned revision",
+    "copyrightNotice": "Copyright (c) 2020 Papercups",
+    "frontendManifestLicenseField": "MIT",
+    "dualLicensed": false,
+    "sourceAvailableCarveOut": false
+  },
+  "artifacts": [
+    {
+      "path": "LICENSE",
+      "role": "repository-root-licence",
+      "gitBlobSha": "3349ffbd98da535072e12b3f15acdc9f2c28e9dd",
+      "bytes": 1066,
+      "sha256": "cd94b1bf29eec689bd048f0f202c038d2d3033d80102a7ff47ddf65d2890291c",
+      "firstLine": "MIT License",
+      "permissionGrantPresent": true,
+      "noticeRetentionClausePresent": true,
+      "warrantyDisclaimerPresent": true
+    },
+    {
+      "path": "assets/package.json",
+      "role": "frontend-manifest",
+      "gitBlobSha": "466a8696e395ce19877a134b0fca290f1bacb979",
+      "bytes": 1982,
+      "sha256": "817e6a3deb6aebbd89c35254aae57aeca4c3d17ed3387264bf6c8cf27012bf35",
+      "licenseField": "MIT",
+      "privateField": true
+    }
+  ],
+  "inventory": {
+    "licenceFilesInTree": 1,
+    "additionalLicenceOrNoticeFiles": 0,
+    "vendoredThirdPartySources": 0,
+    "committedNodeModules": 0,
+    "committedDistDirectories": 0,
+    "note": "The recursive tree at the pinned revision contains exactly one licence file and no vendored dependency or built-output directories."
+  },
+  "retainedAssetRights": {
+    "reviewed": true,
+    "brandedAssets": [
+      "assets/src/logo.svg",
+      "assets/public (favicon and manifest assets)"
+    ],
+    "position": "Papercups brand marks are retained under the upstream project's ownership. They are carried only as part of the immutable source archive and are not relicensed, rebranded, or reused as Versionless assets.",
+    "unknownPreserved": "Trademark rights are separate from the MIT copyright grant and are neither established nor disclaimed here."
+  },
+  "obligations": [
+    "Retain the MIT notice and permission text in any copy or substantial portion of the source.",
+    "The MIT grant covers the repository's own files; each dependency in the closure carries its own terms, which this record does not evaluate."
+  ],
+  "nonclaims": [
+    "This is a record of the licence text present at the pinned revision, not a legal opinion, licence-compatibility finding, or legal approval.",
+    "No licence determination is made for the transitive dependency closure."
+  ]
+}

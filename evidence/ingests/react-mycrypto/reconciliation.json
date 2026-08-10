@@ -1,0 +1,24 @@
+{
+ "schemaVersion": "versionless.archive-git-tree-reconciliation.v1",
+ "slug": "react-mycrypto",
+ "archiveRoot": "MyCrypto-1ff2fef4df5a90bf9ba003070b62a91d6817090f",
+ "rootTreeSha": "48cd41a404336fddd14780c2445559bfc8e93132",
+ "commitSha": "1ff2fef4df5a90bf9ba003070b62a91d6817090f",
+ "method": "every extracted regular file was hashed as a git blob object and compared against the recursive tree at the pinned revision",
+ "result": {
+  "gitBlobs": 1613,
+  "extractedFiles": 1613,
+  "extractedDirs": 209,
+  "missingFiles": 0,
+  "extraFiles": 0,
+  "mismatchedBlobs": 0,
+  "specialEntries": 0,
+  "symlinks": 0,
+  "gitlinks": 0,
+  "treeTruncated": false,
+  "normalizedManifestSha256": "30a28d5274bac1be2f3e3415de16395dbe5da94536151b274f917d8295b66835",
+  "missingSample": [],
+  "extraSample": []
+ },
+ "archiveMatchesGitTree": true
+}

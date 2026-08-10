@@ -1,0 +1,49 @@
+{
+ "schemaVersion": "versionless.legacy-dependency-closure.v1",
+ "slug": "react-mycrypto",
+ "frontendRoot": ".",
+ "source": {
+  "verifiedSourceRoot": ".versionless/cache/react-mycrypto-source/verify/extracted/MyCrypto-1ff2fef4df5a90bf9ba003070b62a91d6817090f",
+  "packageJsonSha256": "b88b3fbc012567042fa499f41db57c897298ccc60e151ee3f0c387fa82655772",
+  "lockfileSha256": "5a8afb5e332f5f205acb9d61800035cee4c3e948fb88fc34e2aad02408eb6621",
+  "lockfileBytes": 999257
+ },
+ "lockState": {
+  "file": "yarn.lock",
+  "format": "yarn classic (v1) lockfile",
+  "lockfileVersion": 1,
+  "committedWithSource": true,
+  "coversDevDependencies": true,
+  "resolutionsFieldPresent": true,
+  "lockedEntries": 2905,
+  "entriesWithResolvedUrl": 2905,
+  "entriesWithIntegrityHash": 2902,
+  "entriesWithoutResolvedUrl": [],
+  "entriesWithoutIntegrityHash": [
+   "js-md5@MyCryptoHQ/js-md5#b300da8",
+   "js-sha1@MyCryptoHQ/js-sha1#7474a64",
+   "uuid-by-string@MyCryptoHQ/uuid-by-string#36afddc"
+  ],
+  "lockfileIntegrityAlgorithms": [
+   "sha1",
+   "sha512"
+  ]
+ },
+ "counts": {
+  "declaredDependencies": 77,
+  "declaredDevDependencies": 128,
+  "declaredResolutions": 1,
+  "lockedEntries": 2905,
+  "distinctNameVersionPairs": 2905
+ },
+ "registryHosts": {
+  "registry.yarnpkg.com": 2902,
+  "codeload.github.com": 3
+ },
+ "closureSha256": "ea47f7168533bf1baa4e68376cb27779c0aea35390c1c3ae1e2084b47dd164e6",
+ "nonclaims": [
+  "Per-artifact byte digests were not independently mirrored in this unit; the recorded integrity hashes are the ones the committed lockfile declares.",
+  "A yarn classic lockfile records resolutions but not a full package-manager-verified install tree; no install is claimed by this document.",
+  "A resolvable closure establishes no build, browser behavior, licence compatibility of transitive dependencies, migration feasibility, or production readiness."
+ ]
+}

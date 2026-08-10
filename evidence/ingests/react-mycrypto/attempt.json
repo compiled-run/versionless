@@ -1,0 +1,53 @@
+{
+  "schemaVersion": "versionless.official-source-attempt.v1",
+  "candidate": {
+    "repository": "MyCryptoHQ/MyCrypto",
+    "requestedTag": "2.5.64"
+  },
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "result": "started",
+  "network": {
+    "method": "GET",
+    "credentials": "none",
+    "requestEncoding": "identity",
+    "redirectsAllowed": false,
+    "retriesAllowed": false,
+    "alternateHostsAllowed": false
+  },
+  "allowlist": [
+    "https://api.github.com/repos/MyCryptoHQ/MyCrypto",
+    "https://api.github.com/repos/MyCryptoHQ/MyCrypto/git/ref/tags/2.5.64",
+    "https://api.github.com/repos/MyCryptoHQ/MyCrypto/git/tags/<validated-tag-object-sha>",
+    "https://api.github.com/repos/MyCryptoHQ/MyCrypto/git/commits/<validated-commit-sha>",
+    "https://api.github.com/repos/MyCryptoHQ/MyCrypto/git/trees/<validated-tree-sha>?recursive=1",
+    "https://api.github.com/repos/MyCryptoHQ/MyCrypto/git/blobs/<validated-blob-sha>",
+    "https://codeload.github.com/MyCryptoHQ/MyCrypto/tar.gz/<validated-commit-sha>"
+  ],
+  "caps": {
+    "maximumAcceptedResponses": 12,
+    "maximumApiResponseBytes": 33554432,
+    "maximumArchiveBytes": 268435456,
+    "maximumAggregateWireBytes": 629145600,
+    "maximumAggregateDecodedBytes": 629145600,
+    "requiredArchiveStreams": 2
+  },
+  "requiredRevisionWindow": {
+    "from": "2018-01-01T00:00:00Z",
+    "through": "2023-08-10T00:00:00Z"
+  },
+  "publication": {
+    "evidenceRoot": "evidence/ingests/react-mycrypto",
+    "cacheRoot": ".versionless/cache/react-mycrypto-source",
+    "transactional": true,
+    "readinessCredit": false
+  },
+  "drivers": {
+    "form": "ad-hoc node -e invocations issued one per acquisition step",
+    "ledger": "evidence/ingests/react-mycrypto/transcript.ndjson records the argv each step was invoked with, as read back from the operating system process table",
+    "rationale": "The packet forbids adding .js/.mjs/.cjs driver files anywhere in this repository, so no driver script is published beside the evidence."
+  },
+  "nonclaims": [
+    "Starting this transaction establishes no tag identity, license, source integrity, dependency closure, framework, build, browser behavior, migration feasibility, pilot status, or production readiness.",
+    "The resulting evidence is reproducibility evidence, not certification or legal approval."
+  ]
+}

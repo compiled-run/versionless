@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-admission-attempt.v1",
+  "unit": "lrapr-t1/t004-b1-candidate-ingest-b",
+  "slug": "react-winds",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "networkMode": "consented",
+  "rank": 2,
+  "candidate": {
+    "repository": "GetStream/Winds",
+    "product": "Winds — an open-source RSS reader and podcast application",
+    "suggestedEra": "create-react-app-era React application, approximately 2018-2019"
+  },
+  "purpose": "Admit and immutably ingest one webpack/CRA-era legacy React MIT application for the Versionless production-readiness portfolio (T004, tranche one).",
+  "phase": "admission-gate-probe",
+  "result": "started",
+  "network": {
+    "method": "GET",
+    "credentials": "none",
+    "requestEncoding": "identity",
+    "redirectsAllowed": false,
+    "retriesAllowed": false,
+    "alternateHostsAllowed": false,
+    "scope": "acquisition-only; every step after acquisition is offline"
+  },
+  "allowlist": [
+    "https://api.github.com/repos/GetStream/Winds",
+    "https://api.github.com/repos/GetStream/Winds/tags?per_page=100"
+  ],
+  "gateOrder": [
+    "mit-license-at-pinned-revision",
+    "real-substantive-application-not-template-demo-or-library",
+    "react-15-to-17",
+    "webpack-le-4-or-create-react-app",
+    "pinned-revision-at-least-about-three-years-old",
+    "browser-ui-with-at-least-three-substantive-user-journeys"
+  ],
+  "gatePolicy": {
+    "shortCircuit": true,
+    "note": "Gates are evaluated in order and the first hard failure terminates the candidate before acquisition. No archive is fetched for a candidate that fails a gate, so a gate rejection consumes no acquisition budget."
+  },
+  "publication": {
+    "evidenceRoot": "evidence/ingests/react-winds",
+    "probeCacheRoot": ".versionless/cache/react-winds-probe",
+    "transactional": true,
+    "readinessCredit": false
+  },
+  "nonclaims": [
+    "Starting this probe establishes no licence, revision identity, source integrity, dependency closure, framework version, build, browser behaviour, migration feasibility, pilot status, or production readiness.",
+    "The candidate was supplied to this unit as an unverified suggestion; only the admission gates decide."
+  ]
+}

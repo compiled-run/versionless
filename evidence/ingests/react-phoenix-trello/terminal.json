@@ -1,0 +1,181 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-admission-terminal.v1",
+  "unit": "lrapr-t1/t004-b1-candidate-ingest-b",
+  "slug": "react-phoenix-trello",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "networkMode": "consented",
+  "rank": 3,
+  "candidate": {
+    "repository": "bigardone/phoenix-trello",
+    "repositoryId": 49008041,
+    "product": "Phoenix Trello — a Trello tribute built with Elixir, the Phoenix Framework, React and Redux",
+    "fork": false,
+    "archivedUpstream": false,
+    "disabled": false,
+    "defaultBranch": "master",
+    "createdAt": "2016-01-04T16:13:35Z",
+    "lastPushedAt": "2018-11-09T13:48:45Z"
+  },
+  "pinnedRevision": {
+    "ref": "refs/heads/master",
+    "objectType": "commit",
+    "commitSha": "60c874de63126b5659a42ef8e05846ca16e3e30a",
+    "commitDate": "2016-09-24T10:40:11Z",
+    "commitMessage": "Update README.md",
+    "commitVerification": "unsigned",
+    "rootTreeSha": "dd61c3438ec142afbcac733bf68f02ff5673dc9c",
+    "treeEntries": 201,
+    "treeBlobs": 149,
+    "treeDirectories": 52,
+    "treeSymlinks": 0,
+    "treeGitlinks": 0,
+    "treeTruncated": false
+  },
+  "branchInventory": [
+    { "name": "master", "commitSha": "60c874de63126b5659a42ef8e05846ca16e3e30a" },
+    { "name": "elm-version", "commitSha": "73f863ba7477895c15626e6e30539a4d5e4fe1b7" },
+    { "name": "feature/hound-integration", "commitSha": "49407f9eb659a8646bf3759936c87bef1ff2f123" }
+  ],
+  "tagInventory": [
+    { "name": "1.1.0", "commitSha": "c374aad30b302ad89ab0bc546da9422ff5d51375", "commitDate": "2016-02-08T20:35:15Z" },
+    { "name": "1.0.0", "commitSha": "b9b2b89a24801e31e81293a7c08d4297dfeb13fa" },
+    { "name": "v1.0", "commitSha": "b9b2b89a24801e31e81293a7c08d4297dfeb13fa" },
+    { "name": "v++1.0", "commitSha": "b9b2b89a24801e31e81293a7c08d4297dfeb13fa" }
+  ],
+  "result": "rejected-at-admission",
+  "terminal": true,
+  "acquisitionPerformed": false,
+  "fullyAttempted": false,
+  "startedAt": "2026-08-10T18:57:00Z",
+  "completedAt": "2026-08-10T19:00:00Z",
+  "gates": [
+    {
+      "gate": "mit-license-at-pinned-revision",
+      "result": "pass-with-contradiction",
+      "hardFailure": false,
+      "evidence": {
+        "rootLicensePath": "LICENSE",
+        "gitBlobSha": "7a2ecd0c086a5d74b7094a91117f1c8a6ef5a78f",
+        "bytes": 1087,
+        "sha256": "df67729a33fba293ac5f37b1019c598b223e96c2d6854e9f293477b0555d5254",
+        "firstLine": "The MIT License (MIT)",
+        "copyrightNotice": "Copyright (c) 2016 Ricardo García Vega",
+        "repositoryLicenceField": { "key": "mit", "spdxId": "MIT" },
+        "manifestLicenseField": "ISC",
+        "licenceFilesInTree": 1,
+        "otherLicenceOrNoticeFiles": 0,
+        "contradiction": "The repository root LICENSE file at the pinned revision carries verbatim MIT text and GitHub's detection agrees, but package.json at the same revision declares \"license\": \"ISC\". These two declarations disagree.",
+        "contradictionResolved": false,
+        "unknownPreserved": "This unit does not resolve which declaration governs. Had the candidate reached acquisition, that contradiction would itself have needed a rights decision before admission; it is recorded rather than silently resolved in MIT's favour."
+      }
+    },
+    {
+      "gate": "real-substantive-application-not-template-demo-or-library",
+      "result": "marginal",
+      "hardFailure": false,
+      "evidence": {
+        "frontendRoot": "web/static/js",
+        "frontendSourceFiles": 39,
+        "frontendSourceBytes": 71765,
+        "reduxShape": "actions/ (7 modules), reducers/ (8 modules), store/, constants/, containers/, routes/",
+        "viewAreas": ["views/home", "views/sessions", "views/registrations", "views/boards", "views/cards"],
+        "backendShape": "Phoenix application with 5 Ecto models (user, board, list, card, card_member, comment), 6 API controllers under web/controllers/api/v1, and 2 realtime channels (board_channel, user_channel)",
+        "publishedAsLibrary": false,
+        "isStarterTemplate": false,
+        "assessment": "By shape this is a working application rather than a scaffold: it has authentication, a REST API, a relational data model, and Phoenix channels for realtime board updates. Its origin, however, is a published tutorial series, and at 39 frontend modules and roughly 70 KB of source it sits at the small end of what the portfolio calls a substantive production application. Recorded as marginal rather than pass, and not relied on, because a hard gate fails below."
+      }
+    },
+    {
+      "gate": "react-15-to-17",
+      "result": "fail",
+      "hardFailure": true,
+      "evidence": {
+        "manifestPath": "package.json",
+        "gitBlobSha": "46596a34bc693e2a9a0cf0387861963d0a9a038d",
+        "bytes": 1658,
+        "sha256": "0d200b63e690c87e0e7ac2e2e32b228142c3b20ae2f5397620b503407812361c",
+        "declaredReact": "^0.14.5",
+        "declaredReactDom": "^0.14.5",
+        "declaredReactAddonsCssTransitionGroup": "^0.14.5",
+        "declaredReactRouter": "^2.0.1",
+        "declaredReactRedux": "^4.0.4",
+        "declaredRedux": "^3.3.1",
+        "resolvedMajor": "0.14",
+        "requiredRange": "15 to 17 inclusive",
+        "detail": "The pinned revision targets React 0.14, a full major generation below the gate's floor. React 0.14 predates the react/react-dom split conventions the portfolio's migration spine assumes, and no revision in this repository reaches React 15: the only other branches are an Elm rewrite and a Hound test-tooling branch, and every tag is older than the pinned head."
+      }
+    },
+    {
+      "gate": "webpack-le-4-or-create-react-app",
+      "result": "pass",
+      "evidence": {
+        "configPath": "webpack.config.js",
+        "gitBlobSha": "2596f3c9c6da25fe148c22283314f393844da376",
+        "bytes": 2092,
+        "sha256": "399720b065e47fd1f072c49528c4ea4f9104be151a4e440f75272a56950cf81b",
+        "declaredWebpack": "^1.12.11",
+        "resolvedMajor": 1,
+        "createReactApp": false,
+        "bundlerShape": "single entry (web/static/js/application.js plus web/static/css/application.sass) emitting into priv/static, babel-loader with the react/es2015/stage-2/stage-0 presets, extract-text-webpack-plugin@1 for CSS, DedupePlugin and UglifyJsPlugin under NODE_ENV=production",
+        "detail": "webpack 1 satisfies the 'webpack at most 4' gate. Recorded for completeness; it does not offset the React version failure."
+      }
+    },
+    {
+      "gate": "pinned-revision-at-least-about-three-years-old",
+      "result": "pass",
+      "evidence": {
+        "commitDate": "2016-09-24T10:40:11Z",
+        "observedAt": "2026-08-10T19:00:56Z",
+        "ageYearsApproximate": 9.9,
+        "requiredMinimumYears": 3
+      }
+    },
+    {
+      "gate": "browser-ui-with-at-least-three-substantive-user-journeys",
+      "result": "pass",
+      "evidence": {
+        "journeys": [
+          "Register an account and sign in (views/registrations, views/sessions, actions/registrations.js, actions/sessions.js, api/v1/registration_controller.ex, api/v1/session_controller.ex)",
+          "Create and open a board, then add lists and cards to it (views/boards, components/boards, components/lists, actions/boards.js, actions/lists.js, api/v1/board_controller.ex)",
+          "Open a card to edit it, comment on it and assign members (views/cards, components/cards, actions/current_card.js, api/v1/card_controller.ex, comment.ex, card_member.ex)",
+          "Drag a card between lists with live updates pushed to other viewers of the board (react-dnd@2 with the HTML5 backend, board_channel.ex)"
+        ],
+        "journeyCount": 4,
+        "requiredMinimum": 3,
+        "detail": "Recorded for completeness; it does not offset the React version failure."
+      }
+    }
+  ],
+  "additionalObservations": {
+    "lockState": {
+      "packageLockJson": "absent",
+      "yarnLock": "absent",
+      "npmShrinkwrapJson": "absent",
+      "detail": "The pinned tree contains no JavaScript lock file of any kind. Every dependency is declared with a caret range, so the closure is not reproducible from the repository alone. Recorded as found; no lock was generated and nothing was upgraded."
+    },
+    "installBlockers": [
+      "package.json declares \"phoenix\": \"file:deps/phoenix\" and \"phoenix_html\": \"file:deps/phoenix_html\". Those paths only exist after the Elixir toolchain has run `mix deps.get`, so `npm install` cannot resolve the manifest in a JavaScript-only cell.",
+      "engines pins node 5.3.0 and npm 3.5.x, and devDependencies include node-sass@^3.4.2, whose native binaries were never published for any currently installable Node runtime."
+    ],
+    "note": "These were observed while reading the manifest for the React gate. No install or build was attempted, because the candidate had already failed a hard gate and attempting a build would have spent budget on a candidate that cannot be admitted."
+  },
+  "transaction": {
+    "attemptedRequests": 11,
+    "acceptedResponses": 11,
+    "acceptedWireBytes": 66923,
+    "redirectsObserved": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "archivesFetched": 0,
+    "publishedSource": false,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "disposition": "Terminal. The React version gate cannot be satisfied by choosing a different revision of this repository, because no revision of it ever reached React 15.",
+  "nonclaims": [
+    "This record establishes no source integrity, dependency closure, build outcome, browser behaviour, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "No archive was fetched and no blob-level reconciliation against the git tree was performed, so nothing here is source-binding evidence.",
+    "The user journeys listed above were inferred from module and controller names in the recursive tree; no browser was run and no journey was observed executing.",
+    "The licence reading is a record of the text present at the pinned revision, not a legal opinion, and the MIT-versus-ISC contradiction is left unresolved."
+  ]
+}

@@ -1,0 +1,48 @@
+{
+ "schemaVersion": "versionless.legacy-baseline-attempt.v1",
+ "slug": "react-mycrypto",
+ "cell": {
+  "declaredByRepository": {
+   "node": "12.14.1",
+   "npm": ">= 6.4.1",
+   "yarn": ">= 1.19.1",
+   "nvmrc": "v12.14.1"
+  },
+  "executed": {
+   "node": "v16.20.2",
+   "yarn": "1.22.19",
+   "platform": "darwin-arm64",
+   "lifecycleScripts": "disabled for install (--ignore-scripts)"
+  },
+  "substitutionReason": "The repository declares Node 12.14.1 exactly. The Node 12 line has no darwin-arm64 build, so the declared cell cannot be executed natively on this platform. The nearest runtime already pinned in this workspace (Node 16.20.2 darwin-arm64) was used instead, and the mismatch is recorded rather than resolved.",
+  "network": "npm and yarn registries reachable during the consented acquisition window only"
+ },
+ "workRoot": ".versionless/work/react-mycrypto/legacy",
+ "priorInvocation": {
+  "outcome": "discarded",
+  "reason": "the first baseline invocation pointed at a wrong yarn entrypoint path and exited in 76ms without reaching the project; it is recorded in transcript.ndjson and carries no finding about the project"
+ },
+ "steps": [
+  {
+   "name": "install",
+   "command": "yarn install --frozen-lockfile --ignore-scripts --non-interactive",
+   "startedAt": "2026-08-10T19:26:29.107Z",
+   "durationMs": 172,
+   "exitCode": 1,
+   "signal": null,
+   "outcome": "failed",
+   "stdoutBytes": 144,
+   "stderrBytes": 149,
+   "stdoutSha256": "a56a08af52031fcae854abee172265f1d56480fe276f0865f826e72436a01523",
+   "stderrSha256": "e04ce9ce582b85a663cec2b59099dd2991ec16442fccfd5555e4b8679f19a020",
+   "stdoutTail": "yarn install v1.22.19\n[1/5] Validating package.json...\ninfo Visit https://yarnpkg.com/en/docs/cli/install for documentation about this command.\n",
+   "stderrTail": "error MyCrypto@2.2.5: The engine \"node\" is incompatible with this module. Expected version \"12.14.1\". Got \"16.20.2\"\nerror Found incompatible module.\n"
+  }
+ ],
+ "outcome": "failed",
+ "nonclaims": [
+  "A recorded install or build outcome establishes no browser behavior, journey coverage, migration feasibility, pilot status, or production readiness.",
+  "A failing step is recorded as observed; no repair, pin, downgrade, or flag was applied to make it pass.",
+  "This baseline was not executed in the repository-declared Node 12.14.1 cell, so it is not evidence about how the project behaves in that cell."
+ ]
+}

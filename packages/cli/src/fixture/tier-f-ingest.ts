@@ -78,7 +78,8 @@ export type FixtureId =
 	| 'angular-fuxa'
 	| 'next-killedbygoogle'
 	| 'next-nextchat'
-	| 'next-tailwind-starter-blog';
+	| 'next-tailwind-starter-blog'
+	| 'react-papercups-v1-0-0';
 export type FixtureConfig = Readonly<{
 	id: FixtureId;
 	framework: 'react' | 'angular' | 'nextjs';
@@ -314,6 +315,30 @@ const fixtures: readonly FixtureConfig[] = [
 		localityBoundaries: [
 			'No candidate code, dependency, script, server, API route, browser journey, or outbound behavior was executed.',
 			'Newsletter, remote resources, server, authentication, payment, analytics, telemetry, and egress remain not-tested.',
+		],
+	},
+	{
+		// Ingested by the generic legacy-corpus machinery in legacy-candidate-ingest.ts; this entry
+		// names the candidate for the shared tier-f fixture identity and allowlist surface.
+		id: 'react-papercups-v1-0-0',
+		framework: 'react',
+		owner: 'papercups-io',
+		repository: 'papercups',
+		commit: '3546a5f60c52fcc86fe9cbcc3bbac07356ba134f',
+		requiredPaths: [
+			'LICENSE',
+			'assets/package.json',
+			'assets/package-lock.json',
+			'assets/src/index.tsx',
+			'assets/src/App.tsx',
+			'assets/tsconfig.json',
+		],
+		entryCandidates: ['assets/src/index.tsx'],
+		configurationCandidates: ['assets/tsconfig.json'],
+		journeyCandidates: ['assets/src/App.tsx'],
+		localityBoundaries: [
+			'The Elixir/Phoenix backend, its database, and its outbound integrations are outside the usable closure.',
+			'No candidate browser journey, migration, or production-readiness claim is established by this identity.',
 		],
 	},
 ] as const;

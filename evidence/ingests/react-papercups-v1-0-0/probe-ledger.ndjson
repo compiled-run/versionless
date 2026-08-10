@@ -1,0 +1,5 @@
+{"url":"https://api.github.com/repos/papercups-io/papercups/git/ref/tags/v1.0.0","status":200,"bytes":353,"sha256":"79a9a18dbcf452fca52b0eb74068ee2ad80a3479b468997d8f96e5a8edbcc0c7"}
+{"url":"https://api.github.com/repos/papercups-io/papercups/git/commits/3546a5f60c52fcc86fe9cbcc3bbac07356ba134f","status":200,"bytes":1160,"sha256":"7b40f83db384eb82fe831225c9e04025c8db62794536ae0f6d95d05eece20708"}
+{"url":"https://api.github.com/repos/papercups-io/papercups/git/trees/b931a606a24f0e9f43ac6ddcfb8f6a3b2dc47372?recursive=1","status":200,"bytes":50277,"sha256":"e9101c99dffb1737f459575fafae06d11074cd6e937d90d441e4baf76b5f814d"}
+{"url":"https://api.github.com/repos/papercups-io/papercups/git/blobs/3349ffbd98da535072e12b3f15acdc9f2c28e9dd","status":200,"bytes":1767,"sha256":"b7d36cc8d1ec40d1fe53f6b66cf66c8399b7c31c47f59fabe1dccf58ad99d41d"}
+{"url":"https://api.github.com/repos/papercups-io/papercups/git/blobs/466a8696e395ce19877a134b0fca290f1bacb979","status":200,"bytes":3029,"sha256":"48ff4644bdeedbf181e7fc3e6c1c3285048664698bc638b0ec4056169993beb6"}

@@ -1,0 +1,119 @@
+{
+  "id": "react-mycrypto",
+  "source": {
+    "repository": "https://github.com/MyCryptoHQ/MyCrypto",
+    "ref": "refs/tags/2.5.64",
+    "tagKind": "annotated",
+    "tagObjectSha": "586884b76d6efdc1fea08ed87ac35fc58ada3d7b",
+    "tagVerification": "unsigned",
+    "revision": "1ff2fef4df5a90bf9ba003070b62a91d6817090f",
+    "revisionDate": "2022-02-22T10:09:33Z",
+    "rootTreeSha": "48cd41a404336fddd14780c2445559bfc8e93132",
+    "archiveUrl": "https://codeload.github.com/MyCryptoHQ/MyCrypto/tar.gz/1ff2fef4df5a90bf9ba003070b62a91d6817090f",
+    "archiveBytes": 3537730,
+    "archiveSha256": "62eea670ce0ebd6c0c56c60bfc85ac1311a6f4291375ac1abb45508412fc1ccd",
+    "archiveRoot": "MyCrypto-1ff2fef4df5a90bf9ba003070b62a91d6817090f",
+    "normalizedManifestSha256": "30a28d5274bac1be2f3e3415de16395dbe5da94536151b274f917d8295b66835",
+    "license": "MIT",
+    "licensePath": "LICENSE",
+    "licenseSha256": "1b0a4ebe6200441fe008bba2b60bb227b944cd77427b3f9c60f6f7e32120a65d",
+    "frontendRoot": ".",
+    "packagePath": "package.json",
+    "packageSha256": "b88b3fbc012567042fa499f41db57c897298ccc60e151ee3f0c387fa82655772",
+    "packageLockPath": "yarn.lock",
+    "packageLockSha256": "5a8afb5e332f5f205acb9d61800035cee4c3e948fb88fc34e2aad02408eb6621"
+  },
+  "application": {
+    "product": "MyCrypto — self-custody Ethereum wallet interface",
+    "frontend": "single-page React application built by a hand-written webpack 4 configuration (TypeScript)",
+    "backend": "none in this repository; the application talks to Ethereum JSON-RPC nodes and third-party pricing, swap, and ENS services",
+    "react": "17.0.2",
+    "reactDom": "17.0.2",
+    "typescript": "4.1.2",
+    "router": "react-router-dom 5.1.2",
+    "state": "redux 4.0.5, react-redux 7.2.4, redux-saga 1.1.3, redux-persist 6.0.0",
+    "sourceFilesInSrc": 879,
+    "testFiles": 241,
+    "declaredRoutes": 26
+  },
+  "legacyCell": {
+    "declared": true,
+    "bundler": "webpack 4.46.0, configured by hand under webpack_config/",
+    "bundlerCeiling": "webpack <= 4",
+    "bundlerCli": "webpack-cli 3.3.10",
+    "devServer": "webpack-dev-server 3.10.1",
+    "toolchain": "raw webpack; not create-react-app and not ejected from it",
+    "node": {
+      "declaredByRepository": "12.14.1",
+      "declaredIn": ["package.json engines.node", ".nvmrc"],
+      "executable": false,
+      "executableReason": "The Node 12 line has no darwin-arm64 build, so the declared cell cannot be run natively on this platform.",
+      "substituted": {
+        "version": "16.20.2",
+        "platform": "darwin-arm64",
+        "url": "https://nodejs.org/dist/v16.20.2/node-v16.20.2-darwin-arm64.tar.gz",
+        "sha256": "6a5c4108475871362d742b988566f3fe307f6a67ce14634eb3fbceb4f9eea88c",
+        "reusedFrom": "the runtime already pinned in this workspace; no new network request"
+      }
+    },
+    "packageManager": {
+      "declared": "yarn >= 1.19.1, npm >= 6.4.1",
+      "used": "yarn 1.22.19",
+      "acquiredFrom": "https://registry.npmjs.org/yarn/-/yarn-1.22.19.tgz",
+      "sha256": "732620bac8b1690d507274f025f3c6cfdc3627a84d9642e38a07452cc00e0f2e"
+    },
+    "installCommand": "yarn install --frozen-lockfile --ignore-scripts --non-interactive",
+    "buildCommand": "yarn build",
+    "buildScriptExpands": "cross-env TARGET_ENV=default webpack --config webpack_config/production.js",
+    "lifecycleScripts": "disabled during install",
+    "rationale": "The repository pins Node 12.14.1 exactly and enforces it through engines and a check-node-version prebuild step. That cell is the declared legacy environment; it is recorded here as declared and unreachable on this platform rather than silently replaced."
+  },
+  "lockState": {
+    "file": "yarn.lock",
+    "format": "yarn classic (v1)",
+    "committedWithSource": true,
+    "lockedEntries": 2905,
+    "distinctNameVersionPairs": 2905,
+    "everyEntryHasResolvedUrl": true,
+    "everyEntryHasIntegrityHash": false,
+    "entriesWithoutIntegrityHash": 3,
+    "integrityAlgorithms": ["sha1", "sha512"],
+    "integrityCaveat": "2902 entries resolve to registry.yarnpkg.com with an integrity hash, mixing legacy sha1 with sha512. Three entries resolve to git tarballs on codeload.github.com (MyCryptoHQ forks of js-md5, js-sha1, and uuid-by-string) and carry no integrity hash at all. Recorded as found; not upgraded, pinned, or replaced.",
+    "registryHosts": ["registry.yarnpkg.com", "codeload.github.com"],
+    "detail": "evidence/ingests/react-mycrypto/closure.json"
+  },
+  "baseline": {
+    "declaredOutcome": "failed",
+    "declaredDetail": "yarn refused the install because the manifest pins Node 12.14.1 exactly and the substituted runtime is 16.20.2. No package was fetched.",
+    "deviationOutcome": "install succeeded, build refused",
+    "deviationDetail": "With the engine check overridden, yarn resolved and linked the committed lockfile in 62.6 seconds (2233 package directories). The build command was then refused by the same engine check. Whether this project builds under Node 16.20.2 remains unknown.",
+    "detail": [
+      "evidence/ingests/react-mycrypto/baseline-attempt.json",
+      "evidence/ingests/react-mycrypto/baseline-deviation.json"
+    ]
+  },
+  "knownRisks": [
+    "Wallet application: the upstream tree contains test key material. No key material was copied into Versionless evidence, and none should be copied in later work.",
+    "Several journeys are coupled to an Ethereum JSON-RPC endpoint and to third-party pricing, swap, and ENS services; offline exercisability is unknown.",
+    "The declared Node cell is unreachable on darwin-arm64, so any future work on this fixture must first decide how to obtain a Node 12.14.1 environment or accept a recorded substitution."
+  ],
+  "evidence": {
+    "admission": "evidence/ingests/react-mycrypto/admission.json",
+    "license": "evidence/ingests/react-mycrypto/license.json",
+    "provenance": "evidence/ingests/react-mycrypto/provenance.json",
+    "attempt": "evidence/ingests/react-mycrypto/attempt.json",
+    "source": "evidence/ingests/react-mycrypto/source.json",
+    "reconciliation": "evidence/ingests/react-mycrypto/reconciliation.json",
+    "closure": "evidence/ingests/react-mycrypto/closure.json",
+    "baseline": "evidence/ingests/react-mycrypto/baseline-attempt.json",
+    "baselineDeviation": "evidence/ingests/react-mycrypto/baseline-deviation.json",
+    "ledger": "evidence/ingests/react-mycrypto/probe-ledger.ndjson",
+    "transcript": "evidence/ingests/react-mycrypto/transcript.ndjson",
+    "tree": "evidence/ingests/react-mycrypto/probe-tree.json"
+  },
+  "nonclaims": [
+    "This fixture record fixes an identity and a declared legacy cell. It establishes no browser behavior, journey coverage, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "No adapter, transform, or migration lane is declared for this fixture by the unit that ingested it.",
+    "No build artifact was produced, so nothing here shows that this application compiles in any environment."
+  ]
+}

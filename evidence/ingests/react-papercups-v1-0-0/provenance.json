@@ -1,0 +1,95 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-provenance.v1",
+  "slug": "react-papercups-v1-0-0",
+  "unit": "lrapr-t1/t004-a1-candidate-ingest-a",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "networkMode": "consented",
+  "purpose": "Admit and immutably ingest one webpack/CRA-era legacy React MIT application for the Versionless production-readiness portfolio (T004, tranche one).",
+  "upstream": {
+    "repository": "papercups-io/papercups",
+    "repositoryId": 279895213,
+    "homepageEndpoint": "https://api.github.com/repos/papercups-io/papercups",
+    "archivedUpstream": false,
+    "ref": "refs/tags/v1.0.0",
+    "tagKind": "lightweight",
+    "tagObjectSha": null,
+    "tagVerification": "unsigned",
+    "commitSha": "3546a5f60c52fcc86fe9cbcc3bbac07356ba134f",
+    "commitDate": "2020-07-28T03:11:00Z",
+    "commitVerification": "unsigned",
+    "rootTreeSha": "b931a606a24f0e9f43ac6ddcfb8f6a3b2dc47372"
+  },
+  "archive": {
+    "endpoint": "https://codeload.github.com/papercups-io/papercups/tar.gz/3546a5f60c52fcc86fe9cbcc3bbac07356ba134f",
+    "mediaType": "application/gzip",
+    "bytes": 436770,
+    "sha256": "f8a6576c0399e1eca5e1936a9e5e5b311798cccf3cb7c6fcce0cecbf8b46ea8f",
+    "streamsFetched": 2,
+    "streamsByteIdentical": true,
+    "singleRoot": "papercups-3546a5f60c52fcc86fe9cbcc3bbac07356ba134f",
+    "regularFiles": 164,
+    "normalizedManifestSha256": "16870d115358834be5d0462ff8ec5708cb05534e226f9ea4e5b9b5dc42999c7d"
+  },
+  "reconciliation": {
+    "method": "every extracted regular file was hashed as a git blob object and compared against the recursive tree at the pinned revision",
+    "gitBlobs": 164,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "specialEntries": 0,
+    "symlinks": 0,
+    "gitlinks": 0,
+    "treeTruncated": false,
+    "archiveMatchesGitTree": true
+  },
+  "chain": [
+    {
+      "step": "discovery",
+      "producedBy": "curl (GET, no credentials)",
+      "records": "admission.json#remoteAccess.records"
+    },
+    {
+      "step": "admission-gate-probe",
+      "producedBy": "evidence/ingests/react-papercups-v1-0-0/probe.mjs + blob.mjs",
+      "records": "probe-ledger.ndjson, probe-tree.json, admission.json"
+    },
+    {
+      "step": "acquisition",
+      "producedBy": "evidence/ingests/react-papercups-v1-0-0/acquire.mjs",
+      "records": "attempt.json, source.json"
+    },
+    {
+      "step": "dependency-closure",
+      "producedBy": "evidence/ingests/react-papercups-v1-0-0/closure.mjs (offline, from the verified archive)",
+      "records": "closure.json"
+    },
+    {
+      "step": "baseline-install-and-build",
+      "producedBy": "evidence/ingests/react-papercups-v1-0-0/baseline.mjs",
+      "records": "baseline-attempt.json"
+    }
+  ],
+  "machinery": {
+    "reused": [
+      "packages/cli/src/acquisition/https-transaction.ts (acquisition shape: exact GET, identity encoding, per-response ledger with byte count and digest, cap enforcement)",
+      "packages/cli/src/fixture/tier-f-ingest.ts (evidence shape: attempt/source documents, archive-to-git-tree parity, transactional publication, non-claim discipline)",
+      "fixtures/react-boilerplate-v4/fixture.json (already-pinned Node 16.20.2 legacy runtime, reused from cache with no new network request)"
+    ],
+    "notWritten": [
+      "No module was added under packages/**; the packet places per-app product modules out of contract."
+    ],
+    "driversLocation": "The three drivers live beside their evidence under evidence/ingests/react-papercups-v1-0-0/ so this ingest is reproducible without adding a per-app product module.",
+    "unknownPreserved": "The workspace CLI (`pnpm run fixture:ingest`) accepts a closed list of four fixture ids and tier-f-ingest.ts carries a closed FixtureId union, so neither could name this candidate without an out-of-contract edit."
+  },
+  "cache": {
+    "root": ".versionless/cache/react-papercups-v1-0-0-source",
+    "verifiedSource": ".versionless/cache/react-papercups-v1-0-0-source/verify/extracted/papercups-3546a5f60c52fcc86fe9cbcc3bbac07356ba134f",
+    "work": ".versionless/work/react-papercups-v1-0-0/legacy",
+    "gitIgnored": true,
+    "note": "Cache and work trees are git-ignored; the durable record is this evidence directory plus fixtures/react-papercups-v1-0-0/fixture.json."
+  },
+  "nonclaims": [
+    "Byte-identical duplicate fetches and git-tree parity establish source integrity for this revision only; they establish no signer authenticity, since the tag is lightweight and the commit unsigned.",
+    "This provenance record establishes no migration feasibility, pilot status, production readiness, certification, or legal approval."
+  ]
+}

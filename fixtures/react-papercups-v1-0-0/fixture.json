@@ -1,0 +1,81 @@
+{
+  "id": "react-papercups-v1-0-0",
+  "source": {
+    "repository": "https://github.com/papercups-io/papercups",
+    "ref": "refs/tags/v1.0.0",
+    "tagKind": "lightweight",
+    "revision": "3546a5f60c52fcc86fe9cbcc3bbac07356ba134f",
+    "revisionDate": "2020-07-28T03:11:00Z",
+    "rootTreeSha": "b931a606a24f0e9f43ac6ddcfb8f6a3b2dc47372",
+    "archiveUrl": "https://codeload.github.com/papercups-io/papercups/tar.gz/3546a5f60c52fcc86fe9cbcc3bbac07356ba134f",
+    "archiveBytes": 436770,
+    "archiveSha256": "f8a6576c0399e1eca5e1936a9e5e5b311798cccf3cb7c6fcce0cecbf8b46ea8f",
+    "archiveRoot": "papercups-3546a5f60c52fcc86fe9cbcc3bbac07356ba134f",
+    "normalizedManifestSha256": "16870d115358834be5d0462ff8ec5708cb05534e226f9ea4e5b9b5dc42999c7d",
+    "license": "MIT",
+    "licensePath": "LICENSE",
+    "licenseSha256": "cd94b1bf29eec689bd048f0f202c038d2d3033d80102a7ff47ddf65d2890291c",
+    "frontendRoot": "assets",
+    "packagePath": "assets/package.json",
+    "packageSha256": "817e6a3deb6aebbd89c35254aae57aeca4c3d17ed3387264bf6c8cf27012bf35",
+    "packageLockPath": "assets/package-lock.json",
+    "packageLockSha256": "210db3017977d391aa49968787cc674f5ed135fd658aa9f56563288ea5e9848f"
+  },
+  "application": {
+    "product": "Papercups — self-hosted customer messaging and shared inbox",
+    "frontend": "create-react-app operator console (TypeScript)",
+    "backend": "Elixir/Phoenix, present in the archive but not exercised by this fixture",
+    "react": "^16.13.1",
+    "reactDom": "^16.13.1",
+    "typescript": "~3.7.2",
+    "router": "react-router-dom ^5.2.0",
+    "uiKit": "antd ^4.3.5, theme-ui ^0.3.1",
+    "realtime": "phoenix ^1.5.3 channels"
+  },
+  "legacyCell": {
+    "declared": true,
+    "bundler": "webpack 4.42.0 (resolved through react-scripts 3.4.1; create-react-app 3 line, not ejected)",
+    "bundlerCeiling": "webpack <= 4",
+    "bundlerResolvedFromLockfile": "webpack 4.42.0 — https://registry.npmjs.org/webpack/-/webpack-4.42.0.tgz",
+    "toolchain": "create-react-app",
+    "reactScripts": "3.4.1",
+    "node": {
+      "version": "16.20.2",
+      "platform": "darwin-arm64",
+      "url": "https://nodejs.org/dist/v16.20.2/node-v16.20.2-darwin-arm64.tar.gz",
+      "sha256": "6a5c4108475871362d742b988566f3fe307f6a67ce14634eb3fbceb4f9eea88c",
+      "reusedFrom": "fixtures/react-boilerplate-v4/fixture.json (already pinned in this workspace; no new network request)"
+    },
+    "packageManager": "npm 8.19.4 (bundled with the pinned Node runtime)",
+    "installCommand": "npm ci --ignore-scripts --no-audit --no-fund",
+    "buildCommand": "npm run build",
+    "lifecycleScripts": "disabled during install",
+    "rationale": "react-scripts 3.4.1 predates Node 17's OpenSSL 3 default and is not expected to build on the host's Node 24; the pinned Node 16 cell is the declared legacy environment for this fixture."
+  },
+  "lockState": {
+    "file": "assets/package-lock.json",
+    "lockfileVersion": 1,
+    "committedWithSource": true,
+    "lockedPlacements": 2001,
+    "distinctNameVersionPairs": 1647,
+    "everyEntryHasResolvedUrl": true,
+    "everyEntryHasIntegrityHash": true,
+    "integrityAlgorithms": ["sha1", "sha512"],
+    "integrityCaveat": "A lockfileVersion 1 file from 2020: some entries carry legacy sha1 integrity rather than sha512. Recorded as found; not upgraded.",
+    "registryHosts": ["registry.npmjs.org"],
+    "detail": "evidence/ingests/react-papercups-v1-0-0/closure.json"
+  },
+  "evidence": {
+    "admission": "evidence/ingests/react-papercups-v1-0-0/admission.json",
+    "license": "evidence/ingests/react-papercups-v1-0-0/license.json",
+    "provenance": "evidence/ingests/react-papercups-v1-0-0/provenance.json",
+    "attempt": "evidence/ingests/react-papercups-v1-0-0/attempt.json",
+    "source": "evidence/ingests/react-papercups-v1-0-0/source.json",
+    "closure": "evidence/ingests/react-papercups-v1-0-0/closure.json",
+    "baseline": "evidence/ingests/react-papercups-v1-0-0/baseline-attempt.json"
+  },
+  "nonclaims": [
+    "This fixture record fixes an identity and a declared legacy cell. It establishes no browser behavior, journey coverage, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "No adapter, transform, or migration lane is declared for this fixture by the unit that ingested it."
+  ]
+}

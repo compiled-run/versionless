@@ -1,0 +1,111 @@
+{
+  "schemaVersion": "versionless.official-source.v1",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "attemptSha256": "d80c9511ecf7f9304767f92f6f37b6c8a1dae3cbb29cd1062bc88123d50f21f6",
+  "result": "source-bound",
+  "startedAt": "2026-08-10T18:47:44.674Z",
+  "completedAt": "2026-08-10T18:47:46.392Z",
+  "repository": {
+    "id": 279895213,
+    "fullName": "papercups-io/papercups",
+    "private": false,
+    "archived": false,
+    "disabled": false,
+    "responseBytes": 6723,
+    "responseSha256": "3dd4609819f8036e85cc6f5fba30ba9808e89c352318047646b2f763ff0c44c5"
+  },
+  "revision": {
+    "ref": "refs/tags/v1.0.0",
+    "tagObjectSha": null,
+    "tagKind": "lightweight",
+    "tagDate": null,
+    "tagVerification": "unsigned",
+    "commitSha": "3546a5f60c52fcc86fe9cbcc3bbac07356ba134f",
+    "commitDate": "2020-07-28T03:11:00Z",
+    "commitVerification": "unsigned",
+    "rootTreeSha": "b931a606a24f0e9f43ac6ddcfb8f6a3b2dc47372",
+    "treeEntries": 205,
+    "treeBlobs": 164,
+    "treeDirectories": 41,
+    "treeSymlinks": 0,
+    "treeGitlinks": 0,
+    "treeTruncated": false
+  },
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/papercups-io/papercups",
+      "status": 200,
+      "bytes": 6723,
+      "sha256": "3dd4609819f8036e85cc6f5fba30ba9808e89c352318047646b2f763ff0c44c5"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/papercups-io/papercups/git/ref/tags/v1.0.0",
+      "status": 200,
+      "bytes": 353,
+      "sha256": "79a9a18dbcf452fca52b0eb74068ee2ad80a3479b468997d8f96e5a8edbcc0c7"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/papercups-io/papercups/git/commits/3546a5f60c52fcc86fe9cbcc3bbac07356ba134f",
+      "status": 200,
+      "bytes": 1160,
+      "sha256": "7b40f83db384eb82fe831225c9e04025c8db62794536ae0f6d95d05eece20708"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/papercups-io/papercups/git/trees/b931a606a24f0e9f43ac6ddcfb8f6a3b2dc47372?recursive=1",
+      "status": 200,
+      "bytes": 50277,
+      "sha256": "e9101c99dffb1737f459575fafae06d11074cd6e937d90d441e4baf76b5f814d"
+    },
+    {
+      "endpoint": "https://codeload.github.com/papercups-io/papercups/tar.gz/3546a5f60c52fcc86fe9cbcc3bbac07356ba134f",
+      "status": 200,
+      "bytes": 436770,
+      "sha256": "f8a6576c0399e1eca5e1936a9e5e5b311798cccf3cb7c6fcce0cecbf8b46ea8f",
+      "stream": 1
+    },
+    {
+      "endpoint": "https://codeload.github.com/papercups-io/papercups/tar.gz/3546a5f60c52fcc86fe9cbcc3bbac07356ba134f",
+      "status": 200,
+      "bytes": 436770,
+      "sha256": "f8a6576c0399e1eca5e1936a9e5e5b311798cccf3cb7c6fcce0cecbf8b46ea8f",
+      "stream": 2
+    }
+  ],
+  "archiveParity": {
+    "singleRoot": "papercups-3546a5f60c52fcc86fe9cbcc3bbac07356ba134f",
+    "safeEntries": 206,
+    "regularFiles": 164,
+    "directories": 42,
+    "specialEntries": 0,
+    "gitBlobs": 164,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "normalizedManifestSha256": "16870d115358834be5d0462ff8ec5708cb05534e226f9ea4e5b9b5dc42999c7d"
+  },
+  "transaction": {
+    "attemptedRequests": 6,
+    "acceptedResponses": 6,
+    "acceptedWireBytes": 932053,
+    "acceptedDecodedBytes": 932053,
+    "redirectsObserved": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "archivesByteIdentical": true,
+    "archiveMatchesGitTree": true,
+    "publishedSource": true,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "cache": {
+    "root": ".versionless/cache/react-papercups-v1-0-0-source",
+    "archive1": ".versionless/cache/react-papercups-v1-0-0-source/archive/archive-1.tar.gz",
+    "archive2": ".versionless/cache/react-papercups-v1-0-0-source/archive/archive-2.tar.gz",
+    "verifiedSource": ".versionless/cache/react-papercups-v1-0-0-source/verify/extracted",
+    "rawMetadataPortable": false
+  },
+  "nonclaims": [
+    "A lightweight or unsigned tag does not establish signer authenticity.",
+    "No dependency closure, build, browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval is established by this record."
+  ]
+}

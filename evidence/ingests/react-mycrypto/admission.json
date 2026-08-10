@@ -1,0 +1,316 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-admission.v1",
+  "unit": "lrapr-t004/t004-b2-candidate-ingest",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "networkMode": "consented",
+  "slug": "react-mycrypto",
+  "evaluatedOn": "2026-08-10",
+  "candidateOrder": [
+    {
+      "rank": 1,
+      "candidate": "MyCryptoHQ/MyCrypto",
+      "slug": "react-mycrypto",
+      "decision": "admitted",
+      "fullyAttempted": true
+    },
+    {
+      "rank": 2,
+      "candidate": "captbaritone/webamp",
+      "slug": "react-webamp",
+      "decision": "not-reached",
+      "fullyAttempted": false,
+      "note": "Rank 1 was admitted and ingested; the packet admits one application, so this candidate was never probed."
+    },
+    {
+      "rank": 3,
+      "candidate": "gothinkster/react-mobx-realworld-example-app",
+      "slug": "react-mobx-realworld",
+      "decision": "not-reached",
+      "fullyAttempted": false,
+      "note": "Rank 1 was admitted and ingested; the packet admits one application, so this candidate was never probed."
+    }
+  ],
+  "admitted": {
+    "repository": "MyCryptoHQ/MyCrypto",
+    "product": "MyCrypto — self-custody Ethereum wallet interface (send, swap, sign, contract interaction, portfolio dashboard)",
+    "ref": "refs/tags/2.5.64",
+    "tagKind": "annotated",
+    "tagObjectSha": "586884b76d6efdc1fea08ed87ac35fc58ada3d7b",
+    "commitSha": "1ff2fef4df5a90bf9ba003070b62a91d6817090f",
+    "commitDate": "2022-02-22T10:09:33Z",
+    "rootTreeSha": "48cd41a404336fddd14780c2445559bfc8e93132",
+    "frontendRoot": "."
+  },
+  "gates": [
+    {
+      "gate": "mit-license-at-pinned-revision",
+      "result": "pass",
+      "evidence": {
+        "rootLicensePath": "LICENSE",
+        "gitBlobSha": "b7436609a8de8a0ac399e5f72b8b259a1ba37f18",
+        "fileSha256": "1b0a4ebe6200441fe008bba2b60bb227b944cd77427b3f9c60f6f7e32120a65d",
+        "spdxHeaderLine": "MIT License",
+        "copyrightLines": [
+          "Copyright (c) 2015-2017 MyEtherWallet LLC",
+          "Copyright (c) 2019 MyCrypto, Inc."
+        ],
+        "quotedGrantOpening": "Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software",
+        "hostReportedSpdxId": "MIT",
+        "verificationMethod": "the LICENSE blob was fetched by sha through the git blob API; its recomputed git blob hash equals the sha recorded in the recursive tree of the pinned commit, so the quoted text is the text at this revision",
+        "manifestLicenseField": null,
+        "otherLicenseFilesInTree": 0,
+        "detail": "see license.json"
+      }
+    },
+    {
+      "gate": "real-substantive-application-not-template-demo-or-library",
+      "result": "pass",
+      "evidence": {
+        "repositoryShape": "single-package application repository: src/ application code, webpack_config/ hand-written build, jest_config/, node-scripts/, spec/, __tests__/, static/",
+        "sourceFilesInSrc": 879,
+        "sourceBytesInSrc": 1969063,
+        "testFiles": 241,
+        "featureAreas": [
+          "AddAccount",
+          "BroadcastTransaction",
+          "BuyAssets",
+          "Dashboard",
+          "DeFiZap",
+          "DeployContracts",
+          "DevTools",
+          "Ens",
+          "Faucet",
+          "InteractWithContracts",
+          "NFT",
+          "ProtectTransaction",
+          "PurchaseMembership",
+          "RequestAssets",
+          "SendAssets",
+          "Settings",
+          "SignAndVerifyMessage",
+          "SwapAssets",
+          "TokenMigration",
+          "TxStatus"
+        ],
+        "publishedAsLibrary": false,
+        "isStarterTemplate": false,
+        "notes": "This is the shipped MyCrypto web wallet, not a scaffold or a demo. It carries its own state layer (redux, redux-saga, redux-persist), a large component library under src/components, and an end-to-end suite driven by testcafe."
+      }
+    },
+    {
+      "gate": "react-15-to-17",
+      "result": "pass",
+      "evidence": {
+        "declaredReact": "17.0.2",
+        "declaredReactDom": "17.0.2",
+        "pinnedExactly": true,
+        "declaredReactRouterDom": "5.1.2",
+        "declaredReactRedux": "7.2.4",
+        "source": "package.json at the pinned revision (git blob 783511e29d225f7e4dd8272bbb6137b75a3888f6)"
+      }
+    },
+    {
+      "gate": "webpack-le-4-or-create-react-app",
+      "result": "pass",
+      "evidence": {
+        "toolchain": "raw webpack with a hand-written configuration; not create-react-app, not ejected from it",
+        "declaredWebpack": "4.46.0",
+        "declaredWebpackCli": "3.3.10",
+        "declaredWebpackDevServer": "3.10.1",
+        "declaredWebpackMerge": "4.2.2",
+        "pinnedExactly": true,
+        "configFiles": [
+          "webpack_config/common.js",
+          "webpack_config/config.js",
+          "webpack_config/development.js",
+          "webpack_config/production.js",
+          "webpack_config/utils.js",
+          "webpack_config/plugins/delay.js"
+        ],
+        "buildScript": "cross-env TARGET_ENV=default webpack --config webpack_config/production.js",
+        "devScript": "cross-env NODE_ENV=development TARGET_ENV=local webpack-dev-server --config webpack_config/development.js",
+        "reactScriptsPresent": false
+      }
+    },
+    {
+      "gate": "pinned-revision-at-least-three-years-old",
+      "result": "pass",
+      "evidence": {
+        "ref": "refs/tags/2.5.64",
+        "commitSha": "1ff2fef4df5a90bf9ba003070b62a91d6817090f",
+        "commitDate": "2022-02-22T10:09:33Z",
+        "tagDate": "2022-02-24T18:40:37Z",
+        "evaluatedOn": "2026-08-10",
+        "ageYearsApproximate": 4.47,
+        "tagKind": "annotated",
+        "tagVerification": "unsigned",
+        "commitVerification": "the host reports the pinned commit as carrying a verified signature",
+        "unknownPreserved": "The annotated tag itself carries no signature, so it establishes no signer identity. The host's report about the commit signature was recorded as received and not independently verified against a key this unit holds."
+      }
+    },
+    {
+      "gate": "browser-ui-plausibly-supporting-three-or-more-substantive-user-journeys",
+      "result": "pass",
+      "evidence": {
+        "routerLibrary": "react-router-dom 5.1.2",
+        "routeDefinitionFile": "src/config/routePaths.ts",
+        "declaredRoutePaths": [
+          "/",
+          "/buy",
+          "/dashboard",
+          "/add-account",
+          "/create-wallet",
+          "/download-desktop-app",
+          "/no-accounts",
+          "/request",
+          "/send",
+          "/defi/zap",
+          "/settings",
+          "/settings/import",
+          "/settings/export",
+          "/swap",
+          "/sign-message",
+          "/verify-message",
+          "/broadcast-transaction",
+          "/interact-with-contracts",
+          "/deploy-contracts",
+          "/membership",
+          "/membership/buy",
+          "/ens",
+          "/tx-status",
+          "/migrate",
+          "/faucet",
+          "/nft-dashboard"
+        ],
+        "routeCount": 26,
+        "candidateJourneys": [
+          {
+            "journey": "Add or create an account and land on the portfolio dashboard",
+            "surfaces": [
+              "src/features/AddAccount",
+              "src/features/Dashboard",
+              "src/routing/PrivateRoute.tsx"
+            ],
+            "routes": ["/add-account", "/create-wallet", "/dashboard", "/no-accounts"]
+          },
+          {
+            "journey": "Compose and send a transaction, then follow its status",
+            "surfaces": ["src/features/SendAssets", "src/features/TxStatus"],
+            "routes": ["/send", "/tx-status"]
+          },
+          {
+            "journey": "Request assets and inspect the receiving address",
+            "surfaces": ["src/features/RequestAssets"],
+            "routes": ["/request"]
+          },
+          {
+            "journey": "Sign a message and verify a signed message",
+            "surfaces": ["src/features/SignAndVerifyMessage"],
+            "routes": ["/sign-message", "/verify-message"]
+          },
+          {
+            "journey": "Interact with or deploy a contract from the interface",
+            "surfaces": ["src/features/InteractWithContracts", "src/features/DeployContracts"],
+            "routes": ["/interact-with-contracts", "/deploy-contracts"]
+          },
+          {
+            "journey": "Manage settings, including importing and exporting the local account store",
+            "surfaces": ["src/features/Settings"],
+            "routes": ["/settings", "/settings/import", "/settings/export"]
+          },
+          {
+            "journey": "Swap assets",
+            "surfaces": ["src/features/SwapAssets"],
+            "routes": ["/swap"]
+          }
+        ],
+        "journeyCount": 7,
+        "knownRisk": "Several of these journeys are coupled to an Ethereum JSON-RPC node and to third-party pricing and swap APIs. Whether any journey can be exercised offline is unknown and untested here.",
+        "unknownPreserved": "Journeys are read from route definitions and feature directories at the pinned revision. No journey was executed in a browser by this unit, and none is claimed to work."
+      }
+    }
+  ],
+  "scoutClaimsRechecked": {
+    "note": "The packet carried a prior read-only scout's findings. Each was re-verified against the pinned revision by this unit rather than accepted.",
+    "results": [
+      {
+        "claim": "LICENSE at this tag is MIT",
+        "verdict": "confirmed",
+        "how": "LICENSE blob fetched by sha, git blob hash recomputed and matched against the recursive tree"
+      },
+      {
+        "claim": "React 17",
+        "verdict": "confirmed",
+        "how": "react and react-dom both pinned to 17.0.2 in package.json at the pinned revision"
+      },
+      {
+        "claim": "raw webpack 4.46 with webpack-cli 3, hand-rolled config, no CRA",
+        "verdict": "confirmed",
+        "how": "webpack 4.46.0 and webpack-cli 3.3.10 in devDependencies; six configuration files under webpack_config/; no react-scripts anywhere in the manifest"
+      },
+      {
+        "claim": "commit 1ff2fef4df5a90bf9ba003070b62a91d6817090f is tag 2.5.64",
+        "verdict": "confirmed",
+        "how": "the annotated tag object was dereferenced and its target commit sha equals the packet's commit"
+      },
+      {
+        "claim": "an Electron target shares the repository",
+        "verdict": "not-observed-at-this-revision",
+        "how": "no electron dependency and no desktop or electron directory exists in the tree at 2.5.64; the repository instead carries a /download-desktop-app route that points elsewhere. Recorded as a difference from the packet's stated risk, not as a contradiction of the packet's intent."
+      },
+      {
+        "claim": "node-polyfill-heavy crypto dependencies",
+        "verdict": "consistent-with-observation",
+        "how": "77 runtime dependencies and 128 development dependencies, with a hand-written webpack 4 configuration; the closure was not audited for polyfill shape by this unit"
+      }
+    ]
+  },
+  "graveyardCheck": {
+    "candidateSlug": "react-mycrypto",
+    "priorIngestDirectories": 31,
+    "candidateMatchesExisting": false,
+    "note": "No directory under evidence/ingests and no fixture under fixtures matches MyCrypto or this slug at the time of admission."
+  },
+  "remoteAccess": {
+    "policy": "acquisition only, purpose-bound, GET only, identity encoding, no credentials, no redirects followed, no retries",
+    "hostsTouched": ["api.github.com", "codeload.github.com", "registry.npmjs.org", "registry.yarnpkg.com"],
+    "records": [
+      {
+        "phase": "admission-gate-probe",
+        "url": "probe-ledger.ndjson",
+        "note": "Seven ledgered GETs — repository metadata, the tag ref, the annotated tag object, the commit, the recursive tree, the LICENSE blob, and the package.json blob — each with status, byte count, and sha256."
+      },
+      {
+        "phase": "acquisition",
+        "url": "https://codeload.github.com/MyCryptoHQ/MyCrypto/tar.gz/1ff2fef4df5a90bf9ba003070b62a91d6817090f",
+        "note": "Fetched twice; both streams 3537730 bytes with sha256 62eea670ce0ebd6c0c56c60bfc85ac1311a6f4291375ac1abb45508412fc1ccd. See source.json#requests."
+      },
+      {
+        "phase": "baseline-toolchain",
+        "url": "https://registry.npmjs.org/yarn/-/yarn-1.22.19.tgz",
+        "status": 200,
+        "bytes": 1244259,
+        "sha256": "732620bac8b1690d507274f025f3c6cfdc3627a84d9642e38a07452cc00e0f2e",
+        "note": "The repository declares yarn >= 1.19.1 and ships only a yarn lockfile, so yarn classic was acquired to run the baseline."
+      },
+      {
+        "phase": "baseline-install",
+        "url": "https://registry.yarnpkg.com/",
+        "note": "Reached only by the deviation install recorded in baseline-deviation.json. Per-artifact byte digests were not independently mirrored by this unit; yarn enforced the lockfile-declared integrity hashes. See closure.json."
+      }
+    ],
+    "reusedOffline": [
+      {
+        "artifact": "node-v16.20.2-darwin-arm64",
+        "sha256": "6a5c4108475871362d742b988566f3fe307f6a67ce14634eb3fbceb4f9eea88c",
+        "note": "Taken from the runtime already pinned in this workspace. No network request was made for it."
+      }
+    ]
+  },
+  "nonclaims": [
+    "Admission records that the gates were evaluated against the pinned revision; it establishes no migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "No browser journey was executed and no journey is asserted to work.",
+    "Licence findings cover the repository's own files at the pinned revision only, not its transitive dependency closure.",
+    "Ranks 2 and 3 were never probed, so nothing here is a finding about them."
+  ]
+}

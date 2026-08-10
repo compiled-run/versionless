@@ -1,0 +1,89 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-admission-attempt.v1",
+  "unit": "lrapr-t1/t004-b1-candidate-ingest-b",
+  "slug": "react-phoenix-trello",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "networkMode": "consented",
+  "rank": 3,
+  "candidate": {
+    "repository": "bigardone/phoenix-trello",
+    "product": "Phoenix Trello — a Trello tribute built with Elixir, the Phoenix Framework, React and Redux",
+    "suggestedEra": "webpack-era React + Redux frontend inside a Phoenix application"
+  },
+  "purpose": "Admit and immutably ingest one webpack/CRA-era legacy React MIT application for the Versionless production-readiness portfolio (T004, tranche one).",
+  "phase": "admission-gate-probe",
+  "result": "started",
+  "network": {
+    "method": "GET",
+    "credentials": "none",
+    "requestEncoding": "identity",
+    "redirectsAllowed": false,
+    "retriesAllowed": false,
+    "alternateHostsAllowed": false,
+    "scope": "acquisition-only; every step after acquisition is offline"
+  },
+  "allowlist": [
+    "https://api.github.com/repos/bigardone/phoenix-trello",
+    "https://api.github.com/repos/bigardone/phoenix-trello/git/ref/heads/master",
+    "https://api.github.com/repos/bigardone/phoenix-trello/git/commits/<validated-commit-sha>",
+    "https://api.github.com/repos/bigardone/phoenix-trello/tags?per_page=100",
+    "https://api.github.com/repos/bigardone/phoenix-trello/git/ref/tags/<validated-tag-name>",
+    "https://api.github.com/repos/bigardone/phoenix-trello/git/trees/<validated-tree-sha>?recursive=1",
+    "https://api.github.com/repos/bigardone/phoenix-trello/git/blobs/<validated-blob-sha>",
+    "https://api.github.com/repos/bigardone/phoenix-trello/branches?per_page=100"
+  ],
+  "notReached": [
+    "https://codeload.github.com/bigardone/phoenix-trello/tar.gz/<validated-commit-sha> (archive, two byte-identical streams) — never requested, because the candidate failed the React version gate before acquisition"
+  ],
+  "gateOrder": [
+    "mit-license-at-pinned-revision",
+    "real-substantive-application-not-template-demo-or-library",
+    "react-15-to-17",
+    "webpack-le-4-or-create-react-app",
+    "pinned-revision-at-least-about-three-years-old",
+    "browser-ui-with-at-least-three-substantive-user-journeys"
+  ],
+  "gatePolicy": {
+    "shortCircuit": false,
+    "note": "For this candidate the licence gate passed, so every remaining gate was evaluated from the pinned tree rather than short-circuiting on the first failure. Evaluating them all costs only blob reads and produces a more useful terminal record for the reviewer."
+  },
+  "revisionSelection": {
+    "rule": "prefer the newest pinnable revision that carries the fullest application state",
+    "considered": [
+      {
+        "kind": "tag",
+        "name": "1.1.0",
+        "commitSha": "c374aad30b302ad89ab0bc546da9422ff5d51375",
+        "committerDate": "2016-02-08T20:35:15Z"
+      },
+      {
+        "kind": "tag",
+        "name": "1.0.0 / v1.0 / v++1.0",
+        "commitSha": "b9b2b89a24801e31e81293a7c08d4297dfeb13fa",
+        "committerDate": "not-fetched"
+      },
+      {
+        "kind": "branch-head",
+        "name": "master",
+        "commitSha": "60c874de63126b5659a42ef8e05846ca16e3e30a",
+        "committerDate": "2016-09-24T10:40:11Z"
+      }
+    ],
+    "selected": {
+      "kind": "branch-head",
+      "ref": "refs/heads/master",
+      "commitSha": "60c874de63126b5659a42ef8e05846ca16e3e30a"
+    },
+    "rationale": "Every tag in this repository is older than the default-branch head, so pinning a tag would have pinned a strictly earlier and less complete state of the application. The packet permits pinning either a tag or a commit; the head commit sha is just as immutable as a tag object and is the newest state the project ever reached."
+  },
+  "publication": {
+    "evidenceRoot": "evidence/ingests/react-phoenix-trello",
+    "probeCacheRoot": ".versionless/cache/react-phoenix-trello-probe",
+    "transactional": true,
+    "readinessCredit": false
+  },
+  "nonclaims": [
+    "Starting this probe establishes no licence, revision identity, source integrity, dependency closure, framework version, build, browser behaviour, migration feasibility, pilot status, or production readiness.",
+    "The candidate was supplied to this unit as an unverified suggestion; only the admission gates decide."
+  ]
+}

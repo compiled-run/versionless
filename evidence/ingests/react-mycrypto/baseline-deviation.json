@@ -1,0 +1,64 @@
+{
+ "schemaVersion": "versionless.legacy-baseline-deviation.v1",
+ "slug": "react-mycrypto",
+ "relationship": "This is NOT the declared baseline. baseline-attempt.json holds the declared baseline, in which yarn refused to install because the repository pins Node 12.14.1 exactly. This record exists only to say what happens when that engine gate is overridden.",
+ "deviation": {
+  "flag": "--ignore-engines",
+  "effect": "suppresses the yarn engine check that otherwise refuses the install outside Node 12.14.1",
+  "appliedBy": "this ingest unit, deliberately and only in this separate record"
+ },
+ "cell": {
+  "node": "v16.20.2",
+  "yarn": "1.22.19",
+  "platform": "darwin-arm64",
+  "lifecycleScripts": "disabled for install (--ignore-scripts)"
+ },
+ "workRoot": ".versionless/work/react-mycrypto/legacy",
+ "steps": [
+  {
+   "name": "install-with-engine-check-overridden",
+   "command": "yarn install --frozen-lockfile --ignore-scripts --ignore-engines --non-interactive",
+   "startedAt": "2026-08-10T19:27:37.329Z",
+   "durationMs": 62800,
+   "exitCode": 0,
+   "signal": null,
+   "outcome": "succeeded",
+   "stdoutBytes": 156,
+   "stderrBytes": 3427,
+   "stdoutSha256": "95eaad2430ce593e7965030bcfd698ff630d358eb80c551131d59d4ab8b8eee2",
+   "stderrSha256": "637956280a663e65d10399897d488d335da7a3be0baa365f9583331011cf46f6",
+   "stdoutTail": "yarn install v1.22.19\n[1/4] Resolving packages...\n[2/4] Fetching packages...\n[3/4] Linking dependencies...\n[4/4] Building fresh packages...\nDone in 62.60s.\n",
+   "stderrTail": "6.8.4\".\nwarning \" > toasted-notes@3.2.0\" has incorrect peer dependency \"react-dom@^16.8.4\".\nwarning \"toasted-notes > @reach/alert@0.1.5\" has incorrect peer dependency \"react@^16.8.0\".\nwarning \"toasted-notes > @reach/alert@0.1.5\" has incorrect peer dependency \"react-dom@^16.8.0\".\nwarning \"toasted-notes > @reach/alert > @reach/component-component@0.1.3\" has unmet peer dependency \"prop-types@^15.6.2\".\nwarning \"toasted-notes > @reach/alert > @reach/component-component@0.1.3\" has incorrect peer dependency \"react@^16.4.0\".\nwarning \"toasted-notes > @reach/alert > @reach/component-component@0.1.3\" has incorrect peer dependency \"react-dom@^16.4.0\".\nwarning \"toasted-notes > @reach/alert > @reach/visually-hidden@0.1.4\" has incorrect peer dependency \"react@^16.8.0\".\nwarning \"toasted-notes > @reach/alert > @reach/visually-hidden@0.1.4\" has incorrect peer dependency \"react-dom@^16.8.0\".\nwarning \" > @nomiclabs/hardhat-ethers@2.0.2\" has unmet peer dependency \"ethers@^5.0.0\".\nwarning \" > @phenomnomnominal/tsquery@4.0.0\" has incorrect peer dependency \"typescript@^3\".\nwarning \" > @pmmmwh/react-refresh-webpack-plugin@0.4.3\" has incorrect peer dependency \"react-refresh@>=0.8.3 <0.10.0\".\nwarning \"@storybook/addon-actions > @storybook/api > @reach/router@1.3.4\" has incorrect peer dependency \"react@15.x || 16.x || 16.4.0-alpha.0911da3\".\nwarning \"@storybook/addon-actions > @storybook/api > @reach/router@1.3.4\" has incorrect peer dependency \"react-dom@15.x || 16.x || 16.4.0-alpha.0911da3\".\nwarning \" > @storybook/addon-storyshots@6.2.9\" has unmet peer dependency \"svelte@*\".\nwarning \" > @storybook/addon-storyshots@6.2.9\" has unmet peer dependency \"vue-jest@*\".\nwarning \"@storybook/addon-storyshots > react-test-renderer@17.0.1\" has incorrect peer dependency \"react@17.0.1\".\nwarning \" > react-inlinesvg@2.0.1\" has incorrect peer dependency \"react@^16.8.0\".\nwarning \"react-inlinesvg > react-from-dom@0.4.2\" has incorrect peer dependency \"react@^15.0.0 || ^16.0.0\".\nwarning Ignored scripts due to flag.\n"
+  },
+  {
+   "name": "build-with-engine-check-overridden",
+   "command": "yarn build --ignore-engines",
+   "startedAt": "2026-08-10T19:28:40.130Z",
+   "durationMs": 116,
+   "exitCode": 1,
+   "signal": null,
+   "outcome": "failed",
+   "stdoutBytes": 103,
+   "stderrBytes": 176,
+   "stdoutSha256": "6460c1c65e1e0c92ef2021163dbefd36ae7b174fc6934cf7e9daaf549a3b50a1",
+   "stderrSha256": "a83843ade6f3103e4375f21751faf08841bb2baa1bb8c7ce6dd7fe934bfd8cc0",
+   "stdoutTail": "yarn run v1.22.19\ninfo Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.\n",
+   "stderrTail": "error MyCrypto@2.2.5: The engine \"node\" is incompatible with this module. Expected version \"12.14.1\". Got \"16.20.2\"\nerror Commands cannot run with an incompatible environment.\n",
+   "interpretation": "yarn classic consumes --ignore-engines only when it appears before the script name. Placed after it, the flag was forwarded to the script and yarn applied its engine check to the run command, refusing it for the same reason as the declared baseline. The step is recorded as it ran; it was not re-issued with the flag moved."
+  }
+ ],
+ "outcome": "failed",
+ "nonclaims": [
+  "Overriding the engine gate does not make Node 16.20.2 the declared cell, and nothing here is evidence about behavior in the declared Node 12.14.1 cell.",
+  "A recorded install or build outcome establishes no browser behavior, journey coverage, migration feasibility, pilot status, or production readiness.",
+  "With lifecycle scripts disabled, native postinstall steps did not run; an install recorded here is not a working development environment."
+ ],
+ "installArtifacts": {
+  "root": ".versionless/work/react-mycrypto/legacy/node_modules",
+  "installedPackageDirectories": 2233,
+  "scopeDirectories": 46,
+  "lockedEntriesInLockfile": 2905,
+  "note": "Directory count is a placement count from the linked tree, not a claim that every locked entry was materialised."
+ },
+ "buildNotAttemptedFurther": "No further build variation was attempted inside this unit budget, so whether this project builds under Node 16.20.2 remains unknown."
+}

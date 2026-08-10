@@ -1,0 +1,129 @@
+{
+ "schemaVersion": "versionless.official-source.v1",
+ "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+ "attemptSha256": "8911238f816ea4d9540d4a3d83f5964de86c241460cd570ce376b387ec06193b",
+ "result": "source-bound",
+ "startedAt": "2026-08-10T19:21:23.416Z",
+ "completedAt": "2026-08-10T19:23:26.700Z",
+ "repository": {
+  "id": 75510908,
+  "fullName": "MyCryptoHQ/MyCrypto",
+  "private": false,
+  "archived": false,
+  "disabled": false,
+  "responseBytes": 6663,
+  "responseSha256": "f47e8c04405edefbd8405dabf59ca5bc12b2578eda5136318ad56f1c83ed14f6"
+ },
+ "revision": {
+  "ref": "refs/tags/2.5.64",
+  "tagObjectSha": "586884b76d6efdc1fea08ed87ac35fc58ada3d7b",
+  "tagKind": "annotated",
+  "tagDate": "2022-02-24T18:40:37Z",
+  "tagVerification": "unsigned",
+  "commitSha": "1ff2fef4df5a90bf9ba003070b62a91d6817090f",
+  "commitDate": "2022-02-22T10:09:33Z",
+  "commitVerification": "verified-signature-reported-by-host",
+  "rootTreeSha": "48cd41a404336fddd14780c2445559bfc8e93132",
+  "treeEntries": 1822,
+  "treeBlobs": 1613,
+  "treeDirectories": 209,
+  "treeSymlinks": 0,
+  "treeGitlinks": 0,
+  "treeTruncated": false
+ },
+ "requests": [
+  {
+   "endpoint": "https://api.github.com/repos/MyCryptoHQ/MyCrypto",
+   "status": 200,
+   "bytes": 6663,
+   "sha256": "f47e8c04405edefbd8405dabf59ca5bc12b2578eda5136318ad56f1c83ed14f6"
+  },
+  {
+   "endpoint": "https://api.github.com/repos/MyCryptoHQ/MyCrypto/git/ref/tags/2.5.64",
+   "status": 200,
+   "bytes": 341,
+   "sha256": "129fa17cfdb730fb25622485b37accc98f7b7765832fa0b1b047a10c0e22df3a"
+  },
+  {
+   "endpoint": "https://api.github.com/repos/MyCryptoHQ/MyCrypto/git/tags/586884b76d6efdc1fea08ed87ac35fc58ada3d7b",
+   "status": 200,
+   "bytes": 681,
+   "sha256": "32f2167685c3f435ed9b86439f2fa99cf80536a6d73c3873fcbac61b0b7525d0"
+  },
+  {
+   "endpoint": "https://api.github.com/repos/MyCryptoHQ/MyCrypto/git/commits/1ff2fef4df5a90bf9ba003070b62a91d6817090f",
+   "status": 200,
+   "bytes": 2162,
+   "sha256": "3657e17dd85d64c119ffe57fdf03fdc44510710d261985949bd23ebd595c72fe"
+  },
+  {
+   "endpoint": "https://api.github.com/repos/MyCryptoHQ/MyCrypto/git/trees/48cd41a404336fddd14780c2445559bfc8e93132?recursive=1",
+   "status": 200,
+   "bytes": 451996,
+   "sha256": "9b0dd512b0ba65b76283930f5897e45861bf8e6f7e8e3d0ce0053986017a20d1"
+  },
+  {
+   "endpoint": "https://api.github.com/repos/MyCryptoHQ/MyCrypto/git/blobs/b7436609a8de8a0ac399e5f72b8b259a1ba37f18",
+   "status": 200,
+   "bytes": 1826,
+   "sha256": "42d76193b939de69eb32f1a4a1abf43bcdc2258a3c9634953fe5828191ffd684"
+  },
+  {
+   "endpoint": "https://api.github.com/repos/MyCryptoHQ/MyCrypto/git/blobs/783511e29d225f7e4dd8272bbb6137b75a3888f6",
+   "status": 200,
+   "bytes": 13950,
+   "sha256": "b93f754c317b13b0253adede5f72f75b872fef7e306651e31e0b4bf176543a85"
+  },
+  {
+   "endpoint": "https://codeload.github.com/MyCryptoHQ/MyCrypto/tar.gz/1ff2fef4df5a90bf9ba003070b62a91d6817090f",
+   "status": 200,
+   "bytes": 3537730,
+   "sha256": "62eea670ce0ebd6c0c56c60bfc85ac1311a6f4291375ac1abb45508412fc1ccd",
+   "stream": 1
+  },
+  {
+   "endpoint": "https://codeload.github.com/MyCryptoHQ/MyCrypto/tar.gz/1ff2fef4df5a90bf9ba003070b62a91d6817090f",
+   "status": 200,
+   "bytes": 3537730,
+   "sha256": "62eea670ce0ebd6c0c56c60bfc85ac1311a6f4291375ac1abb45508412fc1ccd",
+   "stream": 2
+  }
+ ],
+ "archiveParity": {
+  "singleRoot": "MyCrypto-1ff2fef4df5a90bf9ba003070b62a91d6817090f",
+  "regularFiles": 1613,
+  "directories": 209,
+  "specialEntries": 0,
+  "gitBlobs": 1613,
+  "missingFiles": 0,
+  "extraFiles": 0,
+  "mismatchedBlobs": 0,
+  "normalizedManifestSha256": "30a28d5274bac1be2f3e3415de16395dbe5da94536151b274f917d8295b66835"
+ },
+ "transaction": {
+  "attemptedRequests": 9,
+  "acceptedResponses": 9,
+  "acceptedWireBytes": 7553079,
+  "acceptedDecodedBytes": 7553079,
+  "redirectsObserved": 0,
+  "setCookiesUsed": 0,
+  "retries": 0,
+  "archivesByteIdentical": true,
+  "archiveMatchesGitTree": true,
+  "publishedSource": true,
+  "readinessCredit": false,
+  "implementationStarted": false
+ },
+ "cache": {
+  "root": ".versionless/cache/react-mycrypto-source",
+  "archive1": ".versionless/cache/react-mycrypto-source/archive/archive-1.tar.gz",
+  "archive2": ".versionless/cache/react-mycrypto-source/archive/archive-2.tar.gz",
+  "verifiedSource": ".versionless/cache/react-mycrypto-source/verify/extracted",
+  "rawMetadataPortable": false
+ },
+ "nonclaims": [
+  "The annotated tag carries no signature, so it establishes no signer authenticity. The host reports the pinned commit as carrying a verified signature; that report is recorded as received and was not independently checked against a key this unit holds.",
+  "No dependency closure, build, browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval is established by this record.",
+  "Upstream authorship identifiers present in the tag and commit metadata were deliberately not copied into this evidence."
+ ]
+}

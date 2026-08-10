@@ -12,6 +12,12 @@ import { verifyAngularPhonecatComposed } from './fixture/angular-phonecat-compos
 import { verifyAngularPhonecatVite8 } from './fixture/angular-phonecat-vite8-run.ts';
 import { verifyAngularPhonecatRouteResolve } from './fixture/angular-phonecat-route-resolve-run.ts';
 import { ingestFixture } from './fixture/ingest.ts';
+import {
+	ingestLegacyCandidate,
+	isLegacyCandidateId,
+	legacyCandidateConfig,
+} from './fixture/legacy-candidate-ingest.ts';
+import { verifyLegacyCandidateEvidence } from './fixture/legacy-candidate-verify.ts';
 import { ingestReactBoilerplateNode24 } from './fixture/react-boilerplate-v4-node24-ingest.ts';
 import { verifyReactBoilerplateNode24 } from './fixture/react-boilerplate-v4-node24-run.ts';
 import { verifyReactBoilerplateVite8 } from './fixture/react-boilerplate-v4-vite8-run.ts';
@@ -44,8 +50,10 @@ const valueAfter = (flag: string): string | undefined => {
 try {
 	if (command === 'fixture:ingest') {
 		const fixture = valueAfter('--fixture');
-		const ingest =
-			fixture === 'angular-phonecat'
+		const ingest = isLegacyCandidateId(fixture)
+			? (options: { allowNetwork: boolean; consentId?: string }) =>
+					ingestLegacyCandidate({ ...options, fixture })
+			: fixture === 'angular-phonecat'
 				? ingestAngularPhonecat
 				: fixture === 'react-realworld-cra1-vite8'
 					? ingestReactRealworld
@@ -58,6 +66,7 @@ try {
 				'react-boilerplate-v4-node24',
 				'react-realworld-cra1-vite8',
 				'angular-phonecat',
+				'react-papercups-v1-0-0',
 			].includes(fixture ?? '')
 		)
 			throw new Error('Unsupported fixture');
@@ -70,6 +79,20 @@ try {
 				result: 'ingested',
 				fixture: result.manifest.id,
 				consentId: result.consent.consentId,
+			}),
+		);
+	} else if (command === 'fixture:verify' && isLegacyCandidateId(valueAfter('--fixture'))) {
+		if (!args.includes('--offline'))
+			throw new Error('Legacy corpus evidence verification requires --offline');
+		const verification = await verifyLegacyCandidateEvidence(
+			legacyCandidateConfig(valueAfter('--fixture')),
+		);
+		console.log(
+			JSON.stringify({
+				result: 'pass',
+				fixture: verification.fixture,
+				checks: verification.checks.length,
+				digest: verification.digest,
 			}),
 		);
 	} else if (command === 'fixture:verify') {

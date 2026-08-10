@@ -1,0 +1,90 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-rights.v1",
+  "slug": "react-mycrypto",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "revision": {
+    "repository": "MyCryptoHQ/MyCrypto",
+    "ref": "refs/tags/2.5.64",
+    "tagObjectSha": "586884b76d6efdc1fea08ed87ac35fc58ada3d7b",
+    "commitSha": "1ff2fef4df5a90bf9ba003070b62a91d6817090f",
+    "rootTreeSha": "48cd41a404336fddd14780c2445559bfc8e93132"
+  },
+  "declaration": {
+    "identifier": "MIT",
+    "identifierSource": "verbatim MIT text in the repository root LICENSE file at the pinned revision",
+    "copyrightNotice": [
+      "Copyright (c) 2015-2017 MyEtherWallet LLC",
+      "Copyright (c) 2019 MyCrypto, Inc."
+    ],
+    "hostReportedSpdxId": "MIT",
+    "hostReportedSpdxSource": "https://api.github.com/repos/MyCryptoHQ/MyCrypto (license.spdx_id), recorded as reported by the host and independently confirmed against the LICENSE blob below",
+    "manifestLicenseField": null,
+    "manifestLicenseFieldNote": "The root package.json at the pinned revision declares no license field. The MIT grant is established by the LICENSE file, not by the manifest.",
+    "dualLicensed": false,
+    "sourceAvailableCarveOut": false
+  },
+  "quotedGrant": "MIT License\n\nCopyright (c) 2015-2017 MyEtherWallet LLC\nCopyright (c) 2019 MyCrypto, Inc.\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n",
+  "artifacts": [
+    {
+      "path": "LICENSE",
+      "role": "repository-root-licence",
+      "gitBlobSha": "b7436609a8de8a0ac399e5f72b8b259a1ba37f18",
+      "bytes": 1113,
+      "sha256": "1b0a4ebe6200441fe008bba2b60bb227b944cd77427b3f9c60f6f7e32120a65d",
+      "firstLine": "MIT License",
+      "permissionGrantPresent": true,
+      "noticeRetentionClausePresent": true,
+      "warrantyDisclaimerPresent": true,
+      "verification": "the blob was fetched by sha from the git blob API and its recomputed git blob hash equals the sha recorded in the recursive tree at the pinned revision"
+    },
+    {
+      "path": "package.json",
+      "role": "root-manifest",
+      "gitBlobSha": "783511e29d225f7e4dd8272bbb6137b75a3888f6",
+      "bytes": 9912,
+      "sha256": "b88b3fbc012567042fa499f41db57c897298ccc60e151ee3f0c387fa82655772",
+      "licenseField": null,
+      "privateField": null
+    }
+  ],
+  "inventory": {
+    "licenceFilesInTree": 1,
+    "additionalLicenceOrNoticeFiles": 0,
+    "committedNodeModules": 0,
+    "committedDistDirectories": 0,
+    "note": "The recursive tree at the pinned revision contains exactly one file matching a licence, copying, or notice name, and no vendored dependency or built-output directories."
+  },
+  "closureRightsCaveat": {
+    "gitSourcedDependencies": [
+      "js-md5 (MyCryptoHQ fork, pinned by git commit)",
+      "js-sha1 (MyCryptoHQ fork, pinned by git commit)",
+      "uuid-by-string (MyCryptoHQ fork, pinned by git commit)"
+    ],
+    "position": "Three lockfile entries resolve to git tarballs rather than a registry and carry no integrity hash. Their own licence terms were not evaluated by this unit.",
+    "unknownPreserved": "The licence status of the dependency closure, including these three forks, is unknown to this record."
+  },
+  "retainedAssetRights": {
+    "reviewed": true,
+    "brandedAssets": [
+      "src/assets (MyCrypto brand marks and product imagery)",
+      "static (favicon and web app manifest assets)"
+    ],
+    "position": "MyCrypto and MyEtherWallet brand marks remain under upstream ownership. They are carried only as part of the immutable source archive and are not relicensed, rebranded, or reused as Versionless assets.",
+    "unknownPreserved": "Trademark rights are separate from the MIT copyright grant and are neither established nor disclaimed here."
+  },
+  "sensitiveMaterialHandling": {
+    "applicationClass": "cryptocurrency wallet",
+    "policy": "No key material, mnemonic, seed phrase, private key, keystore, or address fixture from the upstream repository was copied into this evidence directory. Only digests, counts, path names, route paths, and the LICENSE text were recorded.",
+    "upstreamTestMaterialNotCopied": true,
+    "authorshipIdentifiersNotCopied": "Tagger and committer names and email addresses returned by the host were read during verification and deliberately not written into this evidence."
+  },
+  "obligations": [
+    "Retain the MIT notice and permission text, including both copyright lines, in any copy or substantial portion of the source.",
+    "The MIT grant covers the repository's own files at the pinned revision; each dependency in the closure carries its own terms, which this record does not evaluate."
+  ],
+  "nonclaims": [
+    "This is a record of the licence text present at the pinned revision, not a legal opinion, licence-compatibility finding, or legal approval.",
+    "No licence determination is made for the transitive dependency closure.",
+    "Nothing here bears on the regulatory or custodial status of a wallet application."
+  ]
+}

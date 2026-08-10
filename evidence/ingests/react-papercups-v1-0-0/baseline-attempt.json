@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "versionless.legacy-baseline-attempt.v1",
+  "slug": "react-papercups-v1-0-0",
+  "cell": {
+    "node": "v16.20.2",
+    "npm": "8.19.4",
+    "platform": "darwin-arm64",
+    "lifecycleScripts": "disabled for install (--ignore-scripts)",
+    "network": "npm registry reachable during the consented acquisition window only"
+  },
+  "workRoot": ".versionless/work/react-papercups-v1-0-0/legacy",
+  "steps": [
+    {
+      "name": "install",
+      "command": "npm ci --ignore-scripts --no-audit --no-fund",
+      "startedAt": "2026-08-10T18:48:40.541Z",
+      "durationMs": 16829,
+      "exitCode": 0,
+      "signal": null,
+      "outcome": "succeeded",
+      "stdoutBytes": 28,
+      "stderrBytes": 13043,
+      "stdoutSha256": "de3c7e2e8195ca6bcfa977fba35251f4513b4fdbcad875f195d9ed281a71031e",
+      "stderrSha256": "8200b757753284a222a845b8ead3fbfbb3de170f9dc5da51a6f73a4506df9652",
+      "stdoutTail": "added 1989 packages in 17s",
+      "stderrTail": "npm WARN deprecated @hapi/topo@3.1.6: This version has been deprecated and is no longer supported or maintained\nnpm WARN deprecated @hapi/bourne@1.3.2: This version has been deprecated and is no longer supported or maintained\nnpm WARN deprecated @hapi/hoek@8.5.1: This version has been deprecated and is no longer supported or maintained\nnpm WARN deprecated @hapi/joi@15.1.1: Switch to 'npm install joi'\nnpm WARN deprecated @babel/plugin-proposal-class-properties@7.10.4: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-class-properties instead.\nnpm WARN deprecated @babel/plugin-proposal-unicode-property-regex@7.10.4: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-unicode-property-regex instead.\nnpm WARN deprecated @babel/plugin-proposal-private-methods@7.10.4: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-private-methods instead.\nnpm WARN deprecated @babel/plugin-proposal-async-generator-functions@7.10.5: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-async-generator-functions instead.\nnpm WARN deprecated @babel/plugin-proposal-nullish-coalescing-operator@7.10.4: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-nullish-coalescing-operator instead.\nnpm WARN deprecated @babel/plugin-proposal-dynamic-import@7.10.4: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-dynamic-import instead.\nnpm WARN deprecated @babel/plugin-proposal-optional-catch-binding@7.10.4: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-optional-catch-binding instead.\nnpm WARN deprecated @babel/plugin-proposal-numeric-separator@7.10.4: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-numeric-separator instead.\nnpm WARN deprecated @babel/plugin-proposal-json-strings@7.10.4: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-json-strings instead.\nnpm WARN deprecated @babel/plugin-proposal-object-rest-spread@7.10.4: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-object-rest-spread instead.\nnpm WARN deprecated @babel/plugin-proposal-optional-chaining@7.10.4: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-optional-chaining instead.\nnpm WARN deprecated fsevents@1.2.13: Upgrade to fsevents v2 to mitigate potential security issues\nnpm WARN deprecated fsevents@1.2.13: Upgrade to fsevents v2 to mitigate potential security issues\nnpm WARN deprecated debug@3.2.6: Debug versions >=3.2.0 <3.2.7 || >=4 <4.3.1 have a low-severity ReDos regression when used in a Node.js environment. It is recommended you upgrade to 3.2.7 or 4.3.1. (https://github.com/visionmedia/debug/issues/797)\nnpm WARN deprecated is-accessor-descriptor@1.0.0: Please upgrade to v1.0.1\nnpm WARN deprecated is-data-descriptor@1.0.0: Please upgrade to v1.0.1\nnpm WARN deprecated debug@3.2.6: Debug versions >=3.2.0 <3.2.7 || >=4 <4.3.1 have a low-severity ReDos regression when used in a Node.js environment. It is recommended you upgrade to 3.2.7 or 4.3.1. (https://github.com/visionmedia/debug/issues/797)\nnpm WARN deprecated fsevents@1.2.13: Upgrade to fsevents v2 to mitigate potential security issues\nnpm WARN deprecated is-accessor-descriptor@1.0.0: Please upgrade to v1.0.1\nnpm WARN deprecated is-data-descriptor@1.0.0: Please upgrade to v1.0.1\nnpm WARN deprecated is-data-descriptor@1.0.0: Please upgrade to v1.0.1\nnpm WARN deprecated is-accessor-descriptor@1.0.0: Please upgrade to v1.0.1\nnpm WARN deprecated is-data-descriptor@0.1.4: Please upgrade to v0.1.5\nnpm WARN deprecated is-accessor-descriptor@0.1.6: Please upgrade to v0.1.7\nnpm WARN deprecated is-data-descriptor@1.0.0: Please upgrade to v1.0.1\nnpm WARN deprecated is-accessor-descriptor@1.0.0: Please upgrade to v1.0.1\nnpm WARN deprecated fsevents@1.2.13: Upgrade to fsevents v2 to mitigate potential security issues\nnpm WARN deprecated is-data-descriptor@1.0.0: Please upgrade to v1.0.1\nnpm WARN deprecated is-accessor-descriptor@1.0.0: Please upgrade to v1.0.1\nnpm WARN deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supported\nnpm WARN deprecated @babel/plugin-proposal-optional-chaining@7.9.0: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-optional-chaining instead.\nnpm WARN deprecated @babel/plugin-proposal-numeric-separator@7.8.3: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-numeric-separator instead.\nnpm WARN deprecated @babel/plugin-proposal-nullish-coalescing-operator@7.8.3: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-nullish-coalescing-operator instead.\nnpm WARN deprecated @babel/plugin-proposal-class-properties@7.8.3: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-class-properties instead.\nnpm WARN deprecated core-js@2.6.11: core-js@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js."
+    },
+    {
+      "name": "build",
+      "command": "npm run build",
+      "startedAt": "2026-08-10T18:48:57.371Z",
+      "durationMs": 16314,
+      "exitCode": 0,
+      "signal": null,
+      "outcome": "succeeded",
+      "stdoutBytes": 804,
+      "stderrBytes": 88,
+      "stdoutSha256": "7613de0bdf873370a32dbf6a2ca59d20fc02d4d480137f69f621ada46ffe4606",
+      "stderrSha256": "97cc7f958789480da7f88f471fe06547dedfe292ab24cc55f8cf1bc50b49faf6",
+      "stdoutTail": "> papercups-ui@0.1.0 build\n> react-scripts build\n\nCreating an optimized production build...\nCompiled successfully.\n\nFile sizes after gzip:\n\n  571.85 KB  build/static/js/2.f88acb51.chunk.js\n  61.77 KB   build/static/css/2.4c4477be.chunk.css\n  13.33 KB   build/static/js/main.5ede0e0e.chunk.js\n  775 B      build/static/js/runtime-main.edfc3e9b.js\n  423 B      build/static/css/main.2c04a113.chunk.css\n\nThe project was built assuming it is hosted at /.\nYou can control this with the homepage field in your package.json.\n\nThe build folder is ready to be deployed.\nYou may serve it with a static server:\n\n  npm install -g serve\n  serve -s build\n\nFind out more about deployment here:\n\n  bit.ly/CRA-deploy\n\n\n> papercups-ui@0.1.0 postbuild\n> mkdirp ../priv/static && cpx \"./build/**\" \"../priv/static\" --clean",
+      "stderrTail": "Browserslist: caniuse-lite is outdated. Please run:\nnpx browserslist@latest --update-db"
+    }
+  ],
+  "outcome": "succeeded",
+  "artifacts": {
+    "root": ".versionless/work/react-papercups-v1-0-0/legacy/build",
+    "files": 22,
+    "bytes": 10657721,
+    "manifestSha256": "9116e33e671af200ba95abb7cdb88284e62c170fa2d90b8940c87c9d32bd9772"
+  },
+  "nonclaims": [
+    "A recorded install or build outcome establishes no browser behavior, journey coverage, migration feasibility, pilot status, or production readiness.",
+    "A failing step is recorded as observed; no repair, pin, or flag was applied to make it pass."
+  ]
+}

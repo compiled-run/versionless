@@ -1,0 +1,101 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-admission-terminal.v1",
+  "unit": "lrapr-t1/t004-b1-candidate-ingest-b",
+  "slug": "react-winds",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "networkMode": "consented",
+  "rank": 2,
+  "candidate": {
+    "repository": "GetStream/Winds",
+    "repositoryId": 68627122,
+    "product": "Winds — an open-source RSS reader and podcast application",
+    "fork": false,
+    "archivedUpstream": true,
+    "disabled": false,
+    "defaultBranch": "master",
+    "createdAt": "2016-09-19T17:02:13Z",
+    "lastPushedAt": "2021-10-11T20:32:23Z"
+  },
+  "observedRevision": {
+    "ref": null,
+    "commitSha": null,
+    "note": "No revision was pinned. The licence gate is repository-wide and failed on the repository's own declared licence, so no ref, commit, tree, or archive was fetched."
+  },
+  "tagInventory": {
+    "endpoint": "https://api.github.com/repos/GetStream/Winds/tags?per_page=100",
+    "recordsOnFirstPage": 100,
+    "paginationExhausted": false,
+    "newestOnFirstPage": "v3.3.14",
+    "note": "The tag inventory was read before the licence result was acted on. It is retained so a future reviewer can see that pinnable ~3-year-old tags do exist; the candidate nevertheless fails on licence."
+  },
+  "result": "rejected-at-admission",
+  "terminal": true,
+  "acquisitionPerformed": false,
+  "fullyAttempted": false,
+  "startedAt": "2026-08-10T18:55:00Z",
+  "completedAt": "2026-08-10T18:57:00Z",
+  "gates": [
+    {
+      "gate": "mit-license-at-pinned-revision",
+      "result": "fail",
+      "hardFailure": true,
+      "evidence": {
+        "repositoryLicenceField": {
+          "key": "bsd-3-clause",
+          "spdxId": "BSD-3-Clause",
+          "name": "BSD 3-Clause \"New\" or \"Revised\" License",
+          "source": "https://api.github.com/repos/GetStream/Winds (license field)"
+        },
+        "mitTextPresent": false,
+        "dualLicensed": false,
+        "detail": "GitHub's licence detection reports BSD-3-Clause for this repository. The packet's admission gate requires MIT at the pinned revision. BSD-3-Clause is a permissive licence but it is not MIT: it adds a non-endorsement clause that MIT does not carry, so it is a different set of obligations and does not satisfy an MIT-only corpus policy."
+      }
+    },
+    {
+      "gate": "real-substantive-application-not-template-demo-or-library",
+      "result": "not-evaluated",
+      "reason": "short-circuited by the licence gate"
+    },
+    {
+      "gate": "react-15-to-17",
+      "result": "not-evaluated",
+      "reason": "short-circuited by the licence gate"
+    },
+    {
+      "gate": "webpack-le-4-or-create-react-app",
+      "result": "not-evaluated",
+      "reason": "short-circuited by the licence gate"
+    },
+    {
+      "gate": "pinned-revision-at-least-about-three-years-old",
+      "result": "not-evaluated",
+      "reason": "short-circuited by the licence gate"
+    },
+    {
+      "gate": "browser-ui-with-at-least-three-substantive-user-journeys",
+      "result": "not-evaluated",
+      "reason": "short-circuited by the licence gate"
+    }
+  ],
+  "unknownPreserved": [
+    "Whether the repository root licence file text matches GitHub's BSD-3-Clause detection was not independently read, because the detection result alone already disqualifies the candidate under an MIT-only gate. If corpus policy is ever widened to permissive-non-MIT licences, this candidate must be re-probed from the licence file itself before any reliance is placed on the detection."
+  ],
+  "transaction": {
+    "attemptedRequests": 2,
+    "acceptedResponses": 2,
+    "acceptedWireBytes": 47669,
+    "redirectsObserved": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "archivesFetched": 0,
+    "publishedSource": false,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "disposition": "Terminal under the current MIT-only corpus policy. Re-attemptable only if the policy is widened to accept BSD-3-Clause, which is a product decision outside this unit.",
+  "nonclaims": [
+    "This record establishes no source integrity, dependency closure, framework version, build outcome, browser behaviour, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "The licence reading is a record of the declared licence observed at probe time, not a legal opinion.",
+    "No judgement is made here about the technical quality of the application; it was never reached."
+  ]
+}
