@@ -1,0 +1,127 @@
+{
+	"schemaVersion": "versionless.receipt.v1",
+	"runId": "T004-react-hospitalrun-cra-to-vite8-build",
+	"fixture": "react-hospitalrun",
+	"stage": "build",
+	"source": {
+		"repository": "https://github.com/HospitalRun/hospitalrun-frontend",
+		"ref": "refs/tags/v2.0.0-alpha.7",
+		"revision": "8156955145551d0366df10faa28e724f3377dea1",
+		"archiveSha256": "c9d07e8ee7ffaa174dff597dcecbd00c8eb0b6d525bb7a3f9a7d48e6a46ec306",
+		"license": "MIT",
+		"licenseSha256": "460148c79f31dd2a352b401068e0ae512a807cf643edac512eb22cf3342027a3",
+		"frontendRoot": "."
+	},
+	"consent": [
+		{
+			"id": "VL-LEGACY-CORPUS-2026-08-10",
+			"mode": "consented",
+			"purpose": "npm dependency acquisition for the baseline lane and registry time metadata plus exact-version tarballs for the era-labeled compatibility pins",
+			"registryHosts": [
+				"registry.npmjs.org"
+			]
+		}
+	],
+	"baseline": {
+		"authenticity": "explicitly-labeled-compatibility-resolution",
+		"authenticityNote": "The upstream revision commits no lockfile and the floating 2026 resolution does not build. Eight drifted @types packages were pinned to releases published on or before the tag date. This is not presented as the upstream-committed state.",
+		"pins": [
+			"@types/lodash@4.14.165 (2020-11-05T18:50:33.760Z)",
+			"@types/ms@0.7.31 (2019-09-04T20:48:44.923Z)",
+			"@types/react-redux@7.1.11 (2020-11-04T00:02:07.614Z)",
+			"@types/react-router@5.1.8 (2020-06-22T06:30:23.119Z)",
+			"@types/babel__traverse@7.0.15 (2020-09-25T23:59:42.949Z)",
+			"@types/react-bootstrap-typeahead@3.4.6 (2020-05-15T12:19:01.124Z)",
+			"@types/react-datepicker@3.1.1 (2020-08-02T01:10:03.159Z)",
+			"@types/minimatch@3.0.3 (2018-01-04T23:26:51.283Z)"
+		],
+		"cell": "node 12.14.1 darwin-x64 under Rosetta 2, npm 6.13.4, react-scripts 3.4.4, typescript 3.8.3"
+	},
+	"migration": {
+		"from": "create-react-app 3.4.4 (webpack 4.42.0)",
+		"to": "Vite 8.0.16",
+		"applicationSourceEdits": 0,
+		"applicationNamedProductBranches": 0,
+		"reusableSurfaceChanged": false,
+		"reusableSurfaceNote": "The generic create-react-app Vite adapter proven on papercups carried this application unchanged. No shape here demanded an extension, so none was invented.",
+		"capabilities": [
+			"substituteCraTemplatePlaceholders",
+			"craEntryDocument",
+			"craProcessEnvironmentDefines",
+			"rewriteWebpackTildeCssImports",
+			"createCraTildeCssImportPlugin",
+			"craPublicAssetPaths",
+			"createCraPublicDirectoryPlugin",
+			"createCraViteAdapter"
+		],
+		"craShapesExercised": [
+			"%PUBLIC_URL% template placeholders in public/index.html",
+			"process.env.NODE_ENV and process.env.PUBLIC_URL inlining (src/serviceWorker.ts, src/shared/config)",
+			"public/ directory replication excluding the HTML template"
+		],
+		"craShapesNotExercised": [
+			"svgr: the tree imports no .svg module",
+			"jsx-in-.js: every non-test source file is .ts or .tsx",
+			"absolute imports: tsconfig declares no baseUrl and every import is relative or bare",
+			"REACT_APP_* variables: none is read anywhere in src or public",
+			"webpack tilde CSS specifiers: none appears in src/index.css, the only stylesheet the entry imports"
+		],
+		"entryDocument": "generated from public/index.html by craEntryDocument"
+	},
+	"tooling": {
+		"adapter": "packages/frameworks/react reusable create-react-app capabilities",
+		"browser": "not-used",
+		"legacyRuntime": "node-12.14.1-darwin-x64 under Rosetta 2 (in-matrix, not a repository pin)",
+		"targetRuntime": "node-24.15.0-darwin-arm64 maintained runtime",
+		"vite": "8.0.16 root installation",
+		"webpack": "4.42.0 via react-scripts 3.4.4"
+	},
+	"verification": {
+		"result": "build-stage-pass",
+		"builds": "pass",
+		"baselineDeterministic": true,
+		"targetDeterministic": true,
+		"deterministicCore": {
+			"baseline": {
+				"equal": true,
+				"first": "302e499bc7e2e9597f7e0f33cf3eb586407764f02afbcd98dad3b5a42495cafe",
+				"second": "302e499bc7e2e9597f7e0f33cf3eb586407764f02afbcd98dad3b5a42495cafe"
+			},
+			"target": {
+				"equal": true,
+				"first": "9fedeeb184fdb01f2c8f300e6f93b90dac34a8ee88a20a4466f6fde7beaf34b7",
+				"second": "9fedeeb184fdb01f2c8f300e6f93b90dac34a8ee88a20a4466f6fde7beaf34b7"
+			}
+		},
+		"journeys": "not-run",
+		"locality": "not-run",
+		"mutation": "not-run",
+		"serviceWorker": "not-tested",
+		"parity": {
+			"level": "build-artifacts-only",
+			"behavioral": "not-tested",
+			"journeys": "not-tested",
+			"runtimeEquivalence": "unknown"
+		}
+	},
+	"artifacts": [
+		{
+			"path": "evidence/runs/react-hospitalrun/build-profile.json",
+			"sha256": "0a16e0508a686df9cbb34f507c428ebb709a42837e97783aea05824ca3a3c550"
+		}
+	],
+	"limitations": [
+		"The baseline is an explicitly labeled compatibility resolution. The upstream revision ships no lockfile, so no authentic committed resolution exists to reproduce.",
+		"This receipt covers the build stage only: two deterministic compatibility-baseline webpack builds and two deterministic Vite 8 targets.",
+		"No browser journey was executed; behavioral parity between the baseline and the target remains not-tested.",
+		"The create-react-app service worker and precache manifest emitted by the baseline have no Vite target counterpart; that gap is recorded, not resolved.",
+		"Hash integrity does not establish signer authenticity or Git provenance.",
+		"No pilot status, production readiness, certification, or legal approval is claimed."
+	],
+	"integrityNote": "canonicalDigest covers this receipt with the integrity block removed",
+	"integrity": {
+		"algorithm": "sha256",
+		"authenticity": "not-established",
+		"canonicalDigest": "4f498c3cc7496af2d93a9be8a9aafec551178dfec150d8b34196abc64fc8d0ad"
+	}
+}

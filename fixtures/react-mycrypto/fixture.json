@@ -48,6 +48,20 @@
       "declaredIn": ["package.json engines.node", ".nvmrc"],
       "executable": false,
       "executableReason": "The Node 12 line has no darwin-arm64 build, so the declared cell cannot be run natively on this platform.",
+      "declaredCellRuntime": {
+        "status": "acquired-and-digest-verified-but-not-executable-on-this-host",
+        "platform": "darwin-x64",
+        "url": "https://nodejs.org/dist/v12.14.1/node-v12.14.1-darwin-x64.tar.gz",
+        "sha256": "0be10a28737527a1e5e3784d3ad844d742fe8b0718acd701fd48f718fd3af78f",
+        "shasumsUrl": "https://nodejs.org/dist/v12.14.1/SHASUMS256.txt",
+        "shasumsSha256": "e8edaf587831205aced1ae5425bf944ea9ce1922f5b3074187c86b0ed07aa302",
+        "digestVerifiedAgainstOfficialShasums": true,
+        "translationRequired": "Rosetta 2",
+        "translationAvailable": false,
+        "blocker": "Rosetta 2 is not installed on this darwin-arm64 host, so the x86_64 binary cannot be translated. The control probe `arch -x86_64 /usr/bin/true` fails the same way although that binary carries an x86_64 slice, which isolates the cause to the missing translation layer rather than the acquired runtime.",
+        "remediation": "Run the declared cell on a host with Rosetta 2 installed or on an x86_64 host; the URL and verified digest above are reusable as-is.",
+        "detail": "evidence/ingests/react-mycrypto/runtime-acquisition.json"
+      },
       "substituted": {
         "version": "16.20.2",
         "platform": "darwin-arm64",
@@ -107,6 +121,8 @@
     "closure": "evidence/ingests/react-mycrypto/closure.json",
     "baseline": "evidence/ingests/react-mycrypto/baseline-attempt.json",
     "baselineDeviation": "evidence/ingests/react-mycrypto/baseline-deviation.json",
+    "runtimeAcquisition": "evidence/ingests/react-mycrypto/runtime-acquisition.json",
+    "buildProfile": "evidence/runs/react-mycrypto/build-profile.json",
     "ledger": "evidence/ingests/react-mycrypto/probe-ledger.ndjson",
     "transcript": "evidence/ingests/react-mycrypto/transcript.ndjson",
     "tree": "evidence/ingests/react-mycrypto/probe-tree.json"

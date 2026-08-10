@@ -1,0 +1,116 @@
+{
+	"schemaVersion": "versionless.legacy-compatibility-resolution.v1",
+	"slug": "react-hospitalrun",
+	"unit": "lrapr-t004-hospitalrun/h2-baseline-and-migration-build",
+	"consentId": "VL-LEGACY-CORPUS-2026-08-10",
+	"networkMode": "consented",
+	"appendsTo": "evidence/ingests/react-hospitalrun/baseline-attempt.json",
+	"appendsToNote": "That record stands unaltered. It reports the floating 2026 resolution failing to build; this record reports what an era-labeled resolution changes and does not change.",
+	"label": "explicitly labeled compatibility baseline — NOT the upstream-committed state",
+	"whyNotAuthentic": "The pinned revision commits no lockfile. The floating resolution observed on 2026-08-10 does not build: the repository’s own pinned typescript 3.8.3 cannot parse several present-day @types releases. No upstream-committed resolution exists to reproduce.",
+	"cutoff": "2020-11-07T10:12:53Z",
+	"cutoffSource": "the annotated tag date of refs/tags/v2.0.0-alpha.7",
+	"method": "Every drifted package below was pinned to the newest version published on or before the tag date and within the range the closure already declared, then extracted over its installed placement from a registry tarball whose declared shasum was re-verified from the wire. Nothing else in the resolution was changed.",
+	"discoveredBy": "iterated `tsc --noEmit -p tsconfig.json` under the cell’s own typescript 3.8.3; each round pinned only the package the compiler actually failed on",
+	"packagesPinned": 8,
+	"snowballCeiling": "the unit was authorised to stop past roughly a dozen pins; eight were needed",
+	"pins": [
+		{
+			"name": "@types/lodash",
+			"version": "4.14.165",
+			"tarball": "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.165.tgz",
+			"published": "2020-11-05T18:50:33.760Z",
+			"integrity": "sha512-tjSSOTHhI5mCHTy/OOXYIhi2Wt1qcbHmuXD1Ha7q70CgI/I71afO4XtLb/cVexki1oVYchpul/TOuu3Arcdxrg==",
+			"tarballSha256": "ae74d42c3d643f71a0c2daff7289c747b3a757d13d106b23d68b6492135f6208",
+			"cutoff": "2020-11-07T10:12:53Z",
+			"reason": "declared ^4.14.150; today's release uses `infer ... extends` inside a template-literal type, which needs TypeScript 4.7"
+		},
+		{
+			"name": "@types/ms",
+			"version": "0.7.31",
+			"tarball": "https://registry.npmjs.org/@types/ms/-/ms-0.7.31.tgz",
+			"published": "2019-09-04T20:48:44.923Z",
+			"integrity": "sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA==",
+			"tarballSha256": "43c1f797421d639562755b038e9d4a6da1bd6de0ced4df16fcd3b293626d5836",
+			"cutoff": "2020-11-07T10:12:53Z",
+			"reason": "declared `*` by @types/debug; today's release is a 2.x major that did not exist at the tag date and uses syntax TypeScript 3.8 cannot parse"
+		},
+		{
+			"name": "@types/react-redux",
+			"version": "7.1.11",
+			"tarball": "https://registry.npmjs.org/@types/react-redux/-/react-redux-7.1.11.tgz",
+			"published": "2020-11-04T00:02:07.614Z",
+			"integrity": "sha512-OjaFlmqy0CRbYKBoaWF84dub3impqnLJUrz4u8PRjDzaa4n1A2cVmjMV81shwXyAD5x767efhA8STFGJz/r1Zg==",
+			"tarballSha256": "c151acc0cfd67d50012322dc6cf557fc024db3597e6200f5b4f1c38ef57928a2",
+			"cutoff": "2020-11-07T10:12:53Z",
+			"reason": "declared ~7.1.5; a later 7.1.x patch adopted syntax TypeScript 3.8 cannot parse"
+		},
+		{
+			"name": "@types/react-router",
+			"version": "5.1.8",
+			"tarball": "https://registry.npmjs.org/@types/react-router/-/react-router-5.1.8.tgz",
+			"published": "2020-06-22T06:30:23.119Z",
+			"integrity": "sha512-HzOyJb+wFmyEhyfp4D4NYrumi+LQgQL/68HvJO+q6XtuHSDvw6Aqov7sCAhjbNq3bUPgPqbdvjXC5HeB2oEAPg==",
+			"tarballSha256": "457797f110de8ae7f5434db8cd6eabe787fed0f84f0321d68971c700c4b7eddf",
+			"cutoff": "2020-11-07T10:12:53Z",
+			"reason": "declared ~5.1.2 through @types/react-router-dom; a later 5.1.x patch adopted syntax TypeScript 3.8 cannot parse"
+		},
+		{
+			"name": "@types/babel__traverse",
+			"version": "7.0.15",
+			"tarball": "https://registry.npmjs.org/@types/babel__traverse/-/babel__traverse-7.0.15.tgz",
+			"published": "2020-09-25T23:59:42.949Z",
+			"integrity": "sha512-Pzh9O3sTK8V6I1olsXpCfj2k/ygO2q1X0vhhnDrEQyYLHZesWz+zMZMVcwXLCYf0U36EtmyYaFGPfXlTtDHe3A==",
+			"tarballSha256": "48c2d4784cf97735a124d689152d094097ad9fd73edbb0f26741ec390d261626",
+			"cutoff": "2020-11-07T10:12:53Z",
+			"reason": "declared ^7.0.6 through the babel closure; today’s release uses mapped-type key remapping, which needs TypeScript 4.1"
+		},
+		{
+			"name": "@types/react-bootstrap-typeahead",
+			"version": "3.4.6",
+			"tarball": "https://registry.npmjs.org/@types/react-bootstrap-typeahead/-/react-bootstrap-typeahead-3.4.6.tgz",
+			"published": "2020-05-15T12:19:01.124Z",
+			"integrity": "sha512-3vrWrPNb2G+ieyWB1VtEPZH6E4NBcd2cVsacb6oUhBNU/D/ZYnUqnbmeTIKzIVXqEkdPtgARG45W1x7tUV9DGA==",
+			"tarballSha256": "8ccf44542c722af0377e823b7de9668824dcb4d4af624c2ecc7cf65ca201cebf",
+			"cutoff": "2020-11-07T10:12:53Z",
+			"reason": "declared ^3.4.6 through react-bootstrap-typeahead; a later 3.4.x patch adopted syntax TypeScript 3.8 cannot parse"
+		},
+		{
+			"name": "@types/react-datepicker",
+			"version": "3.1.1",
+			"tarball": "https://registry.npmjs.org/@types/react-datepicker/-/react-datepicker-3.1.1.tgz",
+			"published": "2020-08-02T01:10:03.159Z",
+			"integrity": "sha512-vwNrgaIMJThvvwmtnA8jSVVJZ0FNgljQrq1jDA4MtYJIDmVmd9NNrFaXf9u2JqR2nS+8Kvi8OVs/tnAbUqZhHw==",
+			"tarballSha256": "b668e31e310d7f25c08e411b8a8ef9d1f6b54ec6f59363c0c42ef218266feb5f",
+			"cutoff": "2020-11-07T10:12:53Z",
+			"reason": "declared ~3.1.0 through @hospitalrun/components; a later 3.1.x patch adopted syntax TypeScript 3.8 cannot parse"
+		},
+		{
+			"name": "@types/minimatch",
+			"version": "3.0.3",
+			"tarball": "https://registry.npmjs.org/@types/minimatch/-/minimatch-3.0.3.tgz",
+			"published": "2018-01-04T23:26:51.283Z",
+			"integrity": "sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA==",
+			"tarballSha256": "71d7512873c41dda650f0be23fba8fe000d8abe948d8937fe4b040c0e6c61677",
+			"cutoff": "2020-11-07T10:12:53Z",
+			"reason": "declared `*` transitively; the current release is a stub package with no type definitions at all, so TypeScript 3.8 reports TS2688"
+		}
+	],
+	"notPinned": "no application dependency, no runtime, and no direct declared range was altered; package.json and the application source are byte-identical to the pinned revision",
+	"reproducibility": "The compatibility resolution lives in the git-ignored work area. It is reconstructible from this record: install the declared ranges in the cell, then apply the eight pins above.",
+	"outcome": {
+		"installs": "yes, in the Node 12.14.1 / npm 6.13.4 cell",
+		"typechecks": "yes, under the repository’s own typescript 3.8.3, for every file react-scripts reports on",
+		"testFileDiagnosticsRemain": true,
+		"testFileDiagnosticsNote": "`tsc --noEmit -p tsconfig.json` still reports type errors inside src/__tests__/**. create-react-app 3 excludes test files from the build-time typecheck (fork-ts-checker reportFiles), so these do not affect the build. They are upstream properties of the pinned revision, recorded rather than fixed.",
+		"builds": "yes — see evidence/runs/react-hospitalrun/build-profile.json",
+		"buildRuns": 2,
+		"buildDeterministic": true,
+		"buildDigest": "302e499bc7e2e9597f7e0f33cf3eb586407764f02afbcd98dad3b5a42495cafe"
+	},
+	"nonclaims": [
+		"This resolution is a compatibility construction dated to the tag, not the upstream-committed state, and not a reconstruction of what any 2020 developer actually installed.",
+		"A successful build in this cell establishes no browser behavior, no behavioral parity, and no dependency licence position.",
+		"Registry publish dates are upstream metadata read from the registry on 2026-08-10; they establish no signer authenticity."
+	]
+}
