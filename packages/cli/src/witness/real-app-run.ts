@@ -31,7 +31,12 @@ import {
 } from '../../../core/src/index.ts';
 import { transformNext12DerivedStateToMemo } from '../../../frameworks/nextjs/src/index.ts';
 import { witnessNodeFileSystem } from './node-filesystem.ts';
-import { createPapercupsProjection, PAPERCUPS_SOCKET_PATH } from './papercups-projection.ts';
+import {
+	createPapercupsProjection,
+	PAPERCUPS_CONVERSATIONS,
+	PAPERCUPS_SOCKET_PATH,
+	PAPERCUPS_USER,
+} from './papercups-projection.ts';
 import { createPhoenixSocketUpgrade } from './phoenix-socket.ts';
 import {
 	createPlaywrightWitnessHost,
@@ -77,6 +82,24 @@ type JourneyEvidence = {
 	offlineEvidence: WitnessOfflineEvidence;
 	timeoutTelemetry?: ServiceWorkerTelemetry;
 	zeroServiceWorker?: {
+		checkpoints: Array<{
+			phase: 'before-interactions' | 'after-interactions' | 'after-online-reload';
+			state: 'timeout';
+			registrations: 0;
+			controller: null;
+			cacheNames: [];
+			workerEvents: [];
+		}>;
+	};
+	/**
+	 * Runtime zero-service-worker evidence for an application whose legacy build
+	 * still emits a worker script it never registers. The emitted bytes are
+	 * recorded rather than asserted away, and the runtime is required to show no
+	 * registration, controller, CacheStorage name, lifecycle event, or worker
+	 * request in any lane.
+	 */
+	zeroServiceWorkerRuntime?: {
+		registration: 'application-unregister';
 		checkpoints: Array<{
 			phase: 'before-interactions' | 'after-interactions' | 'after-online-reload';
 			state: 'timeout';
@@ -315,7 +338,9 @@ async function staticInventory(staticRoot: string): Promise<StaticInventory> {
 		files: entries.length,
 		digest: sha256(canonicalize(entries)),
 		applicationSha256: application.sha256,
-		serviceWorkers: entries.filter((entry) => entry.path === 'sw.js'),
+		serviceWorkers: entries.filter(
+			(entry) => entry.path === 'sw.js' || entry.path === 'service-worker.js',
+		),
 	};
 }
 
@@ -786,6 +811,39 @@ const clean = async (context: BoxContext, page: PageHandle, navigations: number)
 	});
 };
 
+/**
+ * Papercups journey inputs derived from the frozen loopback projection rather
+ * than hand-copied, so a projection edit moves the assertion instead of
+ * silently detaching it from the served evidence data.
+ */
+function papercupsPreview(id: string): string {
+	const conversation = PAPERCUPS_CONVERSATIONS.find((candidate) => candidate.id === id);
+	const body = conversation?.messages[0]?.body;
+	if (body === undefined || body.length === 0)
+		throw new Error(`Papercups projection preview is absent: ${id}`);
+	return body;
+}
+
+const PAPERCUPS_SIGN_IN_PASSWORD = 'synthetic-evidence-password';
+const PAPERCUPS_UNASSIGNED_PREVIEW = papercupsPreview('conversation-unassigned');
+const PAPERCUPS_ASSIGNED_PREVIEW = papercupsPreview('conversation-assigned');
+const PAPERCUPS_PRIORITY_PREVIEW = papercupsPreview('conversation-priority');
+const PAPERCUPS_CLOSED_PREVIEW = papercupsPreview('conversation-closed');
+const PAPERCUPS_OPEN_PREVIEWS = [
+	PAPERCUPS_UNASSIGNED_PREVIEW,
+	PAPERCUPS_ASSIGNED_PREVIEW,
+	PAPERCUPS_PRIORITY_PREVIEW,
+];
+export const PAPERCUPS_REPLY_BODY =
+	'Restored the offline mirror; the migration receipt is attached.' as const;
+/**
+ * Post-load navigations after the `/login` document: the sign-in push to
+ * `/conversations`, its redirect to `/conversations/all`, the prioritized and
+ * closed category routes, the return to `/conversations/all`, and the online
+ * reload of that route.
+ */
+const PAPERCUPS_JOURNEY_NAVIGATIONS = 6;
+
 const apps: AppSpec[] = [
 	{
 		app: 'react-boilerplate',
@@ -1156,14 +1214,69 @@ const apps: AppSpec[] = [
 				}),
 			};
 		},
-		// NOT YET IMPLEMENTED: the Papercups sign-in, inbox triage and reply
-		// round-trip journey lands in the next unit. This specification carries
-		// the loopback API projection and the Phoenix v2 socket stub only; it
-		// refuses to report a pass it has not observed.
-		journey: () => {
-			throw new Error(
-				'Papercups linked Witness journey is not yet implemented; witness infrastructure only',
-			);
+		journey: async (context, page, _transportEvidence, lifecycle) => {
+			if (lifecycle.expectedServiceWorker !== null)
+				throw new Error('Papercups journey received a service-worker expectation');
+			const checkpoints = [
+				await zeroServiceWorkerCheckpoint(lifecycle, 'before-interactions'),
+			];
+			await page.trackEvents('click', 'input', 'change', 'keydown', 'mouseover');
+			await context.expect.page.bodyText(page, { contains: 'Welcome back' });
+			await page.hover('#email');
+			await page.type('#email', PAPERCUPS_USER.email);
+			await page.type('#password', PAPERCUPS_SIGN_IN_PASSWORD);
+			await page.press('#password', 'Enter');
+			await context.expect.page.text(page, 'h3', 'All conversations');
+			for (const preview of PAPERCUPS_OPEN_PREVIEWS)
+				await context.expect.page.bodyText(page, { contains: preview });
+			await page.hover('a[href="/conversations/priority"]');
+			await page.click('a[href="/conversations/priority"]');
+			await context.expect.page.text(page, 'h3', 'Prioritized');
+			await context.expect.page.bodyText(page, {
+				contains: PAPERCUPS_PRIORITY_PREVIEW,
+				notContains: PAPERCUPS_UNASSIGNED_PREVIEW,
+			});
+			await page.hover('a[href="/conversations/closed"]');
+			await page.click('a[href="/conversations/closed"]');
+			await context.expect.page.text(page, 'h3', 'Closed');
+			await context.expect.page.bodyText(page, {
+				contains: PAPERCUPS_CLOSED_PREVIEW,
+				notContains: PAPERCUPS_PRIORITY_PREVIEW,
+			});
+			await page.click('a[href="/conversations/all"]');
+			await context.expect.page.text(page, 'h3', 'All conversations');
+			await context.expect.page.bodyText(page, { notContains: PAPERCUPS_REPLY_BODY });
+			await page.type('textarea.ant-input', PAPERCUPS_REPLY_BODY);
+			await page.click('.ant-layout-footer button.ant-btn-primary');
+			await context.expect.page.bodyText(page, { contains: PAPERCUPS_REPLY_BODY });
+			await context.expect.page.outcome(page, {
+				events: {
+					click: { atLeast: 3 },
+					input: { atLeast: 3 },
+					change: { atLeast: 3 },
+					keydown: { atLeast: 3 },
+					mouseover: { atLeast: 1 },
+				},
+			});
+			checkpoints.push(await zeroServiceWorkerCheckpoint(lifecycle, 'after-interactions'));
+			await page.reload();
+			await context.expect.page.text(page, 'h3', 'All conversations');
+			await context.expect.page.bodyText(page, { contains: PAPERCUPS_REPLY_BODY });
+			checkpoints.push(await zeroServiceWorkerCheckpoint(lifecycle, 'after-online-reload'));
+			await clean(context, page, PAPERCUPS_JOURNEY_NAVIGATIONS);
+			return {
+				assertions: [
+					'sign-in route change to the agent console',
+					'inbox category triage across all, prioritized and closed',
+					'category-distinct conversation text',
+					'reply round-trip echoed over the Phoenix shout broadcast',
+					'online reload retains the sent reply',
+					'zero service-worker lifecycle and CacheStorage',
+					'clean page',
+				],
+				offlineEvidence: { state: 'not-applicable' },
+				zeroServiceWorkerRuntime: { registration: 'application-unregister', checkpoints },
+			};
 		},
 	},
 ];
@@ -1583,6 +1696,21 @@ async function executeRun(
 						workerEvents: observerFinalization.workerEvents,
 					},
 				}),
+		...(completedJourney.zeroServiceWorkerRuntime === undefined
+			? {}
+			: {
+					zeroServiceWorkerRuntime: {
+						...completedJourney.zeroServiceWorkerRuntime,
+						emittedOutputFiles: beforeInventory.serviceWorkers,
+						requests: differentialEvents.filter(
+							(event) =>
+								event.detail.serviceWorker === true ||
+								event.urlPath === '/sw.js' ||
+								event.urlPath === '/service-worker.js',
+						),
+						workerEvents: observerFinalization.workerEvents,
+					},
+				}),
 		successfulNonLoopback: host.locality().successfulNonLoopback,
 	};
 	if ('zeroServiceWorker' in runWithoutDigest) {
@@ -1603,6 +1731,25 @@ async function executeRun(
 			)
 		)
 			throw new Error('zero-service-worker policy assertion failed');
+	}
+	if ('zeroServiceWorkerRuntime' in runWithoutDigest) {
+		const zero = runWithoutDigest.zeroServiceWorkerRuntime;
+		if (
+			zero === undefined ||
+			zero.registration !== 'application-unregister' ||
+			zero.requests.length !== 0 ||
+			zero.workerEvents.length !== 0 ||
+			zero.checkpoints.length !== 3 ||
+			zero.checkpoints.some(
+				(checkpoint) =>
+					checkpoint.state !== 'timeout' ||
+					checkpoint.registrations !== 0 ||
+					checkpoint.controller !== null ||
+					checkpoint.cacheNames.length !== 0 ||
+					checkpoint.workerEvents.length !== 0,
+			)
+		)
+			throw new Error('runtime zero-service-worker policy assertion failed');
 	}
 	return {
 		...runWithoutDigest,
@@ -1632,6 +1779,20 @@ export async function executeReactBoilerplateWitnessRun(options: {
 	const app = apps.find((candidate) => candidate.app === 'react-boilerplate');
 	if (app === undefined) throw new Error('React Boilerplate Witness specification is absent');
 	return await executeRun(app, options.lane, options.pass, options);
+}
+
+export async function executeReactPapercupsWitnessRun(options: {
+	lane: Lane;
+	pass: 1 | 2;
+	laneRoot: string;
+	receiptRoot: string;
+}): Promise<WitnessRealAppRun> {
+	const app = apps.find((candidate) => candidate.app === 'papercups');
+	if (app === undefined) throw new Error('Papercups Witness specification is absent');
+	return await executeRun(app, options.lane, options.pass, {
+		...options,
+		serviceWorkerPolicy: 'zero',
+	});
 }
 
 async function zeroServiceWorkerCheckpoint(

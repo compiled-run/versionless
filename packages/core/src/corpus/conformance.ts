@@ -57,6 +57,13 @@ import {
 	verifyWitnessReactBoilerplateZeroSwEvidence,
 	witnessReactBoilerplateZeroSwAggregateMember,
 } from '../receipts/react-boilerplate-zero-sw.ts';
+import {
+	REACT_PAPERCUPS_RECEIPT_PATH,
+	reactPapercupsAggregateMember,
+	verifyWitnessReactPapercupsEvidence,
+	WITNESS_REACT_PAPERCUPS_RECEIPT_PATH,
+	witnessReactPapercupsAggregateMember,
+} from '../receipts/witness-react-papercups.ts';
 
 export const CORPUS_CONFORMANCE_SCHEMA = 'versionless.corpus-conformance.v1' as const;
 const REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH =
@@ -283,6 +290,24 @@ export type CorpusTransactionState = Readonly<
 			sourceApplications: 4;
 			receipts: 16;
 			resolvedDependencies: 29;
+	  }
+	| {
+			/**
+			 * The Papercups create-react-app lineage joins on top of the
+			 * zero-service-worker reconciliation, adding its retained build
+			 * receipt and its direct browser-proof Witness receipt. It is a new
+			 * immutable source application, so it is a new vertical rather than
+			 * a reconciliation of an already-counted one.
+			 */
+			kind: 'react-papercups-browser-proof';
+			nextKilledByGoogleIntegrated: true;
+			angularRealworldWitnessIntegrated: true;
+			reactBoilerplateWitnessIntegrated: true;
+			nextKilledByGoogleWitnessIntegrated: true;
+			verticals: 12;
+			sourceApplications: 5;
+			receipts: 18;
+			resolvedDependencies: 31;
 	  }
 	| {
 			kind: 'react-avataaars-candidate';
@@ -552,9 +577,77 @@ export function deriveCorpusTransactionState(fixtures: unknown): CorpusTransacti
 							canonicalize(zeroSwRecord) !==
 								canonicalize(
 									witnessReactBoilerplateZeroSwAggregateMember(digest),
-								) ||
-							byPath.size !== canonicalReceipts.length + 7
+								)
 						)
+							throw new Error(
+								'React Boilerplate zero-SW aggregate membership mismatch',
+							);
+						const zeroSwOrder = [
+							...candidateOrder,
+							REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH,
+							WITNESS_REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH,
+						];
+						const papercups = byPath.get(WITNESS_REACT_PAPERCUPS_RECEIPT_PATH);
+						if (papercups) {
+							const papercupsMigration = byPath.get(REACT_PAPERCUPS_RECEIPT_PATH);
+							const papercupsRecord = record(
+								papercups,
+								'React Papercups Witness aggregate fixture',
+							);
+							const papercupsDigest = string(
+								papercupsRecord.digest,
+								'React Papercups Witness aggregate digest',
+							);
+							if (papercupsMigration === undefined)
+								throw new Error(
+									'React Papercups aggregate membership mismatch',
+								);
+							const papercupsMigrationRecord = record(
+								papercupsMigration,
+								'React Papercups migration aggregate fixture',
+							);
+							const papercupsMigrationDigest = string(
+								papercupsMigrationRecord.digest,
+								'React Papercups migration aggregate digest',
+							);
+							if (
+								!sha256Pattern.test(papercupsDigest) ||
+								!sha256Pattern.test(papercupsMigrationDigest) ||
+								canonicalize(papercupsRecord) !==
+									canonicalize(
+										witnessReactPapercupsAggregateMember(papercupsDigest),
+									) ||
+								canonicalize(papercupsMigrationRecord) !==
+									canonicalize(
+										reactPapercupsAggregateMember(papercupsMigrationDigest),
+									) ||
+								byPath.size !== canonicalReceipts.length + 9
+							)
+								throw new Error(
+									'React Papercups aggregate membership mismatch',
+								);
+							assertOrderedAggregate(
+								orderedPaths,
+								[
+									...zeroSwOrder,
+									REACT_PAPERCUPS_RECEIPT_PATH,
+									WITNESS_REACT_PAPERCUPS_RECEIPT_PATH,
+								],
+								'React Papercups browser proof',
+							);
+							return {
+								kind: 'react-papercups-browser-proof',
+								nextKilledByGoogleIntegrated: true,
+								angularRealworldWitnessIntegrated: true,
+								reactBoilerplateWitnessIntegrated: true,
+								nextKilledByGoogleWitnessIntegrated: true,
+								verticals: 12,
+								sourceApplications: 5,
+								receipts: 18,
+								resolvedDependencies: 31,
+							};
+						}
+						if (byPath.size !== canonicalReceipts.length + 7)
 							throw new Error(
 								'React Boilerplate zero-SW aggregate membership mismatch',
 							);
@@ -1261,10 +1354,13 @@ export async function analyzeCorpusConformance(
 			(transaction.kind === 'react-avataaars-candidate' ||
 			transaction.kind === 'react-calculator-candidate' ||
 			transaction.kind === 'react-graphiql-013-candidate' ||
-			transaction.kind === 'react-zero-sw-reconciliation'
+			transaction.kind === 'react-zero-sw-reconciliation' ||
+			transaction.kind === 'react-papercups-browser-proof'
 				? transaction.kind === 'react-zero-sw-reconciliation'
 					? 2
-					: 1
+					: transaction.kind === 'react-papercups-browser-proof'
+						? 4
+						: 1
 				: 0)
 	)
 		throw new Error('Aggregate contains an unknown or extra receipt');
@@ -1278,7 +1374,25 @@ export async function analyzeCorpusConformance(
 	const nextKilledByGoogleWitness = transaction.nextKilledByGoogleWitnessIntegrated
 		? await verifyWitnessNextKilledByGoogleEvidence(root)
 		: null;
-	if (transaction.kind === 'react-zero-sw-reconciliation') {
+	if (transaction.kind === 'react-papercups-browser-proof') {
+		const verified = await verifyWitnessReactPapercupsEvidence(root);
+		const member = record(
+			aggregateByPath.get(WITNESS_REACT_PAPERCUPS_RECEIPT_PATH),
+			'React Papercups Witness aggregate fixture',
+		);
+		if (member.digest !== verified.digest)
+			throw new Error('React Papercups Witness aggregate digest differs');
+		const migrationMember = record(
+			aggregateByPath.get(REACT_PAPERCUPS_RECEIPT_PATH),
+			'React Papercups migration aggregate fixture',
+		);
+		if (migrationMember.digest !== verified.receipt.canonicalReceipt.canonicalDigest)
+			throw new Error('React Papercups migration aggregate digest differs');
+	}
+	if (
+		transaction.kind === 'react-zero-sw-reconciliation' ||
+		transaction.kind === 'react-papercups-browser-proof'
+	) {
 		const migration = await verifyReceipt(REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH, {
 			repositoryRoot: root,
 		});

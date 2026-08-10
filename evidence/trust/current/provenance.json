@@ -4,25 +4,25 @@
     {
       "name": "packages/cli/dist/cli.js",
       "digest": {
-        "sha256": "c86f4fb29ccd96ec9d3874a141428e265a548b2fc9ee88a88403cabd3d148e1e"
+        "sha256": "4d21fe92fbfa0f4232f2256e86cf82e1ef16d0af075fb6a9595c5ccda6c3475a"
       }
     },
     {
       "name": "packages/cli/dist/index.js",
       "digest": {
-        "sha256": "fa6001f85fd9bbd57e12eb5f5423a1f89ce02c8eee394ce972368bad27ebd209"
+        "sha256": "2fb2e537e52e43dbc6dd6be3b5a91d400443522e300df56488be9d4e559065af"
       }
     },
     {
-      "name": "packages/cli/dist/verify-YnGo5vRD.js",
+      "name": "packages/cli/dist/verify-C3NWY0ly.js",
       "digest": {
-        "sha256": "e380f6ca1d830a53c9389da3663249143916b4320ec1d94a40f673b58d1c2dd0"
+        "sha256": "d24299e088a07b4f9464fdcaa89eeeb56baa85fc6a9bb044d107250534f0fdb5"
       }
     },
     {
       "name": "packages/core/dist/index.js",
       "digest": {
-        "sha256": "7c190ee606a5d8ce743b47d41e2581aa4fcaed50f1f7377802f52992b674ebd0"
+        "sha256": "9041a6c15baf09cb36e6f42479ec2f77500feeab5b1f00990c8ff2ff3c05f074"
       }
     },
     {
@@ -52,7 +52,7 @@
     {
       "name": "packages/frameworks/react/dist/index.js",
       "digest": {
-        "sha256": "ba24ca653b9d4362489cf99c112469c0985233e664137f1ea01fdef5240dd17b"
+        "sha256": "4efa42cc4584464b179272f999cebbe41fa20ce80a37f06322f0fc554b968f97"
       }
     },
     {
@@ -64,7 +64,7 @@
     {
       "name": "packages/trust/dist/index.js",
       "digest": {
-        "sha256": "78ed0be6f40936dc3f2583cadc18091cb376919524797a342064359311b4ac2a"
+        "sha256": "48afbcdfd0da8194344e079c471bb79783c59aaaaa5233c2f3cf92896bd035c6"
       }
     }
   ],
@@ -288,19 +288,19 @@
       "byproducts": [
         {
           "path": "packages/cli/dist/cli.js",
-          "sha256": "c86f4fb29ccd96ec9d3874a141428e265a548b2fc9ee88a88403cabd3d148e1e"
+          "sha256": "4d21fe92fbfa0f4232f2256e86cf82e1ef16d0af075fb6a9595c5ccda6c3475a"
         },
         {
           "path": "packages/cli/dist/index.js",
-          "sha256": "fa6001f85fd9bbd57e12eb5f5423a1f89ce02c8eee394ce972368bad27ebd209"
+          "sha256": "2fb2e537e52e43dbc6dd6be3b5a91d400443522e300df56488be9d4e559065af"
         },
         {
-          "path": "packages/cli/dist/verify-YnGo5vRD.js",
-          "sha256": "e380f6ca1d830a53c9389da3663249143916b4320ec1d94a40f673b58d1c2dd0"
+          "path": "packages/cli/dist/verify-C3NWY0ly.js",
+          "sha256": "d24299e088a07b4f9464fdcaa89eeeb56baa85fc6a9bb044d107250534f0fdb5"
         },
         {
           "path": "packages/core/dist/index.js",
-          "sha256": "7c190ee606a5d8ce743b47d41e2581aa4fcaed50f1f7377802f52992b674ebd0"
+          "sha256": "9041a6c15baf09cb36e6f42479ec2f77500feeab5b1f00990c8ff2ff3c05f074"
         },
         {
           "path": "packages/experiments/dist/index.js",
@@ -320,7 +320,7 @@
         },
         {
           "path": "packages/frameworks/react/dist/index.js",
-          "sha256": "ba24ca653b9d4362489cf99c112469c0985233e664137f1ea01fdef5240dd17b"
+          "sha256": "4efa42cc4584464b179272f999cebbe41fa20ce80a37f06322f0fc554b968f97"
         },
         {
           "path": "packages/node-guard/dist/index.cjs",
@@ -328,7 +328,7 @@
         },
         {
           "path": "packages/trust/dist/index.js",
-          "sha256": "78ed0be6f40936dc3f2583cadc18091cb376919524797a342064359311b4ac2a"
+          "sha256": "48afbcdfd0da8194344e079c471bb79783c59aaaaa5233c2f3cf92896bd035c6"
         }
       ]
     }
