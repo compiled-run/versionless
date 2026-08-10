@@ -1,0 +1,77 @@
+{
+  "schemaVersion": "versionless.react-avataaars-compatibility-t612-terminal-exclusion.v1",
+  "fixture": "react-avataaars-compatibility",
+  "result": "terminal-excluded",
+  "counted": false,
+  "retry": false,
+  "reason": "history-back-state-differs",
+  "source": {
+    "repository": "fangpenlin/avataaars-generator",
+    "revision": "c191c6c2d27f41245e803912d43c7213436a34d3",
+    "tree": "94a3d1a024682b3f21ad30b9de8d4e1541a376d3",
+    "archiveSha256": "4863a1304b659f1105f69d8ae0c715428c41d2d64b43edfd701148ddfca900da"
+  },
+  "targetClosure": {
+    "consentId": "T608-react-avataaars-react1831-target-closure-production",
+    "digest": "050ee1051469f2d7e236546d7feecc6d3f1f632bafb1206d2904a4baebd5385b",
+    "fileSha256": "245b1ec5b769d6a54edf92c12af0ab80eb6ceb039c1fe9ea4219ddc5a24afe00",
+    "receiptSha256": "582ba109c42c7a27b37ba7b23ec3d617f8370a83bd1325ab015db1e215861512",
+    "artifacts": 3,
+    "responses": 6,
+    "networkAttemptsDuringReplay": 0
+  },
+  "preflight": {
+    "focusedTests": {
+      "runs": 2,
+      "files": 4,
+      "passedEach": 21
+    },
+    "typescript": "pass",
+    "format": "pass",
+    "lint": {
+      "errors": 0,
+      "unrelatedWarnings": 7
+    },
+    "pack": "pass",
+    "fullOfflineNodeTests": {
+      "files": 103,
+      "passed": 684
+    }
+  },
+  "execution": {
+    "mode": "offline",
+    "compatibilityBuilds": "completed-in-process-not-published",
+    "migratedBuilds": "completed-in-process-not-published",
+    "failedObservation": {
+      "lane": "compatibility",
+      "pass": 1,
+      "journey": "selection-history",
+      "assertion": "history-back-state-differs",
+      "showReactSelector": "pass",
+      "transparentWrappingLabelSelector": "pass"
+    },
+    "positiveReceipt": "not-published",
+    "aggregate": "restored-preimage",
+    "trust": "restored-preimage",
+    "workRoot": "removed",
+    "replayRoot": "removed"
+  },
+  "protectedEvidence": {
+    "t568AttemptSha256": "ce9bc6d95aff7713c7a5dce5e46b5ac0a535dc8ca89e267a726f5bc8a5d2bfb5",
+    "t568FailureSha256": "38a0769ae62a3abc16e34efb2454c2ace4979c0a00fe0e53a6ae4ebfcb0bd7d4",
+    "t568TerminalSha256": "16ff63e05ae215ec994dd8db6c8d538292dca3c457d065c8bdeb0922af33f09e",
+    "t570AttemptSha256": "710f9fb91a91b2867f5d44e6b1a49ca6a0fb8e843f0fe9cd5f072d938623acb9",
+    "t570FailureSha256": "7eaacf817683951ad03b3ade464c2aac994b2afa8730943403ca46c588af516a",
+    "t570TerminalSha256": "3d671e92a7505fba0219faf534930744b1bab48f4bbba36bfcc7fad573ee8711"
+  },
+  "nonclaims": [
+    "No eight-observation browser matrix, mutation restoration, aggregate linkage, trust replay, migration support, certification, compliance, signer authenticity or OS-wide isolation claim is established.",
+    "The successful T608 dependency acquisition remains immutable offline input and is not reinterpreted as application compatibility evidence.",
+    "Avataaars is excluded from production counting and no further locator or journey correction is authorized."
+  ],
+  "integrity": {
+    "algorithm": "sha256",
+    "canonicalDigest": "38bca7f2c5088a1f48aa105eeb5c6e40dec28ff1961d9a8561ecbf5a9e0dc39b",
+    "authenticity": "not-established"
+  }
+}

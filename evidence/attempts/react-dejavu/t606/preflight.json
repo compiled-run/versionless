@@ -1,0 +1,43 @@
+{
+	"schemaVersion": 1,
+	"task": "T606",
+	"index": {
+		"trackedIndexSha256": "6f7f3f4ed89a44e01b021207274273ef03ebd962440ff51d0d9896bc61a6e133",
+		"stagedPatchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+		"stagedPaths": []
+	},
+	"immutableT604Evidence": {
+		"evidence/attempts/react-dejavu/t604/preflight.json": "281b2c3a0ef928e672645ab8756cab755ae629b0295f74f9e61ecc9fedc677ad",
+		"evidence/attempts/react-dejavu/t604/approval-blocked.json": "c3d4a46b85f90a3818f9990d86d9e7d69d17688c5cdd2a3f13b90c3a24caa05c",
+		"evidence/attempts/react-dejavu/t604/terminal.json": "33b650296ed20be633a8b5bcbfcffcbcc33bf682aad985f7c7b7e1c8249da1a9"
+	},
+	"overlappingPreimages": {
+		"packages/cli/src/fixture/react-dejavu-production-ingest.ts": "3fb5068f30285280f0b750e1c3739aff9d5f6d446d74934456abafbb3726968f",
+		"packages/cli/src/fixture/react-dejavu-production-run.ts": "338c612ce4a91137e0298369b697deae07111aa327384c187aa50165e194470a",
+		"packages/cli/src/witness/react-dejavu-run.ts": "046b5accce6176f5cb95c3fe67fb956ee8a636a96fe461d8516189815841f310",
+		"packages/cli/test/react-dejavu-production-ingest.test.ts": "44bfe46031b7f1285a65f0f17d4d2255fc56e5600091b1d43e11ebd3b4b75da1",
+		"packages/cli/test/react-dejavu-production-run.test.ts": "e8cd6e04967cab2a7975c0edc9eb1bfeb800f3b5df4973cbd6f2a2a91bfa2339",
+		"packages/cli/test/witness-react-dejavu-run.test.ts": "dc5b5dc22775b15eeb1580e0cc84ed266cdd480dd14f080ada99e79cc8a24804",
+		"packages/core/src/receipts/react-dejavu.ts": "ac954e77dc7eb48cd78cba584ba6585e25e588b7d94fcb5ee2b343fca90adbf9",
+		"packages/core/test/react-dejavu-receipt.test.ts": "17a14ed5fde9559ff45ae507f824c7f916bc1952232a4fac14bde9864cb3b8bd",
+		"packages/frameworks/react/src/react-dejavu-migration.ts": "53b7b6baf211ce69db844cac97138a1447169cae9ff52ce0d0fdde39965cb8b2",
+		"packages/frameworks/react/test/react-dejavu-migration.test.ts": "c910cf808bad4c141e4aaa69a14c4a3e219e0325bab7e18ac5297817825bb035",
+		"packages/core/src/corpus/conformance.ts": "1bc08b9c3e12d41ccc40c13500524f1c474f71ab197a5cfdcbdd5acea9e195d8",
+		"packages/core/src/index.ts": "3a27c815e4e72a7dea87336723430b23c0a1d9357663cec850d3be7ca9a64778",
+		"packages/core/test/corpus-conformance.test.ts": "be38b515073c3378f4c19cb76076eba93ad8eb1f187db61db374c82ffcf046b9",
+		"packages/frameworks/react/src/index.ts": "33edbdeb19f1470a5748da5ddc0c46902be66a8b037bb3957faf31ff343d6fe4",
+		"packages/trust/src/generate.ts": "1a7fcda317e7730a684a6b740a21ef24bd5d7e7dd89d90bfbe05c15c4cd4945b",
+		"packages/trust/src/verify.ts": "0df189027e0a14717198dbda40df97b1b5663e9cac6d9190379d7edd4f82fed2",
+		"packages/trust/test/trust-package.test.ts": "708e8680cd3280848c0e431c4b521ac563198608f16457c4028021c4b678539f",
+		"evidence/runs/aggregate.json": "988c865da928bac41ee382bb348559aa69861bf671d702105504af37233ffcd3"
+	},
+	"positiveRootsAbsent": [
+		"fixtures/react-dejavu",
+		"evidence/dependencies/react-dejavu",
+		"evidence/runs/react-dejavu-legacy",
+		"evidence/runs/react-dejavu-vite8",
+		"evidence/runs/witness-react-dejavu",
+		".versionless/cache/react-dejavu",
+		".versionless/work/react-dejavu/t606"
+	]
+}

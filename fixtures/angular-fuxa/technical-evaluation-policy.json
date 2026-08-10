@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "versionless.angular-fuxa-technical-evaluation-policy.v1",
+  "fixture": "angular-fuxa",
+  "technicalEvaluationOnly": true,
+  "unresolvedLicenses": "unknown",
+  "legalReviewRequired": true,
+  "redistributionAuthorized": false,
+  "complianceStatus": "not-assessed",
+  "certificationClaim": false,
+  "enterpriseAdoptionApproval": false,
+  "payloadRetention": "ignored-local-cache-and-work-only",
+  "serverEnabled": false,
+  "forbiddenRuntimeSurfaces": [
+    "server",
+    "database",
+    "device",
+    "industrial-protocol",
+    "hosted-service",
+    "service-worker",
+    "mocked-product-state"
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "versionless.angular-fuxa-t621-preflight.v1",
+  "task": "T621",
+  "result": "pre-network",
+  "index": {
+    "trackedIndexSha256": "6f7f3f4ed89a44e01b021207274273ef03ebd962440ff51d0d9896bc61a6e133",
+    "stagedPatchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "source": {
+    "commit": "8b323c177615c0d152a54e5ef0a6f98dae7b8ff0",
+    "tree": "6c9f146b3292a3795d5ae35c53c0f39f0fc0b490",
+    "archiveSha256": "4913aabfec74fc990664a5d60760d8f3438ee067b682f833f5869cd2c9c3c372",
+    "archiveManifestSha256": "f8580a18536ff8b34cf9b227f208cc6147e67323c844b234ced749962db04d30",
+    "lockSha256": "b8309c014f39662b170b7d174f24132dfd0d65b43d70eabeca6222a0ef8c23a3",
+    "rootLicense": "MIT",
+    "rootLicenseSha256": "c95c127580398d71176e7553465ef142a8c0a6a7f3d1c547a7469300cf524a90",
+    "demoEnvironmentSha256": "9b7a6aeb96eff48213dfd51c0f8ac645df74d104ae5768d48047f767612b8c3a",
+    "fixtureSha256": "6715df20a882174f72723265ede19c46ca274a00e7f254dbd183cfab8953fa42",
+    "provenanceSha256": "2219e53ad8691d00d3d77a52fafc89e401ab43050d57d92e79b09860e26453d1",
+    "t094IngestSha256": "2f843fd96c75f081921eae5200e22924f4c9bedb316875217c8e7e315614371f"
+  },
+  "replay": {
+    "runs": 2,
+    "networkAttempts": 0,
+    "fuxaDigest": "e34a049f7536b5028a7913f568a3ac1e0b4eccf8fc727e39b8b98cdd5dce42f9"
+  },
+  "closure": {
+    "lockfileVersion": 1,
+    "entries": 1468,
+    "uniqueRegistryTarballs": 1222,
+    "missingResolvedOrIntegrity": 0,
+    "requestLimit": 4000,
+    "responseByteLimit": 134217728,
+    "aggregateByteLimit": 3221225472,
+    "recordedLoopbackProxy": true
+  },
+  "runtimes": {
+    "node16": {
+      "version": "16.20.2",
+      "npm": "8.19.4",
+      "archiveSha256": "6a5c4108475871362d742b988566f3fe307f6a67ce14634eb3fbceb4f9eea88c"
+    },
+    "node18": {
+      "version": "18.20.8",
+      "archiveSha256": "bae4965d29d29bd32f96364eefbe3bca576a03e917ddbb70b9330d75f2cacd76"
+    }
+  },
+  "boundary": {
+    "technicalEvaluationOnly": true,
+    "unresolvedLicenses": "unknown",
+    "legalReviewRequired": true,
+    "redistributionAuthorized": false,
+    "complianceStatus": "not-assessed",
+    "certificationClaim": false,
+    "enterpriseAdoptionApproval": false
+  },
+  "historicalEvidence": {
+    "T151": "preserved-strict-block",
+    "T618": "preserved-production-reachability-and-license-rejection",
+    "T619": "preserved-exact-payload-binding-and-unknown-upstream-license"
+  }
+}

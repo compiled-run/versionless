@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "versionless.react-dashboard-t614-pre-network-gates.v1",
+  "result": "ready-for-consent",
+  "networkAttempts": 0,
+  "immutablePairReplay": {
+    "runs": 2,
+    "networkAttempts": 0,
+    "dashboardDigest": "82fa149ecd37ca6d91fa45ea39e7f7b1b6ca19d52fe29365b5e6a049563ec9ef",
+    "angularFuxaDigest": "e34a049f7536b5028a7913f568a3ac1e0b4eccf8fc727e39b8b98cdd5dce42f9"
+  },
+  "closure": {
+    "pairs": 1108,
+    "sha512Pairs": 1108,
+    "rowSetSha256": "08a95c31516ea6ac280d8c58626fb518bdb2c8fef952be575ed7999981ae6bf9",
+    "contentHashVerifiedCacheHits": 146,
+    "frozenMissing": 962,
+    "targetDelta": 3,
+    "requests": 965,
+    "allowlistSha256": "1c4030c8e8254f9be81fee87908b99d0a795e22ecbc15e252f66e40b0e0dd0bc"
+  },
+  "launcherSmoke": {
+    "runs": 2,
+    "identical": true,
+    "networkAttempts": 0
+  },
+  "verification": {
+    "focused": "passed twice",
+    "typescript": "passed",
+    "format": "passed",
+    "lint": "passed with unrelated pre-existing warnings",
+    "pack": "passed",
+    "offlineNode": {
+      "tests": 694,
+      "passed": 694,
+      "note": "Initial sandboxed Chromium launch was denied by macOS Mach permissions; the exact offline suite passed when the pinned local browser was permitted to launch."
+    }
+  },
+  "consent": {
+    "id": "T614-react-dashboard-vite4-to-vite8-production-closure",
+    "status": "unconsumed",
+    "commandExecuted": false
+  },
+  "nonclaims": [
+    "Pre-network readiness only; no dependency acquisition, build, browser journey, support, production, certification, authenticity, or OS-wide isolation claim."
+  ]
+}

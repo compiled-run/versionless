@@ -1,0 +1,44 @@
+{
+  "schemaVersion": "versionless.react-dashboard-t614-terminal-exclusion.v1",
+  "result": "excluded",
+  "task": "T614",
+  "fixture": "react-dashboard",
+  "consent": {
+    "id": "T614-react-dashboard-vite4-to-vite8-production-closure",
+    "status": "consumed-failed",
+    "retries": 0
+  },
+  "failure": {
+    "code": "identity-failed",
+    "attempts": 200,
+    "acceptedBytesBeforeRollback": 84572165,
+    "failedAllowlistOrdinal": 200,
+    "failedUrl": "https://registry.npmjs.org/@rollup/pluginutils/-/pluginutils-5.1.0.tgz",
+    "failedIdentity": "@rollup/pluginutils@5.1.0",
+    "derivation": "The sanitized failure retained attempts=200. The single-threaded acquisition increments once immediately before each request, and the frozen allowlist binds ordinal 200 to this exact URL and identity. No unsanitized transport detail or failed response bytes were retained."
+  },
+  "rollback": {
+    "stageEntries": 0,
+    "publicationEntries": 0,
+    "dependencyReceiptPresent": false,
+    "aggregateUpdated": false,
+    "trustUpdated": false
+  },
+  "verification": {
+    "networkMode": "offline",
+    "protectedPreimagesMatch": true,
+    "aggregateSha256": "988c865da928bac41ee382bb348559aa69861bf671d702105504af37233ffcd3",
+    "trustListingSha256": "fc5c3f837dfea6607f2ec2654dee2f73bbb65582e488a7b3f82ad75f61e40a8c"
+  },
+  "downstream": {
+    "vite4Build": "not-run",
+    "vite8Build": "not-run",
+    "browserJourneys": "not-run",
+    "corpus": "not-updated",
+    "aggregate": "not-updated",
+    "trust": "not-updated"
+  },
+  "nonclaims": [
+    "The failed consented acquisition is terminal for T614. It establishes no build, browser behavior, support, production, certification, authenticity, or OS-wide isolation claim."
+  ]
+}

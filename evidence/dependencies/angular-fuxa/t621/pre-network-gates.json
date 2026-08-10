@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "versionless.angular-fuxa-t621-pre-network-gates.v1",
+  "result": "ready-for-consent",
+  "networkAttempts": 0,
+  "replay": {
+    "runs": 2,
+    "fuxaDigest": "e34a049f7536b5028a7913f568a3ac1e0b4eccf8fc727e39b8b98cdd5dce42f9",
+    "networkAttempts": 0
+  },
+  "launcher": {
+    "runs": 2,
+    "identical": true,
+    "requests": 1222,
+    "allowlistSha256": "924dbe640af2eae76cce2611b4f52fc04cf06f3498491f973fb79e8329eb33c2",
+    "networkAttempts": 0
+  },
+  "verification": {
+    "focused": {
+      "files": 6,
+      "tests": 17,
+      "passed": 17
+    },
+    "typescript": "passed",
+    "format": "passed",
+    "lint": "passed with seven unrelated existing warnings",
+    "pack": "passed",
+    "offlineNode": {
+      "files": 110,
+      "tests": 707,
+      "passed": 707
+    }
+  },
+  "residue": {
+    "stage": "absent",
+    "work": "absent",
+    "dependencyReceipt": "absent",
+    "failureReceipt": "absent",
+    "runEvidenceEntries": 0
+  },
+  "boundary": {
+    "technicalEvaluationOnly": true,
+    "unresolvedLicenses": "unknown",
+    "legalReviewRequired": true,
+    "redistributionAuthorized": false,
+    "complianceStatus": "not-assessed",
+    "certificationClaim": false,
+    "enterpriseAdoptionApproval": false
+  },
+  "consent": {
+    "id": "T621-angular-fuxa-local-technical-evaluation",
+    "status": "unconsumed",
+    "commandExecuted": false
+  },
+  "nonclaims": [
+    "Pre-network readiness only. No acquisition, install, build, browser journey, migration parity, legal approval, redistribution right, compliance, certification, enterprise adoption, authenticity, or OS-wide isolation claim."
+  ]
+}

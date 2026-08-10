@@ -1,0 +1,84 @@
+{
+  "schemaVersion": "versionless.technical-migration.v1",
+  "boundary": {
+    "technicalEvaluationOnly": true,
+    "unresolvedLicenses": "unknown",
+    "legalReviewRequired": true,
+    "redistributionAuthorized": false,
+    "complianceStatus": "not-assessed",
+    "certificationClaim": false,
+    "enterpriseAdoptionApproval": false
+  },
+  "fixture": "angular-fuxa",
+  "lanes": [
+    {
+      "name": "angular14-node16",
+      "build": "pass",
+      "journeyRuns": 0
+    },
+    {
+      "name": "angular16-node18",
+      "build": "not-run",
+      "journeyRuns": 0
+    }
+  ],
+  "mutation": "not-run",
+  "locality": {
+    "nonLoopbackRequests": 0,
+    "credentialsObserved": false,
+    "userOrPaymentDataObserved": false,
+    "serviceWorkers": 0
+  },
+  "nonclaims": [
+    "Technical evaluation only; unresolved dependency and asset licenses remain unknown and require legal review. No redistribution, compliance, certification, enterprise adoption, authenticity, generic support, or OS-wide isolation claim."
+  ],
+  "result": "blocked",
+  "task": "T621",
+  "dependencyClosure": {
+    "digest": "3b4394737cf44d7847a22a10282ebb0b9201d701f3d492dacf48f46d6d3e673d",
+    "fileSha256": "c04c00f0893774d441269d36df03dfbce57f83e3dfa07684bd2501aecbd50552",
+    "offlineVerificationRuns": 2,
+    "artifacts": 1222,
+    "networkAttempts": 0,
+    "unknownLicenseArtifacts": 4
+  },
+  "baseline": {
+    "installs": 2,
+    "ignoreScripts": true,
+    "networkAttempts": 0,
+    "lockSha256": "b8309c014f39662b170b7d174f24132dfd0d65b43d70eabeca6222a0ef8c23a3",
+    "builds": 2,
+    "aot": true,
+    "configuration": "demo",
+    "node": "16.20.2",
+    "distFiles": [
+      331,
+      331
+    ],
+    "distDigests": [
+      "4f31ba02c80eec01f78b554fcea8eb33c0422c90467db721182273dba3c9b426",
+      "2947af2cd91b89ab76b4c7b748edc45ba672d5ef16315d7c1e1169485833ba78"
+    ],
+    "distByteIdentical": false
+  },
+  "failure": {
+    "gate": "target-closure-completeness",
+    "reason": "The consumed T621 closure contains the Angular 14 lock only and no Angular 15/16 core or CLI artifact and no exact target lock.",
+    "angular15CoreArtifacts": 0,
+    "angular16CoreArtifacts": 0,
+    "angular15CliArtifacts": 0,
+    "angular16CliArtifacts": 0,
+    "retryAllowed": false
+  },
+  "downstream": {
+    "targetBuild": "not-run",
+    "browserJourneys": "not-run",
+    "mutationRestoration": "not-run",
+    "score": "not-updated",
+    "aggregateAcceptance": "not-updated"
+  },
+  "integrity": {
+    "algorithm": "sha256",
+    "canonicalDigest": "564d31b1fb7d65a48825f73ed75b2661bd525c45628b652945ce7c6d6e9fc441"
+  }
+}

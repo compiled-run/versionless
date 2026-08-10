@@ -1,0 +1,50 @@
+{
+	"schemaVersion": 1,
+	"task": "T604",
+	"capturedAt": "2026-08-09T00:00:00.000Z",
+	"index": {
+		"trackedIndexSha256": "6f7f3f4ed89a44e01b021207274273ef03ebd962440ff51d0d9896bc61a6e133",
+		"stagedPatchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+		"stagedPaths": []
+	},
+	"t600": {
+		"stateSliceLines": "51518-51607",
+		"sha256": "1f2cd1fe42dbfd31367d9fb4233e6c16c032a036173882577ce47dcbbe59cf82",
+		"acceptedResponses": 0,
+		"acceptedBytes": 0,
+		"excluded": false,
+		"workerAuthorized": false
+	},
+	"sharedPreimages": {
+		"workingPatchSha256": "5f945452c3858823da9da6f43a537cf7d13913a394d8cec2ed40b982b99e5754",
+		"files": {
+			"packages/core/src/corpus/conformance.ts": "1bc08b9c3e12d41ccc40c13500524f1c474f71ab197a5cfdcbdd5acea9e195d8",
+			"packages/core/src/index.ts": "3a27c815e4e72a7dea87336723430b23c0a1d9357663cec850d3be7ca9a64778",
+			"packages/core/test/corpus-conformance.test.ts": "be38b515073c3378f4c19cb76076eba93ad8eb1f187db61db374c82ffcf046b9",
+			"packages/frameworks/react/src/index.ts": "33edbdeb19f1470a5748da5ddc0c46902be66a8b037bb3957faf31ff343d6fe4",
+			"packages/trust/src/generate.ts": "1a7fcda317e7730a684a6b740a21ef24bd5d7e7dd89d90bfbe05c15c4cd4945b",
+			"packages/trust/src/verify.ts": "0df189027e0a14717198dbda40df97b1b5663e9cac6d9190379d7edd4f82fed2",
+			"packages/trust/test/trust-package.test.ts": "708e8680cd3280848c0e431c4b521ac563198608f16457c4028021c4b678539f",
+			"evidence/runs/aggregate.json": "988c865da928bac41ee382bb348559aa69861bf671d702105504af37233ffcd3"
+		}
+	},
+	"positiveRootsAbsent": [
+		"fixtures/react-dejavu",
+		"packages/frameworks/react/src/react-dejavu-migration.ts",
+		"packages/frameworks/react/test/react-dejavu-migration.test.ts",
+		"packages/core/src/receipts/react-dejavu.ts",
+		"packages/core/test/react-dejavu-receipt.test.ts",
+		"packages/cli/src/fixture/react-dejavu-production-ingest.ts",
+		"packages/cli/src/fixture/react-dejavu-production-run.ts",
+		"packages/cli/src/witness/react-dejavu-run.ts",
+		"packages/cli/test/react-dejavu-production-ingest.test.ts",
+		"packages/cli/test/react-dejavu-production-run.test.ts",
+		"packages/cli/test/witness-react-dejavu-run.test.ts",
+		"evidence/dependencies/react-dejavu",
+		"evidence/runs/react-dejavu-legacy",
+		"evidence/runs/react-dejavu-vite8",
+		"evidence/runs/witness-react-dejavu",
+		".versionless/cache/react-dejavu",
+		".versionless/work/react-dejavu/t604"
+	]
+}

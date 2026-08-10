@@ -11,6 +11,7 @@ export * from './receipts/framework-classification.ts';
 export * from './receipts/provenance-framework-classification.ts';
 export * from './receipts/next13-provenance-classification.ts';
 export * from './receipts/dependency-closure.ts';
+export * from './receipts/technical-migration.ts';
 export * from './receipts/npm-lock-acquisition-preflight.ts';
 export * from './receipts/angular-realworld-v15-to-v16.ts';
 export * from './receipts/next-killedbygoogle.ts';

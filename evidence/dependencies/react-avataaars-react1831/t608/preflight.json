@@ -1,0 +1,61 @@
+{
+	"schemaVersion": 1,
+	"task": "T608",
+	"index": {
+		"trackedIndexSha256": "6f7f3f4ed89a44e01b021207274273ef03ebd962440ff51d0d9896bc61a6e133",
+		"stagedPatchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+		"stagedPaths": []
+	},
+	"protectedNegativeEvidence": {
+		"evidence/dependencies/react-avataaars-react1831/attempt.json": "ce9bc6d95aff7713c7a5dce5e46b5ac0a535dc8ca89e267a726f5bc8a5d2bfb5",
+		"evidence/dependencies/react-avataaars-react1831/consumed-failed.json": "38a0769ae62a3abc16e34efb2454c2ace4979c0a00fe0e53a6ae4ebfcb0bd7d4",
+		"evidence/runs/react-avataaars-compatibility-to-vite8/terminal-exclusion.json": "16ff63e05ae215ec994dd8db6c8d538292dca3c457d065c8bdeb0922af33f09e",
+		"evidence/dependencies/react-avataaars-react1831/t570/attempt.json": "710f9fb91a91b2867f5d44e6b1a49ca6a0fb8e843f0fe9cd5f072d938623acb9",
+		"evidence/dependencies/react-avataaars-react1831/t570/consumed-failed.json": "7eaacf817683951ad03b3ade464c2aac994b2afa8730943403ca46c588af516a",
+		"evidence/runs/react-avataaars-compatibility-to-vite8/t570/terminal-exclusion.json": "3d671e92a7505fba0219faf534930744b1bab48f4bbba36bfcc7fad573ee8711"
+	},
+	"acceptedSource": {
+		"commit": "c191c6c2d27f41245e803912d43c7213436a34d3",
+		"tree": "94a3d1a024682b3f21ad30b9de8d4e1541a376d3",
+		"archiveSha256": "4863a1304b659f1105f69d8ae0c715428c41d2d64b43edfd701148ddfca900da",
+		"manifestSha256": "10f3a70bd1b3fc04c945deeddb865e104a332aa54e9896d6ce0e0aa55c165776",
+		"fixtureSha256": "a2d68ebeac7f0b270bd142d9245d58092b69e7de6e3fe384d60f1ca9527e604a",
+		"provenanceSha256": "e089086f98fbea48c5ad30f28e526ca5dc788cfa2d537b27a3521e70154633e0"
+	},
+	"acceptedLegacyClosure": {
+		"cacheKey": "d53edb62306b30bc2888ebb06c028f4b1452df9e39819c4d98f00857655f5156",
+		"closureSha256": "8dc039b5fc650594545a954d16f67d6d5df793340b535ccf6ade19f3f86a8f7b",
+		"ledgerSha256": "23c5a4292b1bc6076d72ee1a11b39108010a95ba9c886706567b466d530bc7ef",
+		"receiptSha256": "3bd40314e1085edcf8cdba530c112645e361b7b6a93e0d17fcedf59c3ee6e6a9",
+		"tarballs": 1222,
+		"mirrorListingDigest": "b97f4b23c3a3824a22ade4cef591b72cc4bd5d05d070b295bf1e0ab64fd7c066"
+	},
+	"sharedPreimages": {
+		"fixtures/react-avataaars-compatibility/fixture.json": "725ef3bcd1e23b64cc0a5fb27dc70403950a991098fec6d7f1303d18dc7aa235",
+		"packages/frameworks/react/src/react-avataaars-react18-migration.ts": "ad96294bcf3547e420e01240332bd125c170b3832873d105c933d0f31df1a12b",
+		"packages/frameworks/react/src/index.ts": "33edbdeb19f1470a5748da5ddc0c46902be66a8b037bb3957faf31ff343d6fe4",
+		"packages/frameworks/react/test/react-avataaars-react18-migration.test.ts": "c1e46fb3005a74ff5f0f3ad2d4e0042778e2912536dbc22ac68fbf8c29a50c61",
+		"packages/cli/src/fixture/react-avataaars-compatibility-ingest.ts": "9228c3ad8eebdad185cb4f15379b1c7b639bcbd774bcd1e802c61ce6836c95f6",
+		"packages/cli/src/fixture/react-avataaars-compatibility-run.ts": "326637d8ad8bf61da8466ff6909507c2a3d1b553a00d6a34ea8984af9c7c612c",
+		"packages/cli/src/fixture/react-avataaars-compatibility-vite.config.ts": "2e58989ace28c8f757317b5e4f504c72f13f263886743465573b2d7893dcefa6",
+		"packages/cli/test/react-avataaars-compatibility-ingest.test.ts": "694e88973cd6deb75fa2da0c4dcde6e3fd0a4c68e2ceaa1e212e252e2face112",
+		"packages/cli/test/react-avataaars-compatibility-run.test.ts": "7672c4b36ac5bc466056ff41be9423dc6a0630d24714ab5179c5934cfc83e106",
+		"packages/core/src/receipts/react-avataaars-compatibility.ts": "d0d4a9a467e43d1df4073552378495abe67bb169a102da0da52de3b808f28c3d",
+		"packages/core/test/react-avataaars-compatibility-receipt.test.ts": "6caaf5755ce565975d310a03b329b330ee7efb26ed6b539bd98e69f24184f508",
+		"packages/core/src/receipts/verify.ts": "bb857f2d7d1127b30e4eff66e9445bec34ac3a46ab24b3834111fc4bac9ed742",
+		"packages/core/src/corpus/conformance.ts": "1bc08b9c3e12d41ccc40c13500524f1c474f71ab197a5cfdcbdd5acea9e195d8",
+		"packages/core/test/corpus-conformance.test.ts": "be38b515073c3378f4c19cb76076eba93ad8eb1f187db61db374c82ffcf046b9",
+		"packages/core/src/index.ts": "3a27c815e4e72a7dea87336723430b23c0a1d9357663cec850d3be7ca9a64778",
+		"packages/trust/src/generate.ts": "1a7fcda317e7730a684a6b740a21ef24bd5d7e7dd89d90bfbe05c15c4cd4945b",
+		"packages/trust/src/verify.ts": "0df189027e0a14717198dbda40df97b1b5663e9cac6d9190379d7edd4f82fed2",
+		"packages/trust/test/trust-package.test.ts": "708e8680cd3280848c0e431c4b521ac563198608f16457c4028021c4b678539f",
+		"evidence/runs/aggregate.json": "988c865da928bac41ee382bb348559aa69861bf671d702105504af37233ffcd3"
+	},
+	"positiveRootsAbsent": [
+		"evidence/dependencies/react-avataaars-react1831/t608",
+		"evidence/runs/react-avataaars-compatibility-to-vite8/t608",
+		".versionless/cache/react-avataaars-react1831/t608",
+		".versionless/stage/react-avataaars-react1831/t608",
+		".versionless/work/react-avataaars-compatibility/t608"
+	]
+}

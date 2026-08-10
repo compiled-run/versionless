@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "versionless.react-dashboard-t614-preflight.v1",
+  "task": "T614",
+  "index": {
+    "trackedIndexSha256": "6f7f3f4ed89a44e01b021207274273ef03ebd962440ff51d0d9896bc61a6e133",
+    "stagedPatchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "source": {
+    "commit": "4b8be9f7e0080d680598c74d7e6cfbe080566059",
+    "tree": "adc596cb1c3834a0ebf9cea580c87eb9b002ddfa",
+    "archiveSha256": "84a3a8a5e3e39803a25cc7d35e862f99f22aa3fd4e0c39e413a7a2d0e68901e0",
+    "manifestIdentitySha256": "b138389c7578b6cdcb7ab7aad74ec8bc6d602eb50f5a7d2c3c907d39e1731245",
+    "manifestFileSha256": "c2d3525c6edead255be034b687e345f1460c7f01eee0db58ec0225940900da90",
+    "licenseSha256": "0e856f37545c4692e654e10a3a438ffa712a24fb0bfa4bf55d4caa170b71ee9f",
+    "lockSha256": "75c9591e3d4aa2d3f383b8ca41fd5599c018862b6ebc175759fb6b9d381afccc",
+    "fixtureSha256": "4b6e249b1cdc156dd2aa38971745a550ae08efc5c195f9761082e10f889b91c3",
+    "provenanceSha256": "bc876ddc01f5114488172deb349a5f3da9c3d63aadf20a9054d100444f6bbaf8",
+    "t094IngestSha256": "778234c22be36b95947579f37ac73e8243f95d1670aef9e4a695893aa38d06c8"
+  },
+  "dashboardClosure": {
+    "lockfileVersion": 3,
+    "pairs": 1108,
+    "sha512Pairs": 1108,
+    "rowSetSha256": "08a95c31516ea6ac280d8c58626fb518bdb2c8fef952be575ed7999981ae6bf9",
+    "contentHashVerifiedCacheHits": 146,
+    "frozenMissingAllowlist": 962,
+    "t190ReceiptSha256": "262abe9b19a10804808eadd5ae2dfcbc1fd9ac4119f9dc9571cb3df89df1d351"
+  },
+  "protectedEvidence": {
+    "dejavuT604ApprovalSha256": "c3d4a46b85f90a3818f9990d86d9e7d69d17688c5cdd2a3f13b90c3a24caa05c",
+    "dejavuT604PreflightSha256": "281b2c3a0ef928e672645ab8756cab755ae629b0295f74f9e61ecc9fedc677ad",
+    "dejavuT604TerminalSha256": "33b650296ed20be633a8b5bcbfcffcbcc33bf682aad985f7c7b7e1c8249da1a9",
+    "dejavuT606PreflightSha256": "e4e0215b58a90a939b7d470bc3e29375e208948e12a62634deddb26b5965c86f",
+    "dejavuT606TerminalSha256": "a6960f12cdc2e0ea6d65154346a00be48faaf8f02b6bc6972eace37fc084679b",
+    "avataaarsT612TerminalSha256": "c5692c1b766bb19f2b1a64f1c5e16faf780766e918867b3abe4e59d3ab544719",
+    "avataaarsT608ClosureReceiptSha256": "582ba109c42c7a27b37ba7b23ec3d617f8370a83bd1325ab015db1e215861512"
+  },
+  "publicationPreimages": {
+    "aggregateSha256": "988c865da928bac41ee382bb348559aa69861bf671d702105504af37233ffcd3",
+    "trustListingSha256": "fc5c3f837dfea6607f2ec2654dee2f73bbb65582e488a7b3f82ad75f61e40a8c"
+  },
+  "positiveRootsAbsent": [
+    "evidence/dependencies/react-dashboard/t614",
+    "evidence/runs/react-dashboard-vite4-to-vite8/t614",
+    ".versionless/cache/react-dashboard/t614",
+    ".versionless/stage/react-dashboard/t614",
+    ".versionless/work/react-dashboard/t614",
+    ".versionless/cache/trust/replay/t614"
+  ]
+}

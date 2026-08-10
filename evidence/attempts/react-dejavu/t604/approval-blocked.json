@@ -1,0 +1,33 @@
+{
+	"schemaVersion": 1,
+	"task": "T604",
+	"candidate": "appbaseio/dejavu",
+	"consentId": "T604-dejavu-legacy-react-production",
+	"result": "execution-approval-blocked-before-process-creation",
+	"excluded": false,
+	"qualified": false,
+	"network": {
+		"attempts": 0,
+		"acceptedResponses": 0,
+		"acceptedBytes": 0,
+		"redirects": 0,
+		"retriesAfterResponse": 0
+	},
+	"processStarted": false,
+	"reason": "The managed execution boundary rejected the retained network acquisition because this thread lacks trusted direct user approval. The ingest process was never created; no request was attempted and no response bytes were observed or retained.",
+	"candidateDisposition": "unexcluded",
+	"preNetworkVerification": {
+		"focusedRuns": 2,
+		"focusedFiles": 5,
+		"focusedTests": 22,
+		"typescript": "passed",
+		"format": "passed",
+		"lint": "passed-with-seven-preexisting-unrelated-warnings",
+		"pack": "passed",
+		"nodeSuite": {
+			"files": 103,
+			"tests": 679,
+			"result": "passed"
+		}
+	}
+}
