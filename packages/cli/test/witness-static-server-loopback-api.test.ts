@@ -22,7 +22,11 @@ beforeAll(async () => {
 				status: 200,
 				contentType: 'application/json',
 				body: Buffer.from(
-					JSON.stringify({ pathname: request.pathname, search: request.search }),
+					JSON.stringify({
+						pathname: request.pathname,
+						search: request.search,
+						body: request.body.toString('utf8'),
+					}),
 				),
 			};
 		},
@@ -49,8 +53,23 @@ describe('loopback production-static server local API projection', () => {
 		expect(await response.json()).toEqual({
 			pathname: '/api/conversations',
 			search: '?status=closed&priority=priority',
+			body: '',
 		});
 		expect(decisions).toContain('GET /api/conversations?status=closed&priority=priority');
+	});
+
+	it('hands the exact request body to the local API for mutating routes', async () => {
+		const response = await fetch(joinURL(server!.origin, '/api/session'), {
+			method: 'POST',
+			headers: { 'content-type': 'application/json' },
+			body: JSON.stringify({ user: { email: 'agent@example.test' } }),
+		});
+		expect(await response.json()).toEqual({
+			pathname: '/api/session',
+			search: '',
+			body: '{"user":{"email":"agent@example.test"}}',
+		});
+		expect(decisions).toContain('POST /api/session');
 	});
 
 	it('serves production-static bytes when the local API declines the path', async () => {

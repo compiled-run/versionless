@@ -3,6 +3,7 @@ import { canonicalize, sha256 } from '../src/receipts/canonicalize.ts';
 import {
 	parseWitnessRealAppReceipt,
 	WITNESS_REAL_APP_NAMES,
+	WITNESS_REAL_APP_RUNS,
 	WITNESS_REAL_APP_SCHEMA,
 	witnessRealAppDigest,
 	type WitnessOfflineEvidence,
@@ -14,7 +15,7 @@ function fixture(): WitnessRealAppReceipt {
 		(['baseline', 'migrated'] as const).flatMap((lane) =>
 			([1, 2] as const).map((pass) => ({
 				app,
-				framework: (['react', 'angularjs', 'next', 'angular'] as const)[appIndex]!,
+				framework: (['react', 'angularjs', 'next', 'angular', 'react'] as const)[appIndex]!,
 				lane,
 				pass,
 				result: 'pass' as const,
@@ -267,8 +268,15 @@ function fixture(): WitnessRealAppReceipt {
 }
 
 describe('linked Witness real-app receipt', () => {
-	it('accepts exactly four apps, two lanes and two passes', () => {
-		expect(parseWitnessRealAppReceipt(fixture()).runs).toHaveLength(16);
+	it('accepts every named app across two lanes and two passes', () => {
+		expect(WITNESS_REAL_APP_RUNS).toBe(WITNESS_REAL_APP_NAMES.length * 4);
+		expect(parseWitnessRealAppReceipt(fixture()).runs).toHaveLength(WITNESS_REAL_APP_RUNS);
+	});
+
+	it('rejects a receipt that omits a named app', () => {
+		const receipt = fixture();
+		receipt.runs = receipt.runs.slice(0, WITNESS_REAL_APP_RUNS - 4);
+		expect(() => parseWitnessRealAppReceipt(receipt)).toThrow('cardinality');
 	});
 
 	it('rejects fake drag and semantic tampering', () => {

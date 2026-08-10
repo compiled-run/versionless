@@ -6,7 +6,10 @@ export const WITNESS_REAL_APP_NAMES = [
 	'angular-phonecat',
 	'killedbygoogle',
 	'angular-realworld',
+	'papercups',
 ] as const;
+/** Every named app must contribute two lanes observed twice each. */
+export const WITNESS_REAL_APP_RUNS = WITNESS_REAL_APP_NAMES.length * 4;
 
 export type WitnessGesture = 'click' | 'type' | 'press' | 'hover' | 'scroll';
 export type WitnessServiceWorkerTelemetry = {
@@ -249,9 +252,9 @@ export function parseWitnessRealAppReceipt(value: unknown): WitnessRealAppReceip
 		receipt.schemaVersion !== WITNESS_REAL_APP_SCHEMA ||
 		receipt.result !== 'pass' ||
 		!Array.isArray(receipt.runs) ||
-		receipt.runs.length !== 16 ||
+		receipt.runs.length !== WITNESS_REAL_APP_RUNS ||
 		!Array.isArray(receipt.canonicalReceipts) ||
-		receipt.canonicalReceipts.length !== 4
+		receipt.canonicalReceipts.length !== WITNESS_REAL_APP_NAMES.length
 	)
 		throw new Error('Witness real-app receipt cardinality differs');
 	const expected = new Set<string>();

@@ -31,6 +31,8 @@ import {
 } from '../../../core/src/index.ts';
 import { transformNext12DerivedStateToMemo } from '../../../frameworks/nextjs/src/index.ts';
 import { witnessNodeFileSystem } from './node-filesystem.ts';
+import { createPapercupsProjection, PAPERCUPS_SOCKET_PATH } from './papercups-projection.ts';
+import { createPhoenixSocketUpgrade } from './phoenix-socket.ts';
 import {
 	createPlaywrightWitnessHost,
 	type PlaywrightWitnessHost,
@@ -40,6 +42,11 @@ import {
 	type WitnessTransportRequest,
 } from './playwright-host.ts';
 import { verifyLinkedWitnessProvenance } from './provenance.ts';
+import type {
+	WitnessSocketLedgerDetail,
+	WitnessSocketLedgerRecord,
+	WitnessSocketLedgerRecorder,
+} from './socket-ledger.ts';
 
 const root = resolve(import.meta.dirname, '../../../..');
 const stageRoot = join(root, '.versionless/stage/witness-real-app');
@@ -58,7 +65,12 @@ const killedByGoogleMirror = join(
 const EXPECTED_KILLED_BY_GOOGLE_ARCHIVE =
 	'c28878d0f65b56aa595763c852477fb0c1e3533e5c7f7ea9daa2be16f102368d';
 
-type App = 'react-boilerplate' | 'angular-phonecat' | 'killedbygoogle' | 'angular-realworld';
+type App =
+	| 'react-boilerplate'
+	| 'angular-phonecat'
+	| 'killedbygoogle'
+	| 'angular-realworld'
+	| 'papercups';
 type Lane = 'baseline' | 'migrated';
 type JourneyEvidence = {
 	assertions: string[];
@@ -111,6 +123,20 @@ type AppSpec = {
 		request: WitnessTransportRequest,
 		transportEvidence: JourneyTransportEvidence,
 	): Promise<WitnessTransportDecision>;
+	/**
+	 * Per-run same-origin loopback seams. The factory is invoked once per run so
+	 * every run starts from the frozen projection state instead of inheriting
+	 * mutations from an earlier pass.
+	 */
+	loopback?(): {
+		api(request: StaticServerApiRequest): Promise<StaticServerApiResponse | null>;
+		upgrade(
+			request: IncomingMessage,
+			socket: Duplex,
+			head: Buffer,
+			record: WitnessSocketLedgerRecorder,
+		): void;
+	};
 };
 
 export const ANGULAR_REALWORLD_TERMINAL_MARKER =
@@ -226,6 +252,7 @@ type StaticResponseLedgerEntry = {
 	mime: string;
 	bytes: number;
 	sha256: string;
+	socket?: WitnessSocketLedgerDetail;
 };
 
 type LegacyMainPrecacheResponse = {
@@ -332,7 +359,22 @@ export type StaticServerApiRequest = {
 	method: string;
 	pathname: string;
 	search: string;
+	body: Buffer;
 };
+
+const MAX_API_REQUEST_BYTES = 1_048_576;
+
+async function collectRequestBody(request: IncomingMessage): Promise<Buffer | null> {
+	const chunks: Buffer[] = [];
+	let bytes = 0;
+	for await (const chunk of request as AsyncIterable<Buffer | string>) {
+		const buffer = typeof chunk === 'string' ? Buffer.from(chunk, 'utf8') : chunk;
+		bytes += buffer.length;
+		if (bytes > MAX_API_REQUEST_BYTES) return null;
+		chunks.push(buffer);
+	}
+	return Buffer.concat(chunks);
+}
 
 export async function startStaticServer(
 	staticRoot: string,
@@ -346,6 +388,7 @@ export async function startStaticServer(
 			request: IncomingMessage,
 			socket: Duplex,
 			head: Buffer,
+			record: WitnessSocketLedgerRecorder,
 		) => void | Promise<void>;
 	} = {},
 ): Promise<{
@@ -419,10 +462,16 @@ export async function startStaticServer(
 				response.end(body);
 			};
 			if (options.api !== undefined) {
+				const body = await collectRequestBody(request);
+				if (body === null) {
+					complete(413, 'text/plain', Buffer.from('payload too large'), null);
+					return;
+				}
 				const fulfilled = await options.api({
 					method: request.method ?? 'GET',
 					pathname,
 					search: parsedRequest.search ?? '',
+					body,
 				});
 				if (fulfilled !== null) {
 					complete(fulfilled.status, fulfilled.contentType, fulfilled.body, null);
@@ -457,9 +506,23 @@ export async function startStaticServer(
 	server.headersTimeout = 10_000;
 	if (options.upgrade !== undefined) {
 		const upgrade = options.upgrade;
+		const recordSocket = (record: WitnessSocketLedgerRecord): void => {
+			ledger.push({
+				method: record.method,
+				pathname: record.pathname,
+				query: record.query,
+				destination: 'websocket',
+				resolvedFile: null,
+				status: record.status,
+				mime: record.mime,
+				bytes: record.body.length,
+				sha256: sha256(record.body),
+				socket: record.socket,
+			});
+		};
 		server.on('upgrade', (request, socket, head) => {
 			void (async () => {
-				await upgrade(request, socket, head);
+				await upgrade(request, socket, head, recordSocket);
 			})().catch((error: unknown) => {
 				failures.push(error instanceof Error ? error.message : String(error));
 				socket.destroy();
@@ -1073,6 +1136,36 @@ const apps: AppSpec[] = [
 			};
 		},
 	},
+	{
+		app: 'papercups',
+		framework: 'react',
+		canonicalReceipt: 'evidence/runs/react-papercups-v1-0-0/t004-run.json',
+		canonicalDigest: 'b433f214727389676b308332f7689d773ad28dde0984b9bf245f3f780f87d35a',
+		sources: {
+			baseline: '.versionless/work/react-papercups-v1-0-0/baseline/build',
+			migrated: '.versionless/work/react-papercups-v1-0-0/target/build-vite',
+		},
+		initialRoute: '/login',
+		loopback: () => {
+			const projection = createPapercupsProjection();
+			return {
+				api: projection.api,
+				upgrade: createPhoenixSocketUpgrade({
+					pathname: PAPERCUPS_SOCKET_PATH,
+					projection: projection.channel,
+				}),
+			};
+		},
+		// NOT YET IMPLEMENTED: the Papercups sign-in, inbox triage and reply
+		// round-trip journey lands in the next unit. This specification carries
+		// the loopback API projection and the Phoenix v2 socket stub only; it
+		// refuses to report a pass it has not observed.
+		journey: () => {
+			throw new Error(
+				'Papercups linked Witness journey is not yet implemented; witness infrastructure only',
+			);
+		},
+	},
 ];
 
 async function exists(file: string): Promise<boolean> {
@@ -1294,7 +1387,12 @@ async function executeRun(
 		options.serviceWorkerPolicy !== 'zero'
 			? ('canonical-t060' as const)
 			: ('current-witness' as const);
-	const staticServer = await startStaticServer(laneRoot, { profile: contextProfile });
+	const loopback = app.loopback?.();
+	const staticServer = await startStaticServer(laneRoot, {
+		profile: contextProfile,
+		api: loopback?.api,
+		upgrade: loopback?.upgrade,
+	});
 	const productionUrl = joinURL(staticServer.origin, app.initialRoute ?? '/');
 	const transportEvidence: JourneyTransportEvidence = { apiUsernames: [] };
 	const expectedServiceWorker =
