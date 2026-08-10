@@ -82,7 +82,7 @@
       "runtime": "node-18.20.8",
       "result": "pass",
       "receipt": "evidence/runs/witness-angular-realworld/receipt.json",
-      "digest": "acd4f259f9372dd58b5267001469c2b68657d708c4d2a311df71a5a171b21128"
+      "digest": "122496b1ccb5c1da57945868cdea5bb93fab90164534efa5867025d25c01df34"
     },
     {
       "id": "next-killedbygoogle-derived-state-to-memo",

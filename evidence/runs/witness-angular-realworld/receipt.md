@@ -1,7 +1,7 @@
 # Angular RealWorld direct-Witness receipt
 
 - Result: **pass**
-- Canonical SHA-256: `acd4f259f9372dd58b5267001469c2b68657d708c4d2a311df71a5a171b21128`
+- Canonical SHA-256: `122496b1ccb5c1da57945868cdea5bb93fab90164534efa5867025d25c01df34`
 - Bound migration receipt: `bba54bc67cf5686445b207c530e04c5f9d56cf87f495250e97329e1eed8c6ad1`
 - Qualification runs: 2 baseline + 2 migrated production-static passes
 - Interaction coverage per run: click, type, press, hover, scroll

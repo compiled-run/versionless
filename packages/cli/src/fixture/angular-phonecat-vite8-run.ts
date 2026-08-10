@@ -104,24 +104,6 @@ interface Journey {
 	viewport: { width: number; height: number };
 }
 
-export interface AngularPhonecatVite8PortPlan {
-	legacy: number;
-	target: number;
-	bindingMutation: number;
-	bindingRestoration: number;
-	templateMutation: number;
-	templateRestoration: number;
-}
-
-export const ANGULAR_PHONECAT_VITE8_DEFAULT_PORT_PLAN: Readonly<AngularPhonecatVite8PortPlan> = {
-	legacy: 43510,
-	target: 43511,
-	bindingMutation: 43512,
-	bindingRestoration: 43513,
-	templateMutation: 43514,
-	templateRestoration: 43515,
-};
-
 interface ServerProbe {
 	index: { url: string; status: number; contentType: string };
 	assets: Array<{ url: string; status: number; contentType: string }>;
@@ -409,7 +391,14 @@ function mime(file: string): string {
 	}
 }
 
-async function startServer(directory: string, port: number): Promise<http.Server> {
+function ephemeralPort(server: http.Server): number {
+	const address = server.address();
+	if (address === null || typeof address === 'string')
+		throw new Error('Loopback server did not report an ephemeral port');
+	return address.port;
+}
+
+async function startServer(directory: string): Promise<{ server: http.Server; port: number }> {
 	const server = http.createServer(async (request, response) => {
 		try {
 			const pathname = decodePath(parseURL(request.url ?? '/').pathname);
@@ -431,9 +420,9 @@ async function startServer(directory: string, port: number): Promise<http.Server
 	});
 	await new Promise<void>((resolve, reject) => {
 		server.once('error', reject);
-		server.listen(port, '127.0.0.1', resolve);
+		server.listen(0, '127.0.0.1', resolve);
 	});
-	return server;
+	return { server, port: ephemeralPort(server) };
 }
 
 async function stopServer(server: http.Server): Promise<void> {
@@ -650,14 +639,13 @@ async function runJourney(
 async function journeyOnce(
 	browserExecutable: string,
 	served: string,
-	port: number,
 	journey: Journey,
 	lane: string,
 	run: number,
 	expectFailure = false,
 ) {
 	const browser = await chromium.launch({ headless: true, executablePath: browserExecutable });
-	const server = await startServer(served, port);
+	const { server, port } = await startServer(served);
 	try {
 		const probe = await probeBuiltEntry(port);
 		return await runJourney(browser, served, port, journey, lane, run, probe, expectFailure);
@@ -680,7 +668,6 @@ export async function verifyAngularPhonecatVite8({
 	artifactsPath,
 	adapterConfigPath,
 	publishAggregate = true,
-	portPlan = ANGULAR_PHONECAT_VITE8_DEFAULT_PORT_PLAN,
 	internalReceiptIdentity,
 }: {
 	receiptPath: string;
@@ -688,7 +675,6 @@ export async function verifyAngularPhonecatVite8({
 	artifactsPath?: string;
 	adapterConfigPath?: string;
 	publishAggregate?: boolean;
-	portPlan?: Readonly<AngularPhonecatVite8PortPlan>;
 	internalReceiptIdentity?: AngularPhonecatInternalReceiptIdentity;
 }): Promise<MigrationReceipt> {
 	workRoot = workPath ?? defaultWorkRoot;
@@ -805,12 +791,12 @@ export async function verifyAngularPhonecatVite8({
 
 	const browserExecutable = path.join(root, manifest.browser.executable);
 	const journeys = [];
-	for (const [lane, served, port] of [
-		['legacy', path.join(legacy, 'app'), portPlan.legacy],
-		['target', path.join(target, 'build-vite'), portPlan.target],
+	for (const [lane, served] of [
+		['legacy', path.join(legacy, 'app')],
+		['target', path.join(target, 'build-vite')],
 	] as const)
 		for (let run = 1; run <= journey.qualificationRuns; run++)
-			journeys.push(await journeyOnce(browserExecutable, served, port, journey, lane, run));
+			journeys.push(await journeyOnce(browserExecutable, served, journey, lane, run));
 
 	const mutations = [];
 	const bindingFile = path.join(target, applicationFiles.appConfig);
@@ -826,7 +812,6 @@ export async function verifyAngularPhonecatVite8({
 		const failure = await journeyOnce(
 			browserExecutable,
 			path.join(target, 'build-vite'),
-			portPlan.bindingMutation,
 			journey,
 			'binding-mutation',
 			1,
@@ -848,7 +833,6 @@ export async function verifyAngularPhonecatVite8({
 	await journeyOnce(
 		browserExecutable,
 		path.join(target, 'build-vite'),
-		portPlan.bindingRestoration,
 		journey,
 		'binding-restored',
 		1,
@@ -861,7 +845,6 @@ export async function verifyAngularPhonecatVite8({
 	const templateFailure = await journeyOnce(
 		browserExecutable,
 		path.join(target, 'build-vite'),
-		portPlan.templateMutation,
 		journey,
 		'template-mutation',
 		1,
@@ -874,7 +857,6 @@ export async function verifyAngularPhonecatVite8({
 	await journeyOnce(
 		browserExecutable,
 		path.join(target, 'build-vite'),
-		portPlan.templateRestoration,
 		journey,
 		'template-restored',
 		1,

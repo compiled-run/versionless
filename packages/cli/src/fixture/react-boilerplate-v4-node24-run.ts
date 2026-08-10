@@ -360,14 +360,31 @@ async function waitForServer(port: number): Promise<void> {
 	throw new Error('Loopback server did not become ready');
 }
 
-async function startServer(port: number): Promise<ChildProcess> {
+async function reserveEphemeralPort(): Promise<number> {
+	const probe = http.createServer();
+	await new Promise<void>((resolve, reject) => {
+		probe.once('error', reject);
+		probe.listen(0, '127.0.0.1', resolve);
+	});
+	const address = probe.address();
+	if (address === null || typeof address === 'string')
+		throw new Error('Loopback probe did not report an ephemeral port');
+	const { port } = address;
+	await new Promise<void>((resolve, reject) =>
+		probe.close((error) => (error ? reject(error) : resolve())),
+	);
+	return port;
+}
+
+async function startServer(): Promise<{ child: ChildProcess; port: number }> {
+	const port = await reserveEphemeralPort();
 	const child = spawn(path.join(cache, 'node24/bin/node'), ['server'], {
 		cwd: target,
 		env: { ...env(), NODE_ENV: 'production', HOST: '127.0.0.1', PORT: String(port) },
 		stdio: ['ignore', 'pipe', 'pipe'],
 	});
 	await waitForServer(port);
-	return child;
+	return { child, port };
 }
 
 async function stopServer(child: ChildProcess): Promise<void> {
@@ -491,11 +508,11 @@ export async function verifyReactBoilerplateNode24({
 	if (sha256(await readFile(browserExecutable)) !== manifest.browser.sha256)
 		throw new Error('Pinned browser digest mismatch');
 	const browser = await chromium.launch({ headless: true, executablePath: browserExecutable });
-	const server = await startServer(43181);
+	const { child: server, port } = await startServer();
 	const journeys: unknown[] = [];
 	try {
 		for (let index = 1; index <= journey.qualificationRuns; index++)
-			journeys.push(await journeyRun(browser, journey, 43181, index));
+			journeys.push(await journeyRun(browser, journey, port, index));
 	} finally {
 		await stopServer(server);
 		await browser.close();
@@ -550,10 +567,10 @@ export async function verifyReactBoilerplateNode24({
 		headless: true,
 		executablePath: browserExecutable,
 	});
-	const restoredServer = await startServer(43182);
+	const { child: restoredServer, port: restoredPort } = await startServer();
 	let restoredJourney;
 	try {
-		restoredJourney = await journeyRun(restoredBrowser, journey, 43182, 1);
+		restoredJourney = await journeyRun(restoredBrowser, journey, restoredPort, 1);
 	} finally {
 		await stopServer(restoredServer);
 		await restoredBrowser.close();

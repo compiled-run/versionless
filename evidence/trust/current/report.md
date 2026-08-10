@@ -1,8 +1,8 @@
 # Versionless project trust package
 
-- Canonical SHA-256: `d169fe29ece785d90566470f50837397b90045af0e056e89f870ebfd3ef69fc1`
-- Deterministic core: `217a426735ddbe9d191ea2133c330c5a1646eebc731db23308f4a284d569ca38`
-- Generated observation: `2026-08-10T12:43:12.367Z`
+- Canonical SHA-256: `7eedb668a3603b856e6037a015ba459b9586df54ab578cf625aee8b95fb4b8b3`
+- Deterministic core: `ae85ea574eafc87ac240336ac022fd3572a8bbfd31db55bd131408b7684379e6`
+- Generated observation: `2026-08-10T18:29:58.367Z`
 - Vulnerability input freshness: **verified** (seven-day maximum age)
 - Integrity: **hash-only; authenticity is not established**
 - Assurance: **this package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation**
@@ -41,7 +41,7 @@ The dependency graph is a rooted complete inventory. Exact transitive dependency
 - `evidence/runs/angular-phonecat-vite8/t069-run.json`: `033fc40237975e28df36117cc309625632610a399b5c0f88735079ed21fcad0d` (verified)
 - `evidence/runs/angular-realworld-v15-to-v16/receipt.json`: `bba54bc67cf5686445b207c530e04c5f9d56cf87f495250e97329e1eed8c6ad1` (verified)
 - `evidence/runs/next-killedbygoogle-derived-state-to-memo/receipt.json`: `a018c6490cd559fab74ea402ff93660f053503dbed1a52ba9b68ed7fdc086b7c` (verified)
-- `evidence/runs/witness-angular-realworld/receipt.json`: `acd4f259f9372dd58b5267001469c2b68657d708c4d2a311df71a5a171b21128` (verified)
+- `evidence/runs/witness-angular-realworld/receipt.json`: `122496b1ccb5c1da57945868cdea5bb93fab90164534efa5867025d25c01df34` (verified)
 - `evidence/runs/witness-react-boilerplate/receipt.json`: `bfa48f718ee86566f120cb0bc42645b22c989a27d87c102b9c2f256d15661ed7` (verified)
 - `evidence/runs/witness-next-killedbygoogle/receipt.json`: `da376ad77386a9f48c9be076fbe2131ebc249338df8f38f415e5830659a3f2ef` (verified)
 - `evidence/runs/react-boilerplate-v4-zero-sw/t693-run.json`: `386620d0dadad7d201d62965d72d79f37ee6aad69447669e4691787b3e2ef6e6` (verified)

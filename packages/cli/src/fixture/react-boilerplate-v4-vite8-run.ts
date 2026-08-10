@@ -73,18 +73,6 @@ interface Journey {
 	viewport: { width: number; height: number };
 }
 
-export interface ReactVite8PortPlan {
-	qualification: number;
-	mutation: number;
-	restoration: number;
-}
-
-export const REACT_VITE8_DEFAULT_PORT_PLAN: Readonly<ReactVite8PortPlan> = {
-	qualification: 43281,
-	mutation: 43282,
-	restoration: 43283,
-};
-
 interface ServerProbe {
 	index: { url: string; status: number; contentType: string };
 	assets: Array<{ url: string; status: number; contentType: string }>;
@@ -291,7 +279,14 @@ function contentType(file: string): string {
 	}
 }
 
-async function startServer(port: number): Promise<Server> {
+function ephemeralPort(server: Server): number {
+	const address = server.address();
+	if (address === null || typeof address === 'string')
+		throw new Error('Loopback server did not report an ephemeral port');
+	return address.port;
+}
+
+async function startServer(): Promise<{ server: Server; port: number }> {
 	const output = path.join(target, 'build-vite');
 	const server = http.createServer(async (request, response) => {
 		try {
@@ -317,9 +312,9 @@ async function startServer(port: number): Promise<Server> {
 	});
 	await new Promise<void>((resolve, reject) => {
 		server.once('error', reject);
-		server.listen(port, '127.0.0.1', () => resolve());
+		server.listen(0, '127.0.0.1', () => resolve());
 	});
-	return server;
+	return { server, port: ephemeralPort(server) };
 }
 
 async function stopServer(server: Server): Promise<void> {
@@ -560,7 +555,6 @@ async function journeyRun(
 async function browserRun(
 	manifest: Record<string, any>,
 	journey: Journey,
-	port: number,
 	run: number,
 	expectServiceWorkerFailure = false,
 ) {
@@ -568,7 +562,7 @@ async function browserRun(
 		headless: true,
 		executablePath: path.resolve(root, manifest.browser.executable),
 	});
-	const server = await startServer(port);
+	const { server, port } = await startServer();
 	try {
 		const probe = await probeBuiltEntry(port);
 		return await journeyRun(browser, journey, port, run, probe, expectServiceWorkerFailure);
@@ -584,14 +578,12 @@ export async function verifyReactBoilerplateVite8({
 	artifactsPath,
 	adapterConfigPath,
 	publishAggregate = true,
-	portPlan = REACT_VITE8_DEFAULT_PORT_PLAN,
 }: {
 	receiptPath: string;
 	targetPath?: string;
 	artifactsPath?: string;
 	adapterConfigPath?: string;
 	publishAggregate?: boolean;
-	portPlan?: Readonly<ReactVite8PortPlan>;
 }): Promise<MigrationReceipt> {
 	target = targetPath ?? defaultTarget;
 	artifactsRoot = artifactsPath ?? defaultArtifactsRoot;
@@ -630,7 +622,7 @@ export async function verifyReactBoilerplateVite8({
 	);
 	const journeys = [];
 	for (let index = 1; index <= journey.qualificationRuns; index++)
-		journeys.push(await browserRun(manifest, journey, portPlan.qualification, index));
+		journeys.push(await browserRun(manifest, journey, index));
 	if (canonicalize(journeys[0]) !== canonicalize({ ...journeys[1], run: 1 }))
 		throw new Error('Vite qualification journeys differ');
 	artifacts.push(await artifact('journey.json', journeys));
@@ -651,7 +643,7 @@ export async function verifyReactBoilerplateVite8({
 		await writeFile(registrationFile, mutated);
 		const mutationBuild = await viteBuild();
 		artifacts.push(await artifact('build-mutation.log', normalized(mutationBuild)));
-		mutationJourney = await browserRun(manifest, journey, portPlan.mutation, 1, true);
+		mutationJourney = await browserRun(manifest, journey, 1, true);
 	} finally {
 		await writeFile(registrationFile, restored);
 	}
@@ -662,7 +654,7 @@ export async function verifyReactBoilerplateVite8({
 	if (canonicalize(restoredServiceWorker) !== canonicalize(firstServiceWorker))
 		throw new Error('Restored service-worker output differs');
 	artifacts.push(await artifact('build-restored.log', normalized(restoredBuild)));
-	const restoredJourney = await browserRun(manifest, journey, portPlan.restoration, 1);
+	const restoredJourney = await browserRun(manifest, journey, 1);
 	artifacts.push(
 		await artifact('mutation.json', {
 			mutation: mutationJourney.result,

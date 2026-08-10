@@ -10,14 +10,8 @@ import {
 } from '../../../core/src/index.ts';
 import * as path from 'pathe';
 import { joinURL, parseURL } from 'ufo';
-import {
-	verifyAngularPhonecatVite8,
-	type AngularPhonecatVite8PortPlan,
-} from './angular-phonecat-vite8-run.ts';
-import {
-	verifyReactBoilerplateVite8,
-	type ReactVite8PortPlan,
-} from './react-boilerplate-v4-vite8-run.ts';
+import { verifyAngularPhonecatVite8 } from './angular-phonecat-vite8-run.ts';
+import { verifyReactBoilerplateVite8 } from './react-boilerplate-v4-vite8-run.ts';
 
 const sourceDirectory = import.meta.dirname;
 const root =
@@ -49,36 +43,6 @@ const immutable = {
 
 type Options = Readonly<{ outputRoot?: string; workRoot?: string; publish?: boolean }>;
 type Order = 'react-first' | 'phonecat-first';
-
-export const VITE8_SHARED_ADAPTER_COHORT_PORT_PLAN: Readonly<
-	Record<
-		Order,
-		{ react: Readonly<ReactVite8PortPlan>; phonecat: Readonly<AngularPhonecatVite8PortPlan> }
-	>
-> = {
-	'react-first': {
-		react: { qualification: 44200, mutation: 44201, restoration: 44202 },
-		phonecat: {
-			legacy: 44210,
-			target: 44211,
-			bindingMutation: 44212,
-			bindingRestoration: 44213,
-			templateMutation: 44214,
-			templateRestoration: 44215,
-		},
-	},
-	'phonecat-first': {
-		react: { qualification: 44230, mutation: 44231, restoration: 44232 },
-		phonecat: {
-			legacy: 44220,
-			target: 44221,
-			bindingMutation: 44222,
-			bindingRestoration: 44223,
-			templateMutation: 44224,
-			templateRestoration: 44225,
-		},
-	},
-};
 
 function exists(target: string): Promise<boolean> {
 	return access(target).then(
@@ -351,7 +315,6 @@ async function runProfile(order: Order, profile: 'react' | 'phonecat', directory
 			artifactsPath: artifacts,
 			adapterConfigPath: reactAdapter,
 			publishAggregate: false,
-			portPlan: VITE8_SHARED_ADAPTER_COHORT_PORT_PLAN[order].react,
 		});
 		const kernel = JSON.parse(
 			await readFile(path.join(target, '.versionless-vite8-kernel.json'), 'utf8'),
@@ -384,7 +347,6 @@ async function runProfile(order: Order, profile: 'react' | 'phonecat', directory
 		artifactsPath: artifacts,
 		adapterConfigPath: phonecatAdapter,
 		publishAggregate: false,
-		portPlan: VITE8_SHARED_ADAPTER_COHORT_PORT_PLAN[order].phonecat,
 		internalReceiptIdentity: order,
 	});
 	const kernel = JSON.parse(

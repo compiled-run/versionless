@@ -4,19 +4,19 @@
     {
       "name": "packages/cli/dist/cli.js",
       "digest": {
-        "sha256": "a2cce25c7a85784971d53963ddd210c6a1d213557657c41d178f14ffe8c7ff5a"
+        "sha256": "c86f4fb29ccd96ec9d3874a141428e265a548b2fc9ee88a88403cabd3d148e1e"
       }
     },
     {
       "name": "packages/cli/dist/index.js",
       "digest": {
-        "sha256": "989f2ec791fc187b1e8672def8e1ca56af525123e0fe536e387a48a7193f3361"
+        "sha256": "fa6001f85fd9bbd57e12eb5f5423a1f89ce02c8eee394ce972368bad27ebd209"
       }
     },
     {
-      "name": "packages/cli/dist/verify-knGN0mGt.js",
+      "name": "packages/cli/dist/verify-YnGo5vRD.js",
       "digest": {
-        "sha256": "f33c30528cf7dbae5d86c0b263380fe8aba49251fdc3cfcc1178b97132136e70"
+        "sha256": "e380f6ca1d830a53c9389da3663249143916b4320ec1d94a40f673b58d1c2dd0"
       }
     },
     {
@@ -34,7 +34,7 @@
     {
       "name": "packages/frameworks/angular/dist/index.js",
       "digest": {
-        "sha256": "4af0fc356eefd3d3e714706468b43051fad99a777e76200960e8401525a164f9"
+        "sha256": "45e8057d1b3e1672b2994f703ffd7c10d1a7a33a7cb5d6492570462a4ceb1956"
       }
     },
     {
@@ -52,7 +52,7 @@
     {
       "name": "packages/frameworks/react/dist/index.js",
       "digest": {
-        "sha256": "9e8a7982b795221905d6452dfc11c3aaa5eea06aaed3679f7bf2fa3c034afa1d"
+        "sha256": "ba24ca653b9d4362489cf99c112469c0985233e664137f1ea01fdef5240dd17b"
       }
     },
     {
@@ -108,7 +108,7 @@
         {
           "uri": "evidence/runs/aggregate.json",
           "digest": {
-            "sha256": "9b61684cb81ea96955fb6b107a5488c5eaa7b36ecbc6e1a495fbba8caba8de3e"
+            "sha256": "9344a6846e4d7882a8eba06196117d11e56f07491f7117bac9e4b5d0e94c9bcc"
           }
         },
         {
@@ -186,7 +186,7 @@
         {
           "uri": "evidence/runs/witness-angular-realworld/receipt.json",
           "digest": {
-            "sha256": "acd4f259f9372dd58b5267001469c2b68657d708c4d2a311df71a5a171b21128"
+            "sha256": "122496b1ccb5c1da57945868cdea5bb93fab90164534efa5867025d25c01df34"
           }
         },
         {
@@ -288,15 +288,15 @@
       "byproducts": [
         {
           "path": "packages/cli/dist/cli.js",
-          "sha256": "a2cce25c7a85784971d53963ddd210c6a1d213557657c41d178f14ffe8c7ff5a"
+          "sha256": "c86f4fb29ccd96ec9d3874a141428e265a548b2fc9ee88a88403cabd3d148e1e"
         },
         {
           "path": "packages/cli/dist/index.js",
-          "sha256": "989f2ec791fc187b1e8672def8e1ca56af525123e0fe536e387a48a7193f3361"
+          "sha256": "fa6001f85fd9bbd57e12eb5f5423a1f89ce02c8eee394ce972368bad27ebd209"
         },
         {
-          "path": "packages/cli/dist/verify-knGN0mGt.js",
-          "sha256": "f33c30528cf7dbae5d86c0b263380fe8aba49251fdc3cfcc1178b97132136e70"
+          "path": "packages/cli/dist/verify-YnGo5vRD.js",
+          "sha256": "e380f6ca1d830a53c9389da3663249143916b4320ec1d94a40f673b58d1c2dd0"
         },
         {
           "path": "packages/core/dist/index.js",
@@ -308,7 +308,7 @@
         },
         {
           "path": "packages/frameworks/angular/dist/index.js",
-          "sha256": "4af0fc356eefd3d3e714706468b43051fad99a777e76200960e8401525a164f9"
+          "sha256": "45e8057d1b3e1672b2994f703ffd7c10d1a7a33a7cb5d6492570462a4ceb1956"
         },
         {
           "path": "packages/frameworks/angularjs/dist/index.js",
@@ -320,7 +320,7 @@
         },
         {
           "path": "packages/frameworks/react/dist/index.js",
-          "sha256": "9e8a7982b795221905d6452dfc11c3aaa5eea06aaed3679f7bf2fa3c034afa1d"
+          "sha256": "ba24ca653b9d4362489cf99c112469c0985233e664137f1ea01fdef5240dd17b"
         },
         {
           "path": "packages/node-guard/dist/index.cjs",

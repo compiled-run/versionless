@@ -150,7 +150,14 @@ function mime(file: string): string {
 	}
 }
 
-async function startServer(lane: string, port: number): Promise<http.Server> {
+function ephemeralPort(server: http.Server): number {
+	const address = server.address();
+	if (address === null || typeof address === 'string')
+		throw new Error('Loopback server did not report an ephemeral port');
+	return address.port;
+}
+
+async function startServer(lane: string): Promise<{ server: http.Server; port: number }> {
 	const app = path.join(lane, 'app');
 	const server = http.createServer(async (request, response) => {
 		try {
@@ -174,9 +181,9 @@ async function startServer(lane: string, port: number): Promise<http.Server> {
 	});
 	await new Promise<void>((resolve, reject) => {
 		server.once('error', reject);
-		server.listen(port, '127.0.0.1', resolve);
+		server.listen(0, '127.0.0.1', resolve);
 	});
-	return server;
+	return { server, port: ephemeralPort(server) };
 }
 
 async function stopServer(server: http.Server): Promise<void> {
@@ -352,7 +359,6 @@ async function mutationProof(
 	relativeFile: string,
 	before: string,
 	after: string,
-	port: number,
 ) {
 	const file = path.join(target, relativeFile);
 	const restored = await readFile(file, 'utf8');
@@ -368,7 +374,7 @@ async function mutationProof(
 			headless: true,
 			executablePath: browserExecutable,
 		});
-		const server = await startServer(target, port);
+		const { server, port } = await startServer(target);
 		try {
 			failure = await runJourney(browser, port, journey, `${seam}-mutation`, 1, true);
 		} finally {
@@ -384,10 +390,16 @@ async function mutationProof(
 		headless: true,
 		executablePath: browserExecutable,
 	});
-	const restoredServer = await startServer(target, port + 1);
+	const { server: restoredServer, port: restoredPort } = await startServer(target);
 	let reproduced;
 	try {
-		reproduced = await runJourney(restoredBrowser, port + 1, journey, `${seam}-restored`, 1);
+		reproduced = await runJourney(
+			restoredBrowser,
+			restoredPort,
+			journey,
+			`${seam}-restored`,
+			1,
+		);
 	} finally {
 		await stopServer(restoredServer);
 		await restoredBrowser.close();
@@ -532,11 +544,11 @@ export async function verifyAngularPhonecatComposed({
 	const browser = await chromium.launch({ headless: true, executablePath: browserExecutable });
 	const journeys = [];
 	try {
-		for (const [name, lane, port] of [
-			['legacy', legacy, 43401],
-			['target', target, 43402],
+		for (const [name, lane] of [
+			['legacy', legacy],
+			['target', target],
 		] as const) {
-			const server = await startServer(lane, port);
+			const { server, port } = await startServer(lane);
 			try {
 				for (let index = 1; index <= journey.qualificationRuns; index++)
 					journeys.push(await runJourney(browser, port, journey, name, index));
@@ -556,7 +568,6 @@ export async function verifyAngularPhonecatComposed({
 			applicationFiles.phoneDetail,
 			'this.setImage(this.phone.images[0]);',
 			'this.setImage(this.phone.images[1]);',
-			43403,
 		),
 		await mutationProof(
 			browserExecutable,
@@ -566,7 +577,6 @@ export async function verifyAngularPhonecatComposed({
 			applicationFiles.appConfig,
 			`template: '<phone-detail phone="$resolve.phone"></phone-detail>',`,
 			`template: '<phone-detail phone="{name: \\'Wrong Phone\\', images: [\\'img/phones/nexus-s.0.jpg\\']}"></phone-detail>',`,
-			43405,
 		),
 	];
 	if (outputDigest(await sourceSlice(target)) !== firstOutputSha256)

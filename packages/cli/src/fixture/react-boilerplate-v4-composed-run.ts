@@ -468,7 +468,17 @@ function contentType(file: string): string {
 	}
 }
 
-async function startServer(lane: string, laneName: LaneName, port: number): Promise<Server> {
+function ephemeralPort(server: Server): number {
+	const address = server.address();
+	if (address === null || typeof address === 'string')
+		throw new Error('Loopback server did not report an ephemeral port');
+	return address.port;
+}
+
+async function startServer(
+	lane: string,
+	laneName: LaneName,
+): Promise<{ server: Server; port: number }> {
 	const output = path.join(lane, laneName === 'legacy' ? 'build' : 'build-vite');
 	const server = http.createServer(async (request, response) => {
 		try {
@@ -494,9 +504,9 @@ async function startServer(lane: string, laneName: LaneName, port: number): Prom
 	});
 	await new Promise<void>((resolve, reject) => {
 		server.once('error', reject);
-		server.listen(port, '127.0.0.1', resolve);
+		server.listen(0, '127.0.0.1', resolve);
 	});
-	return server;
+	return { server, port: ephemeralPort(server) };
 }
 
 async function journeyRun(options: {
@@ -684,15 +694,15 @@ async function journeyRun(options: {
 
 async function withJourney(
 	manifest: Manifest,
-	options: Omit<Parameters<typeof journeyRun>[0], 'browser'>,
+	options: Omit<Parameters<typeof journeyRun>[0], 'browser' | 'port'>,
 ) {
 	const browser = await chromium.launch({
 		headless: true,
 		executablePath: path.join(root, manifest.browser.executable),
 	});
-	const server = await startServer(options.lane, options.laneName, options.port);
+	const { server, port } = await startServer(options.lane, options.laneName);
 	try {
-		return await journeyRun({ ...options, browser });
+		return await journeyRun({ ...options, browser, port });
 	} finally {
 		await new Promise<void>((resolve, reject) =>
 			server.close((error) => (error ? reject(error) : resolve())),
@@ -801,7 +811,6 @@ export async function verifyReactBoilerplateComposed({
 	];
 	artifacts.push(await artifact('build.json', builds));
 	const runs = [];
-	let port = 43420;
 	for (const [laneName, lane] of [
 		['legacy', lanes.legacy],
 		['target', lanes.target],
@@ -813,7 +822,6 @@ export async function verifyReactBoilerplateComposed({
 					laneName,
 					journey,
 					payload,
-					port: port++,
 					run,
 				}),
 			);
@@ -865,7 +873,6 @@ export async function verifyReactBoilerplateComposed({
 				laneName: 'target',
 				journey,
 				payload,
-				port: port++,
 				run: 1,
 				expectedFailure: mutation.seam,
 			});
@@ -883,7 +890,6 @@ export async function verifyReactBoilerplateComposed({
 			laneName: 'target',
 			journey,
 			payload,
-			port: port++,
 			run: 1,
 		});
 		mutations.push({

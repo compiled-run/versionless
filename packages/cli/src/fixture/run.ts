@@ -131,7 +131,24 @@ async function waitForServer(port: number): Promise<void> {
 	}
 	throw new Error(`Server ${port} did not become ready`);
 }
-async function startServer(lane: string, port: number): Promise<ChildProcess> {
+async function reserveEphemeralPort(): Promise<number> {
+	const probe = http.createServer();
+	await new Promise<void>((resolve, reject) => {
+		probe.once('error', reject);
+		probe.listen(0, '127.0.0.1', resolve);
+	});
+	const address = probe.address();
+	if (address === null || typeof address === 'string')
+		throw new Error('Loopback probe did not report an ephemeral port');
+	const { port } = address;
+	await new Promise<void>((resolve, reject) =>
+		probe.close((error) => (error ? reject(error) : resolve())),
+	);
+	return port;
+}
+
+async function startServer(lane: string): Promise<{ child: ChildProcess; port: number }> {
+	const port = await reserveEphemeralPort();
 	const child = spawn(path.join(cacheRoot, 'node16/bin/node'), ['server'], {
 		cwd: lane,
 		env: childEnv({ NODE_ENV: 'production', HOST: '127.0.0.1', PORT: String(port) }),
@@ -145,7 +162,7 @@ async function startServer(lane: string, port: number): Promise<ChildProcess> {
 		child.kill('SIGTERM');
 		throw new Error(`${String(error)}: ${Buffer.concat(errors).toString()}`);
 	}
-	return child;
+	return { child, port };
 }
 async function stopServer(child: ChildProcess): Promise<void> {
 	if (child.exitCode !== null) return;
@@ -316,11 +333,11 @@ export async function verifyReactFixture({
 	const browser = await chromium.launch({ headless: true, executablePath: browserExecutable });
 	const journeys: unknown[] = [];
 	try {
-		for (const [name, lane, port] of [
-			['legacy', legacy, 43161],
-			['target', target, 43162],
+		for (const [name, lane] of [
+			['legacy', legacy],
+			['target', target],
 		] as const) {
-			const server = await startServer(lane, port);
+			const { child: server, port } = await startServer(lane);
 			try {
 				for (let index = 1; index <= journey.qualificationRuns; index += 1)
 					journeys.push(await runJourney(browser, port, journey, name, index));
@@ -357,12 +374,12 @@ export async function verifyReactFixture({
 			executablePath: browserExecutable,
 		});
 		stage('mutation browser launched');
-		const server = await startServer(target, 43163);
+		const { child: server, port } = await startServer(target);
 		stage('mutation server started');
 		try {
 			mutationResult = await runJourney(
 				mutationBrowser,
-				43163,
+				port,
 				journey,
 				'target-mutation',
 				1,
@@ -389,10 +406,16 @@ export async function verifyReactFixture({
 		headless: true,
 		executablePath: browserExecutable,
 	});
-	const restoredServer = await startServer(target, 43164);
+	const { child: restoredServer, port: restoredPort } = await startServer(target);
 	let restoredJourney;
 	try {
-		restoredJourney = await runJourney(restoredBrowser, 43164, journey, 'target-restored', 1);
+		restoredJourney = await runJourney(
+			restoredBrowser,
+			restoredPort,
+			journey,
+			'target-restored',
+			1,
+		);
 	} finally {
 		await stopServer(restoredServer);
 		await restoredBrowser.close();

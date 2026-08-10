@@ -329,7 +329,14 @@ function contentType(file: string): string {
 	}
 }
 
-async function startServer(lane: string, port: number): Promise<Server> {
+function ephemeralPort(server: Server): number {
+	const address = server.address();
+	if (address === null || typeof address === 'string')
+		throw new Error('Loopback server did not report an ephemeral port');
+	return address.port;
+}
+
+async function startServer(lane: string): Promise<{ server: Server; port: number }> {
 	const output = path.join(lane, 'build-vite');
 	const server = http.createServer(async (request, response) => {
 		try {
@@ -355,9 +362,9 @@ async function startServer(lane: string, port: number): Promise<Server> {
 	});
 	await new Promise<void>((resolve, reject) => {
 		server.once('error', reject);
-		server.listen(port, '127.0.0.1', resolve);
+		server.listen(0, '127.0.0.1', resolve);
 	});
-	return server;
+	return { server, port: ephemeralPort(server) };
 }
 
 async function startSwitchableServer(lane: string, port: number) {
@@ -724,15 +731,15 @@ async function browserJourney(options: {
 
 async function withBrowserJourney(
 	manifest: FixtureManifest,
-	options: Omit<Parameters<typeof browserJourney>[0], 'browser'>,
+	options: Omit<Parameters<typeof browserJourney>[0], 'browser' | 'port'>,
 ) {
 	const browser = await chromium.launch({
 		headless: true,
 		executablePath: path.join(root, manifest.browser.executable),
 	});
-	const server = await startServer(options.lane, options.port);
+	const { server, port } = await startServer(options.lane);
 	try {
-		return await browserJourney({ ...options, browser });
+		return await browserJourney({ ...options, browser, port });
 	} finally {
 		await new Promise<void>((resolve, reject) =>
 			server.close((error) => (error ? reject(error) : resolve())),
@@ -816,7 +823,6 @@ export async function verifyReactBoilerplateDataFlow({
 	});
 	artifacts.push(await artifact('upgrade.json', upgrades));
 	const browserRuns = [];
-	let port = 43310;
 	for (const [laneName, lane] of [
 		['legacy', prepared.legacy],
 		['target', prepared.target],
@@ -828,7 +834,6 @@ export async function verifyReactBoilerplateDataFlow({
 					laneName,
 					journey,
 					payload,
-					port: port++,
 					run,
 				}),
 			);
@@ -881,7 +886,6 @@ export async function verifyReactBoilerplateDataFlow({
 				laneName: 'target',
 				journey,
 				payload,
-				port: port++,
 				run: 1,
 				expectedFailure: mutation.seam,
 			});
@@ -903,7 +907,6 @@ export async function verifyReactBoilerplateDataFlow({
 			laneName: 'target',
 			journey,
 			payload,
-			port: port++,
 			run: 1,
 		});
 		mutations.push({

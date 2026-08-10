@@ -2,13 +2,13 @@ import { access, mkdtemp, readFile, rm } from 'node:fs/promises';
 import os from 'node:os';
 import * as path from 'pathe';
 import { parseURL } from 'ufo';
+import { createRegExp, digit, exactly, global } from 'magic-regexp';
 import { afterEach, describe, expect, it } from 'vitest';
 import {
 	assertCompleteVite8Inventory,
 	canonicalPhonecatInventory,
 	createVite8InventoryDelta,
 	createVite8SharedAdapterCohortEvidence,
-	VITE8_SHARED_ADAPTER_COHORT_PORT_PLAN,
 	verifyVite8SharedAdapterCohort,
 } from '../src/fixture/vite8-shared-adapter-cohort-run.ts';
 import {
@@ -18,14 +18,8 @@ import {
 	sha256,
 	type Vite8OutputEntry,
 } from '../../core/src/index.ts';
-import {
-	reactViteBuildEnvironment,
-	REACT_VITE8_DEFAULT_PORT_PLAN,
-} from '../src/fixture/react-boilerplate-v4-vite8-run.ts';
-import {
-	angularPhonecatViteBuildEnvironment,
-	ANGULAR_PHONECAT_VITE8_DEFAULT_PORT_PLAN,
-} from '../src/fixture/angular-phonecat-vite8-run.ts';
+import { reactViteBuildEnvironment } from '../src/fixture/react-boilerplate-v4-vite8-run.ts';
+import { angularPhonecatViteBuildEnvironment } from '../src/fixture/angular-phonecat-vite8-run.ts';
 
 const temporary: string[] = [];
 async function directory(): Promise<string> {
@@ -295,19 +289,23 @@ describe('shared Vite 8 adapter cohort', () => {
 		expect(reactViteBuildEnvironment().NODE_ENV).toBe('production');
 		expect(angularPhonecatViteBuildEnvironment().NODE_ENV).toBe('production');
 		expect(process.env.NODE_ENV).toBe('test');
-		expect(Object.values(REACT_VITE8_DEFAULT_PORT_PLAN)).toEqual([43281, 43282, 43283]);
-		expect(Object.values(ANGULAR_PHONECAT_VITE8_DEFAULT_PORT_PLAN)).toEqual([
-			43510, 43511, 43512, 43513, 43514, 43515,
+		const loopbackPort = createRegExp(exactly('127.0.0.1:').and(digit.times.between(2, 5)), [
+			global,
 		]);
-		const cohortPorts = Object.values(VITE8_SHARED_ADAPTER_COHORT_PORT_PLAN).flatMap((plan) => [
-			...Object.values(plan.react),
-			...Object.values(plan.phonecat),
-		]);
-		expect(new Set(cohortPorts).size).toBe(cohortPorts.length);
+		for (const runner of [
+			'../src/fixture/react-boilerplate-v4-vite8-run.ts',
+			'../src/fixture/angular-phonecat-vite8-run.ts',
+		]) {
+			const source = await readFile(path.resolve(import.meta.dirname, runner), 'utf8');
+			expect(source.match(loopbackPort)).toBeNull();
+			expect(source).toContain("server.listen(0, '127.0.0.1'");
+			expect(source).toContain('did not report an ephemeral port');
+		}
 		const cohortSource = await readFile(
 			path.resolve(import.meta.dirname, '../src/fixture/vite8-shared-adapter-cohort-run.ts'),
 			'utf8',
 		);
+		expect(cohortSource.match(loopbackPort)).toBeNull();
 		expect(cohortSource).toContain('internalReceiptIdentity: order');
 		for (const runner of [
 			'../src/fixture/react-boilerplate-v4-vite8-run.ts',

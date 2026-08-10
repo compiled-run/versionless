@@ -110,7 +110,14 @@ function markdownPath(jsonPath: string): string {
 		: `${jsonPath}.md`;
 }
 
-async function startStaticServer(lane: string, port: number): Promise<http.Server> {
+function ephemeralPort(server: http.Server): number {
+	const address = server.address();
+	if (address === null || typeof address === 'string')
+		throw new Error('Loopback server did not report an ephemeral port');
+	return address.port;
+}
+
+async function startStaticServer(lane: string): Promise<{ server: http.Server; port: number }> {
 	const app = path.join(lane, 'app');
 	const server = http.createServer(async (request, response) => {
 		try {
@@ -130,9 +137,9 @@ async function startStaticServer(lane: string, port: number): Promise<http.Serve
 	});
 	await new Promise<void>((resolve, reject) => {
 		server.once('error', reject);
-		server.listen(port, '127.0.0.1', resolve);
+		server.listen(0, '127.0.0.1', resolve);
 	});
-	return server;
+	return { server, port: ephemeralPort(server) };
 }
 
 async function stopServer(server: http.Server): Promise<void> {
@@ -335,11 +342,11 @@ export async function verifyAngularPhonecat({
 	const browser = await chromium.launch({ headless: true, executablePath: browserExecutable });
 	const journeys: unknown[] = [];
 	try {
-		for (const [name, lane, port] of [
-			['legacy', legacy, 43171],
-			['target', target, 43172],
+		for (const [name, lane] of [
+			['legacy', legacy],
+			['target', target],
 		] as const) {
-			const server = await startStaticServer(lane, port);
+			const { server, port } = await startStaticServer(lane);
 			try {
 				for (let index = 1; index <= journey.qualificationRuns; index += 1)
 					journeys.push(await runJourney(browser, port, journey, name, index));
@@ -365,11 +372,11 @@ export async function verifyAngularPhonecat({
 			headless: true,
 			executablePath: browserExecutable,
 		});
-		const server = await startStaticServer(target, 43173);
+		const { server, port } = await startStaticServer(target);
 		try {
 			mutationResult = await runJourney(
 				mutationBrowser,
-				43173,
+				port,
 				journey,
 				'target-mutation',
 				1,
@@ -388,10 +395,16 @@ export async function verifyAngularPhonecat({
 		headless: true,
 		executablePath: browserExecutable,
 	});
-	const restoredServer = await startStaticServer(target, 43174);
+	const { server: restoredServer, port: restoredPort } = await startStaticServer(target);
 	let restoredJourney;
 	try {
-		restoredJourney = await runJourney(restoredBrowser, 43174, journey, 'target-restored', 1);
+		restoredJourney = await runJourney(
+			restoredBrowser,
+			restoredPort,
+			journey,
+			'target-restored',
+			1,
+		);
 	} finally {
 		await stopServer(restoredServer);
 		await restoredBrowser.close();
