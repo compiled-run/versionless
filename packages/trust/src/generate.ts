@@ -48,6 +48,12 @@ import {
 	WITNESS_REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH,
 	verifyWitnessReactBoilerplateZeroSwEvidence,
 } from '../../core/src/receipts/react-boilerplate-zero-sw.ts';
+import {
+	REACT_PAPERCUPS_FIXTURE,
+	REACT_PAPERCUPS_RECEIPT_PATH,
+	verifyWitnessReactPapercupsEvidence,
+	WITNESS_REACT_PAPERCUPS_RECEIPT_PATH,
+} from '../../core/src/receipts/witness-react-papercups.ts';
 import { verifyScriptSurface } from '../../core/src/enterprise/script-surface.ts';
 import {
 	parseRuntimeObservationConfig,
@@ -97,6 +103,90 @@ export function reactGraphiQL013TrustReceipts(
 		: [];
 }
 
+/**
+ * Exact receipt and matrix-cell counts the Papercups browser-proof transaction
+ * pins for itself. They are measured facts of that state — the sixteen
+ * zero-service-worker receipts plus the retained build receipt and its direct
+ * browser proof, and the sixteen prior matrix cells plus the Papercups cell —
+ * and no other transaction state is affected by them.
+ */
+export const REACT_PAPERCUPS_TRUST_RECEIPTS = 18 as const;
+export const REACT_PAPERCUPS_TRUST_MATRIX_CELLS = 17 as const;
+
+/**
+ * Verifies the retained Papercups build receipt through the browser proof that
+ * seals it. The build receipt is not a generic migration receipt, so it is
+ * verified against the exact byte digest and canonical digest the Witness
+ * receipt binds, and every artifact it references is re-hashed. Nothing here is
+ * asserted from a literal: the returned digest and artifact count are measured.
+ */
+export async function verifyReactPapercupsCanonicalReceipt(
+	rootDir: string,
+): Promise<{ valid: true; digest: string; artifacts: number }> {
+	const root = path.resolve(rootDir);
+	const witness = await verifyWitnessReactPapercupsEvidence(root);
+	const bytes = await readFile(path.join(root, REACT_PAPERCUPS_RECEIPT_PATH));
+	if (sha256(bytes) !== witness.receipt.canonicalReceipt.sha256)
+		throw new Error('React Papercups build receipt bytes drifted');
+	const receipt = asRecord(
+		JSON.parse(bytes.toString('utf8')),
+		'React Papercups build receipt',
+	);
+	const integrity = asRecord(receipt.integrity, 'React Papercups build receipt integrity');
+	if (
+		integrity.algorithm !== 'sha256' ||
+		integrity.canonicalDigest !== witness.receipt.canonicalReceipt.canonicalDigest
+	)
+		throw new Error('React Papercups build receipt integrity differs');
+	if (!Array.isArray(receipt.artifacts))
+		throw new Error('React Papercups build receipt artifacts are absent');
+	for (const value of receipt.artifacts) {
+		const artifact = asRecord(value, 'React Papercups build artifact');
+		const artifactPath = asString(artifact.path, 'React Papercups build artifact path');
+		if (sha256(await readFile(path.join(root, artifactPath))) !== artifact.sha256)
+			throw new Error(`React Papercups build artifact digest mismatch: ${artifactPath}`);
+	}
+	return {
+		valid: true,
+		digest: witness.receipt.canonicalReceipt.canonicalDigest,
+		artifacts: receipt.artifacts.length,
+	};
+}
+
+/**
+ * The single receipt-verification dispatch shared by generation and
+ * verification, so a receipt can never be verified one way when it is written
+ * and another way when it is checked.
+ */
+export async function verifyTrustReceipt(
+	root: string,
+	receiptPath: string,
+): Promise<{ digest: string; artifacts: number }> {
+	if (receiptPath === ANGULAR_REALWORLD_V15_TO_V16_RECEIPT.path)
+		return verifyAngularRealworldV15ToV16Evidence(root);
+	if (receiptPath === WITNESS_ANGULAR_REALWORLD_RECEIPT_PATH)
+		return verifyWitnessAngularRealworldEvidence(root);
+	if (receiptPath === WITNESS_REACT_BOILERPLATE_RECEIPT_PATH)
+		return verifyWitnessReactBoilerplateEvidence(root);
+	if (receiptPath === WITNESS_NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH)
+		return verifyWitnessNextKilledByGoogleEvidence(root);
+	if (receiptPath === WITNESS_REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH)
+		return verifyWitnessReactBoilerplateZeroSwEvidence(root);
+	if (receiptPath === WITNESS_REACT_PAPERCUPS_RECEIPT_PATH)
+		return verifyWitnessReactPapercupsEvidence(root);
+	if (receiptPath === REACT_PAPERCUPS_RECEIPT_PATH)
+		return verifyReactPapercupsCanonicalReceipt(root);
+	if (receiptPath === NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH)
+		return verifyNextKilledByGoogleEvidence(root, true);
+	if (receiptPath === REACT_AVATAAARS_COMPATIBILITY_RECEIPT_PATH)
+		return verifyReactAvataaarsCompatibilityEvidence(root);
+	if (receiptPath === REACT_CALCULATOR_RECEIPT_PATH)
+		return { ...(await verifyReactCalculatorEvidence(root)), artifacts: 5 };
+	if (receiptPath === REACT_GRAPHIQL_013_RECEIPT_PATH)
+		return verifyReactGraphiQL013Evidence(root);
+	return verifyReceipt(path.join(root, receiptPath));
+}
+
 const PRESERVED_RECEIPTS = [
 	{
 		path: 'evidence/runs/react-boilerplate-v4/t008-run.json',
@@ -137,6 +227,14 @@ const REACT_ZERO_SW_RECEIPT = {
 } as const;
 const WITNESS_REACT_ZERO_SW_RECEIPT = {
 	path: WITNESS_REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH,
+	digest: null,
+} as const;
+const REACT_PAPERCUPS_RECEIPT = {
+	path: REACT_PAPERCUPS_RECEIPT_PATH,
+	digest: null,
+} as const;
+const WITNESS_REACT_PAPERCUPS_RECEIPT = {
+	path: WITNESS_REACT_PAPERCUPS_RECEIPT_PATH,
 	digest: null,
 } as const;
 const PHONECAT_VITE_RECEIPT = {
@@ -759,6 +857,7 @@ function matrix(conformance: CorpusConformance): Record<string, unknown> {
 		'Angular RealWorld conformance',
 	);
 	const nextKilledByGoogle = verticals.get('next-killedbygoogle-derived-state-to-memo');
+	const papercups = verticals.get(REACT_PAPERCUPS_FIXTURE);
 	return {
 		schemaVersion: TRUST_SCHEMA,
 		derivedFrom: {
@@ -924,6 +1023,30 @@ function matrix(conformance: CorpusConformance): Record<string, unknown> {
 							scope: 'fixture-specific-next12-pages',
 							genericNextSupport: 'not-claimed',
 						},
+					]
+				: []),
+			...(papercups
+				? [
+						(() => {
+							const cell = asRecord(papercups, 'React Papercups conformance');
+							return {
+								id: REACT_PAPERCUPS_FIXTURE,
+								framework: cell.framework,
+								designatedPilot: cell.designatedPilot,
+								runtime: cell.runtime,
+								bundler: cell.bundler,
+								state: 'verified',
+								track: cell.track,
+								scope: 'fixture-specific-create-react-app-to-vite8',
+								genericReactSupport: 'not-claimed',
+								browserProof: cell.browserProof,
+								serviceWorker: cell.serviceWorker,
+								scrollSurface: cell.scrollSurface,
+								locality: cell.locality,
+								productionReadiness: cell.productionReadiness,
+								readinessScoreboard: cell.readinessScoreboard,
+							};
+						})(),
 					]
 				: []),
 			...conformance.frameworkLanes.map((lane) => ({
@@ -1159,7 +1282,9 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 	const hasWitnessAngularRealworldReceipt = transaction.angularRealworldWitnessIntegrated;
 	const hasWitnessReactBoilerplateReceipt = transaction.reactBoilerplateWitnessIntegrated;
 	const hasWitnessNextKilledByGoogleReceipt = transaction.nextKilledByGoogleWitnessIntegrated;
-	const hasReactZeroSwReceipts = transaction.kind === 'react-zero-sw-reconciliation';
+	const hasReactPapercupsReceipts = transaction.kind === 'react-papercups-browser-proof';
+	const hasReactZeroSwReceipts =
+		transaction.kind === 'react-zero-sw-reconciliation' || hasReactPapercupsReceipts;
 	const receipts = [
 		...PRESERVED_RECEIPTS,
 		...(hasMaintainedReceipt ? [MAINTAINED_RECEIPT] : []),
@@ -1175,39 +1300,20 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 		...(hasWitnessReactBoilerplateReceipt ? [WITNESS_REACT_BOILERPLATE_RECEIPT] : []),
 		...(hasWitnessNextKilledByGoogleReceipt ? [WITNESS_NEXT_KILLED_BY_GOOGLE_RECEIPT] : []),
 		...(hasReactZeroSwReceipts ? [REACT_ZERO_SW_RECEIPT, WITNESS_REACT_ZERO_SW_RECEIPT] : []),
+		...(hasReactPapercupsReceipts
+			? [REACT_PAPERCUPS_RECEIPT, WITNESS_REACT_PAPERCUPS_RECEIPT]
+			: []),
 		...reactAvataaarsCompatibilityTrustReceipts(transaction),
 		...reactCalculatorTrustReceipts(transaction),
 		...reactGraphiQL013TrustReceipts(transaction),
 	];
 	if (receipts.length !== transaction.receipts)
 		throw new Error('Aggregate evidence does not preserve the required receipts');
+	if (hasReactPapercupsReceipts && receipts.length !== REACT_PAPERCUPS_TRUST_RECEIPTS)
+		throw new Error('React Papercups browser proof does not preserve exactly 18 receipts');
 	const verifiedReceipts = [];
 	for (const expected of receipts) {
-		const verified =
-			expected.path === ANGULAR_REALWORLD_RECEIPT.path
-				? await verifyAngularRealworldV15ToV16Evidence(root)
-				: expected.path === WITNESS_ANGULAR_REALWORLD_RECEIPT.path
-					? await verifyWitnessAngularRealworldEvidence(root)
-					: expected.path === WITNESS_REACT_BOILERPLATE_RECEIPT.path
-						? await verifyWitnessReactBoilerplateEvidence(root)
-						: expected.path === WITNESS_NEXT_KILLED_BY_GOOGLE_RECEIPT.path
-							? await verifyWitnessNextKilledByGoogleEvidence(root)
-							: expected.path === WITNESS_REACT_ZERO_SW_RECEIPT.path
-								? await verifyWitnessReactBoilerplateZeroSwEvidence(root)
-								: expected.path === NEXT_KILLED_BY_GOOGLE_RECEIPT.path
-									? await verifyNextKilledByGoogleEvidence(root, true)
-									: expected.path === REACT_AVATAAARS_COMPATIBILITY_RECEIPT_PATH
-										? await verifyReactAvataaarsCompatibilityEvidence(root)
-										: expected.path === REACT_CALCULATOR_RECEIPT_PATH
-											? {
-													...(await verifyReactCalculatorEvidence(root)),
-													artifacts: 5,
-												}
-											: expected.path === REACT_GRAPHIQL_013_RECEIPT_PATH
-												? await verifyReactGraphiQL013Evidence(root)
-												: await verifyReceipt(
-														path.join(root, expected.path),
-													);
+		const verified = await verifyTrustReceipt(root, expected.path);
 		const aggregateFixture = aggregateFixtures.find(
 			(value) => asRecord(value, 'aggregate fixture').receipt === expected.path,
 		);

@@ -4,25 +4,25 @@
     {
       "name": "packages/cli/dist/cli.js",
       "digest": {
-        "sha256": "4d21fe92fbfa0f4232f2256e86cf82e1ef16d0af075fb6a9595c5ccda6c3475a"
+        "sha256": "cc4545119787a3744fb16b3f02176064e54dfb6a8933fc2b6e04efd1f8ff54b8"
       }
     },
     {
       "name": "packages/cli/dist/index.js",
       "digest": {
-        "sha256": "2fb2e537e52e43dbc6dd6be3b5a91d400443522e300df56488be9d4e559065af"
+        "sha256": "d69433dd79f702a24190e20c8e3e6a6aea293d8fabc5737982c4a6abc0b008f6"
       }
     },
     {
-      "name": "packages/cli/dist/verify-C3NWY0ly.js",
+      "name": "packages/cli/dist/verify-C9y_hgIV.js",
       "digest": {
-        "sha256": "d24299e088a07b4f9464fdcaa89eeeb56baa85fc6a9bb044d107250534f0fdb5"
+        "sha256": "884c618e43cea7f82d9f8a09acce58fc1214cacd6b0c8ed54ce1c5e5741df258"
       }
     },
     {
       "name": "packages/core/dist/index.js",
       "digest": {
-        "sha256": "bd7e9c92e59e62c1f456f116cb7e304a062f506d66c32bf5a4784a060c1a5c1c"
+        "sha256": "b783c2ae8e6d26bef9167188be24d8d519e0c85124efea1eb94ccf21f5162dbc"
       }
     },
     {
@@ -64,7 +64,7 @@
     {
       "name": "packages/trust/dist/index.js",
       "digest": {
-        "sha256": "48afbcdfd0da8194344e079c471bb79783c59aaaaa5233c2f3cf92896bd035c6"
+        "sha256": "b6d1bc1940ddbd185cc7ab08ce66ac0c1988753690a566fcbb038f93ec082c60"
       }
     }
   ],
@@ -108,7 +108,7 @@
         {
           "uri": "evidence/runs/aggregate.json",
           "digest": {
-            "sha256": "9344a6846e4d7882a8eba06196117d11e56f07491f7117bac9e4b5d0e94c9bcc"
+            "sha256": "9faccd27541f3c1b1216dc4e793af94f326ed5e589d358ffff89fa4cdeb02008"
           }
         },
         {
@@ -184,6 +184,12 @@
           }
         },
         {
+          "uri": "evidence/runs/react-papercups-v1-0-0/t004-run.json",
+          "digest": {
+            "sha256": "b433f214727389676b308332f7689d773ad28dde0984b9bf245f3f780f87d35a"
+          }
+        },
+        {
           "uri": "evidence/runs/witness-angular-realworld/receipt.json",
           "digest": {
             "sha256": "122496b1ccb5c1da57945868cdea5bb93fab90164534efa5867025d25c01df34"
@@ -205,6 +211,12 @@
           "uri": "evidence/runs/witness-react-boilerplate/receipt.json",
           "digest": {
             "sha256": "bfa48f718ee86566f120cb0bc42645b22c989a27d87c102b9c2f256d15661ed7"
+          }
+        },
+        {
+          "uri": "evidence/runs/witness-react-papercups/receipt.json",
+          "digest": {
+            "sha256": "abd33d566ecef3ce4b24470c3105320520a712db19351f74b6c887b63227f267"
           }
         },
         {
@@ -288,19 +300,19 @@
       "byproducts": [
         {
           "path": "packages/cli/dist/cli.js",
-          "sha256": "4d21fe92fbfa0f4232f2256e86cf82e1ef16d0af075fb6a9595c5ccda6c3475a"
+          "sha256": "cc4545119787a3744fb16b3f02176064e54dfb6a8933fc2b6e04efd1f8ff54b8"
         },
         {
           "path": "packages/cli/dist/index.js",
-          "sha256": "2fb2e537e52e43dbc6dd6be3b5a91d400443522e300df56488be9d4e559065af"
+          "sha256": "d69433dd79f702a24190e20c8e3e6a6aea293d8fabc5737982c4a6abc0b008f6"
         },
         {
-          "path": "packages/cli/dist/verify-C3NWY0ly.js",
-          "sha256": "d24299e088a07b4f9464fdcaa89eeeb56baa85fc6a9bb044d107250534f0fdb5"
+          "path": "packages/cli/dist/verify-C9y_hgIV.js",
+          "sha256": "884c618e43cea7f82d9f8a09acce58fc1214cacd6b0c8ed54ce1c5e5741df258"
         },
         {
           "path": "packages/core/dist/index.js",
-          "sha256": "bd7e9c92e59e62c1f456f116cb7e304a062f506d66c32bf5a4784a060c1a5c1c"
+          "sha256": "b783c2ae8e6d26bef9167188be24d8d519e0c85124efea1eb94ccf21f5162dbc"
         },
         {
           "path": "packages/experiments/dist/index.js",
@@ -328,7 +340,7 @@
         },
         {
           "path": "packages/trust/dist/index.js",
-          "sha256": "48afbcdfd0da8194344e079c471bb79783c59aaaaa5233c2f3cf92896bd035c6"
+          "sha256": "b6d1bc1940ddbd185cc7ab08ce66ac0c1988753690a566fcbb038f93ec082c60"
         }
       ]
     }
@@ -337,6 +349,6 @@
     "slsaLevel": "not-claimed",
     "signerAuthenticity": "unknown",
     "gitProvenance": "unknown",
-    "aggregateFixtures": 16
+    "aggregateFixtures": 18
   }
 }

@@ -1,8 +1,8 @@
 {
   "schemaVersion": "versionless.corpus-conformance.v1",
   "summary": {
-    "verticals": 11,
-    "sourceApplications": 4,
+    "verticals": 12,
+    "sourceApplications": 5,
     "designatedPilotsVerified": 0
   },
   "verticals": [
@@ -646,6 +646,46 @@
       "track": "next12-pages-derived-state-to-use-memo",
       "traceDiagnosticReproducibility": "not-claimed",
       "designatedPilot": false
+    },
+    {
+      "id": "react-papercups-v1-0-0",
+      "application": "papercups",
+      "framework": "react",
+      "receiptPath": "evidence/runs/witness-react-papercups/receipt.json",
+      "receiptDigest": "abd33d566ecef3ce4b24470c3105320520a712db19351f74b6c887b63227f267",
+      "canonicalReceipt": {
+        "path": "evidence/runs/react-papercups-v1-0-0/t004-run.json",
+        "canonicalDigest": "b433f214727389676b308332f7689d773ad28dde0984b9bf245f3f780f87d35a",
+        "sha256": "864a3c207d4f6639fe1f1c377e2b87e5163783aef035ad107198d36315f0d395"
+      },
+      "runtime": "node-16.20.2-to-node-24.15.0",
+      "bundler": "webpack-4.42.0-to-vite-8.0.16",
+      "track": "production-readiness-direct-witness-create-react-app-to-vite8",
+      "migrationTrack": "create-react-app-3.4.1-to-vite8-build",
+      "locality": {
+        "mode": "offline",
+        "scope": "process-scoped",
+        "osWideIsolation": false,
+        "successfulNonLoopback": 0
+      },
+      "browserProof": "verified-direct-witness",
+      "browserRuns": 4,
+      "behaviorDigest": "a2d4dbb6f844dfb8ee2d78cfc64e9981b6a91186030f345a7e6ffb9975eb9917",
+      "serviceWorker": "application-unregister",
+      "scrollSurface": "omitted-not-meaningful",
+      "productionReadiness": "verified-direct-witness",
+      "readinessScoreboard": {
+        "overall": {
+          "ready": 3,
+          "total": 12
+        },
+        "reactLineage": {
+          "counted": false,
+          "ready": 1,
+          "total": 4
+        }
+      },
+      "designatedPilot": false
     }
   ],
   "applications": [
@@ -805,6 +845,47 @@
         "productionReadiness": "not-claimed",
         "locality": "process-scoped-not-os-wide"
       }
+    },
+    {
+      "id": "papercups",
+      "source": {
+        "repository": "https://github.com/papercups-io/papercups",
+        "ref": "refs/tags/v1.0.0",
+        "revision": "3546a5f60c52fcc86fe9cbcc3bbac07356ba134f",
+        "archiveSha256": "f8a6576c0399e1eca5e1936a9e5e5b311798cccf3cb7c6fcce0cecbf8b46ea8f",
+        "frontendRoot": "assets",
+        "license": "MIT",
+        "licenseSha256": "cd94b1bf29eec689bd048f0f202c038d2d3033d80102a7ff47ddf65d2890291c"
+      },
+      "verticals": [
+        "react-papercups-v1-0-0"
+      ],
+      "conformance": {
+        "browserProof": "direct-witness-verified",
+        "runs": 4,
+        "behaviorDigest": "a2d4dbb6f844dfb8ee2d78cfc64e9981b6a91186030f345a7e6ffb9975eb9917",
+        "mutation": "pass",
+        "mutationRestoration": "byte-identical",
+        "zeroServiceWorker": "application-unregister",
+        "readinessScoreboard": {
+          "overall": {
+            "ready": 3,
+            "total": 12
+          },
+          "reactLineage": {
+            "counted": false,
+            "ready": 1,
+            "total": 4
+          }
+        }
+      },
+      "boundaries": {
+        "track": "production-readiness-direct-witness-create-react-app-to-vite8",
+        "designatedPilot": false,
+        "genericReactSupport": "not-claimed",
+        "scrollSurface": "omitted-not-meaningful",
+        "locality": "process-scoped-not-os-wide"
+      }
     }
   ],
   "frameworkLanes": [
@@ -893,6 +974,6 @@
   },
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "e74c36bce753d7f0c0193fffb562ae3803458c4682426021b9a26a166eb8c032"
+    "canonicalDigest": "10d80fb8cea3df89620d38daa3e738f9df508567970b881332e8e0ca41484f44"
   }
 }

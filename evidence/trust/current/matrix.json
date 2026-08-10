@@ -2,7 +2,7 @@
   "schemaVersion": "versionless.trust.v1",
   "derivedFrom": {
     "path": "corpus-conformance.json",
-    "sha256": "e74c36bce753d7f0c0193fffb562ae3803458c4682426021b9a26a166eb8c032"
+    "sha256": "10d80fb8cea3df89620d38daa3e738f9df508567970b881332e8e0ca41484f44"
   },
   "cells": [
     {
@@ -174,6 +174,38 @@
       "state": "verified",
       "scope": "fixture-specific-next12-pages",
       "genericNextSupport": "not-claimed"
+    },
+    {
+      "id": "react-papercups-v1-0-0",
+      "framework": "react",
+      "designatedPilot": false,
+      "runtime": "node-16.20.2-to-node-24.15.0",
+      "bundler": "webpack-4.42.0-to-vite-8.0.16",
+      "state": "verified",
+      "track": "production-readiness-direct-witness-create-react-app-to-vite8",
+      "scope": "fixture-specific-create-react-app-to-vite8",
+      "genericReactSupport": "not-claimed",
+      "browserProof": "verified-direct-witness",
+      "serviceWorker": "application-unregister",
+      "scrollSurface": "omitted-not-meaningful",
+      "locality": {
+        "mode": "offline",
+        "scope": "process-scoped",
+        "osWideIsolation": false,
+        "successfulNonLoopback": 0
+      },
+      "productionReadiness": "verified-direct-witness",
+      "readinessScoreboard": {
+        "overall": {
+          "ready": 3,
+          "total": 12
+        },
+        "reactLineage": {
+          "counted": false,
+          "ready": 1,
+          "total": 4
+        }
+      }
     },
     {
       "id": "synthetic-next12-pages",

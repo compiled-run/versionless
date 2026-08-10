@@ -12,6 +12,13 @@ import { reactAvataaarsCompatibilityAggregateMember } from '../src/receipts/reac
 import { witnessAngularRealworldAggregateMember } from '../src/receipts/witness-angular-realworld.ts';
 import { witnessReactBoilerplateAggregateMember } from '../src/receipts/witness-react-boilerplate.ts';
 import { witnessNextKilledByGoogleAggregateMember } from '../src/receipts/witness-next-killedbygoogle.ts';
+import {
+	REACT_PAPERCUPS_RECEIPT_PATH,
+	reactPapercupsAggregateMember,
+	verifyWitnessReactPapercupsEvidence,
+	WITNESS_REACT_PAPERCUPS_RECEIPT_PATH,
+	witnessReactPapercupsAggregateMember,
+} from '../src/receipts/witness-react-papercups.ts';
 import { receiptDigest, sha256 } from '../src/receipts/canonicalize.ts';
 import { renderReceipt } from '../src/receipts/render.ts';
 import type { MigrationReceipt } from '../src/receipts/schema.ts';
@@ -47,7 +54,9 @@ function prepublicationFixtures(fixtures: Array<Record<string, unknown>>) {
 			fixture.id !== 'witness-react-boilerplate' &&
 			fixture.id !== 'witness-next-killedbygoogle' &&
 			fixture.id !== 'react-boilerplate-v4-zero-sw' &&
-			fixture.id !== 'witness-react-boilerplate-zero-sw',
+			fixture.id !== 'witness-react-boilerplate-zero-sw' &&
+			fixture.id !== 'react-papercups-v1-0-0' &&
+			fixture.id !== 'witness-react-papercups',
 	);
 }
 
@@ -151,15 +160,16 @@ async function rebindPhonecatViteArtifact(
 }
 
 describe('canonical corpus conformance', () => {
-	it('derives the canonical eleven verticals as four narrowly scoped source applications', async () => {
+	it('derives the canonical twelve verticals as five narrowly scoped source applications', async () => {
 		const result = await analyzeCorpusConformance({ rootDir: root });
 		expect(verifyCorpusConformanceDigest(result)).toBe(result.integrity.canonicalDigest);
 		expect(result.summary).toEqual({
-			verticals: 11,
-			sourceApplications: 4,
+			verticals: 12,
+			sourceApplications: 5,
 			designatedPilotsVerified: 0,
 		});
-		expect(result.applications).toHaveLength(4);
+		expect(result.verticals).toHaveLength(12);
+		expect(result.applications).toHaveLength(5);
 		expect(result.applications[0]).toMatchObject({
 			id: 'react-boilerplate',
 			boundaries: {
@@ -256,6 +266,109 @@ describe('canonical corpus conformance', () => {
 				'support',
 			])
 				expect(lane[field]).toBe('not-tested');
+		}
+	});
+
+	it('emits the Papercups vertical and source application derived from its receipts', async () => {
+		const result = await analyzeCorpusConformance({ rootDir: root });
+		const verified = await verifyWitnessReactPapercupsEvidence(root);
+		const aggregate = JSON.parse(
+			await readFile(path.join(root, 'evidence/runs/aggregate.json'), 'utf8'),
+		) as { fixtures: Array<Record<string, unknown>> };
+		const migrationMember = aggregate.fixtures.find(
+			(item) => item.receipt === REACT_PAPERCUPS_RECEIPT_PATH,
+		);
+		const witnessMember = aggregate.fixtures.find(
+			(item) => item.receipt === WITNESS_REACT_PAPERCUPS_RECEIPT_PATH,
+		);
+		expect(migrationMember).toEqual(
+			reactPapercupsAggregateMember(verified.receipt.canonicalReceipt.canonicalDigest),
+		);
+		expect(witnessMember).toEqual(witnessReactPapercupsAggregateMember(verified.digest));
+		expect(result.verticals.at(-1)).toEqual({
+			id: 'react-papercups-v1-0-0',
+			application: 'papercups',
+			framework: 'react',
+			receiptPath: WITNESS_REACT_PAPERCUPS_RECEIPT_PATH,
+			receiptDigest: verified.digest,
+			canonicalReceipt: {
+				path: REACT_PAPERCUPS_RECEIPT_PATH,
+				canonicalDigest: verified.receipt.canonicalReceipt.canonicalDigest,
+				sha256: verified.receipt.canonicalReceipt.sha256,
+			},
+			runtime: 'node-16.20.2-to-node-24.15.0',
+			bundler: 'webpack-4.42.0-to-vite-8.0.16',
+			track: 'production-readiness-direct-witness-create-react-app-to-vite8',
+			migrationTrack: 'create-react-app-3.4.1-to-vite8-build',
+			locality: {
+				mode: 'offline',
+				scope: 'process-scoped',
+				osWideIsolation: false,
+				successfulNonLoopback: 0,
+			},
+			browserProof: 'verified-direct-witness',
+			browserRuns: 4,
+			behaviorDigest: verified.receipt.runs[0]!.behaviorDigest,
+			serviceWorker: 'application-unregister',
+			scrollSurface: 'omitted-not-meaningful',
+			productionReadiness: 'verified-direct-witness',
+			readinessScoreboard: { reactLineage: { ready: 1, total: 4, counted: false }, overall: { ready: 3, total: 12 } },
+			designatedPilot: false,
+		});
+		expect(result.applications.at(-1)).toEqual({
+			id: 'papercups',
+			source: {
+				repository: 'https://github.com/papercups-io/papercups',
+				ref: 'refs/tags/v1.0.0',
+				revision: '3546a5f60c52fcc86fe9cbcc3bbac07356ba134f',
+				archiveSha256: 'f8a6576c0399e1eca5e1936a9e5e5b311798cccf3cb7c6fcce0cecbf8b46ea8f',
+				frontendRoot: 'assets',
+				license: 'MIT',
+				licenseSha256: 'cd94b1bf29eec689bd048f0f202c038d2d3033d80102a7ff47ddf65d2890291c',
+			},
+			verticals: ['react-papercups-v1-0-0'],
+			conformance: {
+				browserProof: 'direct-witness-verified',
+				runs: 4,
+				behaviorDigest: verified.receipt.runs[0]!.behaviorDigest,
+				mutation: 'pass',
+				mutationRestoration: 'byte-identical',
+				zeroServiceWorker: 'application-unregister',
+				readinessScoreboard: {
+					reactLineage: { ready: 1, total: 4, counted: false },
+					overall: { ready: 3, total: 12 },
+				},
+			},
+			boundaries: {
+				track: 'production-readiness-direct-witness-create-react-app-to-vite8',
+				designatedPilot: false,
+				genericReactSupport: 'not-claimed',
+				scrollSurface: 'omitted-not-meaningful',
+				locality: 'process-scoped-not-os-wide',
+			},
+		});
+		expect(result.coverage).toMatchObject({
+			productionReadiness: expect.objectContaining({
+				reactLineage: { ready: 1, total: 4, counted: true, candidate: 'judge-approved' },
+			}),
+		});
+	});
+
+	it('refuses a Papercups aggregate digest that does not match its receipt', async () => {
+		const directory = await corpusCopy('papercups-digest-rebind');
+		try {
+			await mutateJson(directory, 'evidence/runs/aggregate.json', (value) => {
+				const fixture = (value.fixtures as Array<Record<string, unknown>>).find(
+					(item) => item.receipt === WITNESS_REACT_PAPERCUPS_RECEIPT_PATH,
+				);
+				if (!fixture) throw new Error('Papercups witness member missing');
+				fixture.digest = '0'.repeat(64);
+			});
+			await expect(analyzeCorpusConformance({ rootDir: directory })).rejects.toThrow(
+				/Papercups/,
+			);
+		} finally {
+			await rm(directory, { recursive: true, force: true });
 		}
 	});
 

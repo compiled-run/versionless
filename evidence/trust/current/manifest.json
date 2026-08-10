@@ -1,6 +1,6 @@
 {
   "schemaVersion": "versionless.trust.v1",
-  "canonicalDigest": "538164fd79b7403b20cbee70a79d97dd62cef1d9bb55a38e4f741e5c6dcefbaf",
+  "canonicalDigest": "e17814b0f454312c8cabaa7cc35a9b44d2ce7cc9755d019f3aa933dced04f4c0",
   "integrity": {
     "algorithm": "sha256",
     "authenticity": "not-established",
@@ -8,7 +8,7 @@
   },
   "deterministicCore": {
     "algorithm": "sha256",
-    "digest": "f2720d8de4ac3100a8555cd9096d54a17ea319d7e63802e5c8a343a43ca87f99",
+    "digest": "59f5bc2555183ebd0436962947a754af331f549af1c9adb55bb2c9fe24ca9247",
     "artifacts": [
       {
         "path": "dependency-graph.cdx.json",
@@ -24,11 +24,11 @@
       },
       {
         "path": "provenance.json",
-        "sha256": "8527af5252a3edb418a743d3c682096a7db533c0a3300e047baa3d6300129d83"
+        "sha256": "2a5eeef95a21575e8d7783507aaa400ddda065543359da4963d539ca18c5ab1d"
       },
       {
         "path": "matrix.json",
-        "sha256": "f3f30edfb56a869b4ba40273f05bdfa1c8b4e43aaea4827bad81d14a85e884ac"
+        "sha256": "f7b7ba762f9b06e1dd9377897558744475bdafd627f6ed1226ecf362a8a57782"
       },
       {
         "path": "controls.json",
@@ -40,7 +40,7 @@
       },
       {
         "path": "corpus-conformance.json",
-        "sha256": "750e651dbc5924f116825afecd146c118631fca48d20b7dfd9081b1c7d8e81f8"
+        "sha256": "ccd1c3e062774f79c867b1eaa67f3c837d9a3ed2f21e35ea7657352c313e3816"
       },
       {
         "path": "script-surface.json",
@@ -148,10 +148,22 @@
       "digest": "dcdc57f078d9d7bdfdfd290a7f6b1abe78924581796ff3aaefa6c7e4ba38b527",
       "artifacts": 0,
       "state": "verified"
+    },
+    {
+      "path": "evidence/runs/react-papercups-v1-0-0/t004-run.json",
+      "digest": "b433f214727389676b308332f7689d773ad28dde0984b9bf245f3f780f87d35a",
+      "artifacts": 1,
+      "state": "verified"
+    },
+    {
+      "path": "evidence/runs/witness-react-papercups/receipt.json",
+      "digest": "abd33d566ecef3ce4b24470c3105320520a712db19351f74b6c887b63227f267",
+      "artifacts": 0,
+      "state": "verified"
     }
   ],
   "observation": {
-    "generatedAt": "2026-08-10T21:17:58.917Z",
+    "generatedAt": "2026-08-10T21:47:47.158Z",
     "vulnerabilityFreshness": "verified"
   },
   "derivedReport": "report.md"

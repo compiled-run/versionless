@@ -8,6 +8,7 @@ import {
 	stageNextKilledByGoogleInputs,
 } from '../src/witness/next-killedbygoogle-run.ts';
 import { sha256 } from '../../core/src/receipts/canonicalize.ts';
+import { preAppendAggregate } from './aggregate-pre-append.ts';
 import {
 	parseWitnessNextKilledByGoogleReceipt,
 	WITNESS_NEXT_KILLED_BY_GOOGLE_MUTATION,
@@ -106,10 +107,7 @@ describe('standalone Next KilledByGoogle Witness command', () => {
 			const output = path.join(directory, 'evidence/runs/witness-next-killedbygoogle');
 			const aggregatePath = path.join(directory, 'evidence/runs/aggregate.json');
 			await mkdir(path.dirname(aggregatePath), { recursive: true });
-			await writeFile(
-				aggregatePath,
-				await readFile(path.join(root, 'evidence/runs/aggregate.json')),
-			);
+			await writeFile(aggregatePath, await preAppendAggregate(root));
 			const receipt = parseWitnessNextKilledByGoogleReceipt(
 				JSON.parse(await readFile(path.join(published, 'receipt.json'), 'utf8')),
 			);

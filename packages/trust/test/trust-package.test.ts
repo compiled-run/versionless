@@ -631,7 +631,9 @@ snapshots:
 			(item) =>
 				item.id !== 'react-avataaars-compatibility-to-vite8' &&
 				item.id !== 'react-boilerplate-v4-zero-sw' &&
-				item.id !== 'witness-react-boilerplate-zero-sw',
+				item.id !== 'witness-react-boilerplate-zero-sw' &&
+				item.id !== 'react-papercups-v1-0-0' &&
+				item.id !== 'witness-react-papercups',
 		);
 		const avataaarsTransaction = deriveCorpusTransactionState([
 			...withoutAvataaars,
@@ -939,8 +941,8 @@ snapshots:
 				integrity: { canonicalDigest: string };
 			};
 			expect(conformance.summary).toEqual({
-				verticals: 11,
-				sourceApplications: 4,
+				verticals: 12,
+				sourceApplications: 5,
 				designatedPilotsVerified: 0,
 			});
 			expect(conformance.frameworkLanes).toHaveLength(3);

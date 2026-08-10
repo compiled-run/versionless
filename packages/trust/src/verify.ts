@@ -11,31 +11,9 @@ import {
 import { compareUtf16CodeUnits } from '../../core/src/bundlers/vite8-adapter.ts';
 import { assertSyntheticEvidence } from '../../core/src/policy/payment-signals.ts';
 import { canonicalize, sha256 } from '../../core/src/receipts/canonicalize.ts';
-import { verifyReceipt } from '../../core/src/receipts/verify.ts';
-import {
-	ANGULAR_REALWORLD_V15_TO_V16_RECEIPT,
-	verifyAngularRealworldV15ToV16Evidence,
-} from '../../core/src/receipts/angular-realworld-v15-to-v16.ts';
-import {
-	NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH,
-	verifyNextKilledByGoogleEvidence,
-} from '../../core/src/receipts/next-killedbygoogle.ts';
-import {
-	WITNESS_ANGULAR_REALWORLD_RECEIPT_PATH,
-	verifyWitnessAngularRealworldEvidence,
-} from '../../core/src/receipts/witness-angular-realworld.ts';
-import {
-	WITNESS_REACT_BOILERPLATE_RECEIPT_PATH,
-	verifyWitnessReactBoilerplateEvidence,
-} from '../../core/src/receipts/witness-react-boilerplate.ts';
-import {
-	WITNESS_NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH,
-	verifyWitnessNextKilledByGoogleEvidence,
-} from '../../core/src/receipts/witness-next-killedbygoogle.ts';
-import {
-	WITNESS_REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH,
-	verifyWitnessReactBoilerplateZeroSwEvidence,
-} from '../../core/src/receipts/react-boilerplate-zero-sw.ts';
+import { ANGULAR_REALWORLD_V15_TO_V16_RECEIPT } from '../../core/src/receipts/angular-realworld-v15-to-v16.ts';
+import { WITNESS_ANGULAR_REALWORLD_RECEIPT_PATH } from '../../core/src/receipts/witness-angular-realworld.ts';
+import { REACT_PAPERCUPS_FIXTURE } from '../../core/src/receipts/witness-react-papercups.ts';
 import {
 	SCRIPT_SURFACE_SCHEMA,
 	verifyScriptSurface,
@@ -48,7 +26,10 @@ import {
 	NPM_LOCK_ACQUISITION_PREFLIGHT,
 	NEXT_TAILWIND_CONSENT_FAILURE,
 	NEXT_TAILWIND_EXCLUSION,
+	REACT_PAPERCUPS_TRUST_MATRIX_CELLS,
+	REACT_PAPERCUPS_TRUST_RECEIPTS,
 	compareTrustResolvedDependencies,
+	verifyTrustReceipt,
 	validateCycloneDx17,
 	validateNpmLockAcquisitionPreflight,
 	validateNextTailwindConsentFailure,
@@ -211,7 +192,9 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 	if (
 		emittedConformance.summary.verticals !== transaction.verticals ||
 		emittedConformance.summary.sourceApplications !== transaction.sourceApplications ||
-		emittedConformance.summary.designatedPilotsVerified !== 0
+		emittedConformance.summary.designatedPilotsVerified !== 0 ||
+		emittedConformance.verticals.length !== transaction.verticals ||
+		emittedConformance.applications.length !== transaction.sourceApplications
 	)
 		throw new Error(
 			'Corpus conformance does not match the canonical aggregate transaction state',
@@ -513,12 +496,22 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 		runtimeObservationControl.pciCompliance !== 'not-claimed'
 	)
 		throw new Error('Controls contain an unsupported enterprise assurance claim');
+	const papercupsIntegrated = transaction.kind === 'react-papercups-browser-proof';
 	const matrix = asRecord(await readJson(path.join(output, 'matrix.json')), 'corpus matrix');
 	if (
 		!Array.isArray(matrix.cells) ||
-		matrix.cells.length !== 15 + (transaction.nextKilledByGoogleIntegrated ? 1 : 0)
+		matrix.cells.length !==
+			15 + (transaction.nextKilledByGoogleIntegrated ? 1 : 0) + (papercupsIntegrated ? 1 : 0)
 	)
 		throw new Error('Corpus matrix cell count does not match transaction state');
+	if (
+		papercupsIntegrated &&
+		(manifest.receipts.length !== REACT_PAPERCUPS_TRUST_RECEIPTS ||
+			matrix.cells.length !== REACT_PAPERCUPS_TRUST_MATRIX_CELLS)
+	)
+		throw new Error(
+			'React Papercups browser proof must pin exactly eighteen receipts and seventeen matrix cells',
+		);
 	const matrixSource = asRecord(matrix.derivedFrom, 'corpus matrix derivation');
 	if (
 		matrixSource.path !== 'corpus-conformance.json' ||
@@ -671,6 +664,44 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 			: nextKilledByGoogle !== undefined)
 	)
 		throw new Error('Required unsupported/not-tested corpus states were upgraded');
+	const papercupsCell = cells.get(REACT_PAPERCUPS_FIXTURE);
+	const papercupsVertical = emittedConformance.verticals.find(
+		(value) => asRecord(value, 'corpus vertical').id === REACT_PAPERCUPS_FIXTURE,
+	);
+	if (papercupsIntegrated) {
+		const row = asRecord(papercupsVertical, 'React Papercups conformance vertical');
+		const papercupsApplication = emittedConformance.applications.find(
+			(value) => asRecord(value, 'corpus application').id === row.application,
+		);
+		if (
+			papercupsCell === undefined ||
+			papercupsApplication === undefined ||
+			canonicalize(asRecord(papercupsApplication, 'React Papercups application').verticals) !==
+				canonicalize([REACT_PAPERCUPS_FIXTURE]) ||
+			papercupsCell.state !== 'verified' ||
+			papercupsCell.scope !== 'fixture-specific-create-react-app-to-vite8' ||
+			papercupsCell.genericReactSupport !== 'not-claimed' ||
+			papercupsCell.framework !== row.framework ||
+			papercupsCell.designatedPilot !== row.designatedPilot ||
+			papercupsCell.runtime !== row.runtime ||
+			papercupsCell.bundler !== row.bundler ||
+			papercupsCell.track !== row.track ||
+			papercupsCell.browserProof !== row.browserProof ||
+			papercupsCell.serviceWorker !== row.serviceWorker ||
+			papercupsCell.scrollSurface !== row.scrollSurface ||
+			papercupsCell.productionReadiness !== row.productionReadiness ||
+			canonicalize(papercupsCell.locality) !== canonicalize(row.locality) ||
+			canonicalize(papercupsCell.readinessScoreboard) !==
+				canonicalize(row.readinessScoreboard) ||
+			canonicalize(row.readinessScoreboard) !==
+				canonicalize({
+					reactLineage: { ready: 1, total: 4, counted: false },
+					overall: { ready: 3, total: 12 },
+				})
+		)
+			throw new Error('React Papercups matrix cell is not derived from corpus conformance');
+	} else if (papercupsCell !== undefined || papercupsVertical !== undefined)
+		throw new Error('React Papercups evidence is claimed outside its transaction state');
 	const phonecat = cells.get('angular-phonecat');
 	if (
 		phonecat?.framework !== 'angularjs' ||
@@ -716,20 +747,7 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 	if (manifest.observation.vulnerabilityFreshness !== freshness.state)
 		throw new Error('Manifest vulnerability freshness is inconsistent');
 	for (const receipt of manifest.receipts) {
-		const result =
-			receipt.path === ANGULAR_REALWORLD_V15_TO_V16_RECEIPT.path
-				? await verifyAngularRealworldV15ToV16Evidence(root)
-				: receipt.path === WITNESS_ANGULAR_REALWORLD_RECEIPT_PATH
-					? await verifyWitnessAngularRealworldEvidence(root)
-					: receipt.path === WITNESS_REACT_BOILERPLATE_RECEIPT_PATH
-						? await verifyWitnessReactBoilerplateEvidence(root)
-						: receipt.path === WITNESS_REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH
-							? await verifyWitnessReactBoilerplateZeroSwEvidence(root)
-							: receipt.path === WITNESS_NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH
-								? await verifyWitnessNextKilledByGoogleEvidence(root)
-								: receipt.path === NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH
-									? await verifyNextKilledByGoogleEvidence(root, true)
-									: await verifyReceipt(path.join(root, receipt.path));
+		const result = await verifyTrustReceipt(root, receipt.path);
 		if (
 			result.digest !== receipt.digest ||
 			result.artifacts !== receipt.artifacts ||
@@ -770,7 +788,10 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 		(transaction.angularRealworldWitnessIntegrated
 			? !report.includes('Angular-lineage production readiness: **1/4**') ||
 				!report.includes('Harness qualification: **0/4**')
-			: report.includes('Angular-lineage production readiness: **1/4**'))
+			: report.includes('Angular-lineage production readiness: **1/4**')) ||
+		(papercupsIntegrated
+			? !report.includes('Papercups v1.0.0 create-react-app→Vite 8 direct-Witness browser proof')
+			: report.includes('Papercups v1.0.0 create-react-app→Vite 8 direct-Witness browser proof'))
 	)
 		throw new Error('Derived Markdown does not match canonical transaction state');
 	if (options.compareDir) {

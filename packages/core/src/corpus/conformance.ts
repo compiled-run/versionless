@@ -575,9 +575,7 @@ export function deriveCorpusTransactionState(fixtures: unknown): CorpusTransacti
 								}) ||
 							!sha256Pattern.test(digest) ||
 							canonicalize(zeroSwRecord) !==
-								canonicalize(
-									witnessReactBoilerplateZeroSwAggregateMember(digest),
-								)
+								canonicalize(witnessReactBoilerplateZeroSwAggregateMember(digest))
 						)
 							throw new Error(
 								'React Boilerplate zero-SW aggregate membership mismatch',
@@ -599,9 +597,7 @@ export function deriveCorpusTransactionState(fixtures: unknown): CorpusTransacti
 								'React Papercups Witness aggregate digest',
 							);
 							if (papercupsMigration === undefined)
-								throw new Error(
-									'React Papercups aggregate membership mismatch',
-								);
+								throw new Error('React Papercups aggregate membership mismatch');
 							const papercupsMigrationRecord = record(
 								papercupsMigration,
 								'React Papercups migration aggregate fixture',
@@ -623,9 +619,7 @@ export function deriveCorpusTransactionState(fixtures: unknown): CorpusTransacti
 									) ||
 								byPath.size !== canonicalReceipts.length + 9
 							)
-								throw new Error(
-									'React Papercups aggregate membership mismatch',
-								);
+								throw new Error('React Papercups aggregate membership mismatch');
 							assertOrderedAggregate(
 								orderedPaths,
 								[
@@ -875,6 +869,104 @@ export function deriveCorpusTransactionState(fixtures: unknown): CorpusTransacti
 		sourceApplications: 3,
 		receipts: 10,
 		resolvedDependencies: 23,
+	};
+}
+
+/**
+ * Derives the Papercups conformance rows.
+ *
+ * Every emitted field comes from either the canonical aggregate members or the
+ * verified browser-proof receipt and its sealed build receipt; nothing here is
+ * an authored constant, so the emitted vertical and source application cannot
+ * drift away from the evidence they claim to summarize.
+ */
+async function reactPapercupsConformanceRows(
+	root: string,
+	aggregateByPath: Map<string, unknown>,
+): Promise<{ vertical: Record<string, unknown>; application: Record<string, unknown> }> {
+	const verified = await verifyWitnessReactPapercupsEvidence(root);
+	const witnessMember = record(
+		aggregateByPath.get(WITNESS_REACT_PAPERCUPS_RECEIPT_PATH),
+		'React Papercups Witness aggregate fixture',
+	);
+	if (witnessMember.digest !== verified.digest)
+		throw new Error('React Papercups Witness aggregate digest differs');
+	const migrationMember = record(
+		aggregateByPath.get(REACT_PAPERCUPS_RECEIPT_PATH),
+		'React Papercups migration aggregate fixture',
+	);
+	const receipt = verified.receipt;
+	if (migrationMember.digest !== receipt.canonicalReceipt.canonicalDigest)
+		throw new Error('React Papercups migration aggregate digest differs');
+	const run = receipt.runs[0];
+	if (!run) throw new Error('React Papercups Witness receipt carries no runs');
+	const id = string(migrationMember.id, 'React Papercups migration aggregate id');
+	const application = string(run.app, 'React Papercups application identity');
+	const behaviorDigest = string(run.behaviorDigest, 'React Papercups behavior digest');
+	const source = {
+		repository: normalizeURL(receipt.source.repository),
+		ref: receipt.source.ref,
+		revision: receipt.source.revision,
+		archiveSha256: receipt.source.archiveSha256,
+		frontendRoot: receipt.source.frontendRoot,
+		license: receipt.source.license,
+		licenseSha256: receipt.source.licenseSha256,
+	};
+	const locality = {
+		mode: receipt.locality.mode,
+		scope: 'process-scoped',
+		osWideIsolation: receipt.locality.osWideIsolation,
+		successfulNonLoopback: receipt.locality.successfulNonLoopback,
+	};
+	return {
+		vertical: {
+			id,
+			application,
+			framework: string(migrationMember.framework, 'React Papercups aggregate framework'),
+			receiptPath: WITNESS_REACT_PAPERCUPS_RECEIPT_PATH,
+			receiptDigest: verified.digest,
+			canonicalReceipt: {
+				path: receipt.canonicalReceipt.path,
+				canonicalDigest: receipt.canonicalReceipt.canonicalDigest,
+				sha256: receipt.canonicalReceipt.sha256,
+			},
+			runtime: string(migrationMember.runtime, 'React Papercups aggregate runtime'),
+			bundler: string(migrationMember.bundler, 'React Papercups aggregate bundler'),
+			track: string(witnessMember.track, 'React Papercups Witness aggregate track'),
+			migrationTrack: string(migrationMember.track, 'React Papercups migration track'),
+			locality,
+			browserProof: 'verified-direct-witness',
+			browserRuns: receipt.runs.length,
+			behaviorDigest,
+			serviceWorker: receipt.zeroServiceWorker.registration,
+			scrollSurface: receipt.scrollSurface.state,
+			productionReadiness: 'verified-direct-witness',
+			readinessScoreboard: receipt.readiness,
+			designatedPilot: false,
+		},
+		application: {
+			id: application,
+			source,
+			verticals: [id],
+			conformance: {
+				browserProof: 'direct-witness-verified',
+				runs: receipt.runs.length,
+				behaviorDigest,
+				mutation: receipt.mutation.restoredRun,
+				mutationRestoration: receipt.mutation.restoredByteIdentically
+					? 'byte-identical'
+					: 'not-byte-identical',
+				zeroServiceWorker: receipt.zeroServiceWorker.registration,
+				readinessScoreboard: receipt.readiness,
+			},
+			boundaries: {
+				track: string(witnessMember.track, 'React Papercups Witness aggregate track'),
+				designatedPilot: false,
+				genericReactSupport: 'not-claimed',
+				scrollSurface: receipt.scrollSurface.state,
+				locality: 'process-scoped-not-os-wide',
+			},
+		},
 	};
 }
 
@@ -1374,21 +1466,10 @@ export async function analyzeCorpusConformance(
 	const nextKilledByGoogleWitness = transaction.nextKilledByGoogleWitnessIntegrated
 		? await verifyWitnessNextKilledByGoogleEvidence(root)
 		: null;
-	if (transaction.kind === 'react-papercups-browser-proof') {
-		const verified = await verifyWitnessReactPapercupsEvidence(root);
-		const member = record(
-			aggregateByPath.get(WITNESS_REACT_PAPERCUPS_RECEIPT_PATH),
-			'React Papercups Witness aggregate fixture',
-		);
-		if (member.digest !== verified.digest)
-			throw new Error('React Papercups Witness aggregate digest differs');
-		const migrationMember = record(
-			aggregateByPath.get(REACT_PAPERCUPS_RECEIPT_PATH),
-			'React Papercups migration aggregate fixture',
-		);
-		if (migrationMember.digest !== verified.receipt.canonicalReceipt.canonicalDigest)
-			throw new Error('React Papercups migration aggregate digest differs');
-	}
+	const papercups =
+		transaction.kind === 'react-papercups-browser-proof'
+			? await reactPapercupsConformanceRows(root, aggregateByPath)
+			: null;
 	if (
 		transaction.kind === 'react-zero-sw-reconciliation' ||
 		transaction.kind === 'react-papercups-browser-proof'
@@ -1634,6 +1715,123 @@ export async function analyzeCorpusConformance(
 			traceDiagnosticReproducibility: 'not-claimed',
 			designatedPilot: false,
 		});
+	if (papercups) verticals.push(papercups.vertical);
+
+	const applications: Array<Record<string, unknown>> = [
+		{
+			id: 'react-boilerplate',
+			source: react[0]?.source,
+			verticals: react.map((item) => item.expected.id),
+			conformance: {
+				scope: 'common-user-observable-projection-only',
+				projection: commonProjection,
+				projectionSha256: sha256(canonicalize(commonProjection)),
+				blockedNetworkObservations: react.map((item) => ({
+					vertical: item.expected.id,
+					browserBlockedRequests:
+						item.receipt.verification.locality.browserBlockedRequests,
+					blockedUrls: uniqueCanonical(
+						item.journey.flatMap((value) => blockedUrls(value, item.expected.id)),
+					),
+				})),
+			},
+			boundaries: {
+				viteAdapter: 'fixture-specific',
+				oldVite: 'not-tested',
+				genericAdapter: 'not-tested',
+				unplugin: 'not-tested',
+				fullEquivalence: 'not-claimed',
+			},
+		},
+		{
+			id: 'angular-phonecat',
+			source: phonecat[0]?.source,
+			verticals: phonecat.map((item) => item.expected.id),
+			conformance: {
+				journeySha256: phonecatJourneyDigest,
+				journeyDigestIdentical: true,
+				migrationsRemainDistinct: true,
+			},
+			boundaries: {
+				track: 'angularjs-special-track',
+				bundler: 'none-static / Vite 8.0.16',
+				angular2Plus: 'not-applicable',
+				angularCliAot: 'not-applicable',
+				adjacentMajor: 'not-applicable',
+				designatedPilot: false,
+			},
+		},
+		{
+			id: 'angular-realworld',
+			source: {
+				repository: normalizeURL(
+					'https://github.com/realworld-apps/angular-realworld-example-app',
+				),
+				parentRevision: 'e28c8969aab9a27ece9873118b1ab7251f9ccb0c',
+				targetRevision: '0d28f5c63b9cd678a3f1f724f68d6e41363bdd5a',
+				archiveSha256: 'b834410ded0baae07950ba680d2ee82a5d7b797ee01bd86d9a901d3e696544a2',
+				license: 'MIT',
+				licenseSha256: 'dd241fc76d00987f9a025558ec977a2df69875320ab0379bd8f5865ad1033c7b',
+			},
+			verticals: ['angular-realworld-v15-to-v16'],
+			conformance: {
+				adjacentMajor: 'angular-15-to-16-verified',
+				productionAot: true,
+				journeys: 4,
+				mutation: 'target-api-origin-rejection-verified',
+				productionReadiness:
+					angularRealworldWitness === null ? 'not-tested' : 'direct-witness-verified',
+				readinessScoreboard:
+					angularRealworldWitness === null
+						? {
+								angularLineage: { ready: 0, total: 4 },
+								harness: { ready: 0, total: 4 },
+							}
+						: angularRealworldWitness.receipt.readiness,
+			},
+			boundaries: {
+				track: 'angular2-plus-adjacent-major',
+				designatedPilot: false,
+				genericAngularSupport: 'not-claimed',
+				locality: 'process-scoped-not-os-wide',
+			},
+		},
+		...(nextKilledByGoogle
+			? [
+					{
+						id: 'killedbygoogle',
+						source: {
+							repository: normalizeURL('https://github.com/codyogden/killedbygoogle'),
+							revision: '56809c31592e6ca1edce8af9bfe842fbcdf71f4d',
+							archiveSha256:
+								'c28878d0f65b56aa595763c852477fb0c1e3533e5c7f7ea9daa2be16f102368d',
+							license: 'MIT',
+						},
+						verticals: ['next-killedbygoogle-derived-state-to-memo'],
+						conformance: {
+							productionBuild: true,
+							browserJourneys: 4,
+							mutationRestoration: 'verified',
+							productionOutputConformance: 'verified',
+						},
+						boundaries: {
+							traceDiagnosticReproducibility: 'not-claimed',
+							genericNextSupport: 'not-claimed',
+							productionReadiness: 'not-claimed',
+							locality: 'process-scoped-not-os-wide',
+						},
+					},
+				]
+			: []),
+		...(papercups ? [papercups.application] : []),
+	];
+	if (
+		verticals.length !== transaction.verticals ||
+		applications.length !== transaction.sourceApplications
+	)
+		throw new Error(
+			'Corpus conformance rows do not agree with the derived transaction summary',
+		);
 
 	const result: CorpusConformance = {
 		schemaVersion: CORPUS_CONFORMANCE_SCHEMA,
@@ -1643,117 +1841,7 @@ export async function analyzeCorpusConformance(
 			designatedPilotsVerified: 0,
 		},
 		verticals,
-		applications: [
-			{
-				id: 'react-boilerplate',
-				source: react[0]?.source,
-				verticals: react.map((item) => item.expected.id),
-				conformance: {
-					scope: 'common-user-observable-projection-only',
-					projection: commonProjection,
-					projectionSha256: sha256(canonicalize(commonProjection)),
-					blockedNetworkObservations: react.map((item) => ({
-						vertical: item.expected.id,
-						browserBlockedRequests:
-							item.receipt.verification.locality.browserBlockedRequests,
-						blockedUrls: uniqueCanonical(
-							item.journey.flatMap((value) => blockedUrls(value, item.expected.id)),
-						),
-					})),
-				},
-				boundaries: {
-					viteAdapter: 'fixture-specific',
-					oldVite: 'not-tested',
-					genericAdapter: 'not-tested',
-					unplugin: 'not-tested',
-					fullEquivalence: 'not-claimed',
-				},
-			},
-			{
-				id: 'angular-phonecat',
-				source: phonecat[0]?.source,
-				verticals: phonecat.map((item) => item.expected.id),
-				conformance: {
-					journeySha256: phonecatJourneyDigest,
-					journeyDigestIdentical: true,
-					migrationsRemainDistinct: true,
-				},
-				boundaries: {
-					track: 'angularjs-special-track',
-					bundler: 'none-static / Vite 8.0.16',
-					angular2Plus: 'not-applicable',
-					angularCliAot: 'not-applicable',
-					adjacentMajor: 'not-applicable',
-					designatedPilot: false,
-				},
-			},
-			{
-				id: 'angular-realworld',
-				source: {
-					repository: normalizeURL(
-						'https://github.com/realworld-apps/angular-realworld-example-app',
-					),
-					parentRevision: 'e28c8969aab9a27ece9873118b1ab7251f9ccb0c',
-					targetRevision: '0d28f5c63b9cd678a3f1f724f68d6e41363bdd5a',
-					archiveSha256:
-						'b834410ded0baae07950ba680d2ee82a5d7b797ee01bd86d9a901d3e696544a2',
-					license: 'MIT',
-					licenseSha256:
-						'dd241fc76d00987f9a025558ec977a2df69875320ab0379bd8f5865ad1033c7b',
-				},
-				verticals: ['angular-realworld-v15-to-v16'],
-				conformance: {
-					adjacentMajor: 'angular-15-to-16-verified',
-					productionAot: true,
-					journeys: 4,
-					mutation: 'target-api-origin-rejection-verified',
-					productionReadiness:
-						angularRealworldWitness === null ? 'not-tested' : 'direct-witness-verified',
-					readinessScoreboard:
-						angularRealworldWitness === null
-							? {
-									angularLineage: { ready: 0, total: 4 },
-									harness: { ready: 0, total: 4 },
-								}
-							: angularRealworldWitness.receipt.readiness,
-				},
-				boundaries: {
-					track: 'angular2-plus-adjacent-major',
-					designatedPilot: false,
-					genericAngularSupport: 'not-claimed',
-					locality: 'process-scoped-not-os-wide',
-				},
-			},
-			...(nextKilledByGoogle
-				? [
-						{
-							id: 'killedbygoogle',
-							source: {
-								repository: normalizeURL(
-									'https://github.com/codyogden/killedbygoogle',
-								),
-								revision: '56809c31592e6ca1edce8af9bfe842fbcdf71f4d',
-								archiveSha256:
-									'c28878d0f65b56aa595763c852477fb0c1e3533e5c7f7ea9daa2be16f102368d',
-								license: 'MIT',
-							},
-							verticals: ['next-killedbygoogle-derived-state-to-memo'],
-							conformance: {
-								productionBuild: true,
-								browserJourneys: 4,
-								mutationRestoration: 'verified',
-								productionOutputConformance: 'verified',
-							},
-							boundaries: {
-								traceDiagnosticReproducibility: 'not-claimed',
-								genericNextSupport: 'not-claimed',
-								productionReadiness: 'not-claimed',
-								locality: 'process-scoped-not-os-wide',
-							},
-						},
-					]
-				: []),
-		],
+		applications,
 		frameworkLanes: NEXTJS_SYNTHETIC_NOT_TESTED_LANES,
 		coverage: {
 			takenote: 'not-tested',

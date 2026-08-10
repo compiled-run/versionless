@@ -49,7 +49,8 @@ function assertAggregate(value: unknown, requireIntegrated: boolean): Record<str
 		throw new Error('Killed by Google aggregate shape differs');
 	const fixtures = aggregate.fixtures.map((value) => record(value, 'aggregate member'));
 	try {
-		if (deriveCorpusTransactionState(fixtures).kind === 'react-zero-sw-reconciliation')
+		const kind = deriveCorpusTransactionState(fixtures).kind;
+		if (kind === 'react-zero-sw-reconciliation' || kind === 'react-papercups-browser-proof')
 			return aggregate;
 	} catch {
 		// Fall through to the legacy member-specific conflict diagnostics below.

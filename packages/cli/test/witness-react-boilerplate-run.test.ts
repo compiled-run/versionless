@@ -12,6 +12,7 @@ import {
 	witnessReactBoilerplateDigest,
 } from '../../core/src/receipts/witness-react-boilerplate.ts';
 import { sha256 } from '../../core/src/receipts/canonicalize.ts';
+import { preAppendAggregate } from './aggregate-pre-append.ts';
 
 const root = path.resolve(import.meta.dirname, '../../..');
 const retainedBundle = path.join(
@@ -53,10 +54,7 @@ describe('standalone React Boilerplate Witness command', () => {
 			const output = path.join(directory, 'evidence/runs/witness-react-boilerplate');
 			const aggregatePath = path.join(directory, 'evidence/runs/aggregate.json');
 			await mkdir(path.dirname(aggregatePath), { recursive: true });
-			await writeFile(
-				aggregatePath,
-				await readFile(path.join(root, 'evidence/runs/aggregate.json')),
-			);
+			await writeFile(aggregatePath, await preAppendAggregate(root));
 			const receipt = parseWitnessReactBoilerplateReceipt(
 				JSON.parse(await readFile(path.join(published, 'receipt.json'), 'utf8')),
 			);

@@ -172,12 +172,48 @@ describe('Papercups corpus transaction state', () => {
 		return aggregate.fixtures;
 	}
 
+	/**
+	 * The published aggregate now carries the Papercups pair, so the append
+	 * itself is replayed against a staged pre-append copy of the exact live
+	 * membership rather than against a loosened expectation.
+	 */
+	async function preAppendFixtures(): Promise<Array<Record<string, unknown>>> {
+		const fixtures = (await aggregateFixtures()).filter(
+			(fixture) =>
+				fixture.receipt !== REACT_PAPERCUPS_RECEIPT_PATH &&
+				fixture.receipt !== WITNESS_REACT_PAPERCUPS_RECEIPT_PATH,
+		);
+		expect(fixtures).toHaveLength(16);
+		return fixtures;
+	}
+
 	const migrationMember = reactPapercupsAggregateMember(REACT_PAPERCUPS_CANONICAL_DIGEST);
+
+	it('derives the exact composition from the published aggregate', async () => {
+		const receipt = await published();
+		const fixtures = await aggregateFixtures();
+		expect(fixtures).toHaveLength(18);
+		expect(fixtures.slice(-2)).toEqual([
+			migrationMember,
+			witnessReactPapercupsAggregateMember(receipt.integrity.canonicalDigest),
+		]);
+		expect(deriveCorpusTransactionState(fixtures)).toEqual({
+			kind: 'react-papercups-browser-proof',
+			nextKilledByGoogleIntegrated: true,
+			angularRealworldWitnessIntegrated: true,
+			reactBoilerplateWitnessIntegrated: true,
+			nextKilledByGoogleWitnessIntegrated: true,
+			verticals: 12,
+			sourceApplications: 5,
+			receipts: 18,
+			resolvedDependencies: 31,
+		});
+	});
 
 	it('derives the exact composition once both Papercups receipts join', async () => {
 		const receipt = await published();
 		const fixtures = [
-			...(await aggregateFixtures()),
+			...(await preAppendFixtures()),
 			migrationMember,
 			witnessReactPapercupsAggregateMember(receipt.integrity.canonicalDigest),
 		];
@@ -198,7 +234,7 @@ describe('Papercups corpus transaction state', () => {
 	it('refuses the Witness receipt without its retained build receipt', async () => {
 		const receipt = await published();
 		const fixtures = [
-			...(await aggregateFixtures()),
+			...(await preAppendFixtures()),
 			witnessReactPapercupsAggregateMember(receipt.integrity.canonicalDigest),
 		];
 		expect(() => deriveCorpusTransactionState(fixtures)).toThrow(/Papercups/);
@@ -207,7 +243,7 @@ describe('Papercups corpus transaction state', () => {
 	it('refuses a reordered Papercups tail', async () => {
 		const receipt = await published();
 		const fixtures = [
-			...(await aggregateFixtures()),
+			...(await preAppendFixtures()),
 			witnessReactPapercupsAggregateMember(receipt.integrity.canonicalDigest),
 			migrationMember,
 		];
@@ -217,7 +253,7 @@ describe('Papercups corpus transaction state', () => {
 	it('refuses an unexpected extra member alongside the Papercups tail', async () => {
 		const receipt = await published();
 		const fixtures = [
-			...(await aggregateFixtures()),
+			...(await preAppendFixtures()),
 			migrationMember,
 			witnessReactPapercupsAggregateMember(receipt.integrity.canonicalDigest),
 			{ ...migrationMember, id: 'react-papercups-shadow', receipt: 'evidence/runs/shadow.json' },
@@ -228,7 +264,7 @@ describe('Papercups corpus transaction state', () => {
 	it('refuses a Papercups member whose shape drifts from the canonical row', async () => {
 		const receipt = await published();
 		const fixtures = [
-			...(await aggregateFixtures()),
+			...(await preAppendFixtures()),
 			{ ...migrationMember, track: 'production-ready' },
 			witnessReactPapercupsAggregateMember(receipt.integrity.canonicalDigest),
 		];
@@ -236,7 +272,7 @@ describe('Papercups corpus transaction state', () => {
 	});
 
 	it('keeps the zero-service-worker state when Papercups has not joined', async () => {
-		expect(deriveCorpusTransactionState(await aggregateFixtures())).toEqual({
+		expect(deriveCorpusTransactionState(await preAppendFixtures())).toEqual({
 			kind: 'react-zero-sw-reconciliation',
 			nextKilledByGoogleIntegrated: true,
 			angularRealworldWitnessIntegrated: true,

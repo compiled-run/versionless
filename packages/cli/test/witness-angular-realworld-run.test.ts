@@ -14,6 +14,7 @@ import {
 	angularRealworldTransport,
 } from '../src/witness/real-app-run.ts';
 import { sha256 } from '../../core/src/receipts/canonicalize.ts';
+import { preAppendAggregate } from './aggregate-pre-append.ts';
 import {
 	parseWitnessAngularRealworldReceipt,
 	witnessAngularRealworldDigest,
@@ -114,9 +115,9 @@ describe('standalone Angular RealWorld Witness command', () => {
 			const output = path.join(directory, 'evidence/runs/witness-angular-realworld');
 			const aggregatePath = path.join(directory, 'evidence/runs/aggregate.json');
 			await mkdir(path.dirname(aggregatePath), { recursive: true });
-			const aggregate = JSON.parse(
-				await readFile(path.join(repositoryRoot, 'evidence/runs/aggregate.json'), 'utf8'),
-			) as { fixtures: Array<Record<string, unknown>> };
+			const aggregate = JSON.parse(await preAppendAggregate(repositoryRoot)) as {
+				fixtures: Array<Record<string, unknown>>;
+			};
 			const current = structuredClone(aggregate);
 			aggregate.fixtures = aggregate.fixtures.filter(
 				(item) =>
@@ -203,10 +204,7 @@ describe('standalone Angular RealWorld Witness command', () => {
 						path.join(repositoryRoot, 'evidence/runs/witness-angular-realworld', name),
 					),
 				);
-			await writeFile(
-				aggregatePath,
-				await readFile(path.join(repositoryRoot, 'evidence/runs/aggregate.json')),
-			);
+			await writeFile(aggregatePath, await preAppendAggregate(repositoryRoot));
 			const originalAggregate = await readFile(aggregatePath);
 			const originalJson = await readFile(path.join(output, 'receipt.json'));
 			const originalMarkdown = await readFile(path.join(output, 'receipt.md'));

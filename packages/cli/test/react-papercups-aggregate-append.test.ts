@@ -22,6 +22,12 @@ const evidenceFiles = [
 	'evidence/runs/aggregate.json',
 ];
 
+/**
+ * Stages the exact published evidence with the aggregate rolled back to its
+ * pre-append membership, so the append transaction itself is still replayed
+ * against its real predecessor now that the published aggregate carries the
+ * Papercups pair.
+ */
 async function stagedRoot(): Promise<string> {
 	const directory = await mkdtemp(path.join(os.tmpdir(), 'papercups-aggregate-'));
 	for (const relative of evidenceFiles) {
@@ -29,6 +35,14 @@ async function stagedRoot(): Promise<string> {
 		await mkdir(path.dirname(destination), { recursive: true });
 		await copyFile(path.join(repositoryRoot, relative), destination);
 	}
+	await rewrite(directory, (members) =>
+		members.filter(
+			(member) =>
+				member.receipt !== REACT_PAPERCUPS_RECEIPT_PATH &&
+				member.receipt !== WITNESS_REACT_PAPERCUPS_RECEIPT_PATH,
+		),
+	);
+	expect(await fixtures(directory)).toHaveLength(16);
 	return directory;
 }
 
@@ -71,6 +85,27 @@ describe('React Papercups aggregate append', () => {
 		});
 		expect(members.witness.digest).toMatch(/^[0-9a-f]{64}$/);
 		expect(members.witness.digest).not.toBe(members.migration.digest);
+	});
+
+	it('reports the published aggregate as already appended without rewriting it', async () => {
+		const published = await readFile(
+			path.join(repositoryRoot, 'evidence/runs/aggregate.json'),
+			'utf8',
+		);
+		const parsed = JSON.parse(published) as { fixtures: Array<Record<string, unknown>> };
+		expect(parsed.fixtures).toHaveLength(18);
+		expect(parsed.fixtures.slice(-2).map((member) => member.receipt)).toEqual([
+			REACT_PAPERCUPS_RECEIPT_PATH,
+			WITNESS_REACT_PAPERCUPS_RECEIPT_PATH,
+		]);
+		await expect(appendReactPapercupsAggregateMembers(repositoryRoot)).resolves.toEqual({
+			kind: 'react-papercups-browser-proof',
+			receipts: 18,
+			appended: false,
+		});
+		expect(
+			await readFile(path.join(repositoryRoot, 'evidence/runs/aggregate.json'), 'utf8'),
+		).toBe(published);
 	});
 
 	it('appends the exact pair and re-derives the browser-proof state', async () => {

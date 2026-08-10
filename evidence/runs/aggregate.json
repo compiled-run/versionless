@@ -151,6 +151,26 @@
       "result": "pass",
       "receipt": "evidence/runs/witness-react-boilerplate-zero-sw/receipt.json",
       "digest": "dcdc57f078d9d7bdfdfd290a7f6b1abe78924581796ff3aaefa6c7e4ba38b527"
+    },
+    {
+      "id": "react-papercups-v1-0-0",
+      "framework": "react",
+      "track": "create-react-app-3.4.1-to-vite8-build",
+      "bundler": "webpack-4.42.0-to-vite-8.0.16",
+      "runtime": "node-16.20.2-to-node-24.15.0",
+      "result": "pass",
+      "receipt": "evidence/runs/react-papercups-v1-0-0/t004-run.json",
+      "digest": "b433f214727389676b308332f7689d773ad28dde0984b9bf245f3f780f87d35a"
+    },
+    {
+      "id": "witness-react-papercups",
+      "framework": "react",
+      "track": "production-readiness-direct-witness-create-react-app-to-vite8",
+      "bundler": "webpack-4.42.0-to-vite-8.0.16",
+      "runtime": "node-16.20.2-to-node-24.15.0",
+      "result": "pass",
+      "receipt": "evidence/runs/witness-react-papercups/receipt.json",
+      "digest": "abd33d566ecef3ce4b24470c3105320520a712db19351f74b6c887b63227f267"
     }
   ],
   "unsupported": []
