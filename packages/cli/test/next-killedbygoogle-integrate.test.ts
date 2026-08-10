@@ -47,7 +47,9 @@ describe('Killed by Google integration', () => {
 					fixture.id !== 'next-killedbygoogle-derived-state-to-memo' &&
 					fixture.id !== 'witness-angular-realworld' &&
 					fixture.id !== 'witness-react-boilerplate' &&
-					fixture.id !== 'witness-next-killedbygoogle',
+					fixture.id !== 'witness-next-killedbygoogle' &&
+					fixture.id !== 'react-boilerplate-v4-zero-sw' &&
+					fixture.id !== 'witness-react-boilerplate-zero-sw',
 			),
 		};
 	};

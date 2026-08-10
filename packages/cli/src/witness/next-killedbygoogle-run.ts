@@ -255,7 +255,11 @@ export async function publishWitnessNextKilledByGoogleTransaction(options: {
 		[key: string]: unknown;
 	};
 	const current = deriveCorpusTransactionState(aggregate.fixtures);
-	if (current.kind !== 'react-candidate' && current.kind !== 'next-candidate')
+	if (
+		current.kind !== 'react-candidate' &&
+		current.kind !== 'next-candidate' &&
+		current.kind !== 'react-zero-sw-reconciliation'
+	)
 		throw new Error('KilledByGoogle Witness publication requires exact 13 predecessors');
 	if (!Array.isArray(aggregate.fixtures)) throw new Error('KilledByGoogle fixtures are absent');
 	const expected = witnessNextKilledByGoogleAggregateMember(
@@ -267,11 +271,17 @@ export async function publishWitnessNextKilledByGoogleTransaction(options: {
 	);
 	const next = [...fixtures];
 	if (existing >= 0) {
-		if (existing !== next.length - 1) throw new Error('KilledByGoogle Witness order differs');
+		const expectedIndex =
+			current.kind === 'react-zero-sw-reconciliation' ? next.length - 3 : next.length - 1;
+		if (existing !== expectedIndex) throw new Error('KilledByGoogle Witness order differs');
 		next[existing] = expected;
 	} else next.push(expected);
 	const integrated = { ...aggregate, fixtures: next };
-	if (deriveCorpusTransactionState(integrated.fixtures).kind !== 'next-candidate')
+	const expectedKind =
+		current.kind === 'react-zero-sw-reconciliation'
+			? 'react-zero-sw-reconciliation'
+			: 'next-candidate';
+	if (deriveCorpusTransactionState(integrated.fixtures).kind !== expectedKind)
 		throw new Error('KilledByGoogle Witness staged aggregate differs');
 	await writeFile(stagedAggregate, `${JSON.stringify(integrated, null, 2)}\n`, { flag: 'wx' });
 	await mkdir(dirname(options.output), { recursive: true });
@@ -294,7 +304,7 @@ export async function publishWitnessNextKilledByGoogleTransaction(options: {
 						fixtures?: unknown;
 					}
 				).fixtures,
-			).kind !== 'next-candidate'
+			).kind !== expectedKind
 		)
 			throw new Error('KilledByGoogle Witness published transaction differs');
 		await options.verifyPublished?.();

@@ -177,7 +177,8 @@ export async function publishWitnessReactBoilerplateTransaction(options: {
 	if (
 		current.kind !== 'production-readiness' &&
 		current.kind !== 'react-candidate' &&
-		current.kind !== 'next-candidate'
+		current.kind !== 'next-candidate' &&
+		current.kind !== 'react-zero-sw-reconciliation'
 	)
 		throw new Error('React Boilerplate Witness publication requires all predecessors');
 	if (!Array.isArray(aggregate.fixtures))
@@ -192,13 +193,22 @@ export async function publishWitnessReactBoilerplateTransaction(options: {
 	const nextFixtures = [...fixtures];
 	if (existingIndex >= 0) {
 		const expectedIndex =
-			current.kind === 'next-candidate' ? nextFixtures.length - 2 : nextFixtures.length - 1;
+			current.kind === 'react-zero-sw-reconciliation'
+				? nextFixtures.length - 4
+				: current.kind === 'next-candidate'
+					? nextFixtures.length - 2
+					: nextFixtures.length - 1;
 		if (existingIndex !== expectedIndex)
 			throw new Error('React Boilerplate Witness aggregate order differs');
 		nextFixtures[existingIndex] = expected;
 	} else nextFixtures.push(expected);
 	const integrated = { ...aggregate, fixtures: nextFixtures };
-	const expectedKind = current.kind === 'next-candidate' ? 'next-candidate' : 'react-candidate';
+	const expectedKind =
+		current.kind === 'react-zero-sw-reconciliation'
+			? 'react-zero-sw-reconciliation'
+			: current.kind === 'next-candidate'
+				? 'next-candidate'
+				: 'react-candidate';
 	if (deriveCorpusTransactionState(integrated.fixtures).kind !== expectedKind)
 		throw new Error('React Boilerplate Witness staged aggregate state differs');
 	await writeFile(stagedAggregate, `${JSON.stringify(integrated, null, 2)}\n`, { flag: 'wx' });

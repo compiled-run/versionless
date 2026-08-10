@@ -1,0 +1,109 @@
+{
+  "schema": "versionless.react-saleor-dashboard.transaction-terminal.v1",
+  "taskId": "T668",
+  "result": "blocked",
+  "promotion": "none",
+  "consentId": "T668-saleor-dashboard-production-acquisition",
+  "repository": "https://github.com/saleor/saleor-dashboard",
+  "requestPolicy": {
+    "method": "GET",
+    "credentials": false,
+    "redirects": false,
+    "acceptedResponseRetry": false,
+    "maximumZeroResponseAttempts": 3,
+    "apiResponseBytes": 16777216,
+    "acceptedResponsesCap": 6500,
+    "aggregateBytesCap": 3221225472
+  },
+  "selection": {
+    "enumeratedRefPrefixes": [
+      "refs/tags/2."
+    ],
+    "enumeratedRefCount": 15,
+    "algorithm": "greatest stable SemVer 2.x; bytewise-smallest ref on equal-version prefix tie; no fallback",
+    "selectedRef": "refs/tags/2.11.1",
+    "selectedCommit": "04354fa3e03210c261c686fd68fce1fcdc62ed9e",
+    "selectedTreeFromCommit": "bc60f1a590f395ddcb943d774f518c969171ba58",
+    "commitDate": "2020-11-13T10:06:49Z",
+    "repositoryId": 192721247,
+    "repositoryFullName": "saleor/saleor-dashboard",
+    "repositoryLicense": "BSD-3-Clause"
+  },
+  "transportAttempts": [
+    {
+      "request": "https://api.github.com/repos/saleor/saleor-dashboard/git/matching-refs/tags/2.",
+      "attempt": 1,
+      "acceptedStatus": false,
+      "acceptedHeaders": false,
+      "acceptedBodyBytes": 0,
+      "outcome": "zero-response-dns-failure",
+      "diagnostic": "Could not resolve host: api.github.com"
+    },
+    {
+      "request": "https://api.github.com/repos/saleor/saleor-dashboard/git/matching-refs/tags/2.",
+      "attempt": 2,
+      "acceptedStatus": true,
+      "status": 200,
+      "responseBytes": 6426,
+      "requestId": "E1A1:7C8ED:14FFF877:46125513:6A798823",
+      "bodySha256": "6cf2f9994a2655d0dba5d8a5921c8991664bf1ef2d41525c1b27051bfc2c7b47",
+      "bodySha512": "0eac6f86da1f609737901857ea0e1357d258e3c89470d5de9d715b9acefb13dde93671aa9464b24303934562dc54e9b8f739bed02e9903b7b1bc93db7b737875",
+      "headersSha256": "f5bd2affc147ec4cb445c51c78b2fcf1dafefe52a1fea099b78d789963853091"
+    },
+    {
+      "request": "https://api.github.com/repos/saleor/saleor-dashboard/git/commits/04354fa3e03210c261c686fd68fce1fcdc62ed9e",
+      "attempt": 1,
+      "acceptedStatus": true,
+      "status": 200,
+      "responseBytes": 1316,
+      "requestId": "E1AF:249DA6:13E01A59:4278056A:6A79883F",
+      "bodySha256": "f2d9ea40df7a77912e29af6dc4718bdaedbb8ba09e6edeeaea674901322e8366",
+      "bodySha512": "f45ddecb193315f6849a057479512cb3f541ec4ca80e490bf978c5e3cb75250068588a924f469a99e172a092ea1d0cf3d72ad2442aeda3f317d582281d963c60",
+      "headersSha256": "a609a7fad9f6037fd2a8ba39a929c5cb8a9ef7624fcb31cae20a5fecdb932db0"
+    },
+    {
+      "request": "https://api.github.com/repos/saleor/saleor-dashboard",
+      "attempt": 1,
+      "acceptedStatus": true,
+      "status": 200,
+      "responseBytes": 7269,
+      "requestId": "E1B0:10EB66:E8970FF:306A9AEF:6A798840",
+      "bodySha256": "7317257f5b10c2802a38ed7f8c2608382add6c62ed5f3f59bc65f300dd92a158",
+      "bodySha512": "b632dfdf91ce703bf29d2efbde641f63c4c20d17cdd0b72cd58535277b475421d71ee9967c6067ab531bf9ccaa0e94b3b8a64c6930f70ce289b833f438b5af4c",
+      "headersSha256": "0fa932ad72ff553efaa47303f14fc326bb5643349cf8150379d78e4ba4dd4f76"
+    },
+    {
+      "request": "https://api.github.com/repos/saleor/saleor-dashboard/git/trees/d962464ad7d15f35fc0b3598579b3295a6ec9be7?recursive=1",
+      "attempt": 1,
+      "acceptedStatus": true,
+      "status": 422,
+      "responseBytes": 178,
+      "requestId": "E1B1:80642:D8E2475:2D368689:6A798840",
+      "bodySha256": "06b18874767f521fc46eff2ba3ab5fa19e9f0a506eae983ebbc934a91b01ef02",
+      "bodySha512": "196035ac7f46eac592cd54b1496dbd4af3438094d7327ed0e544186d7e57b31c3d0a4f4274d64862df5a1f29c89801ab729c6cc6fe29dba4837f2dce600aa1c3",
+      "headersSha256": "d9fb2516dae7b11bbd9816e46d2c27f695431ce454b4b49e79d0c9bbd3c705af",
+      "responseMessage": "Invalid object requested. SHA must identify a commit or a tree."
+    }
+  ],
+  "acceptedResponseCount": 4,
+  "acceptedResponseBytes": 15189,
+  "stoppedBecause": "The recursive-tree identity GET received an accepted HTTP 422. T668 forbids retry or fallback after any accepted response and makes any source/ref transaction failure a hard stop.",
+  "unperformed": [
+    "correct-tree request",
+    "archive acquisition",
+    "dependency closure",
+    "source publication",
+    "baseline build",
+    "target migration and build",
+    "Witness browser runs",
+    "mutation and restoration",
+    "trust integration",
+    "score, pilot, stage and commit changes"
+  ],
+  "claims": {
+    "saleorFeasibility": "not-assessed",
+    "productionReadiness": "unchanged",
+    "reactScore": "1/4",
+    "reactPilot": "0/1"
+  }
+}

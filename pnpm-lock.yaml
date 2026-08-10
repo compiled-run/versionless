@@ -75,7 +75,11 @@ importers:
         specifier: 0.7.0
         version: 0.7.0
 
-  packages/core: {}
+  packages/core:
+    dependencies:
+      yuku-analyzer:
+        specifier: 0.7.0
+        version: 0.7.0
 
   packages/experiments:
     dependencies:
@@ -94,6 +98,9 @@ importers:
       '@angular/compiler':
         specifier: 22.1.0
         version: 22.1.0
+      yuku-analyzer:
+        specifier: 0.7.0
+        version: 0.7.0
 
   packages/frameworks/angularjs:
     dependencies:

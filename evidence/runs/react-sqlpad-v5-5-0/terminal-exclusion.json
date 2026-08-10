@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "versionless.react-sqlpad-v5-5-0-t663-terminal.v1",
+  "result": "transaction-blocked",
+  "application": "sqlpad/sqlpad",
+  "version": "5.5.0",
+  "revision": "5c259dd7d3e6bdc0eb098bd32262263fe0280c6b",
+  "consentId": "T661-sqlpad-production-closure",
+  "transport": {
+    "url": "https://registry.npmjs.org/@azure/ms-rest-azure-env/-/ms-rest-azure-env-1.1.2.tgz",
+    "attempts": 3,
+    "acceptedResponses": 0,
+    "acceptedBytes": 0,
+    "error": "getaddrinfo ENOTFOUND registry.npmjs.org",
+    "retryBudgetExhausted": true
+  },
+  "gates": {
+    "bundledLockSemantics": "pass",
+    "focusedTests": "pass-5-of-5",
+    "typescript": "pass",
+    "dependencyClosure": "blocked-before-first-response",
+    "baselineBuilds": "not-run",
+    "targetBuilds": "not-run",
+    "directWitnessJourneys": "not-run",
+    "mutationRestoration": "not-run",
+    "localityNoServiceWorker": "not-run",
+    "receiptsTrust": "not-published"
+  },
+  "technicalEvaluation": {
+    "localOnly": true,
+    "legalReviewRequired": true,
+    "redistributionAuthorized": false,
+    "complianceStatus": "not-assessed",
+    "certificationClaim": false,
+    "enterpriseAdoptionApproval": false,
+    "readinessCredit": false
+  },
+  "nonclaims": [
+    "Transport exhaustion does not establish that SQLPad is technically infeasible.",
+    "No dependency, build, browser parity, locality, service-worker, migration, compliance, pilot, or production-readiness claim is established.",
+    "No score, stage, or commit was produced."
+  ]
+}

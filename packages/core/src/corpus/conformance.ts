@@ -37,8 +37,30 @@ import {
 	verifyWitnessNextKilledByGoogleEvidence,
 	witnessNextKilledByGoogleAggregateMember,
 } from '../receipts/witness-next-killedbygoogle.ts';
+import {
+	REACT_AVATAAARS_COMPATIBILITY_RECEIPT_PATH,
+	reactAvataaarsCompatibilityAggregateMember,
+	verifyReactAvataaarsCompatibilityEvidence,
+} from '../receipts/react-avataaars-compatibility.ts';
+import {
+	REACT_CALCULATOR_RECEIPT_PATH,
+	reactCalculatorAggregateMember,
+	verifyReactCalculatorEvidence,
+} from '../receipts/react-calculator.ts';
+import {
+	REACT_GRAPHIQL_013_RECEIPT_PATH,
+	reactGraphiQL013AggregateMember,
+	verifyReactGraphiQL013Evidence,
+} from '../receipts/react-graphiql-013.ts';
+import {
+	WITNESS_REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH,
+	verifyWitnessReactBoilerplateZeroSwEvidence,
+	witnessReactBoilerplateZeroSwAggregateMember,
+} from '../receipts/react-boilerplate-zero-sw.ts';
 
 export const CORPUS_CONFORMANCE_SCHEMA = 'versionless.corpus-conformance.v1' as const;
+const REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH =
+	'evidence/runs/react-boilerplate-v4-zero-sw/t693-run.json' as const;
 
 export const NEXTJS_SYNTHETIC_NOT_TESTED_LANES = [
 	{ id: 'synthetic-next12-pages', nextLane: '12', routing: 'pages' },
@@ -184,8 +206,8 @@ interface JourneyProjection {
 export interface CorpusConformance {
 	schemaVersion: typeof CORPUS_CONFORMANCE_SCHEMA;
 	summary: {
-		verticals: 10 | 11;
-		sourceApplications: 3 | 4;
+		verticals: 10 | 11 | 12;
+		sourceApplications: 3 | 4 | 5;
 		designatedPilotsVerified: 0;
 	};
 	verticals: Array<Record<string, unknown>>;
@@ -250,6 +272,50 @@ export type CorpusTransactionState = Readonly<
 			sourceApplications: 4;
 			receipts: 14;
 			resolvedDependencies: 27;
+	  }
+	| {
+			kind: 'react-zero-sw-reconciliation';
+			nextKilledByGoogleIntegrated: true;
+			angularRealworldWitnessIntegrated: true;
+			reactBoilerplateWitnessIntegrated: true;
+			nextKilledByGoogleWitnessIntegrated: true;
+			verticals: 11;
+			sourceApplications: 4;
+			receipts: 16;
+			resolvedDependencies: 29;
+	  }
+	| {
+			kind: 'react-avataaars-candidate';
+			nextKilledByGoogleIntegrated: true;
+			angularRealworldWitnessIntegrated: true;
+			reactBoilerplateWitnessIntegrated: true;
+			nextKilledByGoogleWitnessIntegrated: true;
+			verticals: 11;
+			sourceApplications: 4;
+			receipts: 15;
+			resolvedDependencies: 28;
+	  }
+	| {
+			kind: 'react-calculator-candidate';
+			nextKilledByGoogleIntegrated: true;
+			angularRealworldWitnessIntegrated: true;
+			reactBoilerplateWitnessIntegrated: true;
+			nextKilledByGoogleWitnessIntegrated: true;
+			verticals: 12;
+			sourceApplications: 5;
+			receipts: 15;
+			resolvedDependencies: 28;
+	  }
+	| {
+			kind: 'react-graphiql-013-candidate';
+			nextKilledByGoogleIntegrated: true;
+			angularRealworldWitnessIntegrated: true;
+			reactBoilerplateWitnessIntegrated: true;
+			nextKilledByGoogleWitnessIntegrated: true;
+			verticals: 12;
+			sourceApplications: 5;
+			receipts: 15;
+			resolvedDependencies: 28;
 	  }
 >;
 
@@ -434,24 +500,183 @@ export function deriveCorpusTransactionState(fixtures: unknown): CorpusTransacti
 						canonicalize(nextWitnessRecord) !==
 							canonicalize(
 								witnessNextKilledByGoogleAggregateMember(nextWitnessDigest),
-							) ||
-						byPath.size !== canonicalReceipts.length + 5
+							)
 					)
 						throw new Error(
 							'Witness Next KilledByGoogle aggregate membership mismatch',
 						);
-					assertOrderedAggregate(
-						orderedPaths,
-						[
-							...orderedPrepublicationReceipts.slice(0, 8),
-							WITNESS_ANGULAR_REALWORLD_RECEIPT_PATH,
-							NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH,
-							...orderedPrepublicationReceipts.slice(8),
-							WITNESS_REACT_BOILERPLATE_RECEIPT_PATH,
-							WITNESS_NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH,
-						],
-						'Next candidate',
-					);
+					const avataaars = byPath.get(REACT_AVATAAARS_COMPATIBILITY_RECEIPT_PATH);
+					const calculator = byPath.get(REACT_CALCULATOR_RECEIPT_PATH);
+					const graphiql = byPath.get(REACT_GRAPHIQL_013_RECEIPT_PATH);
+					const candidateOrder = [
+						...orderedPrepublicationReceipts.slice(0, 8),
+						WITNESS_ANGULAR_REALWORLD_RECEIPT_PATH,
+						NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH,
+						...orderedPrepublicationReceipts.slice(8),
+						WITNESS_REACT_BOILERPLATE_RECEIPT_PATH,
+						WITNESS_NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH,
+					];
+					const zeroSw = byPath.get(WITNESS_REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH);
+					if (zeroSw) {
+						const zeroSwMigration = byPath.get(REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH);
+						const zeroSwRecord = record(
+							zeroSw,
+							'React Boilerplate zero-SW aggregate fixture',
+						);
+						const digest = string(
+							zeroSwRecord.digest,
+							'React Boilerplate zero-SW aggregate digest',
+						);
+						if (
+							zeroSwMigration === undefined ||
+							canonicalize(
+								record(
+									zeroSwMigration,
+									'React Boilerplate zero-SW migration aggregate fixture',
+								),
+							) !==
+								canonicalize({
+									id: 'react-boilerplate-v4-zero-sw',
+									framework: 'react',
+									track: 'current-zero-service-worker-policy-reconciliation',
+									bundler: 'webpack-4.30.0-to-vite-8.0.16',
+									runtime: 'node-16.20.2-to-node-24.15.0',
+									result: 'pass',
+									receipt: REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH,
+									digest: record(
+										zeroSwMigration,
+										'React Boilerplate zero-SW migration aggregate fixture',
+									).digest,
+								}) ||
+							!sha256Pattern.test(digest) ||
+							canonicalize(zeroSwRecord) !==
+								canonicalize(
+									witnessReactBoilerplateZeroSwAggregateMember(digest),
+								) ||
+							byPath.size !== canonicalReceipts.length + 7
+						)
+							throw new Error(
+								'React Boilerplate zero-SW aggregate membership mismatch',
+							);
+						assertOrderedAggregate(
+							orderedPaths,
+							[
+								...candidateOrder,
+								REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH,
+								WITNESS_REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH,
+							],
+							'React zero-SW reconciliation',
+						);
+						return {
+							kind: 'react-zero-sw-reconciliation',
+							nextKilledByGoogleIntegrated: true,
+							angularRealworldWitnessIntegrated: true,
+							reactBoilerplateWitnessIntegrated: true,
+							nextKilledByGoogleWitnessIntegrated: true,
+							verticals: 11,
+							sourceApplications: 4,
+							receipts: 16,
+							resolvedDependencies: 29,
+						};
+					}
+					if (avataaars) {
+						const avataaarsRecord = record(
+							avataaars,
+							'React Avataaars aggregate fixture',
+						);
+						const digest = string(
+							avataaarsRecord.digest,
+							'React Avataaars aggregate digest',
+						);
+						if (
+							canonicalize(avataaarsRecord) !==
+								canonicalize(reactAvataaarsCompatibilityAggregateMember(digest)) ||
+							byPath.size !== canonicalReceipts.length + 6
+						)
+							throw new Error('React Avataaars aggregate membership mismatch');
+						assertOrderedAggregate(
+							orderedPaths,
+							[...candidateOrder, REACT_AVATAAARS_COMPATIBILITY_RECEIPT_PATH],
+							'React Avataaars candidate',
+						);
+						return {
+							kind: 'react-avataaars-candidate',
+							nextKilledByGoogleIntegrated: true,
+							angularRealworldWitnessIntegrated: true,
+							reactBoilerplateWitnessIntegrated: true,
+							nextKilledByGoogleWitnessIntegrated: true,
+							verticals: 11,
+							sourceApplications: 4,
+							receipts: 15,
+							resolvedDependencies: 28,
+						};
+					}
+					if (calculator) {
+						const calculatorRecord = record(
+							calculator,
+							'React Calculator aggregate fixture',
+						);
+						const digest = string(
+							calculatorRecord.digest,
+							'React Calculator aggregate digest',
+						);
+						if (
+							canonicalize(calculatorRecord) !==
+								canonicalize(reactCalculatorAggregateMember(digest)) ||
+							byPath.size !== canonicalReceipts.length + 6
+						)
+							throw new Error('React Calculator aggregate membership mismatch');
+						assertOrderedAggregate(
+							orderedPaths,
+							[...candidateOrder, REACT_CALCULATOR_RECEIPT_PATH],
+							'React Calculator candidate',
+						);
+						return {
+							kind: 'react-calculator-candidate',
+							nextKilledByGoogleIntegrated: true,
+							angularRealworldWitnessIntegrated: true,
+							reactBoilerplateWitnessIntegrated: true,
+							nextKilledByGoogleWitnessIntegrated: true,
+							verticals: 12,
+							sourceApplications: 5,
+							receipts: 15,
+							resolvedDependencies: 28,
+						};
+					}
+					if (graphiql) {
+						const graphiqlRecord = record(graphiql, 'React GraphiQL aggregate fixture');
+						const digest = string(
+							graphiqlRecord.digest,
+							'React GraphiQL aggregate digest',
+						);
+						if (
+							canonicalize(graphiqlRecord) !==
+								canonicalize(reactGraphiQL013AggregateMember(digest)) ||
+							byPath.size !== canonicalReceipts.length + 6
+						)
+							throw new Error('React GraphiQL aggregate membership mismatch');
+						assertOrderedAggregate(
+							orderedPaths,
+							[...candidateOrder, REACT_GRAPHIQL_013_RECEIPT_PATH],
+							'React GraphiQL candidate',
+						);
+						return {
+							kind: 'react-graphiql-013-candidate',
+							nextKilledByGoogleIntegrated: true,
+							angularRealworldWitnessIntegrated: true,
+							reactBoilerplateWitnessIntegrated: true,
+							nextKilledByGoogleWitnessIntegrated: true,
+							verticals: 12,
+							sourceApplications: 5,
+							receipts: 15,
+							resolvedDependencies: 28,
+						};
+					}
+					if (byPath.size !== canonicalReceipts.length + 5)
+						throw new Error(
+							'Witness Next KilledByGoogle aggregate membership mismatch',
+						);
+					assertOrderedAggregate(orderedPaths, candidateOrder, 'Next candidate');
 					return {
 						kind: 'next-candidate',
 						nextKilledByGoogleIntegrated: true,
@@ -1032,7 +1257,15 @@ export async function analyzeCorpusConformance(
 			(transaction.nextKilledByGoogleIntegrated ? 1 : 0) +
 			(transaction.angularRealworldWitnessIntegrated ? 1 : 0) +
 			(transaction.reactBoilerplateWitnessIntegrated ? 1 : 0) +
-			(transaction.nextKilledByGoogleWitnessIntegrated ? 1 : 0)
+			(transaction.nextKilledByGoogleWitnessIntegrated ? 1 : 0) +
+			(transaction.kind === 'react-avataaars-candidate' ||
+			transaction.kind === 'react-calculator-candidate' ||
+			transaction.kind === 'react-graphiql-013-candidate' ||
+			transaction.kind === 'react-zero-sw-reconciliation'
+				? transaction.kind === 'react-zero-sw-reconciliation'
+					? 2
+					: 1
+				: 0)
 	)
 		throw new Error('Aggregate contains an unknown or extra receipt');
 	const angularRealworld = await verifyAngularRealworldV15ToV16Evidence(root);
@@ -1045,9 +1278,54 @@ export async function analyzeCorpusConformance(
 	const nextKilledByGoogleWitness = transaction.nextKilledByGoogleWitnessIntegrated
 		? await verifyWitnessNextKilledByGoogleEvidence(root)
 		: null;
+	if (transaction.kind === 'react-zero-sw-reconciliation') {
+		const migration = await verifyReceipt(REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH, {
+			repositoryRoot: root,
+		});
+		const migrationMember = record(
+			aggregateByPath.get(REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH),
+			'React Boilerplate zero-SW migration aggregate fixture',
+		);
+		if (migrationMember.digest !== migration.digest)
+			throw new Error('React Boilerplate zero-SW migration aggregate digest differs');
+		const verified = await verifyWitnessReactBoilerplateZeroSwEvidence(root);
+		const member = record(
+			aggregateByPath.get(WITNESS_REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH),
+			'React Boilerplate zero-SW aggregate fixture',
+		);
+		if (member.digest !== verified.digest)
+			throw new Error('React Boilerplate zero-SW aggregate digest differs');
+	}
 	const nextKilledByGoogle = transaction.nextKilledByGoogleIntegrated
 		? await verifyNextKilledByGoogleEvidence(root)
 		: null;
+	if (transaction.kind === 'react-avataaars-candidate') {
+		const verified = await verifyReactAvataaarsCompatibilityEvidence(root);
+		const member = record(
+			aggregateByPath.get(REACT_AVATAAARS_COMPATIBILITY_RECEIPT_PATH),
+			'React Avataaars aggregate fixture',
+		);
+		if (member.digest !== verified.digest)
+			throw new Error('React Avataaars aggregate digest differs');
+	}
+	if (transaction.kind === 'react-calculator-candidate') {
+		const verified = await verifyReactCalculatorEvidence(root);
+		const member = record(
+			aggregateByPath.get(REACT_CALCULATOR_RECEIPT_PATH),
+			'React Calculator aggregate fixture',
+		);
+		if (member.digest !== verified.digest)
+			throw new Error('React Calculator aggregate digest differs');
+	}
+	if (transaction.kind === 'react-graphiql-013-candidate') {
+		const verified = await verifyReactGraphiQL013Evidence(root);
+		const member = record(
+			aggregateByPath.get(REACT_GRAPHIQL_013_RECEIPT_PATH),
+			'React GraphiQL aggregate fixture',
+		);
+		if (member.digest !== verified.digest)
+			throw new Error('React GraphiQL aggregate digest differs');
+	}
 	if (nextKilledByGoogle && nextKilledByGoogle.digest !== nextKilledByGoogleDigest)
 		throw new Error('Killed by Google aggregate digest differs');
 

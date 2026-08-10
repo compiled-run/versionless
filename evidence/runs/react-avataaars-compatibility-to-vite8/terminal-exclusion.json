@@ -1,0 +1,68 @@
+{
+  "authorship": "unknown",
+  "certification": false,
+  "consent": {
+    "acceptedResponses": 0,
+    "id": "T568-react-avataaars-react1831-target-closure",
+    "invocations": 1,
+    "result": "consumed-failed",
+    "retry": false
+  },
+  "counted": false,
+  "execution": {
+    "browser": "not-executed",
+    "compatibilityBaseline": "not-executed",
+    "migratedTarget": "not-executed",
+    "mutationRestoration": "not-executed"
+  },
+  "fixture": "react-avataaars-compatibility",
+  "integrity": {
+    "algorithm": "sha256",
+    "canonicalDigest": "c0084e0cf42b58599984b5dc954aa9efc598fa116629d4306b1a4500d88a41ce"
+  },
+  "negativeArtifacts": [
+    {
+      "path": "evidence/dependencies/react-avataaars-react1831/attempt.json",
+      "sha256": "ce9bc6d95aff7713c7a5dce5e46b5ac0a535dc8ca89e267a726f5bc8a5d2bfb5"
+    },
+    {
+      "path": "evidence/dependencies/react-avataaars-react1831/consumed-failed.json",
+      "sha256": "38a0769ae62a3abc16e34efb2454c2ace4979c0a00fe0e53a6ae4ebfcb0bd7d4"
+    }
+  ],
+  "nonclaims": [
+    "The response boundary failure does not identify which forbidden response property differed; no retry was made to strengthen that claim.",
+    "No target package byte was accepted, so no React 18.3.1 closure, install, build, browser parity, migration support, compliance, certification, signer authenticity, or OS-wide isolation claim is made.",
+    "The immutable baseline imports and calls registerServiceWorker; it was observed in source but not executed, so no service-worker blocking or absence claim is made."
+  ],
+  "preflight": {
+    "focusedTests": {
+      "files": 3,
+      "passed": 7
+    },
+    "format": "pass",
+    "fullOfflineNodeTests": {
+      "files": 85,
+      "passed": 581
+    },
+    "lint": {
+      "errors": 0,
+      "unrelatedWarnings": 7
+    },
+    "pack": "pass",
+    "typescript": "pass"
+  },
+  "reason": "Avataaars target response boundary differs",
+  "result": "terminal-excluded",
+  "retry": false,
+  "schemaVersion": "versionless.react-avataaars-compatibility-terminal-exclusion.v1",
+  "signerAuthenticity": false,
+  "source": {
+    "archiveSha256": "4863a1304b659f1105f69d8ae0c715428c41d2d64b43edfd701148ddfca900da",
+    "commit": "c191c6c2d27f41245e803912d43c7213436a34d3",
+    "sourceCommitClassification": "unsupported-source-commit",
+    "sourceCommitExecution": "not-executed",
+    "tree": "94a3d1a024682b3f21ad30b9de8d4e1541a376d3"
+  },
+  "terminalGate": "first target-closure request/response boundary failure; exact consent is consumed and non-reusable"
+}

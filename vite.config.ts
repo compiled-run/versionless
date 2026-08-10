@@ -39,11 +39,14 @@ export default defineConfig({
 	plugins: [MagicRegExpTransformPlugin.vite()],
 	staged: { '*': 'vp check --fix' },
 	pack: [
-		pack('packages/core', '@versionless/core'),
+		pack('packages/core', '@versionless/core', ['yuku-analyzer']),
 		pack('packages/trust', '@versionless/trust', ['@versionless/core']),
 		pack('packages/frameworks/react', '@versionless/react', ['yuku-analyzer']),
 		pack('packages/frameworks/nextjs', '@versionless/nextjs'),
-		pack('packages/frameworks/angular', '@versionless/angular', ['@angular/compiler']),
+		pack('packages/frameworks/angular', '@versionless/angular', [
+			'@angular/compiler',
+			'yuku-analyzer',
+		]),
 		pack('packages/frameworks/angularjs', '@versionless/angularjs', ['yuku-analyzer']),
 		pack(
 			'packages/cli',

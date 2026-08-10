@@ -33,6 +33,10 @@ import {
 	verifyWitnessNextKilledByGoogleEvidence,
 } from '../../core/src/receipts/witness-next-killedbygoogle.ts';
 import {
+	WITNESS_REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH,
+	verifyWitnessReactBoilerplateZeroSwEvidence,
+} from '../../core/src/receipts/react-boilerplate-zero-sw.ts';
+import {
 	SCRIPT_SURFACE_SCHEMA,
 	verifyScriptSurface,
 } from '../../core/src/enterprise/script-surface.ts';
@@ -719,11 +723,13 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 					? await verifyWitnessAngularRealworldEvidence(root)
 					: receipt.path === WITNESS_REACT_BOILERPLATE_RECEIPT_PATH
 						? await verifyWitnessReactBoilerplateEvidence(root)
-						: receipt.path === WITNESS_NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH
-							? await verifyWitnessNextKilledByGoogleEvidence(root)
-							: receipt.path === NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH
-								? await verifyNextKilledByGoogleEvidence(root, true)
-								: await verifyReceipt(path.join(root, receipt.path));
+						: receipt.path === WITNESS_REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH
+							? await verifyWitnessReactBoilerplateZeroSwEvidence(root)
+							: receipt.path === WITNESS_NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH
+								? await verifyWitnessNextKilledByGoogleEvidence(root)
+								: receipt.path === NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH
+									? await verifyNextKilledByGoogleEvidence(root, true)
+									: await verifyReceipt(path.join(root, receipt.path));
 		if (
 			result.digest !== receipt.digest ||
 			result.artifacts !== receipt.artifacts ||

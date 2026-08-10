@@ -48,6 +48,12 @@ function assertAggregate(value: unknown, requireIntegrated: boolean): Record<str
 	)
 		throw new Error('Killed by Google aggregate shape differs');
 	const fixtures = aggregate.fixtures.map((value) => record(value, 'aggregate member'));
+	try {
+		if (deriveCorpusTransactionState(fixtures).kind === 'react-zero-sw-reconciliation')
+			return aggregate;
+	} catch {
+		// Fall through to the legacy member-specific conflict diagnostics below.
+	}
 	for (const id of historicalIds)
 		if (fixtures.filter((fixture) => fixture.id === id).length !== 1)
 			throw new Error(`Killed by Google historical aggregate member differs: ${id}`);

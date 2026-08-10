@@ -131,6 +131,26 @@
       "result": "pass",
       "receipt": "evidence/runs/witness-next-killedbygoogle/receipt.json",
       "digest": "da376ad77386a9f48c9be076fbe2131ebc249338df8f38f415e5830659a3f2ef"
+    },
+    {
+      "id": "react-boilerplate-v4-zero-sw",
+      "framework": "react",
+      "track": "current-zero-service-worker-policy-reconciliation",
+      "bundler": "webpack-4.30.0-to-vite-8.0.16",
+      "runtime": "node-16.20.2-to-node-24.15.0",
+      "result": "pass",
+      "receipt": "evidence/runs/react-boilerplate-v4-zero-sw/t693-run.json",
+      "digest": "386620d0dadad7d201d62965d72d79f37ee6aad69447669e4691787b3e2ef6e6"
+    },
+    {
+      "id": "witness-react-boilerplate-zero-sw",
+      "framework": "react",
+      "track": "production-readiness-direct-witness-current-zero-sw-policy",
+      "bundler": "webpack-4.30.0-to-vite-8.0.16",
+      "runtime": "node-16.20.2-to-node-24.15.0",
+      "result": "pass",
+      "receipt": "evidence/runs/witness-react-boilerplate-zero-sw/receipt.json",
+      "digest": "dcdc57f078d9d7bdfdfd290a7f6b1abe78924581796ff3aaefa6c7e4ba38b527"
     }
   ],
   "unsupported": []

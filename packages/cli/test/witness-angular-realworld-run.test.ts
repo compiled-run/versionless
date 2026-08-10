@@ -121,7 +121,9 @@ describe('standalone Angular RealWorld Witness command', () => {
 				(item) =>
 					item.id !== 'witness-angular-realworld' &&
 					item.id !== 'witness-react-boilerplate' &&
-					item.id !== 'witness-next-killedbygoogle',
+					item.id !== 'witness-next-killedbygoogle' &&
+					item.id !== 'react-boilerplate-v4-zero-sw' &&
+					item.id !== 'witness-react-boilerplate-zero-sw',
 			);
 			expect(aggregate.fixtures).toHaveLength(11);
 			await writeFile(aggregatePath, `${JSON.stringify(aggregate, null, 2)}\n`);
@@ -177,9 +179,10 @@ describe('standalone Angular RealWorld Witness command', () => {
 			const expectedNext = current.fixtures.find(
 				(item) => item.id === 'witness-next-killedbygoogle',
 			);
-			expect(refreshed.fixtures).toHaveLength(expectedNext ? 14 : 13);
-			expect(refreshed.fixtures.at(expectedNext ? -2 : -1)).toEqual(expectedReact);
-			if (expectedNext) expect(refreshed.fixtures.at(-1)).toEqual(expectedNext);
+			expect(refreshed.fixtures).toHaveLength(16);
+			expect(refreshed.fixtures.at(-4)).toEqual(expectedReact);
+			expect(refreshed.fixtures.at(-3)).toEqual(expectedNext);
+			expect(refreshed.fixtures.slice(-2)).toEqual(current.fixtures.slice(-2));
 		} finally {
 			await rm(directory, { recursive: true, force: true });
 		}

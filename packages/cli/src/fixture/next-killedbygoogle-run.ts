@@ -143,7 +143,30 @@ const expectedClosureFile = '38d2a2532f77835ae6ae8e7eaa6512c408760c534b8ab4dd92c
 const expectedClosureCanonical = '61fcd0d02df1212e8a7f461fbfb69917037b4fd85533a095f5d683064991311e';
 const expectedNextTarball = 'f8069b42f1ba01bd63c528ff4bd084f0f13119649eee9f34f4c645d5e345bce7';
 const expectedNextBuildSource = '8b9f70734856102c56df52752081ee73b0b39dca2adbc51dc2d40d8331d22dac';
-const expectedAmbientPnpmLock = '71fb680c6febb2024b8117efadf3ca0641fafa1cc076a08a126724a1b337e166';
+const expectedHistoricalAmbientPnpmLock =
+	'71fb680c6febb2024b8117efadf3ca0641fafa1cc076a08a126724a1b337e166';
+const expectedCurrentAmbientPnpmLock =
+	'ae8c76d3483d5dcd72428ba3a0b9eb0b1731724c14f6f0893ac20972cea5e66a';
+const expectedHistoricalCacheKeyCandidates = [
+	{
+		updateOrder: ['fixture/yarn.lock', 'ambient/pnpm-lock.yaml'],
+		cacheKeySha256: '2a427c8aed107a7358245facf9f07be9e0987d17377ffa1efb630b5f1f849dfc',
+	},
+	{
+		updateOrder: ['ambient/pnpm-lock.yaml', 'fixture/yarn.lock'],
+		cacheKeySha256: '02a3831f05baeda599f7f5a78c2baf2bdb4ae2eb0cf2f6e0bb9e0a2bc7e0b50d',
+	},
+] as const;
+const expectedCurrentCacheKeyCandidates = [
+	{
+		updateOrder: ['fixture/yarn.lock', 'ambient/pnpm-lock.yaml'],
+		cacheKeySha256: '703d86dff0cb0b8c6aa8413365b62c6bbe780b73a520e9e53856bd25cb511c4a',
+	},
+	{
+		updateOrder: ['ambient/pnpm-lock.yaml', 'fixture/yarn.lock'],
+		cacheKeySha256: '1688d4c1f17ce2ad3a8b6065707176112fe6cac438882d3257ba0428e126bd26',
+	},
+] as const;
 const expectedPreviousDiagnostic =
 	'fe0c118a821193bacc26fa0afd63fe36d82f70f7b421ec778929ea115b580745';
 const expectedVariance = [
@@ -3637,6 +3660,15 @@ export function validateNextServerCacheKeyProvenanceArtifact(
 		['nextVersion', 'hasSsrAmpPages', 'hasNextSupport', 'buildSourceSha256'],
 		'cacheKey fixed inputs',
 	);
+	const ambientBinding = model.locks[1];
+	const historicalAmbientBinding =
+		ambientBinding?.sha256 === expectedHistoricalAmbientPnpmLock &&
+		ambientBinding.byteLength === 67_243 &&
+		canonicalize(model.candidates) === canonicalize(expectedHistoricalCacheKeyCandidates);
+	const currentAmbientBinding =
+		ambientBinding?.sha256 === expectedCurrentAmbientPnpmLock &&
+		ambientBinding.byteLength === 67_396 &&
+		canonicalize(model.candidates) === canonicalize(expectedCurrentCacheKeyCandidates);
 	if (
 		fixed.nextVersion !== '12.0.10' ||
 		fixed.hasSsrAmpPages !== false ||
@@ -3654,28 +3686,14 @@ export function validateNextServerCacheKeyProvenanceArtifact(
 		model.locks[0]?.sha256 !== expectedLock ||
 		model.locks[0]?.byteLength !== 256_958 ||
 		model.locks[1]?.identity !== 'ambient/pnpm-lock.yaml' ||
-		model.locks[1]?.sha256 !== expectedAmbientPnpmLock ||
-		model.locks[1]?.byteLength !== 67_243 ||
+		(!historicalAmbientBinding && !currentAmbientBinding) ||
 		model.locks.some(
 			(lock) =>
 				canonicalize(Object.keys(lock).sort(compare)) !==
 					canonicalize(['identity', 'sha256', 'byteLength'].sort(compare)) ||
 				!Number.isInteger(lock.byteLength) ||
 				lock.byteLength < 1,
-		) ||
-		canonicalize(model.candidates) !==
-			canonicalize([
-				{
-					updateOrder: ['fixture/yarn.lock', 'ambient/pnpm-lock.yaml'],
-					cacheKeySha256:
-						'2a427c8aed107a7358245facf9f07be9e0987d17377ffa1efb630b5f1f849dfc',
-				},
-				{
-					updateOrder: ['ambient/pnpm-lock.yaml', 'fixture/yarn.lock'],
-					cacheKeySha256:
-						'02a3831f05baeda599f7f5a78c2baf2bdb4ae2eb0cf2f6e0bb9e0a2bc7e0b50d',
-				},
-			])
+		)
 	)
 		throw new Error('T314 source-bound cacheKey model differs');
 	for (const [index, candidate] of model.candidates.entries()) {
@@ -4376,7 +4394,7 @@ export async function captureNextServerCacheKeyProvenance() {
 		});
 		if (
 			model.locks[0]?.sha256 !== expectedLock ||
-			model.locks[1]?.sha256 !== expectedAmbientPnpmLock
+			model.locks[1]?.sha256 !== expectedCurrentAmbientPnpmLock
 		)
 			throw new Error('T314 exact lockfile byte binding differs');
 		const capture = async (id: 'first' | 'second') => {

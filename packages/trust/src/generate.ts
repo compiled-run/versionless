@@ -6,6 +6,7 @@ import {
 	analyzeCorpusConformance,
 	deriveCorpusTransactionState,
 	type CorpusConformance,
+	type CorpusTransactionState,
 } from '../../core/src/corpus/conformance.ts';
 import { compareUtf16CodeUnits } from '../../core/src/bundlers/vite8-adapter.ts';
 import { assertSyntheticEvidence } from '../../core/src/policy/payment-signals.ts';
@@ -31,6 +32,22 @@ import {
 	WITNESS_NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH,
 	verifyWitnessNextKilledByGoogleEvidence,
 } from '../../core/src/receipts/witness-next-killedbygoogle.ts';
+import {
+	REACT_AVATAAARS_COMPATIBILITY_RECEIPT_PATH,
+	verifyReactAvataaarsCompatibilityEvidence,
+} from '../../core/src/receipts/react-avataaars-compatibility.ts';
+import {
+	REACT_CALCULATOR_RECEIPT_PATH,
+	verifyReactCalculatorEvidence,
+} from '../../core/src/receipts/react-calculator.ts';
+import {
+	REACT_GRAPHIQL_013_RECEIPT_PATH,
+	verifyReactGraphiQL013Evidence,
+} from '../../core/src/receipts/react-graphiql-013.ts';
+import {
+	WITNESS_REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH,
+	verifyWitnessReactBoilerplateZeroSwEvidence,
+} from '../../core/src/receipts/react-boilerplate-zero-sw.ts';
 import { verifyScriptSurface } from '../../core/src/enterprise/script-surface.ts';
 import {
 	parseRuntimeObservationConfig,
@@ -55,6 +72,30 @@ import {
 	packageVersionWithoutPeerContext,
 	validatePackageCoordinate,
 } from './schema.ts';
+
+export function reactAvataaarsCompatibilityTrustReceipts(
+	transaction: CorpusTransactionState,
+): Array<{ path: typeof REACT_AVATAAARS_COMPATIBILITY_RECEIPT_PATH; digest: null }> {
+	return transaction.kind === 'react-avataaars-candidate'
+		? [{ path: REACT_AVATAAARS_COMPATIBILITY_RECEIPT_PATH, digest: null }]
+		: [];
+}
+
+export function reactCalculatorTrustReceipts(
+	transaction: CorpusTransactionState,
+): Array<{ path: typeof REACT_CALCULATOR_RECEIPT_PATH; digest: null }> {
+	return transaction.kind === 'react-calculator-candidate'
+		? [{ path: REACT_CALCULATOR_RECEIPT_PATH, digest: null }]
+		: [];
+}
+
+export function reactGraphiQL013TrustReceipts(
+	transaction: CorpusTransactionState,
+): Array<{ path: typeof REACT_GRAPHIQL_013_RECEIPT_PATH; digest: null }> {
+	return transaction.kind === 'react-graphiql-013-candidate'
+		? [{ path: REACT_GRAPHIQL_013_RECEIPT_PATH, digest: null }]
+		: [];
+}
 
 const PRESERVED_RECEIPTS = [
 	{
@@ -88,6 +129,14 @@ const DATA_FLOW_RECEIPT = {
 } as const;
 const REACT_COMPOSED_RECEIPT = {
 	path: 'evidence/runs/react-boilerplate-v4-composed/t060-run.json',
+	digest: null,
+} as const;
+const REACT_ZERO_SW_RECEIPT = {
+	path: 'evidence/runs/react-boilerplate-v4-zero-sw/t693-run.json',
+	digest: null,
+} as const;
+const WITNESS_REACT_ZERO_SW_RECEIPT = {
+	path: WITNESS_REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH,
 	digest: null,
 } as const;
 const PHONECAT_VITE_RECEIPT = {
@@ -1110,6 +1159,7 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 	const hasWitnessAngularRealworldReceipt = transaction.angularRealworldWitnessIntegrated;
 	const hasWitnessReactBoilerplateReceipt = transaction.reactBoilerplateWitnessIntegrated;
 	const hasWitnessNextKilledByGoogleReceipt = transaction.nextKilledByGoogleWitnessIntegrated;
+	const hasReactZeroSwReceipts = transaction.kind === 'react-zero-sw-reconciliation';
 	const receipts = [
 		...PRESERVED_RECEIPTS,
 		...(hasMaintainedReceipt ? [MAINTAINED_RECEIPT] : []),
@@ -1124,6 +1174,10 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 		...(hasWitnessAngularRealworldReceipt ? [WITNESS_ANGULAR_REALWORLD_RECEIPT] : []),
 		...(hasWitnessReactBoilerplateReceipt ? [WITNESS_REACT_BOILERPLATE_RECEIPT] : []),
 		...(hasWitnessNextKilledByGoogleReceipt ? [WITNESS_NEXT_KILLED_BY_GOOGLE_RECEIPT] : []),
+		...(hasReactZeroSwReceipts ? [REACT_ZERO_SW_RECEIPT, WITNESS_REACT_ZERO_SW_RECEIPT] : []),
+		...reactAvataaarsCompatibilityTrustReceipts(transaction),
+		...reactCalculatorTrustReceipts(transaction),
+		...reactGraphiQL013TrustReceipts(transaction),
 	];
 	if (receipts.length !== transaction.receipts)
 		throw new Error('Aggregate evidence does not preserve the required receipts');
@@ -1138,9 +1192,22 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 						? await verifyWitnessReactBoilerplateEvidence(root)
 						: expected.path === WITNESS_NEXT_KILLED_BY_GOOGLE_RECEIPT.path
 							? await verifyWitnessNextKilledByGoogleEvidence(root)
-							: expected.path === NEXT_KILLED_BY_GOOGLE_RECEIPT.path
-								? await verifyNextKilledByGoogleEvidence(root, true)
-								: await verifyReceipt(path.join(root, expected.path));
+							: expected.path === WITNESS_REACT_ZERO_SW_RECEIPT.path
+								? await verifyWitnessReactBoilerplateZeroSwEvidence(root)
+								: expected.path === NEXT_KILLED_BY_GOOGLE_RECEIPT.path
+									? await verifyNextKilledByGoogleEvidence(root, true)
+									: expected.path === REACT_AVATAAARS_COMPATIBILITY_RECEIPT_PATH
+										? await verifyReactAvataaarsCompatibilityEvidence(root)
+										: expected.path === REACT_CALCULATOR_RECEIPT_PATH
+											? {
+													...(await verifyReactCalculatorEvidence(root)),
+													artifacts: 5,
+												}
+											: expected.path === REACT_GRAPHIQL_013_RECEIPT_PATH
+												? await verifyReactGraphiQL013Evidence(root)
+												: await verifyReceipt(
+														path.join(root, expected.path),
+													);
 		const aggregateFixture = aggregateFixtures.find(
 			(value) => asRecord(value, 'aggregate fixture').receipt === expected.path,
 		);

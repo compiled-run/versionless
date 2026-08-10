@@ -538,10 +538,19 @@ describe('Killed by Google Next 12 production runner', () => {
 			},
 			{
 				identity: 'ambient/pnpm-lock.yaml',
-				sha256: '71fb680c6febb2024b8117efadf3ca0641fafa1cc076a08a126724a1b337e166',
+				sha256: 'ae8c76d3483d5dcd72428ba3a0b9eb0b1731724c14f6f0893ac20972cea5e66a',
 			},
 		]);
-		expect(model.candidates).toHaveLength(2);
+		expect(model.candidates).toEqual([
+			{
+				updateOrder: ['fixture/yarn.lock', 'ambient/pnpm-lock.yaml'],
+				cacheKeySha256: '703d86dff0cb0b8c6aa8413365b62c6bbe780b73a520e9e53856bd25cb511c4a',
+			},
+			{
+				updateOrder: ['ambient/pnpm-lock.yaml', 'fixture/yarn.lock'],
+				cacheKeySha256: '1688d4c1f17ce2ad3a8b6065707176112fe6cac438882d3257ba0428e126bd26',
+			},
+		]);
 		expect(new Set(model.candidates.map((candidate) => candidate.cacheKeySha256)).size).toBe(2);
 		expect(model.candidates.map((candidate) => candidate.updateOrder)).toEqual([
 			['fixture/yarn.lock', 'ambient/pnpm-lock.yaml'],
@@ -650,6 +659,32 @@ describe('Killed by Google Next 12 production runner', () => {
 		expect(validateNextServerCacheKeyProvenanceArtifact(create()).classification).toBe(
 			'observed-order-variance',
 		);
+		const historical = create();
+		const historicalModel = historical.model as Record<string, unknown>;
+		const historicalLocks = historicalModel.locks as Array<Record<string, unknown>>;
+		const historicalCandidates = historicalModel.candidates as Array<Record<string, unknown>>;
+		historicalLocks[1]!.sha256 =
+			'71fb680c6febb2024b8117efadf3ca0641fafa1cc076a08a126724a1b337e166';
+		historicalLocks[1]!.byteLength = 67_243;
+		historicalCandidates[0]!.cacheKeySha256 =
+			'2a427c8aed107a7358245facf9f07be9e0987d17377ffa1efb630b5f1f849dfc';
+		historicalCandidates[1]!.cacheKeySha256 =
+			'02a3831f05baeda599f7f5a78c2baf2bdb4ae2eb0cf2f6e0bb9e0a2bc7e0b50d';
+		const historicalRuns = historical.runs as Array<Record<string, unknown>>;
+		historicalRuns[0]!.actualCacheKeySha256 = historicalCandidates[0]!.cacheKeySha256;
+		historicalRuns[1]!.actualCacheKeySha256 = historicalCandidates[1]!.cacheKeySha256;
+		expect(
+			validateNextServerCacheKeyProvenanceArtifact(resealCacheKey(historical)),
+		).toBeDefined();
+		const unknownAmbient = structuredClone(historical);
+		(
+			(unknownAmbient.model as Record<string, unknown>).locks as Array<
+				Record<string, unknown>
+			>
+		)[1]!.sha256 = 'c'.repeat(64);
+		expect(() =>
+			validateNextServerCacheKeyProvenanceArtifact(resealCacheKey(unknownAmbient)),
+		).toThrow('source-bound cacheKey model differs');
 		for (const mutate of [
 			(artifact: Record<string, unknown>) => Object.assign(artifact, { unknown: true }),
 			(artifact: Record<string, unknown>) =>

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "versionless.trust.v1",
-  "canonicalDigest": "4c113b0567e0019fb7d88851c639fdad1e687af3a0232126887386c31044a791",
+  "canonicalDigest": "d169fe29ece785d90566470f50837397b90045af0e056e89f870ebfd3ef69fc1",
   "integrity": {
     "algorithm": "sha256",
     "authenticity": "not-established",
@@ -8,11 +8,11 @@
   },
   "deterministicCore": {
     "algorithm": "sha256",
-    "digest": "8c4c293b8e6b6044f886f96fe48f99288448ec2ed462ac28e1c319aa478d659f",
+    "digest": "217a426735ddbe9d191ea2133c330c5a1646eebc731db23308f4a284d569ca38",
     "artifacts": [
       {
         "path": "dependency-graph.cdx.json",
-        "sha256": "931e64a8cc1a7d103168ebd3662ef4a1907a54ffbc0c6c692a2176bd1616c7db"
+        "sha256": "3d0d791fea5ad168ae47dcdc44639fbecaf232b469767c4366c3e5cae2986480"
       },
       {
         "path": "licenses.json",
@@ -24,7 +24,7 @@
       },
       {
         "path": "provenance.json",
-        "sha256": "bd482ae756d06437926cc2189b298169ac7a029e4eae087bbde8c71650044100"
+        "sha256": "57bd35c0db328be273604f3e6d11f5e9e333b5fe143b6b2ca22e8bcfff003e68"
       },
       {
         "path": "matrix.json",
@@ -136,10 +136,22 @@
       "digest": "da376ad77386a9f48c9be076fbe2131ebc249338df8f38f415e5830659a3f2ef",
       "artifacts": 0,
       "state": "verified"
+    },
+    {
+      "path": "evidence/runs/react-boilerplate-v4-zero-sw/t693-run.json",
+      "digest": "386620d0dadad7d201d62965d72d79f37ee6aad69447669e4691787b3e2ef6e6",
+      "artifacts": 3,
+      "state": "verified"
+    },
+    {
+      "path": "evidence/runs/witness-react-boilerplate-zero-sw/receipt.json",
+      "digest": "dcdc57f078d9d7bdfdfd290a7f6b1abe78924581796ff3aaefa6c7e4ba38b527",
+      "artifacts": 0,
+      "state": "verified"
     }
   ],
   "observation": {
-    "generatedAt": "2026-08-09T10:40:50.015Z",
+    "generatedAt": "2026-08-10T12:43:12.367Z",
     "vulnerabilityFreshness": "verified"
   },
   "derivedReport": "report.md"

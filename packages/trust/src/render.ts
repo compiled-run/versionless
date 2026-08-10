@@ -50,6 +50,9 @@ export function renderTrustReport(inputs: RenderInputs): string {
 	const reactBoilerplateWitnessVerified = inputs.manifest.receipts.some(
 		(item) => item.path === 'evidence/runs/witness-react-boilerplate/receipt.json',
 	);
+	const reactBoilerplateZeroSwVerified = inputs.manifest.receipts.some(
+		(item) => item.path === 'evidence/runs/witness-react-boilerplate-zero-sw/receipt.json',
+	);
 	const nextKilledByGoogleWitnessVerified = inputs.manifest.receipts.some(
 		(item) => item.path === 'evidence/runs/witness-next-killedbygoogle/receipt.json',
 	);
@@ -85,6 +88,7 @@ ${
 }
 ${angularRealworldWitnessVerified ? '- Angular-lineage production readiness: **1/4**; Harness qualification: **0/4**. PhoneCat remains unsupported for the required visible transition and is not counted.' : '- Angular-lineage production readiness: **0/4**; Harness qualification: **0/4**.'}
 ${reactBoilerplateWitnessVerified ? '- React-lineage production readiness: **1/4; Judge approved**.' : '- React-lineage production readiness: **0/4; not-tested**.'}
+${reactBoilerplateZeroSwVerified ? '- React Boilerplate current zero-service-worker policy reconciliation: **verified; aligned React remains 0/4 pending fresh Judge**. The original offline-first evidence remains retained.' : '- React Boilerplate current zero-service-worker policy reconciliation: **not-tested**.'}
 ${nextKilledByGoogleWitnessVerified ? '- Older-Next direct-Witness candidate: **verified, not counted (0/4) pending final Judge audit**.' : '- Older-Next production readiness: **0/4; not-tested**.'}
 - [Data-flow and control mappings](controls.json) — review inputs, not audit conclusions.
 - [Retention and purge status](retention.json) — unresolved policy remains unknown/not-tested.

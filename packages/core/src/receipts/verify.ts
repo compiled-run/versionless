@@ -15,6 +15,16 @@ import {
 	WITNESS_NEXT_KILLED_BY_GOOGLE_SCHEMA,
 	verifyWitnessNextKilledByGoogleEvidence,
 } from './witness-next-killedbygoogle.ts';
+import {
+	REACT_AVATAAARS_COMPATIBILITY_SCHEMA,
+	verifyReactAvataaarsCompatibilityEvidence,
+} from './react-avataaars-compatibility.ts';
+import { REACT_CALCULATOR_SCHEMA, verifyReactCalculatorEvidence } from './react-calculator.ts';
+import { REACT_GRAPHIQL_013_SCHEMA, verifyReactGraphiQL013Evidence } from './react-graphiql-013.ts';
+import {
+	REACT_ACTUAL_BUDGET_SCHEMA,
+	verifyReactActualBudgetEvidence,
+} from './react-actual-budget-v22-12-9.ts';
 
 function markdownPath(jsonPath: string): string {
 	return jsonPath.endsWith('.json')
@@ -68,6 +78,26 @@ export async function verifyReceipt(
 	if (raw.schemaVersion === WITNESS_NEXT_KILLED_BY_GOOGLE_SCHEMA) {
 		const root = explicitRoot ?? path.resolve(path.dirname(absolute), '../../..');
 		const verified = await verifyWitnessNextKilledByGoogleEvidence(root);
+		return { valid: true, digest: verified.digest, artifacts: verified.artifacts };
+	}
+	if (raw.schemaVersion === REACT_AVATAAARS_COMPATIBILITY_SCHEMA) {
+		const root = explicitRoot ?? path.resolve(path.dirname(absolute), '../../../..');
+		const verified = await verifyReactAvataaarsCompatibilityEvidence(root);
+		return { valid: true, digest: verified.digest, artifacts: verified.artifacts };
+	}
+	if (raw.schemaVersion === REACT_CALCULATOR_SCHEMA) {
+		const root = explicitRoot ?? path.resolve(path.dirname(absolute), '../../..');
+		const verified = await verifyReactCalculatorEvidence(root);
+		return { valid: true, digest: verified.digest, artifacts: 5 };
+	}
+	if (raw.schemaVersion === REACT_GRAPHIQL_013_SCHEMA) {
+		const root = explicitRoot ?? path.resolve(path.dirname(absolute), '../../..');
+		const verified = await verifyReactGraphiQL013Evidence(root);
+		return { valid: true, digest: verified.digest, artifacts: verified.artifacts };
+	}
+	if (raw.schemaVersion === REACT_ACTUAL_BUDGET_SCHEMA) {
+		const root = explicitRoot ?? path.resolve(path.dirname(absolute), '../../..');
+		const verified = await verifyReactActualBudgetEvidence(root);
 		return { valid: true, digest: verified.digest, artifacts: verified.artifacts };
 	}
 	const receipt = parseMigrationReceipt(raw);

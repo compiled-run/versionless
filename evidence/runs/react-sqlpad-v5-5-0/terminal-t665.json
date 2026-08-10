@@ -1,0 +1,68 @@
+{
+  "schemaVersion": "versionless.react-sqlpad-v5-5-0-t665-terminal.v1",
+  "result": "application-vertical-failed",
+  "application": "sqlpad/sqlpad",
+  "version": "5.5.0",
+  "revision": "5c259dd7d3e6bdc0eb098bd32262263fe0280c6b",
+  "closure": {
+    "consentId": "T664-sqlpad-production-closure",
+    "artifacts": 1953,
+    "digest": "98787ee0d13d9ce92f4844bb113f8ac0c39579fcb5f163d8c14aa31d8663408d",
+    "offlineVerificationRuns": 2,
+    "scriptsExecutedDuringMaterialization": false
+  },
+  "builds": {
+    "baseline1": {
+      "node": "16.20.2",
+      "framework": "React 16.13.1",
+      "bundler": "react-scripts 3.4.1 / webpack 4.42.0",
+      "files": 13,
+      "treeDigest": "0d08e1d1a8a4c247227742aaa5c98c087ea9ca9366bec18aa09ef7d9de9438db",
+      "serviceWorkerOutputs": [
+        "precache-manifest.39f51ee2a9a7933464ef2bdd947f098b.js",
+        "service-worker.js"
+      ]
+    },
+    "baseline2": {
+      "node": "16.20.2",
+      "framework": "React 16.13.1",
+      "bundler": "react-scripts 3.4.1 / webpack 4.42.0",
+      "files": 13,
+      "treeDigest": "0bf72a3f0f09699af72e55bdfd1f46174605261ba3b34ce7afcd1e98b0ec8d53",
+      "serviceWorkerOutputs": [
+        "precache-manifest.b83f7d4d2d992ee59ece8b83ba237589.js",
+        "service-worker.js"
+      ]
+    },
+    "baselineDeterministic": false,
+    "target1": "failed-before-output",
+    "target2": "failed-before-output",
+    "targetFailure": "Vite 8 UNRESOLVED_ENTRY: Cannot resolve entry module index.html; immutable CRA entry remains client/public/index.html"
+  },
+  "gates": {
+    "offlineClosureBeforeMaterialization": "pass-twice",
+    "scriptsDisabledMaterialization": "pass",
+    "authenticBaselineBuilds": "built-twice-but-nondeterministic",
+    "zeroServiceWorkerOutput": "fail",
+    "targetBuilds": "fail-before-output",
+    "realServer": "not-run",
+    "directWitnessJourneys": "not-run",
+    "mutationRestoration": "not-run",
+    "localityPrivacy": "not-run",
+    "receiptsTrust": "not-published"
+  },
+  "technicalEvaluation": {
+    "localOnly": true,
+    "legalReviewRequired": true,
+    "redistributionAuthorized": false,
+    "complianceStatus": "not-assessed",
+    "certificationClaim": false,
+    "enterpriseAdoptionApproval": false,
+    "readinessCredit": false
+  },
+  "nonclaims": [
+    "No browser, migration parity, locality, service-worker independence, pilot, compliance, certification, or production-readiness claim is established.",
+    "No positive canonical application receipt or trust member was published.",
+    "No score, stage, or commit was produced."
+  ]
+}

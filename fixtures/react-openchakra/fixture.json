@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "versionless.react-openchakra-fixture.v1",
+  "repository": "https://github.com/premieroctet/openchakra",
+  "repositoryUrl": "https://api.github.com/repos/premieroctet/openchakra",
+  "candidateUrl": "https://api.github.com/repos/premieroctet/openchakra/commits?until=2021-12-31T23%3A59%3A59Z&per_page=2",
+  "yarnMetadataUrl": "https://registry.npmjs.org/yarn/1.22.22",
+  "yarnVersion": "1.22.22",
+  "baselineRuntime": {
+    "version": "v18.20.8",
+    "sha256": "bae4965d29d29bd32f96364eefbe3bca576a03e917ddbb70b9330d75f2cacd76"
+  },
+  "targetRuntime": {
+    "version": "v24.15.0",
+    "sha256": "372331b969779ab5d15b949884fc6eaf88d5afe87bde8ba881d6400b9100ffc4"
+  },
+  "targetVite": "8.0.16"
+}

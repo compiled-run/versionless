@@ -10,6 +10,7 @@ import {
 	FUXA_LOCK_SHA256,
 	FUXA_RUNTIME_SHA256,
 	inspectDependencyTarball,
+	inspectTechnicalDependencyTarball,
 	parseFuxaDependencyPlan,
 	verifyDependencyClosureReceipt,
 	verifyDependencySri,
@@ -123,6 +124,12 @@ describe('FUXA npm-v1 dependency closure', () => {
 				[{ name: 'example', version: '1.0.0' }],
 			),
 		).toThrow('neither a license');
+		expect(
+			inspectTechnicalDependencyTarball(
+				packageTar({ name: 'example', version: '1.0.0' }, 'package/readme'),
+				[{ name: 'example', version: '1.0.0' }],
+			),
+		).toMatchObject({ license: 'unknown', licenseFiles: [] });
 	});
 
 	it('seals and rejects mutations to a complete 1,222-artifact receipt', () => {

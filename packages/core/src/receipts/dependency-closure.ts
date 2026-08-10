@@ -241,6 +241,7 @@ function paxPath(bytes: Buffer): string {
 export function inspectDependencyTarball(
 	bytes: Buffer,
 	identities: readonly DependencyIdentity[],
+	options: Readonly<{ allowUnknownLicense?: boolean }> = {},
 ): { name: string; version: string; license: string; licenseFiles: readonly string[] } {
 	if (!identities.length) throw new Error('Dependency tarball has no lock identity');
 	let archive: Buffer;
@@ -344,16 +345,23 @@ export function inspectDependencyTarball(
 			.filter((item): item is string => typeof item === 'string' && Boolean(item.trim()))
 			.join(' OR ');
 	}
-	if (!license && licenseFiles.length === 0)
+	if (!license && licenseFiles.length === 0 && options.allowUnknownLicense !== true)
 		throw new Error(
 			'Dependency tarball has neither a license declaration nor license/NOTICE file',
 		);
 	return {
 		name: manifest.name,
 		version: manifest.version,
-		license: license || 'file-only',
+		license: license || (licenseFiles.length > 0 ? 'file-only' : 'unknown'),
 		licenseFiles: [...licenseFiles].sort((left, right) => left.localeCompare(right)),
 	};
+}
+
+export function inspectTechnicalDependencyTarball(
+	bytes: Buffer,
+	identities: readonly DependencyIdentity[],
+): ReturnType<typeof inspectDependencyTarball> {
+	return inspectDependencyTarball(bytes, identities, { allowUnknownLicense: true });
 }
 
 export function dependencyClosureDigest(receipt: DependencyClosureReceipt): string {

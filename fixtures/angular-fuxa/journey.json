@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "versionless.angular-fuxa-direct-witness-journey.v1",
+  "fixture": "angular-fuxa",
+  "witness": "direct-linked-@async/witness",
+  "runsPerLane": 2,
+  "lanes": [
+    "angular14-node16-demo-aot",
+    "angular16-node18-demo-browser-esbuild-aot"
+  ],
+  "journeys": [
+    {
+      "id": "rectangle-drag-move-undo-redo",
+      "steps": [
+        "open local editor route",
+        "select rectangle tool",
+        "pointer-drag on authentic SVG editor canvas",
+        "read rectangle x/y/width/height geometry",
+        "pointer-drag rectangle to a distinct position",
+        "read moved geometry",
+        "invoke undo and require original geometry",
+        "invoke redo and require moved geometry"
+      ]
+    },
+    {
+      "id": "local-save-reload-persistence",
+      "steps": [
+        "save through authentic ResDemoService",
+        "read exact localStorage project state",
+        "create a fresh browser page",
+        "reload local editor route",
+        "require the saved rectangle and moved geometry"
+      ]
+    }
+  ],
+  "requiredObservations": {
+    "nonLoopbackRequests": 0,
+    "credentials": false,
+    "userOrPaymentData": false,
+    "serviceWorkers": 0,
+    "consoleErrors": 0,
+    "pageErrors": 0,
+    "requestFailures": 0
+  },
+  "mutation": {
+    "path": "client/src/app/editor/editor.component.html",
+    "before": "[attr.type]=\"item.type\"",
+    "after": "[attr.type]=\"'circle'\"",
+    "requiredFailure": "rectangle semantic assertion",
+    "restoration": "byte-identical"
+  }
+}

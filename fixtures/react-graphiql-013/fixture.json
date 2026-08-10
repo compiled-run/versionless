@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "versionless.react-graphiql-013-fixture.v1",
+  "repository": "https://github.com/graphql/graphiql",
+  "revision": "f997c204e4d4bb0be4d0e2e136471dc62b807ddd",
+  "tree": "7b4f52a518bfc6e4080589cc9ec0f2e731463147",
+  "commitUrl": "https://api.github.com/repos/graphql/graphiql/git/commits/f997c204e4d4bb0be4d0e2e136471dc62b807ddd",
+  "treeUrl": "https://api.github.com/repos/graphql/graphiql/git/trees/7b4f52a518bfc6e4080589cc9ec0f2e731463147?recursive=1",
+  "archiveUrl": "https://codeload.github.com/graphql/graphiql/tar.gz/f997c204e4d4bb0be4d0e2e136471dc62b807ddd",
+  "source": {
+    "license": { "path": "LICENSE", "bytes": 1077, "gitSha": "cd2262e3a31be829b623167928cce428ffe32733", "sha256": "64b1e722d46dbbd0fd63deba6005774a5695b5255b28db067b758306854680eb" },
+    "rootPackage": { "path": "package.json", "gitSha": "06deb6d99b3fa8f04f925fe8c8d815fdcf37db88", "sha256": "aeb8695b5962555e26e51ba0aaa2eb09e8de5a1138fec90e3b93e33eea8e6449" },
+    "lock": { "path": "yarn.lock", "bytes": 410048, "gitSha": "a716936e21e75793f9d48e6541490a9281544a66", "sha256": "c859abe1cccaf231db40f119ae632e6eb742646c25896175cecae302044c61af" },
+    "package": { "path": "packages/graphiql/package.json", "gitSha": "bf491a471e327167d1aafdb7238437ad6c15097e", "sha256": "5348edb0effa20351a1ca005aa174dcc175e05f5ce0ae27e720c05b3c27effa9" },
+    "exampleHtml": { "path": "packages/graphiql/example/index.html", "gitSha": "d316db2ffd6d63427edbc9bb475b750820fcd74e", "sha256": "1b3ded8adcd07ddcecb14995266b122c8d6d297d6f18cd40d7df6abf4dc212a2" },
+    "examplePackage": { "path": "packages/graphiql/example/package.json", "gitSha": "2cf9353097f4f39a33ed9b40ed6f334cec446442", "sha256": "10effe38adfa51e5ecfce95c390870489f0facd8fdb9b1aeefc0b253f313e02d" },
+    "server": { "path": "packages/graphiql/example/server.js", "gitSha": "6b839293a03f6eb80f2f07635b3cba2a1c029259", "sha256": "f4402fced44c7c35bd046082dc1b44b97dff70f2d8d366859676844aa4b5d8c3" },
+    "schema": { "path": "packages/graphiql/example/schema.js", "gitSha": "e8dafd36a9ae9cd1adb3d265174d0afb497e4baa", "sha256": "f3b5f0df6c69a1e0eb33f989857303de984c43e4b42233a8dea5738a80c13026" },
+    "build": { "path": "packages/graphiql/resources/build.sh", "gitSha": "4ad042856d88da2db4efe4f124ec2ec97bbfda1b", "sha256": "d864662b302d9dc1cf7637f214687b6187c945ee5c0f37a7cc34c5deaf888132" }
+  },
+  "cdnAssets": [
+    { "package": "es6-promise", "version": "4.0.5", "url": "https://cdn.jsdelivr.net/es6-promise/4.0.5/es6-promise.auto.min.js" },
+    { "package": "fetch", "version": "0.9.0", "url": "https://cdn.jsdelivr.net/fetch/0.9.0/fetch.min.js" },
+    { "package": "react", "version": "15.4.2", "url": "https://cdn.jsdelivr.net/react/15.4.2/react.min.js" },
+    { "package": "react-dom", "version": "15.4.2", "url": "https://cdn.jsdelivr.net/react/15.4.2/react-dom.min.js" }
+  ],
+  "target": { "node": "24.15.0", "react": "18.3.1", "reactDom": "18.3.1", "scheduler": "0.23.2", "vite": "8.0.16" }
+}

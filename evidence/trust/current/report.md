@@ -1,8 +1,8 @@
 # Versionless project trust package
 
-- Canonical SHA-256: `4c113b0567e0019fb7d88851c639fdad1e687af3a0232126887386c31044a791`
-- Deterministic core: `8c4c293b8e6b6044f886f96fe48f99288448ec2ed462ac28e1c319aa478d659f`
-- Generated observation: `2026-08-09T10:40:50.015Z`
+- Canonical SHA-256: `d169fe29ece785d90566470f50837397b90045af0e056e89f870ebfd3ef69fc1`
+- Deterministic core: `217a426735ddbe9d191ea2133c330c5a1646eebc731db23308f4a284d569ca38`
+- Generated observation: `2026-08-10T12:43:12.367Z`
 - Vulnerability input freshness: **verified** (seven-day maximum age)
 - Integrity: **hash-only; authenticity is not established**
 - Assurance: **this package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation**
@@ -21,6 +21,7 @@
 - React Boilerplate maintained-runtime proof is limited to Node 24.15.0 darwin-arm64 with webpack 4.47.0 and a separate fixture-specific Vite 8.0.16 build; other maintained targets remain unproved.
 - Angular-lineage production readiness: **1/4**; Harness qualification: **0/4**. PhoneCat remains unsupported for the required visible transition and is not counted.
 - React-lineage production readiness: **1/4; Judge approved**.
+- React Boilerplate current zero-service-worker policy reconciliation: **verified; aligned React remains 0/4 pending fresh Judge**. The original offline-first evidence remains retained.
 - Older-Next direct-Witness candidate: **verified, not counted (0/4) pending final Judge audit**.
 - [Data-flow and control mappings](controls.json) — review inputs, not audit conclusions.
 - [Retention and purge status](retention.json) — unresolved policy remains unknown/not-tested.
@@ -43,6 +44,8 @@ The dependency graph is a rooted complete inventory. Exact transitive dependency
 - `evidence/runs/witness-angular-realworld/receipt.json`: `acd4f259f9372dd58b5267001469c2b68657d708c4d2a311df71a5a171b21128` (verified)
 - `evidence/runs/witness-react-boilerplate/receipt.json`: `bfa48f718ee86566f120cb0bc42645b22c989a27d87c102b9c2f256d15661ed7` (verified)
 - `evidence/runs/witness-next-killedbygoogle/receipt.json`: `da376ad77386a9f48c9be076fbe2131ebc249338df8f38f415e5830659a3f2ef` (verified)
+- `evidence/runs/react-boilerplate-v4-zero-sw/t693-run.json`: `386620d0dadad7d201d62965d72d79f37ee6aad69447669e4691787b3e2ef6e6` (verified)
+- `evidence/runs/witness-react-boilerplate-zero-sw/receipt.json`: `dcdc57f078d9d7bdfdfd290a7f6b1abe78924581796ff3aaefa6c7e4ba38b527` (verified)
 
 ## Known gaps
 

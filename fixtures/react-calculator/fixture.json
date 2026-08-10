@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "versionless.react-calculator-fixture.v1",
+  "repository": "https://github.com/andrewagain/calculator",
+  "historicalAlias": "https://github.com/ahfarmer/calculator",
+  "revision": "37b56077e78b82bf2088ec993d55becb47538de9",
+  "tree": "d173cbae55964a2553c308ebbb7ed6e2d14f9a8a",
+  "commitUrl": "https://api.github.com/repos/andrewagain/calculator/git/commits/37b56077e78b82bf2088ec993d55becb47538de9",
+  "treeUrl": "https://api.github.com/repos/andrewagain/calculator/git/trees/d173cbae55964a2553c308ebbb7ed6e2d14f9a8a?recursive=1",
+  "archiveUrl": "https://codeload.github.com/andrewagain/calculator/tar.gz/37b56077e78b82bf2088ec993d55becb47538de9",
+  "baseline": {
+    "manifest": {
+      "react": "^16.8.6",
+      "reactDom": "^16.8.6",
+      "reactScripts": "^3.0.1",
+      "bigJs": "^5.2.2"
+    },
+    "locked": {
+      "react": "16.8.6",
+      "reactDom": "16.8.6",
+      "reactScripts": "3.0.1",
+      "bigJs": "5.2.2"
+    },
+    "packageManager": "npm-lock-v1"
+  },
+  "target": {
+    "node": "24.15.0",
+    "react": "18.3.1",
+    "reactDom": "18.3.1",
+    "vite": "8.0.16"
+  }
+}

@@ -63,6 +63,16 @@ type JourneyEvidence = {
 	assertions: string[];
 	offlineEvidence: WitnessOfflineEvidence;
 	timeoutTelemetry?: ServiceWorkerTelemetry;
+	zeroServiceWorker?: {
+		checkpoints: Array<{
+			phase: 'before-interactions' | 'after-interactions' | 'after-online-reload';
+			state: 'timeout';
+			registrations: 0;
+			controller: null;
+			cacheNames: [];
+			workerEvents: [];
+		}>;
+	};
 };
 type JourneyTransportEvidence = { apiUsernames: string[] };
 type JourneyLifecycle = {
@@ -1226,6 +1236,7 @@ async function executeRun(
 		laneRoot?: string;
 		receiptRoot?: string;
 		nextPrerenderPayload?: NextPrerenderPayloadInput;
+		serviceWorkerPolicy?: 'canonical' | 'zero';
 	} = {},
 ): Promise<WitnessRealAppRun> {
 	const laneRoot = options.laneRoot ?? join(stageRoot, 'lanes', app.app, lane);
@@ -1238,18 +1249,23 @@ async function executeRun(
 	await rm(receiptDir, { recursive: true, force: true });
 	const beforeInventory = await staticInventory(laneRoot);
 	const contextProfile =
-		app.app === 'react-boilerplate' && lane === 'baseline'
+		app.app === 'react-boilerplate' &&
+		lane === 'baseline' &&
+		options.serviceWorkerPolicy !== 'zero'
 			? ('canonical-t060' as const)
 			: ('current-witness' as const);
 	const staticServer = await startStaticServer(laneRoot, { profile: contextProfile });
 	const productionUrl = joinURL(staticServer.origin, app.initialRoute ?? '/');
 	const transportEvidence: JourneyTransportEvidence = { apiUsernames: [] };
 	const expectedServiceWorker =
-		app.app === 'react-boilerplate' ? await expectedReactTelemetry(laneRoot, lane) : null;
+		app.app === 'react-boilerplate' && options.serviceWorkerPolicy !== 'zero'
+			? await expectedReactTelemetry(laneRoot, lane)
+			: null;
 	const phonecatOrdering =
 		app.app === 'angular-phonecat' ? await expectedPhonecatOrdering(laneRoot) : null;
 	const phonecatImages =
 		app.app === 'angular-phonecat' ? await expectedPhonecatImages(laneRoot) : null;
+	const differentialEvents: WitnessDifferentialEvent[] = [];
 	const host = createPlaywrightWitnessHost({
 		chromiumExecutable,
 		contextProfile,
@@ -1257,6 +1273,10 @@ async function executeRun(
 			app.transport === undefined
 				? undefined
 				: async (request) => await app.transport!(request, transportEvidence),
+		diagnosticEvent:
+			options.serviceWorkerPolicy === 'zero'
+				? (event) => differentialEvents.push(event)
+				: undefined,
 	});
 	let journeyEvidence: JourneyEvidence | undefined;
 	const definition = box(`${app.app}-${lane}-${pass}`, async (context) => {
@@ -1325,7 +1345,9 @@ async function executeRun(
 		);
 	const pageRecord = pageRecordFromReceipt(rawReceipt);
 	const legacyMainPrecache =
-		app.app === 'react-boilerplate' && lane === 'baseline'
+		app.app === 'react-boilerplate' &&
+		lane === 'baseline' &&
+		options.serviceWorkerPolicy !== 'zero'
 			? {
 					state: 'exact-completed' as const,
 					responses: await exactLegacyMainPrecacheResponses(
@@ -1408,8 +1430,42 @@ async function executeRun(
 			nextPrerenderPayload,
 		},
 		observerFinalization,
+		...(completedJourney.zeroServiceWorker === undefined
+			? {}
+			: {
+					zeroServiceWorker: {
+						...completedJourney.zeroServiceWorker,
+						outputFiles: beforeInventory.serviceWorkers,
+						requests: differentialEvents.filter(
+							(event) =>
+								event.detail.serviceWorker === true ||
+								event.urlPath === '/sw.js' ||
+								event.urlPath === '/service-worker.js',
+						),
+						workerEvents: observerFinalization.workerEvents,
+					},
+				}),
 		successfulNonLoopback: host.locality().successfulNonLoopback,
 	};
+	if ('zeroServiceWorker' in runWithoutDigest) {
+		const zero = runWithoutDigest.zeroServiceWorker;
+		if (
+			zero === undefined ||
+			zero.outputFiles.length !== 0 ||
+			zero.requests.length !== 0 ||
+			zero.workerEvents.length !== 0 ||
+			zero.checkpoints.length !== 3 ||
+			zero.checkpoints.some(
+				(checkpoint) =>
+					checkpoint.state !== 'timeout' ||
+					checkpoint.registrations !== 0 ||
+					checkpoint.controller !== null ||
+					checkpoint.cacheNames.length !== 0 ||
+					checkpoint.workerEvents.length !== 0,
+			)
+		)
+			throw new Error('zero-service-worker policy assertion failed');
+	}
 	return {
 		...runWithoutDigest,
 		pass,
@@ -1438,6 +1494,118 @@ export async function executeReactBoilerplateWitnessRun(options: {
 	const app = apps.find((candidate) => candidate.app === 'react-boilerplate');
 	if (app === undefined) throw new Error('React Boilerplate Witness specification is absent');
 	return await executeRun(app, options.lane, options.pass, options);
+}
+
+async function zeroServiceWorkerCheckpoint(
+	lifecycle: JourneyLifecycle,
+	phase: 'before-interactions' | 'after-interactions' | 'after-online-reload',
+): Promise<{
+	phase: typeof phase;
+	state: 'timeout';
+	registrations: 0;
+	controller: null;
+	cacheNames: [];
+	workerEvents: [];
+}> {
+	const telemetry = await lifecycle.serviceWorkerTelemetry(250);
+	if (
+		telemetry.state !== 'timeout' ||
+		telemetry.registration.scriptPath !== null ||
+		telemetry.registration.scope !== null ||
+		telemetry.registration.installing !== null ||
+		telemetry.registration.waiting !== null ||
+		telemetry.registration.active !== null ||
+		telemetry.controller !== null ||
+		telemetry.cacheNames.length !== 0 ||
+		telemetry.cacheEntries.length !== 0 ||
+		telemetry.workerEvents.length !== 0
+	)
+		throw new Error('zero-service-worker policy assertion failed');
+	return {
+		phase,
+		state: 'timeout',
+		registrations: 0,
+		controller: null,
+		cacheNames: [],
+		workerEvents: [],
+	};
+}
+
+function reactBoilerplateZeroSwSpec(): AppSpec {
+	const canonical = apps.find((candidate) => candidate.app === 'react-boilerplate');
+	if (canonical === undefined)
+		throw new Error('React Boilerplate canonical Witness specification is absent');
+	return {
+		...canonical,
+		journey: async (context, page, transportEvidence, lifecycle) => {
+			if (lifecycle.expectedServiceWorker !== null)
+				throw new Error('Zero-SW journey received a service-worker expectation');
+			const checkpoints = [
+				await zeroServiceWorkerCheckpoint(lifecycle, 'before-interactions'),
+			];
+			await page.trackEvents('click', 'input', 'change', 'keydown', 'mouseover');
+			await page.click('a[href="/features"]');
+			await context.expect.page.bodyText(page, { contains: 'Features' });
+			await page.click('a[href="/"]');
+			await page.click('select');
+			await page.press('select', 'd');
+			await context.expect.page.bodyText(page, {
+				contains: 'Beginnen Sie Ihr nächstes React Projekt in Sekunden',
+			});
+			await page.hover('#username');
+			await page.type('#username', 'octocat');
+			await page.press('#username', 'Enter');
+			await context.expect.page.bodyText(page, { contains: 'owned-repo' });
+			await context.expect.page.bodyText(page, { contains: 'fork-owner/forked-repo' });
+			await page.scroll(null, { y: 500 });
+			await context.expect.page.outcome(page, {
+				events: {
+					click: { atLeast: 3 },
+					input: { atLeast: 1 },
+					change: { atLeast: 1 },
+					keydown: { atLeast: 1 },
+					mouseover: { atLeast: 1 },
+				},
+			});
+			checkpoints.push(await zeroServiceWorkerCheckpoint(lifecycle, 'after-interactions'));
+			await page.reload();
+			await context.expect.page.bodyText(page, {
+				contains: 'Start your next react project in seconds',
+				notContains: 'owned-repo',
+			});
+			checkpoints.push(await zeroServiceWorkerCheckpoint(lifecycle, 'after-online-reload'));
+			await page.type('#username', 'reset-proof');
+			await page.press('#username', 'Enter');
+			await context.expect.page.bodyText(page, { contains: 'owned-repo' });
+			if (transportEvidence.apiUsernames.join(',') !== 'octocat,reset-proof')
+				throw new Error('React zero-SW username state did not reset after online reload');
+			await clean(context, page, 3);
+			return {
+				assertions: [
+					'feature route',
+					'keyboard locale selection',
+					'canonical repository payload',
+					'online reload and state reset',
+					'zero service-worker lifecycle and CacheStorage',
+					'clean page',
+				],
+				offlineEvidence: { state: 'not-applicable' },
+				zeroServiceWorker: { checkpoints },
+			};
+		},
+	};
+}
+
+export async function executeReactBoilerplateZeroSwWitnessRun(options: {
+	lane: Lane;
+	pass: 1 | 2;
+	laneRoot: string;
+	receiptRoot: string;
+}): Promise<WitnessRealAppRun> {
+	return await executeRun(reactBoilerplateZeroSwSpec(), options.lane, options.pass, {
+		...options,
+		serviceWorkerPolicy: 'zero',
+	});
 }
 
 export async function executeNextKilledByGoogleWitnessRun(options: {

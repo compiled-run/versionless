@@ -5,6 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { canonicalize, sha256 } from '../../core/src/receipts/canonicalize.ts';
 import { deriveCorpusTransactionState } from '../../core/src/corpus/conformance.ts';
 import { compareUtf16CodeUnits } from '../../core/src/bundlers/vite8-adapter.ts';
+import { reactAvataaarsCompatibilityAggregateMember } from '../../core/src/receipts/react-avataaars-compatibility.ts';
 import {
 	verifyWitnessAngularRealworldEvidence,
 	witnessAngularRealworldAggregateMember,
@@ -25,6 +26,8 @@ import {
 	NEXT_TAILWIND_EXCLUSION,
 	compareTrustResolvedDependencies,
 	renderNextTailwindExclusionMarkdown,
+	reactAvataaarsCompatibilityTrustReceipts,
+	reactGraphiQL013TrustReceipts,
 	validateCycloneDx17,
 	validateNpmLockAcquisitionPreflight,
 	validateNextTailwindConsentFailure,
@@ -157,6 +160,17 @@ async function rewriteArtifact(
 }
 
 describe('offline-first trust package', () => {
+	it('routes only the uncounted GraphiQL candidate receipt into trust generation', () => {
+		expect(
+			reactGraphiQL013TrustReceipts({ kind: 'react-graphiql-013-candidate' } as never),
+		).toEqual([
+			{
+				path: 'evidence/runs/react-graphiql-react15-to-vite8/receipt.json',
+				digest: null,
+			},
+		]);
+		expect(reactGraphiQL013TrustReceipts({ kind: 'canonical' } as never)).toEqual([]);
+	});
 	it('orders mixed-case BV/Bh distribution paths by raw UTF-16 code units', async () => {
 		const directory = await mkdtemp(path.join(os.tmpdir(), 'versionless-dist-order-'));
 		const upper = 'packages/cli/dist/BV-ordering-fixture.js';
@@ -613,6 +627,22 @@ snapshots:
 			await readFile(path.join(root, 'evidence/runs/aggregate.json'), 'utf8'),
 		) as { fixtures: Array<Record<string, unknown>> };
 		const transaction = deriveCorpusTransactionState(aggregate.fixtures);
+		const withoutAvataaars = aggregate.fixtures.filter(
+			(item) =>
+				item.id !== 'react-avataaars-compatibility-to-vite8' &&
+				item.id !== 'react-boilerplate-v4-zero-sw' &&
+				item.id !== 'witness-react-boilerplate-zero-sw',
+		);
+		const avataaarsTransaction = deriveCorpusTransactionState([
+			...withoutAvataaars,
+			reactAvataaarsCompatibilityAggregateMember('6'.repeat(64)),
+		]);
+		expect(reactAvataaarsCompatibilityTrustReceipts(avataaarsTransaction)).toEqual([
+			{
+				path: 'evidence/runs/react-avataaars-compatibility-to-vite8/t608/receipt.json',
+				digest: null,
+			},
+		]);
 		const verifiedReact = transaction.reactBoilerplateWitnessIntegrated
 			? await verifyWitnessReactBoilerplateEvidence(root)
 			: null;

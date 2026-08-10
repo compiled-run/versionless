@@ -1,0 +1,1 @@
+{"buildRestoration":"digest-identical","guard":"intended-failure","observedWorkerOutputs":["sw.js"],"seam":"exact-upstream-offline-plugin-registration-and-build-execution","sourceConfigRestoration":"byte-identical"}

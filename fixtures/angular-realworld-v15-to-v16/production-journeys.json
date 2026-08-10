@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "versionless.angular-realworld-production-journeys.v1",
+  "users": ["author", "reader"],
+  "passesPerLane": 2,
+  "lanes": ["angular15", "angular16"],
+  "syntheticValues": {
+    "articleTitle": "Versionless Stateful Parity",
+    "articleUpdatedTitle": "Versionless Stateful Parity Updated",
+    "tag": "versionless-local",
+    "authorComment": "Author local comment",
+    "readerComment": "Reader local comment"
+  },
+  "required": [
+    "registration",
+    "login",
+    "session-reload",
+    "article-crud",
+    "tags-filter-profile",
+    "favorite-follow",
+    "comment-crud",
+    "reload-persistence"
+  ]
+}

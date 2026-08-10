@@ -4,6 +4,7 @@
 	"type": "module",
 	"exports": "./dist/index.js",
 	"dependencies": {
-		"@angular/compiler": "22.1.0"
+		"@angular/compiler": "22.1.0",
+		"yuku-analyzer": "0.7.0"
 	}
 }

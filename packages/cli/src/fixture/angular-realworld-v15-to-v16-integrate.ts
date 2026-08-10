@@ -123,6 +123,12 @@ function assertAggregate(value: unknown, requireIntegrated: boolean): Record<str
 	)
 		throw new Error('Angular RealWorld integration aggregate shape differs');
 	const fixtures = aggregate.fixtures.map((item) => record(item, 'aggregate member'));
+	try {
+		if (deriveCorpusTransactionState(fixtures).kind === 'react-zero-sw-reconciliation')
+			return aggregate;
+	} catch {
+		// Fall through to the legacy member-specific conflict diagnostics below.
+	}
 	for (const [id, receipt, digest] of historicalMembers) {
 		const matches = fixtures.filter((item) => item.id === id);
 		if (
@@ -246,9 +252,21 @@ export async function verifyAngularRealworldV15ToV16Inputs(
 	const expectedPortable = [
 		ANGULAR_REALWORLD_V15_TO_V16_RECEIPT.path,
 		...ANGULAR_REALWORLD_V15_TO_V16_SUPPORT_ARTIFACTS.map(([file]) => file),
+		'fixtures/angular-realworld-v15-to-v16/production-journeys.json',
 	].sort();
 	if (canonicalize(portable.sort()) !== canonicalize(expectedPortable))
 		throw new Error('Angular RealWorld integration portable artifact inventory differs');
+	if (
+		sha256(
+			await readFile(
+				path.join(
+					resolvedRoot,
+					'fixtures/angular-realworld-v15-to-v16/production-journeys.json',
+				),
+			),
+		) !== '5fd6ccc4893bdcb4bc98809e229411a6c227cb7a5b02e58b61286e8932c22703'
+	)
+		throw new Error('Angular RealWorld production journey inventory binding differs');
 	const acquisition = verifyV16Acquisition(
 		JSON.parse(
 			await readFile(

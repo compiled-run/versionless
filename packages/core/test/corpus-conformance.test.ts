@@ -8,6 +8,7 @@ import {
 	verifyCorpusConformanceDigest,
 } from '../src/corpus/conformance.ts';
 import { nextKilledByGoogleAggregateMember } from '../src/receipts/next-killedbygoogle.ts';
+import { reactAvataaarsCompatibilityAggregateMember } from '../src/receipts/react-avataaars-compatibility.ts';
 import { witnessAngularRealworldAggregateMember } from '../src/receipts/witness-angular-realworld.ts';
 import { witnessReactBoilerplateAggregateMember } from '../src/receipts/witness-react-boilerplate.ts';
 import { witnessNextKilledByGoogleAggregateMember } from '../src/receipts/witness-next-killedbygoogle.ts';
@@ -44,7 +45,9 @@ function prepublicationFixtures(fixtures: Array<Record<string, unknown>>) {
 			fixture.id !== expected.id &&
 			fixture.id !== 'witness-angular-realworld' &&
 			fixture.id !== 'witness-react-boilerplate' &&
-			fixture.id !== 'witness-next-killedbygoogle',
+			fixture.id !== 'witness-next-killedbygoogle' &&
+			fixture.id !== 'react-boilerplate-v4-zero-sw' &&
+			fixture.id !== 'witness-react-boilerplate-zero-sw',
 	);
 }
 
@@ -311,9 +314,8 @@ describe('canonical corpus conformance', () => {
 			resolvedDependencies: 26,
 		});
 		const nextWitnessMember = witnessNextKilledByGoogleAggregateMember('7'.repeat(64));
-		expect(
-			deriveCorpusTransactionState([...readiness, reactMember, nextWitnessMember]),
-		).toEqual({
+		const nextCandidate = [...readiness, reactMember, nextWitnessMember];
+		expect(deriveCorpusTransactionState(nextCandidate)).toEqual({
 			kind: 'next-candidate',
 			nextKilledByGoogleIntegrated: true,
 			angularRealworldWitnessIntegrated: true,
@@ -323,6 +325,18 @@ describe('canonical corpus conformance', () => {
 			sourceApplications: 4,
 			receipts: 14,
 			resolvedDependencies: 27,
+		});
+		const avataaarsMember = reactAvataaarsCompatibilityAggregateMember('6'.repeat(64));
+		expect(deriveCorpusTransactionState([...nextCandidate, avataaarsMember])).toEqual({
+			kind: 'react-avataaars-candidate',
+			nextKilledByGoogleIntegrated: true,
+			angularRealworldWitnessIntegrated: true,
+			reactBoilerplateWitnessIntegrated: true,
+			nextKilledByGoogleWitnessIntegrated: true,
+			verticals: 11,
+			sourceApplications: 4,
+			receipts: 15,
+			resolvedDependencies: 28,
 		});
 		for (const fixtures of [
 			[...before, before[0]],

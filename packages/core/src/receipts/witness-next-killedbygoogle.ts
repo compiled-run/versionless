@@ -379,9 +379,7 @@ export function renderWitnessNextKilledByGoogleReceipt(
 	return `# KilledByGoogle Next 12 direct-Witness receipt\n\n- Result: **pass**\n- Canonical SHA-256: \`${receipt.integrity.canonicalDigest}\`\n- Bound migration receipt: \`${receipt.canonicalReceipt.canonicalDigest}\`\n- Qualification runs: 2 baseline + 2 migrated production-static passes\n- Meaningful journey: 263 rows; one Google+ search result; keyboard reset; Apps (50) and 50 rows; hover and scroll\n- Raw navigation events per run: 0\n- Behavioral parity: \`${receipt.runs[0]!.behaviorDigest}\`\n- Mutation-red/restoration: exact missing Google+ assertion; zero unrelated errors; byte-identical restoration; restored run passed\n- Successful non-loopback requests: 0\n- Older Next readiness: 0/4, candidate not counted pending Judge audit\n- React lineage readiness: 1/4\n- Angular lineage readiness: 1/4\n- Harness readiness: 0/4\n\n## Exact prerender support\n\n${support}\n\n## Boundaries\n\n${receipt.nonclaims.map((claim) => `- ${claim}`).join('\n')}\n`;
 }
 
-export async function verifyWitnessNextKilledByGoogleEvidence(
-	rootDir = '.',
-): Promise<{
+export async function verifyWitnessNextKilledByGoogleEvidence(rootDir = '.'): Promise<{
 	valid: true;
 	digest: string;
 	artifacts: 0;

@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "versionless.react-takenote-fixture.v1",
+  "repository": "https://github.com/taniarascia/takenote",
+  "revision": "e0eddbb9a21ae4cf4c4c7c183f29cfd666e08331",
+  "tree": "4d5a0f472a4609d7b8086dcd73827a394b21f343",
+  "treeUrl": "https://api.github.com/repos/taniarascia/takenote/git/trees/4d5a0f472a4609d7b8086dcd73827a394b21f343?recursive=1",
+  "treeResponseSha256": "6bb1868d22827aa24520106fab2ef69dbc8092d943f4c27eb2d329521cb1eb33",
+  "archiveUrl": "https://codeload.github.com/taniarascia/takenote/tar.gz/e0eddbb9a21ae4cf4c4c7c183f29cfd666e08331",
+  "historicalFailedRawPackageResponseSha256": "d8784964887b365916d02e8cf252dd439a5e4bde8fe7ae4e8bf37bccfea17800",
+  "knownFiles": {
+    "LICENSE": "be21ef08114b881822faa35d6afeb1d2f291ab6959b3796912bd12e1e009d033",
+    "README.md": "b4bcd10c22e26f265ce7a697285a5e13f8edf4e337d2ae8966992a482e831063",
+    "package-lock.json": "5e17fe3ba32d6359133d9ec831f88fe1cd557f7d5b5dfcba20cada49a2b587f3",
+    "src/client/slices/note.ts": "114ed0b7487292fe7638a5ba7f3b41a98ee6d87929b25db9e250d7980c00ff5e"
+  },
+  "compatibility": {
+    "originalRuntime": "Node 12 CI, not executed",
+    "originalNativeSass": "node-sass@4.14.1, not executed",
+    "runtime": "v18.20.8",
+    "runtimeSha256": "bae4965d29d29bd32f96364eefbe3bca576a03e917ddbb70b9330d75f2cacd76",
+    "sass": "1.32.13",
+    "sassMetadataUrl": "https://registry.npmjs.org/sass/1.32.13"
+  },
+  "target": {
+    "runtime": "v24.15.0",
+    "runtimeSha256": "372331b969779ab5d15b949884fc6eaf88d5afe87bde8ba881d6400b9100ffc4",
+    "vite": "8.0.16"
+  }
+}

@@ -1,0 +1,33 @@
+{
+	"schemaVersion": "versionless.react-actual-budget-v22-12-9-fixture.v1",
+	"repository": "https://github.com/actualbudget/actual",
+	"tag": "v22.12.9",
+	"revision": "3edf94714540837c67e6ac521efef3eed5e15bc6",
+	"tree": "1dcc782100f84487473a871b5af099769ab90a07",
+	"commitUrl": "https://api.github.com/repos/actualbudget/actual/git/commits/3edf94714540837c67e6ac521efef3eed5e15bc6",
+	"treeUrl": "https://api.github.com/repos/actualbudget/actual/git/trees/1dcc782100f84487473a871b5af099769ab90a07?recursive=1",
+	"archiveUrl": "https://codeload.github.com/actualbudget/actual/tar.gz/3edf94714540837c67e6ac521efef3eed5e15bc6",
+	"source": {
+		"rows": 3203,
+		"licensePath": "LICENSE.txt",
+		"licenseGitSha": "5ace00c807a2418a1b103f07f5a549d164c5019a",
+		"licenseSha256": "98517c72001c5efee3f6e112ed5614e53cac5d232b2ad1296e568ae77f8fb958",
+		"lockPath": "yarn.lock",
+		"lockGitSha": "1adb1f3f90229c2612d0d37dbbcda5384789adc8",
+		"lockBytes": 837714,
+		"packageManager": "yarn@3.2.0"
+	},
+	"baseline": {
+		"node": "16.20.2",
+		"react": "16.13.1",
+		"bundler": "webpack@4",
+		"workspaces": ["@actual-app/web", "@actual-app/loot-core"]
+	},
+	"target": {
+		"node": "24.15.0",
+		"react": "18.3.1",
+		"reactDom": "18.3.1",
+		"scheduler": "0.23.2",
+		"vite": "8.0.16"
+	}
+}
