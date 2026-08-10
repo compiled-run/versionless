@@ -44,5 +44,71 @@
   "A recorded install or build outcome establishes no browser behavior, journey coverage, migration feasibility, pilot status, or production readiness.",
   "A failing step is recorded as observed; no repair, pin, downgrade, or flag was applied to make it pass.",
   "This baseline was not executed in the repository-declared Node 12.14.1 cell, so it is not evidence about how the project behaves in that cell."
+ ],
+ "appendLog": {
+  "note": "Every field above this key records the first baseline attempt exactly as it was published, and is retained unchanged. Later attempts are appended under declaredCellAttempts rather than overwriting it. The top-level `outcome` above continues to describe that first attempt only.",
+  "schemaVersion": "versionless.legacy-baseline-attempt-log.v1"
+ },
+ "declaredCellAttempts": [
+  {
+   "attemptId": "t004-e1-declared-cell",
+   "startedAt": "2026-08-10T21:55:00.000Z",
+   "completedAt": "2026-08-10T21:58:20.000Z",
+   "intent": "Execute the repository-declared cell (x64 Node 12.14.1) under Rosetta 2 on darwin-arm64, then run yarn install and the production build twice for a deterministic inventory.",
+   "cell": {
+    "declaredByRepository": {
+     "node": "12.14.1",
+     "npm": ">= 6.4.1",
+     "yarn": ">= 1.19.1",
+     "nvmrc": "v12.14.1"
+    },
+    "attempted": {
+     "node": "12.14.1",
+     "platform": "darwin-x64",
+     "translation": "Rosetta 2 (required on this arm64 host)",
+     "acquired": true,
+     "digestVerifiedAgainstOfficialShasums": true,
+     "executed": false
+    },
+    "substitutionApplied": "none — no substitute runtime was used and no engine gate was overridden in this attempt"
+   },
+   "workRoot": ".versionless/work/react-mycrypto/baseline",
+   "blockers": [
+    {
+     "id": "rosetta-2-absent",
+     "severity": "blocking",
+     "summary": "Rosetta 2 is not installed on this host, so the acquired x86_64 Node 12.14.1 binary cannot be executed.",
+     "evidence": {
+      "direct": "./node-v12.14.1-darwin-x64/bin/node -v exited 127: bad CPU type in executable",
+      "translated": "/usr/bin/arch -x86_64 ./node-v12.14.1-darwin-x64/bin/node -v exited 1: arch: posix_spawnp: Bad CPU type in executable",
+      "control": "/usr/bin/arch -x86_64 /usr/bin/true also fails with Bad CPU type although /usr/bin/true carries an x86_64 slice, which isolates the cause to the missing translation layer rather than a missing slice",
+      "installationMarkers": "/Library/Apple/usr/libexec/oah absent; com.apple.oahd.plist absent; oahd not running"
+     },
+     "detail": "evidence/ingests/react-mycrypto/runtime-acquisition.json"
+    },
+    {
+     "id": "sealed-source-cache-absent",
+     "severity": "blocking",
+     "summary": "The sealed source archive recorded by the ingest is no longer present in the local cache, and re-fetching it was outside this unit's recorded network allowance.",
+     "evidence": {
+      "expectedPath": ".versionless/cache/react-mycrypto-source/archive/archive-1.tar.gz",
+      "observed": "absent; .versionless/cache carries no react-mycrypto-source directory",
+      "archiveSha256": "62eea670ce0ebd6c0c56c60bfc85ac1311a6f4291375ac1abb45508412fc1ccd"
+     },
+     "detail": "This unit's network allowance covered the Node runtime and SHASUMS acquisition plus yarn registry fetches during install. Re-acquiring the source archive from codeload.github.com was not covered, so the source was not re-downloaded and .versionless/work/react-mycrypto/baseline was not materialized."
+    }
+   ],
+   "steps": [],
+   "outcome": "blocked-declared-cell-unreachable",
+   "runtimeAcquisition": {
+    "result": "acquired-and-digest-verified",
+    "detail": "evidence/ingests/react-mycrypto/runtime-acquisition.json"
+   },
+   "nonclaims": [
+    "No install and no build were executed in this attempt, so nothing here is evidence about whether MyCrypto installs or builds in the declared Node 12.14.1 cell. That remains unknown.",
+    "The declared cell was not reached and was not substituted. The unreachability is recorded as observed; no downgrade, pin, flag, or engine override was applied to manufacture a passing result.",
+    "A verified runtime digest establishes byte agreement with the published release only; it establishes no signer authenticity and no execution."
+   ]
+  }
  ]
 }

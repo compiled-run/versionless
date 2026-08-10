@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "versionless.official-source-attempt.v1",
+  "unit": "lrapr-t004-hospitalrun/h1-candidate-ingest",
+  "candidate": {
+    "repository": "HospitalRun/hospitalrun-frontend",
+    "requestedTag": "v2.0.0-alpha.7",
+    "expectedCommitSha": "8156955145551d0366df10faa28e724f3377dea1",
+    "expectationSource": "a prior read-only scout unit; re-verified from the wire by this unit rather than trusted"
+  },
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "result": "started",
+  "network": {
+    "method": "GET",
+    "credentials": "none",
+    "requestEncoding": "identity",
+    "redirectsAllowed": false,
+    "retriesAllowed": false,
+    "alternateHostsAllowed": false
+  },
+  "allowlist": [
+    "https://api.github.com/repos/HospitalRun/hospitalrun-frontend",
+    "https://api.github.com/repos/HospitalRun/hospitalrun-frontend/git/ref/tags/v2.0.0-alpha.7",
+    "https://api.github.com/repos/HospitalRun/hospitalrun-frontend/git/tags/<validated-tag-object-sha>",
+    "https://api.github.com/repos/HospitalRun/hospitalrun-frontend/git/commits/<validated-commit-sha>",
+    "https://api.github.com/repos/HospitalRun/hospitalrun-frontend/git/trees/<validated-tree-sha>?recursive=1",
+    "https://codeload.github.com/HospitalRun/hospitalrun-frontend/tar.gz/<validated-commit-sha>"
+  ],
+  "caps": {
+    "maximumAcceptedResponses": 8,
+    "maximumApiResponseBytes": 16777216,
+    "maximumArchiveBytes": 134217728,
+    "maximumAggregateWireBytes": 314572800,
+    "maximumAggregateDecodedBytes": 314572800,
+    "requiredArchiveStreams": 2
+  },
+  "requiredRevisionWindow": {
+    "from": "2018-01-01T00:00:00Z",
+    "through": "2023-08-10T00:00:00Z"
+  },
+  "publication": {
+    "evidenceRoot": "evidence/ingests/react-hospitalrun",
+    "cacheRoot": ".versionless/cache/react-hospitalrun-source",
+    "fixtureRoot": "fixtures/react-hospitalrun",
+    "transactional": true,
+    "readinessCredit": false
+  },
+  "baselineNetwork": {
+    "purpose": "one truthful baseline dependency install for the declared legacy cell",
+    "allowedHosts": [
+      "registry.npmjs.org",
+      "registry.yarnpkg.com",
+      "codeload.github.com"
+    ],
+    "note": "Package-manager fetches during the baseline install are performed by the package manager itself and are recorded in aggregate in the baseline attempt record, not URL-by-URL in the source ledger."
+  },
+  "nonclaims": [
+    "Starting this transaction establishes no tag identity, license, source integrity, dependency closure, framework, build, browser behavior, migration feasibility, pilot status, or production readiness.",
+    "The resulting evidence is reproducibility evidence, not certification or legal approval."
+  ]
+}

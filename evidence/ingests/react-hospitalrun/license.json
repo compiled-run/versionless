@@ -1,0 +1,77 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-rights.v1",
+  "slug": "react-hospitalrun",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "revision": {
+    "repository": "HospitalRun/hospitalrun-frontend",
+    "ref": "refs/tags/v2.0.0-alpha.7",
+    "commitSha": "8156955145551d0366df10faa28e724f3377dea1",
+    "rootTreeSha": "0be1ea968559f62696f929e48938b95e02ffb48b"
+  },
+  "declaration": {
+    "identifier": "MIT",
+    "identifierSource": "verbatim MIT text in the repository root LICENSE file at the pinned revision",
+    "copyrightNotice": "Copyright (c) 2019 HospitalRun",
+    "manifestLicenseField": "MIT",
+    "githubDetectedLicense": "MIT (spdx_id MIT) as reported by the repository metadata response; the file text is the primary evidence and agrees with it",
+    "dualLicensed": false,
+    "sourceAvailableCarveOut": false
+  },
+  "artifacts": [
+    {
+      "path": "LICENSE",
+      "role": "repository-root-licence",
+      "gitBlobSha": "0b3dbd5677c9dc207e24115279aa3dff26b41be3",
+      "bytes": 1068,
+      "sha256": "460148c79f31dd2a352b401068e0ae512a807cf643edac512eb22cf3342027a3",
+      "firstLine": "MIT License",
+      "copyrightLine": "Copyright (c) 2019 HospitalRun",
+      "permissionGrantPresent": true,
+      "noticeRetentionClausePresent": true,
+      "warrantyDisclaimerPresent": true
+    },
+    {
+      "path": "package.json",
+      "role": "frontend-manifest",
+      "gitBlobSha": "e494be20f6e11a560c6e37ecc3ac502bc79672d4",
+      "bytes": 5366,
+      "sha256": "19d691e570d8cc01750dbe55cd3dd4d6b66ff1b608d9bad7ec3047ccd04739e9",
+      "licenseField": "MIT",
+      "privateField": false,
+      "packageName": "@hospitalrun/frontend",
+      "packageVersion": "2.0.0-alpha.7"
+    }
+  ],
+  "inventory": {
+    "licenceFilesInTree": 1,
+    "additionalLicenceOrNoticeFiles": 0,
+    "vendoredThirdPartySources": 0,
+    "committedNodeModules": 0,
+    "committedDistDirectories": 0,
+    "note": "The recursive tree at the pinned revision contains exactly one licence file (root LICENSE) and no vendored dependency or built-output directories. A SECURITY.md and a CODE_OF_CONDUCT.md are present; neither carries additional licence terms."
+  },
+  "retainedAssetRights": {
+    "reviewed": true,
+    "brandedAssets": [
+      "public/logo.png",
+      "public/favicon.ico",
+      "public/manifest.json"
+    ],
+    "position": "HospitalRun brand marks are retained under the upstream project's ownership. They are carried only as part of the immutable source archive and are not relicensed, rebranded, or reused as Versionless assets.",
+    "unknownPreserved": "Trademark rights are separate from the MIT copyright grant and are neither established nor disclaimed here."
+  },
+  "healthDataPosture": {
+    "reviewed": true,
+    "realPatientDataInRepository": "none observed; the tree carries no data fixtures beyond unit-test literals authored in src/__tests__",
+    "position": "This is healthcare-shaped CRUD software, not healthcare data. Nothing in the acquired tree is treated as protected health information, and no such data may be introduced into Versionless evidence by later work.",
+    "unknownPreserved": "Whether this application would satisfy any healthcare regulatory regime is neither examined nor claimed here."
+  },
+  "obligations": [
+    "Retain the MIT notice and permission text in any copy or substantial portion of the source.",
+    "The MIT grant covers the repository's own files; each dependency in the closure carries its own terms, which this record does not evaluate."
+  ],
+  "nonclaims": [
+    "This is a record of the licence text present at the pinned revision, not a legal opinion, licence-compatibility finding, or legal approval.",
+    "No licence determination is made for the transitive dependency closure."
+  ]
+}

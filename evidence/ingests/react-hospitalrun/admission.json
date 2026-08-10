@@ -1,0 +1,216 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-admission.v1",
+  "unit": "lrapr-t004-hospitalrun/h1-candidate-ingest",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "networkMode": "consented",
+  "slug": "react-hospitalrun",
+  "tranche": "React tranche three",
+  "ownerContext": "This candidate replaces a dropped crypto-wallet candidate. The evidence corpus is approvals-facing, and healthcare CRUD is the wanted application shape.",
+  "priorScout": {
+    "existed": true,
+    "role": "read-only; supplied the target repository, tag, and expected commit sha",
+    "reverificationPolicy": "Every gate below was re-verified by this unit from the wire and from the reconciled archive at the pinned revision. The scout's findings were used as a hypothesis, not as evidence.",
+    "expectedCommitShaConfirmed": true
+  },
+  "admitted": {
+    "repository": "HospitalRun/hospitalrun-frontend",
+    "product": "HospitalRun — offline-first hospital information system front end (patients, appointments, labs, imaging, medications, incidents)",
+    "ref": "refs/tags/v2.0.0-alpha.7",
+    "tagKind": "annotated",
+    "tagVerification": "unsigned",
+    "commitSha": "8156955145551d0366df10faa28e724f3377dea1",
+    "commitDate": "2020-11-07T10:12:44Z",
+    "frontendRoot": ".",
+    "decision": "admitted"
+  },
+  "gates": [
+    {
+      "gate": "mit-license-at-pinned-revision",
+      "result": "pass",
+      "evidence": {
+        "rootLicensePath": "LICENSE",
+        "gitBlobSha": "0b3dbd5677c9dc207e24115279aa3dff26b41be3",
+        "fileSha256": "460148c79f31dd2a352b401068e0ae512a807cf643edac512eb22cf3342027a3",
+        "bytes": 1068,
+        "spdxHeaderLine": "MIT License",
+        "copyrightLine": "Copyright (c) 2019 HospitalRun",
+        "manifestLicenseField": "MIT",
+        "otherLicenseFilesInTree": 0,
+        "quotedFromArchive": "The licence text was read out of the extracted archive, which reconciles blob-for-blob with the git tree at the pinned revision.",
+        "detail": "license.json"
+      }
+    },
+    {
+      "gate": "real-substantive-application-not-template-demo-or-library",
+      "result": "pass",
+      "evidence": {
+        "repositoryShape": "A single create-react-app TypeScript front end at the repository root, organised by clinical domain, with a PouchDB persistence layer and a repository/Redux/react-query data stack. A couchdb/ Dockerfile and a docker-compose.yml are present for optional local server work; no application server source lives in this repository.",
+        "blobsInTree": 537,
+        "sourceFilesUnderSrc": 487,
+        "nonTestSourceFiles": 330,
+        "testFiles": 157,
+        "nonTestSourceBytes": 456806,
+        "testSourceBytes": 589144,
+        "clinicalDomains": [
+          "patients",
+          "scheduling",
+          "labs",
+          "imagings",
+          "medications",
+          "incidents",
+          "dashboard",
+          "settings",
+          "user"
+        ],
+        "persistenceLayer": "src/shared/db/*Repository.ts over relational-pouch + pouchdb-find + pouchdb-quick-search",
+        "stateLayer": "@reduxjs/toolkit 1.4 slices plus react-query 2.23 hooks under src/*/hooks",
+        "internationalised": "i18next + react-i18next, 106 locale files under src/shared/locales",
+        "publishedAsLibrary": false,
+        "isStarterTemplate": false,
+        "notes": "This is the product itself, not a scaffold: it carries domain repositories, validation, breadcrumbs, a button-bar provider, a sidebar, and a substantial unit-test suite that is larger in bytes than the non-test source."
+      }
+    },
+    {
+      "gate": "react-15-to-17",
+      "result": "pass",
+      "evidence": {
+        "declaredReact": "~16.13.0",
+        "declaredReactDom": "~16.13.0",
+        "declaredTypes": "@types/react ~16.9.17, @types/react-dom ~16.9.4",
+        "resolvedInBaselineCell": "react 16.13.1, react-dom 16.13.1",
+        "source": "package.json at the pinned revision"
+      }
+    },
+    {
+      "gate": "webpack-le-4-or-create-react-app",
+      "result": "pass",
+      "evidence": {
+        "toolchain": "create-react-app",
+        "declaredReactScripts": "~3.4.0",
+        "reactScriptsPinnedExactly": false,
+        "resolvedReactScriptsInBaselineCell": "3.4.4",
+        "ejected": false,
+        "webpackResolvedInBaselineCell": "4.42.0",
+        "webpackDevServerResolvedInBaselineCell": "3.11.0",
+        "bundlerCeilingSatisfied": "webpack 4.42.0 is on the webpack 4 line",
+        "scripts": {
+          "start": "npm run translation:check && react-scripts start",
+          "build": "react-scripts build",
+          "test": "npm run translation:check && react-scripts test --testPathIgnorePatterns=src/__tests__/test-utils --detectOpenHandles"
+        }
+      }
+    },
+    {
+      "gate": "pinned-revision-old-enough",
+      "result": "pass",
+      "evidence": {
+        "ref": "refs/tags/v2.0.0-alpha.7",
+        "commitSha": "8156955145551d0366df10faa28e724f3377dea1",
+        "commitDate": "2020-11-07T10:12:44Z",
+        "tagDate": "2020-11-07T10:12:53Z",
+        "evaluatedOn": "2026-08-10",
+        "ageYearsApproximate": 5.75,
+        "tagKind": "annotated",
+        "tagVerification": "unsigned",
+        "upstreamRepositoryArchived": true,
+        "unknownPreserved": "An unsigned annotated tag carries a tagger name but no signature; signer authenticity is recorded as unestablished, not resolved."
+      }
+    },
+    {
+      "gate": "browser-ui-plausibly-supporting-three-or-more-substantive-user-journeys",
+      "result": "pass",
+      "evidence": {
+        "routerLibrary": "react-router-dom ~5.2.0",
+        "topLevelRoutes": [
+          "/",
+          "/patients",
+          "/appointments",
+          "/labs",
+          "/medications",
+          "/incidents",
+          "/imaging",
+          "/settings"
+        ],
+        "declaredRoutePathOccurrences": 60,
+        "distinctRoutePaths": 34,
+        "candidateJourneys": [
+          {
+            "journey": "patient intake and edit",
+            "routes": ["/patients", "/patients/new", "/patients/edit/:id", "/patients/:id"],
+            "code": "src/patients/new/NewPatient.tsx, src/patients/edit/EditPatient.tsx, src/shared/db/PatientRepository.ts",
+            "plausibility": "declared-and-code-backed"
+          },
+          {
+            "journey": "appointment scheduling",
+            "routes": ["/appointments", "/appointments/new", "/appointments/edit/:id", "/appointments/:id"],
+            "code": "src/scheduling/appointments/**, src/shared/db/AppointmentRepository.ts",
+            "plausibility": "declared-and-code-backed"
+          },
+          {
+            "journey": "lab request workflow",
+            "routes": ["/labs", "/labs/new", "/labs/:id"],
+            "code": "src/labs/**, src/shared/db/LabRepository.ts",
+            "plausibility": "declared-and-code-backed"
+          },
+          {
+            "journey": "incident reporting",
+            "routes": ["/incidents", "/incidents/new", "/incidents/:id", "/incidents/visualize"],
+            "code": "src/incidents/**, src/shared/db/IncidentRepository.ts",
+            "plausibility": "declared-and-code-backed"
+          },
+          {
+            "journey": "patient clinical record sub-tabs (care plans, care goals, visits, notes, allergies, labs)",
+            "routes": [
+              "/patients/:id/care-plans",
+              "/patients/:id/care-goals",
+              "/patients/:id/visits",
+              "/patients/:id/notes",
+              "/patients/:id/allergies",
+              "/patients/:id/labs"
+            ],
+            "plausibility": "declared-and-code-backed"
+          },
+          {
+            "journey": "medication and imaging requests",
+            "routes": ["/medications", "/medications/new", "/medications/:id", "/imaging", "/imaging/new"],
+            "plausibility": "declared-and-code-backed"
+          }
+        ],
+        "requiredMinimum": 3,
+        "observed": 6,
+        "unknownPreserved": "These journeys are read off the router and the domain modules. No browser was driven in this unit, so none of them is established as actually exercisable."
+      }
+    }
+  ],
+  "recordedRisks": [
+    {
+      "risk": "pouchdb-authentication may imply a CouchDB remote on the login path",
+      "finding": "Examined directly in the reconciled source. src/shared/config/pouchdb.ts registers pouchdb-authentication as a PouchDB plugin, but it only constructs a server database when process.env.NODE_ENV === 'test' (an in-memory adapter). In every non-test build `serverDb` is left undefined and the module still exports `export const remoteDb = serverDb as PouchDB.Database`. The four call sites — App.tsx `remoteDb.getSession()` on mount and user-slice.ts `logIn`, `getUser`, `logOut` — therefore dereference `undefined` at runtime rather than contacting a remote. App.tsx wraps the mount-time call in try/catch and only `console.log`s the failure before rendering, and no /login route is declared in the router at all.",
+      "consequence": "No CouchDB host is contacted by a normal dev or production build at this revision. Local-only operation is what the code does, and the persistent store is the browser-default PouchDB adapter on the database named `local_hospitalrun` (constructed with skip_setup).",
+      "residual": "`.env.example` declares REACT_APP_HOSPITALRUN_API=http://localhost:5984 and docker-compose.yml provisions a CouchDB with a hard-coded development admin password. Neither is referenced from src or public — REACT_APP_HOSPITALRUN_API appears nowhere in the application code — so both read as vestigial at this revision. The docker-compose credentials were not copied into any Versionless artifact and must not be.",
+      "state": "resolved-by-reading-the-code; local-only operation confirmed at the source level, not at the browser level"
+    },
+    {
+      "risk": "alpha maturity",
+      "finding": "The pinned revision is 2.0.0-alpha.7 of a 2.0 rewrite, and the upstream repository is now archived. The CHANGELOG shows an active alpha series around this date.",
+      "consequence": "Behaviour, route stability, and completeness are what an alpha carries. This is recorded, not discounted.",
+      "state": "recorded"
+    },
+    {
+      "risk": "i18n translation:check gate in the start script",
+      "finding": "`start` and `test` are prefixed with `npm run translation:check`, which compiles scripts/check-translations/index.ts with tsc and runs the emitted JavaScript, bracketed by pre/post rimraf steps. `build` is NOT gated: it is plain `react-scripts build`.",
+      "consequence": "Any later unit that drives the dev server through `npm start` inherits this gate; a unit that only builds does not.",
+      "state": "recorded; the gate was not exercised in this unit"
+    },
+    {
+      "risk": "no lockfile is committed at the pinned revision",
+      "finding": "The recursive tree at the pinned revision contains no package-lock.json, no yarn.lock, and no npm-shrinkwrap.json. Dependency ranges are tilde/caret ranges, and .npmrc sets save-prefix='~'.",
+      "consequence": "The dependency closure is not pinned by the repository. A baseline install today resolves ranges against the registry as it exists today, and the resolution drifted far enough to break the build — see baseline-attempt.json.",
+      "state": "recorded; this is the dominant reproducibility risk for this fixture"
+    }
+  ],
+  "nonclaims": [
+    "Admission fixes an identity and records gate findings. It establishes no browser behavior, journey exercisability, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "The journey list is read from the router and the domain modules; no journey was driven in a browser by this unit."
+  ]
+}

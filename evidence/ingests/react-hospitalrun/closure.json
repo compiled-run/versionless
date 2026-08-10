@@ -1,0 +1,77 @@
+{
+  "schemaVersion": "versionless.legacy-dependency-closure.v1",
+  "slug": "react-hospitalrun",
+  "frontendRoot": ".",
+  "source": {
+    "verifiedSourceRoot": ".versionless/cache/react-hospitalrun-source/verify/extracted/hospitalrun-frontend-8156955145551d0366df10faa28e724f3377dea1",
+    "packageJsonSha256": "19d691e570d8cc01750dbe55cd3dd4d6b66ff1b608d9bad7ec3047ccd04739e9",
+    "packageJsonBytes": 5366
+  },
+  "lockState": {
+    "committedWithSource": false,
+    "committedLockfiles": [],
+    "searchedFor": ["package-lock.json", "npm-shrinkwrap.json", "yarn.lock", "pnpm-lock.yaml"],
+    "searchScope": "the full recursive git tree at the pinned revision (537 blobs)",
+    "declaredRangeStyle": "tilde ranges for most direct dependencies, caret ranges for a minority; .npmrc sets save-prefix='~'",
+    "resolutionsField": { "moment": "2.24.0" },
+    "resolutionsFieldNote": "package.json carries a yarn-style `resolutions` block pinning moment to 2.24.0. npm 6 ignores `resolutions`, so it had no effect on the npm baseline install recorded here.",
+    "consequence": "There is no upstream pin. Any install resolves the declared ranges against the registry as it exists at install time, so the closure is not reproducible from the repository alone.",
+    "state": "unpinned-upstream"
+  },
+  "observedResolution": {
+    "what": "The lockfile npm 6.13.4 generated during this unit's baseline install in the declared cell. It is a record of what the ranges resolved to on 2026-08-10, not an upstream artifact, and it is not published into the repository.",
+    "location": ".versionless/cache/react-hospitalrun-baseline/app/package-lock.json (git-ignored)",
+    "lockfileVersion": 1,
+    "bytes": 1120022,
+    "sha256": "6d57396713d88252de2ed783df6c89c2a7733ff6943f67e30c06435e5fbdcce4",
+    "sha256Caveat": "This digest was taken after the baseline install and after the single deviation pin of @types/babel__traverse@7.0.15 described in baseline-attempt.json, so it is a snapshot of the cell at the end of this unit rather than of the baseline install alone.",
+    "generatedBy": "npm 6.13.4 on Node 12.14.1 (darwin-x64 under Rosetta 2)",
+    "generatedOn": "2026-08-10"
+  },
+  "counts": {
+    "declaredDependencies": 37,
+    "declaredDevDependencies": 51,
+    "lockedPlacements": 3024,
+    "distinctNameVersionPairs": 2212,
+    "devPlacements": 770,
+    "optionalPlacements": 17,
+    "bundledPlacements": 0,
+    "installedPackagesReportedByNpm": 3024
+  },
+  "integrity": {
+    "everyEntryHasResolvedUrl": true,
+    "everyEntryHasIntegrityHash": true,
+    "entriesWithoutResolvedUrl": 0,
+    "entriesWithoutIntegrityHash": 0,
+    "integrityAlgorithms": ["sha512"],
+    "note": "Every entry in the generated lockfile carries a sha512 integrity hash, because it was generated today rather than in 2020. This is a property of this unit's resolution, not evidence about the upstream repository."
+  },
+  "registryHosts": {
+    "registry.npmjs.org": 3024
+  },
+  "drift": {
+    "observed": true,
+    "description": "Unpinned ranges resolved to present-day releases of transitive @types packages whose declaration files use TypeScript syntax that postdates the typescript ~3.8.3 the repository pins. Two independent instances were hit in sequence during the baseline and its one deviation.",
+    "instances": [
+      {
+        "package": "@types/babel__traverse",
+        "resolvedAt": "modern release pulled transitively",
+        "declarationSyntax": "key remapping in mapped types (`[N in Node as N[\"type\"]]`), TypeScript 4.1 and later",
+        "failure": "TS1005 in node_modules/@types/babel__traverse/index.d.ts(302,20)"
+      },
+      {
+        "package": "@types/lodash",
+        "declaredRange": "^4.14.150",
+        "declarationSyntax": "template-literal type with `infer ... extends` (`` `${infer N extends number}` ``), TypeScript 4.7 and later",
+        "failure": "TS1110 in node_modules/@types/lodash/common/common.d.ts(266,40)"
+      }
+    ],
+    "unknownPreserved": "Only two drifted packages were reached before this unit stopped iterating. Whether the remaining closure would typecheck under typescript 3.8.3 once every @types package is era-pinned is unknown and is not claimed either way."
+  },
+  "closureSha256": "6d57396713d88252de2ed783df6c89c2a7733ff6943f67e30c06435e5fbdcce4",
+  "nonclaims": [
+    "Per-artifact byte digests were not independently mirrored in this unit; the recorded integrity hashes are the ones the generated lockfile declares.",
+    "A resolvable closure establishes no build, browser behavior, licence compatibility of transitive dependencies, migration feasibility, or production readiness.",
+    "The generated lockfile is not offered as a reconstruction of the 2020 closure. It is the resolution this cell produced today, and it is recorded as such."
+  ]
+}

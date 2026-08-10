@@ -1,0 +1,96 @@
+{
+  "schemaVersion": "versionless.legacy-baseline-attempt.v1",
+  "slug": "react-hospitalrun",
+  "unit": "lrapr-t004-hospitalrun/h1-candidate-ingest",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "purpose": "One truthful baseline dependency install and production build of the pinned revision, in the nearest honestly-labeled legacy cell.",
+  "declaredCell": {
+    "declaredByRepository": {
+      "enginesField": "absent — package.json declares no engines block",
+      "nvmrc": "lts/* (a floating alias, not a pin)",
+      "nvmrcBlobSha": "b009dfb9d9f98f39d71d2a4ecc3110332b969fd3",
+      "continuousIntegrationMatrix": "node-version [12.x, 14.x] on ubuntu-latest, windows-latest, macOS-latest (.github/workflows/ci.yml, blob 6d0d9eb06bce0101709890c6dd675deddb992785)",
+      "packageManagerInCi": "npm install (no lockfile to ci from)",
+      "interpretation": "The repository does not pin a Node version. The only concrete statement it makes is the CI matrix: Node 12.x and Node 14.x. `lts/*` floated to the Node 14 Fermium line around the tag date and floats to a far newer line today, so it is recorded as ambiguous rather than resolved to a number.",
+      "ambiguityPreserved": true
+    },
+    "used": {
+      "node": "12.14.1",
+      "platform": "darwin-x64 executed on darwin-arm64 through Rosetta 2",
+      "url": "https://nodejs.org/dist/v12.14.1/node-v12.14.1-darwin-x64.tar.gz",
+      "sha256": "0be10a28737527a1e5e3784d3ad844d742fe8b0718acd701fd48f718fd3af78f",
+      "digestVerifiedAgainstOfficialShasums": true,
+      "reusedFrom": "the runtime acquired and digest-verified by the react-mycrypto ingest and already present in this workspace cache; no new runtime download was made by this unit",
+      "translationLayer": "Rosetta 2, present and working on this host (`arch -x86_64 node --version` returns v12.14.1)",
+      "packageManager": "npm 6.13.4 (bundled with the pinned runtime)",
+      "honestLabel": "in-matrix: Node 12.14.1 is inside the repository's declared 12.x CI lane. It is not a repository pin, because the repository has none. The Node 14 lane was not exercised, and no Node 14 build exists for darwin-arm64 either."
+    }
+  },
+  "install": {
+    "command": "npm install --ignore-scripts --no-audit --no-fund",
+    "ciVariantAvailable": false,
+    "ciVariantReason": "`npm ci` requires a committed lockfile. There is none at the pinned revision, so the reproducible install path does not exist for this fixture.",
+    "lifecycleScripts": "disabled",
+    "lifecycleScriptsNote": "node-sass ~4.14.0 is a declared dependency whose postinstall would fetch or compile a native binding. Disabling lifecycle scripts leaves that binding unbuilt. No .scss or .sass file exists anywhere in the tree and only src/index.css is imported, so no build input requires it; this is recorded rather than worked around.",
+    "outcome": "succeeded",
+    "exitStatus": 0,
+    "durationMs": 44817,
+    "packagesInstalled": 3024,
+    "networkHosts": ["registry.npmjs.org"],
+    "warningsObserved": {
+      "deprecations": "16 npm deprecation warnings across the transitive closure",
+      "unsupportedEngine": "5 packages resolved that declare node >=18 or >=20 (node-releases, cheerio, undici, whatwg-mimetype, whatwg-encoding). npm 6 warned and installed them anyway.",
+      "unmetPeerDependencies": "11 unmet peer warnings, including @hospitalrun/components@3.0.4 wanting react ~16.14.0 while the manifest pins react ~16.13.0",
+      "lockfileNotice": "npm reported `created a lockfile as package-lock.json`, confirming none was present in the source."
+    }
+  },
+  "build": {
+    "command": "npm run build",
+    "expands": "react-scripts build",
+    "environment": "CI was left unset, so create-react-app 3 did not promote warnings to errors. This is stated because the upstream GitHub Actions run had CI=true.",
+    "translationGate": "not applicable — only `start` and `test` are prefixed with `npm run translation:check`; `build` is not.",
+    "outcome": "failed",
+    "exitStatus": 1,
+    "durationMs": 59112,
+    "failure": {
+      "stage": "TypeScript typecheck inside react-scripts build",
+      "diagnostic": "TS1005 \"']' expected\" at node_modules/@types/babel__traverse/index.d.ts(302,20)",
+      "cause": "The declaration file uses mapped-type key remapping (`[N in Node as N[\"type\"]]`), which requires TypeScript 4.1 or later. The repository pins typescript ~3.8.3, which resolved to 3.8.3 and cannot parse it.",
+      "rootCause": "No lockfile is committed, so the unpinned transitive @types package resolved to a present-day release rather than to its 2020 contemporary.",
+      "notAFailureOf": "This is not a failure of the pinned application source, of the Node 12 cell, or of Rosetta 2 translation. Nothing in src was reached."
+    }
+  },
+  "deviation": {
+    "attempted": true,
+    "honestLabel": "deviation — not the baseline; the cell was modified after the fact",
+    "change": "npm install --ignore-scripts --no-audit --no-fund --no-save @types/babel__traverse@7.0.15 (an era-contemporary release), then `npm run build` again",
+    "pinExitStatus": 0,
+    "buildExitStatus": 1,
+    "buildDurationMs": 25597,
+    "outcome": "failed at the next drifted package",
+    "failure": {
+      "diagnostic": "TS1110 \"Type expected\" at node_modules/@types/lodash/common/common.d.ts(266,40)",
+      "cause": "`type StringToNumber<T> = T extends `${infer N extends number}` ? N : never` uses `infer ... extends` inside a template-literal type, which requires TypeScript 4.7 or later. @types/lodash is declared as ^4.14.150 and resolved to a present-day release."
+    },
+    "stopped": "after one deviation. The failure class had reproduced identically on a second, independent package, which was enough to establish the pattern. No further pinning was attempted."
+  },
+  "conclusion": {
+    "installs": "yes, in the Node 12.14.1 / npm 6.13.4 cell",
+    "builds": "no, as acquired",
+    "why": "the repository ships no lockfile, and the ranges it declares no longer resolve to a set that its own pinned TypeScript can parse",
+    "whatWouldLikelyBeNeeded": "an era-consistent lockfile — reconstructed, or pinned by date — before any build, browser, or migration work on this fixture",
+    "unknownPreserved": "Whether this application builds at all under an era-consistent closure is unknown. Nothing observed here shows that it compiles in any environment, and nothing observed here shows that it does not."
+  },
+  "artifacts": {
+    "workingTree": ".versionless/cache/react-hospitalrun-baseline/app (git-ignored)",
+    "installLog": ".versionless/cache/react-hospitalrun-baseline/install.stdout.log, install.stderr.log (git-ignored)",
+    "buildLog": ".versionless/cache/react-hospitalrun-baseline/build.stdout.log, build.stderr.log (git-ignored)",
+    "buildOutputProduced": false,
+    "note": "Logs are retained in the git-ignored cache rather than copied into evidence, because they carry host-absolute paths. The quoted diagnostics above were transcribed with those paths removed."
+  },
+  "nonclaims": [
+    "A successful install establishes no build, no browser behavior, and no dependency licence position.",
+    "A failed build in this cell is a finding about this cell and this resolution on this date. It is not a claim that the application is unbuildable.",
+    "Nothing here establishes migration feasibility, pilot status, production readiness, certification, or legal approval."
+  ]
+}

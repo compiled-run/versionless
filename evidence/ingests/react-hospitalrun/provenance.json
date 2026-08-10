@@ -1,0 +1,100 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-provenance.v1",
+  "slug": "react-hospitalrun",
+  "unit": "lrapr-t004-hospitalrun/h1-candidate-ingest",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "networkMode": "consented",
+  "purpose": "Admit and immutably ingest the third React tranche candidate for the legacy production-readiness corpus: a healthcare CRUD application on the create-react-app / webpack 4 line, replacing a dropped crypto-wallet candidate because the corpus is approvals-facing.",
+  "upstream": {
+    "repository": "HospitalRun/hospitalrun-frontend",
+    "repositoryId": 18224920,
+    "homepageEndpoint": "https://api.github.com/repos/HospitalRun/hospitalrun-frontend",
+    "archivedUpstream": true,
+    "ref": "refs/tags/v2.0.0-alpha.7",
+    "tagKind": "annotated",
+    "tagObjectSha": "0c5ce4d6baa5af053d231df6ab565aff061b30cf",
+    "tagDate": "2020-11-07T10:12:53Z",
+    "tagVerification": "unsigned",
+    "commitSha": "8156955145551d0366df10faa28e724f3377dea1",
+    "commitDate": "2020-11-07T10:12:44Z",
+    "commitVerification": "unsigned",
+    "rootTreeSha": "0be1ea968559f62696f929e48938b95e02ffb48b"
+  },
+  "archive": {
+    "endpoint": "https://codeload.github.com/HospitalRun/hospitalrun-frontend/tar.gz/8156955145551d0366df10faa28e724f3377dea1",
+    "mediaType": "application/gzip",
+    "bytes": 249138,
+    "sha256": "c9d07e8ee7ffaa174dff597dcecbd00c8eb0b6d525bb7a3f9a7d48e6a46ec306",
+    "streamsFetched": 2,
+    "streamsByteIdentical": true,
+    "singleRoot": "hospitalrun-frontend-8156955145551d0366df10faa28e724f3377dea1",
+    "regularFiles": 537,
+    "normalizedManifestSha256": "5662b4a35f1435f1364a5cfc3036d82b346a69292793b480d64576de60c432c1"
+  },
+  "reconciliation": {
+    "method": "every extracted regular file was hashed as a git blob object and compared against the recursive tree at the pinned revision",
+    "gitBlobs": 537,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "specialEntries": 0,
+    "symlinks": 0,
+    "gitlinks": 0,
+    "treeTruncated": false,
+    "archiveMatchesGitTree": true
+  },
+  "chain": [
+    {
+      "step": "probe-repo-and-tag-ref",
+      "producedBy": "ad-hoc `node -e` invocation, argv logged verbatim in transcript.ndjson",
+      "records": "probe-ledger.ndjson, transcript.ndjson"
+    },
+    {
+      "step": "deref-tag-commit-tree",
+      "producedBy": "ad-hoc `node -e` invocation, argv logged verbatim in transcript.ndjson",
+      "records": "probe-tree.json, probe-ledger.ndjson, transcript.ndjson"
+    },
+    {
+      "step": "fetch-archive-twice",
+      "producedBy": "ad-hoc `node -e` invocation, argv logged verbatim in transcript.ndjson",
+      "records": "probe-ledger.ndjson, source.json, transcript.ndjson"
+    },
+    {
+      "step": "extract-archive-1",
+      "producedBy": "ad-hoc `node -e` invocation, argv logged verbatim in transcript.ndjson",
+      "records": "transcript.ndjson"
+    },
+    {
+      "step": "reconcile-blobs-against-git-tree",
+      "producedBy": "ad-hoc `node -e` invocation, argv logged verbatim in transcript.ndjson",
+      "records": "reconciliation.json, transcript.ndjson"
+    },
+    {
+      "step": "baseline-install-and-build",
+      "producedBy": "ad-hoc `node -e` invocations driving the pinned Node 12.14.1 x86_64 runtime under Rosetta 2",
+      "records": "baseline-attempt.json, closure.json, transcript.ndjson"
+    }
+  ],
+  "machinery": {
+    "reused": [
+      "evidence/ingests/react-papercups-v1-0-0/ and evidence/ingests/react-mycrypto/ (evidence shapes: attempt/source documents, per-response ledger with byte count and digest, blob-level archive-to-git-tree parity, declared-cell honesty, non-claim discipline)",
+      ".versionless/cache/react-mycrypto-runtime/node-v12.14.1-darwin-x64 (Node runtime already acquired and digest-verified against the official SHASUMS256.txt by the react-mycrypto ingest; reused here with no new runtime download)"
+    ],
+    "notWritten": [
+      "No module, driver, or script was added under packages/**, scripts/**, or docs/**; the packet places them out of contract.",
+      "No .js, .mjs, or .cjs driver was written anywhere. Every acquisition step ran as an ad-hoc `node -e` invocation whose full argv is recorded verbatim in transcript.ndjson, which is what makes this ingest re-runnable without adding an executable file to the repository."
+    ],
+    "unknownPreserved": "The workspace CLI (`pnpm run fixture:ingest`) carries a closed fixture-id union that cannot name this candidate without an out-of-contract edit, so no CLI path was used."
+  },
+  "cache": {
+    "root": ".versionless/cache/react-hospitalrun-source",
+    "verifiedSource": ".versionless/cache/react-hospitalrun-source/verify/extracted/hospitalrun-frontend-8156955145551d0366df10faa28e724f3377dea1",
+    "baseline": ".versionless/cache/react-hospitalrun-baseline",
+    "gitIgnored": true,
+    "note": "Cache trees are git-ignored; the durable record is this evidence directory plus fixtures/react-hospitalrun/fixture.json."
+  },
+  "nonclaims": [
+    "Byte-identical duplicate fetches and blob-level git-tree parity establish source integrity for this revision only; they establish no signer authenticity, since the annotated tag and its commit are both unsigned.",
+    "This provenance record establishes no migration feasibility, pilot status, production readiness, certification, or legal approval."
+  ]
+}

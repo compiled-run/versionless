@@ -1,0 +1,19 @@
+{
+ "schemaVersion": "versionless.legacy-corpus-reconciliation.v1",
+ "slug": "react-hospitalrun",
+ "archiveRoot": "hospitalrun-frontend-8156955145551d0366df10faa28e724f3377dea1",
+ "gitBlobs": 537,
+ "gitTrees": 253,
+ "gitGitlinks": 0,
+ "archiveFiles": 537,
+ "archiveDirectories": 253,
+ "specialEntries": 0,
+ "missingFiles": 0,
+ "extraFiles": 0,
+ "mismatchedBlobs": 0,
+ "missingList": [],
+ "extraList": [],
+ "mismatchedList": [],
+ "normalizedManifestSha256": "5662b4a35f1435f1364a5cfc3036d82b346a69292793b480d64576de60c432c1",
+ "method": "Every regular file and symlink in the extracted archive was hashed as a git blob object and compared to the sha recorded for the same path in the recursive git tree at the pinned revision."
+}

@@ -1,0 +1,127 @@
+{
+  "schemaVersion": "versionless.official-source.v1",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "attemptSha256": "148c124ec8dd626572aeffb4e38056985b62d5c142d1012e098a3d78d277e9be",
+  "result": "source-bound",
+  "startedAt": "2026-08-10T00:00:00Z",
+  "completedAt": "2026-08-10T00:00:00Z",
+  "timestampNote": "Per-request wall-clock timestamps are recorded in probe-ledger.ndjson and transcript.ndjson; the coarse values above are placeholders for the transaction envelope only.",
+  "repository": {
+    "id": 18224920,
+    "fullName": "HospitalRun/hospitalrun-frontend",
+    "private": false,
+    "archived": true,
+    "disabled": false,
+    "responseBytes": 7060,
+    "responseSha256": "8bfa0ded254697a1eb3eb12fa175a82612b13149226c871cc4d2ef231429ebda",
+    "archivedNote": "The upstream repository is archived (read-only) as observed at acquisition time. That is recorded as found; it does not affect the licence grant or the integrity of the pinned revision."
+  },
+  "revision": {
+    "ref": "refs/tags/v2.0.0-alpha.7",
+    "tagObjectSha": "0c5ce4d6baa5af053d231df6ab565aff061b30cf",
+    "tagKind": "annotated",
+    "tagDate": "2020-11-07T10:12:53Z",
+    "tagMessage": "chore(release): 2.0.0-alpha.7",
+    "tagVerification": "unsigned",
+    "commitSha": "8156955145551d0366df10faa28e724f3377dea1",
+    "commitDate": "2020-11-07T10:12:44Z",
+    "commitVerification": "unsigned",
+    "rootTreeSha": "0be1ea968559f62696f929e48938b95e02ffb48b",
+    "treeEntries": 790,
+    "treeBlobs": 537,
+    "treeDirectories": 253,
+    "treeSymlinks": 0,
+    "treeGitlinks": 0,
+    "treeExecutableBlobs": 2,
+    "treeTruncated": false,
+    "expectedCommitShaFromPriorScout": "8156955145551d0366df10faa28e724f3377dea1",
+    "expectedCommitShaConfirmedFromWire": true
+  },
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/HospitalRun/hospitalrun-frontend",
+      "status": 200,
+      "bytes": 7060,
+      "sha256": "8bfa0ded254697a1eb3eb12fa175a82612b13149226c871cc4d2ef231429ebda"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/HospitalRun/hospitalrun-frontend/git/ref/tags/v2.0.0-alpha.7",
+      "status": 200,
+      "bytes": 391,
+      "sha256": "2365f185d92aa917334d88a6ff32a44fc786ee0e387550283186805db3a7e7da"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/HospitalRun/hospitalrun-frontend/git/tags/0c5ce4d6baa5af053d231df6ab565aff061b30cf",
+      "status": 200,
+      "bytes": 725,
+      "sha256": "54cbb8caae84a0dd0a17f89c589b707daf8b886d4ed876c0c33189cce65fdad1"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/HospitalRun/hospitalrun-frontend/git/commits/8156955145551d0366df10faa28e724f3377dea1",
+      "status": 200,
+      "bytes": 1197,
+      "sha256": "c5d303a2ef7bf147f50b0e99fb7f5e2fa4bd47ff5fe71fddb786139ec44fd40e"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/HospitalRun/hospitalrun-frontend/git/trees/0be1ea968559f62696f929e48938b95e02ffb48b?recursive=1",
+      "status": 200,
+      "bytes": 204535,
+      "sha256": "266516ce8958f2c12a67416e488ccff4fe332d453e3b598d8dfcfed0d2c5cc36"
+    },
+    {
+      "endpoint": "https://codeload.github.com/HospitalRun/hospitalrun-frontend/tar.gz/8156955145551d0366df10faa28e724f3377dea1",
+      "status": 200,
+      "bytes": 249138,
+      "sha256": "c9d07e8ee7ffaa174dff597dcecbd00c8eb0b6d525bb7a3f9a7d48e6a46ec306",
+      "stream": 1
+    },
+    {
+      "endpoint": "https://codeload.github.com/HospitalRun/hospitalrun-frontend/tar.gz/8156955145551d0366df10faa28e724f3377dea1",
+      "status": 200,
+      "bytes": 249138,
+      "sha256": "c9d07e8ee7ffaa174dff597dcecbd00c8eb0b6d525bb7a3f9a7d48e6a46ec306",
+      "stream": 2
+    }
+  ],
+  "archiveParity": {
+    "singleRoot": "hospitalrun-frontend-8156955145551d0366df10faa28e724f3377dea1",
+    "safeEntries": 790,
+    "regularFiles": 537,
+    "directories": 253,
+    "specialEntries": 0,
+    "gitBlobs": 537,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "normalizedManifestSha256": "5662b4a35f1435f1364a5cfc3036d82b346a69292793b480d64576de60c432c1",
+    "method": "Blob-level: every regular file in the extracted archive was hashed as a git blob object and compared byte-for-byte against the sha recorded for the same path in the recursive git tree. Detail in reconciliation.json.",
+    "pathTraversalEntries": 0,
+    "absolutePathEntries": 0
+  },
+  "transaction": {
+    "attemptedRequests": 7,
+    "acceptedResponses": 7,
+    "acceptedWireBytes": 712184,
+    "acceptedDecodedBytes": 712184,
+    "redirectsObserved": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "credentialsSent": 0,
+    "archivesByteIdentical": true,
+    "archiveMatchesGitTree": true,
+    "publishedSource": true,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "cache": {
+    "root": ".versionless/cache/react-hospitalrun-source",
+    "archive1": ".versionless/cache/react-hospitalrun-source/archive/archive-1.tar.gz",
+    "archive2": ".versionless/cache/react-hospitalrun-source/archive/archive-2.tar.gz",
+    "verifiedSource": ".versionless/cache/react-hospitalrun-source/verify/extracted",
+    "rawMetadataPortable": false
+  },
+  "nonclaims": [
+    "An unsigned annotated tag does not establish signer authenticity; the tagger identity carried by the tag object is upstream metadata and is not treated as a verification result.",
+    "No dependency closure, build, browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval is established by this record."
+  ]
+}

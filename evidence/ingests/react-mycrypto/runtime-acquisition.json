@@ -1,0 +1,89 @@
+{
+ "schemaVersion": "versionless.pinned-runtime-acquisition.v1",
+ "slug": "react-mycrypto",
+ "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+ "networkMode": "consented",
+ "purpose": "Acquire the official x64 Node 12.14.1 runtime for darwin so the repository-declared cell (package.json engines.node 12.14.1, .nvmrc v12.14.1, check-node-version prebuild) could be executed under Rosetta 2 on darwin-arm64.",
+ "acquiredAt": "2026-08-10T21:56:00.000Z",
+ "cache": ".versionless/cache/react-mycrypto-runtime",
+ "downloads": [
+  {
+   "role": "official-checksum-manifest",
+   "url": "https://nodejs.org/dist/v12.14.1/SHASUMS256.txt",
+   "status": 200,
+   "redirects": 0,
+   "bytes": 3147,
+   "sha256": "e8edaf587831205aced1ae5425bf944ea9ce1922f5b3074187c86b0ed07aa302",
+   "path": ".versionless/cache/react-mycrypto-runtime/SHASUMS256.txt"
+  },
+  {
+   "role": "runtime-archive",
+   "url": "https://nodejs.org/dist/v12.14.1/node-v12.14.1-darwin-x64.tar.gz",
+   "status": 200,
+   "redirects": 0,
+   "bytes": 19523325,
+   "sha256": "0be10a28737527a1e5e3784d3ad844d742fe8b0718acd701fd48f718fd3af78f",
+   "path": ".versionless/cache/react-mycrypto-runtime/node-v12.14.1-darwin-x64.tar.gz"
+  }
+ ],
+ "digestVerification": {
+  "method": "shasum -a 256 -c against the line for node-v12.14.1-darwin-x64.tar.gz extracted from the official SHASUMS256.txt fetched in the same consented window",
+  "expectedFromOfficialManifest": "0be10a28737527a1e5e3784d3ad844d742fe8b0718acd701fd48f718fd3af78f",
+  "observedOnDisk": "0be10a28737527a1e5e3784d3ad844d742fe8b0718acd701fd48f718fd3af78f",
+  "result": "OK"
+ },
+ "runtime": {
+  "version": "12.14.1",
+  "platform": "darwin-x64",
+  "binary": ".versionless/cache/react-mycrypto-runtime/node-v12.14.1-darwin-x64/bin/node",
+  "machOArchitectures": ["x86_64"],
+  "bundledPackageManagers": ["npm", "npx"]
+ },
+ "executionProbe": {
+  "hostArchitecture": "arm64",
+  "hostOs": "darwin 26.5.1",
+  "attempts": [
+   {
+    "command": "node-v12.14.1-darwin-x64/bin/node -v",
+    "mode": "direct",
+    "exitCode": 127,
+    "stderrTail": "bad CPU type in executable: ./node-v12.14.1-darwin-x64/bin/node"
+   },
+   {
+    "command": "/usr/bin/arch -x86_64 node-v12.14.1-darwin-x64/bin/node -v",
+    "mode": "rosetta-translated",
+    "exitCode": 1,
+    "stderrTail": "arch: posix_spawnp: ./node-v12.14.1-darwin-x64/bin/node: Bad CPU type in executable"
+   }
+  ],
+  "result": "runtime-acquired-and-digest-verified-but-not-executable-on-this-host"
+ },
+ "rosettaProbe": {
+  "question": "Is Rosetta 2 present, so that an x86_64 Mach-O binary can be translated on this arm64 host?",
+  "controlProbe": {
+   "binary": "/usr/bin/true",
+   "machOArchitectures": ["x86_64", "arm64e"],
+   "command": "/usr/bin/arch -x86_64 /usr/bin/true",
+   "exitCode": 1,
+   "stderrTail": "arch: posix_spawnp: /usr/bin/true: Bad CPU type in executable",
+   "interpretation": "This system binary does contain an x86_64 slice, so the refusal is not a missing slice. It is the absence of the translation layer."
+  },
+  "installationMarkers": {
+   "/Library/Apple/usr/libexec/oah": "absent",
+   "/Library/Apple/System/Library/LaunchDaemons/com.apple.oahd.plist": "absent",
+   "oahdProcess": "not running"
+  },
+  "conclusion": "Rosetta 2 is not installed on this host.",
+  "remediationNotAttempted": "Installing Rosetta 2 requires `softwareupdate --install-rosetta`, which needs administrator privileges, an interactive licence acceptance, and a network fetch outside this unit's recorded allowance. It mutates the host rather than the repository, so it was not attempted."
+ },
+ "alternativeCellsProbed": [
+  { "candidate": "docker", "present": false },
+  { "candidate": "podman", "present": false },
+  { "candidate": "colima", "present": false }
+ ],
+ "nonclaims": [
+  "A verified runtime digest establishes only that the bytes on disk match the bytes nodejs.org published for this release. It establishes no signer authenticity: the official SHASUMS256.txt was fetched over TLS and its detached GPG signature was not checked against a key this unit holds.",
+  "The runtime was acquired and verified but never executed, so this record is not evidence about how any project behaves under Node 12.14.1.",
+  "No install, build, browser behavior, migration feasibility, pilot status, or production readiness is established by this record."
+ ]
+}
