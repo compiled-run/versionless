@@ -58,6 +58,7 @@ import {
 	witnessReactBoilerplateZeroSwAggregateMember,
 } from '../receipts/react-boilerplate-zero-sw.ts';
 import {
+	REACT_PAPERCUPS_FIXTURE,
 	REACT_PAPERCUPS_RECEIPT_PATH,
 	reactPapercupsAggregateMember,
 	verifyWitnessReactPapercupsEvidence,
@@ -72,11 +73,13 @@ import {
 	witnessReactHospitalrunAggregateMember,
 } from '../receipts/witness-react-hospitalrun.ts';
 import {
+	ANGULAR_FACTORIOLAB_FIXTURE,
 	verifyWitnessAngularFactoriolabEvidence,
 	WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH,
 	witnessAngularFactoriolabAggregateMember,
 } from '../receipts/witness-angular-factoriolab.ts';
 import {
+	ANGULAR_JIRA_CLONE_FIXTURE,
 	verifyWitnessAngularJiraCloneEvidence,
 	WITNESS_ANGULAR_JIRA_CLONE_RECEIPT_PATH,
 	witnessAngularJiraCloneAggregateMember,
@@ -126,6 +129,123 @@ export const NEXTJS_SYNTHETIC_NOT_TESTED_LANES = [
 	pilot: 'not-tested' as const,
 	support: 'not-tested' as const,
 }));
+
+/**
+ * The denominator every production-readiness lineage score is measured against:
+ * four immutable source applications per lineage. It is a target count, not a
+ * count of evidence, so it stays constant while the numerator is derived.
+ */
+export const LINEAGE_READINESS_TOTAL = 4 as const;
+
+/**
+ * One production-readiness lineage cell as the Judge ruled on it.
+ *
+ * A cell is a source application proven by exactly one direct-Witness receipt.
+ * `counted` is the Judge's acceptance, and `reason` is why — including for the
+ * cells the Judge declines, which stay visible here rather than disappearing
+ * from the ledger. Lineage numerators are counted off these entries, so a cell
+ * cannot reach a numerator without a verified Witness receipt in the corpus and
+ * a declined cell cannot be quietly dropped to flatter a score.
+ */
+export interface LineageCountingCell {
+	readonly cell: string;
+	readonly application: string;
+	readonly lineage: 'react' | 'angular';
+	readonly witnessReceipt: string;
+	readonly counted: boolean;
+	readonly reason: string;
+}
+
+/**
+ * Builds the Judge's counting ledger from which lineage cells the corpus
+ * actually carries verified Witness evidence for.
+ *
+ * Presence is the caller's already-verified evidence, never an assertion made
+ * here, so an earlier transaction state emits a strictly shorter ledger and a
+ * correspondingly smaller numerator without any separate bookkeeping.
+ */
+function lineageCountingLedger(present: {
+	reactBoilerplate: boolean;
+	papercups: boolean;
+	hospitalrun: boolean;
+	angularRealworld: boolean;
+	factoriolab: boolean;
+	jiraClone: boolean;
+}): LineageCountingCell[] {
+	const cells: Array<LineageCountingCell | null> = [
+		present.reactBoilerplate
+			? {
+					cell: 'react-boilerplate',
+					application: 'react-boilerplate',
+					lineage: 'react' as const,
+					witnessReceipt: WITNESS_REACT_BOILERPLATE_RECEIPT_PATH,
+					counted: true,
+					reason: 'Judge-accepted: webpack 4.30.0 to Vite 8.0.16 across Node 16 to Node 24 with a direct-Witness browser proof, byte-identical mutation restoration, and a current zero-service-worker policy reconciliation on the same immutable source.',
+				}
+			: null,
+		present.papercups
+			? {
+					cell: REACT_PAPERCUPS_FIXTURE,
+					application: 'papercups',
+					lineage: 'react' as const,
+					witnessReceipt: WITNESS_REACT_PAPERCUPS_RECEIPT_PATH,
+					counted: true,
+					reason: 'Judge-accepted: a create-react-app 3.4.1 production application really moved to a Vite 8 build, with behavioral parity and mutation restoration proven in the browser rather than inferred from the build.',
+				}
+			: null,
+		present.hospitalrun
+			? {
+					cell: REACT_HOSPITALRUN_FIXTURE,
+					application: 'react-hospitalrun',
+					lineage: 'react' as const,
+					witnessReceipt: WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
+					counted: true,
+					reason: 'Judge-accepted: a create-react-app 3.4.4 application on Node 12 reached a booting Vite 8 build on Node 24, and its baseline/migrated service-worker difference is recorded rather than masked, so the cell is counted with its difference visible.',
+				}
+			: null,
+		present.angularRealworld
+			? {
+					cell: 'angular-realworld-v15-to-v16',
+					application: 'angular-realworld',
+					lineage: 'angular' as const,
+					witnessReceipt: WITNESS_ANGULAR_REALWORLD_RECEIPT_PATH,
+					counted: false,
+					reason: 'Judge-declined for the numerator: the migration changed applicationFilesChanged=0 application files, so it is an Angular 15-to-16 dependency version bump rebuilt under AOT rather than a proven application migration. Its browser-proof receipt stays verified and retained; only its counting is reclassified.',
+				}
+			: null,
+		present.factoriolab
+			? {
+					cell: ANGULAR_FACTORIOLAB_FIXTURE,
+					application: 'angular-factoriolab',
+					lineage: 'angular' as const,
+					witnessReceipt: WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH,
+					counted: true,
+					reason: 'Judge-accepted: Angular CLI 10.1 to 16.2 browser-builder across six majors with application source really rewritten, proven in the browser with byte-identical mutation restoration.',
+				}
+			: null,
+		present.jiraClone
+			? {
+					cell: ANGULAR_JIRA_CLONE_FIXTURE,
+					application: 'angular-jira-clone',
+					lineage: 'angular' as const,
+					witnessReceipt: WITNESS_ANGULAR_JIRA_CLONE_RECEIPT_PATH,
+					counted: true,
+					reason: 'Judge-accepted: Angular CLI 13.2 custom-webpack to 16.2 browser-builder, absorbing a non-default builder and rewriting application source, proven in the browser on a second independent Angular application.',
+				}
+			: null,
+	];
+	return cells.filter((cell): cell is LineageCountingCell => cell !== null);
+}
+
+/**
+ * Counts one lineage's numerator off the Judge's ledger.
+ *
+ * The score is the number of accepted cells and nothing else, so it cannot be
+ * set to a value the ledger does not support.
+ */
+function countedLineageCells(ledger: LineageCountingCell[], lineage: 'react' | 'angular'): number {
+	return ledger.filter((cell) => cell.lineage === lineage && cell.counted).length;
+}
 
 const sha256Pattern = createRegExp(
 	charIn('0123456789').from('a', 'f').times(64).at.lineStart().at.lineEnd(),
@@ -2458,6 +2578,17 @@ export async function analyzeCorpusConformance(
 			'Corpus conformance rows do not agree with the derived transaction summary',
 		);
 
+	const judgeCounting = lineageCountingLedger({
+		reactBoilerplate: reactBoilerplateWitness !== null,
+		papercups: papercups !== null,
+		hospitalrun: hospitalrun !== null,
+		angularRealworld: angularRealworldWitness !== null,
+		factoriolab: factoriolab !== null,
+		jiraClone: jiraClone !== null,
+	});
+	const reactLineageReady = countedLineageCells(judgeCounting, 'react');
+	const angularLineageReady = countedLineageCells(judgeCounting, 'angular');
+
 	const result: CorpusConformance = {
 		schemaVersion: CORPUS_CONFORMANCE_SCHEMA,
 		summary: {
@@ -2480,15 +2611,18 @@ export async function analyzeCorpusConformance(
 			locality: 'process-scoped-not-os-wide',
 			productionReadiness: {
 				reactLineage: {
-					ready: reactBoilerplateWitness === null ? 0 : 1,
-					total: 4,
-					counted: reactBoilerplateWitness !== null,
-					candidate: reactBoilerplateWitness === null ? 'not-tested' : 'judge-approved',
+					ready: reactLineageReady,
+					total: LINEAGE_READINESS_TOTAL,
+					counted: reactLineageReady > 0,
+					candidate: reactLineageReady > 0 ? 'judge-approved' : 'not-tested',
 				},
 				angularLineage: {
-					ready: angularRealworldWitness === null ? 0 : 1,
-					total: 4,
+					ready: angularLineageReady,
+					total: LINEAGE_READINESS_TOTAL,
+					counted: angularLineageReady > 0,
+					candidate: angularLineageReady > 0 ? 'judge-approved' : 'not-tested',
 				},
+				judgeCounting,
 				olderNext: {
 					ready: 0,
 					total: 4,

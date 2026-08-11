@@ -1,0 +1,127 @@
+{
+  "schemaVersion": "versionless.trust.v1",
+  "freeze": {
+    "commit": "57b308a573dd582c844ce401fb1161cd70e9bc66",
+    "algorithm": "sha256",
+    "composite": "d9f75ef677cb850f664cc188abf77b8ebfd24e84cb58d147b74e9bbaa143eb77",
+    "preimage": "newline-terminated `<path> <tree-oid>` lines in the listed subtree order",
+    "subtrees": [
+      {
+        "path": "packages/frameworks/react",
+        "treeOid": "ae219d37efe52b2aebd51d116108169a0456ad93"
+      },
+      {
+        "path": "packages/frameworks/angular",
+        "treeOid": "46ed07a7ff95277dfd99e7cddb14bd8cf806719b"
+      },
+      {
+        "path": "packages/core/src/migrations",
+        "treeOid": "5237ce5990af3623206bcd2301047a59c80731cf"
+      },
+      {
+        "path": "packages/core/src/bundlers",
+        "treeOid": "cec2f0b56fbb7897f38d579be805e19982380ca6"
+      },
+      {
+        "path": "packages/core/src/analysis",
+        "treeOid": "262dc8b7528c92883c2300914eb7d42579fb856b"
+      }
+    ],
+    "state": "frozen",
+    "claim": "The migration engine adapter surface is byte-stable at this commit."
+  },
+  "holdoutPublishing": {
+    "state": "outside-freeze",
+    "surfaces": [
+      "packages/core/src/receipts",
+      "packages/core/src/corpus",
+      "packages/cli/src/witness"
+    ],
+    "reason": "Additive holdout publishing must stay possible: new verticals land as receipts, corpus rows, and witness runners without reopening the frozen adapters."
+  },
+  "capabilities": {
+    "experimental": {
+      "state": "out-of-matrix",
+      "basis": "single-application proof",
+      "pendingEvidence": "T006 second-application evidence",
+      "entries": [
+        {
+          "lineage": "react",
+          "capability": "connect-to-hooks"
+        },
+        {
+          "lineage": "react",
+          "capability": "class-lifecycle-to-hooks"
+        },
+        {
+          "lineage": "react",
+          "capability": "data-flow-connect-to-hooks"
+        },
+        {
+          "lineage": "react",
+          "capability": "composed-migration"
+        },
+        {
+          "lineage": "angular",
+          "capability": "custom-webpack-absorption"
+        },
+        {
+          "lineage": "angular",
+          "capability": "sentry-v8-migration"
+        },
+        {
+          "lineage": "angular",
+          "capability": "package-exports-style-imports"
+        },
+        {
+          "lineage": "angular",
+          "capability": "modal-content-params-migration"
+        },
+        {
+          "lineage": "angular",
+          "capability": "undeclared-runtime-dependency"
+        },
+        {
+          "lineage": "angular",
+          "capability": "tslint-toolchain-removal"
+        },
+        {
+          "lineage": "angular",
+          "capability": "ngrx-effects-migration"
+        }
+      ]
+    },
+    "crossProven": {
+      "state": "in-matrix",
+      "basis": "two independent applications",
+      "entries": [
+        {
+          "lineage": "react",
+          "capability": "react-cra-vite-adapter"
+        },
+        {
+          "lineage": "angular",
+          "capability": "angular-target-cell"
+        },
+        {
+          "lineage": "angular",
+          "capability": "angular-workspace-migration"
+        },
+        {
+          "lineage": "angular",
+          "capability": "angular-source-migration"
+        },
+        {
+          "lineage": "angular",
+          "capability": "angular-cli-era-migration"
+        }
+      ]
+    }
+  },
+  "angularHoldout": {
+    "state": "deferred",
+    "deferredUntil": "post-T006",
+    "preScreen": "mandatory license-text-at-pin pre-screen",
+    "reason": "Angular holdout ingestion is deferred until the second-application evidence lands, and no candidate is admitted without verifying license text at the exact pinned revision first."
+  }
+}

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "versionless.trust.v1",
-  "canonicalDigest": "c5ddf84e6de0fb1780fe123d83e749ed79b3a5af64e3e0426862a3648def0fd7",
+  "canonicalDigest": "197e4c4156175aec99d977642835e1396034aa6326afafb22265f80085bf52a9",
   "integrity": {
     "algorithm": "sha256",
     "authenticity": "not-established",
@@ -8,8 +8,12 @@
   },
   "deterministicCore": {
     "algorithm": "sha256",
-    "digest": "6d906891b44ac1c504d3b14d09f1be30be13cfbd8337c2fcdb1a4645ae20bbd9",
+    "digest": "8d455f28ceee15c9384ed8c3396ab2ee13dc04e194b52a2862d75a7146918485",
     "artifacts": [
+      {
+        "path": "adapter-freeze.json",
+        "sha256": "60676202aee644db5c6452ab00a1fec760dd8825f91d16c0d908154cbf49c86d"
+      },
       {
         "path": "dependency-graph.cdx.json",
         "sha256": "3d0d791fea5ad168ae47dcdc44639fbecaf232b469767c4366c3e5cae2986480"
@@ -24,11 +28,11 @@
       },
       {
         "path": "provenance.json",
-        "sha256": "207eb8927aec4d973cc50f50f5d3ff24fe8dde005211fe19cf0455633e7a5e1c"
+        "sha256": "a1cde7f85cfd305a7168d56abf7f97195aa2e03e6983c7d7968fde43c057c4f7"
       },
       {
         "path": "matrix.json",
-        "sha256": "372e46fecb5febfff288f8b7a90bf4854482bddfd17f65de5779647c6d6ae52b"
+        "sha256": "31a627d73a3011daede7561bfdc4b82c552fb88dbf131caeac597206eefef5a2"
       },
       {
         "path": "controls.json",
@@ -40,7 +44,7 @@
       },
       {
         "path": "corpus-conformance.json",
-        "sha256": "200024e8be8c1b95b4088c6b75cbf6394096ca1bf491f83e751018661ea8ab6f"
+        "sha256": "ccbd1ffa70fe5886c336c0a366e8c653669888c0bbd1fe0051470d774ca9d639"
       },
       {
         "path": "script-surface.json",
@@ -187,7 +191,7 @@
     }
   ],
   "observation": {
-    "generatedAt": "2026-08-11T11:40:04.809Z",
+    "generatedAt": "2026-08-11T12:23:54.127Z",
     "vulnerabilityFreshness": "verified"
   },
   "derivedReport": "report.md"

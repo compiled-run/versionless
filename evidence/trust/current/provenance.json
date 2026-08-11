@@ -4,25 +4,25 @@
     {
       "name": "packages/cli/dist/cli.js",
       "digest": {
-        "sha256": "ff91eb0c2c12d77b8a9b84a3b2529a59681227de8e60302070477b6a83a7ac2f"
+        "sha256": "9b90d76be66ca17802046b8c603c6679d167f995ae7b47ca035a94bc93fa02da"
       }
     },
     {
       "name": "packages/cli/dist/index.js",
       "digest": {
-        "sha256": "75cfcb54ead9e960a293baa2794a482c1064c594bb29b5aa825c8254a1bff414"
+        "sha256": "6d4f97283735506e2a84dcc416a748a8be3b19c93a1a53f52740ccf51a97e2a5"
       }
     },
     {
-      "name": "packages/cli/dist/verify-CEvokVu9.js",
+      "name": "packages/cli/dist/verify-D7sIVkt7.js",
       "digest": {
-        "sha256": "93563b99e5de00f7cdaaf99b63484652e98b8f7158c9e4670e932912c686f0ab"
+        "sha256": "9175d02a199c68d42016c05043b8ef506cf1dd7cad75c06b3ec3218f2ac6359e"
       }
     },
     {
       "name": "packages/core/dist/index.js",
       "digest": {
-        "sha256": "b6983b9ea4a90f6946ac30c6460afb0faa35df62b82a858f6374087f43208bde"
+        "sha256": "ea4fb9c1fc1468983d37413af5fbb7a50854fb285406b1a6cdfcea173ab20668"
       }
     },
     {
@@ -64,7 +64,7 @@
     {
       "name": "packages/trust/dist/index.js",
       "digest": {
-        "sha256": "bfa671450ea30c04dfa0e09293bf63be1d8af7682fb666d341ce24026335c174"
+        "sha256": "8d1e0bf0192b285ad2987f001f44c8e589698ee4780ff2847aadc356de51fb3c"
       }
     }
   ],
@@ -324,19 +324,19 @@
       "byproducts": [
         {
           "path": "packages/cli/dist/cli.js",
-          "sha256": "ff91eb0c2c12d77b8a9b84a3b2529a59681227de8e60302070477b6a83a7ac2f"
+          "sha256": "9b90d76be66ca17802046b8c603c6679d167f995ae7b47ca035a94bc93fa02da"
         },
         {
           "path": "packages/cli/dist/index.js",
-          "sha256": "75cfcb54ead9e960a293baa2794a482c1064c594bb29b5aa825c8254a1bff414"
+          "sha256": "6d4f97283735506e2a84dcc416a748a8be3b19c93a1a53f52740ccf51a97e2a5"
         },
         {
-          "path": "packages/cli/dist/verify-CEvokVu9.js",
-          "sha256": "93563b99e5de00f7cdaaf99b63484652e98b8f7158c9e4670e932912c686f0ab"
+          "path": "packages/cli/dist/verify-D7sIVkt7.js",
+          "sha256": "9175d02a199c68d42016c05043b8ef506cf1dd7cad75c06b3ec3218f2ac6359e"
         },
         {
           "path": "packages/core/dist/index.js",
-          "sha256": "b6983b9ea4a90f6946ac30c6460afb0faa35df62b82a858f6374087f43208bde"
+          "sha256": "ea4fb9c1fc1468983d37413af5fbb7a50854fb285406b1a6cdfcea173ab20668"
         },
         {
           "path": "packages/experiments/dist/index.js",
@@ -364,7 +364,7 @@
         },
         {
           "path": "packages/trust/dist/index.js",
-          "sha256": "bfa671450ea30c04dfa0e09293bf63be1d8af7682fb666d341ce24026335c174"
+          "sha256": "8d1e0bf0192b285ad2987f001f44c8e589698ee4780ff2847aadc356de51fb3c"
         }
       ]
     }

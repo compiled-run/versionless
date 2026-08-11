@@ -368,9 +368,11 @@ describe('canonical corpus conformance', () => {
 				locality: 'process-scoped-not-os-wide',
 			},
 		});
+		// The T007 Judge counts this browser-proven application, so it is one of
+		// the three cells behind the React-lineage numerator.
 		expect(result.coverage).toMatchObject({
 			productionReadiness: expect.objectContaining({
-				reactLineage: { ready: 1, total: 4, counted: true, candidate: 'judge-approved' },
+				reactLineage: { ready: 3, total: 4, counted: true, candidate: 'judge-approved' },
 			}),
 		});
 	});
@@ -466,9 +468,11 @@ describe('canonical corpus conformance', () => {
 				locality: 'process-scoped-not-os-wide',
 			},
 		});
+		// The T007 Judge counts this browser-proven application, so it is one of
+		// the three cells behind the React-lineage numerator.
 		expect(result.coverage).toMatchObject({
 			productionReadiness: expect.objectContaining({
-				reactLineage: { ready: 1, total: 4, counted: true, candidate: 'judge-approved' },
+				reactLineage: { ready: 3, total: 4, counted: true, candidate: 'judge-approved' },
 			}),
 		});
 	});
@@ -566,11 +570,17 @@ describe('canonical corpus conformance', () => {
 				locality: 'process-scoped-not-os-wide',
 			},
 		});
-		// The vertical is verified and explicitly uncounted, so corpus-wide
-		// Angular-lineage readiness stays exactly where RealWorld left it.
+		// The T007 Judge counts this vertical and declines RealWorld's zero
+		// application-file version bump, so the Angular numerator is the two
+		// applications whose source really moved.
 		expect(result.coverage).toMatchObject({
 			productionReadiness: expect.objectContaining({
-				angularLineage: { ready: 1, total: 4 },
+				angularLineage: {
+					ready: 2,
+					total: 4,
+					counted: true,
+					candidate: 'judge-approved',
+				},
 			}),
 		});
 	});
@@ -677,13 +687,62 @@ describe('canonical corpus conformance', () => {
 				locality: 'process-scoped-not-os-wide',
 			},
 		});
-		// A second verified-but-uncounted Angular vertical still moves nothing:
-		// corpus-wide Angular-lineage readiness stays where RealWorld left it.
+		// The second counted Angular application completes the numerator; the
+		// declined RealWorld cell stays in the ledger with its reason.
 		expect(result.coverage).toMatchObject({
 			productionReadiness: expect.objectContaining({
-				angularLineage: { ready: 1, total: 4 },
+				angularLineage: {
+					ready: 2,
+					total: 4,
+					counted: true,
+					candidate: 'judge-approved',
+				},
 			}),
 		});
+	});
+
+	it('counts both lineage numerators off the Judge ledger and keeps the declined cell visible', async () => {
+		const result = await analyzeCorpusConformance({ rootDir: root });
+		const readiness = (result.coverage as Record<string, unknown>)
+			.productionReadiness as Record<string, unknown>;
+		const ledger = readiness.judgeCounting as Array<{
+			cell: string;
+			application: string;
+			lineage: string;
+			witnessReceipt: string;
+			counted: boolean;
+			reason: string;
+		}>;
+		// Every cell carries a reason, counted or not: the ledger is the record
+		// of the decision, not just of the score.
+		expect(ledger.every((cell) => cell.reason.length > 0)).toBe(true);
+		expect(ledger.map((cell) => cell.cell)).toEqual([
+			'react-boilerplate',
+			'react-papercups-v1-0-0',
+			'react-hospitalrun',
+			'angular-realworld-v15-to-v16',
+			'angular-factoriolab',
+			'angular-jira-clone',
+		]);
+		// RealWorld is demoted, not deleted: its Witness receipt is still the
+		// cell's evidence and the non-counting reason names the measurement.
+		const realworld = ledger.find((cell) => cell.cell === 'angular-realworld-v15-to-v16');
+		expect(realworld).toMatchObject({
+			counted: false,
+			witnessReceipt: 'evidence/runs/witness-angular-realworld/receipt.json',
+		});
+		expect(realworld?.reason).toContain('applicationFilesChanged=0');
+		// The numerators are the counted cells and nothing else.
+		for (const lineage of ['react', 'angular']) {
+			const score = readiness[`${lineage}Lineage`] as { ready: number; total: number };
+			expect(score.ready).toBe(
+				ledger.filter((cell) => cell.lineage === lineage && cell.counted).length,
+			);
+			expect(score.total).toBe(4);
+		}
+		expect(
+			result.applications.find((application) => application.id === 'angular-realworld'),
+		).toBeDefined();
 	});
 
 	it('refuses a jira-clone aggregate digest that does not match its receipt', async () => {

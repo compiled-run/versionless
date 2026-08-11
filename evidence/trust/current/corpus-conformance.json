@@ -1257,15 +1257,67 @@
     "locality": "process-scoped-not-os-wide",
     "productionReadiness": {
       "reactLineage": {
-        "ready": 1,
+        "ready": 3,
         "total": 4,
         "counted": true,
         "candidate": "judge-approved"
       },
       "angularLineage": {
-        "ready": 1,
-        "total": 4
+        "ready": 2,
+        "total": 4,
+        "counted": true,
+        "candidate": "judge-approved"
       },
+      "judgeCounting": [
+        {
+          "cell": "react-boilerplate",
+          "application": "react-boilerplate",
+          "lineage": "react",
+          "witnessReceipt": "evidence/runs/witness-react-boilerplate/receipt.json",
+          "counted": true,
+          "reason": "Judge-accepted: webpack 4.30.0 to Vite 8.0.16 across Node 16 to Node 24 with a direct-Witness browser proof, byte-identical mutation restoration, and a current zero-service-worker policy reconciliation on the same immutable source."
+        },
+        {
+          "cell": "react-papercups-v1-0-0",
+          "application": "papercups",
+          "lineage": "react",
+          "witnessReceipt": "evidence/runs/witness-react-papercups/receipt.json",
+          "counted": true,
+          "reason": "Judge-accepted: a create-react-app 3.4.1 production application really moved to a Vite 8 build, with behavioral parity and mutation restoration proven in the browser rather than inferred from the build."
+        },
+        {
+          "cell": "react-hospitalrun",
+          "application": "react-hospitalrun",
+          "lineage": "react",
+          "witnessReceipt": "evidence/runs/witness-react-hospitalrun/receipt.json",
+          "counted": true,
+          "reason": "Judge-accepted: a create-react-app 3.4.4 application on Node 12 reached a booting Vite 8 build on Node 24, and its baseline/migrated service-worker difference is recorded rather than masked, so the cell is counted with its difference visible."
+        },
+        {
+          "cell": "angular-realworld-v15-to-v16",
+          "application": "angular-realworld",
+          "lineage": "angular",
+          "witnessReceipt": "evidence/runs/witness-angular-realworld/receipt.json",
+          "counted": false,
+          "reason": "Judge-declined for the numerator: the migration changed applicationFilesChanged=0 application files, so it is an Angular 15-to-16 dependency version bump rebuilt under AOT rather than a proven application migration. Its browser-proof receipt stays verified and retained; only its counting is reclassified."
+        },
+        {
+          "cell": "angular-factoriolab",
+          "application": "angular-factoriolab",
+          "lineage": "angular",
+          "witnessReceipt": "evidence/runs/witness-angular-factoriolab/receipt.json",
+          "counted": true,
+          "reason": "Judge-accepted: Angular CLI 10.1 to 16.2 browser-builder across six majors with application source really rewritten, proven in the browser with byte-identical mutation restoration."
+        },
+        {
+          "cell": "angular-jira-clone",
+          "application": "angular-jira-clone",
+          "lineage": "angular",
+          "witnessReceipt": "evidence/runs/witness-angular-jira-clone/receipt.json",
+          "counted": true,
+          "reason": "Judge-accepted: Angular CLI 13.2 custom-webpack to 16.2 browser-builder, absorbing a non-default builder and rewriting application source, proven in the browser on a second independent Angular application."
+        }
+      ],
       "olderNext": {
         "ready": 0,
         "total": 4,
@@ -1281,6 +1333,6 @@
   },
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "619f90332984e231be3842caf220d7de14f024ebb18de75741bfdc39ba3dda66"
+    "canonicalDigest": "33358963b9619ea15599f1913c33082c220d5b584887227d47963d775a1c3fe8"
   }
 }

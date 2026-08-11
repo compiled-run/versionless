@@ -76,6 +76,7 @@ import {
 	type RuntimeScriptObservation,
 	verifyRuntimeScriptObservationEvidence,
 } from '../../core/src/enterprise/runtime-script-observation.ts';
+import { adapterFreezeRecord } from './freeze.ts';
 import { lockPackages, osvRequest } from './ingest.ts';
 import { renderTrustReport } from './render.ts';
 import {
@@ -1714,7 +1715,9 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 		},
 	};
 	await mkdir(output, { recursive: true });
+	const freeze = adapterFreezeRecord();
 	const deterministic: Array<[string, unknown]> = [
+		['adapter-freeze.json', freeze],
 		['dependency-graph.cdx.json', graph],
 		['licenses.json', licenses],
 		['vulnerabilities.json', vulnerability.report],
@@ -1751,6 +1754,7 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 	await writeJson(path.join(output, 'manifest.json'), trustManifest);
 	const report = renderTrustReport({
 		manifest: trustManifest,
+		freeze,
 		licenses,
 		vulnerabilities: vulnerability.report,
 		matrix: corpus,

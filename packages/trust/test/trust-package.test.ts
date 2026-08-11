@@ -37,6 +37,12 @@ import {
 	validateNextTailwindConsentFailure,
 	validateNextTailwindExclusion,
 } from '../src/generate.ts';
+import {
+	ADAPTER_FREEZE_COMPOSITE,
+	adapterFreezePreimage,
+	adapterFreezeRecord,
+	verifyAdapterFreezeRecord,
+} from '../src/freeze.ts';
 import { ingestTrustInputs, lockPackages, osvRequest } from '../src/ingest.ts';
 import { verifyTrustPackage } from '../src/verify.ts';
 
@@ -700,7 +706,7 @@ snapshots:
 			) as typeof first;
 			expect(first.deterministicCore.digest).toBe(second.deterministicCore.digest);
 			expect(first.canonicalDigest).not.toBe(second.canonicalDigest);
-			expect(first.deterministicCore.artifacts).toHaveLength(10);
+			expect(first.deterministicCore.artifacts).toHaveLength(11);
 			expect(first.receipts).toHaveLength(transaction.receipts);
 			expect(
 				first.receipts.filter(
@@ -1585,6 +1591,71 @@ snapshots:
 			await rm(fixture.directory, { recursive: true, force: true });
 		}
 	}, 30_000);
+
+	it('publishes an adapter freeze record whose composite is recomputable from its subtrees', () => {
+		const record = adapterFreezeRecord();
+		const freeze = record.freeze as {
+			commit: string;
+			composite: string;
+			subtrees: Array<{ path: string; treeOid: string }>;
+		};
+		// The published composite is exactly what a plain shell loop over
+		// `git rev-parse HEAD:<path>` piped to `shasum -a 256` produces, so the
+		// claim can be checked without this package.
+		expect(freeze.composite).toBe(ADAPTER_FREEZE_COMPOSITE);
+		expect(sha256(adapterFreezePreimage(freeze.subtrees))).toBe(freeze.composite);
+		expect(freeze.subtrees.map((subtree) => subtree.path)).toEqual([
+			'packages/frameworks/react',
+			'packages/frameworks/angular',
+			'packages/core/src/migrations',
+			'packages/core/src/bundlers',
+			'packages/core/src/analysis',
+		]);
+		// Freezing the adapters must not freeze the ability to publish evidence.
+		expect(record.holdoutPublishing).toMatchObject({
+			state: 'outside-freeze',
+			surfaces: [
+				'packages/core/src/receipts',
+				'packages/core/src/corpus',
+				'packages/cli/src/witness',
+			],
+		});
+		const capabilities = record.capabilities as {
+			experimental: {
+				pendingEvidence: string;
+				entries: Array<{ lineage: string; capability: string }>;
+			};
+			crossProven: { entries: Array<{ lineage: string; capability: string }> };
+		};
+		expect(capabilities.experimental.entries).toHaveLength(11);
+		expect(capabilities.experimental.pendingEvidence).toContain('T006');
+		expect(capabilities.crossProven.entries.map((entry) => entry.capability)).toContain(
+			'react-cra-vite-adapter',
+		);
+		expect(record.angularHoldout).toMatchObject({
+			state: 'deferred',
+			deferredUntil: 'post-T006',
+			preScreen: 'mandatory license-text-at-pin pre-screen',
+		});
+		expect(verifyAdapterFreezeRecord(record)).toEqual(record);
+	});
+
+	it('refuses a freeze record whose subtree oid was edited under its composite', () => {
+		const record = adapterFreezeRecord();
+		const freeze = record.freeze as { subtrees: Array<{ path: string; treeOid: string }> };
+		const tampered = {
+			...record,
+			freeze: {
+				...freeze,
+				subtrees: freeze.subtrees.map((subtree, index) =>
+					index === 0 ? { ...subtree, treeOid: '0'.repeat(40) } : subtree,
+				),
+			},
+		};
+		expect(() => verifyAdapterFreezeRecord(tampered)).toThrow(
+			'Adapter freeze composite does not match its recorded subtrees',
+		);
+	});
 
 	it('refuses sensitive policy material', async () => {
 		const fixture = await setup();

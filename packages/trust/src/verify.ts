@@ -45,11 +45,13 @@ import {
 	validateNextTailwindExclusion,
 	workspaceManifestPaths,
 } from './generate.ts';
+import { adapterFreezeRecord, verifyAdapterFreezeRecord } from './freeze.ts';
 import { lockPackages, osvRequest } from './ingest.ts';
 import {
 	MAX_VULNERABILITY_AGE_MS,
 	TRUST_SCHEMA,
 	asRecord,
+	asString,
 	assertPortableEvidence,
 	parseIngestRecord,
 	type TrustManifest,
@@ -146,6 +148,7 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 		assertPortableEvidence(JSON.parse(body.toString('utf8')));
 	}
 	const expectedArtifacts = [
+		'adapter-freeze.json',
 		'controls.json',
 		'corpus-conformance.json',
 		'dependency-graph.cdx.json',
@@ -161,7 +164,12 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 		canonicalize(manifest.deterministicCore.artifacts.map((item) => item.path).sort()) !==
 		canonicalize(expectedArtifacts)
 	)
-		throw new Error('Trust deterministic core must contain exactly ten required artifacts');
+		throw new Error('Trust deterministic core must contain exactly eleven required artifacts');
+	const emittedFreeze = verifyAdapterFreezeRecord(
+		await readJson(path.join(output, 'adapter-freeze.json')),
+	);
+	if (canonicalize(emittedFreeze) !== canonicalize(adapterFreezeRecord()))
+		throw new Error('Adapter freeze record does not match independent re-derivation');
 	const emittedScriptSurface = asRecord(
 		await readJson(path.join(output, 'script-surface.json')),
 		'script surface',
@@ -198,6 +206,34 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 	const rederivedConformance = await analyzeCorpusConformance({ rootDir: root });
 	if (canonicalize(emittedConformance) !== canonicalize(rederivedConformance))
 		throw new Error('Corpus conformance does not match independent re-derivation');
+	const productionReadiness = asRecord(
+		asRecord(emittedConformance.coverage, 'corpus coverage').productionReadiness,
+		'corpus production readiness',
+	);
+	const judgeCounting = productionReadiness.judgeCounting;
+	if (!Array.isArray(judgeCounting))
+		throw new Error('Corpus production readiness omits the Judge counting ledger');
+	/**
+	 * Recount both numerators off the Judge's ledger.
+	 *
+	 * The corpus already derives them, so this is not a second opinion about
+	 * which cells count; it refuses a published package whose numerator does not
+	 * equal the number of accepted cells that support it.
+	 */
+	const lineageScore = (lineage: string): string => {
+		const score = asRecord(productionReadiness[lineage], `${lineage} readiness`);
+		const counted = judgeCounting.filter((entry) => {
+			const cell = asRecord(entry, 'Judge counting cell');
+			asString(cell.cell, 'Judge counting cell id');
+			asString(cell.reason, 'Judge counting cell reason');
+			return cell.lineage === lineage.replace('Lineage', '') && cell.counted === true;
+		}).length;
+		if (score.ready !== counted)
+			throw new Error(`${lineage} numerator is not counted off the Judge ledger`);
+		return `${String(score.ready)}/${String(score.total)}`;
+	};
+	const reactLineageScore = lineageScore('reactLineage');
+	const angularLineageScore = lineageScore('angularLineage');
 	if (
 		emittedConformance.summary.verticals !== transaction.verticals ||
 		emittedConformance.summary.sourceApplications !== transaction.sourceApplications ||
@@ -944,6 +980,8 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 		!report.includes('corpus-conformance.json') ||
 		!report.includes('script-surface.json') ||
 		!report.includes('runtime-script-observation.json') ||
+		!report.includes('adapter-freeze.json') ||
+		!report.includes(asString(asRecord(emittedFreeze.freeze, 'freeze').composite, 'composite')) ||
 		!report.includes(emittedConformance.integrity.canonicalDigest)
 	)
 		throw new Error('Derived Markdown is not linked to the trust manifest');
@@ -959,10 +997,11 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 			? !report.includes('Killed by Google Next.js 12 Pages/webpack production vertical')
 			: !report.includes('Next.js remains **not-tested**') ||
 				report.includes('Killed by Google Next.js 12 Pages/webpack production vertical')) ||
+		!report.includes(`Angular-lineage production readiness: **${angularLineageScore}**`) ||
+		!report.includes(`React-lineage production readiness: **${reactLineageScore};`) ||
 		(transaction.angularRealworldWitnessIntegrated
-			? !report.includes('Angular-lineage production readiness: **1/4**') ||
-				!report.includes('Harness qualification: **0/4**')
-			: report.includes('Angular-lineage production readiness: **1/4**')) ||
+			? !report.includes('Harness qualification: **0/4**')
+			: false) ||
 		(papercupsIntegrated
 			? !report.includes('Papercups v1.0.0 create-react-app→Vite 8 direct-Witness browser proof')
 			: report.includes(

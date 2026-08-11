@@ -1,8 +1,8 @@
 # Versionless project trust package
 
-- Canonical SHA-256: `c5ddf84e6de0fb1780fe123d83e749ed79b3a5af64e3e0426862a3648def0fd7`
-- Deterministic core: `6d906891b44ac1c504d3b14d09f1be30be13cfbd8337c2fcdb1a4645ae20bbd9`
-- Generated observation: `2026-08-11T11:40:04.809Z`
+- Canonical SHA-256: `197e4c4156175aec99d977642835e1396034aa6326afafb22265f80085bf52a9`
+- Deterministic core: `8d455f28ceee15c9384ed8c3396ab2ee13dc04e194b52a2862d75a7146918485`
+- Generated observation: `2026-08-11T12:23:54.127Z`
 - Vulnerability input freshness: **verified** (seven-day maximum age)
 - Integrity: **hash-only; authenticity is not established**
 - Assurance: **this package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation**
@@ -14,18 +14,19 @@
 - [Vulnerability and KEV report](vulnerabilities.json) — cached OSV batch and CISA KEV observations only.
 - [SLSA/in-toto-shaped provenance](provenance.json) — shape only; no SLSA level or signer authenticity is claimed.
 - [Supported corpus/runtime/bundler matrix](matrix.json) — unsupported and untested cells remain visible.
-- [Corpus conformance](corpus-conformance.json) — `619f90332984e231be3842caf220d7de14f024ebb18de75741bfdc39ba3dda66`; 15 verified verticals grouped into exactly 8 source applications; zero designated pilots are verified.
+- [Adapter freeze record](adapter-freeze.json) — the migration engine adapter surface is frozen at commit `57b308a573dd582c844ce401fb1161cd70e9bc66` with composite SHA-256 `d9f75ef677cb850f664cc188abf77b8ebfd24e84cb58d147b74e9bbaa143eb77`; the receipts, corpus, and witness registries are deliberately **outside** the freeze so holdout evidence can still be published additively.
+- [Corpus conformance](corpus-conformance.json) — `33358963b9619ea15599f1913c33082c220d5b584887227d47963d775a1c3fe8`; 15 verified verticals grouped into exactly 8 source applications; zero designated pilots are verified.
 - The immutable Killed by Google Next.js 12 Pages/webpack production vertical is verified only for its exact fixture; synthetic Next.js 12 Pages, 13 transition/App, and 14 App classification lanes remain **not-tested**, and generic Next.js support is not claimed.
 - [Static script/resource surface](script-surface.json) — truthfully remains scoped to the prior nine verticals, two applications, and eighteen exact static deployment entrypoints; T220 is **not included** because its script surface was not separately observed; dynamic script insertion: **not-tested**; payment-page applicability: **not established**; PCI compliance is **not claimed**.
 - [Qualified-journey runtime script observation](runtime-script-observation.json) — truthfully remains scoped to 36 runs across the prior nine verticals, two applications, and eighteen lanes; T220 is **not included** because its runtime scripts were not separately observed; this is **not global dynamic-insertion coverage**.
 - React Boilerplate maintained-runtime proof is limited to Node 24.15.0 darwin-arm64 with webpack 4.47.0 and a separate fixture-specific Vite 8.0.16 build; other maintained targets remain unproved.
-- Angular-lineage production readiness: **1/4**; Harness qualification: **0/4**. PhoneCat remains unsupported for the required visible transition and is not counted.
-- React-lineage production readiness: **1/4; Judge approved**.
-- React Boilerplate current zero-service-worker policy reconciliation: **verified; aligned React remains 0/4 pending fresh Judge**. The original offline-first evidence remains retained.
-- Papercups v1.0.0 create-react-app→Vite 8 direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, and React-lineage readiness stays **1/4** because this vertical is explicitly **not counted**.
-- HospitalRun v2.0.0-alpha.7 create-react-app→Vite 8 direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, its baseline/migrated service-worker difference is **recorded, not masked**, and React-lineage readiness stays **1/4** because this vertical is explicitly **not counted**.
-- factoriolab Angular CLI 10.1→Angular 16.2 browser-builder direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, the first Angular-lineage browser proof beside RealWorld, and Angular-lineage readiness stays **1/4** because this vertical is explicitly **not counted**.
-- jira-clone Angular CLI 13.2 custom-webpack→Angular 16.2 browser-builder direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, the second Angular-lineage browser proof beside factoriolab, and Angular-lineage readiness stays **1/4** because this vertical is explicitly **not counted**.
+- Angular-lineage production readiness: **2/4**; Harness qualification: **0/4**. PhoneCat remains unsupported for the required visible transition and is not counted. Angular RealWorld's browser proof stays verified and retained but is **not counted** toward the numerator: its migration changed zero application files, so it is a dependency version bump rebuilt under AOT rather than a proven application migration.
+- React-lineage production readiness: **3/4; Judge approved**.
+- React Boilerplate current zero-service-worker policy reconciliation: **verified; the aligned React Boilerplate cell is Judge-counted**. The original offline-first evidence remains retained.
+- Papercups v1.0.0 create-react-app→Vite 8 direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, and the Judge **counts** it, so React-lineage readiness is **3/4**.
+- HospitalRun v2.0.0-alpha.7 create-react-app→Vite 8 direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, its baseline/migrated service-worker difference is **recorded, not masked**, and the Judge **counts** it with that difference visible, so React-lineage readiness is **3/4**.
+- factoriolab Angular CLI 10.1→Angular 16.2 browser-builder direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, it really rewrote application source across six majors, and the Judge **counts** it, so Angular-lineage readiness is **2/4**.
+- jira-clone Angular CLI 13.2 custom-webpack→Angular 16.2 browser-builder direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, the second counted Angular application, and the Judge **counts** it, so Angular-lineage readiness is **2/4**.
 - Older-Next direct-Witness candidate: **verified, not counted (0/4) pending final Judge audit**.
 - [Data-flow and control mappings](controls.json) — review inputs, not audit conclusions.
 - [Retention and purge status](retention.json) — unresolved policy remains unknown/not-tested.
@@ -56,6 +57,40 @@ The dependency graph is a rooted complete inventory. Exact transitive dependency
 - `evidence/runs/witness-react-hospitalrun/receipt.json`: `275e435c8518f8978782e6c555ad8c4dd0d6e5401e2ef1acef8856f596648aaa` (verified)
 - `evidence/runs/witness-angular-factoriolab/receipt.json`: `2e7da3056e489958d868917155b6ded61f014b046ee2b020c20ad71a31d86cdd` (verified)
 - `evidence/runs/witness-angular-jira-clone/receipt.json`: `4642564e7ee1ff46668cce76c5db0dc832cce41afe1ceda5611fa2eaf78dfc99` (verified)
+
+## Adapter freeze and capability status
+
+Frozen at commit `57b308a573dd582c844ce401fb1161cd70e9bc66`; composite SHA-256 `d9f75ef677cb850f664cc188abf77b8ebfd24e84cb58d147b74e9bbaa143eb77` over the newline-terminated `<path> <tree-oid>` lines below, in order.
+
+- `packages/frameworks/react` `ae219d37efe52b2aebd51d116108169a0456ad93`
+- `packages/frameworks/angular` `46ed07a7ff95277dfd99e7cddb14bd8cf806719b`
+- `packages/core/src/migrations` `5237ce5990af3623206bcd2301047a59c80731cf`
+- `packages/core/src/bundlers` `cec2f0b56fbb7897f38d579be805e19982380ca6`
+- `packages/core/src/analysis` `262dc8b7528c92883c2300914eb7d42579fb856b`
+
+Cross-proven on two independent applications each, and therefore in the matrix:
+
+- react: `react-cra-vite-adapter`
+- angular: `angular-target-cell`
+- angular: `angular-workspace-migration`
+- angular: `angular-source-migration`
+- angular: `angular-cli-era-migration`
+
+Proven on exactly one application and therefore **experimental / out-of-matrix** pending T006 second-application evidence:
+
+- react: `connect-to-hooks`
+- react: `class-lifecycle-to-hooks`
+- react: `data-flow-connect-to-hooks`
+- react: `composed-migration`
+- angular: `custom-webpack-absorption`
+- angular: `sentry-v8-migration`
+- angular: `package-exports-style-imports`
+- angular: `modal-content-params-migration`
+- angular: `undeclared-runtime-dependency`
+- angular: `tslint-toolchain-removal`
+- angular: `ngrx-effects-migration`
+
+Angular holdout ingestion is **deferred post-T006**, and no candidate is admitted without a mandatory license-text-at-pin pre-screen.
 
 ## Known gaps
 
