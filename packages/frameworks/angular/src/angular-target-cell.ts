@@ -13,7 +13,37 @@
  * module performs no installation and observes no registry.
  */
 
+import { parseURL } from 'ufo';
+
 export type AngularVersionRanges = Readonly<Record<string, string>>;
+
+/**
+ * The fork relation between two package names, as the packages and the forge
+ * that hosts them declare it.
+ *
+ * A fork claim is the one ecosystem reading that cannot be made from the
+ * registry alone. Two packages describing themselves the same way, or naming
+ * each other in prose, establishes nothing: the same description is what a
+ * reimplementation and a continuation both have. What this record carries is a
+ * relation a third party states about the two repositories — the forge's own
+ * answer to "what was this repository forked from" — together with where that
+ * answer was read, so the claim can be re-checked rather than trusted.
+ */
+export type ForkLineage = Readonly<{
+	/** The repository the era package declares, exactly as it declares it. */
+	eraRepository: string;
+	/** The repository the successor package declares, exactly as it declares it. */
+	successorRepository: string;
+	/**
+	 * The repository the forge reports the successor was forked from, or null
+	 * when the forge reports that it is not a fork at all.
+	 */
+	forkedFrom: string | null;
+	/** The forge endpoint the fork relation was read from. */
+	readFrom: string;
+	/** What the reading says, quoted for the record rather than summarised. */
+	fact: string;
+}>;
 
 /**
  * What a community library offers the target line, and the registry reading
@@ -22,13 +52,30 @@ export type AngularVersionRanges = Readonly<Record<string, string>>;
  * `aligned` names the range to write. `no-successor` says the library published
  * nothing this cell can accept, which is a decision to *drop* the package —
  * recorded, per package, as a declared difference between the era workspace and
- * the migrated one. There is deliberately no third state: a library the cell has
- * not read is absent from the table and left exactly as the application declared
- * it, which is a different thing from a library the cell read and rejected.
+ * the migrated one. `successor-fork` says the library's maintained continuation
+ * is published under a *different package name*, which is a decision to remove
+ * one name and write another: it is the only disposition that changes what the
+ * application's own source has to say, and it is admitted only when the lineage
+ * verifies (see {@link verifyForkLineage}).
+ *
+ * There is deliberately no further state: a library the cell has not read is
+ * absent from the table and left exactly as the application declared it, which
+ * is a different thing from a library the cell read and rejected.
  */
+export type SuccessorForkPackage = Readonly<{
+	kind: 'successor-fork';
+	/** The package name that continues the era package's source tree. */
+	successor: string;
+	/** The range to write for the successor, read the way every other range is. */
+	range: string;
+	fact: string;
+	lineage: ForkLineage;
+}>;
+
 export type EcosystemPackage =
 	| Readonly<{ kind: 'aligned'; range: string; fact: string }>
-	| Readonly<{ kind: 'no-successor'; fact: string }>;
+	| Readonly<{ kind: 'no-successor'; fact: string }>
+	| SuccessorForkPackage;
 
 export type EcosystemPackages = Readonly<Record<string, EcosystemPackage>>;
 
@@ -216,8 +263,17 @@ export const ANGULAR_16_ECOSYSTEM_PACKAGES: EcosystemPackages = Object.freeze({
 		fact: 'ngx-markdown versions in lockstep with the Angular major: 16.0.0 is the 16.x line and declares peer @angular/core, @angular/common and @angular/platform-browser "^16.0.0" plus zone.js "~0.13.0", which is exactly the zone.js range this cell writes. 22.0.0, 21.3.0 and 21.2.0 declare ^22.0.0 and ^21.0.0 respectively.',
 	}),
 	'ng-pick-datetime': Object.freeze({
-		kind: 'no-successor',
-		fact: 'ng-pick-datetime stops at 7.0.0, published 2018-10-21, and declares peer @angular/cdk "^7.0.0". No release of this package name exists for any Angular line at or beyond this cell — the maintained continuation was republished under different package names, which is a source decision about which date-time picker the application uses and not a version this cell can pick. The package is dropped and the components importing it are left for a source answer.',
+		kind: 'successor-fork',
+		successor: '@danielmoncada/angular-datetime-picker',
+		range: '^16.1.0',
+		fact: 'ng-pick-datetime stops at 7.0.0, published 2018-10-21, and declares peer @angular/cdk "^7.0.0"; no release of that package name exists for any Angular line at or beyond this cell. Its maintained continuation is published under the name @danielmoncada/angular-datetime-picker, and 16.1.0 is the newest line this cell can accept: it declares peer @angular/cdk, @angular/core and @angular/common "^13.0.3 || ^14.0.0 || ^15.0.0 || ^16.0.0" and dependency tslib ^2.3.1, all satisfied here, where 16.0.0 stops at ^15 and 17.0.0 declares ^17.0.0 across the three. Read from https://registry.npmjs.org/@danielmoncada/angular-datetime-picker under consent VL-LEGACY-CORPUS-2026-08-10.',
+		lineage: Object.freeze({
+			eraRepository: 'git+https://github.com/DanielYKPan/date-time-picker.git',
+			successorRepository: 'git+https://github.com/danielmoncada/date-time-picker.git',
+			forkedFrom: 'https://github.com/DanielYKPan/date-time-picker',
+			readFrom: 'https://api.github.com/repos/danielmoncada/date-time-picker',
+			fact: 'api.github.com/repos/danielmoncada/date-time-picker reports fork: true with parent and source both DanielYKPan/date-time-picker — the exact repository the era package declares. The fork was created 2020-02-10 and the first release under the new name, 9.0.1, was published 2020-02-11. Read under consent VL-LEGACY-CORPUS-2026-08-10. A verified continuation of one source tree is not a behavioural equivalence: nothing in this reading establishes that the fork renders or behaves as the era package did.',
+		}),
 	}),
 	'ngx-electron': Object.freeze({
 		kind: 'aligned',
@@ -399,6 +455,112 @@ export function ecosystemDispositionOf(
 	return cell.ecosystemPackages[name] ?? null;
 }
 
+/**
+ * A repository declaration reduced to the thing two declarations of the same
+ * repository always agree on: host and path, without the protocol, the `git+`
+ * prefix, the `.git` suffix, the fragment or the case.
+ *
+ * `git+https://github.com/Owner/Name.git`, `https://github.com/owner/name` and
+ * `git@github.com:owner/name.git` are one repository, and a comparison that
+ * said otherwise would refuse a real lineage on spelling.
+ */
+export function repositoryIdentity(declaration: string): string {
+	let value = declaration.trim();
+	if (value.startsWith('git+')) value = value.slice('git+'.length);
+	const fragment = value.indexOf('#');
+	if (fragment >= 0) value = value.slice(0, fragment);
+	if (value.endsWith('.git')) value = value.slice(0, -'.git'.length);
+	const parsed = parseURL(value);
+	let host = parsed.host ?? '';
+	let route = parsed.pathname;
+	if (host === '') {
+		/**
+		 * An scp-style ssh declaration — `git@github.com:owner/name` — is not a URL
+		 * and parses as one long path. The host is what precedes the colon after the
+		 * user, and the repository path is what follows it.
+		 */
+		const at = route.indexOf('@');
+		const colon = route.indexOf(':', at + 1);
+		if (colon > 0) {
+			host = route.slice(at + 1, colon);
+			route = route.slice(colon + 1);
+		}
+	}
+	const segments = [host, ...route.split('/')].filter((segment) => segment.length > 0);
+	return segments.join('/').toLowerCase();
+}
+
+export type ForkLineageVerdict =
+	| Readonly<{ verified: true }>
+	| Readonly<{ verified: false; reason: string }>;
+
+/**
+ * Whether a declared fork lineage is one this cell may act on.
+ *
+ * Three things have to hold, and each of them is a separate way for a plausible
+ * successor to be the wrong package:
+ *
+ * - the forge has to say the successor repository *is* a fork, rather than an
+ *   independent repository with a similar name,
+ * - what it says the successor was forked from has to be the repository the era
+ *   package itself declares, not merely some repository, and
+ * - the reading has to have been taken from the successor's own repository, so
+ *   that a fork relation belonging to a third repository cannot be borrowed.
+ *
+ * A lineage that fails any of them is refused by name. The refusal is the point:
+ * renaming a module specifier onto a package that is not the same source tree
+ * produces a workspace that compiles and is not the same application.
+ */
+export function verifyForkLineage(name: string, fork: SuccessorForkPackage): ForkLineageVerdict {
+	const lineage = fork.lineage;
+	const era = repositoryIdentity(lineage.eraRepository);
+	const successor = repositoryIdentity(lineage.successorRepository);
+	if (era === '' || successor === '')
+		return Object.freeze({
+			verified: false,
+			reason: `${name} or ${fork.successor} declares no repository this reading could identify, so there is nothing for a fork relation to be about`,
+		});
+	if (lineage.forkedFrom === null)
+		return Object.freeze({
+			verified: false,
+			reason: `${lineage.readFrom} does not report ${fork.successor}'s repository as a fork of anything, so its continuation of ${name} is a claim rather than a reading`,
+		});
+	const parent = repositoryIdentity(lineage.forkedFrom);
+	if (parent !== era)
+		return Object.freeze({
+			verified: false,
+			reason: `${lineage.readFrom} reports ${successor} as a fork of ${parent}, and ${name} declares ${era}; a fork of a different repository is a different source tree`,
+		});
+	const read = repositoryIdentity(lineage.readFrom);
+	const path = successor.split('/').slice(-2).join('/');
+	if (path === '' || !read.endsWith(path))
+		return Object.freeze({
+			verified: false,
+			reason: `the fork relation was read from ${read}, which is not ${successor}'s own repository, so it does not say what ${fork.successor} was forked from`,
+		});
+	return Object.freeze({ verified: true });
+}
+
+/**
+ * The module-specifier renames the cell's verified fork dispositions imply, from
+ * era package name to successor package name.
+ *
+ * This is the whole of what a fork disposition hands to the source layer: a pair
+ * of package names. What a source capability then does with the pair — whether
+ * the symbols a module names are on the successor's published surface at all —
+ * is a reading of the installed closure that this table cannot make and does not
+ * pretend to.
+ */
+export function successorForkRenames(cell: AngularTargetCell): Readonly<Record<string, string>> {
+	const renames: Record<string, string> = {};
+	for (const [name, disposition] of Object.entries(cell.ecosystemPackages)) {
+		if (disposition.kind !== 'successor-fork') continue;
+		if (!verifyForkLineage(name, disposition).verified) continue;
+		renames[name] = disposition.successor;
+	}
+	return Object.freeze(renames);
+}
+
 /** The range the cell asks for, or null when the cell says nothing about it. */
 export function alignedVersionRange(name: string, cell: AngularTargetCell): string | null {
 	const exact = cell.packages[name];
@@ -495,6 +657,48 @@ export function alignAngularPackageManifest(
 				);
 				continue;
 			}
+			if (disposition !== undefined && disposition.kind === 'successor-fork') {
+				const verdict = verifyForkLineage(name, disposition);
+				if (!verdict.verified) {
+					updated[name] = from;
+					unhandled.push(
+						`${field}.${name} carries a successor-fork disposition naming ` +
+							`${disposition.successor}, and it was not acted on: ${verdict.reason}. The ` +
+							'package was left at its era range rather than renamed onto a package whose ' +
+							'lineage this cell cannot establish.',
+					);
+					continue;
+				}
+				changes.push({
+					field,
+					name,
+					from,
+					to: null,
+					reason:
+						`removed in favour of its successor fork ${disposition.successor}, whose lineage ` +
+						`${cell.id} verified: ${disposition.lineage.fact}`,
+				});
+				declaredDifferences.push(
+					`${field}.${name} was replaced by ${disposition.successor} ${disposition.range}: the ` +
+						`package name changed at the fork and the application's own imports of it change ` +
+						`with it. ${disposition.fact}`,
+				);
+				const declared = current[disposition.successor];
+				if (declared !== disposition.range)
+					changes.push({
+						field,
+						name: disposition.successor,
+						from: declared ?? from,
+						to: disposition.range,
+						reason:
+							declared === undefined
+								? `added as the successor fork of ${name} (which declared ${from}), at the ` +
+									`range ${cell.id} read for it: ${disposition.fact}`
+								: `aligned to the range ${cell.id} read for the successor fork of ${name}: ${disposition.fact}`,
+					});
+				updated[disposition.successor] = disposition.range;
+				continue;
+			}
 			const range = alignedVersionRange(name, cell);
 			if (range === null) {
 				updated[name] = from;
@@ -515,7 +719,17 @@ export function alignAngularPackageManifest(
 					reason: alignmentReason(name, cell),
 				});
 		}
-		next[field] = updated;
+		/**
+		 * The field is written back in name order. Every entry but one already
+		 * arrives that way, because the loop above walks the era declarations
+		 * sorted; a successor fork is written under a name the era manifest never
+		 * had, and re-sorting is what keeps that one entry from landing wherever the
+		 * package it replaced happened to sit.
+		 */
+		const ordered: Record<string, string> = {};
+		for (const name of Object.keys(updated).sort(compareStrings))
+			ordered[name] = updated[name] as string;
+		next[field] = ordered;
 	}
 	return Object.freeze({
 		manifest: Object.freeze(next),

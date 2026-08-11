@@ -12,7 +12,7 @@ import {
 	EVIDENCE_DIRECTORY,
 	INSTABILITY,
 } from '../src/fixture/angular-super-productivity-lanes-run.ts';
-import { ANGULAR_16_BROWSER_CELL } from '../../frameworks/angular/src/index.ts';
+import { ANGULAR_16_BROWSER_CELL, verifyForkLineage } from '../../frameworks/angular/src/index.ts';
 
 async function readRecord(file: string): Promise<Record<string, unknown>> {
 	return JSON.parse(await readFile(path.join(EVIDENCE_DIRECTORY, file), 'utf8')) as Record<
@@ -169,9 +169,28 @@ describe('Angular 16 cell dispositions this fixture measured', () => {
 	});
 
 	it('drops a package with no line for this cell instead of pinning it beside a v16 framework', () => {
-		expect(ANGULAR_16_BROWSER_CELL.ecosystemPackages['ng-pick-datetime']?.kind).toBe(
+		expect(ANGULAR_16_BROWSER_CELL.ecosystemPackages['rxjs-tslint']?.kind).toBe('no-successor');
+		expect(ANGULAR_16_BROWSER_CELL.ecosystemPackages['@sentry/tracing']?.kind).toBe(
 			'no-successor',
 		);
-		expect(ANGULAR_16_BROWSER_CELL.ecosystemPackages['rxjs-tslint']?.kind).toBe('no-successor');
+	});
+
+	/**
+	 * The one reading in this table that u18b overturned. ng-pick-datetime was
+	 * read as `no-successor` because no release of *that package name* exists for
+	 * this cell, which is true and was not the whole reading: the source tree
+	 * carried on under another name, and the fork relation is a thing the forge
+	 * states rather than a thing a maintainer claims.
+	 */
+	it('carries the datetime picker as a lineage-verified successor fork rather than a drop', () => {
+		const disposition = ANGULAR_16_BROWSER_CELL.ecosystemPackages['ng-pick-datetime'];
+		expect(disposition?.kind).toBe('successor-fork');
+		expect(disposition?.kind === 'successor-fork' && disposition.successor).toBe(
+			'@danielmoncada/angular-datetime-picker',
+		);
+		expect(
+			disposition?.kind === 'successor-fork' &&
+				verifyForkLineage('ng-pick-datetime', disposition).verified,
+		).toBe(true);
 	});
 });

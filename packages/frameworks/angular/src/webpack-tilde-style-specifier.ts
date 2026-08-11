@@ -102,13 +102,38 @@ export function resolveInClosure(specifier: string, closure: ClosureFileReading)
 }
 
 /**
+ * The package name a specifier starts with, replaced by the name it is renamed
+ * to, or the specifier unchanged when no rename names its package.
+ *
+ * A rename is matched on the whole package name and not on a prefix of it, so
+ * renaming `ng-pick-datetime` does not touch `ng-pick-datetime-moment`.
+ */
+export function renamePackageInSpecifier(
+	specifier: string,
+	renames: Readonly<Record<string, string>>,
+): string {
+	for (const [from, to] of Object.entries(renames)) {
+		if (specifier === from) return to;
+		if (specifier.startsWith(`${from}/`)) return `${to}${specifier.slice(from.length)}`;
+	}
+	return specifier;
+}
+
+/**
  * Drop the webpack module prefix from every stylesheet at-rule whose
  * un-prefixed specifier the installed closure answers.
+ *
+ * `renames` carries package-name substitutions the caller has already
+ * established — a successor fork the cell verified, say. They are applied to the
+ * specifier *before* it is resolved, so a renamed specifier is un-prefixed only
+ * when the closure carries the renamed path: the same check the capability
+ * already performs, asked of the name that will actually be written.
  */
 export function dropWebpackTildeSpecifiers(
 	path: string,
 	source: string,
 	closure: ClosureFileReading,
+	renames: Readonly<Record<string, string>> = {},
 ): TildeSpecifierMigration {
 	const edits: SourceEdit[] = [];
 	const changes: TildeSpecifierChange[] = [];
@@ -118,11 +143,12 @@ export function dropWebpackTildeSpecifiers(
 		const offset = match.index;
 		if (specifier === undefined || offset === undefined) continue;
 		const line = lineOf(source, offset);
-		const resolved = resolveInClosure(specifier, closure);
+		const renamed = renamePackageInSpecifier(specifier, renames);
+		const resolved = resolveInClosure(renamed, closure);
 		if (resolved === null) {
 			unhandled.push(
 				`${path} line ${String(line)}: '${WEBPACK_MODULE_PREFIX}${specifier}' asks webpack to ` +
-					`resolve ${specifier} as a module, and the installed closure carries no file sass ` +
+					`resolve ${renamed} as a module, and the installed closure carries no file sass ` +
 					'would resolve it to. Dropping the prefix would move the failure rather than answer ' +
 					'it, so the rule was left exactly as it is.',
 			);
@@ -130,12 +156,16 @@ export function dropWebpackTildeSpecifiers(
 		}
 		const tilde = source.indexOf(WEBPACK_MODULE_PREFIX, offset);
 		if (tilde < 0) continue;
-		edits.push({ start: tilde, end: tilde + WEBPACK_MODULE_PREFIX.length, text: '' });
+		edits.push({
+			start: tilde,
+			end: tilde + WEBPACK_MODULE_PREFIX.length + specifier.length,
+			text: renamed,
+		});
 		changes.push({
 			kind: 'webpack-tilde-specifier',
 			line,
 			from: `${WEBPACK_MODULE_PREFIX}${specifier}`,
-			to: specifier,
+			to: renamed,
 			resolved,
 		});
 	}

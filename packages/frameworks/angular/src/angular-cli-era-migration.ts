@@ -31,6 +31,10 @@ import {
 } from './package-exports-style-imports.ts';
 import { migrateSentryV8Tracing, type SentryV8Change } from './sentry-v8-migration.ts';
 import {
+	removeEntryComponents,
+	type EntryComponentsChange,
+} from './entry-components-removal.ts';
+import {
 	declareUndeclaredRuntimeDependencies,
 	undeclaredRuntimeDependencies,
 	type InstalledPackage,
@@ -164,6 +168,15 @@ function describeSourceChange(
 		| StyleImportChange,
 ): string {
 	return `line ${change.line}: ${change.kind} ${change.from} -> ${change.to}`;
+}
+
+/**
+ * An entry-components removal names no successor, because the property has
+ * none: what a reader needs from it is which components the dropped list named,
+ * so the proof that each is still reached can be checked against the literal.
+ */
+function describeEntryComponentsChange(change: EntryComponentsChange): string {
+	return `line ${change.line}: ${change.kind} of ${change.symbols.join(', ')}`;
 }
 
 function file(
@@ -321,13 +334,27 @@ export function migrateAngularCliEraWorkspace(
 		const migrated = migrateAngularSourceModule(module.path, entrySource);
 		const effects = migrateNgrxEffectDecorators(module.path, migrated.source);
 		const sentry = migrateSentryV8Tracing(module.path, effects.source);
-		unhandled.push(...migrated.unhandled, ...effects.unhandled, ...sentry.unhandled);
+		/**
+		 * `entryComponents` is dropped last of the per-module capabilities, and the
+		 * order is not arbitrary: the capability proves, per literal, that every
+		 * component the property names is still reached by `declarations` or
+		 * `bootstrap` of the same literal, and it should see the literal as the
+		 * capabilities before it left it rather than as the era file wrote it.
+		 */
+		const entryComponents = removeEntryComponents(module.path, sentry.source);
+		unhandled.push(
+			...migrated.unhandled,
+			...effects.unhandled,
+			...sentry.unhandled,
+			...entryComponents.unhandled,
+		);
 		files.push(
-			file(module, sentry.source, 'application', [
+			file(module, entryComponents.source, 'application', [
 				...(modalFile?.changes ?? []).map(describeSourceChange),
 				...migrated.changes.map(describeSourceChange),
 				...effects.changes.map(describeSourceChange),
 				...sentry.changes.map(describeSourceChange),
+				...entryComponents.changes.map(describeEntryComponentsChange),
 			]),
 		);
 	}

@@ -185,6 +185,39 @@ describe('Angular CLI era composed migration', () => {
 		);
 	});
 
+	it('drops an analyzer-proven-reachable entryComponents list as part of the composition', () => {
+		const moduleSource =
+			"import {NgModule} from '@angular/core';\n" +
+			"import {Dialog} from './dialog';\n\n" +
+			'@NgModule({\n' +
+			'  declarations: [Dialog],\n' +
+			'  entryComponents: [Dialog]\n' +
+			'})\nexport class AnyModule {}\n';
+		const migration = migrateAngularCliEraWorkspace(
+			{ ...input, sourceModules: [{ path: 'src/app/any.module.ts', source: moduleSource }] },
+			ANGULAR_16_BROWSER_CELL,
+		);
+		const migrated = migration.files.find((file) => file.path === 'src/app/any.module.ts');
+		expect(migrated?.changed).toBe(true);
+		expect(migrated?.source).not.toContain('entryComponents');
+		expect(migrated?.source).toContain('  declarations: [Dialog]\n})');
+		expect(migrated?.changes).toContain('line 6: entry-components-removal of Dialog');
+	});
+
+	it('refuses the removal, per literal, where the component is reached by nothing else', () => {
+		const moduleSource =
+			"import {NgModule} from '@angular/core';\n" +
+			"import {Dialog} from './dialog';\n\n" +
+			'@NgModule({\n  entryComponents: [Dialog]\n})\nexport class AnyModule {}\n';
+		const migration = migrateAngularCliEraWorkspace(
+			{ ...input, sourceModules: [{ path: 'src/app/any.module.ts', source: moduleSource }] },
+			ANGULAR_16_BROWSER_CELL,
+		);
+		const migrated = migration.files.find((file) => file.path === 'src/app/any.module.ts');
+		expect(migrated?.changed).toBe(false);
+		expect(migration.unhandled.join('\n')).toContain('src/app/any.module.ts line 4: Dialog');
+	});
+
 	it('runs the cross-module modal capability before the per-module ones', () => {
 		const migration = migrateAngularCliEraWorkspace(
 			{

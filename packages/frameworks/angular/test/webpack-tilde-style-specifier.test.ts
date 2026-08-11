@@ -71,6 +71,38 @@ describe('webpack tilde style specifier', () => {
 		expect(migration.unhandled[0]).toContain('@scope/ui/gone');
 	});
 
+	it('carries a package rename through the prefix drop, resolved under the new name', () => {
+		const migration = dropWebpackTildeSpecifiers(
+			'src/styles.scss',
+			"@import '~old-ui/css/icons.min.css';\n",
+			{ carries: (relativePath) => relativePath === 'icons/css/icons.min.css' },
+			{ 'old-ui': 'icons' },
+		);
+		expect(migration.source).toBe("@import 'icons/css/icons.min.css';\n");
+		expect(migration.changes[0]?.resolved).toBe('icons/css/icons.min.css');
+	});
+
+	it('refuses a renamed specifier the closure does not answer under the new name', () => {
+		const migration = dropWebpackTildeSpecifiers(
+			'src/styles.scss',
+			"@import '~old-ui/css/icons.min.css';\n",
+			closure,
+			{ 'old-ui': 'somewhere-else' },
+		);
+		expect(migration.changed).toBe(false);
+		expect(migration.unhandled[0]).toContain('somewhere-else/css/icons.min.css');
+	});
+
+	it('renames on the whole package name, never on a prefix of one', () => {
+		const migration = dropWebpackTildeSpecifiers(
+			'src/styles.scss',
+			"@import '~icons-extra/css/icons.min.css';\n",
+			{ carries: (relativePath) => relativePath === 'icons-extra/css/icons.min.css' },
+			{ icons: 'renamed' },
+		);
+		expect(migration.source).toBe("@import 'icons-extra/css/icons.min.css';\n");
+	});
+
 	it('touches nothing in a sheet with no tilde, including a relative import of the same name', () => {
 		const source = "@import './theming';\n@import '@scope/ui/theming';\n";
 		const migration = dropWebpackTildeSpecifiers('src/styles.scss', source, closure);

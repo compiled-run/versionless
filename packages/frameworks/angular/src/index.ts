@@ -21,3 +21,4 @@ export * from './entry-components-removal.ts';
 export * from './module-with-providers-type-argument.ts';
 export * from './widened-union-narrowing.ts';
 export * from './webpack-tilde-style-specifier.ts';
+export * from './successor-fork-package.ts';
