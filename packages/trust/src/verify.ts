@@ -15,6 +15,7 @@ import { ANGULAR_REALWORLD_V15_TO_V16_RECEIPT } from '../../core/src/receipts/an
 import { WITNESS_ANGULAR_REALWORLD_RECEIPT_PATH } from '../../core/src/receipts/witness-angular-realworld.ts';
 import { REACT_PAPERCUPS_FIXTURE } from '../../core/src/receipts/witness-react-papercups.ts';
 import { REACT_HOSPITALRUN_FIXTURE } from '../../core/src/receipts/witness-react-hospitalrun.ts';
+import { ANGULAR_FACTORIOLAB_FIXTURE } from '../../core/src/receipts/witness-angular-factoriolab.ts';
 import {
 	SCRIPT_SURFACE_SCHEMA,
 	verifyScriptSurface,
@@ -27,6 +28,8 @@ import {
 	NPM_LOCK_ACQUISITION_PREFLIGHT,
 	NEXT_TAILWIND_CONSENT_FAILURE,
 	NEXT_TAILWIND_EXCLUSION,
+	ANGULAR_FACTORIOLAB_TRUST_MATRIX_CELLS,
+	ANGULAR_FACTORIOLAB_TRUST_RECEIPTS,
 	REACT_HOSPITALRUN_TRUST_MATRIX_CELLS,
 	REACT_HOSPITALRUN_TRUST_RECEIPTS,
 	REACT_PAPERCUPS_TRUST_MATRIX_CELLS,
@@ -499,7 +502,9 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 		runtimeObservationControl.pciCompliance !== 'not-claimed'
 	)
 		throw new Error('Controls contain an unsupported enterprise assurance claim');
-	const hospitalrunIntegrated = transaction.kind === 'react-hospitalrun-browser-proof';
+	const factoriolabIntegrated = transaction.kind === 'angular-factoriolab-browser-proof';
+	const hospitalrunIntegrated =
+		transaction.kind === 'react-hospitalrun-browser-proof' || factoriolabIntegrated;
 	const papercupsIntegrated =
 		transaction.kind === 'react-papercups-browser-proof' || hospitalrunIntegrated;
 	const matrix = asRecord(await readJson(path.join(output, 'matrix.json')), 'corpus matrix');
@@ -509,7 +514,8 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 			15 +
 				(transaction.nextKilledByGoogleIntegrated ? 1 : 0) +
 				(papercupsIntegrated ? 1 : 0) +
-				(hospitalrunIntegrated ? 1 : 0)
+				(hospitalrunIntegrated ? 1 : 0) +
+				(factoriolabIntegrated ? 1 : 0)
 	)
 		throw new Error('Corpus matrix cell count does not match transaction state');
 	if (
@@ -523,11 +529,20 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 		);
 	if (
 		hospitalrunIntegrated &&
+		!factoriolabIntegrated &&
 		(manifest.receipts.length !== REACT_HOSPITALRUN_TRUST_RECEIPTS ||
 			matrix.cells.length !== REACT_HOSPITALRUN_TRUST_MATRIX_CELLS)
 	)
 		throw new Error(
 			'React HospitalRun browser proof must pin exactly twenty receipts and eighteen matrix cells',
+		);
+	if (
+		factoriolabIntegrated &&
+		(manifest.receipts.length !== ANGULAR_FACTORIOLAB_TRUST_RECEIPTS ||
+			matrix.cells.length !== ANGULAR_FACTORIOLAB_TRUST_MATRIX_CELLS)
+	)
+		throw new Error(
+			'Angular factoriolab browser proof must pin exactly twenty-one receipts and nineteen matrix cells',
 		);
 	const matrixSource = asRecord(matrix.derivedFrom, 'corpus matrix derivation');
 	if (
@@ -761,6 +776,48 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 			throw new Error('React HospitalRun matrix cell is not derived from corpus conformance');
 	} else if (hospitalrunCell !== undefined || hospitalrunVertical !== undefined)
 		throw new Error('React HospitalRun evidence is claimed outside its transaction state');
+	const factoriolabCell = cells.get(ANGULAR_FACTORIOLAB_FIXTURE);
+	const factoriolabVertical = emittedConformance.verticals.find(
+		(value) => asRecord(value, 'corpus vertical').id === ANGULAR_FACTORIOLAB_FIXTURE,
+	);
+	if (factoriolabIntegrated) {
+		const row = asRecord(factoriolabVertical, 'Angular factoriolab conformance vertical');
+		const factoriolabApplication = emittedConformance.applications.find(
+			(value) => asRecord(value, 'corpus application').id === row.application,
+		);
+		if (
+			factoriolabCell === undefined ||
+			factoriolabApplication === undefined ||
+			canonicalize(
+				asRecord(factoriolabApplication, 'Angular factoriolab application').verticals,
+			) !== canonicalize([ANGULAR_FACTORIOLAB_FIXTURE]) ||
+			factoriolabCell.state !== 'verified' ||
+			factoriolabCell.scope !== 'fixture-specific-angular-cli-browser-builder-10-to-16' ||
+			factoriolabCell.genericAngularSupport !== 'not-claimed' ||
+			factoriolabCell.framework !== 'angular' ||
+			factoriolabCell.framework !== row.framework ||
+			factoriolabCell.designatedPilot !== row.designatedPilot ||
+			factoriolabCell.runtime !== row.runtime ||
+			factoriolabCell.bundler !== row.bundler ||
+			factoriolabCell.track !== row.track ||
+			factoriolabCell.browserProof !== row.browserProof ||
+			factoriolabCell.serviceWorker !== row.serviceWorker ||
+			factoriolabCell.serviceWorkerMasked !== row.serviceWorkerMasked ||
+			row.serviceWorkerMasked !== false ||
+			factoriolabCell.scrollSurface !== row.scrollSurface ||
+			factoriolabCell.productionReadiness !== row.productionReadiness ||
+			canonicalize(factoriolabCell.locality) !== canonicalize(row.locality) ||
+			canonicalize(factoriolabCell.readinessScoreboard) !==
+				canonicalize(row.readinessScoreboard) ||
+			canonicalize(row.readinessScoreboard) !==
+				canonicalize({
+					angularLineage: { ready: 1, total: 4, counted: false },
+					overall: { ready: 3, total: 12 },
+				})
+		)
+			throw new Error('Angular factoriolab matrix cell is not derived from corpus conformance');
+	} else if (factoriolabCell !== undefined || factoriolabVertical !== undefined)
+		throw new Error('Angular factoriolab evidence is claimed outside its transaction state');
 	const phonecat = cells.get('angular-phonecat');
 	if (
 		phonecat?.framework !== 'angularjs' ||
@@ -859,6 +916,13 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 				)
 			: report.includes(
 					'HospitalRun v2.0.0-alpha.7 create-react-app→Vite 8 direct-Witness browser proof',
+				)) ||
+		(factoriolabIntegrated
+			? !report.includes(
+					'factoriolab Angular CLI 10.1→Angular 16.2 browser-builder direct-Witness browser proof',
+				)
+			: report.includes(
+					'factoriolab Angular CLI 10.1→Angular 16.2 browser-builder direct-Witness browser proof',
 				))
 	)
 		throw new Error('Derived Markdown does not match canonical transaction state');

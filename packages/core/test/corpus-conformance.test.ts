@@ -25,6 +25,11 @@ import {
 	WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
 	witnessReactHospitalrunAggregateMember,
 } from '../src/receipts/witness-react-hospitalrun.ts';
+import {
+	verifyWitnessAngularFactoriolabEvidence,
+	WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH,
+	witnessAngularFactoriolabAggregateMember,
+} from '../src/receipts/witness-angular-factoriolab.ts';
 import { reactHospitalrunAggregateMember } from '../src/corpus/conformance.ts';
 import { receiptDigest, sha256 } from '../src/receipts/canonicalize.ts';
 import { renderReceipt } from '../src/receipts/render.ts';
@@ -65,7 +70,8 @@ function prepublicationFixtures(fixtures: Array<Record<string, unknown>>) {
 			fixture.id !== 'react-papercups-v1-0-0' &&
 			fixture.id !== 'witness-react-papercups' &&
 			fixture.id !== 'react-hospitalrun' &&
-			fixture.id !== 'witness-react-hospitalrun',
+			fixture.id !== 'witness-react-hospitalrun' &&
+			fixture.id !== 'witness-angular-factoriolab',
 	);
 }
 
@@ -169,16 +175,16 @@ async function rebindPhonecatViteArtifact(
 }
 
 describe('canonical corpus conformance', () => {
-	it('derives the canonical thirteen verticals as six narrowly scoped source applications', async () => {
+	it('derives the canonical fourteen verticals as seven narrowly scoped source applications', async () => {
 		const result = await analyzeCorpusConformance({ rootDir: root });
 		expect(verifyCorpusConformanceDigest(result)).toBe(result.integrity.canonicalDigest);
 		expect(result.summary).toEqual({
-			verticals: 13,
-			sourceApplications: 6,
+			verticals: 14,
+			sourceApplications: 7,
 			designatedPilotsVerified: 0,
 		});
-		expect(result.verticals).toHaveLength(13);
-		expect(result.applications).toHaveLength(6);
+		expect(result.verticals).toHaveLength(14);
+		expect(result.applications).toHaveLength(7);
 		expect(result.applications[0]).toMatchObject({
 			id: 'react-boilerplate',
 			boundaries: {
@@ -294,7 +300,7 @@ describe('canonical corpus conformance', () => {
 			reactPapercupsAggregateMember(verified.receipt.canonicalReceipt.canonicalDigest),
 		);
 		expect(witnessMember).toEqual(witnessReactPapercupsAggregateMember(verified.digest));
-		expect(result.verticals.at(-2)).toEqual({
+		expect(result.verticals.at(-3)).toEqual({
 			id: 'react-papercups-v1-0-0',
 			application: 'papercups',
 			framework: 'react',
@@ -324,7 +330,7 @@ describe('canonical corpus conformance', () => {
 			readinessScoreboard: { reactLineage: { ready: 1, total: 4, counted: false }, overall: { ready: 3, total: 12 } },
 			designatedPilot: false,
 		});
-		expect(result.applications.at(-2)).toEqual({
+		expect(result.applications.at(-3)).toEqual({
 			id: 'papercups',
 			source: {
 				repository: 'https://github.com/papercups-io/papercups',
@@ -379,7 +385,7 @@ describe('canonical corpus conformance', () => {
 			reactHospitalrunAggregateMember(verified.receipt.canonicalReceipt.canonicalDigest),
 		);
 		expect(witnessMember).toEqual(witnessReactHospitalrunAggregateMember(verified.digest));
-		expect(result.verticals.at(-1)).toEqual({
+		expect(result.verticals.at(-2)).toEqual({
 			id: 'react-hospitalrun',
 			application: 'react-hospitalrun',
 			framework: 'react',
@@ -414,7 +420,7 @@ describe('canonical corpus conformance', () => {
 			},
 			designatedPilot: false,
 		});
-		expect(result.applications.at(-1)).toEqual({
+		expect(result.applications.at(-2)).toEqual({
 			id: 'react-hospitalrun',
 			source: {
 				repository: 'https://github.com/HospitalRun/hospitalrun-frontend',
@@ -459,6 +465,126 @@ describe('canonical corpus conformance', () => {
 				reactLineage: { ready: 1, total: 4, counted: true, candidate: 'judge-approved' },
 			}),
 		});
+	});
+
+	it('emits the factoriolab vertical and source application derived from its receipts', async () => {
+		const result = await analyzeCorpusConformance({ rootDir: root });
+		const verified = await verifyWitnessAngularFactoriolabEvidence(root);
+		const aggregate = JSON.parse(
+			await readFile(path.join(root, 'evidence/runs/aggregate.json'), 'utf8'),
+		) as { fixtures: Array<Record<string, unknown>> };
+		const witnessMember = aggregate.fixtures.find(
+			(item) => item.receipt === WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH,
+		);
+		// The lane publishes one member, not a pair: its three build-lane
+		// receipts are sealed inside the Witness receipt rather than carried as
+		// separate aggregate rows, so no migration member exists to find.
+		expect(
+			aggregate.fixtures.filter((item) => String(item.id).includes('factoriolab')),
+		).toHaveLength(1);
+		expect(witnessMember).toEqual(witnessAngularFactoriolabAggregateMember(verified.digest));
+		expect(result.verticals.at(-1)).toEqual({
+			id: 'angular-factoriolab',
+			application: 'angular-factoriolab',
+			framework: 'angular',
+			receiptPath: WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH,
+			receiptDigest: verified.digest,
+			canonicalReceipts: verified.receipt.canonicalReceipts.map((bound) => ({
+				path: bound.path,
+				schemaVersion: bound.schemaVersion,
+				digest: bound.digest,
+				sha256: bound.sha256,
+			})),
+			runtime: 'node-12.14.1-to-node-16.20.2',
+			bundler: 'angular-cli-10.1-browser-builder-to-angular-16.2-browser-builder',
+			track: 'production-readiness-direct-witness-angular10-to-angular16-browser-builder',
+			locality: {
+				mode: 'offline',
+				scope: 'process-scoped',
+				osWideIsolation: false,
+				successfulNonLoopback: 0,
+			},
+			browserProof: 'verified-direct-witness',
+			browserRuns: 4,
+			behaviorDigest: verified.receipt.runs[0]!.behaviorDigest,
+			serviceWorker: 'no-service-worker-in-either-lane',
+			serviceWorkerMasked: false,
+			scrollSurface: 'measured-no-overflowing-document',
+			productionReadiness: 'verified-direct-witness',
+			readinessScoreboard: {
+				angularLineage: { ready: 1, total: 4, counted: false },
+				overall: { ready: 3, total: 12 },
+			},
+			designatedPilot: false,
+		});
+		expect(result.verticals.at(-1)).not.toHaveProperty('migrationTrack');
+		expect(result.applications.at(-1)).toEqual({
+			id: 'angular-factoriolab',
+			source: {
+				repository: 'https://github.com/factoriolab/factoriolab',
+				ref: 'none — a bare commit sha was pinned; no tag was requested or relied on',
+				revision: '5f54abbdcac518d8ebf7e136c4348384d9b1a2bb',
+				rootTreeSha: 'b366ea0d6183d83e175aaa52e3620562c46321b8',
+				archiveSha256: '11f2ce939f4be04b11e77b7f12e13d7449bf944b9bfefbeca237c46dea12f7ed',
+				archiveBytes: 267218,
+				license: 'MIT',
+				licenseSha256:
+					'd2556dbacc2d52cdda0e8b3ebd15b0492d34028074768b3683815540d17e71af',
+			},
+			verticals: ['angular-factoriolab'],
+			conformance: {
+				browserProof: 'direct-witness-verified',
+				runs: 4,
+				behaviorDigest: verified.receipt.runs[0]!.behaviorDigest,
+				mutation: 'pass',
+				mutationRestoration: 'byte-identical',
+				serviceWorker: 'no-service-worker-in-either-lane',
+				serviceWorkerMasked: false,
+				persistence: {
+					plan: 'url-fragment-encoded',
+					preferences: 'browser-local-storage',
+					backend: 'none',
+					stubbed: false,
+					survivesOnlineReload: true,
+				},
+				readinessScoreboard: {
+					angularLineage: { ready: 1, total: 4, counted: false },
+					overall: { ready: 3, total: 12 },
+				},
+			},
+			boundaries: {
+				track: 'production-readiness-direct-witness-angular10-to-angular16-browser-builder',
+				designatedPilot: false,
+				genericAngularSupport: 'not-claimed',
+				scrollSurface: 'measured-no-overflowing-document',
+				locality: 'process-scoped-not-os-wide',
+			},
+		});
+		// The vertical is verified and explicitly uncounted, so corpus-wide
+		// Angular-lineage readiness stays exactly where RealWorld left it.
+		expect(result.coverage).toMatchObject({
+			productionReadiness: expect.objectContaining({
+				angularLineage: { ready: 1, total: 4 },
+			}),
+		});
+	});
+
+	it('refuses a factoriolab aggregate digest that does not match its receipt', async () => {
+		const directory = await corpusCopy('factoriolab-digest-rebind');
+		try {
+			await mutateJson(directory, 'evidence/runs/aggregate.json', (value) => {
+				const fixture = (value.fixtures as Array<Record<string, unknown>>).find(
+					(item) => item.receipt === WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH,
+				);
+				if (!fixture) throw new Error('factoriolab witness member missing');
+				fixture.digest = '0'.repeat(64);
+			});
+			await expect(analyzeCorpusConformance({ rootDir: directory })).rejects.toThrow(
+				/factoriolab/,
+			);
+		} finally {
+			await rm(directory, { recursive: true, force: true });
+		}
 	});
 
 	it('refuses a HospitalRun aggregate digest that does not match its receipt', async () => {

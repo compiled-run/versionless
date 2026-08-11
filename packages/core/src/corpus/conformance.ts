@@ -71,6 +71,11 @@ import {
 	WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
 	witnessReactHospitalrunAggregateMember,
 } from '../receipts/witness-react-hospitalrun.ts';
+import {
+	verifyWitnessAngularFactoriolabEvidence,
+	WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH,
+	witnessAngularFactoriolabAggregateMember,
+} from '../receipts/witness-angular-factoriolab.ts';
 
 export const CORPUS_CONFORMANCE_SCHEMA = 'versionless.corpus-conformance.v1' as const;
 const REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH =
@@ -242,8 +247,8 @@ interface JourneyProjection {
 export interface CorpusConformance {
 	schemaVersion: typeof CORPUS_CONFORMANCE_SCHEMA;
 	summary: {
-		verticals: 10 | 11 | 12 | 13;
-		sourceApplications: 3 | 4 | 5 | 6;
+		verticals: 10 | 11 | 12 | 13 | 14;
+		sourceApplications: 3 | 4 | 5 | 6 | 7;
 		designatedPilotsVerified: 0;
 	};
 	verticals: Array<Record<string, unknown>>;
@@ -356,6 +361,28 @@ export type CorpusTransactionState = Readonly<
 			sourceApplications: 6;
 			receipts: 20;
 			resolvedDependencies: 33;
+	  }
+	| {
+			/**
+			 * The factoriolab Angular CLI lineage joins on top of the HospitalRun
+			 * browser proof and is the first Angular-lineage browser proof to
+			 * enter the aggregate. It publishes one member rather than a pair:
+			 * its three build-lane receipts are sealed inside the Witness receipt
+			 * by both canonical digest and exact bytes rather than carried as
+			 * separate aggregate rows, so the Witness receipt is the whole of its
+			 * membership. It is a separate immutable source application, so it is
+			 * a new vertical, and its Angular-lineage readiness remains
+			 * explicitly uncounted.
+			 */
+			kind: 'angular-factoriolab-browser-proof';
+			nextKilledByGoogleIntegrated: true;
+			angularRealworldWitnessIntegrated: true;
+			reactBoilerplateWitnessIntegrated: true;
+			nextKilledByGoogleWitnessIntegrated: true;
+			verticals: 14;
+			sourceApplications: 7;
+			receipts: 21;
+			resolvedDependencies: 34;
 	  }
 	| {
 			kind: 'react-avataaars-candidate';
@@ -713,19 +740,68 @@ export function deriveCorpusTransactionState(fixtures: unknown): CorpusTransacti
 											reactHospitalrunAggregateMember(
 												hospitalrunMigrationDigest,
 											),
-										) ||
-									byPath.size !== canonicalReceipts.length + 11
+										)
 								)
+									throw new Error(
+										'React HospitalRun aggregate membership mismatch',
+									);
+								const hospitalrunOrder = [
+									...papercupsOrder,
+									REACT_HOSPITALRUN_RECEIPT_PATH,
+									WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
+								];
+								const factoriolab = byPath.get(
+									WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH,
+								);
+								if (factoriolab) {
+									const factoriolabRecord = record(
+										factoriolab,
+										'Angular factoriolab Witness aggregate fixture',
+									);
+									const factoriolabDigest = string(
+										factoriolabRecord.digest,
+										'Angular factoriolab Witness aggregate digest',
+									);
+									if (
+										!sha256Pattern.test(factoriolabDigest) ||
+										canonicalize(factoriolabRecord) !==
+											canonicalize(
+												witnessAngularFactoriolabAggregateMember(
+													factoriolabDigest,
+												),
+											) ||
+										byPath.size !== canonicalReceipts.length + 12
+									)
+										throw new Error(
+											'Angular factoriolab aggregate membership mismatch',
+										);
+									assertOrderedAggregate(
+										orderedPaths,
+										[
+											...hospitalrunOrder,
+											WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH,
+										],
+										'Angular factoriolab browser proof',
+									);
+									return {
+										kind: 'angular-factoriolab-browser-proof',
+										nextKilledByGoogleIntegrated: true,
+										angularRealworldWitnessIntegrated: true,
+										reactBoilerplateWitnessIntegrated: true,
+										nextKilledByGoogleWitnessIntegrated: true,
+										verticals: 14,
+										sourceApplications: 7,
+										receipts: 21,
+										resolvedDependencies: 34,
+									};
+								}
+								if (byPath.size !== canonicalReceipts.length + 11)
 									throw new Error(
 										'React HospitalRun aggregate membership mismatch',
 									);
 								assertOrderedAggregate(
 									orderedPaths,
-									[
-										...papercupsOrder,
-										REACT_HOSPITALRUN_RECEIPT_PATH,
-										WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
-									],
+									hospitalrunOrder,
 									'React HospitalRun browser proof',
 								);
 								return {
@@ -1188,6 +1264,109 @@ async function reactHospitalrunConformanceRows(
 				designatedPilot: false,
 				genericReactSupport: 'not-claimed',
 				scrollSurface: receipt.scrollSurface.state,
+				locality: 'process-scoped-not-os-wide',
+			},
+		},
+	};
+}
+
+/**
+ * Derives the factoriolab conformance rows.
+ *
+ * This is the first Angular-lineage browser proof in the corpus, and the shape
+ * difference is carried through rather than smoothed over. There is no retained
+ * migration member to read metadata from: the three build-lane receipts are
+ * sealed inside the Witness receipt by canonical digest and exact bytes, so the
+ * emitted `canonicalReceipts` list is that sealed binding and the lane
+ * identity comes from the single Witness aggregate member. Everything else is
+ * read out of the verified receipt, so the emitted vertical and source
+ * application cannot drift away from the evidence they summarize. The measured
+ * scroll absence and the never-registered service worker are published as the
+ * receipt measured them, not as a claim the harness arranged.
+ */
+async function angularFactoriolabConformanceRows(
+	root: string,
+	aggregateByPath: Map<string, unknown>,
+): Promise<{ vertical: Record<string, unknown>; application: Record<string, unknown> }> {
+	const verified = await verifyWitnessAngularFactoriolabEvidence(root);
+	const witnessMember = record(
+		aggregateByPath.get(WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH),
+		'Angular factoriolab Witness aggregate fixture',
+	);
+	if (witnessMember.digest !== verified.digest)
+		throw new Error('Angular factoriolab Witness aggregate digest differs');
+	const receipt = verified.receipt;
+	const run = receipt.runs[0];
+	if (!run) throw new Error('Angular factoriolab Witness receipt carries no runs');
+	const id = string(receipt.fixture, 'Angular factoriolab receipt fixture');
+	const application = string(run.app, 'Angular factoriolab application identity');
+	const behaviorDigest = string(run.behaviorDigest, 'Angular factoriolab behavior digest');
+	const track = string(witnessMember.track, 'Angular factoriolab Witness aggregate track');
+	const source = {
+		repository: normalizeURL(receipt.source.repository),
+		ref: receipt.source.ref,
+		revision: receipt.source.revision,
+		rootTreeSha: receipt.source.rootTreeSha,
+		archiveSha256: receipt.source.archiveSha256,
+		archiveBytes: receipt.source.archiveBytes,
+		license: receipt.source.license,
+		licenseSha256: receipt.source.licenseSha256,
+	};
+	const locality = {
+		mode: receipt.locality.mode,
+		scope: 'process-scoped',
+		osWideIsolation: receipt.locality.osWideIsolation,
+		successfulNonLoopback: receipt.locality.successfulNonLoopback,
+	};
+	return {
+		vertical: {
+			id,
+			application,
+			framework: string(witnessMember.framework, 'Angular factoriolab aggregate framework'),
+			receiptPath: WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH,
+			receiptDigest: verified.digest,
+			canonicalReceipts: receipt.canonicalReceipts.map((bound) => ({
+				path: bound.path,
+				schemaVersion: bound.schemaVersion,
+				digest: bound.digest,
+				sha256: bound.sha256,
+			})),
+			runtime: string(witnessMember.runtime, 'Angular factoriolab aggregate runtime'),
+			bundler: string(witnessMember.bundler, 'Angular factoriolab aggregate bundler'),
+			track,
+			locality,
+			browserProof: 'verified-direct-witness',
+			browserRuns: receipt.runs.length,
+			behaviorDigest,
+			serviceWorker: receipt.serviceWorker.state,
+			serviceWorkerMasked: receipt.serviceWorker.masked,
+			scrollSurface: receipt.scrollAbsence.state,
+			productionReadiness: 'verified-direct-witness',
+			readinessScoreboard: receipt.readiness,
+			designatedPilot: false,
+		},
+		application: {
+			id: application,
+			source,
+			verticals: [id],
+			conformance: {
+				browserProof: 'direct-witness-verified',
+				runs: receipt.runs.length,
+				behaviorDigest,
+				mutation: receipt.mutation.restoredRun,
+				mutationRestoration: receipt.mutation.restoredByteIdentically
+					? 'byte-identical'
+					: 'not-byte-identical',
+				serviceWorker: receipt.serviceWorker.state,
+				serviceWorkerMasked: receipt.serviceWorker.masked,
+				persistence: receipt.persistence,
+				readinessScoreboard: receipt.readiness,
+			},
+			boundaries: {
+				track,
+				designatedPilot: false,
+				genericAngularSupport: 'not-claimed',
+				scrollSurface: receipt.scrollAbsence.state,
 				locality: 'process-scoped-not-os-wide',
 			},
 		},
@@ -1672,14 +1851,17 @@ export async function analyzeCorpusConformance(
 			transaction.kind === 'react-graphiql-013-candidate' ||
 			transaction.kind === 'react-zero-sw-reconciliation' ||
 			transaction.kind === 'react-papercups-browser-proof' ||
-			transaction.kind === 'react-hospitalrun-browser-proof'
+			transaction.kind === 'react-hospitalrun-browser-proof' ||
+			transaction.kind === 'angular-factoriolab-browser-proof'
 				? transaction.kind === 'react-zero-sw-reconciliation'
 					? 2
 					: transaction.kind === 'react-papercups-browser-proof'
 						? 4
 						: transaction.kind === 'react-hospitalrun-browser-proof'
 							? 6
-							: 1
+							: transaction.kind === 'angular-factoriolab-browser-proof'
+								? 7
+								: 1
 				: 0)
 	)
 		throw new Error('Aggregate contains an unknown or extra receipt');
@@ -1695,17 +1877,24 @@ export async function analyzeCorpusConformance(
 		: null;
 	const papercups =
 		transaction.kind === 'react-papercups-browser-proof' ||
-		transaction.kind === 'react-hospitalrun-browser-proof'
+		transaction.kind === 'react-hospitalrun-browser-proof' ||
+		transaction.kind === 'angular-factoriolab-browser-proof'
 			? await reactPapercupsConformanceRows(root, aggregateByPath)
 			: null;
 	const hospitalrun =
-		transaction.kind === 'react-hospitalrun-browser-proof'
+		transaction.kind === 'react-hospitalrun-browser-proof' ||
+		transaction.kind === 'angular-factoriolab-browser-proof'
 			? await reactHospitalrunConformanceRows(root, aggregateByPath)
+			: null;
+	const factoriolab =
+		transaction.kind === 'angular-factoriolab-browser-proof'
+			? await angularFactoriolabConformanceRows(root, aggregateByPath)
 			: null;
 	if (
 		transaction.kind === 'react-zero-sw-reconciliation' ||
 		transaction.kind === 'react-papercups-browser-proof' ||
-		transaction.kind === 'react-hospitalrun-browser-proof'
+		transaction.kind === 'react-hospitalrun-browser-proof' ||
+		transaction.kind === 'angular-factoriolab-browser-proof'
 	) {
 		const migration = await verifyReceipt(REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH, {
 			repositoryRoot: root,
@@ -1950,6 +2139,7 @@ export async function analyzeCorpusConformance(
 		});
 	if (papercups) verticals.push(papercups.vertical);
 	if (hospitalrun) verticals.push(hospitalrun.vertical);
+	if (factoriolab) verticals.push(factoriolab.vertical);
 
 	const applications: Array<Record<string, unknown>> = [
 		{
@@ -2059,6 +2249,7 @@ export async function analyzeCorpusConformance(
 			: []),
 		...(papercups ? [papercups.application] : []),
 		...(hospitalrun ? [hospitalrun.application] : []),
+		...(factoriolab ? [factoriolab.application] : []),
 	];
 	if (
 		verticals.length !== transaction.verticals ||

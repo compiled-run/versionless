@@ -19,6 +19,8 @@ import {
 	witnessNextKilledByGoogleAggregateMember,
 } from '../../core/src/receipts/witness-next-killedbygoogle.ts';
 import {
+	ANGULAR_FACTORIOLAB_TRUST_MATRIX_CELLS,
+	ANGULAR_FACTORIOLAB_TRUST_RECEIPTS,
 	generateTrustPackage,
 	licenseInventory,
 	NPM_LOCK_ACQUISITION_PREFLIGHT,
@@ -635,7 +637,8 @@ snapshots:
 				item.id !== 'react-papercups-v1-0-0' &&
 				item.id !== 'witness-react-papercups' &&
 				item.id !== 'react-hospitalrun' &&
-				item.id !== 'witness-react-hospitalrun',
+				item.id !== 'witness-react-hospitalrun' &&
+				item.id !== 'witness-angular-factoriolab',
 		);
 		const avataaarsTransaction = deriveCorpusTransactionState([
 			...withoutAvataaars,
@@ -943,13 +946,34 @@ snapshots:
 				integrity: { canonicalDigest: string };
 			};
 			expect(conformance.summary).toEqual({
-				verticals: 13,
-				sourceApplications: 6,
+				verticals: 14,
+				sourceApplications: 7,
 				designatedPilotsVerified: 0,
 			});
 			expect(conformance.frameworkLanes).toHaveLength(3);
+			// The first Angular-lineage browser-proof cell: one member, one
+			// vertical, and an Angular-lineage scoreboard that stays uncounted.
+			expect(matrix.cells).toHaveLength(ANGULAR_FACTORIOLAB_TRUST_MATRIX_CELLS);
+			expect(first.receipts).toHaveLength(ANGULAR_FACTORIOLAB_TRUST_RECEIPTS);
+			expect(matrix.cells.find((cell) => cell.id === 'angular-factoriolab')).toMatchObject({
+				framework: 'angular',
+				state: 'verified',
+				scope: 'fixture-specific-angular-cli-browser-builder-10-to-16',
+				genericAngularSupport: 'not-claimed',
+				browserProof: 'verified-direct-witness',
+				serviceWorker: 'no-service-worker-in-either-lane',
+				serviceWorkerMasked: false,
+				scrollSurface: 'measured-no-overflowing-document',
+				readinessScoreboard: {
+					angularLineage: { ready: 1, total: 4, counted: false },
+					overall: { ready: 3, total: 12 },
+				},
+			});
 			expect(conformance.integrity.canonicalDigest).toHaveLength(64);
 			const report = await readFile(path.join(fixture.current, 'report.md'), 'utf8');
+			expect(report).toContain(
+				'factoriolab Angular CLI 10.1→Angular 16.2 browser-builder direct-Witness browser proof',
+			);
 			expect(report).toContain(
 				'The immutable Killed by Google Next.js 12 Pages/webpack production vertical is verified only for its exact fixture',
 			);

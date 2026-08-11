@@ -2,7 +2,7 @@
   "schemaVersion": "versionless.trust.v1",
   "derivedFrom": {
     "path": "corpus-conformance.json",
-    "sha256": "82dd60812ccec129f7a858d146ba2a79a652b0a94615af9d69106fbdb4aaf974"
+    "sha256": "ee79b3723b627d87c39cb79672922c75904954636c5f8e5cc4b828637a20b5da"
   },
   "cells": [
     {
@@ -238,6 +238,39 @@
           "counted": false,
           "ready": 1,
           "total": 4
+        }
+      }
+    },
+    {
+      "id": "angular-factoriolab",
+      "framework": "angular",
+      "designatedPilot": false,
+      "runtime": "node-12.14.1-to-node-16.20.2",
+      "bundler": "angular-cli-10.1-browser-builder-to-angular-16.2-browser-builder",
+      "state": "verified",
+      "track": "production-readiness-direct-witness-angular10-to-angular16-browser-builder",
+      "scope": "fixture-specific-angular-cli-browser-builder-10-to-16",
+      "genericAngularSupport": "not-claimed",
+      "browserProof": "verified-direct-witness",
+      "serviceWorker": "no-service-worker-in-either-lane",
+      "serviceWorkerMasked": false,
+      "scrollSurface": "measured-no-overflowing-document",
+      "locality": {
+        "mode": "offline",
+        "scope": "process-scoped",
+        "osWideIsolation": false,
+        "successfulNonLoopback": 0
+      },
+      "productionReadiness": "verified-direct-witness",
+      "readinessScoreboard": {
+        "angularLineage": {
+          "counted": false,
+          "ready": 1,
+          "total": 4
+        },
+        "overall": {
+          "ready": 3,
+          "total": 12
         }
       }
     },

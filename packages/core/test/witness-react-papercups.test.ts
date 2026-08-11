@@ -19,6 +19,7 @@ import {
 	REACT_HOSPITALRUN_RECEIPT_PATH,
 	WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
 } from '../src/receipts/witness-react-hospitalrun.ts';
+import { WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH } from '../src/receipts/witness-angular-factoriolab.ts';
 
 const root = path.resolve(import.meta.dirname, '../../..');
 
@@ -178,9 +179,9 @@ describe('Papercups corpus transaction state', () => {
 
 	/**
 	 * The published aggregate now carries the Papercups pair with the
-	 * HospitalRun pair appended on top of it, so the append itself is replayed
-	 * against a staged pre-append copy of the exact live membership rather than
-	 * against a loosened expectation.
+	 * HospitalRun pair and the factoriolab member appended on top of it, so the
+	 * append itself is replayed against a staged pre-append copy of the exact
+	 * live membership rather than against a loosened expectation.
 	 */
 	async function preAppendFixtures(): Promise<Array<Record<string, unknown>>> {
 		const fixtures = (await aggregateFixtures()).filter(
@@ -188,7 +189,8 @@ describe('Papercups corpus transaction state', () => {
 				fixture.receipt !== REACT_PAPERCUPS_RECEIPT_PATH &&
 				fixture.receipt !== WITNESS_REACT_PAPERCUPS_RECEIPT_PATH &&
 				fixture.receipt !== REACT_HOSPITALRUN_RECEIPT_PATH &&
-				fixture.receipt !== WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
+				fixture.receipt !== WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH &&
+				fixture.receipt !== WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH,
 		);
 		expect(fixtures).toHaveLength(16);
 		return fixtures;
@@ -203,7 +205,8 @@ describe('Papercups corpus transaction state', () => {
 		const fixtures = (await aggregateFixtures()).filter(
 			(fixture) =>
 				fixture.receipt !== REACT_HOSPITALRUN_RECEIPT_PATH &&
-				fixture.receipt !== WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
+				fixture.receipt !== WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH &&
+				fixture.receipt !== WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH,
 		);
 		expect(fixtures).toHaveLength(18);
 		return fixtures;
@@ -213,9 +216,9 @@ describe('Papercups corpus transaction state', () => {
 
 	it('derives the exact composition from the published aggregate', async () => {
 		const receipt = await published();
-		const published20 = await aggregateFixtures();
-		expect(published20).toHaveLength(20);
-		expect(published20.slice(-4, -2)).toEqual([
+		const published21 = await aggregateFixtures();
+		expect(published21).toHaveLength(21);
+		expect(published21.slice(-5, -3)).toEqual([
 			migrationMember,
 			witnessReactPapercupsAggregateMember(receipt.integrity.canonicalDigest),
 		]);

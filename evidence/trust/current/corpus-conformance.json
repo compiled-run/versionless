@@ -1,8 +1,8 @@
 {
   "schemaVersion": "versionless.corpus-conformance.v1",
   "summary": {
-    "verticals": 13,
-    "sourceApplications": 6,
+    "verticals": 14,
+    "sourceApplications": 7,
     "designatedPilotsVerified": 0
   },
   "verticals": [
@@ -728,6 +728,61 @@
         }
       },
       "designatedPilot": false
+    },
+    {
+      "id": "angular-factoriolab",
+      "application": "angular-factoriolab",
+      "framework": "angular",
+      "receiptPath": "evidence/runs/witness-angular-factoriolab/receipt.json",
+      "receiptDigest": "2e7da3056e489958d868917155b6ded61f014b046ee2b020c20ad71a31d86cdd",
+      "canonicalReceipts": [
+        {
+          "path": "evidence/runs/angular-factoriolab/m2-era-baseline.json",
+          "schemaVersion": "versionless.angular-factoriolab-era-baseline.v1",
+          "digest": "4459a44f2ab0527e7d79fab82a33149236d041db23f35b595425b422e0c8a48d",
+          "sha256": "5252a8fbb30b6e91891d2bf1868908141f3d0eb82d984a95f2d465250f96eaa6"
+        },
+        {
+          "path": "evidence/runs/angular-factoriolab/m2-migrated-build.json",
+          "schemaVersion": "versionless.angular-factoriolab-migrated-build.v1",
+          "digest": "371649fc4e032bd1e99372ac7afa6f54642b061d0300e37f6603e2e5880cfd65",
+          "sha256": "600a8ea3e6fa95be1b83d33b18a89dac5f7938bcc0bd9ce7fcd10e828d56d170"
+        },
+        {
+          "path": "evidence/runs/angular-factoriolab/m2-build-parity.json",
+          "schemaVersion": "versionless.angular-factoriolab-build-parity.v1",
+          "digest": "4430f24ba6af8d7fd6d90faa0d4eb2fb275aab717cb9edd345f4a8ab6eb8957d",
+          "sha256": "60b6ebea6936ccb2655df99b435f06be83e11c09fa2cca33ce387aa03207eded"
+        }
+      ],
+      "runtime": "node-12.14.1-to-node-16.20.2",
+      "bundler": "angular-cli-10.1-browser-builder-to-angular-16.2-browser-builder",
+      "track": "production-readiness-direct-witness-angular10-to-angular16-browser-builder",
+      "locality": {
+        "mode": "offline",
+        "scope": "process-scoped",
+        "osWideIsolation": false,
+        "successfulNonLoopback": 0
+      },
+      "browserProof": "verified-direct-witness",
+      "browserRuns": 4,
+      "behaviorDigest": "77d9bf5fe4d72a7db2ca5dc760fd1ce3bd13a936b765b85bfa6cb0621022ae42",
+      "serviceWorker": "no-service-worker-in-either-lane",
+      "serviceWorkerMasked": false,
+      "scrollSurface": "measured-no-overflowing-document",
+      "productionReadiness": "verified-direct-witness",
+      "readinessScoreboard": {
+        "angularLineage": {
+          "counted": false,
+          "ready": 1,
+          "total": 4
+        },
+        "overall": {
+          "ready": 3,
+          "total": 12
+        }
+      },
+      "designatedPilot": false
     }
   ],
   "applications": [
@@ -976,6 +1031,56 @@
         "scrollSurface": "measured-genuine-viewport-scroll",
         "locality": "process-scoped-not-os-wide"
       }
+    },
+    {
+      "id": "angular-factoriolab",
+      "source": {
+        "repository": "https://github.com/factoriolab/factoriolab",
+        "ref": "none — a bare commit sha was pinned; no tag was requested or relied on",
+        "revision": "5f54abbdcac518d8ebf7e136c4348384d9b1a2bb",
+        "rootTreeSha": "b366ea0d6183d83e175aaa52e3620562c46321b8",
+        "archiveSha256": "11f2ce939f4be04b11e77b7f12e13d7449bf944b9bfefbeca237c46dea12f7ed",
+        "archiveBytes": 267218,
+        "license": "MIT",
+        "licenseSha256": "d2556dbacc2d52cdda0e8b3ebd15b0492d34028074768b3683815540d17e71af"
+      },
+      "verticals": [
+        "angular-factoriolab"
+      ],
+      "conformance": {
+        "browserProof": "direct-witness-verified",
+        "runs": 4,
+        "behaviorDigest": "77d9bf5fe4d72a7db2ca5dc760fd1ce3bd13a936b765b85bfa6cb0621022ae42",
+        "mutation": "pass",
+        "mutationRestoration": "byte-identical",
+        "serviceWorker": "no-service-worker-in-either-lane",
+        "serviceWorkerMasked": false,
+        "persistence": {
+          "backend": "none",
+          "plan": "url-fragment-encoded",
+          "preferences": "browser-local-storage",
+          "stubbed": false,
+          "survivesOnlineReload": true
+        },
+        "readinessScoreboard": {
+          "angularLineage": {
+            "counted": false,
+            "ready": 1,
+            "total": 4
+          },
+          "overall": {
+            "ready": 3,
+            "total": 12
+          }
+        }
+      },
+      "boundaries": {
+        "track": "production-readiness-direct-witness-angular10-to-angular16-browser-builder",
+        "designatedPilot": false,
+        "genericAngularSupport": "not-claimed",
+        "scrollSurface": "measured-no-overflowing-document",
+        "locality": "process-scoped-not-os-wide"
+      }
     }
   ],
   "frameworkLanes": [
@@ -1064,6 +1169,6 @@
   },
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "82dd60812ccec129f7a858d146ba2a79a652b0a94615af9d69106fbdb4aaf974"
+    "canonicalDigest": "ee79b3723b627d87c39cb79672922c75904954636c5f8e5cc4b828637a20b5da"
   }
 }

@@ -15,6 +15,7 @@ import {
 	REACT_HOSPITALRUN_RECEIPT_PATH,
 	WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
 } from '../../core/src/receipts/witness-react-hospitalrun.ts';
+import { WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH } from '../../core/src/receipts/witness-angular-factoriolab.ts';
 import { deriveCorpusTransactionState } from '../../core/src/corpus/conformance.ts';
 
 const repositoryRoot = path.resolve(import.meta.dirname, '../../..');
@@ -30,7 +31,8 @@ const evidenceFiles = [
  * Stages the exact published evidence with the aggregate rolled back to its
  * pre-append membership, so the append transaction itself is still replayed
  * against its real predecessor now that the published aggregate carries the
- * Papercups pair and the HospitalRun pair appended on top of it.
+ * Papercups pair, the HospitalRun pair and the factoriolab member appended on
+ * top of it.
  */
 async function stagedRoot(): Promise<string> {
 	const directory = await mkdtemp(path.join(os.tmpdir(), 'papercups-aggregate-'));
@@ -45,7 +47,8 @@ async function stagedRoot(): Promise<string> {
 				member.receipt !== REACT_PAPERCUPS_RECEIPT_PATH &&
 				member.receipt !== WITNESS_REACT_PAPERCUPS_RECEIPT_PATH &&
 				member.receipt !== REACT_HOSPITALRUN_RECEIPT_PATH &&
-				member.receipt !== WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
+				member.receipt !== WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH &&
+				member.receipt !== WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH,
 		),
 	);
 	expect(await fixtures(directory)).toHaveLength(16);
@@ -99,16 +102,17 @@ describe('React Papercups aggregate append', () => {
 			'utf8',
 		);
 		const parsed = JSON.parse(published) as { fixtures: Array<Record<string, unknown>> };
-		expect(parsed.fixtures).toHaveLength(20);
-		expect(parsed.fixtures.slice(-4).map((member) => member.receipt)).toEqual([
+		expect(parsed.fixtures).toHaveLength(21);
+		expect(parsed.fixtures.slice(-5).map((member) => member.receipt)).toEqual([
 			REACT_PAPERCUPS_RECEIPT_PATH,
 			WITNESS_REACT_PAPERCUPS_RECEIPT_PATH,
 			REACT_HOSPITALRUN_RECEIPT_PATH,
 			WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
+			WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH,
 		]);
 		await expect(appendReactPapercupsAggregateMembers(repositoryRoot)).resolves.toEqual({
-			kind: 'react-hospitalrun-browser-proof',
-			receipts: 20,
+			kind: 'angular-factoriolab-browser-proof',
+			receipts: 21,
 			appended: false,
 		});
 		expect(

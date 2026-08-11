@@ -10,6 +10,7 @@ import {
 	REACT_HOSPITALRUN_RECEIPT_PATH,
 	WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
 } from '../../core/src/receipts/witness-react-hospitalrun.ts';
+import { WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH } from '../../core/src/receipts/witness-angular-factoriolab.ts';
 import { deriveCorpusTransactionState } from '../../core/src/corpus/conformance.ts';
 
 const repositoryRoot = path.resolve(import.meta.dirname, '../../..');
@@ -25,7 +26,8 @@ const evidenceFiles = [
  * Stages the exact published evidence with the aggregate rolled back to its
  * pre-append membership, so the append transaction itself is still replayed
  * against its real Papercups browser-proof predecessor now that the published
- * aggregate already carries the HospitalRun pair.
+ * aggregate already carries the HospitalRun pair and the factoriolab member
+ * appended on top of it.
  */
 async function stagedRoot(): Promise<string> {
 	const directory = await mkdtemp(path.join(os.tmpdir(), 'hospitalrun-aggregate-'));
@@ -38,7 +40,8 @@ async function stagedRoot(): Promise<string> {
 		members.filter(
 			(member) =>
 				member.receipt !== REACT_HOSPITALRUN_RECEIPT_PATH &&
-				member.receipt !== WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
+				member.receipt !== WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH &&
+				member.receipt !== WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH,
 		),
 	);
 	expect(await fixtures(directory)).toHaveLength(18);
@@ -93,14 +96,15 @@ describe('React HospitalRun aggregate append', () => {
 			'utf8',
 		);
 		const parsed = JSON.parse(published) as { fixtures: Array<Record<string, unknown>> };
-		expect(parsed.fixtures).toHaveLength(20);
-		expect(parsed.fixtures.slice(-2).map((member) => member.receipt)).toEqual([
+		expect(parsed.fixtures).toHaveLength(21);
+		expect(parsed.fixtures.slice(-3).map((member) => member.receipt)).toEqual([
 			REACT_HOSPITALRUN_RECEIPT_PATH,
 			WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
+			WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH,
 		]);
 		await expect(appendReactHospitalrunAggregateMembers(repositoryRoot)).resolves.toEqual({
-			kind: 'react-hospitalrun-browser-proof',
-			receipts: 20,
+			kind: 'angular-factoriolab-browser-proof',
+			receipts: 21,
 			appended: false,
 		});
 		expect(

@@ -53,7 +53,8 @@ describe('Killed by Google integration', () => {
 					fixture.id !== 'react-papercups-v1-0-0' &&
 					fixture.id !== 'witness-react-papercups' &&
 					fixture.id !== 'react-hospitalrun' &&
-					fixture.id !== 'witness-react-hospitalrun',
+					fixture.id !== 'witness-react-hospitalrun' &&
+					fixture.id !== 'witness-angular-factoriolab',
 			),
 		};
 	};

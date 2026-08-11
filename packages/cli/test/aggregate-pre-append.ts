@@ -8,6 +8,7 @@ import {
 	REACT_HOSPITALRUN_RECEIPT_PATH,
 	WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
 } from '../../core/src/receipts/witness-react-hospitalrun.ts';
+import { WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH } from '../../core/src/receipts/witness-angular-factoriolab.ts';
 
 /**
  * The exact receipt paths appended after the zero-service-worker
@@ -19,14 +20,16 @@ const POST_ZERO_SW_RECEIPT_PATHS = new Set<unknown>([
 	WITNESS_REACT_PAPERCUPS_RECEIPT_PATH,
 	REACT_HOSPITALRUN_RECEIPT_PATH,
 	WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
+	WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH,
 ]);
 
 /**
- * The canonical aggregate with the Papercups and HospitalRun pairs rolled back.
+ * The canonical aggregate with the Papercups pair, the HospitalRun pair and the
+ * factoriolab member rolled back.
  *
  * Publication transactions for the earlier Witness verticals are defined
  * against their exact predecessor state. Now that the published aggregate has
- * advanced to the HospitalRun browser proof, those transactions are replayed
+ * advanced to the factoriolab browser proof, those transactions are replayed
  * against a staged copy of the exact pre-append membership rather than against
  * a loosened predecessor check.
  */

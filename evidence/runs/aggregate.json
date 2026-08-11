@@ -191,6 +191,16 @@
       "result": "pass",
       "receipt": "evidence/runs/witness-react-hospitalrun/receipt.json",
       "digest": "275e435c8518f8978782e6c555ad8c4dd0d6e5401e2ef1acef8856f596648aaa"
+    },
+    {
+      "id": "witness-angular-factoriolab",
+      "framework": "angular",
+      "track": "production-readiness-direct-witness-angular10-to-angular16-browser-builder",
+      "bundler": "angular-cli-10.1-browser-builder-to-angular-16.2-browser-builder",
+      "runtime": "node-12.14.1-to-node-16.20.2",
+      "result": "pass",
+      "receipt": "evidence/runs/witness-angular-factoriolab/receipt.json",
+      "digest": "2e7da3056e489958d868917155b6ded61f014b046ee2b020c20ad71a31d86cdd"
     }
   ],
   "unsupported": []

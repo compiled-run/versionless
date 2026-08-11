@@ -60,6 +60,11 @@ import {
 	verifyWitnessReactHospitalrunEvidence,
 	WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
 } from '../../core/src/receipts/witness-react-hospitalrun.ts';
+import {
+	ANGULAR_FACTORIOLAB_FIXTURE,
+	verifyWitnessAngularFactoriolabEvidence,
+	WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH,
+} from '../../core/src/receipts/witness-angular-factoriolab.ts';
 import { verifyScriptSurface } from '../../core/src/enterprise/script-surface.ts';
 import {
 	parseRuntimeObservationConfig,
@@ -128,6 +133,18 @@ export const REACT_PAPERCUPS_TRUST_MATRIX_CELLS = 17 as const;
  */
 export const REACT_HOSPITALRUN_TRUST_RECEIPTS = 20 as const;
 export const REACT_HOSPITALRUN_TRUST_MATRIX_CELLS = 18 as const;
+
+/**
+ * Exact receipt and matrix-cell counts the factoriolab browser-proof
+ * transaction pins for itself: the twenty HospitalRun-state receipts plus this
+ * lane's single Witness receipt, and the eighteen prior matrix cells plus the
+ * factoriolab cell. This lane adds one receipt rather than two because its
+ * three build-lane receipts are sealed inside the Witness receipt rather than
+ * carried as separate aggregate members. No other transaction state is
+ * affected by these counts.
+ */
+export const ANGULAR_FACTORIOLAB_TRUST_RECEIPTS = 21 as const;
+export const ANGULAR_FACTORIOLAB_TRUST_MATRIX_CELLS = 19 as const;
 
 /**
  * Verifies a retained build receipt through the browser proof that seals it.
@@ -215,6 +232,8 @@ export async function verifyTrustReceipt(
 		return verifyWitnessReactHospitalrunEvidence(root);
 	if (receiptPath === REACT_HOSPITALRUN_RECEIPT_PATH)
 		return verifyReactHospitalrunCanonicalReceipt(root);
+	if (receiptPath === WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH)
+		return verifyWitnessAngularFactoriolabEvidence(root);
 	if (receiptPath === NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH)
 		return verifyNextKilledByGoogleEvidence(root, true);
 	if (receiptPath === REACT_AVATAAARS_COMPATIBILITY_RECEIPT_PATH)
@@ -282,6 +301,10 @@ const REACT_HOSPITALRUN_RECEIPT = {
 } as const;
 const WITNESS_REACT_HOSPITALRUN_RECEIPT = {
 	path: WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
+	digest: null,
+} as const;
+const WITNESS_ANGULAR_FACTORIOLAB_RECEIPT = {
+	path: WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH,
 	digest: null,
 } as const;
 const PHONECAT_VITE_RECEIPT = {
@@ -906,6 +929,7 @@ function matrix(conformance: CorpusConformance): Record<string, unknown> {
 	const nextKilledByGoogle = verticals.get('next-killedbygoogle-derived-state-to-memo');
 	const papercups = verticals.get(REACT_PAPERCUPS_FIXTURE);
 	const hospitalrun = verticals.get(REACT_HOSPITALRUN_FIXTURE);
+	const factoriolab = verticals.get(ANGULAR_FACTORIOLAB_FIXTURE);
 	return {
 		schemaVersion: TRUST_SCHEMA,
 		derivedFrom: {
@@ -1115,6 +1139,31 @@ function matrix(conformance: CorpusConformance): Record<string, unknown> {
 								serviceWorker: cell.serviceWorker,
 								serviceWorkerDifference: cell.serviceWorkerDifference,
 								serviceWorkerDifferenceMasked: cell.serviceWorkerDifferenceMasked,
+								scrollSurface: cell.scrollSurface,
+								locality: cell.locality,
+								productionReadiness: cell.productionReadiness,
+								readinessScoreboard: cell.readinessScoreboard,
+							};
+						})(),
+					]
+				: []),
+			...(factoriolab
+				? [
+						(() => {
+							const cell = asRecord(factoriolab, 'Angular factoriolab conformance');
+							return {
+								id: ANGULAR_FACTORIOLAB_FIXTURE,
+								framework: cell.framework,
+								designatedPilot: cell.designatedPilot,
+								runtime: cell.runtime,
+								bundler: cell.bundler,
+								state: 'verified',
+								track: cell.track,
+								scope: 'fixture-specific-angular-cli-browser-builder-10-to-16',
+								genericAngularSupport: 'not-claimed',
+								browserProof: cell.browserProof,
+								serviceWorker: cell.serviceWorker,
+								serviceWorkerMasked: cell.serviceWorkerMasked,
 								scrollSurface: cell.scrollSurface,
 								locality: cell.locality,
 								productionReadiness: cell.productionReadiness,
@@ -1356,7 +1405,9 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 	const hasWitnessAngularRealworldReceipt = transaction.angularRealworldWitnessIntegrated;
 	const hasWitnessReactBoilerplateReceipt = transaction.reactBoilerplateWitnessIntegrated;
 	const hasWitnessNextKilledByGoogleReceipt = transaction.nextKilledByGoogleWitnessIntegrated;
-	const hasReactHospitalrunReceipts = transaction.kind === 'react-hospitalrun-browser-proof';
+	const hasAngularFactoriolabReceipts = transaction.kind === 'angular-factoriolab-browser-proof';
+	const hasReactHospitalrunReceipts =
+		transaction.kind === 'react-hospitalrun-browser-proof' || hasAngularFactoriolabReceipts;
 	const hasReactPapercupsReceipts =
 		transaction.kind === 'react-papercups-browser-proof' || hasReactHospitalrunReceipts;
 	const hasReactZeroSwReceipts =
@@ -1382,6 +1433,7 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 		...(hasReactHospitalrunReceipts
 			? [REACT_HOSPITALRUN_RECEIPT, WITNESS_REACT_HOSPITALRUN_RECEIPT]
 			: []),
+		...(hasAngularFactoriolabReceipts ? [WITNESS_ANGULAR_FACTORIOLAB_RECEIPT] : []),
 		...reactAvataaarsCompatibilityTrustReceipts(transaction),
 		...reactCalculatorTrustReceipts(transaction),
 		...reactGraphiQL013TrustReceipts(transaction),
@@ -1394,8 +1446,14 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 		receipts.length !== REACT_PAPERCUPS_TRUST_RECEIPTS
 	)
 		throw new Error('React Papercups browser proof does not preserve exactly 18 receipts');
-	if (hasReactHospitalrunReceipts && receipts.length !== REACT_HOSPITALRUN_TRUST_RECEIPTS)
+	if (
+		hasReactHospitalrunReceipts &&
+		!hasAngularFactoriolabReceipts &&
+		receipts.length !== REACT_HOSPITALRUN_TRUST_RECEIPTS
+	)
 		throw new Error('React HospitalRun browser proof does not preserve exactly 20 receipts');
+	if (hasAngularFactoriolabReceipts && receipts.length !== ANGULAR_FACTORIOLAB_TRUST_RECEIPTS)
+		throw new Error('Angular factoriolab browser proof does not preserve exactly 21 receipts');
 	const verifiedReceipts = [];
 	for (const expected of receipts) {
 		const verified = await verifyTrustReceipt(root, expected.path);
