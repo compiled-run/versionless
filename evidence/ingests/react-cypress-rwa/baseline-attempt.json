@@ -1,0 +1,113 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-baseline.v1",
+  "slug": "react-cypress-rwa",
+  "unit": "lrapr-t008/hx1-ingest-cypress-rwa",
+  "revision": "f6b5cf3a1799998dab71181eeed59460f8ada5f4",
+  "purpose": "One truthful baseline install, typecheck, build and API boot in the cell the repository itself declares. This is a measurement of the acquired application, not an attempt to make anything pass.",
+  "cell": {
+    "declaredByRepository": {
+      ".nvmrc": "14.16.1",
+      ".node-version": "14.16.1",
+      "engines.node": ">=12",
+      "githubActionsContainer": "cypress/browsers:node14.17.0-chrome88-ff89",
+      "packageManagerDeclared": "none; no packageManager field. yarn is implied by the committed yarn.lock, the .yarnrc file and every script in package.json.",
+      "coherence": "The .nvmrc pin, the .node-version pin and the CI container all name Node 14; engines allows anything from 12 up."
+    },
+    "used": {
+      "node": "14.16.1",
+      "nodeSource": "https://nodejs.org/dist/v14.16.1/node-v14.16.1-darwin-x64.tar.gz",
+      "nodeSha256": "b762b72fc149629b7e394ea9b75a093cad709a9f2f71480942945d8da0fc1218",
+      "digestVerifiedAgainstOfficialShasums": true,
+      "shasumsUrl": "https://nodejs.org/dist/v14.16.1/SHASUMS256.txt",
+      "shasumsSha256": "1ae61ef6e3e2d70de42c585b42eadf5640cd8fbd88ad93efebc6cb2141ce5df9",
+      "platform": "darwin-x64 executed on darwin-arm64 through Rosetta 2",
+      "translationRequired": "Rosetta 2",
+      "translationRequiredNote": "Node 14 has no darwin-arm64 build, so honouring the repository's own pin on this host requires translation. This is a property of the host, not of the application.",
+      "packageManager": "yarn 1.22.22, installed into a scratch global prefix using the npm 6.14.12 bundled with the pinned Node runtime",
+      "honestLabel": "exact-pin: Node 14.16.1 is the version the repository names in both .nvmrc and .node-version. No deviation was needed and none was taken."
+    },
+    "deviations": []
+  },
+  "steps": [
+    {
+      "step": "install",
+      "command": "yarn install --frozen-lockfile --ignore-scripts --non-interactive",
+      "outcome": "succeeded",
+      "exitCode": 0,
+      "durationSeconds": 40,
+      "detail": "yarn accepted the committed lockfile under --frozen-lockfile, so the closure installed is the closure the repository pins. 1463 top-level entries in node_modules. Twelve pre-existing peer-dependency warnings and five resolutions-field incompatibility warnings; no errors.",
+      "deviationsRequired": 0
+    },
+    {
+      "step": "typecheck",
+      "command": "tsc --noEmit (the repository's own `yarn types`, which is also its prebuild hook and its husky pre-push hook)",
+      "outcome": "succeeded",
+      "exitCode": 0,
+      "durationSeconds": 8,
+      "detail": "Clean. No diagnostics against typescript 4.3.4 over the full src/, backend/, scripts/ and cypress/ surface."
+    },
+    {
+      "step": "build",
+      "command": "react-scripts build",
+      "outcome": "succeeded",
+      "exitCode": 0,
+      "durationSeconds": 62,
+      "buildArtifactProduced": true,
+      "artifact": {
+        "directory": "build",
+        "files": 84,
+        "bytes": 17153958,
+        "shape": "a CRA 4 production bundle: runtime-main chunk, a main chunk and roughly thirty numbered code-split chunks, plus hashed CSS, the public assets and asset-manifest.json"
+      },
+      "environmentNote": "CI was cleared for this step. create-react-app promotes lint warnings to errors when CI is truthy, which would report a lint outcome as a compile outcome; the build is recorded here as a compile result.",
+      "detail": "webpack 4.44.2 completed with no compile error. This is the first React fixture in the corpus whose baseline build produced an artifact on the first attempt with zero deviations."
+    },
+    {
+      "step": "api-server-boot",
+      "command": "ts-node -P tsconfig.tsnode.json --files backend/app.ts (the repository's own `yarn start:api`, minus the nyc coverage wrapper)",
+      "outcome": "succeeded",
+      "detail": "The in-repo Express + lowdb API bound its declared loopback port and served real responses.",
+      "prerequisitesRun": [
+        "cp data/database-seed.json data/database.json  — the repository's own db:seed:dev / prestart step",
+        "cp scripts/mock-aws-exports.js src/aws-exports.js  — the repository's own copy:mock:awsexports / predev:cognito:ci step",
+        "cp scripts/mock-aws-exports-es5.js aws-exports-es5.js  — the repository's own copy:mock:awsexportses5 step"
+      ],
+      "prerequisiteFinding": "Without the mock-aws-exports step the server does not start at all: backend/helpers.ts requires ../src/aws-exports unconditionally and that file is git-ignored, so a clean checkout fails with MODULE_NOT_FOUND. The repository ships the remedy as its own script; nothing was invented here.",
+      "loopbackProbes": [
+        { "request": "GET /users", "status": 401, "body": "{\"error\":\"Unauthorized\"}", "reading": "the API enforces its session auth on unauthenticated reads" },
+        { "request": "POST /login with a username from the committed seed document and the seed default password from the committed .env", "status": 200, "reading": "local passport-local authentication succeeded end to end: the credential was checked with bcrypt against the hash in the lowdb seed and a user object was returned with a connect.sid session cookie. No external host was contacted." },
+        { "request": "GET /checkAuth without a session cookie", "status": 401, "reading": "session gating behaves as written" },
+        { "request": "GET /graphql?query={__typename}", "status": 200, "reading": "the express-graphql endpoint with the loaded schema and resolvers is live" }
+      ],
+      "credentialsNote": "The username and password used are fixture values from the public repository's own committed seed data and committed .env. They are deliberately not reproduced in this record.",
+      "timeToFirstResponseSeconds": 5,
+      "externalHostsContacted": 0,
+      "authMode": {
+        "selected": "local",
+        "howSelected": "By the absence of every provider variable. src/index.tsx branches on REACT_APP_AUTH0, then REACT_APP_OKTA, then REACT_APP_AWS_COGNITO, then REACT_APP_GOOGLE, and falls through to a final else that renders src/containers/App.tsx. backend/app.ts mirrors this: it always mounts backend/auth.ts, and mounts checkAuth0Jwt / verifyOktaToken / checkCognitoJwt / checkGoogleJwt only when the matching variable is set. The committed .env leaves all four commented out, so `yarn dev` and `yarn start` select local mode with no flags at all.",
+        "mechanism": "passport-local + express-session, NOT JWT. POST /login runs passport.authenticate('local'), which looks the username up in the lowdb document and compares the password with bcrypt.compareSync; the session is carried in a connect.sid cookie. The JWT libraries in the closure serve only the four external-provider modes.",
+        "tokenNameVariable": "REACT_APP_AUTH_TOKEN_NAME is read by src/machines/authMachine.ts for localStorage token handling and is commented out in .env — it is documented there as being for the external provider modes.",
+        "networkRequiredForLocalMode": "none"
+      }
+    }
+  ],
+  "summary": {
+    "installOutcome": "succeeded",
+    "typecheckOutcome": "succeeded",
+    "buildOutcome": "succeeded",
+    "buildArtifactProduced": true,
+    "apiBootOutcome": "succeeded-after-the-repository's-own-prerequisite-scripts",
+    "deviationsTaken": 0,
+    "networkDuringBaseline": "registry.yarnpkg.com for the package manager's own fetches, plus nodejs.org for the runtime; no application code contacted any host"
+  },
+  "unknownPreserved": [
+    "The application was never loaded in a browser by this unit. That the bundle builds and that the API answers on loopback says nothing about whether any journey renders or completes.",
+    "The dev-server path (`yarn start` / `react-scripts -r @cypress/instrument-cra start`) was not exercised; only the production build was.",
+    "The upstream Cypress suite was not run.",
+    "Whether the frozen React adapters can migrate this application is exactly the question this holdout exists to answer, and nothing here answers it."
+  ],
+  "nonclaims": [
+    "A successful baseline build establishes that this application compiles in this one cell. It establishes no browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "No adapter, transform, or migration lane is declared for this fixture by the unit that ingested it."
+  ]
+}

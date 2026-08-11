@@ -1,0 +1,81 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-provenance.v1",
+  "slug": "react-cypress-rwa",
+  "unit": "lrapr-t008/hx1-ingest-cypress-rwa",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "networkMode": "consented",
+  "role": "holdout",
+  "purpose": "Admit and immutably ingest the React HOLDOUT application for the frozen-adapter falsification run (board task T008, T007 Judge selection): a create-react-app 4 / webpack 4 payments application with its own in-repo Express + lowdb API and a fully offline default mode.",
+  "upstream": {
+    "repository": "cypress-io/cypress-realworld-app",
+    "repositoryId": 232162578,
+    "homepageEndpoint": "https://api.github.com/repos/cypress-io/cypress-realworld-app",
+    "archivedUpstream": false,
+    "defaultBranch": "develop",
+    "ref": "refs/tags/v1.0.18",
+    "tagKind": "lightweight",
+    "tagObjectSha": null,
+    "commitSha": "f6b5cf3a1799998dab71181eeed59460f8ada5f4",
+    "commitDate": "2021-08-06T22:15:47Z",
+    "commitVerification": "GitHub reports verified=true, reason=valid — a GitHub web-flow signature on a squash-merge commit",
+    "rootTreeSha": "3e0984411f7c5951c4bdbe37ce4b856ad20363c5"
+  },
+  "archive": {
+    "endpoint": "https://codeload.github.com/cypress-io/cypress-realworld-app/tar.gz/f6b5cf3a1799998dab71181eeed59460f8ada5f4",
+    "mediaType": "application/gzip",
+    "bytes": 925160,
+    "sha256": "bd9319272dabc1e7263a0186e0aaae011f6219e6e106363d2c89426f9357b315",
+    "streamsFetched": 2,
+    "streamsByteIdentical": true,
+    "singleRoot": "cypress-realworld-app-f6b5cf3a1799998dab71181eeed59460f8ada5f4",
+    "regularFiles": 208,
+    "normalizedManifestSha256": "824e427d941bbe8dce7afcd6e4d243f3bca2b23c3f590179a80380b78c7fb22f"
+  },
+  "reconciliation": {
+    "method": "every extracted regular file was hashed as a git blob object and compared against the recursive tree at the pinned revision",
+    "gitBlobs": 208,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "specialEntries": 0,
+    "symlinks": 0,
+    "gitlinks": 0,
+    "treeTruncated": false,
+    "archiveMatchesGitTree": true,
+    "lfsRouting": "none; no .gitattributes exists anywhere in the tree, so no blob is an LFS pointer and every binary asset is a real payload"
+  },
+  "chain": [
+    { "step": "probe-repo-ref-commit-tree-and-fetch-archive-twice", "producedBy": "evidence/ingests/react-cypress-rwa/drivers/acquire.cjs", "records": "probe-ledger.ndjson, probe-tree.json, source.json" },
+    { "step": "extract-and-reconcile-blobs-against-git-tree", "producedBy": "evidence/ingests/react-cypress-rwa/drivers/reconcile.cjs", "records": "reconciliation.json" },
+    { "step": "acquire-and-digest-verify-the-declared-node-runtime", "producedBy": "evidence/ingests/react-cypress-rwa/drivers/fetch-runtime.cjs", "records": "probe-ledger.ndjson, baseline-attempt.json" },
+    { "step": "baseline-install-typecheck-build-and-api-boot", "producedBy": "evidence/ingests/react-cypress-rwa/drivers/baseline.sh", "records": "baseline-attempt.json, closure.json" }
+  ],
+  "machinery": {
+    "drivers": {
+      "location": "evidence/ingests/react-cypress-rwa/drivers/",
+      "status": "working tools, not evidence records",
+      "files": ["acquire.cjs", "reconcile.cjs", "fetch-runtime.cjs", "baseline.sh"],
+      "mergePosition": "The packet places driver scripts outside what the PM merges; only the evidence records and fixtures/react-cypress-rwa/fixture.json are merge candidates. They are written here because the unit's file contract admits no other location, and they are .cjs/.sh rather than .ts so they sit outside the workspace's strict-TypeScript surface.",
+      "reRunnable": true
+    },
+    "reused": [
+      "evidence/ingests/react-hospitalrun/ (evidence shapes: attempt/source documents, per-response ledger with byte count and digest, blob-level archive-to-git-tree parity, declared-cell honesty, non-claim discipline)"
+    ],
+    "notWritten": [
+      "No module, driver, script, note or configuration was added under packages/**, scripts/**, docs/**, evidence/runs/** or evidence/trust/**.",
+      "The five frozen subtrees were neither read for guidance nor modified. This unit produced no adapter change and proposed none."
+    ],
+    "hostQuirkRecorded": "The baseline tree was materialised outside the Versionless repository. yarn 1 resolves a project root by walking up to the highest ancestor package.json and would otherwise have picked up the workspace root's \"packageManager\": \"pnpm@...\" field and refused to install. This is a property of yarn 1 and of the monorepo layout, not of the acquired application."
+  },
+  "cache": {
+    "root": ".versionless/cache/react-cypress-rwa-source",
+    "verifiedSource": ".versionless/cache/react-cypress-rwa-source/verify/extracted/cypress-realworld-app-f6b5cf3a1799998dab71181eeed59460f8ada5f4",
+    "runtime": ".versionless/cache/react-cypress-rwa-runtime/node-v14.16.1-darwin-x64",
+    "gitIgnored": true,
+    "note": "Cache trees are git-ignored; the durable record is this evidence directory plus fixtures/react-cypress-rwa/fixture.json. The baseline install tree was held outside the repository entirely and is not durable."
+  },
+  "nonclaims": [
+    "Byte-identical duplicate fetches and blob-level git-tree parity establish source integrity for this revision only. The verified commit signature is GitHub's web-flow key and establishes no named human signer.",
+    "This provenance record establishes no migration feasibility, pilot status, production readiness, certification, or legal approval."
+  ]
+}

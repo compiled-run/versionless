@@ -1,0 +1,151 @@
+{
+  "schemaVersion": "versionless.official-source.v1",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "unit": "lrapr-t008/hx1-ingest-cypress-rwa",
+  "slug": "react-cypress-rwa",
+  "role": "holdout",
+  "result": "source-bound",
+  "startedAt": "2026-08-11T12:34:58Z",
+  "completedAt": "2026-08-11T12:36:54Z",
+  "timestampNote": "Per-request wall-clock timestamps are recorded in probe-ledger.ndjson; the envelope values above are the first and last accepted response.",
+  "repository": {
+    "id": 232162578,
+    "fullName": "cypress-io/cypress-realworld-app",
+    "private": false,
+    "archived": false,
+    "disabled": false,
+    "defaultBranch": "develop",
+    "responseBytes": 7090,
+    "responseSha256": "cec5d123dfa7966db2d92397c842e5edd58dc0d3270f215c4deef67aaa2dfe70",
+    "upstreamStillActive": "The repository was neither archived nor disabled at acquisition time and had recent upstream pushes. That is recorded as found; this ingest is pinned to a 2021 revision and is unaffected by later upstream movement."
+  },
+  "revision": {
+    "ref": "refs/tags/v1.0.18",
+    "tagKind": "lightweight",
+    "tagObjectSha": null,
+    "tagObjectNote": "refs/tags/v1.0.18 resolves directly to a commit object; there is no annotated tag object, so there is no tagger identity and no tag message.",
+    "commitSha": "f6b5cf3a1799998dab71181eeed59460f8ada5f4",
+    "commitDate": "2021-08-06T22:15:47Z",
+    "authorDate": "2021-08-06T22:15:47Z",
+    "commitVerification": "signed; GitHub reports verified=true, reason=valid for the commit's PGP signature. The signature is the GitHub web-flow merge-commit signature, which attests that GitHub created the commit, not that a named human signed it.",
+    "rootTreeSha": "3e0984411f7c5951c4bdbe37ce4b856ad20363c5",
+    "treeEntries": 244,
+    "treeBlobs": 208,
+    "treeDirectories": 36,
+    "treeSymlinks": 0,
+    "treeGitlinks": 0,
+    "treeExecutableBlobs": 0,
+    "treeTruncated": false,
+    "expectedCommitShaFromPriorScout": "f6b5cf3a",
+    "expectedCommitShaConfirmedFromWire": true,
+    "fullShaResolvedFromWire": "f6b5cf3a1799998dab71181eeed59460f8ada5f4"
+  },
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/cypress-io/cypress-realworld-app",
+      "status": 200,
+      "bytes": 7090,
+      "sha256": "cec5d123dfa7966db2d92397c842e5edd58dc0d3270f215c4deef67aaa2dfe70"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/cypress-io/cypress-realworld-app/git/ref/tags/v1.0.18",
+      "status": 200,
+      "bytes": 375,
+      "sha256": "d59992413749a84c8a0e40c06f62ac55371fb6b701c9670bb0da1a442e489a5b"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/cypress-io/cypress-realworld-app/git/commits/f6b5cf3a1799998dab71181eeed59460f8ada5f4",
+      "status": 200,
+      "bytes": 2510,
+      "sha256": "606c0049a3dbc5c249b5ee8a4cd5c4de092273fe4a0213da11363c928100a662"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/cypress-io/cypress-realworld-app/git/trees/3e0984411f7c5951c4bdbe37ce4b856ad20363c5?recursive=1",
+      "status": 200,
+      "bytes": 61180,
+      "sha256": "d1a2a45e4b8a9b8b8aca2e811aefd11adc44ca7addcca2386a0a326073fc1971"
+    },
+    {
+      "endpoint": "https://codeload.github.com/cypress-io/cypress-realworld-app/tar.gz/f6b5cf3a1799998dab71181eeed59460f8ada5f4",
+      "status": 200,
+      "bytes": 925160,
+      "sha256": "bd9319272dabc1e7263a0186e0aaae011f6219e6e106363d2c89426f9357b315",
+      "stream": 1
+    },
+    {
+      "endpoint": "https://codeload.github.com/cypress-io/cypress-realworld-app/tar.gz/f6b5cf3a1799998dab71181eeed59460f8ada5f4",
+      "status": 200,
+      "bytes": 925160,
+      "sha256": "bd9319272dabc1e7263a0186e0aaae011f6219e6e106363d2c89426f9357b315",
+      "stream": 2
+    },
+    {
+      "endpoint": "https://nodejs.org/dist/v14.16.1/SHASUMS256.txt",
+      "status": 200,
+      "bytes": 2953,
+      "sha256": "1ae61ef6e3e2d70de42c585b42eadf5640cd8fbd88ad93efebc6cb2141ce5df9",
+      "purpose": "baseline-runtime"
+    },
+    {
+      "endpoint": "https://nodejs.org/dist/v14.16.1/node-v14.16.1-darwin-x64.tar.gz",
+      "status": 200,
+      "bytes": 31562371,
+      "sha256": "b762b72fc149629b7e394ea9b75a093cad709a9f2f71480942945d8da0fc1218",
+      "purpose": "baseline-runtime",
+      "digestVerifiedAgainstOfficialShasums": true
+    }
+  ],
+  "archiveParity": {
+    "singleRoot": "cypress-realworld-app-f6b5cf3a1799998dab71181eeed59460f8ada5f4",
+    "safeEntries": 245,
+    "regularFiles": 208,
+    "directories": 36,
+    "specialEntries": 0,
+    "gitBlobs": 208,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "normalizedManifestSha256": "824e427d941bbe8dce7afcd6e4d243f3bca2b23c3f590179a80380b78c7fb22f",
+    "method": "Blob-level: every regular file in the extracted archive was hashed as a git blob object and compared byte-for-byte against the sha recorded for the same path in the recursive git tree. Detail in reconciliation.json.",
+    "pathTraversalEntries": 0,
+    "absolutePathEntries": 0
+  },
+  "largeFileStorage": {
+    "checked": true,
+    "gitattributesFilesInTree": 0,
+    "lfsRouting": "none",
+    "pointerFilesObserved": 0,
+    "finding": "The recursive tree at the pinned revision contains no .gitattributes file anywhere, so no path is routed through Git LFS and no acquired blob is an LFS pointer. Every binary asset in the tree (public/favicon.ico, public/logo192.png, public/logo512.png, public/img/rwa-readme-screenshot.png) is a real payload that reconciles blob-for-blob with the git tree.",
+    "deviationRecipeNeeded": false,
+    "deviationRecipeIfEverNeeded": "Not applicable at this revision. Were LFS routing ever introduced upstream, payloads would have to be fetched from the LFS endpoint and each object verified against its declared oid before use, recorded as an explicit oid-verified deviation."
+  },
+  "transaction": {
+    "attemptedRequests": 8,
+    "acceptedResponses": 8,
+    "acceptedWireBytes": 33486799,
+    "acceptedDecodedBytes": 33486799,
+    "sourceRequests": 6,
+    "baselineRuntimeRequests": 2,
+    "redirectsObserved": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "credentialsSent": 0,
+    "archivesByteIdentical": true,
+    "archiveMatchesGitTree": true,
+    "publishedSource": true,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "cache": {
+    "root": ".versionless/cache/react-cypress-rwa-source",
+    "archive1": ".versionless/cache/react-cypress-rwa-source/archive/archive-1.tar.gz",
+    "archive2": ".versionless/cache/react-cypress-rwa-source/archive/archive-2.tar.gz",
+    "verifiedSource": ".versionless/cache/react-cypress-rwa-source/verify/extracted",
+    "runtime": ".versionless/cache/react-cypress-rwa-runtime",
+    "rawMetadataPortable": false
+  },
+  "nonclaims": [
+    "A verified GitHub web-flow signature attests that GitHub produced the commit object. It is not evidence that a named individual signed the revision, and no such claim is made.",
+    "No dependency closure, build, browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval is established by this record."
+  ]
+}

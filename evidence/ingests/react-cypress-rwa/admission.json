@@ -1,0 +1,248 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-admission.v1",
+  "unit": "lrapr-t008/hx1-ingest-cypress-rwa",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "networkMode": "consented",
+  "slug": "react-cypress-rwa",
+  "role": "holdout",
+  "tranche": "React tranche one holdout (frozen-adapter falsification run)",
+  "holdoutDiscipline": {
+    "statement": "This application is the falsification-run holdout. It must never influence product code. This unit is evidence-only.",
+    "frozenSubtreesUntouched": [
+      "packages/frameworks/react",
+      "packages/frameworks/angular",
+      "packages/core/src/migrations",
+      "packages/core/src/bundlers",
+      "packages/core/src/analysis"
+    ],
+    "freezeRecord": "evidence/trust/current/adapter-freeze.json (fingerprint d9f75ef6…), not read or modified by this unit",
+    "writesMadeByThisUnit": "fixtures/react-cypress-rwa/** and evidence/ingests/react-cypress-rwa/** only",
+    "adapterTweaksMade": 0,
+    "adapterTweaksProposed": 0,
+    "findingsThatWouldImplyAnAdapterChange": "recorded in recordedRisks and in fixtures/react-cypress-rwa/fixture.json as findings only; no action was taken on any of them"
+  },
+  "priorScout": {
+    "existed": true,
+    "role": "read-only; supplied the target repository, tag, and an abbreviated expected commit sha",
+    "reverificationPolicy": "Every gate below was re-verified by this unit from the wire and from the reconciled archive at the pinned revision. The scout's findings were used as a hypothesis, not as evidence.",
+    "expectedCommitShaConfirmed": true,
+    "scoutClaimsCorrected": [
+      {
+        "scoutClaim": "LOCAL JWT auth mode available without Auth0/Okta network",
+        "asFound": "The default (local) mode is not a JWT mode. It is passport-local plus express-session: POST /login authenticates a username/password pair against the bcrypt hash in the seeded lowdb document and the session is carried by a connect.sid cookie. The JWT machinery in the tree (express-jwt, jwks-rsa, @okta/jwt-verifier, aws-jwt-verify paths in backend/helpers.ts) is mounted only when one of the external-provider environment variables is set.",
+        "consequence": "The scout's conclusion — that the application runs fully offline with no external auth provider — holds and was demonstrated. Its description of the mechanism as JWT does not.",
+        "state": "corrected-from-source-and-from-a-running-server"
+      },
+      {
+        "scoutClaim": "react-scripts 4 / webpack 4 CRA shape",
+        "asFound": "confirmed: react-scripts 4.0.3 declared and resolved, webpack 4.44.2 resolved, not ejected",
+        "state": "confirmed"
+      },
+      {
+        "scoutClaim": "genuine in-repo Express+lowdb loopback API, not a harness stub",
+        "asFound": "confirmed and demonstrated: 19 files under backend/ implementing 8 REST route modules, a GraphQL endpoint, passport auth, express-validator validation and a 25 KB lowdb data layer. The server was started and served real responses on loopback.",
+        "state": "confirmed"
+      }
+    ]
+  },
+  "admitted": {
+    "repository": "cypress-io/cypress-realworld-app",
+    "product": "Cypress Real World App — a peer-to-peer payment application (transaction feeds, new payments and requests, bank accounts, notifications, user settings) with its own Express + lowdb API",
+    "ref": "refs/tags/v1.0.18",
+    "tagKind": "lightweight",
+    "commitSha": "f6b5cf3a1799998dab71181eeed59460f8ada5f4",
+    "commitDate": "2021-08-06T22:15:47Z",
+    "frontendRoot": ".",
+    "backendRoot": "backend",
+    "decision": "admitted"
+  },
+  "gates": [
+    {
+      "gate": "mit-license-at-pinned-revision",
+      "result": "pass",
+      "evidence": {
+        "rootLicensePath": "LICENSE",
+        "bytes": 1069,
+        "spdxHeaderLine": "MIT License",
+        "copyrightLine": "Copyright (c) 2020 Cypress.io",
+        "manifestLicenseField": "MIT",
+        "otherLicenseFilesInTree": 0,
+        "licenseTextBytesRead": true,
+        "sidebarOnlyEvidence": false,
+        "quotedFromArchive": "The licence text was read out of the extracted archive, which reconciles blob-for-blob with the git tree at the pinned revision — not from the repository sidebar or the API's licence field.",
+        "detail": "license.json"
+      }
+    },
+    {
+      "gate": "real-substantive-application-not-template-demo-or-library",
+      "result": "pass",
+      "evidence": {
+        "repositoryShape": "A create-react-app TypeScript single-page application at the repository root plus a first-party Express API under backend/, sharing TypeScript domain models in src/models. Not published as a library; not a starter scaffold.",
+        "blobsInTree": 208,
+        "nonTestSourceFilesUnderSrc": 89,
+        "nonTestSourceBytesUnderSrc": 265880,
+        "componentFiles": 46,
+        "backendFiles": 19,
+        "cypressFiles": 31,
+        "stateLayer": "XState 4.23.1 — 14 hand-written state machines under src/machines (auth, data, transactions, bank accounts, notifications, onboarding, drawer, snackbar, filters)",
+        "domainModels": "10 TypeScript model files under src/models including a db-schema",
+        "backendSurface": "8 REST route modules (users, contacts, bankAccounts, transactions, likes, comments, notifications, bankTransfers), a testData route mounted only in development and test, a GraphQL endpoint with its own schema and resolvers, express-validator validators, and a 25.5 KB lowdb data layer in backend/database.ts",
+        "publishedAsLibrary": false,
+        "isStarterTemplate": false,
+        "authorshipCaveat": "The application is vendor-authored by Cypress as a testing showcase. It is deliberately well-kept code, which makes it a weaker proxy for messy legacy code than an abandoned product would be. This was the known trade-off in the T007 selection and is recorded, not discounted.",
+        "notes": "The substance is in the domain and the state machines, not in file count: a payments domain with double-entry-shaped bank transfers, pagination, search, likes, comments and a notification fan-out."
+      }
+    },
+    {
+      "gate": "react-15-to-17",
+      "result": "pass",
+      "evidence": {
+        "declaredReact": "17.0.2",
+        "declaredReactDom": "17.0.2",
+        "declaredExactly": true,
+        "resolvedInBaselineCell": "react 17.0.2, react-dom 17.0.2",
+        "source": "package.json at the pinned revision, resolved through the committed yarn.lock"
+      }
+    },
+    {
+      "gate": "webpack-le-4-or-create-react-app",
+      "result": "pass",
+      "evidence": {
+        "toolchain": "create-react-app",
+        "declaredReactScripts": "4.0.3",
+        "reactScriptsPinnedExactly": true,
+        "resolvedReactScriptsInBaselineCell": "4.0.3",
+        "ejected": false,
+        "webpackResolvedInBaselineCell": "4.44.2",
+        "bundlerCeilingSatisfied": "webpack 4.44.2 is on the webpack 4 line",
+        "typescript": "4.3.4",
+        "scripts": {
+          "start": "cross-env NODE_ENV=development concurrently yarn:start:react yarn:start:api",
+          "start:react": "react-scripts -r @cypress/instrument-cra start",
+          "start:api": "yarn tsnode --files backend/app.ts",
+          "build": "react-scripts build",
+          "prebuild": "yarn types"
+        },
+        "instrumentationNote": "The dev server is started through @cypress/instrument-cra, which injects istanbul coverage instrumentation. `react-scripts build` is not instrumented."
+      }
+    },
+    {
+      "gate": "pinned-revision-date-coherent",
+      "result": "pass",
+      "evidence": {
+        "ref": "refs/tags/v1.0.18",
+        "tagKind": "lightweight",
+        "commitSha": "f6b5cf3a1799998dab71181eeed59460f8ada5f4",
+        "commitDate": "2021-08-06T22:15:47Z",
+        "authorDate": "2021-08-06T22:15:47Z",
+        "commitMessageSubject": "Update to Cypress 8.2.0 (#1034)",
+        "evaluatedOn": "2026-08-11",
+        "ageYearsApproximate": 5.01,
+        "coherenceChecks": {
+          "commitDateInsideRequiredWindow": true,
+          "dependencyEraAgreesWithCommitDate": "react-scripts 4.0.3 (Feb 2021), react 17.0.2 (Mar 2021), cypress 8.2.0 (Aug 2021), typescript 4.3.4 (Jun 2021) are all era-contemporary with a 2021-08-06 commit",
+          "lockfileEraAgreesWithCommitDate": "the committed yarn.lock resolves the same era",
+          "upstreamRepositoryArchived": false
+        },
+        "commitVerification": "GitHub reports verified=true, reason=valid. The signature is GitHub's web-flow key on a squash-merge commit, so it attests GitHub authorship of the object, not a named human signer.",
+        "unknownPreserved": "A lightweight tag carries no tagger, no date and no signature of its own; the only dating evidence is the commit object it points at."
+      }
+    },
+    {
+      "gate": "browser-ui-plausibly-supporting-three-or-more-substantive-user-journeys",
+      "result": "pass",
+      "evidence": {
+        "routerLibrary": "react-router-dom 5.2.0",
+        "publicRoutes": ["/signin", "/signup"],
+        "privateRoutes": ["/(public|contacts|personal)?", "/user/settings", "/notifications", "/bankaccounts*", "/transaction/new", "/transaction/:transactionId"],
+        "candidateJourneys": [
+          {
+            "journey": "sign in and sign up (local mode)",
+            "routes": ["/signin", "/signup"],
+            "code": "src/containers/App.tsx, src/machines/authMachine.ts, backend/auth.ts",
+            "plausibility": "declared-and-code-backed; the underlying POST /login was additionally exercised against the running API in this unit"
+          },
+          {
+            "journey": "user onboarding and first bank account",
+            "routes": ["/", "/bankaccounts"],
+            "code": "src/containers/UserOnboardingContainer.tsx, src/machines/userOnboardingMachine.ts, src/machines/bankAccountsMachine.ts, backend/bankaccount-routes.ts",
+            "plausibility": "declared-and-code-backed"
+          },
+          {
+            "journey": "create a new payment or request",
+            "routes": ["/transaction/new"],
+            "code": "src/containers/TransactionCreateContainer.tsx, src/machines/createTransactionMachine.ts, backend/transaction-routes.ts",
+            "plausibility": "declared-and-code-backed"
+          },
+          {
+            "journey": "browse the public / contacts / personal transaction feeds with filters and pagination",
+            "routes": ["/", "/public", "/contacts", "/personal"],
+            "code": "src/containers/TransactionsContainer.tsx, src/machines/publicTransactionsMachine.ts, contactsTransactionsMachine.ts, personalTransactionsMachine.ts, transactionFiltersMachine.ts, backend/transaction-routes.ts",
+            "plausibility": "declared-and-code-backed"
+          },
+          {
+            "journey": "open a transaction, like it and comment on it",
+            "routes": ["/transaction/:transactionId"],
+            "code": "src/containers/TransactionDetailContainer.tsx, src/machines/transactionDetailMachine.ts, backend/like-routes.ts, backend/comment-routes.ts",
+            "plausibility": "declared-and-code-backed"
+          },
+          {
+            "journey": "read and dismiss notifications",
+            "routes": ["/notifications"],
+            "code": "src/containers/NotificationsContainer.tsx, src/machines/notificationsMachine.ts, backend/notification-routes.ts",
+            "plausibility": "declared-and-code-backed"
+          },
+          {
+            "journey": "edit user settings",
+            "routes": ["/user/settings"],
+            "code": "src/containers/UserSettingsContainer.tsx, backend/user-routes.ts",
+            "plausibility": "declared-and-code-backed"
+          }
+        ],
+        "requiredMinimum": 3,
+        "observed": 7,
+        "corroboration": "The upstream Cypress suite under cypress/tests/ui carries one spec per journey (auth, bankaccounts, new-transaction, notifications, transaction-feeds, transaction-view, user-settings), which is independent evidence that these journeys are the intended exercisable surface.",
+        "offlineCapability": "All seven journeys are served by the in-repo API against the committed lowdb seed. No external host is contacted in the default mode.",
+        "unknownPreserved": "These journeys are read off the router, the containers and the state machines, and are corroborated by the upstream spec names. No browser was driven in this unit, so none of them is established as actually exercisable."
+      }
+    }
+  ],
+  "recordedRisks": [
+    {
+      "risk": "vendor-authored cleanliness is a weak proxy for messy legacy code",
+      "finding": "The repository is maintained by the Cypress DX team as a testing showcase, is fully typed, prettier-formatted, and carries a renovate config. Its baseline installs, typechecks and builds cleanly today (see baseline-attempt.json).",
+      "consequence": "As a holdout it tests the frozen adapters against a well-formed CRA 4 application, not against decay. A pass here is weaker evidence than a pass on a decayed application would be, and a failure here would be correspondingly stronger.",
+      "state": "recorded"
+    },
+    {
+      "risk": "external identity providers are present in the tree",
+      "finding": "Auth0, Okta, AWS Cognito/Amplify and Google sign-in are all wired, both in src/index.tsx (which selects a root container by environment variable) and in backend/app.ts (which mounts the matching JWT middleware). Each is selected only by an explicit REACT_APP_AUTH0 / REACT_APP_OKTA / REACT_APP_AWS_COGNITO / REACT_APP_GOOGLE variable, and the committed .env leaves every one of them commented out.",
+      "consequence": "The default path — `yarn dev`, `yarn start`, or a plain `react-scripts build` — takes the else branch and renders the local App container against the local passport-local API. No external identity host is contacted.",
+      "residual": "aws-amplify, @okta/*, @auth0/auth0-react, react-google-login and jwks-rsa remain in the dependency closure and are therefore compiled into the production bundle even in local mode. Any later browser work must keep the provider variables unset.",
+      "state": "resolved-by-reading-the-code-and-by-booting-the-server; local-only operation demonstrated on loopback"
+    },
+    {
+      "risk": "the backend requires a generated file that is not in the tree",
+      "finding": "backend/helpers.ts unconditionally requires ../src/aws-exports, an Amplify output that is git-ignored and therefore absent from the pinned revision. Booting backend/app.ts without it fails immediately with MODULE_NOT_FOUND. The repository supplies its own remedy: the copy:mock:awsexports / copy:mock:awsexportses5 scripts copy scripts/mock-aws-exports.js into src/aws-exports.js, and they are wired as prestart:ci and predev:cognito:ci.",
+      "consequence": "A first API boot from a clean checkout must run the repository's own mock-exports step first. This unit ran exactly that step, verbatim, and the server then booted.",
+      "state": "resolved-by-running-the-repository's-own-prerequisite; recorded because it is a real first-boot obstacle"
+    },
+    {
+      "risk": "the seeded database is a mutable working file inside the tree",
+      "finding": "data/database.json is committed and is also the live lowdb store the API writes to; prestart/predev restore it from data/database-seed.json before every run.",
+      "consequence": "Any journey that writes will dirty the working tree. Later work must restore from the seed rather than treat data/database.json as immutable.",
+      "state": "recorded"
+    },
+    {
+      "risk": "the pinned revision is a moving target upstream",
+      "finding": "The upstream repository is active and has been pushed to as recently as 2026-08-03; its default branch is develop.",
+      "consequence": "None for this fixture: the identity is fixed by commit sha f6b5cf3a1799998dab71181eeed59460f8ada5f4 and by the archive digest, both of which are immutable.",
+      "state": "recorded"
+    }
+  ],
+  "nonclaims": [
+    "Admission fixes an identity and records gate findings. It establishes no browser behavior, journey exercisability, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "The journey list is read from the router, the containers and the state machines, and corroborated by upstream spec names; no journey was driven in a browser by this unit.",
+    "Nothing in this record is a statement about whether the frozen adapters will or will not handle this application."
+  ]
+}

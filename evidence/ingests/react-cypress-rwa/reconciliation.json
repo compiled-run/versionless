@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-reconciliation.v1",
+  "slug": "react-cypress-rwa",
+  "archive": {
+    "path": ".versionless/cache/react-cypress-rwa-source/archive/archive-1.tar.gz",
+    "entries": 245,
+    "singleRoot": "cypress-realworld-app-f6b5cf3a1799998dab71181eeed59460f8ada5f4",
+    "pathTraversalEntries": 0,
+    "absolutePathEntries": 0
+  },
+  "extracted": {
+    "regularFiles": 208,
+    "specialEntries": 0,
+    "symlinks": 0
+  },
+  "gitTree": {
+    "sha": "3e0984411f7c5951c4bdbe37ce4b856ad20363c5",
+    "truncated": false,
+    "blobs": 208,
+    "symlinkBlobs": 0,
+    "gitlinks": 0,
+    "executableBlobs": 0
+  },
+  "result": {
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "archiveMatchesGitTree": true
+  },
+  "missing": [],
+  "extra": [],
+  "mismatched": [],
+  "normalizedManifestSha256": "824e427d941bbe8dce7afcd6e4d243f3bca2b23c3f590179a80380b78c7fb22f",
+  "method": "Every regular file in the extracted archive was hashed as a git blob object (sha1 over \"blob <len>\\0\" + bytes) and compared against the sha recorded for the same path in the recursive git tree at the pinned revision.",
+  "nonclaims": [
+    "Blob-level parity establishes that the acquired bytes are the bytes of the pinned revision. It establishes nothing about build, behavior, or fitness."
+  ]
+}

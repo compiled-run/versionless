@@ -1,0 +1,69 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-closure.v1",
+  "slug": "react-cypress-rwa",
+  "unit": "lrapr-t008/hx1-ingest-cypress-rwa",
+  "revision": "f6b5cf3a1799998dab71181eeed59460f8ada5f4",
+  "lockState": {
+    "committedWithSource": true,
+    "file": "yarn.lock",
+    "bytes": 862611,
+    "format": "yarn 1 lockfile v1",
+    "searchedFor": ["yarn.lock", "package-lock.json", "npm-shrinkwrap.json", "pnpm-lock.yaml"],
+    "searchScope": "the full recursive git tree at the pinned revision (208 blobs)",
+    "alsoPresent": [],
+    "entryBlocks": 2422,
+    "everyEntryHasResolvedUrl": true,
+    "everyEntryHasIntegrityHash": true,
+    "registryHosts": ["registry.yarnpkg.com"],
+    "gitDependencies": 0,
+    "fileOrLinkDependencies": 0,
+    "consequence": "The dependency closure IS pinned by the repository. Unlike the unlocked React fixtures in this corpus, a baseline install here reproduces the 2021 closure rather than resolving ranges against today's registry. This is the strongest reproducibility position of any React fixture ingested so far."
+  },
+  "declaredDependencies": {
+    "dependencies": 29,
+    "devDependencies": 71,
+    "rangeStyle": "every direct dependency and devDependency is an exact version with no range operator",
+    "resolutionsField": {
+      "present": true,
+      "entries": {
+        "@babel/compat-data": "7.9.0",
+        "@types/express": "4.17.2",
+        "@types/express-serve-static-core": "4.17.2"
+      },
+      "honoured": "yarn 1 honoured all three; it emitted incompatibility warnings for @babel/compat-data against five requested ranges and applied the resolution anyway."
+    },
+    "engines": { "node": ">=12" }
+  },
+  "installedClosure": {
+    "installedBy": "yarn 1.22.22 on Node 14.16.1 (darwin-x64 under Rosetta 2)",
+    "command": "yarn install --frozen-lockfile --ignore-scripts --non-interactive",
+    "frozenLockfileAccepted": true,
+    "frozenLockfileMeaning": "yarn verified that the committed yarn.lock already satisfies package.json exactly and refused to update it. The install therefore reproduces the committed closure and did not drift.",
+    "lifecycleScripts": "disabled",
+    "lifecycleScriptsSkippedNote": "postinstall (husky install) and any dependency install scripts were not run. No native module was compiled; the closure needs none for install, typecheck or build.",
+    "topLevelNodeModulesEntries": 1463,
+    "durationSeconds": 40,
+    "warnings": {
+      "peerDependencyWarnings": 12,
+      "resolutionIncompatibilityWarnings": 5,
+      "workspacesWarnings": 2,
+      "character": "All warnings are pre-existing properties of the 2021 closure (react-infinite-calendar and react-virtualized declaring React 15/16 peers against React 17, @percy/cypress declaring a Cypress 3-6 peer against Cypress 8). None blocked the install, the typecheck or the build."
+    }
+  },
+  "keyResolvedVersions": {
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-scripts": "4.0.3",
+    "webpack": "4.44.2",
+    "typescript": "4.3.4",
+    "cypress": "8.2.0",
+    "xstate": "4.23.1",
+    "@material-ui/core": "4.11.3",
+    "express": "4.x via the committed lockfile",
+    "lowdb": "1.0.0"
+  },
+  "nonclaims": [
+    "A reproducible install is not a reproducible build environment: the closure is pinned but the Node runtime, the operating system and the CPU architecture are not pinned by the repository beyond .nvmrc and engines.",
+    "This record evaluates no dependency's licence, security posture, or maintenance status."
+  ]
+}

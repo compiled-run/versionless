@@ -1,0 +1,58 @@
+{
+  "repository": {
+    "id": 232162578,
+    "fullName": "cypress-io/cypress-realworld-app",
+    "private": false,
+    "archived": false,
+    "disabled": false,
+    "license": {
+      "key": "mit",
+      "name": "MIT License",
+      "spdx_id": "MIT",
+      "url": "https://api.github.com/licenses/mit",
+      "node_id": "MDc6TGljZW5zZTEz"
+    },
+    "defaultBranch": "develop",
+    "pushedAt": "2026-08-03T06:39:58Z",
+    "responseBytes": 7090,
+    "responseSha256": "cec5d123dfa7966db2d92397c842e5edd58dc0d3270f215c4deef67aaa2dfe70"
+  },
+  "ref": {
+    "name": "refs/tags/v1.0.18",
+    "objectType": "commit",
+    "objectSha": "f6b5cf3a1799998dab71181eeed59460f8ada5f4"
+  },
+  "tagObject": null,
+  "commit": {
+    "sha": "f6b5cf3a1799998dab71181eeed59460f8ada5f4",
+    "date": "2021-08-06T22:15:47Z",
+    "authorDate": "2021-08-06T22:15:47Z",
+    "message": "Update to Cypress 8.2.0 (#1034)\n\n* Update to Cypress 8.2.0\r\n\r\n* remove firefoxGcInterval since it was deprecated\r\n\r\n* Update cypress docker image since Cypress no longer supports Firefox 85 and below in Cypress 8\r\n\r\n* update all container declarations for github actions\r\n\r\n* update all container delcarations for gitlab",
+    "verification": {
+      "verified": true,
+      "reason": "valid",
+      "signature": "-----BEGIN PGP SIGNATURE-----\n\nwsBcBAABCAAQBQJhDbSTCRBK7hj4Ov3rIwAAASEIAFOWezmrFlda5ZTFpGYWT6tn\nvRNI79bIfG5+ARQJ1v4TvBh83wDcMsIvrFezQ5LnAMEJJ9BStHgopHDZ22q3j61o\n15AaP1VPVP0jQrU8w8W+coW3qS1cQuHVDP9qBzlIJ1NaVGiCa1NotapCnm6b4F/+\n6QKU1THlzprAeJ1T0SJ/B1LApuFr6xW39CRnbMy1iHiSKsH+8MlG70csI2SlF9TK\nSzwTrULqPohG2t+HBge+whlLaiCSa7SROf2/zksRHlLVfsTtfTWvF8ENC5o6I0aQ\nmzVS4mqj2Jk2lCCG88V8lmsfqTAl4TJZUb7tgaSFtwAVhJEOwq3aqWW3aBjO84Y=\n=GRTf\n-----END PGP SIGNATURE-----\n",
+      "payload": "tree 3e0984411f7c5951c4bdbe37ce4b856ad20363c5\nparent 85f3dfdeb91d823a849c459ecc0d5cbd4e20ee47\nauthor Kevin Old <kevin@cypress.io> 1628288147 -0500\ncommitter GitHub <noreply@github.com> 1628288147 -0500\n\nUpdate to Cypress 8.2.0 (#1034)\n\n* Update to Cypress 8.2.0\r\n\r\n* remove firefoxGcInterval since it was deprecated\r\n\r\n* Update cypress docker image since Cypress no longer supports Firefox 85 and below in Cypress 8\r\n\r\n* update all container declarations for github actions\r\n\r\n* update all container delcarations for gitlab",
+      "verified_at": "2024-11-08T08:11:42Z"
+    },
+    "treeSha": "3e0984411f7c5951c4bdbe37ce4b856ad20363c5"
+  },
+  "tree": {
+    "sha": "3e0984411f7c5951c4bdbe37ce4b856ad20363c5",
+    "truncated": false,
+    "entries": 244,
+    "blobs": 208,
+    "dirs": 36,
+    "gitlinks": 0,
+    "symlinks": 0,
+    "execBlobs": 0
+  },
+  "archive": {
+    "url": "https://codeload.github.com/cypress-io/cypress-realworld-app/tar.gz/f6b5cf3a1799998dab71181eeed59460f8ada5f4",
+    "bytes": 925160,
+    "sha256": "bd9319272dabc1e7263a0186e0aaae011f6219e6e106363d2c89426f9357b315",
+    "sha256Stream2": "bd9319272dabc1e7263a0186e0aaae011f6219e6e106363d2c89426f9357b315",
+    "byteIdentical": true
+  },
+  "acceptedResponses": 6
+}

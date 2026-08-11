@@ -1,0 +1,80 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-rights.v1",
+  "slug": "react-cypress-rwa",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "revision": {
+    "repository": "cypress-io/cypress-realworld-app",
+    "ref": "refs/tags/v1.0.18",
+    "commitSha": "f6b5cf3a1799998dab71181eeed59460f8ada5f4",
+    "rootTreeSha": "3e0984411f7c5951c4bdbe37ce4b856ad20363c5"
+  },
+  "declaration": {
+    "identifier": "MIT",
+    "identifierSource": "verbatim MIT text in the repository root LICENSE file at the pinned revision, read out of the reconciled archive",
+    "copyrightNotice": "Copyright (c) 2020 Cypress.io",
+    "manifestLicenseField": "MIT",
+    "githubDetectedLicense": "MIT (spdx_id MIT) as reported by the repository metadata response; the file text is the primary evidence and agrees with it",
+    "sidebarOnlyEvidence": false,
+    "dualLicensed": false,
+    "sourceAvailableCarveOut": false
+  },
+  "artifacts": [
+    {
+      "path": "LICENSE",
+      "role": "repository-root-licence",
+      "bytes": 1069,
+      "firstLine": "MIT License",
+      "copyrightLine": "Copyright (c) 2020 Cypress.io",
+      "permissionGrantPresent": true,
+      "noticeRetentionClausePresent": true,
+      "warrantyDisclaimerPresent": true,
+      "textVerbatimMit": true
+    },
+    {
+      "path": "package.json",
+      "role": "application-manifest",
+      "bytes": 8339,
+      "licenseField": "MIT",
+      "privateField": false,
+      "packageName": "cypress-realworld-app",
+      "packageVersion": "1.0.0",
+      "versionFieldNote": "The manifest version string is 1.0.0 and does not track the release tags; the tag v1.0.18 is the identity that matters and is fixed by commit sha."
+    }
+  ],
+  "inventory": {
+    "licenceFilesInTree": 1,
+    "additionalLicenceOrNoticeFiles": 0,
+    "vendoredThirdPartySources": 0,
+    "committedNodeModules": 0,
+    "committedDistDirectories": 0,
+    "note": "The recursive tree at the pinned revision contains exactly one licence file (root LICENSE) and no vendored dependency or built-output directories. A CODE_OF_CONDUCT.md is present and carries no additional licence terms."
+  },
+  "retainedAssetRights": {
+    "reviewed": true,
+    "brandedAssets": [
+      "public/favicon.ico",
+      "public/logo192.png",
+      "public/logo512.png",
+      "public/manifest.json",
+      "public/img/rwa-readme-screenshot.png"
+    ],
+    "position": "Cypress.io brand marks are retained under the upstream project's ownership. They are carried only as part of the immutable source archive and are not relicensed, rebranded, or reused as Versionless assets.",
+    "unknownPreserved": "Trademark rights are separate from the MIT copyright grant and are neither established nor disclaimed here."
+  },
+  "seedDataPosture": {
+    "reviewed": true,
+    "files": ["data/database-seed.json", "data/database.json", "data/empty-seed.json"],
+    "content": "A committed lowdb document holding synthetic users, contacts, bank accounts, transactions, likes, comments and notifications. The records carry person-shaped fields (names, usernames, e-mail addresses, telephone numbers, avatar URLs) and bcrypt password hashes.",
+    "provenance": "Generated upstream by faker 5.5.3 via scripts/generateSeedData.ts and scripts/seedDataUtils.ts; the generator and its .env-driven volume knobs are both committed.",
+    "position": "This is synthetic fixture data, not personal data about real people. No seed record, username, e-mail address, telephone number, or password hash is reproduced in any Versionless evidence file, and none may be introduced by later work.",
+    "unknownPreserved": "Faker output is synthetic by construction; this record does not audit every one of the seeded records individually."
+  },
+  "obligations": [
+    "Retain the MIT notice and permission text in any copy or substantial portion of the source.",
+    "The MIT grant covers the repository's own files; each dependency in the closure carries its own terms, which this record does not evaluate."
+  ],
+  "nonclaims": [
+    "This is a record of the licence text present at the pinned revision, not a legal opinion, licence-compatibility finding, or legal approval.",
+    "No licence determination is made for the transitive dependency closure."
+  ]
+}
