@@ -103,6 +103,28 @@ export type WitnessObservedRequestOutcome = {
 	reason: string | null;
 };
 
+/**
+ * One rendered-appearance measurement to take from the live page: an element,
+ * and the exact CSS properties whose resolved values are wanted. Nothing about
+ * the stylesheet is read — these are the values the browser actually resolved
+ * for a laid-out element, which is the only thing a reader of a styling claim
+ * cares about.
+ */
+export type WitnessRenderedStyleProbe = {
+	label: string;
+	selector: string;
+	properties: readonly string[];
+};
+
+/** The measurement itself, including the element's laid-out box in CSS pixels. */
+export type WitnessRenderedStyle = {
+	label: string;
+	selector: string;
+	width: number;
+	height: number;
+	properties: Record<string, string>;
+};
+
 export type PlaywrightWitnessHost = {
 	browser: WitnessBrowser;
 	locality(): { successfulNonLoopback: 0; mockedNonLoopback: number };
@@ -113,6 +135,12 @@ export type PlaywrightWitnessHost = {
 	 * the surface that actually exists rather than asserted in the abstract.
 	 */
 	viewportScroll(): Promise<WitnessViewportScroll>;
+	/**
+	 * Reads resolved appearance for the named elements out of the live page, so a
+	 * claim about how an application renders is measured rather than asserted
+	 * from the bytes that were shipped.
+	 */
+	renderedStyles(probes: readonly WitnessRenderedStyleProbe[]): Promise<WitnessRenderedStyle[]>;
 	/** Every request outcome the page reported, in observation order. */
 	requestOutcomes(): WitnessObservedRequestOutcome[];
 };
@@ -436,8 +464,47 @@ function adaptPage(
 			void (await page.locator(selector).first().press(keyWithModifiers(key, modifierMask), {
 				timeout: timeoutMs,
 			})),
-		drag: async () => {
-			throw new Error('drag is not-tested because no selected genuine surface exists');
+		drag: async (from, to, steps, timeoutMs) => {
+			const source = page.locator(from).first();
+			await source.scrollIntoViewIfNeeded({ timeout: timeoutMs });
+			const sourceBox = await source.boundingBox({ timeout: timeoutMs });
+			if (sourceBox === null)
+				throw new Error(`drag('${from}') found no laid-out source element`);
+			const destination = await (async (): Promise<{ x: number; y: number }> => {
+				if (typeof to !== 'string') return to;
+				const target = page.locator(to).first();
+				await target.scrollIntoViewIfNeeded({ timeout: timeoutMs });
+				const targetBox = await target.boundingBox({ timeout: timeoutMs });
+				if (targetBox === null)
+					throw new Error(`drag('${from}' -> '${to}') found no laid-out target element`);
+				const viewport = page.viewportSize();
+				const centre = targetBox.y + targetBox.height / 2;
+				return {
+					x: targetBox.x + targetBox.width / 2,
+					// A drop list taller than the viewport has its geometric centre
+					// off-screen; the pointer has to stay inside the window it is
+					// gesturing in, so the drop point is clamped into it.
+					y:
+						viewport === null
+							? centre
+							: Math.min(Math.max(centre, targetBox.y + 8), viewport.height - 8),
+				};
+			})();
+			const origin = {
+				x: sourceBox.x + sourceBox.width / 2,
+				y: sourceBox.y + sourceBox.height / 2,
+			};
+			await page.mouse.move(origin.x, origin.y);
+			await page.mouse.down();
+			// Interpolated intermediate moves: pointer-based drag libraries only
+			// begin tracking after movement past their own threshold, so a single
+			// jump from source to destination is not a drag they ever observe.
+			for (let step = 1; step <= steps; step += 1)
+				await page.mouse.move(
+					origin.x + (destination.x - origin.x) * (step / steps),
+					origin.y + (destination.y - origin.y) * (step / steps),
+				);
+			await page.mouse.up();
 		},
 		scroll: async (target, deltaX, deltaY, _gesture, timeoutMs) =>
 			waitForScrollableChange(page, target, deltaX, deltaY, timeoutMs),
@@ -657,6 +724,42 @@ export function createPlaywrightWitnessHost(options: {
 				clientHeight: document.documentElement.clientHeight,
 				scrollY: Math.round(window.scrollY),
 			}));
+		},
+		renderedStyles: async (probes) => {
+			if (livePages.size !== 1)
+				throw new Error('Witness rendered-style measurement requires exactly one live page');
+			const [page] = livePages;
+			if (page === undefined)
+				throw new Error('Witness rendered-style measurement requires exactly one live page');
+			return await page.evaluate(
+				(requested: Array<{ label: string; selector: string; properties: string[] }>) =>
+					requested.map((probe) => {
+						const element = document.querySelector(probe.selector);
+						if (element === null)
+							throw new Error(
+								`rendered-style probe matched no element: ${probe.selector}`,
+							);
+						const resolved = globalThis.getComputedStyle(element);
+						const box = element.getBoundingClientRect();
+						return {
+							label: probe.label,
+							selector: probe.selector,
+							width: Math.round(box.width),
+							height: Math.round(box.height),
+							properties: Object.fromEntries(
+								probe.properties.map((property) => [
+									property,
+									resolved.getPropertyValue(property),
+								]),
+							),
+						};
+					}),
+				probes.map((probe) => ({
+					label: probe.label,
+					selector: probe.selector,
+					properties: [...probe.properties],
+				})),
+			);
 		},
 		serviceWorkerObserverFinalization: () => {
 			const finalization = observer?.readback() ?? null;

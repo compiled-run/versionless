@@ -9,11 +9,22 @@ export const WITNESS_REAL_APP_NAMES = [
 	'papercups',
 	'react-hospitalrun',
 	'angular-factoriolab',
+	'angular-jira-clone',
 ] as const;
 /** Every named app must contribute two lanes observed twice each. */
 export const WITNESS_REAL_APP_RUNS = WITNESS_REAL_APP_NAMES.length * 4;
 
-export type WitnessGesture = 'click' | 'type' | 'press' | 'hover' | 'scroll';
+/**
+ * The closed list of applications whose journeys are permitted to record a drag
+ * gesture. Drag is not a gesture a journey may reach for because it is
+ * available: it is only honest where the application has a genuine drag surface
+ * whose settled result can be asserted exactly, so every other application in
+ * the corpus continues to record drag as not-tested and fails the run if one
+ * appears.
+ */
+export const WITNESS_REAL_APP_DRAG_SURFACES = ['angular-jira-clone'] as const;
+
+export type WitnessGesture = 'click' | 'type' | 'press' | 'hover' | 'scroll' | 'drag';
 export type WitnessServiceWorkerTelemetry = {
 	state: 'ready';
 	registration: {
@@ -562,7 +573,10 @@ export function parseWitnessRealAppReceipt(value: unknown): WitnessRealAppReceip
 					) ||
 					lifecycle.offlineServerRequests !== 0
 				: lifecycle !== undefined;
-		if (run.interactions.some((interaction) => interaction.kind === ('drag' as WitnessGesture)))
+		if (
+			run.interactions.some((interaction) => interaction.kind === 'drag') &&
+			!(WITNESS_REAL_APP_DRAG_SURFACES as readonly string[]).includes(run.app)
+		)
 			throw new Error('Witness real-app drag must remain not-tested');
 		if (
 			!expected.delete(key) ||
@@ -625,7 +639,10 @@ export function parseWitnessRealAppReceipt(value: unknown): WitnessRealAppReceip
 			gestures.add(interaction.kind);
 		}
 	}
-	if (expected.size !== 0 || [...gestures].sort().join(',') !== 'click,hover,press,scroll,type')
+	if (
+		expected.size !== 0 ||
+		[...gestures].sort().join(',') !== 'click,drag,hover,press,scroll,type'
+	)
 		throw new Error('Witness real-app interaction coverage differs');
 	if (
 		receipt.mutations?.length !== 2 ||
@@ -641,7 +658,7 @@ export function parseWitnessRealAppReceipt(value: unknown): WitnessRealAppReceip
 		receipt.locality?.mode !== 'offline' ||
 		receipt.locality?.successfulNonLoopback !== 0 ||
 		receipt.locality?.osWideIsolation !== false ||
-		!receipt.nonclaims?.some((claim) => claim.includes('Drag is not-tested')) ||
+		!receipt.nonclaims?.some((claim) => claim.includes('Drag is tested only')) ||
 		receipt.integrity?.algorithm !== 'sha256' ||
 		receipt.integrity.canonicalDigest !== witnessRealAppDigest(receipt)
 	)

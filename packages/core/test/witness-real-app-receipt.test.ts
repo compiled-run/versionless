@@ -2,13 +2,28 @@ import { describe, expect, it } from 'vitest';
 import { canonicalize, sha256 } from '../src/receipts/canonicalize.ts';
 import {
 	parseWitnessRealAppReceipt,
+	WITNESS_REAL_APP_DRAG_SURFACES,
 	WITNESS_REAL_APP_NAMES,
 	WITNESS_REAL_APP_RUNS,
 	WITNESS_REAL_APP_SCHEMA,
 	witnessRealAppDigest,
+	type WitnessGesture,
 	type WitnessOfflineEvidence,
 	type WitnessRealAppReceipt,
 } from '../src/receipts/witness-real-app.ts';
+
+/**
+ * The gestures a fixture run records. Drag is added only for the applications
+ * the closed drag-surface list names, which is exactly the discipline the
+ * parser enforces: every other application must still record drag as
+ * not-tested.
+ */
+function gestures(app: (typeof WITNESS_REAL_APP_NAMES)[number]): WitnessGesture[] {
+	const base: WitnessGesture[] = ['click', 'type', 'press', 'hover', 'scroll'];
+	return (WITNESS_REAL_APP_DRAG_SURFACES as readonly string[]).includes(app)
+		? [...base, 'drag']
+		: base;
+}
 
 function fixture(): WitnessRealAppReceipt {
 	const runs = WITNESS_REAL_APP_NAMES.flatMap((app, appIndex) =>
@@ -24,21 +39,22 @@ function fixture(): WitnessRealAppReceipt {
 						'react',
 						'react',
 						'angular',
+						'angular',
 					] as const
 				)[appIndex]!,
 				lane,
 				pass,
 				result: 'pass' as const,
-				interactions: ['click', 'type', 'press', 'hover', 'scroll'].map((kind) => ({
-					kind: kind as 'click' | 'type' | 'press' | 'hover' | 'scroll',
+				interactions: gestures(app).map((kind) => ({
+					kind,
 					selector: '#fixture',
 				})),
 				assertions: ['visible'],
 				routes: ['/'],
 				trackedEvents: [],
 				witnessRecord: {
-					interactions: ['click', 'type', 'press', 'hover', 'scroll'].map((kind) => ({
-						kind: kind as 'click' | 'type' | 'press' | 'hover' | 'scroll',
+					interactions: gestures(app).map((kind) => ({
+						kind,
 						selector: '#fixture',
 					})),
 					navigationPaths: [],
@@ -270,7 +286,9 @@ function fixture(): WitnessRealAppReceipt {
 			transformEdits: 3,
 		},
 		locality: { mode: 'offline', successfulNonLoopback: 0, osWideIsolation: false },
-		nonclaims: ['Drag is not-tested; no genuine selected surface exists.'],
+		nonclaims: [
+			'Drag is tested only on the applications the closed drag-surface list names; every other application records it as not-tested.',
+		],
 		integrity: { algorithm: 'sha256', canonicalDigest: '' },
 	};
 	receipt.integrity.canonicalDigest = witnessRealAppDigest(receipt);
