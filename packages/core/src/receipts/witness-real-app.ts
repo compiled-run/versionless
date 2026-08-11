@@ -8,6 +8,7 @@ export const WITNESS_REAL_APP_NAMES = [
 	'angular-realworld',
 	'papercups',
 	'react-hospitalrun',
+	'angular-factoriolab',
 ] as const;
 /** Every named app must contribute two lanes observed twice each. */
 export const WITNESS_REAL_APP_RUNS = WITNESS_REAL_APP_NAMES.length * 4;
@@ -135,6 +136,75 @@ export type WitnessFailedRequestInventory = {
 };
 
 /**
+ * The exact rule that admits a member of the cancelled-duplicate-fetch
+ * category, carried in the receipt so a reader checks the rule rather than
+ * trusting the label. It is stated once here and copied into every inventory,
+ * so a receipt cannot quietly describe a weaker rule than the one the
+ * mechanism enforced.
+ */
+export const WITNESS_CANCELLED_DUPLICATE_FETCH_RULE =
+	'A browser-cancelled fetch is admitted only when the same page also fetched the same origin-relative path with the same method successfully at least once during the same run. A cancelled fetch with no successful sibling is not admitted and fails the run as an ordinary failed request.' as const;
+
+/**
+ * One member of the cancelled-duplicate-fetch category, pinned by
+ * origin-relative path, method and the browser's own cancellation reason.
+ *
+ * Deliberately no count. This category exists for one measured browser
+ * behavior: a page fetches an asset, re-renders while that fetch is in flight,
+ * starts an identical fetch, and the browser cancels one of the two. Which of
+ * them the browser cancels, and how many times it happens in a given run, is
+ * scheduling — pinning a count would pin a race. What is pinned instead is the
+ * identity of the request that may be cancelled, and admission still requires
+ * the corroboration below on every single instance.
+ */
+export type WitnessCancelledDuplicateFetchCategoryEntry = {
+	method: string;
+	path: string;
+	/** The browser's own cancellation reason, matched exactly. */
+	reason: string;
+};
+
+/**
+ * One admitted instance, recorded with the corroboration that admitted it, so
+ * the receipt shows the evidence rather than the verdict. `cancelled` is the
+ * number of times this exact fetch was cancelled in this run;
+ * `corroboratingSuccesses` is the number of times the same page fetched the
+ * same path and method successfully, and must be at least one.
+ */
+export type WitnessCancelledDuplicateFetchInstance =
+	WitnessCancelledDuplicateFetchCategoryEntry & {
+		cancelled: number;
+		corroboratingSuccesses: number;
+		/** The distinct response statuses of those successful fetches, ascending. */
+		corroboratingStatuses: number[];
+	};
+
+/**
+ * Accounting for the cancelled-duplicate-fetch category. This is a category,
+ * not an allowance: it removes nothing from the evidence, it re-files a named
+ * and corroborated browser behavior into its own inventory where every instance
+ * is recorded individually. Every other failed request continues through the
+ * exact {@link WitnessFailedRequestInventory} and still fails the run, and a
+ * cancelled fetch that matches `category` but finds no successful sibling is
+ * left in that inventory too — which is to say it fails.
+ *
+ * `absent` records category members this run never observed, because the whole
+ * point of the category is that the behavior is intermittent: a run that did
+ * not race is recorded as not having raced rather than silently indistinguishable
+ * from one that did. `uncorroborated` must stay empty by construction.
+ */
+export type WitnessCancelledDuplicateFetchInventory = {
+	policy: 'corroborated-browser-cancelled-duplicate-fetch';
+	corroborationRule: typeof WITNESS_CANCELLED_DUPLICATE_FETCH_RULE;
+	category: WitnessCancelledDuplicateFetchCategoryEntry[];
+	observed: WitnessCancelledDuplicateFetchInstance[];
+	absent: WitnessCancelledDuplicateFetchCategoryEntry[];
+	uncorroborated: [];
+	/** Cancelled fetches admitted by the category in this run, summed. */
+	admitted: number;
+};
+
+/**
  * One observed service-worker-script event, stripped of the two fields that
  * cannot reproduce: the wall-clock timestamp and the run-global sequence
  * number, which counts every other asset the lane happens to load. What
@@ -168,6 +238,14 @@ export type WitnessRealAppRun = {
 		trackedEventCounts: Record<string, number>;
 		consoleErrors: number;
 		pageErrors: number;
+		/**
+		 * Requests the browser failed, excluding the ones admitted by this run's
+		 * cancelled-duplicate-fetch category, which are recorded instance by
+		 * instance in {@link WitnessRealAppRun.cancelledDuplicateFetches}. A run
+		 * that declares no such category — every application here but the ones
+		 * that measured the behavior — has nothing to exclude, so this stays the
+		 * total number of browser-failed requests it has always been.
+		 */
 		failedRequests: number;
 	};
 	cleanPage: true;
@@ -232,7 +310,9 @@ export type WitnessRealAppRun = {
 	successfulNonLoopback: 0;
 	consoleErrorInventory?: WitnessConsoleErrorInventory;
 	failedRequestInventory?: WitnessFailedRequestInventory;
+	cancelledDuplicateFetches?: WitnessCancelledDuplicateFetchInventory;
 	scrollSurface?: WitnessScrollSurface;
+	scrollAbsence?: WitnessMeasuredScrollAbsence;
 };
 
 /**
@@ -250,6 +330,27 @@ export type WitnessScrollSurface = {
 	wheelDeltaY: number;
 	scrolledFromTop: true;
 	scrolled: true;
+};
+
+/**
+ * The measured counterpart of {@link WitnessScrollSurface}: evidence that a
+ * journey looked for a scroll surface and did not find one.
+ *
+ * An application that pins its document to the viewport and scrolls its own
+ * inner panels instead has no scrollable document to gesture at, and inventing
+ * one would be a false claim. So the same generic measurement that backs a
+ * scroll claim is taken at every visited route and recorded here instead:
+ * `scrollHeight` never exceeds `clientHeight`, which is why no scroll coverage
+ * is claimed. Routes are recorded individually rather than summarized, so a
+ * route that starts overflowing later cannot hide inside a total.
+ */
+export type WitnessMeasuredScrollAbsence = {
+	state: 'measured-no-overflowing-document';
+	viewport: { width: number; height: number };
+	routes: Array<{ route: string; scrollHeight: number; clientHeight: number }>;
+	/** How the application keeps the document from overflowing, observed rather than assumed. */
+	documentOverflow: string;
+	claimed: false;
 };
 
 export type WitnessMutationProof = {

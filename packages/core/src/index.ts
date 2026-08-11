@@ -22,6 +22,7 @@ export * from './receipts/witness-react-boilerplate.ts';
 export * from './receipts/witness-next-killedbygoogle.ts';
 export * from './receipts/witness-react-papercups.ts';
 export * from './receipts/witness-react-hospitalrun.ts';
+export * from './receipts/witness-angular-factoriolab.ts';
 export * from './receipts/react-avataaars-compatibility.ts';
 export * from './receipts/react-calculator.ts';
 export * from './receipts/react-graphiql-013.ts';

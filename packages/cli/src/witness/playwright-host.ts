@@ -81,6 +81,28 @@ export type WitnessViewportScroll = {
 	scrollY: number;
 };
 
+/**
+ * One request outcome as the page itself reported it, recorded synchronously in
+ * the same event dispatch the linked Witness runtime records from.
+ *
+ * The runtime's own network record resolves each request's response
+ * asynchronously, which is fine for a receipt written after the page closes but
+ * useless for a question asked while the journey is still running. This ledger
+ * exists so that "did this page also fetch that path successfully?" can be
+ * answered against exactly the set of events the runtime's failed-request count
+ * was computed from, with no window in which one has seen an event and the
+ * other has not.
+ */
+export type WitnessObservedRequestOutcome = {
+	url: string;
+	method: string;
+	outcome: 'finished' | 'failed';
+	/** Response status for a finished request; null when the browser reported none. */
+	status: number | null;
+	/** The browser's own failure reason for a failed request; null otherwise. */
+	reason: string | null;
+};
+
 export type PlaywrightWitnessHost = {
 	browser: WitnessBrowser;
 	locality(): { successfulNonLoopback: 0; mockedNonLoopback: number };
@@ -91,6 +113,8 @@ export type PlaywrightWitnessHost = {
 	 * the surface that actually exists rather than asserted in the abstract.
 	 */
 	viewportScroll(): Promise<WitnessViewportScroll>;
+	/** Every request outcome the page reported, in observation order. */
+	requestOutcomes(): WitnessObservedRequestOutcome[];
 };
 
 const MAX_TELEMETRY_TIMEOUT_MS = 15_000;
@@ -329,6 +353,7 @@ function adaptPage(
 	page: Page,
 	closePage: () => Promise<void>,
 	navigationWaitUntil: 'domcontentloaded' | 'networkidle',
+	requestOutcomes: WitnessObservedRequestOutcome[],
 ): WitnessBrowserPage {
 	const consoleListeners: Array<(message: BrowserConsoleMessage) => void> = [];
 	const pageErrorListeners: Array<(error: BrowserPageError) => void> = [];
@@ -336,6 +361,11 @@ function adaptPage(
 	const requestListeners: Array<(request: BrowserNetworkRequest) => void> = [];
 	const navigationListeners: Array<(url: string) => void> = [];
 	const requestStarts = new WeakMap<Request, number>();
+	/**
+	 * Response status captured the moment the headers arrive, so a finished
+	 * outcome can be recorded below without awaiting anything.
+	 */
+	const responseStatus = new WeakMap<Request, number>();
 	page.on('console', (message) => {
 		for (const listener of consoleListeners)
 			listener({ level: message.type(), text: message.text() });
@@ -344,18 +374,29 @@ function adaptPage(
 		for (const listener of pageErrorListeners) listener({ message: error.message });
 	});
 	page.on('request', (request) => requestStarts.set(request, Date.now()));
+	page.on('response', (response) => responseStatus.set(response.request(), response.status()));
 	page.on('requestfailed', (request) => {
 		const failure = {
 			url: request.url(),
 			method: request.method(),
 			reason: request.failure()?.errorText ?? null,
 		};
+		// Recorded before the listeners run, so nothing reading this ledger can
+		// observe a failure the linked Witness record has not also observed.
+		requestOutcomes.push({ ...failure, outcome: 'failed', status: null });
 		for (const listener of failureListeners) listener(failure);
 		void requestRecord(request, requestStarts.get(request) ?? Date.now()).then((record) => {
 			for (const listener of requestListeners) listener(record);
 		});
 	});
 	page.on('requestfinished', (request) => {
+		requestOutcomes.push({
+			url: request.url(),
+			method: request.method(),
+			outcome: 'finished',
+			status: responseStatus.get(request) ?? null,
+			reason: null,
+		});
 		void requestRecord(request, requestStarts.get(request) ?? Date.now()).then((record) => {
 			for (const listener of requestListeners) listener(record);
 		});
@@ -431,6 +472,7 @@ export function createPlaywrightWitnessHost(options: {
 }): PlaywrightWitnessHost {
 	let successfulNonLoopback = 0;
 	let mockedNonLoopback = 0;
+	const requestOutcomes: WitnessObservedRequestOutcome[] = [];
 	const livePages = new Set<Page>();
 	const workerEvents: ServiceWorkerTelemetry['workerEvents'] = [];
 	let observer: Awaited<ReturnType<typeof observeServiceWorkers>> | null = null;
@@ -592,6 +634,7 @@ export function createPlaywrightWitnessHost(options: {
 							options.contextProfile === 'canonical-t060'
 								? 'networkidle'
 								: 'domcontentloaded',
+							requestOutcomes,
 						);
 					},
 					close: async () => {
@@ -602,6 +645,7 @@ export function createPlaywrightWitnessHost(options: {
 			},
 		},
 		locality: () => ({ successfulNonLoopback: 0, mockedNonLoopback }),
+		requestOutcomes: () => [...requestOutcomes],
 		viewportScroll: async () => {
 			if (livePages.size !== 1)
 				throw new Error('Witness viewport measurement requires exactly one live page');

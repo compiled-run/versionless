@@ -25,9 +25,14 @@ import {
 	WITNESS_REAL_APP_SCHEMA,
 	witnessRealAppDigest,
 	type WitnessConsoleErrorInventory,
+	type WitnessCancelledDuplicateFetchCategoryEntry,
+	type WitnessCancelledDuplicateFetchInstance,
+	type WitnessCancelledDuplicateFetchInventory,
 	type WitnessConsoleErrorInventoryEntry,
 	type WitnessFailedRequestInventory,
 	type WitnessFailedRequestInventoryEntry,
+	type WitnessMeasuredScrollAbsence,
+	WITNESS_CANCELLED_DUPLICATE_FETCH_RULE,
 	type WitnessScrollSurface,
 	type WitnessServiceWorkerRequestEvent,
 	type WitnessServiceWorkerRequestTally,
@@ -38,6 +43,11 @@ import {
 	type WitnessRealAppRun,
 	type WitnessServiceWorkerTelemetry,
 } from '../../../core/src/index.ts';
+import {
+	WITNESS_ANGULAR_FACTORIOLAB_CANCELLED_DUPLICATE_FETCHES,
+	WITNESS_ANGULAR_FACTORIOLAB_CONSOLE_ERRORS,
+	WITNESS_ANGULAR_FACTORIOLAB_FAILED_REQUESTS,
+} from '../../../core/src/receipts/witness-angular-factoriolab.ts';
 import {
 	WITNESS_REACT_HOSPITALRUN_CONSOLE_ERRORS,
 	WITNESS_REACT_HOSPITALRUN_FAILED_REQUESTS,
@@ -56,6 +66,7 @@ import {
 	type PlaywrightWitnessHost,
 	type ServiceWorkerTelemetry,
 	type WitnessDifferentialEvent,
+	type WitnessObservedRequestOutcome,
 	type WitnessTransportDecision,
 	type WitnessTransportRequest,
 	type WitnessViewportScroll,
@@ -90,7 +101,8 @@ type App =
 	| 'killedbygoogle'
 	| 'angular-realworld'
 	| 'papercups'
-	| 'react-hospitalrun';
+	| 'react-hospitalrun'
+	| 'angular-factoriolab';
 type Lane = 'baseline' | 'migrated';
 type JourneyEvidence = {
 	assertions: string[];
@@ -143,6 +155,11 @@ type JourneyEvidence = {
 		}>;
 	};
 	scrollSurface?: WitnessScrollSurface;
+	/**
+	 * The measured counterpart of {@link JourneyEvidence.scrollSurface}, for a
+	 * journey whose routes were measured and found not to overflow.
+	 */
+	scrollAbsence?: WitnessMeasuredScrollAbsence;
 };
 type JourneyTransportEvidence = { apiUsernames: string[] };
 type JourneyLifecycle = {
@@ -172,6 +189,15 @@ type JourneyLifecycle = {
 	expectedConsoleErrors: number;
 	/** The same total for browser-failed requests, from the exact failed-request inventory. */
 	expectedFailedRequests: number;
+	/**
+	 * Cancelled duplicate fetches the run's category has admitted so far,
+	 * measured live from the page's own request ledger. A journey adds this to
+	 * the exact failed-request total it asserts, so the assertion stays exact
+	 * against what the browser actually did rather than being relaxed to a
+	 * range; a cancelled fetch without a corroborating success throws here and
+	 * turns the journey red where it happened.
+	 */
+	admittedCancelledDuplicateFetches(): number;
 };
 type AppSpec = {
 	app: App;
@@ -201,6 +227,17 @@ type AppSpec = {
 	 * fails the run.
 	 */
 	failedRequestInventory?: Record<Lane, readonly WitnessFailedRequestInventoryEntry[]>;
+	/**
+	 * Per-lane cancelled-duplicate-fetch category. Declaring a member says one
+	 * thing only: this exact request may be cancelled by the browser because the
+	 * page raced itself for the same asset. Admission still requires a
+	 * corroborating successful fetch of the same path in the same run, and every
+	 * failure outside these members remains an ordinary failure.
+	 */
+	cancelledDuplicateFetches?: Record<
+		Lane,
+		readonly WitnessCancelledDuplicateFetchCategoryEntry[]
+	>;
 	/**
 	 * Replaces identifiers the application itself mints at runtime with a stable
 	 * placeholder, so a recorded route is comparable across runs. It normalizes
@@ -981,18 +1018,32 @@ function tallyServiceWorkerEvents(
 const failedRequestKey = (entry: WitnessFailedRequestInventoryEntry): string =>
 	canonicalize({ method: entry.method, path: entry.path, reason: entry.reason });
 
+/**
+ * Origin-relative form of an observed URL. The loopback port is ephemeral, so
+ * the origin is the one part of the URL that cannot be pinned; everything after
+ * it is exactly what the browser requested.
+ */
+const originRelativePath = (url: string, origin: string): string =>
+	url.startsWith(origin) ? url.slice(origin.length) : url;
+
 function tallyFailedRequests(
 	page: PageRecord,
 	origin: string,
+	admitted: ReadonlySet<string>,
 ): WitnessFailedRequestInventoryEntry[] {
 	const counts = new Map<string, WitnessFailedRequestInventoryEntry>();
 	for (const request of page.failedRequests) {
 		const entry = {
 			method: request.method,
-			path: request.url.startsWith(origin) ? request.url.slice(origin.length) : request.url,
+			path: originRelativePath(request.url, origin),
 			reason: request.reason,
 			count: 1,
 		};
+		// Admitted cancelled duplicates are accounted for instance by instance in
+		// their own inventory, so they are not counted twice here. Everything
+		// else — including a cancelled fetch the corroboration rule refused —
+		// stays in this exact inventory and fails the run if it is not pinned.
+		if (admitted.has(failedRequestKey(entry))) continue;
 		const existing = counts.get(failedRequestKey(entry));
 		if (existing === undefined) counts.set(failedRequestKey(entry), entry);
 		else existing.count += 1;
@@ -1012,8 +1063,9 @@ function buildFailedRequestInventory(
 	page: PageRecord,
 	origin: string,
 	expected: readonly WitnessFailedRequestInventoryEntry[],
+	admitted: ReadonlySet<string> = new Set(),
 ): WitnessFailedRequestInventory {
-	const observed = tallyFailedRequests(page, origin);
+	const observed = tallyFailedRequests(page, origin, admitted);
 	const pinned = expected
 		.map((entry) => ({
 			method: entry.method,
@@ -1036,6 +1088,90 @@ function buildFailedRequestInventory(
 		observed,
 		outsideInventory: [],
 		total: observed.reduce((sum, entry) => sum + entry.count, 0),
+	};
+}
+
+export const cancelledDuplicateFetchKey = (
+	entry: WitnessCancelledDuplicateFetchCategoryEntry,
+): string => canonicalize({ method: entry.method, path: entry.path, reason: entry.reason });
+
+/**
+ * The cancelled-duplicate-fetch category, applied to one run's observed request
+ * ledger.
+ *
+ * The behavior this exists for is measurable and narrow: a page fetches an
+ * asset, re-renders while that fetch is still in flight, issues an identical
+ * fetch, and the browser cancels one of the two. The cancellation is real and
+ * is recorded as such — what the category establishes is that the page still
+ * got the bytes, by requiring the same page to have fetched the same
+ * origin-relative path with the same method successfully at least once in the
+ * same run.
+ *
+ * The discipline is deliberately narrow in three ways. Membership is pinned by
+ * path, method and the browser's own reason and never by count, because the
+ * count is the race. Corroboration is checked per member against this run's own
+ * ledger, so a category member declared by an application that did not in fact
+ * fetch the asset successfully throws here rather than being waved through.
+ * And nothing outside the pinned members is looked at at all: every other
+ * failed request continues through the exact failed-request inventory.
+ */
+export function buildCancelledDuplicateFetchInventory(
+	outcomes: readonly WitnessObservedRequestOutcome[],
+	origin: string,
+	category: readonly WitnessCancelledDuplicateFetchCategoryEntry[],
+): WitnessCancelledDuplicateFetchInventory {
+	const pinned = category
+		.map((entry) => ({ method: entry.method, path: entry.path, reason: entry.reason }))
+		.sort((left, right) =>
+			compareUtf16CodeUnits(cancelledDuplicateFetchKey(left), cancelledDuplicateFetchKey(right)),
+		);
+	if (new Set(pinned.map(cancelledDuplicateFetchKey)).size !== pinned.length)
+		throw new Error('cancelled-duplicate-fetch category repeats a member');
+	const observed: WitnessCancelledDuplicateFetchInstance[] = [];
+	const absent: WitnessCancelledDuplicateFetchCategoryEntry[] = [];
+	for (const entry of pinned) {
+		const sameRequest = outcomes.filter(
+			(outcome) =>
+				outcome.method === entry.method &&
+				originRelativePath(outcome.url, origin) === entry.path,
+		);
+		const cancelled = sameRequest.filter(
+			(outcome) => outcome.outcome === 'failed' && outcome.reason === entry.reason,
+		).length;
+		const successes = sameRequest.filter(
+			(outcome) =>
+				outcome.outcome === 'finished' &&
+				outcome.status !== null &&
+				outcome.status >= 200 &&
+				outcome.status < 300,
+		);
+		if (cancelled === 0) {
+			absent.push(entry);
+			continue;
+		}
+		if (successes.length === 0)
+			throw new Error(
+				`cancelled fetch has no corroborating successful fetch of the same path: ${canonicalize(
+					{ ...entry, cancelled, observedForPath: sameRequest },
+				)}`,
+			);
+		observed.push({
+			...entry,
+			cancelled,
+			corroboratingSuccesses: successes.length,
+			corroboratingStatuses: [...new Set(successes.map((outcome) => outcome.status!))].sort(
+				(left, right) => left - right,
+			),
+		});
+	}
+	return {
+		policy: 'corroborated-browser-cancelled-duplicate-fetch',
+		corroborationRule: WITNESS_CANCELLED_DUPLICATE_FETCH_RULE,
+		category: pinned,
+		observed,
+		absent,
+		uncorroborated: [],
+		admitted: observed.reduce((sum, instance) => sum + instance.cancelled, 0),
 	};
 }
 
@@ -1118,6 +1254,102 @@ export const PAPERCUPS_REPLY_BODY =
  * reload of that route.
  */
 const PAPERCUPS_JOURNEY_NAVIGATIONS = 6;
+
+/**
+ * factoriolab journey inputs.
+ *
+ * Every string below is text the application itself renders from its own
+ * bundled dataset and templates — the era-pinned Factorio 1.0 data that ships
+ * inside both lanes' `data/` directory — so each assertion is anchored to
+ * settled visible state rather than to a timing window. The application's
+ * production solver is compute-heavy and recomputes the whole table after every
+ * edit, which is exactly why nothing here is asserted on elapsed time: the
+ * assertions wait for the recomputed values themselves.
+ */
+const FACTORIOLAB_VIEWPORT = { width: 1280, height: 720 } as const;
+const FACTORIOLAB_ITEMS_HEADER = 'lab-list table thead tr th:nth-child(2)' as const;
+const FACTORIOLAB_TOTAL_POWER =
+	'lab-list table tr:has(td.summary-label) td:nth-child(2) span.monospace' as const;
+const FACTORIOLAB_TOTAL_POLLUTION =
+	'lab-list table tr:has(td.summary-label) td:nth-child(3) span.monospace' as const;
+const FACTORIOLAB_HEADER_CELLS = 'lab-list table thead th' as const;
+const FACTORIOLAB_PRODUCT_ICON = 'lab-products .product-row lab-icon' as const;
+const FACTORIOLAB_RATE_INPUT = 'lab-products input[type=number]' as const;
+const FACTORIOLAB_PICKER = 'lab-picker' as const;
+const FACTORIOLAB_PICKER_TABS = 'lab-picker .tabs lab-icon' as const;
+/** The third category tab is Intermediate products, where iron plate lives. */
+const FACTORIOLAB_PICKER_TAB = 'lab-picker .tabs lab-icon:nth-of-type(3)' as const;
+const FACTORIOLAB_PICKER_TAB_TOOLTIP = `${FACTORIOLAB_PICKER_TAB} .tooltip .title` as const;
+const FACTORIOLAB_PICKER_ITEM = 'lab-picker .tab lab-icon:has(img.iron-plate)' as const;
+const FACTORIOLAB_PICKER_ITEM_TOOLTIP = `${FACTORIOLAB_PICKER_ITEM} .tooltip .title` as const;
+const FACTORIOLAB_CHOSEN_PRODUCT = 'lab-products .product-row lab-icon img.iron-plate' as const;
+const FACTORIOLAB_COLUMNS_TOGGLE = 'lab-list i[title="Select columns"]' as const;
+const FACTORIOLAB_COLUMNS_DIALOG = 'lab-multiselect' as const;
+const FACTORIOLAB_COLUMNS_TITLE = 'lab-multiselect span.header' as const;
+const FACTORIOLAB_COLUMN_OPTIONS = 'lab-multiselect > div.clickable' as const;
+const FACTORIOLAB_POLLUTION_OPTION =
+	'lab-multiselect > div.clickable:has-text("Pollution")' as const;
+/** Outside the dialog and low enough on the page that the dialog cannot cover it. */
+const FACTORIOLAB_DIALOG_DISMISS = 'lab-list td.summary-label span.monospace' as const;
+const FACTORIOLAB_NAV_SETTINGS = 'ul[role=navigation] li:nth-child(1)' as const;
+const FACTORIOLAB_NAV_LIST = 'ul[role=navigation] li:nth-child(2)' as const;
+const FACTORIOLAB_NAV_FLOW = 'ul[role=navigation] li:nth-child(3)' as const;
+const FACTORIOLAB_SETTINGS = 'lab-settings' as const;
+const FACTORIOLAB_PER_HOUR = 'label[title="Display rates per hour"]' as const;
+const FACTORIOLAB_NAME_STATE = 'lab-settings i[title="Name and save this state"]' as const;
+const FACTORIOLAB_STATE_NAME_INPUT =
+	'lab-settings input[placeholder="Enter a name..."]' as const;
+const FACTORIOLAB_SAVE_STATE = 'lab-settings i[title="Save this state"]' as const;
+const FACTORIOLAB_DELETE_STATE = 'lab-settings i[title="Delete this saved state"]' as const;
+const FACTORIOLAB_FLOW_MESSAGE = 'lab-list td.message' as const;
+const FACTORIOLAB_SAVED_STATE_NAME = 'versionless-witness' as const;
+const FACTORIOLAB_SAVED_STATE_OPTION =
+	`lab-settings .states select option[label="${FACTORIOLAB_SAVED_STATE_NAME}"]` as const;
+/**
+ * Visible dialog title shipped inside the migrated module. The journey asserts
+ * the rendered heading, so overwriting these bytes must turn the journey
+ * genuinely red instead of changing an unread constant.
+ */
+export const FACTORIOLAB_MUTATION_SEAM = 'Select Columns' as const;
+const FACTORIOLAB_FLOW_EMPTY_SELECTION = 'Select a node to see details' as const;
+/** The item the picker journey switches the default product to. */
+const FACTORIOLAB_ITEM_TOOLTIP = 'Iron plate' as const;
+const FACTORIOLAB_CATEGORY_TOOLTIP = 'Intermediate products' as const;
+/**
+ * The exact settled figures the application's own solver produces from its
+ * bundled Factorio 1.0 dataset at each stage of the journey. They are the
+ * assertion targets, not decoration: a solver that recomputes differently after
+ * the framework hop changes these strings and fails the run.
+ */
+const FACTORIOLAB_DEFAULT_TOTAL_POWER = '1.3 kW' as const;
+const FACTORIOLAB_DEFAULT_TOTAL_POLLUTION = '0.1' as const;
+const FACTORIOLAB_IRON_PLATE_TOTAL_POWER = '8.0 kW' as const;
+const FACTORIOLAB_IRON_PLATE_TOTAL_POLLUTION = '0.4' as const;
+const FACTORIOLAB_RATE_TEN_TOTAL_POWER = '79.6 kW' as const;
+const FACTORIOLAB_RATE_TEN_TOTAL_POLLUTION = '3.6' as const;
+const FACTORIOLAB_PER_HOUR_TOTAL_POWER = '1.4 kW' as const;
+const FACTORIOLAB_ITEMS_PER_MINUTE = 'Items/m' as const;
+const FACTORIOLAB_ITEMS_PER_HOUR = 'Items/h' as const;
+const FACTORIOLAB_POLLUTION_COLUMN = 'Pollution/m' as const;
+const FACTORIOLAB_COLUMNS_WITH_POLLUTION = 9;
+const FACTORIOLAB_COLUMNS_WITHOUT_POLLUTION = 8;
+const FACTORIOLAB_CATEGORY_TABS = 6;
+const FACTORIOLAB_COLUMN_CHOICES = 7;
+/**
+ * The digit typed onto the end of the default output rate of 1, turning it into
+ * 10. It is typed rather than set, so the keystroke, the `input` the field
+ * emits and the `change` the blur emits are all genuine.
+ */
+const FACTORIOLAB_TYPED_RATE_DIGIT = '0' as const;
+/**
+ * Every navigation the journey performs after the initial document load: the
+ * three fragment pushes the application makes as the plan changes, the flow
+ * route and the return to the list, the one real document reload, and the
+ * fragment the application re-emits for the plan it restored. Pinning the exact
+ * count is what keeps a silently dropped or duplicated state push from passing
+ * unnoticed; the ordered sequence itself is pinned in the receipt schema.
+ */
+const FACTORIOLAB_JOURNEY_NAVIGATIONS = 7;
 
 const apps: AppSpec[] = [
 	{
@@ -1709,6 +1941,280 @@ const apps: AppSpec[] = [
 			};
 		},
 	},
+	{
+		app: 'angular-factoriolab',
+		framework: 'angular',
+		canonicalReceipt: 'evidence/runs/angular-factoriolab/m2-build-parity.json',
+		canonicalDigest: '4430f24ba6af8d7fd6d90faa0d4eb2fb275aab717cb9edd345f4a8ab6eb8957d',
+		sources: {
+			baseline: '.versionless/cache/angular-factoriolab-baseline/rebuild/dist-1',
+			migrated: '.versionless/stage/angular-factoriolab-m2/dist-a',
+		},
+		viewport: FACTORIOLAB_VIEWPORT,
+		consoleErrorInventory: WITNESS_ANGULAR_FACTORIOLAB_CONSOLE_ERRORS,
+		failedRequestInventory: WITNESS_ANGULAR_FACTORIOLAB_FAILED_REQUESTS,
+		cancelledDuplicateFetches: WITNESS_ANGULAR_FACTORIOLAB_CANCELLED_DUPLICATE_FETCHES,
+		journey: async (context, page, _transportEvidence, lifecycle) => {
+			if (lifecycle.expectedServiceWorker !== null)
+				throw new Error('factoriolab journey received a service-worker expectation');
+			const checkpoints = [
+				await zeroServiceWorkerCheckpoint(lifecycle, 'before-interactions'),
+			];
+			const measuredRoutes: WitnessMeasuredScrollAbsence['routes'] = [];
+			/**
+			 * The generic scroll measurement, taken at every visited route. This
+			 * application pins the document to the viewport and scrolls its own
+			 * panels instead, so the measurement is what licenses the receipt to
+			 * claim no scroll coverage: a route that started overflowing would
+			 * fail here rather than pass silently unexercised.
+			 */
+			const measure = async (route: string): Promise<void> => {
+				const extents = await lifecycle.viewportScroll();
+				if (
+					extents.clientHeight !== FACTORIOLAB_VIEWPORT.height ||
+					extents.scrollHeight > extents.clientHeight ||
+					extents.scrollY !== 0
+				)
+					throw new Error(
+						`factoriolab route overflows the viewport the receipt says it does not: ${route} ${canonicalize(extents)}`,
+					);
+				measuredRoutes.push({
+					route,
+					scrollHeight: extents.scrollHeight,
+					clientHeight: extents.clientHeight,
+				});
+			};
+			await page.trackEvents('click', 'input', 'change', 'keydown', 'mouseover');
+
+			// (a) The era-pinned default production plan, solved from the
+			// application's own bundled Factorio 1.0 dataset.
+			await context.expect.page.text(
+				page,
+				FACTORIOLAB_ITEMS_HEADER,
+				FACTORIOLAB_ITEMS_PER_MINUTE,
+			);
+			await context.expect.page.count(
+				page,
+				FACTORIOLAB_HEADER_CELLS,
+				FACTORIOLAB_COLUMNS_WITH_POLLUTION,
+			);
+			await context.expect.page.text(
+				page,
+				FACTORIOLAB_TOTAL_POWER,
+				FACTORIOLAB_DEFAULT_TOTAL_POWER,
+			);
+			await context.expect.page.text(
+				page,
+				FACTORIOLAB_TOTAL_POLLUTION,
+				FACTORIOLAB_DEFAULT_TOTAL_POLLUTION,
+			);
+			await measure('/list');
+
+			// (b) Item picker: open it on the current product, hover a category
+			// tab and an item for their tooltips, and switch the product. The
+			// whole table is re-solved for the new item.
+			await page.click(FACTORIOLAB_PRODUCT_ICON);
+			await context.expect.page.count(
+				page,
+				FACTORIOLAB_PICKER_TABS,
+				FACTORIOLAB_CATEGORY_TABS,
+			);
+			await page.hover(FACTORIOLAB_PICKER_TAB);
+			await context.expect.page.text(
+				page,
+				FACTORIOLAB_PICKER_TAB_TOOLTIP,
+				FACTORIOLAB_CATEGORY_TOOLTIP,
+			);
+			await page.click(FACTORIOLAB_PICKER_TAB);
+			await context.expect.page.exists(page, FACTORIOLAB_PICKER_ITEM);
+			await page.hover(FACTORIOLAB_PICKER_ITEM);
+			await context.expect.page.text(
+				page,
+				FACTORIOLAB_PICKER_ITEM_TOOLTIP,
+				FACTORIOLAB_ITEM_TOOLTIP,
+			);
+			await page.click(FACTORIOLAB_PICKER_ITEM);
+			await context.expect.page.count(page, FACTORIOLAB_PICKER, 0);
+			await context.expect.page.exists(page, FACTORIOLAB_CHOSEN_PRODUCT);
+			await context.expect.page.text(
+				page,
+				FACTORIOLAB_TOTAL_POWER,
+				FACTORIOLAB_IRON_PLATE_TOTAL_POWER,
+			);
+			await context.expect.page.text(
+				page,
+				FACTORIOLAB_TOTAL_POLLUTION,
+				FACTORIOLAB_IRON_PLATE_TOTAL_POLLUTION,
+			);
+
+			// (c) Typed output-rate edit. The caret is put at the end of the
+			// field with a real key, the digit is typed, and the field is
+			// blurred with another real key so the application sees the same
+			// keydown / input / change sequence a person would produce.
+			await page.press(FACTORIOLAB_RATE_INPUT, 'End');
+			await page.type(FACTORIOLAB_RATE_INPUT, FACTORIOLAB_TYPED_RATE_DIGIT, {
+				redact: false,
+			});
+			await page.press(FACTORIOLAB_RATE_INPUT, 'Tab');
+			await context.expect.page.text(
+				page,
+				FACTORIOLAB_TOTAL_POWER,
+				FACTORIOLAB_RATE_TEN_TOTAL_POWER,
+			);
+			await context.expect.page.text(
+				page,
+				FACTORIOLAB_TOTAL_POLLUTION,
+				FACTORIOLAB_RATE_TEN_TOTAL_POLLUTION,
+			);
+			await measure('/list#p=iron-plate*10');
+
+			// (d) Columns dialog: drop a column and commit by clicking away.
+			await page.click(FACTORIOLAB_COLUMNS_TOGGLE);
+			await context.expect.page.text(
+				page,
+				FACTORIOLAB_COLUMNS_TITLE,
+				FACTORIOLAB_MUTATION_SEAM,
+			);
+			await context.expect.page.count(
+				page,
+				FACTORIOLAB_COLUMN_OPTIONS,
+				FACTORIOLAB_COLUMN_CHOICES,
+			);
+			await page.click(FACTORIOLAB_POLLUTION_OPTION);
+			await page.click(FACTORIOLAB_DIALOG_DISMISS);
+			await context.expect.page.count(page, FACTORIOLAB_COLUMNS_DIALOG, 0);
+			await context.expect.page.count(
+				page,
+				FACTORIOLAB_HEADER_CELLS,
+				FACTORIOLAB_COLUMNS_WITHOUT_POLLUTION,
+			);
+			await context.expect.page.bodyText(page, {
+				notContains: FACTORIOLAB_POLLUTION_COLUMN,
+			});
+			await context.expect.page.text(
+				page,
+				FACTORIOLAB_TOTAL_POWER,
+				FACTORIOLAB_RATE_TEN_TOTAL_POWER,
+			);
+
+			// (e) Settings panel: change the display rate, which re-solves the
+			// whole plan, then name and save the state into browser-local
+			// storage.
+			await page.click(FACTORIOLAB_NAV_SETTINGS);
+			await context.expect.page.exists(page, FACTORIOLAB_SETTINGS);
+			await page.click(FACTORIOLAB_PER_HOUR);
+			await context.expect.page.text(
+				page,
+				FACTORIOLAB_ITEMS_HEADER,
+				FACTORIOLAB_ITEMS_PER_HOUR,
+			);
+			await context.expect.page.text(
+				page,
+				FACTORIOLAB_TOTAL_POWER,
+				FACTORIOLAB_PER_HOUR_TOTAL_POWER,
+			);
+			await measure('/list#p=iron-plate*10&s=*************3600 (settings panel open)');
+			await page.click(FACTORIOLAB_NAME_STATE);
+			await page.type(FACTORIOLAB_STATE_NAME_INPUT, FACTORIOLAB_SAVED_STATE_NAME, {
+				redact: false,
+			});
+			await page.click(FACTORIOLAB_SAVE_STATE);
+			await context.expect.page.count(page, FACTORIOLAB_SAVED_STATE_OPTION, 1);
+			await context.expect.page.exists(page, FACTORIOLAB_DELETE_STATE);
+			await page.click(FACTORIOLAB_NAV_SETTINGS);
+			await context.expect.page.count(page, FACTORIOLAB_SETTINGS, 0);
+			await context.expect.page.outcome(page, {
+				events: {
+					click: { atLeast: 8 },
+					input: { atLeast: 2 },
+					change: { atLeast: 2 },
+					keydown: { atLeast: 2 },
+					mouseover: { atLeast: 2 },
+				},
+			});
+			checkpoints.push(await zeroServiceWorkerCheckpoint(lifecycle, 'after-interactions'));
+
+			// (f) The plan is carried across routes in the URL fragment.
+			await page.click(FACTORIOLAB_NAV_FLOW);
+			await context.expect.page.text(
+				page,
+				FACTORIOLAB_FLOW_MESSAGE,
+				FACTORIOLAB_FLOW_EMPTY_SELECTION,
+			);
+			await measure('/flow#p=iron-plate*10&s=*************3600');
+			await page.click(FACTORIOLAB_NAV_LIST);
+			await context.expect.page.text(
+				page,
+				FACTORIOLAB_TOTAL_POWER,
+				FACTORIOLAB_PER_HOUR_TOTAL_POWER,
+			);
+
+			// (g) A real document reload. The plan comes back out of the URL
+			// fragment and the named state out of browser-local storage; the
+			// dropped column comes back out of the stored preferences.
+			await page.reload();
+			await context.expect.page.text(
+				page,
+				FACTORIOLAB_ITEMS_HEADER,
+				FACTORIOLAB_ITEMS_PER_HOUR,
+			);
+			await context.expect.page.text(
+				page,
+				FACTORIOLAB_TOTAL_POWER,
+				FACTORIOLAB_PER_HOUR_TOTAL_POWER,
+			);
+			await context.expect.page.count(
+				page,
+				FACTORIOLAB_HEADER_CELLS,
+				FACTORIOLAB_COLUMNS_WITHOUT_POLLUTION,
+			);
+			await page.click(FACTORIOLAB_NAV_SETTINGS);
+			await context.expect.page.count(page, FACTORIOLAB_SAVED_STATE_OPTION, 1);
+			await page.click(FACTORIOLAB_NAV_SETTINGS);
+			await context.expect.page.count(page, FACTORIOLAB_SETTINGS, 0);
+			await measure('/list#p=iron-plate*10&s=*************3600 (after online reload)');
+			checkpoints.push(
+				await zeroServiceWorkerCheckpoint(lifecycle, 'after-online-reload'),
+			);
+			await clean(
+				context,
+				page,
+				FACTORIOLAB_JOURNEY_NAVIGATIONS,
+				lifecycle.expectedConsoleErrors,
+				// Still an exact assertion. The pinned inventory total is zero,
+				// and the second term is the number of cancelled duplicate
+				// fetches this run's category actually admitted, measured from
+				// the page's own ledger — so the count asserted here is the
+				// count the browser produced, not a widened bound.
+				lifecycle.expectedFailedRequests + lifecycle.admittedCancelledDuplicateFetches(),
+			);
+			return {
+				assertions: [
+					'era-pinned default production plan solved from the bundled Factorio 1.0 dataset',
+					'item picker category tab and item tooltips reached by genuine hover',
+					'product switched through the picker and the whole table re-solved',
+					'typed output-rate edit the production table recomputes to exact settled figures',
+					'columns dialog removes a column from the rendered table',
+					'settings panel changes the display rate and the plan is re-solved',
+					'named state saved into browser-local storage from a typed name',
+					'flow route reached with the plan carried in the URL fragment',
+					'URL-encoded plan, stored column preference and saved state all survive an online reload',
+					'no service worker registered, controlling, cached or requested in either lane',
+					'clean page',
+				],
+				offlineEvidence: { state: 'not-applicable' },
+				zeroServiceWorker: { checkpoints },
+				scrollAbsence: {
+					state: 'measured-no-overflowing-document',
+					viewport: { ...FACTORIOLAB_VIEWPORT },
+					routes: measuredRoutes,
+					documentOverflow:
+						'the application sets `overflow: hidden` on the document body and scrolls its own inner panels, so no visited route produces a scrollable document',
+					claimed: false,
+				},
+			};
+		},
+	},
 ];
 
 async function exists(file: string): Promise<boolean> {
@@ -1885,6 +2391,8 @@ function assertHmrFree(page: PageRecord): void {
 function normalizedRecord(
 	page: PageRecord,
 	normalizeRoute: (path: string) => string = (path) => path,
+	admittedCancelledDuplicates: ReadonlySet<string> = new Set(),
+	origin = '',
 ): WitnessRealAppRun['witnessRecord'] {
 	return {
 		interactions: page.interactions.map((interaction) => ({
@@ -1903,7 +2411,21 @@ function normalizedRecord(
 		),
 		consoleErrors: page.consoleMessages.filter((message) => message.level === 'error').length,
 		pageErrors: page.pageErrors.length,
-		failedRequests: page.failedRequests.length,
+		// Every browser-failed request except the ones the cancelled-duplicate
+		// category admitted, which are recorded individually in their own
+		// inventory. With no category declared the set is empty and this is the
+		// plain total it has always been.
+		failedRequests: page.failedRequests.filter(
+			(request) =>
+				!admittedCancelledDuplicates.has(
+					failedRequestKey({
+						method: request.method,
+						path: originRelativePath(request.url, origin),
+						reason: request.reason,
+						count: 1,
+					}),
+				),
+		).length,
 	};
 }
 
@@ -1972,6 +2494,13 @@ async function executeRun(
 		(sum, entry) => sum + entry.count,
 		0,
 	);
+	const cancelledDuplicateCategory = app.cancelledDuplicateFetches?.[lane] ?? [];
+	const cancelledDuplicateFetchInventory = (): WitnessCancelledDuplicateFetchInventory =>
+		buildCancelledDuplicateFetchInventory(
+			host.requestOutcomes(),
+			staticServer.origin,
+			cancelledDuplicateCategory,
+		);
 	let journeyEvidence: JourneyEvidence | undefined;
 	const definition = box(`${app.app}-${lane}-${pass}`, async (context) => {
 		const page = await context.browser.visit(productionUrl);
@@ -1984,6 +2513,7 @@ async function executeRun(
 			viewportScroll: host.viewportScroll,
 			expectedConsoleErrors,
 			expectedFailedRequests,
+			admittedCancelledDuplicateFetches: () => cancelledDuplicateFetchInventory().admitted,
 		});
 		await context.receipt.capture('journey-complete');
 	});
@@ -2070,7 +2600,21 @@ async function executeRun(
 					options.nextPrerenderPayload,
 				);
 	assertHmrFree(pageRecord);
-	const witnessRecord = normalizedRecord(pageRecord, app.normalizeRoute);
+	/**
+	 * Computed once from the whole run's ledger, before anything is counted, so
+	 * the failed-request inventory and the recorded failure count both see the
+	 * same admitted set.
+	 */
+	const cancelledDuplicates = cancelledDuplicateFetchInventory();
+	const admittedCancelledKeys = new Set(
+		cancelledDuplicates.observed.map(cancelledDuplicateFetchKey),
+	);
+	const witnessRecord = normalizedRecord(
+		pageRecord,
+		app.normalizeRoute,
+		admittedCancelledKeys,
+		staticServer.origin,
+	);
 	const interactions = witnessRecord.interactions;
 	const trackedEvents = Object.entries(witnessRecord.trackedEventCounts)
 		.filter(([, count]) => count > 0)
@@ -2179,6 +2723,9 @@ async function executeRun(
 		...(completedJourney.scrollSurface === undefined
 			? {}
 			: { scrollSurface: completedJourney.scrollSurface }),
+		...(completedJourney.scrollAbsence === undefined
+			? {}
+			: { scrollAbsence: completedJourney.scrollAbsence }),
 		...(app.consoleErrorInventory === undefined
 			? {}
 			: {
@@ -2195,8 +2742,12 @@ async function executeRun(
 						pageRecord,
 						staticServer.origin,
 						app.failedRequestInventory[lane],
+						admittedCancelledKeys,
 					),
 				}),
+		...(app.cancelledDuplicateFetches === undefined
+			? {}
+			: { cancelledDuplicateFetches: cancelledDuplicates }),
 		successfulNonLoopback: host.locality().successfulNonLoopback,
 	};
 	if ('blockedServiceWorkerRuntime' in runWithoutDigest) {
@@ -2328,6 +2879,27 @@ export async function executeReactHospitalrunWitnessRun(options: {
 	const app = apps.find((candidate) => candidate.app === 'react-hospitalrun');
 	if (app === undefined) throw new Error('HospitalRun Witness specification is absent');
 	return await executeRun(app, options.lane, options.pass, options);
+}
+
+/**
+ * factoriolab ships no service worker in either lane and never calls
+ * `register()`, so the run is executed under the zero-worker policy: the
+ * browser context still allows registration, and the journey is required to
+ * observe nothing registered, controlling, cached or requested at each of its
+ * three checkpoints.
+ */
+export async function executeAngularFactoriolabWitnessRun(options: {
+	lane: Lane;
+	pass: 1 | 2;
+	laneRoot: string;
+	receiptRoot: string;
+}): Promise<WitnessRealAppRun> {
+	const app = apps.find((candidate) => candidate.app === 'angular-factoriolab');
+	if (app === undefined) throw new Error('factoriolab Witness specification is absent');
+	return await executeRun(app, options.lane, options.pass, {
+		...options,
+		serviceWorkerPolicy: 'zero',
+	});
 }
 
 async function zeroServiceWorkerCheckpoint(
@@ -2579,6 +3151,9 @@ async function runReactBaselineDifferentialProfile(
 				viewportScroll: host.viewportScroll,
 				expectedConsoleErrors: 0,
 				expectedFailedRequests: 0,
+				// This differential lane declares no cancelled-duplicate
+				// category, so there is nothing for it to admit.
+				admittedCancelledDuplicateFetches: () => 0,
 			});
 			telemetry =
 				journey.timeoutTelemetry ??

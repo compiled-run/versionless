@@ -15,7 +15,17 @@ function fixture(): WitnessRealAppReceipt {
 		(['baseline', 'migrated'] as const).flatMap((lane) =>
 			([1, 2] as const).map((pass) => ({
 				app,
-				framework: (['react', 'angularjs', 'next', 'angular', 'react'] as const)[appIndex]!,
+				framework: (
+					[
+						'react',
+						'angularjs',
+						'next',
+						'angular',
+						'react',
+						'react',
+						'angular',
+					] as const
+				)[appIndex]!,
 				lane,
 				pass,
 				result: 'pass' as const,
