@@ -41,6 +41,11 @@ import {
 	normalizeFragmentPath,
 	type ConfigChange,
 } from './angular-workspace-migration.ts';
+import {
+	isAngularCliOneWorkspace,
+	synthesizeAngularWorkspace,
+	type SynthesizedWorkspace,
+} from './angular-cli-json-workspace-synthesis.ts';
 import { tslintConfigRemovals } from './tslint-toolchain-removal.ts';
 
 export type WorkspaceFile = Readonly<{ path: string; source: string }>;
@@ -120,6 +125,22 @@ function sha256(value: string): string {
 	return createHash('sha256').update(value).digest('hex');
 }
 
+/**
+ * Parse a workspace document only far enough to decide which format it is in.
+ *
+ * A document that is not JSON at all is handed on unparsed: the migration that
+ * reads it next refuses it with the diagnosable error it already writes, and
+ * duplicating that refusal here would report the same defect twice under two
+ * different names.
+ */
+function safeParseJson(source: string): unknown {
+	try {
+		return JSON.parse(source) as unknown;
+	} catch {
+		return null;
+	}
+}
+
 function describeConfigChange(change: ConfigChange): string {
 	if (change.to === null) return `removed ${change.path} (was ${change.from ?? 'absent'})`;
 	if (change.from === null) return `added ${change.path} = ${change.to}`;
@@ -178,7 +199,26 @@ export function migrateAngularCliEraWorkspace(
 	const fragments: Record<string, string> = {};
 	for (const fragment of input.webpackFragments ?? [])
 		fragments[normalizeFragmentPath(fragment.path)] = fragment.source;
-	const workspace = migrateAngularWorkspace(input.workspaceConfig.source, cell, fragments);
+	/**
+	 * A workspace in the pre-`angular.json` Angular CLI 1.x format is translated
+	 * into the modern one before anything else reads it. Every capability below
+	 * expects a `projects` map with `architect` targets, and the era document has
+	 * neither; synthesizing first is what lets the rest of the adapter run on a
+	 * CLI 1.x tree without one of them learning a second workspace format.
+	 */
+	let synthesis: SynthesizedWorkspace | null = null;
+	let workspaceConfigSource = input.workspaceConfig.source;
+	if (isAngularCliOneWorkspace(safeParseJson(input.workspaceConfig.source))) {
+		synthesis = synthesizeAngularWorkspace(
+			input.workspaceConfig.source,
+			cell,
+			input.workspaceConfig.path,
+		);
+		workspaceConfigSource = synthesis.config;
+		unhandled.push(...synthesis.unhandled);
+		declaredDifferences.push(...synthesis.declaredDifferences);
+	}
+	const workspace = migrateAngularWorkspace(workspaceConfigSource, cell, fragments);
 	unhandled.push(...workspace.unhandled);
 	declaredDifferences.push(...workspace.declaredDifferences);
 	const configRemovals = tslintConfigRemovals(input.workspaceFiles ?? [], cell);
@@ -224,10 +264,19 @@ export function migrateAngularCliEraWorkspace(
 			],
 		),
 		file(
-			input.workspaceConfig,
+			synthesis === null
+				? input.workspaceConfig
+				: { path: synthesis.path, source: input.workspaceConfig.source },
 			workspace.config,
 			'workspace',
-			workspace.changes.map(describeConfigChange),
+			synthesis === null
+				? workspace.changes.map(describeConfigChange)
+				: [
+						`synthesized ${synthesis.path} from ${synthesis.replacedPath}, the pre-angular.json ` +
+							'Angular CLI 1.x workspace format; the digest recorded before is that file',
+						...synthesis.changes.map(describeConfigChange),
+						...workspace.changes.map(describeConfigChange),
+					],
 		),
 		file(
 			input.tsConfig,
@@ -299,6 +348,9 @@ export function migrateAngularCliEraWorkspace(
 		applicationFilesScanned: applicationFiles.length,
 		unhandled: Object.freeze([...new Set(unhandled)]),
 		declaredDifferences: Object.freeze([...new Set(declaredDifferences)]),
-		removedFiles: Object.freeze(configRemovals.map((removal) => removal.at)),
+		removedFiles: Object.freeze([
+			...configRemovals.map((removal) => removal.at),
+			...(synthesis === null ? [] : [synthesis.replacedPath]),
+		]),
 	});
 }

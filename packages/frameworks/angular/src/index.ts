@@ -7,6 +7,7 @@ export * from './angular-target-cell.ts';
 export * from './custom-webpack-absorption.ts';
 export * from './tslint-toolchain-removal.ts';
 export * from './angular-workspace-migration.ts';
+export * from './angular-cli-json-workspace-synthesis.ts';
 export * from './angular-source-migration.ts';
 export * from './ngrx-effects-migration.ts';
 export * from './sentry-v8-migration.ts';

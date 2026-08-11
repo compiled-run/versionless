@@ -1,0 +1,591 @@
+{
+  "schemaVersion": "versionless.angular-tiny-translator-composed-changeset.v1",
+  "unit": "lrapr-t006/u17-tiny-translator-migration-lanes",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "cell": "angular-16-browser-builder",
+  "appliedTo": "The pinned revision as materialised at .versionless/cache/angular-tiny-translator-v0-12-0-source/verify/extracted, whose blob-level reconciliation against the git tree is recorded in the u15 ingest.",
+  "workspaceFormatLift": {
+    "from": ".angular-cli.json",
+    "to": "angular.json",
+    "capability": "@versionless/angular synthesizeAngularWorkspace — the pre-angular.json Angular CLI 1.x workspace format translated into the modern schema: apps[] into a projects map, app-root-relative build inputs into workspace-relative browser-builder options, environmentSource plus the named environments map into fileReplacements configurations, and the sibling test, lint and e2e blocks into the builders that ran them.",
+    "genericity": "The capability reads the document shape, never a filename and never an application name. Fields of either schema level it does not know are reported by name and dropped rather than carried into a document the modern schema validates."
+  },
+  "applicationFilesScanned": 58,
+  "applicationFilesChanged": 2,
+  "workspaceFilesChanged": 3,
+  "files": [
+    {
+      "path": "package.json",
+      "kind": "workspace",
+      "changed": true,
+      "sha256Before": "1398854c95b5da22ec9fe6e64490c901043a75b40ac4698ab3433eec9f23c653",
+      "sha256After": "2294cabd64a8f1810b9aecc25ad3f1b607dca3dfe7ea7fae22a10877b4cf6177",
+      "changes": [
+        "dependencies.@angular/animations: ^5.0.3 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "dependencies.@angular/cdk: ^5.0.0-rc.2 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "dependencies.@angular/common: ^5.0.3 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "dependencies.@angular/compiler: ^5.0.3 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "dependencies.@angular/core: ^5.0.3 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "dependencies.@angular/flex-layout: ^2.0.0-beta.10-4905443 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "dependencies.@angular/forms: ^5.0.3 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "dependencies.@angular/http: ^5.0.3 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "dependencies.@angular/material: ^5.0.0-rc.2 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "dependencies.@angular/platform-browser: ^5.0.3 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "dependencies.@angular/platform-browser-dynamic: ^5.0.3 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "dependencies.@angular/router: ^5.0.3 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "dependencies.@angular/service-worker: ^5.0.3 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "dependencies.rxjs: ^5.5.2 -> ~7.8.0 — aligned to angular-16-browser-builder",
+        "dependencies.zone.js: ^0.8.14 -> ~0.13.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@angular/cli: ^1.5.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@angular/compiler-cli: ^5.0.3 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@angular/language-service: ^5.0.3 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@types/jasmine: ~2.5.53 -> ~4.3.0 — aligned to the test toolchain angular-16-browser-builder generates",
+        "removed devDependencies.@types/jasminewd2 (was ~2.0.2) — released by a builder target the workspace migration removed",
+        "removed devDependencies.codelyzer (was ^4.0.1) — released by a builder target the workspace migration removed",
+        "devDependencies.jasmine-core: ~2.6.2 -> ~4.6.0 — aligned to the test toolchain angular-16-browser-builder generates",
+        "removed devDependencies.jasmine-spec-reporter (was ~4.1.0) — released by a builder target the workspace migration removed",
+        "devDependencies.karma: ~1.7.0 -> ~6.4.0 — aligned to the test toolchain angular-16-browser-builder generates",
+        "devDependencies.karma-chrome-launcher: ~2.1.1 -> ~3.2.0 — aligned to the test toolchain angular-16-browser-builder generates",
+        "devDependencies.karma-jasmine: ~1.1.0 -> ~5.1.0 — aligned to the test toolchain angular-16-browser-builder generates",
+        "devDependencies.karma-jasmine-html-reporter: ^0.2.2 -> ~2.1.0 — aligned to the test toolchain angular-16-browser-builder generates",
+        "removed devDependencies.protractor (was ~5.1.2) — released by a builder target the workspace migration removed",
+        "removed devDependencies.tslint (was ^5.8.0) — released by a builder target the workspace migration removed",
+        "devDependencies.typescript: 2.4 -> ~5.1.3 — aligned to angular-16-browser-builder"
+      ]
+    },
+    {
+      "path": "angular.json",
+      "kind": "workspace",
+      "changed": true,
+      "sha256Before": "61fee70d99e9f41301c666f20b278eca04b82ae87ae5ae18c48a3258ffb4df15",
+      "sha256After": "d174c01ff5be4a2c1c7d332434a5ef69b1cb23f65bb6c6e1f9266a93b78a2017",
+      "changes": [
+        "synthesized angular.json from .angular-cli.json, the pre-angular.json Angular CLI 1.x workspace format; the digest recorded before is that file",
+        "added projects.tiny-translator.architect.build.options.outputPath = \"dist\"",
+        "added projects.tiny-translator.architect.build.options.index = \"src/index.html\"",
+        "added projects.tiny-translator.architect.build.options.main = \"src/main.ts\"",
+        "added projects.tiny-translator.architect.build.options.polyfills = \"src/polyfills.ts\"",
+        "added projects.tiny-translator.architect.build.options.tsConfig = \"src/tsconfig.app.json\"",
+        "added projects.tiny-translator.architect.build.options.assets = [\"src/assets\",\"src/favicon.ico\",\"src/manifest.json\"]",
+        "added projects.tiny-translator.architect.build.options.styles = [\"src/styles.scss\"]",
+        "added projects.tiny-translator.architect.build.options.scripts = []",
+        "projects.tiny-translator.architect.build.configurations.failtests: environments.failtests -> {\"fileReplacements\":[{\"replace\":\"src/environments/environment.ts\",\"with\":\"src/environments/environment.failtests.ts\"}]}",
+        "projects.tiny-translator.architect.build.configurations.production: environments.prod -> {\"fileReplacements\":[{\"replace\":\"src/environments/environment.ts\",\"with\":\"src/environments/environment.prod.ts\"}],\"optimization\":true,\"outputHashing\":\"all\",\"sourceMap\":false,\"namedChunks\":false,\"extractLicenses\":true,\"vendorChunk\":false,\"buildOptimizer\":true,\"aot\":true}",
+        "projects.tiny-translator.architect.build.configurations.secret: environments.secret -> {\"fileReplacements\":[{\"replace\":\"src/environments/environment.ts\",\"with\":\"src/environments/environment.secret.ts\"}]}",
+        "projects.tiny-translator.architect.test.builder: test.karma.config -> @angular-devkit/build-angular:karma",
+        "projects.tiny-translator.architect.lint.builder: lint[] -> @angular-devkit/build-angular:tslint",
+        "projects.tiny-translator.architect.e2e.builder: e2e.protractor.config -> @angular-devkit/build-angular:protractor",
+        "projects.tiny-translator: apps[0] -> projectType application",
+        "added version = 1",
+        "projects.tiny-translator.architect.build.options.polyfills: \"src/polyfills.ts\" -> [\"src/polyfills.ts\"]",
+        "projects.tiny-translator.architect.test.options.polyfills: \"src/polyfills.ts\" -> [\"src/polyfills.ts\"]",
+        "removed projects.tiny-translator.architect.lint (was @angular-devkit/build-angular:tslint)",
+        "removed projects.tiny-translator.architect.e2e (was @angular-devkit/build-angular:protractor)"
+      ]
+    },
+    {
+      "path": "tsconfig.json",
+      "kind": "workspace",
+      "changed": true,
+      "sha256Before": "061eb0bd92b4d29d94021820168f50c6f71ef9478055a1058eeee303d47e8041",
+      "sha256After": "9340de6eb97fe212ea3db14c300335355916ae6c5a8c7317e5cee21e01d34bd8",
+      "changes": [
+        "compilerOptions.target: \"es5\" -> \"ES2022\"",
+        "added compilerOptions.module = \"ES2022\"",
+        "added compilerOptions.useDefineForClassFields = false"
+      ]
+    },
+    {
+      "path": "src/app/active-project.guard.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "5eb895b7e2430dfe0c7917078a881eeeb3094c4f27703c2820b76d74d08411e0",
+      "sha256After": "5eb895b7e2430dfe0c7917078a881eeeb3094c4f27703c2820b76d74d08411e0",
+      "changes": []
+    },
+    {
+      "path": "src/app/app-material.module.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "6227f0ae6a5602135d0f60fc0a30baa0c88fb06bde5ba01fd5ab01d6d9c5591d",
+      "sha256After": "6227f0ae6a5602135d0f60fc0a30baa0c88fb06bde5ba01fd5ab01d6d9c5591d",
+      "changes": []
+    },
+    {
+      "path": "src/app/app.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "bea805fa114972ad365559292d99dddc1a43d84442cb070ea3731350e7002c58",
+      "sha256After": "bea805fa114972ad365559292d99dddc1a43d84442cb070ea3731350e7002c58",
+      "changes": []
+    },
+    {
+      "path": "src/app/app.config.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "357077af2cd6e93a419bbb7ff9673d78442299f69ec133f4ae0bb4fc76f114e5",
+      "sha256After": "357077af2cd6e93a419bbb7ff9673d78442299f69ec133f4ae0bb4fc76f114e5",
+      "changes": []
+    },
+    {
+      "path": "src/app/app.module.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "557753edadc9b94d0e12ed1274ae1b4b4b202a661f4d41c86ea303981a4b16b1",
+      "sha256After": "557753edadc9b94d0e12ed1274ae1b4b4b202a661f4d41c86ea303981a4b16b1",
+      "changes": []
+    },
+    {
+      "path": "src/app/app.routing.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "bbd9b6671e55844968b0d768b885b3f96be9862c25b3f0bec657a583550b9c99",
+      "sha256After": "bbd9b6671e55844968b0d768b885b3f96be9862c25b3f0bec657a583550b9c99",
+      "changes": []
+    },
+    {
+      "path": "src/app/auto-translate-summary-page/auto-translate-summary-page.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "f3abff1c0c83ce1d725295fe987648018fdef3bcb3c10554ab354cb8604fbb0c",
+      "sha256After": "f3abff1c0c83ce1d725295fe987648018fdef3bcb3c10554ab354cb8604fbb0c",
+      "changes": []
+    },
+    {
+      "path": "src/app/common/abbreviate.pipe.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "c20fb86a5eca33dcd5cccc1a256d4f01fdf089a6a58c03de357cf181f71862d1",
+      "sha256After": "c20fb86a5eca33dcd5cccc1a256d4f01fdf089a6a58c03de357cf181f71862d1",
+      "changes": []
+    },
+    {
+      "path": "src/app/configure-auto-translate-page/configure-auto-translate-page.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "41061fdeeceee3df7541562bf24f6bdbbaada700d0d921dc5cbf9b058029a9f3",
+      "sha256After": "41061fdeeceee3df7541562bf24f6bdbbaada700d0d921dc5cbf9b058029a9f3",
+      "changes": []
+    },
+    {
+      "path": "src/app/create-project-page/create-project-page.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "178d945754699d8a50d17a604724391886b4768d94915789ff736ba1bd10d4bf",
+      "sha256After": "178d945754699d8a50d17a604724391886b4768d94915789ff736ba1bd10d4bf",
+      "changes": []
+    },
+    {
+      "path": "src/app/edit-project-page/edit-project-page.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "e61507562c138936c5278ace51a6385f9c5a0a88caf6b2cb25c61a8276e8c0b2",
+      "sha256After": "e61507562c138936c5278ace51a6385f9c5a0a88caf6b2cb25c61a8276e8c0b2",
+      "changes": []
+    },
+    {
+      "path": "src/app/filter-page/filter-page.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "75f42458c0ed9e1d5b6dff2c94c32408f8ddc731b455e6b7fdc5e36183ca18a5",
+      "sha256After": "75f42458c0ed9e1d5b6dff2c94c32408f8ddc731b455e6b7fdc5e36183ca18a5",
+      "changes": []
+    },
+    {
+      "path": "src/app/filter-status/filter-status.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "964f1d4886b4b7007138f94218c445dcca9d4113385b16b264ac5302e218feda",
+      "sha256After": "964f1d4886b4b7007138f94218c445dcca9d4113385b16b264ac5302e218feda",
+      "changes": []
+    },
+    {
+      "path": "src/app/home-page/home-page.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "be9c3e629932c2993c453f05bf13c04301fe91ee18027e7ad759ce65bba75a17",
+      "sha256After": "be9c3e629932c2993c453f05bf13c04301fe91ee18027e7ad759ce65bba75a17",
+      "changes": []
+    },
+    {
+      "path": "src/app/language/language.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "ef44cce96f9c230bb5af4b484445854156f54ece35cbd20c9ab5c7bcc36d5619",
+      "sha256After": "ef44cce96f9c230bb5af4b484445854156f54ece35cbd20c9ab5c7bcc36d5619",
+      "changes": []
+    },
+    {
+      "path": "src/app/model/asynchronous-file-reader.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "eb2b514fc0037002a916deededc25e7e74107c07ccb23949e9c5d20f47cada5f",
+      "sha256After": "eb2b514fc0037002a916deededc25e7e74107c07ccb23949e9c5d20f47cada5f",
+      "changes": []
+    },
+    {
+      "path": "src/app/model/auto-translate-google.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "19db5f45ce6b5013235b964e7b83fa54e0624a5d772416376860eaf51327ab6e",
+      "sha256After": "19db5f45ce6b5013235b964e7b83fa54e0624a5d772416376860eaf51327ab6e",
+      "changes": []
+    },
+    {
+      "path": "src/app/model/auto-translate-result.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "5bb91866f792f6c7284748136ac69c57d48b068d347596d3e5ee97caa3a016cb",
+      "sha256After": "5bb91866f792f6c7284748136ac69c57d48b068d347596d3e5ee97caa3a016cb",
+      "changes": []
+    },
+    {
+      "path": "src/app/model/auto-translate-service-api.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "0488aadb710e0c4cc06b35639cbfe5180873c60f06d6a2b0cfd19c31793c49a2",
+      "sha256After": "0488aadb710e0c4cc06b35639cbfe5180873c60f06d6a2b0cfd19c31793c49a2",
+      "changes": []
+    },
+    {
+      "path": "src/app/model/auto-translate-summary-report.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "034d6a3b143f3b9f71ce2f8489e816c4d6705302afbfee278fc0494590222df8",
+      "sha256After": "034d6a3b143f3b9f71ce2f8489e816c4d6705302afbfee278fc0494590222df8",
+      "changes": []
+    },
+    {
+      "path": "src/app/model/backend-local-storage.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "76f1776e2b66220b6bf81675d35a7e87fc1c8a6a9a87ba5bb75874f640e3f2c9",
+      "sha256After": "76f1776e2b66220b6bf81675d35a7e87fc1c8a6a9a87ba5bb75874f640e3f2c9",
+      "changes": []
+    },
+    {
+      "path": "src/app/model/backend-service-api.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "64487ebedc55826872c19ff9ac3cb1aaa2e2ba6f4e5403f4fa50ddf7521f5fc2",
+      "sha256After": "64487ebedc55826872c19ff9ac3cb1aaa2e2ba6f4e5403f4fa50ddf7521f5fc2",
+      "changes": []
+    },
+    {
+      "path": "src/app/model/downloader.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "35a95ac984e38b145b06c0c86c4066323a6fa969a9fec706bc79cc3ddbf90be5",
+      "sha256After": "35a95ac984e38b145b06c0c86c4066323a6fa969a9fec706bc79cc3ddbf90be5",
+      "changes": []
+    },
+    {
+      "path": "src/app/model/filters/i-translation-unit-filter.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "866e0fa6a337a697a188df8cec2508784c11b1d841f19aaaf492d24446f3b5e3",
+      "sha256After": "866e0fa6a337a697a188df8cec2508784c11b1d841f19aaaf492d24446f3b5e3",
+      "changes": []
+    },
+    {
+      "path": "src/app/model/filters/translation-unit-filter-all.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "9b80e4efba83fd39b568a6bde35afe7e82305d6c8243cc73f7c37bd9a66ec08d",
+      "sha256After": "9b80e4efba83fd39b568a6bde35afe7e82305d6c8243cc73f7c37bd9a66ec08d",
+      "changes": []
+    },
+    {
+      "path": "src/app/model/filters/translation-unit-filter-autotranslated-failed.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "4ce3b415a0faf7faf647b0f1a469ac4d81506af9ad9ffd6f96001f3d2ed2e64d",
+      "sha256After": "4ce3b415a0faf7faf647b0f1a469ac4d81506af9ad9ffd6f96001f3d2ed2e64d",
+      "changes": []
+    },
+    {
+      "path": "src/app/model/filters/translation-unit-filter-autotranslated-ignored.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "4f5f29ee42c33b0abb1a9bc2c00395025d1f45f50731988f9e90bad4262da400",
+      "sha256After": "4f5f29ee42c33b0abb1a9bc2c00395025d1f45f50731988f9e90bad4262da400",
+      "changes": []
+    },
+    {
+      "path": "src/app/model/filters/translation-unit-filter-autotranslated.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "83f0ff9bc4a502c03948c69b46a28e29cfd97d8a5e5b9e0fbb5d602413f01331",
+      "sha256After": "83f0ff9bc4a502c03948c69b46a28e29cfd97d8a5e5b9e0fbb5d602413f01331",
+      "changes": []
+    },
+    {
+      "path": "src/app/model/filters/translation-unit-filter-needs-review.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "014b587331874399d62abc24f54cc88bf33e29df3d8a717092d870c1db9047ed",
+      "sha256After": "014b587331874399d62abc24f54cc88bf33e29df3d8a717092d870c1db9047ed",
+      "changes": []
+    },
+    {
+      "path": "src/app/model/filters/translation-unit-filter-substring.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "3ae18730ada91620c54300baae17911a9ff3263876564da843d369dc2ea2e7f2",
+      "sha256After": "3ae18730ada91620c54300baae17911a9ff3263876564da843d369dc2ea2e7f2",
+      "changes": []
+    },
+    {
+      "path": "src/app/model/filters/translation-unit-filter-untranslated.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "3df689e99ed64ce4b372523e066e26e9e47deac41578da0a15f0fdb6bff2dde8",
+      "sha256After": "3df689e99ed64ce4b372523e066e26e9e47deac41578da0a15f0fdb6bff2dde8",
+      "changes": []
+    },
+    {
+      "path": "src/app/model/filters/translation-unit-filter.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "0583bd4ca705774b97ac056310b688f4896a182a8d3c7412c4def0e71fa4ecc2",
+      "sha256After": "0583bd4ca705774b97ac056310b688f4896a182a8d3c7412c4def0e71fa4ecc2",
+      "changes": []
+    },
+    {
+      "path": "src/app/model/normalized-message.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "a8e241a6c6298f6cf6c5d1988106f582607efc43f8aafb32f9b997ccf551cbf1",
+      "sha256After": "a8e241a6c6298f6cf6c5d1988106f582607efc43f8aafb32f9b997ccf551cbf1",
+      "changes": []
+    },
+    {
+      "path": "src/app/model/tiny-translator.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "8c6b3e0ccce9f2315e186947e3fa95bde99e138443c620ec20b6eadfc553b099",
+      "sha256After": "8c6b3e0ccce9f2315e186947e3fa95bde99e138443c620ec20b6eadfc553b099",
+      "changes": []
+    },
+    {
+      "path": "src/app/model/translation-file-view.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "1d73e8ca2380a9dec4e1fac19dde75ebbff305ba450b1c9d354fd183f0593de8",
+      "sha256After": "1d73e8ca2380a9dec4e1fac19dde75ebbff305ba450b1c9d354fd183f0593de8",
+      "changes": []
+    },
+    {
+      "path": "src/app/model/translation-file.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "51c005c33ce36ee2db37ddadbf26ae8607e4465dd0b912568590b6eecfcff6e4",
+      "sha256After": "51c005c33ce36ee2db37ddadbf26ae8607e4465dd0b912568590b6eecfcff6e4",
+      "changes": []
+    },
+    {
+      "path": "src/app/model/translation-project.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "9c5ffedbb433fa5ace8a258d22b24b59ec5061d3d3b2e80ffcecbf1499c4e15f",
+      "sha256After": "9c5ffedbb433fa5ace8a258d22b24b59ec5061d3d3b2e80ffcecbf1499c4e15f",
+      "changes": []
+    },
+    {
+      "path": "src/app/model/translation-unit.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "2707edccfed71a1445e6a0b0d8591797eca533ac61267764e62521803f2db730",
+      "sha256After": "2707edccfed71a1445e6a0b0d8591797eca533ac61267764e62521803f2db730",
+      "changes": []
+    },
+    {
+      "path": "src/app/normalized-message-input/normalized-message-input.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "803c780f10bdad7b09babe51c09dac2a1f1bb45b1531c7dae9cd38876db5043b",
+      "sha256After": "803c780f10bdad7b09babe51c09dac2a1f1bb45b1531c7dae9cd38876db5043b",
+      "changes": []
+    },
+    {
+      "path": "src/app/project-editor/project-editor.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "38e604b24a7d53e0cf36216c12b091afea0c5b58cb476548f962113463e190a2",
+      "sha256After": "38e604b24a7d53e0cf36216c12b091afea0c5b58cb476548f962113463e190a2",
+      "changes": []
+    },
+    {
+      "path": "src/app/project-list/project-list.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "b94fee91e4d5fd8f9380d81e46c4fc02996f93983ed53fd88a979406da3db9b2",
+      "sha256After": "b94fee91e4d5fd8f9380d81e46c4fc02996f93983ed53fd88a979406da3db9b2",
+      "changes": []
+    },
+    {
+      "path": "src/app/project-starter/project-starter.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "6a10b49eb847650d131b3b05f770f3173b2a67089d605af9974447b14db5560d",
+      "sha256After": "6a10b49eb847650d131b3b05f770f3173b2a67089d605af9974447b14db5560d",
+      "changes": []
+    },
+    {
+      "path": "src/app/project-status/project-status.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "f4b09d5aae9735fdd955b702fbd05c33512b9480cf1e76396db8034d190c9651",
+      "sha256After": "f4b09d5aae9735fdd955b702fbd05c33512b9480cf1e76396db8034d190c9651",
+      "changes": []
+    },
+    {
+      "path": "src/app/project/project.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "22123d06204dceee8f308cf1740ddb3bfee446613a6085a1c220c2ecb9408fed",
+      "sha256After": "22123d06204dceee8f308cf1740ddb3bfee446613a6085a1c220c2ecb9408fed",
+      "changes": []
+    },
+    {
+      "path": "src/app/rxjs-operators.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "6e099fb051081bf278865538f0408e3e53f54763d945827a40f1b584b39bd9f1",
+      "sha256After": "6e099fb051081bf278865538f0408e3e53f54763d945827a40f1b584b39bd9f1",
+      "changes": []
+    },
+    {
+      "path": "src/app/translate-page/translate-page.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "264519b3fd7264f9f3539f61370f9ba8c8118b2f88ac0ec7bf67b7a2f4088a6a",
+      "sha256After": "264519b3fd7264f9f3539f61370f9ba8c8118b2f88ac0ec7bf67b7a2f4088a6a",
+      "changes": []
+    },
+    {
+      "path": "src/app/translate-unit-list/translate-unit-list.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "3f54b942c57381b09b8eeeee5288b68ff7c7aa698374a0586ff47e1be4c06ff2",
+      "sha256After": "3f54b942c57381b09b8eeeee5288b68ff7c7aa698374a0586ff47e1be4c06ff2",
+      "changes": []
+    },
+    {
+      "path": "src/app/translate-unit-warning-confirm-dialog/translate-unit-warning-confirm-dialog.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "609c32ebc5d0056f8199b84fed47e3148ccfa2faf92325fe64cf1d7447b88f3b",
+      "sha256After": "609c32ebc5d0056f8199b84fed47e3148ccfa2faf92325fe64cf1d7447b88f3b",
+      "changes": []
+    },
+    {
+      "path": "src/app/translate-unit/translate-unit.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "1609dac70d7ef6e7a26003f56222193618f78075e79581bfddeeab2f7cc96bc8",
+      "sha256After": "1609dac70d7ef6e7a26003f56222193618f78075e79581bfddeeab2f7cc96bc8",
+      "changes": []
+    },
+    {
+      "path": "src/app/translation-file-status/translation-file-status.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "74e7390a46e6f40bdded65a53d67b63267953f831d7c519143a499a2e690d2ad",
+      "sha256After": "74e7390a46e6f40bdded65a53d67b63267953f831d7c519143a499a2e690d2ad",
+      "changes": []
+    },
+    {
+      "path": "src/app/update-available/update-available.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "1e384e8ec1b5ced1d9f6526bfb25c89cf1f92b7d5442375a48ce0eb46cd9f2b1",
+      "sha256After": "1e384e8ec1b5ced1d9f6526bfb25c89cf1f92b7d5442375a48ce0eb46cd9f2b1",
+      "changes": []
+    },
+    {
+      "path": "src/environments/environment.failtests.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "86d4a8d9c077b29c6f91cb3d2ce907a884e1949e2b564bf9c5f27bf11bbd828e",
+      "sha256After": "86d4a8d9c077b29c6f91cb3d2ce907a884e1949e2b564bf9c5f27bf11bbd828e",
+      "changes": []
+    },
+    {
+      "path": "src/environments/environment.prod.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "7028c971d7238ec42943e5038dc7be5024f6264bc2180928307770dab1e51ecb",
+      "sha256After": "7028c971d7238ec42943e5038dc7be5024f6264bc2180928307770dab1e51ecb",
+      "changes": []
+    },
+    {
+      "path": "src/environments/environment.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "53860b0f6f83426043858a20dbedc7b868aaab57756304aa749c1caad57b1a5e",
+      "sha256After": "53860b0f6f83426043858a20dbedc7b868aaab57756304aa749c1caad57b1a5e",
+      "changes": []
+    },
+    {
+      "path": "src/main.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "75e4230337134ba84902f99ae7288999f58fcf7c31a56979bf2d9de14cda02cc",
+      "sha256After": "75e4230337134ba84902f99ae7288999f58fcf7c31a56979bf2d9de14cda02cc",
+      "changes": []
+    },
+    {
+      "path": "src/polyfills.ts",
+      "kind": "application",
+      "changed": true,
+      "sha256Before": "bf7b008a9bb355c4b5d2be4afeee8635bc893efb5cdb39bcb2256d32b900de91",
+      "sha256After": "170fab5800a5ea9e215f3afcc24304bf683b711eb621ddf63ecbd9fa8b2e82d8",
+      "changes": [
+        "line 60: module-specifier zone.js/dist/zone -> zone.js"
+      ]
+    },
+    {
+      "path": "src/test.ts",
+      "kind": "application",
+      "changed": true,
+      "sha256Before": "3b42ea6a779d205c2dceb320efc13deee49a4d08f6b1b5f2f0d678860caecbd4",
+      "sha256After": "b923c7d56b67d99a33326647d52e8911ab78f4f00fad07898b071dab5ac9d896",
+      "changes": [
+        "line 3: module-specifier zone.js/dist/long-stack-trace-zone -> zone.js/plugins/long-stack-trace-zone"
+      ]
+    },
+    {
+      "path": "src/typings.d.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "500f1012c6d4e5a70d590055fd9b74599f4e4b246b09db80d2fe8a8a5556d3c4",
+      "sha256After": "500f1012c6d4e5a70d590055fd9b74599f4e4b246b09db80d2fe8a8a5556d3c4",
+      "changes": []
+    }
+  ],
+  "removedFiles": [
+    "tslint.json",
+    ".angular-cli.json"
+  ],
+  "declaredDifferences": [
+    ".angular-cli.json apps[0].environments.dev names the same file as environmentSource, which is the identity swap the era CLI performed for its default environment; it needs no fileReplacements and was synthesized as the target's unconfigured default rather than as a named configuration",
+    "the era `ng build --prod` flag set ahead-of-time compilation, the build optimiser, full output hashing and CSS extraction and turned off source maps, named chunks and the vendor chunk. Those flags were written into the production configuration, because on a 16.2 line they are configuration rather than command-line flags. CSS extraction is unconditional there and has no option left, so it is not restated",
+    ".angular-cli.json was replaced by angular.json: the Angular CLI 1.x workspace format is not read by any 16.2 toolchain, so leaving it in the tree would leave a file that describes the build and is never consulted",
+    "projects.tiny-translator.architect.lint ran @angular-devkit/build-angular:tslint, and angular-16-browser-builder carries no TSLint line. The target was removed as a declared migration difference: the era workspace lints with TSLint and the migrated workspace does not, and no replacement lint capability was chosen here.",
+    "tslint.json configures TSLint, and angular-16-browser-builder carries no TSLint line for it to configure. The file was removed with the targets that read it; no rule in it was translated to another linter.",
+    "devDependencies.codelyzer was removed: the migrated workspace no longer carries it. codelyzer stops at 6.0.2, a TSLint rule set for Angular 9-era workspaces. Nothing succeeds it on the TSLint line and its ESLint replacement is @angular-eslint, which this cell already aligns as a family.",
+    "devDependencies.tslint was removed: the migrated workspace no longer carries it. TSLint stops at 6.1.3 and was deprecated by its own maintainers in favour of ESLint before Angular 13 shipped. There is no TSLint release for any Angular line at or beyond this cell, so the whole TSLint toolchain is dropped rather than carried."
+  ],
+  "unhandled": [
+    "projects.tiny-translator.architect.e2e used @angular-devkit/build-angular:protractor, which the 16.2 devkit does not ship; the target was removed and no replacement capability was chosen for it",
+    "devDependencies.karma-cli is coupled to the Angular test cell but is not part of the toolchain angular-16-browser-builder generates, so it was left at its era range",
+    "devDependencies.karma-coverage-istanbul-reporter is coupled to the Angular test cell but is not part of the toolchain angular-16-browser-builder generates, so it was left at its era range",
+    "compilerOptions.lib was left as declared; the 16.2 line does not require a specific lib set and narrowing one could remove a type surface the application relies on"
+  ],
+  "notEstablished": [
+    "A composed changeset is a set of edits, not a build. Nothing here establishes that the migrated tree installs, compiles or emits anything.",
+    "`applicationFilesChanged` counts application source the transforms rewrote. A file the adapter scanned and left alone is counted as scanned and not as changed."
+  ],
+  "digest": "c01a4c6e260964ba7ee8b358884e2ec76b8b6bd7b4ece38ad0af63af9e15e1d5"
+}

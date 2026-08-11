@@ -242,6 +242,10 @@ describe('Angular adapter overfitting guard', () => {
 			'fuxa',
 			'hospitalrun',
 			'kubernetes-dashboard',
+			'tiny-translator',
+			'tinytranslator',
+			'ngx-i18nsupport',
+			'martinroob',
 			'5f54abbd',
 		];
 		const offenders: string[] = [];
