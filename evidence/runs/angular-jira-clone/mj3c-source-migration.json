@@ -1,0 +1,392 @@
+{
+  "schemaVersion": "versionless.angular-jira-clone-source-migration.v3",
+  "unit": "lrapr-t005/mj3c-apply-builds-parity",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "result": "changeset-applied",
+  "supersedes": {
+    "record": "mj2-source-migration.json",
+    "unit": "lrapr-t005/mj2-ecosystem-cell-closure",
+    "why": "mj2 applied the cell before the adapter had a source transform for anything this application asked for, and recorded applicationFilesChanged 0 out of 116 truthfully. This record applies the same cell with five further capabilities composed into it — Sentry v8 tracing relocation, exports-map stylesheet resolution, cross-module modal-data migration, undeclared-runtime-dependency declaration and TSLint toolchain removal — over the same pinned revision. Every mj2 change is still in this changeset; the difference is additive."
+  },
+  "adapterApplication": "second — the same @versionless/angular adapter, a different application, now with every capability composed at once",
+  "source": {
+    "repository": "trungvose/jira-clone-angular",
+    "commit": "059455b9933a236456524925065bce2c295e2d9a",
+    "archiveUrl": "https://codeload.github.com/trungvose/jira-clone-angular/tar.gz/059455b9933a236456524925065bce2c295e2d9a",
+    "archiveSha256": "d913ad5d4686b6a236799166c7c781f624b3901a1826304e00c36eca82896bc5",
+    "bytes": 8048993,
+    "era": "Angular 13.2.4, CLI 13.2.5, @angular-builders/custom-webpack:browser over a root webpack.config.js, ng-zorro-antd 13, Akita 7, Tailwind 3, TypeScript 4.5.5"
+  },
+  "cell": {
+    "id": "angular-16-browser-builder",
+    "angularLine": "16.2",
+    "builder": "@angular-devkit/build-angular:browser",
+    "nodeLine": "16.20.2",
+    "typescriptRange": "~5.1.3",
+    "rationale": [
+      "Angular 16 accepts Node ^16.14.0 || ^18.10.0; this host carries a native Node 16.20.2, which is inside that range.",
+      "The `browser` builder the era workspace already declares is still the mainstream application builder on the Angular 16 line, so the builder identity survives the hop unchanged.",
+      "A newer line was not declared because it would pair an unverified Node line with a builder swap in the same step, and neither could be evidenced here.",
+      "@angular-eslint is versioned in lockstep with the Angular major it lints — its 16.x line is the one published for Angular 16 — and its schematics package pins a peer range on the matching @angular/cli major. An era @angular-eslint left in place makes the closure unresolvable, so the family is aligned with the framework rather than left behind.",
+      "The test toolchain is declared as the versions this line’s own schematics generate. Leaving it at its era ranges is not a neutral choice: an era jasmine pinned below what a floating karma reporter range now demands makes the dependency closure unresolvable, so the install that the build cell needs cannot happen at all."
+    ],
+    "reuse": [
+      "The target cell angular-16-browser-builder is the same cell factoriolab was migrated onto. It was not re-derived for this application and nothing here re-establishes its rationale.",
+      "The ecosystem table this application needed was added to the cell rather than to this fixture, because a community library's Angular-major line is a fact about the Angular ecosystem. It is keyed by package name and applies to any manifest; nothing in it names this application.",
+      "Both lanes of this cell run on Node 16.20.2, which is what this application's own .nvmrc pins as a major and what the era baseline already used. The migrated lane therefore changes the framework without also changing the runtime."
+    ]
+  },
+  "closureReading": {
+    "meaning": "Two of the capabilities in this changeset read published packages rather than application source. This is what they were handed, and by which rule.",
+    "selectionRule": "The runtime dependencies the installed tree's own manifest declares — the direct edges a production build resolves — read from the closure staged beside the pinned tree. Development dependencies and transitive packages are not read.",
+    "bundleRule": "Per package, the newest of fesm2022, fesm2020, fesm2015 that carries at least one .mjs bundle, and every such bundle in it. The reader parses what it is handed and throws on bytes that are not a module, so the format it can read is chosen deliberately rather than discovered by failure.",
+    "packagesRead": 25,
+    "packagesWithBundles": 16,
+    "bundlesParsed": 152,
+    "packagesWithExportsMap": 19,
+    "absentFromClosure": [],
+    "bundlesRead": [
+      {
+        "name": "@angular/animations",
+        "directory": "fesm2022",
+        "bundles": 2
+      },
+      {
+        "name": "@angular/cdk",
+        "directory": "fesm2022",
+        "bundles": 23
+      },
+      {
+        "name": "@angular/common",
+        "directory": "fesm2022",
+        "bundles": 4
+      },
+      {
+        "name": "@angular/compiler",
+        "directory": "fesm2022",
+        "bundles": 2
+      },
+      {
+        "name": "@angular/core",
+        "directory": "fesm2022",
+        "bundles": 3
+      },
+      {
+        "name": "@angular/forms",
+        "directory": "fesm2022",
+        "bundles": 1
+      },
+      {
+        "name": "@angular/platform-browser",
+        "directory": "fesm2022",
+        "bundles": 3
+      },
+      {
+        "name": "@angular/platform-browser-dynamic",
+        "directory": "fesm2022",
+        "bundles": 2
+      },
+      {
+        "name": "@angular/router",
+        "directory": "fesm2022",
+        "bundles": 3
+      },
+      {
+        "name": "@ant-design/icons-angular",
+        "directory": "fesm2022",
+        "bundles": 2
+      },
+      {
+        "name": "@ctrl/tinycolor",
+        "directory": null,
+        "bundles": 0
+      },
+      {
+        "name": "@datorama/akita",
+        "directory": null,
+        "bundles": 0
+      },
+      {
+        "name": "@datorama/akita-ng-entity-service",
+        "directory": "fesm2020",
+        "bundles": 1
+      },
+      {
+        "name": "@ngneat/content-loader",
+        "directory": "fesm2020",
+        "bundles": 1
+      },
+      {
+        "name": "@ngneat/tailwind",
+        "directory": null,
+        "bundles": 0
+      },
+      {
+        "name": "@ngneat/until-destroy",
+        "directory": "fesm2022",
+        "bundles": 1
+      },
+      {
+        "name": "@sentry/angular",
+        "directory": "fesm2020",
+        "bundles": 1
+      },
+      {
+        "name": "date-fns",
+        "directory": null,
+        "bundles": 0
+      },
+      {
+        "name": "karma-coverage",
+        "directory": null,
+        "bundles": 0
+      },
+      {
+        "name": "ng-zorro-antd",
+        "directory": "fesm2022",
+        "bundles": 101
+      },
+      {
+        "name": "ngx-quill",
+        "directory": "fesm2022",
+        "bundles": 2
+      },
+      {
+        "name": "quill",
+        "directory": null,
+        "bundles": 0
+      },
+      {
+        "name": "rxjs",
+        "directory": null,
+        "bundles": 0
+      },
+      {
+        "name": "tslib",
+        "directory": null,
+        "bundles": 0
+      },
+      {
+        "name": "zone.js",
+        "directory": null,
+        "bundles": 0
+      }
+    ]
+  },
+  "appliedTo": "The pinned revision as materialised at .versionless/stage/angular-jira-clone-mj2/tree, with the changeset written into the sibling tree the migrated closure was installed into.",
+  "migration": {
+    "applicationFilesScanned": 160,
+    "applicationFilesScannedNote": "The denominator moved between mj2 and this record, and it moved for a reason rather than by accident: mj2 scanned 116 TypeScript modules, because a module was the only kind of application file any capability read. A stylesheet whose package subpath no longer resolves is an application file that no longer builds, so the adapter now takes stylesheets too, and this tree carries 44 of them. Nothing was rescoped and no file stopped being counted; 44 more started being counted.",
+    "applicationFilesChanged": 7,
+    "workspaceFilesChanged": 3,
+    "files": [
+      {
+        "path": "package.json",
+        "kind": "workspace",
+        "sha256Before": "b029c486ab0eeffac9c311cc00bad782f9203b512c094f873390f8320db18a6f",
+        "sha256After": "1b311ddfacb294d90a302a2719f8fda0e396ffa1028c7760878f22360bcc80ec",
+        "changes": [
+          "dependencies.@angular/animations: ~13.2.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "dependencies.@angular/cdk: ^13.2.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "dependencies.@angular/common: ~13.2.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "dependencies.@angular/compiler: ~13.2.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "dependencies.@angular/core: ~13.2.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "dependencies.@angular/forms: ~13.2.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "dependencies.@angular/platform-browser: ~13.2.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "dependencies.@angular/platform-browser-dynamic: ~13.2.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "dependencies.@angular/router: ~13.2.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "dependencies.@ant-design/icons-angular: ^13.1.0 -> ^16.0.0 — aligned to the community layer angular-16-browser-builder declares: @ant-design/icons-angular versions in lockstep with the Angular major: 16.0.0 is the only 16.x release and declares peer @angular/core ^16.0.0, @angular/common ^16.0.0, @angular/platform-browser ^16.0.0. 17.0.0 declares ^17.0.1.",
+          "dependencies.@ngneat/content-loader: ^6.0.0 -> ^7.0.0 — aligned to the community layer angular-16-browser-builder declares: 7.0.0 is the newest release and declares peer @angular/core \">= 13.0.0\", satisfied by this cell. The 6.x line the era workspace carried declares no @angular peer.",
+          "dependencies.@ngneat/until-destroy: ^8.0.3 -> ^10.0.0 — aligned to the community layer angular-16-browser-builder declares: 10.0.0 is the newest release and declares peer @angular/core \">=13\" and rxjs \"^6.4.0 || ^7.0.0\", both satisfied by this cell.",
+          "dependencies.@sentry/angular: ^6.18.1 -> ^8.55.2 — aligned to the community layer angular-16-browser-builder declares: The 7.x line — including the era 6.x line before it — declares peer @angular/core \">= 10.x <= 15.x\" and refuses Angular 16. 9.46.0 and 10.70.0 declare peer @angular/core ranges that do admit 16, but both declare engines.node \">=18\", which this cell's Node 16.20.2 does not satisfy. 8.55.2 is the newest line left: peer @angular/core \">= 14.x <= 19.x\", engines.node \">=14.18\".",
+          "removed dependencies.@sentry/tracing (was ^6.18.1) — no successor line for angular-16-browser-builder: @sentry/tracing stops at 7.120.4; the package has no 8.x line, because the v8 SDK folded tracing into @sentry/angular itself. Holding it at a v7 range beside a v8 SDK would install two incompatible Sentry cores, so the package is dropped and the tracing import it served is left for a source transform to answer.",
+          "dependencies.karma-coverage: ^2.0.3 -> ~2.2.0 — aligned to the test toolchain angular-16-browser-builder generates",
+          "dependencies.ng-zorro-antd: ^13.1.0 -> ^16.2.2 — aligned to the community layer angular-16-browser-builder declares: ng-zorro-antd versions in lockstep with the Angular major: 16.2.2 is the last 16.x release and declares peer @angular/core ^16.0.0 across the six @angular packages it uses. It depends on @ant-design/icons-angular ^16.0.0 and @angular/cdk ^16.0.0, both of which this cell also carries. 17.0.0 declares ^17.0.0.",
+          "dependencies.ngx-quill: ^16.1.2 -> ^23.0.3 — aligned to the community layer angular-16-browser-builder declares: ngx-quill versions in lockstep with the Angular major: 23.0.3 is the last release declaring peer @angular/core ^16.0.0, and 24.0.0 moves to ^17.0.0. 23.0.3 also declares peer quill ^1.3.7, which the era workspace already carries, and engines.node \"^16.14.0 || >=18.10.0\", satisfied by this cell.",
+          "dependencies.rxjs: ~6.6.3 -> ~7.8.0 — aligned to angular-16-browser-builder",
+          "dependencies.tslib: ^2.0.0 -> ^2.3.0 — aligned to angular-16-browser-builder",
+          "dependencies.zone.js: ~0.11.4 -> ~0.13.0 — aligned to angular-16-browser-builder",
+          "removed devDependencies.@angular-builders/custom-webpack (was ^13.1.0) — released by a builder target the workspace migration removed",
+          "devDependencies.@angular-devkit/build-angular: ~13.2.5 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "devDependencies.@angular-eslint/builder: 13.1.0 -> ^16.1.0 — aligned to angular-16-browser-builder",
+          "devDependencies.@angular-eslint/eslint-plugin: 13.1.0 -> ^16.1.0 — aligned to angular-16-browser-builder",
+          "devDependencies.@angular-eslint/eslint-plugin-template: 13.1.0 -> ^16.1.0 — aligned to angular-16-browser-builder",
+          "devDependencies.@angular-eslint/schematics: 13.1.0 -> ^16.1.0 — aligned to angular-16-browser-builder",
+          "devDependencies.@angular-eslint/template-parser: 13.1.0 -> ^16.1.0 — aligned to angular-16-browser-builder",
+          "devDependencies.@angular/cli: ~13.2.5 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "devDependencies.@angular/compiler-cli: ~13.2.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "devDependencies.@storybook/addon-actions: ^6.1.11 -> ^7.6.24 — aligned to the community layer angular-16-browser-builder declares: Storybook publishes its addons in lockstep with its core, and 7.6.24 is the last 7.x release of this addon. It is aligned to the same version as @storybook/angular because a Storybook installation with two core majors in it is not an installation.",
+          "devDependencies.@storybook/addon-essentials: ^6.1.11 -> ^7.6.24 — aligned to the community layer angular-16-browser-builder declares: Last 7.x release, aligned with @storybook/angular. It declares peer react and react-dom \"^16.8.0 || ^17.0.0 || ^18.0.0\", which the workspace does not declare and the package manager supplies.",
+          "removed devDependencies.@storybook/addon-google-analytics (was ^6.1.11) — no successor line for angular-16-browser-builder: The addon stops at 6.2.9: Storybook shipped no 7.x release of it, so there is no version to pair with the 7.6.24 core this cell selects. A 6.x addon beside a 7.x core is not a supported Storybook installation, so the package is dropped rather than pinned.",
+          "devDependencies.@storybook/addon-links: ^6.1.11 -> ^7.6.24 — aligned to the community layer angular-16-browser-builder declares: Last 7.x release, aligned with @storybook/angular.",
+          "devDependencies.@storybook/angular: ^6.1.11 -> ^7.6.24 — aligned to the community layer angular-16-browser-builder declares: 8.6.18 declares engines.node \">=18.0.0\", which this cell's Node 16.20.2 does not satisfy. 7.6.24 is the newest line left: engines.node \">=16.0.0\" and peer @angular/core, @angular/cli, @angular-devkit/build-angular and @angular/compiler-cli all \">=14.1.0 < 19.0.0\", satisfied by this cell.",
+          "devDependencies.@types/jasmine: ~3.6.0 -> ~4.3.0 — aligned to the test toolchain angular-16-browser-builder generates",
+          "removed devDependencies.@types/jasminewd2 (was ~2.0.3) — released by a builder target the workspace migration removed",
+          "removed devDependencies.codelyzer (was ^6.0.0) — no successor line for angular-16-browser-builder: codelyzer stops at 6.0.2, a TSLint rule set for Angular 9-era workspaces. Nothing succeeds it on the TSLint line and its ESLint replacement is @angular-eslint, which this cell already aligns as a family.",
+          "devDependencies.jasmine-core: ~4.0.1 -> ~4.6.0 — aligned to the test toolchain angular-16-browser-builder generates",
+          "removed devDependencies.jasmine-spec-reporter (was ~6.0.0) — released by a builder target the workspace migration removed",
+          "devDependencies.karma: ~6.3.16 -> ~6.4.0 — aligned to the test toolchain angular-16-browser-builder generates",
+          "devDependencies.karma-chrome-launcher: ~3.1.0 -> ~3.2.0 — aligned to the test toolchain angular-16-browser-builder generates",
+          "devDependencies.karma-jasmine: ~4.0.0 -> ~5.1.0 — aligned to the test toolchain angular-16-browser-builder generates",
+          "devDependencies.karma-jasmine-html-reporter: ^1.5.0 -> ~2.1.0 — aligned to the test toolchain angular-16-browser-builder generates",
+          "removed devDependencies.nz-tslint-rules (was ^0.901.2) — no successor line for angular-16-browser-builder: nz-tslint-rules stops at 0.901.2, the only version ever published. It is a TSLint rule set for ng-zorro-antd and has no successor on any lint line.",
+          "removed devDependencies.protractor (was ~7.0.0) — released by a builder target the workspace migration removed",
+          "removed devDependencies.tslint (was ~6.1.0) — no successor line for angular-16-browser-builder: TSLint stops at 6.1.3 and was deprecated by its own maintainers in favour of ESLint before Angular 13 shipped. There is no TSLint release for any Angular line at or beyond this cell, so the whole TSLint toolchain is dropped rather than carried.",
+          "devDependencies.typescript: ~4.5.5 -> ~5.1.3 — aligned to angular-16-browser-builder",
+          "added dependencies.@ctrl/tinycolor = ^4.2.0 — declared to close an undeclared runtime dependency the installed closure supplied by accident: ng-zorro-antd@16.2.2 imports it as @ctrl/tinycolor from fesm2022/ng-zorro-antd-core-color.mjs, fesm2022/ng-zorro-antd-core-config.mjs but declares it in none of dependencies, peerDependencies, optionalDependencies. Version read for angular-16-browser-builder: @ctrl/tinycolor declares no peers at all, so nothing in this cell excludes a line of it on that ground; 4.2.0 is the newest release published and declares engines.node \">=14\", which this cell's Node 16.20.2 satisfies. The 3.x line before it declares \">=10\" and is therefore not the newest satisfying line. Read from https://registry.npmjs.org/@ctrl/tinycolor under consent VL-LEGACY-CORPUS-2026-08-10; the four named exports the Angular 16 community layer reaches for — TinyColor, inputToRGB, rgbToHex, rgbToHsv — are all declared by 4.2.0 (https://unpkg.com/@ctrl/tinycolor@4.2.0/dist/index.d.ts, /dist/format-input.d.ts, /dist/conversion.d.ts)."
+        ]
+      },
+      {
+        "path": "angular.json",
+        "kind": "workspace",
+        "sha256Before": "65690a1cb9f1d916179bd7a4f9f37b64aca840eeeca0f7ae38fee137370e7a70",
+        "sha256After": "1ebc8a1c49f769af4fafbc828800a1171c8da9eefa2a855ee15ed5e65c4be935",
+        "changes": [
+          "removed defaultProject (was \"frontend\")",
+          "removed cli.defaultCollection (was \"@datorama/akita\")",
+          "added cli.schematicCollections = [\"@datorama/akita\"]",
+          "projects.frontend.architect.build.builder: @angular-builders/custom-webpack:browser -> @angular-devkit/build-angular:browser",
+          "removed projects.frontend.architect.build.options.customWebpackConfig (was {\"path\":\"./webpack.config.js\"})",
+          "projects.frontend.architect.build.options.polyfills: \"src/polyfills.ts\" -> [\"src/polyfills.ts\"]",
+          "removed projects.frontend.architect.build.configurations.production.extractCss (was true)",
+          "projects.frontend.architect.serve.builder: @angular-builders/custom-webpack:dev-server -> @angular-devkit/build-angular:dev-server",
+          "projects.frontend.architect.test.options.polyfills: \"src/polyfills.ts\" -> [\"src/polyfills.ts\"]",
+          "removed projects.frontend.architect.e2e (was @angular-devkit/build-angular:protractor)"
+        ]
+      },
+      {
+        "path": "tsconfig.json",
+        "kind": "workspace",
+        "sha256Before": "70bdf73e5376db09479379a2fa4e6bfd268588cb3b064eaf2e2c3ebd4145001b",
+        "sha256After": "0de01df6c9325f73f8779e47c8117e78ff6de245e97d9d2e7921927bdb57be0f",
+        "changes": [
+          "compilerOptions.target: \"es2015\" -> \"ES2022\"",
+          "compilerOptions.module: \"es2020\" -> \"ES2022\"",
+          "added compilerOptions.useDefineForClassFields = false"
+        ]
+      },
+      {
+        "path": "src/app/project/components/issues/issue-card/issue-card.component.ts",
+        "kind": "application",
+        "sha256Before": "5bc5f15827976d607b30eed909a242fb38b446a049014de227e1e7bc1f66c411",
+        "sha256After": "178892733be7345a5c872fc839b6ff4b8c01b410dd77f6b33a47eecdbfd1c1e7",
+        "changes": [
+          "line 45: modal-content-params-option nzComponentParams: { issue$ } -> nzData: { issue$ }"
+        ]
+      },
+      {
+        "path": "src/app/project/components/issues/issue-delete-modal/issue-delete-modal.component.ts",
+        "kind": "application",
+        "sha256Before": "5e9eae390122ccf7c32dbeef405b240f958a31cce3d4b9ec02067371dbe2ca71",
+        "sha256After": "b23371452d234215d54f42b92681c0a581cc901add476d43bf646a7f29489ad7",
+        "changes": [
+          "line 11: modal-content-data-injection issueId -> issueId = inject(NZ_MODAL_DATA).issueId",
+          "line 13: modal-content-data-injection onDelete -> onDelete = inject(NZ_MODAL_DATA).onDelete"
+        ]
+      },
+      {
+        "path": "src/app/project/components/issues/issue-detail/issue-detail.component.ts",
+        "kind": "application",
+        "sha256Before": "c16b06a26230526c58120c6b5e32d6ade1ad6ded0eea5022109f7dd5a743733a",
+        "sha256After": "22486e413ded0086e9e6b559d2af7d6bc69483a5a04b82f2f6338329cecd6505",
+        "changes": [
+          "line 31: modal-content-params-option nzComponentParams: { issueId, onDelete } -> nzData: { issueId, onDelete }"
+        ]
+      },
+      {
+        "path": "src/app/project/components/issues/issue-modal/issue-modal.component.ts",
+        "kind": "application",
+        "sha256Before": "eafcda0c582932ac979f2ffacca7dbd9a5839282d9f80804d59feb5f492bab36",
+        "sha256After": "28e1136a9c8aad9fde0a5833cbdcfa05fb394a01f91d3aa1c3d42f104c4b6578",
+        "changes": [
+          "line 15: modal-content-data-injection @Input() issue$ -> issue$ = inject(NZ_MODAL_DATA).issue$"
+        ]
+      },
+      {
+        "path": "src/app/project/components/search/search-drawer/search-drawer.component.ts",
+        "kind": "application",
+        "sha256Before": "270674a5573111e1935b146349e22b75a47f219f3d3babee0056b2614e45bb39",
+        "sha256After": "42419bf013693d54493ad40d797101b4647d217b435e22d866caf119f4bbcc1f",
+        "changes": [
+          "line 60: modal-content-params-option nzComponentParams: { issue$ } -> nzData: { issue$ }"
+        ]
+      },
+      {
+        "path": "src/main.ts",
+        "kind": "application",
+        "sha256Before": "649de1e2d6bf673dca8e727e178f427e603fc1a2958589b48b8f0e6ee8d259e1",
+        "sha256After": "d7efe72a911f7064974524a0aea90dc888c9334239a0173e6db73b21e9214df8",
+        "changes": [
+          "line 13: sentry-browser-tracing-integration new Integrations.BrowserTracing(…) -> Sentry.browserTracingIntegration()",
+          "line 14: sentry-trace-propagation-targets tracingOrigins: ['localhost', 'https://jira.trungk18.com/'] -> init option tracePropagationTargets: ['localhost', 'https://jira.trungk18.com/']"
+        ]
+      },
+      {
+        "path": "src/styles.scss",
+        "kind": "application",
+        "sha256Before": "9e8f50006a58f2e36821f49332987f46508af8dc93e94bfe427ad7925f96beb3",
+        "sha256After": "123121974f6e8c7f074894bbdd3c27bfc245ffd0646c20d5df45b2769436b684",
+        "changes": [
+          "line 1: style-import-aggregate ng-zorro-antd/style/index.min.css -> ng-zorro-antd/ng-zorro-antd.min.css",
+          "line 2: style-import-redundant ng-zorro-antd/tooltip/style/index.min.css -> ng-zorro-antd/ng-zorro-antd.min.css",
+          "line 3: style-import-redundant ng-zorro-antd/spin/style/index.min.css -> ng-zorro-antd/ng-zorro-antd.min.css",
+          "line 4: style-import-redundant ng-zorro-antd/modal/style/index.min.css -> ng-zorro-antd/ng-zorro-antd.min.css",
+          "line 5: style-import-redundant ng-zorro-antd/dropdown/style/index.min.css -> ng-zorro-antd/ng-zorro-antd.min.css",
+          "line 6: style-import-redundant ng-zorro-antd/select/style/index.min.css -> ng-zorro-antd/ng-zorro-antd.min.css",
+          "line 7: style-import-redundant ng-zorro-antd/drawer/style/index.min.css -> ng-zorro-antd/ng-zorro-antd.min.css",
+          "line 8: style-import-redundant ng-zorro-antd/notification/style/index.min.css -> ng-zorro-antd/ng-zorro-antd.min.css",
+          "line 9: style-import-redundant ng-zorro-antd/popover/style/index.min.css -> ng-zorro-antd/ng-zorro-antd.min.css"
+        ]
+      }
+    ],
+    "declaredDifferences": [
+      "dependencies.@sentry/tracing was removed: the migrated workspace no longer carries it. @sentry/tracing stops at 7.120.4; the package has no 8.x line, because the v8 SDK folded tracing into @sentry/angular itself. Holding it at a v7 range beside a v8 SDK would install two incompatible Sentry cores, so the package is dropped and the tracing import it served is left for a source transform to answer.",
+      "devDependencies.@storybook/addon-google-analytics was removed: the migrated workspace no longer carries it. The addon stops at 6.2.9: Storybook shipped no 7.x release of it, so there is no version to pair with the 7.6.24 core this cell selects. A 6.x addon beside a 7.x core is not a supported Storybook installation, so the package is dropped rather than pinned.",
+      "devDependencies.codelyzer was removed: the migrated workspace no longer carries it. codelyzer stops at 6.0.2, a TSLint rule set for Angular 9-era workspaces. Nothing succeeds it on the TSLint line and its ESLint replacement is @angular-eslint, which this cell already aligns as a family.",
+      "devDependencies.nz-tslint-rules was removed: the migrated workspace no longer carries it. nz-tslint-rules stops at 0.901.2, the only version ever published. It is a TSLint rule set for ng-zorro-antd and has no successor on any lint line.",
+      "devDependencies.tslint was removed: the migrated workspace no longer carries it. TSLint stops at 6.1.3 and was deprecated by its own maintainers in favour of ESLint before Angular 13 shipped. There is no TSLint release for any Angular line at or beyond this cell, so the whole TSLint toolchain is dropped rather than carried.",
+      "dependencies.@ctrl/tinycolor was added: the migrated workspace declares a package the era workspace never named. declared to close an undeclared runtime dependency the installed closure supplied by accident: ng-zorro-antd@16.2.2 imports it as @ctrl/tinycolor from fesm2022/ng-zorro-antd-core-color.mjs, fesm2022/ng-zorro-antd-core-config.mjs but declares it in none of dependencies, peerDependencies, optionalDependencies. Version read for angular-16-browser-builder: @ctrl/tinycolor declares no peers at all, so nothing in this cell excludes a line of it on that ground; 4.2.0 is the newest release published and declares engines.node \">=14\", which this cell's Node 16.20.2 satisfies. The 3.x line before it declares \">=10\" and is therefore not the newest satisfying line. Read from https://registry.npmjs.org/@ctrl/tinycolor under consent VL-LEGACY-CORPUS-2026-08-10; the four named exports the Angular 16 community layer reaches for — TinyColor, inputToRGB, rgbToHex, rgbToHsv — are all declared by 4.2.0 (https://unpkg.com/@ctrl/tinycolor@4.2.0/dist/index.d.ts, /dist/format-input.d.ts, /dist/conversion.d.ts).",
+      "src/styles.scss: 9 ng-zorro-antd stylesheet import(s) were replaced by the single exported aggregate ng-zorro-antd/ng-zorro-antd.min.css, because ng-zorro-antd@16.2.2 does not expose ./style/index.min.css through its exports map and publishes no narrower equivalent. The migrated application ships 550342 bytes of stylesheet where it previously shipped 152717. This changeset makes no claim that the application renders as it did; a witness arbitrates that.",
+      "src/styles.scss line 2: the granular import ng-zorro-antd/tooltip/style/index.min.css was removed. It is contained in the aggregate ng-zorro-antd/ng-zorro-antd.min.css that replaced the blocked root import, so keeping it would import the same rules twice.",
+      "src/styles.scss line 3: the granular import ng-zorro-antd/spin/style/index.min.css was removed. It is contained in the aggregate ng-zorro-antd/ng-zorro-antd.min.css that replaced the blocked root import, so keeping it would import the same rules twice.",
+      "src/styles.scss line 4: the granular import ng-zorro-antd/modal/style/index.min.css was removed. It is contained in the aggregate ng-zorro-antd/ng-zorro-antd.min.css that replaced the blocked root import, so keeping it would import the same rules twice.",
+      "src/styles.scss line 5: the granular import ng-zorro-antd/dropdown/style/index.min.css was removed. It is contained in the aggregate ng-zorro-antd/ng-zorro-antd.min.css that replaced the blocked root import, so keeping it would import the same rules twice.",
+      "src/styles.scss line 6: the granular import ng-zorro-antd/select/style/index.min.css was removed. It is contained in the aggregate ng-zorro-antd/ng-zorro-antd.min.css that replaced the blocked root import, so keeping it would import the same rules twice.",
+      "src/styles.scss line 7: the granular import ng-zorro-antd/drawer/style/index.min.css was removed. It is contained in the aggregate ng-zorro-antd/ng-zorro-antd.min.css that replaced the blocked root import, so keeping it would import the same rules twice.",
+      "src/styles.scss line 8: the granular import ng-zorro-antd/notification/style/index.min.css was removed. It is contained in the aggregate ng-zorro-antd/ng-zorro-antd.min.css that replaced the blocked root import, so keeping it would import the same rules twice.",
+      "src/styles.scss line 9: the granular import ng-zorro-antd/popover/style/index.min.css was removed. It is contained in the aggregate ng-zorro-antd/ng-zorro-antd.min.css that replaced the blocked root import, so keeping it would import the same rules twice."
+    ],
+    "removedFiles": []
+  },
+  "knownResidue": [
+    "The modal-data migration replaces `@Input()` fields on a content component with injected `NZ_MODAL_DATA` fields but does not touch the module's import list, so `src/app/project/components/issues/issue-modal/issue-modal.component.ts` keeps importing `Input` from @angular/core with nothing left in the module that uses it. TypeScript does not error on an unused import specifier under this workspace's configuration and the emitted bundles do not carry it, so both lanes build. It is visible in the diff and is recorded here rather than hand-patched: removing it would be a change no capability made, and a hand-patch on top of a mechanical changeset is how a generic adapter quietly becomes an application-specific one. The other two content components did not declare their fields with `@Input()`, so neither of them carries the residue."
+  ],
+  "unhandled": [
+    "projects.frontend.architect.lint uses @angular-eslint/builder:lint, which this capability does not recognise; its options were left untouched",
+    "projects.frontend.architect.e2e used @angular-devkit/build-angular:protractor, which the 16.2 devkit does not ship; the target was removed and no replacement capability was chosen for it",
+    "webpack.config.js was absorbed into the official builder and is no longer referenced by any target; it was left in the tree rather than deleted. Absorbed capabilities: webpack-rule-scope /\\.scss$/, postcss-ident ident: \"postcss\", postcss-syntax postcss-scss, postcss-plugin postcss-import, postcss-plugin tailwindcss, postcss-plugin autoprefixer",
+    "devDependencies.karma-coverage-istanbul-reporter is coupled to the Angular test cell but is not part of the toolchain angular-16-browser-builder generates, so it was left at its era range",
+    "@angular/upgrade is imported by the installed closure without being declared — @angular/common@16.2.12 imports it as @angular/upgrade/static from fesm2022/upgrade.mjs but declares it in none of dependencies, peerDependencies, optionalDependencies; @angular/router@16.2.12 imports it as @angular/upgrade/static from fesm2022/upgrade.mjs but declares it in none of dependencies, peerDependencies, optionalDependencies — but angular-16-browser-builder has read no line for it, so the manifest was left as it is rather than declaring an unverified version",
+    "cron-parser is imported by the installed closure without being declared — ng-zorro-antd@16.2.2 imports it as cron-parser from fesm2022/ng-zorro-antd-cron-expression.mjs but declares it in none of dependencies, peerDependencies, optionalDependencies — but angular-16-browser-builder has read no line for it, so the manifest was left as it is rather than declaring an unverified version",
+    "d3-drag is imported by the installed closure without being declared — ng-zorro-antd@16.2.2 imports it as d3-drag from fesm2022/ng-zorro-antd-graph.mjs but declares it in none of dependencies, peerDependencies, optionalDependencies — but angular-16-browser-builder has read no line for it, so the manifest was left as it is rather than declaring an unverified version",
+    "d3-selection is imported by the installed closure without being declared — ng-zorro-antd@16.2.2 imports it as d3-selection from fesm2022/ng-zorro-antd-graph.mjs but declares it in none of dependencies, peerDependencies, optionalDependencies — but angular-16-browser-builder has read no line for it, so the manifest was left as it is rather than declaring an unverified version",
+    "d3-shape is imported by the installed closure without being declared — ng-zorro-antd@16.2.2 imports it as d3-shape from fesm2022/ng-zorro-antd-graph.mjs but declares it in none of dependencies, peerDependencies, optionalDependencies — but angular-16-browser-builder has read no line for it, so the manifest was left as it is rather than declaring an unverified version",
+    "d3-transition is imported by the installed closure without being declared — ng-zorro-antd@16.2.2 imports it as d3-transition from fesm2022/ng-zorro-antd-graph.mjs but declares it in none of dependencies, peerDependencies, optionalDependencies — but angular-16-browser-builder has read no line for it, so the manifest was left as it is rather than declaring an unverified version",
+    "d3-zoom is imported by the installed closure without being declared — ng-zorro-antd@16.2.2 imports it as d3-zoom from fesm2022/ng-zorro-antd-graph.mjs but declares it in none of dependencies, peerDependencies, optionalDependencies — but angular-16-browser-builder has read no line for it, so the manifest was left as it is rather than declaring an unverified version",
+    "dagre-compound is imported by the installed closure without being declared — ng-zorro-antd@16.2.2 imports it as dagre-compound from fesm2022/ng-zorro-antd-graph.mjs but declares it in none of dependencies, peerDependencies, optionalDependencies — but angular-16-browser-builder has read no line for it, so the manifest was left as it is rather than declaring an unverified version",
+    "ng-antd-color-picker is imported by the installed closure without being declared — ng-zorro-antd@16.2.2 imports it as ng-antd-color-picker from fesm2022/ng-zorro-antd-color-picker.mjs but declares it in none of dependencies, peerDependencies, optionalDependencies — but angular-16-browser-builder has read no line for it, so the manifest was left as it is rather than declaring an unverified version",
+    "compilerOptions.lib was left as declared; the 16.2 line does not require a specific lib set and narrowing one could remove a type surface the application relies on"
+  ],
+  "notEstablished": [
+    "This record states what the adapter changed. Whether the changed tree installs, builds or behaves is recorded separately, in the build-lane and parity records beside it, and none of it is implied here.",
+    "The closure this changeset was composed against is the one the mj2 manifest resolved to. A peer hole and an exports map are facts about the packages in *that* closure; a later resolution of the same ranges could publish different ones.",
+    "No test-cell outcome is established: the karma/jasmine toolchain was aligned so the dependency closure could resolve, and no test run was attempted.",
+    "No browser behaviour, runtime parity or user-visible equivalence was observed. No witness ran.",
+    "Nothing here is a production-readiness, pilot, certification or general Angular support claim."
+  ],
+  "nonclaims": [
+    "This record states which bytes a set of reusable transforms changed in one pinned tree. It establishes no migration feasibility, no production readiness, no certification and no support claim for Angular applications generally.",
+    "A second application on one adapter is a second application, not a general result. Nothing here says the adapter carries a third."
+  ],
+  "digest": "d522d6d7eab4a2b2b4a0937311acf784d842f906b44334a2adc280612dc09729"
+}

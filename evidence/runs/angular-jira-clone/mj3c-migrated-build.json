@@ -1,0 +1,227 @@
+{
+  "schemaVersion": "versionless.angular-jira-clone-migrated-build.v1",
+  "unit": "lrapr-t005/mj3c-apply-builds-parity",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "result": "green-byte-stable",
+  "meaning": "The composed changeset was applied to the pinned tree, one package was acquired to close a peer hole a capability found, and the production build ran twice through the official browser builder. All five demands mj2 itemised were answered by capabilities in @versionless/angular; none was answered by an edit to this application.",
+  "supersedes": [
+    {
+      "record": "mj1-migrated-lane.json",
+      "unit": "lrapr-t005/mj1-jira-clone-migration-lanes",
+      "why": "mj1 recorded the migrated lane as red at the closure install, with no build, no inventory and no parity. The closure resolves and the build is green, so the state that record describes no longer holds."
+    },
+    {
+      "record": "mj2-migrated-closure.json",
+      "unit": "lrapr-t005/mj2-ecosystem-cell-closure",
+      "why": "mj2 recorded the closure as resolved and the production build as red with five itemised demands. All five have been answered by capabilities in @versionless/angular, and this record replaces that build attempt with the build. mj2 is not corrected — its itemisation is what made this build possible — and its acquisition record is still the record of the closure this one extends."
+    }
+  ],
+  "changeset": "mj3c-source-migration.json",
+  "cell": {
+    "node": "v16.20.2",
+    "architecture": "darwin-arm64, native — no translation layer",
+    "npm": "8.19.4 (bundled with the runtime)",
+    "command": "npx ng build --configuration production",
+    "builder": "@angular-devkit/build-angular:browser (Angular 16.2), the builder the custom-webpack absorption restored",
+    "environment": {
+      "NG_CLI_ANALYTICS": "false"
+    }
+  },
+  "acquisition": {
+    "purpose": "Install the one package the undeclared-runtime-dependency capability added to the manifest: @ctrl/tinycolor, which ng-zorro-antd 16.2.2 imports from two of its own bundles and declares in none of its dependency fields.",
+    "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+    "networkMode": "consented",
+    "method": "npm install --no-audit --no-fund, against the closure mj2 installed and the lockfile it wrote",
+    "outcome": "succeeded",
+    "exitStatus": 0,
+    "migratedManifestSha256": "1b311ddfacb294d90a302a2719f8fda0e396ffa1028c7760878f22360bcc80ec",
+    "lockfileSha256": "300c0acb2898152f198a98dc6622c54fd37267bbe64dafe53a2b10cf3e52c733",
+    "hosts": [
+      "registry.npmjs.org"
+    ],
+    "packagesLockedBefore": 2022,
+    "packagesLockedAfter": 2026,
+    "added": [
+      {
+        "path": "node_modules/@ctrl/tinycolor",
+        "url": "https://registry.npmjs.org/@ctrl/tinycolor/-/tinycolor-4.2.0.tgz",
+        "integrity": "sha512-kzyuwOAQnXJNLS9PSyrk0CWk35nWJW/zl/6KvnTBMFK65gm7U1/Z5BqjxeapjZCIhQcM/DsrEmcbRwDyXyXK4A=="
+      },
+      {
+        "path": "node_modules/fork-ts-checker-webpack-plugin/node_modules/yaml",
+        "url": "https://registry.npmjs.org/yaml/-/yaml-1.10.3.tgz",
+        "integrity": "sha512-vIYeF1u3CjlhAFekPPAk2h/Kv4T3mAkMox5OymRiJQB0spDP10LHvt+K7G9Ny6NuuMAb25/6n1qyUjAcGNf/AA=="
+      },
+      {
+        "path": "node_modules/lint-staged/node_modules/yaml",
+        "url": "https://registry.npmjs.org/yaml/-/yaml-1.10.3.tgz",
+        "integrity": "sha512-vIYeF1u3CjlhAFekPPAk2h/Kv4T3mAkMox5OymRiJQB0spDP10LHvt+K7G9Ny6NuuMAb25/6n1qyUjAcGNf/AA=="
+      },
+      {
+        "path": "node_modules/postcss-loader/node_modules/yaml",
+        "url": "https://registry.npmjs.org/yaml/-/yaml-1.10.3.tgz",
+        "integrity": "sha512-vIYeF1u3CjlhAFekPPAk2h/Kv4T3mAkMox5OymRiJQB0spDP10LHvt+K7G9Ny6NuuMAb25/6n1qyUjAcGNf/AA=="
+      }
+    ],
+    "changed": [
+      {
+        "path": "node_modules/yaml",
+        "from": "https://registry.npmjs.org/yaml/-/yaml-1.10.3.tgz",
+        "to": "https://registry.npmjs.org/yaml/-/yaml-2.9.0.tgz",
+        "url": "https://registry.npmjs.org/yaml/-/yaml-2.9.0.tgz"
+      }
+    ],
+    "removed": [],
+    "deltaMeaning": "Every lockfile entry this install added or moved, against the entries mj2 recorded, with the URL and the integrity digest the resolver committed to. The install was asked for one package and did more than that: adding a dependency made npm re-resolve the tree, and the hoisted `yaml` at the closure root moved to a newer major while the three packages that ask for the older one gained their own nested copies. That is recorded because it happened, not because it was wanted — a resolver rearrangement inside a build that then went green is exactly the kind of thing a summary would drop.",
+    "offlineAfter": "Both production builds ran with VERSIONLESS_NETWORK_MODE=offline and acquired nothing."
+  },
+  "builds": [
+    {
+      "run": 1,
+      "status": 0,
+      "files": 24
+    },
+    {
+      "run": 2,
+      "status": 0,
+      "files": 24
+    }
+  ],
+  "byteStable": true,
+  "inventory": [
+    {
+      "path": "3rdpartylicenses.txt",
+      "sha256": "2738c367b9193d4b11ba18ee89356b307162266dd55e49607316685e578f1872",
+      "bytes": 27104
+    },
+    {
+      "path": "737.d332bf0835c4994a.js",
+      "sha256": "251b212d8c0835635769a710ce4cbb01f3cad41959774f9abffa094e75786767",
+      "bytes": 456254
+    },
+    {
+      "path": "785.ccc8bdbcf4be015a.js",
+      "sha256": "cdb5192437bb8cfd1aca4fd7547c2a2a4bdd1e78ceb437fd5eabd3241b7eac65",
+      "bytes": 2853
+    },
+    {
+      "path": "_redirects",
+      "sha256": "d7db0b1fe206017e7f24f331ffb8a9de41c4671357c18451c087860f1d640868",
+      "bytes": 19
+    },
+    {
+      "path": "assets/data/auth.json",
+      "sha256": "a2289e812cd224a08aadd5e419f81d985f8008b6e4afd2339f4f415fe43a59c4",
+      "bytes": 272
+    },
+    {
+      "path": "assets/data/project.json",
+      "sha256": "ead4f8d08fd837f790e3ff4f3ead654cb683a940a1506e1f73543c3dc4d95da1",
+      "bytes": 26160
+    },
+    {
+      "path": "assets/favicon.png",
+      "sha256": "10d3ff9dc96a7f4c02c372581bc0b28ceb063a06b18ffda0fc3efa88def8d08e",
+      "bytes": 17986
+    },
+    {
+      "path": "assets/img/assignee-bug.gif",
+      "sha256": "9c03e8081c8e25f4f0623b42737b0f30401abd551178358a05ac02746a74c8f4",
+      "bytes": 279865
+    },
+    {
+      "path": "assets/img/bugs/search-one-letter-bug-fixed.gif",
+      "sha256": "05389975279a078238413da1b48ee4512a291059e77adb577244b9db702f387c",
+      "bytes": 98431
+    },
+    {
+      "path": "assets/img/bugs/search-one-letter-bug.gif",
+      "sha256": "628ef399c3f8a3a8972a77b8f2858aa346fe5e9ac20c9dd40bda532a94a87376",
+      "bytes": 204971
+    },
+    {
+      "path": "assets/img/diagram/application-architecture.png",
+      "sha256": "ad61ec0a8cf04d83c5678673706b803f7fd1420ddc7901b7f4cd64d1fa8152fb",
+      "bytes": 26982
+    },
+    {
+      "path": "assets/img/diagram/interaction-data-flow.png",
+      "sha256": "7e1ef2692f506dc7d48244d327c9098a90b1a29760a9fa14343bf027e29f4983",
+      "bytes": 81147
+    },
+    {
+      "path": "assets/img/jira-clone-angular-demo-trungk18.gif",
+      "sha256": "1105e63fd4d1218754bc84318e4fe468116dd9446cab305c46e479573b2bd8a6",
+      "bytes": 3432882
+    },
+    {
+      "path": "assets/img/jira-clone-tech-stack.png",
+      "sha256": "eda2d7f10f9f4176c32d8e391787b4a50cb3cb2266d925f591fe00a0183558d0",
+      "bytes": 97193
+    },
+    {
+      "path": "assets/img/jira-storybook.gif",
+      "sha256": "544bd7e8393e0510462d66f9be78cb9c327be5548d10af847f0b7530872179fc",
+      "bytes": 1028570
+    },
+    {
+      "path": "assets/img/merry-christmas-2020.gif",
+      "sha256": "816d3efa02ec24415365ea95540344128ae823b7ebde9fe4a5ac2dfa15927026",
+      "bytes": 2395398
+    },
+    {
+      "path": "assets/img/time-spending.png",
+      "sha256": "76d4c673407cb586f5e2a7050f8a881046f6aebff908b4920e35ec4a3aaf0a4c",
+      "bytes": 32745
+    },
+    {
+      "path": "index.html",
+      "sha256": "45142332c727dea8c824c0269d1ab77fea0c9dfc3914f084b6a06edc41743adc",
+      "bytes": 6629
+    },
+    {
+      "path": "main.24fc925a1d71aa7d.js",
+      "sha256": "5fe35f28f9b6349652ba54d420f02fedd88fe447a4b4f12e9529ee6c1e19bae8",
+      "bytes": 650689
+    },
+    {
+      "path": "polyfills.2a31397c96ca3d31.js",
+      "sha256": "751271e22eac2247061f0fe5a6d2ed9e557ab929026a45b4d12e935e0db78896",
+      "bytes": 33845
+    },
+    {
+      "path": "quill.879820ccefc1105f.js",
+      "sha256": "8bc3c75b0556a78a1a87ab3ca7b8057e053dfd1f4042d4ffa308e84466552cf4",
+      "bytes": 214602
+    },
+    {
+      "path": "runtime.a0a9fe2e24c0af74.js",
+      "sha256": "a2bb77beef3442b014c07a40364d3d8944c3a06491902ea8ff5b5890258089ab",
+      "bytes": 3285
+    },
+    {
+      "path": "scripts.a031a3392433bc9f.js",
+      "sha256": "981057f5568a3747defa83fb418a7d17d32ee55b96c884e42e916881582dcb91",
+      "bytes": 214000
+    },
+    {
+      "path": "styles.e163e3e8f446fef7.css",
+      "sha256": "488d5b6cdaa8cd3778dcbba12cc0a36e2306ebc0c7d6ca32b063e8a2533ec6ee",
+      "bytes": 577453
+    }
+  ],
+  "recordedRisks": [
+    "The application initialises Sentry with a hard-coded DSN in src/main.ts. The DSN is present in every artifact both lanes emit. Its value is deliberately not reproduced anywhere in this evidence tree.",
+    "The application initialises Google Analytics with a hard-coded measurement id in src/app/core/services/google-analytics.service.ts. The id is present in every artifact both lanes emit. Its value is deliberately not reproduced anywhere in this evidence tree.",
+    "Neither lane opened a browser, so neither made nor observed a request to Sentry or to Google. Their presence in the bundles is recorded as presence, not as behaviour."
+  ],
+  "notEstablished": [
+    "A green production build establishes that the migrated tree compiles and emits. It establishes nothing about whether the emitted application runs, renders, or behaves as the era build did.",
+    "Two consecutive builds on one host is repeatability, not reproducibility: nothing here establishes that another host, another day or another clock would emit the same bytes.",
+    "No test was run on either lane. The karma/jasmine toolchain was aligned so the closure could resolve, and nothing was executed with it.",
+    "The stylesheet substitution the changeset declared is unverified by this lane. A build that emits a 577KB stylesheet has not established that the rules it contains are the rules the application needs, only that the bundler accepted them.",
+    "The modal-data migration moved three components off a removed API onto injected data. That the build type-checks establishes the shape is right; it does not establish that the three modals still receive what they receive, which is a runtime fact a witness would have to observe.",
+    "Nothing here is a production-readiness, pilot, certification or general Angular support claim."
+  ],
+  "digest": "c477d9294a2a582e21ebe162121aa3304dc0b41b1f0b0adaf58e40a43a8cd8ff"
+}

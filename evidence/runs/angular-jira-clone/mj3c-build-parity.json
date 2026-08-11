@@ -1,0 +1,540 @@
+{
+  "schemaVersion": "versionless.angular-jira-clone-build-parity.v1",
+  "unit": "lrapr-t005/mj3c-apply-builds-parity",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "result": "build-level-parity-recorded",
+  "meaning": "Both lanes built. This record lines their emitted files up by emission point — the file name with the builder’s content hash removed — and states where the bytes agree, where they differ, and by how much.",
+  "eraLane": "mj3c-era-baseline.json",
+  "migratedLane": "mj3c-migrated-build.json",
+  "changeset": "mj3c-source-migration.json",
+  "eraFileCount": 24,
+  "migratedFileCount": 24,
+  "identicalPayloads": [
+    "_redirects",
+    "assets/data/auth.json",
+    "assets/data/project.json",
+    "assets/favicon.png",
+    "assets/img/assignee-bug.gif",
+    "assets/img/bugs/search-one-letter-bug-fixed.gif",
+    "assets/img/bugs/search-one-letter-bug.gif",
+    "assets/img/diagram/application-architecture.png",
+    "assets/img/diagram/interaction-data-flow.png",
+    "assets/img/jira-clone-angular-demo-trungk18.gif",
+    "assets/img/jira-clone-tech-stack.png",
+    "assets/img/jira-storybook.gif",
+    "assets/img/merry-christmas-2020.gif",
+    "assets/img/time-spending.png"
+  ],
+  "onlyInEra": [
+    "456.js",
+    "887.js",
+    "971.js"
+  ],
+  "onlyInMigrated": [
+    "737.js",
+    "785.js",
+    "quill.js"
+  ],
+  "entries": [
+    {
+      "emissionPoint": "3rdpartylicenses.txt",
+      "era": [
+        {
+          "path": "3rdpartylicenses.txt",
+          "bytes": 30689,
+          "sha256": "9700a057a6b496fe5db1e71892d49b0f13f458d5f6668d7c644a36130ad75256"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "3rdpartylicenses.txt",
+          "bytes": 27104,
+          "sha256": "2738c367b9193d4b11ba18ee89356b307162266dd55e49607316685e578f1872"
+        }
+      ],
+      "bytesIdentical": false,
+      "byteDelta": -3585
+    },
+    {
+      "emissionPoint": "456.js",
+      "era": [
+        {
+          "path": "456.3f6f5c6731306a2d.js",
+          "bytes": 2791,
+          "sha256": "fb936a16bfab0217879734a5a22ad5161acf47f6bf350d1eac2662ccf944a9b7"
+        }
+      ],
+      "migrated": [],
+      "bytesIdentical": false,
+      "byteDelta": -2791
+    },
+    {
+      "emissionPoint": "737.js",
+      "era": [],
+      "migrated": [
+        {
+          "path": "737.d332bf0835c4994a.js",
+          "bytes": 456254,
+          "sha256": "251b212d8c0835635769a710ce4cbb01f3cad41959774f9abffa094e75786767"
+        }
+      ],
+      "bytesIdentical": false,
+      "byteDelta": 456254
+    },
+    {
+      "emissionPoint": "785.js",
+      "era": [],
+      "migrated": [
+        {
+          "path": "785.ccc8bdbcf4be015a.js",
+          "bytes": 2853,
+          "sha256": "cdb5192437bb8cfd1aca4fd7547c2a2a4bdd1e78ceb437fd5eabd3241b7eac65"
+        }
+      ],
+      "bytesIdentical": false,
+      "byteDelta": 2853
+    },
+    {
+      "emissionPoint": "887.js",
+      "era": [
+        {
+          "path": "887.ef9434d2dc53dcf1.js",
+          "bytes": 436387,
+          "sha256": "8a581b70ab906e1cbd23c5a66830e4182b17bd04509489aa9726ac17cd34c6f9"
+        }
+      ],
+      "migrated": [],
+      "bytesIdentical": false,
+      "byteDelta": -436387
+    },
+    {
+      "emissionPoint": "971.js",
+      "era": [
+        {
+          "path": "971.21d4300a3201692f.js",
+          "bytes": 214681,
+          "sha256": "9b7d4ed64cfcaede5771852576072ce1b88fc2e738ebe5a7e4ecc70614fb3fdb"
+        }
+      ],
+      "migrated": [],
+      "bytesIdentical": false,
+      "byteDelta": -214681
+    },
+    {
+      "emissionPoint": "_redirects",
+      "era": [
+        {
+          "path": "_redirects",
+          "bytes": 19,
+          "sha256": "d7db0b1fe206017e7f24f331ffb8a9de41c4671357c18451c087860f1d640868"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "_redirects",
+          "bytes": 19,
+          "sha256": "d7db0b1fe206017e7f24f331ffb8a9de41c4671357c18451c087860f1d640868"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "assets/data/auth.json",
+      "era": [
+        {
+          "path": "assets/data/auth.json",
+          "bytes": 272,
+          "sha256": "a2289e812cd224a08aadd5e419f81d985f8008b6e4afd2339f4f415fe43a59c4"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "assets/data/auth.json",
+          "bytes": 272,
+          "sha256": "a2289e812cd224a08aadd5e419f81d985f8008b6e4afd2339f4f415fe43a59c4"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "assets/data/project.json",
+      "era": [
+        {
+          "path": "assets/data/project.json",
+          "bytes": 26160,
+          "sha256": "ead4f8d08fd837f790e3ff4f3ead654cb683a940a1506e1f73543c3dc4d95da1"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "assets/data/project.json",
+          "bytes": 26160,
+          "sha256": "ead4f8d08fd837f790e3ff4f3ead654cb683a940a1506e1f73543c3dc4d95da1"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "assets/favicon.png",
+      "era": [
+        {
+          "path": "assets/favicon.png",
+          "bytes": 17986,
+          "sha256": "10d3ff9dc96a7f4c02c372581bc0b28ceb063a06b18ffda0fc3efa88def8d08e"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "assets/favicon.png",
+          "bytes": 17986,
+          "sha256": "10d3ff9dc96a7f4c02c372581bc0b28ceb063a06b18ffda0fc3efa88def8d08e"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "assets/img/assignee-bug.gif",
+      "era": [
+        {
+          "path": "assets/img/assignee-bug.gif",
+          "bytes": 279865,
+          "sha256": "9c03e8081c8e25f4f0623b42737b0f30401abd551178358a05ac02746a74c8f4"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "assets/img/assignee-bug.gif",
+          "bytes": 279865,
+          "sha256": "9c03e8081c8e25f4f0623b42737b0f30401abd551178358a05ac02746a74c8f4"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "assets/img/bugs/search-one-letter-bug-fixed.gif",
+      "era": [
+        {
+          "path": "assets/img/bugs/search-one-letter-bug-fixed.gif",
+          "bytes": 98431,
+          "sha256": "05389975279a078238413da1b48ee4512a291059e77adb577244b9db702f387c"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "assets/img/bugs/search-one-letter-bug-fixed.gif",
+          "bytes": 98431,
+          "sha256": "05389975279a078238413da1b48ee4512a291059e77adb577244b9db702f387c"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "assets/img/bugs/search-one-letter-bug.gif",
+      "era": [
+        {
+          "path": "assets/img/bugs/search-one-letter-bug.gif",
+          "bytes": 204971,
+          "sha256": "628ef399c3f8a3a8972a77b8f2858aa346fe5e9ac20c9dd40bda532a94a87376"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "assets/img/bugs/search-one-letter-bug.gif",
+          "bytes": 204971,
+          "sha256": "628ef399c3f8a3a8972a77b8f2858aa346fe5e9ac20c9dd40bda532a94a87376"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "assets/img/diagram/application-architecture.png",
+      "era": [
+        {
+          "path": "assets/img/diagram/application-architecture.png",
+          "bytes": 26982,
+          "sha256": "ad61ec0a8cf04d83c5678673706b803f7fd1420ddc7901b7f4cd64d1fa8152fb"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "assets/img/diagram/application-architecture.png",
+          "bytes": 26982,
+          "sha256": "ad61ec0a8cf04d83c5678673706b803f7fd1420ddc7901b7f4cd64d1fa8152fb"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "assets/img/diagram/interaction-data-flow.png",
+      "era": [
+        {
+          "path": "assets/img/diagram/interaction-data-flow.png",
+          "bytes": 81147,
+          "sha256": "7e1ef2692f506dc7d48244d327c9098a90b1a29760a9fa14343bf027e29f4983"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "assets/img/diagram/interaction-data-flow.png",
+          "bytes": 81147,
+          "sha256": "7e1ef2692f506dc7d48244d327c9098a90b1a29760a9fa14343bf027e29f4983"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "assets/img/jira-clone-angular-demo-trungk18.gif",
+      "era": [
+        {
+          "path": "assets/img/jira-clone-angular-demo-trungk18.gif",
+          "bytes": 3432882,
+          "sha256": "1105e63fd4d1218754bc84318e4fe468116dd9446cab305c46e479573b2bd8a6"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "assets/img/jira-clone-angular-demo-trungk18.gif",
+          "bytes": 3432882,
+          "sha256": "1105e63fd4d1218754bc84318e4fe468116dd9446cab305c46e479573b2bd8a6"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "assets/img/jira-clone-tech-stack.png",
+      "era": [
+        {
+          "path": "assets/img/jira-clone-tech-stack.png",
+          "bytes": 97193,
+          "sha256": "eda2d7f10f9f4176c32d8e391787b4a50cb3cb2266d925f591fe00a0183558d0"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "assets/img/jira-clone-tech-stack.png",
+          "bytes": 97193,
+          "sha256": "eda2d7f10f9f4176c32d8e391787b4a50cb3cb2266d925f591fe00a0183558d0"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "assets/img/jira-storybook.gif",
+      "era": [
+        {
+          "path": "assets/img/jira-storybook.gif",
+          "bytes": 1028570,
+          "sha256": "544bd7e8393e0510462d66f9be78cb9c327be5548d10af847f0b7530872179fc"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "assets/img/jira-storybook.gif",
+          "bytes": 1028570,
+          "sha256": "544bd7e8393e0510462d66f9be78cb9c327be5548d10af847f0b7530872179fc"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "assets/img/merry-christmas-2020.gif",
+      "era": [
+        {
+          "path": "assets/img/merry-christmas-2020.gif",
+          "bytes": 2395398,
+          "sha256": "816d3efa02ec24415365ea95540344128ae823b7ebde9fe4a5ac2dfa15927026"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "assets/img/merry-christmas-2020.gif",
+          "bytes": 2395398,
+          "sha256": "816d3efa02ec24415365ea95540344128ae823b7ebde9fe4a5ac2dfa15927026"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "assets/img/time-spending.png",
+      "era": [
+        {
+          "path": "assets/img/time-spending.png",
+          "bytes": 32745,
+          "sha256": "76d4c673407cb586f5e2a7050f8a881046f6aebff908b4920e35ec4a3aaf0a4c"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "assets/img/time-spending.png",
+          "bytes": 32745,
+          "sha256": "76d4c673407cb586f5e2a7050f8a881046f6aebff908b4920e35ec4a3aaf0a4c"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "index.html",
+      "era": [
+        {
+          "path": "index.html",
+          "bytes": 11331,
+          "sha256": "1992d112ac60e65726a8fb34b569e0617860c943b7483f4d0bd2bf2334cfc8f1"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "index.html",
+          "bytes": 6629,
+          "sha256": "45142332c727dea8c824c0269d1ab77fea0c9dfc3914f084b6a06edc41743adc"
+        }
+      ],
+      "bytesIdentical": false,
+      "byteDelta": -4702
+    },
+    {
+      "emissionPoint": "main.js",
+      "era": [
+        {
+          "path": "main.bd4e8d65fe8d00c4.js",
+          "bytes": 651831,
+          "sha256": "49c80edb0f886182d25bacc8f34ce0d2078376afc61784aa33a5e19e57ce8a8b"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "main.24fc925a1d71aa7d.js",
+          "bytes": 650689,
+          "sha256": "5fe35f28f9b6349652ba54d420f02fedd88fe447a4b4f12e9529ee6c1e19bae8"
+        }
+      ],
+      "bytesIdentical": false,
+      "byteDelta": -1142
+    },
+    {
+      "emissionPoint": "polyfills.js",
+      "era": [
+        {
+          "path": "polyfills.b10f9ffb5c3f78a9.js",
+          "bytes": 37094,
+          "sha256": "9d2de96cc9bb411611624d2e0c943698a5c25228bc5294cdb37acf0540afb804"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "polyfills.2a31397c96ca3d31.js",
+          "bytes": 33845,
+          "sha256": "751271e22eac2247061f0fe5a6d2ed9e557ab929026a45b4d12e935e0db78896"
+        }
+      ],
+      "bytesIdentical": false,
+      "byteDelta": -3249
+    },
+    {
+      "emissionPoint": "quill.js",
+      "era": [],
+      "migrated": [
+        {
+          "path": "quill.879820ccefc1105f.js",
+          "bytes": 214602,
+          "sha256": "8bc3c75b0556a78a1a87ab3ca7b8057e053dfd1f4042d4ffa308e84466552cf4"
+        }
+      ],
+      "bytesIdentical": false,
+      "byteDelta": 214602
+    },
+    {
+      "emissionPoint": "runtime.js",
+      "era": [
+        {
+          "path": "runtime.57e4e84e8b5532c8.js",
+          "bytes": 3545,
+          "sha256": "7f2dc1e8407ffb832e1c4fa142b431bc454b71b13aeb26f72afcdb460e528f51"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "runtime.a0a9fe2e24c0af74.js",
+          "bytes": 3285,
+          "sha256": "a2bb77beef3442b014c07a40364d3d8944c3a06491902ea8ff5b5890258089ab"
+        }
+      ],
+      "bytesIdentical": false,
+      "byteDelta": -260
+    },
+    {
+      "emissionPoint": "scripts.js",
+      "era": [
+        {
+          "path": "scripts.18d7f25c6913fe4a.js",
+          "bytes": 214159,
+          "sha256": "1315586c90b9afd81d3e2782958064b4098067cc02f3992253df6fa97e8442df"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "scripts.a031a3392433bc9f.js",
+          "bytes": 214000,
+          "sha256": "981057f5568a3747defa83fb418a7d17d32ee55b96c884e42e916881582dcb91"
+        }
+      ],
+      "bytesIdentical": false,
+      "byteDelta": -159
+    },
+    {
+      "emissionPoint": "styles.css",
+      "era": [
+        {
+          "path": "styles.e5bb7e3c5d2d8958.css",
+          "bytes": 156426,
+          "sha256": "4d205005fb238590fe0ec5758fb0615ada5df518341930e1c60bbdf533c4b62c"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "styles.e163e3e8f446fef7.css",
+          "bytes": 577453,
+          "sha256": "488d5b6cdaa8cd3778dcbba12cc0a36e2306ebc0c7d6ca32b063e8a2533ec6ee"
+        }
+      ],
+      "bytesIdentical": false,
+      "byteDelta": 421027
+    }
+  ],
+  "knownDifferences": [
+    "The migrated stylesheet bundle is 577,453 bytes where the era one is 156,426. This is the declared difference the changeset records: ng-zorro-antd 16 publishes an exports map that does not expose the root `style/index.min.css` entry the era stylesheet imported, and publishes no narrower equivalent, so the nine granular imports were replaced by the single exported 550,342-byte aggregate. The migrated application therefore ships the whole library’s stylesheet where it previously shipped a chosen subset. No claim is made that it renders as it did; a witness arbitrates that, and none has run.",
+    "The migrated workspace has no lint target and no TSLint toolchain. TSLint, codelyzer and nz-tslint-rules stop below this cell’s Angular line with no successor, so the pair was dropped as a declared difference rather than pinned to a version nobody read. The migrated tree is therefore not lint-gated by the gate the era tree had; the ESLint target the workspace also declares was left exactly as it was and was not run by either lane.",
+    "The migrated bundles carry the Sentry v8 SDK where the era bundles carry v6 with a separate @sentry/tracing package. The tracing integration is constructed by a factory rather than a class, the routing instrumentation is performed by the integration rather than passed to it, and `tracingOrigins` has moved to `tracePropagationTargets` on the init options. The API surface the application initialises is a different one. Neither lane opened a browser, so nothing about what either SDK sends was observed.",
+    "Both lanes emit exactly 24 files and both lanes emit three lazy chunks, but the two builders identify those chunks differently: the era lane names them 456, 887 and 971 while the migrated lane names them 785, 737 and `quill`. They therefore share no emission point and are reported as lane-only rather than paired. Pairing them by size would be an inference this record does not make.",
+    "Every copied payload is byte-identical across the lanes: the thirteen files under assets/ and _redirects, fourteen emission points in all. The builder copies these rather than transforming them, so their agreement is the absence of a difference rather than the presence of parity.",
+    "The migrated index.html is 6,629 bytes against the era’s 11,331. The modern builder inlines critical CSS into a <style> element, loads the stylesheet with media=\"print\" onload behind a <noscript> fallback, and minifies the document; the era builder emitted a plain stylesheet link and passed the document through nearly verbatim.",
+    "3rdpartylicenses.txt differs in both size and content, which follows from the dependency closure being a different one.",
+    "The application’s own Sentry DSN and Google Analytics measurement id survive both lanes inside the emitted bundles. They are recorded as present and are deliberately not reproduced anywhere in this evidence tree; no lane loaded a browser and no request to sentry.io or to Google was made or observed.",
+    "The migrated build emitted two warnings this record carries rather than hides: the project’s own browserslist names kaios 2.5 and op_mini all, which the Angular 16 line ignores because it emits no ES5 output, and ngx-quill reaches CommonJS `quill`, which the builder warns can cause optimisation bailouts. The era lane, on a builder that still emitted ES5 targets from the same browserslist, made neither warning."
+  ],
+  "recordedRisks": [
+    "The application initialises Sentry with a hard-coded DSN in src/main.ts. The DSN is present in every artifact both lanes emit. Its value is deliberately not reproduced anywhere in this evidence tree.",
+    "The application initialises Google Analytics with a hard-coded measurement id in src/app/core/services/google-analytics.service.ts. The id is present in every artifact both lanes emit. Its value is deliberately not reproduced anywhere in this evidence tree.",
+    "Neither lane opened a browser, so neither made nor observed a request to Sentry or to Google. Their presence in the bundles is recorded as presence, not as behaviour."
+  ],
+  "nonclaims": [
+    "This is build-level parity only. Nothing here establishes runtime equivalence, visual equivalence, or that either build works in a browser; witnessing is a separate step that has not run.",
+    "A byte-identical payload means the two builders emitted the same file. It does not mean the two applications load it the same way.",
+    "The identical-payload count is a count of emission points, not a measure of similarity. Fourteen of the twenty-seven points here are copied assets, which no builder transforms; the count would be misread as a parity score.",
+    "Nothing here is a production-readiness, pilot, certification or general Angular support claim."
+  ],
+  "digest": "a52921a5e4507688220c6296afdbcb97665484701b3c0097e7f930766de72eb3"
+}

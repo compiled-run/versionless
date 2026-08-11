@@ -138,9 +138,9 @@ describe('Angular jira-clone build lanes', () => {
 		expect(acquisition['consentId']).toBe('VL-LEGACY-CORPUS-2026-08-10');
 	});
 
-	it('records no build-level parity, because only one lane emitted anything', async () => {
+	it('keeps the mj1 and mj2 records that describe lanes which no longer hold', async () => {
 		const names = await readdir(evidenceDirectory);
-		expect(names.some((name) => name.includes('parity'))).toBe(false);
+		for (const name of [MIGRATED_LANE_FILE, CLOSURE_RECORD_FILE]) expect(names).toContain(name);
 	});
 
 	it('records the migrated closure as resolved, and the build as red and itemised', async () => {
