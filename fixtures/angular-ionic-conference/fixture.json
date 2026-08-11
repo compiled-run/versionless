@@ -1,0 +1,97 @@
+{
+  "id": "angular-ionic-conference",
+  "status": "not-admitted",
+  "statusReason": "Blocked at the packet's first admission gate: the licence at the pinned revision is Apache-2.0, not MIT. This file is NOT an admitted fixture and must not be consumed as one. It records a bound, reconciled identity so that no acquisition work is repeated if the PM amends the licence policy.",
+  "usableAsFixture": false,
+  "tranche": "Angular tranche one (board task T005, first Angular cohort) — candidate examined, not admitted",
+  "unit": "lrapr-t005/a3-ingest-ionic-conference",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "evidenceRoot": "evidence/ingests/angular-ionic-conference",
+  "application": {
+    "name": "Ionic Conference App",
+    "manifestName": "ionic-conference-app",
+    "version": "0.0.0",
+    "author": "Ionic Team",
+    "description": "Conference companion application published by Ionic as the reference application for Ionic Framework 4 on Angular",
+    "framing": "vendor demo — admissible under this packet only for its Ionic-Angular market shape, recorded rather than glossed",
+    "license": "Apache-2.0",
+    "licenseExpectedByPacket": "MIT",
+    "backend": "none — static single-page application; conference dataset shipped as an asset, user state persisted in the browser through @ionic/storage"
+  },
+  "source": {
+    "repository": "ionic-team/ionic-conference-app",
+    "ref": "refs/tags/v4",
+    "tagKind": "lightweight",
+    "commitSha": "a7b2fc6afcd064947f3623774f4fd7db83c53c9c",
+    "commitDate": "2020-03-02T23:49:52Z",
+    "rootTreeSha": "f42d2144abd1fb4b3c624301bdafbfc5f142f9f5",
+    "archiveUrl": "https://codeload.github.com/ionic-team/ionic-conference-app/tar.gz/a7b2fc6afcd064947f3623774f4fd7db83c53c9c",
+    "archiveSha256": "230dcc68dc7df540db1c56da88d16100dc9cfa46ead4817fcfa52acaef6fc077",
+    "archiveBytes": 4309471,
+    "archiveRoot": "ionic-conference-app-a7b2fc6afcd064947f3623774f4fd7db83c53c9c",
+    "normalizedManifestSha256": "5e6285a7b96258f6c4433f27377da95b95ec606306c57bd8ae371d8ca416ba43",
+    "licenseSha256": "ca6d0a6a3a4854eed2d59c64b06a5d4ed1255cd3429adabbee2d2d3256ed71d3",
+    "packageSha256": "077daf4482326484e7267bcc86038ddcf5212dbba8e27c9693458b14a84fc5c0",
+    "packageLockSha256": "992e92a409f13b2ea5273409f3f33d1fb4a9906bd3a08814031a96f6613e3791",
+    "angularJsonSha256": "e4e640dafd8b7ec8b269864eeefb60c5cb3ff1e222a72e25507f99e840d0c231",
+    "ngswConfigSha256": "d6b821620c8a2c6ea7ab2cccb9b1d009ba0f9d30e53b7f2b2d1125ff7682e472",
+    "conferenceDataSha256": "aad859b0cfad007bc7ae4d8fa93bdfce2fbfb3e652f3deadf6ff4c558f82472a",
+    "archiveReconciledAgainstGitTree": "197/197 blobs, 0 missing, 0 extra, 0 mismatched"
+  },
+  "gitLargeFileStorage": {
+    "required": false,
+    "gitattributesPresent": false,
+    "pointerFiles": 0,
+    "note": "No LFS routing exists at this revision. Verified twice — by the absence of any .gitattributes and by a content scan for pointer preambles across every small file. src/assets/data/data.json is a real 22,793-byte payload."
+  },
+  "toolchain": {
+    "framework": "Angular 8.2.13",
+    "cli": "@angular/cli ^8.3.20",
+    "builder": "@angular-devkit/build-angular:browser ^0.803.20",
+    "bundler": "webpack 4",
+    "compiler": "View Engine, AOT on the production configuration",
+    "typescript": "~3.5.3",
+    "ui": "@ionic/angular ^4.11.6 with @ionic/angular-toolkit ^2.1.1",
+    "state": "none — two injectable providers over @ionic/storage",
+    "packageManager": "npm, package-lock.json lockfileVersion 1 (1722 entries; 1524 integrity-hashed, 198 bundled-optional entries under fsevents that npm 6 records without their own hashes)"
+  },
+  "serviceWorker": {
+    "present": true,
+    "registers": true,
+    "registration": "ServiceWorkerModule.register('ngsw-worker.js', ...) in src/app/app.module.ts",
+    "config": "ngsw-config.json",
+    "buildFlag": "serviceWorker:true on the production configuration only",
+    "note": "Presence recorded per the packet. Witness-time handling follows the HospitalRun non-masking precedent and is not decided here."
+  },
+  "witnessTimeNotes": {
+    "blockedRequestToInventory": "The venue-map tab (src/app/pages/map) injects a script pointing at the Google Maps JavaScript API at runtime. The packet excludes this tab; its request must be inventoried as a blocked request rather than allowed.",
+    "candidateJourneys": [
+      "schedule browse, search and modal track filter",
+      "favourite a session and see it in the favourites segment",
+      "speaker list to speaker detail to session detail",
+      "tutorial walkthrough behind a route guard, then login or signup",
+      "account and support pages"
+    ]
+  },
+  "legacyCell": {
+    "declared": true,
+    "exercised": false,
+    "node": "12.14.1",
+    "npm": "6.13.4",
+    "platform": "darwin-x64 under Rosetta 2 on darwin-arm64",
+    "justification": "CI pins node_version [12] on windows-latest and macOS-latest; the repository declares no engines block and no .nvmrc, so Node 12 is the only version it names anywhere. npm 6 also consumes the committed lockfileVersion 1 in its native form.",
+    "label": "era-consistent and CI-consistent, but never exercised — no install or build was run by this unit"
+  },
+  "baseline": {
+    "install": { "command": "npm ci --ignore-scripts", "outcome": "not-run" },
+    "build": { "command": "npm run build -- --prod", "outcome": "not-run" },
+    "whyNotRun": "Admission failed at the licence gate first; the purpose-bound consent was not spent on build work for a candidate that did not pass admission.",
+    "preRuledDeviation": "npm ci --ignore-scripts around the `webdriver-manager update` postinstall (PM, 2026-08-10) — pre-ruled, unexercised, still available to a resuming unit.",
+    "openQuestion": "Whether the production build depends on any webdriver-manager postinstall side effect is not established.",
+    "detail": "evidence/ingests/angular-ionic-conference/admission.json"
+  },
+  "nonclaims": [
+    "This manifest records a candidate that was examined and NOT admitted. It is not a fixture, confers no readiness credit, and establishes no browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "The recorded digests are acquisition evidence. Reusing them would require a PM ruling that widens the corpus licence policy beyond MIT."
+  ]
+}

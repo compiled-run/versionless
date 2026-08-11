@@ -1,0 +1,228 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-admission.v1",
+  "unit": "lrapr-t005/a3-ingest-ionic-conference",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "networkMode": "consented",
+  "slug": "angular-ionic-conference",
+  "tranche": "Angular tranche one (board task T005, first Angular cohort)",
+  "decision": "not-admitted",
+  "decisionReason": "The first admission gate — MIT LICENSE file content at the exact pinned revision — fails. The licence at commit a7b2fc6afcd064947f3623774f4fd7db83c53c9c is the Apache License 2.0, and package.json independently declares \"license\": \"Apache-2.0\". The packet is single-candidate and forbids substitution, so this unit records the failure and returns blocked.",
+  "appendOnly": true,
+  "priorScout": {
+    "existed": true,
+    "unit": "lrapr-t005/a0",
+    "role": "read-only; supplied the target repository, the tag, and the expected commit sha",
+    "promotedBy": "PM swap ruling, 2026-08-10, after angular-realworld failed license-at-pin",
+    "reverificationPolicy": "Every gate below was re-verified by this unit from the wire and from the reconciled archive at the pinned revision. The scout's findings were used as a hypothesis, not as evidence.",
+    "expectedCommitShaConfirmed": true,
+    "scoutClaimsCorrected": [
+      {
+        "claim": "MIT LICENSE at the tag (Copyright 2015-present Drifty Co.)",
+        "finding": "MATERIALLY WRONG, and decisive. The root LICENSE blob is the full Apache License 2.0 (11,341 bytes, sha256 ca6d0a6a3a4854eed2d59c64b06a5d4ed1255cd3429adabbee2d2d3256ed71d3), whose appendix notice reads \"Copyright 2015 Drifty Co.\" — not \"2015-present\". package.json declares \"license\": \"Apache-2.0\". The repository metadata response reports spdx_id NOASSERTION, not MIT. There is no MIT text anywhere in the tree.",
+        "severity": "admission-blocking"
+      },
+      {
+        "claim": "Angular 8.2.13, CLI 8.3.20, @ionic/angular 4.11.6, @ionic/angular-toolkit 2.1.1, TS 3.5.3",
+        "finding": "confirmed as declared ranges, with the customary precision correction: @angular/* runtime packages are pinned exactly at 8.2.13, but the CLI is \"^8.3.20\", @ionic/angular is \"^4.11.6\", @ionic/angular-toolkit is \"^2.1.1\" and typescript is \"~3.5.3\" — carets and tildes, not pins. The exact resolved versions live in the committed lockfile; no install was run by this unit, so the resolved set was not observed."
+      },
+      {
+        "claim": "standard build-angular:browser plus cordova targets",
+        "finding": "confirmed. angular.json declares one project (\"app\") with eight targets: build, serve, extract-i18n, test, lint, e2e, ionic-cordova-build, ionic-cordova-serve. The build builder is @angular-devkit/build-angular:browser."
+      },
+      {
+        "claim": "@angular/service-worker + @angular/pwa + ngsw-config.json, service worker registers",
+        "finding": "confirmed and sharpened. ngsw-config.json is present (441 bytes). src/app/app.module.ts imports ServiceWorkerModule from @angular/service-worker and calls ServiceWorkerModule.register('ngsw-worker.js', ...). angular.json sets serviceWorker:true on the production configuration only. One oddity worth recording: @angular/pwa ~0.803.20 is declared in dependencies rather than devDependencies, which is unusual for a schematics-only package."
+      },
+      {
+        "claim": "npm with committed package-lock.json lockfileVersion 1",
+        "finding": "confirmed. package-lock.json is 581,757 bytes, lockfileVersion 1, root name ionic-conference-app version 0.0.0, 979 top-level dependency entries. No yarn.lock and no npm-shrinkwrap.json."
+      },
+      {
+        "claim": "CI matrix Node 12 running npm ci + npm run build -- --prod",
+        "finding": "confirmed and sharpened. .github/workflows/CI.yml runs a matrix of node_version [12] across os [windows-latest, macOS-latest] — no ubuntu leg — and runs npm ci, npm run lint, npm run build -- --prod, npm test -- --configuration=ci, npm run e2e -- --configuration=ci. There is no engines block and no .nvmrc, so Node 12 comes from CI, not from a repository pin."
+      },
+      {
+        "claim": "conference data src/assets/data/data.json in-tree",
+        "finding": "confirmed as a real payload, not a pointer. 22,793 bytes, git blob f880070a2ede36fe8b5f2dc81e710964a0e24f55. The tree carries no .gitattributes at all, so nothing in this repository is routed to Git LFS — the failure mode that broke the factoriolab lane does not exist here."
+      },
+      {
+        "claim": "postinstall runs webdriver-manager update (network)",
+        "finding": "confirmed. package.json scripts.postinstall is `webdriver-manager update --standalone false --gecko false`. The PM's pre-ruled --ignore-scripts deviation was therefore correctly anticipated, but was never exercised because admission failed first."
+      }
+    ]
+  },
+  "candidate": {
+    "repository": "ionic-team/ionic-conference-app",
+    "product": "Ionic Conference App — a conference companion application (session schedule with search and filtering, session detail and favouriting, speaker directory and detail, account/login/signup, tutorial walkthrough, venue map) published by Ionic as the reference application for Ionic Framework 4 on Angular",
+    "ref": "refs/tags/v4",
+    "tagKind": "lightweight",
+    "commitSha": "a7b2fc6afcd064947f3623774f4fd7db83c53c9c",
+    "commitDate": "2020-03-02T23:49:52Z",
+    "applicationVersion": "0.0.0",
+    "frontendRoot": "."
+  },
+  "gates": [
+    {
+      "gate": "mit-license-at-pinned-revision",
+      "result": "FAIL",
+      "blocking": true,
+      "evidence": {
+        "rootLicensePath": "LICENSE",
+        "gitBlobSha": "e79f45b9eaf33ef669f1bc30917b86539cef9bc6",
+        "fileSha256": "ca6d0a6a3a4854eed2d59c64b06a5d4ed1255cd3429adabbee2d2d3256ed71d3",
+        "bytes": 11341,
+        "observedIdentifier": "Apache-2.0",
+        "requiredIdentifier": "MIT",
+        "firstLine": "                                 Apache License",
+        "secondLine": "                           Version 2.0, January 2004",
+        "appendixCopyrightLine": "Copyright 2015 Drifty Co.",
+        "manifestLicenseField": "Apache-2.0",
+        "githubDetectedSpdx": "NOASSERTION",
+        "mitTextAnywhereInTree": false,
+        "otherLicenseFilesInTree": 0,
+        "quotedFromArchive": "The licence text was read out of the extracted archive, which reconciles blob-for-blob with the git tree at the pinned revision.",
+        "detail": "license.json"
+      }
+    },
+    {
+      "gate": "pinned-revision-identity-and-immutability",
+      "result": "pass",
+      "blocking": false,
+      "evidence": {
+        "tagResolution": "refs/tags/v4 -> a7b2fc6afcd064947f3623774f4fd7db83c53c9c, read from the git ref endpoint rather than assumed",
+        "expectedShaConfirmedFromWire": true,
+        "commitSignature": "verified:true, reason \"valid\"",
+        "rootTreeSha": "f42d2144abd1fb4b3c624301bdafbfc5f142f9f5",
+        "archiveSha256": "230dcc68dc7df540db1c56da88d16100dc9cfa46ead4817fcfa52acaef6fc077",
+        "archiveFetchedTwiceByteIdentical": true,
+        "reconciliation": "197/197 blobs matched: 0 missing, 0 extra, 0 mismatched, single root, no traversal or absolute entries",
+        "detail": "source.json, reconciliation.json"
+      }
+    },
+    {
+      "gate": "revision-date-matches-claimed-era",
+      "result": "pass",
+      "blocking": false,
+      "evidence": {
+        "claimedEra": "2020-03-02",
+        "observedCommitDate": "2020-03-02T23:49:52Z",
+        "requiredWindow": "2016-01-01T00:00:00Z .. 2023-08-10T00:00:00Z",
+        "withinWindow": true
+      }
+    },
+    {
+      "gate": "angular-2-plus-cli-era",
+      "result": "pass",
+      "blocking": false,
+      "evidence": {
+        "framework": "Angular 8.2.13 (exact pins on @angular/{common,core,forms,platform-browser,platform-browser-dynamic,router})",
+        "cli": "@angular/cli ^8.3.20",
+        "builder": "@angular-devkit/build-angular:browser (^0.803.20)",
+        "workspaceFile": "angular.json, one project \"app\", eight targets",
+        "typescript": "~3.5.3",
+        "compiler": "View Engine — Angular 8 predates Ivy-by-default; no enableIvy flag is set in tsconfig.app.json",
+        "notAngularJs": true
+      }
+    },
+    {
+      "gate": "real-substantive-application-not-template-demo-or-library",
+      "result": "pass-with-recorded-framing",
+      "blocking": false,
+      "evidence": {
+        "honestFraming": "This IS a vendor demo. It is published by Ionic (Drifty Co.) as the reference application for Ionic Framework 4 on Angular, and its GitHub description reads \"A conference app built with Ionic to demonstrate Ionic\". The packet permits a vendor demo here specifically for its Ionic-Angular market shape, and that permission is the only basis on which this gate passes. It is recorded rather than glossed: nobody should later read this record as evidence that a production line-of-business Angular application was admitted.",
+        "whatMakesItSubstantive": "It is a routed, multi-page application rather than a scaffold: 55 TypeScript files and 15 component templates under src, 14 page directories, a top-level router with seven route entries plus a nested tab router, three injectable providers (conference-data, user-data, check-tutorial), a 22,793-byte conference dataset, and Ionic Storage-backed persistence of login state and session favourites.",
+        "repositoryShape": "A single Angular CLI 8 application at the repository root. No library build target, no publishable package (\"private\": true, version 0.0.0), no monorepo projects tree. Cordova platforms and plugins are declared for iOS and Android alongside the browser build.",
+        "blobsInTree": 197,
+        "treeBlobBytes": 5374345,
+        "typescriptFilesUnderSrc": 55,
+        "specFiles": 5,
+        "specFileNote": "Test coverage is thin — five spec files for 55 TypeScript files. Recorded as found."
+      }
+    },
+    {
+      "gate": "browser-ui-supports-three-or-more-substantive-user-journeys",
+      "result": "pass",
+      "blocking": false,
+      "evidence": {
+        "journeysIdentified": [
+          {
+            "journey": "schedule browse, search and filter",
+            "surface": "src/app/pages/schedule + src/app/pages/schedule-filter",
+            "shape": "a day-segmented session list driven by conference-data, with a search box and a modal filter over session tracks"
+          },
+          {
+            "journey": "favourite a session and see it in the favourites segment",
+            "surface": "src/app/pages/schedule (favourites segment) + user-data provider",
+            "shape": "toggling a favourite writes through the user-data provider to Ionic Storage and re-renders the favourites list — a state mutation with persistence, not a static view"
+          },
+          {
+            "journey": "speaker directory to speaker detail to session detail",
+            "surface": "src/app/pages/speaker-list, speaker-detail, session-detail",
+            "shape": "list-to-detail routing with parameterised routes in both directions"
+          },
+          {
+            "journey": "tutorial walkthrough gated by a route guard, then login or signup",
+            "surface": "src/app/pages/tutorial, login, signup + check-tutorial.service.ts",
+            "shape": "a first-run slides walkthrough behind a CanLoad-style guard, followed by form-driven login and signup that set persisted user state"
+          },
+          {
+            "journey": "account and support pages",
+            "surface": "src/app/pages/account, support, about, about-popover",
+            "shape": "account editing via an alert prompt, a support form, and an about page with a popover"
+          }
+        ],
+        "countAgainstThreshold": "five journeys identified against a threshold of three, excluding the map",
+        "excludedSurface": {
+          "surface": "src/app/pages/map — the venue map tab",
+          "whyExcluded": "The packet excludes the Google-Maps tab. Confirmed from source: src/app/pages/map/map.ts injects a script element pointing at the Google Maps JavaScript API at runtime, and src/index.html carries a commented-out script tag for the same API. Both carry an upstream-committed API key, which is not reproduced in this evidence.",
+          "witnessTimeInstruction": "If this candidate is ever admitted, the map tab's request to the Google Maps JavaScript API must be inventoried as a blocked request at witness time rather than allowed.",
+          "verifiedAtIngest": true
+        },
+        "methodNote": "The journeys were read from the routed page components, providers and templates in the reconciled source. No browser was run and no journey was executed by this unit; this gate records structural plausibility, which is what the packet asks for."
+      }
+    },
+    {
+      "gate": "git-lfs-state-explicitly-recorded",
+      "result": "pass",
+      "blocking": false,
+      "evidence": {
+        "lesson": "carried forward from unit a1 (factoriolab), where LFS pointer stubs in the archive broke the unmodified baseline build",
+        "gitattributesPresent": false,
+        "lfsFilterLines": 0,
+        "pointerStubsFoundByContentScan": 0,
+        "conclusion": "No Git LFS routing exists in this repository at this revision. The archive carries real payloads, including src/assets/data/data.json and all 61 png / 13 jpg / 2 svg assets. No media-host deviation is needed.",
+        "detail": "source.json gitLargeFileStorage"
+      }
+    },
+    {
+      "gate": "baseline-install-and-production-build",
+      "result": "not-run",
+      "blocking": false,
+      "evidence": {
+        "why": "Admission failed at the licence gate before any baseline work began. The purpose-bound consent VL-LEGACY-CORPUS-2026-08-10 covers acquisition for corpus admission; spending it on a dependency install for a candidate that did not pass admission would use it outside its purpose.",
+        "whatWouldHaveRun": "npm ci --ignore-scripts, then npm run build -- --prod, in the declared legacy cell, with the --ignore-scripts choice recorded as the PM's pre-ruled deviation around the webdriver-manager postinstall.",
+        "declaredCellThatWasPrepared": {
+          "node": "12.14.1",
+          "npm": "6.13.4",
+          "platform": "darwin-x64 under Rosetta 2 on darwin-arm64",
+          "reusedFrom": "the runtime acquired and digest-verified by the react-mycrypto ingest and already present in this workspace; no new runtime download was made by this unit",
+          "justification": "CI pins node_version [12] and the repository declares no engines block and no .nvmrc, so Node 12 is the only Node version the repository names anywhere. Node 12 with npm 6 also consumes the committed lockfileVersion 1 in its native form, which is the point of a baseline.",
+          "honestLabel": "era-consistent and CI-consistent, but never exercised by this unit"
+        },
+        "openQuestionLeftUnanswered": "Whether the production build depends on any webdriver-manager postinstall side effect is NOT established by this record. It remains the first thing to answer if the candidate is resumed. The static reading — webdriver-manager only populates Selenium/Chromedriver binaries used by the protractor e2e target, which the browser build does not reference — suggests it does not, but that is an inference from the manifest, not an observed build outcome, and it is recorded as such."
+      }
+    }
+  ],
+  "gateSummary": {
+    "total": 7,
+    "pass": 5,
+    "fail": 1,
+    "notRun": 1,
+    "blockingFailures": ["mit-license-at-pinned-revision"]
+  },
+  "nonclaims": [
+    "This record establishes that one candidate was examined and not admitted. It confers no admission, no readiness credit, and no fixture.",
+    "The five passing gates are recorded so that the work is not lost if the PM amends the licence policy. They do not add up to an admission on their own — the failing gate is the licence, and it is the one the charter makes decisive.",
+    "No browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval is established."
+  ]
+}

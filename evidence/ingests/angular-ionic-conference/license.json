@@ -1,0 +1,88 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-rights.v1",
+  "slug": "angular-ionic-conference",
+  "unit": "lrapr-t005/a3-ingest-ionic-conference",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "revision": {
+    "repository": "ionic-team/ionic-conference-app",
+    "ref": "refs/tags/v4",
+    "commitSha": "a7b2fc6afcd064947f3623774f4fd7db83c53c9c",
+    "rootTreeSha": "f42d2144abd1fb4b3c624301bdafbfc5f142f9f5",
+    "commitDate": "2020-03-02T23:49:52Z"
+  },
+  "declaration": {
+    "identifier": "Apache-2.0",
+    "identifierSource": "the repository root LICENSE file at the pinned revision, read out of the extracted archive after it reconciled blob-for-blob with the git tree",
+    "copyrightNotice": "Copyright 2015 Drifty Co.",
+    "manifestLicenseField": "Apache-2.0",
+    "githubDetectedLicense": "other (spdx_id NOASSERTION, key other) as reported by the repository metadata response for the repository's current head; the file text at the pinned revision is the primary evidence and reads as the Apache License 2.0",
+    "dualLicensed": false,
+    "sourceAvailableCarveOut": false,
+    "isMit": false,
+    "scoutClaimContradicted": true
+  },
+  "scoutClaimReconciliation": {
+    "claim": "MIT LICENSE at the tag (Copyright 2015-present Drifty Co.)",
+    "finding": "materially wrong on both counts. The root LICENSE file at commit a7b2fc6afcd064947f3623774f4fd7db83c53c9c is the full Apache License 2.0 text (11,341 bytes), whose appendix carries the notice \"Copyright 2015 Drifty Co.\" — not \"2015-present\", and not an MIT grant. package.json at the same revision independently declares \"license\": \"Apache-2.0\". The two agree with each other and disagree with the scout.",
+    "howDetected": "The LICENSE blob is 11,341 bytes. An MIT file is roughly one kilobyte; 11 KB is Apache-2.0 length. The repository metadata response also reported spdx_id NOASSERTION rather than MIT. Both signals were followed to the file text rather than rounded off.",
+    "consequence": "The packet's first admission gate — MIT LICENSE file content at the exact pinned revision — fails. Per the packet, this is recorded and returned as blocked, not worked around."
+  },
+  "artifacts": [
+    {
+      "path": "LICENSE",
+      "role": "repository-root-licence",
+      "gitBlobSha": "e79f45b9eaf33ef669f1bc30917b86539cef9bc6",
+      "bytes": 11341,
+      "sha256": "ca6d0a6a3a4854eed2d59c64b06a5d4ed1255cd3429adabbee2d2d3256ed71d3",
+      "firstLine": "                                 Apache License",
+      "secondLine": "                           Version 2.0, January 2004",
+      "titleLinePresent": true,
+      "termsAndConditionsHeadingPresent": true,
+      "appendixPresent": true,
+      "appendixCopyrightLine": "Copyright 2015 Drifty Co.",
+      "warrantyDisclaimerPresent": true,
+      "textForm": "The unmodified Apache License 2.0 boilerplate: the title block, the nine numbered sections of terms and conditions, END OF TERMS AND CONDITIONS, and the \"How to apply\" appendix with the copyright field filled in as \"Copyright 2015 Drifty Co.\" followed by the standard three-paragraph Apache notice. No MIT text appears anywhere in the file.",
+      "caseInsensitiveFilesystemNote": "The extraction host's filesystem is case-insensitive, so a probe for the path \"license\" resolved to the same blob as \"LICENSE\". The git tree at the pinned revision contains exactly one licence path, spelled LICENSE. There is no second, lowercase file."
+    },
+    {
+      "path": "package.json",
+      "role": "application-manifest",
+      "gitBlobSha": "df61ca93ca7d5246d4121bdb43f5d3558688e225",
+      "bytes": 2921,
+      "sha256": "077daf4482326484e7267bcc86038ddcf5212dbba8e27c9693458b14a84fc5c0",
+      "licenseField": "Apache-2.0",
+      "privateField": true,
+      "packageName": "ionic-conference-app",
+      "packageVersion": "0.0.0",
+      "author": "Ionic Team <hi@ionicframework.com>",
+      "privateFieldNote": "\"private\": true prevents npm publication. It is a publication flag, not a licence restriction."
+    }
+  ],
+  "inventory": {
+    "licenceFilesInTree": 1,
+    "additionalLicenceOrNoticeFiles": 0,
+    "noticeFilePresent": false,
+    "vendoredThirdPartySources": 0,
+    "committedNodeModules": 0,
+    "committedDistDirectories": 0,
+    "note": "The recursive tree at the pinned revision (197 blobs) contains exactly one licence file, the root LICENSE, and no NOTICE file. Apache-2.0 section 4(d) obliges redistributors to reproduce a NOTICE file only where the licensed work supplies one; this work supplies none."
+  },
+  "apacheTwoObligationsIfEverAdmitted": {
+    "status": "recorded for completeness only — this candidate was not admitted",
+    "obligations": [
+      "Retain the copyright, patent, trademark, and attribution notices from the source (section 4(c)).",
+      "Include a copy of the licence with any distribution of the work or derivative works (section 4(a)).",
+      "State significant changes made to the files in any modified version (section 4(b)).",
+      "Section 3 carries an express patent grant with a patent-litigation termination clause; MIT has no analogue. This is the substantive difference from the corpus's stated MIT requirement, not a formatting difference."
+    ],
+    "trademarkNote": "Section 6 grants no trademark rights. \"Ionic\" and the Ionic marks belong to Drifty Co. / Ionic; the application's branding and artwork are carried only as part of the acquired upstream source."
+  },
+  "obligations": [
+    "None accepted by this record. The candidate was not admitted and its bytes exist only in a host-local, git-ignored cache that this unit does not publish."
+  ],
+  "nonclaims": [
+    "This is a record of the licence text present at the pinned revision, not a legal opinion, licence-compatibility finding, or legal approval.",
+    "Recording that the licence is Apache-2.0 rather than MIT is a statement about the file, not a judgement that Apache-2.0 is unsuitable for the corpus. Whether the corpus charter's MIT requirement should be widened is a PM decision, not this unit's.",
+    "No licence determination is made for the transitive dependency closure."
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-reconciliation.v1",
+  "slug": "angular-ionic-conference",
+  "unit": "lrapr-t005/a3-ingest-ionic-conference",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "network": "none — this step is entirely offline",
+  "question": "Are the bytes in the downloaded archive exactly the bytes of the pinned git revision, or merely something that looks like them?",
+  "method": {
+    "step1": "Extract archive-1.tar.gz into a scratch directory and confirm it unpacks to exactly one top-level root.",
+    "step2": "Walk the extracted tree and classify every entry as file, directory, symlink or special.",
+    "step3": "Hash each regular file as a git blob object — sha1 over the literal bytes \"blob <length>\\0\" followed by the file content — which is the same object id git itself would compute.",
+    "step4": "Compare each computed blob id against the sha the recursive git tree records for that same path, and check the path sets in both directions.",
+    "step5": "Emit a normalized manifest of \"<path> <blobsha> <bytes>\" lines, sorted, and digest it, so the whole reconciliation collapses to one comparable number.",
+    "whyBlobLevelNotArchiveLevel": "An archive digest proves the download was not corrupted in transit. It does not prove the archive corresponds to the pinned tree. Hashing each file as a git object anchors the acquired bytes to the revision's own object ids."
+  },
+  "archive": {
+    "file": "archive-1.tar.gz",
+    "sha256": "230dcc68dc7df540db1c56da88d16100dc9cfa46ead4817fcfa52acaef6fc077",
+    "bytes": 4309471,
+    "secondFetchIdentical": true,
+    "secondFetchNote": "archive-2.tar.gz was fetched independently and matched archive-1.tar.gz on both length and sha256, so the server returned a stable representation."
+  },
+  "tree": {
+    "rootTreeSha": "f42d2144abd1fb4b3c624301bdafbfc5f142f9f5",
+    "truncated": false,
+    "blobs": 197,
+    "directories": 37,
+    "symlinks": 0,
+    "gitlinks": 0,
+    "executableBlobs": 2,
+    "blobBytes": 5374345
+  },
+  "result": {
+    "singleRoot": "ionic-conference-app-a7b2fc6afcd064947f3623774f4fd7db83c53c9c",
+    "regularFilesInArchive": 197,
+    "blobsInTree": 197,
+    "matched": 197,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "symlinkEntries": 0,
+    "specialEntries": 0,
+    "pathTraversalEntries": 0,
+    "absolutePathEntries": 0,
+    "normalizedManifestSha256": "5e6285a7b96258f6c4433f27377da95b95ec606306c57bd8ae371d8ca416ba43",
+    "verdict": "The archive is a complete and faithful copy of the git content at commit a7b2fc6afcd064947f3623774f4fd7db83c53c9c."
+  },
+  "counts": {
+    "archiveDirectoryEntries": 38,
+    "treeDirectoryEntries": 37,
+    "directoryCountNote": "The archive lists one more directory than the tree because the archive carries its own single top-level root directory, which the git tree does not.",
+    "totalArchiveEntries": 235
+  },
+  "safety": {
+    "pathTraversalChecked": true,
+    "absolutePathsChecked": true,
+    "symlinksChecked": true,
+    "findings": "none — the archive contains no entry whose path includes \"..\", no absolute path, and no symlink or special file. Extraction could not escape the scratch directory."
+  },
+  "gitLargeFileStorage": {
+    "checkedBecause": "unit a1 (factoriolab) was broken by an archive that reconciled perfectly against the tree while still carrying LFS pointer stubs instead of payloads — a clean reconciliation does not by itself mean the application's inputs are present",
+    "gitattributesPresent": false,
+    "lfsFilterLines": 0,
+    "contentScan": "every regular file under 400 bytes was opened and tested for the \"version https://git-lfs.github.com/spec/\" preamble",
+    "pointerStubsFound": 0,
+    "conclusion": "No LFS routing exists in this repository at this revision, so the clean reconciliation here does mean the inputs are present."
+  },
+  "unverifiedContentDistinction": {
+    "whatIsEstablished": "byte-for-byte correspondence between the acquired archive and the pinned revision's git objects",
+    "whatIsNotEstablished": "that the revision's content is licensed as the packet requires (it is not — see license.json), that it installs, that it builds, or that it behaves in a browser"
+  },
+  "nonclaims": [
+    "A clean reconciliation establishes acquisition integrity only.",
+    "This candidate was not admitted; the reconciliation is recorded so the acquisition work is auditable, not to support a fixture."
+  ]
+}

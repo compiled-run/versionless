@@ -1,0 +1,7 @@
+{"at":"2026-08-11T03:53:02.510Z","step":1,"what":"repository metadata","detail":"https://api.github.com/repos/ionic-team/ionic-conference-app"}
+{"at":"2026-08-11T03:53:02.969Z","step":2,"what":"tag ref","detail":"https://api.github.com/repos/ionic-team/ionic-conference-app/git/ref/tags/v4"}
+{"at":"2026-08-11T03:53:03.131Z","step":3,"what":"pinned commit object","detail":"a7b2fc6afcd064947f3623774f4fd7db83c53c9c"}
+{"at":"2026-08-11T03:53:03.356Z","step":4,"what":"recursive git tree","detail":"f42d2144abd1fb4b3c624301bdafbfc5f142f9f5"}
+{"at":"2026-08-11T03:53:03.608Z","step":5,"what":"source archive stream 1","detail":"https://codeload.github.com/ionic-team/ionic-conference-app/tar.gz/a7b2fc6afcd064947f3623774f4fd7db83c53c9c"}
+{"at":"2026-08-11T03:53:04.590Z","step":5,"what":"source archive stream 2","detail":"https://codeload.github.com/ionic-team/ionic-conference-app/tar.gz/a7b2fc6afcd064947f3623774f4fd7db83c53c9c"}
+{"at":"2026-08-11T03:53:05.193Z","step":6,"what":"offline reconciliation","detail":"extract archive and hash every regular file as a git blob"}

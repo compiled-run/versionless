@@ -1,0 +1,159 @@
+{
+  "schemaVersion": "versionless.official-source.v1",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "unit": "lrapr-t005/a3-ingest-ionic-conference",
+  "slug": "angular-ionic-conference",
+  "result": "source-bound-not-admitted",
+  "resultNote": "The acquisition transaction completed cleanly: the tag resolved to the expected commit, two independent archive fetches were byte-identical, and every extracted file reconciled blob-for-blob against the pinned git tree. The candidate was nevertheless NOT admitted, because the licence at that revision is Apache-2.0 and the packet's admission gate requires MIT. Bound bytes are not an admission.",
+  "startedAt": "2026-08-11T04:26:23Z",
+  "completedAt": "2026-08-11T04:26:31Z",
+  "timestampNote": "Per-request wall-clock timestamps are recorded in probe-ledger.ndjson and transcript.ndjson; the values above are the first and last ledgered request.",
+  "repository": {
+    "id": 43385504,
+    "fullName": "ionic-team/ionic-conference-app",
+    "private": false,
+    "archived": false,
+    "disabled": false,
+    "fork": false,
+    "defaultBranch": "main",
+    "createdAt": "2015-09-29T18:13:45Z",
+    "description": "A conference app built with Ionic to demonstrate Ionic",
+    "homepage": "https://ionic-conference-app-eta.vercel.app",
+    "githubDetectedLicense": { "key": "other", "spdxId": "NOASSERTION", "name": "Other" },
+    "responseBytes": 6873,
+    "responseSha256": "5892fa1d4b6c28c97aebd128a5c88f31d0158497f62dd82b5f2e4b3e2326be85",
+    "metadataCurrencyNote": "The repository metadata response describes the repository as it stands today (default branch main, pushed 2026-06-29), not as it stood at the pinned revision. It is recorded because it establishes public, non-fork, non-archived status; the licence position is taken from the file at the pin, not from this response."
+  },
+  "revision": {
+    "ref": "refs/tags/v4",
+    "tagKind": "lightweight — the ref points directly at a commit object, so there is no annotated tag object to dereference and no tagger identity to record",
+    "commitSha": "a7b2fc6afcd064947f3623774f4fd7db83c53c9c",
+    "committerDate": "2020-03-02T23:49:52Z",
+    "authorDate": "2020-03-02T23:49:52Z",
+    "commitSubject": "chore(angular): fix failing e2e tests (#1194)",
+    "commitVerification": "verified — GitHub reports verified:true with reason \"valid\" for the signature on this commit",
+    "rootTreeSha": "f42d2144abd1fb4b3c624301bdafbfc5f142f9f5",
+    "parents": ["4c7b4003c6be1f607c69f8d6f3c007ae4c535ab0"],
+    "treeEntries": 234,
+    "treeBlobs": 197,
+    "treeDirectories": 37,
+    "treeSymlinks": 0,
+    "treeGitlinks": 0,
+    "treeExecutableBlobs": 2,
+    "treeTruncated": false,
+    "treeBlobBytes": 5374345,
+    "expectedCommitShaFromPriorScout": "a7b2fc6afcd064947f3623774f4fd7db83c53c9c",
+    "expectedCommitShaConfirmedFromWire": true,
+    "tagToCommitBindingNote": "The tag was resolved through the git ref endpoint rather than assumed. refs/tags/v4 -> commit a7b2fc6afcd064947f3623774f4fd7db83c53c9c is the binding this record rests on; a tag is a movable label, so the commit sha is what every later URL in this record uses."
+  },
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/ionic-team/ionic-conference-app",
+      "status": 200,
+      "bytes": 6873,
+      "sha256": "5892fa1d4b6c28c97aebd128a5c88f31d0158497f62dd82b5f2e4b3e2326be85"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/ionic-team/ionic-conference-app/git/ref/tags/v4",
+      "status": 200,
+      "bytes": 355,
+      "sha256": "172c59f772238b647c619689d87482c744dd2cdc2d9dae500bacbc73ae7ddcb0"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/ionic-team/ionic-conference-app/commits/a7b2fc6afcd064947f3623774f4fd7db83c53c9c",
+      "status": 200,
+      "bytes": 17954,
+      "sha256": "cf71bcd898e175c301ca5055b3f399694833c8f9ec17aae6659f0cd6d31cdea7"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/ionic-team/ionic-conference-app/git/trees/f42d2144abd1fb4b3c624301bdafbfc5f142f9f5?recursive=1",
+      "status": 200,
+      "bytes": 59342,
+      "sha256": "3d25d563c41ca0042049764696e7cbeb2a7c0285380e187f05f2de59959bfab7"
+    },
+    {
+      "endpoint": "https://codeload.github.com/ionic-team/ionic-conference-app/tar.gz/a7b2fc6afcd064947f3623774f4fd7db83c53c9c",
+      "status": 200,
+      "bytes": 4309471,
+      "sha256": "230dcc68dc7df540db1c56da88d16100dc9cfa46ead4817fcfa52acaef6fc077",
+      "stream": 1
+    },
+    {
+      "endpoint": "https://codeload.github.com/ionic-team/ionic-conference-app/tar.gz/a7b2fc6afcd064947f3623774f4fd7db83c53c9c",
+      "status": 200,
+      "bytes": 4309471,
+      "sha256": "230dcc68dc7df540db1c56da88d16100dc9cfa46ead4817fcfa52acaef6fc077",
+      "stream": 2
+    }
+  ],
+  "keyFileDigests": [
+    { "path": "LICENSE", "gitBlobSha": "e79f45b9eaf33ef669f1bc30917b86539cef9bc6", "bytes": 11341, "sha256": "ca6d0a6a3a4854eed2d59c64b06a5d4ed1255cd3429adabbee2d2d3256ed71d3" },
+    { "path": "package.json", "gitBlobSha": "df61ca93ca7d5246d4121bdb43f5d3558688e225", "bytes": 2921, "sha256": "077daf4482326484e7267bcc86038ddcf5212dbba8e27c9693458b14a84fc5c0" },
+    { "path": "package-lock.json", "gitBlobSha": "dbd0a1af0bd80039b78880453109882386400912", "bytes": 581757, "sha256": "992e92a409f13b2ea5273409f3f33d1fb4a9906bd3a08814031a96f6613e3791" },
+    { "path": "angular.json", "gitBlobSha": "483b767521bf364df5983f710ead1b2359793a2c", "bytes": 5512, "sha256": "e4e640dafd8b7ec8b269864eeefb60c5cb3ff1e222a72e25507f99e840d0c231" },
+    { "path": "tsconfig.json", "gitBlobSha": "66535567e82027b291fa338fb8055dc7ec58604e", "bytes": 369, "sha256": "cc6b370fb82702ac8dd2f3f70bf056d9d4edb9982249b16b6ca00689a767ef52" },
+    { "path": "ngsw-config.json", "gitBlobSha": "fa9410f347f620ee86a69d5c12b6ed4f3a07968d", "bytes": 441, "sha256": "d6b821620c8a2c6ea7ab2cccb9b1d009ba0f9d30e53b7f2b2d1125ff7682e472" },
+    { "path": "src/assets/data/data.json", "gitBlobSha": "f880070a2ede36fe8b5f2dc81e710964a0e24f55", "bytes": 22793, "sha256": "aad859b0cfad007bc7ae4d8fa93bdfce2fbfb3e652f3deadf6ff4c558f82472a" },
+    { "path": "README.md", "gitBlobSha": "e43db3dc6ab8384e148695528592547ffeb60ea6", "bytes": 2318, "sha256": "c3f98be1583cd96676db12cbd2b1b5077a28f6ff9ea44e9395fc4b27d35de1d8" }
+  ],
+  "archiveParity": {
+    "singleRoot": "ionic-conference-app-a7b2fc6afcd064947f3623774f4fd7db83c53c9c",
+    "archiveEntries": 235,
+    "regularFiles": 197,
+    "directories": 38,
+    "symlinkEntries": 0,
+    "specialEntries": 0,
+    "gitBlobs": 197,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "normalizedManifestSha256": "5e6285a7b96258f6c4433f27377da95b95ec606306c57bd8ae371d8ca416ba43",
+    "pathTraversalEntries": 0,
+    "absolutePathEntries": 0,
+    "method": "Blob-level: every regular file in the extracted archive was hashed as a git blob object (sha1 over \"blob <len>\\0\" + content) and compared against the sha recorded for the same path in the recursive git tree. Detail in reconciliation.json.",
+    "directoryCountNote": "The archive lists 38 directory entries against 37 tree entries because the archive carries its own single top-level root directory, which the git tree does not."
+  },
+  "gitLargeFileStorage": {
+    "present": false,
+    "gitattributesPresent": false,
+    "lfsFilterLines": 0,
+    "pointerFilesInArchive": 0,
+    "method": "Two independent checks, both run because the factoriolab lane (unit a1) was broken by trusting only one. First: the tree at the pinned revision contains no .gitattributes file at all, at the root or anywhere else, so nothing is routed to LFS. Second: every regular file in the extracted archive under 400 bytes was opened and tested for the \"version https://git-lfs.github.com/spec/\" pointer preamble; zero matched.",
+    "consequence": "The codeload archive is a complete copy of the application's in-tree inputs. In particular src/assets/data/data.json — the conference dataset the scout claimed ships in-tree — is a real 22,793-byte JSON payload, not a pointer stub. No media-host deviation is needed for this candidate.",
+    "assetSpotCheck": "The tree also carries 61 .png, 13 .jpg, 2 .svg and one .psd blob totalling most of the 5,374,345 tree blob bytes. Their sizes in the tree match their extracted sizes, which is inconsistent with pointer stubs (a stub is ~130 bytes regardless of payload)."
+  },
+  "transaction": {
+    "sourceRequests": 6,
+    "sourceAcceptedResponses": 6,
+    "sourceWireBytes": 8703466,
+    "totalLedgeredRequests": 6,
+    "totalLedgeredBytes": 8703466,
+    "nonTwoHundredResponses": 0,
+    "redirectsFollowedInSourceTransaction": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "credentialsSent": 0,
+    "archivesByteIdentical": true,
+    "archiveMatchesGitTree": true,
+    "publishedSource": false,
+    "admitted": false,
+    "readinessCredit": false,
+    "implementationStarted": false,
+    "baselineInstallRun": false,
+    "baselineBuildRun": false
+  },
+  "cache": {
+    "root": ".versionless/cache/angular-ionic-conference-source",
+    "archive1": ".versionless/cache/angular-ionic-conference-source/archive/archive-1.tar.gz",
+    "archive2": ".versionless/cache/angular-ionic-conference-source/archive/archive-2.tar.gz",
+    "verifiedSource": ".versionless/cache/angular-ionic-conference-source/verify/extracted",
+    "rawFacts": ".versionless/cache/angular-ionic-conference-source/raw-facts.json",
+    "gitIgnored": true,
+    "rawMetadataPortable": false,
+    "note": "Host-local scratch under a git-ignored path, written by the acquisition driver. It is not part of the deliverable and is not published by this unit."
+  },
+  "nonclaims": [
+    "A clean archive-to-tree reconciliation establishes that the acquired bytes are the pinned revision's bytes. It establishes nothing about licence, admissibility, build, browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "This candidate was not admitted to the corpus. Nothing in this record should be read as a fixture, a baseline, or a readiness credit."
+  ]
+}
