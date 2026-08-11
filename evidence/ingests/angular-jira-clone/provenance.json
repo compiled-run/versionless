@@ -1,0 +1,106 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-provenance.v1",
+  "slug": "angular-jira-clone",
+  "unit": "lrapr-t005/a2-ingest-jira-clone",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "networkMode": "consented",
+  "purpose": "Acquisition only. Fix an immutable identity for one legacy Angular application, prove the acquired bytes against the pinned git content, and record one truthful baseline install and production build. No product, adapter, or migration work was performed.",
+  "chain": [
+    {
+      "step": 1,
+      "what": "repository metadata",
+      "url": "https://api.github.com/repos/trungvose/jira-clone-angular",
+      "status": 200,
+      "bytes": 5777,
+      "sha256": "635490ba763df594c32d4494a258651dd8b649a6bdab9c705aea3ac0b9d80ff6",
+      "established": "public, not a fork, not archived, not disabled; GitHub-detected licence MIT; default branch master"
+    },
+    {
+      "step": 2,
+      "what": "the pinned commit object",
+      "url": "https://api.github.com/repos/trungvose/jira-clone-angular/commits/059455b9933a236456524925065bce2c295e2d9a",
+      "status": 200,
+      "bytes": 5042,
+      "sha256": "8f12f7f0862f9ef4e694a9cb4fbf9aee9135144221bd6eb4376b3852cefaf614",
+      "established": "the scout's expected sha is the sha the wire returns; commit date 2022-03-13T03:42:33Z; root tree d5a79170609bb7b135a4c146a4565b3e7d53a92b; unsigned; subject \"feat: add LICENSE file after accidentally removed\", which corroborates why this sha and not the v2.0.0 tag is the pin"
+    },
+    {
+      "step": 3,
+      "what": "the recursive git tree at that commit",
+      "url": "https://api.github.com/repos/trungvose/jira-clone-angular/git/trees/d5a79170609bb7b135a4c146a4565b3e7d53a92b?recursive=1",
+      "status": 200,
+      "bytes": 85942,
+      "sha256": "79488d9fdf6716af18c1195ede0f645294467ed0afd55cfdc7cfa3e6c68422e9",
+      "established": "250 blobs, 75 trees, untruncated, no symlinks, no gitlinks, no executable blobs — the per-path blob shas that the archive is later checked against"
+    },
+    {
+      "step": 4,
+      "what": "the source archive, fetched twice",
+      "url": "https://codeload.github.com/trungvose/jira-clone-angular/tar.gz/059455b9933a236456524925065bce2c295e2d9a",
+      "status": 200,
+      "bytes": 8048993,
+      "sha256": "d913ad5d4686b6a236799166c7c781f624b3901a1826304e00c36eca82896bc5",
+      "streams": 2,
+      "established": "two independent fetches produced byte-identical archives"
+    },
+    {
+      "step": 5,
+      "what": "offline reconciliation, and the Git LFS precheck the factoriolab lane taught",
+      "network": "none",
+      "established": "all 250 extracted files hash, as git blob objects, to exactly the shas the tree records for those paths: 0 missing, 0 extra, 0 mismatched, single archive root, no path traversal or absolute entries. Normalized manifest sha256 f7f3a188bedde5719c369c1b0ce7a8a6ca5588cc50a4fb0dfb2fe8cf08a5ad8a. No .gitattributes exists, no path is routed through the LFS filter, and no blob carries an LFS pointer header — so unlike the factoriolab fixture this tree is self-contained and no media-host deviation was needed.",
+      "detail": "reconciliation.json, lfs.json"
+    },
+    {
+      "step": 6,
+      "what": "the declared legacy Node runtime",
+      "url": "https://nodejs.org/dist/v16.20.2/SHASUMS256.txt and https://nodejs.org/dist/v16.20.2/node-v16.20.2-darwin-arm64.tar.gz",
+      "status": 200,
+      "bytes": 29992384,
+      "requests": 2,
+      "established": ".nvmrc pins Node 16; no Node 16 runtime existed in this workspace, so one was acquired and its sha256 (6a5c4108475871362d742b988566f3fe307f6a67ce14634eb3fbceb4f9eea88c) checked against the entry for the same filename in the release SHASUMS256.txt before it was extracted or run. Native arm64, no translation layer.",
+      "detail": "baseline-attempt.json declaredCell"
+    },
+    {
+      "step": 7,
+      "what": "baseline install and production build in the declared legacy cell",
+      "network": "registry.npmjs.org only, via npm",
+      "established": "npm ci succeeded from the committed lockfileVersion 2 (2729 packages installed, exit 0). `npx ng build --configuration production` failed with exit 1 in about a second at builder schema validation: the committed production configuration sets extractCss, an option removed from the Angular 13 browser builder schema.",
+      "detail": "baseline-attempt.json"
+    },
+    {
+      "step": 8,
+      "what": "two follow-up observations, both offline",
+      "network": "none",
+      "established": "The repository's own `npm run build` — unmodified source, no configuration selected — succeeded with exit 0 and 32 dist files. Then one labeled deviation deleted the single extractCss key from angular.json in the git-ignored working tree, and the production build succeeded with exit 0 and 24 dist files. The dependency closure and application code were untouched in both.",
+      "detail": "baseline-attempt.json, build-followups.json"
+    }
+  ],
+  "consentDiscipline": {
+    "networkModeRequiredAtEveryStep": true,
+    "consentIdCheckedInEveryScript": true,
+    "method": "GET",
+    "credentialsSent": 0,
+    "authenticationHeaders": "none",
+    "cookiesAccepted": 0,
+    "redirectsFollowedInSourceTransaction": 0,
+    "redirectsFollowedInRuntimeAcquisition": 0,
+    "redirectsAllowedNote": "up to 3 redirects were permitted for the two nodejs.org requests and 0 for the source transaction; the hop count was ledgered per request and came back 0 everywhere",
+    "retries": 0,
+    "nonTwoHundredResponses": 0,
+    "hostsContacted": ["api.github.com", "codeload.github.com", "nodejs.org", "registry.npmjs.org"],
+    "telemetrySuppressed": "NG_CLI_ANALYTICS=false for the install and all three builds. angular.json already sets cli.analytics false at the pinned revision, so the CLI would not have reported regardless.",
+    "hostStateIsolated": "HOME and npm_config_cache were redirected into the git-ignored baseline cache for the install and every build",
+    "afterAcquisition": "everything else in this unit was offline"
+  },
+  "reproduction": {
+    "scripts": "evidence/ingests/angular-jira-clone/scripts/{lib,acquire-source,reconcile,analyze,baseline,build-followups}.cjs — the exact programs that produced this evidence, carrying no host paths and no credentials",
+    "runFrom": "the repository root",
+    "environment": "VERSIONLESS_NETWORK_MODE=consented and VERSIONLESS_CONSENT_ID=VL-LEGACY-CORPUS-2026-08-10; the baseline driver acquires and verifies its own Node 16.20.2 runtime, so no runtime needs to pre-exist",
+    "ledger": "probe-ledger.ndjson (7 requests, 46,187,131 bytes, all status 200) and transcript.ndjson (step-by-step)",
+    "caches": ".versionless/cache/angular-jira-clone-{source,runtime,baseline}, all git-ignored and all host-local"
+  },
+  "nonclaims": [
+    "This record establishes acquisition and integrity only.",
+    "No browser behavior, migration feasibility, pilot status, readiness credit, production readiness, certification, or legal approval is established by any step above."
+  ]
+}

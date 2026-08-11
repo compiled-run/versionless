@@ -1,0 +1,86 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-rights.v1",
+  "slug": "angular-jira-clone",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "revision": {
+    "repository": "trungvose/jira-clone-angular",
+    "commitSha": "059455b9933a236456524925065bce2c295e2d9a",
+    "rootTreeSha": "d5a79170609bb7b135a4c146a4565b3e7d53a92b"
+  },
+  "declaration": {
+    "identifier": "MIT",
+    "identifierSource": "the repository root LICENSE file at the pinned revision, read out of the extracted archive after it reconciled blob-for-blob with the git tree",
+    "copyrightNotice": "Copyright (c) 2020 Trung Vo",
+    "manifestLicenseField": "absent — package.json at the pinned revision declares no \"license\" key at all",
+    "manifestLicenseFieldIsAbsenceNotContradiction": true,
+    "githubDetectedLicense": "MIT (spdx_id MIT, key mit) as reported by the repository metadata response; the file text is the primary evidence and agrees with it",
+    "dualLicensed": false,
+    "sourceAvailableCarveOut": false
+  },
+  "licenceHistoryAtThisPin": {
+    "why": "This gate is the reason the pin is a bare sha rather than the v2.0.0 tag.",
+    "scoutClaim": "the v2.0.0 tag tree carries no LICENSE file; this commit, four days later, restores it",
+    "corroborationFromWire": "The pinned commit's own subject line reads \"feat: add LICENSE file after accidentally removed\" (commit object fetched from api.github.com and recorded in identity.json). That is upstream's own statement that the file was missing immediately before this commit.",
+    "whatWasVerifiedHere": "that a LICENSE file carrying the MIT text is present at the pinned revision. The absence of the file at the v2.0.0 tag was not independently re-fetched by this unit; the scout's claim of that absence is corroborated by the commit subject but is not itself re-verified evidence.",
+    "unknownPreserved": "How long the file was missing, and what the state of the repository was between the v2.0.0 tag and this commit, is not established here."
+  },
+  "artifacts": [
+    {
+      "path": "LICENSE",
+      "role": "repository-root-licence",
+      "gitBlobSha": "b7de03036fa26e05578ccb0de92cd1d20c7f0fd3",
+      "bytes": 1065,
+      "sha256": "c45956b16a34a9e0c74a93163f497174e373623333e47ce3251b4d0107120b09",
+      "firstLine": "MIT License",
+      "copyrightLine": "Copyright (c) 2020 Trung Vo",
+      "titleLinePresent": true,
+      "permissionGrantPresent": true,
+      "noticeRetentionClausePresent": true,
+      "warrantyDisclaimerPresent": true,
+      "lineCount": 22,
+      "textForm": "The customary MIT template verbatim and in the customary layout: the \"MIT License\" title line, the copyright line, the permission grant, the notice-retention clause and the all-caps warranty disclaimer, hard-wrapped at roughly 80 columns. Recorded precisely: the notice-retention sentence spans two physical lines (\"...shall be included in all / copies or substantial portions of the Software.\"), which is template wrapping and not a textual variation."
+    },
+    {
+      "path": "package.json",
+      "role": "application-manifest",
+      "gitBlobSha": "24f436353dee6a6338ef294191aa808a3920051b",
+      "bytes": 3385,
+      "sha256": "b029c486ab0eeffac9c311cc00bad782f9203b512c094f873390f8320db18a6f",
+      "licenseFieldPresent": false,
+      "licenseField": null,
+      "privateField": true,
+      "packageName": "jira-clone-angular-frontend",
+      "packageVersion": "1.0.0",
+      "absenceNote": "There is no \"license\" key to agree or disagree with the LICENSE file. This is recorded as an absence, not as a contradiction: nothing in the manifest narrows or contests the root grant.",
+      "privateFieldNote": "\"private\": true prevents npm publication. It is a publication flag, not a licence restriction, and does not narrow the MIT grant in the LICENSE file.",
+      "versionNote": "The manifest version reads 1.0.0 while the repository's own release line at this date is v2.x. The manifest version was not maintained against the tags; recorded as found."
+    }
+  ],
+  "inventory": {
+    "licenceFilesInTree": 1,
+    "additionalLicenceOrNoticeFiles": 0,
+    "vendoredThirdPartySources": 0,
+    "committedNodeModules": 0,
+    "committedDistDirectories": 0,
+    "note": "The recursive tree at the pinned revision contains exactly one licence file (root LICENSE), no vendored dependency trees, and no built output. A .github FUNDING.yml and two issue templates are present; neither carries additional terms."
+  },
+  "thirdPartyBrandPosture": {
+    "reviewed": true,
+    "what": "The application is an unaffiliated clone of Atlassian's Jira issue tracker: it reproduces Jira's board, issue-detail and search interaction model, and the upstream README describes it in those terms. The tree carries no Atlassian logo or product artwork; its icons are the project's own SVG set plus ng-zorro / Ant Design iconography.",
+    "position": "\"Jira\" is Atlassian's trademark. The upstream MIT grant covers the repository's own files; it is not treated here as any grant, permission or endorsement in respect of that mark. The application is carried as acquired upstream source and is not rebranded or presented as an Atlassian product.",
+    "unknownPreserved": "Whether the upstream project's use of the name is permitted, and on what basis, is neither established nor disclaimed by this record."
+  },
+  "embeddedThirdPartyIdentifiers": {
+    "what": "The source carries a Google Analytics measurement id in src/app/core/services/google-analytics.service.ts and a Sentry DSN wired through @sentry/angular, both belonging to the upstream author, plus a Storybook GA id in the build-storybook script.",
+    "position": "These are upstream's own analytics identifiers, recorded here as a property of the acquired source. They are not credentials and grant no access; they are not reproduced in this evidence file.",
+    "consequence": "Any later unit that serves this fixture in a browser would, unmodified, report page views to the upstream author's analytics property. Recorded as a risk in admission.json rather than silently patched."
+  },
+  "obligations": [
+    "Retain the copyright notice and permission text in any copy or substantial portion of the source.",
+    "The MIT grant covers the repository's own files; each dependency in the closure carries its own terms, which this record does not evaluate."
+  ],
+  "nonclaims": [
+    "This is a record of the licence text present at the pinned revision, not a legal opinion, licence-compatibility finding, trademark clearance, or legal approval.",
+    "No licence determination is made for the transitive dependency closure."
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "versionless.official-source-attempt.v1",
+  "unit": "lrapr-t005/a2-ingest-jira-clone",
+  "candidate": {
+    "repository": "trungvose/jira-clone-angular",
+    "requestedRevision": "059455b9933a236456524925065bce2c295e2d9a",
+    "revisionKind": "bare commit sha (no tag was requested or relied on)",
+    "revisionKindReason": "The scout reported that the v2.0.0 tag tree does not carry a LICENSE file and that this commit, four days later, restores it. A tag would therefore not name the revision that satisfies the licence gate. The sha is the pin.",
+    "expectationSource": "a prior read-only scout unit (lrapr-t005/a0); re-verified from the wire by this unit rather than trusted"
+  },
+  "tranche": "Angular tranche one (board task T005, first Angular cohort)",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "result": "started",
+  "network": {
+    "method": "GET",
+    "credentials": "none",
+    "requestEncoding": "identity",
+    "redirectsAllowed": false,
+    "retriesAllowed": false,
+    "alternateHostsAllowed": false
+  },
+  "allowlist": [
+    "https://api.github.com/repos/trungvose/jira-clone-angular",
+    "https://api.github.com/repos/trungvose/jira-clone-angular/commits/<pinned-commit-sha>",
+    "https://api.github.com/repos/trungvose/jira-clone-angular/git/trees/<validated-tree-sha>?recursive=1",
+    "https://codeload.github.com/trungvose/jira-clone-angular/tar.gz/<pinned-commit-sha>"
+  ],
+  "caps": {
+    "maximumAcceptedResponses": 8,
+    "maximumApiResponseBytes": 16777216,
+    "maximumArchiveBytes": 134217728,
+    "maximumAggregateWireBytes": 314572800,
+    "requiredArchiveStreams": 2
+  },
+  "requiredRevisionWindow": {
+    "from": "2016-01-01T00:00:00Z",
+    "through": "2023-08-10T00:00:00Z"
+  },
+  "publication": {
+    "evidenceRoot": "evidence/ingests/angular-jira-clone",
+    "cacheRoot": ".versionless/cache/angular-jira-clone-source",
+    "baselineCacheRoot": ".versionless/cache/angular-jira-clone-baseline",
+    "fixtureRoot": "fixtures/angular-jira-clone",
+    "transactional": true,
+    "readinessCredit": false
+  },
+  "gitLargeFileStoragePrecheck": {
+    "required": true,
+    "reason": "A fresh lesson from the sibling factoriolab ingest (lrapr-t005/a1): a codeload archive faithfully reproduces Git LFS pointer stubs rather than payloads, which broke that unit's unmodified baseline build. This unit reads .gitattributes at the pinned revision before trusting that any asset ships in-tree, and records the LFS state either way.",
+    "deviationPrecedentIfPayloadsNeeded": "plain GET from media.githubusercontent.com at the same pinned commit sha, each payload verified against the sha256 oid carried by the pointer it replaces, labeled as a deviation and never as the baseline"
+  },
+  "baselineNetwork": {
+    "purpose": "one truthful baseline dependency install and production build for the declared legacy cell",
+    "allowedHosts": ["registry.npmjs.org", "nodejs.org"],
+    "runtimeNote": "The repository commits .nvmrc = 16 (per the scout, re-verified here). No Node 16 runtime was present in this workspace, so one was acquired from nodejs.org and its digest checked against the release SHASUMS256.txt for the same version. That fetch is ledgered like any other.",
+    "note": "Package-manager fetches during the baseline install are performed by npm itself and are recorded in aggregate in baseline-attempt.json, not URL-by-URL in the source ledger. Angular CLI analytics is disabled (NG_CLI_ANALYTICS=false) so that neither install nor build emits telemetry."
+  },
+  "nonclaims": [
+    "Starting this transaction establishes no revision identity, license, source integrity, dependency closure, framework, build, browser behavior, migration feasibility, pilot status, or production readiness.",
+    "The resulting evidence is reproducibility evidence, not certification or legal approval."
+  ]
+}

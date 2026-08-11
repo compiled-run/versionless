@@ -1,0 +1,253 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-admission.v1",
+  "unit": "lrapr-t005/a2-ingest-jira-clone",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "networkMode": "consented",
+  "slug": "angular-jira-clone",
+  "tranche": "Angular tranche one (board task T005, first Angular cohort)",
+  "priorScout": {
+    "existed": true,
+    "unit": "lrapr-t005/a0",
+    "role": "read-only; supplied the target repository and expected commit sha",
+    "reverificationPolicy": "Every gate below was re-verified by this unit from the wire and from the reconciled archive at the pinned revision. The scout's findings were used as a hypothesis, not as evidence.",
+    "expectedCommitShaConfirmed": true,
+    "scoutClaimsChecked": [
+      {
+        "claim": "MIT LICENSE file at this exact pin, Copyright (c) 2020 Trung Vo",
+        "finding": "confirmed exactly, in substance and in form: the customary MIT template with its title line, 1065 bytes, blob b7de03036fa26e05578ccb0de92cd1d20c7f0fd3."
+      },
+      {
+        "claim": "the v2.0.0 tag tree lacks LICENSE; this pin four days later restores it, so pin the sha and never the tag",
+        "finding": "corroborated from the wire rather than re-verified. The pinned commit's own subject is \"feat: add LICENSE file after accidentally removed\". The v2.0.0 tag tree itself was not fetched by this unit, so the absence there is recorded as the scout's claim plus upstream's own corroborating message, not as independently observed evidence. The pin is a bare sha either way."
+      },
+      {
+        "claim": "package.json declares no license field",
+        "finding": "confirmed. There is no \"license\" key at all. Recorded as an absence, not a contradiction."
+      },
+      {
+        "claim": "Angular 13.2.4, CLI 13.2.5, @angular-builders/custom-webpack browser/dev-server with a root webpack.config.js, ng-zorro-antd 13, Akita 7, Tailwind 3, TS 4.5.5",
+        "finding": "all confirmed from the reconciled source. The custom webpack config is a single postcss-loader rule for .scss with the postcss-import / tailwindcss / autoprefixer chain."
+      },
+      {
+        "claim": ".nvmrc = 16",
+        "finding": "confirmed — a 3-byte file containing \"16\". Sharpened: the major is pinned, the patch is not, and there is no engines block and no CI workflow anywhere in the tree."
+      },
+      {
+        "claim": "npm with committed package-lock.json",
+        "finding": "confirmed, and the version recorded as found: lockfileVersion 2, 2,297,112 bytes, 2747 entries, every entry integrity-hashed, every resolution on registry.npmjs.org."
+      },
+      {
+        "claim": "seed data src/assets/data/project.json + auth.json fetched same-origin, no backend",
+        "finding": "confirmed. Both environment files set apiUrl to the relative '/assets/data'; the former localhost:3000 and Heroku hosts are present only as comments. No server source, Dockerfile or compose file exists in the tree."
+      },
+      {
+        "claim": "the v1.x line ships a NestJS backend and is not this candidate",
+        "finding": "consistent with what was acquired — there is no backend at this revision — but the v1.x line itself was not fetched or inspected by this unit, so this is recorded as unexamined rather than confirmed."
+      }
+    ],
+    "findingsTheScoutDidNotHave": [
+      {
+        "finding": "The committed production configuration in angular.json is invalid against the Angular 13 builder the same revision pins: it sets \"extractCss\", which was removed from the browser builder schema in v13. `ng build --configuration production` fails schema validation in about a second.",
+        "whyItMatters": "It is the outcome of this unit's production build gate, and it is an upstream defect at the pin rather than an acquisition problem."
+      },
+      {
+        "finding": "The application initialises Sentry with a hard-coded DSN in src/main.ts and Google Analytics with a hard-coded measurement id in src/app/core/services/google-analytics.service.ts.",
+        "whyItMatters": "Serving this fixture unmodified reports to the upstream author's third-party properties."
+      }
+    ]
+  },
+  "admitted": {
+    "repository": "trungvose/jira-clone-angular",
+    "product": "Jira Clone — a simplified browser reimplementation of Atlassian's Jira issue tracker: a drag-and-drop kanban board, full issue detail editing with a rich-text description and threaded comments, cross-project search, and project settings, all over seeded JSON with no backend",
+    "ref": "none — bare commit sha",
+    "commitSha": "059455b9933a236456524925065bce2c295e2d9a",
+    "commitDate": "2022-03-13T03:42:33Z",
+    "applicationVersion": "1.0.0 as declared in package.json (the repository's own release line at this date is v2.x; the manifest version was not maintained against the tags)",
+    "frontendRoot": ".",
+    "decision": "admitted"
+  },
+  "gates": [
+    {
+      "gate": "mit-license-at-pinned-revision",
+      "result": "pass",
+      "evidence": {
+        "rootLicensePath": "LICENSE",
+        "gitBlobSha": "b7de03036fa26e05578ccb0de92cd1d20c7f0fd3",
+        "fileSha256": "c45956b16a34a9e0c74a93163f497174e373623333e47ce3251b4d0107120b09",
+        "bytes": 1065,
+        "firstLine": "MIT License",
+        "copyrightLine": "Copyright (c) 2020 Trung Vo",
+        "titleLinePresent": true,
+        "mitBodyVerbatim": true,
+        "manifestLicenseField": "absent (no \"license\" key in package.json — recorded as an absence, not a contradiction)",
+        "githubDetectedSpdx": "MIT",
+        "otherLicenseFilesInTree": 0,
+        "quotedFromArchive": "The licence text was read out of the extracted archive, which reconciles blob-for-blob with the git tree at the pinned revision.",
+        "pinRationale": "This gate is why the pin is a bare sha: the commit exists precisely to restore the LICENSE file, and the v2.0.0 tag four days earlier would not satisfy it.",
+        "detail": "license.json"
+      }
+    },
+    {
+      "gate": "real-substantive-application-not-template-demo-or-library",
+      "result": "pass",
+      "evidence": {
+        "repositoryShape": "A single Angular CLI 13 application at the repository root — one project (\"frontend\"), no library build target, no publishable package (\"private\": true), no monorepo projects/ tree. It is a deployed product: the manifest homepage and the README point at https://jira.trungk18.com, and src/_redirects is a Netlify SPA rewrite.",
+        "blobsInTree": 250,
+        "treeBlobBytes": 10725264,
+        "typescriptFiles": 119,
+        "htmlTemplates": 44,
+        "specFiles": 25,
+        "storyFiles": 4,
+        "componentDirectories": 47,
+        "domainCore": "src/app/project/** — a board with drag-and-drop lists and filtering, an issue model with type/priority/status/assignees/reporter/comments/estimates, an add-issue modal with four dedicated select components, an issue-detail surface that exists both as a modal and as a standalone route, and a search drawer. Nothing about it is scaffolding.",
+        "stateLayer": "Akita 7 stores under src/app/project/state/{project,filter} with @datorama/akita-ng-entity-service; angular.json sets the CLI default schematics collection to @datorama/akita",
+        "designSystem": "a first-party control library under src/app/jira-control (avatar, breadcrumbs, button, input, svg-icon, svg-definitions) layered over ng-zorro-antd 13 and Tailwind 3",
+        "seedData": "src/assets/data/project.json, 26,160 bytes of issues, users and comments; src/assets/data/auth.json, 272 bytes",
+        "publishedAsLibrary": false,
+        "isStarterTemplate": false,
+        "notes": "Two things in the tree are not application code and are recorded as such: an untouched protractor e2e skeleton, and documentation.json, 460 KB of generated compodoc output committed at the root. Neither changes the assessment. Upstream is a 2,276-star teaching project explicitly written to demonstrate a full-scale Angular application."
+      }
+    },
+    {
+      "gate": "angular-2-plus-cli-era",
+      "result": "pass",
+      "evidence": {
+        "declaredAngular": "~13.2.4 across the nine @angular/* packages",
+        "declaredAngularCli": "~13.2.5",
+        "resolvedInBaselineCell": "the committed lockfileVersion 2 pins the closure exactly; npm ci installed 2729 packages from it without resolution",
+        "builder": "@angular-builders/custom-webpack:browser ^13.1.0 (build) and :dev-server (serve), wrapping @angular-devkit/build-angular ~13.2.5",
+        "customWebpackConfig": "./webpack.config.js — one postcss-loader rule for .scss",
+        "bundler": "webpack 5",
+        "compiler": "Ivy, aot:true in angular.json",
+        "typescript": "~4.5.5",
+        "angularJsonVersion": 1,
+        "ejected": false,
+        "detail": "closure.json"
+      }
+    },
+    {
+      "gate": "pinned-revision-date-matches-claimed-era",
+      "result": "pass",
+      "evidence": {
+        "commitSha": "059455b9933a236456524925065bce2c295e2d9a",
+        "committerDate": "2022-03-13T03:42:33Z",
+        "authorDate": "2022-03-13T03:42:33Z",
+        "claimedByScout": "2022-03-13",
+        "evaluatedOn": "2026-08-11",
+        "ageYearsApproximate": 4.4,
+        "coherenceCheck": "Angular 13.2.4 was released in February 2022 and @angular/cli 13.2.5 in early March 2022, so the pinned dependency versions and the commit date agree rather than merely coexisting. Tailwind 3.0 (December 2021) and ng-zorro-antd 13 are the same season.",
+        "signature": "none — the commit is unsigned and GitHub reports verified:false with reason \"unsigned\"",
+        "unknownPreserved": "Author and committer authenticity are recorded as unestablished. An unsigned commit is not a forgery finding and is not treated as one.",
+        "upstreamRepositoryArchived": false,
+        "upstreamStillMoving": "the repository reports pushedAt 2026-04-03, four years past the pin; the bare-sha pin is unaffected"
+      }
+    },
+    {
+      "gate": "browser-ui-plausibly-supporting-three-or-more-substantive-user-journeys",
+      "result": "pass",
+      "evidence": {
+        "routerLibrary": "@angular/router ~13.2.4",
+        "topLevelRoutes": ["/project (lazy ProjectModule)", "/wip (lazy WorkInProgressModule)", "'' -> redirect"],
+        "projectChildRoutes": ["/project/board", "/project/settings", "/project/issue/:issueId", "'' -> redirect"],
+        "candidateJourneys": [
+          {
+            "journey": "work the kanban board",
+            "surface": "pages/board with board-dnd and board-dnd-list — drag issues between the four status lanes; the drop reorders and restatuses through the Akita project store",
+            "code": "src/app/project/pages/board/**, src/app/project/components/board/**, src/app/project/state/project/**",
+            "plausibility": "declared-and-code-backed"
+          },
+          {
+            "journey": "create an issue",
+            "surface": "add-issue-modal with dedicated type, priority, reporter and assignees select components and a Quill rich-text description",
+            "code": "src/app/project/components/add-issue-modal/**, src/app/project/components/issues/issue-description/**",
+            "plausibility": "declared-and-code-backed"
+          },
+          {
+            "journey": "open and edit an issue in detail",
+            "surface": "issue-detail rendered either as issue-modal over the board or as the standalone /project/issue/:issueId page — title, description, type, priority, status, assignees, reporter, estimate and delete, each its own component",
+            "code": "src/app/project/components/issues/**, src/app/project/pages/full-issue-detail/**",
+            "plausibility": "declared-and-code-backed"
+          },
+          {
+            "journey": "discuss an issue in comments",
+            "surface": "issue-comments / issue-comment — add, edit and delete threaded comments against the seeded users",
+            "code": "src/app/project/components/issues/issue-comment/**, issue-comments/**",
+            "plausibility": "declared-and-code-backed"
+          },
+          {
+            "journey": "search and filter",
+            "surface": "search-drawer with issue-result rows for cross-board lookup, plus board-filter for narrowing the board by text, assignee and issue type through the Akita filter store",
+            "code": "src/app/project/components/search/**, src/app/project/components/board/board-filter/**, src/app/project/state/filter/**",
+            "plausibility": "declared-and-code-backed"
+          },
+          {
+            "journey": "configure the project",
+            "surface": "pages/settings — edit project name, description, category; navigation, sidebar and a draggable resizer around it",
+            "code": "src/app/project/pages/settings/**, src/app/project/components/navigation/**",
+            "plausibility": "declared-and-code-backed"
+          }
+        ],
+        "requiredMinimum": 3,
+        "observed": 6,
+        "persistenceCaveat": "There is no backend. Every journey above starts from the seeded src/assets/data/project.json and mutates an in-memory Akita store; nothing is persisted across a reload. The journeys are exercisable, not durable.",
+        "unknownPreserved": "These journeys are read from the components, the stores and the route table. No browser was driven in this unit, so none of them is established as actually exercisable."
+      }
+    }
+  ],
+  "recordedRisks": [
+    {
+      "risk": "the committed production configuration is invalid against the Angular version the same commit pins",
+      "finding": "angular.json's production configuration sets \"extractCss\": true, removed from the @angular-devkit/build-angular browser builder schema in v13. `npx ng build --configuration production` fails at schema validation in about a second, before compiling anything.",
+      "consequence": "There is no production-configured build of this fixture as acquired. The repository's own `npm run build` script passes no --configuration and succeeds, which is plausibly why upstream never hit it.",
+      "state": "recorded, and probed by one labeled deviation: deleting that single key in the git-ignored working tree made the production build succeed with exit 0 and 24 dist files. The acquired source was not modified.",
+      "residual": "Any later unit wanting a production build must drop the key or avoid that configuration."
+    },
+    {
+      "risk": "the application ships third-party telemetry that fires on load",
+      "finding": "src/main.ts initialises @sentry/angular with a hard-coded DSN belonging to the upstream author, and src/app/core/services/google-analytics.service.ts carries a hard-coded UA measurement id; the build-storybook script carries a second GA id.",
+      "consequence": "Serving this fixture unmodified in a browser reports to ingest.sentry.io and to Google under the upstream author's properties. Unlike Angular CLI analytics, this is application code and cannot be switched off by an environment variable.",
+      "state": "recorded, not patched — the acquired source is preserved as found. Any later unit that drives this fixture in a browser must decide this deliberately."
+    },
+    {
+      "risk": "angular.json declares an asset path that does not exist",
+      "finding": "the build assets array lists \"src/data\", and no src/data directory exists at the pinned revision.",
+      "consequence": "None observed: Angular 13 tolerated it and both successful builds emitted no error or warning naming that path.",
+      "state": "recorded as an inert inconsistency in the committed configuration"
+    },
+    {
+      "risk": "the tree is 10.7 MB of git content, most of it README media",
+      "finding": "three GIFs in src/assets/img account for about 6.9 MB (3.4 MB, 2.4 MB and 1.0 MB), and they sit under the build's assets root, so they are copied into dist. This, not JavaScript, is most of the 9.5 MB of production output.",
+      "consequence": "Cosmetic for a build; relevant to anyone measuring bundle or deploy size against this fixture.",
+      "state": "recorded"
+    },
+    {
+      "risk": "generated output is committed to the source tree",
+      "finding": "documentation.json, 460 KB of compodoc output, is committed at the repository root and is regenerated by the docs:json script.",
+      "consequence": "It is a build artifact inside the pinned source. It is not a build input and no build reads it.",
+      "state": "recorded"
+    },
+    {
+      "risk": "two linters are declared at once",
+      "finding": "@angular-eslint 13 with eslint 8 is the configured lint builder, while tslint ~6.1.0, codelyzer ^6.0.0 and nz-tslint-rules remain in devDependencies from the pre-migration setup.",
+      "consequence": "Dead weight in the closure; no effect on the build. Both were installed by npm ci.",
+      "state": "recorded"
+    },
+    {
+      "risk": "the Node pin is a major, not a version",
+      "finding": ".nvmrc says \"16\" and nothing in the repository narrows it further; there is no engines block and no CI workflow at the pinned revision.",
+      "consequence": "The patch level used for the baseline (16.20.2, the final Node 16 release) is this unit's choice and is labeled as such.",
+      "state": "ambiguity preserved; see baseline-attempt.json declaredCell"
+    },
+    {
+      "risk": "the manifest version does not track the release line",
+      "finding": "package.json and package-lock.json both read version 1.0.0 while the repository's own tag line at this date is v2.x.",
+      "consequence": "The application version in this evidence is the manifest's, recorded as found; it is not a release identity.",
+      "state": "recorded"
+    }
+  ],
+  "nonclaims": [
+    "Admission fixes an identity and records gate findings. It establishes no browser behavior, journey exercisability, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "The journey list is read from the components, the stores and the route table; no journey was driven in a browser by this unit.",
+    "Nothing here is a trademark clearance in respect of the Jira name."
+  ]
+}

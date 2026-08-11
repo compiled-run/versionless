@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-identity.v1",
+  "slug": "angular-jira-clone",
+  "unit": "lrapr-t005/a2-ingest-jira-clone",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "repository": {
+    "id": 271826090,
+    "fullName": "trungvose/jira-clone-angular",
+    "private": false,
+    "archived": false,
+    "disabled": false,
+    "fork": false,
+    "defaultBranch": "master",
+    "createdAt": "2020-06-12T15:05:23Z",
+    "pushedAt": "2026-04-03T14:00:45Z",
+    "license": {
+      "key": "mit",
+      "spdx": "MIT",
+      "name": "MIT License"
+    },
+    "homepage": "https://jira.trungk18.com",
+    "description": "A simplified Jira clone built with Angular, ng-zorro and Akita",
+    "stargazers": 2276,
+    "responseBytes": 5777,
+    "responseSha256": "635490ba763df594c32d4494a258651dd8b649a6bdab9c705aea3ac0b9d80ff6"
+  },
+  "revision": {
+    "commitSha": "059455b9933a236456524925065bce2c295e2d9a",
+    "committerDate": "2022-03-13T03:42:33Z",
+    "authorDate": "2022-03-13T03:42:33Z",
+    "commitSubject": "feat: add LICENSE file after accidentally removed",
+    "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+    },
+    "rootTreeSha": "d5a79170609bb7b135a4c146a4565b3e7d53a92b",
+    "parents": [
+      "1f6f93dacc069ed1c827fd76e581b52b049c9897"
+    ]
+  },
+  "tree": {
+    "entries": 325,
+    "blobs": 250,
+    "directories": 75,
+    "symlinks": 0,
+    "gitlinks": 0,
+    "executableBlobs": 0,
+    "truncated": false,
+    "blobBytes": 10725264
+  },
+  "archive": {
+    "url": "https://codeload.github.com/trungvose/jira-clone-angular/tar.gz/059455b9933a236456524925065bce2c295e2d9a",
+    "streams": [
+      {
+        "stream": 1,
+        "status": 200,
+        "bytes": 8048993,
+        "sha256": "d913ad5d4686b6a236799166c7c781f624b3901a1826304e00c36eca82896bc5",
+        "setCookie": false
+      },
+      {
+        "stream": 2,
+        "status": 200,
+        "bytes": 8048993,
+        "sha256": "d913ad5d4686b6a236799166c7c781f624b3901a1826304e00c36eca82896bc5",
+        "setCookie": false
+      }
+    ],
+    "byteIdentical": true
+  }
+}

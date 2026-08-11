@@ -1,0 +1,165 @@
+{
+  "schemaVersion": "versionless.official-source.v1",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "unit": "lrapr-t005/a2-ingest-jira-clone",
+  "slug": "angular-jira-clone",
+  "result": "source-bound",
+  "timestampNote": "Per-request wall-clock timestamps are recorded in probe-ledger.ndjson and transcript.ndjson.",
+  "repository": {
+    "id": 271826090,
+    "fullName": "trungvose/jira-clone-angular",
+    "private": false,
+    "archived": false,
+    "disabled": false,
+    "fork": false,
+    "defaultBranch": "master",
+    "createdAt": "2020-06-12T15:05:23Z",
+    "description": "A simplified Jira clone built with Angular, ng-zorro and Akita",
+    "homepage": "https://jira.trungk18.com",
+    "githubDetectedLicense": "MIT (key mit, spdx_id MIT)",
+    "responseBytes": 5777,
+    "responseSha256": "635490ba763df594c32d4494a258651dd8b649a6bdab9c705aea3ac0b9d80ff6",
+    "upstreamStillMoving": "the repository reports pushedAt 2026-04-03T14:00:45Z, four years after the pinned revision; the pin is a bare sha and is unaffected by later upstream history"
+  },
+  "revision": {
+    "ref": "none — a bare commit sha was pinned; no tag was requested or relied on",
+    "commitSha": "059455b9933a236456524925065bce2c295e2d9a",
+    "committerDate": "2022-03-13T03:42:33Z",
+    "authorDate": "2022-03-13T03:42:33Z",
+    "commitSubject": "feat: add LICENSE file after accidentally removed",
+    "commitVerification": "unsigned — GitHub reports verified:false with reason \"unsigned\"; no signature is present to evaluate",
+    "rootTreeSha": "d5a79170609bb7b135a4c146a4565b3e7d53a92b",
+    "parents": ["1f6f93dacc069ed1c827fd76e581b52b049c9897"],
+    "treeEntries": 325,
+    "treeBlobs": 250,
+    "treeDirectories": 75,
+    "treeSymlinks": 0,
+    "treeGitlinks": 0,
+    "treeExecutableBlobs": 0,
+    "treeTruncated": false,
+    "treeBlobBytes": 10725264,
+    "expectedCommitShaFromPriorScout": "059455b9933a236456524925065bce2c295e2d9a",
+    "expectedCommitShaConfirmedFromWire": true,
+    "whyNotTheTag": "The scout reported that the v2.0.0 tag tree carries no LICENSE file and that this commit, four days later, restores it. The commit's own subject line — \"feat: add LICENSE file after accidentally removed\" — is upstream's own statement of that fact, read from the wire by this unit. Pinning the tag would name a revision that fails the licence gate; the sha is the pin."
+  },
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/trungvose/jira-clone-angular",
+      "status": 200,
+      "bytes": 5777,
+      "sha256": "635490ba763df594c32d4494a258651dd8b649a6bdab9c705aea3ac0b9d80ff6"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/trungvose/jira-clone-angular/commits/059455b9933a236456524925065bce2c295e2d9a",
+      "status": 200,
+      "bytes": 5042,
+      "sha256": "8f12f7f0862f9ef4e694a9cb4fbf9aee9135144221bd6eb4376b3852cefaf614"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/trungvose/jira-clone-angular/git/trees/d5a79170609bb7b135a4c146a4565b3e7d53a92b?recursive=1",
+      "status": 200,
+      "bytes": 85942,
+      "sha256": "79488d9fdf6716af18c1195ede0f645294467ed0afd55cfdc7cfa3e6c68422e9"
+    },
+    {
+      "endpoint": "https://codeload.github.com/trungvose/jira-clone-angular/tar.gz/059455b9933a236456524925065bce2c295e2d9a",
+      "status": 200,
+      "bytes": 8048993,
+      "sha256": "d913ad5d4686b6a236799166c7c781f624b3901a1826304e00c36eca82896bc5",
+      "stream": 1
+    },
+    {
+      "endpoint": "https://codeload.github.com/trungvose/jira-clone-angular/tar.gz/059455b9933a236456524925065bce2c295e2d9a",
+      "status": 200,
+      "bytes": 8048993,
+      "sha256": "d913ad5d4686b6a236799166c7c781f624b3901a1826304e00c36eca82896bc5",
+      "stream": 2
+    },
+    {
+      "endpoint": "https://nodejs.org/dist/v16.20.2/SHASUMS256.txt",
+      "status": 200,
+      "bytes": 3153,
+      "sha256": "c99843072b4df7216637a564e6c87da53cb2cf55cee6bf95cdda301143f6b7ca",
+      "role": "legacy runtime acquisition — digest list for the declared cell"
+    },
+    {
+      "endpoint": "https://nodejs.org/dist/v16.20.2/node-v16.20.2-darwin-arm64.tar.gz",
+      "status": 200,
+      "bytes": 29989231,
+      "sha256": "6a5c4108475871362d742b988566f3fe307f6a67ce14634eb3fbceb4f9eea88c",
+      "role": "legacy runtime acquisition — matches the SHASUMS256.txt entry for this file"
+    }
+  ],
+  "keyFileDigests": [
+    { "path": "LICENSE", "gitBlobSha": "b7de03036fa26e05578ccb0de92cd1d20c7f0fd3", "bytes": 1065, "sha256": "c45956b16a34a9e0c74a93163f497174e373623333e47ce3251b4d0107120b09" },
+    { "path": "package.json", "gitBlobSha": "24f436353dee6a6338ef294191aa808a3920051b", "bytes": 3385, "sha256": "b029c486ab0eeffac9c311cc00bad782f9203b512c094f873390f8320db18a6f" },
+    { "path": "package-lock.json", "gitBlobSha": "eeed3fccce6492e20e7c951b180bb2ece014dfca", "bytes": 2297112, "sha256": "63d73b3f3cfddc8a5156c637d0039f206514c15f4a77e72ef9159b0dda630ecb" },
+    { "path": "angular.json", "gitBlobSha": "abe1788922d04a48770edbe4ce2db742d6707731", "bytes": 5032, "sha256": "65690a1cb9f1d916179bd7a4f9f37b64aca840eeeca0f7ae38fee137370e7a70" },
+    { "path": ".nvmrc", "gitBlobSha": "b6a7d89c68e0ca66e96a9a51892cc33db66fb8a3", "bytes": 3, "sha256": "e6c21e8d260fe71882debdb339d2402a2ca7648529bc2303f48649bce0380017" },
+    { "path": "webpack.config.js", "gitBlobSha": "76ab6d84f31fa267d8ee761411a0a405b6e2d10f", "bytes": 344, "sha256": "4d8ef1e0a99488118ac585d4aaaf29c5a1b1f324ad2d9316c9cda32c4e9ab2cf" },
+    { "path": "tsconfig.json", "gitBlobSha": "047ada5b5e14016dcef5cd8c70891f78b460d410", "bytes": 590, "sha256": "70bdf73e5376db09479379a2fa4e6bfd268588cb3b064eaf2e2c3ebd4145001b" },
+    { "path": "tailwind.config.js", "gitBlobSha": "a378f5bba19d1721148eb449700c8bb4bab3ba9c", "bytes": 11268, "sha256": "a43ffef8073728ba5738c6f6902183f49d71be295f7f682548265f9d43153fb9" }
+  ],
+  "archiveParity": {
+    "singleRoot": "jira-clone-angular-059455b9933a236456524925065bce2c295e2d9a",
+    "archiveEntries": 326,
+    "regularFiles": 250,
+    "directories": 76,
+    "specialEntries": 0,
+    "gitBlobs": 250,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "normalizedManifestSha256": "f7f3a188bedde5719c369c1b0ce7a8a6ca5588cc50a4fb0dfb2fe8cf08a5ad8a",
+    "pathTraversalEntries": 0,
+    "absolutePathEntries": 0,
+    "method": "Blob-level: every regular file in the extracted archive was hashed as a git blob object and compared byte-for-byte against the sha recorded for the same path in the recursive git tree. Detail in reconciliation.json.",
+    "directoryCountNote": "The archive lists 76 directory entries against 75 tree entries because the archive carries its own single top-level root directory, which the git tree does not."
+  },
+  "gitLargeFileStorage": {
+    "checked": true,
+    "whyChecked": "The sibling factoriolab ingest (lrapr-t005/a1) found that a codeload archive faithfully reproduces LFS pointer stubs rather than payloads, which broke its unmodified baseline build. This unit therefore checked before trusting that any asset ships in-tree, rather than after a build failure.",
+    "present": false,
+    "gitattributesFilePresent": false,
+    "lfsFilterRoutes": 0,
+    "pointerFilesInArchive": 0,
+    "method": "No .gitattributes exists at the pinned revision, so no path is routed through the LFS filter. Independently, every one of the 250 extracted blobs was scanned for the `version https://git-lfs` pointer header; none matched.",
+    "consequence": "The archive is a complete copy of the pinned revision's git content and, unlike the factoriolab fixture, is also a complete copy of the application's build inputs. The 3.4 MB and 2.4 MB README GIFs sit in the tree as real bytes. No deviation was needed and none was taken for assets.",
+    "detail": "lfs.json"
+  },
+  "transaction": {
+    "sourceRequests": 5,
+    "sourceAcceptedResponses": 5,
+    "sourceWireBytes": 16194747,
+    "runtimeRequests": 2,
+    "runtimeWireBytes": 29992384,
+    "totalLedgeredRequests": 7,
+    "totalLedgeredBytes": 46187131,
+    "nonTwoHundredResponses": 0,
+    "redirectsFollowedInSourceTransaction": 0,
+    "redirectsFollowedInRuntimeAcquisition": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "credentialsSent": 0,
+    "archivesByteIdentical": true,
+    "archiveMatchesGitTree": true,
+    "publishedSource": true,
+    "readinessCredit": false,
+    "implementationStarted": false,
+    "byteTotalNote": "totalLedgeredBytes is the sum of the seven ledgered response bodies. sourceWireBytes counts the five source-transaction responses only; runtimeWireBytes counts the two nodejs.org responses that acquired the declared legacy cell."
+  },
+  "cache": {
+    "root": ".versionless/cache/angular-jira-clone-source",
+    "archive1": ".versionless/cache/angular-jira-clone-source/archive/archive-1.tar.gz",
+    "archive2": ".versionless/cache/angular-jira-clone-source/archive/archive-2.tar.gz",
+    "verifiedSource": ".versionless/cache/angular-jira-clone-source/verify/extracted",
+    "runtime": ".versionless/cache/angular-jira-clone-runtime",
+    "baseline": ".versionless/cache/angular-jira-clone-baseline",
+    "gitIgnored": true,
+    "rawMetadataPortable": false
+  },
+  "nonclaims": [
+    "An unsigned commit establishes no author or committer authenticity; the identities carried by the commit object are upstream metadata and are not treated as a verification result.",
+    "No dependency licence position, browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval is established by this record."
+  ]
+}

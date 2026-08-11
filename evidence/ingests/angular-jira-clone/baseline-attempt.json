@@ -1,0 +1,150 @@
+{
+  "schemaVersion": "versionless.legacy-baseline-attempt.v1",
+  "slug": "angular-jira-clone",
+  "unit": "lrapr-t005/a2-ingest-jira-clone",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "purpose": "One truthful baseline dependency install and production build of the pinned revision, in the declared legacy cell.",
+  "declaredCell": {
+    "declaredByRepository": {
+      "nvmrc": "16 — a committed .nvmrc containing the single line \"16\" (blob b6a7d89c68e0ca66e96a9a51892cc33db66fb8a3, 3 bytes)",
+      "nvmrcPrecision": "major line only; it names Node 16 and not a patch",
+      "enginesField": "absent — package.json declares no engines block",
+      "continuousIntegrationMatrix": "none — .github carries only FUNDING.yml and two issue templates; there is no workflow file at the pinned revision, so CI states nothing",
+      "packageManagerInCi": "not stated by the repository; a package-lock.json (lockfileVersion 2) is committed, so `npm ci` is the reproducible path the repository makes available",
+      "interpretation": "The repository does pin a Node major: 16. That agrees with what the toolchain it pins requires — @angular/cli 13 declares engines node ^12.20.2 || ^14.15.0 || >=16.10.0, and Angular 13 dropped Node 12 support mid-line. Node 16 is therefore both the repository's statement and the era-consistent choice.",
+      "ambiguityPreserved": true,
+      "ambiguityNote": "The patch level is not pinned by anything in the repository. 16.20.2 was chosen as the final release of the Node 16 line; that choice is this unit's, not upstream's."
+    },
+    "used": {
+      "node": "16.20.2",
+      "platform": "darwin-arm64",
+      "url": "https://nodejs.org/dist/v16.20.2/node-v16.20.2-darwin-arm64.tar.gz",
+      "sha256": "6a5c4108475871362d742b988566f3fe307f6a67ce14634eb3fbceb4f9eea88c",
+      "bytes": 29989231,
+      "digestVerifiedAgainstOfficialShasums": true,
+      "shasumsUrl": "https://nodejs.org/dist/v16.20.2/SHASUMS256.txt",
+      "shasumsSha256": "c99843072b4df7216637a564e6c87da53cb2cf55cee6bf95cdda301143f6b7ca",
+      "acquiredByThisUnit": true,
+      "acquisitionNote": "No Node 16 runtime existed in this workspace, so one was acquired under the same consent id and ledgered like any other request. The tarball's digest was compared against the entry for the same filename in the release SHASUMS256.txt before it was extracted or executed.",
+      "reportedNodeVersion": "v16.20.2",
+      "packageManager": "npm 8.19.4 (bundled with the runtime)",
+      "translationLayer": "none — a native arm64 build on a darwin-arm64 host; no Rosetta 2 involved",
+      "honestLabel": "repository-pinned as to major, era-consistent as to patch. The .nvmrc says 16 and the cell is Node 16; the patch level 16.20.2 is this unit's selection.",
+      "engineDeviationRecorded": "none observed: npm emitted no unsupported-engine error during the install."
+    },
+    "environment": {
+      "NG_CLI_ANALYTICS": "false",
+      "CI": "true",
+      "analyticsNote": "angular.json already sets cli.analytics to false at the pinned revision, so the CLI would not have reported in any case. NG_CLI_ANALYTICS=false was set anyway, belt and braces.",
+      "isolation": "HOME and npm_config_cache were redirected into the git-ignored baseline cache so the install could not read or write the host's npm state"
+    }
+  },
+  "install": {
+    "command": "npm ci --no-audit --no-fund",
+    "ciVariantAvailable": true,
+    "ciVariantReason": "A package-lock.json (lockfileVersion 2, 2747 entries, every entry carrying an integrity hash, every resolution on registry.npmjs.org) is committed at the pinned revision, so the reproducible install path exists and was the one taken.",
+    "lifecycleScripts": "enabled",
+    "lifecycleScriptsNote": "Left enabled because the closure carries no native compilation step that needed suppressing; nothing in the tree is node-sass-shaped. husky's prepare hook is configured under a `husky` key rather than as a script and did not run.",
+    "outcome": "succeeded",
+    "exitStatus": 0,
+    "durationMs": 17455,
+    "packagesInstalled": 2729,
+    "networkHosts": ["registry.npmjs.org"],
+    "observed": {
+      "deprecationWarnings": "17 npm WARN deprecated lines, all for transitive packages of the 2022-era toolchain (request, tslint, chokidar 2, fsevents 1, uuid 3, har-validator, sane, source-map-resolve, urix, resolve-url, querystring, ini)",
+      "unsupportedEngineErrors": 0,
+      "nativeBuildFailures": "none observed",
+      "vulnerabilityAudit": "not run (--no-audit)"
+    }
+  },
+  "build": {
+    "command": "npx ng build --configuration production",
+    "commandChoiceNote": "The repository's own `build` script is `ng build --sourceMap=true`, which carries no --configuration flag; angular.json declares no defaultConfiguration, so that script does not build the production configuration. The production configuration was therefore invoked explicitly, and the repository's own script was run separately and recorded below.",
+    "expands": "@angular-builders/custom-webpack:browser with the production configuration — Ivy AOT, optimization, output hashing, extractLicenses, the environment.prod.ts file replacement and the src/index.prod.html index",
+    "matchesUpstream": "unknown — the repository commits no CI workflow and no deploy script at the pinned revision. src/_redirects and the README's Netlify reference indicate Netlify deployment, but the build command Netlify was configured with is not in the tree.",
+    "outcome": "failed",
+    "exitStatus": 1,
+    "durationMs": 1055,
+    "failure": {
+      "stage": "builder schema validation, before any compilation began",
+      "diagnostic": "Schema validation failed with the following errors:\n  Data path \"\" must NOT have additional properties(extractCss).",
+      "cause": "angular.json's production configuration sets \"extractCss\": true. That option was deprecated in Angular 11, made a no-op in 12, and removed from the browser builder schema in 13 — the very major this revision pins. The committed production configuration is therefore invalid against the builder the same commit pins.",
+      "rootCause": "An upstream configuration defect at the pinned revision, not an acquisition defect: nothing was missing, corrupted, or unfetched. The revision is internally inconsistent.",
+      "notAFailureOf": "not a failure of the acquired archive, of the committed lockfile, of the Node 16 cell, or of the dependency install.",
+      "howUpstreamPlausiblyMissedIt": "the repository's own `build` script never passes --configuration production, so the invalid key is never read by the command the repository itself documents. Recorded as an inference about upstream, not as a finding about upstream's intent."
+    }
+  },
+  "secondObservationRepositoryOwnScript": {
+    "honestLabel": "not the production build and not a deviation — the repository's own build script, run against unmodified source",
+    "command": "npm run build",
+    "expands": "ng build --sourceMap=true, with no configuration selected",
+    "sourceModified": false,
+    "outcome": "succeeded",
+    "exitStatus": 0,
+    "durationMs": 13502,
+    "output": {
+      "distFiles": 32,
+      "distBytes": 17688496,
+      "initialTotalRaw": "1.01 MB",
+      "initialTotalTransfer": "238.74 kB",
+      "mainBundleRaw": "636.59 kB",
+      "lazyChunks": "project-project-module 426.19 kB, quill 209.68 kB, work-in-progress 2.76 kB",
+      "buildTime": "12307ms as reported by the CLI"
+    },
+    "whatThisIsNot": "This build applies neither the environment.prod.ts file replacement nor the src/index.prod.html index, and emits no output hashing, because none of that lives in the base options. It establishes that the application source compiles and bundles under the pinned toolchain. It does not establish that the production configuration works.",
+    "distDifferenceNote": "32 files against the production build's 24: the base options leave sourceMap=true on, so this output additionally carries .js.map files."
+  },
+  "deviation": {
+    "attempted": true,
+    "honestLabel": "deviation — not the baseline; one key was deleted from the committed configuration in the git-ignored working tree after the fact",
+    "change": "Deleted the single key \"extractCss\": true from projects.frontend.architect.build.configurations.production in angular.json, in the baseline working tree only, and re-ran `npx ng build --configuration production` with no other change.",
+    "sourceArchiveModified": false,
+    "dependencyClosureChanged": false,
+    "applicationCodeChanged": false,
+    "why": "To establish whether that one removed option is the whole of the production failure, or only the first of several. It is the whole of it.",
+    "buildExitStatus": 0,
+    "buildDurationMs": 10539,
+    "outcome": "succeeded",
+    "output": {
+      "distFiles": 24,
+      "distBytes": 9481555,
+      "initialTotalRaw": "1.01 MB",
+      "initialTotalTransfer": "238.99 kB",
+      "mainBundleRaw": "636.55 kB",
+      "stylesBundleRaw": "152.76 kB",
+      "polyfillsRaw": "36.22 kB",
+      "lazyChunks": "project-project-module 426.16 kB, quill 209.65 kB, work-in-progress 2.73 kB",
+      "outputHashing": "all — every emitted bundle is content-hashed",
+      "thirdPartyLicensesEmitted": "dist/3rdpartylicenses.txt",
+      "assetsCopied": "dist/assets (including assets/data/project.json and auth.json) and dist/_redirects",
+      "budgetsExceeded": "none reported",
+      "warnings": "two postcss warnings about nested CSS in navigation and sidebar SCSS, advising a CSS nesting plugin before Tailwind. Non-fatal and emitted by both successful builds.",
+      "sizeNote": "Most of the 9.5 MB of output is the copied src/assets README GIFs, not JavaScript."
+    },
+    "stopped": "after one deviation, which resolved the observed failure completely."
+  },
+  "conclusion": {
+    "installs": "yes, from the committed lockfileVersion 2 via npm ci in the Node 16.20.2 / npm 8.19.4 cell",
+    "buildsAsAcquiredWithProductionConfiguration": "no — the committed production configuration carries \"extractCss\", removed from the Angular 13 browser builder schema, and the build fails schema validation in about a second",
+    "buildsAsAcquiredWithTheRepositorysOwnScript": "yes — `npm run build` compiles and bundles the unmodified source, exit 0",
+    "buildsWithTheOneInvalidKeyRemoved": "yes — a full AOT production build with output hashing, exit 0, 24 dist files",
+    "reproducibilityPosture": "strong for dependencies (complete lockfileVersion 2, every entry integrity-hashed, all 2747 resolutions on registry.npmjs.org) and strong for source (the tree is self-contained: no Git LFS, no missing payloads, nothing fetched to complete it)",
+    "whatLaterWorkMustCarry": "any later unit that wants a production-configured build of this fixture must either drop the extractCss key or invoke a configuration that does not read it; the repository's own script builds unmodified.",
+    "unknownPreserved": "Nothing here establishes that any built bundle runs correctly in a browser; no browser was driven by this unit."
+  },
+  "artifacts": {
+    "workingTree": ".versionless/cache/angular-jira-clone-baseline/app (git-ignored)",
+    "installLog": ".versionless/cache/angular-jira-clone-baseline/install.stdout.log, install.stderr.log (git-ignored)",
+    "baselineBuildLog": ".versionless/cache/angular-jira-clone-baseline/build.stdout.log, build.stderr.log (git-ignored)",
+    "repositoryScriptBuildLog": ".versionless/cache/angular-jira-clone-baseline/repo-script-build.stdout.log, .stderr.log (git-ignored)",
+    "deviationBuildLog": ".versionless/cache/angular-jira-clone-baseline/deviation-build.stdout.log, .stderr.log (git-ignored)",
+    "machineReadableResults": "evidence/ingests/angular-jira-clone/baseline-result.json and build-followups.json, written by the drivers themselves",
+    "buildOutputProduced": true,
+    "note": "Full logs are retained in the git-ignored cache rather than copied into evidence, because they carry host-absolute paths. The quoted diagnostics above were transcribed with those paths removed."
+  },
+  "nonclaims": [
+    "A successful install establishes no dependency licence position.",
+    "A successful build establishes no browser behavior, journey exercisability, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "The production-configuration failure is a finding about the pinned revision as acquired, not a claim that the application is unbuildable — two builds of the same source succeeded."
+  ]
+}

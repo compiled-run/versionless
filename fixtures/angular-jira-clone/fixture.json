@@ -1,0 +1,98 @@
+{
+  "id": "angular-jira-clone",
+  "tranche": "Angular tranche one",
+  "unit": "lrapr-t005/a2-ingest-jira-clone",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "evidenceRoot": "evidence/ingests/angular-jira-clone",
+  "application": {
+    "name": "Jira Clone",
+    "manifestName": "jira-clone-angular-frontend",
+    "version": "1.0.0",
+    "versionNote": "the manifest version as found; the repository's own release line at this date is v2.x",
+    "description": "A simplified Jira clone: drag-and-drop kanban board, issue detail with rich-text description and threaded comments, cross-project search, project settings",
+    "license": "MIT",
+    "licenseFieldInManifest": "absent — the grant is the root LICENSE file",
+    "backend": "none — static single-page application; seed data at src/assets/data/{project,auth}.json is fetched same-origin and all mutations are in-memory Akita state that does not survive a reload"
+  },
+  "source": {
+    "repository": "trungvose/jira-clone-angular",
+    "commitSha": "059455b9933a236456524925065bce2c295e2d9a",
+    "commitDate": "2022-03-13T03:42:33Z",
+    "rootTreeSha": "d5a79170609bb7b135a4c146a4565b3e7d53a92b",
+    "pinIsBareSha": true,
+    "pinNote": "Never pin the v2.0.0 tag: its tree carries no LICENSE. This commit — subject \"feat: add LICENSE file after accidentally removed\" — is four days later and restores it.",
+    "archiveUrl": "https://codeload.github.com/trungvose/jira-clone-angular/tar.gz/059455b9933a236456524925065bce2c295e2d9a",
+    "archiveSha256": "d913ad5d4686b6a236799166c7c781f624b3901a1826304e00c36eca82896bc5",
+    "archiveBytes": 8048993,
+    "archiveRoot": "jira-clone-angular-059455b9933a236456524925065bce2c295e2d9a",
+    "normalizedManifestSha256": "f7f3a188bedde5719c369c1b0ce7a8a6ca5588cc50a4fb0dfb2fe8cf08a5ad8a",
+    "licenseSha256": "c45956b16a34a9e0c74a93163f497174e373623333e47ce3251b4d0107120b09",
+    "packageSha256": "b029c486ab0eeffac9c311cc00bad782f9203b512c094f873390f8320db18a6f",
+    "packageLockSha256": "63d73b3f3cfddc8a5156c637d0039f206514c15f4a77e72ef9159b0dda630ecb",
+    "angularJsonSha256": "65690a1cb9f1d916179bd7a4f9f37b64aca840eeeca0f7ae38fee137370e7a70",
+    "webpackConfigSha256": "4d8ef1e0a99488118ac585d4aaaf29c5a1b1f324ad2d9316c9cda32c4e9ab2cf",
+    "nvmrcSha256": "e6c21e8d260fe71882debdb339d2402a2ca7648529bc2303f48649bce0380017"
+  },
+  "gitLargeFileStorage": {
+    "required": false,
+    "checked": true,
+    "gitattributesPresent": false,
+    "pointerFiles": 0,
+    "note": "Checked before trusting any asset, on the factoriolab lane's lesson. The tree is self-contained: no LFS routing, no pointer stubs, nothing to materialise."
+  },
+  "toolchain": {
+    "framework": "Angular 13.2.4",
+    "cli": "@angular/cli 13.2.5",
+    "builder": "@angular-builders/custom-webpack:browser 13.1.0 over @angular-devkit/build-angular 13.2.5",
+    "customWebpackConfig": "./webpack.config.js — one postcss-loader rule routing .scss through postcss-import, tailwindcss and autoprefixer",
+    "bundler": "webpack 5",
+    "compiler": "Ivy, AOT",
+    "typescript": "4.5.5",
+    "state": "@datorama/akita 7.1.1",
+    "componentLibrary": "ng-zorro-antd 13",
+    "styling": "Tailwind CSS 3 over SCSS",
+    "editor": "ngx-quill 16 over quill 1.3.7",
+    "packageManager": "npm, package-lock.json lockfileVersion 2 (2747 entries, all integrity-hashed, all on registry.npmjs.org)"
+  },
+  "legacyCell": {
+    "node": "16.20.2",
+    "platform": "darwin-arm64 (native; no Rosetta 2)",
+    "npm": "8.19.4",
+    "source": ".nvmrc pins the major (\"16\"); the patch level is this ingest's choice and the runtime digest was verified against nodejs.org SHASUMS256.txt",
+    "label": "repository-pinned as to major, era-consistent as to patch",
+    "environment": { "NG_CLI_ANALYTICS": "false" }
+  },
+  "baseline": {
+    "install": { "command": "npm ci --no-audit --no-fund", "outcome": "succeeded", "exitStatus": 0, "packagesInstalled": 2729 },
+    "productionBuildAsAcquired": {
+      "command": "npx ng build --configuration production",
+      "outcome": "failed",
+      "exitStatus": 1,
+      "reason": "builder schema validation: angular.json's production configuration sets \"extractCss\", removed from the Angular 13 browser builder schema"
+    },
+    "repositoryOwnBuildScript": {
+      "command": "npm run build",
+      "expands": "ng build --sourceMap=true (no configuration selected)",
+      "sourceModified": false,
+      "outcome": "succeeded",
+      "exitStatus": 0,
+      "distFiles": 32
+    },
+    "productionBuildWithOneKeyRemoved": {
+      "command": "npx ng build --configuration production",
+      "labeled": "deviation — extractCss deleted from angular.json in the git-ignored working tree only",
+      "outcome": "succeeded",
+      "exitStatus": 0,
+      "distFiles": 24
+    },
+    "detail": "evidence/ingests/angular-jira-clone/baseline-attempt.json"
+  },
+  "knownHazardsForLaterUnits": [
+    "A production-configured build needs the extractCss key dropped; the repository's own build script builds unmodified but applies neither the environment.prod.ts replacement nor the src/index.prod.html index.",
+    "The application initialises Sentry (hard-coded DSN in src/main.ts) and Google Analytics (hard-coded id in core/services/google-analytics.service.ts) at bootstrap. Serving it unmodified reports to the upstream author's properties.",
+    "No state persists: every journey restarts from src/assets/data/project.json on reload."
+  ],
+  "nonclaims": [
+    "This manifest records an acquired identity and one baseline attempt. It establishes no browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval."
+  ]
+}

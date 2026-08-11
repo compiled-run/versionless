@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-reconciliation.v1",
+  "slug": "angular-jira-clone",
+  "method": "Every regular file in the extracted archive was hashed as a git blob object and compared byte-for-byte against the sha recorded for the same path in the recursive git tree at the pinned revision.",
+  "singleRoot": "jira-clone-angular-059455b9933a236456524925065bce2c295e2d9a",
+  "rootCount": 1,
+  "archiveEntries": 326,
+  "directories": 76,
+  "regularFiles": 250,
+  "specialEntries": 0,
+  "pathTraversalEntries": 0,
+  "absolutePathEntries": 0,
+  "gitBlobs": 250,
+  "extractedFiles": 250,
+  "missingFiles": 0,
+  "extraFiles": 0,
+  "mismatchedBlobs": 0,
+  "missing": [],
+  "extra": [],
+  "mismatched": [],
+  "normalizedManifestSha256": "f7f3a188bedde5719c369c1b0ce7a8a6ca5588cc50a4fb0dfb2fe8cf08a5ad8a",
+  "archiveMatchesGitTree": true
+}

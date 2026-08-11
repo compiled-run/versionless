@@ -1,0 +1,75 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-closure.v1",
+  "slug": "angular-jira-clone",
+  "unit": "lrapr-t005/a2-ingest-jira-clone",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "revision": {
+    "repository": "trungvose/jira-clone-angular",
+    "commitSha": "059455b9933a236456524925065bce2c295e2d9a"
+  },
+  "lockState": {
+    "committedLockfile": "package-lock.json",
+    "lockfileVersion": 2,
+    "lockfileVersionRecordedAsFound": true,
+    "gitBlobSha": "eeed3fccce6492e20e7c951b180bb2ece014dfca",
+    "bytes": 2297112,
+    "sha256": "63d73b3f3cfddc8a5156c637d0039f206514c15f4a77e72ef9159b0dda630ecb",
+    "yarnLock": "absent",
+    "npmShrinkwrap": "absent",
+    "packageManager": "npm (lockfileVersion 2 is the npm 7/8 hybrid format: a `packages` map plus a back-compatible `dependencies` block, both present here)",
+    "rootFieldsAgreeWithManifest": true,
+    "rootFieldsNote": "The lockfile root reads name jira-clone-angular-frontend, version 1.0.0, which is exactly what package.json declares. No drift between the two files."
+  },
+  "closure": {
+    "totalEntries": 2747,
+    "devEntries": 2442,
+    "productionEntries": 305,
+    "linkEntries": 0,
+    "entriesWithoutIntegrityHash": 0,
+    "resolvedHosts": { "registry.npmjs.org": 2747 },
+    "gitOrTarballDependencies": 0,
+    "directDependencies": 25,
+    "directDevDependencies": 45,
+    "installedPackagesReportedByNpmCi": 2729,
+    "closureIsFullyPinned": true,
+    "countReconciliation": "The lockfile's `packages` map holds 2747 non-root entries; npm reported \"added 2729 packages\". The 18-entry difference is npm not installing entries it skips on this platform (optional and os/cpu-gated packages, notably the fsevents variants and other platform-specific binaries). Both numbers are recorded as observed rather than reconciled to one.",
+    "devSkewNote": "The dev/production split is read from the lockfile's own `dev` flags. It is lopsided because the Angular 13 build toolchain, Storybook 6, compodoc, karma, protractor, eslint and tslint are all devDependencies, while the shipped application draws on 25 direct runtime packages.",
+    "misplacedDependencyNote": "karma-coverage ^2.0.3 is declared under `dependencies` rather than `devDependencies` in package.json. It is a test-coverage reporter and is not imported by application code; recorded as found, not corrected."
+  },
+  "frameworkAndToolchain": {
+    "framework": "Angular 13",
+    "declaredAngularPackages": "~13.2.4 for @angular/{animations,common,compiler,core,forms,platform-browser,platform-browser-dynamic,router}, with @angular/cdk ^13.2.4",
+    "declaredAngularCli": "~13.2.5",
+    "declaredBuildAngular": "~13.2.5 (@angular-devkit/build-angular)",
+    "builder": "@angular-builders/custom-webpack:browser ^13.1.0 for build, @angular-builders/custom-webpack:dev-server for serve",
+    "customWebpackConfig": "./webpack.config.js at the repository root — a single rule that routes .scss through postcss-loader with postcss-scss syntax and the postcss-import / tailwindcss / autoprefixer plugin chain. This is why the build goes through the custom-webpack builder rather than the stock devkit browser builder.",
+    "bundler": "webpack 5 (the bundler @angular-devkit/build-angular 13 wraps)",
+    "compiler": "Ivy with aot:true declared in angular.json build options",
+    "typescript": "~4.5.5",
+    "rxjs": "~6.6.3",
+    "zoneJs": "~0.11.4",
+    "componentLibrary": "ng-zorro-antd ^13.1.0 with @ant-design/icons-angular ^13.1.0",
+    "stateLibrary": "@datorama/akita ^7.1.1 with @datorama/akita-ng-entity-service ^7.0.0; akita-ng-router-store and akita-ngdevtools in dev. angular.json sets cli.defaultCollection to @datorama/akita.",
+    "styling": "Tailwind CSS ^3.0.12 via @ngneat/tailwind ^7.0.3 and postcss-loader, over SCSS; an 11 KB tailwind.config.js is committed",
+    "editor": "ngx-quill ^16.1.2 over quill ^1.3.7, with quill's CSS and minified script pulled in through angular.json styles/scripts",
+    "otherRuntime": "@ngneat/until-destroy, @ngneat/content-loader, date-fns, @sentry/angular + @sentry/tracing",
+    "testStack": "karma ~6.3.16 + jasmine 4 (unit, 25 spec files), protractor ~7.0.0 skeleton (e2e)",
+    "componentWorkshop": "Storybook 6 for Angular with 4 committed .stories.ts files, plus compodoc; documentation.json (460 KB of generated compodoc output) is committed at the repository root",
+    "linter": "@angular-eslint 13 with eslint 8 and @typescript-eslint 5; tslint 6 and codelyzer 6 are also still declared alongside them"
+  },
+  "backend": {
+    "present": false,
+    "evidence": "The tree contains no server source, no Dockerfile and no compose file. src/environments/environment.ts and environment.prod.ts both set apiUrl to the relative path '/assets/data', with the previous absolute hosts (http://localhost:3000 and a Heroku URL) left commented out beside them. The seed data ships as src/assets/data/project.json (26,160 bytes) and src/assets/data/auth.json (272 bytes) and is copied into dist by the angular.json assets rule.",
+    "networkAtRuntime": "same-origin GETs of /assets/data/project.json and /assets/data/auth.json; all mutations after load are in-memory Akita store updates that are not persisted anywhere",
+    "thirdPartyEndpointsAtRuntime": "the application also initialises Sentry and Google Analytics at bootstrap, which contact ingest.sentry.io and Google endpoints when served. See license.json embeddedThirdPartyIdentifiers and the recorded risk in admission.json."
+  },
+  "assetSelfContainment": {
+    "gitLargeFileStorage": "absent — no .gitattributes, no pointer stubs; see lfs.json",
+    "declaredAssetPathMissing": "angular.json lists \"src/data\" in the build assets array, but no src/data directory exists at the pinned revision. Angular 13 tolerated this: both successful builds below emitted no error or warning naming that path. Recorded as an inert inconsistency in the committed configuration.",
+    "consequence": "the acquired tree is self-contained for building; nothing had to be fetched to complete it"
+  },
+  "nonclaims": [
+    "A complete, integrity-hashed lockfile establishes that the dependency set is pinned. It establishes nothing about whether those versions are still fetchable, whether they build, or what they are licensed under.",
+    "No licence determination is made for any dependency in this closure."
+  ]
+}

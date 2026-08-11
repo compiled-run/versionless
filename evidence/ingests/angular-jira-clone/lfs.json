@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-lfs.v1",
+  "slug": "angular-jira-clone",
+  "unit": "lrapr-t005/a2-ingest-jira-clone",
+  "checkedBeforeTrustingAssets": true,
+  "checkPrompt": "The sibling factoriolab ingest (lrapr-t005/a1) found LFS pointer stubs in its archive, which broke its unmodified baseline build. This unit therefore reads .gitattributes at the pinned revision and scans every extracted blob for a pointer header before assuming any asset ships in-tree.",
+  "gitattributesPresent": false,
+  "gitattributesText": null,
+  "lfsFilterRoutes": [],
+  "pointerFilesFound": 0,
+  "pointers": [],
+  "payloadsRequired": false,
+  "materialisation": "not applicable: no Git LFS pointer stub exists in the archive, so the pinned tree carries its assets in full"
+}
