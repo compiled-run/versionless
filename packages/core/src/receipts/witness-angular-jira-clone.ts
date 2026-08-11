@@ -112,24 +112,43 @@ export const WITNESS_ANGULAR_JIRA_CLONE_FAILED_REQUESTS = Object.freeze({
  * Every seam this application reaches for outside the bounded loopback origin,
  * pinned query-free, per {@link WITNESS_NON_LOOPBACK_QUERY_FREE_PATH_RULE}.
  *
- * Eight endpoints: the analytics tag the production document loads, the six
- * distinct avatar images the seeded board renders, and the error-reporting
- * envelope the application's bootstrap opens. Each is answered by the harness
- * inside the browser context, so none of them leaves the machine and
+ * Ten endpoints: the analytics tag the production document loads, the six
+ * distinct avatar images the seeded board renders, the error-reporting envelope
+ * the application's bootstrap opens, and the two animated images embedded in
+ * the seeded description of the issue the journey opens. Each is answered by the
+ * harness inside the browser context, so none of them leaves the machine and
  * `successfulNonLoopback` stays zero.
+ *
+ * The last two are worth naming rather than lumping in with the avatars,
+ * because they are reached at a different moment and for a different reason.
+ * The seeded project document ships an issue whose description is authored HTML
+ * carrying two `<img>` elements pointing at a public repository's raw files, and
+ * the browser fetches them the instant the issue modal renders that description
+ * — which is a thing the journey asserts, so these two requests are not
+ * incidental traffic but a consequence of the proof itself.
  *
  * Not one of these paths carries a query string, and that is a construction
  * rather than a coincidence: the analytics measurement id and the
  * error-reporting public key both live in the query of the requests the
  * application actually issues, and a published receipt has no business
  * carrying either. What identifies the seam is the endpoint, and the endpoint
- * is here in full.
+ * is here in full. The two image endpoints are query-free for the same reason
+ * and by the same rule, and in their case the endpoint is the whole request.
+ *
+ * The members are listed in the one canonical order the harness's inventory
+ * builder emits — each entry sorted by its canonical `{method, path}` form —
+ * because the published inventory is compared to this list exactly. Declaring
+ * the same ten endpoints in a different order is a different pin, and it fails.
  */
 export const WITNESS_ANGULAR_JIRA_CLONE_MOCKED_SEAMS = Object.freeze({
 	baseline: Object.freeze([
 		Object.freeze({
 			method: 'GET',
-			path: 'https://www.googletagmanager.com/gtag/js',
+			path: 'https://github.com/trungk18/angular-spotify/raw/main/libs/web/shared/assets/src/assets/readme/angular-spotify-demo-short.gif',
+		}),
+		Object.freeze({
+			method: 'GET',
+			path: 'https://github.com/trungk18/angular-spotify/raw/main/libs/web/shared/assets/src/assets/readme/angular-spotify-visualization.gif',
 		}),
 		Object.freeze({
 			method: 'GET',
@@ -154,6 +173,10 @@ export const WITNESS_ANGULAR_JIRA_CLONE_MOCKED_SEAMS = Object.freeze({
 		Object.freeze({
 			method: 'GET',
 			path: 'https://res.cloudinary.com/dvujyxh7e/image/upload/c_scale,w_48/v1593253478/trung-vo_bioxmc.png',
+		}),
+		Object.freeze({
+			method: 'GET',
+			path: 'https://www.googletagmanager.com/gtag/js',
 		}),
 		Object.freeze({
 			method: 'POST',
@@ -163,7 +186,11 @@ export const WITNESS_ANGULAR_JIRA_CLONE_MOCKED_SEAMS = Object.freeze({
 	migrated: Object.freeze([
 		Object.freeze({
 			method: 'GET',
-			path: 'https://www.googletagmanager.com/gtag/js',
+			path: 'https://github.com/trungk18/angular-spotify/raw/main/libs/web/shared/assets/src/assets/readme/angular-spotify-demo-short.gif',
+		}),
+		Object.freeze({
+			method: 'GET',
+			path: 'https://github.com/trungk18/angular-spotify/raw/main/libs/web/shared/assets/src/assets/readme/angular-spotify-visualization.gif',
 		}),
 		Object.freeze({
 			method: 'GET',
@@ -188,6 +215,10 @@ export const WITNESS_ANGULAR_JIRA_CLONE_MOCKED_SEAMS = Object.freeze({
 		Object.freeze({
 			method: 'GET',
 			path: 'https://res.cloudinary.com/dvujyxh7e/image/upload/c_scale,w_48/v1593253478/trung-vo_bioxmc.png',
+		}),
+		Object.freeze({
+			method: 'GET',
+			path: 'https://www.googletagmanager.com/gtag/js',
 		}),
 		Object.freeze({
 			method: 'POST',
@@ -251,19 +282,30 @@ export const WITNESS_ANGULAR_JIRA_CLONE_SERVICE_WORKER = Object.freeze({
 });
 
 /**
- * The two distinct routes the journey ever occupies, in the order it first
- * reaches them.
+ * The one distinct route the journey ever occupies.
  *
- * The application redirects its root to the board and then never leaves it —
- * opening an issue, editing its title, creating an issue and filtering the
- * board are all modal or in-place surfaces that change no URL. Pinning the
- * distinct sequence rather than a literal array is what lets the reload at the
- * end of the journey re-record the board route without weakening the claim:
- * the verifier requires the first navigation to be the root, every later one to
- * be the board, and nothing else to appear at all. A modal that started pushing
- * a route, or an interaction that navigated away, fails here.
+ * The root is deliberately absent, and its absence is a fact about the harness
+ * rather than about this application. What the record calls a route is a
+ * navigation the page made *after* the initial document load; the document the
+ * journey opens is never itself one of them. The root is where that document is
+ * requested, and the router redirects it to the board before any navigation is
+ * recorded, so the root is a redirect that is never a recorded navigation and
+ * can never appear in this list. The already-published factoriolab and
+ * HospitalRun receipts record the same idiom — their first entry is the route
+ * their application redirected *to*, not the URL the journey opened.
+ *
+ * What is left, then, is the whole truth about where this application goes:
+ * nowhere. Opening an issue, editing its title, creating an issue and filtering
+ * the board are all modal or in-place surfaces that change no URL. The measured
+ * sequence is the board route three times over — the router's redirect on first
+ * boot, the journey's one real document reload, and the router's redirect again
+ * as the reloaded application boots — and the verifier demands exactly that
+ * shape: every recorded navigation is the board route, and the distinct set is
+ * exactly this list. A modal that started pushing a route of its own, or an
+ * interaction that navigated away, appears here as a route outside the pin and
+ * fails.
  */
-export const WITNESS_ANGULAR_JIRA_CLONE_ROUTES = Object.freeze(['/', '/project/board']);
+export const WITNESS_ANGULAR_JIRA_CLONE_ROUTES = Object.freeze(['/project/board']);
 
 /**
  * The filter term the journey types and the exact per-column issue counts the
@@ -995,21 +1037,21 @@ function assertRenderedStyles(
 }
 
 /**
- * The route sequence, checked as a shape rather than as a literal array: the
- * journey enters at the root, the application redirects to the board, and every
- * later navigation — including the reload at the end — is that same board
- * route. A modal that pushed a route of its own, or an interaction that
- * navigated away, appears here as a route outside the pinned pair and fails.
+ * The route sequence, checked as a shape rather than as a literal array: every
+ * navigation the page recorded is the board route, and the set of distinct
+ * routes is exactly the pinned one. The root never appears because it is a
+ * redirect rather than a recorded navigation, as
+ * {@link WITNESS_ANGULAR_JIRA_CLONE_ROUTES} sets out. A modal that pushed a
+ * route of its own, or an interaction that navigated away, appears here as a
+ * route outside the pin and fails; so does a run that navigated nowhere at all,
+ * because the redirect and the reload each have to show up.
  */
 function assertRoutes(routes: string[] | undefined, label: string): void {
-	const distinct = (routes ?? []).filter(
-		(route, index) => index === 0 || route !== routes![index - 1],
-	);
+	const distinct = [...new Set(routes ?? [])];
 	if (
 		routes === undefined ||
 		routes.length < 2 ||
-		routes[0] !== WITNESS_ANGULAR_JIRA_CLONE_ROUTES[0] ||
-		routes.slice(1).some((route) => route !== WITNESS_ANGULAR_JIRA_CLONE_ROUTES[1]) ||
+		routes.some((route) => route !== WITNESS_ANGULAR_JIRA_CLONE_ROUTES[0]) ||
 		!exact(distinct, WITNESS_ANGULAR_JIRA_CLONE_ROUTES)
 	)
 		throw new Error(`Angular jira-clone route sequence differs: ${label}`);
@@ -1232,7 +1274,7 @@ export function renderWitnessAngularJiraCloneReceipt(
 - Build lanes: era ${receipt.buildLanes.baseline.angular} / ${receipt.buildLanes.baseline.builder} on ${receipt.buildLanes.baseline.node} (${receipt.buildLanes.baseline.distFiles} files) against migrated ${receipt.buildLanes.migrated.angular} / ${receipt.buildLanes.migrated.builder} on ${receipt.buildLanes.migrated.node} (${receipt.buildLanes.migrated.distFiles} files)
 - Bound build receipts: ${boundReceipts}
 - Journey: a genuine pointer drag that moves \`${journey.drag.issue}\` from ${journey.drag.from.column} to ${journey.drag.to.column} at index ${journey.drag.to.index}, an issue modal whose title edit survives closing and reopening the modal, an issue created through navbar item 3 that takes ${journey.createIssue.column} from ${journey.createIssue.rowsBefore} rows to ${journey.createIssue.rowsAfter}, a board filtered to ${journey.filter.narrowed.join('/')} on "${journey.filter.term}" and widened back to ${journey.filter.afterClear.join('/')} by a full clear gesture, a hovered avatar whose tooltip reads "${journey.tooltip.text}", and an online reload that brings the seeded board back
-- Routes: ${WITNESS_ANGULAR_JIRA_CLONE_ROUTES.join(' → ')}; every modal surface leaves the route alone
+- Routes: every recorded navigation is ${WITNESS_ANGULAR_JIRA_CLONE_ROUTES.join(' → ')}, ${receipt.runs[0]!.routes.length} of them (the router's redirect off the root, the reload, and the redirect again as the reloaded application boots); the root is a redirect rather than a recorded navigation and never appears, and every modal surface leaves the route alone
 - Tracked browser events, identical in every lane and pass: ${trackedEvents}
 - Persistence: board ${receipt.persistence.board}, browser storage ${receipt.persistence.browserStorage}, backend ${receipt.persistence.backend}, stubbed: ${String(receipt.persistence.stubbed)}, survives an online reload: ${String(receipt.persistence.survivesOnlineReload)}
 - Service worker: ${receipt.serviceWorker.state}; the context allowed registration and the application never attempted one, so zero registrations, controller, CacheStorage names and worker requests at three checkpoints in every pass

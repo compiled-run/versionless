@@ -194,8 +194,16 @@ describe('Angular jira-clone build lanes', () => {
 	});
 
 	it('never reproduces the application’s Sentry DSN or analytics id', async () => {
-		for (const name of await readdir(evidenceDirectory)) {
-			const text = await readFile(path.join(evidenceDirectory, name), 'utf8');
+		// Recursive on purpose: the witness vertical writes its journey and
+		// mutation artifacts into a subdirectory of this same evidence directory,
+		// and a redaction scan that only read the top level would stop covering
+		// exactly the records that carry the most observed request detail.
+		for (const entry of await readdir(evidenceDirectory, {
+			recursive: true,
+			withFileTypes: true,
+		})) {
+			if (!entry.isFile()) continue;
+			const text = await readFile(path.join(entry.parentPath, entry.name), 'utf8');
 			expect(text).not.toMatch(/https:\/\/[0-9a-f]{16,}@[\w.]*sentry\.io/i);
 			expect(text).not.toMatch(/\bUA-\d{4,}-\d+\b/);
 			expect(text).not.toMatch(/\bG-[A-Z0-9]{8,}\b/);

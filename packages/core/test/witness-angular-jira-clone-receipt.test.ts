@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { canonicalize } from '../src/receipts/canonicalize.ts';
 import {
 	ANGULAR_JIRA_CLONE_CANONICAL_RECEIPTS,
 	ANGULAR_JIRA_CLONE_FIXTURE,
@@ -115,8 +116,8 @@ const scrollAbsence = () => ({
 	state: 'measured-no-overflowing-document' as const,
 	viewport: { width: 1280, height: 720 },
 	routes: [
-		{ route: '/', scrollHeight: 720, clientHeight: 720 },
-		{ route: '/project/board', scrollHeight: 720, clientHeight: 720 },
+		{ route: '/project/board (loaded)', scrollHeight: 720, clientHeight: 720 },
+		{ route: '/project/board (after-reload)', scrollHeight: 720, clientHeight: 720 },
 	],
 	documentOverflow: 'the application pins the document to the viewport and scrolls inner panels',
 	claimed: false as const,
@@ -147,11 +148,11 @@ function run(lane: 'baseline' | 'migrated', pass: 1 | 2): WitnessAngularJiraClon
 		lane,
 		interactions,
 		assertions: ['the dragged issue settles in the target column'],
-		routes: ['/', '/project/board', '/project/board'],
+		routes: ['/project/board', '/project/board', '/project/board'],
 		trackedEvents: ['click', 'input', 'keydown', 'mouseover'],
 		witnessRecord: {
 			interactions,
-			navigationPaths: ['/', '/project/board', '/project/board'],
+			navigationPaths: ['/project/board', '/project/board', '/project/board'],
 			trackedEventCounts,
 			consoleErrors: 0,
 			pageErrors: 0,
@@ -385,6 +386,33 @@ describe('Angular jira-clone direct Witness schema', () => {
 		expect(renderWitnessAngularJiraCloneReceipt(drifted)).not.toBe(rendered);
 	});
 
+	it('renders a companion that is a function of the published bytes', () => {
+		// The tracked-event counts and the resolved style properties are objects
+		// whose keys the browser reported in its own order, and canonicalization
+		// sorts them. A companion rendered from the in-memory receipt would then
+		// disagree with the same companion rendered from the file it accompanies,
+		// which is the only form a verifier ever sees. Publishing must render from
+		// the round trip, and this is the assertion that says so.
+		const original = receipt();
+		const reported = { mouseover: 3, keydown: 33, input: 31, click: 11 };
+		original.trackedEvents = reported;
+		for (const entry of original.runs) entry.witnessRecord.trackedEventCounts = reported;
+		const sealed = resealedDeep(original);
+		const published = parseWitnessAngularJiraCloneReceipt(JSON.parse(canonicalize(sealed)));
+		// The hazard is real: rendering the object the browser filled in and
+		// rendering the file it was published as are not the same string.
+		expect(renderWitnessAngularJiraCloneReceipt(published)).not.toBe(
+			renderWitnessAngularJiraCloneReceipt(sealed),
+		);
+		// And rendering from the file is stable, which is what makes it the one
+		// form a publisher may write and a verifier may check.
+		expect(
+			renderWitnessAngularJiraCloneReceipt(
+				parseWitnessAngularJiraCloneReceipt(JSON.parse(canonicalize(published))),
+			),
+		).toBe(renderWitnessAngularJiraCloneReceipt(published));
+	});
+
 	it('names the aggregate member by the receipt it is bound to', () => {
 		const member = witnessAngularJiraCloneAggregateMember(digest('member-'));
 		expect(member.id).toBe('witness-angular-jira-clone');
@@ -412,7 +440,27 @@ describe('Angular jira-clone direct Witness schema', () => {
 
 	it('rejects a route sequence that a modal quietly pushed to', () => {
 		const copy = receipt();
-		copy.runs[0]!.routes = ['/', '/project/board', '/project/board/issue/SEED-1'];
+		copy.runs[0]!.routes = [
+			'/project/board',
+			'/project/board',
+			'/project/board/issue/SEED-1',
+		];
+		expect(() => parseWitnessAngularJiraCloneReceipt(resealedDeep(copy))).toThrow(
+			/route sequence differs/,
+		);
+	});
+
+	it('rejects a route sequence that reintroduces the root as a recorded navigation', () => {
+		const copy = receipt();
+		copy.runs[0]!.routes = ['/', '/project/board', '/project/board'];
+		expect(() => parseWitnessAngularJiraCloneReceipt(resealedDeep(copy))).toThrow(
+			/route sequence differs/,
+		);
+	});
+
+	it('rejects a run that recorded the board route only once, losing the reload', () => {
+		const copy = receipt();
+		copy.runs[0]!.routes = ['/project/board'];
 		expect(() => parseWitnessAngularJiraCloneReceipt(resealedDeep(copy))).toThrow(
 			/route sequence differs/,
 		);
@@ -537,12 +585,63 @@ describe('Angular jira-clone non-loopback seam evidence', () => {
 		const parsed = parseWitnessAngularJiraCloneReceipt(receipt());
 		for (const lane of ['baseline', 'migrated'] as const) {
 			const seams = parsed.mockedNonLoopbackSeams.category[lane];
-			expect(seams).toHaveLength(8);
+			expect(seams).toHaveLength(10);
 			for (const seam of seams) {
 				expect(seam.path).not.toContain('?');
 				expect(seam.path).not.toContain('#');
 			}
 		}
+	});
+
+	it('declares the two description images the issue modal renders, in both lanes', () => {
+		const parsed = parseWitnessAngularJiraCloneReceipt(receipt());
+		for (const lane of ['baseline', 'migrated'] as const) {
+			const images = parsed.mockedNonLoopbackSeams.category[lane].filter((seam) =>
+				seam.path.endsWith('.gif'),
+			);
+			expect(images.map((seam) => seam.path)).toEqual([
+				'https://github.com/trungk18/angular-spotify/raw/main/libs/web/shared/assets/src/assets/readme/angular-spotify-demo-short.gif',
+				'https://github.com/trungk18/angular-spotify/raw/main/libs/web/shared/assets/src/assets/readme/angular-spotify-visualization.gif',
+			]);
+			for (const image of images) expect(image.method).toBe('GET');
+		}
+	});
+
+	it('accounts for seam identity without pinning how many times a seam was requested', () => {
+		// Repeat counts are load timing: the browser may reuse a response it
+		// already holds for an image the board renders more than once, so two
+		// passes of the same lane can legitimately disagree. Identity is the pin;
+		// the count is a measurement, and a receipt that recorded a different one
+		// is still a receipt about the same seam.
+		const copy = receipt();
+		for (const entry of copy.runs)
+			for (const observed of entry.mockedNonLoopbackSeams.observed)
+				observed.requests = observed.requests + entry.pass;
+		expect(() => parseWitnessAngularJiraCloneReceipt(resealedDeep(copy))).not.toThrow();
+	});
+
+	it('still rejects a seam observation that claims it was never requested at all', () => {
+		const copy = receipt();
+		for (const entry of copy.runs)
+			for (const observed of entry.mockedNonLoopbackSeams.observed) observed.requests = 0;
+		expect(() => parseWitnessAngularJiraCloneReceipt(resealedDeep(copy))).toThrow(
+			/mocked non-loopback seam inventory differs/,
+		);
+	});
+
+	it('rejects a run that dropped one of the description images from its inventory', () => {
+		const copy = receipt();
+		for (const entry of copy.runs) {
+			entry.mockedNonLoopbackSeams.category = entry.mockedNonLoopbackSeams.category.filter(
+				(seam) => !seam.path.endsWith('-visualization.gif'),
+			);
+			entry.mockedNonLoopbackSeams.observed = entry.mockedNonLoopbackSeams.observed.filter(
+				(seam) => !seam.path.endsWith('-visualization.gif'),
+			);
+		}
+		expect(() => parseWitnessAngularJiraCloneReceipt(resealedDeep(copy))).toThrow(
+			/mocked non-loopback seam inventory differs/,
+		);
 	});
 
 	it('carries no recorded path with a query anywhere in any inventory of any run', () => {

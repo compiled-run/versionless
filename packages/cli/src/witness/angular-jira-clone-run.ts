@@ -317,7 +317,8 @@ export async function runWitnessAngularJiraClone(): Promise<WitnessAngularJiraCl
 			'Scroll is not claimed. Every stage of the journey was measured with the same generic viewport mechanism a scroll claim would use, and none of them produced a document taller than the 1280x720 viewport, because the application pins the document to the viewport and gives the board columns their own overflow.',
 			'Neither lane emits a single console error. That inventory is therefore empty, and empty is the strictest setting of that mechanism rather than a blanket allowance: any message at all lands outside the inventory and fails the run.',
 			'The exact failed-request inventory is empty in both lanes and every failed request still fails the run, with one named and corroborated exception that is a category rather than an allowance. The journey’s final gesture is an online reload, and the reload can tear down a page with an error-reporting envelope still in flight, which the browser cancels with `net::ERR_ABORTED`. Only that exact method, path and reason is in the category, it carries no count, and an instance is admitted only when the same page also delivered the same report successfully in the same run.',
-			'Every endpoint the application reaches for outside the bounded loopback origin is declared, and each one is answered by the harness inside the browser context, so none of them left the machine. The declared paths carry scheme, host and pathname only: the analytics measurement id and the error-reporting public key both live in the query, and the query is never recorded.',
+			'Every endpoint the application reaches for outside the bounded loopback origin is declared, and each one is answered by the harness inside the browser context, so none of them left the machine. The declared paths carry scheme, host and pathname only: the analytics measurement id and the error-reporting public key both live in the query, and the query is never recorded. Two of the ten are the animated images embedded in the seeded description of the issue the journey opens, fetched the moment the modal renders that description, which the journey asserts.',
+			'How many times a declared seam was requested is recorded per run as it was measured and is never pinned, and the two are not the same thing. The seam inventory is an accounting mechanism over endpoint identity: every declared endpoint must be observed or explicitly absent, nothing outside the inventory may be reached, and no request may succeed against a network. Repeat counts are load timing — the browser may reuse a response it already holds for an image the board renders more than once — so two passes of the same lane can legitimately record different counts for the same endpoint, and this receipt records what each pass actually did rather than a number the passes were made to agree on. What is required to agree, and does across every published pass, is the behavioral parity digest.',
 			'Neither build ships or registers a service worker. The browser context allowed registration and the application never attempted one, so the zero is the application’s own behavior rather than a policy imposed to produce it.',
 			'The two lanes emit different file names and different byte counts by construction, and the migration deliberately replaced the component library’s narrow style entry points with its single aggregate stylesheet. Byte parity across the lanes is not claimed here and is recorded separately by the bound build-parity receipt; what is claimed is that the seven rendered-appearance measurements are identical in both lanes.',
 			'Locality is process-scoped and does not establish operating-system-wide isolation.',
@@ -328,15 +329,25 @@ export async function runWitnessAngularJiraClone(): Promise<WitnessAngularJiraCl
 	receipt.integrity.canonicalDigest = witnessAngularJiraCloneDigest(receipt);
 	parseWitnessAngularJiraCloneReceipt(receipt);
 	await mkdir(witnessEvidence, { recursive: true });
-	await writeFile(join(witnessEvidence, 'receipt.json'), `${canonicalize(receipt)}\n`, {
-		flag: 'wx',
-	});
+	const canonical = canonicalize(receipt);
+	/**
+	 * The companion is rendered from the receipt as published rather than from
+	 * the object in memory, and the difference is not cosmetic. Canonicalization
+	 * sorts object keys, so the tracked-event counts and the resolved style
+	 * properties come back in a different order than the browser reported them.
+	 * A companion rendered from the in-memory object would therefore disagree
+	 * with the same companion rendered from the file, and `verify` — which only
+	 * ever has the file — would be right to reject it. Rendering from the
+	 * round trip makes the human receipt a function of the bytes it accompanies.
+	 */
+	const published = parseWitnessAngularJiraCloneReceipt(JSON.parse(canonical));
+	await writeFile(join(witnessEvidence, 'receipt.json'), `${canonical}\n`, { flag: 'wx' });
 	await writeFile(
 		join(witnessEvidence, 'receipt.md'),
-		renderWitnessAngularJiraCloneReceipt(receipt),
+		renderWitnessAngularJiraCloneReceipt(published),
 		{ flag: 'wx' },
 	);
-	return receipt;
+	return published;
 }
 
 export async function verifyWitnessAngularJiraClone(

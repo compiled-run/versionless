@@ -1,4 +1,7 @@
+import { readFile, stat } from 'node:fs/promises';
+import { join, resolve } from 'pathe';
 import { describe, expect, it } from 'vitest';
+import { canonicalize } from '../../core/src/receipts/canonicalize.ts';
 import {
 	WITNESS_ANGULAR_JIRA_CLONE_CANCELLED_DUPLICATE_FETCHES,
 	WITNESS_ANGULAR_JIRA_CLONE_CONSOLE_ERRORS,
@@ -11,6 +14,7 @@ import { main } from '../src/witness/angular-jira-clone-run.ts';
 import {
 	angularJiraCloneTransport,
 	angularJiraCloneWitnessSpec,
+	buildMockedNonLoopbackSeamInventory,
 	JIRA_CLONE_MUTATION_SEAM,
 } from '../src/witness/real-app-run.ts';
 
@@ -163,6 +167,48 @@ describe('jira-clone mocked non-loopback transport', () => {
 				).toBe(true);
 	});
 
+	it('declares the seams in the one order the inventory builder emits', () => {
+		// The published inventory is compared to the declared list exactly, and
+		// the builder emits its members sorted by canonical `{method, path}`.
+		// Declaring the same endpoints in any other order is a different pin, and
+		// it would fail only once a browser had already run.
+		for (const lane of ['baseline', 'migrated'] as const) {
+			const declared = WITNESS_ANGULAR_JIRA_CLONE_MOCKED_SEAMS[lane].map((seam) => ({
+				method: seam.method,
+				path: seam.path,
+			}));
+			const emitted = buildMockedNonLoopbackSeamInventory(
+				[],
+				'http://127.0.0.1:1',
+				WITNESS_ANGULAR_JIRA_CLONE_MOCKED_SEAMS[lane],
+			).category;
+			expect(canonicalize(declared)).toBe(canonicalize(emitted));
+		}
+	});
+
+	it('answers the two images the seeded issue description embeds', async () => {
+		for (const lane of ['baseline', 'migrated'] as const) {
+			const images = WITNESS_ANGULAR_JIRA_CLONE_MOCKED_SEAMS[lane].filter((seam) =>
+				seam.path.endsWith('.gif'),
+			);
+			expect(images).toHaveLength(2);
+			for (const image of images) {
+				const url = new URL(image.path);
+				expect(url.host).toBe('github.com');
+				expect(url.search).toBe('');
+				const decision = await angularJiraCloneTransport(
+					transportRequest({
+						protocol: `${url.protocol}`,
+						host: url.host,
+						pathname: url.pathname,
+						method: 'GET',
+					}),
+				);
+				expect(decision.action).toBe('fulfill');
+			}
+		}
+	});
+
 	it('never lets a request through to a network', async () => {
 		const decision = await angularJiraCloneTransport(
 			transportRequest({
@@ -184,6 +230,65 @@ describe('jira-clone mutation seam', () => {
 		// The drop list's id is `Selected`; this is what the application renders
 		// for it, and the reopened issue modal is where the journey reads it.
 		expect(JIRA_CLONE_MUTATION_SEAM.startsWith('Selected')).toBe(true);
+	});
+});
+
+describe('jira-clone published Witness receipts', () => {
+	const publishedDirectory = resolve(import.meta.dirname, '../../../evidence/runs/witness-angular-jira-clone');
+
+	it('publishes both canonical receipts', async () => {
+		for (const name of ['receipt.json', 'receipt.md'])
+			expect((await stat(join(publishedDirectory, name))).isFile()).toBe(true);
+	});
+
+	it('never reproduces the application’s Sentry DSN, analytics id or measurement id', async () => {
+		// The query-free path policy is what makes this structural rather than a
+		// filter: the identifiers live in the query of the requests the
+		// application issues, and no inventory in this receipt records a query.
+		// This is the assertion that says the construction actually held.
+		for (const name of ['receipt.json', 'receipt.md']) {
+			const text = await readFile(join(publishedDirectory, name), 'utf8');
+			expect(text).not.toMatch(/https:\/\/[0-9a-f]{16,}@[\w.]*sentry\.io/i);
+			expect(text).not.toMatch(/\bUA-\d{4,}-\d+\b/);
+			expect(text).not.toMatch(/\bG-[A-Z0-9]{8,}\b/);
+			expect(text).not.toContain('sentry_key');
+			expect(text).not.toContain('measurement_id');
+		}
+		// Every recorded path, wherever it sits in the record. A `?` in one of
+		// these is the only way an identifier could reach the file, and the
+		// seeded issue titles the board renders do contain question marks — so
+		// the assertion is about paths rather than about the bytes at large.
+		const recorded: string[] = [];
+		const walk = (value: unknown): void => {
+			if (Array.isArray(value)) for (const item of value) walk(item);
+			else if (value !== null && typeof value === 'object')
+				for (const [key, item] of Object.entries(value)) {
+					if (key === 'path' && typeof item === 'string') recorded.push(item);
+					else walk(item);
+				}
+		};
+		walk(JSON.parse(await readFile(join(publishedDirectory, 'receipt.json'), 'utf8')));
+		expect(recorded.length).toBeGreaterThan(0);
+		for (const path of recorded) {
+			expect(path).not.toContain('?');
+			expect(path).not.toContain('#');
+		}
+	});
+
+	it('publishes four runs that agree on one behavioral parity digest', async () => {
+		const receipt = JSON.parse(
+			await readFile(join(publishedDirectory, 'receipt.json'), 'utf8'),
+		) as { runs: { lane: string; pass: number; behaviorDigest: string; routes: string[] }[] };
+		expect(receipt.runs).toHaveLength(4);
+		expect(new Set(receipt.runs.map((run) => run.behaviorDigest)).size).toBe(1);
+		expect(receipt.runs.map((run) => `${run.lane}-${run.pass}`)).toEqual([
+			'baseline-1',
+			'baseline-2',
+			'migrated-1',
+			'migrated-2',
+		]);
+		for (const run of receipt.runs)
+			expect(new Set(run.routes)).toEqual(new Set(['/project/board']));
 	});
 });
 
