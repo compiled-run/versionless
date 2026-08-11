@@ -1,0 +1,620 @@
+{
+	"schemaVersion": "versionless.legacy-build-parity.v1",
+	"slug": "next-killedbygoogle-v3-0-0",
+	"unit": "lrapr-t006/u7-kbg-migration-lanes",
+	"consentId": "VL-LEGACY-CORPUS-2026-08-10",
+	"migrationClass": "LEGACY-NEXT",
+	"migrationClassNote": "The portfolio's first migration whose ORIGIN is a framework rather than a bundler. Every React migration recorded before this one replaced a build tool. This one also replaces the thing that renders the document: a Next 12 pages/ application whose entire route set is one statically exported page is lifted to a Vite 8 client build. The lift is only defensible because the application is single-route, zero-API and server-free, and nothing here generalises past that.",
+	"laneDigestScheme": "sha256(canonicalize(files))",
+	"revision": "56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+	"frontendRoot": ".",
+	"eraLane": {
+		"label": "era-pinned baseline",
+		"framework": "next 12.0.10",
+		"bundler": "webpack 5, vendored inside next 12.0.10 and not selectable independently",
+		"compiler": "Babel. The repository's committed .babelrc disables the framework's Rust compiler, so babel-loader is what compiled this lane.",
+		"runtime": {
+			"node": "16.20.2",
+			"platform": "darwin-arm64"
+		},
+		"runtimeDeviation": "in-lane, NOT repository-pinned: package.json declares no engines block and there is no .nvmrc. 16.20.2 is the final 16.x release and sits inside the repository's own CI lane, which pins actions/setup-node to 16.x. Carried forward from the ingest.",
+		"closure": "the repository's own committed yarn.lock, installed by the ingest unit with --frozen-lockfile holding, 713 package directories placed",
+		"commandRun": "next build, then next export -o <lane directory>",
+		"rebuilds": 2,
+		"deterministic": false,
+		"determinismNote": "The framework mints a fresh random build identifier for every build and threads it through emitted asset paths and the serialised page data. No configuration in the pinned repository pins it, so two builds of identical source cannot agree byte for byte. The raw answer is published as it falls.",
+		"buildIdentifiers": [
+			"KOuAuI38CtaCrYhFJiZ48",
+			"rSwu2nYixAZqc00W4ZOr2"
+		],
+		"deterministicModuloBuildIdentifier": true,
+		"normalizedDigestScheme": "sha256(canonicalize(files)) after replacing every occurrence of the build identifier with the literal <build-id>, in paths and in file contents alike",
+		"normalizedDigest": "143283b98012b6793094cfcc3939d01c3c497214fc201e7c9a57a72bc29af4e7",
+		"secondNormalizedDigest": "143283b98012b6793094cfcc3939d01c3c497214fc201e7c9a57a72bc29af4e7",
+		"digest": "0c7d86363d4a15c64aeca4f9c674a49e1abd006457c7a24621d4fff161bcf5c2",
+		"secondDigest": "449bfc6c85927fbf89139a86ba3930f2f6a7701f5d9a3d9103601bda69a64085",
+		"documents": [
+			"404.html",
+			"index.html"
+		],
+		"indexDocumentBytes": 291004,
+		"inventory": [
+			{
+				"path": "404.html",
+				"sha256": "7638931bad5599d702de5522a666bc876236b94395a73d31aee74a89a0243c73",
+				"bytes": 2242
+			},
+			{
+				"path": "_headers",
+				"sha256": "f4d43ea0d140db2e7f72da3228ab1af384f94418cff2aa35e5b9b63c0823f831",
+				"bytes": 49
+			},
+			{
+				"path": "_next/data/KOuAuI38CtaCrYhFJiZ48/index.json",
+				"sha256": "9c438dbfa8ba2c6c9e17fbacd9503134ff0f947cbb30f3d4f0b5cb5d4afb0c25",
+				"bytes": 86917
+			},
+			{
+				"path": "_next/static/KOuAuI38CtaCrYhFJiZ48/_buildManifest.js",
+				"sha256": "8818948072362766677352d53a62103a5d6584cdacf044ef674d803a346dca9f",
+				"bytes": 365
+			},
+			{
+				"path": "_next/static/KOuAuI38CtaCrYhFJiZ48/_middlewareManifest.js",
+				"sha256": "de5341313a4dc5d982ca50ae4a491e84bc5e80b0f439d87f05fc3973c1b7e59a",
+				"bytes": 92
+			},
+			{
+				"path": "_next/static/KOuAuI38CtaCrYhFJiZ48/_ssgManifest.js",
+				"sha256": "a66383b381b46cccc8f600e19dedea91beedf07e06bb49f011fa7f7073ead591",
+				"bytes": 88
+			},
+			{
+				"path": "_next/static/chunks/29107295-a2d0c8e72019a3ed.js",
+				"sha256": "338f99e901fcb761903c04d154b485a03896f987a5f6cba549ec3ea40e3c60cf",
+				"bytes": 71673
+			},
+			{
+				"path": "_next/static/chunks/6-291d46f9faded274.js",
+				"sha256": "5c498a9832c81876a5f91f7755a4ac0a67b3fc3d6d91185af96c116a354eae22",
+				"bytes": 107955
+			},
+			{
+				"path": "_next/static/chunks/651.243d23442247d286.js",
+				"sha256": "3e85e21508399936afce4d13886eca7015fb9b770251361a0699b2da0d63aad5",
+				"bytes": 7727
+			},
+			{
+				"path": "_next/static/chunks/framework-91d7f78b5b4003c8.js",
+				"sha256": "ce3783d4091c989beac6560ce4ba0032d52339854010ac19358dfb702f226167",
+				"bytes": 130154
+			},
+			{
+				"path": "_next/static/chunks/main-96060e10e65c9c86.js",
+				"sha256": "8c64a8f5af83211a51f3a877c5d3082689b8231221da7f75bde6d1f5a2398cf5",
+				"bytes": 82229
+			},
+			{
+				"path": "_next/static/chunks/pages/_app-e1ebe32527998e81.js",
+				"sha256": "24506ad308138fb591efbd929975f72ac24b1e53d665717dc8379abb2cd3d8e5",
+				"bytes": 19167
+			},
+			{
+				"path": "_next/static/chunks/pages/_error-2f883067a14f4c4a.js",
+				"sha256": "5868fd1f9d717fa4a955b1503ea31ed50d27e35ae9102af7247e2c95e46190b2",
+				"bytes": 7984
+			},
+			{
+				"path": "_next/static/chunks/pages/index-7ce21998f201b00b.js",
+				"sha256": "697eb9450a355c59d2840c0a18c17e03ab1b713ec5526273c538e04fbdcb7d38",
+				"bytes": 21789
+			},
+			{
+				"path": "_next/static/chunks/polyfills-5cd94c89d3acac5f.js",
+				"sha256": "7cb5a87a6c0d05aab2245cbf6a26adad80cd322540d5f6360dde621bf922743f",
+				"bytes": 91434
+			},
+			{
+				"path": "_next/static/chunks/webpack-63d2d5c71feb4eda.js",
+				"sha256": "7a32e256336b7b6aaeb771aeba1dbe912c883491ef8d0e632583e28a1b9cc97e",
+				"bytes": 3215
+			},
+			{
+				"path": "_next/static/css/e7ccbfefc0e09288.css",
+				"sha256": "c54201cc0b4ef3f30acd7cad196a5b13b38137ad7c7cd91d1a0fe2d53fd36f57",
+				"bytes": 218
+			},
+			{
+				"path": "envelope.svg",
+				"sha256": "2bbb7cfe107bf2a7845f0cb6058102e5b21537a26234ead3c13cbb42c2675585",
+				"bytes": 1280
+			},
+			{
+				"path": "favicon.png",
+				"sha256": "145494e6aa58aae3536ac51265d28af42abc12a48c8bd07889ad4f3461cc6ac9",
+				"bytes": 1115
+			},
+			{
+				"path": "features/ars-technica-logo.png",
+				"sha256": "09e676a5f4d03d4dcf88521c0e550488ae61f287eb7f66ea23b2ae99c08940ac",
+				"bytes": 7818
+			},
+			{
+				"path": "features/bgr-logo.png",
+				"sha256": "854d39ae6c15cf1b1a4664856607799d03691d4ae3e6c7fe0580500a186d52d4",
+				"bytes": 14909
+			},
+			{
+				"path": "features/business-insider-logo.png",
+				"sha256": "7cffb126f09afb62a795134223b8a6d39c4f404ca00140a97a12543dbafebd49",
+				"bytes": 19717
+			},
+			{
+				"path": "features/fast-company-logo.png",
+				"sha256": "28ad6bb9ca2d15d033f543870da9792feef8d138a5f74f341e796a5840c722e8",
+				"bytes": 9961
+			},
+			{
+				"path": "features/forbes-logo.png",
+				"sha256": "75d0c402a667c9db9e08384bf362beb6676a70a99ef4e1f9ee5f4466dad4bfb7",
+				"bytes": 7102
+			},
+			{
+				"path": "features/fortune-logo.png",
+				"sha256": "7596bbbe2bf7bd9885591041bd672468065f95a6a32b5daf7917f2bba0ee09e8",
+				"bytes": 14032
+			},
+			{
+				"path": "features/gizmodo-logo.png",
+				"sha256": "edca5995696b501bf061384be84d4763f5929eb4ce80ac4194204346d36b3a27",
+				"bytes": 7714
+			},
+			{
+				"path": "features/lifehacker-logo.png",
+				"sha256": "d7f8c53f4b821d30e3e5461d1b5aa45e331f469f970a723773d01f4073b622a4",
+				"bytes": 21394
+			},
+			{
+				"path": "features/the-next-web-logo.png",
+				"sha256": "e06c60e3dd4f5195734a7a6ad539158c4a9b364d804976d3b3986657fbdf29c1",
+				"bytes": 3463
+			},
+			{
+				"path": "github.svg",
+				"sha256": "bc5d96b5c6eac0633d61a44a7f2bbe48a87e28ae9dccb3ff7c3a4c93ec30a2ec",
+				"bytes": 834
+			},
+			{
+				"path": "global.css",
+				"sha256": "3989853a9e5f981c593eefbfe0f6cda84b5e4b3b82c2649e6626f26fe376de81",
+				"bytes": 287
+			},
+			{
+				"path": "guillotine.svg",
+				"sha256": "b634d8bccdc5e6f07be0f150dc542b39a00b5d570e42c1918d9cb176f24d3b77",
+				"bytes": 1296
+			},
+			{
+				"path": "index.html",
+				"sha256": "d1ff0f7317346088d2824e1996e9fd0ebaedac568e1fecd7cbd227be75f44d0b",
+				"bytes": 291004
+			},
+			{
+				"path": "knife.svg",
+				"sha256": "a43451898b9df386867d62fbed55a2b80761730280e6d7b7c9b7fc9d58ff5dc8",
+				"bytes": 959
+			},
+			{
+				"path": "loading.svg",
+				"sha256": "ecab06ae8837d2e34f3c72d6f7b80f49659cd374313725a77aaba6dc40f0d345",
+				"bytes": 682
+			},
+			{
+				"path": "social/card-twitter.png",
+				"sha256": "8e8d530eefe8d11d88bf2500df1b304047ab2034b7ab8c260ea8b9c42562d9a5",
+				"bytes": 74320
+			},
+			{
+				"path": "social/card.png",
+				"sha256": "7658e4b8bb47b246650a828ccc85713faa45e0cad6b016f4ae6cf564bed32b00",
+				"bytes": 77859
+			},
+			{
+				"path": "tombstone-alt.svg",
+				"sha256": "31e28670f21aa745d25b2d66a0403d22b22f2c20163d63e899384c71748a37e7",
+				"bytes": 1762
+			},
+			{
+				"path": "tombstone.png",
+				"sha256": "947332fb25116badec7db88ef486d24b3363d2e9f721c8d29442b901549d82e7",
+				"bytes": 1311
+			},
+			{
+				"path": "tombstone.svg",
+				"sha256": "ec30fcacc40c8abe7bedcc4d1591f328e32c68203a317e5e397fd792e41279c4",
+				"bytes": 1761
+			},
+			{
+				"path": "twitter-blue.svg",
+				"sha256": "4a8e3be945bea7466bfc083c737fe619c611f325f11c3a8dc28f07c13a3c8203",
+				"bytes": 604
+			},
+			{
+				"path": "twitter.svg",
+				"sha256": "b05fc5fed04f5a7c4b59e5fd3bab672c679d5d15aba3c46ee5a5db911c75fc73",
+				"bytes": 627
+			}
+		]
+	},
+	"targetLane": {
+		"label": "migrated target",
+		"framework": "none — the framework is removed from the build",
+		"bundler": "vite 8.0.16 (rolldown 1.0.3)",
+		"compiler": "oxc, with the JSX contract translated from the application's own .babelrc",
+		"runtime": {
+			"node": "24.15.0",
+			"platform": "darwin-arm64"
+		},
+		"closure": "unchanged. The migrated tree links the era closure the baseline installed, so React 17.0.2, Emotion, react-select 5.2.2 and date-fns are the lockfile-pinned copies. Nothing was resolved against the 2026 registry for this lane and no network request was made by it.",
+		"closureNote": "This is a recorded consequence, not an engineered one: removing the framework from the build removed the only dependency the target could not have reused, so the consented allowance for a target closure install went unused. VERSIONLESS_NETWORK_MODE was offline for every build in this unit.",
+		"commandRun": "vite build --config fixtures/next-killedbygoogle-v3-0-0/vite.config.ts",
+		"rebuilds": 2,
+		"deterministic": true,
+		"digest": "f048ea581b990bb71b85be8f4255764abd9a2904da409357b1980e3dbc12e3d4",
+		"secondDigest": "f048ea581b990bb71b85be8f4255764abd9a2904da409357b1980e3dbc12e3d4",
+		"documents": [
+			"index.html"
+		],
+		"indexDocumentBytes": 268,
+		"inventory": [
+			{
+				"path": "_headers",
+				"sha256": "f4d43ea0d140db2e7f72da3228ab1af384f94418cff2aa35e5b9b63c0823f831",
+				"bytes": 49
+			},
+			{
+				"path": "assets/index-o9w1HExQ.js",
+				"sha256": "241fb51bfb97bd5469571f4dbce7cc5a9240be03f2e5b2690412de930b6fa96d",
+				"bytes": 420774
+			},
+			{
+				"path": "assets/index-oYg1FzLq.css",
+				"sha256": "adffac5578994252d3795c1feee47e654e9fe023ae45b299a9576e30aadeddf1",
+				"bytes": 219
+			},
+			{
+				"path": "envelope.svg",
+				"sha256": "2bbb7cfe107bf2a7845f0cb6058102e5b21537a26234ead3c13cbb42c2675585",
+				"bytes": 1280
+			},
+			{
+				"path": "favicon.png",
+				"sha256": "145494e6aa58aae3536ac51265d28af42abc12a48c8bd07889ad4f3461cc6ac9",
+				"bytes": 1115
+			},
+			{
+				"path": "features/ars-technica-logo.png",
+				"sha256": "09e676a5f4d03d4dcf88521c0e550488ae61f287eb7f66ea23b2ae99c08940ac",
+				"bytes": 7818
+			},
+			{
+				"path": "features/bgr-logo.png",
+				"sha256": "854d39ae6c15cf1b1a4664856607799d03691d4ae3e6c7fe0580500a186d52d4",
+				"bytes": 14909
+			},
+			{
+				"path": "features/business-insider-logo.png",
+				"sha256": "7cffb126f09afb62a795134223b8a6d39c4f404ca00140a97a12543dbafebd49",
+				"bytes": 19717
+			},
+			{
+				"path": "features/fast-company-logo.png",
+				"sha256": "28ad6bb9ca2d15d033f543870da9792feef8d138a5f74f341e796a5840c722e8",
+				"bytes": 9961
+			},
+			{
+				"path": "features/forbes-logo.png",
+				"sha256": "75d0c402a667c9db9e08384bf362beb6676a70a99ef4e1f9ee5f4466dad4bfb7",
+				"bytes": 7102
+			},
+			{
+				"path": "features/fortune-logo.png",
+				"sha256": "7596bbbe2bf7bd9885591041bd672468065f95a6a32b5daf7917f2bba0ee09e8",
+				"bytes": 14032
+			},
+			{
+				"path": "features/gizmodo-logo.png",
+				"sha256": "edca5995696b501bf061384be84d4763f5929eb4ce80ac4194204346d36b3a27",
+				"bytes": 7714
+			},
+			{
+				"path": "features/lifehacker-logo.png",
+				"sha256": "d7f8c53f4b821d30e3e5461d1b5aa45e331f469f970a723773d01f4073b622a4",
+				"bytes": 21394
+			},
+			{
+				"path": "features/the-next-web-logo.png",
+				"sha256": "e06c60e3dd4f5195734a7a6ad539158c4a9b364d804976d3b3986657fbdf29c1",
+				"bytes": 3463
+			},
+			{
+				"path": "github.svg",
+				"sha256": "bc5d96b5c6eac0633d61a44a7f2bbe48a87e28ae9dccb3ff7c3a4c93ec30a2ec",
+				"bytes": 834
+			},
+			{
+				"path": "global.css",
+				"sha256": "3989853a9e5f981c593eefbfe0f6cda84b5e4b3b82c2649e6626f26fe376de81",
+				"bytes": 287
+			},
+			{
+				"path": "guillotine.svg",
+				"sha256": "b634d8bccdc5e6f07be0f150dc542b39a00b5d570e42c1918d9cb176f24d3b77",
+				"bytes": 1296
+			},
+			{
+				"path": "index.html",
+				"sha256": "a0fe59920f302afeca4504f5bbdb8a94e8a6595c8a62eeb8b14e5f19ab5d5961",
+				"bytes": 268
+			},
+			{
+				"path": "knife.svg",
+				"sha256": "a43451898b9df386867d62fbed55a2b80761730280e6d7b7c9b7fc9d58ff5dc8",
+				"bytes": 959
+			},
+			{
+				"path": "loading.svg",
+				"sha256": "ecab06ae8837d2e34f3c72d6f7b80f49659cd374313725a77aaba6dc40f0d345",
+				"bytes": 682
+			},
+			{
+				"path": "social/card-twitter.png",
+				"sha256": "8e8d530eefe8d11d88bf2500df1b304047ab2034b7ab8c260ea8b9c42562d9a5",
+				"bytes": 74320
+			},
+			{
+				"path": "social/card.png",
+				"sha256": "7658e4b8bb47b246650a828ccc85713faa45e0cad6b016f4ae6cf564bed32b00",
+				"bytes": 77859
+			},
+			{
+				"path": "tombstone-alt.svg",
+				"sha256": "31e28670f21aa745d25b2d66a0403d22b22f2c20163d63e899384c71748a37e7",
+				"bytes": 1762
+			},
+			{
+				"path": "tombstone.png",
+				"sha256": "947332fb25116badec7db88ef486d24b3363d2e9f721c8d29442b901549d82e7",
+				"bytes": 1311
+			},
+			{
+				"path": "tombstone.svg",
+				"sha256": "ec30fcacc40c8abe7bedcc4d1591f328e32c68203a317e5e397fd792e41279c4",
+				"bytes": 1761
+			},
+			{
+				"path": "twitter-blue.svg",
+				"sha256": "4a8e3be945bea7466bfc083c737fe619c611f325f11c3a8dc28f07c13a3c8203",
+				"bytes": 604
+			},
+			{
+				"path": "twitter.svg",
+				"sha256": "b05fc5fed04f5a7c4b59e5fd3bab672c679d5d15aba3c46ee5a5db911c75fc73",
+				"bytes": 627
+			}
+		]
+	},
+	"frameworkLift": {
+		"adapter": "packages/frameworks/react/src/react-next-static-adapter.ts",
+		"buildTimeGuardReport": {
+			"babel": {
+				"jsx": {
+					"runtime": "automatic",
+					"importSource": "@emotion/react"
+				},
+				"omittedPlugins": [
+					"@emotion/babel-plugin"
+				],
+				"notes": [
+					"@emotion/babel-plugin: It adds component labels, source maps and style minification to the styles the Emotion JSX runtime already produces. The runtime — selected by the JSX importSource this plan carries — is what makes the css prop work at all; the plugin is developer ergonomics on top of it. Dropping it changes generated class names, which is visible in emitted CSS and is therefore a recorded difference, not an invisible one."
+				]
+			},
+			"modules": [
+				{
+					"module": "pages/index.tsx",
+					"imports": [],
+					"dataFetchingExports": [
+						"getStaticProps"
+					]
+				}
+			]
+		},
+		"buildTimeGuardNote": "This is what the lift saw when it ran again inside the migrated build, after the same lift had already been applied to disk. It reports no framework imports because there are none left to find, which is the guard passing rather than the surface being empty. What the lift actually moved is modulesLiftedOnDisk below, and the Babel translation it carries is read at build time either way.",
+		"modulesLiftedOnDisk": [
+			{
+				"path": "components/Footer/index.tsx",
+				"before": "bc99e91d97691e3170ae1a893757d42e938c5c96816cada5bba90dd6162d08e9",
+				"after": "bdad48fdc74b8c4481fd30a1875df97f8e724d50f56aefc0b0e97ac2b9b57b26"
+			},
+			{
+				"path": "components/Header.tsx",
+				"before": "d37b10a9b2b63f125c2ffb40fab694effecd3a74d3b3a3ed6f4ca5398c5edbf9",
+				"after": "85dc0ca4c84158a300084a2f57a452a8d120ec2ba14c9f3800b7c42b147cb413"
+			},
+			{
+				"path": "components/List/index.tsx",
+				"before": "8aa775bf5c6caaeb6a2022cc33c1dcc1d37d134d24af0f3c8477562ecf39b224",
+				"after": "a86e43d2a3c29992bcbd449957d2d9dba546b6d06b8d6166e2628740575ddc86"
+			},
+			{
+				"path": "pages/_app.tsx",
+				"before": "52814ea4c7934ff5a5fc11e47639c4753ca204238d4a2302702e0e6a65e1329d",
+				"after": "d6a90cc31c951c5e628d173e08c2bbfde7a9463537884dc474b621d66e863c0a"
+			},
+			{
+				"path": "pages/index.tsx",
+				"before": "1b4971c9e4c935f331518ae40a2387412e7031ad2959e98c9e01133095cf4309",
+				"after": "a2cff5d7dda56c795d4a423b60bf3e7387d30373c76ff4153ab9aa8a40a6d16c"
+			}
+		],
+		"liftedSurface": "next/head and next/link were rewritten to lifted components; the type-only imports of next and next/app were erased after the analyzer proved every binding they introduce is referenced from type positions alone; getStaticProps was carried unchanged and is called by the synthesised entry from the application's own module.",
+		"notLifted": "No other framework module appears in the pinned tree, and the adapter refuses every one it has not been taught rather than passing it through."
+	},
+	"applicationFilesChanged": {
+		"scope": "application root, excluding the dependency directory and build outputs",
+		"filesCompared": 72,
+		"changed": [
+			{
+				"path": "components/Footer/index.tsx",
+				"before": "bc99e91d97691e3170ae1a893757d42e938c5c96816cada5bba90dd6162d08e9",
+				"after": "bdad48fdc74b8c4481fd30a1875df97f8e724d50f56aefc0b0e97ac2b9b57b26"
+			},
+			{
+				"path": "components/Header.tsx",
+				"before": "d37b10a9b2b63f125c2ffb40fab694effecd3a74d3b3a3ed6f4ca5398c5edbf9",
+				"after": "85dc0ca4c84158a300084a2f57a452a8d120ec2ba14c9f3800b7c42b147cb413"
+			},
+			{
+				"path": "components/List/index.tsx",
+				"before": "8aa775bf5c6caaeb6a2022cc33c1dcc1d37d134d24af0f3c8477562ecf39b224",
+				"after": "a86e43d2a3c29992bcbd449957d2d9dba546b6d06b8d6166e2628740575ddc86"
+			},
+			{
+				"path": "framework-lift.json",
+				"before": null,
+				"after": "b17a49d639be2f90aed56d476ea60c30e5263d8f2f8408b37c35010b78b781af"
+			},
+			{
+				"path": "index.html",
+				"before": null,
+				"after": "83c71cdc89c5a820e29bf4ad5b2406c9e2d07f1b0910d157f22f84bb72f17508"
+			},
+			{
+				"path": "pages/_app.tsx",
+				"before": "52814ea4c7934ff5a5fc11e47639c4753ca204238d4a2302702e0e6a65e1329d",
+				"after": "d6a90cc31c951c5e628d173e08c2bbfde7a9463537884dc474b621d66e863c0a"
+			},
+			{
+				"path": "pages/index.tsx",
+				"before": "1b4971c9e4c935f331518ae40a2387412e7031ad2959e98c9e01133095cf4309",
+				"after": "a2cff5d7dda56c795d4a423b60bf3e7387d30373c76ff4153ab9aa8a40a6d16c"
+			},
+			{
+				"path": "versionless-entry.js",
+				"before": null,
+				"after": "344296ab19b7372aa9b5e97fec1bba6090133264b3d53d9cc9c49375f8741a69"
+			}
+		]
+	},
+	"buildLevelParity": {
+		"eraDocuments": [
+			"404.html",
+			"index.html"
+		],
+		"targetDocuments": [
+			"index.html"
+		],
+		"eraBundledAssets": 15,
+		"targetBundledAssets": 2,
+		"bundledAssetNote": "Bundler-emitted asset names are content hashes produced by two different bundlers. They are counted, never compared.",
+		"publicAssets": {
+			"shared": [
+				"_headers",
+				"envelope.svg",
+				"favicon.png",
+				"features/ars-technica-logo.png",
+				"features/bgr-logo.png",
+				"features/business-insider-logo.png",
+				"features/fast-company-logo.png",
+				"features/forbes-logo.png",
+				"features/fortune-logo.png",
+				"features/gizmodo-logo.png",
+				"features/lifehacker-logo.png",
+				"features/the-next-web-logo.png",
+				"github.svg",
+				"global.css",
+				"guillotine.svg",
+				"knife.svg",
+				"loading.svg",
+				"social/card-twitter.png",
+				"social/card.png",
+				"tombstone-alt.svg",
+				"tombstone.png",
+				"tombstone.svg",
+				"twitter-blue.svg",
+				"twitter.svg"
+			],
+			"onlyInEra": [],
+			"onlyInTarget": [],
+			"identicalBytes": [
+				"_headers",
+				"envelope.svg",
+				"favicon.png",
+				"features/ars-technica-logo.png",
+				"features/bgr-logo.png",
+				"features/business-insider-logo.png",
+				"features/fast-company-logo.png",
+				"features/forbes-logo.png",
+				"features/fortune-logo.png",
+				"features/gizmodo-logo.png",
+				"features/lifehacker-logo.png",
+				"features/the-next-web-logo.png",
+				"github.svg",
+				"global.css",
+				"guillotine.svg",
+				"knife.svg",
+				"loading.svg",
+				"social/card-twitter.png",
+				"social/card.png",
+				"tombstone-alt.svg",
+				"tombstone.png",
+				"tombstone.svg",
+				"twitter-blue.svg",
+				"twitter.svg"
+			],
+			"differingBytes": []
+		},
+		"publicAssetNote": "Copied public files are the one part of two bundlers' output that is legitimately comparable byte for byte, because neither is supposed to transform them."
+	},
+	"recordedDifferences": [
+		{
+			"difference": "the delivered document carries the application markup in one lane and not the other",
+			"detail": "The era lane statically renders the whole page — every list row, every style rule — into index.html. The migrated lane delivers a mount element and a module script, and the same markup is produced when that script evaluates. Anything that reads the document without running scripts therefore sees two different pages. This is the central difference of the whole lift and it is not repaired anywhere below."
+		},
+		{
+			"difference": "the head elements are pre-rendered in one lane and installed on mount in the other",
+			"detail": "Every element the page passes to next/head appears inside <head> in the era document, counted by the framework in a next-head-count meta tag. After the lift they are applied to the live document head by a React portal when the application mounts. Title, description and social-card metadata are therefore absent from the migrated document as delivered."
+		},
+		{
+			"difference": "the second document the era lane emits has no counterpart",
+			"detail": "The era export writes 404.html from the framework built-in error page. The pinned tree authors no 404 page of its own, so that document is framework-supplied markup rather than application markup, and this adapter emits no framework pages. The migrated lane emits one document."
+		},
+		{
+			"difference": "the serialised page data has no counterpart",
+			"detail": "The era export writes _next/data/<build-id>/index.json, the serialised result of getStaticProps, for the client router to fetch on navigation. The migrated lane calls the application's own getStaticProps as it starts instead, so the data exists only in memory and no such file is emitted."
+		},
+		{
+			"difference": "the production third-party script tag moves out of the document",
+			"detail": "The page renders a script element for card.codyogden.com under a production NODE_ENV branch, outside next/head. The era document contains that tag as markup. After the lift the same branch produces the same element when the page renders, so the tag exists at runtime and not in the delivered bytes. The analytics script guarded by a typeof window check is absent from the era document for the complementary reason — there is no window during static generation — and is produced on the client in both lanes."
+		},
+		{
+			"difference": "the carbon ad slot is a runtime insertion in both lanes and is comparable in neither",
+			"detail": "components/Carbon.tsx appends a cdn.carbonads.com script element in an effect. No lane emits it as build output; the only carbonads text in the era document is a CSS selector inside the pre-rendered style block. Nothing about the ad slot, its fallback, or its egress is established by either build."
+		},
+		{
+			"difference": "emitted stylesheet contents are not comparable between the lanes",
+			"detail": "The era lane pre-renders the Emotion styles into the document and emits only the imported global stylesheet as CSS. The migrated lane emits the same global stylesheet and produces every Emotion rule at runtime. The @emotion/babel-plugin the legacy build ran is not reproduced, which affects generated class names; since the migrated lane emits no Emotion CSS at build time, that effect is unobservable in these artifacts and is left as an open question for a witness unit."
+		},
+		{
+			"difference": "client-side route navigation is not reproduced",
+			"detail": "next/link asks the framework router to navigate without a document load. The lift decorates the same child anchor and leaves navigation to the browser. In this application every link is either external or points at the single authored route, so the visible outcome coincides; across several routes it would not, which is why multi-route applications are refused rather than attempted."
+		}
+	],
+	"nonclaims": [
+		"No page was loaded in a browser by this unit. Nothing here establishes that either lane renders correctly, that the two lanes render the same thing, or that any upstream journey passes. A witness unit would have to establish that separately, and the recorded differences above are where it should look first.",
+		"The single-route limitation is a property of this fixture and a published non-claim of the adapter. Nothing here generalises to Next applications with several routes, API routes, middleware, server rendering, next/image, next/dynamic or next/router.",
+		"A deterministic migrated build is a statement about the bundler, not about the application. It says two runs of the same input agree; it says nothing about whether the input is right.",
+		"The era lane is not byte-stable and is not claimed to be. What is claimed is the normalised comparison, which is a weaker statement and is labelled as one wherever it appears.",
+		"No artifact from either lane is published, merged, or offered as a reproducible build product. Both live in the git-ignored cache."
+	]
+}
