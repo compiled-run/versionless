@@ -23,6 +23,12 @@ import {
 	ANGULAR_FACTORIOLAB_TRUST_RECEIPTS,
 	ANGULAR_JIRA_CLONE_TRUST_MATRIX_CELLS,
 	ANGULAR_JIRA_CLONE_TRUST_RECEIPTS,
+	NEXT_KILLEDBYGOOGLE_V3_TRUST_MATRIX_CELLS,
+	NEXT_KILLEDBYGOOGLE_V3_TRUST_RECEIPTS,
+	REACT_LINKFREE_TRUST_MATRIX_CELLS,
+	REACT_LINKFREE_TRUST_RECEIPTS,
+	REACT_MEMOS_TRUST_MATRIX_CELLS,
+	REACT_MEMOS_TRUST_RECEIPTS,
 	generateTrustPackage,
 	licenseInventory,
 	NPM_LOCK_ACQUISITION_PREFLIGHT,
@@ -647,7 +653,10 @@ snapshots:
 				item.id !== 'react-hospitalrun' &&
 				item.id !== 'witness-react-hospitalrun' &&
 				item.id !== 'witness-angular-factoriolab' &&
-				item.id !== 'witness-angular-jira-clone',
+				item.id !== 'witness-angular-jira-clone' &&
+				item.id !== 'witness-react-memos-v0-1-3' &&
+				item.id !== 'witness-next-killedbygoogle-v3-0-0' &&
+				item.id !== 'witness-react-linkfree-v0-72-0',
 		);
 		const avataaarsTransaction = deriveCorpusTransactionState([
 			...withoutAvataaars,
@@ -956,19 +965,30 @@ snapshots:
 				integrity: { canonicalDigest: string };
 			};
 			expect(conformance.summary).toEqual({
-				verticals: 15,
-				sourceApplications: 8,
+				verticals: 18,
+				sourceApplications: 10,
 				designatedPilotsVerified: 0,
 			});
 			expect(conformance.frameworkLanes).toHaveLength(3);
-			// Two Angular-lineage browser-proof cells now, each one member and
-			// one vertical, and both Angular-lineage scoreboards stay uncounted.
-			expect(matrix.cells).toHaveLength(ANGULAR_JIRA_CLONE_TRUST_MATRIX_CELLS);
-			expect(first.receipts).toHaveLength(ANGULAR_JIRA_CLONE_TRUST_RECEIPTS);
+			// Three more browser-proof cells now, each one member and one
+			// vertical, and every one of their lineage scoreboards stays
+			// uncounted.
+			expect(matrix.cells).toHaveLength(REACT_LINKFREE_TRUST_MATRIX_CELLS);
+			expect(first.receipts).toHaveLength(REACT_LINKFREE_TRUST_RECEIPTS);
 			expect(ANGULAR_JIRA_CLONE_TRUST_MATRIX_CELLS).toBe(
 				ANGULAR_FACTORIOLAB_TRUST_MATRIX_CELLS + 1,
 			);
 			expect(ANGULAR_JIRA_CLONE_TRUST_RECEIPTS).toBe(ANGULAR_FACTORIOLAB_TRUST_RECEIPTS + 1);
+			expect(REACT_MEMOS_TRUST_MATRIX_CELLS).toBe(ANGULAR_JIRA_CLONE_TRUST_MATRIX_CELLS + 1);
+			expect(REACT_MEMOS_TRUST_RECEIPTS).toBe(ANGULAR_JIRA_CLONE_TRUST_RECEIPTS + 1);
+			expect(NEXT_KILLEDBYGOOGLE_V3_TRUST_MATRIX_CELLS).toBe(
+				REACT_MEMOS_TRUST_MATRIX_CELLS + 1,
+			);
+			expect(NEXT_KILLEDBYGOOGLE_V3_TRUST_RECEIPTS).toBe(REACT_MEMOS_TRUST_RECEIPTS + 1);
+			expect(REACT_LINKFREE_TRUST_MATRIX_CELLS).toBe(
+				NEXT_KILLEDBYGOOGLE_V3_TRUST_MATRIX_CELLS + 1,
+			);
+			expect(REACT_LINKFREE_TRUST_RECEIPTS).toBe(NEXT_KILLEDBYGOOGLE_V3_TRUST_RECEIPTS + 1);
 			expect(matrix.cells.find((cell) => cell.id === 'angular-factoriolab')).toMatchObject({
 				framework: 'angular',
 				state: 'verified',
@@ -1001,6 +1021,66 @@ snapshots:
 				},
 				readinessScoreboard: {
 					angularLineage: { ready: 1, total: 4, counted: false },
+					overall: { ready: 3, total: 12 },
+				},
+			});
+			expect(matrix.cells.find((cell) => cell.id === 'react-memos-v0-1-3')).toMatchObject({
+				framework: 'react',
+				state: 'verified',
+				scope: 'fixture-specific-old-vite-origin-2-9-to-vite8',
+				genericReactSupport: 'not-claimed',
+				browserProof: 'verified-direct-witness',
+				migrationClass: 'OLD-VITE-ORIGIN',
+				projection: { label: 'synthetic-fixture-evidence-data' },
+				scrollSurface: 'measured-no-overflowing-document',
+				readinessScoreboard: {
+					reactLineage: { ready: 1, total: 4, counted: false },
+					overall: { ready: 3, total: 12 },
+				},
+			});
+			expect(
+				matrix.cells.find((cell) => cell.id === 'next-killedbygoogle-v3-0-0'),
+			).toMatchObject({
+				framework: 'next',
+				state: 'verified',
+				scope: 'fixture-specific-next12-static-export-to-vite8-client-build',
+				genericNextSupport: 'not-claimed',
+				browserProof: 'verified-direct-witness',
+				serviceWorker: 'no-service-worker-in-either-lane',
+				serviceWorkerMasked: false,
+				// The lanes deliver the document differently and the cell says
+				// so rather than claiming a byte parity the proof never had.
+				documentDelivery: {
+					baseline: 'pre-rendered-application-document',
+					migrated: 'client-mounted-application-document',
+					parityOracle: 'settled-dom-and-behaviour',
+					byteParity: 'not-claimed',
+				},
+				scrollSurface: 'measured-genuine-viewport-scroll',
+				locality: {
+					mode: 'offline',
+					scope: 'process-scoped',
+					osWideIsolation: false,
+					successfulNonLoopback: 0,
+					mockedNonLoopbackSeams: 3,
+				},
+				readinessScoreboard: {
+					nextLineage: { ready: 0, total: 1, counted: false },
+					overall: { ready: 3, total: 12 },
+				},
+			});
+			expect(matrix.cells.find((cell) => cell.id === 'react-linkfree-v0-72-0')).toMatchObject({
+				framework: 'react',
+				state: 'verified',
+				scope: 'fixture-specific-create-react-app-5-to-vite8',
+				genericReactSupport: 'not-claimed',
+				browserProof: 'verified-direct-witness',
+				// The synthetic corpus is published on the cell rather than
+				// left inside the receipt: it is the boundary of the claim.
+				corpusRuling: { ruling: 'synthetic-corpus', realProfileDataRendered: false },
+				scrollSurface: 'measured-genuine-viewport-scroll',
+				readinessScoreboard: {
+					reactLineage: { ready: 1, total: 4, counted: false },
 					overall: { ready: 3, total: 12 },
 				},
 			});

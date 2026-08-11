@@ -10,6 +10,9 @@ import {
 } from '../../core/src/receipts/witness-react-hospitalrun.ts';
 import { WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH } from '../../core/src/receipts/witness-angular-factoriolab.ts';
 import { WITNESS_ANGULAR_JIRA_CLONE_RECEIPT_PATH } from '../../core/src/receipts/witness-angular-jira-clone.ts';
+import { WITNESS_REACT_MEMOS_RECEIPT_PATH } from '../../core/src/receipts/witness-react-memos.ts';
+import { WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH } from '../../core/src/receipts/witness-next-killedbygoogle-v3.ts';
+import { WITNESS_REACT_LINKFREE_RECEIPT_PATH } from '../../core/src/receipts/witness-react-linkfree.ts';
 
 /**
  * The exact receipt paths appended after the zero-service-worker
@@ -23,15 +26,19 @@ const POST_ZERO_SW_RECEIPT_PATHS = new Set<unknown>([
 	WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
 	WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH,
 	WITNESS_ANGULAR_JIRA_CLONE_RECEIPT_PATH,
+	WITNESS_REACT_MEMOS_RECEIPT_PATH,
+	WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH,
+	WITNESS_REACT_LINKFREE_RECEIPT_PATH,
 ]);
 
 /**
- * The canonical aggregate with the Papercups pair, the HospitalRun pair, the
- * factoriolab member and the jira-clone member rolled back.
+ * The canonical aggregate with the Papercups pair, the HospitalRun pair, and
+ * the factoriolab, jira-clone, memos, killedbygoogle v3 and LinkFree members
+ * rolled back.
  *
  * Publication transactions for the earlier Witness verticals are defined
  * against their exact predecessor state. Now that the published aggregate has
- * advanced to the jira-clone browser proof, those transactions are replayed
+ * advanced to the LinkFree browser proof, those transactions are replayed
  * against a staged copy of the exact pre-append membership rather than against
  * a loosened predecessor check.
  */

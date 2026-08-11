@@ -2,7 +2,7 @@
   "schemaVersion": "versionless.trust.v1",
   "derivedFrom": {
     "path": "corpus-conformance.json",
-    "sha256": "f505bc1a352def646cf552c1f29378f39b2f32b74db35803d5d9bceca2ff4eaa"
+    "sha256": "e5f76aa7dfc3ca58951c7efffed4fc771cd23793ebc77d6e495cc00cd4959319"
   },
   "cells": [
     {
@@ -305,6 +305,124 @@
         "overall": {
           "ready": 3,
           "total": 12
+        }
+      }
+    },
+    {
+      "id": "react-memos-v0-1-3",
+      "framework": "react",
+      "designatedPilot": false,
+      "runtime": "node-16.20.2-to-node-24.15.0",
+      "bundler": "vite-2.9.5-to-vite-8.0.16",
+      "state": "verified",
+      "track": "production-readiness-direct-witness-old-vite-origin-to-vite8",
+      "scope": "fixture-specific-old-vite-origin-2-9-to-vite8",
+      "genericReactSupport": "not-claimed",
+      "browserProof": "verified-direct-witness",
+      "migrationClass": "OLD-VITE-ORIGIN",
+      "projection": {
+        "label": "synthetic-fixture-evidence-data",
+        "behaviorDigest": "b17da56bba70249f1d3b25b2837083b80ba0ae8c1c2899f710fc1eaf9b059902",
+        "seedSha256": "3694ff4647588679036bbd713baf49f78513e04c34221af4aa4968e9f887fced",
+        "pinnedRevision": "565fe0cc567c02deb59fc04830df707ea7476d52"
+      },
+      "scrollSurface": "measured-no-overflowing-document",
+      "locality": {
+        "mode": "offline",
+        "scope": "process-scoped",
+        "osWideIsolation": false,
+        "successfulNonLoopback": 0
+      },
+      "productionReadiness": "verified-direct-witness",
+      "readinessScoreboard": {
+        "overall": {
+          "ready": 3,
+          "total": 12
+        },
+        "reactLineage": {
+          "counted": false,
+          "ready": 1,
+          "total": 4
+        }
+      }
+    },
+    {
+      "id": "next-killedbygoogle-v3-0-0",
+      "framework": "next",
+      "designatedPilot": false,
+      "runtime": "node-16.20.2",
+      "bundler": "next-12.0.10-vendored-webpack-5-to-vite-8.0.16-rolldown",
+      "state": "verified",
+      "track": "production-readiness-direct-witness-next12-static-export-to-vite8-client-build",
+      "scope": "fixture-specific-next12-static-export-to-vite8-client-build",
+      "genericNextSupport": "not-claimed",
+      "browserProof": "verified-direct-witness",
+      "serviceWorker": "no-service-worker-in-either-lane",
+      "serviceWorkerMasked": false,
+      "documentDelivery": {
+        "baseline": "pre-rendered-application-document",
+        "migrated": "client-mounted-application-document",
+        "parityOracle": "settled-dom-and-behaviour",
+        "byteParity": "not-claimed"
+      },
+      "scrollSurface": "measured-genuine-viewport-scroll",
+      "locality": {
+        "mode": "offline",
+        "scope": "process-scoped",
+        "osWideIsolation": false,
+        "successfulNonLoopback": 0,
+        "mockedNonLoopbackSeams": 3
+      },
+      "productionReadiness": "verified-direct-witness",
+      "readinessScoreboard": {
+        "nextLineage": {
+          "counted": false,
+          "ready": 0,
+          "total": 1
+        },
+        "overall": {
+          "ready": 3,
+          "total": 12
+        }
+      }
+    },
+    {
+      "id": "react-linkfree-v0-72-0",
+      "framework": "react",
+      "designatedPilot": false,
+      "runtime": "node-16.20.2-to-node-24.15.0",
+      "bundler": "webpack-5.73.0-to-vite-8.0.16",
+      "state": "verified",
+      "track": "production-readiness-direct-witness-create-react-app-5-to-vite8",
+      "scope": "fixture-specific-create-react-app-5-to-vite8",
+      "genericReactSupport": "not-claimed",
+      "browserProof": "verified-direct-witness",
+      "corpusRuling": {
+        "ruling": "synthetic-corpus",
+        "dataset": "fixtures/react-linkfree-v0-72-0/witness-corpus",
+        "seam": "the application's own corpus-agnostic generate.js, run unmodified over the synthetic profiles",
+        "sameCorpusInBothLanes": true,
+        "applicationSourceEdits": 0,
+        "realProfileDataRendered": false,
+        "proves": "the behaviour of the application, not the dataset its archive ships"
+      },
+      "scrollSurface": "measured-genuine-viewport-scroll",
+      "locality": {
+        "mode": "offline",
+        "scope": "process-scoped",
+        "osWideIsolation": false,
+        "successfulNonLoopback": 0
+      },
+      "productionReadiness": "verified-direct-witness",
+      "readinessScoreboard": {
+        "overall": {
+          "ready": 3,
+          "total": 12
+        },
+        "reactLineage": {
+          "counted": false,
+          "ready": 1,
+          "total": 4
         }
       }
     },

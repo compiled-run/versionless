@@ -211,6 +211,36 @@
       "result": "pass",
       "receipt": "evidence/runs/witness-angular-jira-clone/receipt.json",
       "digest": "4642564e7ee1ff46668cce76c5db0dc832cce41afe1ceda5611fa2eaf78dfc99"
+    },
+    {
+      "id": "witness-react-memos-v0-1-3",
+      "framework": "react",
+      "track": "production-readiness-direct-witness-old-vite-origin-to-vite8",
+      "bundler": "vite-2.9.5-to-vite-8.0.16",
+      "runtime": "node-16.20.2-to-node-24.15.0",
+      "result": "pass",
+      "receipt": "evidence/runs/witness-react-memos-v0-1-3/receipt.json",
+      "digest": "71964ddaba63710462e1c6faa6322598a4afb0800f3c4826c7ef4e5a6ca01cfa"
+    },
+    {
+      "id": "witness-next-killedbygoogle-v3-0-0",
+      "framework": "next",
+      "track": "production-readiness-direct-witness-next12-static-export-to-vite8-client-build",
+      "bundler": "next-12.0.10-vendored-webpack-5-to-vite-8.0.16-rolldown",
+      "runtime": "node-16.20.2",
+      "result": "pass",
+      "receipt": "evidence/runs/witness-next-killedbygoogle-v3-0-0/receipt.json",
+      "digest": "660cb5027139735a5174a5bb8e89fceb9fa6b0327f4a479e174137e789d52a79"
+    },
+    {
+      "id": "witness-react-linkfree-v0-72-0",
+      "framework": "react",
+      "track": "production-readiness-direct-witness-create-react-app-5-to-vite8",
+      "bundler": "webpack-5.73.0-to-vite-8.0.16",
+      "runtime": "node-16.20.2-to-node-24.15.0",
+      "result": "pass",
+      "receipt": "evidence/runs/witness-react-linkfree-v0-72-0/receipt.json",
+      "digest": "2277ad1947280d898f577f418f8b4a34ca775b91156bc1e1de488bde28eae4ba"
     }
   ],
   "holdouts": [

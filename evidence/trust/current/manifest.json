@@ -1,6 +1,6 @@
 {
   "schemaVersion": "versionless.trust.v1",
-  "canonicalDigest": "507e795a6b56c85486509297a15988dee8db0a507bea6d4d20f84e0f74e61eb8",
+  "canonicalDigest": "dd515ee61609dedfff0c7bfd4ed952c7cb37ebb29b8ccd3c090d6b6bc2411203",
   "integrity": {
     "algorithm": "sha256",
     "authenticity": "not-established",
@@ -8,7 +8,7 @@
   },
   "deterministicCore": {
     "algorithm": "sha256",
-    "digest": "f748b2523680a650a1da0b397a6a080629f3f7de33c7e09db60a2d454811d176",
+    "digest": "32d4f2096972a358f6cffd9d192fe81911cc95e1ea8743ff8f22ea6430377595",
     "artifacts": [
       {
         "path": "adapter-freeze.json",
@@ -28,11 +28,11 @@
       },
       {
         "path": "provenance.json",
-        "sha256": "b8f091d1779a6e6607f6c71dce8749ecbf9b7c4765a3d1ef344d13c18f8e512e"
+        "sha256": "c9654aceb57641630a4d459dbb9c4114c6527731513c01db2276c7ae7f701a5a"
       },
       {
         "path": "matrix.json",
-        "sha256": "bb1937742c29d667215ca1323048fcda13178945e8b7f4b24fc83cc51b80e0c4"
+        "sha256": "8f26213f9c3b3746ef933a19b4a1b91c7769eb9e8a96a6b77f71664fd1f2c219"
       },
       {
         "path": "controls.json",
@@ -44,7 +44,7 @@
       },
       {
         "path": "corpus-conformance.json",
-        "sha256": "304932465a13479ef589f307c6fd0a2156d9d86c61fc2ec0583a66df37096a59"
+        "sha256": "17985f2044f0de03fbe447d0991c913f85745a7aadca0ca13767d42a3a00a867"
       },
       {
         "path": "script-surface.json",
@@ -188,10 +188,28 @@
       "digest": "4642564e7ee1ff46668cce76c5db0dc832cce41afe1ceda5611fa2eaf78dfc99",
       "artifacts": 0,
       "state": "verified"
+    },
+    {
+      "path": "evidence/runs/witness-react-memos-v0-1-3/receipt.json",
+      "digest": "71964ddaba63710462e1c6faa6322598a4afb0800f3c4826c7ef4e5a6ca01cfa",
+      "artifacts": 0,
+      "state": "verified"
+    },
+    {
+      "path": "evidence/runs/witness-next-killedbygoogle-v3-0-0/receipt.json",
+      "digest": "660cb5027139735a5174a5bb8e89fceb9fa6b0327f4a479e174137e789d52a79",
+      "artifacts": 0,
+      "state": "verified"
+    },
+    {
+      "path": "evidence/runs/witness-react-linkfree-v0-72-0/receipt.json",
+      "digest": "2277ad1947280d898f577f418f8b4a34ca775b91156bc1e1de488bde28eae4ba",
+      "artifacts": 0,
+      "state": "verified"
     }
   ],
   "observation": {
-    "generatedAt": "2026-08-11T13:30:06.778Z",
+    "generatedAt": "2026-08-11T19:34:58.926Z",
     "vulnerabilityFreshness": "verified"
   },
   "derivedReport": "report.md"

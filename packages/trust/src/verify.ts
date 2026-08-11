@@ -17,6 +17,9 @@ import { REACT_PAPERCUPS_FIXTURE } from '../../core/src/receipts/witness-react-p
 import { REACT_HOSPITALRUN_FIXTURE } from '../../core/src/receipts/witness-react-hospitalrun.ts';
 import { ANGULAR_FACTORIOLAB_FIXTURE } from '../../core/src/receipts/witness-angular-factoriolab.ts';
 import { ANGULAR_JIRA_CLONE_FIXTURE } from '../../core/src/receipts/witness-angular-jira-clone.ts';
+import { REACT_MEMOS_FIXTURE } from '../../core/src/receipts/witness-react-memos.ts';
+import { NEXT_KILLEDBYGOOGLE_V3_FIXTURE } from '../../core/src/receipts/witness-next-killedbygoogle-v3.ts';
+import { REACT_LINKFREE_FIXTURE } from '../../core/src/receipts/witness-react-linkfree.ts';
 import {
 	SCRIPT_SURFACE_SCHEMA,
 	verifyScriptSurface,
@@ -33,6 +36,12 @@ import {
 	ANGULAR_FACTORIOLAB_TRUST_RECEIPTS,
 	ANGULAR_JIRA_CLONE_TRUST_MATRIX_CELLS,
 	ANGULAR_JIRA_CLONE_TRUST_RECEIPTS,
+	NEXT_KILLEDBYGOOGLE_V3_TRUST_MATRIX_CELLS,
+	NEXT_KILLEDBYGOOGLE_V3_TRUST_RECEIPTS,
+	REACT_LINKFREE_TRUST_MATRIX_CELLS,
+	REACT_LINKFREE_TRUST_RECEIPTS,
+	REACT_MEMOS_TRUST_MATRIX_CELLS,
+	REACT_MEMOS_TRUST_RECEIPTS,
 	REACT_HOSPITALRUN_TRUST_MATRIX_CELLS,
 	REACT_HOSPITALRUN_TRUST_RECEIPTS,
 	REACT_PAPERCUPS_TRUST_MATRIX_CELLS,
@@ -583,7 +592,13 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 		runtimeObservationControl.pciCompliance !== 'not-claimed'
 	)
 		throw new Error('Controls contain an unsupported enterprise assurance claim');
-	const jiraCloneIntegrated = transaction.kind === 'angular-jira-clone-browser-proof';
+	const linkfreeIntegrated = transaction.kind === 'react-linkfree-browser-proof';
+	const killedbygoogleV3Integrated =
+		transaction.kind === 'next-killedbygoogle-v3-browser-proof' || linkfreeIntegrated;
+	const memosIntegrated =
+		transaction.kind === 'react-memos-browser-proof' || killedbygoogleV3Integrated;
+	const jiraCloneIntegrated =
+		transaction.kind === 'angular-jira-clone-browser-proof' || memosIntegrated;
 	const factoriolabIntegrated =
 		transaction.kind === 'angular-factoriolab-browser-proof' || jiraCloneIntegrated;
 	const hospitalrunIntegrated =
@@ -599,7 +614,10 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 				(papercupsIntegrated ? 1 : 0) +
 				(hospitalrunIntegrated ? 1 : 0) +
 				(factoriolabIntegrated ? 1 : 0) +
-				(jiraCloneIntegrated ? 1 : 0)
+				(jiraCloneIntegrated ? 1 : 0) +
+				(memosIntegrated ? 1 : 0) +
+				(killedbygoogleV3Integrated ? 1 : 0) +
+				(linkfreeIntegrated ? 1 : 0)
 	)
 		throw new Error('Corpus matrix cell count does not match transaction state');
 	if (
@@ -631,11 +649,38 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 		);
 	if (
 		jiraCloneIntegrated &&
+		!memosIntegrated &&
 		(manifest.receipts.length !== ANGULAR_JIRA_CLONE_TRUST_RECEIPTS ||
 			matrix.cells.length !== ANGULAR_JIRA_CLONE_TRUST_MATRIX_CELLS)
 	)
 		throw new Error(
 			'Angular jira-clone browser proof must pin exactly twenty-two receipts and twenty matrix cells',
+		);
+	if (
+		memosIntegrated &&
+		!killedbygoogleV3Integrated &&
+		(manifest.receipts.length !== REACT_MEMOS_TRUST_RECEIPTS ||
+			matrix.cells.length !== REACT_MEMOS_TRUST_MATRIX_CELLS)
+	)
+		throw new Error(
+			'React memos browser proof must pin exactly twenty-three receipts and twenty-one matrix cells',
+		);
+	if (
+		killedbygoogleV3Integrated &&
+		!linkfreeIntegrated &&
+		(manifest.receipts.length !== NEXT_KILLEDBYGOOGLE_V3_TRUST_RECEIPTS ||
+			matrix.cells.length !== NEXT_KILLEDBYGOOGLE_V3_TRUST_MATRIX_CELLS)
+	)
+		throw new Error(
+			'KilledByGoogle v3 browser proof must pin exactly twenty-four receipts and twenty-two matrix cells',
+		);
+	if (
+		linkfreeIntegrated &&
+		(manifest.receipts.length !== REACT_LINKFREE_TRUST_RECEIPTS ||
+			matrix.cells.length !== REACT_LINKFREE_TRUST_MATRIX_CELLS)
+	)
+		throw new Error(
+			'React LinkFree browser proof must pin exactly twenty-five receipts and twenty-three matrix cells',
 		);
 	const matrixSource = asRecord(matrix.derivedFrom, 'corpus matrix derivation');
 	if (
@@ -954,6 +999,155 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 			throw new Error('Angular jira-clone matrix cell is not derived from corpus conformance');
 	} else if (jiraCloneCell !== undefined || jiraCloneVertical !== undefined)
 		throw new Error('Angular jira-clone evidence is claimed outside its transaction state');
+	const memosCell = cells.get(REACT_MEMOS_FIXTURE);
+	const memosVertical = emittedConformance.verticals.find(
+		(value) => asRecord(value, 'corpus vertical').id === REACT_MEMOS_FIXTURE,
+	);
+	if (memosIntegrated) {
+		const row = asRecord(memosVertical, 'React memos conformance vertical');
+		const memosApplication = emittedConformance.applications.find(
+			(value) => asRecord(value, 'corpus application').id === row.application,
+		);
+		if (
+			memosCell === undefined ||
+			memosApplication === undefined ||
+			canonicalize(asRecord(memosApplication, 'React memos application').verticals) !==
+				canonicalize([REACT_MEMOS_FIXTURE]) ||
+			memosCell.state !== 'verified' ||
+			memosCell.scope !== 'fixture-specific-old-vite-origin-2-9-to-vite8' ||
+			memosCell.genericReactSupport !== 'not-claimed' ||
+			memosCell.framework !== 'react' ||
+			memosCell.framework !== row.framework ||
+			memosCell.designatedPilot !== row.designatedPilot ||
+			memosCell.runtime !== row.runtime ||
+			memosCell.bundler !== row.bundler ||
+			memosCell.track !== row.track ||
+			memosCell.browserProof !== row.browserProof ||
+			memosCell.migrationClass !== row.migrationClass ||
+			row.migrationClass !== 'OLD-VITE-ORIGIN' ||
+			canonicalize(memosCell.projection) !== canonicalize(row.projection) ||
+			asRecord(row.projection, 'React memos projection').label !==
+				'synthetic-fixture-evidence-data' ||
+			memosCell.scrollSurface !== row.scrollSurface ||
+			memosCell.productionReadiness !== row.productionReadiness ||
+			canonicalize(memosCell.locality) !== canonicalize(row.locality) ||
+			canonicalize(memosCell.readinessScoreboard) !== canonicalize(row.readinessScoreboard) ||
+			canonicalize(row.readinessScoreboard) !==
+				canonicalize({
+					reactLineage: { ready: 1, total: 4, counted: false },
+					overall: { ready: 3, total: 12 },
+				})
+		)
+			throw new Error('React memos matrix cell is not derived from corpus conformance');
+	} else if (memosCell !== undefined || memosVertical !== undefined)
+		throw new Error('React memos evidence is claimed outside its transaction state');
+	const killedbygoogleV3Cell = cells.get(NEXT_KILLEDBYGOOGLE_V3_FIXTURE);
+	const killedbygoogleV3Vertical = emittedConformance.verticals.find(
+		(value) => asRecord(value, 'corpus vertical').id === NEXT_KILLEDBYGOOGLE_V3_FIXTURE,
+	);
+	if (killedbygoogleV3Integrated) {
+		const row = asRecord(killedbygoogleV3Vertical, 'KilledByGoogle v3 conformance vertical');
+		const killedbygoogleV3Application = emittedConformance.applications.find(
+			(value) => asRecord(value, 'corpus application').id === row.application,
+		);
+		/**
+		 * The browser proof is a second vertical on the killedbygoogle source
+		 * application, not an eleventh application. Refuse both failures: the
+		 * vertical disappearing from that application's list, and a duplicate
+		 * application row appearing for the same immutable source.
+		 */
+		if (
+			killedbygoogleV3Cell === undefined ||
+			killedbygoogleV3Application === undefined ||
+			row.application !== 'killedbygoogle' ||
+			emittedConformance.applications.some(
+				(value) =>
+					asRecord(value, 'corpus application').id === NEXT_KILLEDBYGOOGLE_V3_FIXTURE,
+			) ||
+			canonicalize(
+				asRecord(killedbygoogleV3Application, 'KilledByGoogle v3 application').verticals,
+			) !==
+				canonicalize([
+					'next-killedbygoogle-derived-state-to-memo',
+					NEXT_KILLEDBYGOOGLE_V3_FIXTURE,
+				]) ||
+			killedbygoogleV3Cell.state !== 'verified' ||
+			killedbygoogleV3Cell.scope !==
+				'fixture-specific-next12-static-export-to-vite8-client-build' ||
+			killedbygoogleV3Cell.genericNextSupport !== 'not-claimed' ||
+			killedbygoogleV3Cell.framework !== 'next' ||
+			killedbygoogleV3Cell.framework !== row.framework ||
+			killedbygoogleV3Cell.designatedPilot !== row.designatedPilot ||
+			killedbygoogleV3Cell.runtime !== row.runtime ||
+			killedbygoogleV3Cell.bundler !== row.bundler ||
+			killedbygoogleV3Cell.track !== row.track ||
+			killedbygoogleV3Cell.browserProof !== row.browserProof ||
+			killedbygoogleV3Cell.serviceWorker !== row.serviceWorker ||
+			killedbygoogleV3Cell.serviceWorkerMasked !== row.serviceWorkerMasked ||
+			row.serviceWorkerMasked !== false ||
+			canonicalize(killedbygoogleV3Cell.documentDelivery) !==
+				canonicalize(row.documentDelivery) ||
+			asRecord(row.documentDelivery, 'KilledByGoogle v3 document delivery').byteParity !==
+				'not-claimed' ||
+			killedbygoogleV3Cell.scrollSurface !== row.scrollSurface ||
+			killedbygoogleV3Cell.productionReadiness !== row.productionReadiness ||
+			canonicalize(killedbygoogleV3Cell.locality) !== canonicalize(row.locality) ||
+			canonicalize(killedbygoogleV3Cell.readinessScoreboard) !==
+				canonicalize(row.readinessScoreboard) ||
+			canonicalize(row.readinessScoreboard) !==
+				canonicalize({
+					nextLineage: { ready: 0, total: 1, counted: false },
+					overall: { ready: 3, total: 12 },
+				})
+		)
+			throw new Error(
+				'KilledByGoogle v3 matrix cell is not derived from corpus conformance',
+			);
+	} else if (killedbygoogleV3Cell !== undefined || killedbygoogleV3Vertical !== undefined)
+		throw new Error('KilledByGoogle v3 evidence is claimed outside its transaction state');
+	const linkfreeCell = cells.get(REACT_LINKFREE_FIXTURE);
+	const linkfreeVertical = emittedConformance.verticals.find(
+		(value) => asRecord(value, 'corpus vertical').id === REACT_LINKFREE_FIXTURE,
+	);
+	if (linkfreeIntegrated) {
+		const row = asRecord(linkfreeVertical, 'React LinkFree conformance vertical');
+		const linkfreeApplication = emittedConformance.applications.find(
+			(value) => asRecord(value, 'corpus application').id === row.application,
+		);
+		if (
+			linkfreeCell === undefined ||
+			linkfreeApplication === undefined ||
+			canonicalize(asRecord(linkfreeApplication, 'React LinkFree application').verticals) !==
+				canonicalize([REACT_LINKFREE_FIXTURE]) ||
+			linkfreeCell.state !== 'verified' ||
+			linkfreeCell.scope !== 'fixture-specific-create-react-app-5-to-vite8' ||
+			linkfreeCell.genericReactSupport !== 'not-claimed' ||
+			linkfreeCell.framework !== 'react' ||
+			linkfreeCell.framework !== row.framework ||
+			linkfreeCell.designatedPilot !== row.designatedPilot ||
+			linkfreeCell.runtime !== row.runtime ||
+			linkfreeCell.bundler !== row.bundler ||
+			linkfreeCell.track !== row.track ||
+			linkfreeCell.browserProof !== row.browserProof ||
+			canonicalize(linkfreeCell.corpusRuling) !== canonicalize(row.corpusRuling) ||
+			asRecord(row.corpusRuling, 'React LinkFree corpus ruling').ruling !==
+				'synthetic-corpus' ||
+			asRecord(row.corpusRuling, 'React LinkFree corpus ruling').realProfileDataRendered !==
+				false ||
+			linkfreeCell.scrollSurface !== row.scrollSurface ||
+			linkfreeCell.productionReadiness !== row.productionReadiness ||
+			canonicalize(linkfreeCell.locality) !== canonicalize(row.locality) ||
+			canonicalize(linkfreeCell.readinessScoreboard) !==
+				canonicalize(row.readinessScoreboard) ||
+			canonicalize(row.readinessScoreboard) !==
+				canonicalize({
+					reactLineage: { ready: 1, total: 4, counted: false },
+					overall: { ready: 3, total: 12 },
+				})
+		)
+			throw new Error('React LinkFree matrix cell is not derived from corpus conformance');
+	} else if (linkfreeCell !== undefined || linkfreeVertical !== undefined)
+		throw new Error('React LinkFree evidence is claimed outside its transaction state');
 	const phonecat = cells.get('angular-phonecat');
 	if (
 		phonecat?.framework !== 'angularjs' ||
@@ -1074,6 +1268,27 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 				)
 			: report.includes(
 					'jira-clone Angular CLI 13.2 custom-webpack→Angular 16.2 browser-builder direct-Witness browser proof',
+				)) ||
+		(memosIntegrated
+			? !report.includes(
+					'memos v0.1.3 Vite 2.9.5→Vite 8 old-Vite-origin direct-Witness browser proof',
+				)
+			: report.includes(
+					'memos v0.1.3 Vite 2.9.5→Vite 8 old-Vite-origin direct-Witness browser proof',
+				)) ||
+		(killedbygoogleV3Integrated
+			? !report.includes(
+					'killedbygoogle v3.0.0 Next 12 static-export→Vite 8 client-build direct-Witness browser proof',
+				)
+			: report.includes(
+					'killedbygoogle v3.0.0 Next 12 static-export→Vite 8 client-build direct-Witness browser proof',
+				)) ||
+		(linkfreeIntegrated
+			? !report.includes(
+					'LinkFree v0.72.0 create-react-app 5→Vite 8 direct-Witness browser proof',
+				)
+			: report.includes(
+					'LinkFree v0.72.0 create-react-app 5→Vite 8 direct-Witness browser proof',
 				))
 	)
 		throw new Error('Derived Markdown does not match canonical transaction state');

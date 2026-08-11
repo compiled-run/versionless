@@ -1,8 +1,8 @@
 {
   "schemaVersion": "versionless.corpus-conformance.v1",
   "summary": {
-    "verticals": 15,
-    "sourceApplications": 8,
+    "verticals": 18,
+    "sourceApplications": 10,
     "designatedPilotsVerified": 0
   },
   "verticals": [
@@ -845,6 +845,148 @@
         }
       },
       "designatedPilot": false
+    },
+    {
+      "id": "react-memos-v0-1-3",
+      "application": "react-memos",
+      "framework": "react",
+      "receiptPath": "evidence/runs/witness-react-memos-v0-1-3/receipt.json",
+      "receiptDigest": "71964ddaba63710462e1c6faa6322598a4afb0800f3c4826c7ef4e5a6ca01cfa",
+      "canonicalReceipt": {
+        "path": "evidence/runs/react-memos-v0-1-3/t006-build-lanes.json",
+        "sha256": "9d0139c40d273eeb8b97d831116aaf52f80e35409444c8cee6173e8876d600aa",
+        "binding": "sha256-over-the-exact-bytes",
+        "bindingReason": "the retained build-lane receipt for this vertical declares no integrity.canonicalDigest, so the browser proof binds it by the sha256 of its exact bytes rather than by a field it does not carry"
+      },
+      "runtime": "node-16.20.2-to-node-24.15.0",
+      "bundler": "vite-2.9.5-to-vite-8.0.16",
+      "track": "production-readiness-direct-witness-old-vite-origin-to-vite8",
+      "migrationClass": "OLD-VITE-ORIGIN",
+      "projection": {
+        "label": "synthetic-fixture-evidence-data",
+        "behaviorDigest": "b17da56bba70249f1d3b25b2837083b80ba0ae8c1c2899f710fc1eaf9b059902",
+        "seedSha256": "3694ff4647588679036bbd713baf49f78513e04c34221af4aa4968e9f887fced",
+        "pinnedRevision": "565fe0cc567c02deb59fc04830df707ea7476d52"
+      },
+      "locality": {
+        "mode": "offline",
+        "scope": "process-scoped",
+        "osWideIsolation": false,
+        "successfulNonLoopback": 0
+      },
+      "browserProof": "verified-direct-witness",
+      "browserRuns": 4,
+      "behaviorDigest": "d5e08daffeb7765ba6722700587762a702fe74b5357f32fa4d069512014ad934",
+      "scrollSurface": "measured-no-overflowing-document",
+      "productionReadiness": "verified-direct-witness",
+      "readinessScoreboard": {
+        "overall": {
+          "ready": 3,
+          "total": 12
+        },
+        "reactLineage": {
+          "counted": false,
+          "ready": 1,
+          "total": 4
+        }
+      },
+      "designatedPilot": false
+    },
+    {
+      "id": "next-killedbygoogle-v3-0-0",
+      "application": "killedbygoogle",
+      "framework": "next",
+      "receiptPath": "evidence/runs/witness-next-killedbygoogle-v3-0-0/receipt.json",
+      "receiptDigest": "660cb5027139735a5174a5bb8e89fceb9fa6b0327f4a479e174137e789d52a79",
+      "canonicalReceipt": {
+        "path": "evidence/runs/next-killedbygoogle-v3-0-0/t006-build-lanes.json",
+        "schemaVersion": "versionless.legacy-build-parity.v1",
+        "sha256": "7e311d8c8c5e5ac3e68008d113c5be403b40de07ee113556f078b6bfcd658a02",
+        "eraLaneDigest": "0c7d86363d4a15c64aeca4f9c674a49e1abd006457c7a24621d4fff161bcf5c2",
+        "targetLaneDigest": "f048ea581b990bb71b85be8f4255764abd9a2904da409357b1980e3dbc12e3d4"
+      },
+      "runtime": "node-16.20.2",
+      "bundler": "next-12.0.10-vendored-webpack-5-to-vite-8.0.16-rolldown",
+      "track": "production-readiness-direct-witness-next12-static-export-to-vite8-client-build",
+      "locality": {
+        "mode": "offline",
+        "scope": "process-scoped",
+        "osWideIsolation": false,
+        "successfulNonLoopback": 0,
+        "mockedNonLoopbackSeams": 3
+      },
+      "browserProof": "verified-direct-witness",
+      "browserRuns": 4,
+      "behaviorDigest": "240554452bac31af556f6888c0fdb3a5523ff6cc6e839a5a345d64d8204a480f",
+      "serviceWorker": "no-service-worker-in-either-lane",
+      "serviceWorkerMasked": false,
+      "documentDelivery": {
+        "baseline": "pre-rendered-application-document",
+        "migrated": "client-mounted-application-document",
+        "parityOracle": "settled-dom-and-behaviour",
+        "byteParity": "not-claimed"
+      },
+      "scrollSurface": "measured-genuine-viewport-scroll",
+      "productionReadiness": "verified-direct-witness",
+      "readinessScoreboard": {
+        "nextLineage": {
+          "counted": false,
+          "ready": 0,
+          "total": 1
+        },
+        "overall": {
+          "ready": 3,
+          "total": 12
+        }
+      },
+      "designatedPilot": false
+    },
+    {
+      "id": "react-linkfree-v0-72-0",
+      "application": "react-linkfree",
+      "framework": "react",
+      "receiptPath": "evidence/runs/witness-react-linkfree-v0-72-0/receipt.json",
+      "receiptDigest": "2277ad1947280d898f577f418f8b4a34ca775b91156bc1e1de488bde28eae4ba",
+      "canonicalReceipt": {
+        "path": "evidence/runs/react-linkfree-v0-72-0/t006-run.json",
+        "canonicalDigest": "971b4d8c9b94760d973d8c417780ee8f8c009582dc09e16ac900bc511cb36dd8",
+        "sha256": "0c0fb499e0c976750799c9451210a9d327b01996f9255b5f31b8a777774b3f6a"
+      },
+      "runtime": "node-16.20.2-to-node-24.15.0",
+      "bundler": "webpack-5.73.0-to-vite-8.0.16",
+      "track": "production-readiness-direct-witness-create-react-app-5-to-vite8",
+      "corpusRuling": {
+        "ruling": "synthetic-corpus",
+        "dataset": "fixtures/react-linkfree-v0-72-0/witness-corpus",
+        "seam": "the application's own corpus-agnostic generate.js, run unmodified over the synthetic profiles",
+        "sameCorpusInBothLanes": true,
+        "applicationSourceEdits": 0,
+        "realProfileDataRendered": false,
+        "proves": "the behaviour of the application, not the dataset its archive ships"
+      },
+      "locality": {
+        "mode": "offline",
+        "scope": "process-scoped",
+        "osWideIsolation": false,
+        "successfulNonLoopback": 0
+      },
+      "browserProof": "verified-direct-witness",
+      "browserRuns": 4,
+      "behaviorDigest": "09432cbf2578c35c1d04e74219e8411c075505943914fbe91b197c2da46929a1",
+      "scrollSurface": "measured-genuine-viewport-scroll",
+      "productionReadiness": "verified-direct-witness",
+      "readinessScoreboard": {
+        "overall": {
+          "ready": 3,
+          "total": 12
+        },
+        "reactLineage": {
+          "counted": false,
+          "ready": 1,
+          "total": 4
+        }
+      },
+      "designatedPilot": false
     }
   ],
   "applications": [
@@ -990,13 +1132,50 @@
         "license": "MIT"
       },
       "verticals": [
-        "next-killedbygoogle-derived-state-to-memo"
+        "next-killedbygoogle-derived-state-to-memo",
+        "next-killedbygoogle-v3-0-0"
       ],
       "conformance": {
         "productionBuild": true,
         "browserJourneys": 4,
         "mutationRestoration": "verified",
-        "productionOutputConformance": "verified"
+        "productionOutputConformance": "verified",
+        "directWitness": {
+          "vertical": "next-killedbygoogle-v3-0-0",
+          "track": "production-readiness-direct-witness-next12-static-export-to-vite8-client-build",
+          "browserProof": "direct-witness-verified",
+          "runs": 4,
+          "behaviorDigest": "240554452bac31af556f6888c0fdb3a5523ff6cc6e839a5a345d64d8204a480f",
+          "mutation": "pass",
+          "mutationRestoration": "byte-identical",
+          "serviceWorker": "no-service-worker-in-either-lane",
+          "serviceWorkerMasked": false,
+          "documentDelivery": {
+            "baseline": "pre-rendered-application-document",
+            "migrated": "client-mounted-application-document",
+            "parityOracle": "settled-dom-and-behaviour",
+            "byteParity": "not-claimed"
+          },
+          "persistence": {
+            "backend": "none",
+            "browserStorage": "none-written",
+            "store": "in-memory-react-state",
+            "stubbed": false,
+            "survivesOnlineReload": false
+          },
+          "scrollSurface": "measured-genuine-viewport-scroll",
+          "readinessScoreboard": {
+            "nextLineage": {
+              "counted": false,
+              "ready": 0,
+              "total": 1
+            },
+            "overall": {
+              "ready": 3,
+              "total": 12
+            }
+          }
+        }
       },
       "boundaries": {
         "traceDiagnosticReproducibility": "not-claimed",
@@ -1193,6 +1372,117 @@
         "scrollSurface": "measured-no-overflowing-document",
         "locality": "process-scoped-not-os-wide"
       }
+    },
+    {
+      "id": "react-memos",
+      "source": {
+        "repository": "https://github.com/usememos/memos",
+        "ref": "refs/tags/v0.1.3",
+        "tagKind": "lightweight",
+        "tagVerification": "not-applicable-no-tag-object",
+        "revision": "565fe0cc567c02deb59fc04830df707ea7476d52",
+        "archiveSha256": "184834df7e2ea0272d21b4b0bfd7366986bc0aded740442aac91ca58d270f391",
+        "frontendRoot": "web",
+        "monorepo": true,
+        "license": "MIT",
+        "licenseNote": "the grant rests on the repository-root LICENSE file; web/package.json declares no license field"
+      },
+      "verticals": [
+        "react-memos-v0-1-3"
+      ],
+      "conformance": {
+        "browserProof": "direct-witness-verified",
+        "runs": 4,
+        "behaviorDigest": "d5e08daffeb7765ba6722700587762a702fe74b5357f32fa4d069512014ad934",
+        "mutation": "pass",
+        "mutationRestoration": "byte-identical",
+        "migrationClass": "OLD-VITE-ORIGIN",
+        "eraBuildDeviation": "fails, exit 2, inside the tsc gate; four errors, all in node_modules, none under src",
+        "projection": {
+          "label": "synthetic-fixture-evidence-data",
+          "behaviorDigest": "b17da56bba70249f1d3b25b2837083b80ba0ae8c1c2899f710fc1eaf9b059902",
+          "seedSha256": "3694ff4647588679036bbd713baf49f78513e04c34221af4aa4968e9f887fced",
+          "pinnedRevision": "565fe0cc567c02deb59fc04830df707ea7476d52"
+        },
+        "readinessScoreboard": {
+          "overall": {
+            "ready": 3,
+            "total": 12
+          },
+          "reactLineage": {
+            "counted": false,
+            "ready": 1,
+            "total": 4
+          }
+        }
+      },
+      "boundaries": {
+        "track": "production-readiness-direct-witness-old-vite-origin-to-vite8",
+        "designatedPilot": false,
+        "genericReactSupport": "not-claimed",
+        "scrollSurface": "measured-no-overflowing-document",
+        "locality": "process-scoped-not-os-wide"
+      }
+    },
+    {
+      "id": "react-linkfree",
+      "source": {
+        "repository": "https://github.com/EddieHubCommunity/BioDrop",
+        "repositoryAtPinnedRevision": "https://github.com/EddieHubCommunity/LinkFree",
+        "nearestTag": "refs/tags/v0.72.0",
+        "pinnedRevisionIsTagTarget": false,
+        "revision": "367d77297b5753644e11ecd22cf80e59c87b0dc8",
+        "archiveSha256": "7cef1a1c2ae251e3738d8b8a6c5fe94b118bf13d3a5bae7b522b8db9c1c334ef",
+        "frontendRoot": ".",
+        "license": "MIT",
+        "licenseSha256": "3b5b430ae7e6151220591e69a8a056482a13d36518357c025619cf0d60be50bf"
+      },
+      "verticals": [
+        "react-linkfree-v0-72-0"
+      ],
+      "conformance": {
+        "browserProof": "direct-witness-verified",
+        "runs": 4,
+        "behaviorDigest": "09432cbf2578c35c1d04e74219e8411c075505943914fbe91b197c2da46929a1",
+        "mutation": "pass",
+        "mutationRestoration": "byte-identical",
+        "corpusRuling": {
+          "ruling": "synthetic-corpus",
+          "dataset": "fixtures/react-linkfree-v0-72-0/witness-corpus",
+          "seam": "the application's own corpus-agnostic generate.js, run unmodified over the synthetic profiles",
+          "sameCorpusInBothLanes": true,
+          "applicationSourceEdits": 0,
+          "realProfileDataRendered": false,
+          "proves": "the behaviour of the application, not the dataset its archive ships"
+        },
+        "stagedCorpus": {
+          "bundlerAuthoredBytesUnchanged": true,
+          "bundlerAuthoredPaths": 18,
+          "policy": "synthetic-profile-corpus-through-the-applications-own-codegen",
+          "replacedPaths": [
+            "data/",
+            "list.json"
+          ]
+        },
+        "readinessScoreboard": {
+          "overall": {
+            "ready": 3,
+            "total": 12
+          },
+          "reactLineage": {
+            "counted": false,
+            "ready": 1,
+            "total": 4
+          }
+        }
+      },
+      "boundaries": {
+        "track": "production-readiness-direct-witness-create-react-app-5-to-vite8",
+        "designatedPilot": false,
+        "genericReactSupport": "not-claimed",
+        "scrollSurface": "measured-genuine-viewport-scroll",
+        "locality": "process-scoped-not-os-wide"
+      }
     }
   ],
   "frameworkLanes": [
@@ -1316,6 +1606,30 @@
           "witnessReceipt": "evidence/runs/witness-angular-jira-clone/receipt.json",
           "counted": true,
           "reason": "Judge-accepted: Angular CLI 13.2 custom-webpack to 16.2 browser-builder, absorbing a non-default builder and rewriting application source, proven in the browser on a second independent Angular application."
+        },
+        {
+          "cell": "react-memos-v0-1-3",
+          "application": "react-memos",
+          "lineage": "react",
+          "witnessReceipt": "evidence/runs/witness-react-memos-v0-1-3/receipt.json",
+          "counted": false,
+          "reason": "Not counted pending Judge audit: the browser proof is verified and retained, but this vertical is an old-Vite-origin lane rather than a create-react-app one and its own receipt declares counted:false, so it stays visible in the ledger without reaching the React numerator."
+        },
+        {
+          "cell": "next-killedbygoogle-v3-0-0",
+          "application": "next-killedbygoogle-v3-0-0",
+          "lineage": "next",
+          "witnessReceipt": "evidence/runs/witness-next-killedbygoogle-v3-0-0/receipt.json",
+          "counted": false,
+          "reason": "Not counted pending Judge audit: the browser proof is verified and retained, and its own receipt declares counted:false against the Next lineage, whose readiness stays the standing olderNext 0/4 until the final Judge audit rules on it."
+        },
+        {
+          "cell": "react-linkfree-v0-72-0",
+          "application": "react-linkfree",
+          "lineage": "react",
+          "witnessReceipt": "evidence/runs/witness-react-linkfree-v0-72-0/receipt.json",
+          "counted": false,
+          "reason": "Not counted pending Judge audit: the browser proof is verified and retained, but it was run over a synthetic profile corpus staged through the application’s own codegen rather than the shipped dataset, and its own receipt declares counted:false, so it stays visible without reaching the React numerator."
         }
       ],
       "holdouts": [
@@ -1356,6 +1670,6 @@
   },
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "f505bc1a352def646cf552c1f29378f39b2f32b74db35803d5d9bceca2ff4eaa"
+    "canonicalDigest": "e5f76aa7dfc3ca58951c7efffed4fc771cd23793ebc77d6e495cc00cd4959319"
   }
 }

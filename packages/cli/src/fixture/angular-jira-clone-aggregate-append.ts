@@ -74,7 +74,12 @@ export async function appendAngularJiraCloneAggregateMembers(rootDir = root): Pr
 	const members = await angularJiraCloneAggregateMembers(rootDir);
 	if (jiraClonePaths(fixtures).length === 1) {
 		const state = deriveCorpusTransactionState(fixtures);
-		if (state.kind !== 'angular-jira-clone-browser-proof')
+		if (
+			state.kind !== 'angular-jira-clone-browser-proof' &&
+			state.kind !== 'react-memos-browser-proof' &&
+			state.kind !== 'next-killedbygoogle-v3-browser-proof' &&
+			state.kind !== 'react-linkfree-browser-proof'
+		)
 			throw new Error('Angular jira-clone aggregate membership is already inconsistent');
 		return { kind: state.kind, receipts: state.receipts, appended: false };
 	}
@@ -124,7 +129,12 @@ export async function main(args = process.argv.slice(2)): Promise<void> {
 						const state = deriveCorpusTransactionState(
 							aggregate.fixtures.map((item) => record(item, 'member')),
 						);
-						if (state.kind !== 'angular-jira-clone-browser-proof')
+						if (
+							state.kind !== 'angular-jira-clone-browser-proof' &&
+							state.kind !== 'react-memos-browser-proof' &&
+							state.kind !== 'next-killedbygoogle-v3-browser-proof' &&
+							state.kind !== 'react-linkfree-browser-proof'
+						)
 							throw new Error('Angular jira-clone aggregate membership is absent');
 						return { kind: state.kind, receipts: state.receipts, appended: false };
 					})()

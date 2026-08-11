@@ -1,8 +1,8 @@
 # Versionless project trust package
 
-- Canonical SHA-256: `507e795a6b56c85486509297a15988dee8db0a507bea6d4d20f84e0f74e61eb8`
-- Deterministic core: `f748b2523680a650a1da0b397a6a080629f3f7de33c7e09db60a2d454811d176`
-- Generated observation: `2026-08-11T13:30:06.778Z`
+- Canonical SHA-256: `dd515ee61609dedfff0c7bfd4ed952c7cb37ebb29b8ccd3c090d6b6bc2411203`
+- Deterministic core: `32d4f2096972a358f6cffd9d192fe81911cc95e1ea8743ff8f22ea6430377595`
+- Generated observation: `2026-08-11T19:34:58.926Z`
 - Vulnerability input freshness: **verified** (seven-day maximum age)
 - Integrity: **hash-only; authenticity is not established**
 - Assurance: **this package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation**
@@ -15,7 +15,7 @@
 - [SLSA/in-toto-shaped provenance](provenance.json) — shape only; no SLSA level or signer authenticity is claimed.
 - [Supported corpus/runtime/bundler matrix](matrix.json) — unsupported and untested cells remain visible.
 - [Adapter freeze record](adapter-freeze.json) — the migration engine adapter surface is frozen at commit `57b308a573dd582c844ce401fb1161cd70e9bc66` with composite SHA-256 `d9f75ef677cb850f664cc188abf77b8ebfd24e84cb58d147b74e9bbaa143eb77`; the receipts, corpus, and witness registries are deliberately **outside** the freeze so holdout evidence can still be published additively.
-- [Corpus conformance](corpus-conformance.json) — `f505bc1a352def646cf552c1f29378f39b2f32b74db35803d5d9bceca2ff4eaa`; 15 verified verticals grouped into exactly 8 source applications; zero designated pilots are verified.
+- [Corpus conformance](corpus-conformance.json) — `e5f76aa7dfc3ca58951c7efffed4fc771cd23793ebc77d6e495cc00cd4959319`; 18 verified verticals grouped into exactly 10 source applications; zero designated pilots are verified.
 - The immutable Killed by Google Next.js 12 Pages/webpack production vertical is verified only for its exact fixture; synthetic Next.js 12 Pages, 13 transition/App, and 14 App classification lanes remain **not-tested**, and generic Next.js support is not claimed.
 - [Static script/resource surface](script-surface.json) — truthfully remains scoped to the prior nine verticals, two applications, and eighteen exact static deployment entrypoints; T220 is **not included** because its script surface was not separately observed; dynamic script insertion: **not-tested**; payment-page applicability: **not established**; PCI compliance is **not claimed**.
 - [Qualified-journey runtime script observation](runtime-script-observation.json) — truthfully remains scoped to 36 runs across the prior nine verticals, two applications, and eighteen lanes; T220 is **not included** because its runtime scripts were not separately observed; this is **not global dynamic-insertion coverage**.
@@ -27,6 +27,9 @@
 - HospitalRun v2.0.0-alpha.7 create-react-app→Vite 8 direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, its baseline/migrated service-worker difference is **recorded, not masked**, and the Judge **counts** it with that difference visible, so React-lineage readiness is **3/4**.
 - factoriolab Angular CLI 10.1→Angular 16.2 browser-builder direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, it really rewrote application source across six majors, and the Judge **counts** it, so Angular-lineage readiness is **2/4**.
 - jira-clone Angular CLI 13.2 custom-webpack→Angular 16.2 browser-builder direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, the second counted Angular application, and the Judge **counts** it, so Angular-lineage readiness is **2/4**.
+- memos v0.1.3 Vite 2.9.5→Vite 8 old-Vite-origin direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, the first React-lineage vertical whose origin bundler is Vite rather than webpack, and React-lineage readiness stays **3/4** because this vertical is explicitly **not counted**.
+- killedbygoogle v3.0.0 Next 12 static-export→Vite 8 client-build direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, its baseline/migrated document-delivery difference is **recorded, not masked**, and Next-lineage readiness stays **0/4** because this vertical is explicitly **not counted**.
+- LinkFree v0.72.0 create-react-app 5→Vite 8 direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, its proof ran over a **synthetic profile corpus** staged through the application's own codegen rather than the shipped dataset, and React-lineage readiness stays **3/4** because this vertical is explicitly **not counted**.
 - Older-Next direct-Witness candidate: **verified, not counted (0/4) pending final Judge audit**.
 - Holdout `holdout-react-cypress-rwa` (cypress-realworld-app, react lineage): **attempted; outcome failed**. Baseline lane green, migrated lane red identically across 2 attempts against frozen adapter composite `d9f75ef677cb850f664cc188abf77b8ebfd24e84cb58d147b74e9bbaa143eb77` with 0 adapter bytes changed. Recorded missing capability for the follow-on tranche: **non-UTF-8 module source decoding**. It is **counted in no lineage numerator** and published rather than dropped: [evidence/runs/holdout-react-cypress-rwa/receipt.json](../../../evidence/runs/holdout-react-cypress-rwa/receipt.json) `7ec6f18b27d2967cd533ba89505e8a76590c1866aec8bd7a8d8543cd87743aae`.
 - [Data-flow and control mappings](controls.json) — review inputs, not audit conclusions.
@@ -58,6 +61,9 @@ The dependency graph is a rooted complete inventory. Exact transitive dependency
 - `evidence/runs/witness-react-hospitalrun/receipt.json`: `275e435c8518f8978782e6c555ad8c4dd0d6e5401e2ef1acef8856f596648aaa` (verified)
 - `evidence/runs/witness-angular-factoriolab/receipt.json`: `2e7da3056e489958d868917155b6ded61f014b046ee2b020c20ad71a31d86cdd` (verified)
 - `evidence/runs/witness-angular-jira-clone/receipt.json`: `4642564e7ee1ff46668cce76c5db0dc832cce41afe1ceda5611fa2eaf78dfc99` (verified)
+- `evidence/runs/witness-react-memos-v0-1-3/receipt.json`: `71964ddaba63710462e1c6faa6322598a4afb0800f3c4826c7ef4e5a6ca01cfa` (verified)
+- `evidence/runs/witness-next-killedbygoogle-v3-0-0/receipt.json`: `660cb5027139735a5174a5bb8e89fceb9fa6b0327f4a479e174137e789d52a79` (verified)
+- `evidence/runs/witness-react-linkfree-v0-72-0/receipt.json`: `2277ad1947280d898f577f418f8b4a34ca775b91156bc1e1de488bde28eae4ba` (verified)
 
 ## Adapter freeze and capability status
 

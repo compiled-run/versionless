@@ -70,6 +70,21 @@ import {
 	verifyWitnessAngularJiraCloneEvidence,
 	WITNESS_ANGULAR_JIRA_CLONE_RECEIPT_PATH,
 } from '../../core/src/receipts/witness-angular-jira-clone.ts';
+import {
+	REACT_MEMOS_FIXTURE,
+	verifyWitnessReactMemosEvidence,
+	WITNESS_REACT_MEMOS_RECEIPT_PATH,
+} from '../../core/src/receipts/witness-react-memos.ts';
+import {
+	NEXT_KILLEDBYGOOGLE_V3_FIXTURE,
+	verifyWitnessNextKilledbygoogleV3Evidence,
+	WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH,
+} from '../../core/src/receipts/witness-next-killedbygoogle-v3.ts';
+import {
+	REACT_LINKFREE_FIXTURE,
+	verifyWitnessReactLinkfreeEvidence,
+	WITNESS_REACT_LINKFREE_RECEIPT_PATH,
+} from '../../core/src/receipts/witness-react-linkfree.ts';
 import { verifyScriptSurface } from '../../core/src/enterprise/script-surface.ts';
 import {
 	parseRuntimeObservationConfig,
@@ -165,6 +180,40 @@ export const ANGULAR_JIRA_CLONE_TRUST_RECEIPTS = 22 as const;
 export const ANGULAR_JIRA_CLONE_TRUST_MATRIX_CELLS = 20 as const;
 
 /**
+ * Exact receipt and matrix-cell counts the memos browser-proof transaction pins
+ * for itself: the twenty-two jira-clone-state receipts plus this lane's single
+ * Witness receipt, and the twenty prior matrix cells plus the memos cell. The
+ * lane adds one receipt rather than two because its build-lane receipt is
+ * sealed inside the Witness receipt by the sha256 of its exact bytes rather
+ * than carried as a separate aggregate member. No other transaction state is
+ * affected by these counts.
+ */
+export const REACT_MEMOS_TRUST_RECEIPTS = 23 as const;
+export const REACT_MEMOS_TRUST_MATRIX_CELLS = 21 as const;
+
+/**
+ * Exact receipt and matrix-cell counts the killedbygoogle v3 browser-proof
+ * transaction pins for itself: the twenty-three memos-state receipts plus this
+ * lane's single Witness receipt, and the twenty-one prior matrix cells plus the
+ * killedbygoogle v3 cell. Its two build-lane digests are sealed inside the
+ * Witness receipt, so the lane adds one receipt rather than two. No other
+ * transaction state is affected by these counts.
+ */
+export const NEXT_KILLEDBYGOOGLE_V3_TRUST_RECEIPTS = 24 as const;
+export const NEXT_KILLEDBYGOOGLE_V3_TRUST_MATRIX_CELLS = 22 as const;
+
+/**
+ * Exact receipt and matrix-cell counts the LinkFree browser-proof transaction
+ * pins for itself: the twenty-four killedbygoogle-v3-state receipts plus this
+ * lane's single Witness receipt, and the twenty-two prior matrix cells plus the
+ * LinkFree cell. Its build-lane receipt is sealed inside the Witness receipt by
+ * both canonical digest and exact bytes, so the lane adds one receipt rather
+ * than two. No other transaction state is affected by these counts.
+ */
+export const REACT_LINKFREE_TRUST_RECEIPTS = 25 as const;
+export const REACT_LINKFREE_TRUST_MATRIX_CELLS = 23 as const;
+
+/**
  * Verifies a retained build receipt through the browser proof that seals it.
  * A sealed build receipt is not a generic migration receipt, so it is verified
  * against the exact byte digest and canonical digest the Witness receipt binds,
@@ -254,6 +303,12 @@ export async function verifyTrustReceipt(
 		return verifyWitnessAngularFactoriolabEvidence(root);
 	if (receiptPath === WITNESS_ANGULAR_JIRA_CLONE_RECEIPT_PATH)
 		return verifyWitnessAngularJiraCloneEvidence(root);
+	if (receiptPath === WITNESS_REACT_MEMOS_RECEIPT_PATH)
+		return verifyWitnessReactMemosEvidence(root);
+	if (receiptPath === WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH)
+		return verifyWitnessNextKilledbygoogleV3Evidence(root);
+	if (receiptPath === WITNESS_REACT_LINKFREE_RECEIPT_PATH)
+		return verifyWitnessReactLinkfreeEvidence(root);
 	if (receiptPath === NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH)
 		return verifyNextKilledByGoogleEvidence(root, true);
 	if (receiptPath === REACT_AVATAAARS_COMPATIBILITY_RECEIPT_PATH)
@@ -329,6 +384,18 @@ const WITNESS_ANGULAR_FACTORIOLAB_RECEIPT = {
 } as const;
 const WITNESS_ANGULAR_JIRA_CLONE_RECEIPT = {
 	path: WITNESS_ANGULAR_JIRA_CLONE_RECEIPT_PATH,
+	digest: null,
+} as const;
+const WITNESS_REACT_MEMOS_RECEIPT = {
+	path: WITNESS_REACT_MEMOS_RECEIPT_PATH,
+	digest: null,
+} as const;
+const WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT = {
+	path: WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH,
+	digest: null,
+} as const;
+const WITNESS_REACT_LINKFREE_RECEIPT = {
+	path: WITNESS_REACT_LINKFREE_RECEIPT_PATH,
 	digest: null,
 } as const;
 const PHONECAT_VITE_RECEIPT = {
@@ -955,6 +1022,9 @@ function matrix(conformance: CorpusConformance): Record<string, unknown> {
 	const hospitalrun = verticals.get(REACT_HOSPITALRUN_FIXTURE);
 	const factoriolab = verticals.get(ANGULAR_FACTORIOLAB_FIXTURE);
 	const jiraClone = verticals.get(ANGULAR_JIRA_CLONE_FIXTURE);
+	const memos = verticals.get(REACT_MEMOS_FIXTURE);
+	const killedbygoogleV3 = verticals.get(NEXT_KILLEDBYGOOGLE_V3_FIXTURE);
+	const linkfree = verticals.get(REACT_LINKFREE_FIXTURE);
 	return {
 		schemaVersion: TRUST_SCHEMA,
 		derivedFrom: {
@@ -1222,6 +1292,81 @@ function matrix(conformance: CorpusConformance): Record<string, unknown> {
 						})(),
 					]
 				: []),
+			...(memos
+				? [
+						(() => {
+							const cell = asRecord(memos, 'React memos conformance');
+							return {
+								id: REACT_MEMOS_FIXTURE,
+								framework: cell.framework,
+								designatedPilot: cell.designatedPilot,
+								runtime: cell.runtime,
+								bundler: cell.bundler,
+								state: 'verified',
+								track: cell.track,
+								scope: 'fixture-specific-old-vite-origin-2-9-to-vite8',
+								genericReactSupport: 'not-claimed',
+								browserProof: cell.browserProof,
+								migrationClass: cell.migrationClass,
+								projection: cell.projection,
+								scrollSurface: cell.scrollSurface,
+								locality: cell.locality,
+								productionReadiness: cell.productionReadiness,
+								readinessScoreboard: cell.readinessScoreboard,
+							};
+						})(),
+					]
+				: []),
+			...(killedbygoogleV3
+				? [
+						(() => {
+							const cell = asRecord(killedbygoogleV3, 'KilledByGoogle v3 conformance');
+							return {
+								id: NEXT_KILLEDBYGOOGLE_V3_FIXTURE,
+								framework: cell.framework,
+								designatedPilot: cell.designatedPilot,
+								runtime: cell.runtime,
+								bundler: cell.bundler,
+								state: 'verified',
+								track: cell.track,
+								scope: 'fixture-specific-next12-static-export-to-vite8-client-build',
+								genericNextSupport: 'not-claimed',
+								browserProof: cell.browserProof,
+								serviceWorker: cell.serviceWorker,
+								serviceWorkerMasked: cell.serviceWorkerMasked,
+								documentDelivery: cell.documentDelivery,
+								scrollSurface: cell.scrollSurface,
+								locality: cell.locality,
+								productionReadiness: cell.productionReadiness,
+								readinessScoreboard: cell.readinessScoreboard,
+							};
+						})(),
+					]
+				: []),
+			...(linkfree
+				? [
+						(() => {
+							const cell = asRecord(linkfree, 'React LinkFree conformance');
+							return {
+								id: REACT_LINKFREE_FIXTURE,
+								framework: cell.framework,
+								designatedPilot: cell.designatedPilot,
+								runtime: cell.runtime,
+								bundler: cell.bundler,
+								state: 'verified',
+								track: cell.track,
+								scope: 'fixture-specific-create-react-app-5-to-vite8',
+								genericReactSupport: 'not-claimed',
+								browserProof: cell.browserProof,
+								corpusRuling: cell.corpusRuling,
+								scrollSurface: cell.scrollSurface,
+								locality: cell.locality,
+								productionReadiness: cell.productionReadiness,
+								readinessScoreboard: cell.readinessScoreboard,
+							};
+						})(),
+					]
+				: []),
 			...conformance.frameworkLanes.map((lane) => ({
 				...lane,
 				state: 'not-tested',
@@ -1455,7 +1600,13 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 	const hasWitnessAngularRealworldReceipt = transaction.angularRealworldWitnessIntegrated;
 	const hasWitnessReactBoilerplateReceipt = transaction.reactBoilerplateWitnessIntegrated;
 	const hasWitnessNextKilledByGoogleReceipt = transaction.nextKilledByGoogleWitnessIntegrated;
-	const hasAngularJiraCloneReceipts = transaction.kind === 'angular-jira-clone-browser-proof';
+	const hasReactLinkfreeReceipts = transaction.kind === 'react-linkfree-browser-proof';
+	const hasNextKilledbygoogleV3Receipts =
+		transaction.kind === 'next-killedbygoogle-v3-browser-proof' || hasReactLinkfreeReceipts;
+	const hasReactMemosReceipts =
+		transaction.kind === 'react-memos-browser-proof' || hasNextKilledbygoogleV3Receipts;
+	const hasAngularJiraCloneReceipts =
+		transaction.kind === 'angular-jira-clone-browser-proof' || hasReactMemosReceipts;
 	const hasAngularFactoriolabReceipts =
 		transaction.kind === 'angular-factoriolab-browser-proof' || hasAngularJiraCloneReceipts;
 	const hasReactHospitalrunReceipts =
@@ -1487,6 +1638,9 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 			: []),
 		...(hasAngularFactoriolabReceipts ? [WITNESS_ANGULAR_FACTORIOLAB_RECEIPT] : []),
 		...(hasAngularJiraCloneReceipts ? [WITNESS_ANGULAR_JIRA_CLONE_RECEIPT] : []),
+		...(hasReactMemosReceipts ? [WITNESS_REACT_MEMOS_RECEIPT] : []),
+		...(hasNextKilledbygoogleV3Receipts ? [WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT] : []),
+		...(hasReactLinkfreeReceipts ? [WITNESS_REACT_LINKFREE_RECEIPT] : []),
 		...reactAvataaarsCompatibilityTrustReceipts(transaction),
 		...reactCalculatorTrustReceipts(transaction),
 		...reactGraphiQL013TrustReceipts(transaction),
@@ -1511,8 +1665,26 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 		receipts.length !== ANGULAR_FACTORIOLAB_TRUST_RECEIPTS
 	)
 		throw new Error('Angular factoriolab browser proof does not preserve exactly 21 receipts');
-	if (hasAngularJiraCloneReceipts && receipts.length !== ANGULAR_JIRA_CLONE_TRUST_RECEIPTS)
+	if (
+		hasAngularJiraCloneReceipts &&
+		!hasReactMemosReceipts &&
+		receipts.length !== ANGULAR_JIRA_CLONE_TRUST_RECEIPTS
+	)
 		throw new Error('Angular jira-clone browser proof does not preserve exactly 22 receipts');
+	if (
+		hasReactMemosReceipts &&
+		!hasNextKilledbygoogleV3Receipts &&
+		receipts.length !== REACT_MEMOS_TRUST_RECEIPTS
+	)
+		throw new Error('React memos browser proof does not preserve exactly 23 receipts');
+	if (
+		hasNextKilledbygoogleV3Receipts &&
+		!hasReactLinkfreeReceipts &&
+		receipts.length !== NEXT_KILLEDBYGOOGLE_V3_TRUST_RECEIPTS
+	)
+		throw new Error('KilledByGoogle v3 browser proof does not preserve exactly 24 receipts');
+	if (hasReactLinkfreeReceipts && receipts.length !== REACT_LINKFREE_TRUST_RECEIPTS)
+		throw new Error('React LinkFree browser proof does not preserve exactly 25 receipts');
 	const verifiedReceipts = [];
 	for (const expected of receipts) {
 		const verified = await verifyTrustReceipt(root, expected.path);

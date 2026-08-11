@@ -55,7 +55,10 @@ function assertAggregate(value: unknown, requireIntegrated: boolean): Record<str
 			kind === 'react-papercups-browser-proof' ||
 			kind === 'react-hospitalrun-browser-proof' ||
 			kind === 'angular-factoriolab-browser-proof' ||
-			kind === 'angular-jira-clone-browser-proof'
+			kind === 'angular-jira-clone-browser-proof' ||
+			kind === 'react-memos-browser-proof' ||
+			kind === 'next-killedbygoogle-v3-browser-proof' ||
+			kind === 'react-linkfree-browser-proof'
 		)
 			return aggregate;
 	} catch {

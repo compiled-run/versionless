@@ -85,12 +85,46 @@ import {
 	witnessAngularJiraCloneAggregateMember,
 } from '../receipts/witness-angular-jira-clone.ts';
 import {
+	REACT_MEMOS_FIXTURE,
+	verifyWitnessReactMemosEvidence,
+	WITNESS_REACT_MEMOS_RECEIPT_PATH,
+	witnessReactMemosAggregateMember,
+} from '../receipts/witness-react-memos.ts';
+import {
+	NEXT_KILLEDBYGOOGLE_V3_FIXTURE,
+	verifyWitnessNextKilledbygoogleV3Evidence,
+	WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH,
+	witnessNextKilledbygoogleV3AggregateMember,
+} from '../receipts/witness-next-killedbygoogle-v3.ts';
+import {
+	REACT_LINKFREE_FIXTURE,
+	verifyWitnessReactLinkfreeEvidence,
+	WITNESS_REACT_LINKFREE_RECEIPT_PATH,
+	witnessReactLinkfreeAggregateMember,
+} from '../receipts/witness-react-linkfree.ts';
+import {
 	HOLDOUT_REACT_CYPRESS_RWA_APPLICATION,
 	holdoutReactCypressRwaCorpusRecord,
 	verifyHoldoutReactCypressRwaEvidence,
 } from '../receipts/holdout-react-cypress-rwa.ts';
 
 export const CORPUS_CONFORMANCE_SCHEMA = 'versionless.corpus-conformance.v1' as const;
+
+/**
+ * The one immutable killedbygoogle source the corpus carries.
+ *
+ * Two verticals rest on it — the derived-state-to-useMemo migration and the
+ * v3.0.0 direct-Witness browser proof — and they are two proofs of one source,
+ * not two sources. Naming it once is what lets the browser-proof lane be
+ * checked against it instead of quietly publishing a second application row for
+ * the same repository at the same revision.
+ */
+const KILLED_BY_GOOGLE_PUBLISHED_SOURCE = Object.freeze({
+	repository: normalizeURL('https://github.com/codyogden/killedbygoogle'),
+	revision: '56809c31592e6ca1edce8af9bfe842fbcdf71f4d',
+	archiveSha256: 'c28878d0f65b56aa595763c852477fb0c1e3533e5c7f7ea9daa2be16f102368d',
+	license: 'MIT',
+});
 const REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH =
 	'evidence/runs/react-boilerplate-v4-zero-sw/t693-run.json' as const;
 
@@ -151,11 +185,17 @@ export const LINEAGE_READINESS_TOTAL = 4 as const;
  * from the ledger. Lineage numerators are counted off these entries, so a cell
  * cannot reach a numerator without a verified Witness receipt in the corpus and
  * a declined cell cannot be quietly dropped to flatter a score.
+ *
+ * A cell whose lineage has no published numerator — the Next lineage, whose
+ * readiness is still the standing `olderNext` 0/4 pending the final Judge audit
+ * — still belongs in this ledger. It is verified evidence about a source
+ * application, so hiding it would be the flattering edit; carrying it with
+ * `counted: false` is the honest one, and `countedLineageCells` never reads it.
  */
 export interface LineageCountingCell {
 	readonly cell: string;
 	readonly application: string;
-	readonly lineage: 'react' | 'angular';
+	readonly lineage: 'react' | 'angular' | 'next';
 	readonly witnessReceipt: string;
 	readonly counted: boolean;
 	readonly reason: string;
@@ -176,6 +216,9 @@ function lineageCountingLedger(present: {
 	angularRealworld: boolean;
 	factoriolab: boolean;
 	jiraClone: boolean;
+	memos: boolean;
+	killedbygoogleV3: boolean;
+	linkfree: boolean;
 }): LineageCountingCell[] {
 	const cells: Array<LineageCountingCell | null> = [
 		present.reactBoilerplate
@@ -236,6 +279,36 @@ function lineageCountingLedger(present: {
 					witnessReceipt: WITNESS_ANGULAR_JIRA_CLONE_RECEIPT_PATH,
 					counted: true,
 					reason: 'Judge-accepted: Angular CLI 13.2 custom-webpack to 16.2 browser-builder, absorbing a non-default builder and rewriting application source, proven in the browser on a second independent Angular application.',
+				}
+			: null,
+		present.memos
+			? {
+					cell: REACT_MEMOS_FIXTURE,
+					application: 'react-memos',
+					lineage: 'react' as const,
+					witnessReceipt: WITNESS_REACT_MEMOS_RECEIPT_PATH,
+					counted: false,
+					reason: 'Not counted pending Judge audit: the browser proof is verified and retained, but this vertical is an old-Vite-origin lane rather than a create-react-app one and its own receipt declares counted:false, so it stays visible in the ledger without reaching the React numerator.',
+				}
+			: null,
+		present.killedbygoogleV3
+			? {
+					cell: NEXT_KILLEDBYGOOGLE_V3_FIXTURE,
+					application: NEXT_KILLEDBYGOOGLE_V3_FIXTURE,
+					lineage: 'next' as const,
+					witnessReceipt: WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH,
+					counted: false,
+					reason: 'Not counted pending Judge audit: the browser proof is verified and retained, and its own receipt declares counted:false against the Next lineage, whose readiness stays the standing olderNext 0/4 until the final Judge audit rules on it.',
+				}
+			: null,
+		present.linkfree
+			? {
+					cell: REACT_LINKFREE_FIXTURE,
+					application: 'react-linkfree',
+					lineage: 'react' as const,
+					witnessReceipt: WITNESS_REACT_LINKFREE_RECEIPT_PATH,
+					counted: false,
+					reason: 'Not counted pending Judge audit: the browser proof is verified and retained, but it was run over a synthetic profile corpus staged through the application’s own codegen rather than the shipped dataset, and its own receipt declares counted:false, so it stays visible without reaching the React numerator.',
 				}
 			: null,
 	];
@@ -424,8 +497,8 @@ interface JourneyProjection {
 export interface CorpusConformance {
 	schemaVersion: typeof CORPUS_CONFORMANCE_SCHEMA;
 	summary: {
-		verticals: 10 | 11 | 12 | 13 | 14 | 15;
-		sourceApplications: 3 | 4 | 5 | 6 | 7 | 8;
+		verticals: 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18;
+		sourceApplications: 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 		designatedPilotsVerified: 0;
 	};
 	verticals: Array<Record<string, unknown>>;
@@ -584,6 +657,76 @@ export type CorpusTransactionState = Readonly<
 			resolvedDependencies: 35;
 	  }
 	| {
+			/**
+			 * The memos old-Vite-origin lineage joins on top of the jira-clone
+			 * browser proof and is the first React-lineage vertical whose origin
+			 * bundler is Vite rather than webpack. It publishes one member: its
+			 * build-lane receipt is sealed inside the Witness receipt by the
+			 * sha256 of its exact bytes — the lane receipt declares no canonical
+			 * digest of its own — so a second aggregate row would restate a
+			 * binding that already exists. It is a separate immutable source
+			 * application, so it is a new vertical, and its React-lineage
+			 * readiness is explicitly uncounted pending the Judge.
+			 */
+			kind: 'react-memos-browser-proof';
+			nextKilledByGoogleIntegrated: true;
+			angularRealworldWitnessIntegrated: true;
+			reactBoilerplateWitnessIntegrated: true;
+			nextKilledByGoogleWitnessIntegrated: true;
+			verticals: 16;
+			sourceApplications: 9;
+			receipts: 23;
+			resolvedDependencies: 36;
+	  }
+	| {
+			/**
+			 * The killedbygoogle v3.0.0 legacy-Next lineage joins on top of the
+			 * memos browser proof. It is a new vertical but NOT a new source
+			 * application: it is the same repository at the same pinned revision
+			 * with the same archive digest as the derived-state-to-memo vertical
+			 * already in the corpus, so it joins that application's vertical list
+			 * rather than being counted a second time. The proof itself is new —
+			 * the earlier vertical is a derived-state migration, this one is a
+			 * direct-Witness browser proof of the Next 12 static export moved to
+			 * a Vite 8 client build — which is why the vertical count rises and
+			 * the source-application count does not. Its two build-lane digests
+			 * are sealed inside the Witness receipt, so it publishes one member,
+			 * and its Next lineage stays the standing olderNext 0/4 pending the
+			 * Judge.
+			 */
+			kind: 'next-killedbygoogle-v3-browser-proof';
+			nextKilledByGoogleIntegrated: true;
+			angularRealworldWitnessIntegrated: true;
+			reactBoilerplateWitnessIntegrated: true;
+			nextKilledByGoogleWitnessIntegrated: true;
+			verticals: 17;
+			sourceApplications: 9;
+			receipts: 24;
+			resolvedDependencies: 37;
+	  }
+	| {
+			/**
+			 * The LinkFree create-react-app 5 lineage joins on top of the
+			 * killedbygoogle v3 browser proof and is the third create-react-app
+			 * source application in the corpus. It publishes one member: the
+			 * build-lane receipt it seals is bound by both canonical digest and
+			 * exact bytes inside the Witness receipt. Its proof was run over a
+			 * synthetic profile corpus staged through the application's own
+			 * codegen, which the receipt records as a corpus ruling rather than
+			 * hiding, and its React-lineage readiness is explicitly uncounted
+			 * pending the Judge.
+			 */
+			kind: 'react-linkfree-browser-proof';
+			nextKilledByGoogleIntegrated: true;
+			angularRealworldWitnessIntegrated: true;
+			reactBoilerplateWitnessIntegrated: true;
+			nextKilledByGoogleWitnessIntegrated: true;
+			verticals: 18;
+			sourceApplications: 10;
+			receipts: 25;
+			resolvedDependencies: 38;
+	  }
+	| {
 			kind: 'react-avataaars-candidate';
 			nextKilledByGoogleIntegrated: true;
 			angularRealworldWitnessIntegrated: true;
@@ -711,6 +854,117 @@ function assertAggregateFixture(
 	)
 		throw new Error(`Aggregate membership mismatch: ${expected.id}`);
 	return fixture;
+}
+
+/**
+ * Derives the three browser-proof states that sit above the jira-clone one.
+ *
+ * They are checked here rather than inline for one reason only: the inline
+ * chain is already ten conditionals deep, and three more would bury the checks
+ * under indentation without changing a single one of them. Every check the
+ * inline chain makes is made here too, in the same order and with the same
+ * strictness — the derived member must canonicalize to exactly what its Witness
+ * module builds from the published digest, the aggregate must hold exactly the
+ * expected number of members at each state, and the receipt order must match
+ * the exact appended sequence. Each state is only reachable through its own
+ * predecessor, so the three lanes cannot be admitted out of order.
+ *
+ * Returning `null` means the memos member is absent, which is the jira-clone
+ * state's business to conclude, not this function's.
+ */
+function deriveReactTrioTransactionState(
+	byPath: Map<string, unknown>,
+	orderedPaths: string[],
+	jiraCloneOrder: readonly string[],
+): CorpusTransactionState | null {
+	const memos = byPath.get(WITNESS_REACT_MEMOS_RECEIPT_PATH);
+	if (!memos) return null;
+	const memosRecord = record(memos, 'React memos Witness aggregate fixture');
+	const memosDigest = string(memosRecord.digest, 'React memos Witness aggregate digest');
+	if (
+		!sha256Pattern.test(memosDigest) ||
+		canonicalize(memosRecord) !== canonicalize(witnessReactMemosAggregateMember(memosDigest))
+	)
+		throw new Error('React memos aggregate membership mismatch');
+	const memosOrder = [...jiraCloneOrder, WITNESS_REACT_MEMOS_RECEIPT_PATH];
+	const killedbygoogle = byPath.get(WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH);
+	if (!killedbygoogle) {
+		if (byPath.size !== canonicalReceipts.length + 14)
+			throw new Error('React memos aggregate membership mismatch');
+		assertOrderedAggregate(orderedPaths, memosOrder, 'React memos browser proof');
+		return {
+			kind: 'react-memos-browser-proof',
+			nextKilledByGoogleIntegrated: true,
+			angularRealworldWitnessIntegrated: true,
+			reactBoilerplateWitnessIntegrated: true,
+			nextKilledByGoogleWitnessIntegrated: true,
+			verticals: 16,
+			sourceApplications: 9,
+			receipts: 23,
+			resolvedDependencies: 36,
+		};
+	}
+	const killedbygoogleRecord = record(
+		killedbygoogle,
+		'KilledByGoogle v3 Witness aggregate fixture',
+	);
+	const killedbygoogleDigest = string(
+		killedbygoogleRecord.digest,
+		'KilledByGoogle v3 Witness aggregate digest',
+	);
+	if (
+		!sha256Pattern.test(killedbygoogleDigest) ||
+		canonicalize(killedbygoogleRecord) !==
+			canonicalize(witnessNextKilledbygoogleV3AggregateMember(killedbygoogleDigest))
+	)
+		throw new Error('KilledByGoogle v3 aggregate membership mismatch');
+	const killedbygoogleOrder = [...memosOrder, WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH];
+	const linkfree = byPath.get(WITNESS_REACT_LINKFREE_RECEIPT_PATH);
+	if (!linkfree) {
+		if (byPath.size !== canonicalReceipts.length + 15)
+			throw new Error('KilledByGoogle v3 aggregate membership mismatch');
+		assertOrderedAggregate(
+			orderedPaths,
+			killedbygoogleOrder,
+			'KilledByGoogle v3 browser proof',
+		);
+		return {
+			kind: 'next-killedbygoogle-v3-browser-proof',
+			nextKilledByGoogleIntegrated: true,
+			angularRealworldWitnessIntegrated: true,
+			reactBoilerplateWitnessIntegrated: true,
+			nextKilledByGoogleWitnessIntegrated: true,
+			verticals: 17,
+			sourceApplications: 9,
+			receipts: 24,
+			resolvedDependencies: 37,
+		};
+	}
+	const linkfreeRecord = record(linkfree, 'React LinkFree Witness aggregate fixture');
+	const linkfreeDigest = string(linkfreeRecord.digest, 'React LinkFree Witness aggregate digest');
+	if (
+		!sha256Pattern.test(linkfreeDigest) ||
+		canonicalize(linkfreeRecord) !==
+			canonicalize(witnessReactLinkfreeAggregateMember(linkfreeDigest)) ||
+		byPath.size !== canonicalReceipts.length + 16
+	)
+		throw new Error('React LinkFree aggregate membership mismatch');
+	assertOrderedAggregate(
+		orderedPaths,
+		[...killedbygoogleOrder, WITNESS_REACT_LINKFREE_RECEIPT_PATH],
+		'React LinkFree browser proof',
+	);
+	return {
+		kind: 'react-linkfree-browser-proof',
+		nextKilledByGoogleIntegrated: true,
+		angularRealworldWitnessIntegrated: true,
+		reactBoilerplateWitnessIntegrated: true,
+		nextKilledByGoogleWitnessIntegrated: true,
+		verticals: 18,
+		sourceApplications: 10,
+		receipts: 25,
+		resolvedDependencies: 38,
+	};
 }
 
 export function deriveCorpusTransactionState(fixtures: unknown): CorpusTransactionState {
@@ -996,18 +1250,28 @@ export function deriveCorpusTransactionState(fixtures: unknown): CorpusTransacti
 													witnessAngularJiraCloneAggregateMember(
 														jiraCloneDigest,
 													),
-												) ||
-											byPath.size !== canonicalReceipts.length + 13
+												)
 										)
+											throw new Error(
+												'Angular jira-clone aggregate membership mismatch',
+											);
+										const jiraCloneOrder = [
+											...factoriolabOrder,
+											WITNESS_ANGULAR_JIRA_CLONE_RECEIPT_PATH,
+										];
+										const trio = deriveReactTrioTransactionState(
+											byPath,
+											orderedPaths,
+											jiraCloneOrder,
+										);
+										if (trio) return trio;
+										if (byPath.size !== canonicalReceipts.length + 13)
 											throw new Error(
 												'Angular jira-clone aggregate membership mismatch',
 											);
 										assertOrderedAggregate(
 											orderedPaths,
-											[
-												...factoriolabOrder,
-												WITNESS_ANGULAR_JIRA_CLONE_RECEIPT_PATH,
-											],
+											jiraCloneOrder,
 											'Angular jira-clone browser proof',
 										);
 										return {
@@ -1731,6 +1995,332 @@ async function angularJiraCloneConformanceRows(
 	};
 }
 
+/**
+ * Derives the memos conformance rows.
+ *
+ * This is the first React-lineage vertical whose origin bundler is Vite rather
+ * than webpack, and the row says so through the receipt's own measured
+ * migration class rather than through a label invented here. Three further
+ * shape differences are carried rather than smoothed: the sealed build-lane
+ * receipt is bound by the sha256 of its exact bytes, so the emitted binding
+ * publishes that reason instead of a canonical digest the lane receipt does not
+ * carry; the application never registers a service worker and the receipt
+ * measures none, so no service-worker field is emitted rather than a
+ * manufactured "none"; and the proof talked to a frozen synthetic projection,
+ * which the row publishes by label, digest and seed so the reader knows what
+ * the journeys were answered by.
+ */
+async function reactMemosConformanceRows(
+	root: string,
+	aggregateByPath: Map<string, unknown>,
+): Promise<{ vertical: Record<string, unknown>; application: Record<string, unknown> }> {
+	const verified = await verifyWitnessReactMemosEvidence(root);
+	const witnessMember = record(
+		aggregateByPath.get(WITNESS_REACT_MEMOS_RECEIPT_PATH),
+		'React memos Witness aggregate fixture',
+	);
+	if (witnessMember.digest !== verified.digest)
+		throw new Error('React memos Witness aggregate digest differs');
+	const receipt = verified.receipt;
+	const run = receipt.runs[0];
+	if (!run) throw new Error('React memos Witness receipt carries no runs');
+	const id = string(receipt.fixture, 'React memos receipt fixture');
+	const application = string(run.app, 'React memos application identity');
+	const behaviorDigest = string(run.behaviorDigest, 'React memos behavior digest');
+	const track = string(witnessMember.track, 'React memos Witness aggregate track');
+	const source = {
+		repository: normalizeURL(receipt.source.repository),
+		ref: receipt.source.ref,
+		tagKind: receipt.source.tagKind,
+		tagVerification: receipt.source.tagVerification,
+		revision: receipt.source.revision,
+		archiveSha256: receipt.source.archiveSha256,
+		frontendRoot: receipt.source.frontendRoot,
+		monorepo: receipt.source.monorepo,
+		license: receipt.source.license,
+		licenseNote: receipt.source.licenseNote,
+	};
+	const locality = {
+		mode: receipt.locality.mode,
+		scope: 'process-scoped',
+		osWideIsolation: receipt.locality.osWideIsolation,
+		successfulNonLoopback: receipt.locality.successfulNonLoopback,
+	};
+	const projection = {
+		label: receipt.projection.label,
+		behaviorDigest: receipt.projection.behaviorDigest,
+		seedSha256: receipt.projection.seedSha256,
+		pinnedRevision: receipt.projection.pinnedRevision,
+	};
+	return {
+		vertical: {
+			id,
+			application,
+			framework: string(witnessMember.framework, 'React memos aggregate framework'),
+			receiptPath: WITNESS_REACT_MEMOS_RECEIPT_PATH,
+			receiptDigest: verified.digest,
+			canonicalReceipt: {
+				path: receipt.canonicalReceipt.path,
+				sha256: receipt.canonicalReceipt.sha256,
+				binding: receipt.canonicalReceipt.binding,
+				bindingReason: receipt.canonicalReceipt.bindingReason,
+			},
+			runtime: string(witnessMember.runtime, 'React memos aggregate runtime'),
+			bundler: string(witnessMember.bundler, 'React memos aggregate bundler'),
+			track,
+			migrationClass: receipt.migrationClass.migrationClass,
+			projection,
+			locality,
+			browserProof: 'verified-direct-witness',
+			browserRuns: receipt.runs.length,
+			behaviorDigest,
+			scrollSurface: receipt.scrollAbsence.state,
+			productionReadiness: 'verified-direct-witness',
+			readinessScoreboard: receipt.readiness,
+			designatedPilot: false,
+		},
+		application: {
+			id: application,
+			source,
+			verticals: [id],
+			conformance: {
+				browserProof: 'direct-witness-verified',
+				runs: receipt.runs.length,
+				behaviorDigest,
+				mutation: receipt.mutation.restoredRun,
+				mutationRestoration: receipt.mutation.restoredByteIdentically
+					? 'byte-identical'
+					: 'not-byte-identical',
+				migrationClass: receipt.migrationClass.migrationClass,
+				eraBuildDeviation: receipt.eraBuildDeviation.declaredBuildCommandOutcomeAtThisRevision,
+				projection,
+				readinessScoreboard: receipt.readiness,
+			},
+			boundaries: {
+				track,
+				designatedPilot: false,
+				genericReactSupport: 'not-claimed',
+				scrollSurface: receipt.scrollAbsence.state,
+				locality: 'process-scoped-not-os-wide',
+			},
+		},
+	};
+}
+
+/**
+ * Derives the killedbygoogle v3.0.0 conformance rows.
+ *
+ * This lane is a new vertical on a source application the corpus already
+ * carries, and the difference matters enough to be enforced rather than
+ * assumed. The published `killedbygoogle` application row pins a repository, a
+ * revision and an archive digest; this proof pins the same three. Counting it
+ * as an eleventh source application would count one immutable source twice and
+ * inflate the only number in the summary that is supposed to mean "distinct
+ * real applications", so the function returns no application row at all: it
+ * returns the vertical plus the browser-proof block that joins the existing
+ * application, and refuses outright if the two sources ever diverge.
+ *
+ * The two document-delivery shapes are a genuine measured difference between
+ * the lanes rather than a defect, so the row publishes the receipt's own
+ * recorded difference instead of claiming byte parity, and the locality row
+ * publishes the mocked non-loopback seam count beside the zero successful
+ * non-loopback requests exactly as the jira-clone row does.
+ */
+async function nextKilledbygoogleV3ConformanceRows(
+	root: string,
+	aggregateByPath: Map<string, unknown>,
+	publishedSource: { repository: string; revision: string; archiveSha256: string; license: string },
+): Promise<{ vertical: Record<string, unknown>; browserProof: Record<string, unknown> }> {
+	const verified = await verifyWitnessNextKilledbygoogleV3Evidence(root);
+	const witnessMember = record(
+		aggregateByPath.get(WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH),
+		'KilledByGoogle v3 Witness aggregate fixture',
+	);
+	if (witnessMember.digest !== verified.digest)
+		throw new Error('KilledByGoogle v3 Witness aggregate digest differs');
+	const receipt = verified.receipt;
+	if (
+		normalizeURL(receipt.source.repository) !== publishedSource.repository ||
+		receipt.source.revision !== publishedSource.revision ||
+		receipt.source.archiveSha256 !== publishedSource.archiveSha256 ||
+		receipt.source.license !== publishedSource.license
+	)
+		throw new Error(
+			'KilledByGoogle v3 browser proof does not pin the published killedbygoogle source',
+		);
+	const run = receipt.runs[0];
+	if (!run) throw new Error('KilledByGoogle v3 Witness receipt carries no runs');
+	const id = string(receipt.fixture, 'KilledByGoogle v3 receipt fixture');
+	const behaviorDigest = string(run.behaviorDigest, 'KilledByGoogle v3 behavior digest');
+	const track = string(witnessMember.track, 'KilledByGoogle v3 Witness aggregate track');
+	const locality = {
+		mode: receipt.locality.mode,
+		scope: 'process-scoped',
+		osWideIsolation: receipt.locality.osWideIsolation,
+		successfulNonLoopback: receipt.locality.successfulNonLoopback,
+		mockedNonLoopbackSeams: receipt.locality.mockedNonLoopbackSeams,
+	};
+	const documentDelivery = {
+		baseline: receipt.documentDelivery.baseline,
+		migrated: receipt.documentDelivery.migrated,
+		parityOracle: receipt.documentDelivery.parityOracle,
+		byteParity: receipt.documentDelivery.byteParity,
+	};
+	return {
+		vertical: {
+			id,
+			application: 'killedbygoogle',
+			framework: string(witnessMember.framework, 'KilledByGoogle v3 aggregate framework'),
+			receiptPath: WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH,
+			receiptDigest: verified.digest,
+			canonicalReceipt: {
+				path: receipt.canonicalReceipt.path,
+				schemaVersion: receipt.canonicalReceipt.schemaVersion,
+				sha256: receipt.canonicalReceipt.sha256,
+				eraLaneDigest: receipt.canonicalReceipt.eraLaneDigest,
+				targetLaneDigest: receipt.canonicalReceipt.targetLaneDigest,
+			},
+			runtime: string(witnessMember.runtime, 'KilledByGoogle v3 aggregate runtime'),
+			bundler: string(witnessMember.bundler, 'KilledByGoogle v3 aggregate bundler'),
+			track,
+			locality,
+			browserProof: 'verified-direct-witness',
+			browserRuns: receipt.runs.length,
+			behaviorDigest,
+			serviceWorker: receipt.serviceWorker.state,
+			serviceWorkerMasked: receipt.serviceWorker.masked,
+			documentDelivery,
+			scrollSurface: receipt.scrollSurface.state,
+			productionReadiness: 'verified-direct-witness',
+			readinessScoreboard: receipt.readiness,
+			designatedPilot: false,
+		},
+		browserProof: {
+			vertical: id,
+			track,
+			browserProof: 'direct-witness-verified',
+			runs: receipt.runs.length,
+			behaviorDigest,
+			mutation: receipt.mutation.restoredRun,
+			mutationRestoration: receipt.mutation.restoredByteIdentically
+				? 'byte-identical'
+				: 'not-byte-identical',
+			serviceWorker: receipt.serviceWorker.state,
+			serviceWorkerMasked: receipt.serviceWorker.masked,
+			documentDelivery,
+			persistence: receipt.persistence,
+			scrollSurface: receipt.scrollSurface.state,
+			readinessScoreboard: receipt.readiness,
+		},
+	};
+}
+
+/**
+ * Derives the LinkFree conformance rows.
+ *
+ * This is the third create-react-app source application in the corpus and the
+ * first whose proof was run over a staged synthetic corpus. That is the fact
+ * most easily lost in a summary, so it is the one the rows carry most
+ * explicitly: the receipt's own corpus ruling — what was replaced, what it
+ * proves, and what it does not — is published on both the vertical and the
+ * source application rather than being left inside the receipt.
+ */
+async function reactLinkfreeConformanceRows(
+	root: string,
+	aggregateByPath: Map<string, unknown>,
+): Promise<{ vertical: Record<string, unknown>; application: Record<string, unknown> }> {
+	const verified = await verifyWitnessReactLinkfreeEvidence(root);
+	const witnessMember = record(
+		aggregateByPath.get(WITNESS_REACT_LINKFREE_RECEIPT_PATH),
+		'React LinkFree Witness aggregate fixture',
+	);
+	if (witnessMember.digest !== verified.digest)
+		throw new Error('React LinkFree Witness aggregate digest differs');
+	const receipt = verified.receipt;
+	const run = receipt.runs[0];
+	if (!run) throw new Error('React LinkFree Witness receipt carries no runs');
+	const id = string(receipt.fixture, 'React LinkFree receipt fixture');
+	const application = string(run.app, 'React LinkFree application identity');
+	const behaviorDigest = string(run.behaviorDigest, 'React LinkFree behavior digest');
+	const track = string(witnessMember.track, 'React LinkFree Witness aggregate track');
+	const source = {
+		repository: normalizeURL(receipt.source.repository),
+		repositoryAtPinnedRevision: normalizeURL(receipt.source.repositoryAtPinnedRevision),
+		nearestTag: receipt.source.nearestTag,
+		pinnedRevisionIsTagTarget: receipt.source.pinnedRevisionIsTagTarget,
+		revision: receipt.source.revision,
+		archiveSha256: receipt.source.archiveSha256,
+		frontendRoot: receipt.source.frontendRoot,
+		license: receipt.source.license,
+		licenseSha256: receipt.source.licenseSha256,
+	};
+	const locality = {
+		mode: receipt.locality.mode,
+		scope: 'process-scoped',
+		osWideIsolation: receipt.locality.osWideIsolation,
+		successfulNonLoopback: receipt.locality.successfulNonLoopback,
+	};
+	const corpusRuling = {
+		ruling: receipt.corpusRuling.ruling,
+		dataset: receipt.corpusRuling.dataset,
+		seam: receipt.corpusRuling.seam,
+		sameCorpusInBothLanes: receipt.corpusRuling.sameCorpusInBothLanes,
+		applicationSourceEdits: receipt.corpusRuling.applicationSourceEdits,
+		realProfileDataRendered: receipt.corpusRuling.realProfileDataRendered,
+		proves: receipt.corpusRuling.proves,
+	};
+	return {
+		vertical: {
+			id,
+			application,
+			framework: string(witnessMember.framework, 'React LinkFree aggregate framework'),
+			receiptPath: WITNESS_REACT_LINKFREE_RECEIPT_PATH,
+			receiptDigest: verified.digest,
+			canonicalReceipt: {
+				path: receipt.canonicalReceipt.path,
+				canonicalDigest: receipt.canonicalReceipt.canonicalDigest,
+				sha256: receipt.canonicalReceipt.sha256,
+			},
+			runtime: string(witnessMember.runtime, 'React LinkFree aggregate runtime'),
+			bundler: string(witnessMember.bundler, 'React LinkFree aggregate bundler'),
+			track,
+			corpusRuling,
+			locality,
+			browserProof: 'verified-direct-witness',
+			browserRuns: receipt.runs.length,
+			behaviorDigest,
+			scrollSurface: receipt.scrollSurface.state,
+			productionReadiness: 'verified-direct-witness',
+			readinessScoreboard: receipt.readiness,
+			designatedPilot: false,
+		},
+		application: {
+			id: application,
+			source,
+			verticals: [id],
+			conformance: {
+				browserProof: 'direct-witness-verified',
+				runs: receipt.runs.length,
+				behaviorDigest,
+				mutation: receipt.mutation.restoredRun,
+				mutationRestoration: receipt.mutation.restoredByteIdentically
+					? 'byte-identical'
+					: 'not-byte-identical',
+				corpusRuling,
+				stagedCorpus: receipt.stagedCorpus,
+				readinessScoreboard: receipt.readiness,
+			},
+			boundaries: {
+				track,
+				designatedPilot: false,
+				genericReactSupport: 'not-claimed',
+				scrollSurface: receipt.scrollSurface.state,
+				locality: 'process-scoped-not-os-wide',
+			},
+		},
+	};
+}
+
 export async function analyzeCorpusConformance(
 	options: CorpusConformanceOptions = {},
 ): Promise<CorpusConformance> {
@@ -2211,7 +2801,10 @@ export async function analyzeCorpusConformance(
 			transaction.kind === 'react-papercups-browser-proof' ||
 			transaction.kind === 'react-hospitalrun-browser-proof' ||
 			transaction.kind === 'angular-factoriolab-browser-proof' ||
-			transaction.kind === 'angular-jira-clone-browser-proof'
+			transaction.kind === 'angular-jira-clone-browser-proof' ||
+			transaction.kind === 'react-memos-browser-proof' ||
+			transaction.kind === 'next-killedbygoogle-v3-browser-proof' ||
+			transaction.kind === 'react-linkfree-browser-proof'
 				? transaction.kind === 'react-zero-sw-reconciliation'
 					? 2
 					: transaction.kind === 'react-papercups-browser-proof'
@@ -2222,7 +2815,15 @@ export async function analyzeCorpusConformance(
 								? 7
 								: transaction.kind === 'angular-jira-clone-browser-proof'
 									? 8
-									: 1
+									: transaction.kind === 'react-memos-browser-proof'
+										? 9
+										: transaction.kind ===
+											  'next-killedbygoogle-v3-browser-proof'
+											? 10
+											: transaction.kind ===
+												  'react-linkfree-browser-proof'
+												? 11
+												: 1
 				: 0)
 	)
 		throw new Error('Aggregate contains an unknown or extra receipt');
@@ -2236,35 +2837,51 @@ export async function analyzeCorpusConformance(
 	const nextKilledByGoogleWitness = transaction.nextKilledByGoogleWitnessIntegrated
 		? await verifyWitnessNextKilledByGoogleEvidence(root)
 		: null;
-	const papercups =
-		transaction.kind === 'react-papercups-browser-proof' ||
-		transaction.kind === 'react-hospitalrun-browser-proof' ||
-		transaction.kind === 'angular-factoriolab-browser-proof' ||
-		transaction.kind === 'angular-jira-clone-browser-proof'
-			? await reactPapercupsConformanceRows(root, aggregateByPath)
-			: null;
-	const hospitalrun =
-		transaction.kind === 'react-hospitalrun-browser-proof' ||
-		transaction.kind === 'angular-factoriolab-browser-proof' ||
-		transaction.kind === 'angular-jira-clone-browser-proof'
-			? await reactHospitalrunConformanceRows(root, aggregateByPath)
-			: null;
-	const factoriolab =
-		transaction.kind === 'angular-factoriolab-browser-proof' ||
-		transaction.kind === 'angular-jira-clone-browser-proof'
-			? await angularFactoriolabConformanceRows(root, aggregateByPath)
-			: null;
-	const jiraClone =
-		transaction.kind === 'angular-jira-clone-browser-proof'
-			? await angularJiraCloneConformanceRows(root, aggregateByPath)
-			: null;
-	if (
-		transaction.kind === 'react-zero-sw-reconciliation' ||
-		transaction.kind === 'react-papercups-browser-proof' ||
-		transaction.kind === 'react-hospitalrun-browser-proof' ||
-		transaction.kind === 'angular-factoriolab-browser-proof' ||
-		transaction.kind === 'angular-jira-clone-browser-proof'
-	) {
+	/**
+	 * Which browser-proof lanes this transaction state carries.
+	 *
+	 * Each lane is admitted only above its own predecessor, so presence
+	 * cascades: a later state carries every earlier lane's rows. Deriving that
+	 * cascade once keeps every row, receipt-count and matrix check reading the
+	 * same answer instead of restating a longer disjunction at each use.
+	 */
+	const linkfreeIntegrated = transaction.kind === 'react-linkfree-browser-proof';
+	const killedbygoogleV3Integrated =
+		transaction.kind === 'next-killedbygoogle-v3-browser-proof' || linkfreeIntegrated;
+	const memosIntegrated =
+		transaction.kind === 'react-memos-browser-proof' || killedbygoogleV3Integrated;
+	const jiraCloneIntegrated =
+		transaction.kind === 'angular-jira-clone-browser-proof' || memosIntegrated;
+	const factoriolabIntegrated =
+		transaction.kind === 'angular-factoriolab-browser-proof' || jiraCloneIntegrated;
+	const hospitalrunIntegrated =
+		transaction.kind === 'react-hospitalrun-browser-proof' || factoriolabIntegrated;
+	const papercupsIntegrated =
+		transaction.kind === 'react-papercups-browser-proof' || hospitalrunIntegrated;
+	const papercups = papercupsIntegrated
+		? await reactPapercupsConformanceRows(root, aggregateByPath)
+		: null;
+	const hospitalrun = hospitalrunIntegrated
+		? await reactHospitalrunConformanceRows(root, aggregateByPath)
+		: null;
+	const factoriolab = factoriolabIntegrated
+		? await angularFactoriolabConformanceRows(root, aggregateByPath)
+		: null;
+	const jiraClone = jiraCloneIntegrated
+		? await angularJiraCloneConformanceRows(root, aggregateByPath)
+		: null;
+	const memos = memosIntegrated ? await reactMemosConformanceRows(root, aggregateByPath) : null;
+	const killedbygoogleV3 = killedbygoogleV3Integrated
+		? await nextKilledbygoogleV3ConformanceRows(
+				root,
+				aggregateByPath,
+				KILLED_BY_GOOGLE_PUBLISHED_SOURCE,
+			)
+		: null;
+	const linkfree = linkfreeIntegrated
+		? await reactLinkfreeConformanceRows(root, aggregateByPath)
+		: null;
+	if (transaction.kind === 'react-zero-sw-reconciliation' || papercupsIntegrated) {
 		const migration = await verifyReceipt(REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH, {
 			repositoryRoot: root,
 		});
@@ -2510,6 +3127,9 @@ export async function analyzeCorpusConformance(
 	if (hospitalrun) verticals.push(hospitalrun.vertical);
 	if (factoriolab) verticals.push(factoriolab.vertical);
 	if (jiraClone) verticals.push(jiraClone.vertical);
+	if (memos) verticals.push(memos.vertical);
+	if (killedbygoogleV3) verticals.push(killedbygoogleV3.vertical);
+	if (linkfree) verticals.push(linkfree.vertical);
 
 	const applications: Array<Record<string, unknown>> = [
 		{
@@ -2594,19 +3214,28 @@ export async function analyzeCorpusConformance(
 			? [
 					{
 						id: 'killedbygoogle',
-						source: {
-							repository: normalizeURL('https://github.com/codyogden/killedbygoogle'),
-							revision: '56809c31592e6ca1edce8af9bfe842fbcdf71f4d',
-							archiveSha256:
-								'c28878d0f65b56aa595763c852477fb0c1e3533e5c7f7ea9daa2be16f102368d',
-							license: 'MIT',
-						},
-						verticals: ['next-killedbygoogle-derived-state-to-memo'],
+						source: KILLED_BY_GOOGLE_PUBLISHED_SOURCE,
+						/**
+						 * The v3.0.0 browser proof is a second vertical on this
+						 * one immutable source, not a second source: it pins the
+						 * same repository, revision and archive digest, which
+						 * `nextKilledbygoogleV3ConformanceRows` refuses to emit
+						 * without checking.
+						 */
+						verticals: [
+							'next-killedbygoogle-derived-state-to-memo',
+							...(killedbygoogleV3
+								? [string(killedbygoogleV3.vertical.id, 'KilledByGoogle v3 id')]
+								: []),
+						],
 						conformance: {
 							productionBuild: true,
 							browserJourneys: 4,
 							mutationRestoration: 'verified',
 							productionOutputConformance: 'verified',
+							...(killedbygoogleV3
+								? { directWitness: killedbygoogleV3.browserProof }
+								: {}),
 						},
 						boundaries: {
 							traceDiagnosticReproducibility: 'not-claimed',
@@ -2621,6 +3250,8 @@ export async function analyzeCorpusConformance(
 		...(hospitalrun ? [hospitalrun.application] : []),
 		...(factoriolab ? [factoriolab.application] : []),
 		...(jiraClone ? [jiraClone.application] : []),
+		...(memos ? [memos.application] : []),
+		...(linkfree ? [linkfree.application] : []),
 	];
 	if (
 		verticals.length !== transaction.verticals ||
@@ -2637,6 +3268,9 @@ export async function analyzeCorpusConformance(
 		angularRealworld: angularRealworldWitness !== null,
 		factoriolab: factoriolab !== null,
 		jiraClone: jiraClone !== null,
+		memos: memos !== null,
+		killedbygoogleV3: killedbygoogleV3 !== null,
+		linkfree: linkfree !== null,
 	});
 	const reactLineageReady = countedLineageCells(judgeCounting, 'react');
 	const angularLineageReady = countedLineageCells(judgeCounting, 'angular');

@@ -36,6 +36,21 @@ import {
 	witnessAngularJiraCloneAggregateMember,
 } from '../src/receipts/witness-angular-jira-clone.ts';
 import {
+	verifyWitnessReactMemosEvidence,
+	WITNESS_REACT_MEMOS_RECEIPT_PATH,
+	witnessReactMemosAggregateMember,
+} from '../src/receipts/witness-react-memos.ts';
+import {
+	verifyWitnessNextKilledbygoogleV3Evidence,
+	WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH,
+	witnessNextKilledbygoogleV3AggregateMember,
+} from '../src/receipts/witness-next-killedbygoogle-v3.ts';
+import {
+	verifyWitnessReactLinkfreeEvidence,
+	WITNESS_REACT_LINKFREE_RECEIPT_PATH,
+	witnessReactLinkfreeAggregateMember,
+} from '../src/receipts/witness-react-linkfree.ts';
+import {
 	holdoutReactCypressRwaCorpusRecord,
 	verifyHoldoutReactCypressRwaEvidence,
 } from '../src/receipts/holdout-react-cypress-rwa.ts';
@@ -81,7 +96,10 @@ function prepublicationFixtures(fixtures: Array<Record<string, unknown>>) {
 			fixture.id !== 'react-hospitalrun' &&
 			fixture.id !== 'witness-react-hospitalrun' &&
 			fixture.id !== 'witness-angular-factoriolab' &&
-			fixture.id !== 'witness-angular-jira-clone',
+			fixture.id !== 'witness-angular-jira-clone' &&
+			fixture.id !== 'witness-react-memos-v0-1-3' &&
+			fixture.id !== 'witness-next-killedbygoogle-v3-0-0' &&
+			fixture.id !== 'witness-react-linkfree-v0-72-0',
 	);
 }
 
@@ -185,16 +203,16 @@ async function rebindPhonecatViteArtifact(
 }
 
 describe('canonical corpus conformance', () => {
-	it('derives the canonical fifteen verticals as eight narrowly scoped source applications', async () => {
+	it('derives the canonical eighteen verticals as ten narrowly scoped source applications', async () => {
 		const result = await analyzeCorpusConformance({ rootDir: root });
 		expect(verifyCorpusConformanceDigest(result)).toBe(result.integrity.canonicalDigest);
 		expect(result.summary).toEqual({
-			verticals: 15,
-			sourceApplications: 8,
+			verticals: 18,
+			sourceApplications: 10,
 			designatedPilotsVerified: 0,
 		});
-		expect(result.verticals).toHaveLength(15);
-		expect(result.applications).toHaveLength(8);
+		expect(result.verticals).toHaveLength(18);
+		expect(result.applications).toHaveLength(10);
 		expect(result.applications[0]).toMatchObject({
 			id: 'react-boilerplate',
 			boundaries: {
@@ -216,7 +234,12 @@ describe('canonical corpus conformance', () => {
 		});
 		expect(
 			result.applications.find((application) => application.id === 'killedbygoogle'),
-		).toMatchObject({ verticals: ['next-killedbygoogle-derived-state-to-memo'] });
+		).toMatchObject({
+			verticals: [
+				'next-killedbygoogle-derived-state-to-memo',
+				'next-killedbygoogle-v3-0-0',
+			],
+		});
 		expect(result.applications[1]).toMatchObject({
 			id: 'angular-phonecat',
 			verticals: [
@@ -310,7 +333,7 @@ describe('canonical corpus conformance', () => {
 			reactPapercupsAggregateMember(verified.receipt.canonicalReceipt.canonicalDigest),
 		);
 		expect(witnessMember).toEqual(witnessReactPapercupsAggregateMember(verified.digest));
-		expect(result.verticals.at(-4)).toEqual({
+		expect(result.verticals.at(-7)).toEqual({
 			id: 'react-papercups-v1-0-0',
 			application: 'papercups',
 			framework: 'react',
@@ -340,7 +363,7 @@ describe('canonical corpus conformance', () => {
 			readinessScoreboard: { reactLineage: { ready: 1, total: 4, counted: false }, overall: { ready: 3, total: 12 } },
 			designatedPilot: false,
 		});
-		expect(result.applications.at(-4)).toEqual({
+		expect(result.applications.at(-6)).toEqual({
 			id: 'papercups',
 			source: {
 				repository: 'https://github.com/papercups-io/papercups',
@@ -397,7 +420,7 @@ describe('canonical corpus conformance', () => {
 			reactHospitalrunAggregateMember(verified.receipt.canonicalReceipt.canonicalDigest),
 		);
 		expect(witnessMember).toEqual(witnessReactHospitalrunAggregateMember(verified.digest));
-		expect(result.verticals.at(-3)).toEqual({
+		expect(result.verticals.at(-6)).toEqual({
 			id: 'react-hospitalrun',
 			application: 'react-hospitalrun',
 			framework: 'react',
@@ -432,7 +455,7 @@ describe('canonical corpus conformance', () => {
 			},
 			designatedPilot: false,
 		});
-		expect(result.applications.at(-3)).toEqual({
+		expect(result.applications.at(-5)).toEqual({
 			id: 'react-hospitalrun',
 			source: {
 				repository: 'https://github.com/HospitalRun/hospitalrun-frontend',
@@ -497,7 +520,7 @@ describe('canonical corpus conformance', () => {
 			aggregate.fixtures.filter((item) => String(item.id).includes('factoriolab')),
 		).toHaveLength(1);
 		expect(witnessMember).toEqual(witnessAngularFactoriolabAggregateMember(verified.digest));
-		expect(result.verticals.at(-2)).toEqual({
+		expect(result.verticals.at(-5)).toEqual({
 			id: 'angular-factoriolab',
 			application: 'angular-factoriolab',
 			framework: 'angular',
@@ -531,8 +554,8 @@ describe('canonical corpus conformance', () => {
 			},
 			designatedPilot: false,
 		});
-		expect(result.verticals.at(-2)).not.toHaveProperty('migrationTrack');
-		expect(result.applications.at(-2)).toEqual({
+		expect(result.verticals.at(-5)).not.toHaveProperty('migrationTrack');
+		expect(result.applications.at(-4)).toEqual({
 			id: 'angular-factoriolab',
 			source: {
 				repository: 'https://github.com/factoriolab/factoriolab',
@@ -607,7 +630,7 @@ describe('canonical corpus conformance', () => {
 		).toHaveLength(1);
 		expect(verified.receipt.canonicalReceipts).toHaveLength(4);
 		expect(witnessMember).toEqual(witnessAngularJiraCloneAggregateMember(verified.digest));
-		expect(result.verticals.at(-1)).toEqual({
+		expect(result.verticals.at(-4)).toEqual({
 			id: 'angular-jira-clone',
 			application: 'angular-jira-clone',
 			framework: 'angular',
@@ -645,8 +668,8 @@ describe('canonical corpus conformance', () => {
 			},
 			designatedPilot: false,
 		});
-		expect(result.verticals.at(-1)).not.toHaveProperty('migrationTrack');
-		expect(result.applications.at(-1)).toEqual({
+		expect(result.verticals.at(-4)).not.toHaveProperty('migrationTrack');
+		expect(result.applications.at(-3)).toEqual({
 			id: 'angular-jira-clone',
 			source: {
 				repository: 'https://github.com/trungvose/jira-clone-angular',
@@ -705,6 +728,350 @@ describe('canonical corpus conformance', () => {
 		});
 	});
 
+	it('emits the memos vertical and source application derived from its receipts', async () => {
+		const result = await analyzeCorpusConformance({ rootDir: root });
+		const verified = await verifyWitnessReactMemosEvidence(root);
+		const aggregate = JSON.parse(
+			await readFile(path.join(root, 'evidence/runs/aggregate.json'), 'utf8'),
+		) as { fixtures: Array<Record<string, unknown>> };
+		// One member, not a pair: the build-lane receipt is sealed inside the
+		// Witness receipt by the sha256 of its exact bytes, because that receipt
+		// declares no canonical digest of its own.
+		expect(
+			aggregate.fixtures.filter((item) => String(item.id).includes('memos')),
+		).toHaveLength(1);
+		expect(verified.receipt.canonicalReceipt.binding).toBe('sha256-over-the-exact-bytes');
+		expect(
+			aggregate.fixtures.find((item) => item.receipt === WITNESS_REACT_MEMOS_RECEIPT_PATH),
+		).toEqual(witnessReactMemosAggregateMember(verified.digest));
+		expect(result.verticals.at(-3)).toEqual({
+			id: 'react-memos-v0-1-3',
+			application: 'react-memos',
+			framework: 'react',
+			receiptPath: WITNESS_REACT_MEMOS_RECEIPT_PATH,
+			receiptDigest: verified.digest,
+			canonicalReceipt: {
+				path: verified.receipt.canonicalReceipt.path,
+				sha256: verified.receipt.canonicalReceipt.sha256,
+				binding: verified.receipt.canonicalReceipt.binding,
+				bindingReason: verified.receipt.canonicalReceipt.bindingReason,
+			},
+			runtime: 'node-16.20.2-to-node-24.15.0',
+			bundler: 'vite-2.9.5-to-vite-8.0.16',
+			track: 'production-readiness-direct-witness-old-vite-origin-to-vite8',
+			// The first React-lineage vertical whose origin bundler is Vite: the
+			// row says so with the receipt's own measured class.
+			migrationClass: 'OLD-VITE-ORIGIN',
+			// The journeys were answered by a frozen synthetic projection, and
+			// the row publishes which one rather than leaving it in the receipt.
+			projection: {
+				label: 'synthetic-fixture-evidence-data',
+				behaviorDigest: verified.receipt.projection.behaviorDigest,
+				seedSha256: verified.receipt.projection.seedSha256,
+				pinnedRevision: verified.receipt.projection.pinnedRevision,
+			},
+			locality: {
+				mode: 'offline',
+				scope: 'process-scoped',
+				osWideIsolation: false,
+				successfulNonLoopback: 0,
+			},
+			browserProof: 'verified-direct-witness',
+			browserRuns: 4,
+			behaviorDigest: verified.receipt.runs[0]!.behaviorDigest,
+			scrollSurface: 'measured-no-overflowing-document',
+			productionReadiness: 'verified-direct-witness',
+			readinessScoreboard: {
+				reactLineage: { ready: 1, total: 4, counted: false },
+				overall: { ready: 3, total: 12 },
+			},
+			designatedPilot: false,
+		});
+		// The application never registers a service worker and the receipt
+		// measures none, so the row emits no service-worker field rather than a
+		// manufactured one.
+		expect(result.verticals.at(-3)).not.toHaveProperty('serviceWorker');
+		expect(result.verticals.at(-3)).not.toHaveProperty('migrationTrack');
+		expect(result.applications.at(-2)).toEqual({
+			id: 'react-memos',
+			source: {
+				repository: 'https://github.com/usememos/memos',
+				ref: 'refs/tags/v0.1.3',
+				tagKind: 'lightweight',
+				tagVerification: 'not-applicable-no-tag-object',
+				revision: '565fe0cc567c02deb59fc04830df707ea7476d52',
+				archiveSha256:
+					'184834df7e2ea0272d21b4b0bfd7366986bc0aded740442aac91ca58d270f391',
+				frontendRoot: 'web',
+				monorepo: true,
+				license: 'MIT',
+				licenseNote:
+					'the grant rests on the repository-root LICENSE file; web/package.json declares no license field',
+			},
+			verticals: ['react-memos-v0-1-3'],
+			conformance: {
+				browserProof: 'direct-witness-verified',
+				runs: 4,
+				behaviorDigest: verified.receipt.runs[0]!.behaviorDigest,
+				mutation: 'pass',
+				mutationRestoration: 'byte-identical',
+				migrationClass: 'OLD-VITE-ORIGIN',
+				eraBuildDeviation:
+					verified.receipt.eraBuildDeviation.declaredBuildCommandOutcomeAtThisRevision,
+				projection: {
+					label: 'synthetic-fixture-evidence-data',
+					behaviorDigest: verified.receipt.projection.behaviorDigest,
+					seedSha256: verified.receipt.projection.seedSha256,
+					pinnedRevision: verified.receipt.projection.pinnedRevision,
+				},
+				readinessScoreboard: {
+					reactLineage: { ready: 1, total: 4, counted: false },
+					overall: { ready: 3, total: 12 },
+				},
+			},
+			boundaries: {
+				track: 'production-readiness-direct-witness-old-vite-origin-to-vite8',
+				designatedPilot: false,
+				genericReactSupport: 'not-claimed',
+				scrollSurface: 'measured-no-overflowing-document',
+				locality: 'process-scoped-not-os-wide',
+			},
+		});
+	});
+
+	it('emits the killedbygoogle v3 vertical and source application derived from its receipts', async () => {
+		const result = await analyzeCorpusConformance({ rootDir: root });
+		const verified = await verifyWitnessNextKilledbygoogleV3Evidence(root);
+		const aggregate = JSON.parse(
+			await readFile(path.join(root, 'evidence/runs/aggregate.json'), 'utf8'),
+		) as { fixtures: Array<Record<string, unknown>> };
+		expect(
+			aggregate.fixtures.find(
+				(item) => item.receipt === WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH,
+			),
+		).toEqual(witnessNextKilledbygoogleV3AggregateMember(verified.digest));
+		// The earlier killedbygoogle vertical pins the same revision, so this
+		// proof joins that source application rather than opening a new one.
+		const earlier = result.applications.find((item) => item.id === 'killedbygoogle');
+		expect(earlier).toBeDefined();
+		expect((earlier?.source as Record<string, unknown>).revision).toBe(
+			verified.receipt.source.revision,
+		);
+		expect(result.verticals.at(-2)).toEqual({
+			id: 'next-killedbygoogle-v3-0-0',
+			application: 'killedbygoogle',
+			framework: 'next',
+			receiptPath: WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH,
+			receiptDigest: verified.digest,
+			canonicalReceipt: {
+				path: verified.receipt.canonicalReceipt.path,
+				schemaVersion: verified.receipt.canonicalReceipt.schemaVersion,
+				sha256: verified.receipt.canonicalReceipt.sha256,
+				eraLaneDigest: verified.receipt.canonicalReceipt.eraLaneDigest,
+				targetLaneDigest: verified.receipt.canonicalReceipt.targetLaneDigest,
+			},
+			runtime: 'node-16.20.2',
+			bundler: 'next-12.0.10-vendored-webpack-5-to-vite-8.0.16-rolldown',
+			track: 'production-readiness-direct-witness-next12-static-export-to-vite8-client-build',
+			locality: {
+				mode: 'offline',
+				scope: 'process-scoped',
+				osWideIsolation: false,
+				successfulNonLoopback: 0,
+				mockedNonLoopbackSeams: 3,
+			},
+			browserProof: 'verified-direct-witness',
+			browserRuns: 4,
+			behaviorDigest: verified.receipt.runs[0]!.behaviorDigest,
+			serviceWorker: 'no-service-worker-in-either-lane',
+			serviceWorkerMasked: false,
+			// One lane ships a pre-rendered document and the other mounts it in
+			// the client: the difference is published, not repaired.
+			documentDelivery: {
+				baseline: 'pre-rendered-application-document',
+				migrated: 'client-mounted-application-document',
+				parityOracle: 'settled-dom-and-behaviour',
+				byteParity: 'not-claimed',
+			},
+			scrollSurface: 'measured-genuine-viewport-scroll',
+			productionReadiness: 'verified-direct-witness',
+			readinessScoreboard: {
+				nextLineage: { ready: 0, total: 1, counted: false },
+				overall: { ready: 3, total: 12 },
+			},
+			designatedPilot: false,
+		});
+		expect(result.verticals.at(-2)).not.toHaveProperty('migrationTrack');
+		// The proof is a second vertical on ONE immutable source, not an
+		// eleventh source application: the same repository at the same revision
+		// with the same archive digest is not two applications, so the summary
+		// gains a vertical and no application.
+		expect(
+			result.applications.filter((item) => item.id === 'next-killedbygoogle-v3-0-0'),
+		).toEqual([]);
+		const killedbygoogle = result.applications.find((item) => item.id === 'killedbygoogle');
+		expect(killedbygoogle?.source).toEqual({
+			repository: 'https://github.com/codyogden/killedbygoogle',
+			revision: '56809c31592e6ca1edce8af9bfe842fbcdf71f4d',
+			archiveSha256: 'c28878d0f65b56aa595763c852477fb0c1e3533e5c7f7ea9daa2be16f102368d',
+			license: 'MIT',
+		});
+		expect(verified.receipt.source.revision).toBe(
+			(killedbygoogle?.source as Record<string, unknown>).revision,
+		);
+		expect(verified.receipt.source.archiveSha256).toBe(
+			(killedbygoogle?.source as Record<string, unknown>).archiveSha256,
+		);
+		expect(killedbygoogle?.verticals).toEqual([
+			'next-killedbygoogle-derived-state-to-memo',
+			'next-killedbygoogle-v3-0-0',
+		]);
+		// The earlier vertical's own conformance block is untouched; the browser
+		// proof is published beside it rather than over it.
+		expect(killedbygoogle?.conformance).toEqual({
+			productionBuild: true,
+			browserJourneys: 4,
+			mutationRestoration: 'verified',
+			productionOutputConformance: 'verified',
+			directWitness: {
+				vertical: 'next-killedbygoogle-v3-0-0',
+				track: 'production-readiness-direct-witness-next12-static-export-to-vite8-client-build',
+				browserProof: 'direct-witness-verified',
+				runs: 4,
+				behaviorDigest: verified.receipt.runs[0]!.behaviorDigest,
+				mutation: 'pass',
+				mutationRestoration: 'byte-identical',
+				serviceWorker: 'no-service-worker-in-either-lane',
+				serviceWorkerMasked: false,
+				documentDelivery: {
+					baseline: 'pre-rendered-application-document',
+					migrated: 'client-mounted-application-document',
+					parityOracle: 'settled-dom-and-behaviour',
+					byteParity: 'not-claimed',
+				},
+				persistence: {
+					store: 'in-memory-react-state',
+					browserStorage: 'none-written',
+					backend: 'none',
+					stubbed: false,
+					survivesOnlineReload: false,
+				},
+				scrollSurface: 'measured-genuine-viewport-scroll',
+				readinessScoreboard: {
+					nextLineage: { ready: 0, total: 1, counted: false },
+					overall: { ready: 3, total: 12 },
+				},
+			},
+		});
+	});
+
+	it('emits the LinkFree vertical and source application derived from its receipts', async () => {
+		const result = await analyzeCorpusConformance({ rootDir: root });
+		const verified = await verifyWitnessReactLinkfreeEvidence(root);
+		const aggregate = JSON.parse(
+			await readFile(path.join(root, 'evidence/runs/aggregate.json'), 'utf8'),
+		) as { fixtures: Array<Record<string, unknown>> };
+		expect(
+			aggregate.fixtures.filter((item) => String(item.id).includes('linkfree')),
+		).toHaveLength(1);
+		expect(
+			aggregate.fixtures.find((item) => item.receipt === WITNESS_REACT_LINKFREE_RECEIPT_PATH),
+		).toEqual(witnessReactLinkfreeAggregateMember(verified.digest));
+		expect(result.verticals.at(-1)).toEqual({
+			id: 'react-linkfree-v0-72-0',
+			application: 'react-linkfree',
+			framework: 'react',
+			receiptPath: WITNESS_REACT_LINKFREE_RECEIPT_PATH,
+			receiptDigest: verified.digest,
+			canonicalReceipt: {
+				path: verified.receipt.canonicalReceipt.path,
+				canonicalDigest: verified.receipt.canonicalReceipt.canonicalDigest,
+				sha256: verified.receipt.canonicalReceipt.sha256,
+			},
+			runtime: 'node-16.20.2-to-node-24.15.0',
+			bundler: 'webpack-5.73.0-to-vite-8.0.16',
+			track: 'production-readiness-direct-witness-create-react-app-5-to-vite8',
+			// The synthetic corpus is the boundary of what this proof proves, so
+			// the vertical carries the ruling rather than leaving it behind.
+			corpusRuling: {
+				ruling: 'synthetic-corpus',
+				dataset: 'fixtures/react-linkfree-v0-72-0/witness-corpus',
+				seam: verified.receipt.corpusRuling.seam,
+				sameCorpusInBothLanes: true,
+				applicationSourceEdits: 0,
+				realProfileDataRendered: false,
+				proves: verified.receipt.corpusRuling.proves,
+			},
+			locality: {
+				mode: 'offline',
+				scope: 'process-scoped',
+				osWideIsolation: false,
+				successfulNonLoopback: 0,
+			},
+			browserProof: 'verified-direct-witness',
+			browserRuns: 4,
+			behaviorDigest: verified.receipt.runs[0]!.behaviorDigest,
+			scrollSurface: 'measured-genuine-viewport-scroll',
+			productionReadiness: 'verified-direct-witness',
+			readinessScoreboard: {
+				reactLineage: { ready: 1, total: 4, counted: false },
+				overall: { ready: 3, total: 12 },
+			},
+			designatedPilot: false,
+		});
+		expect(result.verticals.at(-1)).not.toHaveProperty('migrationTrack');
+		expect(result.applications.at(-1)).toEqual({
+			id: 'react-linkfree',
+			source: {
+				repository: 'https://github.com/EddieHubCommunity/BioDrop',
+				repositoryAtPinnedRevision: 'https://github.com/EddieHubCommunity/LinkFree',
+				nearestTag: 'refs/tags/v0.72.0',
+				pinnedRevisionIsTagTarget: false,
+				revision: '367d77297b5753644e11ecd22cf80e59c87b0dc8',
+				archiveSha256:
+					'7cef1a1c2ae251e3738d8b8a6c5fe94b118bf13d3a5bae7b522b8db9c1c334ef',
+				frontendRoot: '.',
+				license: 'MIT',
+				licenseSha256:
+					'3b5b430ae7e6151220591e69a8a056482a13d36518357c025619cf0d60be50bf',
+			},
+			verticals: ['react-linkfree-v0-72-0'],
+			conformance: {
+				browserProof: 'direct-witness-verified',
+				runs: 4,
+				behaviorDigest: verified.receipt.runs[0]!.behaviorDigest,
+				mutation: 'pass',
+				mutationRestoration: 'byte-identical',
+				corpusRuling: {
+					ruling: 'synthetic-corpus',
+					dataset: 'fixtures/react-linkfree-v0-72-0/witness-corpus',
+					seam: verified.receipt.corpusRuling.seam,
+					sameCorpusInBothLanes: true,
+					applicationSourceEdits: 0,
+					realProfileDataRendered: false,
+					proves: verified.receipt.corpusRuling.proves,
+				},
+				stagedCorpus: {
+					policy: 'synthetic-profile-corpus-through-the-applications-own-codegen',
+					replacedPaths: ['data/', 'list.json'],
+					bundlerAuthoredPaths: 18,
+					bundlerAuthoredBytesUnchanged: true,
+				},
+				readinessScoreboard: {
+					reactLineage: { ready: 1, total: 4, counted: false },
+					overall: { ready: 3, total: 12 },
+				},
+			},
+			boundaries: {
+				track: 'production-readiness-direct-witness-create-react-app-5-to-vite8',
+				designatedPilot: false,
+				genericReactSupport: 'not-claimed',
+				scrollSurface: 'measured-genuine-viewport-scroll',
+				locality: 'process-scoped-not-os-wide',
+			},
+		});
+	});
+
 	it('counts both lineage numerators off the Judge ledger and keeps the declined cell visible', async () => {
 		const result = await analyzeCorpusConformance({ rootDir: root });
 		const readiness = (result.coverage as Record<string, unknown>)
@@ -727,7 +1094,19 @@ describe('canonical corpus conformance', () => {
 			'angular-realworld-v15-to-v16',
 			'angular-factoriolab',
 			'angular-jira-clone',
+			'react-memos-v0-1-3',
+			'next-killedbygoogle-v3-0-0',
+			'react-linkfree-v0-72-0',
 		]);
+		// The three newest verticals are visible and uncounted: their Witness
+		// receipts are verified, they carry a reason, and neither React
+		// numerator nor any other moves because of them.
+		for (const cell of ['react-memos-v0-1-3', 'next-killedbygoogle-v3-0-0', 'react-linkfree-v0-72-0'])
+			expect(ledger.find((entry) => entry.cell === cell)).toMatchObject({ counted: false });
+		expect((readiness.reactLineage as { ready: number }).ready).toBe(3);
+		// The Next-lineage cell reaches no published numerator: olderNext stays
+		// the standing 0/4 pending the final Judge audit.
+		expect(readiness.olderNext).toMatchObject({ ready: 0, total: 4, counted: false });
 		// RealWorld is demoted, not deleted: its Witness receipt is still the
 		// cell's evidence and the non-counting reason names the measurement.
 		const realworld = ledger.find((cell) => cell.cell === 'angular-realworld-v15-to-v16');

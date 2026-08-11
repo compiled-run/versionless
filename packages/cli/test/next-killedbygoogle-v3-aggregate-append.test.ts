@@ -3,37 +3,35 @@ import { copyFile, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promi
 import os from 'node:os';
 import * as path from 'pathe';
 import {
-	angularFactoriolabAggregateMembers,
-	appendAngularFactoriolabAggregateMembers,
-} from '../src/fixture/angular-factoriolab-aggregate-append.ts';
+	appendNextKilledbygoogleV3AggregateMembers,
+	nextKilledbygoogleV3AggregateMembers,
+} from '../src/fixture/next-killedbygoogle-v3-aggregate-append.ts';
 import {
-	ANGULAR_FACTORIOLAB_CANONICAL_RECEIPTS,
-	WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH,
-} from '../../core/src/receipts/witness-angular-factoriolab.ts';
-import { WITNESS_ANGULAR_JIRA_CLONE_RECEIPT_PATH } from '../../core/src/receipts/witness-angular-jira-clone.ts';
+	NEXT_KILLEDBYGOOGLE_V3_CANONICAL_RECEIPT,
+	WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH,
+} from '../../core/src/receipts/witness-next-killedbygoogle-v3.ts';
 import { WITNESS_REACT_MEMOS_RECEIPT_PATH } from '../../core/src/receipts/witness-react-memos.ts';
-import { WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH } from '../../core/src/receipts/witness-next-killedbygoogle-v3.ts';
 import { WITNESS_REACT_LINKFREE_RECEIPT_PATH } from '../../core/src/receipts/witness-react-linkfree.ts';
 import { deriveCorpusTransactionState } from '../../core/src/corpus/conformance.ts';
 
 const repositoryRoot = path.resolve(import.meta.dirname, '../../..');
 
 const evidenceFiles = [
-	WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH,
-	`${path.dirname(WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH)}/receipt.md`,
-	...ANGULAR_FACTORIOLAB_CANONICAL_RECEIPTS.map((bound) => bound.path),
+	WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH,
+	`${path.dirname(WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH)}/receipt.md`,
+	NEXT_KILLEDBYGOOGLE_V3_CANONICAL_RECEIPT.path,
 	'evidence/runs/aggregate.json',
 ];
 
 /**
  * Stages the exact published evidence with the aggregate rolled back to its
  * pre-append membership, so the append transaction itself is still replayed
- * against its real HospitalRun browser-proof predecessor now that the published
- * aggregate already carries the factoriolab member with the jira-clone, memos,
- * killedbygoogle v3 and LinkFree members appended on top of it.
+ * against its real memos browser-proof predecessor now that the published
+ * aggregate already carries the killedbygoogle v3 member with the LinkFree
+ * member appended on top of it.
  */
 async function stagedRoot(): Promise<string> {
-	const directory = await mkdtemp(path.join(os.tmpdir(), 'factoriolab-aggregate-'));
+	const directory = await mkdtemp(path.join(os.tmpdir(), 'killedbygoogle-v3-aggregate-'));
 	for (const relative of evidenceFiles) {
 		const destination = path.join(directory, relative);
 		await mkdir(path.dirname(destination), { recursive: true });
@@ -42,14 +40,11 @@ async function stagedRoot(): Promise<string> {
 	await rewrite(directory, (members) =>
 		members.filter(
 			(member) =>
-				member.receipt !== WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH &&
-				member.receipt !== WITNESS_ANGULAR_JIRA_CLONE_RECEIPT_PATH &&
-				member.receipt !== WITNESS_REACT_MEMOS_RECEIPT_PATH &&
 				member.receipt !== WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH &&
 				member.receipt !== WITNESS_REACT_LINKFREE_RECEIPT_PATH,
 		),
 	);
-	expect(await fixtures(directory)).toHaveLength(20);
+	expect(await fixtures(directory)).toHaveLength(23);
 	return directory;
 }
 
@@ -74,18 +69,22 @@ async function rewrite(
 	);
 }
 
-describe('Angular factoriolab aggregate append', () => {
+describe('KilledByGoogle v3 aggregate append', () => {
 	it('derives its single member from the published evidence rather than an authored row', async () => {
-		const members = await angularFactoriolabAggregateMembers(repositoryRoot);
+		const members = await nextKilledbygoogleV3AggregateMembers(repositoryRoot);
 		expect(members.witness).toMatchObject({
-			id: 'witness-angular-factoriolab',
-			framework: 'angular',
+			id: 'witness-next-killedbygoogle-v3-0-0',
+			framework: 'next',
 			result: 'pass',
-			receipt: WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH,
-			track: 'production-readiness-direct-witness-angular10-to-angular16-browser-builder',
+			receipt: WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH,
+			track: 'production-readiness-direct-witness-next12-static-export-to-vite8-client-build',
 		});
 		expect(members.witness.digest).toMatch(/^[0-9a-f]{64}$/);
 		expect(Object.keys(members)).toEqual(['witness']);
+		// Both build lanes enter through the Witness receipt's own seal, so the
+		// aggregate carries one row and not three.
+		expect(NEXT_KILLEDBYGOOGLE_V3_CANONICAL_RECEIPT.eraLaneDigest).toMatch(/^[0-9a-f]{64}$/);
+		expect(NEXT_KILLEDBYGOOGLE_V3_CANONICAL_RECEIPT.targetLaneDigest).toMatch(/^[0-9a-f]{64}$/);
 	});
 
 	it('reports the published aggregate as already appended without rewriting it', async () => {
@@ -95,14 +94,11 @@ describe('Angular factoriolab aggregate append', () => {
 		);
 		const parsed = JSON.parse(published) as { fixtures: Array<Record<string, unknown>> };
 		expect(parsed.fixtures).toHaveLength(25);
-		expect(parsed.fixtures.slice(-5).map((member) => member.receipt)).toEqual([
-			WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH,
-			WITNESS_ANGULAR_JIRA_CLONE_RECEIPT_PATH,
-			WITNESS_REACT_MEMOS_RECEIPT_PATH,
+		expect(parsed.fixtures.slice(-2).map((member) => member.receipt)).toEqual([
 			WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH,
 			WITNESS_REACT_LINKFREE_RECEIPT_PATH,
 		]);
-		await expect(appendAngularFactoriolabAggregateMembers(repositoryRoot)).resolves.toEqual({
+		await expect(appendNextKilledbygoogleV3AggregateMembers(repositoryRoot)).resolves.toEqual({
 			kind: 'react-linkfree-browser-proof',
 			receipts: 25,
 			appended: false,
@@ -116,45 +112,47 @@ describe('Angular factoriolab aggregate append', () => {
 		const directory = await stagedRoot();
 		try {
 			expect(deriveCorpusTransactionState(await fixtures(directory)).kind).toBe(
-				'react-hospitalrun-browser-proof',
+				'react-memos-browser-proof',
 			);
-			const result = await appendAngularFactoriolabAggregateMembers(directory);
+			const result = await appendNextKilledbygoogleV3AggregateMembers(directory);
 			expect(result).toEqual({
-				kind: 'angular-factoriolab-browser-proof',
-				receipts: 21,
+				kind: 'next-killedbygoogle-v3-browser-proof',
+				receipts: 24,
 				appended: true,
 			});
 			const appended = await fixtures(directory);
-			expect(appended).toHaveLength(21);
-			expect(appended.at(-1)?.receipt).toBe(WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH);
+			expect(appended).toHaveLength(24);
+			expect(appended.at(-1)?.receipt).toBe(WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH);
 			expect(deriveCorpusTransactionState(appended)).toMatchObject({
-				kind: 'angular-factoriolab-browser-proof',
-				verticals: 14,
-				sourceApplications: 7,
-				receipts: 21,
+				kind: 'next-killedbygoogle-v3-browser-proof',
+				verticals: 17,
+				sourceApplications: 9,
+				receipts: 24,
 			});
-			await expect(appendAngularFactoriolabAggregateMembers(directory)).resolves.toEqual({
-				kind: 'angular-factoriolab-browser-proof',
-				receipts: 21,
+			await expect(appendNextKilledbygoogleV3AggregateMembers(directory)).resolves.toEqual({
+				kind: 'next-killedbygoogle-v3-browser-proof',
+				receipts: 24,
 				appended: false,
 			});
-			expect(await fixtures(directory)).toHaveLength(21);
+			expect(await fixtures(directory)).toHaveLength(24);
 		} finally {
 			await rm(directory, { recursive: true, force: true });
 		}
 	});
 
-	it('refuses a predecessor that is not the HospitalRun browser proof', async () => {
+	it('refuses a predecessor that is not the memos browser proof', async () => {
 		const directory = await stagedRoot();
 		try {
-			await rewrite(directory, (members) => members.slice(0, -2));
+			await rewrite(directory, (members) =>
+				members.filter((member) => member.receipt !== WITNESS_REACT_MEMOS_RECEIPT_PATH),
+			);
 			expect(deriveCorpusTransactionState(await fixtures(directory)).kind).toBe(
-				'react-papercups-browser-proof',
+				'angular-jira-clone-browser-proof',
 			);
-			await expect(appendAngularFactoriolabAggregateMembers(directory)).rejects.toThrow(
-				/HospitalRun browser-proof predecessor/,
+			await expect(appendNextKilledbygoogleV3AggregateMembers(directory)).rejects.toThrow(
+				/memos browser-proof predecessor/,
 			);
-			expect(await fixtures(directory)).toHaveLength(18);
+			expect(await fixtures(directory)).toHaveLength(22);
 		} finally {
 			await rm(directory, { recursive: true, force: true });
 		}
@@ -163,16 +161,16 @@ describe('Angular factoriolab aggregate append', () => {
 	it('refuses a member appended anywhere but the tail', async () => {
 		const directory = await stagedRoot();
 		try {
-			const members = await angularFactoriolabAggregateMembers(directory);
+			const members = await nextKilledbygoogleV3AggregateMembers(directory);
 			await rewrite(directory, (current) => [
 				...current.slice(0, -1),
 				members.witness,
 				...current.slice(-1),
 			]);
-			await expect(appendAngularFactoriolabAggregateMembers(directory)).rejects.toThrow(
-				/Angular factoriolab browser proof aggregate receipt order differs/,
+			await expect(appendNextKilledbygoogleV3AggregateMembers(directory)).rejects.toThrow(
+				/KilledByGoogle v3 browser proof aggregate receipt order differs/,
 			);
-			expect(await fixtures(directory)).toHaveLength(21);
+			expect(await fixtures(directory)).toHaveLength(24);
 		} finally {
 			await rm(directory, { recursive: true, force: true });
 		}
@@ -181,13 +179,13 @@ describe('Angular factoriolab aggregate append', () => {
 	it('refuses a member whose row drifts from the derived one', async () => {
 		const directory = await stagedRoot();
 		try {
-			const members = await angularFactoriolabAggregateMembers(directory);
+			const members = await nextKilledbygoogleV3AggregateMembers(directory);
 			await rewrite(directory, (current) => [
 				...current,
 				{ ...members.witness, framework: 'react' },
 			]);
-			await expect(appendAngularFactoriolabAggregateMembers(directory)).rejects.toThrow(
-				/factoriolab aggregate membership/,
+			await expect(appendNextKilledbygoogleV3AggregateMembers(directory)).rejects.toThrow(
+				/KilledByGoogle v3 aggregate membership/,
 			);
 		} finally {
 			await rm(directory, { recursive: true, force: true });

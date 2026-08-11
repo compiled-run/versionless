@@ -21,6 +21,9 @@ import {
 } from '../src/receipts/witness-react-hospitalrun.ts';
 import { WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH } from '../src/receipts/witness-angular-factoriolab.ts';
 import { WITNESS_ANGULAR_JIRA_CLONE_RECEIPT_PATH } from '../src/receipts/witness-angular-jira-clone.ts';
+import { WITNESS_REACT_MEMOS_RECEIPT_PATH } from '../src/receipts/witness-react-memos.ts';
+import { WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH } from '../src/receipts/witness-next-killedbygoogle-v3.ts';
+import { WITNESS_REACT_LINKFREE_RECEIPT_PATH } from '../src/receipts/witness-react-linkfree.ts';
 
 const root = path.resolve(import.meta.dirname, '../../..');
 
@@ -193,16 +196,19 @@ describe('Papercups corpus transaction state', () => {
 				fixture.receipt !== REACT_HOSPITALRUN_RECEIPT_PATH &&
 				fixture.receipt !== WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH &&
 				fixture.receipt !== WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH &&
-				fixture.receipt !== WITNESS_ANGULAR_JIRA_CLONE_RECEIPT_PATH,
+				fixture.receipt !== WITNESS_ANGULAR_JIRA_CLONE_RECEIPT_PATH &&
+				fixture.receipt !== WITNESS_REACT_MEMOS_RECEIPT_PATH &&
+				fixture.receipt !== WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH &&
+				fixture.receipt !== WITNESS_REACT_LINKFREE_RECEIPT_PATH,
 		);
 		expect(fixtures).toHaveLength(16);
 		return fixtures;
 	}
 
 	/**
-	 * The published aggregate with the HospitalRun successor and both Angular
-	 * successors rolled back, which is the exact membership the Papercups
-	 * browser-proof state is defined over.
+	 * The published aggregate with the HospitalRun successor, both Angular
+	 * successors and the React-trio successors rolled back, which is the exact
+	 * membership the Papercups browser-proof state is defined over.
 	 */
 	async function papercupsStateFixtures(): Promise<Array<Record<string, unknown>>> {
 		const fixtures = (await aggregateFixtures()).filter(
@@ -210,7 +216,10 @@ describe('Papercups corpus transaction state', () => {
 				fixture.receipt !== REACT_HOSPITALRUN_RECEIPT_PATH &&
 				fixture.receipt !== WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH &&
 				fixture.receipt !== WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH &&
-				fixture.receipt !== WITNESS_ANGULAR_JIRA_CLONE_RECEIPT_PATH,
+				fixture.receipt !== WITNESS_ANGULAR_JIRA_CLONE_RECEIPT_PATH &&
+				fixture.receipt !== WITNESS_REACT_MEMOS_RECEIPT_PATH &&
+				fixture.receipt !== WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH &&
+				fixture.receipt !== WITNESS_REACT_LINKFREE_RECEIPT_PATH,
 		);
 		expect(fixtures).toHaveLength(18);
 		return fixtures;
@@ -220,9 +229,9 @@ describe('Papercups corpus transaction state', () => {
 
 	it('derives the exact composition from the published aggregate', async () => {
 		const receipt = await published();
-		const published22 = await aggregateFixtures();
-		expect(published22).toHaveLength(22);
-		expect(published22.slice(-6, -4)).toEqual([
+		const published25 = await aggregateFixtures();
+		expect(published25).toHaveLength(25);
+		expect(published25.slice(-9, -7)).toEqual([
 			migrationMember,
 			witnessReactPapercupsAggregateMember(receipt.integrity.canonicalDigest),
 		]);
