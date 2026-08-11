@@ -109,4 +109,61 @@ describe('webpack tilde style specifier', () => {
 		expect(migration.changed).toBe(false);
 		expect(migration.unhandled).toEqual([]);
 	});
+
+	it('un-prefixes a subpath the installed package answers only through its exports map', () => {
+		const map: Readonly<Record<string, string>> = Object.freeze({
+			'angular-material-css-vars/public-util':
+				'angular-material-css-vars/src/lib/_public-util.scss',
+			'angular-material-css-vars/main': 'angular-material-css-vars/src/lib/_main.scss',
+		});
+		const migration = dropWebpackTildeSpecifiers(
+			'src/styles/themes.scss',
+			"@import '~angular-material-css-vars/public-util';\n@import '~angular-material-css-vars/main';\n",
+			{ carries: () => false, entryPoint: (specifier) => map[specifier] ?? null },
+		);
+		expect(migration.changed).toBe(true);
+		expect(migration.unhandled).toEqual([]);
+		expect(migration.source).toBe(
+			"@import 'angular-material-css-vars/public-util';\n@import 'angular-material-css-vars/main';\n",
+		);
+		expect(migration.changes.map((change) => change.resolved)).toEqual([
+			'angular-material-css-vars/src/lib/_public-util.scss',
+			'angular-material-css-vars/src/lib/_main.scss',
+		]);
+	});
+
+	it('refuses a subpath the exports map does not answer, even beside one it does', () => {
+		const migration = dropWebpackTildeSpecifiers(
+			'src/styles/themes.scss',
+			"@import '~mapped/known';\n@import '~mapped/unknown';\n",
+			{
+				carries: () => false,
+				entryPoint: (specifier) => (specifier === 'mapped/known' ? 'mapped/_known.scss' : null),
+			},
+		);
+		expect(migration.source).toBe("@import 'mapped/known';\n@import '~mapped/unknown';\n");
+		expect(migration.unhandled).toHaveLength(1);
+		expect(migration.unhandled[0]).toContain('mapped/unknown');
+	});
+
+	it('prefers the exports map over a path the closure happens to carry', () => {
+		const migration = dropWebpackTildeSpecifiers(
+			'src/styles.scss',
+			"@import '~mapped/util';\n",
+			{
+				carries: (relativePath) => relativePath === 'mapped/util.scss',
+				entryPoint: () => 'mapped/dist/_util.scss',
+			},
+		);
+		expect(migration.changes[0]?.resolved).toBe('mapped/dist/_util.scss');
+	});
+
+	it('asks only the file question of a reading that supplies no exports map', () => {
+		const migration = dropWebpackTildeSpecifiers(
+			'src/styles.scss',
+			"@import '~icons/css/icons.min.css';\n",
+			{ carries: (relativePath) => relativePath === 'icons/css/icons.min.css' },
+		);
+		expect(migration.source).toBe("@import 'icons/css/icons.min.css';\n");
+	});
 });

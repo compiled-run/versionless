@@ -1,0 +1,217 @@
+{
+	"schemaVersion": "versionless.angular-super-productivity-capability-round.v1",
+	"unit": "lrapr-t006/u18d-super-productivity-green",
+	"consentId": "VL-LEGACY-CORPUS-2026-08-10",
+	"result": "capabilities-fired-build-red-smaller-remainder",
+	"meaning": "Two of the eight demands u18c itemised were answerable by reading the installed tree harder rather than by any new decision, and both readings were taken. The production build was run again on the result. It is still red, and this record is the red one: the diagnostic total fell from 110 to 57, every family that moved is named with its before and after count, and every demand that remains is itemised — including two the falling census made visible for the first time. No demand was answered by an edit this record does not name, no artifact was emitted, and no parity or determinism claim is made or possible.",
+	"previous": "u18c-capability-round.json",
+	"changeset": "u18-composed-changeset.json",
+	"tree": {
+		"stage": ".versionless/stage/angular-super-productivity-v2-13-15-u18b",
+		"applied": ".versionless/stage/angular-super-productivity-v2-13-15-u18b/app",
+		"from": ".versionless/cache/angular-super-productivity-v2-13-15-source/verify/extracted",
+		"commit": "2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+		"reuse": "The stage tree u18b staged was reused and the composed changeset was rewritten over it from the pristine source, exactly as u18c did. Two things follow that this record states rather than glosses. Every file the changeset changes is rewritten from the pristine tree on each application, so those bytes are the composition's. Files that only a capability round has ever touched are not rewritten by the changeset and were therefore inherited from u18c — which is why the fork and barrel capabilities report almost nothing changed here: they had already run on those files and found their own work in place. The measure that is not affected by this is the diff against the pristine tree, and it is the one reported below."
+	},
+	"cell": {
+		"node": "v16.20.2",
+		"nodeSource": ".versionless/cache/angular-jira-clone-runtime/node-v16.20.2-darwin-arm64",
+		"architecture": "darwin-arm64, native — no translation layer",
+		"builder": "@angular-devkit/build-angular:browser (Angular 16.2)",
+		"environment": {
+			"NG_CLI_ANALYTICS": "false"
+		}
+	},
+	"acquisition": {
+		"purpose": "None. No package was installed, no manifest was changed and no network was reached in this unit; the closure u18c resolved was read, not altered.",
+		"networkMode": "none"
+	},
+	"adapterChanges": [
+		"`ClosureFileReading` — the reading the webpack tilde capability asks the file system for — now carries a second, optional question: does the installed package's own `exports` map answer this subpath. The capability consults the map before the sass file candidates, because a package that publishes an `exports` map is reachable through it and not through arbitrary paths beneath it, and falls back to the file candidates for a package that publishes no map, which is how every package of the era was reached. A reading that supplies no map answer is asked only the file question, so every caller written before the map existed behaves exactly as it did.",
+		"A `suggested-export-rename` source capability. A library that renames an export and a library that deletes one leave the same shape at the import site — a name the installed package does not have — and the difference cannot be read off the spelling. TypeScript already computes it: TS2724 carries the compiler's own resolution of the successor against the installed declaration files, and TS2305 is the same absence with no successor offered. The capability consumes only the first. The suggestion is then checked rather than trusted: the successor must be on the package's measured root export surface and the name being replaced must be absent from it, or the rename is refused by name. The rewrite is a binding rename — an aliased import has only its exported name replaced, an unaliased one has its exported name and every resolved reference to its binding replaced, and only when the successor name is free in the module's root scope, because a rename that collided with an existing declaration would silently change which symbol the references mean. A subpath import, an incomplete surface reading, and a position that is not an import specifier are three further refusals."
+	],
+	"capabilityOutcomes": [
+		{
+			"capability": "webpack-tilde-style-specifier, closure reading the installed exports maps",
+			"firedOn": "The five at-rules u18c refused by name, across 4 stylesheets.",
+			"filesChanged": 4,
+			"refused": 0,
+			"reading": "angular-material-css-vars@5.0.3 publishes an `exports` map whose `./public-util` and `./main` entries carry only a `sass` condition, pointing at ./src/lib/_public-util.scss and ./src/lib/_main.scss. The Angular builder resolves stylesheet module requests with `conditionNames: ['sass', 'style']` — read from @angular-devkit/build-angular's own src/tools/webpack/configs/styles.js:338 in the installed closure — so those are subpaths the package answers. u18c's refusal was correct about the file system and wrong about the package.",
+			"clearedDiagnostics": "None, and this is the honest half of the outcome. The sass compiler was never reached: the TypeScript program failed first, in this build as in u18c's. What is established is that the specifiers now resolve against the installed package's own map; that they compile is not established here."
+		},
+		{
+			"capability": "suggested-export-rename",
+			"firedOn": "2 declarations across 2 modules — ChartsModule → NgChartsModule in metric.module.ts and ChartDataSets → ChartDataset in metric.model.ts — each with its one further binding reference renamed beside the import.",
+			"filesChanged": 2,
+			"refused": 0,
+			"reading": "Nine root export surfaces were measured from the applied tree's own node_modules, following whole-module re-exports: ng2-charts@5.0.4 (5 exports), chart.js@4.5.1 (221), @angular/core@16.2.12 (503), @angular/common@16.2.12 (107), @angular/forms@16.2.12 (84), @angular/router@16.2.12 (126), @ngrx/store@16.3.0 (71), @ngrx/effects@16.3.0 (27), @ngrx/entity@16.3.0 (11) — every one complete. NgChartsModule is on the ng2-charts surface and ChartsModule is not; ChartDataset is on the chart.js surface and ChartDataSets is not.",
+			"clearedDiagnostics": "TS2724 fell from 2 to 0, and with the metric module resolving, the template census downstream of it collapsed: NG8002 14 → 0, NG8004 18 → 0, NG8003 3 → 0, NG8001 11 → 2, NG6002 21 → 15, NG1010 1 → 0."
+		},
+		{
+			"capability": "successor-fork-package, barrel-entry-point-split, entry-components-removal",
+			"firedOn": "Re-run over the applied tree and found their u18c work already in place on the files the changeset does not rewrite; the fork capability rewrote the one module the changeset had restored.",
+			"filesChanged": 1,
+			"refused": 0,
+			"clearedDiagnostics": "None new. These are the u18c capabilities, re-run to establish that the round is repeatable rather than to answer anything."
+		}
+	],
+	"applicationFilesChanged": {
+		"differingFromPristine": 56,
+		"pristineFilesUnderSrc": 796,
+		"newInThisUnit": 6,
+		"newFiles": [
+			"src/_variables.scss",
+			"src/app/features/metric/metric.model.ts",
+			"src/app/features/metric/metric.module.ts",
+			"src/app/features/tasks/task/task.component.scss",
+			"src/app/pages/work-view/backlog/backlog.component.scss",
+			"src/styles/themes.scss"
+		],
+		"meaning": "56 application files under src/ differ byte-for-byte from the pristine extracted tree at commit 2943c5c. That is the count this record stands behind, because it is a diff against the source and not a tally of what a transform reported — u18c's 51 was the latter, and the two numbers are not the same measurement. Six of the 56 carry an edit this unit made and u18c had not, and they are named. 796 is every file under src/ in the pristine tree, of which the composed changeset scans 494 as application sources."
+	},
+	"build": {
+		"command": "node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng.js build --configuration production",
+		"log": ".versionless/stage/angular-super-productivity-v2-13-15-u18b/build-3.log",
+		"exitStatus": 1,
+		"artifactsEmitted": 0,
+		"diagnosticCountsBefore": {
+			"NG1010": 1,
+			"NG6002": 21,
+			"NG6003": 1,
+			"NG8001": 11,
+			"NG8002": 14,
+			"NG8003": 3,
+			"NG8004": 18,
+			"TS1259": 1,
+			"TS2305": 3,
+			"TS2307": 1,
+			"TS2314": 2,
+			"TS2322": 7,
+			"TS2339": 17,
+			"TS2345": 1,
+			"TS2554": 2,
+			"TS2724": 2,
+			"TS2740": 2,
+			"TS2769": 1,
+			"TS2794": 2
+		},
+		"diagnosticCounts": {
+			"NG6002": 15,
+			"NG6003": 1,
+			"NG8001": 2,
+			"TS1259": 1,
+			"TS2305": 3,
+			"TS2307": 1,
+			"TS2314": 2,
+			"TS2322": 7,
+			"TS2339": 17,
+			"TS2345": 1,
+			"TS2554": 2,
+			"TS2740": 2,
+			"TS2769": 1,
+			"TS2794": 2
+		},
+		"diagnosticTotalBefore": 110,
+		"diagnosticTotal": 57,
+		"countingMethod": "Every `error TS####` / `error NG####` occurrence in the build log, counted the same way in both columns. The before column is u18c's recorded after-state.",
+		"cleared": {
+			"TS2724": "2 → 0 (suggested export rename)",
+			"NG8002": "14 → 0",
+			"NG8004": "18 → 0",
+			"NG8003": "3 → 0",
+			"NG8001": "11 → 2",
+			"NG6002": "21 → 15",
+			"NG1010": "1 → 0"
+		},
+		"unmoved": "TS2339 17, TS2322 7, TS2305 3, TS2314 2, TS2554 2, TS2740 2, TS2794 2, TS1259 1, TS2307 1, TS2345 1, TS2769 1, NG6003 1. Every one of them is a demand u18c itemised and this unit did not attempt."
+	},
+	"remainingDemands": [
+		{
+			"family": "ng2-charts symbols with no successor",
+			"file": "src/app/features/metric/metric.model.ts:2, src/app/features/metric/metric.component.ts:4",
+			"symbol": "Label, SingleDataSet, Color",
+			"library": "ng2-charts 2.3 → 5.0.4",
+			"observed": "3 TS2305: Module '\"ng2-charts\"' has no exported member 'Label' / 'SingleDataSet' / 'Color'.",
+			"neededTransform": "The compiler offers no successor for any of the three, which is precisely why the rename capability never saw them: it reads TS2724 and these are TS2305. ng2-charts 5.0.4 publishes five root exports and none of them is a successor to these; the types moved into chart.js 4 under different shapes and the call sites that consume them are application logic. This is a call-site rewrite, not a rename, and it is not attempted."
+		},
+		{
+			"family": "chart.js 2 options literals",
+			"file": "src/app/features/metric/metric.component.ts:24, src/app/core/theme/global-theme.service.ts:163",
+			"symbol": "{ responsive, legend: { position } } and { legend: { labels: { fontColor } }, scales: { xAxes: [...], yAxes: [...] } }",
+			"library": "chart.js 2.8 → 4.5.1",
+			"observed": "1 TS2322 and 1 TS2345 against _DeepPartialObject<CoreChartOptions & …>.",
+			"neededTransform": "chart.js 4 restructured the options schema: `legend` moved under `plugins`, and the `xAxes`/`yAxes` arrays became a keyed `scales` object with `grid` in place of `gridLines` and `ticks.color` in place of `ticks.fontColor`. Every one of those is a per-property mapping this unit can neither read off the installed declaration files nor prove per property, so nothing was transformed. Itemised per property here rather than guessed."
+		},
+		{
+			"family": "@ngx-formly FieldType genericity and `to` → `props`",
+			"file": "src/app/ui/duration/input-duration-formly/input-duration-formly.component.ts:11 and its template, src/app/features/config/keyboard-input/keyboard-input.component.ts:11, :15, :53 and its template, src/app/ui/ui.module.ts:85, :142, :176, src/app/features/config/config.module.ts:23, :38",
+			"symbol": "class … extends FieldType; this.to; this.formControl; this.field; this.id; errorStateMatcher",
+			"library": "@ngx-formly/core 5.2 → 7.1",
+			"observed": "2 TS2314, 2 TS2740, 3 TS2322, 10 template and class TS2339.",
+			"neededTransform": "Unchanged from u18b and u18c, and unattempted here for budget. The missing type argument is a type-position edit and `to` → `props` is a member rename on `this`; neither is a specifier rewrite, and the ten TS2339 are all downstream of the unparameterised base class. This is the largest single remaining family and the most likely next unit."
+		},
+		{
+			"family": "@ngrx/entity addAll → setAll",
+			"file": "src/app/features/issue/github/github-issue/store/github-issue.reducer.ts:155, src/app/features/issue/jira/jira-issue/store/jira-issue.reducer.ts:153, src/app/features/project/store/project.reducer.ts:248",
+			"symbol": "adapter.addAll(…)",
+			"library": "@ngrx/entity 8.3 → 16.3",
+			"observed": "3 TS2339: Property 'addAll' does not exist on type 'EntityAdapter<…>'.",
+			"neededTransform": "Two in u18c's census, three here — the third is in project.reducer.ts and became visible only because the module around it now resolves. TypeScript reports these as TS2339 with no suggestion, so the rename capability written in this unit cannot see them: nothing in the reading proves that `setAll` is what `addAll` became rather than one of the eleven names @ngrx/entity publishes. It remains the smallest unanswered demand and it needs a proof this unit does not have."
+		},
+		{
+			"family": "rxjs/internal-compatibility",
+			"file": "src/app/features/issue/jira/jira-api.service.ts:22",
+			"symbol": "import { … } from 'rxjs/internal-compatibility'",
+			"library": "rxjs 6.5 → 7.8",
+			"observed": "1 TS2307: Cannot find module 'rxjs/internal-compatibility'.",
+			"neededTransform": "Unattempted. The RxJS table collapses the deep type modules onto the package root; this entry point is not one of them, and the deep-specifier collapse could not be ridden without first reading the symbols this module names against the installed rxjs@7.8.2 root surface. That reading was not taken."
+		},
+		{
+			"family": "mat-chip-list",
+			"file": "src/app/ui/chip-list-input/chip-list-input.component.html:2, src/app/ui/datetime-input/datetime-input.component.html:23",
+			"symbol": "<mat-chip-list>",
+			"library": "@angular/material 8 → 16.2.14",
+			"observed": "2 NG8001: 'mat-chip-list' is not a known element.",
+			"neededTransform": "New to this census. It is not new work — the element was always there — but it was invisible while eleven other NG8001 sat downstream of the unresolvable metric module. Material 16 replaced MatChipList with MatChipListbox and MatChipGrid, and which of the two an application wants depends on whether its chips are selectable or an input, so this is a template decision and not a rename. Itemised, not guessed."
+		},
+		{
+			"family": "three unrelated call sites and NgxElectronModule",
+			"file": "src/app/app.module.ts:41, src/app/features/config/global-config.service.ts:88, src/app/features/issue/jira/jira.module.ts:16, src/app/features/tasks/store/task-internal.effects.ts:113",
+			"symbol": "a three-argument call the module now declares as taking none; a zero-argument call that now takes one; NgxElectronModule; one unmatched overload",
+			"library": "Angular 8 → 16 across four unrelated declarations",
+			"observed": "2 TS2554, 1 TS2769, 1 NG6002: 'NgxElectronModule' does not appear to be an NgModule class.",
+			"neededTransform": "Unattempted. The NgxElectronModule one is still a reading nobody has taken: whether ngx-electron 2.2.0 publishes an Ivy-compatible module is a measurement of the installed package, not a guess."
+		},
+		{
+			"family": "@ngrx/effects createEffect result typing",
+			"file": "src/app/features/google/store/google-drive-sync.effects.ts:84, :116, :223",
+			"symbol": "createEffect(() => …, { dispatch: false })",
+			"library": "@ngrx/effects 8.3 → 16.3",
+			"observed": "3 TS2322: Type 'Observable<unknown>' is not assignable to type 'EffectResult<Action>'.",
+			"neededTransform": "Unchanged from u18c. The wrapper the createEffect migration wrote is correct and the effect body's inferred type is not. Whether the cause is the body or the surrounding module is still not established, and a rewrite that guessed would be a rewrite of application logic."
+		},
+		{
+			"family": "TypeScript 3.5 → 5.1 call sites",
+			"file": "src/app/features/worklog/worklog-export/worklog-export.component.ts:15, src/app/features/google/google-api.service.ts:143 and :150",
+			"symbol": "import Clipboard from 'clipboard'; new Promise<…>(resolve => resolve())",
+			"library": "TypeScript 3.5 → 5.1",
+			"observed": "1 TS1259, 2 TS2794.",
+			"neededTransform": "Unchanged and unattempted: a tsconfig decision the workspace capability has to make explicitly, and a two-line call-site edit."
+		},
+		{
+			"family": "five angular-material-css-vars at-rules",
+			"file": "src/_variables.scss:2, src/styles/themes.scss:1 and :2, src/app/features/tasks/task/task.component.scss:2, src/app/pages/work-view/backlog/backlog.component.scss:2",
+			"symbol": "@import 'angular-material-css-vars/public-util' and '/main'",
+			"library": "angular-material-css-vars 2.x → 5.0.3",
+			"observed": "No build diagnostic, in this build or the last. The sass compiler was never reached because the TypeScript program failed first.",
+			"neededTransform": "Answered by a reading in this unit — the prefix is gone and the subpaths resolve through the installed package's own exports map under the condition the builder uses. It stays on this list because an answer nothing has compiled is not a demand that has been closed. It will be closed or reopened by the first build that reaches sass."
+		}
+	],
+	"notEstablished": [
+		"The build is red. No artifact was emitted, nothing was executed, and no parity, determinism or logical-name statement against the era lane is possible or attempted. The build was run once, because a second run of a build that fails in the TypeScript program before the Sass compiler would establish nothing about the Sass random() nondeterminism the era lane recorded.",
+		"A diagnostic census is not a measure of remaining work. 110 → 57 says what the compiler reported twice. Most of the fall is the template census downstream of one module that now resolves, and two of the demands on the list above are larger in this census than in the last one for exactly the same reason: more of the application is visible to the compiler than was before.",
+		"The five sass at-rules resolve against the installed package's exports map. Nothing here establishes that they compile, because the sass compiler was not reached.",
+		"The two renames the compiler resolved are renames of names, checked against the installed surfaces. Nothing establishes that NgChartsModule behaves as ChartsModule did or that a ChartDataset is populated the way a ChartDataSets was; no browser opened anything and the chart configuration those names sit next to is itself an itemised demand.",
+		"The era lane's recorded Sass random() nondeterminism is untouched. No source was seeded, neutralised or modified."
+	]
+}

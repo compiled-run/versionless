@@ -35,10 +35,26 @@ export const WEBPACK_MODULE_PREFIX = '~';
 export const SASS_EXTENSIONS: readonly string[] = Object.freeze(['.scss', '.sass', '.css']);
 
 /**
- * The one question this capability asks of the installed closure: whether it
- * carries a path, relative to the closure's package root directory.
+ * The questions this capability asks of the installed closure.
+ *
+ * `carries` is the file question: does the closure hold this path, relative to
+ * the closure's package root directory.
+ *
+ * `entryPoint` is the manifest question, and it exists because a path on disk is
+ * not the only way a package answers a module request. A package that publishes
+ * an `exports` map answers subpaths through the map and *only* through the map,
+ * and the map may point a subpath at a file whose name shares nothing with it —
+ * `./public-util` at `./src/lib/_public-util.scss`. The stylesheet pipeline
+ * resolves module requests with the `sass` and `style` conditions, so a subpath
+ * the map answers under those conditions is answered, and asking only `carries`
+ * would refuse it for a reason that is not true. A reading that supplies no
+ * `entryPoint` is asked only the file question, which is what every caller
+ * written before the map existed already expected.
  */
-export type ClosureFileReading = Readonly<{ carries: (relativePath: string) => boolean }>;
+export type ClosureFileReading = Readonly<{
+	carries: (relativePath: string) => boolean;
+	entryPoint?: (specifier: string) => string | null;
+}>;
 
 export type TildeSpecifierChange = Readonly<{
 	kind: 'webpack-tilde-specifier';
@@ -95,8 +111,17 @@ export function sassCandidates(specifier: string): readonly string[] {
 	return Object.freeze([...new Set(candidates)]);
 }
 
-/** The closure file that answers `specifier`, or null when none does. */
+/**
+ * The closure file that answers `specifier`, or null when none does.
+ *
+ * The package's own `exports` map is consulted first, because a package that
+ * publishes one is reachable through it and not through arbitrary paths beneath
+ * it; the sass file candidates are the fallback for a package that publishes no
+ * map, which is how every package of the era was reached.
+ */
 export function resolveInClosure(specifier: string, closure: ClosureFileReading): string | null {
+	const exported = closure.entryPoint?.(specifier) ?? null;
+	if (exported !== null) return exported;
 	for (const candidate of sassCandidates(specifier)) if (closure.carries(candidate)) return candidate;
 	return null;
 }
