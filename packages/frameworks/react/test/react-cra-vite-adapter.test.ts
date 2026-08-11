@@ -5,14 +5,23 @@ import * as path from 'pathe';
 import { build } from 'vite';
 import { describe, expect, test } from 'vitest';
 import {
+	craApplicationModuleResolver,
 	craEntryDocument,
 	craGlobalIdentifierDefines,
+	craNodeCoreModuleName,
+	craNodeCoreShimPackage,
+	craNodeGlobalsBootstrapSource,
+	craNodeGlobalsModuleId,
 	craProcessEnvironmentDefines,
 	craPublicAssetPaths,
+	craWebpackNodeCoreShimSpecifiers,
+	craWebpackNodeInjectedGlobals,
 	createCraGlobalIdentifierPlugin,
+	createCraNodeCoreModulePlugin,
 	createCraPublicDirectoryPlugin,
 	createCraTildeCssImportPlugin,
 	createCraViteAdapter,
+	resolveCraNodeCoreModule,
 	rewriteWebpackTildeCssImports,
 	substituteCraTemplatePlaceholders,
 } from '../src/react-cra-vite-adapter.ts';
@@ -175,6 +184,213 @@ describe('the ambient webpack global identifier', () => {
 	});
 });
 
+/**
+ * webpack 4 resolved Node core modules to browser shim packages drawn from the
+ * application's own dependency closure. Vite treats every builtin as external
+ * and emits a `__vite-browser-external` stub, so `require('stream')` yields
+ * undefined and the first dependency that reads a property off it dies at load.
+ * The control build below is that failure, observed rather than recalled; the
+ * adapted build is the fix.
+ */
+describe('webpack automatic Node core module polyfills', () => {
+	async function writeShimClosure(root: string): Promise<void> {
+		const modules = path.join(root, 'node_modules');
+		await mkdir(path.join(modules, 'util'), { recursive: true });
+		await mkdir(path.join(modules, 'stream-browserify'), { recursive: true });
+		await writeFile(
+			path.join(root, 'package.json'),
+			`${JSON.stringify({ name: 'closure-under-test', version: '0.0.0' })}\n`,
+		);
+		await writeFile(
+			path.join(modules, 'util/package.json'),
+			`${JSON.stringify({ name: 'util', version: '0.12.0', main: 'util.js' })}\n`,
+		);
+		await writeFile(
+			path.join(modules, 'util/util.js'),
+			[
+				'exports.inherits = function inherits(ctor, superCtor) {',
+				'	ctor.super_ = superCtor;',
+				'	ctor.prototype = Object.create(superCtor.prototype, {',
+				'		constructor: { value: ctor, enumerable: false, writable: true },',
+				'	});',
+				'};',
+				'',
+			].join('\n'),
+		);
+		await writeFile(
+			path.join(modules, 'stream-browserify/package.json'),
+			`${JSON.stringify({ name: 'stream-browserify', version: '2.0.2', main: 'index.js' })}\n`,
+		);
+		await writeFile(
+			path.join(modules, 'stream-browserify/index.js'),
+			[
+				'function Stream() {}',
+				"Stream.prototype.pipe = function pipe() { return 'piped'; };",
+				'module.exports = Stream;',
+				'',
+			].join('\n'),
+		);
+	}
+
+	// The era shape: a CommonJS dependency that inherits from the core `stream`
+	// prototype through `util.inherits`, which is what readable-stream 1.x does.
+	const dependencySource = [
+		"var Stream = require('stream');",
+		"var util = require('util');",
+		'function Readable() {}',
+		'util.inherits(Readable, Stream);',
+		'module.exports = {',
+		'	inherited: new Readable().pipe(),',
+		'	prototypeChain: Object.getPrototypeOf(Readable.prototype) === Stream.prototype,',
+		'};',
+		'',
+	].join('\n');
+
+	async function buildProbe(withAdapter: boolean): Promise<string> {
+		const root = await mkdtemp(path.join(tmpdir(), 'versionless-cra-node-core-'));
+		try {
+			await writeShimClosure(root);
+			await writeFile(path.join(root, 'dependency.cjs'), dependencySource);
+			await writeFile(
+				path.join(root, 'entry.js'),
+				["import dependency from './dependency.cjs';", 'export const probe = dependency;', ''].join(
+					'\n',
+				),
+			);
+			const outDir = path.join(root, 'dist');
+			await build({
+				root,
+				logLevel: 'silent',
+				plugins: withAdapter ? [createCraNodeCoreModulePlugin({ applicationRoot: root })] : [],
+				build: {
+					outDir,
+					minify: false,
+					lib: {
+						entry: path.join(root, 'entry.js'),
+						formats: ['iife'],
+						name: 'probe',
+						fileName: () => 'probe.js',
+					},
+				},
+			});
+			return await readFile(path.join(outDir, 'probe.js'), 'utf8');
+		} finally {
+			await rm(root, { recursive: true, force: true });
+		}
+	}
+
+	function evaluateInBrowserLikeRealm(code: string): Record<string, unknown> {
+		// A realm with no Node builtins at all, exactly like a browser window.
+		const context = createContext({});
+		runInContext(code, context);
+		return (context as { probe?: { probe?: Record<string, unknown> } }).probe?.probe as Record<
+			string,
+			unknown
+		>;
+	}
+
+	test('an unadapted build stubs the core modules out and dies at load', async () => {
+		const code = await buildProbe(false);
+		expect(code).toContain('__vite-browser-external');
+		expect(() => evaluateInBrowserLikeRealm(code)).toThrow();
+	});
+
+	test('the adapted build resolves the shims and evaluates', async () => {
+		const code = await buildProbe(true);
+		expect(code).not.toContain('__vite-browser-external');
+		expect(code).toContain('Stream.prototype.pipe');
+		const probe = evaluateInBrowserLikeRealm(code);
+		expect(probe.inherited).toBe('piped');
+		expect(probe.prototypeChain).toBe(true);
+	});
+
+	test('the resolution table is webpack 4 node-libs-browser, keyed by core module', () => {
+		expect(craWebpackNodeCoreShimSpecifiers.stream).toBe('stream-browserify');
+		expect(craWebpackNodeCoreShimSpecifiers.util).toBe('util/util.js');
+		expect(craWebpackNodeCoreShimSpecifiers.crypto).toBe('crypto-browserify');
+		expect(craWebpackNodeCoreShimSpecifiers.process).toBe('process/browser.js');
+		expect(craWebpackNodeCoreShimSpecifiers._stream_readable).toBe('readable-stream/readable.js');
+		expect(Object.isFrozen(craWebpackNodeCoreShimSpecifiers)).toBe(true);
+		// Entries node-libs-browser maps to null stay Vite's business.
+		expect(craWebpackNodeCoreShimSpecifiers.fs).toBeUndefined();
+		expect(craWebpackNodeCoreShimSpecifiers.child_process).toBeUndefined();
+	});
+
+	test('both the bare and node-prefixed specifier name the same core module', () => {
+		expect(craNodeCoreModuleName('stream')).toBe('stream');
+		expect(craNodeCoreModuleName('node:stream')).toBe('stream');
+		expect(craNodeCoreModuleName('react-dom')).toBeNull();
+		expect(craNodeCoreModuleName('stream/promises')).toBeNull();
+		expect(craNodeCoreShimPackage('os-browserify/browser.js')).toBe('os-browserify');
+		expect(craNodeCoreShimPackage('assert/')).toBe('assert');
+		expect(craNodeCoreShimPackage('@scope/shim/entry.js')).toBe('@scope/shim');
+	});
+
+	test('a shim absent from the closure fails loudly and names the module', async () => {
+		const root = await mkdtemp(path.join(tmpdir(), 'versionless-cra-node-core-empty-'));
+		try {
+			await writeShimClosure(root);
+			const resolver = craApplicationModuleResolver(root);
+			expect(resolveCraNodeCoreModule('stream', resolver, root)).toContain('stream-browserify');
+			expect(() => resolveCraNodeCoreModule('crypto', resolver, root)).toThrow(
+				'Node core module "crypto"',
+			);
+			expect(() => resolveCraNodeCoreModule('crypto', resolver, root)).toThrow(
+				'crypto-browserify',
+			);
+			const plugin = createCraNodeCoreModulePlugin({ applicationRoot: root });
+			expect(plugin.enforce).toBe('pre');
+			expect(plugin.resolveId('react')).toBeNull();
+			expect(plugin.resolveId('node:util')).toContain('util.js');
+			expect(() => plugin.resolveId('zlib')).toThrow('Node core module "zlib"');
+		} finally {
+			await rm(root, { recursive: true, force: true });
+		}
+	});
+
+	test('the injected-globals bootstrap sources every webpack-provided binding', () => {
+		expect(craWebpackNodeInjectedGlobals).toEqual({
+			Buffer: 'buffer',
+			clearImmediate: 'timers',
+			process: 'process',
+			setImmediate: 'timers',
+		});
+		const source = craNodeGlobalsBootstrapSource({
+			process: '/closure/process/browser.js',
+			buffer: '/closure/buffer/index.js',
+			timers: '/closure/timers-browserify/main.js',
+		});
+		expect(source).toContain('import craProcess from "/closure/process/browser.js";');
+		expect(source).toContain('globalThis.process ??= craProcess;');
+		expect(source).toContain('globalThis.Buffer ??= craBuffer.Buffer;');
+		expect(source).toContain('globalThis.setImmediate ??= craTimers.setImmediate;');
+		expect(source).toContain('globalThis.clearImmediate ??= craTimers.clearImmediate;');
+	});
+
+	test('the bootstrap module is only served under its own virtual id', () => {
+		const plugin = createCraNodeCoreModulePlugin({ applicationRoot: tmpdir() });
+		expect(plugin.resolveId(craNodeGlobalsModuleId)).toBe(`\0${craNodeGlobalsModuleId}`);
+		expect(plugin.load('/some/app/src/index.tsx')).toBeNull();
+	});
+
+	test('the entry document evaluates bootstrap modules before the application', () => {
+		const document = craEntryDocument({
+			template,
+			entryModule: '/src/index.tsx',
+			bootstrapModules: [craNodeGlobalsModuleId],
+		});
+		const bootstrap = `<script type="module">import "${craNodeGlobalsModuleId}";</script>`;
+		expect(document).toContain(bootstrap);
+		expect(document.indexOf(bootstrap)).toBeLessThan(
+			document.indexOf('<script type="module" src="/src/index.tsx">'),
+		);
+		// Omitting the option leaves the document exactly as it was before.
+		expect(craEntryDocument({ template, entryModule: '/src/index.tsx' })).toBe(
+			craEntryDocument({ template, entryModule: '/src/index.tsx', bootstrapModules: [] }),
+		);
+	});
+});
+
 describe('webpack tilde specifiers in CSS', () => {
 	test('rewrites quoted and url() imports without touching relative ones', () => {
 		const code = [
@@ -235,8 +451,11 @@ describe('create-react-app public directory', () => {
 		await expect(plugin.closeBundle.handler()).rejects.toThrow('outDir is unresolved');
 	});
 	test('the composed adapter excludes the template by default', () => {
-		const [transform, define, output] = createCraViteAdapter({ publicDirectory: tmpdir() });
+		const [transform, nodeCore, define, output] = createCraViteAdapter({
+			publicDirectory: tmpdir(),
+		});
 		expect(transform.name).toBe('versionless-cra-tilde-css-import');
+		expect(nodeCore.name).toBe('versionless-cra-node-core-modules');
 		expect(define.name).toBe('versionless-cra-global-identifier');
 		expect(define.config()).toEqual({ define: { global: 'globalThis' } });
 		expect(output.name).toBe('versionless-cra-public-directory');
