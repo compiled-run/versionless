@@ -190,6 +190,16 @@ export const ANGULAR_16_ECOSYSTEM_PACKAGES: EcosystemPackages = Object.freeze({
 		range: '^6.0.0',
 		fact: '6.0.0 is the newest release published and declares peer @angular/core and @angular/common ">=9.0.4", which this cell satisfies, plus dependency tslib ^2.0.0, which the ^2.3.0 this cell writes satisfies. It declares no engines.node.',
 	}),
+	'chart.js': Object.freeze({
+		kind: 'aligned',
+		range: '^4.5.1',
+		fact: 'chart.js is framework independent — 4.5.1, the newest release and the `latest` dist-tag, declares no peerDependencies and no engines.node, so neither axis of this cell excludes it. It is in this table because an Angular package that is in it depends on the reading: ng2-charts 5.0.4 declares peer chart.js "^3.4.0 || ^4.0.0", so a workspace holding chart.js on its 2.x line beside that peer has no resolvable dependency tree, which is what `npm install` reports before any compiler runs. The reading is a version fact and not a source claim: chart.js 3 renamed the type surface the 2.x line published, and nothing here rewrites a call site that names one.',
+	}),
+	'jasmine-marbles': Object.freeze({
+		kind: 'aligned',
+		range: '^0.9.2',
+		fact: 'jasmine-marbles versions against RxJS rather than against Angular: 0.9.2, the newest release and the `latest` dist-tag, declares peer rxjs "^7.0.0", which the ~7.8.0 this cell writes satisfies; 0.8.4 and every earlier 0.8.x declare "^6.5.3", which it does not. It declares no @angular/* peer and no engines.node. The package sits in this table rather than in the generated test toolchain because it is a community library the cell reads, and because leaving it at an era range pinned to RxJS 6 makes the whole closure unresolvable beside the RxJS 7 this cell writes.',
+	}),
 	'ng2-charts': Object.freeze({
 		kind: 'aligned',
 		range: '^5.0.4',

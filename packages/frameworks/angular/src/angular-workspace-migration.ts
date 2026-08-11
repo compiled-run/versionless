@@ -65,14 +65,25 @@ type JsonObject = Record<string, unknown>;
  * production; `es5BrowserSupport` and `showCircularDependencies` went with the
  * differential-loading and webpack-plugin surfaces they configured;
  * `experimentalRollupPass` and `lazyModules` were experimental options the
- * devkit dropped.
+ * devkit dropped. `evalSourceMap` and `vendorSourceMap` were the two sibling
+ * booleans that sat beside `sourceMap` before the devkit replaced the trio with
+ * a single `sourceMap` object carrying `scripts`, `styles`, `vendor` and
+ * `hidden`; the object form is what the modern schema accepts and the loose
+ * booleans are what it rejects.
+ *
+ * Each name here was read off a build that stopped on it: the schema validator
+ * runs before the compiler, so one surviving option is not a warning but the
+ * whole build — `Data path "" must NOT have additional properties(evalSourceMap)`
+ * and nothing else.
  */
 export const REMOVED_BUILDER_OPTIONS: readonly string[] = Object.freeze([
 	'es5BrowserSupport',
+	'evalSourceMap',
 	'experimentalRollupPass',
 	'extractCss',
 	'lazyModules',
 	'showCircularDependencies',
+	'vendorSourceMap',
 ]);
 
 /**
