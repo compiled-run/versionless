@@ -2,7 +2,7 @@
   "schemaVersion": "versionless.trust.v1",
   "derivedFrom": {
     "path": "corpus-conformance.json",
-    "sha256": "10d80fb8cea3df89620d38daa3e738f9df508567970b881332e8e0ca41484f44"
+    "sha256": "82dd60812ccec129f7a858d146ba2a79a652b0a94615af9d69106fbdb4aaf974"
   },
   "cells": [
     {
@@ -188,6 +188,40 @@
       "browserProof": "verified-direct-witness",
       "serviceWorker": "application-unregister",
       "scrollSurface": "omitted-not-meaningful",
+      "locality": {
+        "mode": "offline",
+        "scope": "process-scoped",
+        "osWideIsolation": false,
+        "successfulNonLoopback": 0
+      },
+      "productionReadiness": "verified-direct-witness",
+      "readinessScoreboard": {
+        "overall": {
+          "ready": 3,
+          "total": 12
+        },
+        "reactLineage": {
+          "counted": false,
+          "ready": 1,
+          "total": 4
+        }
+      }
+    },
+    {
+      "id": "react-hospitalrun",
+      "framework": "react",
+      "designatedPilot": false,
+      "runtime": "node-12.14.1-to-node-24.15.0",
+      "bundler": "webpack-4.42.0-to-vite-8.0.16",
+      "state": "verified",
+      "track": "production-readiness-direct-witness-create-react-app-to-vite8",
+      "scope": "fixture-specific-create-react-app-to-vite8",
+      "genericReactSupport": "not-claimed",
+      "browserProof": "verified-direct-witness",
+      "serviceWorker": "application-register-refused-by-context",
+      "serviceWorkerDifference": "recorded-behavioral-migration-difference",
+      "serviceWorkerDifferenceMasked": false,
+      "scrollSurface": "measured-genuine-viewport-scroll",
       "locality": {
         "mode": "offline",
         "scope": "process-scoped",

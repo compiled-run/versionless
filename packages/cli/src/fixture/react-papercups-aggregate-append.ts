@@ -79,7 +79,10 @@ export async function appendReactPapercupsAggregateMembers(rootDir = root): Prom
 	const present = papercupsPaths(fixtures);
 	if (present.length === 2) {
 		const state = deriveCorpusTransactionState(fixtures);
-		if (state.kind !== 'react-papercups-browser-proof')
+		if (
+			state.kind !== 'react-papercups-browser-proof' &&
+			state.kind !== 'react-hospitalrun-browser-proof'
+		)
 			throw new Error('React Papercups aggregate membership is already inconsistent');
 		return { kind: state.kind, receipts: state.receipts, appended: false };
 	}
@@ -131,7 +134,10 @@ export async function main(args = process.argv.slice(2)): Promise<void> {
 						const state = deriveCorpusTransactionState(
 							aggregate.fixtures.map((item) => record(item, 'member')),
 						);
-						if (state.kind !== 'react-papercups-browser-proof')
+						if (
+							state.kind !== 'react-papercups-browser-proof' &&
+							state.kind !== 'react-hospitalrun-browser-proof'
+						)
 							throw new Error('React Papercups aggregate membership is absent');
 						return { kind: state.kind, receipts: state.receipts, appended: false };
 					})()

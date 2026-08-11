@@ -14,6 +14,7 @@ import { canonicalize, sha256 } from '../../core/src/receipts/canonicalize.ts';
 import { ANGULAR_REALWORLD_V15_TO_V16_RECEIPT } from '../../core/src/receipts/angular-realworld-v15-to-v16.ts';
 import { WITNESS_ANGULAR_REALWORLD_RECEIPT_PATH } from '../../core/src/receipts/witness-angular-realworld.ts';
 import { REACT_PAPERCUPS_FIXTURE } from '../../core/src/receipts/witness-react-papercups.ts';
+import { REACT_HOSPITALRUN_FIXTURE } from '../../core/src/receipts/witness-react-hospitalrun.ts';
 import {
 	SCRIPT_SURFACE_SCHEMA,
 	verifyScriptSurface,
@@ -26,6 +27,8 @@ import {
 	NPM_LOCK_ACQUISITION_PREFLIGHT,
 	NEXT_TAILWIND_CONSENT_FAILURE,
 	NEXT_TAILWIND_EXCLUSION,
+	REACT_HOSPITALRUN_TRUST_MATRIX_CELLS,
+	REACT_HOSPITALRUN_TRUST_RECEIPTS,
 	REACT_PAPERCUPS_TRUST_MATRIX_CELLS,
 	REACT_PAPERCUPS_TRUST_RECEIPTS,
 	compareTrustResolvedDependencies,
@@ -496,21 +499,35 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 		runtimeObservationControl.pciCompliance !== 'not-claimed'
 	)
 		throw new Error('Controls contain an unsupported enterprise assurance claim');
-	const papercupsIntegrated = transaction.kind === 'react-papercups-browser-proof';
+	const hospitalrunIntegrated = transaction.kind === 'react-hospitalrun-browser-proof';
+	const papercupsIntegrated =
+		transaction.kind === 'react-papercups-browser-proof' || hospitalrunIntegrated;
 	const matrix = asRecord(await readJson(path.join(output, 'matrix.json')), 'corpus matrix');
 	if (
 		!Array.isArray(matrix.cells) ||
 		matrix.cells.length !==
-			15 + (transaction.nextKilledByGoogleIntegrated ? 1 : 0) + (papercupsIntegrated ? 1 : 0)
+			15 +
+				(transaction.nextKilledByGoogleIntegrated ? 1 : 0) +
+				(papercupsIntegrated ? 1 : 0) +
+				(hospitalrunIntegrated ? 1 : 0)
 	)
 		throw new Error('Corpus matrix cell count does not match transaction state');
 	if (
 		papercupsIntegrated &&
+		!hospitalrunIntegrated &&
 		(manifest.receipts.length !== REACT_PAPERCUPS_TRUST_RECEIPTS ||
 			matrix.cells.length !== REACT_PAPERCUPS_TRUST_MATRIX_CELLS)
 	)
 		throw new Error(
 			'React Papercups browser proof must pin exactly eighteen receipts and seventeen matrix cells',
+		);
+	if (
+		hospitalrunIntegrated &&
+		(manifest.receipts.length !== REACT_HOSPITALRUN_TRUST_RECEIPTS ||
+			matrix.cells.length !== REACT_HOSPITALRUN_TRUST_MATRIX_CELLS)
+	)
+		throw new Error(
+			'React HospitalRun browser proof must pin exactly twenty receipts and eighteen matrix cells',
 		);
 	const matrixSource = asRecord(matrix.derivedFrom, 'corpus matrix derivation');
 	if (
@@ -702,6 +719,48 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 			throw new Error('React Papercups matrix cell is not derived from corpus conformance');
 	} else if (papercupsCell !== undefined || papercupsVertical !== undefined)
 		throw new Error('React Papercups evidence is claimed outside its transaction state');
+	const hospitalrunCell = cells.get(REACT_HOSPITALRUN_FIXTURE);
+	const hospitalrunVertical = emittedConformance.verticals.find(
+		(value) => asRecord(value, 'corpus vertical').id === REACT_HOSPITALRUN_FIXTURE,
+	);
+	if (hospitalrunIntegrated) {
+		const row = asRecord(hospitalrunVertical, 'React HospitalRun conformance vertical');
+		const hospitalrunApplication = emittedConformance.applications.find(
+			(value) => asRecord(value, 'corpus application').id === row.application,
+		);
+		if (
+			hospitalrunCell === undefined ||
+			hospitalrunApplication === undefined ||
+			canonicalize(
+				asRecord(hospitalrunApplication, 'React HospitalRun application').verticals,
+			) !== canonicalize([REACT_HOSPITALRUN_FIXTURE]) ||
+			hospitalrunCell.state !== 'verified' ||
+			hospitalrunCell.scope !== 'fixture-specific-create-react-app-to-vite8' ||
+			hospitalrunCell.genericReactSupport !== 'not-claimed' ||
+			hospitalrunCell.framework !== row.framework ||
+			hospitalrunCell.designatedPilot !== row.designatedPilot ||
+			hospitalrunCell.runtime !== row.runtime ||
+			hospitalrunCell.bundler !== row.bundler ||
+			hospitalrunCell.track !== row.track ||
+			hospitalrunCell.browserProof !== row.browserProof ||
+			hospitalrunCell.serviceWorker !== row.serviceWorker ||
+			hospitalrunCell.serviceWorkerDifference !== row.serviceWorkerDifference ||
+			hospitalrunCell.serviceWorkerDifferenceMasked !== row.serviceWorkerDifferenceMasked ||
+			row.serviceWorkerDifferenceMasked !== false ||
+			hospitalrunCell.scrollSurface !== row.scrollSurface ||
+			hospitalrunCell.productionReadiness !== row.productionReadiness ||
+			canonicalize(hospitalrunCell.locality) !== canonicalize(row.locality) ||
+			canonicalize(hospitalrunCell.readinessScoreboard) !==
+				canonicalize(row.readinessScoreboard) ||
+			canonicalize(row.readinessScoreboard) !==
+				canonicalize({
+					reactLineage: { ready: 1, total: 4, counted: false },
+					overall: { ready: 3, total: 12 },
+				})
+		)
+			throw new Error('React HospitalRun matrix cell is not derived from corpus conformance');
+	} else if (hospitalrunCell !== undefined || hospitalrunVertical !== undefined)
+		throw new Error('React HospitalRun evidence is claimed outside its transaction state');
 	const phonecat = cells.get('angular-phonecat');
 	if (
 		phonecat?.framework !== 'angularjs' ||
@@ -791,7 +850,16 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 			: report.includes('Angular-lineage production readiness: **1/4**')) ||
 		(papercupsIntegrated
 			? !report.includes('Papercups v1.0.0 create-react-app→Vite 8 direct-Witness browser proof')
-			: report.includes('Papercups v1.0.0 create-react-app→Vite 8 direct-Witness browser proof'))
+			: report.includes(
+					'Papercups v1.0.0 create-react-app→Vite 8 direct-Witness browser proof',
+				)) ||
+		(hospitalrunIntegrated
+			? !report.includes(
+					'HospitalRun v2.0.0-alpha.7 create-react-app→Vite 8 direct-Witness browser proof',
+				)
+			: report.includes(
+					'HospitalRun v2.0.0-alpha.7 create-react-app→Vite 8 direct-Witness browser proof',
+				))
 	)
 		throw new Error('Derived Markdown does not match canonical transaction state');
 	if (options.compareDir) {

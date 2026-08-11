@@ -171,6 +171,26 @@
       "result": "pass",
       "receipt": "evidence/runs/witness-react-papercups/receipt.json",
       "digest": "abd33d566ecef3ce4b24470c3105320520a712db19351f74b6c887b63227f267"
+    },
+    {
+      "id": "react-hospitalrun",
+      "framework": "react",
+      "track": "create-react-app-3.4.4-to-vite8-build-and-boot",
+      "bundler": "webpack-4.42.0-to-vite-8.0.16",
+      "runtime": "node-12.14.1-to-node-24.15.0",
+      "result": "pass",
+      "receipt": "evidence/runs/react-hospitalrun/t004-run.json",
+      "digest": "1fa0278923101efe6af370a44d0ef90e3309ac4c7a823fad448eb196cca37cd8"
+    },
+    {
+      "id": "witness-react-hospitalrun",
+      "framework": "react",
+      "track": "production-readiness-direct-witness-create-react-app-to-vite8",
+      "bundler": "webpack-4.42.0-to-vite-8.0.16",
+      "runtime": "node-12.14.1-to-node-24.15.0",
+      "result": "pass",
+      "receipt": "evidence/runs/witness-react-hospitalrun/receipt.json",
+      "digest": "275e435c8518f8978782e6c555ad8c4dd0d6e5401e2ef1acef8856f596648aaa"
     }
   ],
   "unsupported": []

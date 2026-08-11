@@ -15,6 +15,10 @@ import {
 	witnessReactPapercupsDigest,
 	type WitnessReactPapercupsReceipt,
 } from '../src/receipts/witness-react-papercups.ts';
+import {
+	REACT_HOSPITALRUN_RECEIPT_PATH,
+	WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
+} from '../src/receipts/witness-react-hospitalrun.ts';
 
 const root = path.resolve(import.meta.dirname, '../../..');
 
@@ -173,17 +177,35 @@ describe('Papercups corpus transaction state', () => {
 	}
 
 	/**
-	 * The published aggregate now carries the Papercups pair, so the append
-	 * itself is replayed against a staged pre-append copy of the exact live
-	 * membership rather than against a loosened expectation.
+	 * The published aggregate now carries the Papercups pair with the
+	 * HospitalRun pair appended on top of it, so the append itself is replayed
+	 * against a staged pre-append copy of the exact live membership rather than
+	 * against a loosened expectation.
 	 */
 	async function preAppendFixtures(): Promise<Array<Record<string, unknown>>> {
 		const fixtures = (await aggregateFixtures()).filter(
 			(fixture) =>
 				fixture.receipt !== REACT_PAPERCUPS_RECEIPT_PATH &&
-				fixture.receipt !== WITNESS_REACT_PAPERCUPS_RECEIPT_PATH,
+				fixture.receipt !== WITNESS_REACT_PAPERCUPS_RECEIPT_PATH &&
+				fixture.receipt !== REACT_HOSPITALRUN_RECEIPT_PATH &&
+				fixture.receipt !== WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
 		);
 		expect(fixtures).toHaveLength(16);
+		return fixtures;
+	}
+
+	/**
+	 * The published aggregate with only the HospitalRun successor rolled back,
+	 * which is the exact membership the Papercups browser-proof state is
+	 * defined over.
+	 */
+	async function papercupsStateFixtures(): Promise<Array<Record<string, unknown>>> {
+		const fixtures = (await aggregateFixtures()).filter(
+			(fixture) =>
+				fixture.receipt !== REACT_HOSPITALRUN_RECEIPT_PATH &&
+				fixture.receipt !== WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
+		);
+		expect(fixtures).toHaveLength(18);
 		return fixtures;
 	}
 
@@ -191,8 +213,13 @@ describe('Papercups corpus transaction state', () => {
 
 	it('derives the exact composition from the published aggregate', async () => {
 		const receipt = await published();
-		const fixtures = await aggregateFixtures();
-		expect(fixtures).toHaveLength(18);
+		const published20 = await aggregateFixtures();
+		expect(published20).toHaveLength(20);
+		expect(published20.slice(-4, -2)).toEqual([
+			migrationMember,
+			witnessReactPapercupsAggregateMember(receipt.integrity.canonicalDigest),
+		]);
+		const fixtures = await papercupsStateFixtures();
 		expect(fixtures.slice(-2)).toEqual([
 			migrationMember,
 			witnessReactPapercupsAggregateMember(receipt.integrity.canonicalDigest),

@@ -125,7 +125,11 @@ function assertAggregate(value: unknown, requireIntegrated: boolean): Record<str
 	const fixtures = aggregate.fixtures.map((item) => record(item, 'aggregate member'));
 	try {
 		const kind = deriveCorpusTransactionState(fixtures).kind;
-		if (kind === 'react-zero-sw-reconciliation' || kind === 'react-papercups-browser-proof')
+		if (
+			kind === 'react-zero-sw-reconciliation' ||
+			kind === 'react-papercups-browser-proof' ||
+			kind === 'react-hospitalrun-browser-proof'
+		)
 			return aggregate;
 	} catch {
 		// Fall through to the legacy member-specific conflict diagnostics below.

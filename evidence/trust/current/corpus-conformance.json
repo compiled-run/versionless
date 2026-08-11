@@ -1,8 +1,8 @@
 {
   "schemaVersion": "versionless.corpus-conformance.v1",
   "summary": {
-    "verticals": 12,
-    "sourceApplications": 5,
+    "verticals": 13,
+    "sourceApplications": 6,
     "designatedPilotsVerified": 0
   },
   "verticals": [
@@ -686,6 +686,48 @@
         }
       },
       "designatedPilot": false
+    },
+    {
+      "id": "react-hospitalrun",
+      "application": "react-hospitalrun",
+      "framework": "react",
+      "receiptPath": "evidence/runs/witness-react-hospitalrun/receipt.json",
+      "receiptDigest": "275e435c8518f8978782e6c555ad8c4dd0d6e5401e2ef1acef8856f596648aaa",
+      "canonicalReceipt": {
+        "path": "evidence/runs/react-hospitalrun/t004-run.json",
+        "canonicalDigest": "1fa0278923101efe6af370a44d0ef90e3309ac4c7a823fad448eb196cca37cd8",
+        "sha256": "abd2cb8532cf06d174d0f4b09130a098ac559abe5a88d1f53967471c05b09313"
+      },
+      "runtime": "node-12.14.1-to-node-24.15.0",
+      "bundler": "webpack-4.42.0-to-vite-8.0.16",
+      "track": "production-readiness-direct-witness-create-react-app-to-vite8",
+      "migrationTrack": "create-react-app-3.4.4-to-vite8-build-and-boot",
+      "locality": {
+        "mode": "offline",
+        "scope": "process-scoped",
+        "osWideIsolation": false,
+        "successfulNonLoopback": 0
+      },
+      "browserProof": "verified-direct-witness",
+      "browserRuns": 4,
+      "behaviorDigest": "bb87c861e83fe5cdce99ba3c2ea6ef0523a66f4c1a75d8d8be0f10411c7b6fed",
+      "serviceWorker": "application-register-refused-by-context",
+      "serviceWorkerDifference": "recorded-behavioral-migration-difference",
+      "serviceWorkerDifferenceMasked": false,
+      "scrollSurface": "measured-genuine-viewport-scroll",
+      "productionReadiness": "verified-direct-witness",
+      "readinessScoreboard": {
+        "overall": {
+          "ready": 3,
+          "total": 12
+        },
+        "reactLineage": {
+          "counted": false,
+          "ready": 1,
+          "total": 4
+        }
+      },
+      "designatedPilot": false
     }
   ],
   "applications": [
@@ -886,6 +928,54 @@
         "scrollSurface": "omitted-not-meaningful",
         "locality": "process-scoped-not-os-wide"
       }
+    },
+    {
+      "id": "react-hospitalrun",
+      "source": {
+        "repository": "https://github.com/HospitalRun/hospitalrun-frontend",
+        "ref": "refs/tags/v2.0.0-alpha.7",
+        "revision": "8156955145551d0366df10faa28e724f3377dea1",
+        "archiveSha256": "c9d07e8ee7ffaa174dff597dcecbd00c8eb0b6d525bb7a3f9a7d48e6a46ec306",
+        "frontendRoot": ".",
+        "license": "MIT",
+        "licenseSha256": "460148c79f31dd2a352b401068e0ae512a807cf643edac512eb22cf3342027a3"
+      },
+      "verticals": [
+        "react-hospitalrun"
+      ],
+      "conformance": {
+        "browserProof": "direct-witness-verified",
+        "runs": 4,
+        "behaviorDigest": "bb87c861e83fe5cdce99ba3c2ea6ef0523a66f4c1a75d8d8be0f10411c7b6fed",
+        "mutation": "pass",
+        "mutationRestoration": "byte-identical",
+        "serviceWorker": "application-register-refused-by-context",
+        "serviceWorkerDifference": "recorded-behavioral-migration-difference",
+        "serviceWorkerDifferenceMasked": false,
+        "persistence": {
+          "store": "browser-local-pouchdb",
+          "stubbed": false,
+          "survivesOnlineReload": true
+        },
+        "readinessScoreboard": {
+          "overall": {
+            "ready": 3,
+            "total": 12
+          },
+          "reactLineage": {
+            "counted": false,
+            "ready": 1,
+            "total": 4
+          }
+        }
+      },
+      "boundaries": {
+        "track": "production-readiness-direct-witness-create-react-app-to-vite8",
+        "designatedPilot": false,
+        "genericReactSupport": "not-claimed",
+        "scrollSurface": "measured-genuine-viewport-scroll",
+        "locality": "process-scoped-not-os-wide"
+      }
     }
   ],
   "frameworkLanes": [
@@ -974,6 +1064,6 @@
   },
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "10d80fb8cea3df89620d38daa3e738f9df508567970b881332e8e0ca41484f44"
+    "canonicalDigest": "82dd60812ccec129f7a858d146ba2a79a652b0a94615af9d69106fbdb4aaf974"
   }
 }

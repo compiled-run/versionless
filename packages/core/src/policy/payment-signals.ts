@@ -203,7 +203,10 @@ type EvidenceContext =
 	| 't124-official-tree'
 	| 't124-official-tree-row'
 	| 't138-official-tree'
-	| 't138-official-tree-row';
+	| 't138-official-tree-row'
+	| 'corpus-conformance-applications'
+	| 'corpus-conformance-application'
+	| 'corpus-conformance-application-source';
 
 const runtimeObservationSchema = 'versionless.runtime-script-observation.v1';
 const runtimeObservationRootKeys = new Set([
@@ -256,6 +259,21 @@ const t138ImmutableFixtureRootKeys = new Set([
 	'localityBoundaries',
 	'nonclaims',
 ]);
+const corpusConformanceSchema = 'versionless.corpus-conformance.v1';
+const corpusConformanceRootKeys = new Set([
+	'schemaVersion',
+	'summary',
+	'verticals',
+	'applications',
+	'frameworkLanes',
+	'coverage',
+	'integrity',
+]);
+/**
+ * The revision-context keys derived corpus provenance actually publishes on a
+ * source application. Nothing outside this closed list admits an object id.
+ */
+const corpusProvenanceRevisionKeys = new Set(['revision', 'parentRevision', 'targetRevision']);
 const t124Repository = 'codyogden/killedbygoogle';
 const t124Commit = '56809c31592e6ca1edce8af9bfe842fbcdf71f4d';
 const t124Tree = 'b8ac7b4fc3a1e12240f1848f6e8d98c1c7d80763';
@@ -443,6 +461,17 @@ function isRuntimeObservationDocument(value: Record<string, unknown>): boolean {
 	);
 }
 
+function isCorpusConformanceDocument(value: Record<string, unknown>): boolean {
+	const keys = Object.keys(value);
+	return (
+		value.schemaVersion === corpusConformanceSchema &&
+		Array.isArray(value.applications) &&
+		Array.isArray(value.verticals) &&
+		keys.length === corpusConformanceRootKeys.size &&
+		keys.every((key) => corpusConformanceRootKeys.has(key))
+	);
+}
+
 function childContext(
 	context: EvidenceContext,
 	key: string,
@@ -450,6 +479,7 @@ function childContext(
 	rootIsRuntimeObservation: boolean,
 	rootIsT124Provenance: boolean,
 	rootIsT138Provenance: boolean,
+	rootIsCorpusConformance: boolean,
 ): EvidenceContext {
 	if (rootIsCycloneDx17 && key === 'components') return 'cyclonedx-components';
 	if (context === 'cyclonedx-component' && key === 'hashes') return 'cyclonedx-hashes';
@@ -460,6 +490,9 @@ function childContext(
 		return 'runtime-journey-projection';
 	if (rootIsT124Provenance && key === 'officialTree') return 't124-official-tree';
 	if (rootIsT138Provenance && key === 'officialTree') return 't138-official-tree';
+	if (rootIsCorpusConformance && key === 'applications') return 'corpus-conformance-applications';
+	if (context === 'corpus-conformance-application' && key === 'source')
+		return 'corpus-conformance-application-source';
 	return 'ordinary';
 }
 
@@ -471,6 +504,7 @@ function arrayItemContext(context: EvidenceContext): EvidenceContext {
 	if (context === 'runtime-runs') return 'runtime-run';
 	if (context === 't124-official-tree') return 't124-official-tree-row';
 	if (context === 't138-official-tree') return 't138-official-tree-row';
+	if (context === 'corpus-conformance-applications') return 'corpus-conformance-application';
 	return 'ordinary';
 }
 
@@ -504,6 +538,34 @@ function isT138OfficialTreeObjectId(value: string, key: string, context: Evidenc
 	return context === 't138-official-tree-row' && key === 'sha' && isLowercaseHex(value, 40, true);
 }
 
+/**
+ * Admits a source-application git object id published by derived corpus and
+ * trust provenance.
+ *
+ * A Git revision is a forty-character lowercase hex object id, and some of them
+ * — HospitalRun's `8156955145551d0366df10faa28e724f3377dea1` among them — open
+ * with a thirteen-digit run that is indistinguishable from a primary account
+ * number to the digit-run detector. The admission is deliberately as narrow as
+ * the object id itself: the value must be exactly forty lowercase hex
+ * characters including at least one letter, it must sit under one of the
+ * closed revision-context keys, and that key must sit on the `source` record of
+ * a source application inside a document whose root is exactly the derived
+ * corpus-conformance shape. A bare digit run, a wrong-length or upper-case
+ * value, an object id under any other key, and an object id in any other
+ * document all keep tripping the detector.
+ */
+function isCorpusProvenanceRevisionObjectId(
+	value: string,
+	key: string,
+	context: EvidenceContext,
+): boolean {
+	return (
+		context === 'corpus-conformance-application-source' &&
+		corpusProvenanceRevisionKeys.has(key) &&
+		isLowercaseHex(value, 40, true)
+	);
+}
+
 function collectSensitiveSignals(
 	value: unknown,
 	path: string,
@@ -522,6 +584,7 @@ function collectSensitiveSignals(
 		const rootIsT124Provenance = path === '$' && isT124ProvenanceDocument(record);
 		const rootIsT138Provenance = path === '$' && isT138ProvenanceDocument(record);
 		const rootIsT138ImmutableFixture = path === '$' && isT138ImmutableFixtureDocument(record);
+		const rootIsCorpusConformance = path === '$' && isCorpusConformanceDocument(record);
 		if (
 			path === '$' &&
 			targetsT138ProvenanceContext(record) &&
@@ -547,7 +610,8 @@ function collectSensitiveSignals(
 					isReceiptCryptographicDigest(child, childPath) ||
 					isCycloneDxSha256Content(child, key, record, context) ||
 					isT124OfficialTreeObjectId(child, key, context) ||
-					isT138OfficialTreeObjectId(child, key, context);
+					isT138OfficialTreeObjectId(child, key, context) ||
+					isCorpusProvenanceRevisionObjectId(child, key, context);
 				if (!digest && panLike.test(child))
 					findings.push({ path: childPath, kind: 'pan-like-value' });
 			} else {
@@ -562,6 +626,7 @@ function collectSensitiveSignals(
 						rootIsRuntimeObservation,
 						rootIsT124Provenance,
 						rootIsT138Provenance,
+						rootIsCorpusConformance,
 					),
 				);
 			}

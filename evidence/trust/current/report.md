@@ -1,8 +1,8 @@
 # Versionless project trust package
 
-- Canonical SHA-256: `e17814b0f454312c8cabaa7cc35a9b44d2ce7cc9755d019f3aa933dced04f4c0`
-- Deterministic core: `59f5bc2555183ebd0436962947a754af331f549af1c9adb55bb2c9fe24ca9247`
-- Generated observation: `2026-08-10T21:47:47.158Z`
+- Canonical SHA-256: `06fbc17afa787bae151ce3db0939ff3138647c570492bf0fb5422f3ef35f2cf5`
+- Deterministic core: `7714ce9771eb9e07ad95717be3ad4a2da0e5846d318b808f948e3287f327fb19`
+- Generated observation: `2026-08-11T02:47:04.355Z`
 - Vulnerability input freshness: **verified** (seven-day maximum age)
 - Integrity: **hash-only; authenticity is not established**
 - Assurance: **this package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation**
@@ -14,7 +14,7 @@
 - [Vulnerability and KEV report](vulnerabilities.json) — cached OSV batch and CISA KEV observations only.
 - [SLSA/in-toto-shaped provenance](provenance.json) — shape only; no SLSA level or signer authenticity is claimed.
 - [Supported corpus/runtime/bundler matrix](matrix.json) — unsupported and untested cells remain visible.
-- [Corpus conformance](corpus-conformance.json) — `10d80fb8cea3df89620d38daa3e738f9df508567970b881332e8e0ca41484f44`; 12 verified verticals grouped into exactly 5 source applications; zero designated pilots are verified.
+- [Corpus conformance](corpus-conformance.json) — `82dd60812ccec129f7a858d146ba2a79a652b0a94615af9d69106fbdb4aaf974`; 13 verified verticals grouped into exactly 6 source applications; zero designated pilots are verified.
 - The immutable Killed by Google Next.js 12 Pages/webpack production vertical is verified only for its exact fixture; synthetic Next.js 12 Pages, 13 transition/App, and 14 App classification lanes remain **not-tested**, and generic Next.js support is not claimed.
 - [Static script/resource surface](script-surface.json) — truthfully remains scoped to the prior nine verticals, two applications, and eighteen exact static deployment entrypoints; T220 is **not included** because its script surface was not separately observed; dynamic script insertion: **not-tested**; payment-page applicability: **not established**; PCI compliance is **not claimed**.
 - [Qualified-journey runtime script observation](runtime-script-observation.json) — truthfully remains scoped to 36 runs across the prior nine verticals, two applications, and eighteen lanes; T220 is **not included** because its runtime scripts were not separately observed; this is **not global dynamic-insertion coverage**.
@@ -23,6 +23,7 @@
 - React-lineage production readiness: **1/4; Judge approved**.
 - React Boilerplate current zero-service-worker policy reconciliation: **verified; aligned React remains 0/4 pending fresh Judge**. The original offline-first evidence remains retained.
 - Papercups v1.0.0 create-react-app→Vite 8 direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, and React-lineage readiness stays **1/4** because this vertical is explicitly **not counted**.
+- HospitalRun v2.0.0-alpha.7 create-react-app→Vite 8 direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, its baseline/migrated service-worker difference is **recorded, not masked**, and React-lineage readiness stays **1/4** because this vertical is explicitly **not counted**.
 - Older-Next direct-Witness candidate: **verified, not counted (0/4) pending final Judge audit**.
 - [Data-flow and control mappings](controls.json) — review inputs, not audit conclusions.
 - [Retention and purge status](retention.json) — unresolved policy remains unknown/not-tested.
@@ -49,6 +50,8 @@ The dependency graph is a rooted complete inventory. Exact transitive dependency
 - `evidence/runs/witness-react-boilerplate-zero-sw/receipt.json`: `dcdc57f078d9d7bdfdfd290a7f6b1abe78924581796ff3aaefa6c7e4ba38b527` (verified)
 - `evidence/runs/react-papercups-v1-0-0/t004-run.json`: `b433f214727389676b308332f7689d773ad28dde0984b9bf245f3f780f87d35a` (verified)
 - `evidence/runs/witness-react-papercups/receipt.json`: `abd33d566ecef3ce4b24470c3105320520a712db19351f74b6c887b63227f267` (verified)
+- `evidence/runs/react-hospitalrun/t004-run.json`: `1fa0278923101efe6af370a44d0ef90e3309ac4c7a823fad448eb196cca37cd8` (verified)
+- `evidence/runs/witness-react-hospitalrun/receipt.json`: `275e435c8518f8978782e6c555ad8c4dd0d6e5401e2ef1acef8856f596648aaa` (verified)
 
 ## Known gaps
 

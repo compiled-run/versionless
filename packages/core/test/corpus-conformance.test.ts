@@ -19,6 +19,13 @@ import {
 	WITNESS_REACT_PAPERCUPS_RECEIPT_PATH,
 	witnessReactPapercupsAggregateMember,
 } from '../src/receipts/witness-react-papercups.ts';
+import {
+	REACT_HOSPITALRUN_RECEIPT_PATH,
+	verifyWitnessReactHospitalrunEvidence,
+	WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
+	witnessReactHospitalrunAggregateMember,
+} from '../src/receipts/witness-react-hospitalrun.ts';
+import { reactHospitalrunAggregateMember } from '../src/corpus/conformance.ts';
 import { receiptDigest, sha256 } from '../src/receipts/canonicalize.ts';
 import { renderReceipt } from '../src/receipts/render.ts';
 import type { MigrationReceipt } from '../src/receipts/schema.ts';
@@ -56,7 +63,9 @@ function prepublicationFixtures(fixtures: Array<Record<string, unknown>>) {
 			fixture.id !== 'react-boilerplate-v4-zero-sw' &&
 			fixture.id !== 'witness-react-boilerplate-zero-sw' &&
 			fixture.id !== 'react-papercups-v1-0-0' &&
-			fixture.id !== 'witness-react-papercups',
+			fixture.id !== 'witness-react-papercups' &&
+			fixture.id !== 'react-hospitalrun' &&
+			fixture.id !== 'witness-react-hospitalrun',
 	);
 }
 
@@ -160,16 +169,16 @@ async function rebindPhonecatViteArtifact(
 }
 
 describe('canonical corpus conformance', () => {
-	it('derives the canonical twelve verticals as five narrowly scoped source applications', async () => {
+	it('derives the canonical thirteen verticals as six narrowly scoped source applications', async () => {
 		const result = await analyzeCorpusConformance({ rootDir: root });
 		expect(verifyCorpusConformanceDigest(result)).toBe(result.integrity.canonicalDigest);
 		expect(result.summary).toEqual({
-			verticals: 12,
-			sourceApplications: 5,
+			verticals: 13,
+			sourceApplications: 6,
 			designatedPilotsVerified: 0,
 		});
-		expect(result.verticals).toHaveLength(12);
-		expect(result.applications).toHaveLength(5);
+		expect(result.verticals).toHaveLength(13);
+		expect(result.applications).toHaveLength(6);
 		expect(result.applications[0]).toMatchObject({
 			id: 'react-boilerplate',
 			boundaries: {
@@ -285,7 +294,7 @@ describe('canonical corpus conformance', () => {
 			reactPapercupsAggregateMember(verified.receipt.canonicalReceipt.canonicalDigest),
 		);
 		expect(witnessMember).toEqual(witnessReactPapercupsAggregateMember(verified.digest));
-		expect(result.verticals.at(-1)).toEqual({
+		expect(result.verticals.at(-2)).toEqual({
 			id: 'react-papercups-v1-0-0',
 			application: 'papercups',
 			framework: 'react',
@@ -315,7 +324,7 @@ describe('canonical corpus conformance', () => {
 			readinessScoreboard: { reactLineage: { ready: 1, total: 4, counted: false }, overall: { ready: 3, total: 12 } },
 			designatedPilot: false,
 		});
-		expect(result.applications.at(-1)).toEqual({
+		expect(result.applications.at(-2)).toEqual({
 			id: 'papercups',
 			source: {
 				repository: 'https://github.com/papercups-io/papercups',
@@ -352,6 +361,122 @@ describe('canonical corpus conformance', () => {
 				reactLineage: { ready: 1, total: 4, counted: true, candidate: 'judge-approved' },
 			}),
 		});
+	});
+
+	it('emits the HospitalRun vertical and source application derived from its receipts', async () => {
+		const result = await analyzeCorpusConformance({ rootDir: root });
+		const verified = await verifyWitnessReactHospitalrunEvidence(root);
+		const aggregate = JSON.parse(
+			await readFile(path.join(root, 'evidence/runs/aggregate.json'), 'utf8'),
+		) as { fixtures: Array<Record<string, unknown>> };
+		const migrationMember = aggregate.fixtures.find(
+			(item) => item.receipt === REACT_HOSPITALRUN_RECEIPT_PATH,
+		);
+		const witnessMember = aggregate.fixtures.find(
+			(item) => item.receipt === WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
+		);
+		expect(migrationMember).toEqual(
+			reactHospitalrunAggregateMember(verified.receipt.canonicalReceipt.canonicalDigest),
+		);
+		expect(witnessMember).toEqual(witnessReactHospitalrunAggregateMember(verified.digest));
+		expect(result.verticals.at(-1)).toEqual({
+			id: 'react-hospitalrun',
+			application: 'react-hospitalrun',
+			framework: 'react',
+			receiptPath: WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
+			receiptDigest: verified.digest,
+			canonicalReceipt: {
+				path: REACT_HOSPITALRUN_RECEIPT_PATH,
+				canonicalDigest: verified.receipt.canonicalReceipt.canonicalDigest,
+				sha256: verified.receipt.canonicalReceipt.sha256,
+			},
+			runtime: 'node-12.14.1-to-node-24.15.0',
+			bundler: 'webpack-4.42.0-to-vite-8.0.16',
+			track: 'production-readiness-direct-witness-create-react-app-to-vite8',
+			migrationTrack: 'create-react-app-3.4.4-to-vite8-build-and-boot',
+			locality: {
+				mode: 'offline',
+				scope: 'process-scoped',
+				osWideIsolation: false,
+				successfulNonLoopback: 0,
+			},
+			browserProof: 'verified-direct-witness',
+			browserRuns: 4,
+			behaviorDigest: verified.receipt.runs[0]!.behaviorDigest,
+			serviceWorker: 'application-register-refused-by-context',
+			serviceWorkerDifference: 'recorded-behavioral-migration-difference',
+			serviceWorkerDifferenceMasked: false,
+			scrollSurface: 'measured-genuine-viewport-scroll',
+			productionReadiness: 'verified-direct-witness',
+			readinessScoreboard: {
+				reactLineage: { ready: 1, total: 4, counted: false },
+				overall: { ready: 3, total: 12 },
+			},
+			designatedPilot: false,
+		});
+		expect(result.applications.at(-1)).toEqual({
+			id: 'react-hospitalrun',
+			source: {
+				repository: 'https://github.com/HospitalRun/hospitalrun-frontend',
+				ref: 'refs/tags/v2.0.0-alpha.7',
+				revision: '8156955145551d0366df10faa28e724f3377dea1',
+				archiveSha256: 'c9d07e8ee7ffaa174dff597dcecbd00c8eb0b6d525bb7a3f9a7d48e6a46ec306',
+				frontendRoot: '.',
+				license: 'MIT',
+				licenseSha256:
+					'460148c79f31dd2a352b401068e0ae512a807cf643edac512eb22cf3342027a3',
+			},
+			verticals: ['react-hospitalrun'],
+			conformance: {
+				browserProof: 'direct-witness-verified',
+				runs: 4,
+				behaviorDigest: verified.receipt.runs[0]!.behaviorDigest,
+				mutation: 'pass',
+				mutationRestoration: 'byte-identical',
+				serviceWorker: 'application-register-refused-by-context',
+				serviceWorkerDifference: 'recorded-behavioral-migration-difference',
+				serviceWorkerDifferenceMasked: false,
+				persistence: {
+					store: 'browser-local-pouchdb',
+					stubbed: false,
+					survivesOnlineReload: true,
+				},
+				readinessScoreboard: {
+					reactLineage: { ready: 1, total: 4, counted: false },
+					overall: { ready: 3, total: 12 },
+				},
+			},
+			boundaries: {
+				track: 'production-readiness-direct-witness-create-react-app-to-vite8',
+				designatedPilot: false,
+				genericReactSupport: 'not-claimed',
+				scrollSurface: 'measured-genuine-viewport-scroll',
+				locality: 'process-scoped-not-os-wide',
+			},
+		});
+		expect(result.coverage).toMatchObject({
+			productionReadiness: expect.objectContaining({
+				reactLineage: { ready: 1, total: 4, counted: true, candidate: 'judge-approved' },
+			}),
+		});
+	});
+
+	it('refuses a HospitalRun aggregate digest that does not match its receipt', async () => {
+		const directory = await corpusCopy('hospitalrun-digest-rebind');
+		try {
+			await mutateJson(directory, 'evidence/runs/aggregate.json', (value) => {
+				const fixture = (value.fixtures as Array<Record<string, unknown>>).find(
+					(item) => item.receipt === WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
+				);
+				if (!fixture) throw new Error('HospitalRun witness member missing');
+				fixture.digest = '0'.repeat(64);
+			});
+			await expect(analyzeCorpusConformance({ rootDir: directory })).rejects.toThrow(
+				/HospitalRun/,
+			);
+		} finally {
+			await rm(directory, { recursive: true, force: true });
+		}
 	});
 
 	it('refuses a Papercups aggregate digest that does not match its receipt', async () => {

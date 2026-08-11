@@ -3,14 +3,9 @@ import { copyFile, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promi
 import os from 'node:os';
 import * as path from 'pathe';
 import {
-	appendReactPapercupsAggregateMembers,
-	reactPapercupsAggregateMembers,
-} from '../src/fixture/react-papercups-aggregate-append.ts';
-import {
-	REACT_PAPERCUPS_CANONICAL_DIGEST,
-	REACT_PAPERCUPS_RECEIPT_PATH,
-	WITNESS_REACT_PAPERCUPS_RECEIPT_PATH,
-} from '../../core/src/receipts/witness-react-papercups.ts';
+	appendReactHospitalrunAggregateMembers,
+	reactHospitalrunAggregateMembers,
+} from '../src/fixture/react-hospitalrun-aggregate-append.ts';
 import {
 	REACT_HOSPITALRUN_RECEIPT_PATH,
 	WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
@@ -20,20 +15,20 @@ import { deriveCorpusTransactionState } from '../../core/src/corpus/conformance.
 const repositoryRoot = path.resolve(import.meta.dirname, '../../..');
 
 const evidenceFiles = [
-	REACT_PAPERCUPS_RECEIPT_PATH,
-	WITNESS_REACT_PAPERCUPS_RECEIPT_PATH,
-	`${path.dirname(WITNESS_REACT_PAPERCUPS_RECEIPT_PATH)}/receipt.md`,
+	REACT_HOSPITALRUN_RECEIPT_PATH,
+	WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
+	`${path.dirname(WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH)}/receipt.md`,
 	'evidence/runs/aggregate.json',
 ];
 
 /**
  * Stages the exact published evidence with the aggregate rolled back to its
  * pre-append membership, so the append transaction itself is still replayed
- * against its real predecessor now that the published aggregate carries the
- * Papercups pair and the HospitalRun pair appended on top of it.
+ * against its real Papercups browser-proof predecessor now that the published
+ * aggregate already carries the HospitalRun pair.
  */
 async function stagedRoot(): Promise<string> {
-	const directory = await mkdtemp(path.join(os.tmpdir(), 'papercups-aggregate-'));
+	const directory = await mkdtemp(path.join(os.tmpdir(), 'hospitalrun-aggregate-'));
 	for (const relative of evidenceFiles) {
 		const destination = path.join(directory, relative);
 		await mkdir(path.dirname(destination), { recursive: true });
@@ -42,13 +37,11 @@ async function stagedRoot(): Promise<string> {
 	await rewrite(directory, (members) =>
 		members.filter(
 			(member) =>
-				member.receipt !== REACT_PAPERCUPS_RECEIPT_PATH &&
-				member.receipt !== WITNESS_REACT_PAPERCUPS_RECEIPT_PATH &&
 				member.receipt !== REACT_HOSPITALRUN_RECEIPT_PATH &&
 				member.receipt !== WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
 		),
 	);
-	expect(await fixtures(directory)).toHaveLength(16);
+	expect(await fixtures(directory)).toHaveLength(18);
 	return directory;
 }
 
@@ -73,22 +66,23 @@ async function rewrite(
 	);
 }
 
-describe('React Papercups aggregate append', () => {
+describe('React HospitalRun aggregate append', () => {
 	it('derives both members from the published evidence rather than authored rows', async () => {
-		const members = await reactPapercupsAggregateMembers(repositoryRoot);
+		const members = await reactHospitalrunAggregateMembers(repositoryRoot);
 		expect(members.migration).toMatchObject({
-			id: 'react-papercups-v1-0-0',
+			id: 'react-hospitalrun',
 			framework: 'react',
 			result: 'pass',
-			receipt: REACT_PAPERCUPS_RECEIPT_PATH,
-			digest: REACT_PAPERCUPS_CANONICAL_DIGEST,
+			receipt: REACT_HOSPITALRUN_RECEIPT_PATH,
+			track: 'create-react-app-3.4.4-to-vite8-build-and-boot',
 		});
 		expect(members.witness).toMatchObject({
-			id: 'witness-react-papercups',
+			id: 'witness-react-hospitalrun',
 			framework: 'react',
 			result: 'pass',
-			receipt: WITNESS_REACT_PAPERCUPS_RECEIPT_PATH,
+			receipt: WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
 		});
+		expect(members.migration.digest).toMatch(/^[0-9a-f]{64}$/);
 		expect(members.witness.digest).toMatch(/^[0-9a-f]{64}$/);
 		expect(members.witness.digest).not.toBe(members.migration.digest);
 	});
@@ -100,13 +94,11 @@ describe('React Papercups aggregate append', () => {
 		);
 		const parsed = JSON.parse(published) as { fixtures: Array<Record<string, unknown>> };
 		expect(parsed.fixtures).toHaveLength(20);
-		expect(parsed.fixtures.slice(-4).map((member) => member.receipt)).toEqual([
-			REACT_PAPERCUPS_RECEIPT_PATH,
-			WITNESS_REACT_PAPERCUPS_RECEIPT_PATH,
+		expect(parsed.fixtures.slice(-2).map((member) => member.receipt)).toEqual([
 			REACT_HOSPITALRUN_RECEIPT_PATH,
 			WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
 		]);
-		await expect(appendReactPapercupsAggregateMembers(repositoryRoot)).resolves.toEqual({
+		await expect(appendReactHospitalrunAggregateMembers(repositoryRoot)).resolves.toEqual({
 			kind: 'react-hospitalrun-browser-proof',
 			receipts: 20,
 			appended: false,
@@ -120,48 +112,48 @@ describe('React Papercups aggregate append', () => {
 		const directory = await stagedRoot();
 		try {
 			expect(deriveCorpusTransactionState(await fixtures(directory)).kind).toBe(
-				'react-zero-sw-reconciliation',
+				'react-papercups-browser-proof',
 			);
-			const result = await appendReactPapercupsAggregateMembers(directory);
+			const result = await appendReactHospitalrunAggregateMembers(directory);
 			expect(result).toEqual({
-				kind: 'react-papercups-browser-proof',
-				receipts: 18,
+				kind: 'react-hospitalrun-browser-proof',
+				receipts: 20,
 				appended: true,
 			});
 			const appended = await fixtures(directory);
-			expect(appended).toHaveLength(18);
+			expect(appended).toHaveLength(20);
 			expect(appended.slice(-2).map((member) => member.receipt)).toEqual([
-				REACT_PAPERCUPS_RECEIPT_PATH,
-				WITNESS_REACT_PAPERCUPS_RECEIPT_PATH,
+				REACT_HOSPITALRUN_RECEIPT_PATH,
+				WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
 			]);
 			expect(deriveCorpusTransactionState(appended)).toMatchObject({
-				kind: 'react-papercups-browser-proof',
-				verticals: 12,
-				sourceApplications: 5,
-				receipts: 18,
+				kind: 'react-hospitalrun-browser-proof',
+				verticals: 13,
+				sourceApplications: 6,
+				receipts: 20,
 			});
-			await expect(appendReactPapercupsAggregateMembers(directory)).resolves.toEqual({
-				kind: 'react-papercups-browser-proof',
-				receipts: 18,
+			await expect(appendReactHospitalrunAggregateMembers(directory)).resolves.toEqual({
+				kind: 'react-hospitalrun-browser-proof',
+				receipts: 20,
 				appended: false,
 			});
-			expect(await fixtures(directory)).toHaveLength(18);
+			expect(await fixtures(directory)).toHaveLength(20);
 		} finally {
 			await rm(directory, { recursive: true, force: true });
 		}
 	});
 
-	it('refuses a predecessor that is not the zero-service-worker state', async () => {
+	it('refuses a predecessor that is not the Papercups browser proof', async () => {
 		const directory = await stagedRoot();
 		try {
 			await rewrite(directory, (members) => members.slice(0, -2));
 			expect(deriveCorpusTransactionState(await fixtures(directory)).kind).toBe(
-				'next-candidate',
+				'react-zero-sw-reconciliation',
 			);
-			await expect(appendReactPapercupsAggregateMembers(directory)).rejects.toThrow(
-				/zero-service-worker predecessor/,
+			await expect(appendReactHospitalrunAggregateMembers(directory)).rejects.toThrow(
+				/Papercups browser-proof predecessor/,
 			);
-			expect(await fixtures(directory)).toHaveLength(14);
+			expect(await fixtures(directory)).toHaveLength(16);
 		} finally {
 			await rm(directory, { recursive: true, force: true });
 		}
@@ -170,12 +162,12 @@ describe('React Papercups aggregate append', () => {
 	it('refuses a half-appended aggregate', async () => {
 		const directory = await stagedRoot();
 		try {
-			const members = await reactPapercupsAggregateMembers(directory);
+			const members = await reactHospitalrunAggregateMembers(directory);
 			await rewrite(directory, (current) => [...current, members.migration]);
-			await expect(appendReactPapercupsAggregateMembers(directory)).rejects.toThrow(
+			await expect(appendReactHospitalrunAggregateMembers(directory)).rejects.toThrow(
 				/partially appended/,
 			);
-			expect(await fixtures(directory)).toHaveLength(17);
+			expect(await fixtures(directory)).toHaveLength(19);
 		} finally {
 			await rm(directory, { recursive: true, force: true });
 		}

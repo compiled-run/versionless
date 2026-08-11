@@ -633,7 +633,9 @@ snapshots:
 				item.id !== 'react-boilerplate-v4-zero-sw' &&
 				item.id !== 'witness-react-boilerplate-zero-sw' &&
 				item.id !== 'react-papercups-v1-0-0' &&
-				item.id !== 'witness-react-papercups',
+				item.id !== 'witness-react-papercups' &&
+				item.id !== 'react-hospitalrun' &&
+				item.id !== 'witness-react-hospitalrun',
 		);
 		const avataaarsTransaction = deriveCorpusTransactionState([
 			...withoutAvataaars,
@@ -941,8 +943,8 @@ snapshots:
 				integrity: { canonicalDigest: string };
 			};
 			expect(conformance.summary).toEqual({
-				verticals: 12,
-				sourceApplications: 5,
+				verticals: 13,
+				sourceApplications: 6,
 				designatedPilotsVerified: 0,
 			});
 			expect(conformance.frameworkLanes).toHaveLength(3);

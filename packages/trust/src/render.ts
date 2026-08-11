@@ -56,6 +56,9 @@ export function renderTrustReport(inputs: RenderInputs): string {
 	const reactPapercupsWitnessVerified = inputs.manifest.receipts.some(
 		(item) => item.path === 'evidence/runs/witness-react-papercups/receipt.json',
 	);
+	const reactHospitalrunWitnessVerified = inputs.manifest.receipts.some(
+		(item) => item.path === 'evidence/runs/witness-react-hospitalrun/receipt.json',
+	);
 	const nextKilledByGoogleWitnessVerified = inputs.manifest.receipts.some(
 		(item) => item.path === 'evidence/runs/witness-next-killedbygoogle/receipt.json',
 	);
@@ -93,6 +96,7 @@ ${angularRealworldWitnessVerified ? '- Angular-lineage production readiness: **1
 ${reactBoilerplateWitnessVerified ? '- React-lineage production readiness: **1/4; Judge approved**.' : '- React-lineage production readiness: **0/4; not-tested**.'}
 ${reactBoilerplateZeroSwVerified ? '- React Boilerplate current zero-service-worker policy reconciliation: **verified; aligned React remains 0/4 pending fresh Judge**. The original offline-first evidence remains retained.' : '- React Boilerplate current zero-service-worker policy reconciliation: **not-tested**.'}
 ${reactPapercupsWitnessVerified ? '- Papercups v1.0.0 create-react-app→Vite 8 direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, and React-lineage readiness stays **1/4** because this vertical is explicitly **not counted**.' : '- Papercups create-react-app direct-Witness browser proof: **not-tested**.'}
+${reactHospitalrunWitnessVerified ? '- HospitalRun v2.0.0-alpha.7 create-react-app→Vite 8 direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, its baseline/migrated service-worker difference is **recorded, not masked**, and React-lineage readiness stays **1/4** because this vertical is explicitly **not counted**.' : '- HospitalRun create-react-app direct-Witness browser proof: **not-tested**.'}
 ${nextKilledByGoogleWitnessVerified ? '- Older-Next direct-Witness candidate: **verified, not counted (0/4) pending final Judge audit**.' : '- Older-Next production readiness: **0/4; not-tested**.'}
 - [Data-flow and control mappings](controls.json) — review inputs, not audit conclusions.
 - [Retention and purge status](retention.json) — unresolved policy remains unknown/not-tested.

@@ -647,4 +647,99 @@ describe('synthetic evidence policy', () => {
 			});
 		}
 	});
+
+	/**
+	 * HospitalRun's immutable revision opens with a thirteen-digit run, which is
+	 * exactly what the primary-account-number detector looks for. Derived corpus
+	 * provenance has to publish the revision verbatim, so the admission is
+	 * pinned here from both sides: the exact published object id is accepted in
+	 * its exact published position, and every neighbouring shape still trips.
+	 */
+	describe('derived corpus provenance revision object IDs', () => {
+		const hospitalrunRevision = '8156955145551d0366df10faa28e724f3377dea1';
+		const hospitalrunDigitRun = '8156955145551';
+		const conformance = (source: Record<string, unknown>) => ({
+			schemaVersion: 'versionless.corpus-conformance.v1',
+			summary: { verticals: 13, sourceApplications: 6, designatedPilotsVerified: 0 },
+			verticals: [{ id: 'react-hospitalrun', designatedPilot: false }],
+			applications: [{ id: 'react-hospitalrun', source, verticals: ['react-hospitalrun'] }],
+			frameworkLanes: [],
+			coverage: { authenticity: 'not-established' },
+			integrity: { algorithm: 'sha256', canonicalDigest: 'a'.repeat(64) },
+		});
+
+		test('admits the exact published revision under each revision-context key', () => {
+			expect(hospitalrunRevision.startsWith(hospitalrunDigitRun)).toBe(true);
+			expect(hospitalrunDigitRun).toHaveLength(13);
+			for (const key of ['revision', 'parentRevision', 'targetRevision'])
+				expect(() =>
+					assertSyntheticEvidence(conformance({ [key]: hospitalrunRevision })),
+				).not.toThrow();
+		});
+
+		test('keeps refusing every value that is not an exact lowercase object ID', () => {
+			for (const value of [
+				hospitalrunDigitRun,
+				`${hospitalrunDigitRun} `,
+				'4111111111111111',
+				hospitalrunRevision.toUpperCase(),
+				`8156955145551D0366df10faa28e724f3377dea1`,
+				hospitalrunRevision.slice(0, 39),
+				`${hospitalrunRevision}a`,
+				'8'.repeat(40),
+				`8156955145551g0366df10faa28e724f3377dea1`,
+			])
+				expect(findSensitiveSignals(conformance({ revision: value }))).toContainEqual({
+					path: '$.applications[0].source.revision',
+					kind: 'pan-like-value',
+				});
+		});
+
+		test('keeps refusing the object ID outside a revision-context key', () => {
+			for (const key of ['commit', 'tree', 'sha', 'archiveSha256', 'revisionCopy'])
+				expect(findSensitiveSignals(conformance({ [key]: hospitalrunRevision }))).toContainEqual(
+					{ path: `$.applications[0].source.${key}`, kind: 'pan-like-value' },
+				);
+		});
+
+		test('keeps refusing the object ID outside a source application source record', () => {
+			const onApplication = conformance({});
+			(onApplication.applications[0] as Record<string, unknown>).revision =
+				hospitalrunRevision;
+			expect(findSensitiveSignals(onApplication)).toContainEqual({
+				path: '$.applications[0].revision',
+				kind: 'pan-like-value',
+			});
+			const onVertical = conformance({ revision: hospitalrunRevision });
+			(onVertical.verticals[0] as Record<string, unknown>).revision = hospitalrunRevision;
+			expect(findSensitiveSignals(onVertical)).toEqual([
+				{ path: '$.verticals[0].revision', kind: 'pan-like-value' },
+			]);
+			const nested = conformance({ nested: { revision: hospitalrunRevision } });
+			expect(findSensitiveSignals(nested)).toEqual([
+				{ path: '$.applications[0].source.nested.revision', kind: 'pan-like-value' },
+			]);
+		});
+
+		test('keeps refusing the object ID outside the exact corpus conformance document', () => {
+			for (const unsafe of [
+				{ revision: hospitalrunRevision },
+				{ applications: [{ source: { revision: hospitalrunRevision } }] },
+				{ wrapper: conformance({ revision: hospitalrunRevision }) },
+				{ ...conformance({ revision: hospitalrunRevision }), extra: 'not-tested' },
+				{
+					...conformance({ revision: hospitalrunRevision }),
+					schemaVersion: 'versionless.corpus-conformance.v2',
+				},
+				(() => {
+					const document: Record<string, unknown> = conformance({
+						revision: hospitalrunRevision,
+					});
+					delete document.coverage;
+					return document;
+				})(),
+			])
+				expect(() => assertSyntheticEvidence(unsafe)).toThrow('Sensitive material refused');
+		});
+	});
 });

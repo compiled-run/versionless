@@ -54,6 +54,12 @@ import {
 	verifyWitnessReactPapercupsEvidence,
 	WITNESS_REACT_PAPERCUPS_RECEIPT_PATH,
 } from '../../core/src/receipts/witness-react-papercups.ts';
+import {
+	REACT_HOSPITALRUN_FIXTURE,
+	REACT_HOSPITALRUN_RECEIPT_PATH,
+	verifyWitnessReactHospitalrunEvidence,
+	WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
+} from '../../core/src/receipts/witness-react-hospitalrun.ts';
 import { verifyScriptSurface } from '../../core/src/enterprise/script-surface.ts';
 import {
 	parseRuntimeObservationConfig,
@@ -114,43 +120,72 @@ export const REACT_PAPERCUPS_TRUST_RECEIPTS = 18 as const;
 export const REACT_PAPERCUPS_TRUST_MATRIX_CELLS = 17 as const;
 
 /**
- * Verifies the retained Papercups build receipt through the browser proof that
- * seals it. The build receipt is not a generic migration receipt, so it is
- * verified against the exact byte digest and canonical digest the Witness
- * receipt binds, and every artifact it references is re-hashed. Nothing here is
- * asserted from a literal: the returned digest and artifact count are measured.
+ * Exact receipt and matrix-cell counts the HospitalRun browser-proof
+ * transaction pins for itself: the eighteen Papercups-state receipts plus the
+ * retained build-and-boot receipt and its direct browser proof, and the
+ * seventeen prior matrix cells plus the HospitalRun cell. No other transaction
+ * state is affected by them.
  */
+export const REACT_HOSPITALRUN_TRUST_RECEIPTS = 20 as const;
+export const REACT_HOSPITALRUN_TRUST_MATRIX_CELLS = 18 as const;
+
+/**
+ * Verifies a retained build receipt through the browser proof that seals it.
+ * A sealed build receipt is not a generic migration receipt, so it is verified
+ * against the exact byte digest and canonical digest the Witness receipt binds,
+ * and every artifact it references is re-hashed. Nothing here is asserted from
+ * a literal: the returned digest and artifact count are measured.
+ */
+async function verifySealedBuildReceipt(
+	root: string,
+	label: string,
+	receiptPath: string,
+	sealed: { canonicalDigest: string; sha256: string },
+): Promise<{ valid: true; digest: string; artifacts: number }> {
+	const bytes = await readFile(path.join(root, receiptPath));
+	if (sha256(bytes) !== sealed.sha256) throw new Error(`${label} build receipt bytes drifted`);
+	const receipt = asRecord(JSON.parse(bytes.toString('utf8')), `${label} build receipt`);
+	const integrity = asRecord(receipt.integrity, `${label} build receipt integrity`);
+	if (
+		integrity.algorithm !== 'sha256' ||
+		integrity.canonicalDigest !== sealed.canonicalDigest
+	)
+		throw new Error(`${label} build receipt integrity differs`);
+	if (!Array.isArray(receipt.artifacts))
+		throw new Error(`${label} build receipt artifacts are absent`);
+	for (const value of receipt.artifacts) {
+		const artifact = asRecord(value, `${label} build artifact`);
+		const artifactPath = asString(artifact.path, `${label} build artifact path`);
+		if (sha256(await readFile(path.join(root, artifactPath))) !== artifact.sha256)
+			throw new Error(`${label} build artifact digest mismatch: ${artifactPath}`);
+	}
+	return { valid: true, digest: sealed.canonicalDigest, artifacts: receipt.artifacts.length };
+}
+
 export async function verifyReactPapercupsCanonicalReceipt(
 	rootDir: string,
 ): Promise<{ valid: true; digest: string; artifacts: number }> {
 	const root = path.resolve(rootDir);
 	const witness = await verifyWitnessReactPapercupsEvidence(root);
-	const bytes = await readFile(path.join(root, REACT_PAPERCUPS_RECEIPT_PATH));
-	if (sha256(bytes) !== witness.receipt.canonicalReceipt.sha256)
-		throw new Error('React Papercups build receipt bytes drifted');
-	const receipt = asRecord(
-		JSON.parse(bytes.toString('utf8')),
-		'React Papercups build receipt',
+	return verifySealedBuildReceipt(
+		root,
+		'React Papercups',
+		REACT_PAPERCUPS_RECEIPT_PATH,
+		witness.receipt.canonicalReceipt,
 	);
-	const integrity = asRecord(receipt.integrity, 'React Papercups build receipt integrity');
-	if (
-		integrity.algorithm !== 'sha256' ||
-		integrity.canonicalDigest !== witness.receipt.canonicalReceipt.canonicalDigest
-	)
-		throw new Error('React Papercups build receipt integrity differs');
-	if (!Array.isArray(receipt.artifacts))
-		throw new Error('React Papercups build receipt artifacts are absent');
-	for (const value of receipt.artifacts) {
-		const artifact = asRecord(value, 'React Papercups build artifact');
-		const artifactPath = asString(artifact.path, 'React Papercups build artifact path');
-		if (sha256(await readFile(path.join(root, artifactPath))) !== artifact.sha256)
-			throw new Error(`React Papercups build artifact digest mismatch: ${artifactPath}`);
-	}
-	return {
-		valid: true,
-		digest: witness.receipt.canonicalReceipt.canonicalDigest,
-		artifacts: receipt.artifacts.length,
-	};
+}
+
+export async function verifyReactHospitalrunCanonicalReceipt(
+	rootDir: string,
+): Promise<{ valid: true; digest: string; artifacts: number }> {
+	const root = path.resolve(rootDir);
+	const witness = await verifyWitnessReactHospitalrunEvidence(root);
+	return verifySealedBuildReceipt(
+		root,
+		'React HospitalRun',
+		REACT_HOSPITALRUN_RECEIPT_PATH,
+		witness.receipt.canonicalReceipt,
+	);
 }
 
 /**
@@ -176,6 +211,10 @@ export async function verifyTrustReceipt(
 		return verifyWitnessReactPapercupsEvidence(root);
 	if (receiptPath === REACT_PAPERCUPS_RECEIPT_PATH)
 		return verifyReactPapercupsCanonicalReceipt(root);
+	if (receiptPath === WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH)
+		return verifyWitnessReactHospitalrunEvidence(root);
+	if (receiptPath === REACT_HOSPITALRUN_RECEIPT_PATH)
+		return verifyReactHospitalrunCanonicalReceipt(root);
 	if (receiptPath === NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH)
 		return verifyNextKilledByGoogleEvidence(root, true);
 	if (receiptPath === REACT_AVATAAARS_COMPATIBILITY_RECEIPT_PATH)
@@ -235,6 +274,14 @@ const REACT_PAPERCUPS_RECEIPT = {
 } as const;
 const WITNESS_REACT_PAPERCUPS_RECEIPT = {
 	path: WITNESS_REACT_PAPERCUPS_RECEIPT_PATH,
+	digest: null,
+} as const;
+const REACT_HOSPITALRUN_RECEIPT = {
+	path: REACT_HOSPITALRUN_RECEIPT_PATH,
+	digest: null,
+} as const;
+const WITNESS_REACT_HOSPITALRUN_RECEIPT = {
+	path: WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
 	digest: null,
 } as const;
 const PHONECAT_VITE_RECEIPT = {
@@ -858,6 +905,7 @@ function matrix(conformance: CorpusConformance): Record<string, unknown> {
 	);
 	const nextKilledByGoogle = verticals.get('next-killedbygoogle-derived-state-to-memo');
 	const papercups = verticals.get(REACT_PAPERCUPS_FIXTURE);
+	const hospitalrun = verticals.get(REACT_HOSPITALRUN_FIXTURE);
 	return {
 		schemaVersion: TRUST_SCHEMA,
 		derivedFrom: {
@@ -1041,6 +1089,32 @@ function matrix(conformance: CorpusConformance): Record<string, unknown> {
 								genericReactSupport: 'not-claimed',
 								browserProof: cell.browserProof,
 								serviceWorker: cell.serviceWorker,
+								scrollSurface: cell.scrollSurface,
+								locality: cell.locality,
+								productionReadiness: cell.productionReadiness,
+								readinessScoreboard: cell.readinessScoreboard,
+							};
+						})(),
+					]
+				: []),
+			...(hospitalrun
+				? [
+						(() => {
+							const cell = asRecord(hospitalrun, 'React HospitalRun conformance');
+							return {
+								id: REACT_HOSPITALRUN_FIXTURE,
+								framework: cell.framework,
+								designatedPilot: cell.designatedPilot,
+								runtime: cell.runtime,
+								bundler: cell.bundler,
+								state: 'verified',
+								track: cell.track,
+								scope: 'fixture-specific-create-react-app-to-vite8',
+								genericReactSupport: 'not-claimed',
+								browserProof: cell.browserProof,
+								serviceWorker: cell.serviceWorker,
+								serviceWorkerDifference: cell.serviceWorkerDifference,
+								serviceWorkerDifferenceMasked: cell.serviceWorkerDifferenceMasked,
 								scrollSurface: cell.scrollSurface,
 								locality: cell.locality,
 								productionReadiness: cell.productionReadiness,
@@ -1282,7 +1356,9 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 	const hasWitnessAngularRealworldReceipt = transaction.angularRealworldWitnessIntegrated;
 	const hasWitnessReactBoilerplateReceipt = transaction.reactBoilerplateWitnessIntegrated;
 	const hasWitnessNextKilledByGoogleReceipt = transaction.nextKilledByGoogleWitnessIntegrated;
-	const hasReactPapercupsReceipts = transaction.kind === 'react-papercups-browser-proof';
+	const hasReactHospitalrunReceipts = transaction.kind === 'react-hospitalrun-browser-proof';
+	const hasReactPapercupsReceipts =
+		transaction.kind === 'react-papercups-browser-proof' || hasReactHospitalrunReceipts;
 	const hasReactZeroSwReceipts =
 		transaction.kind === 'react-zero-sw-reconciliation' || hasReactPapercupsReceipts;
 	const receipts = [
@@ -1303,14 +1379,23 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 		...(hasReactPapercupsReceipts
 			? [REACT_PAPERCUPS_RECEIPT, WITNESS_REACT_PAPERCUPS_RECEIPT]
 			: []),
+		...(hasReactHospitalrunReceipts
+			? [REACT_HOSPITALRUN_RECEIPT, WITNESS_REACT_HOSPITALRUN_RECEIPT]
+			: []),
 		...reactAvataaarsCompatibilityTrustReceipts(transaction),
 		...reactCalculatorTrustReceipts(transaction),
 		...reactGraphiQL013TrustReceipts(transaction),
 	];
 	if (receipts.length !== transaction.receipts)
 		throw new Error('Aggregate evidence does not preserve the required receipts');
-	if (hasReactPapercupsReceipts && receipts.length !== REACT_PAPERCUPS_TRUST_RECEIPTS)
+	if (
+		hasReactPapercupsReceipts &&
+		!hasReactHospitalrunReceipts &&
+		receipts.length !== REACT_PAPERCUPS_TRUST_RECEIPTS
+	)
 		throw new Error('React Papercups browser proof does not preserve exactly 18 receipts');
+	if (hasReactHospitalrunReceipts && receipts.length !== REACT_HOSPITALRUN_TRUST_RECEIPTS)
+		throw new Error('React HospitalRun browser proof does not preserve exactly 20 receipts');
 	const verifiedReceipts = [];
 	for (const expected of receipts) {
 		const verified = await verifyTrustReceipt(root, expected.path);

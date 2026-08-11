@@ -64,10 +64,39 @@ import {
 	WITNESS_REACT_PAPERCUPS_RECEIPT_PATH,
 	witnessReactPapercupsAggregateMember,
 } from '../receipts/witness-react-papercups.ts';
+import {
+	REACT_HOSPITALRUN_FIXTURE,
+	REACT_HOSPITALRUN_RECEIPT_PATH,
+	verifyWitnessReactHospitalrunEvidence,
+	WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
+	witnessReactHospitalrunAggregateMember,
+} from '../receipts/witness-react-hospitalrun.ts';
 
 export const CORPUS_CONFORMANCE_SCHEMA = 'versionless.corpus-conformance.v1' as const;
 const REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH =
 	'evidence/runs/react-boilerplate-v4-zero-sw/t693-run.json' as const;
+
+/**
+ * The aggregate row for the retained HospitalRun build-and-boot receipt.
+ *
+ * The Witness module owns the browser-proof row it seals; the retained build
+ * receipt's row belongs beside the transaction state that admits it, exactly as
+ * the zero-service-worker reconciliation's retained migration row already does.
+ * Only the digest varies, and callers supply it from verified evidence rather
+ * than from a literal.
+ */
+export function reactHospitalrunAggregateMember(digestValue: string) {
+	return {
+		id: REACT_HOSPITALRUN_FIXTURE,
+		framework: 'react',
+		track: 'create-react-app-3.4.4-to-vite8-build-and-boot',
+		bundler: 'webpack-4.42.0-to-vite-8.0.16',
+		runtime: 'node-12.14.1-to-node-24.15.0',
+		result: 'pass',
+		receipt: REACT_HOSPITALRUN_RECEIPT_PATH,
+		digest: digestValue,
+	};
+}
 
 export const NEXTJS_SYNTHETIC_NOT_TESTED_LANES = [
 	{ id: 'synthetic-next12-pages', nextLane: '12', routing: 'pages' },
@@ -213,8 +242,8 @@ interface JourneyProjection {
 export interface CorpusConformance {
 	schemaVersion: typeof CORPUS_CONFORMANCE_SCHEMA;
 	summary: {
-		verticals: 10 | 11 | 12;
-		sourceApplications: 3 | 4 | 5;
+		verticals: 10 | 11 | 12 | 13;
+		sourceApplications: 3 | 4 | 5 | 6;
 		designatedPilotsVerified: 0;
 	};
 	verticals: Array<Record<string, unknown>>;
@@ -308,6 +337,25 @@ export type CorpusTransactionState = Readonly<
 			sourceApplications: 5;
 			receipts: 18;
 			resolvedDependencies: 31;
+	  }
+	| {
+			/**
+			 * The HospitalRun create-react-app lineage joins on top of the
+			 * Papercups browser proof, adding its retained build-and-boot
+			 * receipt and its direct browser-proof Witness receipt. It is a
+			 * separate immutable source application, so it is a new vertical
+			 * rather than a reconciliation of an already-counted one, and its
+			 * React-lineage readiness remains explicitly uncounted.
+			 */
+			kind: 'react-hospitalrun-browser-proof';
+			nextKilledByGoogleIntegrated: true;
+			angularRealworldWitnessIntegrated: true;
+			reactBoilerplateWitnessIntegrated: true;
+			nextKilledByGoogleWitnessIntegrated: true;
+			verticals: 13;
+			sourceApplications: 6;
+			receipts: 20;
+			resolvedDependencies: 33;
 	  }
 	| {
 			kind: 'react-avataaars-candidate';
@@ -616,17 +664,87 @@ export function deriveCorpusTransactionState(fixtures: unknown): CorpusTransacti
 								canonicalize(papercupsMigrationRecord) !==
 									canonicalize(
 										reactPapercupsAggregateMember(papercupsMigrationDigest),
-									) ||
-								byPath.size !== canonicalReceipts.length + 9
+									)
 							)
+								throw new Error('React Papercups aggregate membership mismatch');
+							const papercupsOrder = [
+								...zeroSwOrder,
+								REACT_PAPERCUPS_RECEIPT_PATH,
+								WITNESS_REACT_PAPERCUPS_RECEIPT_PATH,
+							];
+							const hospitalrun = byPath.get(
+								WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
+							);
+							if (hospitalrun) {
+								const hospitalrunMigration = byPath.get(
+									REACT_HOSPITALRUN_RECEIPT_PATH,
+								);
+								const hospitalrunRecord = record(
+									hospitalrun,
+									'React HospitalRun Witness aggregate fixture',
+								);
+								const hospitalrunDigest = string(
+									hospitalrunRecord.digest,
+									'React HospitalRun Witness aggregate digest',
+								);
+								if (hospitalrunMigration === undefined)
+									throw new Error(
+										'React HospitalRun aggregate membership mismatch',
+									);
+								const hospitalrunMigrationRecord = record(
+									hospitalrunMigration,
+									'React HospitalRun migration aggregate fixture',
+								);
+								const hospitalrunMigrationDigest = string(
+									hospitalrunMigrationRecord.digest,
+									'React HospitalRun migration aggregate digest',
+								);
+								if (
+									!sha256Pattern.test(hospitalrunDigest) ||
+									!sha256Pattern.test(hospitalrunMigrationDigest) ||
+									canonicalize(hospitalrunRecord) !==
+										canonicalize(
+											witnessReactHospitalrunAggregateMember(
+												hospitalrunDigest,
+											),
+										) ||
+									canonicalize(hospitalrunMigrationRecord) !==
+										canonicalize(
+											reactHospitalrunAggregateMember(
+												hospitalrunMigrationDigest,
+											),
+										) ||
+									byPath.size !== canonicalReceipts.length + 11
+								)
+									throw new Error(
+										'React HospitalRun aggregate membership mismatch',
+									);
+								assertOrderedAggregate(
+									orderedPaths,
+									[
+										...papercupsOrder,
+										REACT_HOSPITALRUN_RECEIPT_PATH,
+										WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
+									],
+									'React HospitalRun browser proof',
+								);
+								return {
+									kind: 'react-hospitalrun-browser-proof',
+									nextKilledByGoogleIntegrated: true,
+									angularRealworldWitnessIntegrated: true,
+									reactBoilerplateWitnessIntegrated: true,
+									nextKilledByGoogleWitnessIntegrated: true,
+									verticals: 13,
+									sourceApplications: 6,
+									receipts: 20,
+									resolvedDependencies: 33,
+								};
+							}
+							if (byPath.size !== canonicalReceipts.length + 9)
 								throw new Error('React Papercups aggregate membership mismatch');
 							assertOrderedAggregate(
 								orderedPaths,
-								[
-									...zeroSwOrder,
-									REACT_PAPERCUPS_RECEIPT_PATH,
-									WITNESS_REACT_PAPERCUPS_RECEIPT_PATH,
-								],
+								papercupsOrder,
 								'React Papercups browser proof',
 							);
 							return {
@@ -961,6 +1079,112 @@ async function reactPapercupsConformanceRows(
 			},
 			boundaries: {
 				track: string(witnessMember.track, 'React Papercups Witness aggregate track'),
+				designatedPilot: false,
+				genericReactSupport: 'not-claimed',
+				scrollSurface: receipt.scrollSurface.state,
+				locality: 'process-scoped-not-os-wide',
+			},
+		},
+	};
+}
+
+/**
+ * Derives the HospitalRun conformance rows.
+ *
+ * Every emitted field comes from either the canonical aggregate members or the
+ * verified browser-proof receipt and its sealed build-and-boot receipt, so the
+ * emitted vertical and source application cannot drift away from the evidence
+ * they summarize. The recorded service-worker migration difference is carried
+ * through rather than flattened: this lane's baseline and migrated builds fail
+ * the application's own registration differently, and that difference is a
+ * published fact of the vertical.
+ */
+async function reactHospitalrunConformanceRows(
+	root: string,
+	aggregateByPath: Map<string, unknown>,
+): Promise<{ vertical: Record<string, unknown>; application: Record<string, unknown> }> {
+	const verified = await verifyWitnessReactHospitalrunEvidence(root);
+	const witnessMember = record(
+		aggregateByPath.get(WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH),
+		'React HospitalRun Witness aggregate fixture',
+	);
+	if (witnessMember.digest !== verified.digest)
+		throw new Error('React HospitalRun Witness aggregate digest differs');
+	const migrationMember = record(
+		aggregateByPath.get(REACT_HOSPITALRUN_RECEIPT_PATH),
+		'React HospitalRun migration aggregate fixture',
+	);
+	const receipt = verified.receipt;
+	if (migrationMember.digest !== receipt.canonicalReceipt.canonicalDigest)
+		throw new Error('React HospitalRun migration aggregate digest differs');
+	const run = receipt.runs[0];
+	if (!run) throw new Error('React HospitalRun Witness receipt carries no runs');
+	const id = string(migrationMember.id, 'React HospitalRun migration aggregate id');
+	const application = string(run.app, 'React HospitalRun application identity');
+	const behaviorDigest = string(run.behaviorDigest, 'React HospitalRun behavior digest');
+	const source = {
+		repository: normalizeURL(receipt.source.repository),
+		ref: receipt.source.ref,
+		revision: receipt.source.revision,
+		archiveSha256: receipt.source.archiveSha256,
+		frontendRoot: receipt.source.frontendRoot,
+		license: receipt.source.license,
+		licenseSha256: receipt.source.licenseSha256,
+	};
+	const locality = {
+		mode: receipt.locality.mode,
+		scope: 'process-scoped',
+		osWideIsolation: receipt.locality.osWideIsolation,
+		successfulNonLoopback: receipt.locality.successfulNonLoopback,
+	};
+	return {
+		vertical: {
+			id,
+			application,
+			framework: string(migrationMember.framework, 'React HospitalRun aggregate framework'),
+			receiptPath: WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
+			receiptDigest: verified.digest,
+			canonicalReceipt: {
+				path: receipt.canonicalReceipt.path,
+				canonicalDigest: receipt.canonicalReceipt.canonicalDigest,
+				sha256: receipt.canonicalReceipt.sha256,
+			},
+			runtime: string(migrationMember.runtime, 'React HospitalRun aggregate runtime'),
+			bundler: string(migrationMember.bundler, 'React HospitalRun aggregate bundler'),
+			track: string(witnessMember.track, 'React HospitalRun Witness aggregate track'),
+			migrationTrack: string(migrationMember.track, 'React HospitalRun migration track'),
+			locality,
+			browserProof: 'verified-direct-witness',
+			browserRuns: receipt.runs.length,
+			behaviorDigest,
+			serviceWorker: receipt.blockedServiceWorker.registration,
+			serviceWorkerDifference: receipt.serviceWorkerDifference.state,
+			serviceWorkerDifferenceMasked: receipt.serviceWorkerDifference.masked,
+			scrollSurface: receipt.scrollSurface.state,
+			productionReadiness: 'verified-direct-witness',
+			readinessScoreboard: receipt.readiness,
+			designatedPilot: false,
+		},
+		application: {
+			id: application,
+			source,
+			verticals: [id],
+			conformance: {
+				browserProof: 'direct-witness-verified',
+				runs: receipt.runs.length,
+				behaviorDigest,
+				mutation: receipt.mutation.restoredRun,
+				mutationRestoration: receipt.mutation.restoredByteIdentically
+					? 'byte-identical'
+					: 'not-byte-identical',
+				serviceWorker: receipt.blockedServiceWorker.registration,
+				serviceWorkerDifference: receipt.serviceWorkerDifference.state,
+				serviceWorkerDifferenceMasked: receipt.serviceWorkerDifference.masked,
+				persistence: receipt.persistence,
+				readinessScoreboard: receipt.readiness,
+			},
+			boundaries: {
+				track: string(witnessMember.track, 'React HospitalRun Witness aggregate track'),
 				designatedPilot: false,
 				genericReactSupport: 'not-claimed',
 				scrollSurface: receipt.scrollSurface.state,
@@ -1447,12 +1671,15 @@ export async function analyzeCorpusConformance(
 			transaction.kind === 'react-calculator-candidate' ||
 			transaction.kind === 'react-graphiql-013-candidate' ||
 			transaction.kind === 'react-zero-sw-reconciliation' ||
-			transaction.kind === 'react-papercups-browser-proof'
+			transaction.kind === 'react-papercups-browser-proof' ||
+			transaction.kind === 'react-hospitalrun-browser-proof'
 				? transaction.kind === 'react-zero-sw-reconciliation'
 					? 2
 					: transaction.kind === 'react-papercups-browser-proof'
 						? 4
-						: 1
+						: transaction.kind === 'react-hospitalrun-browser-proof'
+							? 6
+							: 1
 				: 0)
 	)
 		throw new Error('Aggregate contains an unknown or extra receipt');
@@ -1467,12 +1694,18 @@ export async function analyzeCorpusConformance(
 		? await verifyWitnessNextKilledByGoogleEvidence(root)
 		: null;
 	const papercups =
-		transaction.kind === 'react-papercups-browser-proof'
+		transaction.kind === 'react-papercups-browser-proof' ||
+		transaction.kind === 'react-hospitalrun-browser-proof'
 			? await reactPapercupsConformanceRows(root, aggregateByPath)
+			: null;
+	const hospitalrun =
+		transaction.kind === 'react-hospitalrun-browser-proof'
+			? await reactHospitalrunConformanceRows(root, aggregateByPath)
 			: null;
 	if (
 		transaction.kind === 'react-zero-sw-reconciliation' ||
-		transaction.kind === 'react-papercups-browser-proof'
+		transaction.kind === 'react-papercups-browser-proof' ||
+		transaction.kind === 'react-hospitalrun-browser-proof'
 	) {
 		const migration = await verifyReceipt(REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH, {
 			repositoryRoot: root,
@@ -1716,6 +1949,7 @@ export async function analyzeCorpusConformance(
 			designatedPilot: false,
 		});
 	if (papercups) verticals.push(papercups.vertical);
+	if (hospitalrun) verticals.push(hospitalrun.vertical);
 
 	const applications: Array<Record<string, unknown>> = [
 		{
@@ -1824,6 +2058,7 @@ export async function analyzeCorpusConformance(
 				]
 			: []),
 		...(papercups ? [papercups.application] : []),
+		...(hospitalrun ? [hospitalrun.application] : []),
 	];
 	if (
 		verticals.length !== transaction.verticals ||
