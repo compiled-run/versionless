@@ -1,0 +1,106 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-rights.v1",
+  "slug": "next-killedbygoogle-v3-0-0",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "revision": {
+    "repository": "codyogden/killedbygoogle",
+    "commitSha": "56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+    "rootTreeSha": "b8ac7b4fc3a1e12240f1848f6e8d98c1c7d80763"
+  },
+  "declaration": {
+    "identifier": "MIT",
+    "identifierSource": "verbatim MIT text in the repository root LICENSE file at the pinned revision, read from the extracted archive and confirmed against the git blob sha recorded in the recursive tree",
+    "copyrightNotice": "Copyright (c) 2020 Cody Ogden",
+    "manifestLicenseField": "MIT",
+    "githubDetectedLicense": "MIT (spdx_id MIT, key mit) as reported by the live repository metadata response; the file text at the pin is the primary evidence and agrees with it",
+    "dualLicensed": false,
+    "sourceAvailableCarveOut": false
+  },
+  "artifacts": [
+    {
+      "path": "LICENSE",
+      "role": "repository-root-licence",
+      "gitBlobSha": "a7069eeadecd0e520bc416f05ebc1a70350af5dc",
+      "bytes": 1067,
+      "sha256": "10547fb81e311e470cdcda5a273bac2a76f50ded6b33ce4362bcb05e1176d5e0",
+      "firstLine": "MIT License",
+      "copyrightLine": "Copyright (c) 2020 Cody Ogden",
+      "permissionGrantPresent": true,
+      "noticeRetentionClausePresent": true,
+      "warrantyDisclaimerPresent": true
+    },
+    {
+      "path": "package.json",
+      "role": "application-manifest",
+      "gitBlobSha": "330913c760f754befa65534332c107d91d535cfd",
+      "bytes": 1300,
+      "sha256": "5042dd8b31a7e1b37c2e0ed529cf3db50388660c9616c08e6445664ab59481c4",
+      "licenseField": "MIT",
+      "privateField": false,
+      "packageName": "killedbygoogle",
+      "packageVersion": "3.0.0"
+    }
+  ],
+  "inventory": {
+    "licenceFilesInTree": 1,
+    "additionalLicenceOrNoticeFiles": 0,
+    "vendoredThirdPartySources": 0,
+    "committedNodeModules": 0,
+    "committedDistDirectories": 0,
+    "note": "The recursive tree at the pinned revision contains exactly one licence file (root LICENSE) and no vendored dependency or built-output directory. .github/CODE_OF_CONDUCT.md and .github/CONTRIBUTING.md are present; neither carries additional licence terms."
+  },
+  "retainedAssetRights": {
+    "reviewed": true,
+    "pressOutletLogos": {
+      "purposeInApplication": "The footer renders a \"Featured in\" strip (components/PressCoverage.tsx, mounted from components/Footer/index.tsx) linking to eight press articles about the project. Each entry pairs an outlet name with a bitmap of that outlet's logo served from public/features/.",
+      "files": [
+        { "path": "public/features/ars-technica-logo.png", "bytes": 7818, "gitBlobSha": "4107f2bba65d62d2a632df18b04f57375296d3fb", "referencedByComponent": true },
+        { "path": "public/features/bgr-logo.png", "bytes": 14909, "gitBlobSha": "68c89551c001874a1f7a7e3cf6f5d891bebb0fff", "referencedByComponent": true },
+        { "path": "public/features/business-insider-logo.png", "bytes": 19717, "gitBlobSha": "e186eee6805c7ca54b35ef4504609705ab89dddf", "referencedByComponent": true },
+        { "path": "public/features/fast-company-logo.png", "bytes": 9961, "gitBlobSha": "c4df4331bf03f5180fcb23e63e21eee1a0b9f7b8", "referencedByComponent": true },
+        { "path": "public/features/fortune-logo.png", "bytes": 14032, "gitBlobSha": "1f059907dbddf1965b1ded3061c824bd7e38405c", "referencedByComponent": true },
+        { "path": "public/features/gizmodo-logo.png", "bytes": 7714, "gitBlobSha": "827edd46acb6775ac78aa1586cc1ebc5b810ca6d", "referencedByComponent": true },
+        { "path": "public/features/lifehacker-logo.png", "bytes": 21394, "gitBlobSha": "3aaaec79605f971627ca3c10f87732184afadb27", "referencedByComponent": true },
+        { "path": "public/features/the-next-web-logo.png", "bytes": 3463, "gitBlobSha": "aa4e5513eff7637567dd6ed79a9feaf79940db5a", "referencedByComponent": true },
+        { "path": "public/features/forbes-logo.png", "bytes": 7102, "gitBlobSha": "f3b5e61e03cf9daef73e76bfa500040e12ae1542", "referencedByComponent": false, "note": "Present in the tree at the pin but not referenced by any imgSrc in components/PressCoverage.tsx." }
+      ],
+      "position": "These are third-party publisher marks. The MIT grant in this repository is the project author's grant over the project's own files; it is not a trademark licence from Ars Technica, BGR, Business Insider, Fast Company, Fortune, Gizmodo, Lifehacker, The Next Web, or Forbes. They are carried only as part of the immutable source archive.",
+      "assetExclusionPolicy": "Excluded from any Versionless-published rendering, screenshot, artifact, or asset set. Later units must not extract, re-host, re-encode, thumbnail, or reuse these nine files as Versionless assets, and must not publish captures in which they are legible. The footer is below the fold of the journey surface, so this exclusion does not constrain the admitted journeys.",
+      "unknownPreserved": "Whether the upstream project holds permission to display these marks is unknown and is neither established nor disputed here."
+    },
+    "otherBrandedAssets": {
+      "projectOwn": [
+        "public/tombstone.png",
+        "public/tombstone.svg",
+        "public/tombstone-alt.svg",
+        "public/favicon.png",
+        "public/social/card.png",
+        "public/social/card-twitter.png",
+        "public/knife.svg",
+        "public/guillotine.svg"
+      ],
+      "platformMarks": [
+        "public/github.svg",
+        "public/twitter.svg",
+        "public/twitter-blue.svg",
+        "public/envelope.svg"
+      ],
+      "position": "Project-own artwork is covered by the repository's MIT grant as a matter of the file text; the GitHub and Twitter glyphs are third-party platform marks and are treated the same way as the press logos: carried in the archive, not reused as Versionless assets.",
+      "unknownPreserved": "Trademark rights are separate from the MIT copyright grant and are neither established nor disclaimed here."
+    },
+    "subjectMatterNames": {
+      "reviewed": true,
+      "observation": "graveyard.json contains 263 records naming discontinued Google products, with descriptions and outbound links. Google product names and the word Google are third-party trademarks used here referentially.",
+      "position": "The data file is carried as source. No Google logo, wordmark image, or brand asset is present in the tree; the references are text. Versionless makes no claim of association with, or endorsement by, Google.",
+      "unknownPreserved": "Whether this referential use is permissible in any jurisdiction is not examined."
+    }
+  },
+  "obligations": [
+    "Retain the MIT notice and permission text in any copy or substantial portion of the source.",
+    "The MIT grant covers the repository's own files; each of the 710 locked dependencies carries its own terms, which this record does not evaluate."
+  ],
+  "nonclaims": [
+    "This is a record of the licence text present at the pinned revision, not a legal opinion, licence-compatibility finding, trademark clearance, or legal approval.",
+    "No licence determination is made for the transitive dependency closure."
+  ]
+}

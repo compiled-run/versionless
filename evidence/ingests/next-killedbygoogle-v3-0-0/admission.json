@@ -1,0 +1,108 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-admission.v1",
+  "slug": "next-killedbygoogle-v3-0-0",
+  "lane": "LEGACY-NEXT",
+  "unit": "lrapr-t006/u4-ingest-killedbygoogle",
+  "candidate": {
+    "repository": "codyogden/killedbygoogle",
+    "commitSha": "56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+    "commitDate": "2022-02-06T02:55:11Z",
+    "product": "Killed by Google — a public log of discontinued Google products, services, and devices"
+  },
+  "gateEvaluationOrder": "Every gate below was evaluated against the acquired bytes before the acquisition was allowed to count. The archive was fetched first because the licence text and the application shape can only be read from the pinned tree, but nothing was published until all five gates passed.",
+  "gates": [
+    {
+      "gate": "licence",
+      "requirement": "MIT licence text bytes present at the pinned revision",
+      "verdict": "pass",
+      "evidence": "LICENSE at the pin is 1067 bytes, git blob a7069eeadecd0e520bc416f05ebc1a70350af5dc, sha256 10547fb81e311e470cdcda5a273bac2a76f50ded6b33ce4362bcb05e1176d5e0. First line \"MIT License\", copyright line \"Copyright (c) 2020 Cody Ogden\". The permission grant, the notice-retention clause, and the warranty disclaimer are all present verbatim. package.json declares \"license\": \"MIT\" and is not private.",
+      "scoutClaim": "MIT LICENSE blob a7069eea…, 1067 B, \"Copyright (c) 2020 Cody Ogden\"",
+      "scoutClaimStatus": "confirmed independently from the archive; the blob sha was recomputed from the file bytes, not copied"
+    },
+    {
+      "gate": "substantive-application",
+      "requirement": "a real substantive application, not a template, scaffold, or documentation site",
+      "verdict": "pass",
+      "evidence": "13 TypeScript component modules plus a page and an app shell implement a searchable, filterable, sorted dataset view over 263 records (91,452 bytes of graveyard.json): debounced search input, a react-select type filter with live per-type counts, a composed filter+search reducer effect, an emotion-styled list with per-item date arithmetic, a footer with a press strip, an accessibility screen-reader-text primitive, a loading state, and an ad slot with a fallback. It is deployed publicly at killedbygoogle.com and carries its own Playwright suite and a Jest data test.",
+      "reservation": "It is a small application. Substance here is behavioral density on one screen, not breadth of surface. See journeySurface.limitation."
+    },
+    {
+      "gate": "legacy-next-shape",
+      "requirement": "legacy Next.js 9-12 era with the pages/ router",
+      "verdict": "pass",
+      "evidence": "next ^12.0.10 declared and locked; the router directory is pages/ (pages/index.tsx, pages/_app.tsx) with no app/ directory anywhere in the 72-blob tree. The page uses getStaticProps, the Next 12 static-generation API. next.config.js extends the webpack config with @svgr/webpack, so the legacy webpack path is exercised by the repository's own configuration.",
+      "scoutClaim": "next ^12.0.10, react ^17.0.2, react-select 5.2.2, TS ^4.5.5, pages/ router",
+      "scoutClaimStatus": "confirmed from package.json at the pin and from the installed baseline tree (next 12.0.10, react 17.0.2, react-dom 17.0.2, react-select 5.2.2, typescript 4.5.5)"
+    },
+    {
+      "gate": "era-coherence",
+      "requirement": "an era-coherent revision date",
+      "verdict": "pass",
+      "evidence": "Committed 2022-02-06, inside the required window 2018-01-01 to 2023-08-10. Next 12.0.10 was released in that same window, and the CI workflows pin actions/setup-node to '16.x', which is the era-contemporary Node line for Next 12."
+    },
+    {
+      "gate": "journey-surface",
+      "requirement": "per the PM ruling: 2 strong journeys plus 1 compound",
+      "verdict": "pass, with a recorded limitation",
+      "evidence": "See journeySurface below."
+    }
+  ],
+  "journeySurface": {
+    "ruling": "PM ruling for this candidate: two strong journeys with count assertions plus one compound journey over combined state.",
+    "charterQualifier": "Admitted under the charter's \"where the application surface allows it\" qualifier. This application has one route; the qualifier is what makes a single-route candidate admissible, and the limitation below is published as a truthful non-claim rather than argued away.",
+    "journeys": [
+      {
+        "id": "search-by-name-and-description",
+        "strength": "strong",
+        "shippedUpstream": true,
+        "specPath": "e2e/search.spec.ts",
+        "specGitBlobSha": "3ba6ab950f3bde60d852432464df9e75a55be313",
+        "specBytes": 278,
+        "description": "Type \"Google+\" into input#searchBox and assert the rendered list settles to a specific count. Search is debounced 350 ms in components/Search/index.tsx and matches case-insensitively against both name and description in components/App.tsx, with regex metacharacters escaped, so the \"+\" is matched literally.",
+        "assertion": "await expect(page.locator('ul[class^=\"Listatoms\"] > li')).toHaveCount(2)",
+        "countArithmetic": "Exactly 1 of the 263 records matches /google\\+/i on name or description (the record named \"Google+\"). The assertion of 2 holds because components/List/index.tsx renders a non-data <li> ad slot (AdContainer, styled from the same ListItem) as the first child of the same <ul>. Later witness units must carry this +1 rather than assume the count is the data count.",
+        "verifiedBy": "reading the specs and re-deriving the count from graveyard.json offline; the suite was not executed by this unit"
+      },
+      {
+        "id": "react-select-type-filter",
+        "strength": "strong",
+        "shippedUpstream": true,
+        "specPath": "e2e/filter.spec.ts",
+        "specGitBlobSha": "963f04489476bdbb4b2322f7de4ee0e46e05572c",
+        "specBytes": 531,
+        "description": "Open the react-select 5.2.2 listbox at #listFilter, choose the second option, and assert the list count. The filter is a controlled react-select with an explicit instanceId of \"filter-select\", so the listbox DOM id is stable at #react-select-filter-select-listbox. Option labels carry live per-type counts.",
+        "assertion": "toHaveCount(graveyard.filter(i => i.type === 'app').length + 1)",
+        "countArithmetic": "50 records have type \"app\", so the assertion resolves to 51, again including the non-data ad <li>. Type distribution at this pin: service 192, app 50, hardware 21, total 263.",
+        "fragility": "The spec selects the option by nth-child position inside the listbox, not by label. Any change to option order or to react-select's internal DOM changes what this journey asserts. Recorded as found; not repaired.",
+        "verifiedBy": "reading the specs and re-deriving the counts from graveyard.json offline; the suite was not executed by this unit"
+      },
+      {
+        "id": "search-x-filter-combined-state",
+        "strength": "compound",
+        "shippedUpstream": false,
+        "description": "Apply a type filter and a search term together and observe that the list reflects the intersection. components/App.tsx holds searchTerm and activeFilter in two useState hooks and recomputes listItems in a single effect keyed on both: the type filter narrows first, then the escaped case-insensitive regex is applied to name and description; an empty search term restores the filtered list rather than the full list.",
+        "whyItCounts": "This is real composed client state, not two independent widgets. Clearing the search must return to the filtered subset, not to all 263 records, and that is the property a witness would assert.",
+        "status": "no upstream spec exists for this combination. A later unit would have to author it. Nothing here claims it passes."
+      }
+    ],
+    "limitation": {
+      "routes": 1,
+      "detail": "The application has exactly one authored route (pages/index.tsx) plus the framework 404. There is no navigation, no form submission, no authentication, no persistence, and no server. The production build emits 2 HTML documents.",
+      "nonClaim": "This fixture cannot exercise routing, data mutation, session, or multi-page migration behavior. Any lane result obtained from it speaks only to single-route static-generation behavior with client-side state, and must not be generalised to Next.js applications with multiple routes, API routes, middleware, or server rendering."
+    },
+    "harness": {
+      "upstreamRunner": "@playwright/test 1.18.1, testDir ./e2e, three browser projects (chromium, firefox, webkit), baseURL from PLAYWRIGHT_TEST_BASE_URL defaulting to http://localhost:3000, webServer block commented out",
+      "upstreamCiTargetsProduction": "The Playwright workflow runs the suite against a deployed Netlify preview URL, not against a local server. A local witness run must supply its own server and set the base URL.",
+      "notExecutedHere": "This unit did not run Playwright, install browsers, or start a server."
+    }
+  },
+  "backend": {
+    "present": false,
+    "detail": "Zero backend. All data is the local graveyard.json (91,452 bytes, 263 records) imported at build time by getStaticProps. bin/graveyard is a local Node script that writes a slugged, minified copy to public/graveyard.json. newsletter.http is a saved HTTP request scratch file for a third-party endpoint and is not executed by any script.",
+    "consequence": "No service, database, seed, or fixture server is needed to run this application."
+  },
+  "nonclaims": [
+    "Passing these gates admits the candidate to the corpus. It establishes no browser behavior, no journey pass, no migration feasibility, no pilot status, and no production readiness.",
+    "No journey listed here has been executed by any Versionless unit. Counts were derived by reading the data file, not by observing a running page."
+  ]
+}

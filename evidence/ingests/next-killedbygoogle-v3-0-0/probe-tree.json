@@ -1,0 +1,382 @@
+{
+  "schemaVersion": "versionless.probe-tree.v1",
+  "slug": "next-killedbygoogle-v3-0-0",
+  "revision": "56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+  "rootTreeSha": "b8ac7b4fc3a1e12240f1848f6e8d98c1c7d80763",
+  "treeTruncated": false,
+  "archiveRoot": "killedbygoogle-56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+  "counts": {
+    "blobs": 72,
+    "directories": 14,
+    "symlinks": 0,
+    "gitlinks": 0,
+    "executableBlobs": 2
+  },
+  "normalizedManifestSha256": "9c7a0cfab99fc5d765a1da1f2f2325b1a5a3f7719556fee4a883d7d04c4b5344",
+  "digestBasis": "gitBlobSha is sha1 over the git blob object (\"blob <len>\\0\" + bytes), recomputed from the extracted archive and equal to the sha recorded in the recursive git tree for every path.",
+  "files": [
+    {
+      "path": ".babelrc",
+      "bytes": 306,
+      "gitBlobSha": "d885c4d230eb45ab81183d244b462594ff823852"
+    },
+    {
+      "path": ".czrc",
+      "bytes": 42,
+      "gitBlobSha": "d1bcc209ca10ad61c38b49b8a7bd644c46a5bbc7"
+    },
+    {
+      "path": ".eslintrc.json",
+      "bytes": 97,
+      "gitBlobSha": "f0f3abee419ea37f9fb5a69679b3463b26e8797c"
+    },
+    {
+      "path": ".github/CODE_OF_CONDUCT.md",
+      "bytes": 3360,
+      "gitBlobSha": "c74334e6113d769b1929d47f6baa987d25e967aa"
+    },
+    {
+      "path": ".github/CONTRIBUTING.md",
+      "bytes": 1423,
+      "gitBlobSha": "9124479f0883845adf43b74b2fdc5d44297e8c4e"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/add-an-obituary.md",
+      "bytes": 397,
+      "gitBlobSha": "8e6a6718fabfa51a36d5bbe60570ae05f166c2e6"
+    },
+    {
+      "path": ".github/ISSUE_TEMPLATE/other-stuff.md",
+      "bytes": 106,
+      "gitBlobSha": "3ab62cb72d3a3deedff501b5deb77d8d432a8c1a"
+    },
+    {
+      "path": ".github/PULL_REQUEST_TEMPLATE.md",
+      "bytes": 188,
+      "gitBlobSha": "61c1622cd5f1d98b4959245da127e0467ed9b2b6"
+    },
+    {
+      "path": ".github/dependabot.yml",
+      "bytes": 172,
+      "gitBlobSha": "423a85150fb2361dba531755599e5de4cb694011"
+    },
+    {
+      "path": ".github/workflows/graveyard.yml",
+      "bytes": 425,
+      "gitBlobSha": "12f4a2dead670c712825136c37631c8e06d76b40"
+    },
+    {
+      "path": ".github/workflows/playwright.yml",
+      "bytes": 1061,
+      "gitBlobSha": "214dc710bf453439c89e1d024add9410c66a1a9a"
+    },
+    {
+      "path": ".github/workflows/stale.yml",
+      "bytes": 367,
+      "gitBlobSha": "dbcfbec11f23b5a51f8e14774adff2c6a0914705"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 1029,
+      "gitBlobSha": "35dac5ac842fb967d57c0b2af60f665b3d116986"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 1067,
+      "gitBlobSha": "a7069eeadecd0e520bc416f05ebc1a70350af5dc"
+    },
+    {
+      "path": "README.md",
+      "bytes": 3180,
+      "gitBlobSha": "e46a25be232c85f0be95433d25d87db84024ae04"
+    },
+    {
+      "path": "bin/graveyard",
+      "bytes": 470,
+      "gitBlobSha": "58c6d76967d64bf77e54abf78931fc84e194e72d"
+    },
+    {
+      "path": "bin/kill",
+      "bytes": 3512,
+      "gitBlobSha": "052ebba9538b38229b77e7672f1942f29465cbf1"
+    },
+    {
+      "path": "components/App.tsx",
+      "bytes": 1769,
+      "gitBlobSha": "a3a01866954bd856e18fabde39c066abce40c1e5"
+    },
+    {
+      "path": "components/Carbon.tsx",
+      "bytes": 1480,
+      "gitBlobSha": "8316e5fe356a04911b9094d6b7f311dbb96940dd"
+    },
+    {
+      "path": "components/Controls.tsx",
+      "bytes": 480,
+      "gitBlobSha": "e0c7063fbac572634fbf07398862fb9a38d889e7"
+    },
+    {
+      "path": "components/Filter.tsx",
+      "bytes": 1557,
+      "gitBlobSha": "c052414b7e958f00bf5679bc726253185699ca58"
+    },
+    {
+      "path": "components/Footer/Footer.atoms.ts",
+      "bytes": 692,
+      "gitBlobSha": "70169a249764ba2f557b65b113d20a290e5a9a93"
+    },
+    {
+      "path": "components/Footer/index.tsx",
+      "bytes": 4919,
+      "gitBlobSha": "ddfccc14694e40e0124a6fd5b749d9fe60584256"
+    },
+    {
+      "path": "components/Header.tsx",
+      "bytes": 1103,
+      "gitBlobSha": "0bde064dad891364772abd3dbff2e54ca15345e2"
+    },
+    {
+      "path": "components/List/Item.atoms.ts",
+      "bytes": 1004,
+      "gitBlobSha": "d97eab5e96141723f61f20efb19dc1d081c5d150"
+    },
+    {
+      "path": "components/List/Item.tsx",
+      "bytes": 3241,
+      "gitBlobSha": "a3252198291decb96d488eae48e90d4ed0c98841"
+    },
+    {
+      "path": "components/List/List.atoms.ts",
+      "bytes": 661,
+      "gitBlobSha": "347ceb0b40be8a04106ec2983aef921857cafbcd"
+    },
+    {
+      "path": "components/List/index.tsx",
+      "bytes": 3778,
+      "gitBlobSha": "944684f71857598cd2cb7f263c20fe1520e9456f"
+    },
+    {
+      "path": "components/Loader.tsx",
+      "bytes": 455,
+      "gitBlobSha": "951683289f37a423fbd8d0a331e01d8d21581178"
+    },
+    {
+      "path": "components/PressCoverage.tsx",
+      "bytes": 2820,
+      "gitBlobSha": "8d6dfa26e615cc8d650cd47d38cab51c58af4904"
+    },
+    {
+      "path": "components/SRT.tsx",
+      "bytes": 461,
+      "gitBlobSha": "e07d7634b4a8b1ad45511c45f0f13bf68e4615f5"
+    },
+    {
+      "path": "components/Search/Search.atoms.ts",
+      "bytes": 1467,
+      "gitBlobSha": "ccd33e8c15f3ba0acb51718d95430721b930f65f"
+    },
+    {
+      "path": "components/Search/index.tsx",
+      "bytes": 974,
+      "gitBlobSha": "5e057cb69f01aa67889acab2d665a108819ec6dd"
+    },
+    {
+      "path": "components/index.tsx",
+      "bytes": 437,
+      "gitBlobSha": "ce01af4056581e51546737cb387d3c26d1f65a5a"
+    },
+    {
+      "path": "e2e/filter.spec.ts",
+      "bytes": 531,
+      "gitBlobSha": "963f04489476bdbb4b2322f7de4ee0e46e05572c"
+    },
+    {
+      "path": "e2e/search.spec.ts",
+      "bytes": 278,
+      "gitBlobSha": "3ba6ab950f3bde60d852432464df9e75a55be313"
+    },
+    {
+      "path": "graveyard.json",
+      "bytes": 91452,
+      "gitBlobSha": "2e1268ecc2123d96f6bf7ae1a457593396f9ef38"
+    },
+    {
+      "path": "graveyard.test.ts",
+      "bytes": 2021,
+      "gitBlobSha": "c1a1fdd439630110113b98d97f72ea22562e28fd"
+    },
+    {
+      "path": "newsletter.http",
+      "bytes": 224,
+      "gitBlobSha": "0f6c93aa827996025fed4ead64cb4e7d44f16909"
+    },
+    {
+      "path": "next-env.d.ts",
+      "bytes": 201,
+      "gitBlobSha": "4f11a03dc6cc37f2b5105c08f2e7b24c603ab2f4"
+    },
+    {
+      "path": "next.config.js",
+      "bytes": 237,
+      "gitBlobSha": "86f29fdbeb026cfad632b714d681ead3fbb680c1"
+    },
+    {
+      "path": "package.json",
+      "bytes": 1300,
+      "gitBlobSha": "330913c760f754befa65534332c107d91d535cfd"
+    },
+    {
+      "path": "pages/_app.tsx",
+      "bytes": 296,
+      "gitBlobSha": "a01c5728411033077653d0abe2ede78024e4be56"
+    },
+    {
+      "path": "pages/index.tsx",
+      "bytes": 4216,
+      "gitBlobSha": "44fa7be0d5a443f25cbe0f59cff1f239a9657b53"
+    },
+    {
+      "path": "playwright.config.ts",
+      "bytes": 2575,
+      "gitBlobSha": "97ccf0422987e135ab633ecb09118f8899d8adbe"
+    },
+    {
+      "path": "public/_headers",
+      "bytes": 49,
+      "gitBlobSha": "a736c8e7695ddc67c199733dbeca00536058139d"
+    },
+    {
+      "path": "public/envelope.svg",
+      "bytes": 1280,
+      "gitBlobSha": "2cf7ee39cbec138603e9c452cb7e220bde1405eb"
+    },
+    {
+      "path": "public/favicon.png",
+      "bytes": 1115,
+      "gitBlobSha": "1849086abd6ec182a24f4b352c55fcd3c76bcf0b"
+    },
+    {
+      "path": "public/features/ars-technica-logo.png",
+      "bytes": 7818,
+      "gitBlobSha": "4107f2bba65d62d2a632df18b04f57375296d3fb"
+    },
+    {
+      "path": "public/features/bgr-logo.png",
+      "bytes": 14909,
+      "gitBlobSha": "68c89551c001874a1f7a7e3cf6f5d891bebb0fff"
+    },
+    {
+      "path": "public/features/business-insider-logo.png",
+      "bytes": 19717,
+      "gitBlobSha": "e186eee6805c7ca54b35ef4504609705ab89dddf"
+    },
+    {
+      "path": "public/features/fast-company-logo.png",
+      "bytes": 9961,
+      "gitBlobSha": "c4df4331bf03f5180fcb23e63e21eee1a0b9f7b8"
+    },
+    {
+      "path": "public/features/forbes-logo.png",
+      "bytes": 7102,
+      "gitBlobSha": "f3b5e61e03cf9daef73e76bfa500040e12ae1542"
+    },
+    {
+      "path": "public/features/fortune-logo.png",
+      "bytes": 14032,
+      "gitBlobSha": "1f059907dbddf1965b1ded3061c824bd7e38405c"
+    },
+    {
+      "path": "public/features/gizmodo-logo.png",
+      "bytes": 7714,
+      "gitBlobSha": "827edd46acb6775ac78aa1586cc1ebc5b810ca6d"
+    },
+    {
+      "path": "public/features/lifehacker-logo.png",
+      "bytes": 21394,
+      "gitBlobSha": "3aaaec79605f971627ca3c10f87732184afadb27"
+    },
+    {
+      "path": "public/features/the-next-web-logo.png",
+      "bytes": 3463,
+      "gitBlobSha": "aa4e5513eff7637567dd6ed79a9feaf79940db5a"
+    },
+    {
+      "path": "public/github.svg",
+      "bytes": 834,
+      "gitBlobSha": "069b3c2f9b60d64821934846f00781fc441f4c65"
+    },
+    {
+      "path": "public/global.css",
+      "bytes": 287,
+      "gitBlobSha": "ef8c30642ac9a0d852c1f3c3db6fcd4e32de1566"
+    },
+    {
+      "path": "public/guillotine.svg",
+      "bytes": 1296,
+      "gitBlobSha": "8578f57356bb5ac24e38cd29e864eee2bd05bd7c"
+    },
+    {
+      "path": "public/knife.svg",
+      "bytes": 959,
+      "gitBlobSha": "6fb61a570d638386e74d6efc5ee66c57b1cda12c"
+    },
+    {
+      "path": "public/loading.svg",
+      "bytes": 682,
+      "gitBlobSha": "06e01f66d07ee564a7d642c3558ba06f1f147a57"
+    },
+    {
+      "path": "public/social/card-twitter.png",
+      "bytes": 74320,
+      "gitBlobSha": "6d8b2f237dd0bb5beff13c145b6e42b4ecad5a89"
+    },
+    {
+      "path": "public/social/card.png",
+      "bytes": 77859,
+      "gitBlobSha": "9f4783d112145a71e44c805e17ea7c829ca73fd5"
+    },
+    {
+      "path": "public/tombstone-alt.svg",
+      "bytes": 1762,
+      "gitBlobSha": "dc680e644ee98f565ba62e8d4635754fc6f3b269"
+    },
+    {
+      "path": "public/tombstone.png",
+      "bytes": 1311,
+      "gitBlobSha": "12cfffd0a8dae6e82756e3b39dc801014ba3070c"
+    },
+    {
+      "path": "public/tombstone.svg",
+      "bytes": 1761,
+      "gitBlobSha": "a13048a856fe4a3bd7e4084341835bc0b981a641"
+    },
+    {
+      "path": "public/twitter-blue.svg",
+      "bytes": 604,
+      "gitBlobSha": "630d73268afcffc02bba99b253c00249b293b8f0"
+    },
+    {
+      "path": "public/twitter.svg",
+      "bytes": 627,
+      "gitBlobSha": "3b9ac0ed30e735727e0754ecffe728776485226c"
+    },
+    {
+      "path": "tsconfig.json",
+      "bytes": 617,
+      "gitBlobSha": "6ca035b33ed2381726dfe20a7609ad7d22bcc4b0"
+    },
+    {
+      "path": "types/Product.ts",
+      "bytes": 224,
+      "gitBlobSha": "0dc814bdfda7a856f0002c3a128f67e2b250f7b0"
+    },
+    {
+      "path": "yarn.lock",
+      "bytes": 256958,
+      "gitBlobSha": "b421cdeb0a0fb65639f46f3c2710d80488fd08b0"
+    }
+  ],
+  "nonclaims": [
+    "This is an inventory of what exists at the pinned revision. It establishes nothing about what any file does."
+  ]
+}

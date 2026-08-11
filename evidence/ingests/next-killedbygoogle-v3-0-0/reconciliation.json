@@ -1,0 +1,77 @@
+{
+  "schemaVersion": "versionless.source-reconciliation.v1",
+  "slug": "next-killedbygoogle-v3-0-0",
+  "revision": "56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+  "archiveToGitTree": {
+    "method": "The archive was listed before extraction and refused unless single-rooted with no '..' component and no absolute path. After extraction every regular file was hashed as a git blob object (sha1 over \"blob <len>\\0\" + bytes) and compared against the sha recorded for the same path in the recursive git tree response.",
+    "archiveRoot": "killedbygoogle-56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+    "archiveEntries": 86,
+    "extractedFiles": 72,
+    "extractedDirectories": 14,
+    "extractedSymlinks": 0,
+    "extractedSpecialEntries": 0,
+    "treeBlobs": 72,
+    "treeDirectories": 14,
+    "treeSymlinks": 0,
+    "treeGitlinks": 0,
+    "treeTruncated": false,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "verdict": "every blob in the pinned tree is present in the archive with identical bytes, and the archive contains nothing the tree does not"
+  },
+  "doubleFetch": {
+    "streams": 2,
+    "bytesStream1": 370006,
+    "bytesStream2": 370006,
+    "sha256Stream1": "c28878d0f65b56aa595763c852477fb0c1e3533e5c7f7ea9daa2be16f102368d",
+    "sha256Stream2": "c28878d0f65b56aa595763c852477fb0c1e3533e5c7f7ea9daa2be16f102368d",
+    "identical": true
+  },
+  "largeFileStorage": {
+    "gitattributesPresent": false,
+    "pointerFilesFound": 0,
+    "method": "Absence of .gitattributes was not taken as sufficient. Every file at or under 1 KiB was read and checked for the 'version https://git-lfs.github.com/spec/' preamble."
+  },
+  "independentCrossCheckAgainstRetiredArtifact": {
+    "purpose": "The retired-goal artifact evidence/ingests/next-killedbygoogle/t128-ingest.json (schema versionless.immutable-single-ingest.v1) records an earlier, independent acquisition of this same pin under a different goal. It was ruled not grandfathered and is not reused. It is compared here only because two independent acquisitions of one pin agreeing is worth recording, and disagreeing is worth recording more.",
+    "handling": "read-only; nothing was imported from it, and no fact asserted anywhere in this ingest derives from it",
+    "agreements": [
+      { "fact": "archive sha256", "thisUnit": "c28878d0f65b56aa595763c852477fb0c1e3533e5c7f7ea9daa2be16f102368d", "retiredArtifact": "c28878d0f65b56aa595763c852477fb0c1e3533e5c7f7ea9daa2be16f102368d", "agree": true },
+      { "fact": "archive bytes", "thisUnit": 370006, "retiredArtifact": 370006, "agree": true },
+      { "fact": "root tree sha", "thisUnit": "b8ac7b4fc3a1e12240f1848f6e8d98c1c7d80763", "retiredArtifact": "b8ac7b4fc3a1e12240f1848f6e8d98c1c7d80763", "agree": true },
+      { "fact": "tree response bytes and sha256", "thisUnit": "20306 / f8260bf89edc92d6cb0f3e7da50d25c30c39b4bda1900fc3f8edadd8c4a16e4a", "retiredArtifact": "20306 / f8260bf89edc92d6cb0f3e7da50d25c30c39b4bda1900fc3f8edadd8c4a16e4a", "agree": true },
+      { "fact": "LICENSE bytes and sha256", "thisUnit": "1067 / 10547fb81e311e470cdcda5a273bac2a76f50ded6b33ce4362bcb05e1176d5e0", "retiredArtifact": "1067 / 10547fb81e311e470cdcda5a273bac2a76f50ded6b33ce4362bcb05e1176d5e0", "agree": true, "note": "the retired artifact read LICENSE over raw.githubusercontent.com; this unit read it out of the verified archive. Same bytes by two different routes." },
+      { "fact": "package.json bytes and sha256", "thisUnit": "1300 / 5042dd8b31a7e1b37c2e0ed529cf3db50388660c9616c08e6445664ab59481c4", "retiredArtifact": "1300 / 5042dd8b31a7e1b37c2e0ed529cf3db50388660c9616c08e6445664ab59481c4", "agree": true },
+      { "fact": "yarn.lock bytes and sha256", "thisUnit": "256958 / a676ee932cef5e54d469dc6d1e040e50f42f9cc88beb16ae5c72c13e26ebc48a", "retiredArtifact": "256958 / a676ee932cef5e54d469dc6d1e040e50f42f9cc88beb16ae5c72c13e26ebc48a", "agree": true },
+      { "fact": "next.config.js bytes and sha256", "thisUnit": "237 / f4c7d09451907d1e288c7ddd5d41372ca2f1cc6bc1760f2c09a98ac0291d39bb", "retiredArtifact": "237 / f4c7d09451907d1e288c7ddd5d41372ca2f1cc6bc1760f2c09a98ac0291d39bb", "agree": true },
+      { "fact": "pages/index.tsx bytes and sha256", "thisUnit": "4216 / 1b4971c9e4c935f331518ae40a2387412e7031ad2959e98c9e01133095cf4309", "retiredArtifact": "4216 / 1b4971c9e4c935f331518ae40a2387412e7031ad2959e98c9e01133095cf4309", "agree": true },
+      { "fact": "components/Search/index.tsx bytes and sha256", "thisUnit": "974 / 697678ea2415166f15335d6a092b9513b7e57d4db5e12e224d33e735a3bcabf6", "retiredArtifact": "974 / 697678ea2415166f15335d6a092b9513b7e57d4db5e12e224d33e735a3bcabf6", "agree": true },
+      { "fact": ".github/workflows/playwright.yml bytes and sha256", "thisUnit": "1061 / 79ef3bfab380d28c818d67198275da9d54d7633721a1b507e04beaf81181f0f7", "retiredArtifact": "1061 / 79ef3bfab380d28c818d67198275da9d54d7633721a1b507e04beaf81181f0f7", "agree": true }
+    ],
+    "disagreements": [
+      {
+        "fact": "repository metadata response sha256",
+        "thisUnit": "0ece7137078595b08fa68d31fe6a56057fc68a9f161806b175ae561197babe80",
+        "retiredArtifact": "989854e380d036f784b92697b898a3e15b2ea746b1fc3049666de86287cf28ba",
+        "agree": false,
+        "assessment": "expected and not a problem. This endpoint returns live, mutable repository metadata (stargazers, pushed_at, topics), not pinned content. Both responses happen to be 5629 bytes, which is a coincidence of field widths, not a sign of identical content. Nothing in this ingest is bound to that body: the pin is the commit sha, and the licence determination is made from the LICENSE bytes at the pin rather than from this metadata."
+      }
+    ],
+    "notComparable": [
+      {
+        "fact": "commit metadata",
+        "reason": "the retired artifact requested /repos/:owner/:repo/commits/:sha (the REST commit view, 4120 bytes) while this unit requested /repos/:owner/:repo/git/commits/:sha (the raw git object, 1113 bytes). Different endpoints returning different representations; their digests are not comparable. Both agree on the fields that matter: sha 56809c31592e6ca1edce8af9bfe842fbcdf71f4d and tree b8ac7b4fc3a1e12240f1848f6e8d98c1c7d80763."
+      },
+      {
+        "fact": "raw.githubusercontent.com per-file bodies",
+        "reason": "this unit did not use that host at all. It read every file out of the digest-verified archive instead, which is a stronger route: each file is additionally pinned by its git blob sha in the recursive tree."
+      }
+    ],
+    "verdict": "Two independent acquisitions performed under different goals and using partly different endpoints agree on every immutable fact about this pin, including four file bodies compared by sha256. The single disagreement is confined to a mutable metadata body that no claim depends on."
+  },
+  "nonclaims": [
+    "Byte agreement between two acquisitions establishes that the upstream host served the same content twice. It does not establish authorship, signature, or that the content is what upstream intended.",
+    "This record establishes source integrity only. No build, browser, or behavioral property follows from it."
+  ]
+}

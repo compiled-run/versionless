@@ -1,0 +1,94 @@
+{
+  "schemaVersion": "versionless.baseline-attempt.v1",
+  "slug": "next-killedbygoogle-v3-0-0",
+  "revision": "56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+  "purpose": "One truthful baseline: install the committed closure and attempt a production build in the declared legacy cell, then record what happened.",
+  "declaredCell": {
+    "node": {
+      "version": "16.20.2",
+      "platform": "darwin-arm64",
+      "url": "https://nodejs.org/dist/v16.20.2/node-v16.20.2-darwin-arm64.tar.gz",
+      "sha256": "6a5c4108475871362d742b988566f3fe307f6a67ce14634eb3fbceb4f9eea88c",
+      "reusedFrom": "already acquired and digest-verified in this workspace by earlier corpus work (fixtures/react-boilerplate-v4/fixture.json and fixtures/angular-phonecat/fixture.json record the same URL and digest). No new network request was made for the runtime.",
+      "translationRequired": "none; this is a native darwin-arm64 build"
+    },
+    "justification": {
+      "repositoryDeclaresEngines": false,
+      "repositoryDeclaresNvmrc": false,
+      "onlyConcreteStatement": "Both GitHub Actions workflows at the pin (.github/workflows/playwright.yml and .github/workflows/graveyard.yml) pin actions/setup-node to node-version '16.x'.",
+      "honestLabel": "in-lane, not a pin: package.json carries no engines block and there is no .nvmrc, so nothing in the repository pins a Node version exactly. Node 16.20.2 is the final 16.x release and therefore sits inside the repository's own declared CI lane. Node 14 would also satisfy Next 12's floor (>= 12.22.0) but is not what this repository's CI declares.",
+      "eraCoherence": "Next 12 shipped in the Node 14/16 era; 16.x is the line this repository chose."
+    },
+    "packageManager": {
+      "name": "yarn",
+      "version": "1.22.19",
+      "why": "the repository commits a yarn v1 lockfile; npm cannot honour it",
+      "reusedFrom": "the yarn 1.22.19 CLI already acquired and cached in this workspace by earlier corpus work (recorded in fixtures/react-mycrypto/fixture.json as https://registry.npmjs.org/yarn/-/yarn-1.22.19.tgz). No new network request was made for the package manager.",
+      "npmBundledWithRuntime": "8.19.4, unused"
+    },
+    "installCommand": "yarn install --frozen-lockfile --ignore-scripts --non-interactive",
+    "buildCommand": "yarn build",
+    "buildCommandExpands": "next build",
+    "exportCommand": "./node_modules/.bin/next export",
+    "lifecycleScripts": "disabled during install",
+    "environment": { "NEXT_TELEMETRY_DISABLED": "1", "CI": "1" }
+  },
+  "outcome": {
+    "install": {
+      "result": "succeeded",
+      "wallClockSeconds": 2,
+      "packageDirectoriesPlaced": 713,
+      "frozenLockfileHeld": true,
+      "detail": "yarn resolved, fetched, and linked the committed closure without modifying yarn.lock. Lifecycle scripts were disabled.",
+      "networkHonesty": "The wall-clock time is 2 seconds because the host's shared yarn cache was already warm from earlier corpus work in this workspace. This unit did not measure how many bytes, if any, crossed the network during the install, and makes no claim that the install was fully offline or fully networked. What is established is that --frozen-lockfile held and that 713 package directories were placed."
+    },
+    "build": {
+      "result": "succeeded",
+      "wallClockSeconds": 8,
+      "artifactProduced": true,
+      "artifactPath": ".versionless/cache/next-killedbygoogle-v3-0-0-baseline/app/.next",
+      "typecheck": "passed — next build ran \"Checking validity of types...\" with the repository's own typescript 4.5.5 and tsconfig.json and reported no error",
+      "compiler": "Babel, not SWC. next build reported: \"Disabled SWC as replacement for Babel because of custom Babel configuration '.babelrc'\". The repository's .babelrc loads @emotion/babel-preset-css-prop, so the legacy babel-loader path through Next 12's vendored webpack 5 is what actually compiled this application.",
+      "swcBinaryPresent": "@next/swc-darwin-arm64 12.0.10 was installed but not used for compilation, per the notice above",
+      "pages": {
+        "/": { "kind": "SSG", "size": "64.6 kB", "firstLoadJs": "140 kB" },
+        "/_app": { "kind": "shared", "size": "0 B", "firstLoadJs": "75.8 kB" },
+        "/404": { "kind": "static", "size": "2.84 kB", "firstLoadJs": "78.7 kB" }
+      },
+      "staticPagesGenerated": 3,
+      "warnings": [
+        "no build cache found (first build in a fresh directory)",
+        "Browserslist: caniuse-lite is outdated — a notice only; nothing was fetched"
+      ]
+    },
+    "export": {
+      "result": "succeeded",
+      "wallClockSeconds": 0,
+      "command": "next export",
+      "why": "The static-export path is the migration story for this fixture: package.json's preview script is `bin/graveyard && yarn build && next export && npx http-server out/ -p 3000`, so a fully static bundle is how upstream itself previews the app.",
+      "detail": "Export generated its path map from ./pages (no exportPathMap in next.config.js), launched 17 workers, copied the public directory, and wrote 2 HTML documents (index.html and 404.html) plus _next/static, _next/data, and all public assets into out/.",
+      "htmlDocumentsWritten": 2,
+      "consequence": "A witness unit can serve this fixture as a plain static directory with no Node server at all, which removes a whole class of runtime variables from later comparisons."
+    }
+  },
+  "whatThisEstablishes": [
+    "The committed closure installs in the declared cell without lockfile modification.",
+    "The application's own TypeScript typecheck passes at the pin under its own compiler version.",
+    "A production build and a full static export both succeed, and artifacts exist on disk in the git-ignored cache."
+  ],
+  "whatThisDoesNotEstablish": [
+    "Nothing was rendered in a browser. No page was loaded, no journey was executed, and no Playwright spec was run by this unit.",
+    "The build succeeding says nothing about whether the exported page behaves correctly, whether the two upstream specs pass, or whether any migration lane can reproduce this output.",
+    "The artifacts live only in the git-ignored cache. They are not published, not merged, and not offered as a reproducible build product."
+  ],
+  "reproduction": {
+    "driver": "evidence/ingests/next-killedbygoogle-v3-0-0/drivers/baseline.sh",
+    "logs": ".versionless/cache/next-killedbygoogle-v3-0-0-baseline/logs (cell.txt, install.log, build.log, export.log, summary.txt)",
+    "gitIgnored": true,
+    "note": "The driver is committed as a working tool so the cell is reconstructible; the logs it produced are not evidence artifacts and are not published."
+  },
+  "nonclaims": [
+    "A successful baseline build is not a certification, a support statement, or a readiness credit.",
+    "No Node version other than 16.20.2 was exercised. Whether this application builds under Node 14 or under any modern runtime is unknown and is preserved as unknown."
+  ]
+}

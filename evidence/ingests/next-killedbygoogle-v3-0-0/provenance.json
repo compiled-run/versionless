@@ -1,0 +1,67 @@
+{
+  "schemaVersion": "versionless.ingest-provenance.v1",
+  "slug": "next-killedbygoogle-v3-0-0",
+  "unit": "lrapr-t006/u4-ingest-killedbygoogle",
+  "board": { "goal": "legacy-react-angular-production-readiness", "task": "T006" },
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "chainOfCustody": [
+    {
+      "step": 1,
+      "actor": "scout unit lrapr-t006/u2 (read-only, 2026-08-11)",
+      "produced": "a candidate pin and a set of claims about it",
+      "trustPosture": "none of it trusted. Every scout claim was re-verified by this unit from the wire or from the extracted tree, and the claims are recorded alongside their verification status in admission.json."
+    },
+    {
+      "step": 2,
+      "actor": "this unit, acquisition phase",
+      "produced": "5 accepted HTTPS responses totalling 767,060 bytes",
+      "policy": "GET only, identity encoding, no credentials, no redirects, no retries, host allowlist enforced in code, byte caps enforced per response and in aggregate, archive fetched on two independent streams",
+      "ledger": "evidence/ingests/next-killedbygoogle-v3-0-0/probe-ledger.ndjson"
+    },
+    {
+      "step": 3,
+      "actor": "this unit, verification phase (offline)",
+      "produced": "blob-level parity between the archive and the recursive git tree, licence bytes, lock state, LFS check, application shape",
+      "network": "none"
+    },
+    {
+      "step": 4,
+      "actor": "this unit, baseline phase",
+      "produced": "one install, one production build, one static export in the declared legacy cell",
+      "network": "package-manager fetches only; no Versionless-issued request"
+    }
+  ],
+  "networkPolicy": {
+    "acquisitionOnly": true,
+    "mode": "VERSIONLESS_NETWORK_MODE=consented",
+    "enforcement": "The acquisition driver exits non-zero unless both VERSIONLESS_NETWORK_MODE=consented and the matching consent id are present in its environment. Host and byte limits are enforced in the same process, not by convention.",
+    "closedAfterAcquisition": true,
+    "closureStatement": "After the fifth response, every remaining step of this unit — extraction, blob comparison, licence reading, lock parsing, journey derivation, and evidence authoring — ran offline against bytes already on disk. The only later network activity was the package manager's own during the baseline install, which is declared in attempt.json and reported in aggregate in baseline-attempt.json."
+  },
+  "toolsUsed": {
+    "drivers": [
+      { "path": "evidence/ingests/next-killedbygoogle-v3-0-0/drivers/acquire.mjs", "role": "consented acquisition and probe ledger" },
+      { "path": "evidence/ingests/next-killedbygoogle-v3-0-0/drivers/reconcile.mjs", "role": "offline extraction, blob-level parity, licence and lock facts" },
+      { "path": "evidence/ingests/next-killedbygoogle-v3-0-0/drivers/closure.mjs", "role": "offline lockfile parse and installed-tree survey" },
+      { "path": "evidence/ingests/next-killedbygoogle-v3-0-0/drivers/baseline.sh", "role": "install, build, and export in the declared cell" }
+    ],
+    "status": "working tools committed for reconstructibility. They are not evidence records and carry no schema.",
+    "coreChanges": "none. No enum, package, or core source file was touched by this unit."
+  },
+  "cacheLocations": {
+    "source": ".versionless/cache/next-killedbygoogle-v3-0-0-source",
+    "baseline": ".versionless/cache/next-killedbygoogle-v3-0-0-baseline",
+    "gitIgnored": true,
+    "note": "Both roots are under the repository's git-ignored cache prefix. Nothing in them is published or merged; only the evidence records and the fixture record are."
+  },
+  "priorArtifactSeparation": {
+    "retiredPath": "evidence/ingests/next-killedbygoogle/t128-ingest.json",
+    "action": "not touched, not reused, not extended. Read once, read-only, for the independent cross-check published in reconciliation.json.",
+    "freshSlug": "next-killedbygoogle-v3-0-0",
+    "statement": "This ingest stands on its own five responses. Remove the retired artifact and nothing asserted here changes, except that the cross-check section would have nothing to compare against."
+  },
+  "nonclaims": [
+    "This record describes how the evidence was obtained. It establishes nothing about the application itself.",
+    "No readiness credit, pilot status, certification, or approval follows from a clean chain of custody."
+  ]
+}

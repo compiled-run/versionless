@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "versionless.fixture-runtime-egress.v1",
+  "slug": "next-killedbygoogle-v3-0-0",
+  "revision": "56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+  "purpose": "Enumerate every third-party destination this application reaches for at run time, so that later witness units can block them deliberately instead of discovering them as flake. Derived by reading the source at the pin and by grepping the artifacts of this unit's own production build and static export.",
+  "mustBeBlockedByWitnessUnits": [
+    {
+      "destination": "https://analytics.bale.media/umami.js",
+      "kind": "analytics script (umami)",
+      "declaredIn": "pages/index.tsx, inside <Head>, via the local analytics() helper",
+      "condition": "guarded by `typeof window !== 'undefined'`, so it is unconditional on the client and absent during static generation",
+      "buildTimeObservation": "The string does not appear in the exported out/index.html produced by this unit's build. It is injected into the head after hydration, on every environment including development.",
+      "runtimeEffect": "A page load in a browser will request this script. components/App.tsx and components/Filter.tsx additionally call window.umami.trackEvent on every search term and every filter change, optional-chained, so blocking the script degrades silently rather than throwing.",
+      "blockingIsSafe": true,
+      "blockingRationale": "Every call site is optional-chained (`window.umami?.trackEvent`). No journey depends on it."
+    },
+    {
+      "destination": "https://card.codyogden.com/card.js",
+      "kind": "author's own third-party widget script",
+      "declaredIn": "pages/index.tsx, rendered after <Footer /> via the local card() helper",
+      "condition": "`process.env.NODE_ENV === 'production'` only",
+      "buildTimeObservation": "Present in the exported out/index.html produced by this unit's production build (1 occurrence). A development-mode server will not emit it.",
+      "runtimeEffect": "A production build served to a browser will request this script. Nothing in the application reads a result from it.",
+      "blockingIsSafe": true,
+      "blockingRationale": "No application code references any symbol it defines."
+    },
+    {
+      "destination": "//cdn.carbonads.com/carbon.js?serve=CK7I653N&placement=killedbygooglecom",
+      "kind": "advertising script (Carbon Ads)",
+      "declaredIn": "components/Carbon.tsx, appended as a <script> element by a useEffect; mounted from components/List/index.tsx via showAd()",
+      "condition": "`process.env.NODE_ENV === 'production'` only. In any non-production build showAd() renders the local FallbackAd (a Twitter link) instead and no script element is created.",
+      "protocolNote": "The src is protocol-relative (`//cdn.carbonads.com/...`), so it inherits the page scheme. A witness serving over http:// will see an http request.",
+      "buildTimeObservation": "The identifier carbonads appears 6 times in the exported out/index.html produced by this unit's production build.",
+      "runtimeEffect": "In a production build the ad <li> mounts, appends the script, and on load calls _carbonads.refresh via lodash invoke. On script error it flips state and renders the local FallbackAd instead.",
+      "blockingIsSafe": true,
+      "blockingRationale": "The onerror path is authored: a blocked request renders the FallbackAd. Importantly the ad <li> exists in the <ul> either way, so both upstream count assertions (+1) hold with or without the network.",
+      "warning": "Blocking must produce an error, not a hang. A destination that stalls rather than failing will leave the ad slot in its initial state past the 5-second expect timeout in playwright.config.ts."
+    }
+  ],
+  "outboundLinksNotScripts": {
+    "note": "These are hrefs a user could click. They issue no automatic request and need no blocking, but a witness that clicks through would leave the fixture.",
+    "hosts": [
+      "killedbygoogle.com (canonical, og:url, og:image, twitter:image:src)",
+      "github.com/codyogden/killedbygoogle",
+      "twitter.com/killedbygoogle",
+      "codyogden.com",
+      "netlify.com",
+      "analytics.kbg.rip",
+      "eight press-article URLs in components/PressCoverage.tsx",
+      "one outbound source link per record in graveyard.json (263 records)"
+    ]
+  },
+  "buildTimeNetwork": {
+    "observed": "none required. `next build` and `next export` both completed in this unit's cell with no network access needed beyond the dependency install that preceded them.",
+    "telemetry": "Next.js 12 collects anonymous telemetry by default. This unit set NEXT_TELEMETRY_DISABLED=1 for the build. A witness unit that does not set it should expect an outbound telemetry attempt from the build, not from the page.",
+    "browserslist": "The build printed a caniuse-lite update notice. It is a notice only; nothing was fetched."
+  },
+  "nonclaims": [
+    "This enumeration is derived from the source at the pin and from the artifacts of one production build. It is not a recorded network trace of a running browser, and no unit has yet observed this application's real request set.",
+    "No claim is made that this list is exhaustive for a dependency-injected request, for a redirect issued by any of these destinations, or for anything a future upstream revision would add."
+  ]
+}

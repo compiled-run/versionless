@@ -1,0 +1,71 @@
+{
+  "schemaVersion": "versionless.official-source-attempt.v1",
+  "unit": "lrapr-t006/u4-ingest-killedbygoogle",
+  "slug": "next-killedbygoogle-v3-0-0",
+  "candidate": {
+    "repository": "codyogden/killedbygoogle",
+    "requestedRef": "no ref requested; the pin is a bare commit sha",
+    "expectedCommitSha": "56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+    "expectationSource": "a prior read-only scout unit (lrapr-t006/u2, 2026-08-11); every scout fact is re-verified from the wire and from the extracted tree by this unit rather than trusted",
+    "lane": "LEGACY-NEXT"
+  },
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "result": "started",
+  "network": {
+    "method": "GET",
+    "credentials": "none",
+    "requestEncoding": "identity",
+    "redirectsAllowed": false,
+    "retriesAllowed": false,
+    "alternateHostsAllowed": false,
+    "mode": "VERSIONLESS_NETWORK_MODE=consented; the driver refuses to run without both the mode and the matching consent id in its environment"
+  },
+  "allowlist": [
+    "https://api.github.com/repos/codyogden/killedbygoogle",
+    "https://api.github.com/repos/codyogden/killedbygoogle/git/commits/56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+    "https://api.github.com/repos/codyogden/killedbygoogle/git/trees/<validated-tree-sha>?recursive=1",
+    "https://codeload.github.com/codyogden/killedbygoogle/tar.gz/56809c31592e6ca1edce8af9bfe842fbcdf71f4d"
+  ],
+  "allowlistNote": "Host allowlist enforced in code: api.github.com and codeload.github.com only. The tree sha is not taken from the packet; it is read from the commit object returned on the wire and only then requested.",
+  "caps": {
+    "maximumAcceptedResponses": 8,
+    "maximumApiResponseBytes": 16777216,
+    "maximumArchiveBytes": 134217728,
+    "maximumAggregateWireBytes": 314572800,
+    "requiredArchiveStreams": 2
+  },
+  "requiredRevisionWindow": {
+    "from": "2018-01-01T00:00:00Z",
+    "through": "2023-08-10T00:00:00Z"
+  },
+  "admissionGatesToClearBeforeAcquisitionCounts": [
+    "MIT licence text bytes present at the pinned revision, read from the pin and not from repository metadata alone",
+    "a real substantive application rather than a template, demo scaffold, or documentation site",
+    "legacy Next.js 9-12 era with the pages/ router, which is the required legacy-Next shape for this lane",
+    "an era-coherent revision date",
+    "a journey surface sufficient for later witness work, judged under the charter's \"where the application surface allows it\" qualifier"
+  ],
+  "publication": {
+    "evidenceRoot": "evidence/ingests/next-killedbygoogle-v3-0-0",
+    "cacheRoot": ".versionless/cache/next-killedbygoogle-v3-0-0-source",
+    "baselineCacheRoot": ".versionless/cache/next-killedbygoogle-v3-0-0-baseline",
+    "fixtureRoot": "fixtures/next-killedbygoogle-v3-0-0",
+    "transactional": true,
+    "readinessCredit": false
+  },
+  "priorArtifactSeparation": {
+    "path": "evidence/ingests/next-killedbygoogle/t128-ingest.json",
+    "schema": "versionless.immutable-single-ingest.v1",
+    "status": "retired goal artifact, ruled not grandfathered",
+    "handling": "not touched, not reused, not extended, and not imported. This unit performed its own acquisition end to end. The retired record was read once, read-only, purely to record agreement or disagreement between two independent acquisitions of the same pin; that comparison is published in reconciliation.json and is not a source of any fact asserted here."
+  },
+  "baselineNetwork": {
+    "purpose": "one truthful baseline dependency install and production build attempt for the declared legacy cell",
+    "allowedHosts": ["registry.yarnpkg.com", "registry.npmjs.org"],
+    "note": "Package-manager fetches during the baseline install are performed by the package manager itself and are recorded in aggregate in the baseline record, not URL-by-URL in the source ledger."
+  },
+  "nonclaims": [
+    "Starting this transaction establishes no revision identity, licence, source integrity, dependency closure, framework, build, browser behavior, journey coverage, migration feasibility, pilot status, or production readiness.",
+    "The resulting evidence is reproducibility evidence, not certification or legal approval."
+  ]
+}

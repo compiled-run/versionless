@@ -1,0 +1,129 @@
+{
+  "schemaVersion": "versionless.official-source.v1",
+  "slug": "next-killedbygoogle-v3-0-0",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "attemptSha256": "88a8e69abb0c4179e9620d46d103b00e80bf8aca21c7cfe905d94ba4c420cb28",
+  "result": "source-bound",
+  "startedAt": "2026-08-11T14:28:47Z",
+  "completedAt": "2026-08-11T14:28:48Z",
+  "timestampNote": "Per-request wall-clock timestamps are recorded in probe-ledger.ndjson; the envelope values above are the first request start and the last response completion.",
+  "repository": {
+    "id": 148951571,
+    "fullName": "codyogden/killedbygoogle",
+    "private": false,
+    "fork": false,
+    "archived": false,
+    "disabled": false,
+    "visibility": "public",
+    "defaultBranch": "main",
+    "createdAt": "2018-09-16T00:52:08Z",
+    "responseBytes": 5629,
+    "responseSha256": "0ece7137078595b08fa68d31fe6a56057fc68a9f161806b175ae561197babe80",
+    "mutabilityNote": "This response is live repository metadata, not pinned content. Its body changes as the upstream repository changes and it is recorded only as observed at acquisition time. The pinned revision below is what this ingest is bound to."
+  },
+  "revision": {
+    "pinnedBy": "commit sha",
+    "commitSha": "56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+    "commitMessage": "v3.0.0",
+    "authorDate": "2022-02-06T02:55:11Z",
+    "committerDate": "2022-02-06T02:55:11Z",
+    "commitVerification": "unsigned",
+    "parents": ["43b3f30922e5d44d9d7225645f72679ec95cf1d5"],
+    "rootTreeSha": "b8ac7b4fc3a1e12240f1848f6e8d98c1c7d80763",
+    "treeEntries": 86,
+    "treeBlobs": 72,
+    "treeDirectories": 14,
+    "treeSymlinks": 0,
+    "treeGitlinks": 0,
+    "treeExecutableBlobs": 2,
+    "treeTruncated": false,
+    "expectedCommitShaFromPriorScout": "56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+    "expectedCommitShaConfirmedFromWire": true,
+    "tagUnknown": "No ref or tag endpoint was requested, so whether an annotated or lightweight tag named v3.0.0 points at this commit is unknown. The commit message is the literal string \"v3.0.0\"; that is a message, not a tag, and it is not treated as one.",
+    "revisionWindow": "2022-02-06 falls inside the required window 2018-01-01 through 2023-08-10"
+  },
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/codyogden/killedbygoogle",
+      "status": 200,
+      "bytes": 5629,
+      "sha256": "0ece7137078595b08fa68d31fe6a56057fc68a9f161806b175ae561197babe80"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/codyogden/killedbygoogle/git/commits/56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+      "status": 200,
+      "bytes": 1113,
+      "sha256": "07451aa8996d3dd3e594b9390e070795cd5e3bc3aeb1156f520ea4c88d759093"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/codyogden/killedbygoogle/git/trees/b8ac7b4fc3a1e12240f1848f6e8d98c1c7d80763?recursive=1",
+      "status": 200,
+      "bytes": 20306,
+      "sha256": "f8260bf89edc92d6cb0f3e7da50d25c30c39b4bda1900fc3f8edadd8c4a16e4a"
+    },
+    {
+      "endpoint": "https://codeload.github.com/codyogden/killedbygoogle/tar.gz/56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+      "status": 200,
+      "bytes": 370006,
+      "sha256": "c28878d0f65b56aa595763c852477fb0c1e3533e5c7f7ea9daa2be16f102368d",
+      "stream": 1
+    },
+    {
+      "endpoint": "https://codeload.github.com/codyogden/killedbygoogle/tar.gz/56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+      "status": 200,
+      "bytes": 370006,
+      "sha256": "c28878d0f65b56aa595763c852477fb0c1e3533e5c7f7ea9daa2be16f102368d",
+      "stream": 2
+    }
+  ],
+  "archiveParity": {
+    "singleRoot": "killedbygoogle-56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+    "safeEntries": 86,
+    "regularFiles": 72,
+    "directories": 14,
+    "specialEntries": 0,
+    "gitBlobs": 72,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "normalizedManifestSha256": "9c7a0cfab99fc5d765a1da1f2f2325b1a5a3f7719556fee4a883d7d04c4b5344",
+    "normalizedManifestDefinition": "sha256 over the newline-terminated listing of `<git-blob-sha>  <path>` for every regular file in the extracted archive, sorted by path.",
+    "method": "Blob-level: every regular file in the extracted archive was hashed as a git blob object and compared byte-for-byte against the sha recorded for the same path in the recursive git tree. Detail in reconciliation.json.",
+    "pathTraversalEntries": 0,
+    "absolutePathEntries": 0
+  },
+  "largeFileStorage": {
+    "gitattributesPresent": false,
+    "lfsPointerFilesFound": 0,
+    "method": "Every file at or under 1 KiB was checked for the git-lfs pointer preamble. Absence of .gitattributes was not treated as sufficient evidence on its own.",
+    "consequence": "All 72 blobs are real content. No smudge filter is needed to obtain the working tree."
+  },
+  "transaction": {
+    "attemptedRequests": 5,
+    "acceptedResponses": 5,
+    "acceptedWireBytes": 767060,
+    "acceptedDecodedBytes": 767060,
+    "redirectsObserved": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "credentialsSent": 0,
+    "archivesByteIdentical": true,
+    "archiveMatchesGitTree": true,
+    "publishedSource": true,
+    "readinessCredit": false,
+    "networkClosedAfterAcquisition": true,
+    "networkClosedMeaning": "No further Versionless-issued request was made after the fifth response. The baseline install that followed is performed by the package manager against its declared registry hosts and is reported in aggregate in baseline-attempt.json; it is outside this source transaction, not an exception to it."
+  },
+  "cache": {
+    "root": ".versionless/cache/next-killedbygoogle-v3-0-0-source",
+    "archive1": ".versionless/cache/next-killedbygoogle-v3-0-0-source/archive/archive-1.tar.gz",
+    "archive2": ".versionless/cache/next-killedbygoogle-v3-0-0-source/archive/archive-2.tar.gz",
+    "verifiedSource": ".versionless/cache/next-killedbygoogle-v3-0-0-source/verify/extracted",
+    "gitIgnored": true,
+    "rawMetadataPortable": false
+  },
+  "nonclaims": [
+    "The commit carries no signature; no signer authenticity is established, and the author and committer identities carried by the commit object are upstream metadata, not a verification result.",
+    "No dependency closure, build, browser behavior, journey coverage, migration feasibility, pilot status, production readiness, certification, or legal approval is established by this record."
+  ]
+}

@@ -1,0 +1,193 @@
+{
+  "id": "next-killedbygoogle-v3-0-0",
+  "lane": "LEGACY-NEXT",
+  "source": {
+    "repository": "https://github.com/codyogden/killedbygoogle",
+    "ref": null,
+    "refNote": "Pinned by bare commit sha. No ref or tag endpoint was queried, so whether a tag named v3.0.0 points here is unknown; the commit message is the literal string \"v3.0.0\" and is not treated as a tag.",
+    "revision": "56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+    "revisionDate": "2022-02-06T02:55:11Z",
+    "commitVerification": "unsigned",
+    "rootTreeSha": "b8ac7b4fc3a1e12240f1848f6e8d98c1c7d80763",
+    "archiveUrl": "https://codeload.github.com/codyogden/killedbygoogle/tar.gz/56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+    "archiveBytes": 370006,
+    "archiveSha256": "c28878d0f65b56aa595763c852477fb0c1e3533e5c7f7ea9daa2be16f102368d",
+    "archiveRoot": "killedbygoogle-56809c31592e6ca1edce8af9bfe842fbcdf71f4d",
+    "normalizedManifestSha256": "9c7a0cfab99fc5d765a1da1f2f2325b1a5a3f7719556fee4a883d7d04c4b5344",
+    "treeBlobs": 72,
+    "lfsPointers": 0,
+    "upstreamArchived": false,
+    "license": "MIT",
+    "licensePath": "LICENSE",
+    "licenseBytes": 1067,
+    "licenseGitBlobSha": "a7069eeadecd0e520bc416f05ebc1a70350af5dc",
+    "licenseSha256": "10547fb81e311e470cdcda5a273bac2a76f50ded6b33ce4362bcb05e1176d5e0",
+    "licenseCopyright": "Copyright (c) 2020 Cody Ogden",
+    "frontendRoot": ".",
+    "packagePath": "package.json",
+    "packageSha256": "5042dd8b31a7e1b37c2e0ed529cf3db50388660c9616c08e6445664ab59481c4",
+    "packageLockPath": "yarn.lock",
+    "packageLockSha256": "a676ee932cef5e54d469dc6d1e040e50f42f9cc88beb16ae5c72c13e26ebc48a"
+  },
+  "application": {
+    "product": "Killed by Google — a public log of discontinued Google products, services, and devices",
+    "packageName": "killedbygoogle",
+    "packageVersion": "3.0.0",
+    "frontend": "Next.js 12 pages/ router application, TypeScript, a single authored route rendered by getStaticProps",
+    "backend": "none. All data is the committed graveyard.json (91,452 bytes, 263 records) imported at build time. No API route, no server, no database, no auth.",
+    "next": "^12.0.10",
+    "react": "^17.0.2",
+    "reactDom": "^17.0.2",
+    "typescript": "^4.5.5",
+    "router": "pages/ (pages/index.tsx, pages/_app.tsx); no app/ directory exists at this revision",
+    "rendering": "static generation via getStaticProps; the build emits / as SSG and /404 as static",
+    "state": "React useState in components/App.tsx only; no Redux, no query library, no context",
+    "styling": "@emotion/react 11.7.1 and @emotion/styled 11.6.0 with the @emotion/babel-preset-css-prop babel preset",
+    "uiKit": "none; react-select 5.2.2 is the only widget dependency",
+    "dataRecords": 263,
+    "dataTypeDistribution": { "service": 192, "app": 50, "hardware": 21 },
+    "sourceModules": 20,
+    "distinctRoutePaths": 1,
+    "e2eSpecsUpstream": 2,
+    "unitTestsUpstream": 1
+  },
+  "legacyCell": {
+    "declared": false,
+    "declaredNote": "The repository pins no Node version: package.json has no engines block and there is no .nvmrc. The only concrete statement is that both GitHub Actions workflows pin actions/setup-node to node-version '16.x'.",
+    "bundler": "webpack 5, vendored inside next 12.0.10 rather than resolvable as a separate dependency",
+    "bundlerCeiling": "whatever next 12.0.10 vendors; the repository cannot select a bundler independently",
+    "compiler": "Babel. next build reports SWC disabled because of the custom .babelrc, so @next/swc-darwin-arm64 is installed but unused.",
+    "toolchain": "next",
+    "node": {
+      "used": "16.20.2",
+      "platform": "darwin-arm64",
+      "url": "https://nodejs.org/dist/v16.20.2/node-v16.20.2-darwin-arm64.tar.gz",
+      "sha256": "6a5c4108475871362d742b988566f3fe307f6a67ce14634eb3fbceb4f9eea88c",
+      "reusedFrom": "already acquired and digest-verified in this workspace (fixtures/react-boilerplate-v4/fixture.json, fixtures/angular-phonecat/fixture.json); no new network request",
+      "translationRequired": "none",
+      "honestLabel": "in-lane, not a pin: 16.20.2 is the final 16.x release and sits inside the repository's own declared CI lane. Next 12's floor is Node >= 12.22.0, so Node 14 would also run; it was not exercised."
+    },
+    "packageManager": "yarn 1.22.19 (classic), required by the committed yarn v1 lockfile",
+    "installCommand": "yarn install --frozen-lockfile --ignore-scripts --non-interactive",
+    "buildCommand": "yarn build",
+    "buildCommandExpands": "next build",
+    "exportCommand": "next export",
+    "lifecycleScripts": "disabled during install",
+    "rationale": "There is no declared cell to honour, so the nearest honest cell is the Node line the repository's own CI declares, run on a runtime whose digest was already verified in this workspace."
+  },
+  "lockState": {
+    "file": "yarn.lock",
+    "committedWithSource": true,
+    "format": "yarn classic (v1)",
+    "bytes": 256958,
+    "searchedFor": ["yarn.lock", "package-lock.json", "npm-shrinkwrap.json", "pnpm-lock.yaml"],
+    "searchScope": "the full recursive git tree at the pinned revision (72 blobs)",
+    "entryBlocks": 710,
+    "distinctNameVersionPairs": 710,
+    "everyEntryHasResolvedUrl": true,
+    "everyEntryHasIntegrityHash": true,
+    "integrityAlgorithms": ["sha1", "sha512"],
+    "registryHosts": ["registry.yarnpkg.com"],
+    "gitOrForkSources": 0,
+    "consequence": "The closure is pinned by the repository itself and reproduced without lockfile modification. This is the reproducible case, not the risky one.",
+    "caveat": "The integrity algorithm set mixes legacy sha1 with sha512, and the lockfile's integrity hashes were not independently re-verified against the registry by this unit.",
+    "detail": "evidence/ingests/next-killedbygoogle-v3-0-0/closure.json"
+  },
+  "baseline": {
+    "installOutcome": "succeeded",
+    "installDetail": "yarn 1.22.19 on Node 16.20.2 placed 713 package directories with --frozen-lockfile holding and lifecycle scripts disabled.",
+    "buildOutcome": "succeeded",
+    "buildDetail": "next build passed the repository's own typecheck (typescript 4.5.5) and compiled through Babel in 8 seconds, emitting 3 static pages: / at 64.6 kB (140 kB first load), /404 at 2.84 kB, /_app shared at 75.8 kB.",
+    "buildArtifactProduced": true,
+    "exportOutcome": "succeeded",
+    "exportDetail": "next export wrote 2 HTML documents plus _next/static, _next/data, and the public assets into out/. The static-export path is the migration story for this fixture: upstream's own preview script is bin/graveyard && yarn build && next export && http-server out/.",
+    "artifactsLocation": "git-ignored cache only; nothing published",
+    "detail": "evidence/ingests/next-killedbygoogle-v3-0-0/baseline-attempt.json"
+  },
+  "candidateJourneys": [
+    {
+      "id": "search-by-name-and-description",
+      "strength": "strong",
+      "upstreamSpec": "e2e/search.spec.ts",
+      "summary": "type into input#searchBox and assert the list settles to a specific count; search is debounced 350 ms and matches name and description case-insensitively with regex metacharacters escaped",
+      "countArithmetic": "'Google+' matches exactly 1 of 263 records; the upstream assertion of 2 includes the non-data <li> ad slot rendered as the first child of the same <ul>"
+    },
+    {
+      "id": "react-select-type-filter",
+      "strength": "strong",
+      "upstreamSpec": "e2e/filter.spec.ts",
+      "summary": "open the react-select 5.2.2 listbox at #listFilter (instanceId 'filter-select', so #react-select-filter-select-listbox is stable) and assert the filtered count",
+      "countArithmetic": "50 records have type 'app', so the upstream assertion resolves to 51, again including the ad <li>",
+      "fragility": "the option is selected by nth-child position, not by label"
+    },
+    {
+      "id": "search-x-filter-combined-state",
+      "strength": "compound",
+      "upstreamSpec": null,
+      "summary": "apply a type filter and a search term together; components/App.tsx recomputes the list in one effect keyed on both, and clearing the search must return to the filtered subset rather than to all 263 records",
+      "status": "no upstream spec exists; a later unit would have to author it"
+    }
+  ],
+  "journeyLimitation": {
+    "distinctRoutePaths": 1,
+    "statement": "Admitted under the charter's \"where the application surface allows it\" qualifier. This application has one authored route, no navigation, no form submission, no authentication, no persistence, and no server. It cannot exercise routing, data mutation, session, or multi-page migration behavior, and no result obtained from it may be generalised to Next.js applications with multiple routes, API routes, middleware, or server rendering."
+  },
+  "thirdPartyEgress": {
+    "mustBeBlockedByWitnessUnits": [
+      { "destination": "https://analytics.bale.media/umami.js", "when": "client-side, unconditional (guarded only by typeof window)", "safeToBlock": true },
+      { "destination": "https://card.codyogden.com/card.js", "when": "production builds only", "safeToBlock": true },
+      { "destination": "//cdn.carbonads.com/carbon.js?serve=CK7I653N&placement=killedbygooglecom", "when": "production builds only; protocol-relative", "safeToBlock": true, "warning": "must fail fast rather than hang; the authored onerror path renders a local fallback, but a stalled request will outlast the 5-second expect timeout" }
+    ],
+    "note": "The ad <li> exists whether or not the ad script loads, so both upstream count assertions hold offline.",
+    "detail": "evidence/ingests/next-killedbygoogle-v3-0-0/runtime-egress.json"
+  },
+  "assetExclusions": {
+    "pressOutletLogos": [
+      "public/features/ars-technica-logo.png",
+      "public/features/bgr-logo.png",
+      "public/features/business-insider-logo.png",
+      "public/features/fast-company-logo.png",
+      "public/features/forbes-logo.png",
+      "public/features/fortune-logo.png",
+      "public/features/gizmodo-logo.png",
+      "public/features/lifehacker-logo.png",
+      "public/features/the-next-web-logo.png"
+    ],
+    "platformMarks": ["public/github.svg", "public/twitter.svg", "public/twitter-blue.svg"],
+    "policy": "Third-party marks carried inside the immutable archive only. Not to be extracted, re-hosted, re-encoded, thumbnailed, or reused as Versionless assets, and not to appear legibly in any published capture. They sit in the footer, below the journey surface, so this constrains nothing the journeys need.",
+    "detail": "evidence/ingests/next-killedbygoogle-v3-0-0/license.json"
+  },
+  "knownRisks": [
+    "One authored route. This fixture's evidentiary reach is narrow by construction; see journeyLimitation.",
+    "Both upstream count assertions silently depend on a non-data <li> ad slot being present. Any later work that removes or conditionally renders that slot changes the expected counts by one.",
+    "The filter spec selects its option by nth-child position inside react-select's internal listbox DOM, so it is coupled to react-select 5.2.2 internals rather than to a label.",
+    "A production build reaches three third-party script hosts, two of which only appear in production. A witness that builds for production and forgets to block them will observe network flake that has nothing to do with the migration under test.",
+    "lodash is imported by components/Carbon.tsx without being a declared dependency; it works today only because a transitive copy is hoisted to the root of node_modules.",
+    "The upstream Playwright workflow runs against a deployed Netlify preview URL, not a local server, and playwright.config.ts has its webServer block commented out. Any local witness run must supply its own server and base URL.",
+    "graveyard.json names third-party products and links to third-party articles. It is public commentary data, not Versionless content, and must not be edited to suit a test."
+  ],
+  "evidence": {
+    "attempt": "evidence/ingests/next-killedbygoogle-v3-0-0/attempt.json",
+    "source": "evidence/ingests/next-killedbygoogle-v3-0-0/source.json",
+    "license": "evidence/ingests/next-killedbygoogle-v3-0-0/license.json",
+    "provenance": "evidence/ingests/next-killedbygoogle-v3-0-0/provenance.json",
+    "admission": "evidence/ingests/next-killedbygoogle-v3-0-0/admission.json",
+    "reconciliation": "evidence/ingests/next-killedbygoogle-v3-0-0/reconciliation.json",
+    "closure": "evidence/ingests/next-killedbygoogle-v3-0-0/closure.json",
+    "baseline": "evidence/ingests/next-killedbygoogle-v3-0-0/baseline-attempt.json",
+    "runtimeEgress": "evidence/ingests/next-killedbygoogle-v3-0-0/runtime-egress.json",
+    "tree": "evidence/ingests/next-killedbygoogle-v3-0-0/probe-tree.json",
+    "ledger": "evidence/ingests/next-killedbygoogle-v3-0-0/probe-ledger.ndjson",
+    "transcript": "evidence/ingests/next-killedbygoogle-v3-0-0/transcript.ndjson"
+  },
+  "priorArtifactSeparation": {
+    "retiredPath": "evidence/ingests/next-killedbygoogle/t128-ingest.json",
+    "statement": "A retired-goal artifact for the same upstream pin exists under the old slug and was ruled not grandfathered. It was not touched, reused, or extended. This fixture stands on its own acquisition; the retired record was read read-only for an independent cross-check, which agreed on every immutable fact."
+  },
+  "nonclaims": [
+    "This fixture record fixes an identity, records the cell in which a baseline ran, and describes an application surface. It establishes no browser behavior, no journey pass, no migration feasibility, no pilot status, no production readiness, no certification, and no legal approval.",
+    "No adapter, transform, or migration lane is declared for this fixture by the unit that ingested it.",
+    "The build and export succeeded, which shows the application compiles and exports in one cell. It does not show that the exported page renders correctly, and no page has been loaded in a browser by any Versionless unit.",
+    "The journey definitions here are derived by reading source and data offline. No journey has been executed."
+  ]
+}
