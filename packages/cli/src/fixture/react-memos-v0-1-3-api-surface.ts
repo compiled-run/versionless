@@ -7,8 +7,11 @@ import {
 	MEMOS_PROJECTED_ENDPOINTS,
 	MEMOS_PROJECTION_BEHAVIOR_DIGEST,
 	MEMOS_SEED,
+	MEMOS_SEED_AMENDMENT,
+	MEMOS_SIGNIN_VALIDATOR,
 	MEMOS_UNPROJECTED_ENDPOINTS,
 	memosSeedDigest,
+	memosSigninValidates,
 } from '../witness/memos-projection.ts';
 
 /**
@@ -491,6 +494,17 @@ export type MemosApiSurfaceRecord = {
 		seedFixture: string;
 		seedSha256: string;
 		behaviorDigest: string;
+		/**
+		 * The recorded credentials-only amendment to the frozen seed, carrying the
+		 * digests it superseded so the move is auditable from the evidence alone.
+		 */
+		seedAmendment: typeof MEMOS_SEED_AMENDMENT;
+		signinValidator: {
+			source: string;
+			config: typeof MEMOS_SIGNIN_VALIDATOR;
+			ownerEmailPasses: boolean;
+			ownerPasswordPasses: boolean;
+		};
 	};
 	scope: string;
 };
@@ -534,6 +548,13 @@ export async function buildMemosApiSurfaceRecord(
 			seedFixture: 'fixtures/react-memos-v0-1-3/witness-projection-seed.json',
 			seedSha256: memosSeedDigest(),
 			behaviorDigest: MEMOS_PROJECTION_BEHAVIOR_DIGEST,
+			seedAmendment: MEMOS_SEED_AMENDMENT,
+			signinValidator: {
+				source: 'web/src/pages/Signin.tsx + web/src/helpers/validator.ts at the pinned revision',
+				config: MEMOS_SIGNIN_VALIDATOR,
+				ownerEmailPasses: memosSigninValidates(MEMOS_SEED.users[0]!.email),
+				ownerPasswordPasses: memosSigninValidates(MEMOS_SEED.credentials[0]!.password),
+			},
 		},
 		scope: 'API projection only: this unit publishes no journeys, no witness receipt and no witness run entry.',
 	};

@@ -7,15 +7,15 @@
 			"updatedTs": 1785574800,
 			"rowStatus": "NORMAL",
 			"role": "OWNER",
-			"email": "owner@versionless-evidence.invalid",
-			"name": "owner@versionless-evidence.invalid",
+			"email": "owner@evidence.invalid",
+			"name": "owner@evidence.invalid",
 			"openId": "synthetic-open-id-owner"
 		}
 	],
 	"credentials": [
 		{
 			"userId": 1,
-			"password": "synthetic-owner-passphrase"
+			"password": "synthetic-pass"
 		}
 	],
 	"memos": [
@@ -80,5 +80,5 @@
 		"mode": "prod",
 		"version": "0.1.3"
 	},
-	"sha256": "cf422f2cda23b4c777d27b2bccd68a24b53cac027dbe57347e1b150fc8cdb7ff"
+	"sha256": "3694ff4647588679036bbd713baf49f78513e04c34221af4aa4968e9f887fced"
 }

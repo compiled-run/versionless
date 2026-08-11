@@ -1,5 +1,6 @@
 import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
+import { join } from 'pathe';
 import { describe, expect, it } from 'vitest';
 import {
 	buildMemosApiSurfaceRecord,
@@ -16,7 +17,10 @@ import {
 	MEMOS_PROJECTED_ENDPOINTS,
 	MEMOS_PROJECTION_BEHAVIOR_DIGEST,
 	MEMOS_SEED,
+	MEMOS_SEED_AMENDMENT,
+	MEMOS_SIGNIN_VALIDATOR,
 	memosSeedDigest,
+	memosSigninValidates,
 } from '../src/witness/memos-projection.ts';
 
 const pinnedTreePresent = existsSync(MEMOS_SOURCE_ROOT);
@@ -65,6 +69,15 @@ describe('Memos pinned API surface enumeration', () => {
 		expect(record.withheldEndpoints[0]?.reason.length).toBeGreaterThan(0);
 		expect(record.projection.behaviorDigest).toBe(MEMOS_PROJECTION_BEHAVIOR_DIGEST);
 		expect(record.projection.seedSha256).toBe(memosSeedDigest());
+		// The credentials-only amendment is published with the digests it moved.
+		expect(record.projection.seedAmendment).toEqual(MEMOS_SEED_AMENDMENT);
+		expect(record.projection.seedAmendment.supersededSeedSha256).not.toBe(memosSeedDigest());
+		expect(record.projection.seedAmendment.supersededBehaviorDigest).not.toBe(
+			MEMOS_PROJECTION_BEHAVIOR_DIGEST,
+		);
+		expect(record.projection.signinValidator.config).toEqual(MEMOS_SIGNIN_VALIDATOR);
+		expect(record.projection.signinValidator.ownerEmailPasses).toBe(true);
+		expect(record.projection.signinValidator.ownerPasswordPasses).toBe(true);
 		// This unit publishes the projection only.
 		expect(record.scope).toContain('no journeys');
 	});
@@ -121,6 +134,58 @@ describe('Memos pinned API surface enumeration', () => {
 			MEMOS_SEED.credentials.every((entry) => entry.password.startsWith('synthetic-')),
 		).toBe(true);
 	});
+
+	it('seeds an owner pair the pinned sign-in form would actually send, and records why it moved', () => {
+		const owner = MEMOS_SEED.users[0]!;
+		const password = MEMOS_SEED.credentials[0]!.password;
+		// The application's own validator is the gate a journey has to clear.
+		expect(memosSigninValidates(owner.email)).toBe(true);
+		expect(memosSigninValidates(password)).toBe(true);
+		expect(owner.email.length).toBeLessThanOrEqual(MEMOS_SIGNIN_VALIDATOR.maxLength);
+		expect(password.length).toBeLessThanOrEqual(MEMOS_SIGNIN_VALIDATOR.maxLength);
+		// The superseded pair is exactly what that validator refused, which is the
+		// whole authority for the amendment.
+		expect(memosSigninValidates(MEMOS_SEED_AMENDMENT.supersededOwnerEmail)).toBe(false);
+		expect(memosSigninValidates(MEMOS_SEED_AMENDMENT.supersededOwnerPassword)).toBe(false);
+		expect(owner.email).not.toBe(MEMOS_SEED_AMENDMENT.supersededOwnerEmail);
+		expect(password).not.toBe(MEMOS_SEED_AMENDMENT.supersededOwnerPassword);
+		// Credentials only: everything the amendment declares unchanged is unchanged.
+		expect(owner.name).toBe(owner.email);
+		expect(MEMOS_SEED.profile).toEqual({ mode: 'prod', version: '0.1.3' });
+		expect(MEMOS_SEED.memos.map((row) => row.content).join('\n')).not.toContain('@');
+		expect(MEMOS_SEED.shortcuts.map((row) => row.title)).toEqual(['Evidence', 'Migration']);
+		// Still plainly synthetic and still unresolvable.
+		expect(owner.email.endsWith('.invalid')).toBe(true);
+		expect(password.startsWith('synthetic-')).toBe(true);
+	});
+
+	it.skipIf(!pinnedTreePresent)(
+		'transcribes the sign-in validator from the pinned source rather than remembering it',
+		async () => {
+			const signin = await readFile(
+				join(MEMOS_SOURCE_ROOT, 'src/pages/Signin.tsx'),
+				'utf8',
+			);
+			const validator = await readFile(
+				join(MEMOS_SOURCE_ROOT, 'src/helpers/validator.ts'),
+				'utf8',
+			);
+			for (const [key, value] of Object.entries(MEMOS_SIGNIN_VALIDATOR))
+				expect(signin).toContain(`${key}: ${String(value)},`);
+			// Both fields are validated, and both before the request is ever made.
+			expect(signin).toContain('validate(email, validateConfig)');
+			expect(signin).toContain('validate(password, validateConfig)');
+			expect(signin.indexOf('validate(password, validateConfig)')).toBeLessThan(
+				signin.indexOf('await api.login(email, password)'),
+			);
+			// The three rules this projection transcribes are the three the pinned
+			// validator actually enforces beyond length.
+			expect(validator).toContain('config.noSpace && text.includes(" ")');
+			expect(validator).toContain('config.noChinese && chineseReg.test(text)');
+			expect(validator).toContain('text.length < config.minLength');
+			expect(validator).toContain('text.length > config.maxLength');
+		},
+	);
 
 	it.skipIf(!pinnedTreePresent)('agrees with the pinned tree it claims to describe', async () => {
 		const verification = await verifyMemosApiSurface();

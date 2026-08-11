@@ -5,7 +5,9 @@ import {
 	MEMOS_PROJECTED_ENDPOINTS,
 	MEMOS_PROJECTION_BEHAVIOR_DIGEST,
 	MEMOS_SEED,
+	MEMOS_SEED_AMENDMENT,
 	MEMOS_UNPROJECTED_ENDPOINTS,
+	memosSigninValidates,
 	memosTagsInContent,
 	replayMemosProjectionBehavior,
 	type MemosApiResponse,
@@ -81,6 +83,32 @@ describe('synthetic Memos API projection', () => {
 		expect(entry?.decision).toBe('refused-unprojected');
 		expect(entry?.endpoint).toBe(withheld.endpoint);
 		expect(MEMOS_PROJECTED_ENDPOINTS).not.toContain(withheld.endpoint);
+	});
+
+	it('opens the gate with a pair the pinned sign-in form would send unaltered', async () => {
+		// The pinned Signin.tsx validates BOTH fields before it calls api.login, so
+		// a pair the projection accepts is only usable if the form sends it.
+		expect(memosSigninValidates(OWNER_EMAIL)).toBe(true);
+		expect(memosSigninValidates(MEMOS_OWNER_PASSWORD)).toBe(true);
+		expect(memosSigninValidates(MEMOS_SEED_AMENDMENT.supersededOwnerPassword)).toBe(false);
+		const projection = createMemosProjection();
+		const response = await call(projection, 'POST', '/api/auth/login', {
+			body: { email: OWNER_EMAIL, password: MEMOS_OWNER_PASSWORD },
+		});
+		expect(response?.status).toBe(200);
+		expect((await call(projection, 'GET', '/api/user/me'))?.status).toBe(200);
+		// The superseded passphrase no longer opens anything.
+		const stale = createMemosProjection();
+		expect(
+			(
+				await call(stale, 'POST', '/api/auth/login', {
+					body: {
+						email: MEMOS_SEED_AMENDMENT.supersededOwnerEmail,
+						password: MEMOS_SEED_AMENDMENT.supersededOwnerPassword,
+					},
+				})
+			)?.status,
+		).toBe(401);
 	});
 
 	it('holds the session gate closed until sign-in and opens it again on sign-out', async () => {

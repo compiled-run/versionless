@@ -96,6 +96,19 @@ const seconds = (iso: string): number => Math.floor(Date.parse(iso) / 1000);
  * The site owner. The address is on `.invalid`, which can never resolve, and
  * the passphrase below is labelled synthetic in its own value: neither is a
  * credential for anything that exists.
+ *
+ * The owner pair is ALSO constrained by the pinned application. `pages/Signin.tsx`
+ * validates both the email field and the password field with its own
+ * `{ minLength: 4, maxLength: 24, noSpace: true, noChinese: true }` config
+ * BEFORE it ever calls `api.login`, so a pair the projection would accept over
+ * the wire is worthless if the pinned form refuses to send it. The first frozen
+ * pair (a 34-character address and a 26-character passphrase) was refused by
+ * that validator on length, which closed every journey behind the
+ * `GET /api/user/me` gate: signup is unreachable because the seed holds an
+ * OWNER, and the dev prefill is unreachable because `profile.mode` is `prod`.
+ *
+ * @see MEMOS_SEED_AMENDMENT for the amendment that replaced that pair, the
+ * authority it was made under, and the digests it superseded.
  */
 const OWNER: MemosUser = {
 	id: 1,
@@ -103,12 +116,76 @@ const OWNER: MemosUser = {
 	updatedTs: seconds('2026-08-01T09:00:00.000Z'),
 	rowStatus: 'NORMAL',
 	role: 'OWNER',
-	email: 'owner@versionless-evidence.invalid',
-	name: 'owner@versionless-evidence.invalid',
+	email: 'owner@evidence.invalid',
+	name: 'owner@evidence.invalid',
 	openId: 'synthetic-open-id-owner',
 };
 
-export const MEMOS_OWNER_PASSWORD = 'synthetic-owner-passphrase' as const;
+export const MEMOS_OWNER_PASSWORD = 'synthetic-pass' as const;
+
+/**
+ * The pinned sign-in validator, transcribed from `web/src/pages/Signin.tsx` at
+ * {@link MEMOS_PINNED_REVISION}. It is held here so the seeded owner pair can be
+ * checked against the application's own rule by test rather than by reading.
+ */
+export const MEMOS_SIGNIN_VALIDATOR = Object.freeze({
+	minLength: 4,
+	maxLength: 24,
+	noSpace: true,
+	noChinese: true,
+});
+
+/**
+ * The pinned validator's own Chinese-character class, transcribed from
+ * `helpers/validator.ts` (`/[　㐀-䶿一-鿿]/`) as code-unit
+ * ranges rather than a pattern, so the transcription is readable as data.
+ */
+const MEMOS_CHINESE_RANGES = Object.freeze([
+	[0x3000, 0x3000],
+	[0x3400, 0x4dbf],
+	[0x4e00, 0x9fff],
+] as const);
+
+/** Whether the pinned `Signin.tsx` would send this value rather than toast it. */
+export function memosSigninValidates(text: string): boolean {
+	for (let index = 0; index < text.length; index += 1) {
+		const unit = text.charCodeAt(index);
+		if (MEMOS_CHINESE_RANGES.some(([low, high]) => unit >= low && unit <= high)) return false;
+	}
+	return (
+		text.length >= MEMOS_SIGNIN_VALIDATOR.minLength &&
+		text.length <= MEMOS_SIGNIN_VALIDATOR.maxLength &&
+		!text.includes(' ')
+	);
+}
+
+/**
+ * The recorded seed amendment.
+ *
+ * The projection's behaviour is frozen by digest precisely so a journey cannot
+ * drift it. That freeze is not a reason to keep a seed the pinned application's
+ * own validator rejects: the freeze exists to prevent journey-driven drift, not
+ * to enshrine credentials no journey can ever use. Under the recorded PM ruling
+ * the owner pair — and ONLY the owner pair — was replaced with validator-passing,
+ * still obviously synthetic values, and both frozen digests were re-taken. No
+ * other seeded record, response envelope, session rule, mutation clock step or
+ * ledger field changed, so every non-auth step of
+ * {@link MEMOS_PROJECTION_BEHAVIOR_TRANSCRIPT} replays byte-identically apart
+ * from the owner's own two values travelling through it.
+ */
+export const MEMOS_SEED_AMENDMENT = Object.freeze({
+	unit: 'lrapr-t006/u12b-memos-seed-and-witness',
+	authority: 'PM ruling recorded in the T006 unit log: the seed amendment is authorized',
+	scope: 'credentials-only — the seeded owner email, the owner name derived from it, and the owner passphrase',
+	reason:
+		"the pinned pages/Signin.tsx validates BOTH fields with {minLength:4,maxLength:24,noSpace,noChinese} before calling api.login, so the frozen pair (34-character email, 26-character password) was refused by the application's own client-side validator and no journey could open the GET /api/user/me gate: signup is closed because the seed holds an OWNER and /api/status reports one, and the dev prefill is disabled because profile.mode is 'prod'",
+	supersededOwnerEmail: 'owner@versionless-evidence.invalid',
+	supersededOwnerPassword: 'synthetic-owner-passphrase',
+	supersededSeedSha256: 'cf422f2cda23b4c777d27b2bccd68a24b53cac027dbe57347e1b150fc8cdb7ff',
+	supersededBehaviorDigest: '1672b43f0f01379b74890013cf145ed87164873cff037d4b6ace072a1fa79493',
+	unchanged:
+		'memos, shortcuts, profile, every response envelope, the session state machine, the mutation clock and the ledger shape are untouched by this amendment',
+});
 
 const memo = (
 	id: number,
@@ -923,6 +1000,12 @@ export async function replayMemosProjectionBehavior(): Promise<MemosBehaviorRepl
  * machine, the mutation clock or the ledger shape moves this value, so a
  * journey unit cannot quietly reshape the projection underneath its own
  * assertions.
+ *
+ * It moved exactly once, from `1672b43f0f01379b74890013cf145ed87164873cff037d4b6ace072a1fa79493`
+ * to the value below, under {@link MEMOS_SEED_AMENDMENT}: the owner credentials
+ * the transcript signs in with are part of the replayed bytes, so amending them
+ * necessarily re-takes this digest. Nothing else in the transcript's answers
+ * changed.
  */
 export const MEMOS_PROJECTION_BEHAVIOR_DIGEST =
-	'1672b43f0f01379b74890013cf145ed87164873cff037d4b6ace072a1fa79493' as const;
+	'b17da56bba70249f1d3b25b2837083b80ba0ae8c1c2899f710fc1eaf9b059902' as const;

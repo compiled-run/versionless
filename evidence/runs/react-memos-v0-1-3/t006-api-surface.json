@@ -429,8 +429,30 @@
 			"shortcut.delete"
 		],
 		"seedFixture": "fixtures/react-memos-v0-1-3/witness-projection-seed.json",
-		"seedSha256": "cf422f2cda23b4c777d27b2bccd68a24b53cac027dbe57347e1b150fc8cdb7ff",
-		"behaviorDigest": "1672b43f0f01379b74890013cf145ed87164873cff037d4b6ace072a1fa79493"
+		"seedSha256": "3694ff4647588679036bbd713baf49f78513e04c34221af4aa4968e9f887fced",
+		"behaviorDigest": "b17da56bba70249f1d3b25b2837083b80ba0ae8c1c2899f710fc1eaf9b059902",
+		"seedAmendment": {
+			"unit": "lrapr-t006/u12b-memos-seed-and-witness",
+			"authority": "PM ruling recorded in the T006 unit log: the seed amendment is authorized",
+			"scope": "credentials-only — the seeded owner email, the owner name derived from it, and the owner passphrase",
+			"reason": "the pinned pages/Signin.tsx validates BOTH fields with {minLength:4,maxLength:24,noSpace,noChinese} before calling api.login, so the frozen pair (34-character email, 26-character password) was refused by the application's own client-side validator and no journey could open the GET /api/user/me gate: signup is closed because the seed holds an OWNER and /api/status reports one, and the dev prefill is disabled because profile.mode is 'prod'",
+			"supersededOwnerEmail": "owner@versionless-evidence.invalid",
+			"supersededOwnerPassword": "synthetic-owner-passphrase",
+			"supersededSeedSha256": "cf422f2cda23b4c777d27b2bccd68a24b53cac027dbe57347e1b150fc8cdb7ff",
+			"supersededBehaviorDigest": "1672b43f0f01379b74890013cf145ed87164873cff037d4b6ace072a1fa79493",
+			"unchanged": "memos, shortcuts, profile, every response envelope, the session state machine, the mutation clock and the ledger shape are untouched by this amendment"
+		},
+		"signinValidator": {
+			"source": "web/src/pages/Signin.tsx + web/src/helpers/validator.ts at the pinned revision",
+			"config": {
+				"minLength": 4,
+				"maxLength": 24,
+				"noSpace": true,
+				"noChinese": true
+			},
+			"ownerEmailPasses": true,
+			"ownerPasswordPasses": true
+		}
 	},
 	"scope": "API projection only: this unit publishes no journeys, no witness receipt and no witness run entry."
 }
