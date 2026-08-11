@@ -18,10 +18,8 @@ import {
 	type DependencyChange,
 } from './angular-target-cell.ts';
 import { migrateAngularSourceModule, type SourceChange } from './angular-source-migration.ts';
-import {
-	migrateNgrxEffectDecorators,
-	type NgrxEffectChange,
-} from './ngrx-effects-migration.ts';
+import { migrateNgrxEffectDecorators, type NgrxEffectChange } from './ngrx-effects-migration.ts';
+import { migrateSentryV8Tracing, type SentryV8Change } from './sentry-v8-migration.ts';
 import {
 	migrateAngularTsConfig,
 	migrateAngularWorkspace,
@@ -99,7 +97,7 @@ function describeDependencyChange(change: DependencyChange): string {
 		: `${target}: ${change.from} -> ${change.to} — ${change.reason}`;
 }
 
-function describeSourceChange(change: SourceChange | NgrxEffectChange): string {
+function describeSourceChange(change: SourceChange | NgrxEffectChange | SentryV8Change): string {
 	return `line ${change.line}: ${change.kind} ${change.from} -> ${change.to}`;
 }
 
@@ -191,11 +189,13 @@ export function migrateAngularCliEraWorkspace(
 	)) {
 		const migrated = migrateAngularSourceModule(module.path, module.source);
 		const effects = migrateNgrxEffectDecorators(module.path, migrated.source);
-		unhandled.push(...migrated.unhandled, ...effects.unhandled);
+		const sentry = migrateSentryV8Tracing(module.path, effects.source);
+		unhandled.push(...migrated.unhandled, ...effects.unhandled, ...sentry.unhandled);
 		files.push(
-			file(module, effects.source, 'application', [
+			file(module, sentry.source, 'application', [
 				...migrated.changes.map(describeSourceChange),
 				...effects.changes.map(describeSourceChange),
+				...sentry.changes.map(describeSourceChange),
 			]),
 		);
 	}

@@ -90,6 +90,35 @@ describe('Angular CLI era composed migration', () => {
 		expect(second.applicationFilesChanged).toBe(0);
 		expect(second.workspaceFilesChanged).toBe(0);
 	});
+
+	it('runs the Sentry v8 capability over application source as part of the composition', () => {
+		const migration = migrateAngularCliEraWorkspace(
+			{
+				...input,
+				sourceModules: [
+					...input.sourceModules,
+					{
+						path: 'src/main.ts',
+						source:
+							"import * as Sentry from '@sentry/angular';\n" +
+							"import { Integrations } from '@sentry/tracing';\n\n" +
+							"Sentry.init({\n  dsn: 'x',\n  integrations: [\n" +
+							"    new Integrations.BrowserTracing({ tracingOrigins: ['localhost'] })\n" +
+							'  ]\n});\n',
+					},
+				],
+			},
+			ANGULAR_16_BROWSER_CELL,
+		);
+		const main = migration.files.find((file) => file.path === 'src/main.ts');
+		expect(main?.changed).toBe(true);
+		expect(main?.source).not.toContain('@sentry/tracing');
+		expect(main?.source).toContain('Sentry.browserTracingIntegration()');
+		expect(main?.source).toContain("tracePropagationTargets: ['localhost']");
+		expect(main?.changes).toContain(
+			'line 7: sentry-browser-tracing-integration new Integrations.BrowserTracing(…) -> Sentry.browserTracingIntegration()',
+		);
+	});
 });
 
 /**
