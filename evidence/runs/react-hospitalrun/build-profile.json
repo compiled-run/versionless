@@ -1,6 +1,6 @@
 {
 	"schemaVersion": "versionless.react-hospitalrun-build-profile.v1",
-	"result": "build-profile-complete-not-promoted",
+	"result": "build-and-boot-complete-not-promoted",
 	"fixture": "react-hospitalrun",
 	"source": {
 		"repository": "https://github.com/HospitalRun/hospitalrun-frontend",
@@ -16,6 +16,16 @@
 		"baseline": ".versionless/work/react-hospitalrun/baseline",
 		"target": ".versionless/work/react-hospitalrun/target",
 		"materializedFrom": ".versionless/cache/react-hospitalrun-source/verify/extracted"
+	},
+	"digest": {
+		"scheme": "sha256(canonicalize(files))",
+		"note": "Every lane digest below is sha256 over the canonicalized file list recorded beside it, so any reader can recompute it from this document alone. canonicalize is packages/core/src/receipts/canonicalize.ts, the same canonicalizer the receipt integrity block uses.",
+		"supersedes": {
+			"record": "the T004 build profile and run receipt this document replaces",
+			"baselineDigestClaimed": "302e499bc7e2e9597f7e0f33cf3eb586407764f02afbcd98dad3b5a42495cafe",
+			"targetDigestClaimed": "9fedeeb184fdb01f2c8f300e6f93b90dac34a8ee88a20a4466f6fde7beaf34b7",
+			"finding": "Neither superseded digest is recomputable from the file list recorded next to it, under sha256(canonicalize(files)), sha256(JSON.stringify(files)), or a sha256 over newline-joined \"path:sha256\" lines. The superseded baseline file list is byte-for-byte the list recorded here, and its reproducible digest is ddbb90ad0f3347c25409bccb38cb09b8680a84e3963bd322de7865763b7201c6, not the 302e499b… that was claimed. The superseded lane digests are therefore replaced rather than carried forward."
+		}
 	},
 	"dependencyAcquisition": {
 		"consentId": "VL-LEGACY-CORPUS-2026-08-10",
@@ -138,11 +148,16 @@
 			"runtime": "node-12.14.1 darwin-x64 under Rosetta 2",
 			"command": "npm run build",
 			"commandExpands": "react-scripts build",
-			"environment": "CI unset, so create-react-app 3 did not promote warnings to errors",
+			"environment": "CI forced empty rather than inherited, so create-react-app 3 did not promote warnings to errors on any host",
 			"typescript": "3.8.3",
+			"serviceWorkerOutputs": [
+				"precache-manifest.fed1a2994a87c5b027e4afeff58995e7.js",
+				"service-worker.js"
+			],
+			"priorFloatingResolutionOutcome": "failed — see evidence/ingests/react-hospitalrun/baseline-attempt.json; that record stands unaltered",
 			"equal": true,
 			"first": {
-				"digest": "302e499bc7e2e9597f7e0f33cf3eb586407764f02afbcd98dad3b5a42495cafe",
+				"digest": "ddbb90ad0f3347c25409bccb38cb09b8680a84e3963bd322de7865763b7201c6",
 				"files": [
 					{
 						"path": "asset-manifest.json",
@@ -223,7 +238,7 @@
 				]
 			},
 			"second": {
-				"digest": "302e499bc7e2e9597f7e0f33cf3eb586407764f02afbcd98dad3b5a42495cafe",
+				"digest": "ddbb90ad0f3347c25409bccb38cb09b8680a84e3963bd322de7865763b7201c6",
 				"files": [
 					{
 						"path": "asset-manifest.json",
@@ -303,32 +318,53 @@
 					}
 				]
 			},
-			"serviceWorkerOutputs": [
-				"precache-manifest.fed1a2994a87c5b027e4afeff58995e7.js",
-				"service-worker.js"
-			],
-			"priorFloatingResolutionOutcome": "failed — see evidence/ingests/react-hospitalrun/baseline-attempt.json; that record stands unaltered"
+			"boot": {
+				"result": "boot",
+				"rootElementBytes": 13423,
+				"documentTitle": "HospitalRun",
+				"headingText": "Dashboard",
+				"pageErrors": [],
+				"consoleErrors": {
+					"known": {
+						"service-worker-registration": 2
+					},
+					"unexpected": []
+				},
+				"failedRequests": [],
+				"successfulNonLoopback": [],
+				"booted": true
+			}
 		},
 		"target": {
 			"bundler": "vite-8.0.16",
 			"runtime": "node-24.15.0 darwin-arm64",
 			"command": "vite build --config fixtures/react-hospitalrun/vite.config.ts",
 			"webpackExecuted": false,
+			"entryDocumentSha256": "ddae270d10c83d8dfe9b00bc67b275ebd793a5a47dcb7a18016fbc92b14efbfc",
+			"serviceWorkerOutputs": [],
+			"sloppyCommonJsImplicitGlobals": [
+				{
+					"module": "node_modules/md5-jkmyers/md5.min.js",
+					"names": [
+						"txt"
+					]
+				}
+			],
 			"equal": true,
 			"first": {
-				"digest": "9fedeeb184fdb01f2c8f300e6f93b90dac34a8ee88a20a4466f6fde7beaf34b7",
+				"digest": "84155b0ad4248bcb561774ca0896389d6d63de263da4762596b23988b4939f6b",
 				"files": [
+					{
+						"path": "assets/index-COyyRcgA.js",
+						"sha256": "c31c61d2fd1c7c1b41c1ed55fd239cf495bcefc203cdf99697fe52f0d63aa4f3"
+					},
+					{
+						"path": "assets/index-COyyRcgA.js.map",
+						"sha256": "8ab9443403b7531753c83d484ee3d619d12b5d209776a6498704a6362684ac9a"
+					},
 					{
 						"path": "assets/index-CVRB107G.css",
 						"sha256": "70419f79999fafec9a947837a2a854fdcec7efb8b587d04d967cee58ce630ed1"
-					},
-					{
-						"path": "assets/index-DgvjXWeM.js",
-						"sha256": "2b3679108e9373ffea33b7df4ca42396694f5b9bb1d26c69a58bef7c155292eb"
-					},
-					{
-						"path": "assets/index-DgvjXWeM.js.map",
-						"sha256": "875e5e391057762da66fd11368a40dc7181bddcf3c7a929b8669fa2c932aaa4c"
 					},
 					{
 						"path": "favicon.ico",
@@ -336,7 +372,7 @@
 					},
 					{
 						"path": "index.html",
-						"sha256": "0149afa9f759015716a9565755279d03c2f5abebb7d871232f0e28664854635b"
+						"sha256": "f694bd5d30584a9d028294c34d73cd618f3057989f137412dd0d320c786ebcff"
 					},
 					{
 						"path": "logo.png",
@@ -353,19 +389,19 @@
 				]
 			},
 			"second": {
-				"digest": "9fedeeb184fdb01f2c8f300e6f93b90dac34a8ee88a20a4466f6fde7beaf34b7",
+				"digest": "84155b0ad4248bcb561774ca0896389d6d63de263da4762596b23988b4939f6b",
 				"files": [
+					{
+						"path": "assets/index-COyyRcgA.js",
+						"sha256": "c31c61d2fd1c7c1b41c1ed55fd239cf495bcefc203cdf99697fe52f0d63aa4f3"
+					},
+					{
+						"path": "assets/index-COyyRcgA.js.map",
+						"sha256": "8ab9443403b7531753c83d484ee3d619d12b5d209776a6498704a6362684ac9a"
+					},
 					{
 						"path": "assets/index-CVRB107G.css",
 						"sha256": "70419f79999fafec9a947837a2a854fdcec7efb8b587d04d967cee58ce630ed1"
-					},
-					{
-						"path": "assets/index-DgvjXWeM.js",
-						"sha256": "2b3679108e9373ffea33b7df4ca42396694f5b9bb1d26c69a58bef7c155292eb"
-					},
-					{
-						"path": "assets/index-DgvjXWeM.js.map",
-						"sha256": "875e5e391057762da66fd11368a40dc7181bddcf3c7a929b8669fa2c932aaa4c"
 					},
 					{
 						"path": "favicon.ico",
@@ -373,7 +409,7 @@
 					},
 					{
 						"path": "index.html",
-						"sha256": "0149afa9f759015716a9565755279d03c2f5abebb7d871232f0e28664854635b"
+						"sha256": "f694bd5d30584a9d028294c34d73cd618f3057989f137412dd0d320c786ebcff"
 					},
 					{
 						"path": "logo.png",
@@ -389,14 +425,62 @@
 					}
 				]
 			},
-			"serviceWorkerOutputs": []
+			"boot": {
+				"result": "boot",
+				"rootElementBytes": 13423,
+				"documentTitle": "HospitalRun",
+				"headingText": "Dashboard",
+				"pageErrors": [],
+				"consoleErrors": {
+					"known": {},
+					"unexpected": []
+				},
+				"failedRequests": [],
+				"successfulNonLoopback": [],
+				"booted": true
+			}
 		}
 	},
+	"runtimeBreaks": [
+		{
+			"order": 1,
+			"symptom": "ReferenceError: global is not defined",
+			"cause": "webpack 4 declares the ambient `global` identifier in its own runtime for browser targets — node.global defaults to true on the webpack 4 line create-react-app 3 and 4 pin — so a dependency written against Node's `global` keeps evaluating. Vite declares nothing of the sort and the same free reference reaches the browser.",
+			"genericFix": "craGlobalIdentifierDefines / createCraGlobalIdentifierPlugin: a compile-time substitution of the one free identifier onto globalThis, contributed through the plugin configuration rather than asked of the consumer.",
+			"landedIn": "ce2fbb80a56797a60ec21b6d1cb32d6b4e3eb207",
+			"caughtBy": "the browser boot gate"
+		},
+		{
+			"order": 2,
+			"symptom": "a Node core module reaching the browser as a __vite-browser-external stub, and webpack-injected process/Buffer/setImmediate bindings arriving free",
+			"cause": "webpack 4 resolved bare core-module requires to the node-libs-browser shim packages drawn from the application's own closure and injected process, Buffer, setImmediate and clearImmediate into every module. Vite externalises builtins and injects nothing.",
+			"genericFix": "craWebpackNodeCoreShimSpecifiers / createCraNodeCoreModulePlugin plus the craNodeGlobalsModuleId bootstrap: lazy resolution of each core module to its webpack 4 shim out of the application's own dependency closure, and a bootstrap module evaluated before the application entry that installs the injected globals. A shim missing from the closure is a hard, named failure rather than a silent stub.",
+			"landedIn": "736c6387e3df308675752bde0a8f6a7f615a6e07",
+			"caughtBy": "the browser boot gate"
+		},
+		{
+			"order": 3,
+			"symptom": "ReferenceError: txt is not defined, thrown at load before the application mounts",
+			"cause": "webpack 4 evaluated non-harmony modules inside a plain function wrapper in the bundle's own mode, and create-react-app's bundles carry no strict prologue, so a CommonJS dependency ran sloppy: an assignment to an undeclared name created a property on the global object and every later reference read it back. Vite emits ECMAScript modules, which are always strict, so the same assignment is a write to an unresolvable reference and throws. node_modules/md5-jkmyers/md5.min.js, reached through pouchdb-quick-search, assigns `txt` without declaring it.",
+			"genericFix": "scanCraImplicitGlobals / createCraSloppyCommonJsGlobalsPlugin: dependency CommonJS modules are scanned with a real scope resolution for names they write but never bind, and each such name is given its binding on globalThis ahead of the module body. Strict mode rejects only unresolvable references, so the original assignment evaluates unchanged and the name stays the shared global webpack gave it, readable from other modules. Application source is never scanned and stays strict; harmony modules, which webpack also made strict, are left untouched; a dependency module that parses as neither script nor module is a hard, named failure.",
+			"landedIn": "this unit",
+			"caughtBy": "the browser boot gate"
+		}
+	],
 	"parity": {
-		"level": "build-artifacts-only",
-		"behavioral": "not-tested",
+		"level": "boot-observed",
+		"behavioral": "boot-only",
 		"journeys": "not-tested",
 		"runtimeEquivalence": "unknown",
+		"boot": {
+			"baseline": "boot",
+			"target": "boot",
+			"rootElementBytesEqual": true,
+			"rootElementBytes": 13423,
+			"documentTitleEqual": true,
+			"headingTextEqual": true,
+			"note": "Both lanes were served from the same loopback static host and observed in the same Chromium build. Equal rendered byte counts, document titles and first headings on / are a boot-level signal only; no interaction, navigation, or data path was exercised."
+		},
 		"inventory": {
 			"baselineFiles": 19,
 			"targetFiles": 8,
@@ -430,18 +514,16 @@
 				"static/js/runtime-main.ae0ae0fa.js.map"
 			],
 			"targetOnlyPaths": [
-				"assets/index-CVRB107G.css",
-				"assets/index-DgvjXWeM.js",
-				"assets/index-DgvjXWeM.js.map"
+				"assets/index-COyyRcgA.js",
+				"assets/index-COyyRcgA.js.map",
+				"assets/index-CVRB107G.css"
 			]
 		},
 		"entryHtml": {
 			"baselineSha256": "0eaaabf64a30561923ef997e9d85e9111c8988e29e060992297771d34d5c5d49",
-			"targetSha256": "0149afa9f759015716a9565755279d03c2f5abebb7d871232f0e28664854635b",
-			"baselineBytes": 2291,
-			"targetBytes": 1794,
+			"targetSha256": "f694bd5d30584a9d028294c34d73cd618f3057989f137412dd0d320c786ebcff",
 			"equal": false,
-			"note": "Bundler entry documents differ by construction: webpack injects hashed chunk scripts, Vite injects one hashed module script and one stylesheet."
+			"note": "Bundler entry documents differ by construction: webpack injects hashed chunk scripts, Vite injects one hashed module script, one stylesheet, and the injected-globals bootstrap."
 		},
 		"serviceWorker": {
 			"baselineEmits": [
@@ -449,6 +531,7 @@
 				"service-worker.js"
 			],
 			"targetEmits": [],
+			"baselineRegistrationUnderTest": "failed — the baseline's own service-worker.js does not evaluate under the offline loopback host, which is the only console error either lane raised",
 			"note": "src/index.tsx calls serviceWorker.register(); the create-react-app baseline emits a service worker and precache manifest for it, the Vite target emits none. Recorded, not resolved."
 		}
 	},
@@ -456,11 +539,13 @@
 		"adapterUnitTests": "pass",
 		"baselineBuiltTwice": "pass-deterministic",
 		"targetBuiltTwice": "pass-deterministic",
-		"browserLocality": "not-run",
+		"baselineBoot": "pass-known-service-worker-inventory-only",
+		"targetBoot": "pass-zero-console-errors",
+		"browserLocality": "pass-zero-successful-non-loopback",
+		"realServer": "pass-loopback-static-host",
 		"dependencyAcquisition": "pass-consented-recorded",
 		"directWitnessJourneys": "not-run",
 		"mutationRestoration": "not-run",
-		"realServer": "not-run",
 		"receiptsTrust": "not-published",
 		"serviceWorkerParity": "not-tested",
 		"sourceMaterialization": "pass",
@@ -468,13 +553,14 @@
 	},
 	"nonclaims": [
 		"The baseline is an explicitly labeled compatibility resolution, not the upstream-committed state. No upstream-committed resolution exists at this revision.",
-		"Two identical build inventories establish determinism of these builds only; they establish no behavioral equivalence between the webpack baseline and the Vite target.",
-		"No browser journey, service-worker, locality, mutation, pilot, production-readiness, certification, or legal approval claim is established by this record.",
-		"The baseline emits a create-react-app service worker and precache manifest; the Vite target emits none. That difference is recorded, not resolved.",
+		"Two identical build inventories per lane establish determinism of those builds only.",
+		"A proven boot is a proven boot: / renders and the page raises nothing beyond the recorded inventory. It establishes no behavioral parity, no journey coverage, and no runtime equivalence between the webpack baseline and the Vite target.",
+		"The baseline emits a create-react-app service worker and precache manifest; the Vite target emits none, and the baseline worker does not evaluate under the offline loopback host. Both facts are recorded, not resolved.",
+		"No mutation/restoration proof, pilot status, production readiness, certification, or legal approval is established by this record.",
 		"Hash integrity does not establish signer authenticity or Git provenance."
 	],
 	"integrity": {
 		"algorithm": "sha256",
-		"canonicalDigest": "fa642d00e8fb7d1e55628c3b5c00cf2bcbaa287e42c580abb1bdc6a278fd7b9a"
+		"canonicalDigest": "17a9ae73d5a4ee2788b47b48299311558c4382865d1351c43a39a9ca3193d2fc"
 	}
 }

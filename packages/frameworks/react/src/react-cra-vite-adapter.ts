@@ -1,7 +1,17 @@
 import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
-import { charIn, createRegExp, exactly, global, maybe, oneOrMore, whitespace, wordChar } from 'magic-regexp';
+import {
+	charIn,
+	createRegExp,
+	exactly,
+	global,
+	maybe,
+	oneOrMore,
+	whitespace,
+	wordChar,
+} from 'magic-regexp';
 import * as path from 'pathe';
+import { analyze } from 'yuku-analyzer';
 
 /**
  * Reusable create-react-app compatibility capabilities for a Vite build.
@@ -9,8 +19,9 @@ import * as path from 'pathe';
  * Every export here is application agnostic: the shapes handled are the ones
  * create-react-app itself defines (HTML template placeholders, `process.env`
  * inlining, the ambient `global` identifier, webpack's automatic Node core
- * module polyfills, webpack tilde specifiers, and the copied public directory).
- * No capability branches on an application name, revision, or source string.
+ * module polyfills, webpack's sloppy-mode CommonJS module wrapper, webpack
+ * tilde specifiers, and the copied public directory). No capability branches on
+ * an application name, revision, or source string.
  */
 
 export type CraEnvironment = Readonly<Record<string, string>>;
@@ -205,7 +216,9 @@ export function craNodeCoreModuleName(source: string): string | null {
 export function craNodeCoreShimPackage(specifier: string): string {
 	const segments = specifier.split('/').filter((segment) => segment.length > 0);
 	const first = segments[0] ?? specifier;
-	return first.startsWith('@') && segments.length > 1 ? `${first}/${segments[1] as string}` : first;
+	return first.startsWith('@') && segments.length > 1
+		? `${first}/${segments[1] as string}`
+		: first;
 }
 
 /** Resolve a bare specifier to a file, the way a require from a directory would. */
@@ -218,7 +231,9 @@ export type CraModuleResolver = (specifier: string) => string;
  * the build tool's own installation.
  */
 export function craApplicationModuleResolver(applicationRoot: string): CraModuleResolver {
-	const applicationRequire = createRequire(path.join(path.resolve(applicationRoot), 'package.json'));
+	const applicationRequire = createRequire(
+		path.join(path.resolve(applicationRoot), 'package.json'),
+	);
 	return (specifier) => applicationRequire.resolve(specifier);
 }
 
@@ -378,6 +393,168 @@ export function createCraTildeCssImportPlugin(): CraTransformPlugin {
 	};
 }
 
+/**
+ * webpack 4 evaluated every non-harmony module inside a plain function wrapper
+ * — `function (module, exports, __webpack_require__) { … }` — in the enclosing
+ * bundle's mode. The bundles create-react-app 3 and 4 emit carry no `"use
+ * strict"` prologue for those wrappers, so a CommonJS dependency ran in
+ * sloppy mode: an assignment to an undeclared name silently created a property
+ * on the global object, and every later reference to that name — in the same
+ * module or in any other — read it back off the global object.
+ *
+ * Vite emits ECMAScript modules, and module code is always strict. The same
+ * assignment is now a write to an unresolvable reference, which throws
+ * `ReferenceError: <name> is not defined` the moment the module is evaluated,
+ * long before the application can mount.
+ *
+ * The capability below restores webpack's tolerance without unpicking strict
+ * mode anywhere. A dependency module that webpack would have wrapped in sloppy
+ * mode is scanned for exactly the names it assigns without declaring; for each
+ * one a prelude creates the property on `globalThis` if nothing already holds
+ * it. Strict mode only rejects assignments to references it cannot resolve, and
+ * a property of the global object is resolvable, so the original assignment
+ * evaluates unchanged — and, because the binding lives on the global object
+ * rather than in the module, cross-module reads of the same name find the same
+ * value webpack's implicit global gave them.
+ *
+ * Three properties matter, and each is enforced rather than asserted:
+ *
+ * - Application source is untouched. Only modules under a dependency directory
+ *   are scanned, so first-party code keeps every strict-mode diagnostic.
+ * - Harmony modules are untouched. webpack made those strict too, so a module
+ *   carrying `import`/`export` is left exactly as it is.
+ * - A module that cannot be analysed is a hard failure naming the module and
+ *   the diagnostic, never a silent skip.
+ */
+
+const dependencyDirectorySegment = 'node_modules';
+
+/**
+ * The extensions webpack 4 fed through its sloppy CommonJS wrapper. `.mjs` is
+ * absent on purpose: webpack forced those to harmony, hence to strict mode.
+ */
+const sloppyCommonJsExtensions: ReadonlySet<string> = new Set(['.js', '.cjs', '']);
+
+/** True when a module id lies inside a dependency directory. */
+export function craIsDependencyModule(id: string): boolean {
+	return path.normalize(id).split('/').includes(dependencyDirectorySegment);
+}
+
+export type CraSloppyModuleKind = 'sloppy-commonjs' | 'ecmascript-module' | 'unanalyzable';
+
+export type CraImplicitGlobalScan = Readonly<{
+	kind: CraSloppyModuleKind;
+	names: readonly string[];
+	diagnostics: readonly string[];
+}>;
+
+/**
+ * Classify a module the way webpack 4 did and, when it is one of the sloppy
+ * CommonJS modules, report the names it assigns without ever declaring them.
+ *
+ * The scan rides a real scope resolution: a name counts only when a write
+ * reference resolves to no binding in any enclosing scope, so a local variable,
+ * a parameter, a `catch` binding or a hoisted `var` of the same name elsewhere
+ * in the module never produces a false report, and a shadowed inner name never
+ * hides a genuine implicit global.
+ */
+export function scanCraImplicitGlobals(code: string, id = 'dependency.js'): CraImplicitGlobalScan {
+	const script = analyze(code, { path: id, lang: 'js', sourceType: 'script' });
+	const scriptErrors = script.diagnostics.filter((entry) => entry.severity === 'error');
+	if (scriptErrors.length > 0) {
+		// Harmony syntax is the ordinary reason a script parse fails, and webpack
+		// ran those modules in strict mode as well. Anything that parses as
+		// neither is a module this capability cannot reason about.
+		const esm = analyze(code, { path: id, lang: 'js', sourceType: 'module' });
+		const esmErrors = esm.diagnostics.filter((entry) => entry.severity === 'error');
+		return esmErrors.length === 0
+			? Object.freeze({ kind: 'ecmascript-module', names: [], diagnostics: [] })
+			: Object.freeze({
+					kind: 'unanalyzable',
+					names: [],
+					diagnostics: esmErrors.map((entry) => entry.message),
+				});
+	}
+	if (script.imports.length > 0 || script.exports.length > 0)
+		return Object.freeze({ kind: 'ecmascript-module', names: [], diagnostics: [] });
+	const names = new Set<string>();
+	for (const reference of script.unresolvedReferences)
+		if (reference.isWrite) names.add(reference.name);
+	return Object.freeze({
+		kind: 'sloppy-commonjs',
+		names: [...names].sort(compareUtf16CodeUnits),
+		diagnostics: [],
+	});
+}
+
+/**
+ * The prelude that gives a sloppy-mode implicit global its binding. Creating
+ * the property is conditional, so a name the host genuinely owns — or one an
+ * earlier dependency already assigned — keeps the value it has; only the
+ * binding webpack's global object would have carried is added.
+ */
+export function craImplicitGlobalPrelude(names: readonly string[]): string {
+	if (names.length === 0) return '';
+	const statements = names
+		.map((name) => {
+			const key = JSON.stringify(name);
+			return `if (!(${key} in globalThis)) globalThis[${key}] = void 0;`;
+		})
+		.join(' ');
+	return `/* webpack sloppy-mode implicit globals */ ${statements}`;
+}
+
+/**
+ * The module source with its implicit-global prelude installed. The prelude
+ * occupies no line of its own — it is appended to the first line — so every
+ * line number in the original module, and therefore every source map that
+ * refers to it, still points where it did. A hashbang keeps the first line.
+ */
+export function craSloppyCommonJsSource(code: string, names: readonly string[]): string {
+	const prelude = craImplicitGlobalPrelude(names);
+	if (prelude === '') return code;
+	if (!code.startsWith('#!')) return `${prelude}${code}`;
+	const firstLineEnd = code.indexOf('\n');
+	if (firstLineEnd === -1) return `${code}\n${prelude}`;
+	return `${code.slice(0, firstLineEnd + 1)}${prelude}${code.slice(firstLineEnd + 1)}`;
+}
+
+export type CraImplicitGlobalRecord = Readonly<{ id: string; names: readonly string[] }>;
+
+export type CraSloppyCommonJsGlobalsOptions = Readonly<{
+	observe?: (record: CraImplicitGlobalRecord) => void;
+}>;
+
+/**
+ * Reproduce webpack 4's sloppy-mode CommonJS wrapper for dependency modules.
+ * A module that declares everything it assigns is returned untouched, so a
+ * dependency closure with no implicit globals emits byte-identical output.
+ */
+export function createCraSloppyCommonJsGlobalsPlugin(
+	options: CraSloppyCommonJsGlobalsOptions = {},
+): CraTransformPlugin {
+	return {
+		name: 'versionless-cra-sloppy-commonjs-globals',
+		enforce: 'pre',
+		transform(code, id) {
+			const file = pathWithoutQuery(id);
+			if (!craIsDependencyModule(file)) return null;
+			if (!sloppyCommonJsExtensions.has(path.extname(file))) return null;
+			const scan = scanCraImplicitGlobals(code, file);
+			if (scan.kind === 'unanalyzable')
+				throw new Error(
+					`create-react-app compatibility: the dependency module ${file} parses as neither ` +
+						`a script nor an ECMAScript module, so webpack 4's sloppy-mode CommonJS wrapper ` +
+						`cannot be reproduced for it and an implicit global it may rely on would reach ` +
+						`the browser as a ReferenceError. Parser diagnostics: ${scan.diagnostics.join('; ')}`,
+				);
+			if (scan.names.length === 0) return null;
+			options.observe?.({ id: file, names: scan.names });
+			return { code: craSloppyCommonJsSource(code, scan.names), map: null };
+		},
+	};
+}
+
 async function filesBelow(directory: string): Promise<string[]> {
 	const files: string[] = [];
 	for (const entry of await readdir(directory, { withFileTypes: true })) {
@@ -440,7 +617,10 @@ export function createCraPublicDirectoryPlugin(
 				)) {
 					const destination = path.join(outputDirectory, file);
 					await mkdir(path.dirname(destination), { recursive: true });
-					await writeFile(destination, await readFile(path.join(options.directory, file)));
+					await writeFile(
+						destination,
+						await readFile(path.join(options.directory, file)),
+					);
 				}
 			},
 		},
@@ -451,9 +631,11 @@ export type CraViteAdapterOptions = Readonly<{
 	publicDirectory: string;
 	templateFile?: string;
 	applicationRoot?: string;
+	observeImplicitGlobals?: (record: CraImplicitGlobalRecord) => void;
 }>;
 
 export type CraViteAdapterPlugins = readonly [
+	CraTransformPlugin,
 	CraTransformPlugin,
 	CraNodeCoreModulePlugin,
 	CraDefinePlugin,
@@ -462,14 +644,22 @@ export type CraViteAdapterPlugins = readonly [
 
 /**
  * The create-react-app compatibility plugin set: tilde CSS specifier rewriting,
- * webpack's automatic Node core module polyfills, the ambient `global`
- * identifier, plus public directory replication.
+ * webpack's sloppy-mode CommonJS wrapper for dependency modules, webpack's
+ * automatic Node core module polyfills, the ambient `global` identifier, plus
+ * public directory replication.
  */
 export function createCraViteAdapter(options: CraViteAdapterOptions): CraViteAdapterPlugins {
 	return [
 		createCraTildeCssImportPlugin(),
+		createCraSloppyCommonJsGlobalsPlugin(
+			options.observeImplicitGlobals === undefined
+				? {}
+				: { observe: options.observeImplicitGlobals },
+		),
 		createCraNodeCoreModulePlugin(
-			options.applicationRoot === undefined ? {} : { applicationRoot: options.applicationRoot },
+			options.applicationRoot === undefined
+				? {}
+				: { applicationRoot: options.applicationRoot },
 		),
 		createCraGlobalIdentifierPlugin(),
 		createCraPublicDirectoryPlugin({

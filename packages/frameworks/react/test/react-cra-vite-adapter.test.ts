@@ -8,6 +8,8 @@ import {
 	craApplicationModuleResolver,
 	craEntryDocument,
 	craGlobalIdentifierDefines,
+	craImplicitGlobalPrelude,
+	craIsDependencyModule,
 	craNodeCoreModuleName,
 	craNodeCoreShimPackage,
 	craNodeGlobalsBootstrapSource,
@@ -19,10 +21,13 @@ import {
 	createCraGlobalIdentifierPlugin,
 	createCraNodeCoreModulePlugin,
 	createCraPublicDirectoryPlugin,
+	createCraSloppyCommonJsGlobalsPlugin,
 	createCraTildeCssImportPlugin,
 	createCraViteAdapter,
+	craSloppyCommonJsSource,
 	resolveCraNodeCoreModule,
 	rewriteWebpackTildeCssImports,
+	scanCraImplicitGlobals,
 	substituteCraTemplatePlaceholders,
 } from '../src/react-cra-vite-adapter.ts';
 
@@ -47,10 +52,9 @@ describe('create-react-app template placeholders', () => {
 		expect(result).toContain('id=%REACT_APP_ANALYTICS_ID%');
 	});
 	test('honours a non-root public url for every occurrence', () => {
-		const result = substituteCraTemplatePlaceholders(
-			'%PUBLIC_URL%/a %PUBLIC_URL%/b',
-			{ PUBLIC_URL: '/console' },
-		);
+		const result = substituteCraTemplatePlaceholders('%PUBLIC_URL%/a %PUBLIC_URL%/b', {
+			PUBLIC_URL: '/console',
+		});
 		expect(result).toBe('/console/a /console/b');
 	});
 	test('injects the entry module before the closing body tag', () => {
@@ -68,8 +72,13 @@ describe('create-react-app template placeholders', () => {
 		);
 	});
 	test('appends the entry module when no body tag is present', () => {
-		const document = craEntryDocument({ template: '<div id="root"></div>', entryModule: '/main.js' });
-		expect(document).toBe('<div id="root"></div>\n<script type="module" src="/main.js"></script>\n');
+		const document = craEntryDocument({
+			template: '<div id="root"></div>',
+			entryModule: '/main.js',
+		});
+		expect(document).toBe(
+			'<div id="root"></div>\n<script type="module" src="/main.js"></script>\n',
+		);
 	});
 });
 
@@ -152,8 +161,10 @@ describe('the ambient webpack global identifier', () => {
 		// A realm with no `global` binding, exactly like a browser window.
 		const context = createContext({ queueMicrotask: (task: () => void) => task() });
 		runInContext(code, context);
-		return (context as { probe?: { probe?: Record<string, unknown> } }).probe
-			?.probe as Record<string, unknown>;
+		return (context as { probe?: { probe?: Record<string, unknown> } }).probe?.probe as Record<
+			string,
+			unknown
+		>;
 	}
 
 	test('an unadapted build throws the webpack-provided identifier away', async () => {
@@ -253,15 +264,19 @@ describe('webpack automatic Node core module polyfills', () => {
 			await writeFile(path.join(root, 'dependency.cjs'), dependencySource);
 			await writeFile(
 				path.join(root, 'entry.js'),
-				["import dependency from './dependency.cjs';", 'export const probe = dependency;', ''].join(
-					'\n',
-				),
+				[
+					"import dependency from './dependency.cjs';",
+					'export const probe = dependency;',
+					'',
+				].join('\n'),
 			);
 			const outDir = path.join(root, 'dist');
 			await build({
 				root,
 				logLevel: 'silent',
-				plugins: withAdapter ? [createCraNodeCoreModulePlugin({ applicationRoot: root })] : [],
+				plugins: withAdapter
+					? [createCraNodeCoreModulePlugin({ applicationRoot: root })]
+					: [],
 				build: {
 					outDir,
 					minify: false,
@@ -309,7 +324,9 @@ describe('webpack automatic Node core module polyfills', () => {
 		expect(craWebpackNodeCoreShimSpecifiers.util).toBe('util/util.js');
 		expect(craWebpackNodeCoreShimSpecifiers.crypto).toBe('crypto-browserify');
 		expect(craWebpackNodeCoreShimSpecifiers.process).toBe('process/browser.js');
-		expect(craWebpackNodeCoreShimSpecifiers._stream_readable).toBe('readable-stream/readable.js');
+		expect(craWebpackNodeCoreShimSpecifiers._stream_readable).toBe(
+			'readable-stream/readable.js',
+		);
 		expect(Object.isFrozen(craWebpackNodeCoreShimSpecifiers)).toBe(true);
 		// Entries node-libs-browser maps to null stay Vite's business.
 		expect(craWebpackNodeCoreShimSpecifiers.fs).toBeUndefined();
@@ -331,7 +348,9 @@ describe('webpack automatic Node core module polyfills', () => {
 		try {
 			await writeShimClosure(root);
 			const resolver = craApplicationModuleResolver(root);
-			expect(resolveCraNodeCoreModule('stream', resolver, root)).toContain('stream-browserify');
+			expect(resolveCraNodeCoreModule('stream', resolver, root)).toContain(
+				'stream-browserify',
+			);
 			expect(() => resolveCraNodeCoreModule('crypto', resolver, root)).toThrow(
 				'Node core module "crypto"',
 			);
@@ -391,6 +410,231 @@ describe('webpack automatic Node core module polyfills', () => {
 	});
 });
 
+/**
+ * webpack 4 evaluated CommonJS dependency modules inside a plain function
+ * wrapper in the bundle's own mode, and create-react-app's bundles are not
+ * strict, so an assignment to an undeclared name quietly created a global. Vite
+ * emits ECMAScript modules, which are always strict, so the same assignment is
+ * a write to an unresolvable reference and throws at load. The control build
+ * below is that failure, observed rather than recalled; the adapted build is the
+ * fix, and it keeps the name a shared global rather than a module-local.
+ */
+describe("webpack's sloppy-mode CommonJS wrapper", () => {
+	// The era shape: a hashing helper that seeds an accumulator it never declares.
+	const writerSource = [
+		'function digest(s) {',
+		"	txt = '';",
+		'	for (var i = 0; i < s.length; i++) txt += s.charAt(i).toUpperCase();',
+		'	return txt;',
+		'}',
+		"module.exports = { digest: digest, first: digest('ab') };",
+		'',
+	].join('\n');
+
+	// A second dependency that only ever reads the name the first one created.
+	const readerSource = [
+		"module.exports = { seen: typeof txt === 'string' ? txt : null };",
+		'',
+	].join('\n');
+
+	async function writeDependency(root: string, name: string, source: string): Promise<void> {
+		const directory = path.join(root, 'node_modules', name);
+		await mkdir(directory, { recursive: true });
+		await writeFile(
+			path.join(directory, 'package.json'),
+			`${JSON.stringify({ name, version: '1.0.0', main: 'index.js' })}\n`,
+		);
+		await writeFile(path.join(directory, 'index.js'), source);
+	}
+
+	async function buildProbe(
+		withAdapter: boolean,
+		entrySource = [
+			"import writer from 'legacy-writer';",
+			"import reader from 'legacy-reader';",
+			'export const probe = { writer: writer, reader: reader };',
+			'',
+		].join('\n'),
+	): Promise<string> {
+		const root = await mkdtemp(path.join(tmpdir(), 'versionless-cra-sloppy-'));
+		try {
+			await writeFile(
+				path.join(root, 'package.json'),
+				`${JSON.stringify({ name: 'closure-under-test', version: '0.0.0' })}\n`,
+			);
+			await writeDependency(root, 'legacy-writer', writerSource);
+			await writeDependency(root, 'legacy-reader', readerSource);
+			await writeFile(path.join(root, 'entry.js'), entrySource);
+			const outDir = path.join(root, 'dist');
+			await build({
+				root,
+				logLevel: 'silent',
+				plugins: withAdapter ? [createCraSloppyCommonJsGlobalsPlugin()] : [],
+				build: {
+					outDir,
+					minify: false,
+					// The strict prologue an ECMAScript module bundle gets for free in a
+					// browser: without it the probe would not evaluate as the page does.
+					rollupOptions: { output: { strict: true } },
+					lib: {
+						entry: path.join(root, 'entry.js'),
+						formats: ['iife'],
+						name: 'probe',
+						fileName: () => 'probe.js',
+					},
+				},
+			});
+			return await readFile(path.join(outDir, 'probe.js'), 'utf8');
+		} finally {
+			await rm(root, { recursive: true, force: true });
+		}
+	}
+
+	function evaluateInBrowserLikeRealm(code: string): Record<string, unknown> {
+		// A realm with nothing but the language, exactly like a fresh browser window.
+		const context = createContext({});
+		runInContext(code, context);
+		return (context as { probe?: { probe?: Record<string, unknown> } }).probe?.probe as Record<
+			string,
+			unknown
+		>;
+	}
+
+	test('an unadapted build throws where webpack tolerated the implicit global', async () => {
+		const code = await buildProbe(false);
+		expect(code).toContain('"use strict"');
+		expect(code).not.toContain('globalThis["txt"]');
+		expect(() => evaluateInBrowserLikeRealm(code)).toThrow('txt is not defined');
+	});
+
+	test('the adapted build evaluates and keeps the name a shared global', async () => {
+		const code = await buildProbe(true);
+		expect(code).toContain('"use strict"');
+		expect(code).toContain('if (!("txt" in globalThis)) globalThis["txt"] = void 0;');
+		const probe = evaluateInBrowserLikeRealm(code) as {
+			writer: { digest(value: string): string; first: string };
+			reader: { seen: string | null };
+		};
+		expect(probe.writer.first).toBe('AB');
+		expect(probe.writer.digest('cd')).toBe('CD');
+		// The era-faithful part: a second module reads the same implicit global.
+		expect(probe.reader.seen).toBe('AB');
+	});
+
+	test('application source stays strict', async () => {
+		// The same undeclared assignment in first-party code keeps failing: the
+		// capability is scoped to the dependency closure webpack wrapped, and
+		// nothing else.
+		const entrySource = [
+			"import writer from 'legacy-writer';",
+			"applicationLocal = 'unset';",
+			'export const probe = { writer: writer, applicationLocal: applicationLocal };',
+			'',
+		].join('\n');
+		await expect(
+			(async () => evaluateInBrowserLikeRealm(await buildProbe(true, entrySource)))(),
+		).rejects.toThrow('applicationLocal is not defined');
+	});
+
+	test('the scan resolves scopes rather than matching names', () => {
+		const source = [
+			'function shadowedParam(txt) { txt = 1; return txt; }',
+			'function localVar() { var seen; seen = 2; return seen; }',
+			'function caught() { try { throw 1; } catch (err) { err = 3; return err; } }',
+			'function hoisted() { later = 4; var later; return later; }',
+			'function pastBlock() { { let scoped = 1; scoped = 2; } scoped = 5; }',
+			'for (index = 0; index < 1; index += 1) {}',
+			'[first] = [1];',
+			'({ second } = { second: 2 });',
+			'counter++;',
+			'for (var key in {}) {}',
+			'for (loose in {}) {}',
+			'module.exports = { shadowedParam: shadowedParam };',
+			'exports.named = 1;',
+			'',
+		].join('\n');
+		const scan = scanCraImplicitGlobals(source, 'dependency.js');
+		expect(scan.kind).toBe('sloppy-commonjs');
+		// Bindings resolve: the parameter, the local, the catch binding and the
+		// hoisted `var` are not implicit globals, and a `let` left behind in its
+		// block does not shield the assignment that outlives it.
+		expect(scan.names).toEqual(['counter', 'first', 'index', 'loose', 'scoped', 'second']);
+		expect(scanCraImplicitGlobals('var declared = 1; declared = 2;').names).toEqual([]);
+		// Reading a free name is not creating one; only writes are implicit globals.
+		expect(scanCraImplicitGlobals('module.exports = someHostGlobal;').names).toEqual([]);
+	});
+
+	test('a harmony dependency module keeps webpack’s strict treatment', () => {
+		const scan = scanCraImplicitGlobals('export const a = 1;\nb = 2;\n', 'dependency.js');
+		expect(scan.kind).toBe('ecmascript-module');
+		expect(scan.names).toEqual([]);
+		const plugin = createCraSloppyCommonJsGlobalsPlugin();
+		expect(
+			plugin.transform('export const a = 1;\nb = 2;\n', '/app/node_modules/dep/index.js'),
+		).toBeNull();
+		expect(plugin.transform("txt = '';", '/app/node_modules/dep/index.mjs')).toBeNull();
+	});
+
+	test('a dependency module that cannot be analysed fails loudly', () => {
+		expect(scanCraImplicitGlobals('var a = <div/>;', 'dependency.js').kind).toBe(
+			'unanalyzable',
+		);
+		const plugin = createCraSloppyCommonJsGlobalsPlugin();
+		expect(() => plugin.transform('var a = <div/>;', '/app/node_modules/dep/index.js')).toThrow(
+			'/app/node_modules/dep/index.js',
+		);
+		expect(() => plugin.transform('var a = <div/>;', '/app/node_modules/dep/index.js')).toThrow(
+			'sloppy-mode CommonJS wrapper',
+		);
+	});
+
+	test('the plugin only touches dependency modules that need it', () => {
+		const plugin = createCraSloppyCommonJsGlobalsPlugin();
+		expect(plugin.enforce).toBe('pre');
+		expect(craIsDependencyModule('/app/node_modules/dep/index.js')).toBe(true);
+		expect(craIsDependencyModule('/app/src/index.js')).toBe(false);
+		expect(craIsDependencyModule('\0virtual:something')).toBe(false);
+		// First-party source, a dependency with nothing implicit, and a query
+		// suffix on an id that does need the prelude.
+		expect(plugin.transform("txt = '';", '/app/src/index.js')).toBeNull();
+		expect(plugin.transform('var txt; txt = 1;', '/app/node_modules/dep/index.js')).toBeNull();
+		expect(plugin.transform("txt = '';", '/app/node_modules/dep/index.js?used')).toEqual({
+			code: `${craImplicitGlobalPrelude(['txt'])}txt = '';`,
+			map: null,
+		});
+	});
+
+	test('the observer reports every module the capability had to touch', () => {
+		const records: Array<{ id: string; names: readonly string[] }> = [];
+		const plugin = createCraSloppyCommonJsGlobalsPlugin({
+			observe: (record) => records.push(record),
+		});
+		plugin.transform("txt = '';", '/app/node_modules/dep/index.js');
+		plugin.transform('var txt; txt = 1;', '/app/node_modules/quiet/index.js');
+		expect(records).toEqual([{ id: '/app/node_modules/dep/index.js', names: ['txt'] }]);
+	});
+
+	test('the prelude leaves a binding the host already owns alone', () => {
+		expect(craImplicitGlobalPrelude([])).toBe('');
+		const context = createContext({ name: 'host-owned' });
+		runInContext(
+			`${craImplicitGlobalPrelude(['fresh', 'name'])} probe = [typeof fresh, name];`,
+			context,
+		);
+		expect((context as { probe?: unknown[] }).probe).toEqual(['undefined', 'host-owned']);
+	});
+
+	test('the prelude keeps every original line number, hashbang included', () => {
+		const source = ['#!/usr/bin/env node', "txt = '';", 'module.exports = txt;', ''].join('\n');
+		const transformed = craSloppyCommonJsSource(source, ['txt']);
+		expect(transformed.split('\n')).toHaveLength(source.split('\n').length);
+		expect(transformed.startsWith('#!/usr/bin/env node\n')).toBe(true);
+		expect(transformed.split('\n')[1]).toContain("txt = '';");
+		expect(craSloppyCommonJsSource("txt = '';", []).split('\n')).toHaveLength(1);
+		expect(craSloppyCommonJsSource("txt = '';", [])).toBe("txt = '';");
+	});
+});
+
 describe('webpack tilde specifiers in CSS', () => {
 	test('rewrites quoted and url() imports without touching relative ones', () => {
 		const code = [
@@ -411,10 +655,12 @@ describe('webpack tilde specifiers in CSS', () => {
 	test('the plugin transforms only CSS ids and returns null when unchanged', () => {
 		const plugin = createCraTildeCssImportPlugin();
 		expect(plugin.enforce).toBe('pre');
-		expect(plugin.transform("@import '~antd/dist/antd.css';", '/app/src/App.css?used')).toEqual({
-			code: "@import 'antd/dist/antd.css';",
-			map: null,
-		});
+		expect(plugin.transform("@import '~antd/dist/antd.css';", '/app/src/App.css?used')).toEqual(
+			{
+				code: "@import 'antd/dist/antd.css';",
+				map: null,
+			},
+		);
 		expect(plugin.transform("@import '~antd/dist/antd.css';", '/app/src/App.tsx')).toBeNull();
 		expect(plugin.transform("@import './local.css';", '/app/src/App.css')).toBeNull();
 	});
@@ -451,10 +697,11 @@ describe('create-react-app public directory', () => {
 		await expect(plugin.closeBundle.handler()).rejects.toThrow('outDir is unresolved');
 	});
 	test('the composed adapter excludes the template by default', () => {
-		const [transform, nodeCore, define, output] = createCraViteAdapter({
+		const [transform, sloppy, nodeCore, define, output] = createCraViteAdapter({
 			publicDirectory: tmpdir(),
 		});
 		expect(transform.name).toBe('versionless-cra-tilde-css-import');
+		expect(sloppy.name).toBe('versionless-cra-sloppy-commonjs-globals');
 		expect(nodeCore.name).toBe('versionless-cra-node-core-modules');
 		expect(define.name).toBe('versionless-cra-global-identifier');
 		expect(define.config()).toEqual({ define: { global: 'globalThis' } });

@@ -1,8 +1,14 @@
 {
 	"schemaVersion": "versionless.receipt.v1",
-	"runId": "T004-react-hospitalrun-cra-to-vite8-build",
+	"runId": "T004-react-hospitalrun-cra-to-vite8-boot",
 	"fixture": "react-hospitalrun",
-	"stage": "build",
+	"supersedes": {
+		"runId": "T004-react-hospitalrun-cra-to-vite8-build",
+		"reason": "The superseded receipt recorded a build-stage-only pass with lane digests that cannot be recomputed from the file lists recorded beside them under any scheme tried (sha256(canonicalize(files)), sha256(JSON.stringify(files)), sha256 over newline-joined \"path:sha256\" lines). Its baseline file list is byte-for-byte the one recorded here, and the reproducible digest of that list is ddbb90ad0f3347c25409bccb38cb09b8680a84e3963bd322de7865763b7201c6 rather than the 302e499b… it claimed. It also asserted no browser evidence at all, while the target lane in fact did not boot. Both lane digests and the verification block are replaced.",
+		"claimedBaselineDigest": "302e499bc7e2e9597f7e0f33cf3eb586407764f02afbcd98dad3b5a42495cafe",
+		"claimedTargetDigest": "9fedeeb184fdb01f2c8f300e6f93b90dac34a8ee88a20a4466f6fde7beaf34b7",
+		"claimedCanonicalDigest": "4f498c3cc7496af2d93a9be8a9aafec551178dfec150d8b34196abc64fc8d0ad"
+	},
 	"source": {
 		"repository": "https://github.com/HospitalRun/hospitalrun-frontend",
 		"ref": "refs/tags/v2.0.0-alpha.7",
@@ -19,7 +25,9 @@
 			"purpose": "npm dependency acquisition for the baseline lane and registry time metadata plus exact-version tarballs for the era-labeled compatibility pins",
 			"registryHosts": [
 				"registry.npmjs.org"
-			]
+			],
+			"usedByThisRun": false,
+			"usedByThisRunNote": "This run performed no network access: both lanes were rebuilt from the already-materialized work area under npm_config_offline=true and VERSIONLESS_NETWORK_MODE=offline, and the browser refused every non-loopback request."
 		}
 	],
 	"baseline": {
@@ -42,12 +50,50 @@
 		"to": "Vite 8.0.16",
 		"applicationSourceEdits": 0,
 		"applicationNamedProductBranches": 0,
-		"reusableSurfaceChanged": false,
-		"reusableSurfaceNote": "The generic create-react-app Vite adapter proven on papercups carried this application unchanged. No shape here demanded an extension, so none was invented.",
+		"reusableSurfaceChanged": true,
+		"reusableSurfaceNote": "Three generic webpack-4 behaviours the create-react-app adapter did not yet reproduce were each found by running the migrated build in a browser, and each was closed in the reusable surface with no application, package, or revision name anywhere in it. The application's own source is byte-identical to the pinned revision.",
+		"runtimeBreaks": [
+			{
+				"order": 1,
+				"symptom": "ReferenceError: global is not defined",
+				"cause": "webpack 4 declares the ambient `global` identifier in its own runtime for browser targets — node.global defaults to true on the webpack 4 line create-react-app 3 and 4 pin — so a dependency written against Node's `global` keeps evaluating. Vite declares nothing of the sort and the same free reference reaches the browser.",
+				"genericFix": "craGlobalIdentifierDefines / createCraGlobalIdentifierPlugin: a compile-time substitution of the one free identifier onto globalThis, contributed through the plugin configuration rather than asked of the consumer.",
+				"landedIn": "ce2fbb80a56797a60ec21b6d1cb32d6b4e3eb207",
+				"caughtBy": "the browser boot gate"
+			},
+			{
+				"order": 2,
+				"symptom": "a Node core module reaching the browser as a __vite-browser-external stub, and webpack-injected process/Buffer/setImmediate bindings arriving free",
+				"cause": "webpack 4 resolved bare core-module requires to the node-libs-browser shim packages drawn from the application's own closure and injected process, Buffer, setImmediate and clearImmediate into every module. Vite externalises builtins and injects nothing.",
+				"genericFix": "craWebpackNodeCoreShimSpecifiers / createCraNodeCoreModulePlugin plus the craNodeGlobalsModuleId bootstrap: lazy resolution of each core module to its webpack 4 shim out of the application's own dependency closure, and a bootstrap module evaluated before the application entry that installs the injected globals. A shim missing from the closure is a hard, named failure rather than a silent stub.",
+				"landedIn": "736c6387e3df308675752bde0a8f6a7f615a6e07",
+				"caughtBy": "the browser boot gate"
+			},
+			{
+				"order": 3,
+				"symptom": "ReferenceError: txt is not defined, thrown at load before the application mounts",
+				"cause": "webpack 4 evaluated non-harmony modules inside a plain function wrapper in the bundle's own mode, and create-react-app's bundles carry no strict prologue, so a CommonJS dependency ran sloppy: an assignment to an undeclared name created a property on the global object and every later reference read it back. Vite emits ECMAScript modules, which are always strict, so the same assignment is a write to an unresolvable reference and throws. node_modules/md5-jkmyers/md5.min.js, reached through pouchdb-quick-search, assigns `txt` without declaring it.",
+				"genericFix": "scanCraImplicitGlobals / createCraSloppyCommonJsGlobalsPlugin: dependency CommonJS modules are scanned with a real scope resolution for names they write but never bind, and each such name is given its binding on globalThis ahead of the module body. Strict mode rejects only unresolvable references, so the original assignment evaluates unchanged and the name stays the shared global webpack gave it, readable from other modules. Application source is never scanned and stays strict; harmony modules, which webpack also made strict, are left untouched; a dependency module that parses as neither script nor module is a hard, named failure.",
+				"landedIn": "this unit",
+				"caughtBy": "the browser boot gate"
+			}
+		],
 		"capabilities": [
 			"substituteCraTemplatePlaceholders",
 			"craEntryDocument",
 			"craProcessEnvironmentDefines",
+			"craGlobalIdentifierDefines",
+			"createCraGlobalIdentifierPlugin",
+			"craWebpackNodeCoreShimSpecifiers",
+			"craNodeCoreModuleName",
+			"resolveCraNodeCoreModule",
+			"createCraNodeCoreModulePlugin",
+			"craNodeGlobalsBootstrapSource",
+			"craIsDependencyModule",
+			"scanCraImplicitGlobals",
+			"craImplicitGlobalPrelude",
+			"craSloppyCommonJsSource",
+			"createCraSloppyCommonJsGlobalsPlugin",
 			"rewriteWebpackTildeCssImports",
 			"createCraTildeCssImportPlugin",
 			"craPublicAssetPaths",
@@ -57,7 +103,10 @@
 		"craShapesExercised": [
 			"%PUBLIC_URL% template placeholders in public/index.html",
 			"process.env.NODE_ENV and process.env.PUBLIC_URL inlining (src/serviceWorker.ts, src/shared/config)",
-			"public/ directory replication excluding the HTML template"
+			"public/ directory replication excluding the HTML template",
+			"webpack's ambient global identifier",
+			"webpack's automatic Node core module polyfills and injected process/Buffer/setImmediate bindings",
+			"webpack's sloppy-mode CommonJS wrapper for dependency modules"
 		],
 		"craShapesNotExercised": [
 			"svgr: the tree imports no .svg module",
@@ -66,40 +115,92 @@
 			"REACT_APP_* variables: none is read anywhere in src or public",
 			"webpack tilde CSS specifiers: none appears in src/index.css, the only stylesheet the entry imports"
 		],
-		"entryDocument": "generated from public/index.html by craEntryDocument"
+		"entryDocument": "generated from public/index.html by craEntryDocument, with the injected-globals bootstrap module ahead of the application entry",
+		"sloppyCommonJsImplicitGlobals": [
+			{
+				"module": "node_modules/md5-jkmyers/md5.min.js",
+				"names": [
+					"txt"
+				]
+			}
+		]
 	},
 	"tooling": {
 		"adapter": "packages/frameworks/react reusable create-react-app capabilities",
-		"browser": "not-used",
+		"browser": "playwright 1.58.2 chromium",
+		"host": "node http static server bound to 127.0.0.1 on an ephemeral port",
 		"legacyRuntime": "node-12.14.1-darwin-x64 under Rosetta 2 (in-matrix, not a repository pin)",
 		"targetRuntime": "node-24.15.0-darwin-arm64 maintained runtime",
 		"vite": "8.0.16 root installation",
 		"webpack": "4.42.0 via react-scripts 3.4.4"
 	},
 	"verification": {
-		"result": "build-stage-pass",
+		"result": "build-and-boot-pass",
 		"builds": "pass",
 		"baselineDeterministic": true,
 		"targetDeterministic": true,
+		"digestScheme": "sha256(canonicalize(files))",
 		"deterministicCore": {
 			"baseline": {
 				"equal": true,
-				"first": "302e499bc7e2e9597f7e0f33cf3eb586407764f02afbcd98dad3b5a42495cafe",
-				"second": "302e499bc7e2e9597f7e0f33cf3eb586407764f02afbcd98dad3b5a42495cafe"
+				"first": "ddbb90ad0f3347c25409bccb38cb09b8680a84e3963bd322de7865763b7201c6",
+				"second": "ddbb90ad0f3347c25409bccb38cb09b8680a84e3963bd322de7865763b7201c6"
 			},
 			"target": {
 				"equal": true,
-				"first": "9fedeeb184fdb01f2c8f300e6f93b90dac34a8ee88a20a4466f6fde7beaf34b7",
-				"second": "9fedeeb184fdb01f2c8f300e6f93b90dac34a8ee88a20a4466f6fde7beaf34b7"
+				"first": "84155b0ad4248bcb561774ca0896389d6d63de263da4762596b23988b4939f6b",
+				"second": "84155b0ad4248bcb561774ca0896389d6d63de263da4762596b23988b4939f6b"
 			}
 		},
+		"boot": {
+			"result": "pass",
+			"baseline": {
+				"result": "boot",
+				"rootElementBytes": 13423,
+				"documentTitle": "HospitalRun",
+				"headingText": "Dashboard",
+				"pageErrors": [],
+				"consoleErrors": {
+					"known": {
+						"service-worker-registration": 2
+					},
+					"unexpected": []
+				},
+				"failedRequests": [],
+				"successfulNonLoopback": [],
+				"booted": true
+			},
+			"target": {
+				"result": "boot",
+				"rootElementBytes": 13423,
+				"documentTitle": "HospitalRun",
+				"headingText": "Dashboard",
+				"pageErrors": [],
+				"consoleErrors": {
+					"known": {},
+					"unexpected": []
+				},
+				"failedRequests": [],
+				"successfulNonLoopback": [],
+				"booted": true
+			},
+			"knownConsoleErrorInventory": {
+				"service-worker-registration": "Error during service worker registration: the create-react-app baseline's own service-worker.js does not evaluate under the offline loopback host. The Vite target emits no service worker and raised no console error at all."
+			}
+		},
+		"locality": {
+			"mode": "offline",
+			"scope": "both lanes rebuilt and both boots observed with no network access",
+			"successfulNonLoopback": 0,
+			"browserBlockedRequests": 0,
+			"note": "The browser context refuses every non-loopback request; neither lane made one."
+		},
 		"journeys": "not-run",
-		"locality": "not-run",
 		"mutation": "not-run",
 		"serviceWorker": "not-tested",
 		"parity": {
-			"level": "build-artifacts-only",
-			"behavioral": "not-tested",
+			"level": "boot-observed",
+			"behavioral": "boot-only",
 			"journeys": "not-tested",
 			"runtimeEquivalence": "unknown"
 		}
@@ -107,21 +208,22 @@
 	"artifacts": [
 		{
 			"path": "evidence/runs/react-hospitalrun/build-profile.json",
-			"sha256": "0a16e0508a686df9cbb34f507c428ebb709a42837e97783aea05824ca3a3c550"
+			"sha256": "7b86b15c58e7c9dd6e3d0613a610cb55d22949d8d29d6dff2c00bc1ab40d9a06"
 		}
 	],
 	"limitations": [
 		"The baseline is an explicitly labeled compatibility resolution. The upstream revision ships no lockfile, so no authentic committed resolution exists to reproduce.",
-		"This receipt covers the build stage only: two deterministic compatibility-baseline webpack builds and two deterministic Vite 8 targets.",
-		"No browser journey was executed; behavioral parity between the baseline and the target remains not-tested.",
-		"The create-react-app service worker and precache manifest emitted by the baseline have no Vite target counterpart; that gap is recorded, not resolved.",
-		"Hash integrity does not establish signer authenticity or Git provenance.",
-		"No pilot status, production readiness, certification, or legal approval is claimed."
+		"This receipt covers builds and boot: two deterministic compatibility-baseline webpack builds, two deterministic Vite 8 targets, and one observed boot per lane.",
+		"A proven boot is not behavioral parity. No journey, interaction, navigation, or data path beyond loading / was exercised, and runtime equivalence between the lanes remains unknown.",
+		"No mutation/restoration proof was run.",
+		"The create-react-app service worker and precache manifest emitted by the baseline have no Vite target counterpart, and the baseline worker does not evaluate under the offline loopback host. Both gaps are recorded, not resolved.",
+		"The three runtime breaks were each found by booting the migrated build. Nothing here claims that no fourth webpack behaviour remains unreproduced; it claims only that none surfaced on this application at boot.",
+		"Hash integrity does not establish signer authenticity or Git provenance."
 	],
 	"integrityNote": "canonicalDigest covers this receipt with the integrity block removed",
 	"integrity": {
 		"algorithm": "sha256",
 		"authenticity": "not-established",
-		"canonicalDigest": "4f498c3cc7496af2d93a9be8a9aafec551178dfec150d8b34196abc64fc8d0ad"
+		"canonicalDigest": "1fa0278923101efe6af370a44d0ef90e3309ac4c7a823fad448eb196cca37cd8"
 	}
 }
