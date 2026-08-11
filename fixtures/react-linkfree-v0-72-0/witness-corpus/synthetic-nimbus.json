@@ -1,0 +1,78 @@
+{
+  "name": "Nimbus",
+  "type": "community",
+  "bio": "Synthetic profile 12 of 12, invented for Versionless browser evidence. Not a person, not an account, not a real profile.",
+  "avatar": "https://avatars.githubusercontent.com/synthetic/synthetic-nimbus.png",
+  "links": [
+    {
+      "name": "Synthetic github link",
+      "url": "https://example.invalid/synthetic/synthetic-nimbus/github",
+      "icon": "github"
+    },
+    {
+      "name": "Synthetic twitter link",
+      "url": "https://example.invalid/synthetic/synthetic-nimbus/twitter",
+      "icon": "twitter"
+    },
+    {
+      "name": "Synthetic linkedin link",
+      "url": "https://example.invalid/synthetic/synthetic-nimbus/linkedin",
+      "icon": "linkedin"
+    },
+    {
+      "name": "Synthetic youtube link",
+      "url": "https://example.invalid/synthetic/synthetic-nimbus/youtube",
+      "icon": "youtube"
+    },
+    {
+      "name": "Synthetic twitch link",
+      "url": "https://example.invalid/synthetic/synthetic-nimbus/twitch",
+      "icon": "twitch"
+    },
+    {
+      "name": "Synthetic spotify link",
+      "url": "https://example.invalid/synthetic/synthetic-nimbus/spotify",
+      "icon": "spotify"
+    },
+    {
+      "name": "Synthetic discord link",
+      "url": "https://example.invalid/synthetic/synthetic-nimbus/discord",
+      "icon": "discord"
+    },
+    {
+      "name": "Synthetic telegram link",
+      "url": "https://example.invalid/synthetic/synthetic-nimbus/telegram",
+      "icon": "telegram"
+    },
+    {
+      "name": "Synthetic medium link",
+      "url": "https://example.invalid/synthetic/synthetic-nimbus/medium",
+      "icon": "medium"
+    },
+    {
+      "name": "Synthetic gitlab link",
+      "url": "https://example.invalid/synthetic/synthetic-nimbus/gitlab",
+      "icon": "gitlab"
+    },
+    {
+      "name": "Synthetic hashnode link",
+      "url": "https://example.invalid/synthetic/synthetic-nimbus/hashnode",
+      "icon": "hashnode"
+    },
+    {
+      "name": "Synthetic polywork link",
+      "url": "https://example.invalid/synthetic/synthetic-nimbus/polywork",
+      "icon": "polywork"
+    },
+    {
+      "name": "Synthetic instagram link",
+      "url": "https://example.invalid/synthetic/synthetic-nimbus/instagram",
+      "icon": "instagram"
+    },
+    {
+      "name": "Synthetic globe link",
+      "url": "https://example.invalid/synthetic/synthetic-nimbus/globe",
+      "icon": "globe"
+    }
+  ]
+}

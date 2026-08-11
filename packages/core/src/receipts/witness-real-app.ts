@@ -19,6 +19,15 @@ export const WITNESS_REAL_APP_NAMES = [
 	 * from being read as one.
 	 */
 	'next-killedbygoogle-v3-0-0',
+	/**
+	 * The create-react-app 5 vertical, and the first in the corpus whose browser
+	 * proof runs against a SYNTHETIC dataset rather than the one its archive
+	 * ships. The application's data layer is 561 real contributors' personal
+	 * profiles; the standing ruling keeps every one of them out of the evidence,
+	 * and the application's own corpus-agnostic codegen is what makes the
+	 * substitution possible without touching a line of its source.
+	 */
+	'react-linkfree',
 ] as const;
 /** Every named app must contribute two lanes observed twice each. */
 export const WITNESS_REAL_APP_RUNS = WITNESS_REAL_APP_NAMES.length * 4;

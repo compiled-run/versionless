@@ -92,6 +92,27 @@ import {
 	type WitnessNextKilledbygoogleV3GraveyardEvidence,
 } from '../../../core/src/receipts/witness-next-killedbygoogle-v3.ts';
 import { transformNext12DerivedStateToMemo } from '../../../frameworks/nextjs/src/index.ts';
+import {
+	REACT_LINKFREE_CANONICAL_DIGEST,
+	REACT_LINKFREE_RECEIPT_PATH,
+	WITNESS_REACT_LINKFREE_CONSOLE_ERRORS,
+	WITNESS_REACT_LINKFREE_CORPUS_RULING,
+	WITNESS_REACT_LINKFREE_FAILED_REQUESTS,
+	WITNESS_REACT_LINKFREE_MOCKED_SEAMS,
+	WITNESS_REACT_LINKFREE_REDACTED_ROUTE,
+	WITNESS_REACT_LINKFREE_ROUTES,
+	WITNESS_REACT_LINKFREE_STYLE_PROBES,
+	type WitnessReactLinkfreeJourney,
+} from '../../../core/src/receipts/witness-react-linkfree.ts';
+import {
+	LINKFREE_AVATAR_FALLBACK_HOST,
+	LINKFREE_AVATAR_HOST,
+	LINKFREE_JOURNEY_PROFILE,
+	LINKFREE_SYNTHETIC_NAMES_SORTED,
+	LINKFREE_SYNTHETIC_PROFILES,
+	linkfreeAvatarFallbackUrl,
+	type LinkfreeStagedCorpus,
+} from '../fixture/react-linkfree-v0-72-0-witness-corpus.ts';
 import { witnessNodeFileSystem } from './node-filesystem.ts';
 import {
 	createPapercupsProjection,
@@ -148,7 +169,8 @@ type App =
 	| 'react-hospitalrun'
 	| 'angular-factoriolab'
 	| 'angular-jira-clone'
-	| 'next-killedbygoogle-v3-0-0';
+	| 'next-killedbygoogle-v3-0-0'
+	| 'react-linkfree';
 type Lane = 'baseline' | 'migrated';
 type JourneyEvidence = {
 	assertions: string[];
@@ -1847,6 +1869,118 @@ const KBG_STYLE_PROBES: readonly WitnessRenderedStyleProbe[] = Object.freeze([
 	}),
 ]);
 
+/* -------------------------------------------------------------------------- */
+/* LinkFree: the create-react-app 5 vertical, on a SYNTHETIC profile corpus     */
+/* -------------------------------------------------------------------------- */
+
+const LINKFREE_VIEWPORT = { width: 1280, height: 720 } as const;
+const LINKFREE_HOME_HEADLINE =
+	'LinkFree connects audiences to all of your content with just one link' as const;
+/**
+ * The mutation seam: the not-found text the journey asserts by its rendered
+ * body, which is what makes overwriting it in the migrated bundle turn the
+ * journey red on that exact assertion rather than on something incidental.
+ */
+export const LINKFREE_MUTATION_SEAM = 'Profile not found.' as const;
+const LINKFREE_SEARCH_LINK = 'a[aria-label="Search"]' as const;
+const LINKFREE_HOME_LINK = 'a[aria-label="Go back to Home"]' as const;
+const LINKFREE_BACK_TO_SEARCH = 'a[aria-label="Go back to Search"]' as const;
+/**
+ * The application's own hard-coded example-profile link, reached structurally.
+ * The href names a real person, so the selector deliberately does not: it is the
+ * first anchor of the third paragraph of the homepage, which is what a reader
+ * clicks.
+ */
+const LINKFREE_EXAMPLE_PROFILE_LINK = 'main p.text-1xl a:nth-of-type(1)' as const;
+const LINKFREE_SEARCH_INPUT = '#search-input' as const;
+const LINKFREE_DIRECTORY_ENTRY = '.user-list > a' as const;
+const LINKFREE_PROFILE_NAME = 'main section h1' as const;
+const LINKFREE_PROFILE_USERNAME = 'main section p.text-2xl' as const;
+const LINKFREE_PROFILE_BIO = 'main section .w-50 p' as const;
+const LINKFREE_PROFILE_LINK = 'a.p-button-outlined' as const;
+const LINKFREE_PROFILE_FIRST_LINK = 'a.p-button-outlined.github' as const;
+const LINKFREE_PROFILE_AVATAR = '.p-avatar img' as const;
+const LINKFREE_SCROLL_TO_TOP = '.scrollToTop-btn' as const;
+const LINKFREE_SEARCH_TERM = 'nim' as const;
+const LINKFREE_WHEEL_DELTA_Y = 500 as const;
+/**
+ * The link colour the application's own `src/config/links.json` declares for the
+ * first icon, as the browser resolves it. The hover handler assigns it inline,
+ * so this is the observable result of the gesture rather than a stylesheet rule.
+ */
+const LINKFREE_HOVER_BACKGROUND = 'rgb(23, 21, 21)' as const;
+/** What the application's own stylesheet turns the label into while hovered. */
+const LINKFREE_HOVER_LABEL_COLOR = 'rgb(255, 255, 255)' as const;
+const LINKFREE_JOURNEY_NAVIGATIONS = WITNESS_REACT_LINKFREE_ROUTES.length;
+const LINKFREE_PROFILE_ROUTE = `/${LINKFREE_JOURNEY_PROFILE.username}`;
+
+/**
+ * What this vertical's runner staged in front of both lanes, bound before any
+ * browser is launched. The journey records the corpus digests it was served, so
+ * a lane pair that somehow received different datasets could never agree on a
+ * behavior digest.
+ */
+let linkfreeStaging: LinkfreeStagedCorpus | null = null;
+export function bindReactLinkfreeStaging(staged: LinkfreeStagedCorpus): void {
+	linkfreeStaging = staged;
+}
+const linkfreeStagedCorpus = (): LinkfreeStagedCorpus => {
+	if (linkfreeStaging === null)
+		throw new Error('LinkFree Witness staging was not bound before the journey ran');
+	return linkfreeStaging;
+};
+
+/**
+ * The closed-list route redaction.
+ *
+ * Two static routes and the profile routes the SYNTHETIC corpus declares are
+ * recorded verbatim. Anything else is a profile route this corpus does not
+ * contain — in this journey, the example profile the application's own homepage
+ * hard-codes, which names a real person — and is recorded as the placeholder.
+ * The rule is positive rather than a blocklist, so a real username cannot reach
+ * the evidence by being one nobody thought to exclude.
+ */
+const normalizeLinkfreeRoute = (path: string): string =>
+	path === '/' ||
+	path === '/search' ||
+	LINKFREE_SYNTHETIC_PROFILES.some((profile) => path === `/${profile.username}`)
+		? path
+		: WITNESS_REACT_LINKFREE_REDACTED_ROUTE;
+
+/**
+ * A deterministic fallback avatar, so the cascaded host answers with a real
+ * image the browser can decode rather than with an empty body that would fail a
+ * second time and hide what was being measured.
+ */
+const LINKFREE_FALLBACK_AVATAR_SVG =
+	'<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"><rect width="64" height="64" fill="#dddddd"/></svg>';
+
+/**
+ * Both avatar hosts, answered in context.
+ *
+ * The declared endpoint is answered 404 because that is the truthful answer for
+ * a synthetic account that does not exist at that host — and it is what drives
+ * the application's own onerror handler to the second host, which is the cascade
+ * the ingest warned a hermetic run must not leave unanswered. The second host is
+ * answered with a decodable image. Anything else outside the loopback origin is
+ * answered empty and then fails the seam inventory, which is the point.
+ */
+export async function reactLinkfreeTransport(
+	request: WitnessTransportRequest,
+): Promise<WitnessTransportDecision> {
+	const endpoint = `${request.protocol}//${request.host}${request.pathname}`;
+	if (endpoint.startsWith(`${LINKFREE_AVATAR_FALLBACK_HOST}/`))
+		return {
+			action: 'fulfill',
+			status: 200,
+			contentType: 'image/svg+xml',
+			body: Buffer.from(LINKFREE_FALLBACK_AVATAR_SVG),
+		};
+	if (endpoint.startsWith(`${LINKFREE_AVATAR_HOST}/`))
+		return { action: 'fulfill', status: 404, contentType: 'text/plain', body: Buffer.alloc(0) };
+	return { action: 'fulfill', status: 204, contentType: 'text/plain', body: Buffer.alloc(0) };
+}
+
 const apps: AppSpec[] = [
 	{
 		app: 'react-boilerplate',
@@ -3325,6 +3459,319 @@ const apps: AppSpec[] = [
 			};
 		},
 	},
+	{
+		app: 'react-linkfree',
+		framework: 'react',
+		canonicalReceipt: REACT_LINKFREE_RECEIPT_PATH,
+		canonicalDigest: REACT_LINKFREE_CANONICAL_DIGEST,
+		// Both lanes are staged by this vertical's own runner, which replaces the
+		// served profile corpus with the synthetic one before a browser is
+		// launched. These paths are the committed build outputs the staging
+		// copies from, and nothing is ever served directly out of them.
+		sources: {
+			baseline: '.versionless/work/react-linkfree-v0-72-0/baseline/build-run1',
+			migrated: '.versionless/work/react-linkfree-v0-72-0/target/build-vite-run1',
+		},
+		viewport: LINKFREE_VIEWPORT,
+		consoleErrorInventory: WITNESS_REACT_LINKFREE_CONSOLE_ERRORS,
+		failedRequestInventory: WITNESS_REACT_LINKFREE_FAILED_REQUESTS,
+		mockedNonLoopbackSeams: WITNESS_REACT_LINKFREE_MOCKED_SEAMS,
+		renderedStyleProbes: WITNESS_REACT_LINKFREE_STYLE_PROBES,
+		normalizeRoute: normalizeLinkfreeRoute,
+		transport: async (request) => await reactLinkfreeTransport(request),
+		journey: async (context, page, _transportEvidence, lifecycle) => {
+			if (lifecycle.expectedServiceWorker !== null)
+				throw new Error('LinkFree journey received a service-worker expectation');
+			const profiles = LINKFREE_SYNTHETIC_PROFILES.length;
+			const sortedNames = LINKFREE_SYNTHETIC_NAMES_SORTED;
+			const routeExtents: Array<{
+				route: string;
+				scrollHeight: number;
+				clientHeight: number;
+			}> = [];
+			/**
+			 * The generic document measurement, taken at every route the journey
+			 * occupies. It is what licenses the scroll claim to name one route
+			 * rather than the journey: the routes that do not overflow are
+			 * recorded with their extents instead of being left unmeasured.
+			 */
+			const measure = async (route: string): Promise<WitnessViewportScroll> => {
+				const extents = await lifecycle.viewportScroll();
+				if (extents.clientHeight !== LINKFREE_VIEWPORT.height)
+					throw new Error(
+						`LinkFree route measured against an unexpected viewport: ${route} ${canonicalize(extents)}`,
+					);
+				routeExtents.push({
+					route,
+					scrollHeight: extents.scrollHeight,
+					clientHeight: extents.clientHeight,
+				});
+				return extents;
+			};
+			await page.trackEvents('click', 'input', 'keydown', 'mouseover');
+
+			// (a) The homepage the application serves at its root: a static hero,
+			// not the directory. Saying which is which is the point of visiting it.
+			await context.expect.page.text(page, 'main h1', LINKFREE_HOME_HEADLINE);
+			await measure('/');
+
+			// (b) The searchable directory, solved in the browser from the index
+			// the application's own codegen wrote over the synthetic corpus.
+			await page.hover(LINKFREE_SEARCH_LINK);
+			await page.click(LINKFREE_SEARCH_LINK);
+			await context.expect.page.count(page, LINKFREE_DIRECTORY_ENTRY, profiles);
+			await context.expect.page.text(
+				page,
+				`${LINKFREE_DIRECTORY_ENTRY}:nth-of-type(1)`,
+				sortedNames[0]!,
+			);
+			await context.expect.page.text(
+				page,
+				`${LINKFREE_DIRECTORY_ENTRY}:nth-of-type(${String(profiles)})`,
+				sortedNames[profiles - 1]!,
+			);
+			const renderedStyles = await lifecycle.renderedStyles();
+			await measure('/search');
+
+			// (c) A typed search that narrows the directory, and a full clear that
+			// restores it. One Backspace widens nothing — the remaining prefix
+			// still matches — so the widening gesture is select-all and Backspace.
+			await page.type(LINKFREE_SEARCH_INPUT, LINKFREE_SEARCH_TERM, { redact: false });
+			await context.expect.page.count(page, LINKFREE_DIRECTORY_ENTRY, 1);
+			await context.expect.page.text(
+				page,
+				`${LINKFREE_DIRECTORY_ENTRY}:nth-of-type(1)`,
+				LINKFREE_JOURNEY_PROFILE.name,
+			);
+			await page.press(LINKFREE_SEARCH_INPUT, 'a', { modifiers: ['Meta'] });
+			await page.press(LINKFREE_SEARCH_INPUT, 'Backspace');
+			await context.expect.page.count(page, LINKFREE_DIRECTORY_ENTRY, profiles);
+			await measure('/search (after the search was cleared)');
+
+			// (d) A real router navigation into the dynamic profile route, by the
+			// directory entry a person would click.
+			await page.click(`${LINKFREE_DIRECTORY_ENTRY}:nth-of-type(${String(profiles)})`);
+			await context.expect.page.text(
+				page,
+				LINKFREE_PROFILE_NAME,
+				LINKFREE_JOURNEY_PROFILE.name,
+			);
+			await context.expect.page.text(
+				page,
+				LINKFREE_PROFILE_USERNAME,
+				`(${LINKFREE_JOURNEY_PROFILE.username})`,
+			);
+			await context.expect.page.text(page, LINKFREE_PROFILE_BIO, LINKFREE_JOURNEY_PROFILE.bio);
+			await context.expect.page.bodyText(page, { contains: 'Community' });
+			await context.expect.page.count(
+				page,
+				LINKFREE_PROFILE_LINK,
+				LINKFREE_JOURNEY_PROFILE.links.length,
+			);
+			await context.expect.page.text(
+				page,
+				`${LINKFREE_PROFILE_FIRST_LINK} span`,
+				LINKFREE_JOURNEY_PROFILE.links[0]!.name,
+			);
+
+			// (e) The avatar cascade. The declared endpoint is refused, so the
+			// application's own onerror handler rewrites the image source to a
+			// second host — which is exactly the egress redirection the ingest
+			// warned about, observed here as the rendered attribute.
+			const cascadedAvatar = linkfreeAvatarFallbackUrl(LINKFREE_JOURNEY_PROFILE.name);
+			await context.expect.page.attribute(
+				page,
+				LINKFREE_PROFILE_AVATAR,
+				'src',
+				cascadedAvatar,
+			);
+
+			// (f) A hover with an observable result: the application assigns the
+			// link's declared colour inline and its stylesheet turns the label
+			// white while the pointer is over it.
+			await context.expect.page.computedStyle(page, LINKFREE_SCROLL_TO_TOP, {
+				display: 'none',
+			});
+			await page.hover(LINKFREE_PROFILE_FIRST_LINK);
+			await context.expect.page.computedStyle(page, LINKFREE_PROFILE_FIRST_LINK, {
+				'background-color': LINKFREE_HOVER_BACKGROUND,
+			});
+			await context.expect.page.computedStyle(page, `${LINKFREE_PROFILE_FIRST_LINK} span`, {
+				color: LINKFREE_HOVER_LABEL_COLOR,
+			});
+
+			// (g) The one route whose document genuinely overflows the stated
+			// viewport, scrolled by a real wheel gesture. Past 300 pixels the
+			// application reveals its own scroll-to-top control, and clicking it
+			// is what proves the control is visible: a hidden element is not
+			// actionable and the click would fail rather than pass quietly.
+			const beforeScroll = await measure(LINKFREE_PROFILE_ROUTE);
+			if (beforeScroll.scrollHeight <= beforeScroll.clientHeight || beforeScroll.scrollY !== 0)
+				throw new Error(
+					`LinkFree profile route is not a scrollable surface: ${canonicalize(beforeScroll)}`,
+				);
+			await page.scroll(null, { y: LINKFREE_WHEEL_DELTA_Y });
+			const afterScroll = await lifecycle.viewportScroll();
+			if (
+				afterScroll.scrollY <= 300 ||
+				afterScroll.scrollHeight !== beforeScroll.scrollHeight
+			)
+				throw new Error(
+					`LinkFree profile route did not scroll past the control threshold: ${canonicalize(afterScroll)}`,
+				);
+			await context.expect.page.visible(page, LINKFREE_SCROLL_TO_TOP);
+			await page.click(LINKFREE_SCROLL_TO_TOP);
+			// The control hides itself again below its own 300-pixel threshold, so
+			// waiting for that is a bounded, event-driven wait on the
+			// application's own reaction rather than on a timer.
+			await context.expect.page.computedStyle(page, LINKFREE_SCROLL_TO_TOP, {
+				display: 'none',
+			});
+			// The last stretch is a smooth-scroll animation, which fires no DOM
+			// event when it settles, so the settled offset is polled under a fixed
+			// bound and required to reach the top rather than accepted wherever it
+			// happened to be.
+			let restored = await lifecycle.viewportScroll();
+			for (let attempt = 0; attempt < 40 && restored.scrollY !== 0; attempt += 1) {
+				await new Promise<void>((settle) => void setTimeout(settle, 25));
+				restored = await lifecycle.viewportScroll();
+			}
+			if (restored.scrollY !== 0)
+				throw new Error(
+					`LinkFree scroll-to-top control did not return the document to the top: ${canonicalize(restored)}`,
+				);
+			const scrollSurface: WitnessScrollSurface = {
+				state: 'measured-genuine-viewport-scroll',
+				route: LINKFREE_PROFILE_ROUTE,
+				viewport: { ...LINKFREE_VIEWPORT },
+				scrollHeight: beforeScroll.scrollHeight,
+				clientHeight: beforeScroll.clientHeight,
+				wheelDeltaY: LINKFREE_WHEEL_DELTA_Y,
+				scrolledFromTop: true,
+				scrolled: true,
+			};
+
+			// (h) Back through the router to the directory and the homepage, then
+			// the application's own example-profile link — which the synthetic
+			// corpus does not contain, so it is the not-found route.
+			await page.click(LINKFREE_BACK_TO_SEARCH);
+			await context.expect.page.count(page, LINKFREE_DIRECTORY_ENTRY, profiles);
+			await page.click(LINKFREE_HOME_LINK);
+			await context.expect.page.text(page, 'main h1', LINKFREE_HOME_HEADLINE);
+			await page.click(LINKFREE_EXAMPLE_PROFILE_LINK);
+			await context.expect.page.bodyText(page, {
+				contains: LINKFREE_MUTATION_SEAM,
+				notContains: LINKFREE_JOURNEY_PROFILE.name,
+			});
+			await measure(WITNESS_REACT_LINKFREE_REDACTED_ROUTE);
+
+			await context.expect.page.outcome(page, {
+				events: {
+					click: { atLeast: 5 },
+					input: { atLeast: 4 },
+					keydown: { atLeast: 5 },
+					mouseover: { atLeast: 2 },
+				},
+			});
+			await clean(
+				context,
+				page,
+				LINKFREE_JOURNEY_NAVIGATIONS,
+				lifecycle.expectedConsoleErrors,
+				lifecycle.expectedFailedRequests,
+			);
+			const applicationJourney: WitnessReactLinkfreeJourney = {
+				corpus: {
+					state: 'synthetic-fixture-corpus',
+					directory: WITNESS_REACT_LINKFREE_CORPUS_RULING.dataset,
+					profiles,
+					aggregateSha256: linkfreeStagedCorpus().corpus.aggregateSha256,
+					generatedIndexSha256: linkfreeStagedCorpus().generatedIndex.sha256,
+					codegenSha256: linkfreeStagedCorpus().codegen.sha256,
+					realProfileDataRendered: false,
+				},
+				directory: {
+					state: 'measured-rendered-index',
+					route: '/search',
+					profiles,
+					firstName: sortedNames[0]!,
+					lastName: sortedNames[profiles - 1]!,
+				},
+				search: {
+					state: 'measured-narrow-and-widen',
+					term: LINKFREE_SEARCH_TERM,
+					beforeFilter: profiles,
+					narrowed: 1,
+					narrowedName: LINKFREE_JOURNEY_PROFILE.name,
+					wideningGesture: 'select-all-then-backspace',
+					afterClear: profiles,
+				},
+				profile: {
+					state: 'measured-rendered-profile',
+					route: LINKFREE_PROFILE_ROUTE,
+					name: LINKFREE_JOURNEY_PROFILE.name,
+					username: LINKFREE_JOURNEY_PROFILE.username,
+					type: 'community',
+					links: LINKFREE_JOURNEY_PROFILE.links.length,
+					firstLinkLabel: LINKFREE_JOURNEY_PROFILE.links[0]!.name,
+				},
+				avatarCascade: {
+					state: 'measured-application-onerror-cascade',
+					declaredEndpoint: LINKFREE_JOURNEY_PROFILE.avatar,
+					declaredAnswer: 404,
+					cascadedEndpoint: cascadedAvatar,
+					cascadedAnswer: 200,
+					renderedSource: cascadedAvatar,
+					bothHostsAnsweredInContext: true,
+					leftTheMachine: false,
+				},
+				hover: {
+					state: 'measured-hover-restyle',
+					selector: LINKFREE_PROFILE_FIRST_LINK,
+					backgroundColor: LINKFREE_HOVER_BACKGROUND,
+					labelColor: LINKFREE_HOVER_LABEL_COLOR,
+				},
+				notFound: {
+					state: 'measured-missing-profile',
+					route: WITNESS_REACT_LINKFREE_REDACTED_ROUTE,
+					reachedBy: 'the application own hard-coded homepage example link',
+					text: LINKFREE_MUTATION_SEAM,
+				},
+				scrollToTop: {
+					state: 'measured-scroll-to-top-control',
+					hiddenBeforeScroll: true,
+					wheelDeltaY: LINKFREE_WHEEL_DELTA_Y,
+					scrolledTo: afterScroll.scrollY,
+					restoredToTop: true,
+				},
+				routeExtents: {
+					state: 'measured-per-route-document-extents',
+					viewport: { ...LINKFREE_VIEWPORT },
+					routes: routeExtents,
+				},
+			};
+			return {
+				assertions: [
+					'homepage hero rendered at the root route, which is not the directory',
+					'searchable directory solved in the browser from the index the application own codegen wrote over a synthetic corpus',
+					'directory narrowed to one entry by a typed search and restored in full by a clear',
+					'real react-router navigation into the dynamic profile route',
+					'profile name, username, biography, community type and complete declared link list',
+					'avatar onerror cascade to the second host, both answered in context and neither contacted',
+					'link restyled by a genuine hover, in the colour the application own configuration declares',
+					'genuine wheel scroll on a measured overflowing document, past the threshold the application reveals its scroll-to-top control at',
+					'scroll-to-top control clicked while visible and the document returned to the top',
+					'not-found state behind the application own example-profile link, which the synthetic corpus does not contain',
+					'no real profile data rendered in either lane',
+					'clean page',
+				],
+				offlineEvidence: { state: 'not-applicable' },
+				renderedStyles,
+				applicationJourney,
+				scrollSurface,
+			};
+		},
+	},
 ];
 
 async function exists(file: string): Promise<boolean> {
@@ -4019,6 +4466,17 @@ export async function executeReactHospitalrunWitnessRun(options: {
 }): Promise<WitnessRealAppRun> {
 	const app = apps.find((candidate) => candidate.app === 'react-hospitalrun');
 	if (app === undefined) throw new Error('HospitalRun Witness specification is absent');
+	return await executeRun(app, options.lane, options.pass, options);
+}
+
+export async function executeReactLinkfreeWitnessRun(options: {
+	lane: Lane;
+	pass: 1 | 2;
+	laneRoot: string;
+	receiptRoot: string;
+}): Promise<WitnessRealAppRun> {
+	const app = apps.find((candidate) => candidate.app === 'react-linkfree');
+	if (app === undefined) throw new Error('LinkFree Witness specification is absent');
 	return await executeRun(app, options.lane, options.pass, options);
 }
 

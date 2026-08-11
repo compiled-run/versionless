@@ -1,0 +1,18 @@
+{
+  "name": "Glacier",
+  "type": "personal",
+  "bio": "Synthetic profile 7 of 12, invented for Versionless browser evidence. Not a person, not an account, not a real profile.",
+  "avatar": "https://avatars.githubusercontent.com/synthetic/synthetic-glacier.png",
+  "links": [
+    {
+      "name": "Synthetic github link",
+      "url": "https://example.invalid/synthetic/synthetic-glacier/github",
+      "icon": "github"
+    },
+    {
+      "name": "Synthetic globe link",
+      "url": "https://example.invalid/synthetic/synthetic-glacier/globe",
+      "icon": "globe"
+    }
+  ]
+}
