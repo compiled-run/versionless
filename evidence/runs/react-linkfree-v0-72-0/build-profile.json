@@ -1,0 +1,674 @@
+{
+	"schemaVersion": "versionless.react-linkfree-v0-72-0-build-profile.v1",
+	"result": "build-profile-complete-not-promoted",
+	"fixture": "react-linkfree-v0-72-0",
+	"source": {
+		"repository": "https://github.com/EddieHubCommunity/BioDrop",
+		"repositoryAtPinnedRevision": "https://github.com/EddieHubCommunity/LinkFree",
+		"revision": "367d77297b5753644e11ecd22cf80e59c87b0dc8",
+		"revisionDate": "2022-08-31T16:08:13Z",
+		"pinnedRevisionIsTagTarget": false,
+		"archiveSha256": "7cef1a1c2ae251e3738d8b8a6c5fe94b118bf13d3a5bae7b522b8db9c1c334ef",
+		"license": "MIT",
+		"licenseSha256": "3b5b430ae7e6151220591e69a8a056482a13d36518357c025619cf0d60be50bf",
+		"frontendRoot": "."
+	},
+	"workArea": {
+		"root": ".versionless/work/react-linkfree-v0-72-0",
+		"baseline": ".versionless/work/react-linkfree-v0-72-0/baseline",
+		"target": ".versionless/work/react-linkfree-v0-72-0/target",
+		"materializedFrom": ".versionless/cache/react-linkfree-v0-72-0-baseline/app",
+		"materializedFromNote": "Both lanes are clones of the installed baseline cell the ingest produced, so both resolve the application’s own committed package-lock.json closure and neither re-resolved anything against a 2026 registry."
+	},
+	"digest": {
+		"scheme": "sha256(canonicalize({corpus, files}))",
+		"note": "Every lane digest is sha256 over the canonicalized file list recorded beside it, so a reader can recompute it from this record alone."
+	},
+	"dependencyAcquisition": {
+		"consentId": "VL-LEGACY-CORPUS-2026-08-10",
+		"mode": "none-needed",
+		"networkDuringThisUnit": "none",
+		"closureInstalledByThisUnit": false,
+		"why": "The migrated lane needed no dependency the application does not already pin. It bundles the application’s own closure with the workspace’s existing Vite 8 devDependency as the bundler, so no consented install was performed and no registry was contacted.",
+		"lockfile": {
+			"path": "package-lock.json",
+			"lockfileVersion": 2,
+			"declaredSha256": "fbd7042bb85fc05e9dccb46199a0a06815b279938de770a906cb49c290e74b48"
+		},
+		"registryHosts": []
+	},
+	"builds": {
+		"baseline": {
+			"bundler": "webpack-5.73.0 (react-scripts 5.0.1)",
+			"runtime": "node-16.20.2",
+			"runtimeAuthority": ".github/workflows/build.yml declares actions/setup-node@v2 node-version 16 for both the build job and the e2e job. The repository’s Dockerfile disagrees and says node:15; CI was followed and the conflict is recorded rather than resolved silently.",
+			"command": "CI=true npm run build",
+			"commandNote": "The repository’s declared build command, unmodified, so all three declared steps fire: the codegen prebuild, react-scripts build, and npm’s postbuild purgecss hook.",
+			"equal": true,
+			"byteStable": true,
+			"byteStabilityNote": "create-react-app 5 / webpack 5 rebuilt byte-for-byte identically across two runs in this cell. That is measured, not assumed: it is not a property every bundler in this corpus has.",
+			"first": {
+				"digest": "f2585ef404989bb187f0a7708bfa2a0029fdb850c0811422d7d7c1296c359ccb",
+				"files": [
+					{
+						"path": "app.json",
+						"sha256": "5d885ea56dda25cd462cc743b6aa11ee481992516c5a331c9bf5425a76076478"
+					},
+					{
+						"path": "asset-manifest.json",
+						"sha256": "e50144055128cf86adfdd8a337b2b3e51617eeb49ff3f3d319b78b6cd9bb3360"
+					},
+					{
+						"path": "eddiehub_community_logo.webp",
+						"sha256": "5022e67170d5efa795896e161f0f9adbc0a1ab1621893a0031d2ee057cdf4843"
+					},
+					{
+						"path": "favicon.ico",
+						"sha256": "308009a2fe3bc1026eec4b75b53d8f7573859018d80d33e8bcf9bc3ae6a23b3d"
+					},
+					{
+						"path": "index.html",
+						"sha256": "ae7315dbff849f10af4c48f47182438aec2f900867db220a3e3f41296a6efb43"
+					},
+					{
+						"path": "list.json",
+						"sha256": "c5ff24b9cab24572bb1e1a18d4784fec670fd879dd7bb25e25486d8a7fd5922a"
+					},
+					{
+						"path": "logo192.png",
+						"sha256": "97272233238e0a025ad23b5880b6c5cbc414e9b988ef31b027578ec52a62de4b"
+					},
+					{
+						"path": "logo512.png",
+						"sha256": "607592bf3353fb59d99a62d47f4ce8086812d23ed83ecc833d298a5b53cfcdef"
+					},
+					{
+						"path": "manifest.json",
+						"sha256": "50b3d8c3903af3f78d871b94557ab14f4e39ca192eaca3d2cfa863c867279a14"
+					},
+					{
+						"path": "mockup.png",
+						"sha256": "d4f32a738ca27eebe5cf7a132151de0ebda9d725fa38cd4588037ca5dabcc83a"
+					},
+					{
+						"path": "robots.txt",
+						"sha256": "90d24bc3bf698ac1e173739502298ccca72adf1f564fab05f484b8c48d1cadd2"
+					},
+					{
+						"path": "static/css/main.aa835dbe.css",
+						"sha256": "1ac1226376aea8a0e66fc579998b7122614ed66f3e5293f688e03c9ad146f05b"
+					},
+					{
+						"path": "static/css/main.aa835dbe.css.map",
+						"sha256": "791fbbf2dfd74485026d0d47d9df175338401a2eea55db274898a2b2cd654fc6"
+					},
+					{
+						"path": "static/js/787.86603928.chunk.js",
+						"sha256": "81dca406bca0c3ea6b8860bf6d839bb9f77051037df8e8f10e255e04ea156576"
+					},
+					{
+						"path": "static/js/787.86603928.chunk.js.map",
+						"sha256": "4489bb7043ba182d393586b32cf6a5461d6f0a9c9bf453d082efd52b5d8f99a4"
+					},
+					{
+						"path": "static/js/main.93d99c04.js",
+						"sha256": "dfede3dd647395baf8dca191996503784498867a5b6b393e992f350f713f2f2f"
+					},
+					{
+						"path": "static/js/main.93d99c04.js.LICENSE.txt",
+						"sha256": "07f1118c7f2efa4e47e0bb1cde09b27fe77c03ffb609254f316cfb0dfe064795"
+					},
+					{
+						"path": "static/js/main.93d99c04.js.map",
+						"sha256": "9ab07278b79fd61c92d396d8f209b9e8df72ffabb37949f9f86000afec05dac3"
+					},
+					{
+						"path": "static/media/primeicons.449aa8c65cdc5c2a8686.woff",
+						"sha256": "feb68bf619417980c30cc785abcfaf9163681b995d433960c91104e6269dc597"
+					},
+					{
+						"path": "static/media/primeicons.7fc4d8e224d1ff1b9c62.eot",
+						"sha256": "c9eaf535c9824672af02c9274d20d0d95f2bb36c812a6ff57c8d2224f577599d"
+					},
+					{
+						"path": "static/media/primeicons.91bacab1f083f2795272.ttf",
+						"sha256": "788dba0a407d05ff8272fb303daa1c6a3038510628c597a0d6f6c13d15658512"
+					},
+					{
+						"path": "static/media/primeicons.c6e2053303524e39530c.svg",
+						"sha256": "2ab98f70e1f0b8ca2820d90f025f3900cdbc92b9f088baef77939d3e98876aff"
+					}
+				],
+				"corpus": {
+					"directory": "data/",
+					"files": 561,
+					"aggregateSha256": "8e011055704d19b87543ef0ad11f293472d0fa79acc7cbe1051c254e121a1ef9",
+					"note": "The profile corpus, folded into one aggregate digest over the same canonicalized path-and-digest list the individual entries would have formed. No corpus filename appears in this record, by the handling rule the ingest fixed for this fixture."
+				}
+			},
+			"second": {
+				"digest": "f2585ef404989bb187f0a7708bfa2a0029fdb850c0811422d7d7c1296c359ccb",
+				"files": [
+					{
+						"path": "app.json",
+						"sha256": "5d885ea56dda25cd462cc743b6aa11ee481992516c5a331c9bf5425a76076478"
+					},
+					{
+						"path": "asset-manifest.json",
+						"sha256": "e50144055128cf86adfdd8a337b2b3e51617eeb49ff3f3d319b78b6cd9bb3360"
+					},
+					{
+						"path": "eddiehub_community_logo.webp",
+						"sha256": "5022e67170d5efa795896e161f0f9adbc0a1ab1621893a0031d2ee057cdf4843"
+					},
+					{
+						"path": "favicon.ico",
+						"sha256": "308009a2fe3bc1026eec4b75b53d8f7573859018d80d33e8bcf9bc3ae6a23b3d"
+					},
+					{
+						"path": "index.html",
+						"sha256": "ae7315dbff849f10af4c48f47182438aec2f900867db220a3e3f41296a6efb43"
+					},
+					{
+						"path": "list.json",
+						"sha256": "c5ff24b9cab24572bb1e1a18d4784fec670fd879dd7bb25e25486d8a7fd5922a"
+					},
+					{
+						"path": "logo192.png",
+						"sha256": "97272233238e0a025ad23b5880b6c5cbc414e9b988ef31b027578ec52a62de4b"
+					},
+					{
+						"path": "logo512.png",
+						"sha256": "607592bf3353fb59d99a62d47f4ce8086812d23ed83ecc833d298a5b53cfcdef"
+					},
+					{
+						"path": "manifest.json",
+						"sha256": "50b3d8c3903af3f78d871b94557ab14f4e39ca192eaca3d2cfa863c867279a14"
+					},
+					{
+						"path": "mockup.png",
+						"sha256": "d4f32a738ca27eebe5cf7a132151de0ebda9d725fa38cd4588037ca5dabcc83a"
+					},
+					{
+						"path": "robots.txt",
+						"sha256": "90d24bc3bf698ac1e173739502298ccca72adf1f564fab05f484b8c48d1cadd2"
+					},
+					{
+						"path": "static/css/main.aa835dbe.css",
+						"sha256": "1ac1226376aea8a0e66fc579998b7122614ed66f3e5293f688e03c9ad146f05b"
+					},
+					{
+						"path": "static/css/main.aa835dbe.css.map",
+						"sha256": "791fbbf2dfd74485026d0d47d9df175338401a2eea55db274898a2b2cd654fc6"
+					},
+					{
+						"path": "static/js/787.86603928.chunk.js",
+						"sha256": "81dca406bca0c3ea6b8860bf6d839bb9f77051037df8e8f10e255e04ea156576"
+					},
+					{
+						"path": "static/js/787.86603928.chunk.js.map",
+						"sha256": "4489bb7043ba182d393586b32cf6a5461d6f0a9c9bf453d082efd52b5d8f99a4"
+					},
+					{
+						"path": "static/js/main.93d99c04.js",
+						"sha256": "dfede3dd647395baf8dca191996503784498867a5b6b393e992f350f713f2f2f"
+					},
+					{
+						"path": "static/js/main.93d99c04.js.LICENSE.txt",
+						"sha256": "07f1118c7f2efa4e47e0bb1cde09b27fe77c03ffb609254f316cfb0dfe064795"
+					},
+					{
+						"path": "static/js/main.93d99c04.js.map",
+						"sha256": "9ab07278b79fd61c92d396d8f209b9e8df72ffabb37949f9f86000afec05dac3"
+					},
+					{
+						"path": "static/media/primeicons.449aa8c65cdc5c2a8686.woff",
+						"sha256": "feb68bf619417980c30cc785abcfaf9163681b995d433960c91104e6269dc597"
+					},
+					{
+						"path": "static/media/primeicons.7fc4d8e224d1ff1b9c62.eot",
+						"sha256": "c9eaf535c9824672af02c9274d20d0d95f2bb36c812a6ff57c8d2224f577599d"
+					},
+					{
+						"path": "static/media/primeicons.91bacab1f083f2795272.ttf",
+						"sha256": "788dba0a407d05ff8272fb303daa1c6a3038510628c597a0d6f6c13d15658512"
+					},
+					{
+						"path": "static/media/primeicons.c6e2053303524e39530c.svg",
+						"sha256": "2ab98f70e1f0b8ca2820d90f025f3900cdbc92b9f088baef77939d3e98876aff"
+					}
+				],
+				"corpus": {
+					"directory": "data/",
+					"files": 561,
+					"aggregateSha256": "8e011055704d19b87543ef0ad11f293472d0fa79acc7cbe1051c254e121a1ef9",
+					"note": "The profile corpus, folded into one aggregate digest over the same canonicalized path-and-digest list the individual entries would have formed. No corpus filename appears in this record, by the handling rule the ingest fixed for this fixture."
+				}
+			}
+		},
+		"target": {
+			"bundler": "vite-8.0.16",
+			"runtime": "node-24.15.0",
+			"command": "node generate.js && vite build --config fixtures/react-linkfree-v0-72-0/vite.config.ts",
+			"adapter": "packages/frameworks/react createCraViteAdapter + craEntryDocument + craProcessEnvironmentDefines",
+			"adapterCapabilities": [
+				"createCraNonUtf8ModuleSourcePlugin",
+				"createCraJavaScriptJsxPlugin",
+				"createCraTildeCssImportPlugin",
+				"createCraSloppyCommonJsGlobalsPlugin",
+				"createCraNodeCoreModulePlugin",
+				"createCraGlobalIdentifierPlugin",
+				"createCraPublicDirectoryPlugin",
+				"craEntryDocument",
+				"craProcessEnvironmentDefines"
+			],
+			"applicationSourceEdits": 0,
+			"applicationFilesChanged": [
+				{
+					"path": "index.html",
+					"sha256": "12f7f9bc458e85e3f29ead81d9515a6863701cc22b4e4833647b986193ade894"
+				},
+				{
+					"path": "public/list.json",
+					"sha256": "c5ff24b9cab24572bb1e1a18d4784fec670fd879dd7bb25e25486d8a7fd5922a"
+				}
+			],
+			"applicationFilesChangedNote": "Neither file is application source. `public/list.json` is the output of the repository’s own codegen prebuild, which is not committed and which every lane must run; `index.html` is the Vite entry document, derived from the immutable create-react-app template at public/index.html and written beside it rather than over it.",
+			"webpackExecuted": false,
+			"equal": true,
+			"first": {
+				"digest": "6aeaf6cd82547f2f855c7040ceaf6de4d7cee1b48c2ca736ddbcb0f922d98e3f",
+				"files": [
+					{
+						"path": "app.json",
+						"sha256": "5d885ea56dda25cd462cc743b6aa11ee481992516c5a331c9bf5425a76076478"
+					},
+					{
+						"path": "assets/index-CPwafykQ.js",
+						"sha256": "84d028f47eb25db03a8afa67c27ce6d6eb46039894ccead502bb154307298934"
+					},
+					{
+						"path": "assets/index-CPwafykQ.js.map",
+						"sha256": "ed0525e5d0f926425bfbd703d78c8356343f7ab4eb1f9ecc1d3ef01d2eab7856"
+					},
+					{
+						"path": "assets/index-CeVE3E4r.css",
+						"sha256": "b510ff6a746613c9a9b3ad22d6c0c8d3ae4fb059b035ac58abb4f09714f6f68a"
+					},
+					{
+						"path": "assets/primeicons-CI7iEhau.eot",
+						"sha256": "c9eaf535c9824672af02c9274d20d0d95f2bb36c812a6ff57c8d2224f577599d"
+					},
+					{
+						"path": "assets/primeicons-CPxenFJM.svg",
+						"sha256": "2ab98f70e1f0b8ca2820d90f025f3900cdbc92b9f088baef77939d3e98876aff"
+					},
+					{
+						"path": "assets/primeicons-DvHBoTlB.ttf",
+						"sha256": "788dba0a407d05ff8272fb303daa1c6a3038510628c597a0d6f6c13d15658512"
+					},
+					{
+						"path": "assets/primeicons-cX8YLkvA.woff",
+						"sha256": "feb68bf619417980c30cc785abcfaf9163681b995d433960c91104e6269dc597"
+					},
+					{
+						"path": "assets/web-vitals-CZFVLH_Z.js",
+						"sha256": "86391f739e0653d74f4909d3da2c0171d495e6fbf0dfc8204259d11a9da65b21"
+					},
+					{
+						"path": "assets/web-vitals-CZFVLH_Z.js.map",
+						"sha256": "7693bafc457feb21444be22b80a68e27a39c4c86b6864b8eca8e5a4e8345f430"
+					},
+					{
+						"path": "eddiehub_community_logo.webp",
+						"sha256": "5022e67170d5efa795896e161f0f9adbc0a1ab1621893a0031d2ee057cdf4843"
+					},
+					{
+						"path": "favicon.ico",
+						"sha256": "308009a2fe3bc1026eec4b75b53d8f7573859018d80d33e8bcf9bc3ae6a23b3d"
+					},
+					{
+						"path": "index.html",
+						"sha256": "c5ffe235f02d85f3252f0cf45f66a06712d07a78384b13ca82c59c5786948887"
+					},
+					{
+						"path": "list.json",
+						"sha256": "c5ff24b9cab24572bb1e1a18d4784fec670fd879dd7bb25e25486d8a7fd5922a"
+					},
+					{
+						"path": "logo192.png",
+						"sha256": "97272233238e0a025ad23b5880b6c5cbc414e9b988ef31b027578ec52a62de4b"
+					},
+					{
+						"path": "logo512.png",
+						"sha256": "607592bf3353fb59d99a62d47f4ce8086812d23ed83ecc833d298a5b53cfcdef"
+					},
+					{
+						"path": "manifest.json",
+						"sha256": "50b3d8c3903af3f78d871b94557ab14f4e39ca192eaca3d2cfa863c867279a14"
+					},
+					{
+						"path": "mockup.png",
+						"sha256": "d4f32a738ca27eebe5cf7a132151de0ebda9d725fa38cd4588037ca5dabcc83a"
+					},
+					{
+						"path": "robots.txt",
+						"sha256": "90d24bc3bf698ac1e173739502298ccca72adf1f564fab05f484b8c48d1cadd2"
+					}
+				],
+				"corpus": {
+					"directory": "data/",
+					"files": 561,
+					"aggregateSha256": "8e011055704d19b87543ef0ad11f293472d0fa79acc7cbe1051c254e121a1ef9",
+					"note": "The profile corpus, folded into one aggregate digest over the same canonicalized path-and-digest list the individual entries would have formed. No corpus filename appears in this record, by the handling rule the ingest fixed for this fixture."
+				}
+			},
+			"second": {
+				"digest": "6aeaf6cd82547f2f855c7040ceaf6de4d7cee1b48c2ca736ddbcb0f922d98e3f",
+				"files": [
+					{
+						"path": "app.json",
+						"sha256": "5d885ea56dda25cd462cc743b6aa11ee481992516c5a331c9bf5425a76076478"
+					},
+					{
+						"path": "assets/index-CPwafykQ.js",
+						"sha256": "84d028f47eb25db03a8afa67c27ce6d6eb46039894ccead502bb154307298934"
+					},
+					{
+						"path": "assets/index-CPwafykQ.js.map",
+						"sha256": "ed0525e5d0f926425bfbd703d78c8356343f7ab4eb1f9ecc1d3ef01d2eab7856"
+					},
+					{
+						"path": "assets/index-CeVE3E4r.css",
+						"sha256": "b510ff6a746613c9a9b3ad22d6c0c8d3ae4fb059b035ac58abb4f09714f6f68a"
+					},
+					{
+						"path": "assets/primeicons-CI7iEhau.eot",
+						"sha256": "c9eaf535c9824672af02c9274d20d0d95f2bb36c812a6ff57c8d2224f577599d"
+					},
+					{
+						"path": "assets/primeicons-CPxenFJM.svg",
+						"sha256": "2ab98f70e1f0b8ca2820d90f025f3900cdbc92b9f088baef77939d3e98876aff"
+					},
+					{
+						"path": "assets/primeicons-DvHBoTlB.ttf",
+						"sha256": "788dba0a407d05ff8272fb303daa1c6a3038510628c597a0d6f6c13d15658512"
+					},
+					{
+						"path": "assets/primeicons-cX8YLkvA.woff",
+						"sha256": "feb68bf619417980c30cc785abcfaf9163681b995d433960c91104e6269dc597"
+					},
+					{
+						"path": "assets/web-vitals-CZFVLH_Z.js",
+						"sha256": "86391f739e0653d74f4909d3da2c0171d495e6fbf0dfc8204259d11a9da65b21"
+					},
+					{
+						"path": "assets/web-vitals-CZFVLH_Z.js.map",
+						"sha256": "7693bafc457feb21444be22b80a68e27a39c4c86b6864b8eca8e5a4e8345f430"
+					},
+					{
+						"path": "eddiehub_community_logo.webp",
+						"sha256": "5022e67170d5efa795896e161f0f9adbc0a1ab1621893a0031d2ee057cdf4843"
+					},
+					{
+						"path": "favicon.ico",
+						"sha256": "308009a2fe3bc1026eec4b75b53d8f7573859018d80d33e8bcf9bc3ae6a23b3d"
+					},
+					{
+						"path": "index.html",
+						"sha256": "c5ffe235f02d85f3252f0cf45f66a06712d07a78384b13ca82c59c5786948887"
+					},
+					{
+						"path": "list.json",
+						"sha256": "c5ff24b9cab24572bb1e1a18d4784fec670fd879dd7bb25e25486d8a7fd5922a"
+					},
+					{
+						"path": "logo192.png",
+						"sha256": "97272233238e0a025ad23b5880b6c5cbc414e9b988ef31b027578ec52a62de4b"
+					},
+					{
+						"path": "logo512.png",
+						"sha256": "607592bf3353fb59d99a62d47f4ce8086812d23ed83ecc833d298a5b53cfcdef"
+					},
+					{
+						"path": "manifest.json",
+						"sha256": "50b3d8c3903af3f78d871b94557ab14f4e39ca192eaca3d2cfa863c867279a14"
+					},
+					{
+						"path": "mockup.png",
+						"sha256": "d4f32a738ca27eebe5cf7a132151de0ebda9d725fa38cd4588037ca5dabcc83a"
+					},
+					{
+						"path": "robots.txt",
+						"sha256": "90d24bc3bf698ac1e173739502298ccca72adf1f564fab05f484b8c48d1cadd2"
+					}
+				],
+				"corpus": {
+					"directory": "data/",
+					"files": 561,
+					"aggregateSha256": "8e011055704d19b87543ef0ad11f293472d0fa79acc7cbe1051c254e121a1ef9",
+					"note": "The profile corpus, folded into one aggregate digest over the same canonicalized path-and-digest list the individual entries would have formed. No corpus filename appears in this record, by the handling rule the ingest fixed for this fixture."
+				}
+			}
+		}
+	},
+	"declaredBuildSteps": {
+		"codegenPrebuild": {
+			"step": "npm run generate — node generate.js",
+			"declaredBy": "the first half of the application’s own `build` script",
+			"migratedLaneRunsIt": true,
+			"how": "The migrated lane runs `node generate.js` unmodified on the maintained runtime, before Vite is invoked. The script is plain CommonJS over the file system and has no bundler coupling, so it needs no adapter and no rewrite.",
+			"emits": "public/list.json, which is not committed and which the home and search routes both read.",
+			"emittedSha256": "c5ff24b9cab24572bb1e1a18d4784fec670fd879dd7bb25e25486d8a7fd5922a",
+			"loadBearing": "A lane that skips it produces an application whose two most-tested journeys have no index to load."
+		},
+		"postbuildCssPurge": {
+			"step": "npm postbuild — purgecss --config ./purgecss.config.js --output build/static/css",
+			"declaredBy": "an npm lifecycle hook on the application’s own `build` script",
+			"migratedLaneRunsIt": false,
+			"decision": "declared-out-of-scope-of-the-vite-build",
+			"reasoning": [
+				"The step is post-build asset optimisation over already-emitted files, not a bundler capability. Nothing about it is webpack-shaped, so absorbing it into the create-react-app compatibility adapter would put a CSS optimiser into a surface whose whole subject is reproducing webpack semantics.",
+				"It cannot be run unmodified against the migrated lane. purgecss.config.js hard-codes create-react-app’s output layout — content `build/index.html` and `build/static/js/*.js`, css `./build/static/css/*.css` — so honouring it verbatim would require either editing application source, which this lane refuses, or making the Vite lane imitate create-react-app’s directory layout, which is application-shaped overfitting in product code.",
+				"Its correctness depends on an application-authored `defaultExtractor`. A generic capability that ran someone else’s extractor over someone else’s stylesheet would be claiming a result it cannot check.",
+				"The upstream step carries two recorded defects: it rewrites the stylesheet without updating the .css.map beside it, and the `purgecss` CLI it invokes is never declared in package.json — it reaches node_modules/.bin only because npm hoists a transitive copy. Inheriting either into a reusable capability would be inheriting a defect."
+			],
+			"measuredBothWays": [
+				{
+					"lane": "baseline",
+					"stylesheets": [
+						"static/css/main.aa835dbe.css"
+					],
+					"bytesBeforePurge": 619824,
+					"bytesAfterPurge": 50728,
+					"reductionPercent": 91.82,
+					"shipped": false
+				},
+				{
+					"lane": "target",
+					"stylesheets": [
+						"assets/index-CeVE3E4r.css"
+					],
+					"bytesBeforePurge": 587122,
+					"bytesAfterPurge": 43283,
+					"reductionPercent": 92.63,
+					"shipped": false
+				}
+			],
+			"measurementNote": "Both measurements run the application’s own purgecss.config.js — its extractor unchanged — with only the content and stylesheet globs retargeted at the lane being measured, and both results are discarded rather than shipped. The baseline figure comes from a third measurement-only baseline build with npm’s lifecycle hooks suppressed, which is the only way to observe what webpack emitted before the purge rewrote it in place; that build is inventoried, measured, and deleted, and it is not one of the two lanes whose determinism is claimed. The migrated lane ships the unpurged stylesheet; the purge remains available to it as an application-level postbuild the moment the application updates its own globs, and nothing in the migration blocks that.",
+			"baselinePurgeAgreesWithShippedLane": true,
+			"baselinePurgeAgreesWithShippedLaneNote": "The measurement lane’s purge output is compared against the stylesheet the baseline lane actually ships. Agreement is what makes the measurement a measurement of this application’s declared step rather than of a retargeted approximation of it.",
+			"shippedCssBytes": {
+				"baseline": 50728,
+				"baselineNote": "The baseline ships the purged stylesheet, because its postbuild hook rewrites it in place.",
+				"target": 587122,
+				"targetNote": "The migrated lane ships the unpurged stylesheet. The difference is an optimisation the migrated lane does not claim, not a rule the migrated lane lost."
+			}
+		}
+	},
+	"capabilities": {
+		"measured": {
+			"sloppyCommonJsImplicitGlobals": [],
+			"nonUtf8DecodedModules": []
+		},
+		"contribution": [
+			{
+				"capability": "createCraJavaScriptJsxPlugin",
+				"fired": true,
+				"what": "Application-source JavaScript was parsed with JSX enabled, as babel-preset-react-app parsed it. Without it the build stops at the entry module."
+			},
+			{
+				"capability": "createCraSloppyCommonJsGlobalsPlugin",
+				"fired": false,
+				"what": "No dependency module in this closure assigns an undeclared name, so the capability ran over the whole graph and rewrote nothing. Measured, not assumed: the report it writes is empty."
+			},
+			{
+				"capability": "createCraNonUtf8ModuleSourcePlugin",
+				"fired": false,
+				"what": "Every dependency JavaScript module this graph loads is valid UTF-8, so nothing was decoded. This closure is therefore NOT a second live application for that capability."
+			},
+			{
+				"capability": "createCraNodeCoreModulePlugin",
+				"fired": false,
+				"what": "No Node core module is imported by this graph. That is provable from the baseline rather than only observed here: webpack 5 — unlike the webpack 4 line create-react-app 3 and 4 pin — ships no automatic core-module polyfills, so an import of one would have failed the green baseline build.",
+				"eraNote": "The capability reproduces a webpack 4 behaviour and this is a webpack 5 cell. It is composed because the adapter is composed whole, and it is inert here; a create-react-app 5 application that did import a core module would need this recorded as a deliberate divergence from its own era rather than silently shimmed."
+			},
+			{
+				"capability": "createCraGlobalIdentifierPlugin",
+				"fired": true,
+				"what": "The ambient `global` identifier is defined as `globalThis`. webpack 5 keeps `node.global` defaulting to true for web targets, so this capability is era-faithful for create-react-app 5 as well as 3 and 4.",
+				"firedNote": "Contributed as a compile-time define. A module that never mentions the identifier emits byte-identical output, so \"fired\" here means composed and contributed, not observed to have rewritten anything."
+			},
+			{
+				"capability": "createCraTildeCssImportPlugin",
+				"fired": false,
+				"what": "No stylesheet in this application or its closure uses a webpack tilde specifier in an @import rule."
+			},
+			{
+				"capability": "createCraPublicDirectoryPlugin",
+				"fired": true,
+				"what": "The public directory was replicated into the build output the way react-scripts build copies it, excluding the HTML template that became the entry document. This is what carries the generated index and the profile corpus into the migrated lane."
+			}
+		]
+	},
+	"runtimeBreaks": [
+		{
+			"order": 1,
+			"symptom": "Vite 8 stopped at parse time: \"Unexpected JSX expression … JSX syntax is disabled and should be enabled via the parser options\", raised on the application entry module.",
+			"cause": "create-react-app compiles every application-source module through babel-preset-react-app, which always includes @babel/preset-react, so a `.js` file may contain JSX and the tool ships that shape in its own template. Vite decides a module grammar from its extension and parses `.js` without JSX.",
+			"genericFix": "createCraJavaScriptJsxPlugin — raises an application-source JavaScript module to the JSX module type, changing no code. Dependencies are excluded, matching create-react-app’s own babel-preset-react-app/dependencies rule, which carries no React preset.",
+			"landedIn": "packages/frameworks/react/src/react-cra-vite-adapter.ts",
+			"caughtBy": "the migrated build lane",
+			"firstApplicationInPortfolio": "This is the first JavaScript (rather than TypeScript) create-react-app cell in the portfolio, which is why the capability had not been needed before."
+		}
+	],
+	"parity": {
+		"level": "build-artifacts-only",
+		"behavioral": "not-tested",
+		"journeys": "not-tested",
+		"runtimeEquivalence": "unknown",
+		"entryHtml": {
+			"baselineBytes": 705,
+			"targetBytes": 1877,
+			"baselineSha256": "ae7315dbff849f10af4c48f47182438aec2f900867db220a3e3f41296a6efb43",
+			"targetSha256": "c5ffe235f02d85f3252f0cf45f66a06712d07a78384b13ca82c59c5786948887",
+			"equal": false,
+			"note": "Bundler entry documents differ by construction: webpack injects hashed chunk scripts, Vite injects a hashed module script and stylesheet."
+		},
+		"inventory": {
+			"baselineFiles": 583,
+			"targetFiles": 580,
+			"baselineOnlyPaths": [
+				"asset-manifest.json",
+				"static/css/main.aa835dbe.css",
+				"static/css/main.aa835dbe.css.map",
+				"static/js/787.86603928.chunk.js",
+				"static/js/787.86603928.chunk.js.map",
+				"static/js/main.93d99c04.js",
+				"static/js/main.93d99c04.js.LICENSE.txt",
+				"static/js/main.93d99c04.js.map",
+				"static/media/primeicons.449aa8c65cdc5c2a8686.woff",
+				"static/media/primeicons.7fc4d8e224d1ff1b9c62.eot",
+				"static/media/primeicons.91bacab1f083f2795272.ttf",
+				"static/media/primeicons.c6e2053303524e39530c.svg"
+			],
+			"targetOnlyPaths": [
+				"assets/index-CPwafykQ.js",
+				"assets/index-CPwafykQ.js.map",
+				"assets/index-CeVE3E4r.css",
+				"assets/primeicons-CI7iEhau.eot",
+				"assets/primeicons-CPxenFJM.svg",
+				"assets/primeicons-DvHBoTlB.ttf",
+				"assets/primeicons-cX8YLkvA.woff",
+				"assets/web-vitals-CZFVLH_Z.js",
+				"assets/web-vitals-CZFVLH_Z.js.map"
+			],
+			"sharedPaths": [
+				"app.json",
+				"eddiehub_community_logo.webp",
+				"favicon.ico",
+				"index.html",
+				"list.json",
+				"logo192.png",
+				"logo512.png",
+				"manifest.json",
+				"mockup.png",
+				"robots.txt"
+			],
+			"byteIdenticalSharedPaths": [
+				"app.json",
+				"eddiehub_community_logo.webp",
+				"favicon.ico",
+				"list.json",
+				"logo192.png",
+				"logo512.png",
+				"manifest.json",
+				"mockup.png",
+				"robots.txt"
+			],
+			"corpus": {
+				"directory": "data/",
+				"baselineFiles": 561,
+				"targetFiles": 561,
+				"sharedPaths": 561,
+				"byteIdenticalSharedPaths": 561,
+				"note": "The profile corpus is compared in full and reported as counts only. No corpus filename appears in this record."
+			},
+			"note": "The shared, byte-identical majority is the copied public directory: the profile corpus and the static assets both lanes carry through unchanged. The differing paths are the bundler-authored ones."
+		}
+	},
+	"witnessPhaseFacts": {
+		"runtimeEgressCascade": "Avatar <img> loads reach GitHub avatar and asset hosts for the whole profile corpus. src/utils.js installs an onerror fallback to a third-party avatar-generation host, so blocking the first host REDIRECTS egress to a second live third-party host rather than eliminating it. A hermetic witness run must block or stub BOTH, and a run that blocks only the first is not hermetic even though it looks quiet.",
+		"buildTimeEgress": "None. Neither lane made a network request while building: the codegen reads the corpus from disk, both bundlers read from disk, and the purge measurement reads emitted files.",
+		"profileCorpus": "The build lanes bundle the real in-tree profile corpus because it is part of the pinned archive. It is counted and digested here and never quoted: no username, filename, or field value from it appears in this record. The witness phase will run against a synthetic corpus instead.",
+		"corpusInThisRecord": {
+			"profileDataFilesCopiedIntoBuild": 561,
+			"profileDataFilesCopiedIntoBuildNote": "A count of byte-identical shared paths under the corpus directory, which is how both lanes carry the corpus: create-react-app copies the public directory and the adapter’s public-directory capability replicates that copy. No file in it is named here.",
+			"generatedIndexBytes": 72625
+		}
+	},
+	"gates": {
+		"adapterUnitTests": "pass",
+		"baselineBuiltTwice": "pass-deterministic",
+		"targetBuiltTwice": "pass-deterministic",
+		"dependencyAcquisition": "not-needed",
+		"overfittingGuard": "pass",
+		"sourceMaterialization": "pass",
+		"browserLocality": "not-run",
+		"realServer": "not-run",
+		"directWitnessJourneys": "not-run",
+		"mutationRestoration": "not-run",
+		"upstreamCypressSuite": "not-run",
+		"receiptsTrust": "not-published"
+	},
+	"nonclaims": [
+		"Nothing here was loaded in a browser. No route was rendered, no journey was exercised, and the upstream cypress suite was not run.",
+		"Two deterministic builds and a shared artifact inventory establish build-level parity only. They establish no behavioural parity, no runtime equivalence, and no visual equivalence.",
+		"The migrated lane ships an unpurged stylesheet by declared decision. That is a recorded difference from the baseline, not an equivalence claim about the emitted CSS.",
+		"No production-readiness, pilot, certification, or migration-completeness claim is made for this application."
+	],
+	"integrity": {
+		"algorithm": "sha256",
+		"canonicalDigest": "fd423413aba0d87a394c7bb0031fc5c4fa8e9638b5c2fdfdc0567a7c4aeb8497"
+	}
+}

@@ -18,12 +18,15 @@ import {
 	craNodeCoreShimPackage,
 	craNodeGlobalsBootstrapSource,
 	craNodeGlobalsModuleId,
+	craJsxModuleType,
+	craModuleIsJsxCapableApplicationSource,
 	craProcessEnvironmentDefines,
 	craPublicAssetPaths,
 	craWebpackDecodedSource,
 	craWebpackNodeCoreShimSpecifiers,
 	craWebpackNodeInjectedGlobals,
 	createCraGlobalIdentifierPlugin,
+	createCraJavaScriptJsxPlugin,
 	createCraNodeCoreModulePlugin,
 	createCraNonUtf8ModuleSourcePlugin,
 	createCraPublicDirectoryPlugin,
@@ -903,6 +906,85 @@ describe('webpack tilde specifiers in CSS', () => {
 	});
 });
 
+describe('JSX in application-source JavaScript', () => {
+	test('claims application-source .js and .mjs, and nothing else', () => {
+		for (const id of ['/app/src/index.js', '/app/src/Components/Home.js', '/app/src/entry.mjs'])
+			expect(craModuleIsJsxCapableApplicationSource(id)).toBe(true);
+		// A dependency's .js was compiled by babel-preset-react-app/dependencies,
+		// which carries no React preset, so it was never parsed with JSX enabled.
+		expect(
+			craModuleIsJsxCapableApplicationSource('/app/node_modules/react-icons/index.js'),
+		).toBe(false);
+		// These already parse as JSX, are TypeScript, or are not modules at all.
+		for (const id of [
+			'/app/src/App.jsx',
+			'/app/src/App.tsx',
+			'/app/src/types.ts',
+			'/app/src/index.css',
+			'\0virtual:something.js',
+		])
+			expect(craModuleIsJsxCapableApplicationSource(id)).toBe(false);
+	});
+
+	test('a query suffix does not hide the extension', () => {
+		expect(craModuleIsJsxCapableApplicationSource('/app/src/index.js?used')).toBe(true);
+		expect(
+			craModuleIsJsxCapableApplicationSource('/app/node_modules/x/index.js?used'),
+		).toBe(false);
+	});
+
+	test('the plugin raises the module type and changes no code', () => {
+		const plugin = createCraJavaScriptJsxPlugin();
+		expect(plugin.enforce).toBe('pre');
+		const code = 'export default function App() { return <div />; }';
+		expect(plugin.transform(code, '/app/src/App.js')).toEqual({
+			code,
+			map: null,
+			moduleType: craJsxModuleType,
+		});
+		expect(plugin.transform(code, '/app/node_modules/pkg/index.js')).toBeNull();
+		expect(plugin.transform(code, '/app/src/App.tsx')).toBeNull();
+	});
+
+	test('a Vite build parses JSX in a .js application module and refuses without the plugin', async () => {
+		const root = await mkdtemp(path.join(tmpdir(), 'versionless-cra-jsx-'));
+		await mkdir(path.join(root, 'src'), { recursive: true });
+		// No React import and no runtime: the assertion is about the parser
+		// accepting the syntax, so the JSX factory is supplied locally.
+		await writeFile(
+			path.join(root, 'src/main.js'),
+			[
+				'const jsx = (tag, props) => ({ tag, props });',
+				'export const element = jsx("div", null);',
+				'export const markup = <div className="p-2" />;',
+				'globalThis.__cra = markup;',
+			].join('\n'),
+		);
+		const buildOnce = async (plugins: readonly unknown[]): Promise<void> => {
+			await build({
+				root,
+				logLevel: 'silent',
+				plugins: plugins as never,
+				build: {
+					outDir: path.join(root, 'out'),
+					emptyOutDir: true,
+					write: false,
+					rolldownOptions: {
+						input: path.join(root, 'src/main.js'),
+						// The temporary root has no dependency closure. The JSX
+						// runtime import the transform emits is externalized so the
+						// assertion stays about the parser rather than resolution.
+						external: ['react/jsx-runtime'],
+					},
+				},
+			});
+		};
+		await expect(buildOnce([])).rejects.toThrow();
+		await expect(buildOnce([createCraJavaScriptJsxPlugin()])).resolves.toBeUndefined();
+		await rm(root, { recursive: true, force: true });
+	});
+});
+
 describe('create-react-app public directory', () => {
 	test('copies every public file except the template into the build output', async () => {
 		const root = await mkdtemp(path.join(tmpdir(), 'versionless-cra-public-'));
@@ -934,11 +1016,15 @@ describe('create-react-app public directory', () => {
 		await expect(plugin.closeBundle.handler()).rejects.toThrow('outDir is unresolved');
 	});
 	test('the composed adapter excludes the template by default', () => {
-		const [decode, transform, sloppy, nodeCore, define, output] = createCraViteAdapter({
+		const [decode, jsx, transform, sloppy, nodeCore, define, output] = createCraViteAdapter({
 			publicDirectory: tmpdir(),
 		});
 		expect(decode.name).toBe('versionless-cra-non-utf8-module-source');
 		expect(decode.enforce).toBe('pre');
+		// Decoding acts on bytes and leads; the module type is decided next,
+		// because a module has to be parseable before any transform below it
+		// means anything.
+		expect(jsx.name).toBe('versionless-cra-javascript-jsx');
 		expect(transform.name).toBe('versionless-cra-tilde-css-import');
 		expect(sloppy.name).toBe('versionless-cra-sloppy-commonjs-globals');
 		expect(nodeCore.name).toBe('versionless-cra-node-core-modules');
@@ -989,6 +1075,7 @@ describe('React adapter overfitting guard', () => {
 			'graveyard',
 			'hospitalrun',
 			'killedbygoogle',
+			'linkfree',
 			'memos',
 			'papercups',
 			'realworld',

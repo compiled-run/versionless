@@ -1,0 +1,67 @@
+{
+	"schemaVersion": "versionless.react-linkfree-v0-72-0-run.v1",
+	"unit": "lrapr-t006/u8-linkfree-migration-lanes",
+	"fixture": "react-linkfree-v0-72-0",
+	"buildProfile": {
+		"path": "evidence/runs/react-linkfree-v0-72-0/build-profile.json",
+		"canonicalDigest": "fd423413aba0d87a394c7bb0031fc5c4fa8e9638b5c2fdfdc0567a7c4aeb8497"
+	},
+	"verification": {
+		"result": "build-lanes-pass",
+		"digestScheme": "sha256(canonicalize({corpus, files}))",
+		"deterministicCore": {
+			"baseline": {
+				"equal": true,
+				"files": 583
+			},
+			"target": {
+				"equal": true,
+				"files": 580
+			}
+		},
+		"boot": "not-run",
+		"journeys": "not-run",
+		"mutation": "not-run",
+		"parityLevel": "build-artifacts-only"
+	},
+	"migration": {
+		"adapter": "createCraViteAdapter",
+		"applicationNamedProductBranches": 0,
+		"applicationSourceEdits": 0,
+		"reusableSurfaceChanged": true,
+		"reusableSurfaceChange": "One capability added: createCraJavaScriptJsxPlugin, for JSX in application-source JavaScript.",
+		"runtimeBreaks": [
+			{
+				"order": 1,
+				"symptom": "Vite 8 stopped at parse time: \"Unexpected JSX expression … JSX syntax is disabled and should be enabled via the parser options\", raised on the application entry module.",
+				"cause": "create-react-app compiles every application-source module through babel-preset-react-app, which always includes @babel/preset-react, so a `.js` file may contain JSX and the tool ships that shape in its own template. Vite decides a module grammar from its extension and parses `.js` without JSX.",
+				"genericFix": "createCraJavaScriptJsxPlugin — raises an application-source JavaScript module to the JSX module type, changing no code. Dependencies are excluded, matching create-react-app’s own babel-preset-react-app/dependencies rule, which carries no React preset.",
+				"landedIn": "packages/frameworks/react/src/react-cra-vite-adapter.ts",
+				"caughtBy": "the migrated build lane",
+				"firstApplicationInPortfolio": "This is the first JavaScript (rather than TypeScript) create-react-app cell in the portfolio, which is why the capability had not been needed before."
+			}
+		],
+		"declaredDifferences": [
+			"The postbuild purgecss step is declared out of the Vite build’s scope, with the size it would have cut measured on both lanes."
+		]
+	},
+	"era": {
+		"craGeneration": "create-react-app 5.0.1 over webpack 5.73.0",
+		"firstInPortfolio": "the first create-react-app 5 / webpack 5 cell, and the first JavaScript (rather than TypeScript) create-react-app cell",
+		"priorApplicationsOverThisAdapter": [
+			"papercups (create-react-app 3)",
+			"HospitalRun (create-react-app 3)",
+			"the create-react-app 4 holdout"
+		]
+	},
+	"nonclaims": [
+		"Nothing here was loaded in a browser. No route was rendered, no journey was exercised, and the upstream cypress suite was not run.",
+		"Two deterministic builds and a shared artifact inventory establish build-level parity only. They establish no behavioural parity, no runtime equivalence, and no visual equivalence.",
+		"The migrated lane ships an unpurged stylesheet by declared decision. That is a recorded difference from the baseline, not an equivalence claim about the emitted CSS.",
+		"No production-readiness, pilot, certification, or migration-completeness claim is made for this application."
+	],
+	"integrity": {
+		"algorithm": "sha256",
+		"canonicalDigest": "971b4d8c9b94760d973d8c417780ee8f8c009582dc09e16ac900bc511cb36dd8"
+	}
+}

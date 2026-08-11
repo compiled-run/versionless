@@ -794,6 +794,78 @@ export function createCraNonUtf8ModuleSourcePlugin(
 	};
 }
 
+/**
+ * create-react-app compiles every module of the application's own source through
+ * `babel-preset-react-app`, and that preset always includes `@babel/preset-react`.
+ * The consequence is a syntax fact rather than a transform fact: a `.js` file in
+ * a create-react-app application may contain JSX, and every generation of the
+ * tool has accepted it — `src/index.js` rendering `<React.StrictMode>` is the
+ * shape the tool's own template ships.
+ *
+ * Vite decides a module's syntax from its extension: `.jsx` and `.tsx` are
+ * parsed with JSX enabled and `.js` is not, so the same `src/index.js` stops the
+ * build at parse time with `Unexpected JSX expression … JSX syntax is disabled`.
+ * Nothing about that file is wrong; the parser was simply told a narrower
+ * grammar than the bundler being replaced used.
+ *
+ * The capability below promotes an application-source JavaScript module to the
+ * JSX module type, which is exactly the grammar babel parsed it with. Three
+ * properties are worth stating:
+ *
+ * - It changes no code. Only the declared module type is raised, so a file
+ *   containing no JSX bundles byte-identically either way — JSX parsing is a
+ *   superset of the JavaScript grammar for the positions JSX can occupy.
+ * - Dependencies are excluded, and that matches create-react-app: its
+ *   `babel-loader` rule for `node_modules` uses `babel-preset-react-app/dependencies`,
+ *   which does not include the React preset, so a dependency's `.js` was never
+ *   parsed with JSX enabled and must not start being.
+ * - The boundary used is the dependency-directory boundary the other
+ *   capabilities here use, which is broader than create-react-app's own
+ *   `src`-only include. The difference is inert: a first-party `.js` outside
+ *   `src` that contains no JSX parses the same either way, and one that does
+ *   contain JSX is a file create-react-app would have refused rather than a file
+ *   this changes the meaning of.
+ */
+const jsxCapableApplicationExtensions: ReadonlySet<string> = new Set(['.js', '.mjs']);
+
+/** The JSX-capable module type, named once so the plugin and its tests agree. */
+export const craJsxModuleType = 'jsx';
+
+/**
+ * True when a module is application source that create-react-app would have
+ * parsed with JSX enabled.
+ */
+export function craModuleIsJsxCapableApplicationSource(id: string): boolean {
+	if (id.startsWith('\0')) return false;
+	const file = pathWithoutQuery(id);
+	if (craIsDependencyModule(file)) return false;
+	return jsxCapableApplicationExtensions.has(path.extname(file));
+}
+
+export type CraModuleTypeResult = Readonly<{ code: string; map: null; moduleType: string }>;
+export type CraModuleTypePlugin = Readonly<{
+	name: string;
+	enforce: 'pre';
+	transform(code: string, id: string): CraModuleTypeResult | null;
+}>;
+
+/**
+ * Parse application-source JavaScript with JSX enabled, the way
+ * `babel-preset-react-app` did. A module that is not application source, or
+ * whose extension create-react-app did not feed through the React preset, is
+ * left entirely alone.
+ */
+export function createCraJavaScriptJsxPlugin(): CraModuleTypePlugin {
+	return {
+		name: 'versionless-cra-javascript-jsx',
+		enforce: 'pre',
+		transform(code, id) {
+			if (!craModuleIsJsxCapableApplicationSource(id)) return null;
+			return { code, map: null, moduleType: craJsxModuleType };
+		},
+	};
+}
+
 async function filesBelow(directory: string): Promise<string[]> {
 	const files: string[] = [];
 	for (const entry of await readdir(directory, { withFileTypes: true })) {
@@ -876,6 +948,7 @@ export type CraViteAdapterOptions = Readonly<{
 
 export type CraViteAdapterPlugins = readonly [
 	CraLoadPlugin,
+	CraModuleTypePlugin,
 	CraTransformPlugin,
 	CraTransformPlugin,
 	CraNodeCoreModulePlugin,
@@ -885,13 +958,15 @@ export type CraViteAdapterPlugins = readonly [
 
 /**
  * The create-react-app compatibility plugin set: webpack's lenient module-source
- * decoding, tilde CSS specifier rewriting, webpack's sloppy-mode CommonJS
- * wrapper for dependency modules, webpack's automatic Node core module
- * polyfills, the ambient `global` identifier, plus public directory
- * replication.
+ * decoding, JSX in application-source JavaScript, tilde CSS specifier
+ * rewriting, webpack's sloppy-mode CommonJS wrapper for dependency modules,
+ * webpack's automatic Node core module polyfills, the ambient `global`
+ * identifier, plus public directory replication.
  *
  * Decoding leads, because it is the only capability here that acts on bytes: a
- * module has to become text before any transform above can read it.
+ * module has to become text before any transform above can read it. The JSX
+ * module type follows immediately, because a module has to be parseable before
+ * any later transform's output is meaningful.
  */
 export function createCraViteAdapter(options: CraViteAdapterOptions): CraViteAdapterPlugins {
 	return [
@@ -900,6 +975,7 @@ export function createCraViteAdapter(options: CraViteAdapterOptions): CraViteAda
 				? {}
 				: { observe: options.observeDecodedModules },
 		),
+		createCraJavaScriptJsxPlugin(),
 		createCraTildeCssImportPlugin(),
 		createCraSloppyCommonJsGlobalsPlugin(
 			options.observeImplicitGlobals === undefined
