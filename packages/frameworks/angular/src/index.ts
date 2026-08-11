@@ -16,3 +16,8 @@ export * from './angular-cli-era-migration.ts';
 export * from './barrel-entry-point-split.ts';
 export * from './node-core-binding-migration.ts';
 export * from './rxjs-prototype-patch-migration.ts';
+export * from './deep-import-redirection.ts';
+export * from './entry-components-removal.ts';
+export * from './module-with-providers-type-argument.ts';
+export * from './widened-union-narrowing.ts';
+export * from './webpack-tilde-style-specifier.ts';

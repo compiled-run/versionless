@@ -119,6 +119,47 @@ export function isFreeRootName(module: SemanticModule, name: string): boolean {
 	return module.rootScope.find(name) === null;
 }
 
+/**
+ * Visit every node of a parsed subtree, once each.
+ *
+ * The estree shapes the analyzer produces are plain objects whose children are
+ * nodes or arrays of nodes, so a structural walk reaches all of them without
+ * enumerating the grammar. `parent` links are skipped so the walk terminates on
+ * a graph the analyzer may have made cyclic, and a node is visited once even if
+ * two fields reference it.
+ */
+export function forEachNode(root: unknown, visit: (node: AstNode) => void): void {
+	const seen = new Set<object>();
+	const step = (value: unknown): void => {
+		if (Array.isArray(value)) {
+			for (const entry of value as readonly unknown[]) step(entry);
+			return;
+		}
+		if (typeof value !== 'object' || value === null) return;
+		const record = value as Record<string, unknown>;
+		if (typeof record['type'] !== 'string') return;
+		if (seen.has(record)) return;
+		seen.add(record);
+		visit(record as unknown as AstNode);
+		for (const key of Object.keys(record)) {
+			if (key === 'parent' || key === 'loc' || key === 'range') continue;
+			step(record[key]);
+		}
+	};
+	step(root);
+}
+
+/** The 0-based offset of a 1-based line and column, as a compiler reports them. */
+export function offsetOfPosition(source: string, line: number, column: number): number | null {
+	const lines = source.split('\n');
+	if (line < 1 || line > lines.length) return null;
+	let offset = 0;
+	for (let index = 0; index < line - 1; index += 1) offset += (lines[index]?.length ?? 0) + 1;
+	const text = lines[line - 1] ?? '';
+	if (column < 1 || column > text.length + 1) return null;
+	return offset + column - 1;
+}
+
 export type PlainProperty = Readonly<{ node: AstNode; name: string; value: AstNode }>;
 
 /**
