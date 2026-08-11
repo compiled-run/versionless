@@ -1,0 +1,403 @@
+{
+  "schemaVersion": "versionless.angular-super-productivity-era-baseline.v1",
+  "unit": "lrapr-t006/u18-super-productivity-migration-lanes",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "result": "rebuilt-green-not-byte-stable",
+  "cell": {
+    "node": "v12.14.1",
+    "architecture": "darwin-x64 executed on darwin-arm64 through Rosetta 2",
+    "packageManager": "yarn 1.21.1",
+    "command": "node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng build --aot --prod",
+    "builder": "@angular-devkit/build-angular:browser 0.803.4 over webpack 4",
+    "compiler": "pre-Ivy ViewEngine, AOT — enableIvy appears in none of the 967 blobs and Angular 8.2 defaults to ViewEngine",
+    "honestLabel": "repository-declared as to major. .travis.yml pins `node_js: '12'`, which is what this cell runs; the patch level 12.14.1 and yarn 1.21.1 are the ingest's era-consistent choices, because the repository declares neither. The yarn 1.22.11-and-later defect recorded by the ingest — newer yarn walks up the directory tree, finds the host monorepo's packageManager field and demands Corepack — is avoided by the same fix the ingest recorded, not re-discovered."
+  },
+  "source": {
+    "repository": "super-productivity/super-productivity",
+    "commit": "2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+    "cache": ".versionless/cache/angular-super-productivity-v2-13-15-baseline",
+    "provenance": "Restored in this checkout from the u16 ingest: the era dependency closure installed by `yarn install --frozen-lockfile --ignore-scripts --non-interactive` against the committed 466,548-byte yarn.lock, 1061 top-level entries, lockfile unmutated.",
+    "variant": "The repository's own `buildFrontend` command — `node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng build --aot --prod` — with its `yarn preCheck` (lint plus unit tests) prefix omitted, so that this measures a build and not a test run. The Electron sidecar that the manifest names as its `main` entry point is out of build scope and was never invoked on either lane. The production configuration this command selects turns on `serviceWorker`, so ngsw-worker.js, safety-worker.js and a generated ngsw.json are part of the emitted inventory, and `webWorkerTsConfig` compiles the two application web workers (lz, reminder) as separate chunks.",
+    "deviation": "none. Nothing was pinned, patched or worked around in either rebuild, and no source file was modified."
+  },
+  "builds": [
+    {
+      "run": 2,
+      "status": 0,
+      "files": 64,
+      "seconds": 90
+    },
+    {
+      "run": 3,
+      "status": 0,
+      "files": 64,
+      "seconds": null,
+      "secondsNote": "Rebuilds 1 and 2 were timed by the harness that ran them (95 s and 90 s). Rebuild 3 was added afterwards to isolate the divergence and its wall clock was not captured; a duration is left null rather than estimated."
+    }
+  ],
+  "rebuildComparison": "Three consecutive rebuilds of the unmodified pinned tree were run on the same host in the same session. All three exited zero and all three emitted the same 64-file inventory. No two of them agree: rebuild 1 emitted main.6871f8597c3fbcf77df6.js, rebuild 2 main.2b292dc79b76876e9ea9.js and rebuild 3 main.932307a6bf1518696bcc.js, each with its own map, its own index.html script tag and its own ngsw.json hash table. The comparison pair recorded in `inventory` and `differingPaths` is rebuilds 2 and 3, whose full dist trees are both retained; rebuild 1 is cited from its retained digest manifest. Adding a third build was not a repair attempt — it was how the cause was isolated, by giving the divergence a second independent sample instead of one.",
+  "byteStable": false,
+  "byteStableMeaning": "The two rebuilds do not emit the same inventory. Both exited zero and emitted the same file count, and the paths below carry different bytes between them. This is a property of the fixture and its era toolchain that the ingest's single build could not have detected; it is recorded, not repaired, and no deviation was introduced to make it go away.",
+  "differingPaths": [
+    "index.html",
+    "main.2b292dc79b76876e9ea9.js",
+    "main.2b292dc79b76876e9ea9.js.map",
+    "main.932307a6bf1518696bcc.js",
+    "main.932307a6bf1518696bcc.js.map",
+    "ngsw.json"
+  ],
+  "instability": [
+    {
+      "path": "./ngsw.json",
+      "observed": "The generated service-worker manifest differs between every pair of builds.",
+      "cause": "ngsw.json carries a `timestamp` field that the service-worker builder fills with the wall clock at generation time, and a `hashTable` keyed by the emitted filenames — so it moves both on its own and whenever a hashed filename moves.",
+      "consequential": false
+    },
+    {
+      "path": "./index.html",
+      "observed": "The emitted entry document differs between builds that emit differing main chunks.",
+      "cause": "index.html carries the content-hashed filename of the main chunk in its script tag. It is downstream of the main chunk and moves only because that moved.",
+      "consequential": false
+    },
+    {
+      "path": "main.<contenthash>.js and its .map",
+      "observed": "The application chunk carries a different content hash and different bytes on every build, so no two builds even agree on the filename. Three consecutive rebuilds produced three distinct main chunks of three different byte lengths.",
+      "cause": "Chased to a single line rather than inferred. The first differing byte between two consecutive main chunks falls inside an inlined component stylesheet, in a `@keyframes bang` rule whose box-shadow list is generated by Sass `random()` — src/app/pages/daily-summary/daily-summary.component.scss line 184, `random($width)-$width / 2 + px random($height)-$height / 1.2 + px hsl(random(360), 100, 50)`. Sass `random()` is unseeded, so node-sass emits different literals on every compile, the component stylesheet is inlined into the application chunk, and the chunk's content hash moves with it. The workspace-level styles.css is byte-identical across all three builds, which is consistent: the confetti rule lives in a component stylesheet, not the global one.",
+      "consequential": true
+    }
+  ],
+  "inventory": [
+    {
+      "path": "3rdpartylicenses.txt",
+      "sha256": "fce007796e499fa49525308ea106d03a39e4f2c4505c22c0da204eb680fae446",
+      "bytes": 80351
+    },
+    {
+      "path": "MaterialIcons-Regular.012cf6a10129e2275d79.woff",
+      "sha256": "e699f9a3e52908c31b02e0e6991148ebee3509de8486220f7938aa1f7350320a",
+      "bytes": 57620
+    },
+    {
+      "path": "MaterialIcons-Regular.570eb83859dc23dd0eec.woff2",
+      "sha256": "a471c93b4d744ef3eb4f8cd2a05a9abe28bac71d4cf3ed99747165df8e2de311",
+      "bytes": 44300
+    },
+    {
+      "path": "MaterialIcons-Regular.a37b0c01c0baf1888ca8.ttf",
+      "sha256": "541996b221e1bd3ef2a56fcbeb6b52aefde13b2598bc9a7688faa948fefe4f1d",
+      "bytes": 128180
+    },
+    {
+      "path": "MaterialIcons-Regular.e79bfd88537def476913.eot",
+      "sha256": "39ebc508d7bc2c76c667ff2eb51cb5d6a3cc4ee6de2ba76e5f270a1d2ac893ec",
+      "bytes": 143258
+    },
+    {
+      "path": "assets/fonts/MaterialIcons-Regular.eot",
+      "sha256": "39ebc508d7bc2c76c667ff2eb51cb5d6a3cc4ee6de2ba76e5f270a1d2ac893ec",
+      "bytes": 143258
+    },
+    {
+      "path": "assets/fonts/MaterialIcons-Regular.svg",
+      "sha256": "cd1b53120159084b89bdebce8393d91a9f89193af8db25c4096543fdeb3e1fb9",
+      "bytes": 294314
+    },
+    {
+      "path": "assets/fonts/MaterialIcons-Regular.ttf",
+      "sha256": "541996b221e1bd3ef2a56fcbeb6b52aefde13b2598bc9a7688faa948fefe4f1d",
+      "bytes": 128180
+    },
+    {
+      "path": "assets/fonts/MaterialIcons-Regular.woff",
+      "sha256": "e699f9a3e52908c31b02e0e6991148ebee3509de8486220f7938aa1f7350320a",
+      "bytes": 57620
+    },
+    {
+      "path": "assets/fonts/MaterialIcons-Regular.woff2",
+      "sha256": "a471c93b4d744ef3eb4f8cd2a05a9abe28bac71d4cf3ed99747165df8e2de311",
+      "bytes": 44300
+    },
+    {
+      "path": "assets/i18n/ar.json",
+      "sha256": "5ae49a8fce12c5af1ff078239f778570d87b8348baeb7e286bd0e2d65d1a3b60",
+      "bytes": 63235
+    },
+    {
+      "path": "assets/i18n/de.json",
+      "sha256": "1e2e783bdf02a82acd8f71651eb0dc775e7c0d488e52072bd01f933f69a4e04c",
+      "bytes": 53945
+    },
+    {
+      "path": "assets/i18n/en.json",
+      "sha256": "6b522d877792ded3ad8cdb76aae1a4f5b7f8452f01f72a62f396bc4e246c5e90",
+      "bytes": 47356
+    },
+    {
+      "path": "assets/i18n/es.json",
+      "sha256": "812a84d72ce515a380187ab4d7963b3c7ed05d448deb5032cb3336d58658c016",
+      "bytes": 53490
+    },
+    {
+      "path": "assets/i18n/fr.json",
+      "sha256": "211b79e72f1243ecb8739f88b2989f1081c9ab1e4ad870a82137be6cd8c8cfde",
+      "bytes": 54985
+    },
+    {
+      "path": "assets/i18n/it.json",
+      "sha256": "dc22cc9496aaef7b3afb0c5644e41428e73af1a65e777d911b683b30cf8a2400",
+      "bytes": 57153
+    },
+    {
+      "path": "assets/i18n/ja.json",
+      "sha256": "f2893c1fa558232dd681dc8cd4d6c7190873c9de2bd02aa53c021c517e6e80bf",
+      "bytes": 60290
+    },
+    {
+      "path": "assets/i18n/ko.json",
+      "sha256": "847b4d6d983dec37ceabab9d1016e8c2a36ed5ca1c1d9b2d7313607e63a8c4e4",
+      "bytes": 54333
+    },
+    {
+      "path": "assets/i18n/pt.json",
+      "sha256": "94dea3081ca14fa1f4c8dd5658a0a9da5b5a6244748f99c872a31bd7d52341f0",
+      "bytes": 51853
+    },
+    {
+      "path": "assets/i18n/ru.json",
+      "sha256": "23d13bf50dca75fa1a34cda85f26777da0892323379059fce0f0b0eb4331c866",
+      "bytes": 74319
+    },
+    {
+      "path": "assets/i18n/tr.json",
+      "sha256": "fcc1f101f23114832f07778ac6ae7193a17695d226ce930e02031a6127827a40",
+      "bytes": 51923
+    },
+    {
+      "path": "assets/i18n/zh.json",
+      "sha256": "4116ece639e25ce146419c60d318a7e159b176bc1b1445dfe091aba716c5208d",
+      "bytes": 46167
+    },
+    {
+      "path": "assets/icons/apple-touch-icon.png",
+      "sha256": "aee8392a487b70e403a25ae1a6543222d770d1c86efaf23d1e5d60b3da239fc6",
+      "bytes": 4723
+    },
+    {
+      "path": "assets/icons/browserconfig.xml",
+      "sha256": "8da3a82a9f3ccc439c35cfe5d4d1735004965ec3eb072d9173188d05596a3dec",
+      "bytes": 246
+    },
+    {
+      "path": "assets/icons/drag-handle.svg",
+      "sha256": "cbc23d4431512e584b1bcaccc3fcc9531cf18ee7b7717d1acd0ddcf1c3892893",
+      "bytes": 661
+    },
+    {
+      "path": "assets/icons/favicon-16x16.png",
+      "sha256": "b7924d265a175423a0d65849e7cd4921fddd54af352ac50708cd5ebb7e47cfe6",
+      "bytes": 803
+    },
+    {
+      "path": "assets/icons/favicon-32x32.png",
+      "sha256": "3461e814c56f21916735509a1e645e6e389481bdd9590f1768757bdb24fe8bc4",
+      "bytes": 1332
+    },
+    {
+      "path": "assets/icons/github.svg",
+      "sha256": "7f3f65e96f77126be0ebfba43fdaceeaedb016ee404a8fe755408f20bc3f2ded",
+      "bytes": 991
+    },
+    {
+      "path": "assets/icons/icon-128x128.png",
+      "sha256": "f95eb993d87ddb9dfac45ec94576e3df3523e8a7da2643e04d4e6e9910bf0949",
+      "bytes": 7029
+    },
+    {
+      "path": "assets/icons/icon-144x144.png",
+      "sha256": "f0df2a37c1823c9088a41773eea227aacfc8c9297abf4f2a44200ca6e78f78b9",
+      "bytes": 6345
+    },
+    {
+      "path": "assets/icons/icon-192x192.png",
+      "sha256": "ca2985d89f5f6df2248297bb42aad555370f15b405c3b074afa62cc97a5db134",
+      "bytes": 10003
+    },
+    {
+      "path": "assets/icons/icon-512x512.png",
+      "sha256": "743b6249e5b35689c3928ddd6691067917f4b09e84f5826f8bf5a48708735f0d",
+      "bytes": 30559
+    },
+    {
+      "path": "assets/icons/icon-72x72.png",
+      "sha256": "711530e8c7300cbf6e0f1f85729370537f9c333c6365f72b3c3733f7a9ea201f",
+      "bytes": 3119
+    },
+    {
+      "path": "assets/icons/icon-96x96.png",
+      "sha256": "e076e6b4794c4b79c2689223e68858fdc3381b30605bf5b6fe2850aedcf9b093",
+      "bytes": 4604
+    },
+    {
+      "path": "assets/icons/jira.svg",
+      "sha256": "431bbdba3bb8799d7b2c8bcee32d5d07e6cf3121d650e1f26874eca82ac91181",
+      "bytes": 2426
+    },
+    {
+      "path": "assets/icons/mstile-150x150.png",
+      "sha256": "18292da60c41521eee0645ba4868d43e4eddf1ce3ce88b931de86b26b3b3215c",
+      "bytes": 6818
+    },
+    {
+      "path": "assets/icons/play.svg",
+      "sha256": "6c1a285483d3f1af35b60a1ea78a2179fce5d0806d7feec50ee8b39aa028b4dd",
+      "bytes": 305
+    },
+    {
+      "path": "assets/icons/safari-pinned-tab.svg",
+      "sha256": "981d38538e7a00fa0e42185369310f0a3684ec6db3373dba11a7be1cfd7f1b24",
+      "bytes": 1075
+    },
+    {
+      "path": "assets/icons/sp.svg",
+      "sha256": "f787079d18b637fbcf218e4cf79e94f5a64d041503884a46907cd5d376811332",
+      "bytes": 392
+    },
+    {
+      "path": "assets/service-workers/msg.js",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "assets/snd/positive.ogg",
+      "sha256": "ecb2eb18ed32402b1d3d372c14b095801901572a398fdb45ac3644ca4cc8d61f",
+      "bytes": 99826
+    },
+    {
+      "path": "assets/snd/tick.mp3",
+      "sha256": "50e1b97e968cc2f82f2494360700dff567ad1722f8cfc6523a418cdd200e509d",
+      "bytes": 1584
+    },
+    {
+      "path": "assets/unicorn.png",
+      "sha256": "31f107ff5a340d7cbb63071d3ce801eaad2cac317d82d252eb97a73d2b1e313b",
+      "bytes": 1254
+    },
+    {
+      "path": "favicon.ico",
+      "sha256": "1f40b45133e67eecb20d3dc927a043ea0f240f4187f8d26e11f9950224f0ae49",
+      "bytes": 15086
+    },
+    {
+      "path": "index.html",
+      "sha256": "3948c33903af5c36114a9048e663608a5cb8eb94f290b179989f291d00c94ae9",
+      "bytes": 6873
+    },
+    {
+      "path": "lz.46c6d785ad9411bfb3da.worker.js",
+      "sha256": "b3f0d4382820ffd7981ada43153be63dd5eebaedb4897646782a038d5a3ac690",
+      "bytes": 6112
+    },
+    {
+      "path": "lz.46c6d785ad9411bfb3da.worker.js.map",
+      "sha256": "a65899c91239178a621c3ffa86b3c2d179d205998e35dc93539b442af8dc6539",
+      "bytes": 31925
+    },
+    {
+      "path": "main.2b292dc79b76876e9ea9.js",
+      "sha256": "d02d6b636f657633375064ee61a6d38dfbfe1879d2ebd70d215ea7921622e49d",
+      "bytes": 3812042
+    },
+    {
+      "path": "main.2b292dc79b76876e9ea9.js.map",
+      "sha256": "c3473c92e89cb0a6dde985c0e8b90cc2f5e67c1b44321453ac819ec07e8de829",
+      "bytes": 16012401
+    },
+    {
+      "path": "manifest.json",
+      "sha256": "1a649e67b6db1f9ade5e194ed6e32cdc4b29b8095933734b7637af6b19a5d05d",
+      "bytes": 925
+    },
+    {
+      "path": "ngsw-worker.js",
+      "sha256": "cf66be5c1fbc1185dac84ec0cf4437549722a165985c7c78fc2262e14fc6db1a",
+      "bytes": 140542
+    },
+    {
+      "path": "ngsw.json",
+      "sha256": "0ebfb4efa76edf298b0ecdc84ed7cd2c73d82da30a4f8350d683c22bc6dbc1f8",
+      "bytes": 6596
+    },
+    {
+      "path": "polyfills-es5.2abe3ed7e5365deecf2a.js",
+      "sha256": "db758df027100df720cde062a5d0b0d15a1cb4034b1d69b83a078daba4311451",
+      "bytes": 205822
+    },
+    {
+      "path": "polyfills-es5.2abe3ed7e5365deecf2a.js.map",
+      "sha256": "1613e95652ad232d71f14a27ba83dc9198b2ef82173d0fba97ab25573084b2a8",
+      "bytes": 989373
+    },
+    {
+      "path": "polyfills.ba9ede11574490fb99be.js",
+      "sha256": "22967f56f698de84a0dd1181143b6a9785307ea1fcaf1373b20eb6d0af9984ad",
+      "bytes": 124393
+    },
+    {
+      "path": "polyfills.ba9ede11574490fb99be.js.map",
+      "sha256": "ad6bcaaeed760e6896b937bbf6ecde786af3490372092bdf12cc8c7ac83eb25e",
+      "bytes": 597103
+    },
+    {
+      "path": "reminder.3ac70ee532363281f1c3.worker.js",
+      "sha256": "ae70e2dcde014c627660233ea7c59ed16247e5888c6317e18aa963fa2cd6efce",
+      "bytes": 1326
+    },
+    {
+      "path": "reminder.3ac70ee532363281f1c3.worker.js.map",
+      "sha256": "ba40ad663e82988150809b14865592f632700da7102edfb628ab3171fcf14c55",
+      "bytes": 8129
+    },
+    {
+      "path": "runtime.270bd8f33f8d16d6a229.js",
+      "sha256": "2c30964287abf3919347a714ee9ac400c196c3e44fcd4c4ecd3356c17886f9a6",
+      "bytes": 1542
+    },
+    {
+      "path": "runtime.270bd8f33f8d16d6a229.js.map",
+      "sha256": "e108341a67ee68b3539e46f7722486e65b2c9c79672141534436482616687244",
+      "bytes": 8234
+    },
+    {
+      "path": "safety-worker.js",
+      "sha256": "c6c2530aa92b8af7d28f639b97ef998e04e72627c5c06df55a698d00f00d92fd",
+      "bytes": 519
+    },
+    {
+      "path": "styles.db712f54a585028f32b9.css",
+      "sha256": "ff6768c8987a67fae6e4f6855c9a958f0bbbc46d69deeb423db0b31c48ad8126",
+      "bytes": 171092
+    },
+    {
+      "path": "styles.db712f54a585028f32b9.css.map",
+      "sha256": "cff6b411d02a09da9613c7aab5f312cd47e8e564802edac6488eca94b4f9525a",
+      "bytes": 28912
+    },
+    {
+      "path": "worker-basic.min.js",
+      "sha256": "c6c2530aa92b8af7d28f639b97ef998e04e72627c5c06df55a698d00f00d92fd",
+      "bytes": 519
+    }
+  ],
+  "recordedRisks": [
+    "The emitted service worker prefetches https://fonts.googleapis.com/** and https://fonts.gstatic.com/** at runtime, as ngsw-config.json declares. No lane here made that request, so nothing is established about what happens when it fails or is blocked.",
+    "node-sass ^4.12.0 declares a postinstall that fetches or compiles a native binding. Both the ingest install and this lane ran with lifecycle scripts disabled; every .scss input still compiled and styles.css still emitted, so nothing in the build path required that binding. That is a reading of this build, not a general claim about node-sass.",
+    "The manifest declares one git-protocol dependency, jira2md, with no version and no registry integrity hash. The era lane consumed it exactly as the committed lockfile resolved it; the migrated cell records a disposition for it rather than carrying an unpinned git specifier forward."
+  ],
+  "notEstablished": [
+    "Two consecutive builds on one host measure repeatability, not reproducibility. Nothing here establishes what another host, another day or another clock would emit — and on this fixture the same host on the same day already disagreed with itself.",
+    "No browser opened these bundles. Nothing about their behaviour, boot or runtime correctness is observed.",
+    "The ingest recorded this application as installing frozen and building green on the first attempt with zero deviations. That remains true and is not contradicted here: a green build and a byte-stable build are different claims, and only the first one was ever made.",
+    "The Electron sidecar was not built, not run and not analysed. Its dependencies are declared in the same manifest and are carried into no claim here."
+  ],
+  "digest": "a1a449ce01961bf09d5b92e297e1e98781a55dcf4de4bfee49e89e75dd242803"
+}

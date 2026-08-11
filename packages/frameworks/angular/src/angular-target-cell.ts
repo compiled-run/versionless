@@ -160,6 +160,69 @@ export const ANGULAR_16_ECOSYSTEM_PACKAGES: EcosystemPackages = Object.freeze({
 		range: '^7.0.3',
 		fact: '7.0.3 is the newest release the package ever published and declares no peers at all, so nothing in this cell excludes it. The range is unchanged from the era workspace; it is recorded because the reading happened, not because a byte moved.',
 	}),
+	'@ngx-formly/core': Object.freeze({
+		kind: 'aligned',
+		range: '^7.1.0',
+		fact: '@ngx-formly/core 7.1.0 is the newest release published and declares peer @angular/forms ">=13.2.0" and rxjs "^6.5.3 || ^7.0.0", both satisfied by this cell. It declares no @angular/core peer and no engines.node, so nothing on either axis excludes it.',
+	}),
+	'@ngx-formly/material': Object.freeze({
+		kind: 'aligned',
+		range: '^7.1.0',
+		fact: '@ngx-formly/material 7.1.0 declares peer @ngx-formly/core "7.1.0" as an exact version, so the two packages move together or not at all; it also declares peer @angular/material ">=16.0.0", satisfied by the ^16.2.0 this cell writes for the @angular/ family.',
+	}),
+	'@ngx-translate/core': Object.freeze({
+		kind: 'aligned',
+		range: '^17.0.0',
+		fact: '18.0.0 is the newest release but declares peer @angular/core ">=18" and @angular/common ">=18", which the ^16.2.0 this cell writes does not satisfy. 17.0.0 is the newest line left: peer @angular/core ">=16" and @angular/common ">=16", and no engines.node.',
+	}),
+	'@ngx-translate/http-loader': Object.freeze({
+		kind: 'aligned',
+		range: '^17.0.0',
+		fact: '18.0.0 declares peer @angular/core ">=18", excluded for the same reason as the core package. 17.0.0 declares peer @angular/core ">=16" and @angular/common ">=16". The loader is aligned to the same major as the core it loads for, because a translate installation carrying two majors of its own core is not an installation.',
+	}),
+	'angular-material-css-vars': Object.freeze({
+		kind: 'aligned',
+		range: '^5.0.3',
+		fact: 'This package versions ahead of the Angular major it supports: 11.0.0 (the `latest` dist-tag) declares peer @angular/core, @angular/common and @angular/material ">=22", 10.0.0 declares ">=21" and 9.1.1 declares ">=20". 5.0.3 is the newest release whose peers ">=16" the ^16.2.0 this cell writes satisfies. It declares no engines.node, and its own dependency @ctrl/tinycolor ^4.0.0 is a package this cell already reads at ^4.2.0.',
+	}),
+	'angular2-promise-buttons': Object.freeze({
+		kind: 'aligned',
+		range: '^6.0.0',
+		fact: '6.0.0 is the newest release published and declares peer @angular/core and @angular/common ">=9.0.4", which this cell satisfies, plus dependency tslib ^2.0.0, which the ^2.3.0 this cell writes satisfies. It declares no engines.node.',
+	}),
+	'ng2-charts': Object.freeze({
+		kind: 'aligned',
+		range: '^5.0.4',
+		fact: 'ng2-charts versions ahead of the Angular major: 10.0.0 declares peer @angular/core ">=21.0.0", 9.0.0 ">=20.0.0" and 8.0.0 ">=19.0.0". 5.0.4 is the newest release whose peer @angular/core ">=16.0.0" this cell satisfies. It also declares peer chart.js "^3.4.0 || ^4.0.0", which the era chart.js ^2.8.0 does not satisfy — that is a source-visible change of charting major and is recorded here rather than silently carried.',
+	}),
+	'ng2-dragula': Object.freeze({
+		kind: 'aligned',
+		range: '^7.0.0',
+		fact: 'The `latest` dist-tag points at 6.0.0, but 7.0.0 is the newest version published and declares peer @angular/core, @angular/common and @angular/animations ">=16.0.0 <21.0.0" and rxjs ">=6.0.0 <8.0.0", all satisfied by this cell. Its peers dragula ^3.7.2 and @types/dragula ^2.1.34 are supplied by the package itself as dependencies of the installation, not by the workspace.',
+	}),
+	'ngx-markdown': Object.freeze({
+		kind: 'aligned',
+		range: '^16.0.0',
+		fact: 'ngx-markdown versions in lockstep with the Angular major: 16.0.0 is the 16.x line and declares peer @angular/core, @angular/common and @angular/platform-browser "^16.0.0" plus zone.js "~0.13.0", which is exactly the zone.js range this cell writes. 22.0.0, 21.3.0 and 21.2.0 declare ^22.0.0 and ^21.0.0 respectively.',
+	}),
+	'ng-pick-datetime': Object.freeze({
+		kind: 'no-successor',
+		fact: 'ng-pick-datetime stops at 7.0.0, published 2018-10-21, and declares peer @angular/cdk "^7.0.0". No release of this package name exists for any Angular line at or beyond this cell — the maintained continuation was republished under different package names, which is a source decision about which date-time picker the application uses and not a version this cell can pick. The package is dropped and the components importing it are left for a source answer.',
+	}),
+	'ngx-electron': Object.freeze({
+		kind: 'aligned',
+		range: '^2.2.0',
+		fact: '2.2.0 is the newest release published and declares peer @angular/core ">=8.0.0" and rxjs ">=6.3.0", both satisfied by this cell. Its third peer, electron ">=6.0.10", is a desktop-sidecar dependency the web build does not resolve; the range is recorded as read, and nothing here establishes that the sidecar builds.',
+	}),
+	jira2md: Object.freeze({
+		kind: 'aligned',
+		range: '^3.0.1',
+		fact: 'jira2md is Angular-major independent: 3.0.1, the newest release and the `latest` dist-tag, declares no peerDependencies at all and no engines.node, so neither axis of this cell excludes it. Its single runtime dependency is marked ^4.0.12. A workspace may declare this package by a `git+https://` specifier carrying no version and no integrity hash; the registry publishes the same library under this name, so the cell aligns such a declaration onto a resolvable registry range rather than carrying an unpinned git specifier into the migrated closure.',
+	}),
+	'rxjs-tslint': Object.freeze({
+		kind: 'no-successor',
+		fact: 'rxjs-tslint stops at 0.1.8 and is a TSLint rule set, so it shares TSLint\'s fate: there is no release of it for any lint line this cell carries. It is dropped with the rest of the TSLint toolchain rather than pinned beside a lint target that no longer exists.',
+	}),
 	'@sentry/angular': Object.freeze({
 		kind: 'aligned',
 		range: '^8.55.2',

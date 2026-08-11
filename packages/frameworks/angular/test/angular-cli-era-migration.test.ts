@@ -247,6 +247,11 @@ describe('Angular adapter overfitting guard', () => {
 			'ngx-i18nsupport',
 			'martinroob',
 			'5f54abbd',
+			'super-productivity',
+			'superproductivity',
+			'johannesjo',
+			'daily-summary',
+			'2943c5c4',
 		];
 		const offenders: string[] = [];
 		for (const entry of await readdir(directory, { withFileTypes: true })) {
