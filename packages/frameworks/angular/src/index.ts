@@ -13,3 +13,6 @@ export * from './angular-source-migration.ts';
 export * from './ngrx-effects-migration.ts';
 export * from './sentry-v8-migration.ts';
 export * from './angular-cli-era-migration.ts';
+export * from './barrel-entry-point-split.ts';
+export * from './node-core-binding-migration.ts';
+export * from './rxjs-prototype-patch-migration.ts';

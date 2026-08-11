@@ -1,0 +1,278 @@
+{
+  "schemaVersion": "versionless.angular-tiny-translator-green-lane.v1",
+  "unit": "lrapr-t006/u17c-tiny-translator-green-parity",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "result": "three-demand-families-answered-build-red-residual-itemised",
+  "meaning": "The three demand families u17b itemised are answered by capabilities that read the installed closure and the compiler, not by edits this record does not name. The build went from 72 diagnostics and 29 unresolvable module specifiers to 4 diagnostics and 0 unresolvable specifiers, and it is still red. The four diagnostics that remain are demands no capability in this unit carried, and they are itemised below. No artifact was emitted, so no parity is claimed.",
+  "supersedes": {
+    "record": "u17b-migrated-lane.json",
+    "unit": "lrapr-t006/u17b-tiny-translator-migrated-lane",
+    "why": "u17b recorded the red build and itemised four demands. Three of them — the @angular/material barrel, the Node `util` core module in browser code, and the RxJS 5 prototype patching — are answered here, and the fourth (the NG2003/NG6001 injection-token errors) cleared with the barrel as u17b predicted it would. This record replaces the demand list with what the build says now."
+  },
+  "capabilities": [
+    {
+      "name": "barrel-entry-point-split",
+      "package": "@versionless/angular",
+      "answers": "the @angular/material barrel demand, and the injection-token demand that followed it",
+      "mechanism": "The installed package's own exports map is enumerated, each entry point's declaration file is parsed, and every barrel symbol is mapped to the shallowest entry point whose surface carries it. A symbol on no surface is refused by name and its whole declaration is left alone. Nothing about @angular/material is written into the capability: the same reading of a package that kept its barrel reports nothing to split.",
+      "applicationFilesChanged": 8
+    },
+    {
+      "name": "node-core-binding-migration",
+      "package": "@versionless/angular",
+      "answers": "the application half of the `util` demand — 16 modules importing isNullOrUndefined, isString and format",
+      "mechanism": "Each binding is expanded into the ECMAScript that Node documents it as: `isNullOrUndefined(x)` becomes `(x == null)`, `isString(x)` becomes `(typeof x === 'string')`, and every expansion mentions its argument exactly once so no call can be evaluated twice. `format` is expanded as a directive reading — a literal %s-only format string becomes a template literal — and refused for every other directive. A module with one reference the table cannot expand keeps its import and every call site.",
+      "applicationFilesChanged": 16
+    },
+    {
+      "name": "declared browser dependency for `util`",
+      "package": "the application manifest",
+      "answers": "the library half of the `util` demand — ngx-i18nsupport-lib 1.10.2's own `require('util')`",
+      "mechanism": "No application transform reaches a published library's own imports, and no shim was authored for it. The workspace declares `util@^0.12.5` — the published browser implementation of the core module — as an explicit dependency, so ordinary node resolution answers the library's require and the declaration is visible in the manifest rather than hidden in a bundler alias. It is scoped to the specifier rather than to the dependency, because the browser builder exposes no issuer-scoped alias; the only importer left after the call-site transform is ngx-i18nsupport-lib, and that is a fact about this closure rather than a guarantee the mechanism enforces.",
+      "applicationFilesChanged": 0
+    },
+    {
+      "name": "rxjs-prototype-patch-migration",
+      "package": "@versionless/angular",
+      "answers": "the RxJS 5 prototype-patch demand — 37 call sites and 19 patch imports",
+      "mechanism": "Which `.map(` belongs to an observable and which to an array is not a question the syntax answers, so the capability does not ask the syntax: it takes the compiler's TS2339 diagnostics, each naming a position and the receiver's type, and moves exactly those call sites. Instance operators become `pipe(...)` with the operator imported by name, static creation methods become the free functions of the installed root, and every name emitted is checked against the installed RxJS surface first. Refusal is per module and total, and the patch imports are dropped only where every call site the compiler named in that module moved.",
+      "applicationFilesChanged": 12
+    }
+  ],
+  "iteration": {
+    "why": "A diagnostic-driven transform sees only what the compiler could still type. A `.map` whose receiver is the result of an already-failed `.catch` is typed `any` and produces no diagnostic, so it becomes visible only after the call before it is fixed. The lane is therefore a fixpoint, and the record says how many rounds it took rather than presenting the result as one pass.",
+    "rounds": [
+      {
+        "round": 1,
+        "diagnosticsRead": "build-1.stderr.log (the u17b build)",
+        "moved": "rxjs: 10 files, 51 changes. barrel: 8 files, 8 declarations split. util: 16 files, 50 call sites and imports."
+      },
+      {
+        "round": 2,
+        "diagnosticsRead": "build-2.stderr.log",
+        "moved": "rxjs: 2 files, 5 changes — the call sites that were typed `any` until round 1 fixed the call before them. The other two capabilities found nothing left to do, which is the check that they are idempotent."
+      }
+    ]
+  },
+  "acquisition": {
+    "purpose": "Install the one dependency this lane declared: the published browser implementation of Node's `util`, for a library that imports it from its own published code.",
+    "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+    "networkMode": "consented",
+    "method": "npm install --no-audit --no-fund, in the applied tree, with the manifest declaring util@^0.12.5.",
+    "outcome": "succeeded",
+    "exitStatus": 0,
+    "packagesAdded": 16,
+    "hosts": [
+      "registry.npmjs.org"
+    ]
+  },
+  "builds": [
+    {
+      "name": "build-1",
+      "exitStatus": 1,
+      "diagnostics": 72,
+      "unresolvedSpecifiers": 29,
+      "diagnosticListSha256": "cfe0f7c74b2a57d5fb8c787eff86cf49fc217e6acfd70d5d5e924818b0115c40"
+    },
+    {
+      "name": "build-2",
+      "exitStatus": 1,
+      "diagnostics": 9,
+      "unresolvedSpecifiers": 0,
+      "diagnosticListSha256": "0f2241130e2e8b5192038e0874bec5d41281ecbab1f787e5e7cf4b74a7deaabd"
+    },
+    {
+      "name": "build-3",
+      "exitStatus": 1,
+      "diagnostics": 4,
+      "unresolvedSpecifiers": 0,
+      "diagnosticListSha256": "cdb79fb683551427a577875751c79878992441ae25c11738ba8b9e4e55e8b848"
+    },
+    {
+      "name": "build-4",
+      "exitStatus": 1,
+      "diagnostics": 4,
+      "unresolvedSpecifiers": 0,
+      "diagnosticListSha256": "cdb79fb683551427a577875751c79878992441ae25c11738ba8b9e4e55e8b848"
+    }
+  ],
+  "determinism": {
+    "claim": "build-3 and build-4 ran the same command over the same bytes with no edit between them and produced the same exit status and the same diagnostic list, digest for digest.",
+    "runs": 2,
+    "identical": true
+  },
+  "applicationFilesChanged": [
+    {
+      "path": "src/app/app-material.module.ts",
+      "sha256Before": "6227f0ae6a5602135d0f60fc0a30baa0c88fb06bde5ba01fd5ab01d6d9c5591d",
+      "sha256After": "3effd1e48d00025f88a642ef7de753652ec6cc31a9d0505adb0bf5d55fd4a356"
+    },
+    {
+      "path": "src/app/app.component.ts",
+      "sha256Before": "6c396ddbd6037b5e857c2811a5408a6eec27dab2b7835be5f252eb2156b3810f",
+      "sha256After": "6d1847fae031a44acfa322a955670c5977455fce179be9c873b38fc30fe593d7"
+    },
+    {
+      "path": "src/app/auto-translate-summary-page/auto-translate-summary-page.component.ts",
+      "sha256Before": "f3abff1c0c83ce1d725295fe987648018fdef3bcb3c10554ab354cb8604fbb0c",
+      "sha256After": "9265eda3264d00e2f554a0925c1fc0edcea1ebf49c9d8d28574732bb1f8f6b47"
+    },
+    {
+      "path": "src/app/common/abbreviate.pipe.ts",
+      "sha256Before": "c20fb86a5eca33dcd5cccc1a256d4f01fdf089a6a58c03de357cf181f71862d1",
+      "sha256After": "211ca8ae15383926f498fdbb83aaffcf189bfaba2225b560ff5f24ec64ee4080"
+    },
+    {
+      "path": "src/app/configure-auto-translate-page/configure-auto-translate-page.component.ts",
+      "sha256Before": "e31f6f6c14ecc2be628a5cfe0862bf93c3b3d5bc7aad88fe07754e7cfc0be194",
+      "sha256After": "310d68dd9d95594f69c3ff36d6fcb5deeacf2a295ef71218c96c481d385fe921"
+    },
+    {
+      "path": "src/app/model/auto-translate-google.service.ts",
+      "sha256Before": "e457e66582e820d7505b1847e539f2f8c805bc5df9884462d4e0c6024f9d346f",
+      "sha256After": "b4f16259ae83ef3c948ceb543d8820742c8ad0e8ecc771dea270d00279b226e3"
+    },
+    {
+      "path": "src/app/model/auto-translate-service-api.ts",
+      "sha256Before": "e7247cac351e76fdcc978d4358956befe1d63eb6c4c5e5fcc919da28596dcd65",
+      "sha256After": "9ae9e658ca7f790235f5fe578104fccf4ffe60732d554a25bc938f7c1132db8c"
+    },
+    {
+      "path": "src/app/model/auto-translate-summary-report.ts",
+      "sha256Before": "034d6a3b143f3b9f71ce2f8489e816c4d6705302afbfee278fc0494590222df8",
+      "sha256After": "2332f30bb723f59e72a016f9cae3062f8e6fe7cd41e2271bf6917aa6807cc092"
+    },
+    {
+      "path": "src/app/model/filters/translation-unit-filter-autotranslated.ts",
+      "sha256Before": "83f0ff9bc4a502c03948c69b46a28e29cfd97d8a5e5b9e0fbb5d602413f01331",
+      "sha256After": "1b726be35f8190200cee00c5c3136562aec037be52c477eced6aac8616a1b443"
+    },
+    {
+      "path": "src/app/model/filters/translation-unit-filter-substring.ts",
+      "sha256Before": "3ae18730ada91620c54300baae17911a9ff3263876564da843d369dc2ea2e7f2",
+      "sha256After": "89115ff23267ab48308d1b2ddc19dd9638aef469bb3a80e273b0ad7a020c605f"
+    },
+    {
+      "path": "src/app/model/normalized-message.ts",
+      "sha256Before": "a54d2b8fe56118b40b8041c3920e71a62e755701ad5414e3261810615f1a78c7",
+      "sha256After": "d89e3bcd5ed41b99c718bcee39e2709e16158e8757aa2f44525e695e803f1042"
+    },
+    {
+      "path": "src/app/model/tiny-translator.service.ts",
+      "sha256Before": "a942825ae296300c6d720e64a399b06af38e09811700727357c0a491e81f0c40",
+      "sha256After": "7d4bc70ad0324d4735a43958e4113674d2df21f7ae3dac45dd0e053c9ba612ea"
+    },
+    {
+      "path": "src/app/model/translation-file.ts",
+      "sha256Before": "db3b624ef245524b598a8e2eae0ee78e9fb2bfa29fcd1d80c5be831379486906",
+      "sha256After": "b2adbeba9952ad39a718004e675c83d0412d7b6e6e71b6c9563809023a8c9ccd"
+    },
+    {
+      "path": "src/app/model/translation-project.ts",
+      "sha256Before": "9c5ffedbb433fa5ace8a258d22b24b59ec5061d3d3b2e80ffcecbf1499c4e15f",
+      "sha256After": "8bcb8cfef3138d01ca741075b0cdab065fbc534b5967e259a3f4cad0f102e924"
+    },
+    {
+      "path": "src/app/model/translation-unit.ts",
+      "sha256Before": "2707edccfed71a1445e6a0b0d8591797eca533ac61267764e62521803f2db730",
+      "sha256After": "b58b75d37ffe0cd005ca17c62173ac0d4b0f67f9169ce1b48e00023bd06371e4"
+    },
+    {
+      "path": "src/app/normalized-message-input/normalized-message-input.component.ts",
+      "sha256Before": "7a0bc38245342c74a65515378b54d4452283819af22a6e398898cbcb42bfb3bb",
+      "sha256After": "2b43ee70cd0f9ba5d18669ca0e5ceb6ac478a0084b251b5bad3ad0eb2305e828"
+    },
+    {
+      "path": "src/app/project-editor/project-editor.component.ts",
+      "sha256Before": "38e604b24a7d53e0cf36216c12b091afea0c5b58cb476548f962113463e190a2",
+      "sha256After": "2c9a39acfa08120795e81af48e801f069ab469bf490329092e9097c73a537caa"
+    },
+    {
+      "path": "src/app/project-starter/project-starter.component.ts",
+      "sha256Before": "6a10b49eb847650d131b3b05f770f3173b2a67089d605af9974447b14db5560d",
+      "sha256After": "a7079569e4130aa5061945cc886c34cea93ddce66dc55846fb2e5c957f5a7472"
+    },
+    {
+      "path": "src/app/rxjs-operators.ts",
+      "sha256Before": "6e099fb051081bf278865538f0408e3e53f54763d945827a40f1b584b39bd9f1",
+      "sha256After": "cace956584d56662f2cc7a0c0aedc1bea3054e68474d34c65ff903b85a569b0c"
+    },
+    {
+      "path": "src/app/translate-unit-list/translate-unit-list.component.ts",
+      "sha256Before": "1aa38a77f6677cbfb3d6de7e4c252809d285e75b59da26835cfcb2db86468c7b",
+      "sha256After": "c9ba63c098f11baef700723c9187f40ca2e27afaed55032e26d73d5d8871ef1a"
+    },
+    {
+      "path": "src/app/translate-unit-warning-confirm-dialog/translate-unit-warning-confirm-dialog.component.spec.ts",
+      "sha256Before": "fd5448db38def513fee25bb5a663986514a3d943f139d17033c0576123631c22",
+      "sha256After": "b5d1e0794ed65ed99de84dd79e55f929215a13f53fc221dd1be5f387bc246c1e"
+    },
+    {
+      "path": "src/app/translate-unit-warning-confirm-dialog/translate-unit-warning-confirm-dialog.component.ts",
+      "sha256Before": "609c32ebc5d0056f8199b84fed47e3148ccfa2faf92325fe64cf1d7447b88f3b",
+      "sha256After": "a2b13ccdced997a9ba7004ea94ad45f40ee8fcb495fae9e716985d403540a625"
+    },
+    {
+      "path": "src/app/translate-unit/translate-unit.component.spec.ts",
+      "sha256Before": "752e8e7bbbbcf01d9a6070eeab40e525d0b1fbd8ef22e1afce43eaafe77ef6df",
+      "sha256After": "d1be6d8c05931b522ac78ce225ff3b4114ded21f5674e2d0ed8df8e4acd6929d"
+    },
+    {
+      "path": "src/app/translate-unit/translate-unit.component.ts",
+      "sha256Before": "474a85ac1266696b734deeb964c8540583045e7401e721f8afcbf65fa0b2eb0b",
+      "sha256After": "205ebe61897a4d6b9b3ea5beaa325e5a29d3c01088822a8e1eceff52497e657a"
+    },
+    {
+      "path": "src/app/update-available/update-available.component.ts",
+      "sha256Before": "1e384e8ec1b5ced1d9f6526bfb25c89cf1f92b7d5442375a48ce0eb46cd9f2b1",
+      "sha256After": "d3f6f2c17dc0155ec49ede8b95df27b618b0ee0d14fd5f6d4edc43110fd34afd"
+    }
+  ],
+  "artifactsEmitted": 0,
+  "parity": null,
+  "parityNote": "No parity is recorded and none is claimed. A build-level parity statement compares two artifacts and this lane emitted none: the build is still red. The era lane inventory in u17-era-baseline.json stands on its own, and the plain-variant comparison the established idiom would make is owed by whichever unit gets a bundle out of this application.",
+  "residualDemands": [
+    {
+      "file": "src/app/app.component.ts:8",
+      "symbol": "import { UpdateAvailableEvent } from '@angular/service-worker/src/low_level'",
+      "library": "@angular/service-worker 5 → 16.2",
+      "observed": "src/app/app.component.ts:8:36 - error TS2307: Cannot find module '@angular/service-worker/src/low_level' or its corresponding type declarations.",
+      "neededTransform": "A deep import into a package's unpublished internals. The 16.2 package declares an exports map, and `./src/low_level` is not on it: the subpath is unreachable whatever is on disk. This is the mirror image of the barrel split — a symbol reached one directory too deep rather than one too shallow — and the same closure reading answers the resolvable half of it. `UpdateAvailableEvent` itself is not a symbol the installed package publishes under any subpath: the SwUpdate surface replaced it with a discriminated `VersionEvent` union, so the reading refuses and the demand is a call-site migration onto `versionUpdates`, not a specifier rewrite."
+    },
+    {
+      "file": "src/app/app.module.ts:95",
+      "symbol": "entryComponents in an @NgModule literal",
+      "library": "@angular/core 5 → 16.2",
+      "observed": "src/app/app.module.ts:95:3 - error TS2345: Argument of type '{ declarations: …; entryComponents: …; }' is not assignable to parameter of type 'NgModule'.",
+      "neededTransform": "Ivy removed the entry-component concept and Angular 13 removed the `entryComponents` property from the `NgModule` type. Every component it named is reachable without it. The transform is a property removal from a decorator literal, and it is a removal rather than a rename: there is no successor property to move the list into."
+    },
+    {
+      "file": "src/app/app.routing.ts:32",
+      "symbol": "ModuleWithProviders written without a type argument",
+      "library": "@angular/core 5 → 16.2",
+      "observed": "src/app/app.routing.ts:32:23 - error TS2314: Generic type 'ModuleWithProviders<T>' requires 1 type argument(s).",
+      "neededTransform": "Angular 10 made `ModuleWithProviders` generic and stopped defaulting its parameter. The argument is not guessable in general, but it is readable here: the annotated expression is `RouterModule.forRoot(...)`, whose declared return type names the module, so the type argument is a reading of the callee's signature rather than an assumption. A transform that could not read it would have to refuse."
+    },
+    {
+      "file": "src/app/model/asynchronous-file-reader.service.ts:33",
+      "symbol": "FileReader.result assigned to a string",
+      "library": "TypeScript's DOM library, 2.4 → 5.1",
+      "observed": "src/app/model/asynchronous-file-reader.service.ts:33:57 - error TS2322: Type 'string | ArrayBuffer' is not assignable to type 'string'.",
+      "neededTransform": "Not a package change at all: the DOM typings the compiler ships widened `FileReader.result` to `string | ArrayBuffer | null` to describe what the API always did. The application reads a file as text and so its result really is a string, but nothing in the type says so. The honest answers are a narrowing at the use site or a declared assertion; either is a call-site transform, and neither is a version mapping."
+    }
+  ],
+  "notEstablished": [
+    "The build is red. Four diagnostics remain and no bundle exists, so nothing here establishes that this application runs on Angular 16.",
+    "Nothing was executed. Every claim in this record is a claim about a compiler and a bundler reading source, not about behaviour.",
+    "The rewritten call sites were type-checked, not run. `(x == null)` is what Node documents `isNullOrUndefined` to be, and the compiler accepts it; no test in this application exercised any of the 50 sites.",
+    "The `%s` expansions carry a declared difference: Node inspects a plain object where `String()` calls its built-in toString. Nothing here observes which arguments are objects at runtime.",
+    "The spec files were rewritten where the same capabilities applied to them, and the production build does not compile them. Whether the tests of this application pass is not established by anything in this lane.",
+    "The residual list is what this build asks for now. Answering it may reveal further demands that only a build getting past these can see — that is what happened to the u17b list, twice."
+  ],
+  "recordedRisks": [
+    "A TLS private key (key.pem) and its certificate (cert.pem) are committed at the root of the pinned tree. Neither was copied into the stage tree and neither appears in any artifact of this run.",
+    "`util@0.12.5` is a browser implementation of a Node core module and is now in the declared closure of this application. It is reached only by ngx-i18nsupport-lib, and it is a payload the era build did not carry in this form.",
+    "@angular/flex-layout remains at a deprecated beta release, unchanged from u17b and for the same reason."
+  ],
+  "digest": "d1b9f35712cbe402c505be7ca5b5a04154661511388ba3b2264c4c0f8c36fd82"
+}
