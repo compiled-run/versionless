@@ -74,11 +74,23 @@ export type WitnessDifferentialEvent = {
 	detail: Record<string, boolean | number | string | null>;
 };
 
+/** Document scroll extents and current offset, read from the live page. */
+export type WitnessViewportScroll = {
+	scrollHeight: number;
+	clientHeight: number;
+	scrollY: number;
+};
+
 export type PlaywrightWitnessHost = {
 	browser: WitnessBrowser;
 	locality(): { successfulNonLoopback: 0; mockedNonLoopback: number };
 	serviceWorkerTelemetry(timeoutMs: number): Promise<ServiceWorkerTelemetry>;
 	serviceWorkerObserverFinalization(): ServiceWorkerObserverFinalization;
+	/**
+	 * Measures the scrolling document so a scroll claim can be checked against
+	 * the surface that actually exists rather than asserted in the abstract.
+	 */
+	viewportScroll(): Promise<WitnessViewportScroll>;
 };
 
 const MAX_TELEMETRY_TIMEOUT_MS = 15_000;
@@ -405,6 +417,17 @@ export function createPlaywrightWitnessHost(options: {
 	transport?(request: WitnessTransportRequest): Promise<WitnessTransportDecision>;
 	diagnosticEvent?(event: WitnessDifferentialEvent): void;
 	contextProfile?: 'current-witness' | 'canonical-t060';
+	/**
+	 * Browser-context service-worker policy. `block` refuses every registration
+	 * at the context level, which is how an application that calls
+	 * `serviceWorker.register()` is observed without a worker ever taking
+	 * control. Blocking does not silence the application: a refused
+	 * registration still surfaces whatever the application itself logs, and the
+	 * caller remains responsible for accounting for those messages exactly.
+	 */
+	serviceWorkers?: 'allow' | 'block';
+	/** Explicit context viewport, so scroll-surface claims are measured against a stated size. */
+	viewport?: { width: number; height: number };
 }): PlaywrightWitnessHost {
 	let successfulNonLoopback = 0;
 	let mockedNonLoopback = 0;
@@ -483,7 +506,8 @@ export function createPlaywrightWitnessHost(options: {
 					headless,
 				});
 				const context: BrowserContext = await browser.newContext({
-					serviceWorkers: 'allow',
+					serviceWorkers: options.serviceWorkers ?? 'allow',
+					...(options.viewport === undefined ? {} : { viewport: options.viewport }),
 					...(options.contextProfile === 'canonical-t060'
 						? {
 								locale: 'en-US',
@@ -578,6 +602,18 @@ export function createPlaywrightWitnessHost(options: {
 			},
 		},
 		locality: () => ({ successfulNonLoopback: 0, mockedNonLoopback }),
+		viewportScroll: async () => {
+			if (livePages.size !== 1)
+				throw new Error('Witness viewport measurement requires exactly one live page');
+			const [page] = livePages;
+			if (page === undefined)
+				throw new Error('Witness viewport measurement requires exactly one live page');
+			return await page.evaluate(() => ({
+				scrollHeight: document.documentElement.scrollHeight,
+				clientHeight: document.documentElement.clientHeight,
+				scrollY: Math.round(window.scrollY),
+			}));
+		},
 		serviceWorkerObserverFinalization: () => {
 			const finalization = observer?.readback() ?? null;
 			if (finalization === null)

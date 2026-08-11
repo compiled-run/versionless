@@ -15,13 +15,22 @@ import type { AddressInfo } from 'node:net';
 import type { Duplex } from 'node:stream';
 import { dirname, extname, isAbsolute, join, normalize, relative, resolve } from 'pathe';
 import { box, runBoxes, type BoxContext, type PageHandle, type PageRecord } from '@async/witness';
+import { charIn, createRegExp, exactly, global } from 'magic-regexp';
 import { joinURL, parseURL, stringifyParsedURL } from 'ufo';
 import {
 	canonicalize,
+	compareUtf16CodeUnits,
 	parseWitnessRealAppReceipt,
 	sha256,
 	WITNESS_REAL_APP_SCHEMA,
 	witnessRealAppDigest,
+	type WitnessConsoleErrorInventory,
+	type WitnessConsoleErrorInventoryEntry,
+	type WitnessFailedRequestInventory,
+	type WitnessFailedRequestInventoryEntry,
+	type WitnessScrollSurface,
+	type WitnessServiceWorkerRequestEvent,
+	type WitnessServiceWorkerRequestTally,
 	type WitnessMutationProof,
 	type WitnessNextPrerenderPayloadEvidence,
 	type WitnessOfflineEvidence,
@@ -29,6 +38,10 @@ import {
 	type WitnessRealAppRun,
 	type WitnessServiceWorkerTelemetry,
 } from '../../../core/src/index.ts';
+import {
+	WITNESS_REACT_HOSPITALRUN_CONSOLE_ERRORS,
+	WITNESS_REACT_HOSPITALRUN_FAILED_REQUESTS,
+} from '../../../core/src/receipts/witness-react-hospitalrun.ts';
 import { transformNext12DerivedStateToMemo } from '../../../frameworks/nextjs/src/index.ts';
 import { witnessNodeFileSystem } from './node-filesystem.ts';
 import {
@@ -45,6 +58,7 @@ import {
 	type WitnessDifferentialEvent,
 	type WitnessTransportDecision,
 	type WitnessTransportRequest,
+	type WitnessViewportScroll,
 } from './playwright-host.ts';
 import { verifyLinkedWitnessProvenance } from './provenance.ts';
 import type {
@@ -75,7 +89,8 @@ type App =
 	| 'angular-phonecat'
 	| 'killedbygoogle'
 	| 'angular-realworld'
-	| 'papercups';
+	| 'papercups'
+	| 'react-hospitalrun';
 type Lane = 'baseline' | 'migrated';
 type JourneyEvidence = {
 	assertions: string[];
@@ -109,6 +124,25 @@ type JourneyEvidence = {
 			workerEvents: [];
 		}>;
 	};
+	/**
+	 * Runtime evidence for an application whose own code calls
+	 * `serviceWorker.register()`. The registration is refused at the browser
+	 * context, so no worker is ever installed, controls the page, or opens a
+	 * cache — and the refusal is not silenced: whatever the application logs in
+	 * response is accounted for by the exact console-error inventory.
+	 */
+	blockedServiceWorkerRuntime?: {
+		registration: 'application-register-refused-by-context';
+		checkpoints: Array<{
+			phase: 'before-interactions' | 'after-interactions' | 'after-online-reload';
+			state: 'timeout';
+			registrations: 0;
+			controller: null;
+			cacheNames: [];
+			workerEvents: [];
+		}>;
+	};
+	scrollSurface?: WitnessScrollSurface;
 };
 type JourneyTransportEvidence = { apiUsernames: string[] };
 type JourneyLifecycle = {
@@ -128,6 +162,16 @@ type JourneyLifecycle = {
 		defaultImage: string;
 		nonDefaultImage: string;
 	} | null;
+	/** Live document scroll extents, for journeys that exercise a real scroll surface. */
+	viewportScroll(): Promise<WitnessViewportScroll>;
+	/**
+	 * Total console errors this lane is allowed to have emitted by the end of
+	 * the journey, summed from the application-scoped exact inventory. Zero
+	 * when the application pins no inventory at all.
+	 */
+	expectedConsoleErrors: number;
+	/** The same total for browser-failed requests, from the exact failed-request inventory. */
+	expectedFailedRequests: number;
 };
 type AppSpec = {
 	app: App;
@@ -136,6 +180,34 @@ type AppSpec = {
 	canonicalDigest: string;
 	sources: Record<Lane, string>;
 	initialRoute?: string;
+	/**
+	 * Browser-context service-worker policy for this application. `block` is
+	 * for applications that call `serviceWorker.register()` themselves: the
+	 * registration is refused instead of being allowed to take control, and the
+	 * application's own reaction is then accounted for exactly.
+	 */
+	serviceWorkers?: 'block';
+	/** Explicit context viewport when the journey makes a viewport-relative claim. */
+	viewport?: { width: number; height: number };
+	/**
+	 * Per-lane exact console-error inventory. Every pinned message is required
+	 * with its exact count, and any console error whose text is not pinned
+	 * fails the run — this is an accounting mechanism, never an allowance.
+	 */
+	consoleErrorInventory?: Record<Lane, readonly WitnessConsoleErrorInventoryEntry[]>;
+	/**
+	 * Per-lane exact failed-request inventory, held to the same discipline as the
+	 * console inventory: pinned entries are required exactly and anything else
+	 * fails the run.
+	 */
+	failedRequestInventory?: Record<Lane, readonly WitnessFailedRequestInventoryEntry[]>;
+	/**
+	 * Replaces identifiers the application itself mints at runtime with a stable
+	 * placeholder, so a recorded route is comparable across runs. It normalizes
+	 * only the generated identifier; the route shape around it stays exactly as
+	 * the application navigated it.
+	 */
+	normalizeRoute?(path: string): string;
 	journey(
 		context: BoxContext,
 		page: PageHandle,
@@ -803,13 +875,216 @@ async function expectedPhonecatImages(laneRoot: string): Promise<{
 	return { detailSha256: sha256(detail), defaultImage, nonDefaultImage };
 }
 
-const clean = async (context: BoxContext, page: PageHandle, navigations: number): Promise<void> => {
+/**
+ * Clean-page outcome. `consoleErrors` and `failedRequests` default to zero and
+ * are only ever raised to the total of an application's exact, entry-by-entry
+ * inventory; each inventory is checked separately against the recorded
+ * messages and failures, so a raised total can never widen into a blanket
+ * allowance.
+ */
+const clean = async (
+	context: BoxContext,
+	page: PageHandle,
+	navigations: number,
+	consoleErrors = 0,
+	failedRequests = 0,
+): Promise<void> => {
 	await context.expect.page.outcome(page, {
 		navigations,
-		consoleErrors: 0,
-		failedRequests: 0,
+		consoleErrors,
+		failedRequests,
 	});
 };
+
+const CONSOLE_ORIGIN_PLACEHOLDER = '{production-static-origin}' as const;
+
+function tallyConsoleErrors(
+	page: PageRecord,
+	origin: string,
+): WitnessConsoleErrorInventoryEntry[] {
+	const counts = new Map<string, number>();
+	for (const message of page.consoleMessages) {
+		if (message.level !== 'error') continue;
+		const normalized = message.text.split(origin).join(CONSOLE_ORIGIN_PLACEHOLDER);
+		counts.set(normalized, (counts.get(normalized) ?? 0) + 1);
+	}
+	return [...counts]
+		.map(([message, count]) => ({ message, count }))
+		.sort((left, right) => compareUtf16CodeUnits(left.message, right.message));
+}
+
+/**
+ * Non-masking console-error accounting. The observed errors must equal the
+ * pinned inventory exactly — same messages, same counts — and any error outside
+ * the inventory is reported by its own text rather than folded into a total.
+ */
+function buildConsoleErrorInventory(
+	page: PageRecord,
+	origin: string,
+	expected: readonly WitnessConsoleErrorInventoryEntry[],
+): WitnessConsoleErrorInventory {
+	const observed = tallyConsoleErrors(page, origin);
+	const pinned = expected
+		.map((entry) => ({ message: entry.message, count: entry.count }))
+		.sort((left, right) => compareUtf16CodeUnits(left.message, right.message));
+	const pinnedMessages = new Set(pinned.map((entry) => entry.message));
+	const outside = observed.filter((entry) => !pinnedMessages.has(entry.message));
+	if (outside.length > 0)
+		throw new Error(`console errors outside the pinned inventory: ${canonicalize(outside)}`);
+	if (canonicalize(observed) !== canonicalize(pinned))
+		throw new Error(
+			`pinned console-error inventory differs: expected ${canonicalize(pinned)}, observed ${canonicalize(observed)}`,
+		);
+	return {
+		policy: 'exact-app-scoped-expected-console-errors',
+		originPlaceholder: CONSOLE_ORIGIN_PLACEHOLDER,
+		expected: pinned,
+		observed,
+		outsideInventory: [],
+		total: observed.reduce((sum, entry) => sum + entry.count, 0),
+	};
+}
+
+/**
+ * Drops the wall clock and the run-global sequence number from observed
+ * service-worker events, keeping every field that describes what was actually
+ * observed. Nothing is filtered out here — the whole ordered trace survives, it
+ * simply becomes reproducible.
+ */
+function projectServiceWorkerEvents(
+	events: readonly WitnessDifferentialEvent[],
+): WitnessServiceWorkerRequestEvent[] {
+	return events.map((event) => ({
+		source: event.source,
+		phase: event.phase,
+		urlPath: event.urlPath,
+		detail: event.detail,
+	}));
+}
+
+/** Exact multiset of the projected trace, for verification against a pinned tally. */
+function tallyServiceWorkerEvents(
+	events: readonly WitnessServiceWorkerRequestEvent[],
+): WitnessServiceWorkerRequestTally[] {
+	const counts = new Map<string, WitnessServiceWorkerRequestTally>();
+	for (const event of events) {
+		const key = canonicalize(event);
+		const existing = counts.get(key);
+		if (existing === undefined) counts.set(key, { ...event, count: 1 });
+		else existing.count += 1;
+	}
+	return [...counts]
+		.sort(([left], [right]) => compareUtf16CodeUnits(left, right))
+		.map(([, tally]) => tally);
+}
+
+const failedRequestKey = (entry: WitnessFailedRequestInventoryEntry): string =>
+	canonicalize({ method: entry.method, path: entry.path, reason: entry.reason });
+
+function tallyFailedRequests(
+	page: PageRecord,
+	origin: string,
+): WitnessFailedRequestInventoryEntry[] {
+	const counts = new Map<string, WitnessFailedRequestInventoryEntry>();
+	for (const request of page.failedRequests) {
+		const entry = {
+			method: request.method,
+			path: request.url.startsWith(origin) ? request.url.slice(origin.length) : request.url,
+			reason: request.reason,
+			count: 1,
+		};
+		const existing = counts.get(failedRequestKey(entry));
+		if (existing === undefined) counts.set(failedRequestKey(entry), entry);
+		else existing.count += 1;
+	}
+	return [...counts.values()].sort((left, right) =>
+		compareUtf16CodeUnits(failedRequestKey(left), failedRequestKey(right)),
+	);
+}
+
+/**
+ * Non-masking failed-request accounting, the exact analogue of the console-error
+ * inventory: the observed failures must equal the pinned ones entry for entry
+ * and count for count, and any failure outside the inventory is reported by its
+ * own path and reason rather than folded into a total.
+ */
+function buildFailedRequestInventory(
+	page: PageRecord,
+	origin: string,
+	expected: readonly WitnessFailedRequestInventoryEntry[],
+): WitnessFailedRequestInventory {
+	const observed = tallyFailedRequests(page, origin);
+	const pinned = expected
+		.map((entry) => ({
+			method: entry.method,
+			path: entry.path,
+			reason: entry.reason,
+			count: entry.count,
+		}))
+		.sort((left, right) => compareUtf16CodeUnits(failedRequestKey(left), failedRequestKey(right)));
+	const pinnedKeys = new Set(pinned.map(failedRequestKey));
+	const outside = observed.filter((entry) => !pinnedKeys.has(failedRequestKey(entry)));
+	if (outside.length > 0)
+		throw new Error(`failed requests outside the pinned inventory: ${canonicalize(outside)}`);
+	if (canonicalize(observed) !== canonicalize(pinned))
+		throw new Error(
+			`pinned failed-request inventory differs: expected ${canonicalize(pinned)}, observed ${canonicalize(observed)}`,
+		);
+	return {
+		policy: 'exact-app-scoped-expected-failed-requests',
+		expected: pinned,
+		observed,
+		outsideInventory: [],
+		total: observed.reduce((sum, entry) => sum + entry.count, 0),
+	};
+}
+
+/**
+ * HospitalRun journey inputs. The application resolves `en-US` against its
+ * bundled `en` catalogue, so every assertion below is the exact English string
+ * the application itself renders from `src/shared/locales/enUs`.
+ */
+const HOSPITALRUN_GIVEN_NAME = 'Aurelia' as const;
+const HOSPITALRUN_FAMILY_NAME = 'Whitfield' as const;
+const HOSPITALRUN_FULL_NAME = `${HOSPITALRUN_GIVEN_NAME} ${HOSPITALRUN_FAMILY_NAME}` as const;
+/**
+ * Visible intake-success text shipped inside the migrated module. The journey
+ * asserts the rendered toast that contains it, so overwriting these bytes must
+ * turn the journey genuinely red instead of changing an unread constant.
+ */
+export const HOSPITALRUN_MUTATION_SEAM = 'Successfully created patient' as const;
+const HOSPITALRUN_INTAKE_TOAST = `${HOSPITALRUN_MUTATION_SEAM} ${HOSPITALRUN_FULL_NAME}` as const;
+const HOSPITALRUN_EMPTY_PATIENTS = "There are no patients yet, let's add the first one!" as const;
+const HOSPITALRUN_VIEWPORT = { width: 1280, height: 720 } as const;
+const HOSPITALRUN_SCROLL_ROUTE = '/appointments' as const;
+const HOSPITALRUN_WHEEL_DELTA_Y = 400 as const;
+/**
+ * Every navigation the journey performs after the initial document load: the
+ * thirteen client-side route changes the application pushes as the journey
+ * moves through intake, the patient record sub-tabs and the department routes,
+ * plus the one real document reload. Pinning the exact count is what keeps a
+ * silently dropped or duplicated route change from passing unnoticed.
+ */
+const HOSPITALRUN_JOURNEY_NAVIGATIONS = 14;
+/**
+ * The patient identifier is a UUID the application mints in the browser when
+ * the record is created, so it is different in every run and every lane. Only
+ * that identifier is replaced; the surrounding route shape is left exactly as
+ * the application navigated it, so a changed route still changes the record.
+ */
+const HOSPITALRUN_PATIENT_ID = createRegExp(
+	exactly('/patients/'),
+	charIn('0123456789abcdef-').times.between(32, 40).groupedAs('id'),
+	[global],
+);
+const HOSPITALRUN_PATIENT_ID_PLACEHOLDER = '/patients/{created-patient-id}' as const;
+const normalizeHospitalrunRoute = (path: string): string =>
+	path.replace(HOSPITALRUN_PATIENT_ID, HOSPITALRUN_PATIENT_ID_PLACEHOLDER);
+
+const sidebarItem = (label: string): string =>
+	`.sidebar .nav-item.list-group-item:text-is(${JSON.stringify(label)})`;
+const patientTab = (label: string): string =>
+	`button.nav-link:text-is(${JSON.stringify(label)})`;
 
 /**
  * Papercups journey inputs derived from the frozen loopback projection rather
@@ -1279,6 +1554,161 @@ const apps: AppSpec[] = [
 			};
 		},
 	},
+	{
+		app: 'react-hospitalrun',
+		framework: 'react',
+		canonicalReceipt: 'evidence/runs/react-hospitalrun/t004-run.json',
+		canonicalDigest: '1fa0278923101efe6af370a44d0ef90e3309ac4c7a823fad448eb196cca37cd8',
+		sources: {
+			baseline: '.versionless/work/react-hospitalrun/baseline/build-run1',
+			migrated: '.versionless/work/react-hospitalrun/target/build-vite-run1',
+		},
+		serviceWorkers: 'block',
+		viewport: HOSPITALRUN_VIEWPORT,
+		consoleErrorInventory: WITNESS_REACT_HOSPITALRUN_CONSOLE_ERRORS,
+		failedRequestInventory: WITNESS_REACT_HOSPITALRUN_FAILED_REQUESTS,
+		normalizeRoute: normalizeHospitalrunRoute,
+		journey: async (context, page, _transportEvidence, lifecycle) => {
+			if (lifecycle.expectedServiceWorker !== null)
+				throw new Error('HospitalRun journey received a service-worker expectation');
+			const checkpoints = [
+				await blockedServiceWorkerCheckpoint(lifecycle, 'before-interactions'),
+			];
+			await page.trackEvents('click', 'input', 'change', 'keydown', 'mouseover');
+			await context.expect.page.text(page, 'h1', 'Dashboard');
+
+			// (a) New-patient intake against the browser-local PouchDB store.
+			await page.hover(sidebarItem('Patients'));
+			await page.click(sidebarItem('Patients'));
+			await context.expect.page.text(page, 'h1', 'Patients');
+			await context.expect.page.bodyText(page, { contains: HOSPITALRUN_EMPTY_PATIENTS });
+			await page.click(sidebarItem('New Patient'));
+			await context.expect.page.text(page, 'h1', 'New Patient');
+			await page.type('#givenNameTextInput', HOSPITALRUN_GIVEN_NAME, { redact: false });
+			await page.type('#familyNameTextInput', HOSPITALRUN_FAMILY_NAME, { redact: false });
+			await page.hover('button.btn-save');
+			await page.click('button.btn-save');
+			await context.expect.page.bodyText(page, { contains: HOSPITALRUN_INTAKE_TOAST });
+			await context.expect.page.text(page, 'h1', 'Patient');
+			await context.expect.page.text(page, 'h3', HOSPITALRUN_FULL_NAME);
+
+			// (b) Clinical navigation: patient record sub-tabs, then the
+			// department routes, each identified by its own visible header.
+			await page.hover(patientTab('Allergies'));
+			await page.click(patientTab('Allergies'));
+			await context.expect.page.bodyText(page, { contains: 'No Allergies' });
+			await page.click(patientTab('Notes'));
+			await context.expect.page.bodyText(page, {
+				contains: 'No Notes',
+				notContains: 'No Allergies',
+			});
+			await page.click(patientTab('Related Persons'));
+			await context.expect.page.bodyText(page, {
+				contains: 'No related persons',
+				notContains: 'No Notes',
+			});
+			await page.click(patientTab('General Information'));
+			await context.expect.page.bodyText(page, { contains: 'Basic Information' });
+			await page.click(sidebarItem('Patients'));
+			await context.expect.page.text(page, 'h1', 'Patients');
+			await context.expect.page.text(
+				page,
+				'table tbody tr td:nth-child(2)',
+				HOSPITALRUN_GIVEN_NAME,
+			);
+			await context.expect.page.text(
+				page,
+				'table tbody tr td:nth-child(3)',
+				HOSPITALRUN_FAMILY_NAME,
+			);
+			await page.click(sidebarItem('Labs'));
+			await context.expect.page.text(page, 'h1', 'Labs');
+			await context.expect.page.bodyText(page, { contains: 'Lab Code' });
+			await page.click(sidebarItem('Incidents'));
+			await context.expect.page.text(page, 'h1', 'Reported Incidents');
+			await context.expect.page.bodyText(page, { contains: 'Date of Incident' });
+			await page.click(sidebarItem('Imagings'));
+			await context.expect.page.text(page, 'h1', 'Imagings');
+			await context.expect.page.bodyText(page, { contains: 'Imaging Code' });
+
+			// (c) Appointment schedule, the one route whose document genuinely
+			// overflows the stated viewport; the scroll is a real wheel gesture.
+			await page.click(sidebarItem('Scheduling'));
+			await context.expect.page.text(page, 'h1', 'Appointments');
+			await context.expect.page.bodyText(page, { contains: 'all-day' });
+			const before = await lifecycle.viewportScroll();
+			if (before.scrollHeight <= before.clientHeight || before.scrollY !== 0)
+				throw new Error(
+					`HospitalRun appointment schedule is not a scrollable surface: ${canonicalize(before)}`,
+				);
+			await page.scroll(null, { y: HOSPITALRUN_WHEEL_DELTA_Y });
+			const after = await lifecycle.viewportScroll();
+			if (after.scrollY <= before.scrollY || after.scrollHeight !== before.scrollHeight)
+				throw new Error(
+					`HospitalRun appointment schedule did not scroll: ${canonicalize(after)}`,
+				);
+			const scrollSurface: WitnessScrollSurface = {
+				state: 'measured-genuine-viewport-scroll',
+				route: HOSPITALRUN_SCROLL_ROUTE,
+				viewport: { ...HOSPITALRUN_VIEWPORT },
+				scrollHeight: before.scrollHeight,
+				clientHeight: before.clientHeight,
+				wheelDeltaY: HOSPITALRUN_WHEEL_DELTA_Y,
+				scrolledFromTop: true,
+				scrolled: true,
+			};
+			await context.expect.page.outcome(page, {
+				events: {
+					click: { atLeast: 10 },
+					input: { atLeast: 2 },
+					change: { atLeast: 2 },
+					keydown: { atLeast: 2 },
+					mouseover: { atLeast: 2 },
+				},
+			});
+			checkpoints.push(await blockedServiceWorkerCheckpoint(lifecycle, 'after-interactions'));
+
+			// The created record must survive a real document reload, which is
+			// what proves the browser-local PouchDB store, not React state.
+			await page.click(sidebarItem('Patients'));
+			await context.expect.page.text(page, 'h1', 'Patients');
+			await page.reload();
+			await context.expect.page.text(page, 'h1', 'Patients');
+			await context.expect.page.bodyText(page, {
+				contains: HOSPITALRUN_FAMILY_NAME,
+				notContains: HOSPITALRUN_EMPTY_PATIENTS,
+			});
+			checkpoints.push(
+				await blockedServiceWorkerCheckpoint(lifecycle, 'after-online-reload'),
+			);
+			await clean(
+				context,
+				page,
+				HOSPITALRUN_JOURNEY_NAVIGATIONS,
+				lifecycle.expectedConsoleErrors,
+				lifecycle.expectedFailedRequests,
+			);
+			return {
+				assertions: [
+					'new-patient intake persisted to the browser-local PouchDB store',
+					'intake success toast naming the created patient',
+					'patient row on the patients list',
+					'patient record sub-tabs across allergies, notes, related persons and general information',
+					'department routes labs, incidents and imaging with distinct visible headers',
+					'appointment schedule with a genuine wheel scroll on a measured overflowing document',
+					'created patient survives an online reload',
+					'blocked service-worker registration with an exact console-error inventory',
+					'clean page',
+				],
+				offlineEvidence: { state: 'not-applicable' },
+				blockedServiceWorkerRuntime: {
+					registration: 'application-register-refused-by-context',
+					checkpoints,
+				},
+				scrollSurface,
+			};
+		},
+	},
 ];
 
 async function exists(file: string): Promise<boolean> {
@@ -1452,7 +1882,10 @@ function assertHmrFree(page: PageRecord): void {
 	}
 }
 
-function normalizedRecord(page: PageRecord): WitnessRealAppRun['witnessRecord'] {
+function normalizedRecord(
+	page: PageRecord,
+	normalizeRoute: (path: string) => string = (path) => path,
+): WitnessRealAppRun['witnessRecord'] {
 	return {
 		interactions: page.interactions.map((interaction) => ({
 			kind: interaction.kind as WitnessRealAppRun['interactions'][number]['kind'],
@@ -1463,7 +1896,7 @@ function normalizedRecord(page: PageRecord): WitnessRealAppRun['witnessRecord'] 
 		})),
 		navigationPaths: page.navigations.map((navigation) => {
 			const parsed = parseURL(navigation.url);
-			return `${parsed.pathname}${parsed.hash}`;
+			return normalizeRoute(`${parsed.pathname}${parsed.hash}`);
 		}),
 		trackedEventCounts: Object.fromEntries(
 			Object.entries(page.trackedEvents).map(([name, events]) => [name, events.length]),
@@ -1525,10 +1958,20 @@ async function executeRun(
 				? undefined
 				: async (request) => await app.transport!(request, transportEvidence),
 		diagnosticEvent:
-			options.serviceWorkerPolicy === 'zero'
+			options.serviceWorkerPolicy === 'zero' || app.serviceWorkers === 'block'
 				? (event) => differentialEvents.push(event)
 				: undefined,
+		...(app.serviceWorkers === undefined ? {} : { serviceWorkers: app.serviceWorkers }),
+		...(app.viewport === undefined ? {} : { viewport: app.viewport }),
 	});
+	const expectedConsoleErrors = (app.consoleErrorInventory?.[lane] ?? []).reduce(
+		(sum, entry) => sum + entry.count,
+		0,
+	);
+	const expectedFailedRequests = (app.failedRequestInventory?.[lane] ?? []).reduce(
+		(sum, entry) => sum + entry.count,
+		0,
+	);
 	let journeyEvidence: JourneyEvidence | undefined;
 	const definition = box(`${app.app}-${lane}-${pass}`, async (context) => {
 		const page = await context.browser.visit(productionUrl);
@@ -1538,6 +1981,9 @@ async function executeRun(
 			expectedServiceWorker,
 			phonecatOrdering,
 			phonecatImages,
+			viewportScroll: host.viewportScroll,
+			expectedConsoleErrors,
+			expectedFailedRequests,
 		});
 		await context.receipt.capture('journey-complete');
 	});
@@ -1595,6 +2041,14 @@ async function executeRun(
 			`linked Witness runtime journey failed: ${result.boxes[0]?.error?.message ?? 'unknown failure'}; static paths: ${canonicalize(staticServer.requests())}`,
 		);
 	const pageRecord = pageRecordFromReceipt(rawReceipt);
+	const serviceWorkerRequests = projectServiceWorkerEvents(
+		differentialEvents.filter(
+			(event) =>
+				event.detail.serviceWorker === true ||
+				event.urlPath === '/sw.js' ||
+				event.urlPath === '/service-worker.js',
+		),
+	);
 	const legacyMainPrecache =
 		app.app === 'react-boilerplate' &&
 		lane === 'baseline' &&
@@ -1616,7 +2070,7 @@ async function executeRun(
 					options.nextPrerenderPayload,
 				);
 	assertHmrFree(pageRecord);
-	const witnessRecord = normalizedRecord(pageRecord);
+	const witnessRecord = normalizedRecord(pageRecord, app.normalizeRoute);
 	const interactions = witnessRecord.interactions;
 	const trackedEvents = Object.entries(witnessRecord.trackedEventCounts)
 		.filter(([, count]) => count > 0)
@@ -1711,8 +2165,58 @@ async function executeRun(
 						workerEvents: observerFinalization.workerEvents,
 					},
 				}),
+		...(completedJourney.blockedServiceWorkerRuntime === undefined
+			? {}
+			: {
+					blockedServiceWorkerRuntime: {
+						...completedJourney.blockedServiceWorkerRuntime,
+						emittedOutputFiles: beforeInventory.serviceWorkers,
+						requests: serviceWorkerRequests,
+						requestTally: tallyServiceWorkerEvents(serviceWorkerRequests),
+						workerEvents: observerFinalization.workerEvents,
+					},
+				}),
+		...(completedJourney.scrollSurface === undefined
+			? {}
+			: { scrollSurface: completedJourney.scrollSurface }),
+		...(app.consoleErrorInventory === undefined
+			? {}
+			: {
+					consoleErrorInventory: buildConsoleErrorInventory(
+						pageRecord,
+						staticServer.origin,
+						app.consoleErrorInventory[lane],
+					),
+				}),
+		...(app.failedRequestInventory === undefined
+			? {}
+			: {
+					failedRequestInventory: buildFailedRequestInventory(
+						pageRecord,
+						staticServer.origin,
+						app.failedRequestInventory[lane],
+					),
+				}),
 		successfulNonLoopback: host.locality().successfulNonLoopback,
 	};
+	if ('blockedServiceWorkerRuntime' in runWithoutDigest) {
+		const blocked = runWithoutDigest.blockedServiceWorkerRuntime;
+		if (
+			blocked === undefined ||
+			blocked.registration !== 'application-register-refused-by-context' ||
+			blocked.workerEvents.length !== 0 ||
+			blocked.checkpoints.length !== 3 ||
+			blocked.checkpoints.some(
+				(checkpoint) =>
+					checkpoint.state !== 'timeout' ||
+					checkpoint.registrations !== 0 ||
+					checkpoint.controller !== null ||
+					checkpoint.cacheNames.length !== 0 ||
+					checkpoint.workerEvents.length !== 0,
+			)
+		)
+			throw new Error('blocked-service-worker policy assertion failed');
+	}
 	if ('zeroServiceWorker' in runWithoutDigest) {
 		const zero = runWithoutDigest.zeroServiceWorker;
 		if (
@@ -1793,6 +2297,37 @@ export async function executeReactPapercupsWitnessRun(options: {
 		...options,
 		serviceWorkerPolicy: 'zero',
 	});
+}
+
+/**
+ * Same runtime check as the zero-worker checkpoint, for an application whose
+ * own code calls `register()` and whose registration the browser context
+ * refuses: nothing may be registered, controlling, cached, or emitting worker
+ * lifecycle events at this point in the journey.
+ */
+async function blockedServiceWorkerCheckpoint(
+	lifecycle: JourneyLifecycle,
+	phase: 'before-interactions' | 'after-interactions' | 'after-online-reload',
+): Promise<{
+	phase: typeof phase;
+	state: 'timeout';
+	registrations: 0;
+	controller: null;
+	cacheNames: [];
+	workerEvents: [];
+}> {
+	return await zeroServiceWorkerCheckpoint(lifecycle, phase);
+}
+
+export async function executeReactHospitalrunWitnessRun(options: {
+	lane: Lane;
+	pass: 1 | 2;
+	laneRoot: string;
+	receiptRoot: string;
+}): Promise<WitnessRealAppRun> {
+	const app = apps.find((candidate) => candidate.app === 'react-hospitalrun');
+	if (app === undefined) throw new Error('HospitalRun Witness specification is absent');
+	return await executeRun(app, options.lane, options.pass, options);
 }
 
 async function zeroServiceWorkerCheckpoint(
@@ -2041,6 +2576,9 @@ async function runReactBaselineDifferentialProfile(
 				expectedServiceWorker,
 				phonecatOrdering: null,
 				phonecatImages: null,
+				viewportScroll: host.viewportScroll,
+				expectedConsoleErrors: 0,
+				expectedFailedRequests: 0,
 			});
 			telemetry =
 				journey.timeoutTelemetry ??

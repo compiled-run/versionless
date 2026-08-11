@@ -7,6 +7,7 @@ export const WITNESS_REAL_APP_NAMES = [
 	'killedbygoogle',
 	'angular-realworld',
 	'papercups',
+	'react-hospitalrun',
 ] as const;
 /** Every named app must contribute two lanes observed twice each. */
 export const WITNESS_REAL_APP_RUNS = WITNESS_REAL_APP_NAMES.length * 4;
@@ -90,6 +91,67 @@ export type WitnessNextPrerenderPayloadEvidence =
 			};
 	  }
 	| { state: 'not-applicable' };
+/**
+ * Exact, application-scoped accounting for console errors an application emits
+ * on its own.
+ *
+ * A blanket "console errors are allowed" switch would mask regressions, so this
+ * is deliberately not one: `expected` pins every message text and its exact
+ * occurrence count, `observed` records what the browser actually reported, and
+ * `outsideInventory` must stay empty — any error whose text is not already
+ * pinned fails the run. Origins are normalized because the loopback port is
+ * ephemeral; everything after the origin is real observed text.
+ */
+export type WitnessConsoleErrorInventoryEntry = { message: string; count: number };
+export type WitnessConsoleErrorInventory = {
+	policy: 'exact-app-scoped-expected-console-errors';
+	originPlaceholder: '{production-static-origin}';
+	expected: WitnessConsoleErrorInventoryEntry[];
+	observed: WitnessConsoleErrorInventoryEntry[];
+	outsideInventory: [];
+	total: number;
+};
+
+/**
+ * Exact, application-scoped accounting for requests the browser itself failed,
+ * held to the same discipline as the console-error inventory: every expected
+ * failure is pinned by origin-relative path, method and reason with its exact
+ * count, and any failure outside the pinned set fails the run. Paths are
+ * origin-relative because the loopback port is ephemeral.
+ */
+export type WitnessFailedRequestInventoryEntry = {
+	method: string;
+	path: string;
+	/** The browser's own failure reason, or null when the driver reported none. */
+	reason: string | null;
+	count: number;
+};
+export type WitnessFailedRequestInventory = {
+	policy: 'exact-app-scoped-expected-failed-requests';
+	expected: WitnessFailedRequestInventoryEntry[];
+	observed: WitnessFailedRequestInventoryEntry[];
+	outsideInventory: [];
+	total: number;
+};
+
+/**
+ * One observed service-worker-script event, stripped of the two fields that
+ * cannot reproduce: the wall-clock timestamp and the run-global sequence
+ * number, which counts every other asset the lane happens to load. What
+ * remains — who observed it, in what phase, for which path, with what detail —
+ * is the substance of the observation and is identical run to run.
+ */
+export type WitnessServiceWorkerRequestEvent = {
+	source: string;
+	phase: string;
+	urlPath: string | null;
+	detail: Record<string, boolean | number | string | null>;
+};
+/** The same event with the number of times it was observed, for exact accounting. */
+export type WitnessServiceWorkerRequestTally = WitnessServiceWorkerRequestEvent & {
+	count: number;
+};
+
 export type WitnessRealAppRun = {
 	app: (typeof WITNESS_REAL_APP_NAMES)[number];
 	framework: 'react' | 'angularjs' | 'next' | 'angular';
@@ -168,6 +230,26 @@ export type WitnessRealAppRun = {
 	};
 	semanticDigest: string;
 	successfulNonLoopback: 0;
+	consoleErrorInventory?: WitnessConsoleErrorInventory;
+	failedRequestInventory?: WitnessFailedRequestInventory;
+	scrollSurface?: WitnessScrollSurface;
+};
+
+/**
+ * Measured scroll evidence for one route that genuinely overflows the stated
+ * viewport. The document extents are read from the live page, and the scroll
+ * itself is a real wheel gesture the browser driver confirms moved the
+ * viewport — the boolean is an observation, not a claim substituted for one.
+ */
+export type WitnessScrollSurface = {
+	state: 'measured-genuine-viewport-scroll';
+	route: string;
+	viewport: { width: number; height: number };
+	scrollHeight: number;
+	clientHeight: number;
+	wheelDeltaY: number;
+	scrolledFromTop: true;
+	scrolled: true;
 };
 
 export type WitnessMutationProof = {
