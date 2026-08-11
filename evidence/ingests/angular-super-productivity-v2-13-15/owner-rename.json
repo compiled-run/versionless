@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-observation.v1",
+  "slug": "angular-super-productivity-v2-13-15",
+  "unit": "lrapr-t006/u16-ingest-super-productivity",
+  "observation": "the upstream repository has been renamed since the scout pass",
+  "recordedAt": "2026-08-11",
+  "whatHappened": "The first allowlisted request of the acquisition, to the scout's coordinates https://api.github.com/repos/johannesjo/super-productivity, returned 301 with location https://api.github.com/repositories/78243781 rather than 200.",
+  "handling": {
+    "redirectFollowed": false,
+    "why": "The transaction was opened with redirectsAllowed: false. Following a redirect silently would mean acquiring bytes from a URL that was never allowlisted.",
+    "whatWasDoneInstead": "The 301 was ledgered as an observation with its location header. The canonical repository was then resolved and probed explicitly at https://api.github.com/repos/super-productivity/super-productivity, which is recorded as its own allowlisted endpoint. Every subsequent git and codeload request used the canonical owner path.",
+    "allowlistAmendment": "The endpoints actually used differ from the allowlist written into attempt.json by exactly the owner segment. attempt.json is left as written, because it records the state of the transaction at the moment it was opened; this file is the append-only amendment."
+  },
+  "identityArgument": {
+    "claim": "This is the scout's candidate, not a substitute.",
+    "evidence": [
+      "The numeric repository id in the redirect target, 78243781, is identical to the id returned by the canonical path.",
+      "The requested tag v2.13.15 resolves at the canonical path to commit 2943c5c4f13c3ce4dece0abf4f9c39739dde4192, which is exactly the commit the scout recorded.",
+      "The root LICENSE blob at that commit is 4ebcbdf9291d5317433929f0afb4c411513381cd, exactly the blob the scout recorded, at exactly the 1072 bytes the scout recorded.",
+      "The tree carries 967 blobs, exactly the count the scout recorded.",
+      "Git objects are content-addressed. A rename changes the path bytes are served from; it cannot change the bytes, the commit sha, the tree sha, or any blob sha."
+    ],
+    "conclusion": "The rename is a routing fact about the present-day upstream. It carries no authority over the pinned 2019 revision, whose integrity was independently established by blob-for-blob reconciliation against the acquired archive."
+  },
+  "currentUpstreamState": {
+    "archived": false,
+    "disabled": false,
+    "defaultBranch": "master",
+    "note": "The repository is live and actively pushed to today, unlike the archived HospitalRun lane. This says nothing about the pinned revision and is recorded only as observed context."
+  },
+  "lessonForLaterScouts": "Repository coordinates are mutable and a scout's owner/name pair can go stale between passes. The durable identifiers are the numeric repository id and the commit sha. Acquisition drivers should treat a 301 on the repository endpoint as a rename to resolve and record, not as a failure and not as something to follow blindly.",
+  "nonclaims": [
+    "Recording the rename establishes nothing about why the project moved, who controls the new organisation, or whether the upstream project's governance changed.",
+    "The licence position recorded in license.json rests on the licence text present at the pinned revision, not on any present-day upstream metadata."
+  ]
+}

@@ -1,0 +1,212 @@
+{
+  "schemaVersion": "versionless.official-source.v1",
+  "slug": "angular-super-productivity-v2-13-15",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "unit": "lrapr-t006/u16-ingest-super-productivity",
+  "result": "source-bound",
+  "startedAt": "2026-08-11T20:00:00Z",
+  "completedAt": "2026-08-11T20:10:00Z",
+  "timestampNote": "Per-request wall-clock timestamps are recorded in probe-ledger.ndjson; the coarse values above are placeholders for the transaction envelope only.",
+  "repository": {
+    "id": 78243781,
+    "fullName": "super-productivity/super-productivity",
+    "fullNameAtScoutTime": "johannesjo/super-productivity",
+    "private": false,
+    "archived": false,
+    "disabled": false,
+    "defaultBranch": "master",
+    "licenseSpdx": "MIT",
+    "responseBytes": 7694,
+    "responseSha256": "af5366bf0ed73759717fe0e23f4abcc1f6f4007dba810b26f9c7f68f9c34c367",
+    "ownerRename": {
+      "observed": true,
+      "scoutPath": "https://api.github.com/repos/johannesjo/super-productivity",
+      "scoutPathStatus": 301,
+      "scoutPathLocation": "https://api.github.com/repositories/78243781",
+      "canonicalPath": "https://api.github.com/repos/super-productivity/super-productivity",
+      "redirectFollowed": false,
+      "disposition": "The 301 was recorded as an observation and not followed. The canonical path was then probed explicitly as its own allowlisted endpoint.",
+      "identityArgument": "The numeric repository id in the redirect target (78243781) is the same id the canonical path returns, so this is one repository under a new owner, not a different repository. The pinned commit sha, tree sha and licence blob are unchanged by a rename because they are content-addressed.",
+      "notASubstitution": "This is the scout's candidate at the scout's commit. No substitute candidate was acquired.",
+      "detail": "owner-rename.json"
+    }
+  },
+  "revision": {
+    "ref": "refs/tags/v2.13.15",
+    "tagObjectSha": "8d33ba1f606390b2545f04e90506e36b1f9be859",
+    "tagKind": "annotated",
+    "tagDate": "2019-12-05T21:01:13Z",
+    "tagMessage": "2.13.15",
+    "tagVerification": "unsigned",
+    "commitSha": "2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+    "commitDate": "2019-12-05T21:01:13Z",
+    "commitAuthorDate": "2019-12-05T21:01:13Z",
+    "commitMessage": "2.13.15",
+    "commitVerification": "unsigned",
+    "rootTreeSha": "c609e059de5c000e5a95799d33427b4c1df04d1e",
+    "treeEntries": 1156,
+    "treeBlobs": 967,
+    "treeDirectories": 189,
+    "treeSymlinks": 0,
+    "treeGitlinks": 0,
+    "treeExecutableBlobs": 0,
+    "treeTruncated": false,
+    "expectedCommitShaFromPriorScout": "2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+    "expectedCommitShaConfirmedFromWire": true,
+    "expectedBlobCountFromPriorScout": 967,
+    "expectedBlobCountConfirmedFromWire": true
+  },
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/johannesjo/super-productivity",
+      "status": 301,
+      "bytes": 0,
+      "sha256": null,
+      "location": "https://api.github.com/repositories/78243781",
+      "redirectFollowed": false
+    },
+    {
+      "endpoint": "https://api.github.com/repos/super-productivity/super-productivity",
+      "status": 200,
+      "bytes": 7694,
+      "sha256": "af5366bf0ed73759717fe0e23f4abcc1f6f4007dba810b26f9c7f68f9c34c367"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/super-productivity/super-productivity/git/ref/tags/v2.13.15",
+      "status": 200,
+      "bytes": 381,
+      "sha256": "e8cc79c4305170212d66991c4b17b1c16e09bf7acde4c94b6506ebf0326248e0"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/super-productivity/super-productivity/git/tags/8d33ba1f606390b2545f04e90506e36b1f9be859",
+      "status": 200,
+      "bytes": 714,
+      "sha256": "01d9c15f489f18965115bdaf4039ca306fcb3947ff5f3729ee78ad5703faa6ec"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/super-productivity/super-productivity/git/commits/2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+      "status": 200,
+      "bytes": 1214,
+      "sha256": "6d8b55edadab9c29df959b69863e3cdcd189860c6a8c0b5db20c8ad22f80e0e7"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/super-productivity/super-productivity/git/trees/c609e059de5c000e5a95799d33427b4c1df04d1e?recursive=1",
+      "status": 200,
+      "bytes": 316279,
+      "sha256": "28fe305aa85c8d0252d9bcd4b734214cedd4f5839eb54599444801438a02569a"
+    },
+    {
+      "endpoint": "https://codeload.github.com/super-productivity/super-productivity/tar.gz/2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+      "status": 200,
+      "bytes": 4072238,
+      "sha256": "dead2f5334350459f930f5d5235322e5af38e577c79557d3370e497bf15f24eb",
+      "stream": 1
+    },
+    {
+      "endpoint": "https://codeload.github.com/super-productivity/super-productivity/tar.gz/2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+      "status": 200,
+      "bytes": 4072238,
+      "sha256": "dead2f5334350459f930f5d5235322e5af38e577c79557d3370e497bf15f24eb",
+      "stream": 2
+    }
+  ],
+  "gitProtocolDependencyRequests": {
+    "note": "Four further consented acquisition requests were made for the one git-protocol dependency the manifest declares. They are ledgered in probe-ledger.ndjson with purpose \"git-protocol-dependency\" and recorded in full in closure.json.",
+    "count": 4,
+    "aggregateWireBytes": 17533
+  },
+  "archive": {
+    "url": "https://codeload.github.com/super-productivity/super-productivity/tar.gz/2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+    "bytes": 4072238,
+    "sha256": "dead2f5334350459f930f5d5235322e5af38e577c79557d3370e497bf15f24eb",
+    "archivesByteIdentical": true,
+    "secondStreamSha256": "dead2f5334350459f930f5d5235322e5af38e577c79557d3370e497bf15f24eb",
+    "archiveUrlUsesCanonicalOwner": true,
+    "archiveUrlNote": "codeload was addressed at the canonical owner path. The archive is content-addressed by the commit sha, and the extracted bytes reconcile blob-for-blob against the git tree, so the owner segment of the URL carries no authority over the content."
+  },
+  "archiveParity": {
+    "singleRoot": "super-productivity-2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+    "safeEntries": 1157,
+    "regularFiles": 967,
+    "directories": 189,
+    "specialEntries": 0,
+    "gitBlobs": 967,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "normalizedManifestSha256": "7e577db53695de1583ffdc32a5eb9f50d994a55b305a93d76c161fa994402f0a",
+    "method": "Blob-level: every regular file in the extracted archive was hashed as a git blob object and compared byte-for-byte against the sha recorded for the same path in the recursive git tree. Detail in reconciliation.json.",
+    "pathTraversalEntries": 0,
+    "absolutePathEntries": 0
+  },
+  "keyArtifactDigests": {
+    "LICENSE": {
+      "bytes": 1072,
+      "gitBlobSha": "4ebcbdf9291d5317433929f0afb4c411513381cd",
+      "sha256": "2e279de19632b5694d24b0ac06fd5b837ec487bf821302d9ce195379850a5fcb"
+    },
+    "package.json": {
+      "bytes": 6877,
+      "gitBlobSha": "e23c9ead8afaa4fbd2e8097cfecfbedef7ff1583",
+      "sha256": "9e875856e6677df9cbf5f2710e4adfc1faa7f18753925c59adb57fe5c65b9e9f"
+    },
+    "yarn.lock": {
+      "bytes": 466548,
+      "gitBlobSha": "b289e5484b99ad18a030ffbe14174b195fdaced6",
+      "sha256": "7a9b967ca1471c7c9a8fa0a225acad3076f27667f15fe7abbe81679dff791674"
+    },
+    "angular.json": {
+      "bytes": 4218,
+      "gitBlobSha": "ceb54413fb84884e2158cf73e211022b97c96110",
+      "sha256": "11886cbf302783a662111bd0c4cde1ef003ae410a6b2967d5f1e7ef81dec5abd"
+    },
+    "tsconfig.json": {
+      "bytes": 499,
+      "gitBlobSha": "36e2565dd214509d8e4510c22958057e3eacdf26",
+      "sha256": "8ac3609019950932b1f05b8563d8d0f61a93f3c01476c0583c431356932f93c4"
+    },
+    "tsconfig.worker.json": {
+      "bytes": 212,
+      "gitBlobSha": "1c8cc55ed8b3e69af7c0894c2de6f3420a57658a",
+      "sha256": "4fd41029a3a1cace7476de8e753e2479e6ee25a2997044efafe6c6a4a9b9eefa"
+    },
+    "src/tsconfig.app.json": {
+      "bytes": 188,
+      "gitBlobSha": "2703469cb66a3dc487133a1f1adee57d36d6c14f",
+      "sha256": "f066a0bc19306f2c88c6e802b10703bf28fbdb25e05f7b2b326294022b073f23"
+    },
+    ".travis.yml": {
+      "bytes": 3344,
+      "gitBlobSha": "e2c98fd74f32f5cfa8dcb8a8f2b42ed8fb31b8d9",
+      "sha256": "b9b3c8c9f27a60356ca8fe2c5e27ff23797a0873362460a4fbca1060e0f4769d"
+    }
+  },
+  "transaction": {
+    "attemptedRequests": 8,
+    "acceptedResponses": 8,
+    "acceptedWireBytes": 8470758,
+    "acceptedDecodedBytes": 8470758,
+    "redirectsObserved": 1,
+    "redirectsFollowed": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "credentialsSent": 0,
+    "archivesByteIdentical": true,
+    "archiveMatchesGitTree": true,
+    "publishedSource": true,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "cache": {
+    "root": ".versionless/cache/angular-super-productivity-v2-13-15-source",
+    "archive1": ".versionless/cache/angular-super-productivity-v2-13-15-source/archive/archive-1.tar.gz",
+    "archive2": ".versionless/cache/angular-super-productivity-v2-13-15-source/archive/archive-2.tar.gz",
+    "verifiedSource": ".versionless/cache/angular-super-productivity-v2-13-15-source/verify/extracted/super-productivity-2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+    "rawMetadataPortable": false
+  },
+  "nonclaims": [
+    "An unsigned annotated tag does not establish signer authenticity; the tagger identity carried by the tag object is upstream metadata and is not treated as a verification result.",
+    "The repository being unarchived and actively pushed to today says nothing about the pinned 2019 revision, which is immutable and content-addressed.",
+    "No browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval is established by this record."
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-rights.v1",
+  "slug": "angular-super-productivity-v2-13-15",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "revision": {
+    "repository": "super-productivity/super-productivity",
+    "repositoryAtScoutTime": "johannesjo/super-productivity",
+    "repositoryId": 78243781,
+    "ref": "refs/tags/v2.13.15",
+    "commitSha": "2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+    "rootTreeSha": "c609e059de5c000e5a95799d33427b4c1df04d1e"
+  },
+  "declaration": {
+    "identifier": "MIT",
+    "identifierSource": "verbatim MIT text in the repository root LICENSE file at the pinned revision, read out of the acquired and reconciled bytes",
+    "copyrightNotice": "Copyright (c) 2018 Johannes Millan",
+    "manifestLicenseField": "MIT",
+    "githubDetectedLicense": "MIT (spdx_id MIT) as reported by the repository metadata response; the file text is the primary evidence and agrees with it",
+    "dualLicensed": false,
+    "sourceAvailableCarveOut": false
+  },
+  "scoutClaimVerification": {
+    "claimedBlobShaPrefix": "4ebcbdf9",
+    "observedBlobSha": "4ebcbdf9291d5317433929f0afb4c411513381cd",
+    "claimedBytes": 1072,
+    "observedBytes": 1072,
+    "claimedCopyright": "Copyright (c) 2018 Johannes Millan",
+    "observedCopyright": "Copyright (c) 2018 Johannes Millan",
+    "agrees": true,
+    "method": "The licence blob was re-derived from the acquired archive bytes by git blob hashing, not read from the scout's note. It is content-addressed and therefore unaffected by the owner rename recorded in source.json."
+  },
+  "artifacts": [
+    {
+      "path": "LICENSE",
+      "role": "repository-root-licence",
+      "gitBlobSha": "4ebcbdf9291d5317433929f0afb4c411513381cd",
+      "bytes": 1072,
+      "sha256": "2e279de19632b5694d24b0ac06fd5b837ec487bf821302d9ce195379850a5fcb",
+      "firstLine": "MIT License",
+      "copyrightLine": "Copyright (c) 2018 Johannes Millan",
+      "permissionGrantPresent": true,
+      "noticeRetentionClausePresent": true,
+      "warrantyDisclaimerPresent": true
+    },
+    {
+      "path": "package.json",
+      "role": "application-manifest",
+      "gitBlobSha": "e23c9ead8afaa4fbd2e8097cfecfbedef7ff1583",
+      "bytes": 6877,
+      "sha256": "9e875856e6677df9cbf5f2710e4adfc1faa7f18753925c59adb57fe5c65b9e9f",
+      "licenseField": "MIT",
+      "privateField": "absent",
+      "packageName": "superProductivity",
+      "packageVersion": "2.13.15"
+    }
+  ],
+  "gitProtocolDependencyLicence": {
+    "package": "jira2md",
+    "upstream": "johannesjo/J2M",
+    "resolvedCommitSha": "d6e0211c6e6c4c1f09283faec3d0efdaed3a4caa",
+    "licenceFileInTree": "LICENSE.md",
+    "licenceBlobSha": "b78da67571bd8b9200da830548ec226e98ee403c",
+    "position": "The dependency's own tree carries a licence file, whose blob sha is recorded here as found. Its terms were not read or evaluated by this unit, consistent with the standing position that dependency licences are not adjudicated at ingest.",
+    "unknownPreserved": "Whether that licence is MIT or anything else is not claimed here."
+  },
+  "inventory": {
+    "licenceFilesInTree": 1,
+    "additionalLicenceOrNoticeFiles": 0,
+    "vendoredThirdPartySources": 0,
+    "committedNodeModules": 0,
+    "committedDistDirectories": 0,
+    "note": "The recursive tree at the pinned revision contains exactly one licence file (root LICENSE) and no vendored dependency or built-output directories."
+  },
+  "retainedAssetRights": {
+    "reviewed": true,
+    "brandedAssets": [
+      "src/assets/icons",
+      "src/favicon.ico",
+      "src/manifest.json",
+      "build (electron-builder icon and installer assets)"
+    ],
+    "position": "Super Productivity brand marks and application icons are retained under the upstream project's ownership. They are carried only as part of the immutable source archive and are not relicensed, rebranded, or reused as Versionless assets.",
+    "unknownPreserved": "Trademark rights are separate from the MIT copyright grant and are neither established nor disclaimed here."
+  },
+  "obligations": [
+    "Retain the MIT notice and permission text in any copy or substantial portion of the source.",
+    "The MIT grant covers the repository's own files; each dependency in the closure carries its own terms, which this record does not evaluate."
+  ],
+  "nonclaims": [
+    "This is a record of the licence text present at the pinned revision, not a legal opinion, licence-compatibility finding, or legal approval.",
+    "No licence determination is made for the transitive dependency closure, including the one git-protocol dependency whose licence file is merely noted above."
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-admission.v1",
+  "slug": "angular-super-productivity-v2-13-15",
+  "unit": "lrapr-t006/u16-ingest-super-productivity",
+  "boardTask": "T006",
+  "cohort": "Angular cohort two, cell C2",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "candidate": "super-productivity/super-productivity @ tag v2.13.15 = commit 2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+  "admitted": true,
+  "admittedAt": "2026-08-11",
+  "gateDiscipline": "Every gate was verified against the acquired and blob-reconciled bytes before acquisition was allowed to count. The scout's claims were treated as expectations to falsify, not as facts to inherit.",
+  "gates": [
+    {
+      "gate": "MIT licence text present at the pinned revision",
+      "verdict": "pass",
+      "evidence": "Root LICENSE, git blob 4ebcbdf9291d5317433929f0afb4c411513381cd, 1072 bytes, sha256 2e279de19632b5694d24b0ac06fd5b837ec487bf821302d9ce195379850a5fcb. Verbatim MIT text, 'Copyright (c) 2018 Johannes Millan'. Grant, notice-retention and warranty-disclaimer clauses all present. package.json declares \"license\": \"MIT\" and the repository metadata reports spdx_id MIT; the file text is primary and all three agree.",
+      "scoutClaimAgrees": true,
+      "detail": "license.json"
+    },
+    {
+      "gate": "a real substantive application, not a demo or tutorial scaffold",
+      "verdict": "pass",
+      "evidence": "558 TypeScript files, 80 component templates and 113 SCSS files under src, organised into 17 feature domains (tasks, time-tracking, project, config, worklog, metric, pomodoro, reminder, note, bookmark, attachment, issue, google, imex, planning-mode, procrastination, task-repeat-cfg) plus core, core-ui, pages, root-store, ui and util layers. Ten routed pages. An ngrx 8 root store with effects, entity and data. A published desktop product with its own domain, not a sample.",
+      "detail": "This is the largest single-application Angular fixture admitted to the corpus so far."
+    },
+    {
+      "gate": "Angular 8, pre-Ivy",
+      "verdict": "pass",
+      "evidence": "@angular/core ^8.2.6 with the whole platform at ^8.2.x, @angular/cli ^8.3.4, @angular-devkit/build-angular pinned exactly at 0.803.4, typescript ~3.5.3, ngrx 8. `enableIvy` appears in zero of the 967 blobs, and Angular 8.2 defaults to ViewEngine, so the AOT production build that succeeded compiled through ViewEngine.",
+      "eraGapFilled": "the pre-Ivy ViewEngine cell the Angular cohort was missing",
+      "scoutClaimAgrees": true
+    },
+    {
+      "gate": "era-coherent date",
+      "verdict": "pass",
+      "evidence": "Annotated tag v2.13.15 dated 2019-12-05T21:01:13Z; commit 2943c5c4 committed and authored the same instant. Inside the required revision window 2018-01-01 through 2021-12-31.",
+      "scoutClaimAgrees": true
+    },
+    {
+      "gate": "at least three substantive journeys plausible",
+      "verdict": "pass",
+      "journeysIdentified": 8,
+      "requirement": 3,
+      "journeys": [
+        "task create / edit — the tasks feature over the ngrx store, entered from the work-view page",
+        "task drag reorder — ng2-dragula 2.1.1 wired through the task list components",
+        "time tracking start / stop — the time-tracking feature with its own store slice and the worklog page",
+        "project switch — the project feature plus the projects and project-settings pages",
+        "settings — the config page over @ngx-formly 5 schema-driven forms",
+        "dark theme — angular-material-css-vars 0.1.6 driving Material theming through CSS custom properties",
+        "keyboard shortcuts — a configurable shortcut layer in the config surface",
+        "import / export — the imex feature, backed by localforage and lz-string compression"
+      ],
+      "backendRequired": "none for the core flow",
+      "backendEvidence": "State lives in src/app/core/persistence over localforage and browser local storage (persistence.service.ts, database.service.ts, local-storage.ts). No API base URL is configured for the core flow and no server is needed to exercise the journeys above."
+    }
+  ],
+  "recordedNonMaskingFacts": [
+    {
+      "fact": "ngsw service worker",
+      "detail": "@angular/service-worker 8.2.x with ngsw-config.json; the production build emits ngsw-worker.js, ngsw.json and safety-worker.js. Its externalAssets group prefetches https://fonts.googleapis.com/** and https://fonts.gstatic.com/**.",
+      "disposition": "recorded, not disabled. Establishes the non-masking precedent for later units: a service-worker-free variant must be a labeled deviation, never the unlabeled baseline."
+    },
+    {
+      "fact": "web workers",
+      "detail": "tsconfig.worker.json is wired into the browser builder via webWorkerTsConfig. Two application workers compile and emit: lz (lz-string compression) and reminder.",
+      "disposition": "recorded and exercised — both emitted in the green production build."
+    },
+    {
+      "fact": "Electron sidecar",
+      "detail": "An electron/ directory (15 TypeScript modules: main, main-window, jira, google-auth, backup, dbus, lockscreen, indicator, git-log and others), electron 6.1.5, electron-builder 22.2.0, tsconfig-electron.json, electron-builder.yaml and a build/ asset tree. package.json `main` points at ./electron/main.js and the `start` script launches Electron, not the browser.",
+      "disposition": "out of build scope for this unit and never invoked. Recorded so that later units know the repository's default entry point is the desktop shell, and that `yarn start` is not a web dev server — `startFrontend` is."
+    },
+    {
+      "fact": "optional third-party integrations, off by default",
+      "detail": "Jira (jira-client-fork, jira.const.ts declares isEnabled: false), Google Drive/Sheets sync (googleapis 40, toggled off until a user enables it) and GitHub issue import.",
+      "disposition": "recorded with egress destinations below for witness blocking."
+    }
+  ],
+  "egressDestinationsForWitnessBlocking": {
+    "purpose": "Destinations any later browser-witness unit must block or stub, so that exercising this fixture cannot reach third-party hosts.",
+    "unconditionalAtPageLoad": [
+      {
+        "host": "fonts.googleapis.com",
+        "source": "a hard-coded <link href=\"https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700&display=swap\"> in src/index.html",
+        "severity": "fires on every page load with no user action and no setting to turn it off"
+      },
+      {
+        "host": "fonts.gstatic.com",
+        "source": "the font files the above stylesheet references, plus the ngsw externalAssets prefetch group",
+        "severity": "fires on every page load"
+      }
+    ],
+    "conditionalOnUserEnablingAnIntegration": [
+      { "host": "www.googleapis.com", "source": "Google Drive / Sheets sync (googleapis 40)" },
+      { "host": "sheets.googleapis.com", "source": "Google Sheets sync" },
+      { "host": "content.googleapis.com", "source": "Google API client" },
+      { "host": "apis.google.com", "source": "Google auth client script" },
+      { "host": "github.com", "source": "GitHub issue import" },
+      { "host": "user-configured Jira host", "source": "the Jira integration; the host is supplied by the user, so no fixed destination can be allowlisted in advance" }
+    ],
+    "notEgress": "confluence.atlassian.com, drsoph.com, nytimes.com, chrome.google.com, developers.google.com and similar appear only as documentation and help links in template markup. They are navigation targets a user could click, not requests the application issues.",
+    "comparisonToPriorLanes": "Unlike the jira-clone lane, this fixture hard-codes no Sentry DSN and no Google Analytics id. Nothing reports to an upstream author's telemetry property at bootstrap. The only unconditional third-party traffic is Google Fonts."
+  },
+  "scoutClaimsReconciled": [
+    { "claim": "commit 2943c5c4f13c3ce4dece0abf4f9c39739dde4192", "verdict": "confirmed from the wire" },
+    { "claim": "MIT LICENSE blob 4ebcbdf9…, 1072 B, Copyright (c) 2018 Johannes Millan", "verdict": "confirmed byte-for-byte" },
+    { "claim": "967 blobs", "verdict": "confirmed — 967 blobs, 1156 tree entries, 189 directories" },
+    { "claim": "Angular 8.2.6, CLI 8.3.4, build-angular 0.803.4, ngrx 8, TS 3.5.3", "verdict": "confirmed" },
+    { "claim": "angular.json, yarn.lock present", "verdict": "confirmed" },
+    { "claim": "no LFS claimed", "verdict": "confirmed by byte-scan anyway — no .gitattributes, zero pointer files across all 967 blobs" },
+    { "claim": "zero backend for the core flow, all state local", "verdict": "confirmed — localforage and local storage under src/app/core/persistence" },
+    { "claim": "pre-Ivy ViewEngine", "verdict": "confirmed — zero enableIvy hits, Angular 8.2 default" },
+    { "claim": "differential loading", "verdict": "corrected — partial only. A polyfills-es5 chunk is emitted, but a single es5 main bundle, because tsconfig target is es5 rather than es2015. Detail in baseline-attempt.json." },
+    { "claim": "6.94 MB single app", "verdict": "not reproduced as stated — the codeload tar.gz is 4,072,238 bytes on the wire. The scout's figure is presumably uncompressed. Recorded as a discrepancy in units, not treated as a gate failure." },
+    { "claim": "repository owner johannesjo", "verdict": "corrected — the repository has since moved to the super-productivity organisation. Same repository id 78243781. Detail in source.json." }
+  ],
+  "pmRulingsApplied": [
+    "The git-protocol dependency jira2md was admitted under consent, with its resolved commit, tree sha and double-fetched tarball digest recorded, and the absence of a lockfile integrity hash recorded as found rather than repaired. See closure.json.",
+    "The floating \"latest\" declared range for angular-material-css-vars was recorded as declared drift against its lock pin 0.1.6. A second instance of the same shape, angular2-promise-buttons at 4.0.1, was found by this unit and recorded alongside it."
+  ],
+  "substitution": {
+    "occurred": false,
+    "statement": "No candidate substitution occurred. pigallery2 1.7.0 remains the PM-ruled fallback and remains un-ingested."
+  },
+  "nonclaims": [
+    "Admission records that this fixture met the corpus's acquisition gates. It confers no readiness credit, pilot status, production readiness, certification or legal approval.",
+    "The journeys listed above are journeys judged plausible from reading the acquired source. None has been exercised in a browser by this unit."
+  ]
+}

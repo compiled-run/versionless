@@ -1,0 +1,84 @@
+{
+  "schemaVersion": "versionless.official-source-attempt.v1",
+  "unit": "lrapr-t006/u16-ingest-super-productivity",
+  "boardTask": "T006",
+  "cohort": "Angular cohort two, cell C2 (Angular 8 pre-Ivy ViewEngine)",
+  "candidate": {
+    "repository": "johannesjo/super-productivity",
+    "requestedTag": "v2.13.15",
+    "expectedCommitSha": "2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+    "expectationSource": "a prior read-only scout unit (lrapr-t006/u14, 2026-08-11); every claim is re-verified from the wire by this unit rather than trusted",
+    "substitutionForbidden": "This unit may ingest this candidate or nothing. pigallery2 1.7.0 is a PM-ruled fallback but stays un-ingested unless the PM re-rules."
+  },
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "result": "started",
+  "network": {
+    "method": "GET",
+    "credentials": "none",
+    "requestEncoding": "identity",
+    "redirectsAllowed": false,
+    "retriesAllowed": false,
+    "alternateHostsAllowed": false,
+    "mode": "VERSIONLESS_NETWORK_MODE=consented, acquisition only; offline thereafter except the package-manager baseline window recorded below"
+  },
+  "allowlist": [
+    "https://api.github.com/repos/johannesjo/super-productivity",
+    "https://api.github.com/repos/johannesjo/super-productivity/git/ref/tags/v2.13.15",
+    "https://api.github.com/repos/johannesjo/super-productivity/git/tags/<validated-tag-object-sha>",
+    "https://api.github.com/repos/johannesjo/super-productivity/git/commits/<validated-commit-sha>",
+    "https://api.github.com/repos/johannesjo/super-productivity/git/trees/<validated-tree-sha>?recursive=1",
+    "https://codeload.github.com/johannesjo/super-productivity/tar.gz/<validated-commit-sha>"
+  ],
+  "gitProtocolDependencyAllowlist": {
+    "declaration": "\"jira2md\": \"git+https://github.com/johannesjo/J2M.git\" in the acquired package.json",
+    "ruling": "PM-RULED APPROVED under consent VL-LEGACY-CORPUS-2026-08-10. A git-protocol dependency is admitted provided its resolved commit and a tree/tarball digest are recorded per the closure idiom, and the absence of any registry integrity hash is recorded as found rather than repaired.",
+    "endpoints": [
+      "https://api.github.com/repos/johannesjo/J2M/git/commits/<lock-resolved-commit-sha>",
+      "https://codeload.github.com/johannesjo/J2M/tar.gz/<lock-resolved-commit-sha>"
+    ],
+    "note": "The resolved commit is read out of the acquired yarn.lock, not chosen by this unit."
+  },
+  "caps": {
+    "maximumAcceptedResponses": 12,
+    "maximumApiResponseBytes": 16777216,
+    "maximumArchiveBytes": 134217728,
+    "maximumAggregateWireBytes": 314572800,
+    "maximumAggregateDecodedBytes": 314572800,
+    "requiredArchiveStreams": 2
+  },
+  "requiredRevisionWindow": {
+    "from": "2018-01-01T00:00:00Z",
+    "through": "2021-12-31T00:00:00Z",
+    "rationale": "The Angular 8 pre-Ivy ViewEngine era. A revision outside this window would not fill the era gap this cell exists for."
+  },
+  "admissionGates": [
+    "MIT licence text present in the tree at the pinned revision, verified from the acquired bytes",
+    "a real substantive application, not a demo or a tutorial scaffold",
+    "Angular 8, compiling through pre-Ivy ViewEngine",
+    "an era-coherent commit date inside the required revision window",
+    "at least three substantive user journeys plausible from the acquired source"
+  ],
+  "gateFailurePolicy": "Any gate failing is recorded append-only in this evidence root and the unit returns blocked. No substitute candidate is acquired.",
+  "publication": {
+    "evidenceRoot": "evidence/ingests/angular-super-productivity-v2-13-15",
+    "cacheRoot": ".versionless/cache/angular-super-productivity-v2-13-15-source",
+    "fixtureRoot": "fixtures/angular-super-productivity-v2-13-15",
+    "transactional": true,
+    "readinessCredit": false
+  },
+  "baselineNetwork": {
+    "purpose": "one truthful baseline dependency install and one production browser build attempt for the declared legacy cell",
+    "allowedHosts": [
+      "registry.yarnpkg.com",
+      "registry.npmjs.org",
+      "codeload.github.com",
+      "github.com"
+    ],
+    "buildScope": "the web application build only. The Electron sidecar is explicitly out of build scope for this unit and is recorded, not exercised.",
+    "note": "Package-manager fetches during the baseline install are performed by the package manager itself and are recorded in aggregate in the baseline attempt record, not URL-by-URL in the source ledger."
+  },
+  "nonclaims": [
+    "Starting this transaction establishes no tag identity, licence, source integrity, dependency closure, framework, build, browser behavior, migration feasibility, pilot status, or production readiness.",
+    "The resulting evidence is reproducibility evidence, not certification or legal approval."
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "id": "angular-super-productivity-v2-13-15",
+  "tranche": "Angular cohort two",
+  "cell": "C2 — Angular 8 pre-Ivy ViewEngine",
+  "unit": "lrapr-t006/u16-ingest-super-productivity",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "evidenceRoot": "evidence/ingests/angular-super-productivity-v2-13-15",
+  "application": {
+    "name": "Super Productivity",
+    "manifestName": "superProductivity",
+    "version": "2.13.15",
+    "description": "An advanced personal task manager: task lists with drag reorder, integrated time tracking and timeboxing, projects, worklog and daily summary, metrics, pomodoro, reminders, notes and bookmarks, schema-driven settings, and full import/export",
+    "license": "MIT",
+    "licenseFieldInManifest": "MIT",
+    "backend": "none for the core flow — all state is local, persisted through localforage and browser local storage in src/app/core/persistence. Optional Jira, Google Drive/Sheets and GitHub integrations exist but are off by default.",
+    "desktopSidecar": "An Electron 6 shell lives in electron/ and is the manifest's `main` entry point. It is out of scope for the web fixture and was never invoked."
+  },
+  "source": {
+    "repository": "super-productivity/super-productivity",
+    "repositoryAtScoutTime": "johannesjo/super-productivity",
+    "repositoryId": 78243781,
+    "ownerRenameNote": "The upstream owner moved from a personal account to an organisation between the scout pass and this ingest. GitHub answers the old path with a 301 to the same numeric repository id. The redirect was recorded and not followed; the canonical path was probed explicitly. The pinned commit, tree and licence blob are content-addressed and unchanged by the rename.",
+    "ref": "refs/tags/v2.13.15",
+    "tagKind": "annotated",
+    "tagObjectSha": "8d33ba1f606390b2545f04e90506e36b1f9be859",
+    "tagVerification": "unsigned",
+    "commitSha": "2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+    "commitDate": "2019-12-05T21:01:13Z",
+    "rootTreeSha": "c609e059de5c000e5a95799d33427b4c1df04d1e",
+    "treeBlobs": 967,
+    "archiveUrl": "https://codeload.github.com/super-productivity/super-productivity/tar.gz/2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+    "archiveSha256": "dead2f5334350459f930f5d5235322e5af38e577c79557d3370e497bf15f24eb",
+    "archiveBytes": 4072238,
+    "archiveRoot": "super-productivity-2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+    "archivesByteIdentical": true,
+    "archiveMatchesGitTree": true,
+    "normalizedManifestSha256": "7e577db53695de1583ffdc32a5eb9f50d994a55b305a93d76c161fa994402f0a",
+    "licenseSha256": "2e279de19632b5694d24b0ac06fd5b837ec487bf821302d9ce195379850a5fcb",
+    "licenseBlobSha": "4ebcbdf9291d5317433929f0afb4c411513381cd",
+    "packageSha256": "9e875856e6677df9cbf5f2710e4adfc1faa7f18753925c59adb57fe5c65b9e9f",
+    "yarnLockSha256": "7a9b967ca1471c7c9a8fa0a225acad3076f27667f15fe7abbe81679dff791674",
+    "angularJsonSha256": "11886cbf302783a662111bd0c4cde1ef003ae410a6b2967d5f1e7ef81dec5abd",
+    "tsconfigSha256": "8ac3609019950932b1f05b8563d8d0f61a93f3c01476c0583c431356932f93c4",
+    "tsconfigWorkerSha256": "4fd41029a3a1cace7476de8e753e2479e6ee25a2997044efafe6c6a4a9b9eefa"
+  },
+  "gitLargeFileStorage": {
+    "required": false,
+    "checked": true,
+    "gitattributesPresent": false,
+    "pointerFiles": 0,
+    "blobsScanned": 967,
+    "note": "The scout claimed no LFS. Every blob was byte-scanned for the LFS pointer preamble anyway, on the factoriolab lane's lesson. The tree is self-contained."
+  },
+  "toolchain": {
+    "framework": "Angular 8.2.6",
+    "cli": "@angular/cli 8.3.4",
+    "builder": "@angular-devkit/build-angular:browser 0.803.4 (pinned exactly, not ranged)",
+    "bundler": "webpack 4",
+    "compiler": "pre-Ivy ViewEngine, AOT — enableIvy appears in zero of the 967 blobs and Angular 8.2 defaults to ViewEngine",
+    "differentialLoading": "partial — a polyfills-es5 chunk is emitted alongside the modern polyfills chunk, but a single es5 main bundle, because tsconfig sets target es5 rather than es2015",
+    "typescript": "3.5.3",
+    "state": "@ngrx/store 8.5.2 with effects, entity, data and store-devtools",
+    "componentLibrary": "@angular/material 8.2 with cdk 8.2",
+    "styling": "SCSS through node-sass 4, themed by angular-material-css-vars 0.1.6 over CSS custom properties",
+    "forms": "@ngx-formly 5.2 (schema-driven settings)",
+    "i18n": "@ngx-translate/core 11",
+    "dragAndDrop": "ng2-dragula 2.1.1",
+    "charts": "chart.js 2.8 via ng2-charts 2.3",
+    "persistence": "localforage 1.7 with lz-string compression in a web worker",
+    "serviceWorker": "@angular/service-worker 8.2 driven by ngsw-config.json",
+    "webWorkers": "tsconfig.worker.json wired through the builder's webWorkerTsConfig option; two application workers (lz, reminder) compile and emit",
+    "packageManager": "yarn 1 classic, yarn.lock committed (466,548 bytes)"
+  },
+  "dependencyClosure": {
+    "lockState": "pinned-upstream — a complete yarn.lock is committed and `yarn install --frozen-lockfile` succeeded against it unmodified",
+    "topLevelEntriesInstalled": 1061,
+    "declaredDrift": "Two devDependencies are declared as the floating dist-tag \"latest\": angular-material-css-vars (lock-pinned 0.1.6) and angular2-promise-buttons (lock-pinned 4.0.1). The lockfile is the only thing holding them at their 2019 versions.",
+    "gitProtocolDependency": {
+      "package": "jira2md",
+      "declaredSpecifier": "git+https://github.com/johannesjo/J2M.git",
+      "pmRuling": "APPROVED under consent VL-LEGACY-CORPUS-2026-08-10",
+      "resolvedCommitSha": "d6e0211c6e6c4c1f09283faec3d0efdaed3a4caa",
+      "resolvedCommitDate": "2019-11-24T15:36:18Z",
+      "lockedVersion": "2.0.3",
+      "rootTreeSha": "27105c8ccda8b9c8e76dccb92ee7f9e45bfe1dbc",
+      "tarballUrl": "https://codeload.github.com/johannesjo/J2M/tar.gz/d6e0211c6e6c4c1f09283faec3d0efdaed3a4caa",
+      "tarballSha256": "0e4ca9183573fb3a3feeb93a724585bc753fae6a69991a0831962bdb3b4c7924",
+      "tarballBytes": 6940,
+      "tarballDoubleFetchByteIdentical": true,
+      "lockIntegrityHashPresent": false,
+      "integrityAbsenceRecordedAsFound": true
+    },
+    "localPathDependency": {
+      "package": "jo",
+      "declaredSpecifier": "file:./tools/schematics",
+      "note": "an in-tree schematics helper; no external acquisition surface"
+    },
+    "detail": "evidence/ingests/angular-super-productivity-v2-13-15/closure.json"
+  },
+  "legacyCell": {
+    "node": "12.14.1",
+    "platform": "darwin-x64 executed on darwin-arm64 through Rosetta 2",
+    "packageManager": "yarn 1.21.1",
+    "source": ".travis.yml pins `node_js: '12'`. The patch level and the yarn version are this ingest's choices, both era-consistent with the 2019-12 tag.",
+    "label": "repository-declared as to Node major, era-consistent as to patch and as to yarn",
+    "environment": { "NG_CLI_ANALYTICS": "false", "CI": "true" }
+  },
+  "baseline": {
+    "install": {
+      "command": "yarn install --frozen-lockfile --ignore-scripts --non-interactive",
+      "outcome": "succeeded",
+      "exitStatus": 0,
+      "durationSec": 25,
+      "lockfileMutated": false
+    },
+    "productionBuildAsAcquired": {
+      "command": "node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng build --aot --prod",
+      "scope": "web application only; the Electron sidecar was never invoked",
+      "sourceModified": false,
+      "outcome": "succeeded",
+      "exitStatus": 0,
+      "durationSec": 96,
+      "distFiles": 27,
+      "buildHash": "587c18dc999abaa50d2d",
+      "mainBundle": "3.64 MB",
+      "deviations": 0
+    },
+    "significance": "The first Angular cohort fixture in this corpus to install frozen and build production green on the first attempt with zero deviations.",
+    "detail": "evidence/ingests/angular-super-productivity-v2-13-15/baseline-attempt.json"
+  },
+  "journeys": [
+    "task create / edit",
+    "task drag reorder",
+    "time tracking start / stop",
+    "project switch",
+    "settings",
+    "dark theme",
+    "keyboard shortcuts",
+    "import / export"
+  ],
+  "knownHazardsForLaterUnits": [
+    "src/index.html hard-codes a Google Fonts stylesheet link, and ngsw-config.json prefetches fonts.googleapis.com and fonts.gstatic.com. Serving this fixture unmodified issues third-party requests on every page load with no user action. Any browser-witness unit must block or stub those two hosts.",
+    "The production build emits a real ngsw service worker (ngsw-worker.js, ngsw.json, safety-worker.js). It is recorded, not disabled — a service-worker-free variant must be a labeled deviation, never the unlabeled baseline.",
+    "package.json `main` is ./electron/main.js and `yarn start` launches Electron, not a web server. The web dev server is `yarn startFrontend`. Do not assume the default scripts serve a browser application.",
+    "The `buildFrontend` script prefixes the build with `yarn preCheck`, which runs lint and the full unit-test suite. The baseline deliberately invoked the bare ng build instead; anyone using the repository script gets a test run too.",
+    "jira2md resolves over git protocol from a repository this project does not control, with no registry fallback and no lockfile integrity hash. If that commit ever becomes unfetchable, the closure cannot be reconstructed from the lockfile alone.",
+    "Two devDependencies declare the floating tag \"latest\". Regenerating or upgrading the lockfile silently loses both 2019 pins.",
+    "The Jira, Google Drive/Sheets and GitHub integrations are off by default but reachable from the settings surface; enabling one during a witness run would open egress to the hosts recorded in admission.json."
+  ],
+  "nonclaims": [
+    "This manifest records an acquired identity, a licence position, a dependency closure and one baseline install and production build. It establishes no browser behavior, runtime correctness, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "A green production build means the bundle compiles and emits. No browser was opened by the ingesting unit, so nothing here shows the application boots or renders."
+  ]
+}

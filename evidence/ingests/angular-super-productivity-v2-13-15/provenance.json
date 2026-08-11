@@ -1,0 +1,110 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-provenance.v1",
+  "slug": "angular-super-productivity-v2-13-15",
+  "unit": "lrapr-t006/u16-ingest-super-productivity",
+  "boardTask": "T006",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "acquiredOn": "2026-08-11",
+  "chainOfCustody": [
+    {
+      "step": 1,
+      "what": "transaction opened",
+      "record": "attempt.json",
+      "detail": "Allowlist, caps, revision window, admission gates and gate-failure policy written before any request was issued."
+    },
+    {
+      "step": 2,
+      "what": "upstream identity resolved",
+      "detail": "The scout's repository path answered 301. The redirect was recorded and not followed; the canonical path was probed explicitly. Same repository id 78243781.",
+      "record": "owner-rename.json"
+    },
+    {
+      "step": 3,
+      "what": "revision pinned from the wire",
+      "detail": "Annotated tag v2.13.15 -> tag object 8d33ba1f -> commit 2943c5c4 -> root tree c609e059. The scout's expected commit was confirmed from the wire rather than trusted.",
+      "record": "source.json"
+    },
+    {
+      "step": 4,
+      "what": "archive acquired twice",
+      "detail": "codeload tar.gz fetched in two independent streams, 4,072,238 bytes each, byte-identical, sha256 dead2f5334350459f930f5d5235322e5af38e577c79557d3370e497bf15f24eb."
+    },
+    {
+      "step": 5,
+      "what": "archive reconciled against the git tree",
+      "detail": "Entry names screened for traversal before extraction; all 967 blobs then reconciled byte-for-byte in both directions. Zero missing, zero extra, zero mismatched.",
+      "record": "reconciliation.json"
+    },
+    {
+      "step": 6,
+      "what": "LFS byte-scan",
+      "detail": "All 967 blobs scanned for the LFS pointer preamble despite the scout claiming no LFS. Zero pointers, no .gitattributes.",
+      "record": "lfs.json"
+    },
+    {
+      "step": 7,
+      "what": "admission gates evaluated against the acquired bytes",
+      "detail": "Licence, substance, Angular 8 pre-Ivy, era-coherent date and journeys. All five pass. Eleven scout claims reconciled, two corrected.",
+      "record": "admission.json"
+    },
+    {
+      "step": 8,
+      "what": "git-protocol dependency integrity recorded",
+      "detail": "jira2md's lock-resolved commit d6e0211c fetched, its tree read, its tarball double-fetched and digested. The absent lockfile integrity hash recorded as found.",
+      "record": "closure.json"
+    },
+    {
+      "step": 9,
+      "what": "baseline install and production build in the declared legacy cell",
+      "detail": "yarn 1.21.1 on Node 12.14.1 under Rosetta 2. Frozen install exit 0 in 25s; ng build --aot --prod exit 0 in 96s, 27 dist files, zero deviations, source unmodified.",
+      "record": "baseline-attempt.json"
+    },
+    {
+      "step": 10,
+      "what": "fixture manifest published",
+      "record": "fixtures/angular-super-productivity-v2-13-15/fixture.json"
+    }
+  ],
+  "networkPolicy": {
+    "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+    "mode": "VERSIONLESS_NETWORK_MODE=consented, acquisition only",
+    "method": "GET only",
+    "credentialsSent": 0,
+    "redirectsFollowed": 0,
+    "redirectsObserved": 1,
+    "retries": 0,
+    "sourceRequests": 8,
+    "gitDependencyRequests": 4,
+    "aggregateWireBytesSourceTransaction": 8470758,
+    "aggregateWireBytesGitDependency": 17533,
+    "everyRequestLedgered": true,
+    "ledger": "probe-ledger.ndjson",
+    "baselineWindow": {
+      "purpose": "the one baseline install",
+      "hostsReached": ["registry.yarnpkg.com", "registry.npmjs.org", "codeload.github.com"],
+      "recordedInAggregate": true,
+      "why": "Package-manager fetches are performed by the package manager itself and are recorded in aggregate in baseline-attempt.json rather than URL-by-URL."
+    },
+    "offlineAfter": true
+  },
+  "toolsUsed": {
+    "location": "evidence/ingests/angular-super-productivity-v2-13-15/tools/",
+    "scripts": [
+      "acquire.mjs — the source transaction: probes, caps, double fetch, ledger",
+      "reconcile.mjs — extraction safety screen, blob-for-blob reconciliation, LFS scan, key-artifact digests",
+      "acquire-git-dependency.mjs — the PM-approved git-protocol dependency's integrity facts",
+      "baseline.sh — the legacy cell: package manager provisioning, frozen install, production build"
+    ],
+    "status": "working tools, published inside this evidence root for reproducibility. The records the PM merges are the evidence JSON files and fixture.json.",
+    "hostPaths": "baseline.sh carries absolute worktree paths because it must address a git-ignored cache outside the evidence tree. No host path appears in any evidence record."
+  },
+  "runtimeReuse": {
+    "node": "12.14.1 darwin-x64",
+    "reusedFrom": "the runtime acquired and digest-verified by the react-mycrypto ingest, already present in the workspace cache",
+    "newRuntimeDownloaded": false
+  },
+  "nonclaims": [
+    "This record describes how the bytes were obtained and what was checked. It confers no readiness credit, pilot status, production readiness, certification or legal approval.",
+    "No secrets, usernames or host paths are recorded in any evidence file in this root."
+  ]
+}

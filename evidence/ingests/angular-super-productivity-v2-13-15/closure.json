@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "versionless.legacy-dependency-closure.v1",
+  "slug": "angular-super-productivity-v2-13-15",
+  "frontendRoot": ".",
+  "source": {
+    "verifiedSourceRoot": ".versionless/cache/angular-super-productivity-v2-13-15-source/verify/extracted/super-productivity-2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+    "packageJsonSha256": "9e875856e6677df9cbf5f2710e4adfc1faa7f18753925c59adb57fe5c65b9e9f",
+    "packageJsonBytes": 6877
+  },
+  "lockState": {
+    "committedWithSource": true,
+    "committedLockfiles": ["yarn.lock"],
+    "searchedFor": ["package-lock.json", "npm-shrinkwrap.json", "yarn.lock", "pnpm-lock.yaml"],
+    "searchScope": "the full recursive git tree at the pinned revision (967 blobs)",
+    "lockfileSha256": "7a9b967ca1471c7c9a8fa0a225acad3076f27667f15fe7abbe81679dff791674",
+    "lockfileBytes": 466548,
+    "lockfileFormat": "yarn v1 classic lockfile",
+    "declaredRangeStyle": "caret ranges for most entries; @angular-devkit/build-angular and @ngrx/store are declared as exact pins; two entries are declared as the floating tag \"latest\"",
+    "state": "pinned-upstream",
+    "consequence": "The repository ships its own lockfile, so `yarn install --frozen-lockfile` reproduces the upstream-resolved closure rather than re-resolving ranges against today's registry. This is the materially better case than the unpinned lanes in this corpus, and the baseline install exercised it."
+  },
+  "declaredDrift": {
+    "observed": true,
+    "description": "Two devDependencies are declared as the floating npm dist-tag \"latest\" rather than as a range. The committed lockfile pins each to a concrete version, so the drift is latent rather than active: it would only bite on a re-resolution that ignored the lockfile.",
+    "entries": [
+      {
+        "package": "angular-material-css-vars",
+        "declaredSpecifier": "latest",
+        "lockPinnedVersion": "0.1.6",
+        "resolved": "https://registry.yarnpkg.com/angular-material-css-vars/-/angular-material-css-vars-0.1.6.tgz#9b16cb3bf70d00106e58031c0070b5335e2f8b49",
+        "integrity": "sha512-uIyuE46DQATVOTj55Seomzate4Nsa6fhceC/jFSmjMWVBxe9Vtzz89xUWq33wiPXPbfuqLIbwRXeRnrv6mVz5w==",
+        "integrityHashPresent": true
+      },
+      {
+        "package": "angular2-promise-buttons",
+        "declaredSpecifier": "latest",
+        "lockPinnedVersion": "4.0.1",
+        "resolved": "https://registry.yarnpkg.com/angular2-promise-buttons/-/angular2-promise-buttons-4.0.1.tgz#8784edbf896e934574273e21de1457dca9e08e4e",
+        "integrity": "sha512-SHt9K1BmM9dpfcm6fbnlmjduWzm6RpC3Uc7vFj1Z0ml8OMOc+nnyFkoAXOMf1tnYCFhTgNyz2mMCtms2wG9oXA==",
+        "integrityHashPresent": true
+      }
+    ],
+    "scoutNote": "The scout flagged angular-material-css-vars only. angular2-promise-buttons is a second instance of the same declared-drift shape, found by this unit and recorded here.",
+    "hazardForLaterUnits": "Any later work that regenerates or upgrades this lockfile loses both pins to whatever \"latest\" means on that day. The lockfile is the only thing holding these two at their 2019 versions."
+  },
+  "nonRegistryDependencies": {
+    "count": 2,
+    "entries": [
+      {
+        "package": "jira2md",
+        "kind": "git-protocol",
+        "declaredIn": "devDependencies",
+        "declaredSpecifier": "git+https://github.com/johannesjo/J2M.git",
+        "declaredSpecifierPinsNothing": true,
+        "ruling": "PM-RULED APPROVED under consent VL-LEGACY-CORPUS-2026-08-10, on the condition that the resolved commit and a tarball digest are recorded per the closure idiom and that the absence of a registry integrity hash is recorded as found rather than repaired.",
+        "lockResolvedTo": "git+https://github.com/johannesjo/J2M.git#d6e0211c6e6c4c1f09283faec3d0efdaed3a4caa",
+        "lockedVersion": "2.0.3",
+        "resolvedCommitSha": "d6e0211c6e6c4c1f09283faec3d0efdaed3a4caa",
+        "resolvedCommitDate": "2019-11-24T15:36:18Z",
+        "resolvedCommitMessage": "fix: tables",
+        "resolvedCommitVerification": "unsigned",
+        "rootTreeSha": "27105c8ccda8b9c8e76dccb92ee7f9e45bfe1dbc",
+        "treeEntries": 11,
+        "treeBlobs": 10,
+        "tarballUrl": "https://codeload.github.com/johannesjo/J2M/tar.gz/d6e0211c6e6c4c1f09283faec3d0efdaed3a4caa",
+        "tarballBytes": 6940,
+        "tarballSha256": "0e4ca9183573fb3a3feeb93a724585bc753fae6a69991a0831962bdb3b4c7924",
+        "tarballDoubleFetchByteIdentical": true,
+        "tarballSecondStreamSha256": "0e4ca9183573fb3a3feeb93a724585bc753fae6a69991a0831962bdb3b4c7924",
+        "lockIntegrityHashPresent": false,
+        "integrityAbsenceRecordedAsFound": true,
+        "integrityAbsenceNote": "The yarn.lock entry for jira2md carries `version` and `resolved` but no `integrity` line, because yarn 1 does not record subresource integrity for git-protocol dependencies. The absence is recorded as found and was not repaired, papered over, or substituted with a registry release of the same name.",
+        "whatTheCommitPinDoesAndDoesNot": "The lock pins a bare 40-hex commit sha, so the dependency is content-addressed at the git-object level and cannot silently move. What it does not carry is a digest of the packed artifact yarn actually installs, which is why this unit fetched and double-digested the tarball above.",
+        "installedInBaseline": true,
+        "installedVersionObserved": "2.0.3",
+        "hazardForLaterUnits": "Resolution depends on github.com being reachable and on that commit remaining fetchable from a repository this project does not control. There is no registry fallback for this package under this specifier."
+      },
+      {
+        "package": "jo",
+        "kind": "local-path",
+        "declaredIn": "devDependencies",
+        "declaredSpecifier": "file:./tools/schematics",
+        "lockEntry": "\"jo@file:./tools/schematics\": version \"0.0.0\"",
+        "lockResolvedField": "absent",
+        "lockIntegrityHashPresent": false,
+        "note": "A second non-registry dependency, resolved from a path inside the repository's own tree rather than from any network host. It is an in-tree schematics helper. Recorded for completeness; it introduces no external acquisition surface.",
+        "foundByThisUnit": true
+      }
+    ]
+  },
+  "baselineResolution": {
+    "what": "The closure produced by `yarn install --frozen-lockfile --ignore-scripts` in the declared legacy cell on 2026-08-11. Because --frozen-lockfile was used and the install succeeded, this is the upstream-pinned closure, not a re-resolution.",
+    "packageManager": "yarn 1.21.1 on Node 12.14.1 (darwin-x64 under Rosetta 2)",
+    "frozenLockfileHonoured": true,
+    "lockfileMutated": false,
+    "installedTopLevelEntries": 1061,
+    "durationSec": 25,
+    "registryHosts": ["registry.yarnpkg.com", "codeload.github.com"],
+    "note": "`--frozen-lockfile` fails the install outright if resolution would require changing the lockfile. It exited 0, which is itself the evidence that every declared specifier — including the git-protocol one — still resolves to exactly what the 2019 lockfile records."
+  },
+  "integrity": {
+    "lockfileEntriesWithIntegrityHash": "all registry entries carry sha1-in-resolved-fragment plus a sha512 integrity line, as generated by yarn 1 in 2019",
+    "lockfileEntriesWithoutIntegrityHash": 2,
+    "entriesWithoutIntegrityHashNamed": ["jira2md (git-protocol)", "jo (local path)"],
+    "integrityAlgorithms": ["sha512", "sha1"],
+    "note": "The two entries without an integrity line are exactly the two non-registry dependencies above. That is a property of yarn 1's lockfile format for non-registry specifiers, recorded as found."
+  },
+  "closureSha256": "7a9b967ca1471c7c9a8fa0a225acad3076f27667f15fe7abbe81679dff791674",
+  "closureShaNote": "The digest of the committed upstream yarn.lock, which is the closure of record for this fixture. No generated lockfile is published, because none was produced: the frozen install consumed the upstream one unchanged.",
+  "nonclaims": [
+    "Per-artifact byte digests were not independently mirrored for the registry closure; the recorded integrity hashes are the ones the committed lockfile declares.",
+    "A resolvable closure establishes no build, browser behavior, licence compatibility of transitive dependencies, migration feasibility, or production readiness.",
+    "Recording the git dependency's resolved commit and tarball digest establishes that this unit observed those bytes on this date. It does not establish that they are the bytes the upstream author published in 2019, and it makes no claim about that package's contents or safety."
+  ]
+}

@@ -1,0 +1,136 @@
+{
+  "schemaVersion": "versionless.legacy-baseline-attempt.v1",
+  "slug": "angular-super-productivity-v2-13-15",
+  "unit": "lrapr-t006/u16-ingest-super-productivity",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "purpose": "One truthful baseline dependency install and one production browser build attempt of the pinned revision, in the nearest honestly-labeled legacy cell. The Electron sidecar is out of build scope and was never invoked.",
+  "declaredCell": {
+    "declaredByRepository": {
+      "enginesField": "absent — package.json declares no engines block",
+      "nvmrc": "absent — no .nvmrc exists in the tree",
+      "continuousIntegration": ".travis.yml declares `language: node_js` with `node_js: '12'` (blob e2c98fd74f32f5cfa8dcb8a8f2b42ed8fb31b8d9)",
+      "packageManagerDeclared": "yarn — a yarn.lock is committed and the scripts call `yarn` internally; no yarn version is declared anywhere",
+      "interpretation": "The repository makes exactly one concrete runtime statement: Travis builds it on Node 12. That is a repository declaration, not merely an era guess, and the cell below matches it.",
+      "ambiguityPreserved": false
+    },
+    "used": {
+      "node": "12.14.1",
+      "platform": "darwin-x64 executed on darwin-arm64 through Rosetta 2",
+      "url": "https://nodejs.org/dist/v12.14.1/node-v12.14.1-darwin-x64.tar.gz",
+      "sha256": "0be10a28737527a1e5e3784d3ad844d742fe8b0718acd701fd48f718fd3af78f",
+      "digestVerifiedAgainstOfficialShasums": true,
+      "reusedFrom": "the runtime acquired and digest-verified by the react-mycrypto ingest and already present in this workspace cache; no new runtime download was made by this unit",
+      "translationLayer": "Rosetta 2, present and working on this host",
+      "packageManager": "yarn 1.21.1",
+      "packageManagerProvenance": "installed into a cell-local prefix from registry.npmjs.org during the baseline network window; not a repository artifact",
+      "honestLabel": "repository-declared as to major: Node 12 is exactly what .travis.yml pins. The patch level 12.14.1 (2020-01) is this ingest's choice and is era-consistent with the 2019-12 tag. yarn 1.21.1 (2019-12-11) is the yarn 1 classic release closest to the tag date; the repository declares no yarn version, so the patch level is this ingest's choice."
+    },
+    "packageManagerSelectionNote": {
+      "firstAttempt": "yarn 1.22.22 was provisioned first and refused to run, because yarn 1.22.11 and later walk up the directory tree, found the host Versionless monorepo's root package.json, read its `packageManager: pnpm@10.33.2` field and demanded Corepack.",
+      "diagnosis": "That is an artifact of the baseline tree being staged inside a git-ignored cache directory beneath the host monorepo. It is a property of where this unit put the working tree, not a property of the fixture.",
+      "resolution": "Re-provisioned at yarn 1.21.1, which predates that Corepack check and is also closer to the tag date. Both the defect and the fix are recorded rather than silently swallowed.",
+      "notADeviation": "The lockfile was consumed frozen and unmodified by the yarn that succeeded, so no fixture content changed as a result of this substitution."
+    }
+  },
+  "install": {
+    "command": "yarn install --frozen-lockfile --ignore-scripts --non-interactive",
+    "frozenLockfileAvailable": true,
+    "frozenLockfileAvailableReason": "A yarn.lock is committed at the pinned revision, so the reproducible install path genuinely exists for this fixture — unlike the unpinned lanes elsewhere in this corpus.",
+    "lifecycleScripts": "disabled",
+    "lifecycleScriptsNote": "node-sass ^4.12.0 is declared and its postinstall would fetch or compile a native binding. Scripts were disabled for the baseline; the production build below nevertheless compiled every .scss input and emitted styles.css, so nothing in the build path required that binding.",
+    "outcome": "succeeded",
+    "exitStatus": 0,
+    "durationSec": 25,
+    "topLevelEntriesInstalled": 1061,
+    "lockfileMutated": false,
+    "networkHosts": ["registry.yarnpkg.com", "codeload.github.com"],
+    "gitProtocolDependencyInstalled": {
+      "package": "jira2md",
+      "observedInstalledVersion": "2.0.3",
+      "resolvedCommitSha": "d6e0211c6e6c4c1f09283faec3d0efdaed3a4caa",
+      "note": "The PM-approved git-protocol dependency resolved and installed under --frozen-lockfile, which is the strongest available evidence that the 2019 lock entry is still satisfiable today."
+    },
+    "warningsObserved": {
+      "count": 3,
+      "peerDependency": "2 peer-dependency warnings: ng-pick-datetime@7.0.0 wants @angular/cdk@^7.0.0 against the installed cdk 8, and sass-loader@7.3.1 declares an unmet webpack ^3||^4 peer.",
+      "other": "1 further warning. No warning blocked the install."
+    }
+  },
+  "build": {
+    "command": "node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng build --aot --prod",
+    "commandProvenance": "the repository's own `buildFrontend` script, with its `yarn preCheck` (lint + unit tests) prefix omitted so that this records a build attempt rather than a test run",
+    "scope": "the web application only. The Electron sidecar (`electron:build`, electron-builder, the `dist:*` scripts) was never invoked, per the packet's build scope.",
+    "sourceModified": false,
+    "environment": { "NG_CLI_ANALYTICS": "false", "CI": "true" },
+    "outcome": "succeeded",
+    "exitStatus": 0,
+    "durationSec": 96,
+    "compilerReportedTimeMs": 93258,
+    "buildHash": "587c18dc999abaa50d2d",
+    "distFiles": 27,
+    "emittedChunks": [
+      { "chunk": "runtime", "file": "runtime.270bd8f33f8d16d6a229.js", "size": "1.51 kB" },
+      { "chunk": "main", "file": "main.b4a04af64257fc10cc01.js", "size": "3.64 MB" },
+      { "chunk": "polyfills", "file": "polyfills.ba9ede11574490fb99be.js", "size": "121 kB" },
+      { "chunk": "polyfills-es5", "file": "polyfills-es5.2abe3ed7e5365deecf2a.js", "size": "201 kB" },
+      { "chunk": "styles", "file": "styles.e5ff9928010769ea1cd2.css", "size": "167 kB" }
+    ],
+    "productionConfigurationApplied": {
+      "aot": true,
+      "buildOptimizer": true,
+      "optimization": true,
+      "outputHashing": "all",
+      "extractCss": true,
+      "extractLicenses": true,
+      "serviceWorker": true,
+      "fileReplacement": "src/environments/environment.ts -> environment.prod.ts",
+      "note": "`extractCss: true` is a valid key for the Angular 8 browser builder. The Angular 13 hazard recorded on the jira-clone lane does not apply here."
+    },
+    "compilerMode": {
+      "observed": "pre-Ivy ViewEngine, AOT",
+      "evidence": "Angular 8.2.x defaults to ViewEngine, and `enableIvy` appears nowhere in the tree — grepped across all 967 blobs, zero hits. Nothing opted this build into Ivy.",
+      "eraGapFilled": "This is the pre-Ivy ViewEngine cell the Angular cohort was missing."
+    },
+    "differentialLoading": {
+      "observed": "partial",
+      "whatWasEmitted": "a separate polyfills-es5 chunk alongside the modern polyfills chunk, but a single main bundle rather than a main/main-es5 pair",
+      "why": "tsconfig.json sets `target: es5`. Angular 8 emits the full two-bundle differential build only when the tsconfig target is es2015 and browserslist still asks for legacy browsers. With an es5 target the CLI produces one es5 application bundle and splits only the polyfills.",
+      "correctionToScoutNote": "The scout recorded 'differential loading' unqualified. What the build actually produced is the partial shape described above. The differential-loading machinery is present and active in the CLI 8 pipeline; this repository's tsconfig does not ask it for two application bundles.",
+      "unknownPreserved": "Whether flipping the target to es2015 would produce a clean two-bundle build here was not tested and is not claimed."
+    },
+    "serviceWorker": {
+      "emitted": true,
+      "artifacts": ["ngsw-worker.js", "ngsw.json", "safety-worker.js"],
+      "configSource": "ngsw-config.json",
+      "externalAssetGroup": "prefetches https://fonts.googleapis.com/** and https://fonts.gstatic.com/** at runtime",
+      "nonMaskingPrecedent": "Recorded, not disabled. Later units that need a service-worker-free variant must produce it as a labeled deviation rather than treating its absence as the baseline."
+    },
+    "webWorkers": {
+      "emitted": true,
+      "artifacts": ["lz.46c6d785ad9411bfb3da.worker.js", "reminder.3ac70ee532363281f1c3.worker.js", "worker-basic.min.js"],
+      "configSource": "tsconfig.worker.json via the builder's webWorkerTsConfig option",
+      "note": "The web-worker path the scout flagged is real and exercised: two application workers compiled and emitted in the production build."
+    },
+    "warningsObserved": "Browserslist reported caniuse-lite as outdated, twice. Cosmetic; it did not affect the emitted output."
+  },
+  "conclusion": {
+    "installs": "yes, frozen against the committed 2019 lockfile, in the Node 12.14.1 / yarn 1.21.1 cell",
+    "builds": "yes, as acquired, with no source modification and no deviation",
+    "why": "the repository ships a complete lockfile, so the closure its own toolchain was written against is still reconstructible byte-for-byte",
+    "significance": "This is the first Angular cohort fixture in this corpus to install frozen and build production green on the first attempt, with zero deviations. It gives the pre-Ivy cell a known-good starting point rather than a known-broken one.",
+    "unknownPreserved": "A green production build establishes that the bundle compiles and emits. It establishes nothing about whether the application boots, renders, or behaves correctly in a browser. No browser was opened by this unit."
+  },
+  "artifacts": {
+    "workingTree": ".versionless/cache/angular-super-productivity-v2-13-15-baseline/app (git-ignored)",
+    "installLog": ".versionless/cache/angular-super-productivity-v2-13-15-baseline/install.{stdout,stderr}.log (git-ignored)",
+    "buildLog": ".versionless/cache/angular-super-productivity-v2-13-15-baseline/build.{stdout,stderr}.log (git-ignored)",
+    "buildOutputProduced": true,
+    "buildOutputPath": ".versionless/cache/angular-super-productivity-v2-13-15-baseline/app/dist (git-ignored)",
+    "note": "Logs are retained in the git-ignored cache rather than copied into evidence, because they carry host-absolute paths. The quoted figures above were transcribed with those paths removed."
+  },
+  "nonclaims": [
+    "A successful install establishes no dependency licence position.",
+    "A successful production build establishes no browser behavior, no runtime correctness, and no absence of runtime errors.",
+    "Nothing here establishes migration feasibility, pilot status, production readiness, certification, or legal approval."
+  ]
+}

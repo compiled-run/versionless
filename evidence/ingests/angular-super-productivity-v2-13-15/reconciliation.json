@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "versionless.archive-tree-reconciliation.v1",
+  "slug": "angular-super-productivity-v2-13-15",
+  "commitSha": "2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+  "rootTreeSha": "c609e059de5c000e5a95799d33427b4c1df04d1e",
+  "method": "Every regular file in the extracted archive was read, hashed as a git blob object (sha1 over \"blob <len>\\0\" + content) and compared against the sha the recursive git tree records for the same path. The comparison runs in both directions, so a file present in one and absent from the other is caught as well as a byte difference.",
+  "archiveEntryNameSafety": {
+    "checkedBeforeExtraction": true,
+    "pathTraversalEntries": 0,
+    "absolutePathEntries": 0,
+    "singleRoot": true,
+    "archiveRoot": "super-productivity-2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+    "note": "Entry names were listed and screened before anything was written to disk, so a traversal or absolute-path entry would have aborted the ingest rather than escaping the extraction directory."
+  },
+  "counts": {
+    "archiveEntries": 1157,
+    "regularFiles": 967,
+    "directories": 189,
+    "specialEntries": 0,
+    "symlinks": 0,
+    "gitTreeBlobs": 967,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0
+  },
+  "result": "exact",
+  "resultStatement": "All 967 blobs reconcile byte-for-byte. The archive contains no file the tree does not record, the tree records no file the archive lacks, and no file differs in content.",
+  "normalizedManifestSha256": "7e577db53695de1583ffdc32a5eb9f50d994a55b305a93d76c161fa994402f0a",
+  "normalizedManifestDefinition": "sha256 over the newline-joined, path-sorted list of \"<git blob sha>  <path>\" lines covering every regular file. Independent of extraction order, timestamps and file modes.",
+  "doubleFetch": {
+    "streams": 2,
+    "byteIdentical": true,
+    "sha256": "dead2f5334350459f930f5d5235322e5af38e577c79557d3370e497bf15f24eb",
+    "bytes": 4072238,
+    "note": "The archive was fetched twice in independent requests and the two responses compared byte-for-byte, not merely by digest."
+  },
+  "verifiedSourceRoot": ".versionless/cache/angular-super-productivity-v2-13-15-source/verify/extracted/super-productivity-2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+  "nonclaims": [
+    "Reconciliation establishes that the archive faithfully represents the git tree at the pinned commit. It establishes nothing about the contents being safe, buildable, or fit for any purpose."
+  ]
+}

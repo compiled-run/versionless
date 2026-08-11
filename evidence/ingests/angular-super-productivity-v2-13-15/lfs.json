@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "versionless.git-lfs-check.v1",
+  "slug": "angular-super-productivity-v2-13-15",
+  "commitSha": "2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+  "required": false,
+  "checked": true,
+  "gitattributesPresent": false,
+  "pointerFiles": 0,
+  "blobsScanned": 967,
+  "method": "Every regular file in the extracted archive was opened and its leading bytes tested for the Git LFS pointer preamble (\"version https://git-lfs.github.com/spec/\"), with a size precondition, rather than trusting the absence of a .gitattributes file.",
+  "scoutClaim": "no LFS claimed",
+  "verdict": "confirmed by independent byte-scan",
+  "why": "The factoriolab lane established that a missing .gitattributes is not sufficient evidence of a self-contained tree. The scan is run regardless of what the scout claims.",
+  "consequence": "The tree is self-contained: no LFS routing, no pointer stubs, nothing to materialise before a build. The 96-second production build that succeeded had every asset it needed on disk.",
+  "nonclaims": [
+    "This checks for Git LFS pointers only. It is not a general assertion that every asset in the tree is complete or valid."
+  ]
+}
