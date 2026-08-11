@@ -1,0 +1,221 @@
+{
+  "schemaVersion": "versionless.holdout-react-cypress-rwa.v1",
+  "role": "holdout",
+  "holdoutOutcome": "failed",
+  "reason": "non-UTF-8 module source decoding",
+  "unit": "lrapr-t008/hx2-migration-under-freeze",
+  "fixture": "react-cypress-rwa",
+  "application": "cypress-realworld-app",
+  "framework": "react",
+  "source": {
+    "repository": "https://github.com/cypress-io/cypress-realworld-app",
+    "ref": "refs/tags/v1.0.18",
+    "revision": "f6b5cf3a1799998dab71181eeed59460f8ada5f4",
+    "archiveSha256": "bd9319272dabc1e7263a0186e0aaae011f6219e6e106363d2c89426f9357b315",
+    "frontendRoot": ".",
+    "license": "MIT",
+    "react": "17.0.2",
+    "reactScripts": "4.0.3",
+    "webpack": "4.44.2",
+    "typescript": "4.3.4"
+  },
+  "runEvidence": [
+    {
+      "path": "evidence/runs/react-cypress-rwa/build-profile.json",
+      "sha256": "596fbefd141573988e69c0e063b563a0b9382ae780997e10e4c97ad1099a8010"
+    },
+    {
+      "path": "evidence/runs/react-cypress-rwa/t008-run.md",
+      "sha256": "715581add025e6bb41a55a845bfd7d82b9503ce6b9befa6517b5d620375b5345"
+    }
+  ],
+  "frozenAdapter": {
+    "composition": "createCraViteAdapter, applied as it stands",
+    "compositeFingerprint": "d9f75ef677cb850f664cc188abf77b8ebfd24e84cb58d147b74e9bbaa143eb77",
+    "subtrees": [
+      "packages/frameworks/react",
+      "packages/frameworks/angular",
+      "packages/core/src/migrations",
+      "packages/core/src/bundlers",
+      "packages/core/src/analysis"
+    ],
+    "recomputedByThisUnit": true,
+    "bytesChanged": 0,
+    "changesProposedAndExecuted": 0,
+    "redBuildPatchedAround": false,
+    "genericCapabilitiesOnly": true,
+    "holdoutSpecificConfiguration": "none"
+  },
+  "lanes": {
+    "sharedClosure": {
+      "bothLanesMaterializedFromTheSameExtractedTree": true,
+      "bothLanesInstalledFromTheSameFrozenLockfile": true,
+      "lockfileSha256": "34f0c1b71d3ed8747121f07fb0dd74a8b1269f82967109f951702d362214e822",
+      "manifestSha256": "8ee4252ce4ec8f666f0de3a3bb4b9e1dcecdd1e18f4c91f13221cf0965e96a8b",
+      "statement": "Both lanes installed the same committed yarn.lock under --frozen-lockfile, so the only difference between them is the bundler, not the dependency closure."
+    },
+    "baseline": {
+      "outcome": "green",
+      "command": "yarn build:ci",
+      "node": "14.16.1",
+      "declaredBy": [
+        ".nvmrc",
+        ".node-version"
+      ],
+      "platform": "darwin-x64 executed on darwin-arm64 through Rosetta 2",
+      "builds": 2,
+      "byteStableAcrossRebuilds": true,
+      "laneDigest": "57cea24966c61963914da814e8348c970f11468127228c070def6c6472980028",
+      "secondLaneDigest": "57cea24966c61963914da814e8348c970f11468127228c070def6c6472980028",
+      "fileCount": 84,
+      "digestScheme": "sha256(canonicalize(files))"
+    },
+    "migrated": {
+      "outcome": "red",
+      "command": "vite build --config fixtures/react-cypress-rwa/vite.config.ts",
+      "node": "24.15.0",
+      "vite": "8.0.16",
+      "bundler": "rolldown 1.0.3",
+      "attempts": 2,
+      "stableAcrossAttempts": true,
+      "exitCode": 1,
+      "modulesTransformedBeforeFailure": 10181,
+      "demands": [
+        {
+          "code": "UNLOADABLE_DEPENDENCY",
+          "module": "node_modules/faker/lib/locales/it/name/first_name.js",
+          "importer": "node_modules/faker/lib/locales/it/name/index.js",
+          "line": 5,
+          "column": 27,
+          "detail": "stream did not contain valid UTF-8"
+        }
+      ],
+      "outputProduced": false
+    }
+  },
+  "identityProof": {
+    "statement": "Both attempts exited the same way with the same itemized demand, so the red is a measurement rather than a flake.",
+    "baselineAttempts": 2,
+    "baselineDigestsIdentical": true,
+    "migratedAttempts": 2,
+    "migratedDemandsIdentical": true,
+    "demandDigest": "7f991d33e12aca3acfaf28013ec8eb73a2dcd3d2287b39374546009a6d42517e"
+  },
+  "finding": {
+    "missingCapability": "non-UTF-8 module source decoding",
+    "verdict": "the frozen create-react-app adapter does not carry this application",
+    "statement": "webpack 4 decoded every module’s bytes leniently, so a dependency file stored in ISO-8859-1 reached the bundle with its bytes replaced rather than rejected. Vite 8’s bundler requires every module source to be valid UTF-8 and refuses to load one that is not. The frozen adapter has no capability covering byte-level source decoding, so the build stops.",
+    "exactDemand": {
+      "code": "UNLOADABLE_DEPENDENCY",
+      "module": "node_modules/faker/lib/locales/it/name/first_name.js",
+      "importer": "node_modules/faker/lib/locales/it/name/index.js",
+      "line": 5,
+      "column": 27,
+      "construct": "name.first_name = require(\"./first_name\");",
+      "compilerText": "stream did not contain valid UTF-8"
+    },
+    "offendingFile": {
+      "path": "node_modules/faker/lib/locales/it/name/first_name.js",
+      "package": "faker@5.5.3",
+      "bytes": 21980,
+      "sha256": "02a9f8a91945f0ed006e7b79efcfc7b9548f20e90042c5a0e84acaa6f654eb1d",
+      "encoding": "ISO-8859-1, not UTF-8",
+      "invalidUtf8ByteCount": 6,
+      "invalidBytes": [
+        {
+          "offset": 5170,
+          "byte": "0xf9",
+          "latin1": "ù",
+          "inWord": "Esaù"
+        },
+        {
+          "offset": 6973,
+          "byte": "0xe8",
+          "latin1": "è",
+          "inWord": "Giosuè"
+        },
+        {
+          "offset": 9233,
+          "byte": "0xe8",
+          "latin1": "è",
+          "inWord": "Mosè"
+        },
+        {
+          "offset": 9538,
+          "byte": "0xf2",
+          "latin1": "ò",
+          "inWord": "Nicolò"
+        },
+        {
+          "offset": 9570,
+          "byte": "0xe8",
+          "latin1": "è",
+          "inWord": "Noè"
+        }
+      ],
+      "invalidBytesNote": "Five of the six invalid bytes are listed; all six are accented characters in Italian given names."
+    },
+    "reachedFromApplicationCode": {
+      "importer": "src/utils/transactionUtils.ts",
+      "construct": "import faker from \"faker\";",
+      "note": "This is production application source, not test-only code, so faker 5.5.3 is genuinely in the browser module graph. faker’s locale index eagerly requires every locale file, so the Italian name list is pulled in whether or not the application uses that locale."
+    },
+    "whyThisIsNotAnAdapterBug": "The adapter’s five capabilities are about module semantics: tilde CSS specifiers, webpack’s sloppy-mode CommonJS wrapper, webpack’s Node core shim table, the ambient global identifier, and public directory replication. Source decoding sits below all of them, at the point where the bundler turns bytes into text. Nothing in the frozen composition is positioned to intervene there.",
+    "actionTaken": "none. Recorded as a finding. No adapter change was proposed or executed."
+  },
+  "observedButNotFatal": {
+    "externalizedNodeCoreModules": [
+      {
+        "module": "fs",
+        "importer": "node_modules/dotenv/lib/main.js"
+      }
+    ],
+    "note": "Vite externalized `fs` for the browser where dotenv requires it. The adapter’s shim table deliberately omits the specifiers webpack itself emitted an empty module for, so this is reported rather than resolved. It is a warning, not the failure; the build passed it and continued for 10181 modules before stopping on the demand above."
+  },
+  "applicationInfluence": {
+    "handEditedSourceFiles": [],
+    "applicationFilesChanged": 0,
+    "adapterBytesChanged": 0,
+    "attestation": "The holdout influenced nothing. Zero adapter bytes changed and zero application source files were hand-edited; the red build was recorded, not repaired.",
+    "generatedByTheApplicationsOwnScripts": [
+      {
+        "path": "src/aws-exports.js",
+        "by": "yarn predev:cognito:ci (ncp scripts/mock-aws-exports.js src/aws-exports.js)",
+        "lanes": "both"
+      },
+      {
+        "path": "aws-exports-es5.js",
+        "by": "yarn predev:cognito:ci (ncp scripts/mock-aws-exports-es5.js aws-exports-es5.js)",
+        "lanes": "both"
+      }
+    ],
+    "generatedByTheMigration": [
+      {
+        "path": "index.html",
+        "by": "craEntryDocument, from the immutable public/index.html template",
+        "lanes": "migrated only",
+        "sha256": "96c4b57713901459094aca9a4a26c93479b48766d7b518fba320a3ed4c383c14"
+      }
+    ]
+  },
+  "parity": {
+    "comparable": false,
+    "reason": "Build-level parity needs two built lanes. Only the baseline built, so no output comparison is made. The baseline inventory is recorded in full so a future comparison has a fixed reference.",
+    "declaredDifferences": [
+      "The baseline build is a webpack 4 create-react-app production build; the migrated lane produced no output at all."
+    ]
+  },
+  "nonclaims": [
+    "No claim that this application can be migrated by the frozen adapter. It cannot, at this revision, and that is the recorded result.",
+    "No claim that a single additional capability would make it green: the build stopped at the first unloadable module, so any demand behind that point is unobserved.",
+    "No runtime, boot, or behavioural parity is claimed. The migrated lane never produced a bundle to boot.",
+    "No claim about the four external auth provider modes; the local passport-local mode is the only one exercisable offline and no lane exercised it.",
+    "The baseline lane is a build measurement only. It was not booted in this unit.",
+    "No browser evidence exists for either lane in this unit. No journey ran, no page was loaded, and nothing is claimed about behavior.",
+    "A green holdout would still have proven less than a clean-target migration does: it would have shown the frozen adapter carrying one further application, not generic support. That caveat is carried here unchanged, in the failing direction."
+  ],
+  "integrity": {
+    "algorithm": "sha256",
+    "canonicalDigest": "7ec6f18b27d2967cd533ba89505e8a76590c1866aec8bd7a8d8543cd87743aae"
+  }
+}

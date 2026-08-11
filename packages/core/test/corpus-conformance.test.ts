@@ -35,6 +35,10 @@ import {
 	WITNESS_ANGULAR_JIRA_CLONE_RECEIPT_PATH,
 	witnessAngularJiraCloneAggregateMember,
 } from '../src/receipts/witness-angular-jira-clone.ts';
+import {
+	holdoutReactCypressRwaCorpusRecord,
+	verifyHoldoutReactCypressRwaEvidence,
+} from '../src/receipts/holdout-react-cypress-rwa.ts';
 import { reactHospitalrunAggregateMember } from '../src/corpus/conformance.ts';
 import { receiptDigest, sha256 } from '../src/receipts/canonicalize.ts';
 import { renderReceipt } from '../src/receipts/render.ts';
@@ -1175,6 +1179,84 @@ describe('canonical corpus conformance', () => {
 			try {
 				await rebindPhonecatViteArtifact(directory, name, mutate);
 				await expect(analyzeCorpusConformance({ rootDir: directory })).rejects.toThrow();
+			} finally {
+				await rm(directory, { recursive: true, force: true });
+			}
+		}
+	});
+
+	it('publishes the failed holdout, counted in no numerator and hidden from none', async () => {
+		const result = await analyzeCorpusConformance({ rootDir: root });
+		const verified = await verifyHoldoutReactCypressRwaEvidence(root);
+		const expected = holdoutReactCypressRwaCorpusRecord(verified.receipt);
+		const readiness = (result.coverage as Record<string, unknown>)
+			.productionReadiness as Record<string, unknown>;
+		expect(readiness.holdouts).toEqual([expected]);
+		const aggregate = JSON.parse(
+			await readFile(path.join(root, 'evidence/runs/aggregate.json'), 'utf8'),
+		) as { fixtures: Array<Record<string, unknown>>; holdouts: unknown[] };
+		expect(aggregate.holdouts).toEqual([expected]);
+		// The holdout is evidence about the frozen adapter, not a migrated
+		// application, so it is neither an aggregate fixture row nor a Judge
+		// counting cell.
+		expect(
+			aggregate.fixtures.some((fixture) => fixture.receipt === expected.receipt),
+		).toBe(false);
+		const ledger = readiness.judgeCounting as Array<Record<string, unknown>>;
+		expect(ledger.some((cell) => cell.application === expected.application)).toBe(false);
+		expect(ledger.some((cell) => cell.cell === expected.id)).toBe(false);
+	});
+
+	it('leaves both lineage numerators exactly where the Judge ledger puts them', async () => {
+		const result = await analyzeCorpusConformance({ rootDir: root });
+		const readiness = (result.coverage as Record<string, unknown>)
+			.productionReadiness as Record<string, unknown>;
+		expect(readiness.reactLineage).toEqual({
+			ready: 3,
+			total: 4,
+			counted: true,
+			candidate: 'judge-approved',
+		});
+		expect(readiness.angularLineage).toEqual({
+			ready: 2,
+			total: 4,
+			counted: true,
+			candidate: 'judge-approved',
+		});
+		const ledger = readiness.judgeCounting as Array<Record<string, unknown>>;
+		expect(ledger.filter((cell) => cell.lineage === 'react' && cell.counted)).toHaveLength(3);
+		expect(ledger.filter((cell) => cell.lineage === 'angular' && cell.counted)).toHaveLength(2);
+	});
+
+	it('refuses an aggregate whose holdout record has been dropped or rewritten', async () => {
+		for (const [label, transform] of [
+			[
+				'dropped',
+				(value: Record<string, unknown>) => {
+					value.holdouts = [];
+				},
+			],
+			[
+				'counted',
+				(value: Record<string, unknown>) => {
+					const holdout = (value.holdouts as Array<Record<string, unknown>>)[0];
+					if (holdout) holdout.countedInLineageNumerator = true;
+				},
+			],
+			[
+				'passed',
+				(value: Record<string, unknown>) => {
+					const holdout = (value.holdouts as Array<Record<string, unknown>>)[0];
+					if (holdout) holdout.outcome = 'passed';
+				},
+			],
+		] as const) {
+			const directory = await corpusCopy(`holdout-${label}`);
+			try {
+				await mutateJson(directory, 'evidence/runs/aggregate.json', transform);
+				await expect(analyzeCorpusConformance({ rootDir: directory })).rejects.toThrow(
+					/holdout/,
+				);
 			} finally {
 				await rm(directory, { recursive: true, force: true });
 			}

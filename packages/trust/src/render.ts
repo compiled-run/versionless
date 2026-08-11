@@ -25,6 +25,30 @@ interface RenderInputs {
  * The Markdown must never restate a numerator; it renders whatever the corpus
  * derived, so a prose score cannot drift away from the counted evidence.
  */
+/**
+ * Renders the holdout ledger the corpus derived.
+ *
+ * A holdout is an application the frozen adapters were applied to in order to
+ * falsify them, and this one failed. The report states the failure, its
+ * recorded reason, and the fingerprint it ran against, and states in the same
+ * breath that it is counted in no numerator — so a reader cannot mistake the
+ * unchanged lineage scores for an absence of contrary evidence.
+ */
+function holdoutLines(conformance: CorpusConformance): string {
+	const readiness = (conformance.coverage as Record<string, unknown>).productionReadiness as
+		| Record<string, unknown>
+		| undefined;
+	const holdouts = readiness?.holdouts;
+	if (!Array.isArray(holdouts) || holdouts.length === 0)
+		throw new Error('Corpus conformance omits the holdout ledger');
+	return holdouts
+		.map((value) => {
+			const holdout = value as Record<string, unknown>;
+			return `- Holdout \`${String(holdout.id)}\` (${String(holdout.application)}, ${String(holdout.lineage)} lineage): **attempted; outcome ${String(holdout.outcome)}**. Baseline lane ${String(holdout.baselineLane)}, migrated lane ${String(holdout.migratedLane)} identically across ${String(holdout.attempts)} attempts against frozen adapter composite \`${String(holdout.frozenAdapterFingerprint)}\` with ${String(holdout.adapterBytesChanged)} adapter bytes changed. Recorded missing capability for the follow-on tranche: **${String(holdout.reason)}**. It is **counted in no lineage numerator** and published rather than dropped: [${String(holdout.receipt)}](../../../${String(holdout.receipt)}) \`${String(holdout.digest)}\`.`;
+		})
+		.join('\n');
+}
+
 function lineageScore(conformance: CorpusConformance, lineage: string): string {
 	const readiness = (conformance.coverage as Record<string, unknown>).productionReadiness as
 		| Record<string, unknown>
@@ -36,6 +60,7 @@ function lineageScore(conformance: CorpusConformance, lineage: string): string {
 
 export function renderTrustReport(inputs: RenderInputs): string {
 	const freshness = inputs.manifest.observation.vulnerabilityFreshness;
+	const holdouts = holdoutLines(inputs.conformance);
 	const reactLineage = lineageScore(inputs.conformance, 'reactLineage');
 	const angularLineage = lineageScore(inputs.conformance, 'angularLineage');
 	const freeze = inputs.freeze.freeze as { commit: string; composite: string };
@@ -130,6 +155,7 @@ ${reactHospitalrunWitnessVerified ? `- HospitalRun v2.0.0-alpha.7 create-react-a
 ${angularFactoriolabWitnessVerified ? `- factoriolab Angular CLI 10.1→Angular 16.2 browser-builder direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, it really rewrote application source across six majors, and the Judge **counts** it, so Angular-lineage readiness is **${angularLineage}**.` : '- factoriolab Angular CLI direct-Witness browser proof: **not-tested**.'}
 ${angularJiraCloneWitnessVerified ? `- jira-clone Angular CLI 13.2 custom-webpack→Angular 16.2 browser-builder direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, the second counted Angular application, and the Judge **counts** it, so Angular-lineage readiness is **${angularLineage}**.` : '- jira-clone Angular CLI custom-webpack direct-Witness browser proof: **not-tested**.'}
 ${nextKilledByGoogleWitnessVerified ? '- Older-Next direct-Witness candidate: **verified, not counted (0/4) pending final Judge audit**.' : '- Older-Next production readiness: **0/4; not-tested**.'}
+${holdouts}
 - [Data-flow and control mappings](controls.json) — review inputs, not audit conclusions.
 - [Retention and purge status](retention.json) — unresolved policy remains unknown/not-tested.
 

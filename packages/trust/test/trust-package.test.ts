@@ -952,6 +952,7 @@ snapshots:
 			) as {
 				summary: Record<string, unknown>;
 				frameworkLanes: Array<Record<string, unknown>>;
+				coverage: Record<string, unknown>;
 				integrity: { canonicalDigest: string };
 			};
 			expect(conformance.summary).toEqual({
@@ -1019,6 +1020,24 @@ snapshots:
 				'The Vite adapter is **fixture-specific**; generic adapter: **not-tested**; unplugin portability: **not-tested**',
 			);
 			expect(report).toContain('T220 is **not included**');
+			// The one failed holdout in the corpus is stated in the report with its
+			// recorded reason, and stated to be counted in no numerator, so the
+			// unchanged lineage scores cannot be read as an absence of contrary
+			// evidence.
+			const holdouts = (
+				conformance.coverage.productionReadiness as Record<string, unknown>
+			).holdouts as Array<Record<string, unknown>>;
+			expect(holdouts).toHaveLength(1);
+			expect(holdouts[0]).toMatchObject({
+				id: 'holdout-react-cypress-rwa',
+				attempted: true,
+				outcome: 'failed',
+				reason: 'non-UTF-8 module source decoding',
+				countedInLineageNumerator: false,
+			});
+			expect(report).toContain('holdout-react-cypress-rwa');
+			expect(report).toContain('non-UTF-8 module source decoding');
+			expect(report).toContain('counted in no lineage numerator');
 			const scriptSurface = JSON.parse(
 				await readFile(path.join(fixture.current, 'script-surface.json'), 'utf8'),
 			) as { summary: Record<string, unknown>; boundaries: Record<string, unknown> };

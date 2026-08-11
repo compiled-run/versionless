@@ -2,7 +2,7 @@
   "schemaVersion": "versionless.trust.v1",
   "derivedFrom": {
     "path": "corpus-conformance.json",
-    "sha256": "33358963b9619ea15599f1913c33082c220d5b584887227d47963d775a1c3fe8"
+    "sha256": "f505bc1a352def646cf552c1f29378f39b2f32b74db35803d5d9bceca2ff4eaa"
   },
   "cells": [
     {

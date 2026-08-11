@@ -1,8 +1,8 @@
 # Versionless project trust package
 
-- Canonical SHA-256: `197e4c4156175aec99d977642835e1396034aa6326afafb22265f80085bf52a9`
-- Deterministic core: `8d455f28ceee15c9384ed8c3396ab2ee13dc04e194b52a2862d75a7146918485`
-- Generated observation: `2026-08-11T12:23:54.127Z`
+- Canonical SHA-256: `507e795a6b56c85486509297a15988dee8db0a507bea6d4d20f84e0f74e61eb8`
+- Deterministic core: `f748b2523680a650a1da0b397a6a080629f3f7de33c7e09db60a2d454811d176`
+- Generated observation: `2026-08-11T13:30:06.778Z`
 - Vulnerability input freshness: **verified** (seven-day maximum age)
 - Integrity: **hash-only; authenticity is not established**
 - Assurance: **this package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation**
@@ -15,7 +15,7 @@
 - [SLSA/in-toto-shaped provenance](provenance.json) — shape only; no SLSA level or signer authenticity is claimed.
 - [Supported corpus/runtime/bundler matrix](matrix.json) — unsupported and untested cells remain visible.
 - [Adapter freeze record](adapter-freeze.json) — the migration engine adapter surface is frozen at commit `57b308a573dd582c844ce401fb1161cd70e9bc66` with composite SHA-256 `d9f75ef677cb850f664cc188abf77b8ebfd24e84cb58d147b74e9bbaa143eb77`; the receipts, corpus, and witness registries are deliberately **outside** the freeze so holdout evidence can still be published additively.
-- [Corpus conformance](corpus-conformance.json) — `33358963b9619ea15599f1913c33082c220d5b584887227d47963d775a1c3fe8`; 15 verified verticals grouped into exactly 8 source applications; zero designated pilots are verified.
+- [Corpus conformance](corpus-conformance.json) — `f505bc1a352def646cf552c1f29378f39b2f32b74db35803d5d9bceca2ff4eaa`; 15 verified verticals grouped into exactly 8 source applications; zero designated pilots are verified.
 - The immutable Killed by Google Next.js 12 Pages/webpack production vertical is verified only for its exact fixture; synthetic Next.js 12 Pages, 13 transition/App, and 14 App classification lanes remain **not-tested**, and generic Next.js support is not claimed.
 - [Static script/resource surface](script-surface.json) — truthfully remains scoped to the prior nine verticals, two applications, and eighteen exact static deployment entrypoints; T220 is **not included** because its script surface was not separately observed; dynamic script insertion: **not-tested**; payment-page applicability: **not established**; PCI compliance is **not claimed**.
 - [Qualified-journey runtime script observation](runtime-script-observation.json) — truthfully remains scoped to 36 runs across the prior nine verticals, two applications, and eighteen lanes; T220 is **not included** because its runtime scripts were not separately observed; this is **not global dynamic-insertion coverage**.
@@ -28,6 +28,7 @@
 - factoriolab Angular CLI 10.1→Angular 16.2 browser-builder direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, it really rewrote application source across six majors, and the Judge **counts** it, so Angular-lineage readiness is **2/4**.
 - jira-clone Angular CLI 13.2 custom-webpack→Angular 16.2 browser-builder direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, the second counted Angular application, and the Judge **counts** it, so Angular-lineage readiness is **2/4**.
 - Older-Next direct-Witness candidate: **verified, not counted (0/4) pending final Judge audit**.
+- Holdout `holdout-react-cypress-rwa` (cypress-realworld-app, react lineage): **attempted; outcome failed**. Baseline lane green, migrated lane red identically across 2 attempts against frozen adapter composite `d9f75ef677cb850f664cc188abf77b8ebfd24e84cb58d147b74e9bbaa143eb77` with 0 adapter bytes changed. Recorded missing capability for the follow-on tranche: **non-UTF-8 module source decoding**. It is **counted in no lineage numerator** and published rather than dropped: [evidence/runs/holdout-react-cypress-rwa/receipt.json](../../../evidence/runs/holdout-react-cypress-rwa/receipt.json) `7ec6f18b27d2967cd533ba89505e8a76590c1866aec8bd7a8d8543cd87743aae`.
 - [Data-flow and control mappings](controls.json) — review inputs, not audit conclusions.
 - [Retention and purge status](retention.json) — unresolved policy remains unknown/not-tested.
 

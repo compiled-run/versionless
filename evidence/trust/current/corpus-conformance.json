@@ -1318,6 +1318,29 @@
           "reason": "Judge-accepted: Angular CLI 13.2 custom-webpack to 16.2 browser-builder, absorbing a non-default builder and rewriting application source, proven in the browser on a second independent Angular application."
         }
       ],
+      "holdouts": [
+        {
+          "id": "holdout-react-cypress-rwa",
+          "application": "cypress-realworld-app",
+          "framework": "react",
+          "lineage": "react",
+          "role": "holdout",
+          "attempted": true,
+          "outcome": "failed",
+          "reason": "non-UTF-8 module source decoding",
+          "verdict": "the frozen create-react-app adapter does not carry this application",
+          "frozenAdapterFingerprint": "d9f75ef677cb850f664cc188abf77b8ebfd24e84cb58d147b74e9bbaa143eb77",
+          "adapterBytesChanged": 0,
+          "baselineLane": "green",
+          "migratedLane": "red",
+          "attempts": 2,
+          "receipt": "evidence/runs/holdout-react-cypress-rwa/receipt.json",
+          "digest": "7ec6f18b27d2967cd533ba89505e8a76590c1866aec8bd7a8d8543cd87743aae",
+          "countedInLineageNumerator": false,
+          "countingNote": "Never counted in any lineage numerator: no application was migrated. The record is published rather than dropped so a failed falsification attempt cannot be hidden.",
+          "browserProof": "not-tested"
+        }
+      ],
       "olderNext": {
         "ready": 0,
         "total": 4,
@@ -1333,6 +1356,6 @@
   },
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "33358963b9619ea15599f1913c33082c220d5b584887227d47963d775a1c3fe8"
+    "canonicalDigest": "f505bc1a352def646cf552c1f29378f39b2f32b74db35803d5d9bceca2ff4eaa"
   }
 }

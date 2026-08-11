@@ -84,6 +84,11 @@ import {
 	WITNESS_ANGULAR_JIRA_CLONE_RECEIPT_PATH,
 	witnessAngularJiraCloneAggregateMember,
 } from '../receipts/witness-angular-jira-clone.ts';
+import {
+	HOLDOUT_REACT_CYPRESS_RWA_APPLICATION,
+	holdoutReactCypressRwaCorpusRecord,
+	verifyHoldoutReactCypressRwaEvidence,
+} from '../receipts/holdout-react-cypress-rwa.ts';
 
 export const CORPUS_CONFORMANCE_SCHEMA = 'versionless.corpus-conformance.v1' as const;
 const REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH =
@@ -245,6 +250,53 @@ function lineageCountingLedger(present: {
  */
 function countedLineageCells(ledger: LineageCountingCell[], lineage: 'react' | 'angular'): number {
 	return ledger.filter((cell) => cell.lineage === lineage && cell.counted).length;
+}
+
+/**
+ * Derives the corpus holdout ledger from verified holdout evidence.
+ *
+ * A holdout is an application the adapters were applied to *after* they were
+ * frozen, to try to falsify them. It is not a vertical, not a source
+ * application, and not a lineage counting cell, so it never reaches a
+ * numerator. What it must not do is disappear: the cypress-realworld-app
+ * attempt failed, and a corpus that publishes only its successes is not
+ * evidence. The record is therefore derived from the published receipt, cross-
+ * checked against the aggregate's own `holdouts` membership, and emitted with
+ * its outcome, its recorded reason, and the frozen fingerprint it ran against.
+ */
+async function holdoutLedger(
+	root: string,
+	aggregate: Record<string, unknown>,
+): Promise<Array<Record<string, unknown>>> {
+	const verified = await verifyHoldoutReactCypressRwaEvidence(root);
+	const derived = holdoutReactCypressRwaCorpusRecord(verified.receipt);
+	const published = aggregate.holdouts;
+	if (!Array.isArray(published) || published.length !== 1)
+		throw new Error('Aggregate holdout membership must carry exactly one record');
+	if (canonicalize(record(published[0], 'aggregate holdout record')) !== canonicalize(derived))
+		throw new Error('Aggregate holdout record differs from its verified receipt');
+	if (derived.countedInLineageNumerator !== false || derived.outcome !== 'failed')
+		throw new Error('Corpus holdout record misstates its counting or outcome');
+	return [derived as unknown as Record<string, unknown>];
+}
+
+/**
+ * Refuses a holdout that has leaked into the Judge's counting ledger.
+ *
+ * The ledger is the only thing a numerator is counted off, so keeping the
+ * holdout out of it is what actually keeps it out of the score. This checks the
+ * mechanism rather than trusting the construction above it.
+ */
+function assertHoldoutsAreUncounted(
+	ledger: LineageCountingCell[],
+	holdouts: Array<Record<string, unknown>>,
+): void {
+	const applications = new Set<unknown>(holdouts.map((holdout) => holdout.application));
+	const cells = new Set<unknown>(holdouts.map((holdout) => holdout.id));
+	if (!applications.has(HOLDOUT_REACT_CYPRESS_RWA_APPLICATION))
+		throw new Error('Corpus holdout ledger omits the cypress-realworld-app holdout');
+	if (ledger.some((cell) => applications.has(cell.application) || cells.has(cell.cell)))
+		throw new Error('A holdout reached the Judge counting ledger');
 }
 
 const sha256Pattern = createRegExp(
@@ -2588,6 +2640,8 @@ export async function analyzeCorpusConformance(
 	});
 	const reactLineageReady = countedLineageCells(judgeCounting, 'react');
 	const angularLineageReady = countedLineageCells(judgeCounting, 'angular');
+	const holdouts = await holdoutLedger(root, aggregate);
+	assertHoldoutsAreUncounted(judgeCounting, holdouts);
 
 	const result: CorpusConformance = {
 		schemaVersion: CORPUS_CONFORMANCE_SCHEMA,
@@ -2623,6 +2677,11 @@ export async function analyzeCorpusConformance(
 					candidate: angularLineageReady > 0 ? 'judge-approved' : 'not-tested',
 				},
 				judgeCounting,
+				/**
+				 * Holdouts attempted against the frozen adapters, counted in no
+				 * numerator and hidden from none of them.
+				 */
+				holdouts,
 				olderNext: {
 					ready: 0,
 					total: 4,

@@ -234,6 +234,48 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 	};
 	const reactLineageScore = lineageScore('reactLineage');
 	const angularLineageScore = lineageScore('angularLineage');
+	/**
+	 * Refuse a published package whose holdout ledger is missing, empty, or
+	 * quietly counted.
+	 *
+	 * A failed holdout is the only contrary evidence this corpus carries about
+	 * the frozen adapters, so its disappearance would be the most flattering
+	 * possible edit. Every record must declare an outcome, a reason, the
+	 * fingerprint it ran against, and that it reaches no numerator — and none of
+	 * them may appear as a Judge counting cell.
+	 */
+	const holdouts = productionReadiness.holdouts;
+	if (!Array.isArray(holdouts) || holdouts.length === 0)
+		throw new Error('Corpus production readiness omits the holdout ledger');
+	const countedCells = new Set(
+		judgeCounting.map((entry) => asString(asRecord(entry, 'Judge counting cell').cell, 'cell')),
+	);
+	const countedApplications = new Set(
+		judgeCounting.map((entry) =>
+			asString(asRecord(entry, 'Judge counting cell').application, 'application'),
+		),
+	);
+	const holdoutMarkers: string[] = [];
+	for (const value of holdouts) {
+		const holdout = asRecord(value, 'holdout record');
+		const id = asString(holdout.id, 'holdout id');
+		const application = asString(holdout.application, 'holdout application');
+		if (
+			holdout.attempted !== true ||
+			holdout.countedInLineageNumerator !== false ||
+			countedCells.has(id) ||
+			countedApplications.has(application)
+		)
+			throw new Error(`Holdout is counted or understated: ${id}`);
+		holdoutMarkers.push(
+			id,
+			asString(holdout.outcome, 'holdout outcome'),
+			asString(holdout.reason, 'holdout reason'),
+			asString(holdout.frozenAdapterFingerprint, 'holdout adapter fingerprint'),
+			asString(holdout.receipt, 'holdout receipt path'),
+			asString(holdout.digest, 'holdout receipt digest'),
+		);
+	}
 	if (
 		emittedConformance.summary.verticals !== transaction.verticals ||
 		emittedConformance.summary.sourceApplications !== transaction.sourceApplications ||
@@ -990,6 +1032,11 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 		!report.includes('not certification')
 	)
 		throw new Error('Derived Markdown omits mandatory non-claims');
+	if (
+		holdoutMarkers.some((marker) => !report.includes(marker)) ||
+		!report.includes('counted in no lineage numerator')
+	)
+		throw new Error('Derived Markdown omits the holdout result');
 	if (
 		!report.includes(`${transaction.verticals} verified verticals`) ||
 		!report.includes(`exactly ${transaction.sourceApplications} source applications`) ||

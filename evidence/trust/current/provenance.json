@@ -4,25 +4,25 @@
     {
       "name": "packages/cli/dist/cli.js",
       "digest": {
-        "sha256": "9b90d76be66ca17802046b8c603c6679d167f995ae7b47ca035a94bc93fa02da"
+        "sha256": "4d61f8f6f55904b516c221163a1cd670b2265bc9da3fa4db94c27fc4375a0a54"
       }
     },
     {
       "name": "packages/cli/dist/index.js",
       "digest": {
-        "sha256": "6d4f97283735506e2a84dcc416a748a8be3b19c93a1a53f52740ccf51a97e2a5"
+        "sha256": "f46d9df806f29515c60600015c00d0019c949d39d9e54fcd14c8dd09af659264"
       }
     },
     {
-      "name": "packages/cli/dist/verify-D7sIVkt7.js",
+      "name": "packages/cli/dist/verify-6eJCyi-P.js",
       "digest": {
-        "sha256": "9175d02a199c68d42016c05043b8ef506cf1dd7cad75c06b3ec3218f2ac6359e"
+        "sha256": "5a2b712d35c1996f1e733853fdc229d620147066c630dc5453a52fbf29cb7c34"
       }
     },
     {
       "name": "packages/core/dist/index.js",
       "digest": {
-        "sha256": "ea4fb9c1fc1468983d37413af5fbb7a50854fb285406b1a6cdfcea173ab20668"
+        "sha256": "9d850b7177ce14379dd5927c893c575313ef7c26787cc24583089eba361f1041"
       }
     },
     {
@@ -64,7 +64,7 @@
     {
       "name": "packages/trust/dist/index.js",
       "digest": {
-        "sha256": "8d1e0bf0192b285ad2987f001f44c8e589698ee4780ff2847aadc356de51fb3c"
+        "sha256": "058bfd25a4bb0cff8ddd6bfac75680e9278c86aed2a9e54e23d810f3a3e0801d"
       }
     }
   ],
@@ -108,7 +108,7 @@
         {
           "uri": "evidence/runs/aggregate.json",
           "digest": {
-            "sha256": "02e205d3fea4bee09f3db967d50f22415c9e7447d343edf6fd67d967be9ae310"
+            "sha256": "89d443f7143b8402209cc32fac1701a772710de78c39af1ada3e3b84fb2edcda"
           }
         },
         {
@@ -324,19 +324,19 @@
       "byproducts": [
         {
           "path": "packages/cli/dist/cli.js",
-          "sha256": "9b90d76be66ca17802046b8c603c6679d167f995ae7b47ca035a94bc93fa02da"
+          "sha256": "4d61f8f6f55904b516c221163a1cd670b2265bc9da3fa4db94c27fc4375a0a54"
         },
         {
           "path": "packages/cli/dist/index.js",
-          "sha256": "6d4f97283735506e2a84dcc416a748a8be3b19c93a1a53f52740ccf51a97e2a5"
+          "sha256": "f46d9df806f29515c60600015c00d0019c949d39d9e54fcd14c8dd09af659264"
         },
         {
-          "path": "packages/cli/dist/verify-D7sIVkt7.js",
-          "sha256": "9175d02a199c68d42016c05043b8ef506cf1dd7cad75c06b3ec3218f2ac6359e"
+          "path": "packages/cli/dist/verify-6eJCyi-P.js",
+          "sha256": "5a2b712d35c1996f1e733853fdc229d620147066c630dc5453a52fbf29cb7c34"
         },
         {
           "path": "packages/core/dist/index.js",
-          "sha256": "ea4fb9c1fc1468983d37413af5fbb7a50854fb285406b1a6cdfcea173ab20668"
+          "sha256": "9d850b7177ce14379dd5927c893c575313ef7c26787cc24583089eba361f1041"
         },
         {
           "path": "packages/experiments/dist/index.js",
@@ -364,7 +364,7 @@
         },
         {
           "path": "packages/trust/dist/index.js",
-          "sha256": "8d1e0bf0192b285ad2987f001f44c8e589698ee4780ff2847aadc356de51fb3c"
+          "sha256": "058bfd25a4bb0cff8ddd6bfac75680e9278c86aed2a9e54e23d810f3a3e0801d"
         }
       ]
     }

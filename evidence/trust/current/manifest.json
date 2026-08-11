@@ -1,6 +1,6 @@
 {
   "schemaVersion": "versionless.trust.v1",
-  "canonicalDigest": "197e4c4156175aec99d977642835e1396034aa6326afafb22265f80085bf52a9",
+  "canonicalDigest": "507e795a6b56c85486509297a15988dee8db0a507bea6d4d20f84e0f74e61eb8",
   "integrity": {
     "algorithm": "sha256",
     "authenticity": "not-established",
@@ -8,7 +8,7 @@
   },
   "deterministicCore": {
     "algorithm": "sha256",
-    "digest": "8d455f28ceee15c9384ed8c3396ab2ee13dc04e194b52a2862d75a7146918485",
+    "digest": "f748b2523680a650a1da0b397a6a080629f3f7de33c7e09db60a2d454811d176",
     "artifacts": [
       {
         "path": "adapter-freeze.json",
@@ -28,11 +28,11 @@
       },
       {
         "path": "provenance.json",
-        "sha256": "a1cde7f85cfd305a7168d56abf7f97195aa2e03e6983c7d7968fde43c057c4f7"
+        "sha256": "b8f091d1779a6e6607f6c71dce8749ecbf9b7c4765a3d1ef344d13c18f8e512e"
       },
       {
         "path": "matrix.json",
-        "sha256": "31a627d73a3011daede7561bfdc4b82c552fb88dbf131caeac597206eefef5a2"
+        "sha256": "bb1937742c29d667215ca1323048fcda13178945e8b7f4b24fc83cc51b80e0c4"
       },
       {
         "path": "controls.json",
@@ -44,7 +44,7 @@
       },
       {
         "path": "corpus-conformance.json",
-        "sha256": "ccbd1ffa70fe5886c336c0a366e8c653669888c0bbd1fe0051470d774ca9d639"
+        "sha256": "304932465a13479ef589f307c6fd0a2156d9d86c61fc2ec0583a66df37096a59"
       },
       {
         "path": "script-surface.json",
@@ -191,7 +191,7 @@
     }
   ],
   "observation": {
-    "generatedAt": "2026-08-11T12:23:54.127Z",
+    "generatedAt": "2026-08-11T13:30:06.778Z",
     "vulnerabilityFreshness": "verified"
   },
   "derivedReport": "report.md"
