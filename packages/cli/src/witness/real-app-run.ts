@@ -32,7 +32,14 @@ import {
 	type WitnessFailedRequestInventory,
 	type WitnessFailedRequestInventoryEntry,
 	type WitnessMeasuredScrollAbsence,
+	type WitnessMockedNonLoopbackSeamEntry,
+	type WitnessMockedNonLoopbackSeamInventory,
+	type WitnessMockedNonLoopbackSeamObservation,
+	type WitnessApplicationJourneyEvidence,
+	type WitnessRenderedStyleEvidence,
+	WITNESS_CANCELLED_DUPLICATE_FETCH_NON_LOOPBACK_SCOPE,
 	WITNESS_CANCELLED_DUPLICATE_FETCH_RULE,
+	WITNESS_NON_LOOPBACK_QUERY_FREE_PATH_RULE,
 	type WitnessScrollSurface,
 	type WitnessServiceWorkerRequestEvent,
 	type WitnessServiceWorkerRequestTally,
@@ -63,10 +70,13 @@ import {
 import { createPhoenixSocketUpgrade } from './phoenix-socket.ts';
 import {
 	createPlaywrightWitnessHost,
+	isWitnessLoopbackUrl,
 	type PlaywrightWitnessHost,
 	type ServiceWorkerTelemetry,
 	type WitnessDifferentialEvent,
 	type WitnessObservedRequestOutcome,
+	type WitnessRenderedStyle,
+	type WitnessRenderedStyleProbe,
 	type WitnessTransportDecision,
 	type WitnessTransportRequest,
 	type WitnessViewportScroll,
@@ -102,7 +112,8 @@ type App =
 	| 'angular-realworld'
 	| 'papercups'
 	| 'react-hospitalrun'
-	| 'angular-factoriolab';
+	| 'angular-factoriolab'
+	| 'angular-jira-clone';
 type Lane = 'baseline' | 'migrated';
 type JourneyEvidence = {
 	assertions: string[];
@@ -160,6 +171,16 @@ type JourneyEvidence = {
 	 * journey whose routes were measured and found not to overflow.
 	 */
 	scrollAbsence?: WitnessMeasuredScrollAbsence;
+	/**
+	 * Resolved appearance the journey measured off the live page, for a lane pair
+	 * whose styling parity is a claim rather than an assumption.
+	 */
+	renderedStyles?: WitnessRenderedStyle[];
+	/**
+	 * Measured facts expressible only in this application's own surfaces, carried
+	 * through untouched and narrowed by that application's receipt schema.
+	 */
+	applicationJourney?: WitnessApplicationJourneyEvidence;
 };
 type JourneyTransportEvidence = { apiUsernames: string[] };
 type JourneyLifecycle = {
@@ -198,6 +219,13 @@ type JourneyLifecycle = {
 	 * turns the journey red where it happened.
 	 */
 	admittedCancelledDuplicateFetches(): number;
+	/**
+	 * Reads resolved appearance for this application's declared probe list off
+	 * the live page. A journey that calls it without the application having
+	 * declared any probes gets an error rather than an empty measurement, so a
+	 * styling claim can never rest on nothing having been measured.
+	 */
+	renderedStyles(): Promise<WitnessRenderedStyle[]>;
 };
 type AppSpec = {
 	app: App;
@@ -238,6 +266,18 @@ type AppSpec = {
 		Lane,
 		readonly WitnessCancelledDuplicateFetchCategoryEntry[]
 	>;
+	/**
+	 * Per-lane closed list of the seams this application reaches for outside the
+	 * bounded loopback origin, each pinned query-free. Declaring the list is what
+	 * makes an undeclared seam fail the run; the harness answers every one of
+	 * them in-context, so none of them leaves the machine.
+	 */
+	mockedNonLoopbackSeams?: Record<Lane, readonly WitnessMockedNonLoopbackSeamEntry[]>;
+	/**
+	 * The closed list of rendered-appearance probes this application's journey
+	 * measures, identical in both lanes so the two measurements are comparable.
+	 */
+	renderedStyleProbes?: readonly WitnessRenderedStyleProbe[];
 	/**
 	 * Replaces identifiers the application itself mints at runtime with a stable
 	 * placeholder, so a recorded route is comparable across runs. It normalizes
@@ -1019,12 +1059,33 @@ const failedRequestKey = (entry: WitnessFailedRequestInventoryEntry): string =>
 	canonicalize({ method: entry.method, path: entry.path, reason: entry.reason });
 
 /**
- * Origin-relative form of an observed URL. The loopback port is ephemeral, so
- * the origin is the one part of the URL that cannot be pinned; everything after
- * it is exactly what the browser requested.
+ * The one way an observed URL is written into the evidence.
+ *
+ * For the bounded loopback origin this is the origin-relative form it has
+ * always been: the port is ephemeral, so the origin is the one part that cannot
+ * be pinned, and everything after it is exactly what the browser requested —
+ * query included, because the harness's own origin mints no identifiers and its
+ * queries are part of what a production-static claim is about.
+ *
+ * For anything outside that origin the query is dropped, and the record is
+ * scheme, host and pathname. The endpoints applications of this era reach for
+ * carry their account identifier in the query — a measurement id, a DSN public
+ * key — and a published receipt has no business carrying one. What identifies
+ * the seam is the endpoint, and the endpoint survives intact.
  */
-const originRelativePath = (url: string, origin: string): string =>
-	url.startsWith(origin) ? url.slice(origin.length) : url;
+export const witnessRecordedRequestPath = (url: string, origin: string): string => {
+	if (origin.length > 0 && url.startsWith(origin)) return url.slice(origin.length);
+	if (isWitnessLoopbackUrl(url)) return url;
+	const parsed = parseURL(url);
+	const recorded = stringifyParsedURL({
+		protocol: parsed.protocol,
+		host: parsed.host,
+		pathname: parsed.pathname,
+	});
+	if (recorded.includes('?'))
+		throw new Error(`recorded non-loopback path must be query-free: ${recorded}`);
+	return recorded;
+};
 
 function tallyFailedRequests(
 	page: PageRecord,
@@ -1035,7 +1096,7 @@ function tallyFailedRequests(
 	for (const request of page.failedRequests) {
 		const entry = {
 			method: request.method,
-			path: originRelativePath(request.url, origin),
+			path: witnessRecordedRequestPath(request.url, origin),
 			reason: request.reason,
 			count: 1,
 		};
@@ -1127,13 +1188,22 @@ export function buildCancelledDuplicateFetchInventory(
 		);
 	if (new Set(pinned.map(cancelledDuplicateFetchKey)).size !== pinned.length)
 		throw new Error('cancelled-duplicate-fetch category repeats a member');
+	// A member outside the loopback origin is pinned query-free by construction,
+	// checked here rather than trusted, so a category can never become the place
+	// an account identifier enters the evidence.
+	const nonLoopbackMembers = pinned.filter((entry) => !entry.path.startsWith('/'));
+	for (const entry of nonLoopbackMembers)
+		if (entry.path.includes('?'))
+			throw new Error(
+				`non-loopback cancelled-duplicate member must be pinned query-free: ${entry.path}`,
+			);
 	const observed: WitnessCancelledDuplicateFetchInstance[] = [];
 	const absent: WitnessCancelledDuplicateFetchCategoryEntry[] = [];
 	for (const entry of pinned) {
 		const sameRequest = outcomes.filter(
 			(outcome) =>
 				outcome.method === entry.method &&
-				originRelativePath(outcome.url, origin) === entry.path,
+				witnessRecordedRequestPath(outcome.url, origin) === entry.path,
 		);
 		const cancelled = sameRequest.filter(
 			(outcome) => outcome.outcome === 'failed' && outcome.reason === entry.reason,
@@ -1172,6 +1242,88 @@ export function buildCancelledDuplicateFetchInventory(
 		absent,
 		uncorroborated: [],
 		admitted: observed.reduce((sum, instance) => sum + instance.cancelled, 0),
+		// Carried only where it applies. An application whose category is entirely
+		// same-origin says nothing about mocked seams, and an omitted field is the
+		// honest way to say nothing.
+		...(nonLoopbackMembers.length === 0
+			? {}
+			: { nonLoopbackScope: WITNESS_CANCELLED_DUPLICATE_FETCH_NON_LOOPBACK_SCOPE }),
+	};
+}
+
+const mockedSeamKey = (entry: WitnessMockedNonLoopbackSeamEntry): string =>
+	canonicalize({ method: entry.method, path: entry.path });
+
+/**
+ * The mocked non-loopback seam inventory, applied to one run's observed request
+ * ledger.
+ *
+ * Every request the page made outside the bounded loopback origin is written
+ * down by its query-free recorded path and must name a declared member. A seam
+ * nobody declared is reported by its own path and fails the run — that is the
+ * whole mechanism, and it is why the count of declared seams is worth reading:
+ * it is the complete set of endpoints this application reaches for, not a
+ * sample of them.
+ *
+ * Per-seam request counts are recorded rather than pinned. How many times a
+ * page reports to an analytics or error endpoint depends on when its bundles
+ * resolve, and pinning that number would pin load timing; what the inventory
+ * pins is which endpoints exist, which is the fact that does not move.
+ */
+export function buildMockedNonLoopbackSeamInventory(
+	outcomes: readonly WitnessObservedRequestOutcome[],
+	origin: string,
+	category: readonly WitnessMockedNonLoopbackSeamEntry[],
+): WitnessMockedNonLoopbackSeamInventory {
+	const pinned = category
+		.map((entry) => ({ method: entry.method, path: entry.path }))
+		.sort((left, right) => compareUtf16CodeUnits(mockedSeamKey(left), mockedSeamKey(right)));
+	if (new Set(pinned.map(mockedSeamKey)).size !== pinned.length)
+		throw new Error('mocked non-loopback seam inventory repeats a member');
+	for (const entry of pinned) {
+		if (entry.path.startsWith('/') || entry.path.includes('?'))
+			throw new Error(
+				`mocked non-loopback seam must be a query-free absolute endpoint: ${entry.path}`,
+			);
+	}
+	const pinnedKeys = new Set(pinned.map(mockedSeamKey));
+	const seen = new Map<string, WitnessMockedNonLoopbackSeamObservation>();
+	const outside: WitnessMockedNonLoopbackSeamEntry[] = [];
+	for (const outcome of outcomes) {
+		if (isWitnessLoopbackUrl(outcome.url) || outcome.url.startsWith(origin)) continue;
+		const entry = {
+			method: outcome.method,
+			path: witnessRecordedRequestPath(outcome.url, origin),
+		};
+		const key = mockedSeamKey(entry);
+		if (!pinnedKeys.has(key)) {
+			if (!outside.some((candidate) => mockedSeamKey(candidate) === key)) outside.push(entry);
+			continue;
+		}
+		const existing = seen.get(key);
+		const statuses = existing?.statuses ?? [];
+		if (outcome.status !== null && !statuses.includes(outcome.status))
+			statuses.push(outcome.status);
+		statuses.sort((left, right) => left - right);
+		if (existing === undefined)
+			seen.set(key, { ...entry, requests: 1, statuses });
+		else existing.requests += 1;
+	}
+	if (outside.length > 0)
+		throw new Error(
+			`non-loopback requests outside the declared seam inventory: ${canonicalize(outside)}`,
+		);
+	return {
+		policy: 'exact-app-scoped-mocked-non-loopback-seams',
+		pathPolicy: WITNESS_NON_LOOPBACK_QUERY_FREE_PATH_RULE,
+		category: pinned,
+		observed: pinned.flatMap((entry) => {
+			const observation = seen.get(mockedSeamKey(entry));
+			return observation === undefined ? [] : [observation];
+		}),
+		absent: pinned.filter((entry) => !seen.has(mockedSeamKey(entry))),
+		outsideInventory: [],
+		successfulNonLoopback: 0,
 	};
 }
 
@@ -2420,7 +2572,7 @@ function normalizedRecord(
 				!admittedCancelledDuplicates.has(
 					failedRequestKey({
 						method: request.method,
-						path: originRelativePath(request.url, origin),
+						path: witnessRecordedRequestPath(request.url, origin),
 						reason: request.reason,
 						count: 1,
 					}),
@@ -2514,6 +2666,14 @@ async function executeRun(
 			expectedConsoleErrors,
 			expectedFailedRequests,
 			admittedCancelledDuplicateFetches: () => cancelledDuplicateFetchInventory().admitted,
+			renderedStyles: async () => {
+				const probes = app.renderedStyleProbes ?? [];
+				if (probes.length === 0)
+					throw new Error(
+						`${app.app} declares no rendered-style probes to measure`,
+					);
+				return await host.renderedStyles(probes);
+			},
 		});
 		await context.receipt.capture('journey-complete');
 	});
@@ -2748,6 +2908,26 @@ async function executeRun(
 		...(app.cancelledDuplicateFetches === undefined
 			? {}
 			: { cancelledDuplicateFetches: cancelledDuplicates }),
+		...(app.mockedNonLoopbackSeams === undefined
+			? {}
+			: {
+					mockedNonLoopbackSeams: buildMockedNonLoopbackSeamInventory(
+						host.requestOutcomes(),
+						staticServer.origin,
+						app.mockedNonLoopbackSeams[lane],
+					),
+				}),
+		...(completedJourney.renderedStyles === undefined
+			? {}
+			: {
+					renderedStyles: {
+						state: 'measured-resolved-styles' as const,
+						probes: completedJourney.renderedStyles,
+					} satisfies WitnessRenderedStyleEvidence,
+				}),
+		...(completedJourney.applicationJourney === undefined
+			? {}
+			: { applicationJourney: completedJourney.applicationJourney }),
 		successfulNonLoopback: host.locality().successfulNonLoopback,
 	};
 	if ('blockedServiceWorkerRuntime' in runWithoutDigest) {
@@ -3154,6 +3334,14 @@ async function runReactBaselineDifferentialProfile(
 				// This differential lane declares no cancelled-duplicate
 				// category, so there is nothing for it to admit.
 				admittedCancelledDuplicateFetches: () => 0,
+				// It declares no rendered-style probes either, and refusing
+				// here is the point: a lane that measured nothing must not be
+				// able to return an empty measurement that reads as agreement.
+				renderedStyles: () => {
+					throw new Error(
+						'react baseline differential lane declares no rendered-style probes',
+					);
+				},
 			});
 			telemetry =
 				journey.timeoutTelemetry ??

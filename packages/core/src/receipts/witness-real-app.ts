@@ -157,8 +157,46 @@ export const WITNESS_CANCELLED_DUPLICATE_FETCH_RULE =
 	'A browser-cancelled fetch is admitted only when the same page also fetched the same origin-relative path with the same method successfully at least once during the same run. A cancelled fetch with no successful sibling is not admitted and fails the run as an ordinary failed request.' as const;
 
 /**
+ * How a request outside the bounded loopback origin is written down.
+ *
+ * A seam the harness answers inside the browser context is still a request the
+ * application made, and it belongs in the evidence. What does not belong is the
+ * query string: for the analytics and error-reporting endpoints applications of
+ * this era reach for, the query is exactly where the account identifier lives —
+ * a measurement id, a DSN public key — and copying it into a published receipt
+ * would publish a credential nobody asked to publish. So the recorded path for
+ * a non-loopback request is query-free by construction: scheme, host and
+ * pathname, and nothing after them. Nothing is lost that identifies the seam,
+ * because the seam is the endpoint, not the account calling it.
+ *
+ * Same-origin loopback paths are untouched by this and stay exactly as the
+ * browser requested them, query included: the loopback origin is the harness's
+ * own, it mints no credentials, and its query strings are part of what a
+ * production-static claim is about.
+ */
+export const WITNESS_NON_LOOPBACK_QUERY_FREE_PATH_RULE =
+	'A request outside the bounded loopback origin is recorded by scheme, host and pathname only. The query string is never recorded, because for these endpoints it carries the account identifier rather than the identity of the seam. Same-origin loopback paths are recorded exactly as requested, query included.' as const;
+
+/**
+ * The extension of the cancelled-duplicate-fetch category to seams the harness
+ * answers inside the browser context rather than over the network.
+ *
+ * The generic rule is unchanged and unweakened — a cancelled fetch is admitted
+ * only when the same page fetched the same method and path successfully at
+ * least once in the same run. What this states is that "successfully" means the
+ * response the page actually received, whether it came from the bounded
+ * loopback origin or from the harness answering a mocked seam in-context. A
+ * navigation that aborts an in-flight report of a seam the same page already
+ * reported to twice is the same race the category was built for, and it is
+ * recorded as the category rather than pinned to a count the page's load timing
+ * decides.
+ */
+export const WITNESS_CANCELLED_DUPLICATE_FETCH_NON_LOOPBACK_SCOPE =
+	'The corroboration rule is applied unchanged to mocked non-loopback seams: the corroborating success is the 2xx response the page received, whether the bounded loopback origin or the in-context harness produced it. Members whose path is not loopback are pinned query-free, so no member can encode an account identifier.' as const;
+
+/**
  * One member of the cancelled-duplicate-fetch category, pinned by
- * origin-relative path, method and the browser's own cancellation reason.
+ * recorded path, method and the browser's own cancellation reason.
  *
  * Deliberately no count. This category exists for one measured browser
  * behavior: a page fetches an asset, re-renders while that fetch is in flight,
@@ -213,7 +251,93 @@ export type WitnessCancelledDuplicateFetchInventory = {
 	uncorroborated: [];
 	/** Cancelled fetches admitted by the category in this run, summed. */
 	admitted: number;
+	/**
+	 * Present exactly when the category declares a member outside the loopback
+	 * origin, and carrying the scope statement that governs those members. A run
+	 * whose category is entirely same-origin omits it, so an application that
+	 * never reached past loopback cannot be read as having claimed anything about
+	 * seams it does not have.
+	 */
+	nonLoopbackScope?: typeof WITNESS_CANCELLED_DUPLICATE_FETCH_NON_LOOPBACK_SCOPE;
 };
+
+/**
+ * One non-loopback seam the application reaches for and the harness answers
+ * inside the browser context, pinned by method and query-free recorded path.
+ *
+ * This is an inventory, not an allowance: the point of naming every seam is
+ * that a request to an endpoint nobody declared fails the run rather than being
+ * absorbed into a total. Nothing here is a successful non-loopback request —
+ * none of these left the machine — which is why `successfulNonLoopback` stays
+ * zero alongside it.
+ */
+export type WitnessMockedNonLoopbackSeamEntry = { method: string; path: string };
+
+/**
+ * One declared seam as this run actually observed it. `requests` is recorded
+ * rather than pinned, because how many times a page reports to an analytics or
+ * error endpoint is load timing; the statuses are the answers the harness gave.
+ */
+export type WitnessMockedNonLoopbackSeamObservation = WitnessMockedNonLoopbackSeamEntry & {
+	requests: number;
+	/** The distinct statuses the harness answered with, ascending. */
+	statuses: number[];
+};
+
+/**
+ * Exact, application-scoped accounting for the seams an application reaches for
+ * outside loopback, held to the same non-masking discipline as the console and
+ * failed-request inventories: every declared member is either observed or
+ * explicitly absent, and anything observed outside the declared membership is
+ * reported by its own path and fails the run.
+ */
+export type WitnessMockedNonLoopbackSeamInventory = {
+	policy: 'exact-app-scoped-mocked-non-loopback-seams';
+	pathPolicy: typeof WITNESS_NON_LOOPBACK_QUERY_FREE_PATH_RULE;
+	category: WitnessMockedNonLoopbackSeamEntry[];
+	observed: WitnessMockedNonLoopbackSeamObservation[];
+	absent: WitnessMockedNonLoopbackSeamEntry[];
+	outsideInventory: [];
+	/** None of these left the machine; the harness answered every one in-context. */
+	successfulNonLoopback: 0;
+};
+
+/**
+ * Resolved appearance measured from the live page for a closed list of probes.
+ *
+ * A claim that two lanes render the same has to be measured on laid-out
+ * elements, not inferred from the stylesheet bytes that were shipped — an
+ * application whose migration replaced a narrow style entry point with an
+ * aggregate ships different bytes on purpose, and the only honest way to say
+ * the difference is invisible is to read what the browser resolved.
+ */
+export type WitnessRenderedStyleMeasurement = {
+	label: string;
+	selector: string;
+	width: number;
+	height: number;
+	properties: Record<string, string>;
+};
+export type WitnessRenderedStyleEvidence = {
+	state: 'measured-resolved-styles';
+	probes: WitnessRenderedStyleMeasurement[];
+};
+
+/**
+ * Measured journey facts that only one application's own surfaces can express —
+ * the settled state of a board after a drag, the counts a filter narrowed to,
+ * the text a tooltip rendered.
+ *
+ * The generic runner carries this without inspecting it, which is deliberate:
+ * inventing a shared vocabulary for facts that are not shared would either
+ * flatten them into something unfalsifiable or push one application's nouns
+ * into everyone else's schema. The strictness is not lost, it moves — the
+ * application's own receipt schema narrows this to an exact shape and checks
+ * every field of it, and because the whole record participates in that
+ * application's behavior digest, a lane that measured something different
+ * cannot agree with its own pair.
+ */
+export type WitnessApplicationJourneyEvidence = Record<string, unknown>;
 
 /**
  * One observed service-worker-script event, stripped of the two fields that
@@ -322,6 +446,9 @@ export type WitnessRealAppRun = {
 	consoleErrorInventory?: WitnessConsoleErrorInventory;
 	failedRequestInventory?: WitnessFailedRequestInventory;
 	cancelledDuplicateFetches?: WitnessCancelledDuplicateFetchInventory;
+	mockedNonLoopbackSeams?: WitnessMockedNonLoopbackSeamInventory;
+	renderedStyles?: WitnessRenderedStyleEvidence;
+	applicationJourney?: WitnessApplicationJourneyEvidence;
 	scrollSurface?: WitnessScrollSurface;
 	scrollAbsence?: WitnessMeasuredScrollAbsence;
 };

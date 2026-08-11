@@ -314,7 +314,14 @@ async function observeServiceWorkers(
 	};
 }
 
-function loopback(url: string): boolean {
+/**
+ * Whether a URL addresses the bounded loopback origin the harness itself
+ * serves. It is the one distinction that decides how a request is answered and
+ * how it is written down, so it is exported rather than re-derived: the request
+ * ledger records a loopback path exactly as requested and a non-loopback one
+ * query-free, and both readings have to agree about which is which.
+ */
+export function isWitnessLoopbackUrl(url: string): boolean {
 	const hostname = parseHost(parseURL(url).host ?? '').hostname;
 	return hostname === '127.0.0.1' || hostname === 'localhost' || hostname === '::1';
 }
@@ -562,7 +569,7 @@ export function createPlaywrightWitnessHost(options: {
 			urlPath,
 			detail: { serviceWorker: request.serviceWorker() !== null },
 		});
-		if (loopback(request.url())) {
+		if (isWitnessLoopbackUrl(request.url())) {
 			diagnosticEvent({
 				source: 'context-route',
 				phase: 'continue',
@@ -690,7 +697,7 @@ export function createPlaywrightWitnessHost(options: {
 						};
 						page.on('response', (response) => {
 							if (
-								!loopback(response.url()) &&
+								!isWitnessLoopbackUrl(response.url()) &&
 								response.request().serviceWorker() === null
 							)
 								successfulNonLoopback += 0;
