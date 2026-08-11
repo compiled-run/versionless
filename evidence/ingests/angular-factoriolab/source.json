@@ -1,0 +1,138 @@
+{
+  "schemaVersion": "versionless.official-source.v1",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "unit": "lrapr-t005/a1-ingest-factoriolab",
+  "slug": "angular-factoriolab",
+  "result": "source-bound",
+  "startedAt": "2026-08-11T03:33:56Z",
+  "completedAt": "2026-08-11T03:41:18Z",
+  "timestampNote": "Per-request wall-clock timestamps are recorded in probe-ledger.ndjson and transcript.ndjson; the values above are the first and last ledgered request.",
+  "repository": {
+    "id": 251332078,
+    "fullName": "factoriolab/factoriolab",
+    "private": false,
+    "archived": false,
+    "disabled": false,
+    "fork": false,
+    "defaultBranch": "main",
+    "createdAt": "2020-03-30T14:35:07Z",
+    "responseBytes": 6613,
+    "responseSha256": "ba8488b24f9290985fe53c2cefc306cc5f4ba4087bb9e11a78965172ee4b9163",
+    "renameNote": "The manifest and README at the pinned revision still name the project factorio-lab and point at github.com/factoriolab/factorio-lab. The repository has since been renamed to factoriolab/factoriolab; the current name is what the API answers to and what every URL in this record uses. The rename is upstream history, recorded rather than reconciled."
+  },
+  "revision": {
+    "ref": "none — a bare commit sha was pinned; no tag was requested or relied on",
+    "commitSha": "5f54abbdcac518d8ebf7e136c4348384d9b1a2bb",
+    "committerDate": "2020-10-31T16:58:40Z",
+    "authorDate": "2020-10-31T16:58:40Z",
+    "commitSubject": "Fix expensive recipes and pumps, closes #256, closes #241 (#259)",
+    "commitVerification": "signed but not verified — GitHub reports verified:false with reason \"expired_key\" for the web-flow signature on this merge commit",
+    "rootTreeSha": "b366ea0d6183d83e175aaa52e3620562c46321b8",
+    "parents": ["4c44ed0f8e25e7f9b0d011d4700c612c898baa1e"],
+    "treeEntries": 301,
+    "treeBlobs": 248,
+    "treeDirectories": 53,
+    "treeSymlinks": 0,
+    "treeGitlinks": 0,
+    "treeExecutableBlobs": 0,
+    "treeTruncated": false,
+    "treeBlobBytes": 1171924,
+    "expectedCommitShaFromPriorScout": "5f54abbdcac518d8ebf7e136c4348384d9b1a2bb",
+    "expectedCommitShaConfirmedFromWire": true
+  },
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/factoriolab/factoriolab",
+      "status": 200,
+      "bytes": 6613,
+      "sha256": "ba8488b24f9290985fe53c2cefc306cc5f4ba4087bb9e11a78965172ee4b9163"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/factoriolab/factoriolab/commits/5f54abbdcac518d8ebf7e136c4348384d9b1a2bb",
+      "status": 200,
+      "bytes": 19381,
+      "sha256": "552d205ecf735f55e27640bb6168e3fd384d19e3209cd4f4008c23bb6668197b"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/factoriolab/factoriolab/git/trees/b366ea0d6183d83e175aaa52e3620562c46321b8?recursive=1",
+      "status": 200,
+      "bytes": 74846,
+      "sha256": "c3a4a3384162cce3640910cd6462162efa08933b6713bf1ce5505aa65a91d610"
+    },
+    {
+      "endpoint": "https://codeload.github.com/factoriolab/factoriolab/tar.gz/5f54abbdcac518d8ebf7e136c4348384d9b1a2bb",
+      "status": 200,
+      "bytes": 267218,
+      "sha256": "11f2ce939f4be04b11e77b7f12e13d7449bf944b9bfefbeca237c46dea12f7ed",
+      "stream": 1
+    },
+    {
+      "endpoint": "https://codeload.github.com/factoriolab/factoriolab/tar.gz/5f54abbdcac518d8ebf7e136c4348384d9b1a2bb",
+      "status": 200,
+      "bytes": 267218,
+      "sha256": "11f2ce939f4be04b11e77b7f12e13d7449bf944b9bfefbeca237c46dea12f7ed",
+      "stream": 2
+    }
+  ],
+  "keyFileDigests": [
+    { "path": "LICENSE", "gitBlobSha": "3e38290d502f386b68e8043133a0151abd356396", "bytes": 1049, "sha256": "d2556dbacc2d52cdda0e8b3ebd15b0492d34028074768b3683815540d17e71af" },
+    { "path": "package.json", "gitBlobSha": "e57ff66d640b2f5af20426b2a0e52c2a0d1eb5d2", "bytes": 2477, "sha256": "051f928938dd0bbd55cd24de9f8c6330b5eb07728e0b10e0fd97658224e6eb18" },
+    { "path": "package-lock.json", "gitBlobSha": "f84d59fdf1ff74e38b11233769684258917b48b9", "bytes": 577043, "sha256": "dfd5c7727bdfe9eeb397eb5599049356d70762648adefb08ef5c0ec07229142e" },
+    { "path": "angular.json", "bytes": 5154, "sha256": "8ea2a5081c346939c434dc431e694f1b8ef619762843f5083882480d5ea8467b" }
+  ],
+  "archiveParity": {
+    "singleRoot": "factoriolab-5f54abbdcac518d8ebf7e136c4348384d9b1a2bb",
+    "archiveEntries": 302,
+    "regularFiles": 248,
+    "directories": 54,
+    "specialEntries": 0,
+    "gitBlobs": 248,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "normalizedManifestSha256": "706b6a8ae14797cea1da6d38941439bed6e1b81c901a7056455ce7270e7936fb",
+    "pathTraversalEntries": 0,
+    "absolutePathEntries": 0,
+    "method": "Blob-level: every regular file in the extracted archive was hashed as a git blob object and compared byte-for-byte against the sha recorded for the same path in the recursive git tree. Detail in reconciliation.json.",
+    "directoryCountNote": "The archive lists 54 directory entries against 53 tree entries because the archive carries its own single top-level root directory, which the git tree does not."
+  },
+  "gitLargeFileStorage": {
+    "present": true,
+    "pointerFilesInArchive": 26,
+    "paths": "src/data/**/data.json (11), src/data/**/icons.png (11), src/assets/GitHub.png, src/assets/logo.png (per .gitattributes: *.png, *.webp, src/data/**)",
+    "consequence": "The codeload archive — and the git tree it reconciles against — carry LFS pointer stubs, not the dataset and artwork payloads. The archive is a complete and faithful copy of the pinned revision's git content; it is not by itself a complete copy of the application's inputs.",
+    "materialisation": "One labeled deviation fetched the 26 payloads (34,213,410 bytes) over plain GET from media.githubusercontent.com at the same pinned commit sha. Each payload was verified against the sha256 oid carried by the pointer it replaces; all 26 matched. Detail in lfs.json.",
+    "integrityNote": "Because each LFS oid is itself pinned content inside the reconciled git tree, the payload check is anchored to the pinned revision rather than to trust in the media host."
+  },
+  "transaction": {
+    "sourceRequests": 5,
+    "sourceAcceptedResponses": 5,
+    "sourceWireBytes": 635276,
+    "lfsRequests": 26,
+    "lfsWireBytes": 34213410,
+    "totalLedgeredRequests": 31,
+    "totalLedgeredBytes": 34848686,
+    "nonTwoHundredResponses": 0,
+    "redirectsFollowedInSourceTransaction": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "credentialsSent": 0,
+    "archivesByteIdentical": true,
+    "archiveMatchesGitTree": true,
+    "publishedSource": true,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "cache": {
+    "root": ".versionless/cache/angular-factoriolab-source",
+    "archive1": ".versionless/cache/angular-factoriolab-source/archive/archive-1.tar.gz",
+    "archive2": ".versionless/cache/angular-factoriolab-source/archive/archive-2.tar.gz",
+    "verifiedSource": ".versionless/cache/angular-factoriolab-source/verify/extracted",
+    "gitIgnored": true,
+    "rawMetadataPortable": false
+  },
+  "nonclaims": [
+    "An unverified signature establishes no signer authenticity; the committer identity carried by the commit object is upstream metadata and is not treated as a verification result.",
+    "No dependency licence position, browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval is established by this record."
+  ]
+}

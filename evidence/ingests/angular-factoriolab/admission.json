@@ -1,0 +1,200 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-admission.v1",
+  "unit": "lrapr-t005/a1-ingest-factoriolab",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "networkMode": "consented",
+  "slug": "angular-factoriolab",
+  "tranche": "Angular tranche one (board task T005, first Angular cohort)",
+  "priorScout": {
+    "existed": true,
+    "unit": "lrapr-t005/a0",
+    "role": "read-only; supplied the target repository and expected commit sha",
+    "reverificationPolicy": "Every gate below was re-verified by this unit from the wire and from the reconciled archive at the pinned revision. The scout's findings were used as a hypothesis, not as evidence.",
+    "expectedCommitShaConfirmed": true,
+    "scoutClaimsCorrected": [
+      {
+        "claim": "MIT LICENSE file at the pin (Copyright 2020 Doug Broad)",
+        "finding": "confirmed as to substance, corrected as to form: the file carries the MIT body verbatim but has no \"MIT License\" title line and opens with the copyright line."
+      },
+      {
+        "claim": "datasets ship in src/data/**",
+        "finding": "materially wrong as stated. src/data/** is Git LFS. The pinned git tree — and therefore any source archive of it — carries 26 pointer stubs, not the datasets or the icon sprite sheets. This is the finding that decides the baseline build outcome."
+      },
+      {
+        "claim": "builder @angular-devkit/build-angular:browser, webpack 4, Ivy; Angular 10.1.5, CLI 10.1.4, @ngrx/store 10.0.1, TS 4.0.3; npm with committed package-lock.json lockfileVersion 1; engines unstated",
+        "finding": "all confirmed from the reconciled source."
+      },
+      {
+        "claim": "engines unstated (CLI 10 era = Node 10.13/12/14)",
+        "finding": "confirmed and sharpened: there is no engines block, no .nvmrc, and no setup-node step in any workflow, so the repository states no Node version anywhere. The era is fixed by the pinned CLI, not by the repository."
+      }
+    ]
+  },
+  "admitted": {
+    "repository": "factoriolab/factoriolab",
+    "product": "Factorio Lab — a browser production calculator for the game Factorio: solve resource and factory requirements for a set of desired outputs, across several game versions and community mod sets",
+    "ref": "none — bare commit sha",
+    "commitSha": "5f54abbdcac518d8ebf7e136c4348384d9b1a2bb",
+    "commitDate": "2020-10-31T16:58:40Z",
+    "applicationVersion": "1.2.5",
+    "frontendRoot": ".",
+    "decision": "admitted"
+  },
+  "gates": [
+    {
+      "gate": "mit-license-at-pinned-revision",
+      "result": "pass",
+      "evidence": {
+        "rootLicensePath": "LICENSE",
+        "gitBlobSha": "3e38290d502f386b68e8043133a0151abd356396",
+        "fileSha256": "d2556dbacc2d52cdda0e8b3ebd15b0492d34028074768b3683815540d17e71af",
+        "bytes": 1049,
+        "firstLine": "Copyright 2020 Doug Broad",
+        "titleLinePresent": false,
+        "mitBodyVerbatim": true,
+        "manifestLicenseField": "MIT",
+        "githubDetectedSpdx": "MIT",
+        "otherLicenseFilesInTree": 0,
+        "quotedFromArchive": "The licence text was read out of the extracted archive, which reconciles blob-for-blob with the git tree at the pinned revision.",
+        "detail": "license.json"
+      }
+    },
+    {
+      "gate": "real-substantive-application-not-template-demo-or-library",
+      "result": "pass",
+      "evidence": {
+        "repositoryShape": "A single Angular CLI 10 application at the repository root — no library build target, no publishable package (\"private\": true), no monorepo projects/ tree. It is a deployed product: .github/workflows/prod.yml builds it and pushes dist to the factoriolab.github.io Pages repository, and the manifest's homepage is that site.",
+        "blobsInTree": 248,
+        "treeBlobBytes": 1171924,
+        "typescriptFiles": 157,
+        "specFiles": 45,
+        "domainCore": "src/app/utilities/simplex.utility.ts (15,841 bytes) — a simplex linear-programming solver for recipe loops, with a 28,480-byte spec file. This is the substance the application exists for; nothing about it is scaffolding.",
+        "largestTemplate": "src/app/components/containers/list-container/list/list.component.html (41,138 bytes)",
+        "stateLayer": "@ngrx/store 10 with five feature slices (products, items, recipes, settings, datasets), each with actions, reducer, selectors and specs, plus effects for datasets",
+        "datasets": "11 base datasets (Factorio 1.0, 0.18, 0.17, 0.16 and the Bio Industries, Bob's & Angel's, FactorioExtended Plus, Krastorio 2, Pyanodons, Space Exploration mod sets) plus an Infinite Research mod overlay, enumerated in src/data/index.ts",
+        "publishedAsLibrary": false,
+        "isStarterTemplate": false,
+        "notes": "The only scaffold left in the tree is the untouched protractor e2e skeleton, which the README says outright carries no tests."
+      }
+    },
+    {
+      "gate": "angular-2-plus-cli-era",
+      "result": "pass",
+      "evidence": {
+        "declaredAngular": "~10.1.5 across the eight @angular/* runtime packages",
+        "declaredAngularCli": "^10.1.4",
+        "resolvedInBaselineCell": "the committed lockfileVersion 1 pins the closure exactly; npm ci installed 1609 packages from it without resolution",
+        "builder": "@angular-devkit/build-angular:browser via @angular-devkit/build-angular ^0.1001.4",
+        "bundler": "webpack 4",
+        "compiler": "Ivy, aot:true in angular.json",
+        "typescript": "^4.0.3",
+        "angularJsonVersion": 1,
+        "ejected": false,
+        "detail": "closure.json"
+      }
+    },
+    {
+      "gate": "pinned-revision-date-matches-claimed-era",
+      "result": "pass",
+      "evidence": {
+        "commitSha": "5f54abbdcac518d8ebf7e136c4348384d9b1a2bb",
+        "committerDate": "2020-10-31T16:58:40Z",
+        "authorDate": "2020-10-31T16:58:40Z",
+        "claimedByScout": "2020-10-31",
+        "evaluatedOn": "2026-08-11",
+        "ageYearsApproximate": 5.78,
+        "coherenceCheck": "Angular 10.1.5 was released in October 2020 and @angular/cli 10.1.4 in September 2020, so the pinned dependency versions and the commit date agree rather than merely coexisting.",
+        "signature": "the merge commit carries a GitHub web-flow signature that GitHub now reports as verified:false, reason expired_key",
+        "unknownPreserved": "Signer authenticity is recorded as unestablished. An expired key is not a forgery finding and is not treated as one.",
+        "upstreamRepositoryArchived": false
+      }
+    },
+    {
+      "gate": "browser-ui-plausibly-supporting-three-or-more-substantive-user-journeys",
+      "result": "pass",
+      "evidence": {
+        "routerLibrary": "@angular/router ~10.1.5",
+        "topLevelRoutes": ["/list", "/flow", "** -> /list"],
+        "routeCountCaveat": "Only two routes exist. Routes are the wrong unit of account for this application: it keeps its entire scenario in the URL rather than in a route tree. RouterService deflates the full product, item, recipe and settings state with pako and writes it into the query string, and re-inflates it on navigation. The journeys below are read off the container components, the ngrx feature slices and the utilities, not off the route table.",
+        "candidateJourneys": [
+          {
+            "journey": "define what to produce",
+            "surface": "products-container / products.component — add and remove products, pick the item through the picker component, choose a rate type (Items, Belts, Wagons, Factories) and a rate",
+            "code": "src/app/components/containers/products-container/**, src/app/store/products/**",
+            "plausibility": "declared-and-code-backed"
+          },
+          {
+            "journey": "read and tune the production step list",
+            "surface": "list-container / list.component — the solved step list with per-step item and recipe overrides (belt, fuel, factory, modules, beacons), driven by the simplex solver",
+            "code": "src/app/components/containers/list-container/**, src/app/utilities/simplex.utility.ts, src/app/store/{items,recipes}/**",
+            "plausibility": "declared-and-code-backed"
+          },
+          {
+            "journey": "visualise the production graph",
+            "surface": "/flow route — flow-container with a d3-sankey / d3-sankey-circular diagram of the solved production network",
+            "code": "src/app/components/containers/flow-container/sankey/**",
+            "plausibility": "declared-and-code-backed"
+          },
+          {
+            "journey": "choose a dataset and configure the factory preset",
+            "surface": "settings-container / settings.component (16,497-byte template) — pick among 11 base datasets and the research mod overlay, set preset, belt, fuel, factory rank, module rank, beacon, precision and display columns",
+            "code": "src/app/components/containers/settings-container/**, src/app/store/settings/**, src/app/store/datasets/**, src/data/index.ts",
+            "plausibility": "declared-and-code-backed"
+          },
+          {
+            "journey": "share a scenario by URL and export the result",
+            "surface": "RouterService zips the whole state into the URL so a scenario is a link; export.utility.ts builds a CSV of the step list and hands it to file-saver's saveAs",
+            "code": "src/app/services/router.service.ts, src/app/utilities/export.utility.ts",
+            "plausibility": "declared-and-code-backed"
+          }
+        ],
+        "requiredMinimum": 3,
+        "observed": 5,
+        "unknownPreserved": "These journeys are read from the components, the store and the utilities. No browser was driven in this unit, so none of them is established as actually exercisable."
+      }
+    }
+  ],
+  "recordedRisks": [
+    {
+      "risk": "the pinned source tree is not self-contained — src/data/** and all *.png are Git LFS",
+      "finding": "The .gitattributes at the pinned revision routes *.png, *.webp and src/data/** through the LFS filter. The recursive git tree therefore stores 26 pointer stubs, and the codeload tarball faithfully reproduces those stubs. Because tsconfig.json enables resolveJsonModule and src/data/index.ts imports app/data.json, the production build fails at TS1136 while parsing a pointer file.",
+      "consequence": "The archive is a complete copy of the pinned revision's git content and still not a complete copy of the application's build inputs. Any later unit that builds or serves this fixture must materialise the LFS payloads first.",
+      "state": "resolved-by-one-labeled-deviation; 26 payloads fetched and each verified against the sha256 oid carried by the pointer it replaces, after which the production build succeeded. See lfs.json and baseline-attempt.json.",
+      "residual": "The LFS payloads live on GitHub's media host, not in the pinned tree. Their availability is an upstream dependency this corpus does not control; their integrity, however, is anchored to pinned oids."
+    },
+    {
+      "risk": "third-party game data and artwork are embedded",
+      "finding": "Every dataset directory ships an icons.png sprite sheet of Factorio and mod artwork, and the data.json files describe game recipes. The 34 MB of LFS payload is almost entirely this material.",
+      "consequence": "The MIT grant covers the repository's own files. It is not treated here as a grant over game artwork.",
+      "state": "recorded; see license.json thirdPartyGameContentPosture"
+    },
+    {
+      "risk": "repository rename since the pinned revision",
+      "finding": "package.json and README at the pin point at github.com/factoriolab/factorio-lab; the repository now answers as factoriolab/factoriolab.",
+      "consequence": "Only the current name resolves. Every URL in this evidence uses it.",
+      "state": "recorded"
+    },
+    {
+      "risk": "lockfile root version drift",
+      "finding": "package-lock.json declares version 1.2.4 while package.json declares 1.2.5; the lockfile was not regenerated for the bump. The dependency entries themselves are complete and integrity-hashed, and npm ci succeeded.",
+      "consequence": "Cosmetic under npm 6. A stricter package manager could treat it differently.",
+      "state": "recorded"
+    },
+    {
+      "risk": "optional native module fails to build in the legacy cell",
+      "finding": "fsevents failed node-gyp configure twice during npm ci, because the bundled node-gyp 5.0.5 cannot run against this host's Python 3. It is optional and macOS-watcher-only; the install exited 0 and the production build did not need it.",
+      "consequence": "A later unit that runs `ng serve` and relies on file watching may notice; a build-only unit does not.",
+      "state": "recorded"
+    },
+    {
+      "risk": "Angular CLI analytics is enabled in the committed angular.json",
+      "finding": "angular.json carries a cli.analytics id at the pinned revision, which would make CLI 10 report usage over the network on every command.",
+      "consequence": "Unconsented telemetry during builds. This unit set NG_CLI_ANALYTICS=false for both install and build, which suppresses the reporting without modifying the source.",
+      "state": "handled by environment; the source was not altered, and later units must set the same variable"
+    }
+  ],
+  "nonclaims": [
+    "Admission fixes an identity and records gate findings. It establishes no browser behavior, journey exercisability, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "The journey list is read from the components, the store and the utilities; no journey was driven in a browser by this unit."
+  ]
+}

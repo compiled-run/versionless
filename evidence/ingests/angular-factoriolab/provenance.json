@@ -1,0 +1,101 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-provenance.v1",
+  "slug": "angular-factoriolab",
+  "unit": "lrapr-t005/a1-ingest-factoriolab",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "networkMode": "consented",
+  "purpose": "Acquisition only. Fix an immutable identity for one legacy Angular application, prove the acquired bytes against the pinned git content, and record one truthful baseline install and production build. No product, adapter, or migration work was performed.",
+  "chain": [
+    {
+      "step": 1,
+      "what": "repository metadata",
+      "url": "https://api.github.com/repos/factoriolab/factoriolab",
+      "status": 200,
+      "bytes": 6613,
+      "sha256": "ba8488b24f9290985fe53c2cefc306cc5f4ba4087bb9e11a78965172ee4b9163",
+      "established": "public, not a fork, not archived, GitHub-detected licence MIT"
+    },
+    {
+      "step": 2,
+      "what": "the pinned commit object",
+      "url": "https://api.github.com/repos/factoriolab/factoriolab/commits/5f54abbdcac518d8ebf7e136c4348384d9b1a2bb",
+      "status": 200,
+      "bytes": 19381,
+      "sha256": "552d205ecf735f55e27640bb6168e3fd384d19e3209cd4f4008c23bb6668197b",
+      "established": "the scout's expected sha is the sha the wire returns; commit date 2020-10-31T16:58:40Z; root tree b366ea0d6183d83e175aaa52e3620562c46321b8; signature present but reported unverified (expired_key)"
+    },
+    {
+      "step": 3,
+      "what": "the recursive git tree at that commit",
+      "url": "https://api.github.com/repos/factoriolab/factoriolab/git/trees/b366ea0d6183d83e175aaa52e3620562c46321b8?recursive=1",
+      "status": 200,
+      "bytes": 74846,
+      "sha256": "c3a4a3384162cce3640910cd6462162efa08933b6713bf1ce5505aa65a91d610",
+      "established": "248 blobs, 53 trees, untruncated, no symlinks, no gitlinks, no executable blobs — the per-path blob shas that the archive is later checked against"
+    },
+    {
+      "step": 4,
+      "what": "the source archive, fetched twice",
+      "url": "https://codeload.github.com/factoriolab/factoriolab/tar.gz/5f54abbdcac518d8ebf7e136c4348384d9b1a2bb",
+      "status": 200,
+      "bytes": 267218,
+      "sha256": "11f2ce939f4be04b11e77b7f12e13d7449bf944b9bfefbeca237c46dea12f7ed",
+      "streams": 2,
+      "established": "two independent fetches produced byte-identical archives"
+    },
+    {
+      "step": 5,
+      "what": "offline reconciliation",
+      "network": "none",
+      "established": "all 248 extracted files hash, as git blob objects, to exactly the shas the tree records for those paths: 0 missing, 0 extra, 0 mismatched, single archive root, no path traversal or absolute entries. Normalized manifest sha256 706b6a8ae14797cea1da6d38941439bed6e1b81c901a7056455ce7270e7936fb.",
+      "detail": "reconciliation.json"
+    },
+    {
+      "step": 6,
+      "what": "baseline install and production build in the declared legacy cell",
+      "network": "registry.npmjs.org only, via npm",
+      "established": "npm ci succeeded from the committed lockfileVersion 1 (1609 packages, exit 0). `npm run build -- --prod` failed with exit 1 at TS1136 while parsing a Git LFS pointer stub as JSON.",
+      "detail": "baseline-attempt.json"
+    },
+    {
+      "step": 7,
+      "what": "one labeled deviation: Git LFS payload materialisation and rebuild",
+      "url": "https://media.githubusercontent.com/media/factoriolab/factoriolab/5f54abbdcac518d8ebf7e136c4348384d9b1a2bb/<lfs-path>",
+      "requests": 26,
+      "bytes": 34213410,
+      "established": "26/26 payloads matched the sha256 oid recorded in the pointer they replaced; the production build then succeeded with exit 0 and emitted 42 dist files",
+      "detail": "lfs.json"
+    }
+  ],
+  "consentDiscipline": {
+    "networkModeRequiredAtEveryStep": true,
+    "consentIdCheckedInEveryScript": true,
+    "method": "GET",
+    "credentialsSent": 0,
+    "authenticationHeaders": "none",
+    "cookiesAccepted": 0,
+    "redirectsFollowedInSourceTransaction": 0,
+    "redirectsFollowedInLfsDeviation": "the media host redirects to object storage; up to 3 redirects were followed per LFS request and the count is ledgered per request",
+    "retries": 0,
+    "nonTwoHundredResponses": 0,
+    "hostsContacted": [
+      "api.github.com",
+      "codeload.github.com",
+      "media.githubusercontent.com",
+      "registry.npmjs.org"
+    ],
+    "telemetrySuppressed": "NG_CLI_ANALYTICS=false for the install and both builds, so the Angular CLI analytics id committed in angular.json never reported",
+    "afterAcquisition": "everything else in this unit was offline"
+  },
+  "reproduction": {
+    "scripts": "evidence/ingests/angular-factoriolab/scripts/{probe-identity,acquire-source,reconcile,baseline,lfs-deviation}.cjs — the exact programs that produced this evidence, carrying no host paths and no credentials",
+    "runFrom": "the repository root",
+    "environment": "VERSIONLESS_NETWORK_MODE=consented, VERSIONLESS_CONSENT_ID=VL-LEGACY-CORPUS-2026-08-10, and LEGACY_NODE_HOME pointing at a Node 12.14.1 darwin-x64 runtime for the baseline",
+    "ledger": "probe-ledger.ndjson (31 requests, 34,848,686 bytes, all status 200) and transcript.ndjson (step-by-step)",
+    "caches": ".versionless/cache/angular-factoriolab-source and .versionless/cache/angular-factoriolab-baseline, both git-ignored and both host-local"
+  },
+  "nonclaims": [
+    "This record establishes acquisition and integrity only.",
+    "No browser behavior, migration feasibility, pilot status, readiness credit, production readiness, certification, or legal approval is established by any step above."
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-reconciliation.v1",
+  "slug": "angular-factoriolab",
+  "method": "Every regular file in the extracted archive was hashed as a git blob object and compared byte-for-byte against the sha recorded for the same path in the recursive git tree at the pinned revision.",
+  "singleRoot": "factoriolab-5f54abbdcac518d8ebf7e136c4348384d9b1a2bb",
+  "rootCount": 1,
+  "archiveEntries": 302,
+  "directories": 54,
+  "regularFiles": 248,
+  "specialEntries": 0,
+  "pathTraversalEntries": 0,
+  "absolutePathEntries": 0,
+  "gitBlobs": 248,
+  "extractedFiles": 248,
+  "missingFiles": 0,
+  "extraFiles": 0,
+  "mismatchedBlobs": 0,
+  "missing": [],
+  "extra": [],
+  "normalizedManifestSha256": "706b6a8ae14797cea1da6d38941439bed6e1b81c901a7056455ce7270e7936fb",
+  "archiveMatchesGitTree": true
+}

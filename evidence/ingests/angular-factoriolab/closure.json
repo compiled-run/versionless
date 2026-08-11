@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-closure.v1",
+  "slug": "angular-factoriolab",
+  "unit": "lrapr-t005/a1-ingest-factoriolab",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "revision": {
+    "repository": "factoriolab/factoriolab",
+    "commitSha": "5f54abbdcac518d8ebf7e136c4348384d9b1a2bb"
+  },
+  "lockState": {
+    "committedLockfile": "package-lock.json",
+    "lockfileVersion": 1,
+    "lockfileVersionRecordedAsFound": true,
+    "gitBlobSha": "f84d59fdf1ff74e38b11233769684258917b48b9",
+    "bytes": 577043,
+    "sha256": "dfd5c7727bdfe9eeb397eb5599049356d70762648adefb08ef5c0ec07229142e",
+    "yarnLock": "absent",
+    "npmShrinkwrap": "absent",
+    "packageManager": "npm (lockfileVersion 1 is the npm 5/6 format)",
+    "honestNote": "The lockfile's own root fields read name factorio-lab, version 1.2.4, while package.json at the same revision reads version 1.2.5. The lockfile was not regenerated for the version bump. npm 6 does not treat this as a mismatch and `npm ci` succeeded; recorded because it is a real, observable drift between the two files."
+  },
+  "closure": {
+    "totalEntries": 1609,
+    "topLevelEntries": 1067,
+    "nestedEntries": 542,
+    "devEntries": 1576,
+    "productionEntries": 33,
+    "entriesWithoutIntegrityHash": 0,
+    "resolvedHosts": { "registry.npmjs.org": 1609 },
+    "gitOrTarballDependencies": 0,
+    "directDependencies": 23,
+    "directDevDependencies": 27,
+    "installedPackagesReportedByNpmCi": 1609,
+    "closureIsFullyPinned": true,
+    "devSkewNote": "The dev/production split is read from the lockfile's own `dev` flags. It is lopsided because the entire Angular build toolchain (CLI, devkit, webpack 4, karma, protractor, tslint) is declared as devDependencies while the shipped application depends on only 23 direct runtime packages."
+  },
+  "frameworkAndToolchain": {
+    "framework": "Angular 10",
+    "declaredAngularPackages": "~10.1.5 for @angular/{animations,common,compiler,core,forms,platform-browser,platform-browser-dynamic,router}",
+    "declaredAngularCli": "^10.1.4",
+    "declaredBuildAngular": "^0.1001.4",
+    "builder": "@angular-devkit/build-angular:browser",
+    "bundler": "webpack 4 (the bundler @angular-devkit/build-angular 0.1001 wraps)",
+    "compiler": "Ivy with aot:true declared in angular.json build options",
+    "typescript": "^4.0.3",
+    "rxjs": "~6.6.3",
+    "zoneJs": "~0.10.3",
+    "stateLibrary": "@ngrx/{store,effects,store-devtools} ^10.0.1 with ngrx-store-freeze ~0.2.4 in dev",
+    "styling": "SCSS with stylePreprocessorOptions.includePaths src/styles, plus material-design-icons ~3.0.1 iconfont",
+    "testStack": "karma 5 + jasmine 3.5 (unit), protractor 7 skeleton (e2e, no tests written)",
+    "linter": "tslint 6 with codelyzer 6",
+    "allowedCommonJsDependencies": ["pako", "file-saver", "elementary-circuits-directed-graph"]
+  },
+  "backend": {
+    "present": false,
+    "evidence": "The tree contains no server source, no Dockerfile, no docker-compose file, and no API base URL in src. src/environments/environment*.ts carry no host. The application reads its datasets from src/data assets copied into dist, and persists user state in the URL (pako-deflated, base64) — see router.service.ts. The prod workflow deploys the dist folder to GitHub Pages.",
+    "networkAtRuntime": "static asset fetches of data/<dataset>/data.json from the app's own origin"
+  },
+  "nonclaims": [
+    "A complete, integrity-hashed lockfile establishes that the dependency set is pinned. It establishes nothing about whether those versions are still fetchable, whether they build, or what they are licensed under.",
+    "No licence determination is made for any dependency in this closure."
+  ]
+}

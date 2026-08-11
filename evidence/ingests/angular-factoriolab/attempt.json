@@ -1,0 +1,62 @@
+{
+  "schemaVersion": "versionless.official-source-attempt.v1",
+  "unit": "lrapr-t005/a1-ingest-factoriolab",
+  "candidate": {
+    "repository": "factoriolab/factoriolab",
+    "requestedRevision": "5f54abbdcac518d8ebf7e136c4348384d9b1a2bb",
+    "revisionKind": "bare commit sha (no tag was requested or relied on)",
+    "expectationSource": "a prior read-only scout unit (lrapr-t005/a0); re-verified from the wire by this unit rather than trusted"
+  },
+  "tranche": "Angular tranche one (board task T005, first Angular cohort)",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "result": "started",
+  "network": {
+    "method": "GET",
+    "credentials": "none",
+    "requestEncoding": "identity",
+    "redirectsAllowed": false,
+    "retriesAllowed": false,
+    "alternateHostsAllowed": false
+  },
+  "allowlist": [
+    "https://api.github.com/repos/factoriolab/factoriolab",
+    "https://api.github.com/repos/factoriolab/factoriolab/commits/<pinned-commit-sha>",
+    "https://api.github.com/repos/factoriolab/factoriolab/git/trees/<validated-tree-sha>?recursive=1",
+    "https://codeload.github.com/factoriolab/factoriolab/tar.gz/<pinned-commit-sha>"
+  ],
+  "caps": {
+    "maximumAcceptedResponses": 8,
+    "maximumApiResponseBytes": 16777216,
+    "maximumArchiveBytes": 134217728,
+    "maximumAggregateWireBytes": 314572800,
+    "requiredArchiveStreams": 2
+  },
+  "requiredRevisionWindow": {
+    "from": "2016-01-01T00:00:00Z",
+    "through": "2023-08-10T00:00:00Z"
+  },
+  "publication": {
+    "evidenceRoot": "evidence/ingests/angular-factoriolab",
+    "cacheRoot": ".versionless/cache/angular-factoriolab-source",
+    "baselineCacheRoot": ".versionless/cache/angular-factoriolab-baseline",
+    "fixtureRoot": "fixtures/angular-factoriolab",
+    "transactional": true,
+    "readinessCredit": false
+  },
+  "baselineNetwork": {
+    "purpose": "one truthful baseline dependency install and production build for the declared legacy cell",
+    "allowedHosts": ["registry.npmjs.org"],
+    "note": "Package-manager fetches during the baseline install are performed by npm itself and are recorded in aggregate in baseline-attempt.json, not URL-by-URL in the source ledger. Angular CLI analytics was disabled (NG_CLI_ANALYTICS=false) so that the build itself contacts nothing."
+  },
+  "amendment": {
+    "at": "recorded after the baseline build attempt",
+    "reason": "The archive at the pinned revision turned out to carry Git LFS pointer stubs for src/data/** and *.png rather than payloads. One labeled deviation extended the allowlist to https://media.githubusercontent.com/media/factoriolab/factoriolab/<pinned-commit-sha>/<lfs-path> — plain GET, no credentials, each payload verified against the sha256 oid carried by the pointer it replaces. Recorded in lfs.json and probe-ledger.ndjson.",
+    "extendedAllowlist": [
+      "https://media.githubusercontent.com/media/factoriolab/factoriolab/<pinned-commit-sha>/<lfs-path>"
+    ]
+  },
+  "nonclaims": [
+    "Starting this transaction establishes no revision identity, license, source integrity, dependency closure, framework, build, browser behavior, migration feasibility, pilot status, or production readiness.",
+    "The resulting evidence is reproducibility evidence, not certification or legal approval."
+  ]
+}

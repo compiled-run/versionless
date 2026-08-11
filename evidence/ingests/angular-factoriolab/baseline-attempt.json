@@ -1,0 +1,104 @@
+{
+  "schemaVersion": "versionless.legacy-baseline-attempt.v1",
+  "slug": "angular-factoriolab",
+  "unit": "lrapr-t005/a1-ingest-factoriolab",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "purpose": "One truthful baseline dependency install and production build of the pinned revision, in the nearest honestly-labeled legacy cell.",
+  "declaredCell": {
+    "declaredByRepository": {
+      "enginesField": "absent — package.json declares no engines block",
+      "nvmrc": "absent",
+      "continuousIntegrationMatrix": "none — .github/workflows/{prod,staging,tests}.yml run on ubuntu-latest and never call actions/setup-node, so they take whatever Node the runner image shipped in 2020 and the repository states no version anywhere",
+      "packageManagerInCi": "npm ci (a package-lock.json is committed)",
+      "interpretation": "The repository pins no Node version at all. The era is fixed instead by the toolchain it does pin: @angular/cli 10.1.4 and @angular-devkit/build-angular 0.1001.4, whose own engines field is node ^10.13.0 || >=12.0.0 with npm ^6.11.0 || ^7.5.6, on the Angular 10 support matrix (Node 10.13/12/14).",
+      "ambiguityPreserved": true
+    },
+    "used": {
+      "node": "12.14.1",
+      "platform": "darwin-x64 executed on darwin-arm64 through Rosetta 2",
+      "reusedFrom": "the runtime acquired and digest-verified by the react-mycrypto ingest and already present in this workspace; no new runtime download was made by this unit",
+      "packageManager": "npm 6.13.4 (bundled with the pinned runtime)",
+      "translationLayer": "Rosetta 2, present and working on this host (the x64 build reports v12.14.1)",
+      "honestLabel": "era-consistent, not repository-pinned. Node 12.14.1 sits inside the Angular 10 support matrix and satisfies the CLI's declared engines range. The repository itself declares nothing, so nothing here is a repository pin. Node 14 was not exercised.",
+      "whyNotNode16": "The host also carries a native arm64 Node 16.20.2. Node 16 is outside the Angular 10 support matrix and pairs with npm 8, which reads lockfileVersion 1 through a v2/v3 upgrade path rather than as written. Node 12 with npm 6 consumes the committed lockfileVersion 1 in its native form, which is the point of a baseline.",
+      "engineDeviationRecorded": "none observed: npm 6 emitted no unsupported-engine warning during the install."
+    }
+  },
+  "install": {
+    "command": "npm ci --no-audit --no-fund",
+    "ciVariantAvailable": true,
+    "ciVariantReason": "A package-lock.json (lockfileVersion 1, 1609 entries, every entry carrying an integrity hash) is committed at the pinned revision, so the reproducible install path exists and was the one taken. This is also what upstream CI runs.",
+    "lifecycleScripts": "enabled",
+    "lifecycleScriptsNote": "Scripts were left enabled because upstream CI runs a plain `npm ci` and because @angular/cli 10's postinstall is part of a normal Angular install. Angular CLI analytics was disabled via NG_CLI_ANALYTICS=false so that neither install nor build emitted telemetry.",
+    "outcome": "succeeded",
+    "exitStatus": 0,
+    "durationMs": 17436,
+    "packagesInstalled": 1609,
+    "networkHosts": ["registry.npmjs.org"],
+    "observed": {
+      "postinstallRan": "@angular/cli@10.1.4 postinstall (node ./bin/postinstall/script.js)",
+      "optionalNativeBuildFailures": "fsevents failed to configure twice (under webpack-dev-server and under watchpack-chokidar2). The cause is the bundled node-gyp 5.0.5 running against this host's Python 3 — gyp raises `TypeError: write() argument must be str, not bytes while trying to load binding.gyp`. fsevents is optional and macOS-watcher-only; npm still exited 0, and the production build below did not need it.",
+      "unsupportedEngineWarnings": 0
+    }
+  },
+  "build": {
+    "command": "npm run build -- --prod",
+    "expands": "ng build --prod (@angular-devkit/build-angular:browser, Ivy, AOT, webpack 4, differential loading)",
+    "matchesUpstream": "yes — .github/workflows/prod.yml runs exactly `npm ci` then `npm run build -- --prod`",
+    "outcome": "failed",
+    "exitStatus": 1,
+    "durationMs": 12990,
+    "failure": {
+      "stage": "TypeScript compilation of imported JSON, before any application code was reached",
+      "diagnostic": "src/data/app/data.json:2:13 - error TS1136: Property assignment expected (and the same class of parse error across the other data.json inputs)",
+      "cause": "The acquired archive carries Git LFS pointer stubs in place of src/data/**/data.json. tsconfig.json sets resolveJsonModule, so the compiler parses those three-line pointer files as JSON and fails on the second line.",
+      "rootCause": "The repository stores src/data/** and all *.png in Git LFS. A codeload tarball — and the git tree it reconciles against — contain pointers, not payloads. This is a property of how the source is published, not a defect in the pinned revision.",
+      "notAFailureOf": "not a failure of the application source, of the committed lockfile, of the Node 12 cell, or of Rosetta 2 translation."
+    }
+  },
+  "deviation": {
+    "attempted": true,
+    "honestLabel": "deviation — not the baseline; the working tree was completed after the fact with content the baseline acquisition path did not carry",
+    "change": "Fetched the 26 Git LFS payloads (34,213,410 bytes) over plain GET from media.githubusercontent.com at the same pinned commit sha, verified each against the sha256 oid carried by the pointer it replaces (26/26 matched), wrote them over the pointer stubs in the baseline working tree, and re-ran `npm run build -- --prod` with no other change.",
+    "dependencyClosureChanged": false,
+    "sourceCodeChanged": false,
+    "buildExitStatus": 0,
+    "buildDurationMs": 34670,
+    "outcome": "succeeded",
+    "output": {
+      "distFiles": 42,
+      "distBytes": 36419363,
+      "differentialLoading": "es2015 and es5 bundles emitted",
+      "mainEs2015Bundle": "696 kB",
+      "mainEs5Bundle": "805 kB",
+      "polyfillsEs2015": "56.7 kB",
+      "polyfillsEs5": "150 kB",
+      "stylesBundle": "3.62 kB",
+      "thirdPartyLicensesEmitted": "dist/3rdpartylicenses.txt",
+      "budgetsExceeded": "none reported",
+      "sizeNote": "Most of the 36 MB of output is the copied src/data assets (dataset JSON plus icon sprite sheets), not JavaScript."
+    },
+    "stopped": "after one deviation, which resolved the observed failure completely."
+  },
+  "conclusion": {
+    "installs": "yes, from the committed lockfileVersion 1 via npm ci in the Node 12.14.1 / npm 6.13.4 cell",
+    "buildsAsAcquired": "no — the LFS pointer stubs in src/data/** make the production build fail during JSON compilation",
+    "buildsWithLfsPayloadsMaterialised": "yes — a full AOT production build with differential loading, exit 0",
+    "reproducibilityPosture": "strong for dependencies (complete lockfileVersion 1, every entry integrity-hashed, all 1609 resolutions on registry.npmjs.org), conditional for source (the tree is not self-contained; LFS payloads must be fetched separately and are verifiable against pinned oids)",
+    "whatLaterWorkMustCarry": "any later unit that builds or serves this fixture must materialise the 26 LFS payloads first, or reproduce the same TS1136 failure.",
+    "unknownPreserved": "Nothing here establishes that the built bundle runs correctly in a browser; no browser was driven by this unit."
+  },
+  "artifacts": {
+    "workingTree": ".versionless/cache/angular-factoriolab-baseline/app (git-ignored)",
+    "installLog": ".versionless/cache/angular-factoriolab-baseline/install.stdout.log, install.stderr.log (git-ignored)",
+    "baselineBuildLog": ".versionless/cache/angular-factoriolab-baseline/baseline-build.stdout.log, baseline-build.stderr.log (git-ignored)",
+    "deviationBuildLog": ".versionless/cache/angular-factoriolab-baseline/deviation-build.stdout.log, deviation-build.stderr.log (git-ignored)",
+    "buildOutputProduced": true,
+    "note": "Logs are retained in the git-ignored cache rather than copied into evidence, because they carry host-absolute paths. The quoted diagnostics above were transcribed with those paths removed."
+  },
+  "nonclaims": [
+    "A successful install establishes no dependency licence position.",
+    "A successful production build establishes no browser behavior, journey exercisability, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "The baseline failure is a finding about the acquisition path on this date, not a claim that the application is unbuildable."
+  ]
+}

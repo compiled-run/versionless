@@ -1,0 +1,245 @@
+{
+  "pointerFiles": 26,
+  "fetchedBytes": 34213410,
+  "allOidsVerified": true,
+  "pointers": [
+    {
+      "path": "src/assets/GitHub.png",
+      "oid": "2495121b685778bd251e2b9ceea4124cf98479ec86e7d159658e47fa790f2c0e",
+      "size": 1714,
+      "pointerSha256": "66e9866b49897ff39bc0bc3aaeee65aa27061b79e31d7459d6418fab4c968558",
+      "fetchedSha256": "2495121b685778bd251e2b9ceea4124cf98479ec86e7d159658e47fa790f2c0e",
+      "fetchedBytes": 1714,
+      "oidVerified": true
+    },
+    {
+      "path": "src/assets/logo.png",
+      "oid": "5913aa327c5a0b64927febce5c74051cb7beb88ee6625469828a73ec62108238",
+      "size": 19468,
+      "pointerSha256": "7e739339983e40874d6610e3cd5573973809d8f3f932fc5e1abfa2ea342beb13",
+      "fetchedSha256": "5913aa327c5a0b64927febce5c74051cb7beb88ee6625469828a73ec62108238",
+      "fetchedBytes": 19468,
+      "oidVerified": true
+    },
+    {
+      "path": "src/data/0.16/data.json",
+      "oid": "652e4b4ffd3514f993c7b2052110a01c3136ef00d683e61c9b932f33274e7762",
+      "size": 74710,
+      "pointerSha256": "4812fbc8bb08c0a811135ceeaa2cd485575e6ddffa3c662ff0a283ebb5e3f461",
+      "fetchedSha256": "652e4b4ffd3514f993c7b2052110a01c3136ef00d683e61c9b932f33274e7762",
+      "fetchedBytes": 74710,
+      "oidVerified": true
+    },
+    {
+      "path": "src/data/0.16/icons.png",
+      "oid": "b9b3676ac3afbcfb06ca6ed4479addfebd4a064f698e4a0dfc7f079c103e64dd",
+      "size": 582211,
+      "pointerSha256": "c34daf51553e7a97864cd5d82d06e4b0a51ce9332228544675fb7693a2bf0212",
+      "fetchedSha256": "b9b3676ac3afbcfb06ca6ed4479addfebd4a064f698e4a0dfc7f079c103e64dd",
+      "fetchedBytes": 582211,
+      "oidVerified": true
+    },
+    {
+      "path": "src/data/0.17/data.json",
+      "oid": "5e714f078fcdfcc3d04545b2b5f9c99c2b040d4f606559e6a31f0240bca329df",
+      "size": 74706,
+      "pointerSha256": "ba987e9cb5990dfb8e893e9075d45f99a5b7c2be74be051227bc7bc0dbd37a92",
+      "fetchedSha256": "5e714f078fcdfcc3d04545b2b5f9c99c2b040d4f606559e6a31f0240bca329df",
+      "fetchedBytes": 74706,
+      "oidVerified": true
+    },
+    {
+      "path": "src/data/0.17/icons.png",
+      "oid": "f15e0e9b9c24bc528d27a5382a993d850feebdcab6be48682c8bc1c6578229cf",
+      "size": 603164,
+      "pointerSha256": "097f500e770cfda391f15d60abca6816d6b8c875571ad1b63a2cc771017f77d1",
+      "fetchedSha256": "f15e0e9b9c24bc528d27a5382a993d850feebdcab6be48682c8bc1c6578229cf",
+      "fetchedBytes": 603164,
+      "oidVerified": true
+    },
+    {
+      "path": "src/data/0.18/data.json",
+      "oid": "1f2b09a7679beef594bee2ac21d04b178fb43146cab777683424dd62bbc61a68",
+      "size": 74706,
+      "pointerSha256": "b3971a4a47ef6c53c8c58d711f7a4e8f0dfaa4c0ce1d862c05b8ede66a989766",
+      "fetchedSha256": "1f2b09a7679beef594bee2ac21d04b178fb43146cab777683424dd62bbc61a68",
+      "fetchedBytes": 74706,
+      "oidVerified": true
+    },
+    {
+      "path": "src/data/0.18/icons.png",
+      "oid": "54397b4c8523f9974af48022a1893ee8acd95a7cd958265b300800392612d6f0",
+      "size": 1569171,
+      "pointerSha256": "7d28be04abd4ae58dfbf62fcd4045ba29e6ba747f2e4629ddd6e76d95ff1975e",
+      "fetchedSha256": "54397b4c8523f9974af48022a1893ee8acd95a7cd958265b300800392612d6f0",
+      "fetchedBytes": 1569171,
+      "oidVerified": true
+    },
+    {
+      "path": "src/data/1.0/data.json",
+      "oid": "3bae87263a9e184e9f4ce47ba37c5788319408cdb4bd5718699283db9a4804b1",
+      "size": 75641,
+      "pointerSha256": "c0fcd884b7911eec530508126d570a54bee1b06edffcc69c95b15ae0be4ada13",
+      "fetchedSha256": "3bae87263a9e184e9f4ce47ba37c5788319408cdb4bd5718699283db9a4804b1",
+      "fetchedBytes": 75641,
+      "oidVerified": true
+    },
+    {
+      "path": "src/data/1.0/icons.png",
+      "oid": "69f61e2ffca4c5fd17557e5d7f97ec1e9d26b84a35ea61f64c1fa618b5e9f016",
+      "size": 1589425,
+      "pointerSha256": "c5137c7b560bdebffd82c0744db0b92fe9b155a587cc1f1fc2ea79170e2c645d",
+      "fetchedSha256": "69f61e2ffca4c5fd17557e5d7f97ec1e9d26b84a35ea61f64c1fa618b5e9f016",
+      "fetchedBytes": 1589425,
+      "oidVerified": true
+    },
+    {
+      "path": "src/data/app/data.json",
+      "oid": "6ab9724409ad49f87151d267f5edab46323de1e374e7e0da63e77c612d199117",
+      "size": 1248,
+      "pointerSha256": "2c0f6dc3365175913549706b0ede4fc51a395517fed27763684f897f209fb110",
+      "fetchedSha256": "6ab9724409ad49f87151d267f5edab46323de1e374e7e0da63e77c612d199117",
+      "fetchedBytes": 1248,
+      "oidVerified": true
+    },
+    {
+      "path": "src/data/app/icons.png",
+      "oid": "c16a418e92b68535040e4e90b91f32ff151968c024b09b34a3d014be114ad73f",
+      "size": 117592,
+      "pointerSha256": "5fc3364823acdf5c9b524c83d179e6141f139de2a2a4bc7a283c93ea0f62fe8d",
+      "fetchedSha256": "c16a418e92b68535040e4e90b91f32ff151968c024b09b34a3d014be114ad73f",
+      "fetchedBytes": 117592,
+      "oidVerified": true
+    },
+    {
+      "path": "src/data/bio-industries/data.json",
+      "oid": "2f8e3804d230d1f042e5530c037f71cdc87289579f216dddd137749222591f08",
+      "size": 108723,
+      "pointerSha256": "c086f87dfd940dd384e991c795b924ff35be532007ac5703d2006121b8564279",
+      "fetchedSha256": "2f8e3804d230d1f042e5530c037f71cdc87289579f216dddd137749222591f08",
+      "fetchedBytes": 108723,
+      "oidVerified": true
+    },
+    {
+      "path": "src/data/bio-industries/icons.png",
+      "oid": "5050ca105032b07291987ce4add0d1962ce42138bd1857b03747b8598b378e2c",
+      "size": 2238805,
+      "pointerSha256": "63ecbea2d46c8bd8e58edbecf97b07fb116abed79366dcece57afbaa5ec6a2b6",
+      "fetchedSha256": "5050ca105032b07291987ce4add0d1962ce42138bd1857b03747b8598b378e2c",
+      "fetchedBytes": 2238805,
+      "oidVerified": true
+    },
+    {
+      "path": "src/data/bobs-angels/data.json",
+      "oid": "d11944470038e484913c8fc59d5bb81ed6f380b30fc42f1fa79e2fe4574bcd78",
+      "size": 1168759,
+      "pointerSha256": "411485e435904798990b43a1fba5545d5f8ee64d2eb088f65a960088328033d2",
+      "fetchedSha256": "d11944470038e484913c8fc59d5bb81ed6f380b30fc42f1fa79e2fe4574bcd78",
+      "fetchedBytes": 1168759,
+      "oidVerified": true
+    },
+    {
+      "path": "src/data/bobs-angels/icons.png",
+      "oid": "ab6e8e8539177363a65c71ab7601411b594634edeb6b814d8805c61f200e6eaa",
+      "size": 6396855,
+      "pointerSha256": "1243e6ccc090c571e28b24d24d1cc85a335dea429dfef9eeb47332b394df4e72",
+      "fetchedSha256": "ab6e8e8539177363a65c71ab7601411b594634edeb6b814d8805c61f200e6eaa",
+      "fetchedBytes": 6396855,
+      "oidVerified": true
+    },
+    {
+      "path": "src/data/factorio-extended-plus/data.json",
+      "oid": "1b51b34e10cdbb1889e7bf2a1d0ebf3296e621dd7a57fc89dfebb3d4caebf12e",
+      "size": 125848,
+      "pointerSha256": "8b7166de1e265063e406c4dac3aa252741601edb316650a7ba4843e699cc4646",
+      "fetchedSha256": "1b51b34e10cdbb1889e7bf2a1d0ebf3296e621dd7a57fc89dfebb3d4caebf12e",
+      "fetchedBytes": 125848,
+      "oidVerified": true
+    },
+    {
+      "path": "src/data/factorio-extended-plus/icons.png",
+      "oid": "f4760f254a10afab607c736322af2724479e37d7b2e1176c0c5a024d0957efd3",
+      "size": 2305591,
+      "pointerSha256": "e1369f4281c5ad6b34c5c90a4a1e9329d44bec606a975c38db344856791922a6",
+      "fetchedSha256": "f4760f254a10afab607c736322af2724479e37d7b2e1176c0c5a024d0957efd3",
+      "fetchedBytes": 2305591,
+      "oidVerified": true
+    },
+    {
+      "path": "src/data/krastorio2/data.json",
+      "oid": "c0494b4f27048cc8f52c3728bd4432f5c5e5e2be23d4569f4b40ef9f00eebae4",
+      "size": 186758,
+      "pointerSha256": "c0938f3a8ef9be0792be19b9dd2393e9c4a5a4d65a5c107dd2e70134536252e3",
+      "fetchedSha256": "c0494b4f27048cc8f52c3728bd4432f5c5e5e2be23d4569f4b40ef9f00eebae4",
+      "fetchedBytes": 186758,
+      "oidVerified": true
+    },
+    {
+      "path": "src/data/krastorio2/icons.png",
+      "oid": "875a6d0409547fa2c3b2489a958a38e5791b67da4a75bd2d5fe3f70fe654b68f",
+      "size": 3471510,
+      "pointerSha256": "8cb7f5457e2d20029f0d468138f7bc6c6cdf93b27386f9708478c4a61d37e21f",
+      "fetchedSha256": "875a6d0409547fa2c3b2489a958a38e5791b67da4a75bd2d5fe3f70fe654b68f",
+      "fetchedBytes": 3471510,
+      "oidVerified": true
+    },
+    {
+      "path": "src/data/pyanodons/data.json",
+      "oid": "e678f51edd6d1d506fb84c3317124b1d173756a2b470a35e7488de4afc172b71",
+      "size": 1093961,
+      "pointerSha256": "7ad59a33ca8562e804f3b045d1c526e5e1879cc48b590a946593b5fca955fb84",
+      "fetchedSha256": "e678f51edd6d1d506fb84c3317124b1d173756a2b470a35e7488de4afc172b71",
+      "fetchedBytes": 1093961,
+      "oidVerified": true
+    },
+    {
+      "path": "src/data/pyanodons/icons.png",
+      "oid": "4427109773e0c20ab1fbd43cd725029fbf2e6358348b7c6c949a968fddb5541c",
+      "size": 7161448,
+      "pointerSha256": "0052394222f30b390c4fae69a0a2dfcc959080d3345ecdc1be3396c01d077b78",
+      "fetchedSha256": "4427109773e0c20ab1fbd43cd725029fbf2e6358348b7c6c949a968fddb5541c",
+      "fetchedBytes": 7161448,
+      "oidVerified": true
+    },
+    {
+      "path": "src/data/research/data.json",
+      "oid": "34e95733ebd7634aa8e1f57fb223e653052a3aa88f90b3c49be6aafca18e36c4",
+      "size": 4185,
+      "pointerSha256": "894aa38aa15a17b3452de3cfbee2d4ee8bfae68b60c89cdfeb40f5688ce40286",
+      "fetchedSha256": "34e95733ebd7634aa8e1f57fb223e653052a3aa88f90b3c49be6aafca18e36c4",
+      "fetchedBytes": 4185,
+      "oidVerified": true
+    },
+    {
+      "path": "src/data/research/icons.png",
+      "oid": "f8a0885996e899c7638e7f119fdb9fafb26de8a7e8c48c952abfdadf89374b27",
+      "size": 73437,
+      "pointerSha256": "ad36ce77beb72683e996f23c43e161a05ed80c11e2ae6168620d19767cf08dde",
+      "fetchedSha256": "f8a0885996e899c7638e7f119fdb9fafb26de8a7e8c48c952abfdadf89374b27",
+      "fetchedBytes": 73437,
+      "oidVerified": true
+    },
+    {
+      "path": "src/data/space-exploration/data.json",
+      "oid": "3fc3e1665ede9e7fd9bb1f28c34cd6c2b6ff4d0ffb423d5e51d8cbafaa803016",
+      "size": 358684,
+      "pointerSha256": "b9f734a63d053aad7c25ccb9015f2f6484448d7c3e4a97e7fef17f0afba37ae1",
+      "fetchedSha256": "3fc3e1665ede9e7fd9bb1f28c34cd6c2b6ff4d0ffb423d5e51d8cbafaa803016",
+      "fetchedBytes": 358684,
+      "oidVerified": true
+    },
+    {
+      "path": "src/data/space-exploration/icons.png",
+      "oid": "e0262fcc598de5fe5fdda9b0693c73f159fde34cc5f791e4b088b58393b1fcda",
+      "size": 4735090,
+      "pointerSha256": "03b580715fde2e28d6b675f05e9fc9eaf653bfc57cd60676b85219f4782a2a28",
+      "fetchedSha256": "e0262fcc598de5fe5fdda9b0693c73f159fde34cc5f791e4b088b58393b1fcda",
+      "fetchedBytes": 4735090,
+      "oidVerified": true
+    }
+  ],
+  "buildExitStatus": 0,
+  "buildDurationMs": 34670,
+  "distFiles": 42,
+  "distBytes": 36419363
+}

@@ -1,0 +1,64 @@
+{
+  "id": "angular-factoriolab",
+  "tranche": "Angular tranche one",
+  "unit": "lrapr-t005/a1-ingest-factoriolab",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "evidenceRoot": "evidence/ingests/angular-factoriolab",
+  "application": {
+    "name": "Factorio Lab",
+    "manifestName": "factorio-lab",
+    "version": "1.2.5",
+    "description": "Angular-based production calculator for the game Factorio",
+    "license": "MIT",
+    "backend": "none — static single-page application, datasets copied in as assets, scenario state carried in the URL"
+  },
+  "source": {
+    "repository": "factoriolab/factoriolab",
+    "commitSha": "5f54abbdcac518d8ebf7e136c4348384d9b1a2bb",
+    "commitDate": "2020-10-31T16:58:40Z",
+    "rootTreeSha": "b366ea0d6183d83e175aaa52e3620562c46321b8",
+    "archiveUrl": "https://codeload.github.com/factoriolab/factoriolab/tar.gz/5f54abbdcac518d8ebf7e136c4348384d9b1a2bb",
+    "archiveSha256": "11f2ce939f4be04b11e77b7f12e13d7449bf944b9bfefbeca237c46dea12f7ed",
+    "archiveBytes": 267218,
+    "archiveRoot": "factoriolab-5f54abbdcac518d8ebf7e136c4348384d9b1a2bb",
+    "normalizedManifestSha256": "706b6a8ae14797cea1da6d38941439bed6e1b81c901a7056455ce7270e7936fb",
+    "licenseSha256": "d2556dbacc2d52cdda0e8b3ebd15b0492d34028074768b3683815540d17e71af",
+    "packageSha256": "051f928938dd0bbd55cd24de9f8c6330b5eb07728e0b10e0fd97658224e6eb18",
+    "packageLockSha256": "dfd5c7727bdfe9eeb397eb5599049356d70762648adefb08ef5c0ec07229142e",
+    "angularJsonSha256": "8ea2a5081c346939c434dc431e694f1b8ef619762843f5083882480d5ea8467b"
+  },
+  "gitLargeFileStorage": {
+    "required": true,
+    "pointerFiles": 26,
+    "payloadBytes": 34213410,
+    "mediaUrlTemplate": "https://media.githubusercontent.com/media/factoriolab/factoriolab/5f54abbdcac518d8ebf7e136c4348384d9b1a2bb/{path}",
+    "verification": "each payload's sha256 must equal the oid recorded in the pointer stub it replaces; the per-path oids are listed in evidence/ingests/angular-factoriolab/lfs.json",
+    "note": "Without this step the production build fails at TS1136, because tsconfig.json enables resolveJsonModule and src/data/index.ts imports a pointer stub."
+  },
+  "toolchain": {
+    "framework": "Angular 10.1.5",
+    "cli": "@angular/cli 10.1.4",
+    "builder": "@angular-devkit/build-angular:browser 0.1001.4",
+    "bundler": "webpack 4",
+    "compiler": "Ivy, AOT",
+    "typescript": "4.0.3",
+    "state": "@ngrx/store 10.0.1",
+    "packageManager": "npm, package-lock.json lockfileVersion 1 (1609 entries, all integrity-hashed)"
+  },
+  "legacyCell": {
+    "node": "12.14.1",
+    "platform": "darwin-x64 under Rosetta 2 on darwin-arm64",
+    "npm": "6.13.4",
+    "label": "era-consistent with the Angular 10 support matrix; the repository itself pins no Node version",
+    "environment": { "NG_CLI_ANALYTICS": "false" }
+  },
+  "baseline": {
+    "install": { "command": "npm ci --no-audit --no-fund", "outcome": "succeeded", "exitStatus": 0 },
+    "buildAsAcquired": { "command": "npm run build -- --prod", "outcome": "failed", "exitStatus": 1, "reason": "Git LFS pointer stubs parsed as JSON" },
+    "buildWithLfsMaterialised": { "command": "npm run build -- --prod", "outcome": "succeeded", "exitStatus": 0, "distFiles": 42 },
+    "detail": "evidence/ingests/angular-factoriolab/baseline-attempt.json"
+  },
+  "nonclaims": [
+    "This manifest records an acquired identity and one baseline attempt. It establishes no browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval."
+  ]
+}
