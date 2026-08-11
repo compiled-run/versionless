@@ -18,8 +18,23 @@ import {
 	type DependencyChange,
 } from './angular-target-cell.ts';
 import { migrateAngularSourceModule, type SourceChange } from './angular-source-migration.ts';
+import {
+	migrateModalContentParams,
+	type ModalContentParamsChange,
+	type ModuleResolution,
+} from './modal-content-params-migration.ts';
 import { migrateNgrxEffectDecorators, type NgrxEffectChange } from './ngrx-effects-migration.ts';
+import {
+	migratePackageStyleImports,
+	type PackageExportsReading,
+	type StyleImportChange,
+} from './package-exports-style-imports.ts';
 import { migrateSentryV8Tracing, type SentryV8Change } from './sentry-v8-migration.ts';
+import {
+	declareUndeclaredRuntimeDependencies,
+	undeclaredRuntimeDependencies,
+	type InstalledPackage,
+} from './undeclared-runtime-dependency.ts';
 import {
 	migrateAngularTsConfig,
 	migrateAngularWorkspace,
@@ -49,6 +64,27 @@ export type AngularMigrationInput = Readonly<{
 	 * tree that supplies no list has no files removed.
 	 */
 	workspaceFiles?: readonly string[];
+	/**
+	 * Stylesheets the application owns, kept apart from {@link sourceModules}
+	 * because they are not modules: no source transform parses them, and the only
+	 * capability that reads them resolves package subpaths against an exports map.
+	 */
+	styleSheets?: readonly WorkspaceFile[];
+	/**
+	 * The published surface of packages whose stylesheet subpaths the application
+	 * imports, as read from the installed closure. A package not read here has its
+	 * style imports left exactly as they are.
+	 */
+	packageExports?: readonly PackageExportsReading[];
+	/**
+	 * The installed dependency closure, reduced to declarations and shipped
+	 * imports. Supplying it is what lets undeclared runtime dependencies be
+	 * detected; a tree that supplies none has none detected, which is a different
+	 * thing from having none.
+	 */
+	installedPackages?: readonly InstalledPackage[];
+	/** How the workspace resolves module specifiers written in its own source. */
+	moduleResolution?: ModuleResolution;
 }>;
 
 export type MigratedFile = Readonly<{
@@ -97,7 +133,14 @@ function describeDependencyChange(change: DependencyChange): string {
 		: `${target}: ${change.from} -> ${change.to} — ${change.reason}`;
 }
 
-function describeSourceChange(change: SourceChange | NgrxEffectChange | SentryV8Change): string {
+function describeSourceChange(
+	change:
+		| SourceChange
+		| NgrxEffectChange
+		| SentryV8Change
+		| ModalContentParamsChange
+		| StyleImportChange,
+): string {
 	return `line ${change.line}: ${change.kind} ${change.from} -> ${change.to}`;
 }
 
@@ -156,14 +199,29 @@ export function migrateAngularCliEraWorkspace(
 	);
 	unhandled.push(...aligned.unhandled);
 	declaredDifferences.push(...aligned.declaredDifferences);
+	/**
+	 * Holes the closure carries are closed after the cell alignment, not before:
+	 * the cell decides which lines the workspace runs, and an undeclared edge is
+	 * declared at the line the cell read for it.
+	 */
+	const holes = undeclaredRuntimeDependencies(input.installedPackages ?? []);
+	const declared = declareUndeclaredRuntimeDependencies(aligned.manifest, holes, cell);
+	unhandled.push(...declared.unhandled);
+	declaredDifferences.push(...declared.declaredDifferences);
 	const tsConfig = migrateAngularTsConfig(input.tsConfig.source, cell);
 	unhandled.push(...tsConfig.unhandled);
 	const files: MigratedFile[] = [
 		file(
 			input.packageManifest,
-			`${JSON.stringify(aligned.manifest, null, 2)}\n`,
+			`${JSON.stringify(declared.manifest, null, 2)}\n`,
 			'workspace',
-			aligned.changes.map(describeDependencyChange),
+			[
+				...aligned.changes.map(describeDependencyChange),
+				...declared.declarations.map(
+					(entry) =>
+						`added ${entry.field}.${entry.name} = ${entry.range} — ${entry.reason}`,
+				),
+			],
 		),
 		file(
 			input.workspaceConfig,
@@ -184,20 +242,52 @@ export function migrateAngularCliEraWorkspace(
 	 * the next replaces a removed NgRx decorator — and a module is counted as
 	 * changed if any of them changed a byte of it.
 	 */
+	/**
+	 * One capability is not per-module and cannot be: rewriting a modal call site
+	 * without rewriting the content component it supplied is the silent failure
+	 * that capability exists to refuse. It runs over the whole tree first, and
+	 * what it produced is what the per-module capabilities then see.
+	 */
+	const modal = migrateModalContentParams(input.sourceModules, input.moduleResolution ?? {});
+	unhandled.push(...modal.unhandled);
+	const modalByPath = new Map(modal.files.map((entry) => [entry.path, entry]));
 	for (const module of [...input.sourceModules].sort((left, right) =>
 		compareStrings(left.path, right.path),
 	)) {
-		const migrated = migrateAngularSourceModule(module.path, module.source);
+		const modalFile = modalByPath.get(module.path);
+		const entrySource = modalFile?.source ?? module.source;
+		const migrated = migrateAngularSourceModule(module.path, entrySource);
 		const effects = migrateNgrxEffectDecorators(module.path, migrated.source);
 		const sentry = migrateSentryV8Tracing(module.path, effects.source);
 		unhandled.push(...migrated.unhandled, ...effects.unhandled, ...sentry.unhandled);
 		files.push(
 			file(module, sentry.source, 'application', [
+				...(modalFile?.changes ?? []).map(describeSourceChange),
 				...migrated.changes.map(describeSourceChange),
 				...effects.changes.map(describeSourceChange),
 				...sentry.changes.map(describeSourceChange),
 			]),
 		);
+	}
+	/**
+	 * Stylesheets are application files too, and a blocked package subpath is an
+	 * application file that no longer builds. Each is offered to every package
+	 * reading the caller supplied; a stylesheet no reading touches is carried
+	 * through unchanged and still counted, so the scanned total means what it says.
+	 */
+	for (const sheet of [...(input.styleSheets ?? [])].sort((left, right) =>
+		compareStrings(left.path, right.path),
+	)) {
+		let source = sheet.source;
+		const changes: string[] = [];
+		for (const reading of input.packageExports ?? []) {
+			const styles = migratePackageStyleImports(sheet.path, source, reading);
+			unhandled.push(...styles.unhandled);
+			declaredDifferences.push(...styles.declaredDifferences);
+			changes.push(...styles.changes.map(describeSourceChange));
+			source = styles.source;
+		}
+		files.push(file(sheet, source, 'application', changes));
 	}
 	const applicationFiles = files.filter((entry) => entry.kind === 'application');
 	return Object.freeze({

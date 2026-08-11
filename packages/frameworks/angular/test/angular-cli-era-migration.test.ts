@@ -3,6 +3,7 @@ import * as path from 'pathe';
 import { describe, expect, it } from 'vitest';
 import { ANGULAR_16_BROWSER_CELL } from '../src/angular-target-cell.ts';
 import { migrateAngularCliEraWorkspace } from '../src/angular-cli-era-migration.ts';
+import { readInstalledPackage } from '../src/undeclared-runtime-dependency.ts';
 
 const workspaceConfig = JSON.stringify(
 	{
@@ -117,6 +118,108 @@ describe('Angular CLI era composed migration', () => {
 		expect(main?.source).toContain("tracePropagationTargets: ['localhost']");
 		expect(main?.changes).toContain(
 			'line 7: sentry-browser-tracing-integration new Integrations.BrowserTracing(…) -> Sentry.browserTracingIntegration()',
+		);
+	});
+
+	it('closes an undeclared runtime dependency the supplied closure carries', () => {
+		const migration = migrateAngularCliEraWorkspace(
+			{
+				...input,
+				installedPackages: [
+					readInstalledPackage(
+						JSON.stringify({
+							name: 'themed-widgets',
+							version: '16.2.2',
+							peerDependencies: { '@angular/core': '^16.0.0' },
+						}),
+						[
+							{
+								path: 'node_modules/themed-widgets/fesm2022/color.mjs',
+								source: "import { TinyColor } from '@ctrl/tinycolor';\nexport { TinyColor };\n",
+							},
+						],
+					),
+				],
+			},
+			ANGULAR_16_BROWSER_CELL,
+		);
+		const manifest = migration.files.find((file) => file.path === 'package.json');
+		expect(manifest?.source).toContain('"@ctrl/tinycolor": "^4.2.0"');
+		expect(manifest?.changes.join('\n')).toContain('added dependencies.@ctrl/tinycolor = ^4.2.0');
+		expect(migration.declaredDifferences.join('\n')).toContain(
+			'dependencies.@ctrl/tinycolor was added',
+		);
+	});
+
+	it('counts a migrated stylesheet as a changed application file and declares its payload change', () => {
+		const migration = migrateAngularCliEraWorkspace(
+			{
+				...input,
+				styleSheets: [
+					{
+						path: 'src/styles.scss',
+						source:
+							"@import 'themed-widgets/style/index.min.css';\n" +
+							"@import 'themed-widgets/modal/style/index.min.css';\n",
+					},
+				],
+				packageExports: [
+					{
+						name: 'themed-widgets',
+						version: '16.2.2',
+						exports: {
+							'./themed-widgets.min.css': { style: './themed-widgets.min.css' },
+							'./modal/style/*': { style: './modal/style/index.min.css' },
+						},
+					},
+				],
+			},
+			ANGULAR_16_BROWSER_CELL,
+		);
+		expect(migration.applicationFilesScanned).toBe(3);
+		const sheet = migration.files.find((file) => file.path === 'src/styles.scss');
+		expect(sheet?.kind).toBe('application');
+		expect(sheet?.source).toBe("@import 'themed-widgets/themed-widgets.min.css';\n");
+		expect(migration.declaredDifferences.join('\n')).toContain(
+			'stylesheet import(s) were replaced by the single exported aggregate',
+		);
+	});
+
+	it('runs the cross-module modal capability before the per-module ones', () => {
+		const migration = migrateAngularCliEraWorkspace(
+			{
+				...input,
+				sourceModules: [
+					...input.sourceModules,
+					{
+						path: 'src/app/card.component.ts',
+						source:
+							"import { NzModalService } from 'ng-zorro-antd/modal';\n" +
+							"import { ContentComponent } from './content.component';\n\n" +
+							'export class CardComponent {\n' +
+							'  constructor(private _modal: NzModalService) {}\n' +
+							'  open() {\n' +
+							'    this._modal.create({ nzContent: ContentComponent, ' +
+							'nzComponentParams: { id: this.id } });\n' +
+							'  }\n}\n',
+					},
+					{
+						path: 'src/app/content.component.ts',
+						source:
+							"import { Component, Input } from '@angular/core';\n\n" +
+							'export class ContentComponent {\n  @Input() id: string;\n}\n',
+					},
+				],
+			},
+			ANGULAR_16_BROWSER_CELL,
+		);
+		const content = migration.files.find((file) => file.path === 'src/app/content.component.ts');
+		expect(content?.changed).toBe(true);
+		expect(content?.source).toContain('id: string = inject(NZ_MODAL_DATA).id;');
+		const card = migration.files.find((file) => file.path === 'src/app/card.component.ts');
+		expect(card?.source).toContain('nzData: { id: this.id }');
+		expect(card?.changes).toContain(
+			'line 7: modal-content-params-option nzComponentParams: { id } -> nzData: { id }',
 		);
 	});
 });

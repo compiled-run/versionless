@@ -111,6 +111,11 @@ export const ANGULAR_16_ECOSYSTEM_PACKAGES: EcosystemPackages = Object.freeze({
 		range: '^16.2.2',
 		fact: 'ng-zorro-antd versions in lockstep with the Angular major: 16.2.2 is the last 16.x release and declares peer @angular/core ^16.0.0 across the six @angular packages it uses. It depends on @ant-design/icons-angular ^16.0.0 and @angular/cdk ^16.0.0, both of which this cell also carries. 17.0.0 declares ^17.0.0.',
 	}),
+	'@ctrl/tinycolor': Object.freeze({
+		kind: 'aligned',
+		range: '^4.2.0',
+		fact: '@ctrl/tinycolor declares no peers at all, so nothing in this cell excludes a line of it on that ground; 4.2.0 is the newest release published and declares engines.node ">=14", which this cell\'s Node 16.20.2 satisfies. The 3.x line before it declares ">=10" and is therefore not the newest satisfying line. Read from https://registry.npmjs.org/@ctrl/tinycolor under consent VL-LEGACY-CORPUS-2026-08-10; the four named exports the Angular 16 community layer reaches for — TinyColor, inputToRGB, rgbToHex, rgbToHsv — are all declared by 4.2.0 (https://unpkg.com/@ctrl/tinycolor@4.2.0/dist/index.d.ts, /dist/format-input.d.ts, /dist/conversion.d.ts).',
+	}),
 	'@datorama/akita': Object.freeze({
 		kind: 'aligned',
 		range: '^7.1.1',
