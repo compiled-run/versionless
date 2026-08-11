@@ -1,4 +1,5 @@
-import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { Buffer } from 'node:buffer';
+import { mkdir, mkdtemp, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { createContext, runInContext } from 'node:vm';
 import * as path from 'pathe';
@@ -6,20 +7,25 @@ import { build } from 'vite';
 import { describe, expect, test } from 'vitest';
 import {
 	craApplicationModuleResolver,
+	craDecodedModuleSource,
 	craEntryDocument,
 	craGlobalIdentifierDefines,
 	craImplicitGlobalPrelude,
+	craInvalidUtf8ByteOffsets,
 	craIsDependencyModule,
+	craModuleSourceEncoding,
 	craNodeCoreModuleName,
 	craNodeCoreShimPackage,
 	craNodeGlobalsBootstrapSource,
 	craNodeGlobalsModuleId,
 	craProcessEnvironmentDefines,
 	craPublicAssetPaths,
+	craWebpackDecodedSource,
 	craWebpackNodeCoreShimSpecifiers,
 	craWebpackNodeInjectedGlobals,
 	createCraGlobalIdentifierPlugin,
 	createCraNodeCoreModulePlugin,
+	createCraNonUtf8ModuleSourcePlugin,
 	createCraPublicDirectoryPlugin,
 	createCraSloppyCommonJsGlobalsPlugin,
 	createCraTildeCssImportPlugin,
@@ -635,6 +641,237 @@ describe("webpack's sloppy-mode CommonJS wrapper", () => {
 	});
 });
 
+describe("webpack's lenient module source decoding", () => {
+	// The era shape, minimised: one dependency whose bytes are a legacy
+	// single-byte encoding. The same text is available well formed, which is the
+	// control the real-world measurement turned on.
+	const dependencyText = "module.exports = { name: 'Giosuè' };\n";
+	const latin1Bytes = Buffer.from(dependencyText, 'latin1');
+	const utf8Bytes = Buffer.from(dependencyText, 'utf8');
+	const decodedText = "module.exports = { name: 'Giosu�' };\n";
+
+	async function writeByteDependency(
+		root: string,
+		name: string,
+		bytes: Uint8Array,
+	): Promise<void> {
+		const directory = path.join(root, 'node_modules', name);
+		await mkdir(directory, { recursive: true });
+		await writeFile(
+			path.join(directory, 'package.json'),
+			`${JSON.stringify({ name, version: '1.0.0', main: 'index.js' })}\n`,
+		);
+		await writeFile(path.join(directory, 'index.js'), bytes);
+	}
+
+	async function buildProbe(options: {
+		withAdapter: boolean;
+		dependencyBytes: Uint8Array;
+		entryBytes?: Uint8Array;
+	}): Promise<string> {
+		const root = await mkdtemp(path.join(tmpdir(), 'versionless-cra-decode-'));
+		try {
+			await writeFile(
+				path.join(root, 'package.json'),
+				`${JSON.stringify({ name: 'closure-under-test', version: '0.0.0' })}\n`,
+			);
+			await writeByteDependency(root, 'legacy-encoded', options.dependencyBytes);
+			await writeFile(
+				path.join(root, 'entry.js'),
+				options.entryBytes ??
+					Buffer.from(
+						[
+							"import legacy from 'legacy-encoded';",
+							'export const probe = { legacy: legacy };',
+							'',
+						].join('\n'),
+						'utf8',
+					),
+			);
+			const outDir = path.join(root, 'dist');
+			await build({
+				root,
+				logLevel: 'silent',
+				plugins: options.withAdapter ? [createCraNonUtf8ModuleSourcePlugin()] : [],
+				build: {
+					outDir,
+					minify: false,
+					lib: {
+						entry: path.join(root, 'entry.js'),
+						formats: ['iife'],
+						name: 'probe',
+						fileName: () => 'probe.js',
+					},
+				},
+			});
+			return await readFile(path.join(outDir, 'probe.js'), 'utf8');
+		} finally {
+			await rm(root, { recursive: true, force: true });
+		}
+	}
+
+	test('an unadapted build cannot load the dependency at all', async () => {
+		// The holdout's red, reproduced at fixture scale: the bundler refuses the
+		// bytes rather than decoding them, so nothing is emitted.
+		await expect(
+			buildProbe({ withAdapter: false, dependencyBytes: latin1Bytes }),
+		).rejects.toThrow('did not contain valid UTF-8');
+	});
+
+	test('the adapted build loads it and carries webpack 4 decoded text', async () => {
+		const code = await buildProbe({ withAdapter: true, dependencyBytes: latin1Bytes });
+		// Exactly what webpack 4 emitted for these bytes, measured on a real
+		// webpack 4.44.2 production build: the replacement character, not the
+		// accent. Parity with the bundler being replaced is the property, and
+		// recovering the accent would be a behaviour change.
+		expect(code).toContain('Giosu�');
+		expect(code).not.toContain('Giosuè');
+	});
+
+	test('a valid UTF-8 dependency is left byte-for-byte alone', async () => {
+		const [unadapted, adapted] = await Promise.all([
+			buildProbe({ withAdapter: false, dependencyBytes: utf8Bytes }),
+			buildProbe({ withAdapter: true, dependencyBytes: utf8Bytes }),
+		]);
+		expect(adapted).toBe(unadapted);
+		expect(adapted).toContain('Giosuè');
+	});
+
+	test('application source with invalid bytes stays a failure', async () => {
+		// The capability is scoped to the dependency closure webpack shipped
+		// pre-decoded. First-party bytes are the application's own defect and
+		// substituting characters into them would hide it.
+		const entryBytes = Buffer.from(`export const probe = { name: 'Giosuè' };\n`, 'latin1');
+		await expect(
+			buildProbe({ withAdapter: true, dependencyBytes: utf8Bytes, entryBytes }),
+		).rejects.toThrow('did not contain valid UTF-8');
+	});
+
+	test('a UTF-16 dependency is refused by name rather than decoded', async () => {
+		const utf16 = Buffer.concat([
+			Buffer.from([0xff, 0xfe]),
+			Buffer.from(dependencyText, 'utf16le'),
+		]);
+		await expect(buildProbe({ withAdapter: true, dependencyBytes: utf16 })).rejects.toThrow(
+			'is stored in utf-16le',
+		);
+	});
+
+	test('classifies an encoding from bytes, never from a name', () => {
+		expect(craModuleSourceEncoding(utf8Bytes)).toBe('utf-8');
+		expect(craModuleSourceEncoding(latin1Bytes)).toBe('utf-8-with-invalid-bytes');
+		expect(craModuleSourceEncoding(new Uint8Array())).toBe('utf-8');
+		expect(craModuleSourceEncoding(Buffer.from([0xff, 0xfe, 0x41, 0x00]))).toBe('utf-16le');
+		expect(craModuleSourceEncoding(Buffer.from([0xfe, 0xff, 0x00, 0x41]))).toBe('utf-16be');
+		expect(craModuleSourceEncoding(Buffer.from([0xff, 0xfe, 0x00, 0x00]))).toBe('utf-32le');
+		expect(craModuleSourceEncoding(Buffer.from([0x00, 0x00, 0xfe, 0xff]))).toBe('utf-32be');
+		// A UTF-8 byte order mark is valid UTF-8, so it is not this capability's.
+		expect(craModuleSourceEncoding(Buffer.from([0xef, 0xbb, 0xbf, 0x41]))).toBe('utf-8');
+	});
+
+	test.each([
+		['a bare continuation byte', [0x80]],
+		['an unfinished two byte sequence', [0xc3]],
+		['an overlong encoding of NUL', [0xc0, 0x80]],
+		['a surrogate code point', [0xed, 0xa0, 0x80]],
+		['a lead byte beyond the range', [0xf5, 0x80, 0x80, 0x80]],
+		['an unfinished four byte sequence', [0xf0, 0x9f]],
+	])('the scanner agrees with the platform validator on %s', (_label, bytes) => {
+		const buffer = Buffer.from([0x41, ...bytes, 0x42]);
+		expect(craInvalidUtf8ByteOffsets(buffer).length).toBeGreaterThan(0);
+		expect(craModuleSourceEncoding(buffer)).toBe('utf-8-with-invalid-bytes');
+	});
+
+	test.each([
+		['ascii', 'abc'],
+		['two byte', 'è'],
+		['three byte', '€'],
+		['four byte', '\u{1f600}'],
+	])('the scanner reports nothing for well formed %s text', (_label, text) => {
+		const buffer = Buffer.from(text, 'utf8');
+		expect(craInvalidUtf8ByteOffsets(buffer)).toEqual([]);
+		expect(craModuleSourceEncoding(buffer)).toBe('utf-8');
+	});
+
+	test('reports the offset of each invalid byte', () => {
+		expect(craInvalidUtf8ByteOffsets(latin1Bytes)).toEqual([dependencyText.indexOf('è')]);
+	});
+
+	test('decodes the way webpack 4 did, byte order mark and all', () => {
+		expect(craWebpackDecodedSource(latin1Bytes)).toBe(decodedText);
+		expect(craWebpackDecodedSource(utf8Bytes)).toBe(dependencyText);
+		// loader-runner stripped a leading byte order mark after decoding.
+		expect(craWebpackDecodedSource(Buffer.from([0xef, 0xbb, 0xbf, 0x41]))).toBe('A');
+		expect(craWebpackDecodedSource(Buffer.from([0xef, 0xbb, 0xbf, 0x41, 0xe8]))).toBe('A�');
+	});
+
+	test('refuses an encoding it does not decode, and says why', () => {
+		const utf16 = Buffer.concat([Buffer.from([0xfe, 0xff]), Buffer.from([0x00, 0x41])]);
+		expect(() => craDecodedModuleSource(utf16, 'node_modules/x/index.js')).toThrow(
+			'is stored in utf-16be',
+		);
+		expect(() => craDecodedModuleSource(utf16, 'node_modules/x/index.js')).toThrow('mojibake');
+	});
+
+	test('the load hook declines everything outside its scope', async () => {
+		const plugin = createCraNonUtf8ModuleSourcePlugin();
+		const root = await mkdtemp(path.join(tmpdir(), 'versionless-cra-decode-scope-'));
+		try {
+			const appFile = path.join(root, 'app.js');
+			await writeFile(appFile, latin1Bytes);
+			const dependencyDirectory = path.join(root, 'node_modules', 'legacy-encoded');
+			await mkdir(dependencyDirectory, { recursive: true });
+			const stylesheet = path.join(dependencyDirectory, 'styles.css');
+			await writeFile(stylesheet, latin1Bytes);
+			const module = path.join(dependencyDirectory, 'index.js');
+			await writeFile(module, latin1Bytes);
+			// First-party source, a stylesheet, a virtual id and a file that is not
+			// there: none of them is this capability's, and each declines rather
+			// than guesses.
+			expect(await plugin.load(appFile)).toBeNull();
+			expect(await plugin.load(stylesheet)).toBeNull();
+			expect(await plugin.load('\0virtual:something')).toBeNull();
+			expect(await plugin.load(path.join(dependencyDirectory, 'absent.js'))).toBeNull();
+			// The dependency module itself is decoded, query string and all.
+			expect(await plugin.load(module)).toBe(decodedText);
+			expect(await plugin.load(`${module}?v=1`)).toBe(decodedText);
+		} finally {
+			await rm(root, { recursive: true, force: true });
+		}
+	});
+
+	test('observes the modules it decoded, with the bytes that made it act', async () => {
+		const records: Array<{
+			id: string;
+			encoding: string;
+			invalidByteOffsets: readonly number[];
+		}> = [];
+		const plugin = createCraNonUtf8ModuleSourcePlugin({
+			observe: (record) => records.push({ ...record }),
+		});
+		const root = await mkdtemp(path.join(tmpdir(), 'versionless-cra-decode-observe-'));
+		try {
+			const directory = path.join(root, 'node_modules', 'legacy-encoded');
+			await mkdir(directory, { recursive: true });
+			const invalid = path.join(directory, 'index.js');
+			const valid = path.join(directory, 'valid.js');
+			await writeFile(invalid, latin1Bytes);
+			await writeFile(valid, utf8Bytes);
+			await plugin.load(invalid);
+			await plugin.load(valid);
+			expect(records).toEqual([
+				{
+					id: invalid,
+					encoding: 'utf-8-with-invalid-bytes',
+					invalidByteOffsets: [dependencyText.indexOf('è')],
+				},
+			]);
+		} finally {
+			await rm(root, { recursive: true, force: true });
+		}
+	});
+});
+
 describe('webpack tilde specifiers in CSS', () => {
 	test('rewrites quoted and url() imports without touching relative ones', () => {
 		const code = [
@@ -697,9 +934,11 @@ describe('create-react-app public directory', () => {
 		await expect(plugin.closeBundle.handler()).rejects.toThrow('outDir is unresolved');
 	});
 	test('the composed adapter excludes the template by default', () => {
-		const [transform, sloppy, nodeCore, define, output] = createCraViteAdapter({
+		const [decode, transform, sloppy, nodeCore, define, output] = createCraViteAdapter({
 			publicDirectory: tmpdir(),
 		});
+		expect(decode.name).toBe('versionless-cra-non-utf8-module-source');
+		expect(decode.enforce).toBe('pre');
 		expect(transform.name).toBe('versionless-cra-tilde-css-import');
 		expect(sloppy.name).toBe('versionless-cra-sloppy-commonjs-globals');
 		expect(nodeCore.name).toBe('versionless-cra-node-core-modules');
@@ -707,5 +946,71 @@ describe('create-react-app public directory', () => {
 		expect(define.config()).toEqual({ define: { global: 'globalThis' } });
 		expect(output.name).toBe('versionless-cra-public-directory');
 		expect(output.closeBundle.order).toBe('post');
+	});
+});
+
+/**
+ * The overfitting guard: the product surface must not know which application it
+ * is migrating. Any corpus application, package or fixture identifier appearing
+ * in the adapter's source is a capability fitted to one tree instead of to a
+ * shape webpack itself defines.
+ *
+ * The decoding capability is the reason this list carries `faker` and `cypress`:
+ * it was named by a holdout that failed on one file inside one package, and the
+ * cheapest wrong way to close it would have been to key on that name.
+ */
+describe('React adapter overfitting guard', () => {
+	const surface = path.join(import.meta.dirname, '../src');
+	/**
+	 * One module is excluded, and it is named here rather than quietly skipped:
+	 * `react-class-lifecycle-to-hooks.ts` is a deliberately application-pinned
+	 * transform that refuses any source whose digest is not the one it was
+	 * written against. Naming the application is its declared contract, not a
+	 * leak. Every other file in this surface is a reusable capability and must
+	 * name nothing. The exclusion is asserted, so it cannot silently grow.
+	 */
+	const applicationPinnedByDesign = new Set(['react-class-lifecycle-to-hooks.ts']);
+
+	test('the excluded module is the pinned one, and is pinned by a digest', async () => {
+		const source = await readFile(
+			path.join(surface, 'react-class-lifecycle-to-hooks.ts'),
+			'utf8',
+		);
+		expect(source).toContain('APP_SOURCE_SHA256');
+		expect(applicationPinnedByDesign.size).toBe(1);
+	});
+
+	test('names no corpus application or dependency anywhere in the reusable surface', async () => {
+		const forbidden = [
+			'avataaars',
+			'boilerplate',
+			'cypress',
+			'faker',
+			'hospitalrun',
+			'papercups',
+			'realworld',
+			'sqlpad',
+			'takenote',
+			'first_name',
+			'locales/it',
+		];
+		const offenders: string[] = [];
+		for (const entry of await readdir(surface, { withFileTypes: true })) {
+			if (!entry.isFile() || applicationPinnedByDesign.has(entry.name)) continue;
+			const source = (await readFile(path.join(surface, entry.name), 'utf8')).toLowerCase();
+			for (const name of forbidden)
+				if (source.includes(name)) offenders.push(`${entry.name}: ${name}`);
+		}
+		expect(offenders).toEqual([]);
+	});
+
+	test('the decoding capability never decodes as a legacy single-byte encoding', async () => {
+		// Prose may name ISO-8859-1, because that is the shape being described.
+		// Code may not decode as it: the measurement refuted that reading, and a
+		// `latin1` or `binary` decode would be the refuted answer smuggled back in.
+		const source = await readFile(path.join(surface, 'react-cra-vite-adapter.ts'), 'utf8');
+		for (const encoding of ["'latin1'", '"latin1"', "'binary'", '"binary'])
+			expect(source).not.toContain(encoding);
+		expect(source).toContain("toString('utf8')");
 	});
 });

@@ -1,0 +1,173 @@
+{
+	"schemaVersion": "versionless.react-cypress-rwa-non-utf8-module-decoding.v1",
+	"unit": "lrapr-t006/u1-nonutf8-module-decoding",
+	"capability": "non-UTF-8 module source decoding",
+	"question": "What did webpack 4.44.2 actually do with module bytes that are not valid UTF-8?",
+	"method": [
+		"The holdout baseline lane is a webpack 4.44.2 create-react-app 4.0.3 production build that compiled green. Its emitted chunk is read back byte by byte and compared against the module bytes that went in.",
+		"The dependency under measurement ships two sibling files carrying the same Italian given names: one stored in ISO-8859-1, which is the module the holdout stopped on, and one stored in valid UTF-8. The second is the control. It fixes what the toolchain does to those same characters when the bytes are well formed, so the ISO-8859-1 result cannot be explained by anything downstream of the decode.",
+		"No adapter and no capability took part in producing this build. It is the baseline lane exactly as the holdout recorded it, and the migrated lane is not touched."
+	],
+	"webpackBuild": {
+		"webpack": "4.44.2",
+		"reactScripts": "4.0.3",
+		"node": "14.16.1",
+		"lane": "baseline",
+		"holdoutReceipt": "evidence/runs/holdout-react-cypress-rwa/receipt.json",
+		"holdoutReceiptCanonicalDigest": "7ec6f18b27d2967cd533ba89505e8a76590c1866aec8bd7a8d8543cd87743aae",
+		"chunk": {
+			"path": "build-run1/static/js/3.65c0dd34.chunk.js",
+			"bytes": 3820543,
+			"sha256": "faec8e5578f9cab2c768be1ef5d460542e0156c7d3f32a0f82c4b48aba9db14f"
+		}
+	},
+	"offendingModule": {
+		"path": "node_modules/faker/lib/locales/it/name/first_name.js",
+		"package": "faker@5.5.3",
+		"bytes": 21980,
+		"sha256": "02a9f8a91945f0ed006e7b79efcfc7b9548f20e90042c5a0e84acaa6f654eb1d",
+		"encoding": "ISO-8859-1, not UTF-8",
+		"invalidUtf8ByteCount": 6,
+		"invalidUtf8ByteOffsets": [
+			5170,
+			6973,
+			9233,
+			9538,
+			9570,
+			11565
+		],
+		"entries": 1700,
+		"entriesMissingFromWebpackChunkAfterUtf8ReplacementDecode": 0
+	},
+	"controlModule": {
+		"path": "node_modules/faker/lib/locales/it/name/male_first_name.js",
+		"bytes": 15261,
+		"sha256": "75d34b381eb0cd643e8cb2b2fd5fda96b2fafaf0e478745560c13eb3716c950a",
+		"encoding": "UTF-8, well formed",
+		"invalidUtf8ByteCount": 0,
+		"entries": 1083,
+		"entriesMissingFromWebpackChunkAfterOrdinaryUtf8Decode": 0
+	},
+	"observations": [
+		{
+			"sourceByteOffset": 5167,
+			"sourceBytesHex": "457361f9",
+			"invalidByteOffset": 5170,
+			"invalidByte": "0xf9",
+			"iso88591Intent": "Esa\u00f9",
+			"webpackDecodedText": "Esa\ufffd",
+			"webpackEmittedLiteralInChunk": "\"Esa\\ufffd\"",
+			"foundInWebpackChunk": true,
+			"control": {
+				"sameTokenInValidUtf8Sibling": "Esa\u00f9",
+				"sourceBytesHex": "457361c3b9",
+				"webpackEmittedLiteralInChunk": "\"Esa\\xf9\"",
+				"foundInWebpackChunk": true
+			}
+		},
+		{
+			"sourceByteOffset": 6968,
+			"sourceBytesHex": "47696f7375e8",
+			"invalidByteOffset": 6973,
+			"invalidByte": "0xe8",
+			"iso88591Intent": "Giosu\u00e8",
+			"webpackDecodedText": "Giosu\ufffd",
+			"webpackEmittedLiteralInChunk": "\"Giosu\\ufffd\"",
+			"foundInWebpackChunk": true,
+			"control": {
+				"sameTokenInValidUtf8Sibling": "Giosu\u00e8",
+				"sourceBytesHex": "47696f7375c3a8",
+				"webpackEmittedLiteralInChunk": "\"Giosu\\xe8\"",
+				"foundInWebpackChunk": true
+			}
+		},
+		{
+			"sourceByteOffset": 9230,
+			"sourceBytesHex": "4d6f73e8",
+			"invalidByteOffset": 9233,
+			"invalidByte": "0xe8",
+			"iso88591Intent": "Mos\u00e8",
+			"webpackDecodedText": "Mos\ufffd",
+			"webpackEmittedLiteralInChunk": "\"Mos\\ufffd\"",
+			"foundInWebpackChunk": true,
+			"control": {
+				"sameTokenInValidUtf8Sibling": "Mos\u00e8",
+				"sourceBytesHex": "4d6f73c3a8",
+				"webpackEmittedLiteralInChunk": "\"Mos\\xe8\"",
+				"foundInWebpackChunk": true
+			}
+		},
+		{
+			"sourceByteOffset": 9533,
+			"sourceBytesHex": "4e69636f6cf2",
+			"invalidByteOffset": 9538,
+			"invalidByte": "0xf2",
+			"iso88591Intent": "Nicol\u00f2",
+			"webpackDecodedText": "Nicol\ufffd",
+			"webpackEmittedLiteralInChunk": "\"Nicol\\ufffd\"",
+			"foundInWebpackChunk": true,
+			"control": {
+				"sameTokenInValidUtf8Sibling": "Nicol\u00f2",
+				"sourceBytesHex": "4e69636f6cc3b2",
+				"webpackEmittedLiteralInChunk": "\"Nicol\\xf2\"",
+				"foundInWebpackChunk": true
+			}
+		},
+		{
+			"sourceByteOffset": 9568,
+			"sourceBytesHex": "4e6fe8",
+			"invalidByteOffset": 9570,
+			"invalidByte": "0xe8",
+			"iso88591Intent": "No\u00e8",
+			"webpackDecodedText": "No\ufffd",
+			"webpackEmittedLiteralInChunk": "\"No\\ufffd\"",
+			"foundInWebpackChunk": true,
+			"control": {
+				"sameTokenInValidUtf8Sibling": "No\u00e8",
+				"sourceBytesHex": "4e6fc3a8",
+				"webpackEmittedLiteralInChunk": "\"No\\xe8\"",
+				"foundInWebpackChunk": true
+			}
+		},
+		{
+			"sourceByteOffset": 11560,
+			"sourceBytesHex": "53616c6f6de8",
+			"invalidByteOffset": 11565,
+			"invalidByte": "0xe8",
+			"iso88591Intent": "Salom\u00e8",
+			"webpackDecodedText": "Salom\ufffd",
+			"webpackEmittedLiteralInChunk": "\"Salom\\ufffd\"",
+			"foundInWebpackChunk": true,
+			"control": {
+				"sameTokenInValidUtf8Sibling": "Salom\u00e8",
+				"sourceBytesHex": "53616c6f6dc3a8",
+				"webpackEmittedLiteralInChunk": "\"Salom\\xe8\"",
+				"foundInWebpackChunk": true
+			}
+		}
+	],
+	"verdict": {
+		"semantics": "utf-8-decode-with-replacement-character",
+		"statement": "webpack 4 decoded module bytes as UTF-8 and substituted U+FFFD REPLACEMENT CHARACTER for every byte sequence UTF-8 cannot represent. That is the decoder loader-runner calls, Buffer.prototype.toString(\"utf-8\"), which never throws, followed by a leading byte order mark strip.",
+		"refutedHypothesis": "ISO-8859-1 decoding. The control module refutes it: the same six names, stored as well formed UTF-8 in the sibling file, reached the same chunk with their accents intact, while the ISO-8859-1 file reached it with U+FFFD in their place. A latin1 decode of the offending module would have produced the accented forms for that module too, and it did not.",
+		"consequence": "Reproducing webpack means reproducing the loss. The production bundle this migration replaces shipped the replacement characters, so a decode that recovered the accents would be a behaviour change rather than parity."
+	},
+	"nonclaims": [
+		"No claim that the decoded text is correct Italian. It is not; the accents are gone. The claim is that it is what webpack 4 produced.",
+		"No claim about application source. The capability is scoped to the dependency closure, and invalid bytes in first-party source stay a build failure.",
+		"No claim about UTF-16 or UTF-32 module sources. Those are refused by name rather than decoded, which is narrower than webpack, and the refusal says so.",
+		"No claim about byte order marks on their own. A UTF-8 file carrying a BOM is valid UTF-8 and never reaches this capability.",
+		"No claim about stylesheets, JSON, or binary assets. Only JavaScript module sources are decoded.",
+		"No claim that the holdout was re-run. This reads the committed baseline artefacts of the run that already happened; the migrated lane is untouched and its FAIL receipt stands.",
+		"No claim that this capability makes the holdout green. The migrated lane stopped at the first unloadable module, so every demand behind that point remains unobserved."
+	],
+	"freezeOrder": {
+		"statement": "This capability postdates the tranche-one adapter freeze. The holdout that named it was measured under composite fingerprint d9f75ef677cb850f664cc188abf77b8ebfd24e84cb58d147b74e9bbaa143eb77 with zero adapter bytes changed. That freeze has since been superseded and the adapter surface reopened for this tranche, and a new freeze boundary comes before any holdout re-run, so no result recorded under d9f75ef6 was taken with this capability in place.",
+		"supersededCompositeFingerprint": "d9f75ef677cb850f664cc188abf77b8ebfd24e84cb58d147b74e9bbaa143eb77",
+		"holdoutRerunPerformedByThisUnit": false
+	},
+	"integrity": {
+		"algorithm": "sha256",
+		"canonicalDigest": "48f67854a3dd043e90c22eb633a910429a9cb27d283e5cbb8126a53304bdbdb3"
+	}
+}

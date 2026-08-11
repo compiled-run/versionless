@@ -1,3 +1,4 @@
+import { Buffer, isUtf8 } from 'node:buffer';
 import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import {
@@ -555,6 +556,244 @@ export function createCraSloppyCommonJsGlobalsPlugin(
 	};
 }
 
+/**
+ * webpack 4 turned a module's bytes into text before any loader saw them, and it
+ * did so leniently. `loader-runner`, the reader webpack 4 delegates every module
+ * read to, calls `buffer.toString("utf-8")` and then strips a leading byte order
+ * mark; Node's UTF-8 decoder never fails, so a byte sequence that is not
+ * well-formed UTF-8 becomes U+FFFD REPLACEMENT CHARACTER and the module keeps
+ * loading. Rolldown, the bundler Vite 8 builds with, requires a module source to
+ * be valid UTF-8 and refuses to load one that is not — `stream did not contain
+ * valid UTF-8` — so a dependency stored in a legacy single-byte encoding stops
+ * the build outright where webpack carried it.
+ *
+ * The semantics reproduced here were measured, not assumed. A webpack 4.44.2
+ * create-react-app production build was read back byte by byte for a dependency
+ * that ships one file in ISO-8859-1 and a sibling file carrying the same names
+ * in valid UTF-8:
+ *
+ * - The ISO-8859-1 file's names reached the bundle with U+FFFD in place of each
+ *   invalid byte — `"Esa�"`, not `"Esaù"`.
+ * - The sibling UTF-8 file's identical names reached the same bundle intact, as
+ *   `"Esaù"`.
+ *
+ * The second observation is the control: it rules out the tempting hypothesis
+ * that webpack decoded the bytes as ISO-8859-1. It did not. It decoded them as
+ * UTF-8 and substituted, losing the accents, and the application it was building
+ * shipped that way. Reproducing webpack means reproducing the loss, because
+ * parity with the bundler being replaced is the property under test — not a
+ * better answer than the one production already had.
+ *
+ * A note on freeze order: this capability postdates the tranche-one adapter
+ * freeze (composite fingerprint d9f75ef6…). It was written after that freeze was
+ * superseded and before the freeze boundary that governs any later re-run, so no
+ * measurement recorded under d9f75ef6 was taken with it in place.
+ */
+
+/**
+ * The extensions this capability decodes. These are the JavaScript module
+ * sources webpack 4 fed through `babel-loader`, all of which arrived as text
+ * through the lenient reader above. Stylesheets, JSON, and binary assets are not
+ * listed: they travel a different Vite pipeline whose loading this capability
+ * does not intercept, and nothing is claimed about them.
+ */
+const decodableModuleExtensions: ReadonlySet<string> = new Set([
+	'.cjs',
+	'.js',
+	'.jsx',
+	'.mjs',
+	'.ts',
+	'.tsx',
+]);
+
+const byteOrderMarkCodeUnit = 0xfeff;
+
+/**
+ * What a module's leading bytes say about its encoding. Only `utf-8` and
+ * `utf-8-with-invalid-bytes` are decodable here; the rest are named so a refusal
+ * can say what it refused.
+ */
+export type CraModuleSourceEncoding =
+	| 'utf-8'
+	| 'utf-8-with-invalid-bytes'
+	| 'utf-16le'
+	| 'utf-16be'
+	| 'utf-32le'
+	| 'utf-32be';
+
+function startsWithBytes(bytes: Uint8Array, prefix: readonly number[]): boolean {
+	if (bytes.length < prefix.length) return false;
+	return prefix.every((byte, index) => bytes[index] === byte);
+}
+
+/**
+ * Classify a module source by its bytes alone. The byte order marks are checked
+ * first because none of them is valid UTF-8, so a UTF-16 or UTF-32 file would
+ * otherwise be indistinguishable from a legacy single-byte one. Everything else
+ * is decided by a real UTF-8 validation of the whole buffer — never by a file
+ * name, a path, or a package.
+ */
+export function craModuleSourceEncoding(bytes: Uint8Array): CraModuleSourceEncoding {
+	if (startsWithBytes(bytes, [0xff, 0xfe, 0x00, 0x00])) return 'utf-32le';
+	if (startsWithBytes(bytes, [0x00, 0x00, 0xfe, 0xff])) return 'utf-32be';
+	if (startsWithBytes(bytes, [0xff, 0xfe])) return 'utf-16le';
+	if (startsWithBytes(bytes, [0xfe, 0xff])) return 'utf-16be';
+	return isUtf8(bytes) ? 'utf-8' : 'utf-8-with-invalid-bytes';
+}
+
+function utf8SequenceLength(lead: number): number {
+	if (lead <= 0x7f) return 1;
+	if (lead >= 0xc2 && lead <= 0xdf) return 2;
+	if (lead >= 0xe0 && lead <= 0xef) return 3;
+	if (lead >= 0xf0 && lead <= 0xf4) return 4;
+	return 0;
+}
+
+/**
+ * The offset of every byte that begins a sequence UTF-8 cannot represent —
+ * exactly the positions Node's decoder substitutes a U+FFFD for. This is the
+ * measured fact the capability is keyed on, and it is what a diagnostic reports.
+ * Overlong forms, surrogate code points and out-of-range lead bytes are all
+ * rejected, so the scan agrees with `isUtf8` on whether a buffer is well formed.
+ */
+export function craInvalidUtf8ByteOffsets(bytes: Uint8Array): readonly number[] {
+	const offsets: number[] = [];
+	let index = 0;
+	while (index < bytes.length) {
+		const lead = bytes[index] as number;
+		const length = utf8SequenceLength(lead);
+		if (length === 0) {
+			offsets.push(index);
+			index += 1;
+			continue;
+		}
+		if (length === 1) {
+			index += 1;
+			continue;
+		}
+		const lowestSecond = lead === 0xe0 ? 0xa0 : lead === 0xf0 ? 0x90 : 0x80;
+		const highestSecond = lead === 0xed ? 0x9f : lead === 0xf4 ? 0x8f : 0xbf;
+		let wellFormed = index + length <= bytes.length;
+		if (wellFormed) {
+			const second = bytes[index + 1] as number;
+			wellFormed = second >= lowestSecond && second <= highestSecond;
+			for (let step = 2; wellFormed && step < length; step += 1) {
+				const continuation = bytes[index + step] as number;
+				wellFormed = continuation >= 0x80 && continuation <= 0xbf;
+			}
+		}
+		if (!wellFormed) {
+			offsets.push(index);
+			index += 1;
+			continue;
+		}
+		index += length;
+	}
+	return Object.freeze(offsets);
+}
+
+/**
+ * webpack 4's `utf8BufferToString`, reproduced: decode the whole buffer as UTF-8
+ * with substitution, then drop a leading byte order mark. `Buffer.prototype
+ * .toString('utf8')` is the same call `loader-runner` makes, so this is the
+ * decoder itself rather than a reimplementation of it.
+ */
+export function craWebpackDecodedSource(bytes: Uint8Array): string {
+	const text = Buffer.from(bytes.buffer, bytes.byteOffset, bytes.byteLength).toString('utf8');
+	return text.charCodeAt(0) === byteOrderMarkCodeUnit ? text.slice(1) : text;
+}
+
+/**
+ * The text webpack 4 would have handed its loaders for these bytes, or a hard
+ * failure naming the encoding.
+ *
+ * The refusal is deliberately narrower than webpack. webpack decoded a UTF-16
+ * file as UTF-8 too, and produced mojibake for it; that is not a capability
+ * worth reproducing, and pretending to have decoded such a file would hide a
+ * broken build behind a plausible-looking string. Naming the encoding and
+ * stopping is the truthful outcome.
+ */
+export function craDecodedModuleSource(bytes: Uint8Array, origin: string): string {
+	const encoding = craModuleSourceEncoding(bytes);
+	if (encoding === 'utf-8' || encoding === 'utf-8-with-invalid-bytes')
+		return craWebpackDecodedSource(bytes);
+	throw new Error(
+		`create-react-app compatibility: the dependency module ${origin} is stored in ${encoding}, ` +
+			`which is not UTF-8 and is not an encoding this capability decodes. webpack 4 read every ` +
+			`module as UTF-8 regardless of its encoding, so it would have turned this file into ` +
+			`mojibake rather than reading it correctly, and reproducing that is not claimed here. ` +
+			`Re-encode the file as UTF-8 or drop the import.`,
+	);
+}
+
+export type CraDecodedModuleRecord = Readonly<{
+	id: string;
+	encoding: CraModuleSourceEncoding;
+	invalidByteOffsets: readonly number[];
+}>;
+
+export type CraNonUtf8ModuleSourceOptions = Readonly<{
+	observe?: (record: CraDecodedModuleRecord) => void;
+}>;
+
+export type CraLoadPlugin = Readonly<{
+	name: string;
+	enforce: 'pre';
+	load(id: string): Promise<string | null>;
+}>;
+
+/**
+ * Supply webpack 4's lenient module-source decoding to a Vite build.
+ *
+ * The hook reads the bytes and validates them. A module whose bytes are valid
+ * UTF-8 is returned to Vite untouched — the hook yields `null`, Vite loads the
+ * file exactly as it always did, and the build is byte-for-byte what it would
+ * have been without this capability. Only a module that Vite's bundler would
+ * refuse outright is decoded here, and only then.
+ *
+ * The scope is the dependency closure, for the same reason the sloppy-mode
+ * wrapper is scoped there: an application's own source with invalid bytes in it
+ * is a defect in the application, and silently substituting characters into
+ * first-party code would hide it. Dependencies are different — they are frozen
+ * artifacts the migration cannot edit, and webpack already shipped them decoded
+ * this way.
+ *
+ * The cost is one extra file read per dependency JavaScript module: the bytes
+ * are read to be validated, and read again by Vite when they are valid. That is
+ * paid deliberately, because handing Vite a string for every dependency would
+ * substitute this capability's loading for Vite's own on files that never needed
+ * it, and the untouched claim above would stop being true.
+ */
+export function createCraNonUtf8ModuleSourcePlugin(
+	options: CraNonUtf8ModuleSourceOptions = {},
+): CraLoadPlugin {
+	return {
+		name: 'versionless-cra-non-utf8-module-source',
+		enforce: 'pre',
+		async load(id) {
+			if (id.startsWith('\0')) return null;
+			const file = pathWithoutQuery(id);
+			if (!craIsDependencyModule(file)) return null;
+			if (!decodableModuleExtensions.has(path.extname(file))) return null;
+			let bytes: Uint8Array;
+			try {
+				bytes = await readFile(file);
+			} catch {
+				return null;
+			}
+			const encoding = craModuleSourceEncoding(bytes);
+			if (encoding === 'utf-8') return null;
+			const source = craDecodedModuleSource(bytes, file);
+			options.observe?.({
+				id: file,
+				encoding,
+				invalidByteOffsets: craInvalidUtf8ByteOffsets(bytes),
+			});
+			return source;
+		},
+	};
+}
+
 async function filesBelow(directory: string): Promise<string[]> {
 	const files: string[] = [];
 	for (const entry of await readdir(directory, { withFileTypes: true })) {
@@ -632,9 +871,11 @@ export type CraViteAdapterOptions = Readonly<{
 	templateFile?: string;
 	applicationRoot?: string;
 	observeImplicitGlobals?: (record: CraImplicitGlobalRecord) => void;
+	observeDecodedModules?: (record: CraDecodedModuleRecord) => void;
 }>;
 
 export type CraViteAdapterPlugins = readonly [
+	CraLoadPlugin,
 	CraTransformPlugin,
 	CraTransformPlugin,
 	CraNodeCoreModulePlugin,
@@ -643,13 +884,22 @@ export type CraViteAdapterPlugins = readonly [
 ];
 
 /**
- * The create-react-app compatibility plugin set: tilde CSS specifier rewriting,
- * webpack's sloppy-mode CommonJS wrapper for dependency modules, webpack's
- * automatic Node core module polyfills, the ambient `global` identifier, plus
- * public directory replication.
+ * The create-react-app compatibility plugin set: webpack's lenient module-source
+ * decoding, tilde CSS specifier rewriting, webpack's sloppy-mode CommonJS
+ * wrapper for dependency modules, webpack's automatic Node core module
+ * polyfills, the ambient `global` identifier, plus public directory
+ * replication.
+ *
+ * Decoding leads, because it is the only capability here that acts on bytes: a
+ * module has to become text before any transform above can read it.
  */
 export function createCraViteAdapter(options: CraViteAdapterOptions): CraViteAdapterPlugins {
 	return [
+		createCraNonUtf8ModuleSourcePlugin(
+			options.observeDecodedModules === undefined
+				? {}
+				: { observe: options.observeDecodedModules },
+		),
 		createCraTildeCssImportPlugin(),
 		createCraSloppyCommonJsGlobalsPlugin(
 			options.observeImplicitGlobals === undefined
