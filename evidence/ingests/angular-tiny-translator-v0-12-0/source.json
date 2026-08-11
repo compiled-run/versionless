@@ -1,0 +1,143 @@
+{
+  "schemaVersion": "versionless.official-source.v1",
+  "slug": "angular-tiny-translator-v0-12-0",
+  "unit": "lrapr-t006/u15-ingest-tiny-translator",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "attemptSha256": "5d9558f820327057c87dc99bf644520da63579d7405fcbb77d0a51bad8987be6",
+  "result": "source-bound",
+  "startedAt": "2026-08-11T20:04:20Z",
+  "completedAt": "2026-08-11T20:04:22Z",
+  "timestampNote": "The window above covers the six source-transaction responses. Per-request wall-clock timestamps, including the later baseline-cell acquisitions, are in probe-ledger.ndjson.",
+  "repository": {
+    "id": 85330996,
+    "fullName": "martinroob/tiny-translator",
+    "private": false,
+    "archived": false,
+    "disabled": false,
+    "fork": false,
+    "defaultBranch": "master",
+    "createdAt": "2017-03-17T16:10:18Z",
+    "pushedAt": "2022-12-07T04:12:39Z",
+    "stargazers": 56,
+    "forks": 9,
+    "openIssues": 25,
+    "detectedLicense": "MIT (spdx_id MIT)",
+    "responseBytes": 5602,
+    "responseSha256": "5a3ef1ffad3137218ea1704c70962f73af16334376e56e9336146301e0554712",
+    "fleetShapeNote": "56 stars and 9 forks are recorded as found. Popularity is a weak-fleet-shape fact for this corpus, not an admission gate; this cell was cut for its pre-angular.json workspace format."
+  },
+  "revision": {
+    "ref": "refs/tags/v0.12.0",
+    "tagKind": "lightweight",
+    "tagObjectSha": null,
+    "tagObjectNote": "The ref dereferences directly to a commit object, so there is no tag object, no tagger identity, and no tag message. No annotated-tag request was made, and the allowlist entry for it went unused.",
+    "tagVerification": "not-applicable-lightweight-tag",
+    "commitSha": "08dcacf6a41d5a6f6dfbc71d858adcdc4c85691a",
+    "commitDate": "2017-12-08T12:30:45Z",
+    "commitAuthorDate": "2017-12-08T12:30:45Z",
+    "commitMessage": "preparation for publishing v0.12",
+    "commitParents": ["c4ff462a96c7c17fe069d4c320b819bc6137fa0f"],
+    "commitVerification": "unsigned",
+    "rootTreeSha": "ba39de904e28030dcc8a09e28bbd1b0db7247bb7",
+    "treeEntries": 209,
+    "treeBlobs": 175,
+    "treeDirectories": 34,
+    "treeSymlinks": 0,
+    "treeGitlinks": 0,
+    "treeExecutableBlobs": 0,
+    "treeTruncated": false,
+    "expectedCommitShaFromPriorScout": "08dcacf6a41d5a6f6dfbc71d858adcdc4c85691a",
+    "expectedCommitShaConfirmedFromWire": true
+  },
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/martinroob/tiny-translator",
+      "status": 200,
+      "bytes": 5602,
+      "sha256": "5a3ef1ffad3137218ea1704c70962f73af16334376e56e9336146301e0554712"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/martinroob/tiny-translator/git/ref/tags/v0.12.0",
+      "status": 200,
+      "bytes": 363,
+      "sha256": "8f6613310a5362def8a146c8d6a542b19df86c37299e85386519c28132038bf6"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/martinroob/tiny-translator/git/commits/08dcacf6a41d5a6f6dfbc71d858adcdc4c85691a",
+      "status": 200,
+      "bytes": 1170,
+      "sha256": "8096920d654cec3901b0c4ad760e3c71e0b37c608d1b66f623f78ea5538eb354"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/ba39de904e28030dcc8a09e28bbd1b0db7247bb7?recursive=1",
+      "status": 200,
+      "bytes": 53349,
+      "sha256": "1b2adb7a42d5af192673c3d1aaaa89f2f0b642eaa8638c0391064aeac5e3a2ea"
+    },
+    {
+      "endpoint": "https://codeload.github.com/martinroob/tiny-translator/tar.gz/08dcacf6a41d5a6f6dfbc71d858adcdc4c85691a",
+      "status": 200,
+      "bytes": 186861,
+      "sha256": "424209463bcccca1714d520e2f68c55d54b204c69367bbeefcdf930d01d3ac18",
+      "stream": 1
+    },
+    {
+      "endpoint": "https://codeload.github.com/martinroob/tiny-translator/tar.gz/08dcacf6a41d5a6f6dfbc71d858adcdc4c85691a",
+      "status": 200,
+      "bytes": 186861,
+      "sha256": "424209463bcccca1714d520e2f68c55d54b204c69367bbeefcdf930d01d3ac18",
+      "stream": 2
+    }
+  ],
+  "archiveParity": {
+    "singleRoot": "tiny-translator-08dcacf6a41d5a6f6dfbc71d858adcdc4c85691a",
+    "safeEntries": 209,
+    "regularFiles": 175,
+    "directories": 34,
+    "specialEntries": 0,
+    "symlinks": 0,
+    "gitBlobs": 175,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "normalizedManifestSha256": "8bd3830b5df07024e10632f08a9b78dfbf8f08933afc8488a5b4869bb3492364",
+    "method": "Blob-level: every regular file in the extracted archive was hashed as a git blob object and compared byte-for-byte against the sha recorded for the same path in the recursive git tree. Detail in reconciliation.json.",
+    "pathTraversalEntries": 0,
+    "absolutePathEntries": 0
+  },
+  "largeFileStorage": {
+    "claimedByScout": "none",
+    "verifiedHow": "byte scan rather than trust: every one of the 175 extracted regular files was read in full and its first 200 bytes tested against the git-lfs pointer preamble.",
+    "pointerFilesFound": 0,
+    "gitattributesInTree": false,
+    "result": "no git-lfs content at this revision"
+  },
+  "transaction": {
+    "attemptedRequests": 6,
+    "acceptedResponses": 6,
+    "acceptedWireBytes": 434206,
+    "acceptedDecodedBytes": 434206,
+    "redirectsObserved": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "credentialsSent": 0,
+    "archivesByteIdentical": true,
+    "archiveMatchesGitTree": true,
+    "publishedSource": true,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "cache": {
+    "root": ".versionless/cache/angular-tiny-translator-v0-12-0-source",
+    "archive1": ".versionless/cache/angular-tiny-translator-v0-12-0-source/archive/archive-1.tar.gz",
+    "archive2": ".versionless/cache/angular-tiny-translator-v0-12-0-source/archive/archive-2.tar.gz",
+    "verifiedSource": ".versionless/cache/angular-tiny-translator-v0-12-0-source/verify/extracted/tiny-translator-08dcacf6a41d5a6f6dfbc71d858adcdc4c85691a",
+    "gitIgnored": true,
+    "rawMetadataPortable": false
+  },
+  "nonclaims": [
+    "A lightweight tag carries no tagger identity and no signature, and the commit it points at is unsigned. Signer authenticity is unestablished, not resolved.",
+    "A lightweight tag is a mutable ref: it fixes nothing on its own. What is fixed here is the commit sha, the root tree sha, and the archive digest.",
+    "No dependency closure, build, browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval is established by this record."
+  ]
+}

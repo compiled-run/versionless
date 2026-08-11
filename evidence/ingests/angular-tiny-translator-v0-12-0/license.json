@@ -1,0 +1,89 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-rights.v1",
+  "slug": "angular-tiny-translator-v0-12-0",
+  "unit": "lrapr-t006/u15-ingest-tiny-translator",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "revision": {
+    "repository": "martinroob/tiny-translator",
+    "ref": "refs/tags/v0.12.0",
+    "tagKind": "lightweight",
+    "commitSha": "08dcacf6a41d5a6f6dfbc71d858adcdc4c85691a",
+    "rootTreeSha": "ba39de904e28030dcc8a09e28bbd1b0db7247bb7"
+  },
+  "declaration": {
+    "identifier": "MIT",
+    "identifierSource": "verbatim MIT text in the repository root LICENSE file at the pinned revision",
+    "copyrightNotice": "Copyright (c) 2017 Martin Roob",
+    "copyrightHolderState": "named individual; a concrete holder line, not a placeholder such as `<year> <copyright holders>`",
+    "manifestLicenseField": "MIT",
+    "githubDetectedLicense": "MIT (spdx_id MIT) as reported by the repository metadata response; the file text is the primary evidence and agrees with it",
+    "dualLicensed": false,
+    "sourceAvailableCarveOut": false
+  },
+  "artifacts": [
+    {
+      "path": "LICENSE",
+      "role": "repository-root-licence",
+      "gitBlobSha": "67e75a82c9c6583e28a5c36d0ae9549daa275bd4",
+      "bytes": 1068,
+      "sha256": "b33e2f180e3d22c42c1511895a448e9aafb848a51a43a9cfae163f19f7288fb9",
+      "firstLine": "MIT License",
+      "copyrightLine": "Copyright (c) 2017 Martin Roob",
+      "permissionGrantPresent": true,
+      "noticeRetentionClausePresent": true,
+      "warrantyDisclaimerPresent": true,
+      "scoutBlobShaPrefixClaimed": "67e75a82",
+      "scoutBlobShaConfirmed": true,
+      "scoutByteLengthClaimed": 1068,
+      "scoutByteLengthConfirmed": true
+    },
+    {
+      "path": "package.json",
+      "role": "application-manifest",
+      "gitBlobSha": "0fcbaa02a0a906326c005aab30a1306f19d93a5a",
+      "bytes": 4714,
+      "sha256": "1398854c95b5da22ec9fe6e64490c901043a75b40ac4698ab3433eec9f23c653",
+      "licenseField": "MIT",
+      "privateField": false,
+      "packageName": "tiny-translator",
+      "packageVersion": "0.12.0"
+    }
+  ],
+  "inventory": {
+    "licenceFilesInTree": 1,
+    "additionalLicenceOrNoticeFiles": 0,
+    "vendoredThirdPartySources": 0,
+    "committedNodeModules": 0,
+    "committedDistDirectories": 0,
+    "note": "The recursive tree at the pinned revision carries exactly one licence file (root LICENSE) and no vendored dependency trees or built output. /dist, /buildtest and /node_modules are all git-ignored upstream."
+  },
+  "retainedAssetRights": {
+    "reviewed": true,
+    "brandedAssets": [
+      "src/favicon.ico",
+      "src/manifest.json",
+      "src/assets/icons/launcher-icon-1x.png",
+      "src/assets/icons/launcher-icon-2x.png",
+      "src/assets/icons/launcher-icon-4x.png",
+      "src/assets/Pirate_Flag.svg",
+      "src/assets/unknowflag.png"
+    ],
+    "position": "The TinyTranslator name and its launcher icons remain the upstream author's. They are carried only as part of the immutable source archive and are not relicensed, rebranded, or reused as Versionless assets.",
+    "unknownPreserved": "Pirate_Flag.svg carries Inkscape and Creative Commons RDF namespaces in its XML header but no explicit licence statement inside the file. Whether that asset carries terms separate from the repository's MIT grant is recorded as unknown, not resolved. The dependency flag-icon-css, which supplies the country flags rendered by the language component, is a separate package with its own terms and is not evaluated here.",
+    "trademark": "Trademark rights are separate from the MIT copyright grant and are neither established nor disclaimed here."
+  },
+  "thirdPartyNoticesInBuiltOutput": {
+    "observed": true,
+    "artifact": "3rdpartylicenses.txt, 8895 bytes, emitted by the Angular CLI 1.5.4 production build into both dist/baseline and dist/en during this unit's baseline",
+    "position": "The production bundle carries dependency notices generated at build time. That file is a property of the build, lives only in the git-ignored baseline cache, and is not published into this repository.",
+    "unknownPreserved": "No licence determination is made for any dependency named in it."
+  },
+  "obligations": [
+    "Retain the MIT notice and permission text in any copy or substantial portion of the source.",
+    "The MIT grant covers the repository's own files; each of the 851 distinct dependency names in the committed yarn.lock carries its own terms, which this record does not evaluate."
+  ],
+  "nonclaims": [
+    "This is a record of the licence text present at the pinned revision, not a legal opinion, licence-compatibility finding, or legal approval.",
+    "No licence determination is made for the transitive dependency closure."
+  ]
+}

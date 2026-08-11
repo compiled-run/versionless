@@ -1,0 +1,117 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-provenance.v1",
+  "slug": "angular-tiny-translator-v0-12-0",
+  "unit": "lrapr-t006/u15-ingest-tiny-translator",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "networkMode": "consented",
+  "purpose": "Admit and immutably ingest the Angular 4-6-band candidate for cell C1 of Angular cohort two: a browser-only XLIFF translation editor on Angular 5 with the pre-angular.json `.angular-cli.json` workspace format, which is the capability the cell exists to carry.",
+  "upstream": {
+    "repository": "martinroob/tiny-translator",
+    "repositoryId": 85330996,
+    "homepageEndpoint": "https://api.github.com/repos/martinroob/tiny-translator",
+    "archivedUpstream": false,
+    "lastPushedUpstream": "2022-12-07T04:12:39Z",
+    "ref": "refs/tags/v0.12.0",
+    "tagKind": "lightweight",
+    "tagObjectSha": null,
+    "tagVerification": "not-applicable-lightweight-tag",
+    "commitSha": "08dcacf6a41d5a6f6dfbc71d858adcdc4c85691a",
+    "commitDate": "2017-12-08T12:30:45Z",
+    "commitVerification": "unsigned",
+    "rootTreeSha": "ba39de904e28030dcc8a09e28bbd1b0db7247bb7"
+  },
+  "archive": {
+    "endpoint": "https://codeload.github.com/martinroob/tiny-translator/tar.gz/08dcacf6a41d5a6f6dfbc71d858adcdc4c85691a",
+    "mediaType": "application/gzip",
+    "bytes": 186861,
+    "sha256": "424209463bcccca1714d520e2f68c55d54b204c69367bbeefcdf930d01d3ac18",
+    "streamsFetched": 2,
+    "streamsByteIdentical": true,
+    "singleRoot": "tiny-translator-08dcacf6a41d5a6f6dfbc71d858adcdc4c85691a",
+    "regularFiles": 175,
+    "normalizedManifestSha256": "8bd3830b5df07024e10632f08a9b78dfbf8f08933afc8488a5b4869bb3492364"
+  },
+  "reconciliation": {
+    "method": "every extracted regular file was hashed as a git blob object and compared against the recursive tree at the pinned revision",
+    "gitBlobs": 175,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "specialEntries": 0,
+    "symlinks": 0,
+    "gitlinks": 0,
+    "pathTraversalEntries": 0,
+    "absolutePathEntries": 0,
+    "treeTruncated": false,
+    "archiveMatchesGitTree": true,
+    "lfsPointerFiles": 0
+  },
+  "chain": [
+    {
+      "step": "probe-repo-ref-commit-tree-and-fetch-archive-twice",
+      "producedBy": "drivers/acquire.mjs, run on the workspace Node with VERSIONLESS_NETWORK_MODE=consented",
+      "records": ["probe-ledger.ndjson", "probe-tree.json", "source.json", "transcript.ndjson"]
+    },
+    {
+      "step": "extract-archive-1",
+      "producedBy": "tar",
+      "records": ["transcript.ndjson"]
+    },
+    {
+      "step": "reconcile-blobs-against-git-tree-and-scan-for-lfs-pointers",
+      "producedBy": "drivers/reconcile.mjs",
+      "records": ["reconciliation.json", "source.json", "transcript.ndjson"]
+    },
+    {
+      "step": "acquire-era-cell-runtime-and-package-manager",
+      "producedBy": "curl plus digest checks against nodejs.org SHASUMS256.txt and the npm registry metadata shasum",
+      "records": ["probe-ledger.ndjson", "baseline-attempt.json", "transcript.ndjson"]
+    },
+    {
+      "step": "baseline-install-frozen-against-the-committed-yarn-lock",
+      "producedBy": "drivers/baseline-install.sh driving Node 8.9.3 x86_64 under Rosetta 2",
+      "records": ["baseline-attempt.json", "closure.json", "transcript.ndjson"]
+    },
+    {
+      "step": "production-build-attempts-plain-and-repository-own-chain",
+      "producedBy": "drivers/baseline-build.sh, stages `prod` and `en`",
+      "records": ["baseline-attempt.json", "transcript.ndjson"]
+    },
+    {
+      "step": "offline-fact-collection",
+      "producedBy": "drivers/facts.mjs",
+      "records": ["admission.json", "license.json", "closure.json", "fixtures/angular-tiny-translator-v0-12-0/fixture.json"]
+    }
+  ],
+  "machinery": {
+    "reused": [
+      "evidence/ingests/react-hospitalrun/ and evidence/ingests/react-papercups-v1-0-0/ — evidence shapes: attempt/source documents, per-response ledger with byte count and digest, blob-level archive-to-git-tree parity, declared-cell honesty, non-claim discipline"
+    ],
+    "written": [
+      "evidence/ingests/angular-tiny-translator-v0-12-0/drivers/acquire.mjs — the consented acquisition transaction",
+      "evidence/ingests/angular-tiny-translator-v0-12-0/drivers/reconcile.mjs — blob-level parity and the git-lfs byte scan",
+      "evidence/ingests/angular-tiny-translator-v0-12-0/drivers/baseline-install.sh — the frozen install in the declared cell",
+      "evidence/ingests/angular-tiny-translator-v0-12-0/drivers/baseline-build.sh — the two production build stages",
+      "evidence/ingests/angular-tiny-translator-v0-12-0/drivers/facts.mjs — offline fact collection",
+      "evidence/ingests/angular-tiny-translator-v0-12-0/drivers/ledger-append-cell.mjs — ledgering of the baseline-cell acquisitions"
+    ],
+    "driverPosture": "The drivers are working tools kept inside this unit's file contract, alongside their raw outputs (drivers/*-output.json). They are re-runnable and they are what makes this ingest reproducible. They are not part of the durable evidence record: the durable record is the JSON documents in this directory plus fixtures/angular-tiny-translator-v0-12-0/fixture.json.",
+    "notWritten": [
+      "No module, script or fixture-id enum entry was added under packages/**, scripts/**, docs/**, evidence/runs/** or evidence/trust/**. The packet places them out of contract.",
+      "No core enum was edited, so the workspace CLI cannot name this fixture; no CLI ingest path was used."
+    ],
+    "hostPathsExcluded": "Every path recorded in this directory is workspace-relative. Host-absolute paths appear only in the git-ignored build logs, which are deliberately not copied into evidence."
+  },
+  "cache": {
+    "root": ".versionless/cache/angular-tiny-translator-v0-12-0-source",
+    "verifiedSource": ".versionless/cache/angular-tiny-translator-v0-12-0-source/verify/extracted/tiny-translator-08dcacf6a41d5a6f6dfbc71d858adcdc4c85691a",
+    "runtime": ".versionless/cache/angular-tiny-translator-v0-12-0-runtime",
+    "baseline": ".versionless/cache/angular-tiny-translator-v0-12-0-baseline",
+    "gitIgnored": true,
+    "note": "Cache trees are git-ignored; the durable record is this evidence directory plus fixtures/angular-tiny-translator-v0-12-0/fixture.json. This unit ran in an isolated worktree, so its caches are local to that worktree and are not the workspace caches the earlier ingests populated."
+  },
+  "nonclaims": [
+    "Byte-identical duplicate fetches and blob-level git-tree parity establish source integrity for this revision only. They establish no signer authenticity: the tag is lightweight and the commit is unsigned.",
+    "This provenance record establishes no browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval."
+  ]
+}

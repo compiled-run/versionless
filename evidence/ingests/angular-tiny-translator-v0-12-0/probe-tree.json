@@ -1,0 +1,1645 @@
+{
+ "sha": "ba39de904e28030dcc8a09e28bbd1b0db7247bb7",
+ "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/ba39de904e28030dcc8a09e28bbd1b0db7247bb7",
+ "tree": [
+  {
+   "path": ".angular-cli.json",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "42945f778cdbe295d2b43890b6c64e83f52f31ec",
+   "size": 1394,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/42945f778cdbe295d2b43890b6c64e83f52f31ec"
+  },
+  {
+   "path": ".editorconfig",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "6e87a003da89defd554080af5af93600cc9f91fe",
+   "size": 245,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/6e87a003da89defd554080af5af93600cc9f91fe"
+  },
+  {
+   "path": ".gitignore",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "310c965cb6f35796c4881004106d7d30fbe8aa32",
+   "size": 618,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/310c965cb6f35796c4881004106d7d30fbe8aa32"
+  },
+  {
+   "path": "Changelog.md",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "91a2a93b77bcf1bc76dbea2f21b9e0fafeb13068",
+   "size": 6912,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/91a2a93b77bcf1bc76dbea2f21b9e0fafeb13068"
+  },
+  {
+   "path": "Dockerfile",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "c0ff3c020286348e47c427bdc30bb34b79f9baa5",
+   "size": 438,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/c0ff3c020286348e47c427bdc30bb34b79f9baa5"
+  },
+  {
+   "path": "Dockerhub",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "c3a4072e7279e255baca8eacc4769e806de79ef9",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/c3a4072e7279e255baca8eacc4769e806de79ef9"
+  },
+  {
+   "path": "Dockerhub/index.html",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "d3757ccb72b1c537942cf3e9943b3c1b5c577b27",
+   "size": 287,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/d3757ccb72b1c537942cf3e9943b3c1b5c577b27"
+  },
+  {
+   "path": "Dockerhub/nginx.conf",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "471e0e485c880eb6e5455b59c89d98b0fb78c3ff",
+   "size": 668,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/471e0e485c880eb6e5455b59c89d98b0fb78c3ff"
+  },
+  {
+   "path": "Dockerhub/nginx.default.conf",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "70470911a1c14e651eb884b63813e5f403ce944f",
+   "size": 1190,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/70470911a1c14e651eb884b63813e5f403ce944f"
+  },
+  {
+   "path": "LICENSE",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "67e75a82c9c6583e28a5c36d0ae9549daa275bd4",
+   "size": 1068,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/67e75a82c9c6583e28a5c36d0ae9549daa275bd4"
+  },
+  {
+   "path": "README.md",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "0097bcb1f1c7d164905c6d2e987d47d7626e5e31",
+   "size": 5023,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/0097bcb1f1c7d164905c6d2e987d47d7626e5e31"
+  },
+  {
+   "path": "cert.pem",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "8d25c6ca2faf56757624cbe0933650d30c6f216b",
+   "size": 1346,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/8d25c6ca2faf56757624cbe0933650d30c6f216b"
+  },
+  {
+   "path": "docker-compose.yml",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "3a545482c1b9f4631f9f7195740c6db46292bf60",
+   "size": 118,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/3a545482c1b9f4631f9f7195740c6db46292bf60"
+  },
+  {
+   "path": "e2e",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "3bf87be4b448ca4756a71323e2e7fd613a25c726",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/3bf87be4b448ca4756a71323e2e7fd613a25c726"
+  },
+  {
+   "path": "e2e/app.e2e-spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "86d7d48fbd9f750dc72b56fffeb30ae5f4878aed",
+   "size": 334,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/86d7d48fbd9f750dc72b56fffeb30ae5f4878aed"
+  },
+  {
+   "path": "e2e/app.po.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "88e47a7725f26750124d0e0859799f9a9633bd14",
+   "size": 219,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/88e47a7725f26750124d0e0859799f9a9633bd14"
+  },
+  {
+   "path": "e2e/tsconfig.e2e.json",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "dd4952b1850c478f3c1728419fd98bd86090dfa8",
+   "size": 234,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/dd4952b1850c478f3c1728419fd98bd86090dfa8"
+  },
+  {
+   "path": "karma.conf.js",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "1dfd5229a100b19a1d5ba2b8a713f57bd570d153",
+   "size": 926,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/1dfd5229a100b19a1d5ba2b8a713f57bd570d153"
+  },
+  {
+   "path": "key.pem",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "52b85e1ba51e084787403d169b06224bc2cda447",
+   "size": 1708,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/52b85e1ba51e084787403d169b06224bc2cda447"
+  },
+  {
+   "path": "package.json",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "0fcbaa02a0a906326c005aab30a1306f19d93a5a",
+   "size": 4714,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/0fcbaa02a0a906326c005aab30a1306f19d93a5a"
+  },
+  {
+   "path": "protractor.conf.js",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "7ee3b5ee863a74c87dbc4f4bee10b1fd1016cbf4",
+   "size": 722,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/7ee3b5ee863a74c87dbc4f4bee10b1fd1016cbf4"
+  },
+  {
+   "path": "src",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "9028d05bf8b930cde9ee1381ff346322214952d9",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/9028d05bf8b930cde9ee1381ff346322214952d9"
+  },
+  {
+   "path": "src/app",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "73a86a2551e5c314a2abdd94a74f5e7bbcf622f6",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/73a86a2551e5c314a2abdd94a74f5e7bbcf622f6"
+  },
+  {
+   "path": "src/app/active-project.guard.spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "1e81d9c46efb8cbae7274f683e9e7c2d0e6b3ff8",
+   "size": 1824,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/1e81d9c46efb8cbae7274f683e9e7c2d0e6b3ff8"
+  },
+  {
+   "path": "src/app/active-project.guard.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "bca08220d9bd7fccf54e90d180bf631071274f2e",
+   "size": 893,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/bca08220d9bd7fccf54e90d180bf631071274f2e"
+  },
+  {
+   "path": "src/app/app-material.module.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "debc8107fd485d4c13881442f7cf0edf24c466d2",
+   "size": 1304,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/debc8107fd485d4c13881442f7cf0edf24c466d2"
+  },
+  {
+   "path": "src/app/app.component.html",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "91cfec556c83a2faaf2246aa81464bd0c11b0f93",
+   "size": 2801,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/91cfec556c83a2faaf2246aa81464bd0c11b0f93"
+  },
+  {
+   "path": "src/app/app.component.scss",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "d59a11bb70a818a2b8867063868fbdd11ed307bf",
+   "size": 556,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/d59a11bb70a818a2b8867063868fbdd11ed307bf"
+  },
+  {
+   "path": "src/app/app.component.spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "9d4746aa92060186141e3ab4ad0eb44a831af5bc",
+   "size": 1278,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/9d4746aa92060186141e3ab4ad0eb44a831af5bc"
+  },
+  {
+   "path": "src/app/app.component.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "fb987164738d64857ecf2e69d827eec353218d23",
+   "size": 2662,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/fb987164738d64857ecf2e69d827eec353218d23"
+  },
+  {
+   "path": "src/app/app.config.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "de7165ddbb67dd754597bbabbb5e3887611d6164",
+   "size": 1197,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/de7165ddbb67dd754597bbabbb5e3887611d6164"
+  },
+  {
+   "path": "src/app/app.module.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "071c3d8a833c014215be3874c15ee0998eb179ee",
+   "size": 4781,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/071c3d8a833c014215be3874c15ee0998eb179ee"
+  },
+  {
+   "path": "src/app/app.routing.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "ed6e8f309b5d96c76da86fa9f601c96812d85053",
+   "size": 1700,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/ed6e8f309b5d96c76da86fa9f601c96812d85053"
+  },
+  {
+   "path": "src/app/auto-translate-summary-page",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "74c513f5265569dbd78fc33d295b13be0a6369e3",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/74c513f5265569dbd78fc33d295b13be0a6369e3"
+  },
+  {
+   "path": "src/app/auto-translate-summary-page/auto-translate-summary-page.component.css",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+   "size": 0,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+  },
+  {
+   "path": "src/app/auto-translate-summary-page/auto-translate-summary-page.component.html",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "2371de9b4305b35348643e9f0c044682c65ffda5",
+   "size": 2057,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/2371de9b4305b35348643e9f0c044682c65ffda5"
+  },
+  {
+   "path": "src/app/auto-translate-summary-page/auto-translate-summary-page.component.spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "26be2079263cc47e99713143355ce6f37f049151",
+   "size": 872,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/26be2079263cc47e99713143355ce6f37f049151"
+  },
+  {
+   "path": "src/app/auto-translate-summary-page/auto-translate-summary-page.component.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "3a17598c78e45c5883261dba8eb46fc84302e940",
+   "size": 3546,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/3a17598c78e45c5883261dba8eb46fc84302e940"
+  },
+  {
+   "path": "src/app/common",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "607e5e4509bd2fb76c3f419a1c89a115d0da697b",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/607e5e4509bd2fb76c3f419a1c89a115d0da697b"
+  },
+  {
+   "path": "src/app/common/abbreviate.pipe.spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "27b4a2b09946440e6e490dc5f84051fce20bffb3",
+   "size": 921,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/27b4a2b09946440e6e490dc5f84051fce20bffb3"
+  },
+  {
+   "path": "src/app/common/abbreviate.pipe.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "30e4d70b99f9dde8ebf7fb141066e88c46a1b49f",
+   "size": 907,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/30e4d70b99f9dde8ebf7fb141066e88c46a1b49f"
+  },
+  {
+   "path": "src/app/configure-auto-translate-page",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "5d3c2ca34e9730b9728dc64e3265aaebd20fedf2",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/5d3c2ca34e9730b9728dc64e3265aaebd20fedf2"
+  },
+  {
+   "path": "src/app/configure-auto-translate-page/configure-auto-translate-page.component.css",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "3ec730c8260060725ee7c0af456ac0dab04da798",
+   "size": 91,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/3ec730c8260060725ee7c0af456ac0dab04da798"
+  },
+  {
+   "path": "src/app/configure-auto-translate-page/configure-auto-translate-page.component.html",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "8962d49c5379dffcf126fb2fe285f31e8c085e57",
+   "size": 2722,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/8962d49c5379dffcf126fb2fe285f31e8c085e57"
+  },
+  {
+   "path": "src/app/configure-auto-translate-page/configure-auto-translate-page.component.spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "cd66014c705ef64e14f117835db1c0752c564039",
+   "size": 867,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/cd66014c705ef64e14f117835db1c0752c564039"
+  },
+  {
+   "path": "src/app/configure-auto-translate-page/configure-auto-translate-page.component.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "a74a31b9582c7a266e4b398fd184e61ff95fb3d3",
+   "size": 3171,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/a74a31b9582c7a266e4b398fd184e61ff95fb3d3"
+  },
+  {
+   "path": "src/app/create-project-page",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "4c5e73816eb25a6e2288eac3d2b66a9509591c4a",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/4c5e73816eb25a6e2288eac3d2b66a9509591c4a"
+  },
+  {
+   "path": "src/app/create-project-page/create-project-page.component.css",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+   "size": 0,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+  },
+  {
+   "path": "src/app/create-project-page/create-project-page.component.html",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "f922d84871fec8c86ccb3c2c980aaa7f28b1cc72",
+   "size": 80,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/f922d84871fec8c86ccb3c2c980aaa7f28b1cc72"
+  },
+  {
+   "path": "src/app/create-project-page/create-project-page.component.spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "79f12ec5b5063e90d3dfa323b6863d757d8b01b9",
+   "size": 1205,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/79f12ec5b5063e90d3dfa323b6863d757d8b01b9"
+  },
+  {
+   "path": "src/app/create-project-page/create-project-page.component.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "a7c40fe548ad07d679ade71496b968fea2a1959b",
+   "size": 787,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/a7c40fe548ad07d679ade71496b968fea2a1959b"
+  },
+  {
+   "path": "src/app/edit-project-page",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "1fa9d2ed17658b0e1981a1de1340bf08cc9ce72d",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/1fa9d2ed17658b0e1981a1de1340bf08cc9ce72d"
+  },
+  {
+   "path": "src/app/edit-project-page/edit-project-page.component.css",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+   "size": 0,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+  },
+  {
+   "path": "src/app/edit-project-page/edit-project-page.component.html",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "a998cae54cda2feaa4e69737d8e4de0c327fc2d4",
+   "size": 109,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/a998cae54cda2feaa4e69737d8e4de0c327fc2d4"
+  },
+  {
+   "path": "src/app/edit-project-page/edit-project-page.component.spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "40c2915449171af8c48d1a673838e611c656fb52",
+   "size": 799,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/40c2915449171af8c48d1a673838e611c656fb52"
+  },
+  {
+   "path": "src/app/edit-project-page/edit-project-page.component.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "757b08fa466edb0f1413a7c3e9862b06f29755a6",
+   "size": 980,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/757b08fa466edb0f1413a7c3e9862b06f29755a6"
+  },
+  {
+   "path": "src/app/filter-page",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "bf8e1ecc580c62e8de2158068de3581361ca82f3",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/bf8e1ecc580c62e8de2158068de3581361ca82f3"
+  },
+  {
+   "path": "src/app/filter-page/filter-page.component.css",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+   "size": 0,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+  },
+  {
+   "path": "src/app/filter-page/filter-page.component.html",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "d509ceaf6ee846dc17366b2f147ec91002cb4e42",
+   "size": 300,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/d509ceaf6ee846dc17366b2f147ec91002cb4e42"
+  },
+  {
+   "path": "src/app/filter-page/filter-page.component.spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "c90bd00230adf373417c63b2f4ac2cd60a9e97a7",
+   "size": 770,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/c90bd00230adf373417c63b2f4ac2cd60a9e97a7"
+  },
+  {
+   "path": "src/app/filter-page/filter-page.component.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "4fc02a40ebd634decb86056481564b527580a3e1",
+   "size": 1346,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/4fc02a40ebd634decb86056481564b527580a3e1"
+  },
+  {
+   "path": "src/app/filter-status",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "b1153ecf03bc133ad535e7a4aed497c5d73a9303",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/b1153ecf03bc133ad535e7a4aed497c5d73a9303"
+  },
+  {
+   "path": "src/app/filter-status/filter-status.component.css",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+   "size": 0,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+  },
+  {
+   "path": "src/app/filter-status/filter-status.component.html",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "74dd1c871d8c316cc46b8322dec615c851bd65c5",
+   "size": 1177,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/74dd1c871d8c316cc46b8322dec615c851bd65c5"
+  },
+  {
+   "path": "src/app/filter-status/filter-status.component.spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "2d53ea4b8f01a42764e96b48110c249ea8710187",
+   "size": 782,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/2d53ea4b8f01a42764e96b48110c249ea8710187"
+  },
+  {
+   "path": "src/app/filter-status/filter-status.component.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "9b40b0a0986765506cb9cc5b364c14c7cb103ada",
+   "size": 1002,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/9b40b0a0986765506cb9cc5b364c14c7cb103ada"
+  },
+  {
+   "path": "src/app/home-page",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "75e28862d1a629d9c84bfba797c53a9fd50a918f",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/75e28862d1a629d9c84bfba797c53a9fd50a918f"
+  },
+  {
+   "path": "src/app/home-page/home-page.component.css",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+   "size": 0,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+  },
+  {
+   "path": "src/app/home-page/home-page.component.html",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "e2e8890437b930249488853cf322af6c6f2c14d8",
+   "size": 506,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/e2e8890437b930249488853cf322af6c6f2c14d8"
+  },
+  {
+   "path": "src/app/home-page/home-page.component.spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "ce53f81a09b21a6c4e4aa375cc45185746b03be8",
+   "size": 693,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/ce53f81a09b21a6c4e4aa375cc45185746b03be8"
+  },
+  {
+   "path": "src/app/home-page/home-page.component.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "86007e7342522bfbf03f40125d9700ad4df9c0a2",
+   "size": 996,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/86007e7342522bfbf03f40125d9700ad4df9c0a2"
+  },
+  {
+   "path": "src/app/language",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "f7660a474f84032e5e24bb0f852501285b9570d2",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/f7660a474f84032e5e24bb0f852501285b9570d2"
+  },
+  {
+   "path": "src/app/language/language.component.html",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "e4bc74d574849434e153739101314e24da7915db",
+   "size": 106,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/e4bc74d574849434e153739101314e24da7915db"
+  },
+  {
+   "path": "src/app/language/language.component.scss",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "03c98291734221fe3da16a8ce19db326652e2817",
+   "size": 174,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/03c98291734221fe3da16a8ce19db326652e2817"
+  },
+  {
+   "path": "src/app/language/language.component.spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "39043b99b7b349da36d029a10ba92216fa2ce171",
+   "size": 642,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/39043b99b7b349da36d029a10ba92216fa2ce171"
+  },
+  {
+   "path": "src/app/language/language.component.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "b0a48e97f32e8d4aab565bab0eff69cb925ea401",
+   "size": 3488,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/b0a48e97f32e8d4aab565bab0eff69cb925ea401"
+  },
+  {
+   "path": "src/app/model",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "5b1e8f92b01fdb45fc6726a4186bf5058e254385",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/5b1e8f92b01fdb45fc6726a4186bf5058e254385"
+  },
+  {
+   "path": "src/app/model/asynchronous-file-reader.service.spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "7f112a19210b05f98ea5840c1da4ccd2ab685b8e",
+   "size": 465,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/7f112a19210b05f98ea5840c1da4ccd2ab685b8e"
+  },
+  {
+   "path": "src/app/model/asynchronous-file-reader.service.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "0ab757a1e4d50138bfd8b345217887e966362225",
+   "size": 1456,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/0ab757a1e4d50138bfd8b345217887e966362225"
+  },
+  {
+   "path": "src/app/model/auto-translate-google.service.spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "c9f3e68fb3aa7664d9e9b7ebb030d48b0dd3c636",
+   "size": 6091,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/c9f3e68fb3aa7664d9e9b7ebb030d48b0dd3c636"
+  },
+  {
+   "path": "src/app/model/auto-translate-google.service.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "a05c0b4474be712f2e774f74965e1ff9a424a1c0",
+   "size": 11299,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/a05c0b4474be712f2e774f74965e1ff9a424a1c0"
+  },
+  {
+   "path": "src/app/model/auto-translate-result.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "270b8bca33af7c3e640d089b4f60463968320585",
+   "size": 1039,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/270b8bca33af7c3e640d089b4f60463968320585"
+  },
+  {
+   "path": "src/app/model/auto-translate-service-api.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "62b51975ca88ba1645a057a523d37c95e31f1fde",
+   "size": 2616,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/62b51975ca88ba1645a057a523d37c95e31f1fde"
+  },
+  {
+   "path": "src/app/model/auto-translate-summary-report.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "265faaa40ba7af1b699aba96528302cae38301d7",
+   "size": 2147,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/265faaa40ba7af1b699aba96528302cae38301d7"
+  },
+  {
+   "path": "src/app/model/backend-local-storage.service.spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "89c6dd35ebaf5678970831ad36b327e099974f5c",
+   "size": 447,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/89c6dd35ebaf5678970831ad36b327e099974f5c"
+  },
+  {
+   "path": "src/app/model/backend-local-storage.service.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "1bda7b9f0d4e2faf5519f7d6c9e4f6527bc9b9da",
+   "size": 3118,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/1bda7b9f0d4e2faf5519f7d6c9e4f6527bc9b9da"
+  },
+  {
+   "path": "src/app/model/backend-service-api.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "e4a97395541deda2b46e8f0a862d6e43e2a2faeb",
+   "size": 2030,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/e4a97395541deda2b46e8f0a862d6e43e2a2faeb"
+  },
+  {
+   "path": "src/app/model/downloader.service.spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "dde2ed2d9284d4d4a6e1c38a73602a077684de89",
+   "size": 391,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/dde2ed2d9284d4d4a6e1c38a73602a077684de89"
+  },
+  {
+   "path": "src/app/model/downloader.service.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "dd91413c2d2213fa6e9f393a9513cd1d680f0e78",
+   "size": 445,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/dd91413c2d2213fa6e9f393a9513cd1d680f0e78"
+  },
+  {
+   "path": "src/app/model/filters",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "f25aa18d8ee5c3c44416f9515609aeff20224d76",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/f25aa18d8ee5c3c44416f9515609aeff20224d76"
+  },
+  {
+   "path": "src/app/model/filters/i-translation-unit-filter.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "aa0e11941f204bfdeeba92c6fff76a95b938677b",
+   "size": 466,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/aa0e11941f204bfdeeba92c6fff76a95b938677b"
+  },
+  {
+   "path": "src/app/model/filters/translation-unit-filter-all.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "11c2bfc8ea53bd12ed4b47f056cf200bb16b79d6",
+   "size": 395,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/11c2bfc8ea53bd12ed4b47f056cf200bb16b79d6"
+  },
+  {
+   "path": "src/app/model/filters/translation-unit-filter-autotranslated-failed.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "e14b93485a96763be6dc103a7d2b18f56040e6a4",
+   "size": 1041,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/e14b93485a96763be6dc103a7d2b18f56040e6a4"
+  },
+  {
+   "path": "src/app/model/filters/translation-unit-filter-autotranslated-ignored.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "4cade42409454043aa2d83a74c687d012a0ce317",
+   "size": 1037,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/4cade42409454043aa2d83a74c687d012a0ce317"
+  },
+  {
+   "path": "src/app/model/filters/translation-unit-filter-autotranslated.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "925ec2b13fe714e160826b058cf0a1ba0c2e963d",
+   "size": 1023,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/925ec2b13fe714e160826b058cf0a1ba0c2e963d"
+  },
+  {
+   "path": "src/app/model/filters/translation-unit-filter-needs-review.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "8045771d18cd70a9bf091cd59fb5075e6040cf06",
+   "size": 533,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/8045771d18cd70a9bf091cd59fb5075e6040cf06"
+  },
+  {
+   "path": "src/app/model/filters/translation-unit-filter-substring.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "fbd63e4ea4263a7f929d55524f4e609d5f381c60",
+   "size": 1042,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/fbd63e4ea4263a7f929d55524f4e609d5f381c60"
+  },
+  {
+   "path": "src/app/model/filters/translation-unit-filter-untranslated.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "5441f885a56052c94b10cff3907bac3631f4ccda",
+   "size": 427,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/5441f885a56052c94b10cff3907bac3631f4ccda"
+  },
+  {
+   "path": "src/app/model/filters/translation-unit-filter.service.spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "dfcf5ac8bf242acb672870d40d7d68d52f9e9aa7",
+   "size": 466,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/dfcf5ac8bf242acb672870d40d7d68d52f9e9aa7"
+  },
+  {
+   "path": "src/app/model/filters/translation-unit-filter.service.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "5d83dae8c5b075ab210c503c193fd10a3b42f031",
+   "size": 2633,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/5d83dae8c5b075ab210c503c193fd10a3b42f031"
+  },
+  {
+   "path": "src/app/model/normalized-message.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "fb9508e30b9f86149234c79326532d60a382ca15",
+   "size": 7259,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/fb9508e30b9f86149234c79326532d60a382ca15"
+  },
+  {
+   "path": "src/app/model/tiny-translator.service.spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "7f4efa4320b491fdb08f94134fde71f186a3b549",
+   "size": 851,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/7f4efa4320b491fdb08f94134fde71f186a3b549"
+  },
+  {
+   "path": "src/app/model/tiny-translator.service.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "28ab89dce7d6d79749a639fd8352bf10224bfe85",
+   "size": 9309,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/28ab89dce7d6d79749a639fd8352bf10224bfe85"
+  },
+  {
+   "path": "src/app/model/translation-file-view.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "e28c29ee15c772cd99d3f367d5a753b7803c1673",
+   "size": 3942,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/e28c29ee15c772cd99d3f367d5a753b7803c1673"
+  },
+  {
+   "path": "src/app/model/translation-file.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "6718c01c9a1298377c71012034370fc667ededd3",
+   "size": 13495,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/6718c01c9a1298377c71012034370fc667ededd3"
+  },
+  {
+   "path": "src/app/model/translation-project.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "f542701e10ae7a8854ea5812a7437ab55271ae90",
+   "size": 4110,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/f542701e10ae7a8854ea5812a7437ab55271ae90"
+  },
+  {
+   "path": "src/app/model/translation-unit.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "1cd5f0de8fc6a5fe17dea231233b467f643aa71a",
+   "size": 5101,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/1cd5f0de8fc6a5fe17dea231233b467f643aa71a"
+  },
+  {
+   "path": "src/app/normalized-message-input",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "b068f6d8e9c7745f0d56f922970556b436a626e1",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/b068f6d8e9c7745f0d56f922970556b436a626e1"
+  },
+  {
+   "path": "src/app/normalized-message-input/normalized-message-input.component.css",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "4546bc2f6e44349196a6aa0077c9b28ed512b0e8",
+   "size": 37,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/4546bc2f6e44349196a6aa0077c9b28ed512b0e8"
+  },
+  {
+   "path": "src/app/normalized-message-input/normalized-message-input.component.html",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "bf02c7b66a5eaa37da756d437b5208caf7d29cca",
+   "size": 1378,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/bf02c7b66a5eaa37da756d437b5208caf7d29cca"
+  },
+  {
+   "path": "src/app/normalized-message-input/normalized-message-input.component.spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "ed6ff7b0f7d26d50a13f969ca51a5e088ad614e1",
+   "size": 905,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/ed6ff7b0f7d26d50a13f969ca51a5e088ad614e1"
+  },
+  {
+   "path": "src/app/normalized-message-input/normalized-message-input.component.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "65897f2c6d8ab16ca828fc1d46e618b00f4cb88c",
+   "size": 4996,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/65897f2c6d8ab16ca828fc1d46e618b00f4cb88c"
+  },
+  {
+   "path": "src/app/project-editor",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "fea357401d96815a3026dc8792ee17b4337599da",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/fea357401d96815a3026dc8792ee17b4337599da"
+  },
+  {
+   "path": "src/app/project-editor/project-editor.component.css",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+   "size": 0,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+  },
+  {
+   "path": "src/app/project-editor/project-editor.component.html",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "c5ed4c76dc3f915d1eedd0f817a50df584c14134",
+   "size": 2376,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/c5ed4c76dc3f915d1eedd0f817a50df584c14134"
+  },
+  {
+   "path": "src/app/project-editor/project-editor.component.spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "8780b1142fca7f9ba7089224b2eba99139b51a7e",
+   "size": 841,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/8780b1142fca7f9ba7089224b2eba99139b51a7e"
+  },
+  {
+   "path": "src/app/project-editor/project-editor.component.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "eb74d3f8b382c9494421b14c976fd6fbf5e8faeb",
+   "size": 3390,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/eb74d3f8b382c9494421b14c976fd6fbf5e8faeb"
+  },
+  {
+   "path": "src/app/project-list",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "a2a3a4441bb2f478b62339856fe9e03faef7e4ff",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/a2a3a4441bb2f478b62339856fe9e03faef7e4ff"
+  },
+  {
+   "path": "src/app/project-list/project-list.component.css",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "29b35dbdb8b860dad31b9994f2e11a42fa09d564",
+   "size": 33,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/29b35dbdb8b860dad31b9994f2e11a42fa09d564"
+  },
+  {
+   "path": "src/app/project-list/project-list.component.html",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "b602bbfb1e7c02799610ec0f0193ce1cb5ee9bab",
+   "size": 231,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/b602bbfb1e7c02799610ec0f0193ce1cb5ee9bab"
+  },
+  {
+   "path": "src/app/project-list/project-list.component.spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "4a739bd088be3954064060d28cc0902b0a07f8e0",
+   "size": 828,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/4a739bd088be3954064060d28cc0902b0a07f8e0"
+  },
+  {
+   "path": "src/app/project-list/project-list.component.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "692755d7ebb75dae562c907d10836b8616b8f524",
+   "size": 966,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/692755d7ebb75dae562c907d10836b8616b8f524"
+  },
+  {
+   "path": "src/app/project-starter",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "66900be7f015015a6d32b9ea9d77046bfcefa329",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/66900be7f015015a6d32b9ea9d77046bfcefa329"
+  },
+  {
+   "path": "src/app/project-starter/project-starter.component.html",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "f8f43b8ded1625131e52af3fd20baa3226a763ca",
+   "size": 4593,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/f8f43b8ded1625131e52af3fd20baa3226a763ca"
+  },
+  {
+   "path": "src/app/project-starter/project-starter.component.scss",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "0af4c64dd71cea7ffdd1c123edebd04be4bd4cc1",
+   "size": 624,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/0af4c64dd71cea7ffdd1c123edebd04be4bd4cc1"
+  },
+  {
+   "path": "src/app/project-starter/project-starter.component.spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "54e16bdcda57cacf29ec595abf1eeae2301e9d19",
+   "size": 729,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/54e16bdcda57cacf29ec595abf1eeae2301e9d19"
+  },
+  {
+   "path": "src/app/project-starter/project-starter.component.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "957f4ff9a0146266738541b96bbcc88fbdaacaf1",
+   "size": 4927,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/957f4ff9a0146266738541b96bbcc88fbdaacaf1"
+  },
+  {
+   "path": "src/app/project-status",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "721358e47b5de34d610f448e84ea2fb6534f9349",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/721358e47b5de34d610f448e84ea2fb6534f9349"
+  },
+  {
+   "path": "src/app/project-status/project-status.component.css",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+   "size": 0,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+  },
+  {
+   "path": "src/app/project-status/project-status.component.html",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "d0767b20412d89efb164733df6d9da25612efd6c",
+   "size": 788,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/d0767b20412d89efb164733df6d9da25612efd6c"
+  },
+  {
+   "path": "src/app/project-status/project-status.component.spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "740123874692409637eba2a9c8e41a15e1065657",
+   "size": 962,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/740123874692409637eba2a9c8e41a15e1065657"
+  },
+  {
+   "path": "src/app/project-status/project-status.component.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "fa6b61aeaf2dda7c72f908aac89525fe6894a39e",
+   "size": 1031,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/fa6b61aeaf2dda7c72f908aac89525fe6894a39e"
+  },
+  {
+   "path": "src/app/project",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "534d49365b7b457e72693e350610b30d8b895524",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/534d49365b7b457e72693e350610b30d8b895524"
+  },
+  {
+   "path": "src/app/project/project.component.css",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+   "size": 0,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+  },
+  {
+   "path": "src/app/project/project.component.html",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "a7a4d063f00c8cb85f8dc77da66d34b4a61bb82b",
+   "size": 793,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/a7a4d063f00c8cb85f8dc77da66d34b4a61bb82b"
+  },
+  {
+   "path": "src/app/project/project.component.spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "44cef9eb544d13e95d75b75dc47ffb13deb591c4",
+   "size": 960,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/44cef9eb544d13e95d75b75dc47ffb13deb591c4"
+  },
+  {
+   "path": "src/app/project/project.component.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "a866607a085dd2b61b0428bf6b5ec034a62f0c91",
+   "size": 960,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/a866607a085dd2b61b0428bf6b5ec034a62f0c91"
+  },
+  {
+   "path": "src/app/rxjs-operators.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "c4be52525ff53b144e37b4aacc0a49fabeea27f6",
+   "size": 570,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/c4be52525ff53b144e37b4aacc0a49fabeea27f6"
+  },
+  {
+   "path": "src/app/translate-page",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "a4cf0a78ff37d57578caeca971236542bafd07ea",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/a4cf0a78ff37d57578caeca971236542bafd07ea"
+  },
+  {
+   "path": "src/app/translate-page/translate-page.component.css",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "624ea1d363be5cc2172076d6bb44731016908b33",
+   "size": 58,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/624ea1d363be5cc2172076d6bb44731016908b33"
+  },
+  {
+   "path": "src/app/translate-page/translate-page.component.html",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "9e7686baf3e195ccbdcd32e758133d1132f66430",
+   "size": 937,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/9e7686baf3e195ccbdcd32e758133d1132f66430"
+  },
+  {
+   "path": "src/app/translate-page/translate-page.component.spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "fd5347ac360c9a745d9f487912c4808a2b5cc666",
+   "size": 723,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/fd5347ac360c9a745d9f487912c4808a2b5cc666"
+  },
+  {
+   "path": "src/app/translate-page/translate-page.component.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "fc7ef87867368d828c5a3e0c39837f3a15a0de31",
+   "size": 2287,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/fc7ef87867368d828c5a3e0c39837f3a15a0de31"
+  },
+  {
+   "path": "src/app/translate-unit-list",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "3c6a2cbd89eb127ee5c3dc22fed93f486d3749e0",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/3c6a2cbd89eb127ee5c3dc22fed93f486d3749e0"
+  },
+  {
+   "path": "src/app/translate-unit-list/translate-unit-list.component.html",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "265abc02684b27fed1fdd73fdc4cc3abd106cb31",
+   "size": 1938,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/265abc02684b27fed1fdd73fdc4cc3abd106cb31"
+  },
+  {
+   "path": "src/app/translate-unit-list/translate-unit-list.component.scss",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "44609faa3ebbdf53d7ad3f1197358efd1610e546",
+   "size": 283,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/44609faa3ebbdf53d7ad3f1197358efd1610e546"
+  },
+  {
+   "path": "src/app/translate-unit-list/translate-unit-list.component.spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "c514bcb4b8a27441b9f152560b8553f9d3315c5e",
+   "size": 1008,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/c514bcb4b8a27441b9f152560b8553f9d3315c5e"
+  },
+  {
+   "path": "src/app/translate-unit-list/translate-unit-list.component.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "7985438b521b77f45145b583d0a9112cd2b29f2a",
+   "size": 4831,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/7985438b521b77f45145b583d0a9112cd2b29f2a"
+  },
+  {
+   "path": "src/app/translate-unit-warning-confirm-dialog",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "8578a875229be1dc0557fd01c0a4f38b47e7270e",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/8578a875229be1dc0557fd01c0a4f38b47e7270e"
+  },
+  {
+   "path": "src/app/translate-unit-warning-confirm-dialog/translate-unit-warning-confirm-dialog.component.css",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "29c0671a69f698ffd5010cd464e2a60198963175",
+   "size": 56,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/29c0671a69f698ffd5010cd464e2a60198963175"
+  },
+  {
+   "path": "src/app/translate-unit-warning-confirm-dialog/translate-unit-warning-confirm-dialog.component.html",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "4959924937d008d26a7e795659bb5653e5c67045",
+   "size": 635,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/4959924937d008d26a7e795659bb5653e5c67045"
+  },
+  {
+   "path": "src/app/translate-unit-warning-confirm-dialog/translate-unit-warning-confirm-dialog.component.spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "8401f501abfbadefc46d1aa1dec1e521fbd13223",
+   "size": 1370,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/8401f501abfbadefc46d1aa1dec1e521fbd13223"
+  },
+  {
+   "path": "src/app/translate-unit-warning-confirm-dialog/translate-unit-warning-confirm-dialog.component.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "eb3f6b022270957fc133a35f3d2f87889a6861d0",
+   "size": 1082,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/eb3f6b022270957fc133a35f3d2f87889a6861d0"
+  },
+  {
+   "path": "src/app/translate-unit",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "722f7bfc5440382ae0a9b16740248310c4a22b3b",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/722f7bfc5440382ae0a9b16740248310c4a22b3b"
+  },
+  {
+   "path": "src/app/translate-unit/translate-unit.component.css",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "c0329f86fc25dd19aeb6c9234ca82dbf01a4b0c8",
+   "size": 798,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/c0329f86fc25dd19aeb6c9234ca82dbf01a4b0c8"
+  },
+  {
+   "path": "src/app/translate-unit/translate-unit.component.html",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "594007b57bedf4ead9836ec4112b0138533675cb",
+   "size": 5244,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/594007b57bedf4ead9836ec4112b0138533675cb"
+  },
+  {
+   "path": "src/app/translate-unit/translate-unit.component.spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "d140e98b7b3209bdf504ee06180aeffe588dec98",
+   "size": 943,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/d140e98b7b3209bdf504ee06180aeffe588dec98"
+  },
+  {
+   "path": "src/app/translate-unit/translate-unit.component.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "07650ddc87c952cef484d9f5db6c5483cc72c5cc",
+   "size": 11620,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/07650ddc87c952cef484d9f5db6c5483cc72c5cc"
+  },
+  {
+   "path": "src/app/translation-file-status",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "8f32e802abff6eafa5fcf820d588ffd1621491ac",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/8f32e802abff6eafa5fcf820d588ffd1621491ac"
+  },
+  {
+   "path": "src/app/translation-file-status/translation-file-status.component.css",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "d9e21c8b048be531bdeead3ee0f0975281767a9e",
+   "size": 110,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/d9e21c8b048be531bdeead3ee0f0975281767a9e"
+  },
+  {
+   "path": "src/app/translation-file-status/translation-file-status.component.html",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "34ed42d72315835984392cb1a1265caefb99cc5e",
+   "size": 2352,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/34ed42d72315835984392cb1a1265caefb99cc5e"
+  },
+  {
+   "path": "src/app/translation-file-status/translation-file-status.component.spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "7560f4a27ea10610b47ceae7b30034b2025eaeb5",
+   "size": 1033,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/7560f4a27ea10610b47ceae7b30034b2025eaeb5"
+  },
+  {
+   "path": "src/app/translation-file-status/translation-file-status.component.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "a4ddbb02d7b8ef0ede41e87c3fe0aee199c9453c",
+   "size": 1286,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/a4ddbb02d7b8ef0ede41e87c3fe0aee199c9453c"
+  },
+  {
+   "path": "src/app/update-available",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "04dea8801c91c59b0b03a278afd6df2bea8b1c54",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/04dea8801c91c59b0b03a278afd6df2bea8b1c54"
+  },
+  {
+   "path": "src/app/update-available/update-available.component.css",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+   "size": 0,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+  },
+  {
+   "path": "src/app/update-available/update-available.component.html",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "ae62adec2350227f2501809a12d63ea79249f503",
+   "size": 223,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/ae62adec2350227f2501809a12d63ea79249f503"
+  },
+  {
+   "path": "src/app/update-available/update-available.component.spec.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "a3386490675fdffc2b240b34f3e08d58a8f9d96b",
+   "size": 692,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/a3386490675fdffc2b240b34f3e08d58a8f9d96b"
+  },
+  {
+   "path": "src/app/update-available/update-available.component.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "7dd69f617cdb83831afea3cbcb42fb3ac76dfc19",
+   "size": 512,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/7dd69f617cdb83831afea3cbcb42fb3ac76dfc19"
+  },
+  {
+   "path": "src/assets",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "f8141218e3db656873c31f8d4ab9a759b943b26d",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/f8141218e3db656873c31f8d4ab9a759b943b26d"
+  },
+  {
+   "path": "src/assets/.gitkeep",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+   "size": 0,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+  },
+  {
+   "path": "src/assets/Pirate_Flag.svg",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "c72e90306bd09cc5ad7e346f819010ea5e0380af",
+   "size": 21889,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/c72e90306bd09cc5ad7e346f819010ea5e0380af"
+  },
+  {
+   "path": "src/assets/icons",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "396e3b7ac2f5d73a0171d9b49e9268920aad6dd9",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/396e3b7ac2f5d73a0171d9b49e9268920aad6dd9"
+  },
+  {
+   "path": "src/assets/icons/launcher-icon-1x.png",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "52a42facbb0a83d61e140f9fdcf4e672833a9de0",
+   "size": 1246,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/52a42facbb0a83d61e140f9fdcf4e672833a9de0"
+  },
+  {
+   "path": "src/assets/icons/launcher-icon-2x.png",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "4537d603011e5aca55b60b46791460202d4f79f8",
+   "size": 3095,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/4537d603011e5aca55b60b46791460202d4f79f8"
+  },
+  {
+   "path": "src/assets/icons/launcher-icon-4x.png",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "6627fe12ad7bde9e55d636a09beae4ab27070068",
+   "size": 7865,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/6627fe12ad7bde9e55d636a09beae4ab27070068"
+  },
+  {
+   "path": "src/assets/unknowflag.png",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "24c2f45d2af6e96a992053a5206bce9f76527483",
+   "size": 262,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/24c2f45d2af6e96a992053a5206bce9f76527483"
+  },
+  {
+   "path": "src/environments",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "383e72bbab1d4b40f586fd96c457cc0a6fb0fa2c",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/383e72bbab1d4b40f586fd96c457cc0a6fb0fa2c"
+  },
+  {
+   "path": "src/environments/environment.failtests.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "cbe5e1543a3d117070de56276572662d37ce848b",
+   "size": 542,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/cbe5e1543a3d117070de56276572662d37ce848b"
+  },
+  {
+   "path": "src/environments/environment.js",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "a005e1b86ac07139b7dac7fdbe459035a0975184",
+   "size": 460,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/a005e1b86ac07139b7dac7fdbe459035a0975184"
+  },
+  {
+   "path": "src/environments/environment.prod.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "8035b4c3ab9d8c64aee440fa37942eaf55898193",
+   "size": 207,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/8035b4c3ab9d8c64aee440fa37942eaf55898193"
+  },
+  {
+   "path": "src/environments/environment.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "4535caa93b21ca6d1eaf9b80acbfafeb40da836f",
+   "size": 543,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/4535caa93b21ca6d1eaf9b80acbfafeb40da836f"
+  },
+  {
+   "path": "src/favicon.ico",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "8081c7ceaf2be08bf59010158c586170d9d2d517",
+   "size": 5430,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/8081c7ceaf2be08bf59010158c586170d9d2d517"
+  },
+  {
+   "path": "src/ghpages",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "0a3e1e53b7c301fdfeb74889841372cd9cb7d789",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/0a3e1e53b7c301fdfeb74889841372cd9cb7d789"
+  },
+  {
+   "path": "src/ghpages/index.html",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "79349ddbc84ec8d8ec155c50548c5e97bef2bf22",
+   "size": 1014,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/79349ddbc84ec8d8ec155c50548c5e97bef2bf22"
+  },
+  {
+   "path": "src/ghpages/styles.css",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "c59367e72271c1c27776c43f38714161e584b029",
+   "size": 93,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/c59367e72271c1c27776c43f38714161e584b029"
+  },
+  {
+   "path": "src/i18n",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "e51bbd00ce51c078d8f34fc2ae0cd898d7bf8b15",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/e51bbd00ce51c078d8f34fc2ae0cd898d7bf8b15"
+  },
+  {
+   "path": "src/i18n/messages.de.xlf",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "d6c369ac283e850a91abaa4c3ddb9279cc6b9474",
+   "size": 59800,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/d6c369ac283e850a91abaa4c3ddb9279cc6b9474"
+  },
+  {
+   "path": "src/i18n/messages.en.xlf",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "50324209885045c8e5e03866b59685a2fa04608e",
+   "size": 59003,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/50324209885045c8e5e03866b59685a2fa04608e"
+  },
+  {
+   "path": "src/i18n/messages.fr-google.xlf",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "ac03ae0f2fa2e4a578693213951f0fbda13721ac",
+   "size": 61361,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/ac03ae0f2fa2e4a578693213951f0fbda13721ac"
+  },
+  {
+   "path": "src/i18n/messages.ru-google.xlf",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "2fdabadfb653cf838bec8534e5a1d6f0139e2fdd",
+   "size": 64021,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/2fdabadfb653cf838bec8534e5a1d6f0139e2fdd"
+  },
+  {
+   "path": "src/i18n/messages.xlf",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "d759fc40811cb62d13b9a2b21c782ee5432e43d2",
+   "size": 54555,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/d759fc40811cb62d13b9a2b21c782ee5432e43d2"
+  },
+  {
+   "path": "src/index.html",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "03c29b43caee712e32856124c16abfe7d3e3dcf8",
+   "size": 436,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/03c29b43caee712e32856124c16abfe7d3e3dcf8"
+  },
+  {
+   "path": "src/main.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "91ec6da5f07886cf1d97b5d4212f4ddaa3eb2c9c",
+   "size": 370,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/91ec6da5f07886cf1d97b5d4212f4ddaa3eb2c9c"
+  },
+  {
+   "path": "src/manifest.json",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "345cc4165f8ab24144fb21b8812d4a1807e7d75e",
+   "size": 454,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/345cc4165f8ab24144fb21b8812d4a1807e7d75e"
+  },
+  {
+   "path": "src/ngsw-config.json",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "72c30547f1739161534bc6e301dc65371d7dd812",
+   "size": 674,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/72c30547f1739161534bc6e301dc65371d7dd812"
+  },
+  {
+   "path": "src/polyfills.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "20d40751a6bc9b507891a749b4e4fdc17028c883",
+   "size": 2667,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/20d40751a6bc9b507891a749b4e4fdc17028c883"
+  },
+  {
+   "path": "src/styles.scss",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "4fdd5244745a74ab93778104e91c980146db7397",
+   "size": 1370,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/4fdd5244745a74ab93778104e91c980146db7397"
+  },
+  {
+   "path": "src/test.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "cd612eeb0e2f2543f1ac0c13fb7156e67ede06da",
+   "size": 1085,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/cd612eeb0e2f2543f1ac0c13fb7156e67ede06da"
+  },
+  {
+   "path": "src/tsconfig.app.json",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "58c38a1000b1b4dc2c0465f6f0b767290c25b7af",
+   "size": 281,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/58c38a1000b1b4dc2c0465f6f0b767290c25b7af"
+  },
+  {
+   "path": "src/tsconfig.spec.json",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "63d89ff283f6a57698af38f3857a81dc1364a36a",
+   "size": 304,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/63d89ff283f6a57698af38f3857a81dc1364a36a"
+  },
+  {
+   "path": "src/typings.d.ts",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "ef5c7bd620579296a1290b1a0b04c96d72e57bc6",
+   "size": 104,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/ef5c7bd620579296a1290b1a0b04c96d72e57bc6"
+  },
+  {
+   "path": "test",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "97771f4da706be2432bb34ebdbef0cb762cd6c9c",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/97771f4da706be2432bb34ebdbef0cb762cd6c9c"
+  },
+  {
+   "path": "test/testdata",
+   "mode": "040000",
+   "type": "tree",
+   "sha": "e1a529a7563716af7e999497a477b3281a529580",
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/trees/e1a529a7563716af7e999497a477b3281a529580"
+  },
+  {
+   "path": "test/testdata/messages.en.xlf",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "ee4dad9651bc2f9d414d9436949721d158779e8a",
+   "size": 9329,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/ee4dad9651bc2f9d414d9436949721d158779e8a"
+  },
+  {
+   "path": "test/testdata/schrott.txt",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+   "size": 0,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+  },
+  {
+   "path": "tsconfig.json",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "57b00b16d7a707c0fe1c1f59ad5bb8f678e8cd2c",
+   "size": 456,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/57b00b16d7a707c0fe1c1f59ad5bb8f678e8cd2c"
+  },
+  {
+   "path": "tslint.json",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "c24dc293d7f0aebebe3b6680c3f3f4fd42debfbc",
+   "size": 2985,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/c24dc293d7f0aebebe3b6680c3f3f4fd42debfbc"
+  },
+  {
+   "path": "xliffmerge.json",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "2bc8cd75b65ee07239245b71f0844d0017c1f000",
+   "size": 167,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/2bc8cd75b65ee07239245b71f0844d0017c1f000"
+  },
+  {
+   "path": "yarn.lock",
+   "mode": "100644",
+   "type": "blob",
+   "sha": "43669b32d886084c2dfed2a3929ba535ca96e96f",
+   "size": 207080,
+   "url": "https://api.github.com/repos/martinroob/tiny-translator/git/blobs/43669b32d886084c2dfed2a3929ba535ca96e96f"
+  }
+ ],
+ "truncated": false
+}

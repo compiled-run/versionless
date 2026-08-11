@@ -1,0 +1,244 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-admission.v1",
+  "unit": "lrapr-t006/u15-ingest-tiny-translator",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "networkMode": "consented",
+  "slug": "angular-tiny-translator-v0-12-0",
+  "tranche": "Angular cohort two, cell C1",
+  "ownerContext": "The cell exists to carry the pre-angular.json Angular CLI workspace format (.angular-cli.json). This candidate was promoted by a PM ruling after the alternative C1 candidate was refused on a placeholder-copyright finding; the C1 swap chain is exhausted behind it.",
+  "priorScout": {
+    "existed": true,
+    "unit": "lrapr-t006/u14",
+    "date": "2026-08-11",
+    "role": "read-only; supplied the target repository, tag, expected commit sha, and a set of claims about the tree",
+    "reverificationPolicy": "Every gate below was re-verified by this unit from the wire and from the reconciled archive at the pinned revision. The scout's findings were used as a hypothesis, not as evidence.",
+    "expectedCommitShaConfirmed": true
+  },
+  "admitted": {
+    "repository": "martinroob/tiny-translator",
+    "product": "TinyTranslator — a browser-only editor for Angular i18n translation files (XLIFF 1.2, XLIFF 2.0, XMB/XTB)",
+    "ref": "refs/tags/v0.12.0",
+    "tagKind": "lightweight",
+    "tagVerification": "not-applicable-lightweight-tag",
+    "commitSha": "08dcacf6a41d5a6f6dfbc71d858adcdc4c85691a",
+    "commitDate": "2017-12-08T12:30:45Z",
+    "frontendRoot": ".",
+    "decision": "admitted"
+  },
+  "gates": [
+    {
+      "gate": "mit-license-text-bytes-at-the-pin",
+      "result": "pass",
+      "evidence": {
+        "rootLicensePath": "LICENSE",
+        "gitBlobSha": "67e75a82c9c6583e28a5c36d0ae9549daa275bd4",
+        "fileSha256": "b33e2f180e3d22c42c1511895a448e9aafb848a51a43a9cfae163f19f7288fb9",
+        "bytes": 1068,
+        "firstLine": "MIT License",
+        "copyrightLine": "Copyright (c) 2017 Martin Roob",
+        "holderLineState": "concrete named holder; not a placeholder",
+        "manifestLicenseField": "MIT",
+        "otherLicenceFilesInTree": 0,
+        "quotedFromArchive": "The licence text was read out of the extracted archive, which reconciles blob-for-blob with the git tree at the pinned revision.",
+        "scoutClaimsConfirmed": ["blob sha prefix 67e75a82", "1068 bytes", "Copyright (c) 2017 Martin Roob"],
+        "detail": "license.json"
+      }
+    },
+    {
+      "gate": "real-substantive-application-not-template-demo-or-library",
+      "result": "pass",
+      "evidence": {
+        "repositoryShape": "A single Angular CLI 1.5 application at the repository root. 175 blobs, 150 files under src/, 87 TypeScript files of which 58 are non-spec source and 29 are specs, 23 component templates, 23 stylesheets, 5 committed .xlf locale files plus XLIFF/XMB test data under test/testdata, and a protractor e2e project.",
+        "nonSpecTypescriptBytes": 148699,
+        "specTypescriptBytes": 30358,
+        "domainModel": "src/app/model carries a translation-project / translation-file / translation-unit / normalized-message model, a localStorage-backed persistence service, a filter service with six concrete filter implementations, a downloader service, and a Google auto-translate service with a summary-report type.",
+        "components": "18 feature components (project starter, project list, project editor, translate page, translate unit, translate unit list, filter page, filter status, normalized message input, language selector, auto-translate summary, configure auto-translate, update-available, warning-confirm dialog, and the page shells).",
+        "libraryDependency": "ngx-i18nsupport-lib 1.6.1 supplies the XLIFF parsers; the application is the editor built on top of it.",
+        "publishedAsLibrary": false,
+        "isStarterTemplate": false,
+        "fleetShape": "56 stars, 9 forks, 25 open issues at acquisition. Recorded as a weak-fleet-shape fact, not a gate failure: this cell was cut for a workspace-format capability, not for popularity.",
+        "notes": "This is the product itself, with its own domain model, workflow states (translator/reviewer), filter engine, and i18n build pipeline — not a scaffold and not a demo of a framework feature."
+      }
+    },
+    {
+      "gate": "angular-4-to-6-era-with-dot-angular-cli-json-workspace-format",
+      "result": "pass",
+      "evidence": {
+        "workspaceFile": ".angular-cli.json",
+        "workspaceFileGitBlobSha": "42945f778cdbe295d2b43890b6c64e83f52f31ec",
+        "workspaceFileBytes": 1394,
+        "workspaceFileSha256": "61fee70d99e9f41301c666f20b278eca04b82ae87ae5ae18c48a3258ffb4df15",
+        "angularJsonPresent": false,
+        "workspaceFormatNote": "This is the pre-angular.json single-`apps[]` format, with `environmentSource` plus a named `environments` map, `styleExt`, and a top-level `e2e.protractor.config`. It is the capability this cell exists to carry.",
+        "declaredAngular": "^5.0.3 across @angular/{animations,common,compiler,core,forms,http,platform-browser,platform-browser-dynamic,router,service-worker}",
+        "declaredCli": "^1.5.4",
+        "declaredTypescript": "2.4",
+        "declaredMaterial": "^5.0.0-rc.2",
+        "resolvedInBaselineCell": {
+          "@angular/core": "5.0.3",
+          "@angular/cli": "1.5.4",
+          "@angular/compiler-cli": "5.0.3",
+          "@angular/material": "5.0.0-rc.2",
+          "@angular/cdk": "5.0.0-rc.2",
+          "@angular/flex-layout": "2.0.0-beta.10-4905443",
+          "@angular/service-worker": "5.0.3",
+          "typescript": "2.4.2",
+          "rxjs": "5.5.2",
+          "zone.js": "0.8.17",
+          "webpack": "3.8.1",
+          "node-sass": "4.5.3"
+        },
+        "resolutionSource": "the committed yarn.lock, installed frozen in this unit's baseline cell — not a fresh range resolution",
+        "bundler": "webpack 3.8.1, supplied by @angular/cli 1.5.4 and not directly declared by the repository",
+        "scoutClaimsConfirmed": ["Angular 5.0.3", "@angular/cli 1.5.4", "TypeScript 2.4 (resolves 2.4.2)", "@angular/material 5.0.0-rc.2", ".angular-cli.json present", "yarn.lock present"],
+        "rcDependencyRecordedAsFound": "@angular/material and @angular/cdk both sit on 5.0.0-rc.2, and @angular/flex-layout on a beta build tagged 2.0.0-beta.10-4905443. Release-candidate and beta dependencies in a tagged release are recorded as found; they are not treated as a defect and not smoothed over."
+      }
+    },
+    {
+      "gate": "era-coherent-date",
+      "result": "pass",
+      "evidence": {
+        "ref": "refs/tags/v0.12.0",
+        "commitSha": "08dcacf6a41d5a6f6dfbc71d858adcdc4c85691a",
+        "commitDate": "2017-12-08T12:30:45Z",
+        "commitMessage": "preparation for publishing v0.12",
+        "internalCorroboration": "src/app/app.config.ts hard-codes BUILDVERSION '0.12.0' and BUILDTIME '2017-12-08', matching the commit date exactly.",
+        "manifestVersion": "0.12.0",
+        "evaluatedOn": "2026-08-11",
+        "ageYearsApproximate": 8.68,
+        "eraWindow": "2016-01-01 through 2019-12-31",
+        "tagKind": "lightweight",
+        "unknownPreserved": "A lightweight tag is a mutable ref with no tagger and no signature, and the commit is unsigned. Signer authenticity is unestablished. What this record fixes is the commit sha, the tree sha, and the archive digest.",
+        "upstreamStillActive": "The repository is not archived and was last pushed 2022-12-07, so revisions after this pin exist upstream. This ingest is bound to the pin, not to the branch."
+      }
+    },
+    {
+      "gate": "three-or-more-substantive-journeys-plausible",
+      "result": "pass",
+      "evidence": {
+        "routerLibrary": "@angular/router 5.0.3, RouterModule.forRoot(..., { useHash: true })",
+        "routingFile": "src/app/app.routing.ts",
+        "hashRouting": true,
+        "declaredRoutes": ["/home", "/createproject", "/editproject", "/translate", "/selectfilter", "/autotranslatesummary", "/configureautotranslate", "'' redirects to /translate"],
+        "guard": "ActiveProjectGuard protects /editproject, /translate and /selectfilter",
+        "requiredMinimum": 3,
+        "observed": 5,
+        "candidateJourneys": [
+          {
+            "journey": "create a project from a translation file",
+            "route": "/createproject",
+            "code": "src/app/project-starter/project-starter.component.{ts,html} — an <input type=\"file\"> feeds AsynchronousFileReaderService (FileReader.readAsText), TinyTranslatorService.createProject parses it via ngx-i18nsupport-lib, and the project is persisted by BackendLocalStorageService.",
+            "detail": "The form also carries project name, workflow type (single-user versus translator/reviewer), user role, an explicit source-language override when the file declares none, and a second file input for the master XMB when an XTB file is selected.",
+            "plausibility": "declared-and-code-backed"
+          },
+          {
+            "journey": "edit, translate and mark translation units",
+            "route": "/translate",
+            "code": "src/app/translate-page, src/app/translate-unit, src/app/translate-unit-list, src/app/normalized-message-input, src/app/translate-unit-warning-confirm-dialog",
+            "detail": "Per-unit target editing over a normalized-message model, next/previous navigation, a warning-confirm dialog when placeholders or tags do not match, and state transitions that depend on the project's workflow type (final directly in single-user mode, translated-then-reviewed otherwise).",
+            "plausibility": "declared-and-code-backed"
+          },
+          {
+            "journey": "filter the unit list",
+            "route": "/selectfilter",
+            "code": "src/app/filter-page, src/app/filter-status, src/app/model/filters/*",
+            "detail": "Six concrete filters — all, untranslated, needs-review, autotranslated, autotranslated-failed, autotranslated-ignored — plus a substring filter, behind TranslationUnitFilterService.",
+            "plausibility": "declared-and-code-backed"
+          },
+          {
+            "journey": "export the translated file",
+            "route": "reachable from the project and translate pages",
+            "code": "src/app/model/downloader.service.ts — builds a Blob and hands it to file-saver 1.3.3 (FileSaver.saveAs), typed application/xml for xliff",
+            "detail": "Purely client-side: the edited file leaves the browser as a download, never as an upload.",
+            "plausibility": "declared-and-code-backed"
+          },
+          {
+            "journey": "manage projects (list, switch, edit, delete)",
+            "route": "/home and /editproject",
+            "code": "src/app/home-page, src/app/project-list, src/app/project, src/app/project-editor, src/app/project-status, src/app/edit-project-page, src/app/model/backend-local-storage.service.ts",
+            "plausibility": "declared-and-code-backed"
+          },
+          {
+            "journey": "configure and run Google auto-translation",
+            "route": "/configureautotranslate and /autotranslatesummary",
+            "code": "src/app/configure-auto-translate-page, src/app/auto-translate-summary-page, src/app/model/auto-translate-google.service.ts",
+            "plausibility": "declared-and-code-backed, but egress-bearing",
+            "witnessPosture": "This journey contacts https://translation.googleapis.com/ with a user-supplied API key. It must be treated as out of the local-only closure and blocked at witness time. See runtime-egress.json."
+          }
+        ],
+        "persistence": "localStorage only — BackendLocalStorageService reads and writes localStorage keys for projects, the current project id and the current translation-unit id. No IndexedDB API appears anywhere in the tree.",
+        "backend": "none. There is no server source in this repository. The Dockerfile builds an nginx image that serves the already-built dist/ as static files.",
+        "unknownPreserved": "These journeys are read off the router, the components and the model. No browser was driven in this unit, so none of them is established as actually exercisable."
+      }
+    }
+  ],
+  "scoutClaimsNotReconciled": [
+    {
+      "claim": "IndexedDB/localStorage core flow",
+      "finding": "Only localStorage is used. A full-tree grep for indexedDB, IDBDatabase and sessionStorage returns nothing; BackendLocalStorageService is the single persistence implementation behind BackendServiceAPI.",
+      "consequence": "The storage surface a later witness must reset is localStorage alone.",
+      "state": "corrected"
+    },
+    {
+      "claim": "an optional GitHub-download feature to be blocked at witness time (record the destination)",
+      "finding": "No such feature exists in the application at this revision. The only GitHub URLs in the tree are documentation links: README.md points at the project and its wiki User Manual, and src/ghpages/index.html — a static landing page copied into dist/ by the build-prod script, not part of the single-page app — links to the same two addresses. The only in-app file input path is the local FileReader in AsynchronousFileReaderService; there is no fetch, no XHR and no HttpClient call that retrieves a translation file from a remote host.",
+      "consequence": "The destination the scout asked to be recorded does not exist. The egress destinations that do exist are recorded in runtime-egress.json, and the one that actually needs blocking at witness time is the Material Icons stylesheet on fonts.googleapis.com, which the SPA requests unconditionally on load.",
+      "state": "not-reconciled; recorded rather than assumed"
+    }
+  ],
+  "recordedRisks": [
+    {
+      "risk": "a TLS private key is committed at the repository root",
+      "finding": "cert.pem (1346 bytes, git blob 8d25c6ca2faf56757624cbe0933650d30c6f216b) and key.pem (1708 bytes, git blob 52b85e1ba51e084787403d169b06224bc2cda447) sit at the root of the pinned tree. key.pem is a PEM PRIVATE KEY block. Nothing in .angular-cli.json, package.json, the Dockerfile or the docker-compose file references either path, so they read as leftovers from a local `ng serve --ssl` experiment.",
+      "consequence": "The key material is public upstream and must be treated as compromised. It is never to be used for anything, and its contents must never be copied into a Versionless artifact. Only the paths, byte lengths and digests are recorded here.",
+      "state": "recorded; contents deliberately not transcribed"
+    },
+    {
+      "risk": "the pin is a lightweight tag",
+      "finding": "refs/tags/v0.12.0 dereferences straight to a commit object. There is no tag object, no tagger, no message and no signature, and the commit itself is unsigned.",
+      "consequence": "The ref could be moved upstream without trace. Identity here rests on the commit sha, the root tree sha and the archive digest, all recorded.",
+      "state": "recorded"
+    },
+    {
+      "risk": "release-candidate and beta dependencies in a tagged release",
+      "finding": "@angular/material and @angular/cdk resolve to 5.0.0-rc.2 and @angular/flex-layout to 2.0.0-beta.10-4905443. yarn warned that flex-layout declares peer dependencies on @angular/core and @angular/common ~4.4.4 while the application runs Angular 5.0.3.",
+      "consequence": "Two unmet peer-dependency warnings at install. The production build nonetheless completed; see baseline-attempt.json.",
+      "state": "recorded"
+    },
+    {
+      "risk": "the application requests an external font stylesheet on every load",
+      "finding": "src/index.html carries <link href=\"https://fonts.googleapis.com/icon?family=Material+Icons\" rel=\"stylesheet\">, and src/ngsw-config.json declares a `fonts` asset group over https://fonts.googleapis.com/**.",
+      "consequence": "Any offline witness of this fixture will fail that request, and every mat-icon in the interface will render as its ligature text instead of a glyph. This is the same class of problem the harness-angular-realworld-fonts work already met in this corpus.",
+      "state": "recorded; see runtime-egress.json"
+    },
+    {
+      "risk": "the ngsw service worker is registered only in production builds, and its URL depends on a build-time string substitution",
+      "finding": "src/app/app.module.ts calls ServiceWorkerModule.register(environment.base_href + 'ngsw-worker.js') only when environment.production is true. environment.prod.ts ships base_href as the literal '%BASE_HREF%', which the repository's prebuild-prod-lang step rewrites to /tiny-translator/$LANG/ and postbuild-prod-lang restores. A plain `ng build --prod` therefore emits a bundle that tries to register a worker at '%BASE_HREF%ngsw-worker.js' and does not ship an ngsw-worker.js at all; only the repository's own build-prod-lang chain produces a coherent service-worker build.",
+      "consequence": "Two materially different production artifacts exist for this application. Both were built in this unit and are recorded separately in baseline-attempt.json. Any later witness must state which one it is driving, and the service-worker non-masking precedent applies to the dist/en variant.",
+      "state": "recorded"
+    },
+    {
+      "risk": "optional Google Translate egress with a user-supplied API key",
+      "finding": "src/app/app.config.ts sets GOOGLETRANSLATE_API_ROOT_URL to https://translation.googleapis.com/ and reads the key from environment.googletranslate_api_key, which is null in both environment.ts and environment.prod.ts. The real key is expected either in src/environments/environment.secret.ts or typed into the configure page at runtime; both that file and googleTranslateApiKey.txt are git-ignored upstream and neither is present in the tree.",
+      "consequence": "No key ships with the fixture and no egress happens unless a user supplies one. The auto-translate journey must be treated as out of the local-only closure.",
+      "state": "recorded; no credential exists in the acquired tree"
+    },
+    {
+      "risk": "the i18n build pipeline mutates a source file in place",
+      "finding": "prebuild-prod-lang runs `replace %BASE_HREF% /tiny-translator/$LANG/ src/environments/environment.prod.ts` and postbuild-prod-lang reverses it. If a build fails between the two, the working tree is left with a rewritten environment file.",
+      "consequence": "Any later automation over this fixture must treat the source tree as mutable during build-prod and verify the restoration. In this unit the restoration was verified: environment.prod.ts carries '%BASE_HREF%' again after the build-prod-en run.",
+      "state": "recorded and checked"
+    },
+    {
+      "risk": "the committed yarn.lock predates subresource integrity",
+      "finding": "yarn lockfile v1 with 963 entries, every one carrying a resolved URL on registry.yarnpkg.com with a 40-hex sha1 fragment, and zero `integrity` fields.",
+      "consequence": "The closure is pinned by version and by sha1, not by sha512 SRI. That is the pinning the era offers, and it is what makes this fixture reproducible where an unpinned peer would not be.",
+      "state": "recorded; see closure.json"
+    }
+  ],
+  "nonclaims": [
+    "Admission fixes an identity and records gate findings. It establishes no browser behavior, journey exercisability, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "The journey list is read from the router, the components and the model. No journey was driven in a browser by this unit.",
+    "A successful production build in the declared cell is a finding about that cell on this date. It is not a claim that the application runs correctly in a browser."
+  ]
+}

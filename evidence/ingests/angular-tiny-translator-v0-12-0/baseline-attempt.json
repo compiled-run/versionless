@@ -1,0 +1,155 @@
+{
+  "schemaVersion": "versionless.legacy-baseline-attempt.v1",
+  "slug": "angular-tiny-translator-v0-12-0",
+  "unit": "lrapr-t006/u15-ingest-tiny-translator",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "purpose": "One truthful baseline dependency install and production build attempt of the pinned revision, in the nearest honestly-labeled legacy cell.",
+  "declaredCell": {
+    "declaredByRepository": {
+      "enginesField": "absent — package.json declares no engines block",
+      "nvmrc": "absent",
+      "continuousIntegration": "absent — the tree carries no .travis.yml, no appveyor config and no .github/workflows directory",
+      "readme": "says only `install npm or (if you prefer it) yarn`, `npm i -g @angular/cli@latest`, then `npm install` or `yarn`. It names no Node version.",
+      "toolchainConstraint": "@angular/cli 1.5.4, which the repository does pin by lockfile, declares engines { node: '>= 6.9.0', npm: '>= 3.0.0' } in its own manifest.",
+      "interpretation": "The repository states no Node version anywhere. The only concrete constraint reachable from the pin is the CLI's own floor of Node 6.9.0, and the practical ceiling is the era: Angular CLI 1.5 and node-sass 4.5.3 predate Node 10.",
+      "ambiguityPreserved": true
+    },
+    "eraPolicyChoice": {
+      "node": "8.9.3",
+      "why": "Node 8.9.3 was the active LTS line (Carbon) on the tag date: it was released 2017-12-06, two days before the pinned commit of 2017-12-08. It satisfies the @angular/cli 1.5.4 floor of >= 6.9.0 and sits inside the Node 6-8 band the era policy calls for.",
+      "platform": "darwin-x64 executed on darwin-arm64 through Rosetta 2",
+      "url": "https://nodejs.org/dist/v8.9.3/node-v8.9.3-darwin-x64.tar.gz",
+      "sha256": "fa7962f25db420a374e9e60d8a410188bd690a2f0ce8d403aa9b09d9b7ae8c1f",
+      "digestVerifiedAgainstOfficialShasums": true,
+      "shasumsUrl": "https://nodejs.org/dist/v8.9.3/SHASUMS256.txt",
+      "shasumsSha256": "99dfe984b3c081409c5f489ec9f7bff86e297c54e398cccfbeb9943f1d1f9231",
+      "acquiredByThisUnit": true,
+      "acquisitionNote": "No Node 6, 7 or 8 runtime existed in this workspace cache. The host carried a Rosetta x64 Node 12.14.1 and a native arm64 Node 16.20.2 from earlier ingests; both are outside the era band, so neither was used for the baseline. The era-correct runtime was acquired instead and its digest checked against the official SHASUMS256.txt.",
+      "translationLayer": "Rosetta 2, present and working on this host — `arch -x86_64 node --version` returns v8.9.3 and reports process.arch x64",
+      "deviationFromHostDefaults": "labeled: the packet named the two runtimes already on the host. Neither is era-coherent for Angular CLI 1.5, so this unit declared the era runtime rather than accept an out-of-band one and quietly relabel it."
+    },
+    "packageManager": {
+      "used": "yarn 1.3.2",
+      "why": "The repository commits a yarn.lock. npm would ignore it and resolve the ranges fresh, which would discard the one property that makes this fixture reproducible. yarn 1.3.2 is era-contemporary (released 2017-11-28, ten days before the pin).",
+      "url": "https://registry.npmjs.org/yarn/-/yarn-1.3.2.tgz",
+      "sha256": "6cfe82e530ef0837212f13e45c1565ba53f5199eec2527b85ecbcd88bf26821d",
+      "sha1": "5939762581b5b4ddcd3418c0f6be42df3aee195f",
+      "sha1VerifiedAgainstRegistryMetadata": true,
+      "registryMetadataUrl": "https://registry.npmjs.org/yarn/1.3.2",
+      "notUsed": "npm 5.5.1, which ships inside the Node 8.9.3 runtime, was left unused."
+    },
+    "honestLabel": "era-declared, not repository-pinned. The repository pins no Node version and no package manager, so nothing here can be called honouring a declaration. Node 8.9.3 and yarn 1.3.2 are the era-contemporary pair, both digest-verified, both inside the constraint the pinned @angular/cli states."
+  },
+  "install": {
+    "command": "yarn install --frozen-lockfile --non-interactive --cache-folder <git-ignored cache>",
+    "frozenLockfileHeld": true,
+    "lifecycleScripts": "enabled",
+    "lifecycleScriptsNote": "node-sass 4.5.3 must build or fetch a binding for the .scss inputs the workspace declares. It resolved a prebuilt darwin-x64-57 binding, so no source compile and no python2 toolchain was required.",
+    "outcome": "succeeded",
+    "exitStatus": 0,
+    "durationSeconds": 19,
+    "installedPackageDirectories": 1149,
+    "networkHosts": ["registry.yarnpkg.com", "github.com"],
+    "warningsObserved": {
+      "unmetPeerDependencies": "2 — @angular/flex-layout@2.0.0-beta.10-4905443 wants @angular/core ~4.4.4 and @angular/common ~4.4.4 against the application's 5.0.3",
+      "deprecations": 0,
+      "unsupportedEngine": 0,
+      "lockfileWrite": "none"
+    },
+    "significance": "A 2017 yarn lockfile with 963 sha1-addressed entries resolved completely and unchanged in 2026. Nothing in the closure has been unpublished and no content address drifted."
+  },
+  "build": {
+    "stagesAttempted": 2,
+    "stages": [
+      {
+        "stage": 1,
+        "label": "plain production build",
+        "command": "ng build --prod --aot --output-path=dist/baseline",
+        "commandNote": "This is `ng build` from the repository's own `build` script with the production and AOT flags added, and an explicit output path so it cannot collide with the locale builds. It is not one of the repository's declared scripts verbatim.",
+        "outcome": "succeeded",
+        "exitStatus": 0,
+        "durationSeconds": 44,
+        "webpackReportedTimeMs": 42918,
+        "warningsInOutput": 0,
+        "artifacts": {
+          "outputPath": "dist/baseline (git-ignored cache)",
+          "files": 524,
+          "bytes": 7828108,
+          "entryFiles": [
+            "index.html",
+            "inline.63f08307ee16d0c5aa48.bundle.js",
+            "main.4791d4b061c314d0e010.bundle.js",
+            "polyfills.54fe3ea07e05cf80d217.bundle.js",
+            "styles.b46c4641346515b74cbc.bundle.css",
+            "3rdpartylicenses.txt"
+          ],
+          "chunkSizesReportedByCli": {
+            "main": "1.48 MB",
+            "styles": "87.6 kB",
+            "polyfills": "59 kB",
+            "inline": "1.45 kB"
+          },
+          "bulkOfFileCount": "the remaining ~518 files are country-flag SVGs emitted by the flag-icon-css dependency"
+        },
+        "caveat": "This variant registers the ngsw service worker at the un-substituted literal '%BASE_HREF%ngsw-worker.js' and ships no ngsw-worker.js, because the %BASE_HREF% replacement is part of the repository's build-prod-lang chain rather than of `ng build`. It is a working bundle whose service-worker registration cannot succeed."
+      },
+      {
+        "stage": 2,
+        "label": "the repository's own production build for one locale",
+        "command": "yarn run build-prod-en",
+        "expands": "cross-env-shell LANG=en XLFFILE=src/i18n/messages.en.xlf npm run build-prod-lang, which runs prebuild-prod-lang (replace %BASE_HREF% with /tiny-translator/en/ in src/environments/environment.prod.ts), then `ng build --prod --aot --i18n-file=$XLFFILE --locale=$LANG --i18n-format=xlf --base-href=/tiny-translator/en/ --output-path=dist/en`, then ngsw-config over dist/en with src/ngsw-config.json, then cpx of @angular/service-worker/ngsw-worker.js into dist/en with its /ngsw.json reference rewritten, then postbuild-prod-lang restoring the source file",
+        "outcome": "succeeded",
+        "exitStatus": 0,
+        "durationSeconds": 48,
+        "artifacts": {
+          "outputPath": "dist/en (git-ignored cache)",
+          "files": 526,
+          "bytes": 7938655,
+          "entryFiles": [
+            "index.html",
+            "inline.904d97022adfa5cf7bb5.bundle.js",
+            "main.a97c15d840c9af7f06a6.bundle.js",
+            "polyfills.54fe3ea07e05cf80d217.bundle.js",
+            "styles.b46c4641346515b74cbc.bundle.css",
+            "ngsw.json",
+            "ngsw-worker.js",
+            "3rdpartylicenses.txt"
+          ]
+        },
+        "i18n": "the en locale was compiled from src/i18n/messages.en.xlf through the Angular 5 compile-time i18n path, so the locale is baked into the bundle rather than switched at runtime",
+        "serviceWorker": "ngsw.json and ngsw-worker.js are both present, and the bundle registers the worker at /tiny-translator/en/ngsw-worker.js",
+        "sourceMutationRestored": "verified — src/environments/environment.prod.ts carries the literal '%BASE_HREF%' again after the run"
+      }
+    ],
+    "notAttempted": {
+      "fullBuildProd": "`yarn build-prod` chains four locale builds (en, de, fr, ru) and then copies src/ghpages/* into dist/. Only the en locale was built. The other three were skipped as redundant for an ingest baseline, not because of any observed failure.",
+      "extractI18n": "`yarn extract-i18n` was not run; it invokes xliffmerge with an autotranslate profile that would contact the Google Translate API.",
+      "tests": "`yarn test` (karma/Chrome) and `yarn e2e` (protractor) were not run. No browser was driven by this unit."
+    },
+    "environment": "No CI environment variable was set. The Angular CLI 1.5 build does not promote warnings to errors, and none were emitted."
+  },
+  "deviation": {
+    "attempted": false,
+    "note": "No deviation was needed. The install honoured the committed lockfile and both production build stages completed on the first attempt, so nothing was pinned, patched or worked around."
+  },
+  "conclusion": {
+    "installs": "yes — frozen against the committed yarn.lock, in the Node 8.9.3 / yarn 1.3.2 cell",
+    "builds": "yes — both a plain `ng build --prod --aot` and the repository's own build-prod-en chain produced complete bundles",
+    "why": "the repository commits a lockfile, and every entry in it still resolves with its recorded sha1",
+    "significance": "This fixture installs and builds clean as acquired, with no deviation and no repair. That makes it a strong starting point for later migration work. No comparison against the other fixtures in the corpus is made here; this unit read none of their baselines.",
+    "unknownPreserved": "Nothing observed here shows that the built application behaves correctly in a browser. No page was loaded, no journey was driven, and the Material Icons stylesheet the bundle requests from fonts.googleapis.com was never fetched."
+  },
+  "artifacts": {
+    "workingTree": ".versionless/cache/angular-tiny-translator-v0-12-0-baseline/app (git-ignored)",
+    "runtime": ".versionless/cache/angular-tiny-translator-v0-12-0-runtime (git-ignored)",
+    "installLog": ".versionless/cache/angular-tiny-translator-v0-12-0-baseline/install.{stdout,stderr}.log (git-ignored)",
+    "buildLogs": ".versionless/cache/angular-tiny-translator-v0-12-0-baseline/build-prod.{stdout,stderr}.log and build-prod-en.{stdout,stderr}.log (git-ignored)",
+    "buildOutputProduced": true,
+    "note": "Logs are retained in the git-ignored cache rather than copied into evidence, because they carry host-absolute paths. The figures quoted above were transcribed with those paths removed."
+  },
+  "nonclaims": [
+    "A successful install and build establish no browser behavior and no dependency licence position.",
+    "A successful build in this cell is a finding about this cell on this date. It is not a claim that the application builds in any other cell, on any other Node line, or with npm instead of yarn.",
+    "Nothing here establishes migration feasibility, pilot status, production readiness, certification, or legal approval."
+  ]
+}

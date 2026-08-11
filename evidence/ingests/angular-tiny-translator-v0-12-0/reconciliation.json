@@ -1,0 +1,30 @@
+{
+ "schemaVersion": "versionless.legacy-corpus-reconciliation.v1",
+ "slug": "angular-tiny-translator-v0-12-0",
+ "archiveRoot": "tiny-translator-08dcacf6a41d5a6f6dfbc71d858adcdc4c85691a",
+ "gitBlobs": 175,
+ "gitTrees": 34,
+ "gitGitlinks": 0,
+ "archiveFiles": 175,
+ "archiveDirectories": 34,
+ "archiveSymlinks": 0,
+ "specialEntries": 0,
+ "pathTraversalEntries": 0,
+ "absolutePathEntries": 0,
+ "missingFiles": 0,
+ "extraFiles": 0,
+ "mismatchedBlobs": 0,
+ "missingList": [],
+ "extraList": [],
+ "mismatchedList": [],
+ "extractedBytes": 805017,
+ "normalizedManifestSha256": "8bd3830b5df07024e10632f08a9b78dfbf8f08933afc8488a5b4869bb3492364",
+ "lfs": {
+  "pointerFilesFound": 0,
+  "pointerFileList": [],
+  "gitattributesPresent": false,
+  "method": "Every regular file in the extracted archive was read in full and its first 200 bytes tested against the git-lfs pointer preamble `version https://git-lfs.github.com/spec/`."
+ },
+ "largestFiles": [],
+ "method": "Every regular file and symlink in the extracted archive was hashed as a git blob object and compared to the sha recorded for the same path in the recursive git tree at the pinned revision."
+}

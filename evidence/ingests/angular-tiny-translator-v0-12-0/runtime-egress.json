@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "versionless.legacy-runtime-egress.v1",
+  "slug": "angular-tiny-translator-v0-12-0",
+  "unit": "lrapr-t006/u15-ingest-tiny-translator",
+  "purpose": "Enumerate every destination the built application can contact at runtime, so that a later witness unit can block them deliberately instead of discovering them in a browser.",
+  "method": "Static read of the reconciled source at the pinned revision: a regex sweep for http(s) URLs across src/, e2e/ and test/, followed by reading each hit in context. No browser was driven and no request was made.",
+  "backend": {
+    "present": false,
+    "detail": "There is no server source in this repository. Persistence is browser localStorage. The Dockerfile builds an nginx image that serves the already-built dist/ as static files and defines no API."
+  },
+  "destinations": [
+    {
+      "url": "https://fonts.googleapis.com/icon?family=Material+Icons",
+      "where": "src/index.html, a <link rel=\"stylesheet\"> in <head>",
+      "trigger": "unconditional, on every page load of every build variant",
+      "purpose": "the Material Icons ligature font used by every <mat-icon> in the interface",
+      "witnessPosture": "must be blocked and its absence declared. Under a blocked request the application still boots; each icon renders as its ligature text (for example the literal `open_in_browser`) instead of a glyph. This is a visible-but-non-fatal degradation and must not be silently masked.",
+      "priorArt": "the harness-angular-realworld-fonts work in this corpus met the same class of problem"
+    },
+    {
+      "url": "https://fonts.googleapis.com/**",
+      "where": "src/ngsw-config.json, the `fonts` assetGroup",
+      "trigger": "only in a build that ships the ngsw service worker — that is, the repository's build-prod-lang chain, not a plain `ng build --prod`",
+      "purpose": "the service worker is configured to cache the external font stylesheet",
+      "witnessPosture": "a blocked font request in a service-worker build fails inside the worker's install or fetch path rather than in the page. Any witness of the dist/en variant must state which of the two build variants it is driving."
+    },
+    {
+      "url": "https://translation.googleapis.com/",
+      "where": "src/app/app.config.ts (GOOGLETRANSLATE_API_ROOT_URL), consumed by src/app/model/auto-translate-google.service.ts",
+      "trigger": "user-initiated only, and only after an API key is supplied — through the /configureautotranslate page at runtime or through the git-ignored src/environments/environment.secret.ts at build time",
+      "purpose": "the optional auto-translate journey and its summary report",
+      "credentialInFixture": "none. environment.ts and environment.prod.ts both set googletranslate_api_key to null, and neither environment.secret.ts nor googleTranslateApiKey.txt exists in the tree; both are git-ignored upstream.",
+      "witnessPosture": "out of the local-only closure. Block it, do not supply a key, and do not drive the auto-translate journey as part of a local witness."
+    }
+  ],
+  "documentationOnlyLinks": {
+    "note": "These appear in the tree but are never fetched by the application.",
+    "links": [
+      "https://github.com/martinroob/tiny-translator and its wiki User Manual — anchor hrefs in README.md and in src/ghpages/index.html, a static landing page copied into dist/ by the build-prod script and not part of the single-page app",
+      "https://martinroob.github.io/tiny-translator/{en,de,fr-google,ru-google} — the upstream hosted deployment, named in README.md",
+      "https://cloud.google.com and a Google support article — anchor hrefs in the configure-auto-translate page explaining where to obtain an API key",
+      "an MSDN locale-code reference in src/app/language/language.component.ts, a Stack Overflow attribution comment in src/app/model/backend-service-api.ts, an angular.io browser-support note and a caniuse link in src/polyfills.ts, and a CSS technique credit in src/app/project-starter/project-starter.component.scss"
+    ]
+  },
+  "scoutClaimNotReconciled": {
+    "claim": "an optional GitHub-download feature to be blocked at witness time (record the destination)",
+    "finding": "No such feature exists at this revision. The only path by which a translation file enters the application is the local file input in src/app/project-starter/project-starter.component.html, read through FileReader.readAsText in AsynchronousFileReaderService. There is no fetch, no XMLHttpRequest and no HttpClient call anywhere in the tree that retrieves a translation file from a remote host; the single HttpClient consumer is the Google auto-translate service.",
+    "consequence": "There is no GitHub destination to block. The destination that does need blocking, and that the scout did not name, is the Material Icons stylesheet on fonts.googleapis.com.",
+    "state": "recorded as not-reconciled rather than assumed present"
+  },
+  "localStorageSurface": {
+    "keys": "one key per project, plus a current-project id and a current-translation-unit id",
+    "implementation": "src/app/model/backend-local-storage.service.ts, the single implementation behind BackendServiceAPI",
+    "indexedDb": "none — the API does not appear anywhere in the tree",
+    "witnessNote": "localStorage is the entire persistence surface a witness must clear between runs."
+  },
+  "nonclaims": [
+    "This is a static enumeration. It establishes no observed network behavior, because no browser was driven and no request was made by this unit.",
+    "Absence of a destination from this list is evidence of a static read, not proof that the built bundle makes no other request."
+  ]
+}

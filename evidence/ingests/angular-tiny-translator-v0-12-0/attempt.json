@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "versionless.official-source-attempt.v1",
+  "unit": "lrapr-t006/u15-ingest-tiny-translator",
+  "board": "T006, Angular cohort two, cell C1",
+  "candidate": {
+    "repository": "martinroob/tiny-translator",
+    "requestedTag": "v0.12.0",
+    "expectedCommitSha": "08dcacf6a41d5a6f6dfbc71d858adcdc4c85691a",
+    "expectationSource": "a prior read-only scout unit (lrapr-t006/u14, 2026-08-11); re-verified from the wire by this unit rather than trusted",
+    "promotionNote": "This candidate was promoted by a PM ruling after the alternative C1 candidate was refused on a placeholder-copyright finding. The C1 swap chain is exhausted behind it."
+  },
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "networkMode": "consented",
+  "result": "started",
+  "network": {
+    "method": "GET",
+    "credentials": "none",
+    "requestEncoding": "identity",
+    "redirectsAllowed": false,
+    "retriesAllowed": false,
+    "alternateHostsAllowed": false
+  },
+  "allowlist": [
+    "https://api.github.com/repos/martinroob/tiny-translator",
+    "https://api.github.com/repos/martinroob/tiny-translator/git/ref/tags/v0.12.0",
+    "https://api.github.com/repos/martinroob/tiny-translator/git/tags/<validated-tag-object-sha, only if the ref dereferences to a tag object>",
+    "https://api.github.com/repos/martinroob/tiny-translator/git/commits/<validated-commit-sha>",
+    "https://api.github.com/repos/martinroob/tiny-translator/git/trees/<validated-tree-sha>?recursive=1",
+    "https://codeload.github.com/martinroob/tiny-translator/tar.gz/<validated-commit-sha>"
+  ],
+  "caps": {
+    "maximumAcceptedResponses": 8,
+    "maximumApiResponseBytes": 16777216,
+    "maximumArchiveBytes": 134217728,
+    "maximumAggregateWireBytes": 314572800,
+    "requiredArchiveStreams": 2
+  },
+  "requiredRevisionWindow": {
+    "from": "2016-01-01T00:00:00Z",
+    "through": "2019-12-31T23:59:59Z",
+    "reason": "The cell asks for the Angular 4-6 era with the pre-angular.json `.angular-cli.json` workspace format."
+  },
+  "publication": {
+    "evidenceRoot": "evidence/ingests/angular-tiny-translator-v0-12-0",
+    "cacheRoot": ".versionless/cache/angular-tiny-translator-v0-12-0-source",
+    "fixtureRoot": "fixtures/angular-tiny-translator-v0-12-0",
+    "transactional": true,
+    "readinessCredit": false
+  },
+  "baselineNetwork": {
+    "purpose": "one truthful baseline dependency install and production build attempt for the declared legacy cell",
+    "allowedHosts": [
+      "nodejs.org",
+      "registry.npmjs.org",
+      "registry.yarnpkg.com",
+      "github.com"
+    ],
+    "note": "The era Node runtime and the era yarn release were fetched directly and are ledgered URL-by-URL in probe-ledger.ndjson under phase `baseline-cell-acquisition`. Package-manager fetches during the dependency install are performed by yarn itself and are recorded in aggregate in baseline-attempt.json, not URL-by-URL. github.com is listed because node-sass resolves a prebuilt binding from GitHub release assets during its install lifecycle script.",
+    "offlineAfter": "No network was used after the baseline build attempts completed. Every record in this directory was produced offline from the reconciled source and the baseline cell."
+  },
+  "nonclaims": [
+    "Starting this transaction establishes no tag identity, license, source integrity, dependency closure, framework, build, browser behavior, migration feasibility, pilot status, or production readiness.",
+    "The resulting evidence is reproducibility evidence, not certification or legal approval."
+  ]
+}
