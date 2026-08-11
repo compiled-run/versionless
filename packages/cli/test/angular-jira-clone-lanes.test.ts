@@ -13,6 +13,10 @@ import {
 	MIGRATED_LANE_FILE,
 	buildLaneRecords,
 } from '../src/fixture/angular-jira-clone-build-lanes-run.ts';
+import {
+	ACQUISITION_RECORD_FILE,
+	CLOSURE_RECORD_FILE,
+} from '../src/fixture/angular-jira-clone-closure-run.ts';
 
 const evidenceDirectory = path.join(
 	import.meta.dirname,
@@ -46,6 +50,8 @@ describe('Angular jira-clone source migration record', () => {
 				workspaceFilesChanged: 1,
 				applicationFilesScanned: 116,
 				unhandled: [],
+				declaredDifferences: [],
+				removedFiles: [],
 			},
 			'unit',
 			'consent',
@@ -135,6 +141,56 @@ describe('Angular jira-clone build lanes', () => {
 	it('records no build-level parity, because only one lane emitted anything', async () => {
 		const names = await readdir(evidenceDirectory);
 		expect(names.some((name) => name.includes('parity'))).toBe(false);
+	});
+
+	it('records the migrated closure as resolved, and the build as red and itemised', async () => {
+		const record = await readRecord(CLOSURE_RECORD_FILE);
+		expect(record['result']).toBe('closure-resolved-build-red-itemised');
+		const acquisition = record['acquisition'] as Record<string, unknown>;
+		expect(acquisition['exitStatus']).toBe(0);
+		expect(acquisition['consentId']).toBe('VL-LEGACY-CORPUS-2026-08-10');
+		expect(acquisition['hosts']).toEqual(['registry.npmjs.org']);
+		expect(acquisition['artifactsAcquired']).toBeGreaterThan(0);
+		const attempt = record['buildAttempt'] as Record<string, unknown>;
+		expect(attempt['outcome']).toBe('red');
+		expect(attempt['artifactsEmitted']).toBe(0);
+		expect((attempt['demands'] as readonly unknown[]).length).toBeGreaterThan(0);
+		for (const demand of attempt['demands'] as readonly Record<string, string>[])
+			for (const field of ['file', 'symbol', 'library', 'observed', 'neededTransform'])
+				expect(demand[field]?.length ?? 0).toBeGreaterThan(0);
+	});
+
+	it('carries a URL and an integrity digest for every artifact it acquired', async () => {
+		const record = await readRecord(ACQUISITION_RECORD_FILE);
+		const artifacts = record['artifacts'] as readonly Record<string, string>[];
+		expect(artifacts.length).toBe(record['count']);
+		expect(artifacts.length).toBeGreaterThan(0);
+		for (const artifact of artifacts) {
+			expect(artifact['url']).toMatch(/^https:\/\/registry\.npmjs\.org\//);
+			expect(artifact['integrity']).toMatch(/^sha(256|512)-/);
+		}
+	});
+
+	it('supersedes the mj1 records by name rather than replacing them silently', async () => {
+		const closure = await readRecord(CLOSURE_RECORD_FILE);
+		const migration = await readRecord(MIGRATION_RECORD_FILE);
+		expect((closure['supersedes'] as Record<string, string>)['record']).toBe(MIGRATED_LANE_FILE);
+		expect((migration['supersedes'] as Record<string, string>)['record']).toBe(
+			'mj1-source-migration.json',
+		);
+		const names = await readdir(evidenceDirectory);
+		expect(names).toContain(MIGRATED_LANE_FILE);
+		expect(names).toContain('mj1-source-migration.json');
+	});
+
+	it('records every dropped package as a declared difference, never as a silent pin', async () => {
+		const migration = await readRecord(MIGRATION_RECORD_FILE);
+		const declared = (migration['migration'] as Record<string, readonly string[]>)[
+			'declaredDifferences'
+		] as readonly string[];
+		for (const name of ['tslint', 'codelyzer', 'nz-tslint-rules', '@sentry/tracing'])
+			expect(declared.some((line) => line.includes(`.${name} was removed`))).toBe(true);
+		for (const line of declared) expect(line.length).toBeGreaterThan(80);
 	});
 
 	it('never reproduces the application’s Sentry DSN or analytics id', async () => {

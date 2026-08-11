@@ -21,6 +21,11 @@ import {
 	builderPackageOf,
 	type WebpackFragmentAnalysis,
 } from './custom-webpack-absorption.ts';
+import {
+	isTslintBuilder,
+	targetLineDropsTslint,
+	tslintTargetRemoval,
+} from './tslint-toolchain-removal.ts';
 
 export type ConfigChange = Readonly<{ path: string; from: string | null; to: string | null }>;
 
@@ -34,6 +39,12 @@ export type WorkspaceMigration = Readonly<{
 	 * wrapper builder that read them was absorbed back into the official builder.
 	 */
 	absorbedFragments: readonly WebpackFragmentAnalysis[];
+	/**
+	 * Capabilities the migrated workspace deliberately no longer has, one line
+	 * per removal. Distinct from {@link WorkspaceMigration.unhandled}: these are
+	 * decisions the cell declared, not shapes the migration could not read.
+	 */
+	declaredDifferences: readonly string[];
 }>;
 
 /**
@@ -264,6 +275,7 @@ export function migrateAngularWorkspace(
 	const changes: ConfigChange[] = [];
 	const removedPackages = new Set<string>();
 	const unhandled: string[] = [];
+	const declaredDifferences: string[] = [];
 	const next: JsonObject = {};
 	for (const [key, value] of Object.entries(workspace)) {
 		if (key === 'defaultProject') {
@@ -327,6 +339,17 @@ export function migrateAngularWorkspace(
 					changes.push({ path: `${targetPath}.builder`, from: builder, to: official });
 					builder = official;
 				}
+				if (
+					typeof builder === 'string' &&
+					isTslintBuilder(builder) &&
+					targetLineDropsTslint(cell)
+				) {
+					changes.push({ path: targetPath, from: builder, to: null });
+					for (const name of REMOVED_BUILDER_PACKAGES[builder] ?? [])
+						removedPackages.add(name);
+					declaredDifferences.push(tslintTargetRemoval(targetPath, builder, cell).reason);
+					continue;
+				}
 				if (typeof builder === 'string' && REMOVED_BUILDERS.includes(builder)) {
 					changes.push({ path: targetPath, from: builder, to: null });
 					for (const name of REMOVED_BUILDER_PACKAGES[builder] ?? [])
@@ -387,6 +410,7 @@ export function migrateAngularWorkspace(
 		removedPackages: Object.freeze([...removedPackages].sort(compareStrings)),
 		unhandled: Object.freeze(unhandled),
 		absorbedFragments: Object.freeze(absorption.absorbed ? absorption.analyses : []),
+		declaredDifferences: Object.freeze(declaredDifferences),
 	});
 }
 

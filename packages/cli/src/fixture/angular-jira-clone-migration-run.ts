@@ -33,9 +33,23 @@ export const JIRA_CLONE_ARCHIVE_BYTES = 8048993;
 const repositoryRoot = path.resolve(import.meta.dirname, '../../../..');
 const evidenceDirectory = path.join(repositoryRoot, 'evidence/runs/angular-jira-clone');
 
-export const MIGRATION_RECORD_FILE = 'mj1-source-migration.json';
-export const MIGRATION_UNIT = 'lrapr-t005/mj1-jira-clone-migration-lanes';
+export const MIGRATION_RECORD_FILE = 'mj2-source-migration.json';
+export const MIGRATION_UNIT = 'lrapr-t005/mj2-ecosystem-cell-closure';
 export const CONSENT_ID = 'VL-LEGACY-CORPUS-2026-08-10';
+
+/**
+ * The record this one replaces, and what changed between them.
+ *
+ * mj1 ran the same adapter over the same pinned tree before the target cell
+ * carried an ecosystem table. Its changeset is still true about what it did;
+ * it is superseded because the cell it applied was a smaller cell, and the
+ * manifest it produced could not resolve.
+ */
+export const SUPERSEDES = Object.freeze({
+	record: 'mj1-source-migration.json',
+	unit: 'lrapr-t005/mj1-jira-clone-migration-lanes',
+	why: 'mj1 applied angular-16-browser-builder before the cell declared a community-library layer, so the community packages kept their era ranges and the closure the manifest asked for did not resolve. This record applies the same cell with that layer declared, and with the TSLint toolchain dropped as a declared difference. Every mj1 change is still in this changeset; the difference is additive.',
+});
 
 /** Files the workspace may reference as a custom webpack fragment. */
 export const CANDIDATE_WEBPACK_FRAGMENTS: readonly string[] = Object.freeze([
@@ -74,6 +88,7 @@ export async function readWorkspace(tree: string): Promise<{
 	tsConfig: WorkspaceFile;
 	sourceModules: readonly WorkspaceFile[];
 	webpackFragments: readonly WorkspaceFile[];
+	workspaceFiles: readonly string[];
 }> {
 	const read = async (relative: string): Promise<WorkspaceFile> => ({
 		path: relative,
@@ -90,7 +105,28 @@ export async function readWorkspace(tree: string): Promise<{
 		tsConfig: await read('tsconfig.json'),
 		sourceModules: await typescriptModulesBelow(path.join(tree, 'src'), tree),
 		webpackFragments: fragments,
+		workspaceFiles: await workspacePathsBelow(tree, tree),
 	};
+}
+
+/**
+ * Every path the tree carries, workspace-relative, excluding the directories a
+ * package manager or a build writes. The adapter is handed paths only; it reads
+ * none of these files and removes one solely on what its name says it is.
+ */
+const UNWALKED_DIRECTORIES: readonly string[] = Object.freeze(['node_modules', 'dist', '.git']);
+
+async function workspacePathsBelow(directory: string, root: string): Promise<string[]> {
+	const paths: string[] = [];
+	for (const entry of (await readdir(directory, { withFileTypes: true })).sort((left, right) =>
+		left.name < right.name ? -1 : 1,
+	)) {
+		if (UNWALKED_DIRECTORIES.includes(entry.name)) continue;
+		const item = path.join(directory, entry.name);
+		if (entry.isDirectory()) paths.push(...(await workspacePathsBelow(item, root)));
+		else if (entry.isFile()) paths.push(path.relative(root, item).split(path.sep).join('/'));
+	}
+	return paths;
 }
 
 export type MigrationRecord = Readonly<Record<string, unknown>> & Readonly<{ digest: string }>;
@@ -106,6 +142,7 @@ export type MigrationRecord = Readonly<Record<string, unknown>> & Readonly<{ dig
 const CELL_REUSE: readonly string[] = Object.freeze([
 	'The target cell angular-16-browser-builder is the same cell factoriolab was migrated onto. It was not re-derived for this application and nothing here re-establishes its rationale.',
 	'Two facts about this application were added to the cell rather than to this fixture, because they are facts about the Angular ecosystem: the @angular-eslint family tracks the Angular major, and the official browser builder’s own postcss pipeline already runs tailwindcss, autoprefixer and `@import` resolution.',
+	'A third fact was added to the cell for this application and is a fact about the Angular ecosystem rather than about this application: the community library layer, read from registry.npmjs.org under this consent, as the versions each library published for the Angular 16 major. The table is keyed by package name and applies to any manifest; nothing in it names this application.',
 	'Both lanes of this cell run on Node 16.20.2, which is what this application’s own .nvmrc pins as a major and what the era baseline already used. The migrated lane therefore changes the framework without also changing the runtime.',
 ]);
 
@@ -126,10 +163,11 @@ export function buildMigrationRecord(
 	consentId: string,
 ): MigrationRecord {
 	const body = {
-		schemaVersion: 'versionless.angular-jira-clone-source-migration.v1',
+		schemaVersion: 'versionless.angular-jira-clone-source-migration.v2',
 		unit,
 		consentId,
 		result: 'source-migration-recorded',
+		supersedes: SUPERSEDES,
 		adapterApplication: 'second — the same @versionless/angular adapter, a different application',
 		source: {
 			repository: 'trungvose/jira-clone-angular',
@@ -161,6 +199,8 @@ export function buildMigrationRecord(
 					sha256After: entry.sha256After,
 					changes: entry.changes,
 				})),
+			declaredDifferences: migration.declaredDifferences,
+			removedFiles: migration.removedFiles,
 		},
 		unhandled: migration.unhandled,
 		notEstablished: NOT_ESTABLISHED,

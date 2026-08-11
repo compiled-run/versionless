@@ -3,6 +3,7 @@ import {
 	ANGULAR_16_BROWSER_CELL,
 	alignAngularPackageManifest,
 	alignedVersionRange,
+	ecosystemDispositionOf,
 } from '../src/angular-target-cell.ts';
 
 describe('Angular target cell', () => {
@@ -79,5 +80,88 @@ describe('Angular target cell', () => {
 				ANGULAR_16_BROWSER_CELL,
 			),
 		).toThrow('is not a string');
+	});
+});
+
+/**
+ * The community-library layer. Every assertion here is about the table as a
+ * table — that it applies to whatever manifest it is handed, that it touches
+ * only what it names, and that it cannot drop a package without saying why.
+ * None of them is about any one application.
+ */
+describe('Angular target cell ecosystem table', () => {
+	it('applies its declared ranges to any manifest, whatever the era ranges were', () => {
+		const alignment = alignAngularPackageManifest(
+			{
+				name: 'some-other-workspace',
+				dependencies: {
+					'ng-zorro-antd': '^11.0.0',
+					'@ngneat/until-destroy': '8.0.3',
+					'@datorama/akita': '*',
+				},
+				devDependencies: { '@storybook/angular': '^6.1.11' },
+			},
+			ANGULAR_16_BROWSER_CELL,
+		);
+		expect(alignment.manifest['dependencies']).toEqual({
+			'ng-zorro-antd': '^16.2.2',
+			'@ngneat/until-destroy': '^10.0.0',
+			'@datorama/akita': '^7.1.1',
+		});
+		expect(alignment.manifest['devDependencies']).toEqual({ '@storybook/angular': '^7.6.24' });
+		expect(alignment.changes.find((change) => change.name === 'ng-zorro-antd')?.reason).toContain(
+			'aligned to the community layer angular-16-browser-builder declares',
+		);
+	});
+
+	it('leaves a package the table does not name exactly as the manifest declared it', () => {
+		const alignment = alignAngularPackageManifest(
+			{ dependencies: { 'ngx-toastr': '^14.0.0', lodash: '4.17.21', 'ng-zorro-antd': '^13.1.0' } },
+			ANGULAR_16_BROWSER_CELL,
+		);
+		expect(alignment.manifest['dependencies']).toEqual({
+			'ngx-toastr': '^14.0.0',
+			lodash: '4.17.21',
+			'ng-zorro-antd': '^16.2.2',
+		});
+		expect(alignment.changes.map((change) => change.name)).toEqual(['ng-zorro-antd']);
+		expect(alignedVersionRange('ngx-toastr', ANGULAR_16_BROWSER_CELL)).toBeNull();
+	});
+
+	it('drops a no-successor package and records the disposition that dropped it', () => {
+		const alignment = alignAngularPackageManifest(
+			{ devDependencies: { tslint: '~6.1.0', eslint: '^8.2.0' } },
+			ANGULAR_16_BROWSER_CELL,
+		);
+		expect(alignment.manifest['devDependencies']).toEqual({ eslint: '^8.2.0' });
+		const removal = alignment.changes.find((change) => change.name === 'tslint');
+		expect(removal?.to).toBeNull();
+		expect(removal?.reason).toContain('no successor line for angular-16-browser-builder');
+		expect(alignment.declaredDifferences).toHaveLength(1);
+		expect(alignment.declaredDifferences[0]).toContain('devDependencies.tslint was removed');
+	});
+
+	it('records no declared difference when nothing the table drops is present', () => {
+		const alignment = alignAngularPackageManifest(
+			{ dependencies: { rxjs: '~6.6.3' } },
+			ANGULAR_16_BROWSER_CELL,
+		);
+		expect(alignment.declaredDifferences).toEqual([]);
+	});
+
+	it('carries a registry reading for every entry, so no version is a guess', () => {
+		const unevidenced: string[] = [];
+		for (const [name, entry] of Object.entries(ANGULAR_16_BROWSER_CELL.ecosystemPackages)) {
+			if (entry.fact.trim().length < 40) unevidenced.push(name);
+			if (entry.kind === 'aligned' && !entry.range.includes('.')) unevidenced.push(name);
+		}
+		expect(unevidenced).toEqual([]);
+	});
+
+	it('reads an entry only through the disposition, never as a bare range', () => {
+		expect(ecosystemDispositionOf('ng-zorro-antd', ANGULAR_16_BROWSER_CELL)?.kind).toBe('aligned');
+		expect(ecosystemDispositionOf('tslint', ANGULAR_16_BROWSER_CELL)?.kind).toBe('no-successor');
+		expect(ecosystemDispositionOf('lodash', ANGULAR_16_BROWSER_CELL)).toBeNull();
+		expect(alignedVersionRange('tslint', ANGULAR_16_BROWSER_CELL)).toBeNull();
 	});
 });

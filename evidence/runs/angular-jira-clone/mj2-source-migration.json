@@ -1,0 +1,156 @@
+{
+  "schemaVersion": "versionless.angular-jira-clone-source-migration.v2",
+  "unit": "lrapr-t005/mj2-ecosystem-cell-closure",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "result": "source-migration-recorded",
+  "supersedes": {
+    "record": "mj1-source-migration.json",
+    "unit": "lrapr-t005/mj1-jira-clone-migration-lanes",
+    "why": "mj1 applied angular-16-browser-builder before the cell declared a community-library layer, so the community packages kept their era ranges and the closure the manifest asked for did not resolve. This record applies the same cell with that layer declared, and with the TSLint toolchain dropped as a declared difference. Every mj1 change is still in this changeset; the difference is additive."
+  },
+  "adapterApplication": "second — the same @versionless/angular adapter, a different application",
+  "source": {
+    "repository": "trungvose/jira-clone-angular",
+    "commit": "059455b9933a236456524925065bce2c295e2d9a",
+    "archiveUrl": "https://codeload.github.com/trungvose/jira-clone-angular/tar.gz/059455b9933a236456524925065bce2c295e2d9a",
+    "archiveSha256": "d913ad5d4686b6a236799166c7c781f624b3901a1826304e00c36eca82896bc5",
+    "bytes": 8048993,
+    "era": "Angular 13.2.4, CLI 13.2.5, @angular-builders/custom-webpack:browser over a root webpack.config.js, ng-zorro-antd 13, Akita 7, Tailwind 3, TypeScript 4.5.5"
+  },
+  "cell": {
+    "id": "angular-16-browser-builder",
+    "angularLine": "16.2",
+    "builder": "@angular-devkit/build-angular:browser",
+    "nodeLine": "16.20.2",
+    "typescriptRange": "~5.1.3",
+    "rationale": [
+      "Angular 16 accepts Node ^16.14.0 || ^18.10.0; this host carries a native Node 16.20.2, which is inside that range.",
+      "The `browser` builder the era workspace already declares is still the mainstream application builder on the Angular 16 line, so the builder identity survives the hop unchanged.",
+      "A newer line was not declared because it would pair an unverified Node line with a builder swap in the same step, and neither could be evidenced here.",
+      "@angular-eslint is versioned in lockstep with the Angular major it lints — its 16.x line is the one published for Angular 16 — and its schematics package pins a peer range on the matching @angular/cli major. An era @angular-eslint left in place makes the closure unresolvable, so the family is aligned with the framework rather than left behind.",
+      "The test toolchain is declared as the versions this line’s own schematics generate. Leaving it at its era ranges is not a neutral choice: an era jasmine pinned below what a floating karma reporter range now demands makes the dependency closure unresolvable, so the install that the build cell needs cannot happen at all."
+    ],
+    "reuse": [
+      "The target cell angular-16-browser-builder is the same cell factoriolab was migrated onto. It was not re-derived for this application and nothing here re-establishes its rationale.",
+      "Two facts about this application were added to the cell rather than to this fixture, because they are facts about the Angular ecosystem: the @angular-eslint family tracks the Angular major, and the official browser builder’s own postcss pipeline already runs tailwindcss, autoprefixer and `@import` resolution.",
+      "A third fact was added to the cell for this application and is a fact about the Angular ecosystem rather than about this application: the community library layer, read from registry.npmjs.org under this consent, as the versions each library published for the Angular 16 major. The table is keyed by package name and applies to any manifest; nothing in it names this application.",
+      "Both lanes of this cell run on Node 16.20.2, which is what this application’s own .nvmrc pins as a major and what the era baseline already used. The migrated lane therefore changes the framework without also changing the runtime."
+    ]
+  },
+  "migration": {
+    "applicationFilesScanned": 116,
+    "applicationFilesChanged": 0,
+    "workspaceFilesChanged": 3,
+    "files": [
+      {
+        "path": "package.json",
+        "kind": "workspace",
+        "sha256Before": "b029c486ab0eeffac9c311cc00bad782f9203b512c094f873390f8320db18a6f",
+        "sha256After": "22b6927cca3624686aaa3f02697fcdf04e33a598c46c99a3a8522cfb25f768f9",
+        "changes": [
+          "dependencies.@angular/animations: ~13.2.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "dependencies.@angular/cdk: ^13.2.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "dependencies.@angular/common: ~13.2.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "dependencies.@angular/compiler: ~13.2.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "dependencies.@angular/core: ~13.2.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "dependencies.@angular/forms: ~13.2.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "dependencies.@angular/platform-browser: ~13.2.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "dependencies.@angular/platform-browser-dynamic: ~13.2.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "dependencies.@angular/router: ~13.2.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "dependencies.@ant-design/icons-angular: ^13.1.0 -> ^16.0.0 — aligned to the community layer angular-16-browser-builder declares: @ant-design/icons-angular versions in lockstep with the Angular major: 16.0.0 is the only 16.x release and declares peer @angular/core ^16.0.0, @angular/common ^16.0.0, @angular/platform-browser ^16.0.0. 17.0.0 declares ^17.0.1.",
+          "dependencies.@ngneat/content-loader: ^6.0.0 -> ^7.0.0 — aligned to the community layer angular-16-browser-builder declares: 7.0.0 is the newest release and declares peer @angular/core \">= 13.0.0\", satisfied by this cell. The 6.x line the era workspace carried declares no @angular peer.",
+          "dependencies.@ngneat/until-destroy: ^8.0.3 -> ^10.0.0 — aligned to the community layer angular-16-browser-builder declares: 10.0.0 is the newest release and declares peer @angular/core \">=13\" and rxjs \"^6.4.0 || ^7.0.0\", both satisfied by this cell.",
+          "dependencies.@sentry/angular: ^6.18.1 -> ^8.55.2 — aligned to the community layer angular-16-browser-builder declares: The 7.x line — including the era 6.x line before it — declares peer @angular/core \">= 10.x <= 15.x\" and refuses Angular 16. 9.46.0 and 10.70.0 declare peer @angular/core ranges that do admit 16, but both declare engines.node \">=18\", which this cell's Node 16.20.2 does not satisfy. 8.55.2 is the newest line left: peer @angular/core \">= 14.x <= 19.x\", engines.node \">=14.18\".",
+          "removed dependencies.@sentry/tracing (was ^6.18.1) — no successor line for angular-16-browser-builder: @sentry/tracing stops at 7.120.4; the package has no 8.x line, because the v8 SDK folded tracing into @sentry/angular itself. Holding it at a v7 range beside a v8 SDK would install two incompatible Sentry cores, so the package is dropped and the tracing import it served is left for a source transform to answer.",
+          "dependencies.karma-coverage: ^2.0.3 -> ~2.2.0 — aligned to the test toolchain angular-16-browser-builder generates",
+          "dependencies.ng-zorro-antd: ^13.1.0 -> ^16.2.2 — aligned to the community layer angular-16-browser-builder declares: ng-zorro-antd versions in lockstep with the Angular major: 16.2.2 is the last 16.x release and declares peer @angular/core ^16.0.0 across the six @angular packages it uses. It depends on @ant-design/icons-angular ^16.0.0 and @angular/cdk ^16.0.0, both of which this cell also carries. 17.0.0 declares ^17.0.0.",
+          "dependencies.ngx-quill: ^16.1.2 -> ^23.0.3 — aligned to the community layer angular-16-browser-builder declares: ngx-quill versions in lockstep with the Angular major: 23.0.3 is the last release declaring peer @angular/core ^16.0.0, and 24.0.0 moves to ^17.0.0. 23.0.3 also declares peer quill ^1.3.7, which the era workspace already carries, and engines.node \"^16.14.0 || >=18.10.0\", satisfied by this cell.",
+          "dependencies.rxjs: ~6.6.3 -> ~7.8.0 — aligned to angular-16-browser-builder",
+          "dependencies.tslib: ^2.0.0 -> ^2.3.0 — aligned to angular-16-browser-builder",
+          "dependencies.zone.js: ~0.11.4 -> ~0.13.0 — aligned to angular-16-browser-builder",
+          "removed devDependencies.@angular-builders/custom-webpack (was ^13.1.0) — released by a builder target the workspace migration removed",
+          "devDependencies.@angular-devkit/build-angular: ~13.2.5 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "devDependencies.@angular-eslint/builder: 13.1.0 -> ^16.1.0 — aligned to angular-16-browser-builder",
+          "devDependencies.@angular-eslint/eslint-plugin: 13.1.0 -> ^16.1.0 — aligned to angular-16-browser-builder",
+          "devDependencies.@angular-eslint/eslint-plugin-template: 13.1.0 -> ^16.1.0 — aligned to angular-16-browser-builder",
+          "devDependencies.@angular-eslint/schematics: 13.1.0 -> ^16.1.0 — aligned to angular-16-browser-builder",
+          "devDependencies.@angular-eslint/template-parser: 13.1.0 -> ^16.1.0 — aligned to angular-16-browser-builder",
+          "devDependencies.@angular/cli: ~13.2.5 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "devDependencies.@angular/compiler-cli: ~13.2.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "devDependencies.@storybook/addon-actions: ^6.1.11 -> ^7.6.24 — aligned to the community layer angular-16-browser-builder declares: Storybook publishes its addons in lockstep with its core, and 7.6.24 is the last 7.x release of this addon. It is aligned to the same version as @storybook/angular because a Storybook installation with two core majors in it is not an installation.",
+          "devDependencies.@storybook/addon-essentials: ^6.1.11 -> ^7.6.24 — aligned to the community layer angular-16-browser-builder declares: Last 7.x release, aligned with @storybook/angular. It declares peer react and react-dom \"^16.8.0 || ^17.0.0 || ^18.0.0\", which the workspace does not declare and the package manager supplies.",
+          "removed devDependencies.@storybook/addon-google-analytics (was ^6.1.11) — no successor line for angular-16-browser-builder: The addon stops at 6.2.9: Storybook shipped no 7.x release of it, so there is no version to pair with the 7.6.24 core this cell selects. A 6.x addon beside a 7.x core is not a supported Storybook installation, so the package is dropped rather than pinned.",
+          "devDependencies.@storybook/addon-links: ^6.1.11 -> ^7.6.24 — aligned to the community layer angular-16-browser-builder declares: Last 7.x release, aligned with @storybook/angular.",
+          "devDependencies.@storybook/angular: ^6.1.11 -> ^7.6.24 — aligned to the community layer angular-16-browser-builder declares: 8.6.18 declares engines.node \">=18.0.0\", which this cell's Node 16.20.2 does not satisfy. 7.6.24 is the newest line left: engines.node \">=16.0.0\" and peer @angular/core, @angular/cli, @angular-devkit/build-angular and @angular/compiler-cli all \">=14.1.0 < 19.0.0\", satisfied by this cell.",
+          "devDependencies.@types/jasmine: ~3.6.0 -> ~4.3.0 — aligned to the test toolchain angular-16-browser-builder generates",
+          "removed devDependencies.@types/jasminewd2 (was ~2.0.3) — released by a builder target the workspace migration removed",
+          "removed devDependencies.codelyzer (was ^6.0.0) — no successor line for angular-16-browser-builder: codelyzer stops at 6.0.2, a TSLint rule set for Angular 9-era workspaces. Nothing succeeds it on the TSLint line and its ESLint replacement is @angular-eslint, which this cell already aligns as a family.",
+          "devDependencies.jasmine-core: ~4.0.1 -> ~4.6.0 — aligned to the test toolchain angular-16-browser-builder generates",
+          "removed devDependencies.jasmine-spec-reporter (was ~6.0.0) — released by a builder target the workspace migration removed",
+          "devDependencies.karma: ~6.3.16 -> ~6.4.0 — aligned to the test toolchain angular-16-browser-builder generates",
+          "devDependencies.karma-chrome-launcher: ~3.1.0 -> ~3.2.0 — aligned to the test toolchain angular-16-browser-builder generates",
+          "devDependencies.karma-jasmine: ~4.0.0 -> ~5.1.0 — aligned to the test toolchain angular-16-browser-builder generates",
+          "devDependencies.karma-jasmine-html-reporter: ^1.5.0 -> ~2.1.0 — aligned to the test toolchain angular-16-browser-builder generates",
+          "removed devDependencies.nz-tslint-rules (was ^0.901.2) — no successor line for angular-16-browser-builder: nz-tslint-rules stops at 0.901.2, the only version ever published. It is a TSLint rule set for ng-zorro-antd and has no successor on any lint line.",
+          "removed devDependencies.protractor (was ~7.0.0) — released by a builder target the workspace migration removed",
+          "removed devDependencies.tslint (was ~6.1.0) — no successor line for angular-16-browser-builder: TSLint stops at 6.1.3 and was deprecated by its own maintainers in favour of ESLint before Angular 13 shipped. There is no TSLint release for any Angular line at or beyond this cell, so the whole TSLint toolchain is dropped rather than carried.",
+          "devDependencies.typescript: ~4.5.5 -> ~5.1.3 — aligned to angular-16-browser-builder"
+        ]
+      },
+      {
+        "path": "angular.json",
+        "kind": "workspace",
+        "sha256Before": "65690a1cb9f1d916179bd7a4f9f37b64aca840eeeca0f7ae38fee137370e7a70",
+        "sha256After": "1ebc8a1c49f769af4fafbc828800a1171c8da9eefa2a855ee15ed5e65c4be935",
+        "changes": [
+          "removed defaultProject (was \"frontend\")",
+          "removed cli.defaultCollection (was \"@datorama/akita\")",
+          "added cli.schematicCollections = [\"@datorama/akita\"]",
+          "projects.frontend.architect.build.builder: @angular-builders/custom-webpack:browser -> @angular-devkit/build-angular:browser",
+          "removed projects.frontend.architect.build.options.customWebpackConfig (was {\"path\":\"./webpack.config.js\"})",
+          "projects.frontend.architect.build.options.polyfills: \"src/polyfills.ts\" -> [\"src/polyfills.ts\"]",
+          "removed projects.frontend.architect.build.configurations.production.extractCss (was true)",
+          "projects.frontend.architect.serve.builder: @angular-builders/custom-webpack:dev-server -> @angular-devkit/build-angular:dev-server",
+          "projects.frontend.architect.test.options.polyfills: \"src/polyfills.ts\" -> [\"src/polyfills.ts\"]",
+          "removed projects.frontend.architect.e2e (was @angular-devkit/build-angular:protractor)"
+        ]
+      },
+      {
+        "path": "tsconfig.json",
+        "kind": "workspace",
+        "sha256Before": "70bdf73e5376db09479379a2fa4e6bfd268588cb3b064eaf2e2c3ebd4145001b",
+        "sha256After": "0de01df6c9325f73f8779e47c8117e78ff6de245e97d9d2e7921927bdb57be0f",
+        "changes": [
+          "compilerOptions.target: \"es2015\" -> \"ES2022\"",
+          "compilerOptions.module: \"es2020\" -> \"ES2022\"",
+          "added compilerOptions.useDefineForClassFields = false"
+        ]
+      }
+    ],
+    "declaredDifferences": [
+      "dependencies.@sentry/tracing was removed: the migrated workspace no longer carries it. @sentry/tracing stops at 7.120.4; the package has no 8.x line, because the v8 SDK folded tracing into @sentry/angular itself. Holding it at a v7 range beside a v8 SDK would install two incompatible Sentry cores, so the package is dropped and the tracing import it served is left for a source transform to answer.",
+      "devDependencies.@storybook/addon-google-analytics was removed: the migrated workspace no longer carries it. The addon stops at 6.2.9: Storybook shipped no 7.x release of it, so there is no version to pair with the 7.6.24 core this cell selects. A 6.x addon beside a 7.x core is not a supported Storybook installation, so the package is dropped rather than pinned.",
+      "devDependencies.codelyzer was removed: the migrated workspace no longer carries it. codelyzer stops at 6.0.2, a TSLint rule set for Angular 9-era workspaces. Nothing succeeds it on the TSLint line and its ESLint replacement is @angular-eslint, which this cell already aligns as a family.",
+      "devDependencies.nz-tslint-rules was removed: the migrated workspace no longer carries it. nz-tslint-rules stops at 0.901.2, the only version ever published. It is a TSLint rule set for ng-zorro-antd and has no successor on any lint line.",
+      "devDependencies.tslint was removed: the migrated workspace no longer carries it. TSLint stops at 6.1.3 and was deprecated by its own maintainers in favour of ESLint before Angular 13 shipped. There is no TSLint release for any Angular line at or beyond this cell, so the whole TSLint toolchain is dropped rather than carried."
+    ],
+    "removedFiles": []
+  },
+  "unhandled": [
+    "projects.frontend.architect.lint uses @angular-eslint/builder:lint, which this capability does not recognise; its options were left untouched",
+    "projects.frontend.architect.e2e used @angular-devkit/build-angular:protractor, which the 16.2 devkit does not ship; the target was removed and no replacement capability was chosen for it",
+    "webpack.config.js was absorbed into the official builder and is no longer referenced by any target; it was left in the tree rather than deleted. Absorbed capabilities: webpack-rule-scope /\\.scss$/, postcss-ident ident: \"postcss\", postcss-syntax postcss-scss, postcss-plugin postcss-import, postcss-plugin tailwindcss, postcss-plugin autoprefixer",
+    "devDependencies.karma-coverage-istanbul-reporter is coupled to the Angular test cell but is not part of the toolchain angular-16-browser-builder generates, so it was left at its era range",
+    "compilerOptions.lib was left as declared; the 16.2 line does not require a specific lib set and narrowing one could remove a type surface the application relies on"
+  ],
+  "notEstablished": [
+    "This record states what the adapter changed. Whether the changed tree installs and builds is recorded separately, in the build-lane records beside it, and neither is implied here.",
+    "No test-cell outcome is established: the karma/jasmine toolchain was aligned so the dependency closure could resolve, and no test run was attempted.",
+    "No browser behaviour, runtime parity or user-visible equivalence was observed. No witness ran."
+  ],
+  "nonclaims": [
+    "This record states which bytes a set of reusable transforms changed in one pinned tree. It establishes no migration feasibility, no production readiness, no certification and no support claim for Angular applications generally.",
+    "A second application on one adapter is a second application, not a general result. Nothing here says the adapter carries a third."
+  ],
+  "digest": "30cd8e9298c4683a64358c80e88eb5becdc0950ac814cdc675d1ad681a8293db"
+}

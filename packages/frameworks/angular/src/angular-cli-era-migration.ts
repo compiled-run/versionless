@@ -28,6 +28,7 @@ import {
 	normalizeFragmentPath,
 	type ConfigChange,
 } from './angular-workspace-migration.ts';
+import { tslintConfigRemovals } from './tslint-toolchain-removal.ts';
 
 export type WorkspaceFile = Readonly<{ path: string; source: string }>;
 
@@ -43,6 +44,13 @@ export type AngularMigrationInput = Readonly<{
 	 * here is reported unread and its wrapper builder is left in place.
 	 */
 	webpackFragments?: readonly WorkspaceFile[];
+	/**
+	 * Every workspace-relative path the tree carries, for capabilities that
+	 * decide a file should no longer exist. Only paths are needed: a file removed
+	 * because the toolchain that read it is gone does not have to be parsed. A
+	 * tree that supplies no list has no files removed.
+	 */
+	workspaceFiles?: readonly string[];
 }>;
 
 export type MigratedFile = Readonly<{
@@ -62,6 +70,16 @@ export type AngularMigration = Readonly<{
 	workspaceFilesChanged: number;
 	applicationFilesScanned: number;
 	unhandled: readonly string[];
+	/**
+	 * Capabilities the migrated workspace deliberately no longer has, one line
+	 * per removal — a dropped lint target, a dropped configuration file, a
+	 * package the cell read and found no successor for. A reader is owed these by
+	 * name: they are the difference between the era workspace and this one that a
+	 * clean changeset would otherwise hide.
+	 */
+	declaredDifferences: readonly string[];
+	/** Files the migration decided the tree should no longer carry. */
+	removedFiles: readonly string[];
 }>;
 
 function sha256(value: string): string {
@@ -115,11 +133,15 @@ export function migrateAngularCliEraWorkspace(
 	cell: AngularTargetCell,
 ): AngularMigration {
 	const unhandled: string[] = [];
+	const declaredDifferences: string[] = [];
 	const fragments: Record<string, string> = {};
 	for (const fragment of input.webpackFragments ?? [])
 		fragments[normalizeFragmentPath(fragment.path)] = fragment.source;
 	const workspace = migrateAngularWorkspace(input.workspaceConfig.source, cell, fragments);
 	unhandled.push(...workspace.unhandled);
+	declaredDifferences.push(...workspace.declaredDifferences);
+	const configRemovals = tslintConfigRemovals(input.workspaceFiles ?? [], cell);
+	declaredDifferences.push(...configRemovals.map((removal) => removal.reason));
 	for (const absorbed of workspace.absorbedFragments)
 		unhandled.push(
 			`${absorbed.path} was absorbed into the official builder and is no longer referenced by any ` +
@@ -135,6 +157,7 @@ export function migrateAngularCliEraWorkspace(
 		workspace.removedPackages,
 	);
 	unhandled.push(...aligned.unhandled);
+	declaredDifferences.push(...aligned.declaredDifferences);
 	const tsConfig = migrateAngularTsConfig(input.tsConfig.source, cell);
 	unhandled.push(...tsConfig.unhandled);
 	const files: MigratedFile[] = [
@@ -185,5 +208,7 @@ export function migrateAngularCliEraWorkspace(
 			.length,
 		applicationFilesScanned: applicationFiles.length,
 		unhandled: Object.freeze([...new Set(unhandled)]),
+		declaredDifferences: Object.freeze([...new Set(declaredDifferences)]),
+		removedFiles: Object.freeze(configRemovals.map((removal) => removal.at)),
 	});
 }

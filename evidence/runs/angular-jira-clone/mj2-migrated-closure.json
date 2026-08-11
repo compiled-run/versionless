@@ -1,0 +1,117 @@
+{
+  "schemaVersion": "versionless.angular-jira-clone-migrated-closure.v1",
+  "unit": "lrapr-t005/mj2-ecosystem-cell-closure",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "result": "closure-resolved-build-red-itemised",
+  "meaning": "The migrated manifest the extended cell produces resolves and installs. The production build was then run once and is recorded as it happened: red, with every demand the compiler made itemised below. No source transform was attempted in this unit.",
+  "supersedes": {
+    "record": "mj1-migrated-lane.json",
+    "unit": "lrapr-t005/mj1-jira-clone-migration-lanes",
+    "why": "mj1 recorded the migrated lane as red at the closure install, with @ant-design/icons-angular@13.1.0 as the first unresolvable peer. The cell now declares the community layer that conflict came from, so the install this record describes is the same step mj1 attempted, on a manifest that resolves."
+  },
+  "changeset": "mj2-source-migration.json",
+  "cell": {
+    "node": "v16.20.2",
+    "architecture": "darwin-arm64, native — no translation layer",
+    "npm": "8.19.4 (bundled with the runtime)",
+    "builder": "@angular-devkit/build-angular:browser (Angular 16.2), the builder the absorption restored",
+    "environment": {
+      "NG_CLI_ANALYTICS": "false"
+    }
+  },
+  "acquisition": {
+    "purpose": "Install the declared Angular 16.2 dependency closure the migrated manifest asks for.",
+    "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+    "networkMode": "consented",
+    "method": "npm install --no-audit --no-fund (no lockfile carried over: the era lockfileVersion 2 pins the Angular 13 closure)",
+    "outcome": "succeeded",
+    "exitStatus": 0,
+    "packagesAdded": 1981,
+    "migratedManifestSha256": "22b6927cca3624686aaa3f02697fcdf04e33a598c46c99a3a8522cfb25f768f9",
+    "lockfileSha256": "bf7efc6dcb64b1d3e1538701c9392c6b6f5e194fa254f5b64b6a6e6de52ecea9",
+    "artifactsAcquired": 2022,
+    "artifactRecord": "mj2-acquired-closure.json",
+    "hosts": [
+      "registry.npmjs.org"
+    ],
+    "warningKinds": [
+      "EBADENGINE",
+      "deprecated"
+    ],
+    "warningNote": "The install emitted engine warnings only. npm was not run with engine-strict, so a package declaring a Node line this cell does not meet was installed with a warning rather than refused; each such package is a transitive dependency, not one this cell names."
+  },
+  "buildAttempt": {
+    "command": "npx ng build --configuration production",
+    "runs": 1,
+    "exitStatus": 1,
+    "outcome": "red",
+    "artifactsEmitted": 0,
+    "demands": [
+      {
+        "file": "src/main.ts",
+        "symbol": "import { Integrations } from '@sentry/tracing'",
+        "library": "@sentry/tracing → @sentry/angular 8",
+        "observed": "src/main.ts:4:30 - error TS2307: Cannot find module '@sentry/tracing' or its corresponding type declarations. / ./src/main.ts:4:0-47 - Error: Module not found: Error: Can't resolve '@sentry/tracing'",
+        "neededTransform": "The package was dropped by the cell as a no-successor package. The v8 SDK exposes tracing from @sentry/angular itself, so the import has to move and the `Integrations.BrowserTracing` construction it fed has to become the integration factory the v8 SDK exports."
+      },
+      {
+        "file": "src/main.ts",
+        "symbol": "Sentry.routingInstrumentation",
+        "library": "@sentry/angular 6 → 8",
+        "observed": "src/main.ts:15:40 - error TS2339: Property 'routingInstrumentation' does not exist on type 'typeof import(\"@sentry/angular\")' / ./src/main.ts:13:30-59 - Error: export 'routingInstrumentation' (imported as 'Sentry') was not found in '@sentry/angular'",
+        "neededTransform": "The v8 SDK removed the standalone routing instrumentation hook; the browser tracing integration performs the routing instrumentation itself. The `routingInstrumentation` option passed into the tracing integration has to go, and whatever the v8 integration takes in its place has to be established from the library rather than guessed."
+      },
+      {
+        "file": "src/styles.scss",
+        "symbol": "@import 'ng-zorro-antd/style/index.min.css' and eight sibling component imports",
+        "library": "ng-zorro-antd 13 → 16",
+        "observed": "./src/styles.scss - Error: Module build failed (from ./node_modules/css-loader/dist/cjs.js): Error: \"./style/index.min.css\" is not exported under the condition \"style\" from package .../node_modules/ng-zorro-antd (see exports field in .../ng-zorro-antd/package.json)",
+        "neededTransform": "ng-zorro-antd 16 publishes an `exports` map, and the era stylesheet paths are not in it under the `style` condition webpack resolves stylesheets with. Every one of the nine style imports has to be rewritten to a path the package exports, or the stylesheet entry point the package does export has to replace them."
+      },
+      {
+        "file": "node_modules/ng-zorro-antd/fesm2022/ng-zorro-antd-core-color.mjs and -core-config.mjs",
+        "symbol": "import '@ctrl/tinycolor'",
+        "library": "ng-zorro-antd 16.2.2",
+        "observed": "./node_modules/ng-zorro-antd/fesm2022/ng-zorro-antd-core-color.mjs:1:0-65 - Error: Module not found: Error: Can't resolve '@ctrl/tinycolor'",
+        "neededTransform": "ng-zorro-antd 16.2.2 imports @ctrl/tinycolor from two of its own bundles but declares it in neither `dependencies` nor `peerDependencies`, so the resolved closure does not contain it. This is a demand of the library on its consumer, not of the application on itself: the manifest has to carry the package the library omitted, and that is a cell-level fact about ng-zorro-antd rather than a source transform."
+      },
+      {
+        "file": "src/app/project/components/issues/issue-card/issue-card.component.ts:45, src/app/project/components/issues/issue-detail/issue-detail.component.ts:31, src/app/project/components/search/search-drawer/search-drawer.component.ts:60",
+        "symbol": "nzComponentParams in NzModalService.create options",
+        "library": "ng-zorro-antd 13 → 16",
+        "observed": "error TS2345: Object literal may only specify known properties, and 'nzComponentParams' does not exist in type 'ModalOptions<…>'",
+        "neededTransform": "`ModalOptions.nzComponentParams` was removed from the ng-zorro-antd modal API. Three call sites pass component inputs through it. The replacement the library offers has to be read off the 16 API and applied at each site; the three sites are the same shape, so one transform covers them."
+      }
+    ],
+    "observedErrorLines": [
+      "./src/main.ts:4:0-47 - Error: Module not found: Error: Can't resolve '@sentry/tracing' in '/Users/jacksm5pro/dev/open-source/versionless/.versionless/stage/angular-jira-clone-mj2/app/src'",
+      "./src/main.ts:13:30-59 - Error: export 'routingInstrumentation' (imported as 'Sentry') was not found in '@sentry/angular' (possible exports: BrowserClient, OpenFeatureIntegrationHook, SDK_VERSION, SEMANTIC_ATTRIBUTE_SENTRY_OP, SEMANTIC_ATTRIBUTE_SENTRY_ORIGIN, SEMANTIC_ATTRIBUTE_SENTRY_SAMPLE_RATE, SEMANTIC_ATTRIBUTE_SENTRY_SOURCE, Scope, SentryErrorHandler, TraceClass, TraceDirective, TraceMethod…",
+      "./src/styles.scss - Error: Module build failed (from ./node_modules/css-loader/dist/cjs.js):",
+      "Error: \"./style/index.min.css\" is not exported under the condition \"style\" from package /Users/jacksm5pro/dev/open-source/versionless/.versionless/stage/angular-jira-clone-mj2/app/node_modules/ng-zorro-antd (see exports field in /Users/jacksm5pro/dev/open-source/versionless/.versionless/stage/angular-jira-clone-mj2/app/node_modules/ng-zorro-antd/package.json)",
+      "./src/styles.scss?ngGlobalStyle - Error: Module build failed (from ./node_modules/mini-css-extract-plugin/dist/loader.js):",
+      "Error: \"./style/index.min.css\" is not exported under the condition \"style\" from package /Users/jacksm5pro/dev/open-source/versionless/.versionless/stage/angular-jira-clone-mj2/app/node_modules/ng-zorro-antd (see exports field in /Users/jacksm5pro/dev/open-source/versionless/.versionless/stage/angular-jira-clone-mj2/app/node_modules/ng-zorro-antd/package.json)",
+      "./node_modules/ng-zorro-antd/fesm2022/ng-zorro-antd-core-color.mjs:1:0-65 - Error: Module not found: Error: Can't resolve '@ctrl/tinycolor' in '/Users/jacksm5pro/dev/open-source/versionless/.versionless/stage/angular-jira-clone-mj2/app/node_modules/ng-zorro-antd/fesm2022'",
+      "./node_modules/ng-zorro-antd/fesm2022/ng-zorro-antd-core-config.mjs:5:0-44 - Error: Module not found: Error: Can't resolve '@ctrl/tinycolor' in '/Users/jacksm5pro/dev/open-source/versionless/.versionless/stage/angular-jira-clone-mj2/app/node_modules/ng-zorro-antd/fesm2022'",
+      "Error: src/app/project/components/issues/issue-card/issue-card.component.ts:45:7 - error TS2345: Argument of type '{ nzContent: typeof IssueModalComponent; nzWidth: number; nzClosable: false; nzFooter: null; nzComponentParams: { issue$: Observable<JIssue>; }; }' is not assignable to parameter of type 'ModalOptions<IssueModalComponent, any, any>'.",
+      "Error: src/app/project/components/issues/issue-detail/issue-detail.component.ts:31:7 - error TS2345: Argument of type '{ nzContent: typeof IssueDeleteModalComponent; nzClosable: false; nzFooter: null; nzStyle: { top: string; }; nzComponentParams: { issueId: string; onDelete: EventEmitter<DeleteIssueModel>; }; }' is not assignable to parameter of type 'ModalOptions<IssueDeleteModalComponent, any, a…",
+      "Error: src/app/project/components/search/search-drawer/search-drawer.component.ts:60:7 - error TS2345: Argument of type '{ nzContent: typeof IssueModalComponent; nzWidth: number; nzClosable: false; nzFooter: null; nzComponentParams: { issue$: Observable<JIssue>; }; }' is not assignable to parameter of type 'ModalOptions<IssueModalComponent, any, any>'.",
+      "Error: src/main.ts:4:30 - error TS2307: Cannot find module '@sentry/tracing' or its corresponding type declarations.",
+      "Error: src/main.ts:15:40 - error TS2339: Property 'routingInstrumentation' does not exist on type 'typeof import(\"/Users/jacksm5pro/dev/open-source/versionless/.versionless/stage/angular-jira-clone-mj2/app/node_modules/@sentry/angular/index\")'."
+    ],
+    "itemisationMeaning": "This list is the product of this unit, not a defect report. Each demand is a transform the migrated source has not yet been given; deciding and applying them is the next unit’s work."
+  },
+  "notEstablished": [
+    "The closure resolves and installs. That establishes nothing about whether the application compiles: it did not, and the demands above are why.",
+    "No migrated artifact exists, so there is still no build-level parity for this cell and no inventory to compare with the era lane.",
+    "No browser opened anything here. Nothing about behaviour, runtime parity or user-visible equivalence is observed.",
+    "The itemisation is this record’s reading of one build log on one host. A second host, or a later resolution of the same ranges, could surface demands this list does not carry.",
+    "The dropped packages are recorded as dropped. Nothing here establishes that the capabilities they provided — Sentry tracing, the Storybook analytics addon, the TSLint lint gate — are replaced, or that the application no longer needs them.",
+    "Nothing here is a production-readiness, pilot, certification or general Angular support claim."
+  ],
+  "recordedRisks": [
+    "The application initialises Sentry with a hard-coded DSN in src/main.ts. Its value is deliberately not reproduced anywhere in this evidence tree.",
+    "The application initialises Google Analytics with a hard-coded measurement id in src/app/core/services/google-analytics.service.ts. Its value is deliberately not reproduced anywhere in this evidence tree.",
+    "The install reached the public npm registry under the recorded consent and wrote 1,981 packages into a staged tree outside this repository. No package was executed beyond the lifecycle scripts npm runs on install, and no build product of that tree is committed here."
+  ],
+  "digest": "11aae0ea02f72b6c28fd715c9e31e0d64133391c1c865d06615538f72cf6c4ac"
+}

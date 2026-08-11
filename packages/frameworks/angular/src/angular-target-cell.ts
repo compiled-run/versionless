@@ -15,6 +15,23 @@
 
 export type AngularVersionRanges = Readonly<Record<string, string>>;
 
+/**
+ * What a community library offers the target line, and the registry reading
+ * that established it.
+ *
+ * `aligned` names the range to write. `no-successor` says the library published
+ * nothing this cell can accept, which is a decision to *drop* the package —
+ * recorded, per package, as a declared difference between the era workspace and
+ * the migrated one. There is deliberately no third state: a library the cell has
+ * not read is absent from the table and left exactly as the application declared
+ * it, which is a different thing from a library the cell read and rejected.
+ */
+export type EcosystemPackage =
+	| Readonly<{ kind: 'aligned'; range: string; fact: string }>
+	| Readonly<{ kind: 'no-successor'; fact: string }>;
+
+export type EcosystemPackages = Readonly<Record<string, EcosystemPackage>>;
+
 export type AngularTargetCell = Readonly<{
 	/** Stable identifier used in migration records. */
 	id: string;
@@ -43,11 +60,143 @@ export type AngularTargetCell = Readonly<{
 	 * Angular line.
 	 */
 	testPackages: AngularVersionRanges;
+	/**
+	 * The community library layer, keyed by exact package name.
+	 *
+	 * Angular's own packages, the devkit and the lint and test toolchains are
+	 * facts about the framework. This table is a different kind of fact: what a
+	 * *third party* published for this Angular major. Every entry is a reading of
+	 * the registry — the declared `@angular/*` peer ranges and `engines.node` of
+	 * the lines that library actually shipped — and each one carries the reading
+	 * that produced it in {@link EcosystemPackage.fact}.
+	 *
+	 * A library that never published a line this cell can accept is not silently
+	 * pinned to an era version and is not silently left behind: it is declared
+	 * `no-successor`, which drops it from the manifest and records why. That is a
+	 * migration difference the cell states out loud, not a defect it hides.
+	 */
+	ecosystemPackages: EcosystemPackages;
 	/** Why this cell and not a newer one. Recorded verbatim in evidence. */
 	rationale: readonly string[];
 	/** What adopting this cell does not establish. */
 	nonclaims: readonly string[];
 }>;
+
+/**
+ * The community layer as `registry.npmjs.org` published it for Angular 16,
+ * read under consent VL-LEGACY-CORPUS-2026-08-10 on 2026-08-11.
+ *
+ * One rule chose every entry, and it is mechanical rather than editorial: take
+ * the newest line the package published whose declared peer ranges and
+ * `engines.node` are all satisfied by this cell — its Angular major, its Node
+ * line, and the ranges the cell itself writes for `rxjs`, `tslib` and the other
+ * packages it names. A package whose own family versions in lockstep with the
+ * Angular major collapses to the matching major under that rule; a package with
+ * a wide peer range is held back by the cell's Node line rather than floated to
+ * whatever is newest today. Where the rule excluded a newer line, the fact says
+ * which declaration excluded it, so the reading can be checked rather than
+ * trusted.
+ *
+ * `fact` is the reading, not a justification: each one names the published
+ * version and the declaration on it that the rule tested.
+ */
+export const ANGULAR_16_ECOSYSTEM_PACKAGES: EcosystemPackages = Object.freeze({
+	'@ant-design/icons-angular': Object.freeze({
+		kind: 'aligned',
+		range: '^16.0.0',
+		fact: '@ant-design/icons-angular versions in lockstep with the Angular major: 16.0.0 is the only 16.x release and declares peer @angular/core ^16.0.0, @angular/common ^16.0.0, @angular/platform-browser ^16.0.0. 17.0.0 declares ^17.0.1.',
+	}),
+	'ng-zorro-antd': Object.freeze({
+		kind: 'aligned',
+		range: '^16.2.2',
+		fact: 'ng-zorro-antd versions in lockstep with the Angular major: 16.2.2 is the last 16.x release and declares peer @angular/core ^16.0.0 across the six @angular packages it uses. It depends on @ant-design/icons-angular ^16.0.0 and @angular/cdk ^16.0.0, both of which this cell also carries. 17.0.0 declares ^17.0.0.',
+	}),
+	'@datorama/akita': Object.freeze({
+		kind: 'aligned',
+		range: '^7.1.1',
+		fact: 'Akita declares no @angular peer at all, so the Angular major does not choose it. The newer 8.0.1 is excluded by this cell: it declares peer tslib "2.4.1" as an exact version, which the tslib ^2.3.0 this cell writes does not resolve to. 7.1.1 declares only peer rxjs "*".',
+	}),
+	'@datorama/akita-ng-entity-service': Object.freeze({
+		kind: 'aligned',
+		range: '^7.0.0',
+		fact: '8.0.0 declares peer @datorama/akita ">= 8.0.0", which the 7.1.1 this cell carries does not satisfy. 7.0.0 declares peer @angular/core ">= 13.0.0" and @datorama/akita ">= 7.0.0", both satisfied here.',
+	}),
+	'@datorama/akita-ng-router-store': Object.freeze({
+		kind: 'aligned',
+		range: '^7.0.0',
+		fact: '8.0.0 declares peer @datorama/akita ">= 8.0.0", excluded for the same reason as the entity service. 7.0.0 declares peer @angular/core ">= 13.0.0" and @datorama/akita ">= 7.0.0".',
+	}),
+	'@datorama/akita-ngdevtools': Object.freeze({
+		kind: 'aligned',
+		range: '^7.0.0',
+		fact: '7.0.0 is the newest release the package ever published; it declares peer @angular/core ">= 13.0.0" and @datorama/akita ">= 7.0.0", both satisfied here.',
+	}),
+	'@ngneat/content-loader': Object.freeze({
+		kind: 'aligned',
+		range: '^7.0.0',
+		fact: '7.0.0 is the newest release and declares peer @angular/core ">= 13.0.0", satisfied by this cell. The 6.x line the era workspace carried declares no @angular peer.',
+	}),
+	'@ngneat/until-destroy': Object.freeze({
+		kind: 'aligned',
+		range: '^10.0.0',
+		fact: '10.0.0 is the newest release and declares peer @angular/core ">=13" and rxjs "^6.4.0 || ^7.0.0", both satisfied by this cell.',
+	}),
+	'@ngneat/tailwind': Object.freeze({
+		kind: 'aligned',
+		range: '^7.0.3',
+		fact: '7.0.3 is the newest release the package ever published and declares no peers at all, so nothing in this cell excludes it. The range is unchanged from the era workspace; it is recorded because the reading happened, not because a byte moved.',
+	}),
+	'@sentry/angular': Object.freeze({
+		kind: 'aligned',
+		range: '^8.55.2',
+		fact: 'The 7.x line — including the era 6.x line before it — declares peer @angular/core ">= 10.x <= 15.x" and refuses Angular 16. 9.46.0 and 10.70.0 declare peer @angular/core ranges that do admit 16, but both declare engines.node ">=18", which this cell\'s Node 16.20.2 does not satisfy. 8.55.2 is the newest line left: peer @angular/core ">= 14.x <= 19.x", engines.node ">=14.18".',
+	}),
+	'@sentry/tracing': Object.freeze({
+		kind: 'no-successor',
+		fact: '@sentry/tracing stops at 7.120.4; the package has no 8.x line, because the v8 SDK folded tracing into @sentry/angular itself. Holding it at a v7 range beside a v8 SDK would install two incompatible Sentry cores, so the package is dropped and the tracing import it served is left for a source transform to answer.',
+	}),
+	'ngx-quill': Object.freeze({
+		kind: 'aligned',
+		range: '^23.0.3',
+		fact: 'ngx-quill versions in lockstep with the Angular major: 23.0.3 is the last release declaring peer @angular/core ^16.0.0, and 24.0.0 moves to ^17.0.0. 23.0.3 also declares peer quill ^1.3.7, which the era workspace already carries, and engines.node "^16.14.0 || >=18.10.0", satisfied by this cell.',
+	}),
+	'@storybook/angular': Object.freeze({
+		kind: 'aligned',
+		range: '^7.6.24',
+		fact: '8.6.18 declares engines.node ">=18.0.0", which this cell\'s Node 16.20.2 does not satisfy. 7.6.24 is the newest line left: engines.node ">=16.0.0" and peer @angular/core, @angular/cli, @angular-devkit/build-angular and @angular/compiler-cli all ">=14.1.0 < 19.0.0", satisfied by this cell.',
+	}),
+	'@storybook/addon-actions': Object.freeze({
+		kind: 'aligned',
+		range: '^7.6.24',
+		fact: 'Storybook publishes its addons in lockstep with its core, and 7.6.24 is the last 7.x release of this addon. It is aligned to the same version as @storybook/angular because a Storybook installation with two core majors in it is not an installation.',
+	}),
+	'@storybook/addon-essentials': Object.freeze({
+		kind: 'aligned',
+		range: '^7.6.24',
+		fact: 'Last 7.x release, aligned with @storybook/angular. It declares peer react and react-dom "^16.8.0 || ^17.0.0 || ^18.0.0", which the workspace does not declare and the package manager supplies.',
+	}),
+	'@storybook/addon-links': Object.freeze({
+		kind: 'aligned',
+		range: '^7.6.24',
+		fact: 'Last 7.x release, aligned with @storybook/angular.',
+	}),
+	'@storybook/addon-google-analytics': Object.freeze({
+		kind: 'no-successor',
+		fact: 'The addon stops at 6.2.9: Storybook shipped no 7.x release of it, so there is no version to pair with the 7.6.24 core this cell selects. A 6.x addon beside a 7.x core is not a supported Storybook installation, so the package is dropped rather than pinned.',
+	}),
+	tslint: Object.freeze({
+		kind: 'no-successor',
+		fact: 'TSLint stops at 6.1.3 and was deprecated by its own maintainers in favour of ESLint before Angular 13 shipped. There is no TSLint release for any Angular line at or beyond this cell, so the whole TSLint toolchain is dropped rather than carried.',
+	}),
+	codelyzer: Object.freeze({
+		kind: 'no-successor',
+		fact: 'codelyzer stops at 6.0.2, a TSLint rule set for Angular 9-era workspaces. Nothing succeeds it on the TSLint line and its ESLint replacement is @angular-eslint, which this cell already aligns as a family.',
+	}),
+	'nz-tslint-rules': Object.freeze({
+		kind: 'no-successor',
+		fact: 'nz-tslint-rules stops at 0.901.2, the only version ever published. It is a TSLint rule set for ng-zorro-antd and has no successor on any lint line.',
+	}),
+});
 
 /**
  * Angular 16 with the `browser` builder.
@@ -89,6 +238,7 @@ export const ANGULAR_16_BROWSER_CELL: AngularTargetCell = Object.freeze({
 		'karma-jasmine': '~5.1.0',
 		'karma-jasmine-html-reporter': '~2.1.0',
 	}),
+	ecosystemPackages: ANGULAR_16_ECOSYSTEM_PACKAGES,
 	rationale: Object.freeze([
 		'Angular 16 accepts Node ^16.14.0 || ^18.10.0; this host carries a native Node 16.20.2, which is inside that range.',
 		'The `browser` builder the era workspace already declares is still the mainstream application builder on the Angular 16 line, so the builder identity survives the hop unchanged.',
@@ -121,6 +271,12 @@ export type ManifestAlignment = Readonly<{
 	manifest: PackageManifest;
 	changes: readonly DependencyChange[];
 	unhandled: readonly string[];
+	/**
+	 * Removals the cell declared rather than discovered: one line per package the
+	 * cell read and found no successor for. These are differences between the era
+	 * workspace and the migrated one that a reader is owed by name, not defects.
+	 */
+	declaredDifferences: readonly string[];
 }>;
 
 const DEPENDENCY_FIELDS = ['dependencies', 'devDependencies'] as const;
@@ -145,12 +301,25 @@ export function compareStrings(left: string, right: string): number {
 	return left < right ? -1 : 1;
 }
 
+/**
+ * The cell's disposition of one community package, or null when the cell has
+ * not read it.
+ */
+export function ecosystemDispositionOf(
+	name: string,
+	cell: AngularTargetCell,
+): EcosystemPackage | null {
+	return cell.ecosystemPackages[name] ?? null;
+}
+
 /** The range the cell asks for, or null when the cell says nothing about it. */
 export function alignedVersionRange(name: string, cell: AngularTargetCell): string | null {
 	const exact = cell.packages[name];
 	if (exact !== undefined) return exact;
 	const test = cell.testPackages[name];
 	if (test !== undefined) return test;
+	const ecosystem = cell.ecosystemPackages[name];
+	if (ecosystem !== undefined) return ecosystem.kind === 'aligned' ? ecosystem.range : null;
 	let match: string | null = null;
 	let matchedPrefix = '';
 	for (const [prefix, range] of Object.entries(cell.families))
@@ -195,6 +364,7 @@ export function alignAngularPackageManifest(
 	const removed = new Set(removedPackages);
 	const changes: DependencyChange[] = [];
 	const unhandled: string[] = [];
+	const declaredDifferences: string[] = [];
 	const next: Record<string, unknown> = { ...manifest };
 	for (const field of DEPENDENCY_FIELDS) {
 		if (manifest[field] === undefined) continue;
@@ -210,6 +380,32 @@ export function alignAngularPackageManifest(
 					to: null,
 					reason: 'released by a builder target the workspace migration removed',
 				});
+				/**
+				 * A package can be released by a removed target *and* be one the cell
+				 * read and found no successor for. The removal is recorded once, but
+				 * the disposition is recorded too: the target going away is why it
+				 * left this manifest, and the missing successor line is why it is not
+				 * coming back on another target.
+				 */
+				const alsoDeclared = cell.ecosystemPackages[name];
+				if (alsoDeclared !== undefined && alsoDeclared.kind === 'no-successor')
+					declaredDifferences.push(
+						`${field}.${name} was removed: the migrated workspace no longer carries it. ${alsoDeclared.fact}`,
+					);
+				continue;
+			}
+			const disposition = cell.ecosystemPackages[name];
+			if (disposition !== undefined && disposition.kind === 'no-successor') {
+				changes.push({
+					field,
+					name,
+					from,
+					to: null,
+					reason: `no successor line for ${cell.id}: ${disposition.fact}`,
+				});
+				declaredDifferences.push(
+					`${field}.${name} was removed: the migrated workspace no longer carries it. ${disposition.fact}`,
+				);
 				continue;
 			}
 			const range = alignedVersionRange(name, cell);
@@ -229,10 +425,7 @@ export function alignAngularPackageManifest(
 					name,
 					from,
 					to: range,
-					reason:
-						cell.testPackages[name] === undefined
-							? `aligned to ${cell.id}`
-							: `aligned to the test toolchain ${cell.id} generates`,
+					reason: alignmentReason(name, cell),
 				});
 		}
 		next[field] = updated;
@@ -241,7 +434,17 @@ export function alignAngularPackageManifest(
 		manifest: Object.freeze(next),
 		changes: Object.freeze(changes),
 		unhandled: Object.freeze(unhandled.sort(compareStrings)),
+		declaredDifferences: Object.freeze(declaredDifferences.sort(compareStrings)),
 	});
+}
+
+function alignmentReason(name: string, cell: AngularTargetCell): string {
+	if (cell.testPackages[name] !== undefined)
+		return `aligned to the test toolchain ${cell.id} generates`;
+	const ecosystem = cell.ecosystemPackages[name];
+	if (ecosystem !== undefined && ecosystem.kind === 'aligned')
+		return `aligned to the community layer ${cell.id} declares: ${ecosystem.fact}`;
+	return `aligned to ${cell.id}`;
 }
 
 const TEST_TOOLCHAIN_PREFIXES: readonly string[] = Object.freeze([
