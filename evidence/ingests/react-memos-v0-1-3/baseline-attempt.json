@@ -1,0 +1,130 @@
+{
+  "schemaVersion": "versionless.legacy-baseline-attempt.v1",
+  "slug": "react-memos-v0-1-3",
+  "unit": "lrapr-t006/u3-ingest-memos",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "frontendRoot": "web",
+  "purpose": "One truthful baseline: install the repository's own pinned dependency closure and run the repository's own declared build command, in the nearest honest legacy cell.",
+  "declaredCell": {
+    "repositoryDeclaresANodeVersion": true,
+    "whereDeclared": "Dockerfile, frontend build stage: `FROM node:14.18.2-alpine3.14 AS frontend` followed by `RUN yarn` and `RUN yarn build`",
+    "otherDeclarations": {
+      "enginesField": null,
+      "packageManagerField": null,
+      "nvmrc": null,
+      "toolVersions": null,
+      "ciNodeMatrix": "none — the three GitHub workflows (build-and-push-dev-image, build-and-push-release-image, codeql) never install Node directly; the image workflows delegate to the Dockerfile."
+    },
+    "declaredPackageManager": "yarn (invoked bare in the Dockerfile), corroborated by the committed web/yarn.lock in yarn v1 format",
+    "declaredBuildCommand": "yarn build, which web/package.json expands to `tsc && vite build`"
+  },
+  "cellUsed": {
+    "node": "16.20.2",
+    "platform": "darwin-arm64 (native; no Rosetta 2)",
+    "npm": "8.19.4 (bundled; used only to fetch yarn into the cell)",
+    "packageManager": "yarn 1.22.19",
+    "packageManagerProvenance": "yarn 1 is not present on the host. yarn@1.22.19 was installed with npm into the baseline cell only (.versionless/cache/react-memos-v0-1-3-baseline/pm), never globally and never into the repository. 1.22.19 is the last yarn 1 release and is era-appropriate for a mid-2022 yarn v1 lockfile.",
+    "runtimeProvenance": {
+      "url": "https://nodejs.org/dist/v16.20.2/node-v16.20.2-darwin-arm64.tar.gz",
+      "sha256": "6a5c4108475871362d742b988566f3fe307f6a67ce14634eb3fbceb4f9eea88c",
+      "digestVerifiedAgainstOfficialShasums": true,
+      "reusedFrom": "an already-acquired and digest-verified runtime in this workspace's cache (first pinned by fixtures/react-boilerplate-v4/fixture.json); no new runtime download was made by this unit"
+    }
+  },
+  "cellDeviationFromDeclared": {
+    "deviated": true,
+    "declared": "Node 14.18.2 on alpine 3.14 (linux/musl)",
+    "used": "Node 16.20.2 on darwin-arm64 (glibc-free BSD host, native arm64)",
+    "justification": "Node 14 has no darwin-arm64 build at all — official darwin-arm64 binaries begin at Node 16. Honouring 14.18.2 on this host would require either Rosetta 2 translation of a darwin-x64 Node 14 (which would then also force the x64 esbuild binary, changing the bundler's execution mode) or a linux/alpine container, neither of which is in this unit's scope. Node 16.20.2 is the oldest natively-runnable Node on this host and sits inside the era policy for the Vite 2.9 line (Node 14/16). It is labelled a deviation, not a pin.",
+    "honestLabel": "era-consistent, not repository-pinned: the repository pins Node 14.18.2 and this baseline ran on Node 16.20.2.",
+    "unknownPreserved": "Whether the outcomes below reproduce under the repository's declared Node 14.18.2 alpine cell was NOT tested and is not claimed either way. The observed failure is a TypeScript typecheck over lockfile-pinned .d.ts files, which is not obviously Node-version-sensitive, but that reasoning is an inference and is recorded as such rather than as a finding."
+  },
+  "install": {
+    "command": "yarn install --frozen-lockfile --ignore-scripts --non-interactive",
+    "commandNotes": {
+      "frozenLockfile": "yarn ACCEPTED --frozen-lockfile, which proves web/yarn.lock is consistent with web/package.json and that nothing was re-resolved against today's registry. The installed tree is the closure the repository itself pins.",
+      "ignoreScripts": "Lifecycle scripts were disabled by policy. yarn reported `warning Ignored scripts due to flag.`"
+    },
+    "outcome": "succeeded",
+    "exitStatus": 0,
+    "wallClockSeconds": 4,
+    "installedPackageDirectories": 331,
+    "nestedPackageDirectories": 26,
+    "lockedEntries": 347,
+    "warnings": [
+      "package.json: No license field",
+      "memos@0.1.3: No license field",
+      "Ignored scripts due to flag."
+    ],
+    "detail": "closure.json"
+  },
+  "buildAttemptA": {
+    "label": "the declared build, run exactly as the repository declares it",
+    "command": "yarn build",
+    "expands": "tsc && vite build",
+    "outcome": "failed",
+    "exitStatus": 2,
+    "wallClockSeconds": 2,
+    "failedIn": "tsc — the typecheck gate, before the bundler ran at all",
+    "buildArtifactProduced": false,
+    "distDirectoryAfterAttempt": "absent",
+    "errors": [
+      "node_modules/@types/react-dom/node_modules/@types/react/index.d.ts(3123,14): error TS2300: Duplicate identifier 'LibraryManagedAttributes'.",
+      "node_modules/@types/react-dom/node_modules/@types/react/index.d.ts(3162,13): error TS2717: Subsequent property declarations must have the same type. Property 'dialog' must be of type 'DetailedHTMLProps<DialogHTMLAttributes<HTMLDialogElement>, HTMLDialogElement>', but here has type 'DetailedHTMLProps<DialogHTMLAttributes<HTMLDialogElement>, HTMLDialogElement>'.",
+      "node_modules/@types/react-dom/node_modules/@types/react/index.d.ts(3194,13): error TS2717: Subsequent property declarations must have the same type. Property 'link' must be of type 'DetailedHTMLProps<LinkHTMLAttributes<HTMLLinkElement>, HTMLLinkElement>', but here has type 'DetailedHTMLProps<LinkHTMLAttributes<HTMLLinkElement>, HTMLLinkElement>'.",
+      "node_modules/@types/react/index.d.ts(3127,14): error TS2300: Duplicate identifier 'LibraryManagedAttributes'."
+    ],
+    "errorsUnderSrc": 0,
+    "diagnosis": {
+      "cause": "web/yarn.lock pins two different copies of @types/react: 18.0.9 at the top level (from the direct devDependency range ^18.0.9) and 18.0.5 nested under @types/react-dom@18.0.4 (whose own dependency range is `@types/react \"*\"`, resolved in the lockfile to 18.0.5). web/tsconfig.json sets \"skipLibCheck\": false, so tsc checks both copies of react's declaration file and reports them as conflicting global JSX declarations.",
+      "notDrift": "This is NOT present-day registry drift. Both versions come from the repository's own committed lockfile, and yarn accepted --frozen-lockfile. The condition is a property of the pinned revision.",
+      "typescriptVersion": "4.6.3, also pinned by the lockfile"
+    }
+  },
+  "buildAttemptB": {
+    "label": "ONE honestly-labeled deviation — NOT the declared build command, and NOT a baseline result",
+    "why": "To determine whether the failure is confined to the typecheck gate or also affects the Vite 2 bundler, which is the property that matters for an old-Vite-to-Vite-8 migration fixture.",
+    "deviations": [
+      "esbuild 0.14.36's install.js was run manually, because --ignore-scripts had suppressed it during the baseline install. The binary came from the lockfile-pinned optional dependency esbuild-darwin-arm64@0.14.36, so this was a local link rather than a download.",
+      "`vite build` was invoked directly, skipping the `tsc &&` half of the declared command."
+    ],
+    "command": "node node_modules/vite/bin/vite.js build",
+    "outcome": "succeeded",
+    "exitStatus": 0,
+    "wallClockSeconds": 2,
+    "vite": "2.9.5",
+    "modulesTransformed": 898,
+    "buildArtifactProduced": true,
+    "emitted": {
+      "dist/index.html": "0.54 KiB",
+      "dist/assets/index.1a33c512.css": "100.70 KiB (gzip 10.96 KiB)",
+      "dist/assets/index.7cb90e06.js": "263.69 KiB (gzip 82.38 KiB)",
+      "staticAssetsCopied": 17,
+      "totalFilesInDist": 20
+    },
+    "warnings": [
+      "Browserslist: caniuse-lite is outdated. (An advisory from the 2022-pinned caniuse-lite in the closure; it did not affect the exit status.)"
+    ],
+    "whatThisEstablishes": "The Vite 2.9.5 bundler transforms and bundles this application's source without error in this cell.",
+    "whatThisDoesNotEstablish": "It does not make the declared `yarn build` succeed, it does not typecheck the application, and it does not establish that the emitted bundle runs correctly in a browser. Nothing here was loaded in a browser."
+  },
+  "network": {
+    "hostsContacted": ["registry.npmjs.org", "registry.yarnpkg.com"],
+    "purpose": "package-manager fetching for the yarn bootstrap and the pinned closure only",
+    "urlByUrlLedger": false,
+    "urlByUrlLedgerNote": "Per-package fetches were performed by npm and yarn themselves and are recorded here in aggregate, not URL-by-URL in the source ledger. Every resolved URL in the closure points at registry.yarnpkg.com and carries an integrity hash; see closure.json.",
+    "afterBaseline": "closed"
+  },
+  "cache": {
+    "root": "<workspace>/.versionless/cache/react-memos-v0-1-3-baseline",
+    "app": "<workspace>/.versionless/cache/react-memos-v0-1-3-baseline/app",
+    "logs": "<workspace>/.versionless/cache/react-memos-v0-1-3-baseline/logs",
+    "gitIgnored": true,
+    "note": "The baseline cell is a copy of web/ from the reconciled source. The reconciled source tree itself was never modified. Neither the installed tree nor the emitted dist is published into the repository."
+  },
+  "nonclaims": [
+    "A successful install establishes no build. A successful bundler run under a labelled deviation establishes no successful build of the declared command.",
+    "No browser was driven, no journey was exercised, and the Go backend was neither built nor run, so nothing here establishes that this application works.",
+    "This record establishes no migration feasibility, pilot status, production readiness, certification, or legal approval."
+  ]
+}

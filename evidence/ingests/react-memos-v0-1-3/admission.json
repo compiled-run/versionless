@@ -1,0 +1,267 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-admission.v1",
+  "unit": "lrapr-t006/u3-ingest-memos",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "networkMode": "consented",
+  "slug": "react-memos-v0-1-3",
+  "boardTask": "T006",
+  "trancheRole": "OLD-VITE React candidate. The migration story this corpus is built for is old-Vite to Vite 8, so an application whose ORIGIN bundler is Vite 2 is the required shape here, not a create-react-app or webpack candidate.",
+  "priorScout": {
+    "existed": true,
+    "unit": "lrapr-t006/u2",
+    "date": "2026-08-11",
+    "role": "read-only; supplied the target repository, tag, expected commit sha, and a set of claims about the tree",
+    "reverificationPolicy": "Every gate below was re-verified by this unit from the wire and from the reconciled archive at the pinned revision. The scout's findings were used as a hypothesis, not as evidence.",
+    "expectedCommitShaConfirmed": true,
+    "scoutClaimsCorrected": [
+      {
+        "claim": "tag v0.1.3",
+        "found": "v0.1.3 is a LIGHTWEIGHT tag (ref object type `commit`), not an annotated one. The scout did not state a kind; this unit records the kind it observed.",
+        "materiality": "low for identity (the commit sha is what is pinned), material for provenance language: there is no tagger, no tag message, and nothing to sign."
+      },
+      {
+        "claim": "140 files under web/src",
+        "found": "120 files under web/src (149 blobs under web/ in total, 205 blobs in the whole repository).",
+        "materiality": "none for the gate — the gate asks for a real substantive application, not a file count — but the scout's number is not reproduced and the observed number is what is recorded."
+      },
+      {
+        "claim": "no .gitattributes, therefore no LFS",
+        "found": "confirmed there is no .gitattributes at any depth, and additionally every one of the 205 extracted files was byte-scanned for a git-lfs pointer header. Zero found. LFS absence is established by scanning, not inferred."
+      }
+    ],
+    "scoutClaimsConfirmed": [
+      "MIT LICENSE at repository root, blob 8b929a44e478b8969ee51e4d5ccb580b9372e939, 1062 bytes, 'Copyright (c) 2022 Memos'",
+      "React app under web/: vite ^2.9.0, @vitejs/plugin-react ^1.0.0, react ^18.1.0, typescript ^4.3.2, tailwindcss ^3.0.18, less ^4.1.1",
+      "build script is `tsc && vite build`",
+      "no engines field, no packageManager field in web/package.json",
+      "web/yarn.lock is a yarn v1 lockfile of exactly 111922 bytes",
+      "a Go backend lives at the repository root and the frontend talks to it over same-origin /api/*",
+      "pinned revision date 2022-07-01"
+    ]
+  },
+  "admitted": {
+    "repository": "usememos/memos",
+    "product": "Memos — an open-source, self-hosted personal knowledge base / lightweight note ('memo') application backed by a SQLite file",
+    "ref": "refs/tags/v0.1.3",
+    "tagKind": "lightweight",
+    "commitSha": "565fe0cc567c02deb59fc04830df707ea7476d52",
+    "commitDate": "2022-07-01T12:35:36Z",
+    "frontendRoot": "web",
+    "decision": "admitted"
+  },
+  "gates": [
+    {
+      "gate": "mit-license-file-text-bytes-at-the-pinned-revision",
+      "result": "pass",
+      "evidence": {
+        "rootLicensePath": "LICENSE",
+        "gitBlobSha": "8b929a44e478b8969ee51e4d5ccb580b9372e939",
+        "fileSha256": "bdf5e33fc4ed37895b342b11d05b4cdf0f1177e225fd5a19e2ce31e3fed07afb",
+        "bytes": 1062,
+        "headerLine": "MIT License",
+        "copyrightLine": "Copyright (c) 2022 Memos",
+        "manifestLicenseField": null,
+        "manifestLicenseFieldNote": "web/package.json declares no license field; yarn warned 'No license field' during install and run. The grant rests on the root LICENSE alone.",
+        "otherLicenceLikeFilesInTree": 0,
+        "monorepoScoping": "The licence is repository-root scoped and the ingest is web/-subtree scoped. There is no separate licence under web/. The ordinary reading — root MIT covers the whole repository including web/ — is recorded explicitly in license.json rather than left implicit.",
+        "quotedFromArchive": "The licence text was read out of the extracted archive, which reconciles blob-for-blob with the git tree at the pinned revision.",
+        "detail": "license.json"
+      }
+    },
+    {
+      "gate": "real-substantive-application-not-template-demo-or-library",
+      "result": "pass",
+      "evidence": {
+        "repositoryShape": "A Go/React monorepo: a Go HTTP server (echo) with a SQLite store at the repository root, and a Vite 2 React SPA under web/. The two are joined at runtime by same-origin /api/* calls; in development the Vite dev server proxies /api and /h/ to http://localhost:8080.",
+        "blobsInTree": 205,
+        "blobsUnderWeb": 149,
+        "filesUnderWebSrc": 120,
+        "webApplicationBytes": 333250,
+        "tsxComponents": 39,
+        "tsModules": 30,
+        "typeDeclarationFiles": 11,
+        "lessStylesheets": 38,
+        "pages": ["Home.tsx", "Signin.tsx"],
+        "stateLayer": "@reduxjs/toolkit 1.8 store with five slices (editor, location, memo, shortcut, user) plus a hand-written service layer under src/services (editorStateService, locationService, memoService, resourceService, shortcutService, userService)",
+        "domainSurface": [
+          "memo compose / edit / pin / archive / delete",
+          "tag extraction and tag filtering",
+          "saved shortcuts (named filter queries)",
+          "resource (image) upload and preview",
+          "daily review",
+          "share-memo-as-image (a hand-rolled html2image lab under src/labs)",
+          "account, preferences, and member administration"
+        ],
+        "goBackendFiles": 35,
+        "goBackendBytes": 144547,
+        "publishedAsLibrary": false,
+        "isStarterTemplate": false,
+        "hasTests": false,
+        "hasTestsNote": "There is no test file anywhere under web/src and no test script in web/package.json. This is recorded as found; it is a real application without a front-end test suite, not a scaffold.",
+        "notes": "The application is the product itself: a released v0.1.3 of a self-hosted product with a Docker image, a live demo, and a Go backend. It carries a hand-rolled markdown renderer (helpers/marked.ts), a filter DSL (helpers/filter.ts with TAG/TYPE/TEXT filter types and AND/OR relations), a usage heat map, and a dialog framework of its own (components/Dialog.tsx)."
+      }
+    },
+    {
+      "gate": "genuine-vite-2-era-origin-bundler",
+      "result": "pass",
+      "evidence": {
+        "declaredVite": "^2.9.0",
+        "resolvedViteFromCommittedLockfile": "2.9.5",
+        "declaredPluginReact": "@vitejs/plugin-react ^1.0.0",
+        "resolvedPluginReact": "1.3.1",
+        "resolvedEsbuild": "0.14.36",
+        "viteConfigPath": "web/vite.config.ts",
+        "viteConfigShape": "defineConfig with plugins: [react()] and a dev-server proxy for /api and /h/ to http://localhost:8080",
+        "buildScript": "tsc && vite build",
+        "devScript": "vite",
+        "entry": "web/index.html with <script type=\"module\" src=\"/src/main.tsx\">, the Vite 2 index-html-as-entry shape",
+        "noWebpack": "no webpack, no react-scripts, no rollup config, and no babel config anywhere in the tree",
+        "originBundlerConfirmed": "Vite 2.9.5, resolved from the repository's own committed lockfile rather than from a fresh resolution. This is a genuine old-Vite origin, which is the shape T006 requires.",
+        "buildProvenObservable": "The Vite 2.9.5 bundler was run in this unit and produced a bundle — see baseline-attempt.json. Vite 2 is not merely declared here; it was exercised."
+      }
+    },
+    {
+      "gate": "pinned-revision-era-coherent",
+      "result": "pass",
+      "evidence": {
+        "ref": "refs/tags/v0.1.3",
+        "tagKind": "lightweight",
+        "commitSha": "565fe0cc567c02deb59fc04830df707ea7476d52",
+        "commitDate": "2022-07-01T12:35:36Z",
+        "commitMessage": "fix: compare migration_history",
+        "evaluatedOn": "2026-08-11",
+        "ageYearsApproximate": 4.1,
+        "eraCoherence": "Every era marker agrees on mid-2022: vite 2.9.5 (April 2022), react 18.1.0 (April 2022), typescript 4.6.3 (March 2022), tailwindcss 3.0.x, @reduxjs/toolkit 1.8, axios 0.27.2, esbuild 0.14.36. The lockfile's resolutions are all era-contemporary with the commit date, because the lockfile is committed and was not re-resolved.",
+        "upstreamRepositoryArchived": false,
+        "upstreamStillActive": "The upstream repository is not archived and has moved far past this revision. Only the pinned commit sha is immutable; the lightweight tag is a movable pointer upstream.",
+        "unknownPreserved": "A lightweight tag has no tagger and no signature, so signer authenticity is recorded as unestablished, not resolved. The commit is also unsigned."
+      }
+    },
+    {
+      "gate": "browser-ui-plausibly-supporting-three-or-more-substantive-user-journeys",
+      "result": "pass",
+      "evidence": {
+        "routerLibrary": "none — the application ships a hand-rolled router (src/routers/index.ts, ~20 lines) with exactly two entries: \"/signin\" and \"*\" (Home). react-router is not a dependency.",
+        "topLevelRoutes": ["/signin", "* (Home)"],
+        "journeyShapeCaveat": "Because there are only two routes, this application's journeys are NOT route-driven. They are dialog- and state-driven inside a single Home page. Any later witness work must drive them through UI state, not through URL navigation. This is recorded as the material fact about this fixture's journey surface.",
+        "requiredMinimum": 3,
+        "observed": 6,
+        "candidateJourneys": [
+          {
+            "journey": "compose and save a memo",
+            "surface": "MemoEditor on Home",
+            "code": "src/components/MemoEditor.tsx, src/components/Editor/Editor.tsx, src/services/memoService.ts createMemo, src/store/modules/memo.ts",
+            "api": "POST /api/memo",
+            "plausibility": "declared-and-code-backed"
+          },
+          {
+            "journey": "search text and filter by tag",
+            "surface": "SearchBar + TagList in the sidebar, MemoFilter above the list",
+            "code": "src/components/SearchBar.tsx, src/components/TagList.tsx, src/components/MemoFilter.tsx, src/helpers/filter.ts (TAG/TYPE/TEXT filter types, CONTAIN / NOT_CONTAIN operators, AND/OR relations)",
+            "api": "GET /api/tag; filtering itself is client-side over the loaded memo list",
+            "plausibility": "declared-and-code-backed"
+          },
+          {
+            "journey": "archive a memo and restore it from the trash",
+            "surface": "Memo card menu -> archive; MemoTrashDialog -> restore",
+            "code": "src/components/Memo.tsx (patch rowStatus: \"ARCHIVED\"), src/components/DeletedMemo.tsx (patch rowStatus: \"NORMAL\"), src/components/MemoTrashDialog.tsx",
+            "api": "PATCH /api/memo/{id}; GET /api/memo?rowStatus=ARCHIVED",
+            "plausibility": "declared-and-code-backed"
+          },
+          {
+            "journey": "open settings and change account / preferences / members",
+            "surface": "SettingDialog with three sections: my-account, preferences, and (admin only) member",
+            "code": "src/components/SettingDialog.tsx, src/components/Settings/MyAccountSection.tsx, src/components/Settings/PreferencesSection.tsx, src/components/Settings/MemberSection.tsx, src/components/ChangePasswordDialog.tsx",
+            "api": "PATCH /api/user/me, GET /api/user, POST /api/user",
+            "plausibility": "declared-and-code-backed",
+            "note": "The 'settings toggle' named in the packet is, at this revision, an export/import pair of buttons plus account and member administration; there is no theme or feature toggle in PreferencesSection. Recorded as found."
+          },
+          {
+            "journey": "create and apply a saved shortcut (a named filter query)",
+            "surface": "ShortcutList in the sidebar, CreateShortcutDialog",
+            "code": "src/components/ShortcutList.tsx, src/components/CreateShortcutDialog.tsx, src/services/shortcutService.ts, src/store/modules/shortcut.ts",
+            "api": "GET/POST/PATCH/DELETE /api/shortcut",
+            "plausibility": "declared-and-code-backed"
+          },
+          {
+            "journey": "sign in / sign up and sign out",
+            "surface": "the /signin page, the only real route",
+            "code": "src/pages/Signin.tsx, src/services/userService.ts, src/store/modules/user.ts",
+            "api": "POST /api/auth/login, POST /api/auth/signup, POST /api/auth/logout, GET /api/user/me, GET /api/status",
+            "plausibility": "declared-and-code-backed"
+          }
+        ],
+        "backendDependencyForJourneys": "Every journey above requires the Go backend. Home.tsx calls userService.doSignIn() on mount and redirects to /signin unless a session is established, and axios is configured with withCredentials = true against same-origin /api. Nothing renders past the loading state without a backend.",
+        "unknownPreserved": "These journeys are read from the components, the service layer, and the API helper. No browser was driven in this unit, so none of them is established as actually exercisable."
+      }
+    },
+    {
+      "gate": "zero-git-lfs-pointers-in-the-tree",
+      "result": "pass",
+      "evidence": {
+        "gitattributesFilesInTree": 0,
+        "filesScanned": 205,
+        "lfsPointerHeadersFound": 0,
+        "method": "Every extracted regular file was checked for the `version https://git-lfs.github.com/spec/` pointer header, independently of whether any .gitattributes declares an LFS filter.",
+        "why": "The factoriolab lesson: a tree can carry LFS pointers whose declaration is not visible in the ingest's own scope. Absence is scanned for, not assumed.",
+        "detail": "reconciliation.json"
+      }
+    }
+  ],
+  "recordedRisks": [
+    {
+      "risk": "the declared build command fails at its typecheck gate, using only the repository's own pinned closure",
+      "finding": "`yarn build` expands to `tsc && vite build`. The `tsc` half exits 2 with four errors, all inside node_modules and none under src: TS2300 duplicate identifier 'LibraryManagedAttributes' and two TS2717 subsequent-property-declaration errors, arising because web/yarn.lock pins TWO copies of @types/react — 18.0.9 at the top level (from the direct ^18.0.9 range) and 18.0.5 nested under @types/react-dom (from its `@types/react \"*\"` dependency) — while web/tsconfig.json sets \"skipLibCheck\": false.",
+      "consequence": "This is NOT registry drift. yarn accepted --frozen-lockfile, so the failing tree is exactly the one the repository's committed lockfile declares. The declared build command did not succeed at this revision in this cell.",
+      "state": "recorded; observed directly, see baseline-attempt.json"
+    },
+    {
+      "risk": "the bundler half of the build is unaffected by the typecheck failure",
+      "finding": "In one honestly-labeled deviation, esbuild's suppressed postinstall was run to bootstrap its platform binary and `vite build` was then run alone. It exited 0, transformed 898 modules, and emitted dist/index.html, a 263.69 KiB JS chunk, a 100.70 KiB CSS chunk, and 17 static icon/logo assets.",
+      "consequence": "The Vite 2 bundler works on this source. The failure is confined to the tsc gate. That is a favourable property for an old-Vite-to-Vite-8 migration fixture and it is recorded as an observation, not as a build success for the declared command.",
+      "state": "recorded"
+    },
+    {
+      "risk": "the frontend cannot run without the Go backend",
+      "finding": "The web/ application has no client-side persistence and no mock layer. axios.defaults.withCredentials = true and every data call is same-origin /api/*. Home.tsx redirects to /signin unless userService.doSignIn() establishes a session. The dev server proxies /api and /h/ to http://localhost:8080.",
+      "consequence": "The web/ cell builds and bundles standalone, but no user journey is exercisable without a running Go backend and a SQLite store. Any later witness or browser unit must either stand up the Go backend (Go toolchain, out of this ingest's scope) or stub the /api surface.",
+      "state": "recorded; this is the dominant obstacle to browser-level work on this fixture"
+    },
+    {
+      "risk": "esbuild's platform binary depends on a lifecycle script",
+      "finding": "The baseline install ran with --ignore-scripts, which suppressed esbuild 0.14.36's install.js. The binary is shipped in the era-correct optional dependency esbuild-darwin-arm64@0.14.36, which the lockfile pins, so the deviation's bootstrap was a local link rather than a download.",
+      "consequence": "Any later unit that installs this fixture with lifecycle scripts disabled must bootstrap esbuild before the bundler will run.",
+      "state": "recorded"
+    },
+    {
+      "risk": "web/package.json declares no license field",
+      "finding": "yarn warned 'No license field' on both install and run. The MIT grant is carried only by the repository-root LICENSE.",
+      "consequence": "Nothing inside web/ corroborates the licence. Any artifact derived from the web/ subtree must carry the root MIT notice explicitly.",
+      "state": "recorded"
+    },
+    {
+      "risk": "no front-end tests exist",
+      "finding": "There is no test file under web/src and no test script in web/package.json.",
+      "consequence": "There is no upstream behavioural oracle for this fixture. Any migration evidence must come from a Versionless-built oracle, not from the repository's own suite.",
+      "state": "recorded"
+    },
+    {
+      "risk": "the repository's declared Node cell was not reproduced",
+      "finding": "The repository DOES declare a build cell, in the Dockerfile's frontend stage: `FROM node:14.18.2-alpine3.14`, then `RUN yarn` and `RUN yarn build`. The scout's 'no engines, no packageManager' is correct as far as package.json goes, but it is not the whole story — the Dockerfile is the declaration. This unit ran on Node 16.20.2 darwin-arm64 instead, because Node 14 has no darwin-arm64 build at all and honouring 14.18.2 here would require Rosetta 2 (which would also switch esbuild to its x64 binary) or a linux container.",
+      "consequence": "Every baseline outcome in this ingest is labelled era-consistent rather than repository-pinned. Whether the tsc failure also occurs under Node 14.18.2 alpine is not tested and not claimed.",
+      "state": "recorded; deviation labelled in baseline-attempt.json"
+    },
+    {
+      "risk": "the upstream tag is lightweight and the repository is still active",
+      "finding": "refs/tags/v0.1.3 points directly at the commit with no tag object. The repository is not archived and its main line has moved far past this revision.",
+      "consequence": "The tag is a movable pointer upstream; only the commit sha 565fe0cc567c02deb59fc04830df707ea7476d52 and the archive digest recorded here are immutable.",
+      "state": "recorded"
+    }
+  ],
+  "nonclaims": [
+    "Admission fixes an identity and records gate findings. It establishes no browser behavior, journey exercisability, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "The journey list is read from the components and the service layer; no journey was driven in a browser by this unit.",
+    "The Go backend was neither built nor run. Its presence and its /api surface are recorded from the source only.",
+    "No adapter, transform, or migration lane is declared for this fixture by the unit that ingested it."
+  ]
+}

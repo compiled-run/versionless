@@ -1,0 +1,137 @@
+{
+  "schemaVersion": "versionless.official-source.v1",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "unit": "lrapr-t006/u3-ingest-memos",
+  "slug": "react-memos-v0-1-3",
+  "result": "source-bound",
+  "startedAt": "2026-08-11T14:28:52Z",
+  "completedAt": "2026-08-11T14:29:44Z",
+  "timestampNote": "Per-request wall-clock timestamps are recorded in probe-ledger.ndjson and transcript.ndjson; the values above bound the acquisition window only.",
+  "repository": {
+    "id": 436297812,
+    "fullName": "usememos/memos",
+    "private": false,
+    "archived": false,
+    "disabled": false,
+    "defaultBranch": "main",
+    "responseBytes": 6221,
+    "responseSha256": "e2f9dd03206ecaf80b96fd783d1792091cd79ed4fb3499a4f328a095a171de7d",
+    "githubDetectedLicense": { "key": "mit", "spdxId": "MIT" },
+    "monorepo": true,
+    "monorepoNote": "The repository is a Go/React monorepo. The ingested cell is the React application under web/. The Go backend at the repository root is recorded as present and is out of the ingest's build scope."
+  },
+  "revision": {
+    "ref": "refs/tags/v0.1.3",
+    "tagKind": "lightweight",
+    "tagObjectSha": null,
+    "tagKindNote": "The prior scout described this as tag v0.1.3 without stating its kind. From the wire the ref object type is `commit`, so v0.1.3 is a LIGHTWEIGHT tag: it is a direct pointer to the commit with no tag object, no tagger, and no message of its own. This is recorded as found and corrects nothing the scout asserted.",
+    "tagVerification": "not-applicable-no-tag-object",
+    "commitSha": "565fe0cc567c02deb59fc04830df707ea7476d52",
+    "commitDate": "2022-07-01T12:35:36Z",
+    "commitAuthorDate": "2022-07-01T12:35:36Z",
+    "commitMessage": "fix: compare migration_history",
+    "commitVerification": "unsigned",
+    "commitParents": ["5a1ea00943ebbfd4df5fbaa41e50cafe8d78f5c2"],
+    "rootTreeSha": "882e4b122f585e2f09ed1a9db332b0d5e865110a",
+    "treeEntries": 244,
+    "treeBlobs": 205,
+    "treeDirectories": 39,
+    "treeSymlinks": 0,
+    "treeGitlinks": 0,
+    "treeExecutableBlobs": 0,
+    "treeTruncated": false,
+    "expectedCommitShaFromPriorScout": "565fe0cc567c02deb59fc04830df707ea7476d52",
+    "expectedCommitShaConfirmedFromWire": true
+  },
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/usememos/memos",
+      "status": 200,
+      "bytes": 6221,
+      "sha256": "e2f9dd03206ecaf80b96fd783d1792091cd79ed4fb3499a4f328a095a171de7d"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/usememos/memos/git/ref/tags/v0.1.3",
+      "status": 200,
+      "bytes": 329,
+      "sha256": "6202c7bd5d722ca7ba8383e3cdaa575e2f6096dabb54b0dc4ec024756b278fbd"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/usememos/memos/git/commits/565fe0cc567c02deb59fc04830df707ea7476d52",
+      "status": 200,
+      "bytes": 1093,
+      "sha256": "e6870fc059f4ca93e967249aa14a786e2e826ae69e982b1b5fffd87e6c977bc1"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/usememos/memos/git/trees/882e4b122f585e2f09ed1a9db332b0d5e865110a?recursive=1",
+      "status": 200,
+      "bytes": 55919,
+      "sha256": "8f1b93c44a4b9165f92b9daa760060df247d4c516d620e7f2964f0e26fb12e03"
+    },
+    {
+      "endpoint": "https://codeload.github.com/usememos/memos/tar.gz/565fe0cc567c02deb59fc04830df707ea7476d52",
+      "status": 200,
+      "bytes": 1022178,
+      "sha256": "184834df7e2ea0272d21b4b0bfd7366986bc0aded740442aac91ca58d270f391",
+      "stream": 1
+    },
+    {
+      "endpoint": "https://codeload.github.com/usememos/memos/tar.gz/565fe0cc567c02deb59fc04830df707ea7476d52",
+      "status": 200,
+      "bytes": 1022178,
+      "sha256": "184834df7e2ea0272d21b4b0bfd7366986bc0aded740442aac91ca58d270f391",
+      "stream": 2
+    }
+  ],
+  "requestsNotMade": [
+    "https://api.github.com/repos/usememos/memos/git/tags/<sha> was NOT requested, because the ref object type is `commit`: there is no tag object to dereference. The allowlist entry for it went unused."
+  ],
+  "archiveParity": {
+    "singleRoot": "memos-565fe0cc567c02deb59fc04830df707ea7476d52",
+    "safeEntries": 244,
+    "regularFiles": 205,
+    "directories": 39,
+    "specialEntries": 0,
+    "gitBlobs": 205,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "normalizedManifestSha256": "b445f63d1ac8dce789292d7ef8294bec4870a14a176fb1f993afd2e671321d63",
+    "method": "Blob-level: every regular file in the extracted archive was hashed as a git blob object and compared byte-for-byte against the sha recorded for the same path in the recursive git tree. Detail in reconciliation.json.",
+    "pathTraversalEntries": 0,
+    "absolutePathEntries": 0,
+    "gitLfsPointerFiles": 0,
+    "gitLfsNote": "The tree carries no .gitattributes at any depth, so no LFS filter is declared. Every one of the 205 extracted files was nevertheless scanned for the `version https://git-lfs.github.com/spec/` pointer header and none was found. LFS absence is established by scanning the bytes, not inferred from the absence of .gitattributes."
+  },
+  "transaction": {
+    "attemptedRequests": 6,
+    "acceptedResponses": 6,
+    "acceptedWireBytes": 2107818,
+    "acceptedDecodedBytes": 2107818,
+    "redirectsObserved": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "credentialsSent": 0,
+    "archivesByteIdentical": true,
+    "archiveMatchesGitTree": true,
+    "publishedSource": true,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "cache": {
+    "root": "<workspace>/.versionless/cache/react-memos-v0-1-3-source",
+    "archive1": "<workspace>/.versionless/cache/react-memos-v0-1-3-source/archive/archive-1.tar.gz",
+    "archive2": "<workspace>/.versionless/cache/react-memos-v0-1-3-source/archive/archive-2.tar.gz",
+    "verifiedSource": "<workspace>/.versionless/cache/react-memos-v0-1-3-source/verify/extracted/memos-565fe0cc567c02deb59fc04830df707ea7476d52",
+    "gitIgnored": true,
+    "rawMetadataPortable": false
+  },
+  "networkClosed": {
+    "afterAcquisition": true,
+    "note": "After the archive fetch, the only further network use in this unit was the package manager's own fetching during the single baseline install, recorded in aggregate in baseline-attempt.json. No further URL was requested by this unit's drivers."
+  },
+  "nonclaims": [
+    "A lightweight tag carries no tagger, no message, and no signature, so it establishes no signer authenticity and no release ceremony; it is a movable pointer upstream and only the commit sha is immutable. The commit itself is unsigned.",
+    "No dependency closure, build, browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval is established by this record."
+  ]
+}
