@@ -40,6 +40,7 @@ function fixture(): WitnessRealAppReceipt {
 						'react',
 						'angular',
 						'angular',
+						'next',
 					] as const
 				)[appIndex]!,
 				lane,

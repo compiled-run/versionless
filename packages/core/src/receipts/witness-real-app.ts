@@ -10,6 +10,15 @@ export const WITNESS_REAL_APP_NAMES = [
 	'react-hospitalrun',
 	'angular-factoriolab',
 	'angular-jira-clone',
+	/**
+	 * The LEGACY-NEXT static-export vertical, named by its pinned version rather
+	 * than by its repository. The corpus already carries `killedbygoogle` for the
+	 * retired derived-state-to-memo cell, and that name stays exactly where it
+	 * is: this is a different migration of a different revision against different
+	 * lanes, and giving it its own versioned name is what keeps the two proofs
+	 * from being read as one.
+	 */
+	'next-killedbygoogle-v3-0-0',
 ] as const;
 /** Every named app must contribute two lanes observed twice each. */
 export const WITNESS_REAL_APP_RUNS = WITNESS_REAL_APP_NAMES.length * 4;

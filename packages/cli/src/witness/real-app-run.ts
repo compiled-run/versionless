@@ -70,6 +70,27 @@ import {
 	WITNESS_REACT_HOSPITALRUN_CONSOLE_ERRORS,
 	WITNESS_REACT_HOSPITALRUN_FAILED_REQUESTS,
 } from '../../../core/src/receipts/witness-react-hospitalrun.ts';
+import {
+	NEXT_KILLEDBYGOOGLE_V3_APP,
+	WITNESS_NEXT_KILLEDBYGOOGLE_V3_ALL_FILTER,
+	WITNESS_NEXT_KILLEDBYGOOGLE_V3_AD_LIST_ITEMS,
+	WITNESS_NEXT_KILLEDBYGOOGLE_V3_CLICK_FILTER,
+	WITNESS_NEXT_KILLEDBYGOOGLE_V3_CLICK_FILTER_RECORDS,
+	WITNESS_NEXT_KILLEDBYGOOGLE_V3_COMPOUND_RECORDS,
+	WITNESS_NEXT_KILLEDBYGOOGLE_V3_COMPOUND_TERM,
+	WITNESS_NEXT_KILLEDBYGOOGLE_V3_CONSOLE_ERRORS,
+	WITNESS_NEXT_KILLEDBYGOOGLE_V3_FAILED_REQUESTS,
+	WITNESS_NEXT_KILLEDBYGOOGLE_V3_KEYBOARD_FILTER,
+	WITNESS_NEXT_KILLEDBYGOOGLE_V3_KEYBOARD_FILTER_RECORDS,
+	WITNESS_NEXT_KILLEDBYGOOGLE_V3_LIST_ITEMS,
+	WITNESS_NEXT_KILLEDBYGOOGLE_V3_MOCKED_SEAMS,
+	WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECORDS,
+	WITNESS_NEXT_KILLEDBYGOOGLE_V3_SEARCH_RECORDS,
+	WITNESS_NEXT_KILLEDBYGOOGLE_V3_SEARCH_TERM,
+	WITNESS_NEXT_KILLEDBYGOOGLE_V3_VIEWPORT,
+	type WitnessNextKilledbygoogleV3Counts,
+	type WitnessNextKilledbygoogleV3GraveyardEvidence,
+} from '../../../core/src/receipts/witness-next-killedbygoogle-v3.ts';
 import { transformNext12DerivedStateToMemo } from '../../../frameworks/nextjs/src/index.ts';
 import { witnessNodeFileSystem } from './node-filesystem.ts';
 import {
@@ -126,7 +147,8 @@ type App =
 	| 'papercups'
 	| 'react-hospitalrun'
 	| 'angular-factoriolab'
-	| 'angular-jira-clone';
+	| 'angular-jira-clone'
+	| 'next-killedbygoogle-v3-0-0';
 type Lane = 'baseline' | 'migrated';
 type JourneyEvidence = {
 	assertions: string[];
@@ -197,6 +219,14 @@ type JourneyEvidence = {
 };
 type JourneyTransportEvidence = { apiUsernames: string[] };
 type JourneyLifecycle = {
+	/**
+	 * The lane this journey is running against. A journey should almost never
+	 * need it — a claim that differs by lane is usually a claim that is not
+	 * about the application — but a lane pair whose measured difference is the
+	 * point has to be able to assert both halves of it exactly rather than
+	 * relax the assertion until both fit.
+	 */
+	lane: Lane;
 	serviceWorkerTelemetry(timeoutMs: number): Promise<ServiceWorkerTelemetry>;
 	staticRequests(): string[];
 	expectedServiceWorker: {
@@ -1698,6 +1728,125 @@ export async function angularJiraCloneTransport(
 		: { action: 'fulfill', status: 204, contentType: 'text/plain', body: Buffer.alloc(0) };
 }
 
+/* -------------------------------------------------------------------------- */
+/* killedbygoogle: the LEGACY-NEXT static-export vertical                       */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * The graveyard list, scoped by the only structural fact that distinguishes it
+ * from the press-coverage list further down the page: its rows carry record
+ * titles. Scoping by a bare `ul` would silently count the footer's logos.
+ */
+const KBG_LIST = 'ul:has(h2)' as const;
+const KBG_LIST_ITEM = `${KBG_LIST} > li` as const;
+const KBG_RECORD = `${KBG_LIST} > li h2` as const;
+const KBG_AD_SLOT = `${KBG_LIST} > li:nth-of-type(1)` as const;
+const KBG_AD_SLOT_LABEL = `${KBG_AD_SLOT} > span` as const;
+const KBG_FIRST_RECORD_TITLE = `${KBG_LIST} > li:nth-of-type(2) h2` as const;
+const KBG_SEARCH_BOX = '#searchBox' as const;
+const KBG_FILTER = '#listFilter' as const;
+const KBG_FILTER_INPUT = '#react-select-filter-select-input' as const;
+const KBG_CLICK_FILTER_OPTION = '#react-select-filter-select-option-3' as const;
+const KBG_HEADER_TITLE = 'header h1' as const;
+const KBG_TITLE = 'Killed by Google' as const;
+const KBG_WHEEL_DELTA_Y = 900 as const;
+/**
+ * The navigations each lane records after its initial document load, asserted
+ * exactly and separately because the two lanes genuinely differ here.
+ *
+ * The journey navigates nowhere: this application has one authored route and no
+ * router, and every gesture in the journey is an in-place state change. Both
+ * lanes therefore record the journey's own document reload. The era lane records
+ * one more — the framework's client router installs its own history entry for
+ * the same URL when it hydrates — and after the lift there is no router to do
+ * that. The URL is identical in both cases and nothing about the rendered page
+ * differs, so the difference is recorded and asserted rather than smoothed over
+ * by a looser assertion that would fit either lane.
+ */
+const KBG_JOURNEY_NAVIGATIONS: Record<Lane, number> = { baseline: 2, migrated: 1 };
+
+/**
+ * The mutation seam: a string the journey asserts by its rendered text, which is
+ * what makes overwriting it in the migrated bundle turn the journey red on that
+ * exact assertion rather than on something incidental.
+ */
+export const KBG_MUTATION_SEAM = 'Advertisement' as const;
+
+/**
+ * The grouped-text probe that reads the settled list off the live page: every
+ * row that carries a record title is a group, named by that title, whose item is
+ * the rendered description. It is the oracle for the one question this vertical
+ * exists to answer — whether the document the era lane pre-rendered and the
+ * document the migrated lane mounts settle to the same list.
+ */
+const KBG_LIST_PROBE: WitnessGroupedTextProbe = {
+	group: `${KBG_LIST} > li:has(h2)`,
+	name: 'h2',
+	item: 'p',
+};
+
+/**
+ * The rendered-appearance probes. They are spread across the page on purpose:
+ * the document body and the header answer whether Emotion's global and
+ * component styles resolved at all, the list container answers whether its grid
+ * did, the advertising slot and a record row answer whether the styles the
+ * migration's dropped Babel plugin used to label still resolve to the same
+ * values, and the search box answers it for a form control.
+ */
+const KBG_STYLE_PROBES: readonly WitnessRenderedStyleProbe[] = Object.freeze([
+	Object.freeze({
+		label: 'document-body',
+		selector: 'body',
+		properties: Object.freeze(['background-color', 'color', 'font-family', 'margin']),
+	}),
+	Object.freeze({
+		label: 'header-title',
+		selector: KBG_HEADER_TITLE,
+		properties: Object.freeze(['font-size', 'font-weight', 'margin', 'color']),
+	}),
+	Object.freeze({
+		label: 'list-container',
+		selector: KBG_LIST,
+		properties: Object.freeze([
+			'display',
+			'grid-template-columns',
+			'gap',
+			'list-style-type',
+			'padding',
+		]),
+	}),
+	Object.freeze({
+		label: 'advertising-list-item',
+		selector: KBG_AD_SLOT,
+		properties: Object.freeze([
+			'display',
+			'align-items',
+			'justify-content',
+			'border-bottom-width',
+		]),
+	}),
+	Object.freeze({
+		label: 'first-record-list-item',
+		selector: `${KBG_LIST} > li:nth-of-type(2)`,
+		properties: Object.freeze(['display', 'flex', 'margin', 'box-sizing']),
+	}),
+	Object.freeze({
+		label: 'first-record-title',
+		selector: KBG_FIRST_RECORD_TITLE,
+		properties: Object.freeze(['font-weight', 'margin', 'font-size']),
+	}),
+	Object.freeze({
+		label: 'search-box',
+		selector: KBG_SEARCH_BOX,
+		properties: Object.freeze([
+			'border-bottom-color',
+			'font-size',
+			'font-weight',
+			'background-color',
+		]),
+	}),
+]);
+
 const apps: AppSpec[] = [
 	{
 		app: 'react-boilerplate',
@@ -2882,6 +3031,300 @@ const apps: AppSpec[] = [
 			};
 		},
 	},
+	{
+		app: NEXT_KILLEDBYGOOGLE_V3_APP,
+		framework: 'next',
+		canonicalReceipt: 'evidence/runs/next-killedbygoogle-v3-0-0/t006-build-lanes.json',
+		canonicalDigest: '7e311d8c8c5e5ac3e68008d113c5be403b40de07ee113556f078b6bfcd658a02',
+		sources: {
+			baseline: '.versionless/cache/next-killedbygoogle-v3-0-0-baseline/app/out-run1',
+			migrated: '.versionless/work/next-killedbygoogle-v3-0-0/target/dist-vite-run1',
+		},
+		viewport: WITNESS_NEXT_KILLEDBYGOOGLE_V3_VIEWPORT,
+		consoleErrorInventory: WITNESS_NEXT_KILLEDBYGOOGLE_V3_CONSOLE_ERRORS,
+		failedRequestInventory: WITNESS_NEXT_KILLEDBYGOOGLE_V3_FAILED_REQUESTS,
+		mockedNonLoopbackSeams: WITNESS_NEXT_KILLEDBYGOOGLE_V3_MOCKED_SEAMS,
+		renderedStyleProbes: KBG_STYLE_PROBES,
+		journey: async (context, page, _transportEvidence, lifecycle) => {
+			if (lifecycle.expectedServiceWorker !== null)
+				throw new Error('killedbygoogle journey received a service-worker expectation');
+			const checkpoints = [
+				await zeroServiceWorkerCheckpoint(lifecycle, 'before-interactions'),
+			];
+			/**
+			 * Every count this application settles to, asserted twice against the
+			 * live page: once for the graveyard records, and once for the list
+			 * items those records sit among. The second number is the first plus
+			 * the advertising slot, which is a list item and not a record — the
+			 * application's own arithmetic, asserted rather than assumed.
+			 */
+			const settled = async (
+				records: number,
+			): Promise<WitnessNextKilledbygoogleV3Counts> => {
+				const listItems = records + WITNESS_NEXT_KILLEDBYGOOGLE_V3_AD_LIST_ITEMS;
+				await context.expect.page.count(page, KBG_RECORD, records);
+				await context.expect.page.count(page, KBG_LIST_ITEM, listItems);
+				return { records, listItems };
+			};
+			const clearSearch = async (): Promise<void> => {
+				await page.press(KBG_SEARCH_BOX, 'a', {
+					modifiers: process.platform === 'darwin' ? ['Meta'] : ['Control'],
+				});
+				await page.press(KBG_SEARCH_BOX, 'Backspace');
+			};
+			const chooseFilter = async (label: string): Promise<void> => {
+				await page.click(KBG_FILTER_INPUT);
+				await page.type(KBG_FILTER_INPUT, label.slice(0, label.indexOf(' ')), {
+					redact: false,
+				});
+				await page.press(KBG_FILTER_INPUT, 'Enter');
+				await context.expect.page.bodyText(page, { contains: label });
+			};
+			/**
+			 * The search box's current value, read off the live control. The group
+			 * is named by the control's placeholder rather than by its value,
+			 * because the value this reads is expected to be empty and a probe
+			 * cannot name a group with nothing.
+			 */
+			const searchBoxValue = async (): Promise<string> => {
+				const read = await lifecycle.groupedText({
+					group: 'label[for="searchBox"]',
+					name: KBG_SEARCH_BOX,
+					nameAttribute: 'placeholder',
+					item: KBG_SEARCH_BOX,
+				});
+				const value = read[0]?.items[0];
+				if (read.length !== 1 || value === undefined)
+					throw new Error('killedbygoogle search box was not readable');
+				return value;
+			};
+			await page.trackEvents('click', 'input', 'change', 'keydown', 'mouseover');
+
+			// (a) The settled list. This is the whole point of the vertical: the
+			// era lane's document arrives with all of these rows already in it and
+			// the migrated lane's arrives with a mount element, and what is
+			// compared is what the two of them settle to.
+			await context.expect.page.text(page, KBG_HEADER_TITLE, KBG_TITLE);
+			const beforeSearch = await settled(WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECORDS);
+			const rendered = await lifecycle.groupedText(KBG_LIST_PROBE);
+			const firstRendered = rendered[0];
+			const lastRendered = rendered.at(-1);
+			if (
+				rendered.length !== WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECORDS ||
+				firstRendered === undefined ||
+				lastRendered === undefined ||
+				rendered.some((row) => row.name.length === 0 || (row.items[0] ?? '').length === 0)
+			)
+				throw new Error(
+					`killedbygoogle rendered list is not the settled record set: ${rendered.length}`,
+				);
+			const renderedStyles = await lifecycle.renderedStyles();
+
+			// (b) The advertising slot, measured rather than argued about. It is a
+			// list item of the same list and carries no record title, which is why
+			// every count above and below is published twice.
+			await context.expect.page.count(page, `${KBG_AD_SLOT} h2`, 0);
+			await context.expect.page.text(page, KBG_AD_SLOT_LABEL, KBG_MUTATION_SEAM);
+			await page.hover(KBG_FIRST_RECORD_TITLE);
+
+			// (c) Search narrowing on a typed term, and a full clear that widens it
+			// back. One Backspace would widen nothing, so the clear is select-all
+			// and then Backspace.
+			await page.type(KBG_SEARCH_BOX, WITNESS_NEXT_KILLEDBYGOOGLE_V3_SEARCH_TERM, {
+				redact: false,
+			});
+			await context.expect.page.bodyText(page, {
+				contains: WITNESS_NEXT_KILLEDBYGOOGLE_V3_SEARCH_TERM,
+			});
+			const narrowed = await settled(WITNESS_NEXT_KILLEDBYGOOGLE_V3_SEARCH_RECORDS);
+			await clearSearch();
+			const afterClear = await settled(WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECORDS);
+
+			// (d) The type filter, reached both ways a person reaches it: typed and
+			// committed with Enter, then by opening the menu and clicking an option.
+			await chooseFilter(WITNESS_NEXT_KILLEDBYGOOGLE_V3_KEYBOARD_FILTER);
+			const keyboardFiltered = await settled(
+				WITNESS_NEXT_KILLEDBYGOOGLE_V3_KEYBOARD_FILTER_RECORDS,
+			);
+			await page.click(KBG_FILTER_INPUT);
+			await context.expect.page.text(
+				page,
+				KBG_CLICK_FILTER_OPTION,
+				WITNESS_NEXT_KILLEDBYGOOGLE_V3_CLICK_FILTER,
+			);
+			await page.click(KBG_CLICK_FILTER_OPTION);
+			await context.expect.page.bodyText(page, {
+				contains: WITNESS_NEXT_KILLEDBYGOOGLE_V3_CLICK_FILTER,
+			});
+			const clickFiltered = await settled(
+				WITNESS_NEXT_KILLEDBYGOOGLE_V3_CLICK_FILTER_RECORDS,
+			);
+
+			// (e) The two narrowings composed, then undone completely.
+			await page.type(KBG_SEARCH_BOX, WITNESS_NEXT_KILLEDBYGOOGLE_V3_COMPOUND_TERM, {
+				redact: false,
+			});
+			const compound = await settled(WITNESS_NEXT_KILLEDBYGOOGLE_V3_COMPOUND_RECORDS);
+			await clearSearch();
+			await chooseFilter(WITNESS_NEXT_KILLEDBYGOOGLE_V3_ALL_FILTER);
+			const afterFullClear = await settled(WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECORDS);
+
+			// (f) The document genuinely overflows the stated viewport with the
+			// whole list restored, so the scroll is a real wheel gesture on a
+			// measured surface rather than a claim.
+			const beforeScroll = await lifecycle.viewportScroll();
+			if (
+				beforeScroll.clientHeight !== WITNESS_NEXT_KILLEDBYGOOGLE_V3_VIEWPORT.height ||
+				beforeScroll.scrollHeight <= beforeScroll.clientHeight ||
+				beforeScroll.scrollY !== 0
+			)
+				throw new Error(
+					`killedbygoogle graveyard is not a scrollable surface: ${canonicalize(beforeScroll)}`,
+				);
+			await page.scroll(null, { y: KBG_WHEEL_DELTA_Y });
+			const afterScroll = await lifecycle.viewportScroll();
+			if (
+				afterScroll.scrollY <= beforeScroll.scrollY ||
+				afterScroll.scrollHeight !== beforeScroll.scrollHeight
+			)
+				throw new Error(
+					`killedbygoogle graveyard did not scroll: ${canonicalize(afterScroll)}`,
+				);
+			const scrollSurface: WitnessScrollSurface = {
+				state: 'measured-genuine-viewport-scroll',
+				route: '/',
+				viewport: { ...WITNESS_NEXT_KILLEDBYGOOGLE_V3_VIEWPORT },
+				scrollHeight: beforeScroll.scrollHeight,
+				clientHeight: beforeScroll.clientHeight,
+				wheelDeltaY: KBG_WHEEL_DELTA_Y,
+				scrolledFromTop: true,
+				scrolled: true,
+			};
+			await context.expect.page.outcome(page, {
+				events: {
+					click: { atLeast: 4 },
+					input: { atLeast: 4 },
+					keydown: { atLeast: 4 },
+					mouseover: { atLeast: 1 },
+				},
+			});
+			checkpoints.push(await zeroServiceWorkerCheckpoint(lifecycle, 'after-interactions'));
+
+			// (g) A real document reload. Nothing the journey did survives it: the
+			// application keeps its search term and its filter in React state,
+			// writes no browser storage and talks to no backend.
+			await page.reload();
+			await context.expect.page.text(page, KBG_HEADER_TITLE, KBG_TITLE);
+			const afterReload = await settled(WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECORDS);
+			await context.expect.page.bodyText(page, {
+				contains: WITNESS_NEXT_KILLEDBYGOOGLE_V3_ALL_FILTER,
+			});
+			const restoredSearch = await searchBoxValue();
+			if (restoredSearch !== '')
+				throw new Error('killedbygoogle search box survived an online reload');
+			const storage = await lifecycle.browserStorageKeys();
+			if (storage.localStorage.length !== 0 || storage.sessionStorage.length !== 0)
+				throw new Error(
+					`killedbygoogle wrote browser storage the receipt says it does not: ${canonicalize(storage)}`,
+				);
+			checkpoints.push(
+				await zeroServiceWorkerCheckpoint(lifecycle, 'after-online-reload'),
+			);
+			await clean(
+				context,
+				page,
+				KBG_JOURNEY_NAVIGATIONS[lifecycle.lane],
+				lifecycle.expectedConsoleErrors,
+				lifecycle.expectedFailedRequests,
+			);
+			const applicationJourney: WitnessNextKilledbygoogleV3GraveyardEvidence = {
+				renderedList: {
+					state: 'measured-settled-list-dom',
+					records: WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECORDS,
+					listItems: WITNESS_NEXT_KILLEDBYGOOGLE_V3_LIST_ITEMS,
+					adListItems: WITNESS_NEXT_KILLEDBYGOOGLE_V3_AD_LIST_ITEMS,
+					contentScheme: 'sha256(canonicalize([{name,items}] in document order))',
+					contentSha256: sha256(canonicalize(rendered)),
+					firstRecord: {
+						name: firstRendered.name,
+						description: firstRendered.items[0] ?? '',
+					},
+					lastRecord: {
+						name: lastRendered.name,
+						description: lastRendered.items[0] ?? '',
+					},
+				},
+				search: {
+					state: 'measured-narrow-and-widen',
+					term: WITNESS_NEXT_KILLEDBYGOOGLE_V3_SEARCH_TERM,
+					gesture: 'typed-into-the-search-box',
+					beforeSearch,
+					narrowed,
+					wideningGesture: 'select-all-then-backspace',
+					afterClear,
+				},
+				typeFilter: {
+					state: 'measured-select-narrowing',
+					control: 'react-select-filter-select',
+					keyboard: {
+						gesture: 'typed-then-enter',
+						option: WITNESS_NEXT_KILLEDBYGOOGLE_V3_KEYBOARD_FILTER,
+						counts: keyboardFiltered,
+					},
+					click: {
+						gesture: 'menu-opened-and-option-clicked',
+						optionId: KBG_CLICK_FILTER_OPTION,
+						option: WITNESS_NEXT_KILLEDBYGOOGLE_V3_CLICK_FILTER,
+						counts: clickFiltered,
+					},
+				},
+				compound: {
+					state: 'measured-compound-narrowing',
+					filter: WITNESS_NEXT_KILLEDBYGOOGLE_V3_CLICK_FILTER,
+					term: WITNESS_NEXT_KILLEDBYGOOGLE_V3_COMPOUND_TERM,
+					counts: compound,
+					afterFullClear,
+					fullClearGesture: 'search-cleared-then-filter-returned-to-all',
+				},
+				adSlot: {
+					state: 'measured-non-data-list-item',
+					selector: KBG_AD_SLOT,
+					recordTitles: 0,
+					countedInListItems: true,
+					countedInRecords: false,
+				},
+				reloadRestore: {
+					state: 'measured-initial-state-restored',
+					counts: afterReload,
+					searchValue: '',
+					filterLabel: WITNESS_NEXT_KILLEDBYGOOGLE_V3_ALL_FILTER,
+					localStorageKeys: storage.localStorage as [],
+					sessionStorageKeys: storage.sessionStorage as [],
+					backend: 'none',
+					survivesOnlineReload: false,
+				},
+			};
+			return {
+				assertions: [
+					'the settled graveyard list, identical in a pre-rendered document and a client-mounted one',
+					'the advertising slot, labelled for screen readers, counted as a list item and never as a record',
+					'search narrowed by a typed term and widened back by a full clear',
+					'type filter selected from the keyboard and again by clicking its menu option',
+					'search and type filter composed, then undone completely',
+					'genuine wheel scroll on a measured overflowing document',
+					'record title reached by a genuine hover',
+					'online reload restores the initial list, an empty search box and the unfiltered selection',
+					'no service worker registered, controlling, cached or requested in either lane',
+					'clean page',
+				],
+				offlineEvidence: { state: 'not-applicable' },
+				zeroServiceWorker: { checkpoints },
+				renderedStyles,
+				applicationJourney,
+				scrollSurface,
+			};
+		},
+	},
 ];
 
 async function exists(file: string): Promise<boolean> {
@@ -3172,6 +3615,7 @@ async function executeRun(
 	const definition = box(`${app.app}-${lane}-${pass}`, async (context) => {
 		const page = await context.browser.visit(productionUrl);
 		journeyEvidence = await app.journey(context, page, transportEvidence, {
+			lane,
 			serviceWorkerTelemetry: host.serviceWorkerTelemetry,
 			staticRequests: staticServer.requests,
 			expectedServiceWorker,
@@ -3629,6 +4073,36 @@ export async function executeAngularJiraCloneWitnessRun(options: {
 	});
 }
 
+/**
+ * The killedbygoogle v3 Witness specification, reachable so its declared
+ * inventories, probes and lane bindings can be checked against the receipt
+ * schema that enforces them without launching a browser.
+ */
+export function nextKilledbygoogleV3WitnessSpec(): AppSpec {
+	const app = apps.find((candidate) => candidate.app === NEXT_KILLEDBYGOOGLE_V3_APP);
+	if (app === undefined) throw new Error('KilledByGoogle v3 Witness specification is absent');
+	return app;
+}
+
+/**
+ * Neither lane ships a service worker and the application never calls
+ * `register()`, so the run is executed under the zero-worker policy: the browser
+ * context still allows registration, and the journey is required to observe
+ * nothing registered, controlling, cached or requested at each of its three
+ * checkpoints.
+ */
+export async function executeNextKilledbygoogleV3WitnessRun(options: {
+	lane: Lane;
+	pass: 1 | 2;
+	laneRoot: string;
+	receiptRoot: string;
+}): Promise<WitnessRealAppRun> {
+	return await executeRun(nextKilledbygoogleV3WitnessSpec(), options.lane, options.pass, {
+		...options,
+		serviceWorkerPolicy: 'zero',
+	});
+}
+
 async function zeroServiceWorkerCheckpoint(
 	lifecycle: JourneyLifecycle,
 	phase: 'before-interactions' | 'after-interactions' | 'after-online-reload',
@@ -3870,6 +4344,7 @@ async function runReactBaselineDifferentialProfile(
 		const page = await context.browser.visit(productionUrl);
 		if (profile === 'current-witness') {
 			const journey = await app.journey(context, page, transportEvidence, {
+				lane: 'baseline',
 				serviceWorkerTelemetry: host.serviceWorkerTelemetry,
 				staticRequests: staticServer.requests,
 				expectedServiceWorker,
