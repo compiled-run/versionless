@@ -125,6 +125,36 @@ export type WitnessRenderedStyle = {
 	properties: Record<string, string>;
 };
 
+/**
+ * One grouped-text reading to take from the live page: the containers that make
+ * up the groups, what names each group, and which elements inside a group are
+ * its items.
+ *
+ * This is the reading counterpart of {@link WitnessRenderedStyleProbe}, and it
+ * exists for the same reason. An application whose state lives in a store
+ * renders that state as ordered lists — a kanban board, a grouped table, a
+ * navigation tree — and the only way to record what the store settled to is to
+ * read what the browser laid out. Assertions still go through `expect.page.*`;
+ * this produces the evidence those assertions are about.
+ */
+export type WitnessGroupedTextProbe = {
+	/** Selector matching every group container, read in document order. */
+	group: string;
+	/** Selector, resolved inside a group, for the element that names it. */
+	name: string;
+	/**
+	 * When set, the group's name is this attribute of the name element rather
+	 * than its text — for a container whose visible label is interleaved with
+	 * other text, the attribute is the stable identity.
+	 */
+	nameAttribute?: string;
+	/** Selector, resolved inside a group, matching its items in document order. */
+	item: string;
+};
+
+/** One group as the page rendered it: its name, and its items in order. */
+export type WitnessGroupedText = { name: string; items: string[] };
+
 export type PlaywrightWitnessHost = {
 	browser: WitnessBrowser;
 	locality(): { successfulNonLoopback: 0; mockedNonLoopback: number };
@@ -141,6 +171,18 @@ export type PlaywrightWitnessHost = {
 	 * from the bytes that were shipped.
 	 */
 	renderedStyles(probes: readonly WitnessRenderedStyleProbe[]): Promise<WitnessRenderedStyle[]>;
+	/**
+	 * Reads the ordered item text of every group the probe matches, so a claim
+	 * about what an application's own store settled to is recorded from the
+	 * rendered page rather than inferred from the gesture that provoked it.
+	 */
+	groupedText(probe: WitnessGroupedTextProbe): Promise<WitnessGroupedText[]>;
+	/**
+	 * The keys the page's own origin holds in browser storage, sorted. A claim
+	 * that an application persists nothing has to be measured against the
+	 * storage it would have written to, not asserted from its source.
+	 */
+	browserStorageKeys(): Promise<{ localStorage: string[]; sessionStorage: string[] }>;
 	/** Every request outcome the page reported, in observation order. */
 	requestOutcomes(): WitnessObservedRequestOutcome[];
 };
@@ -767,6 +809,76 @@ export function createPlaywrightWitnessHost(options: {
 					properties: [...probe.properties],
 				})),
 			);
+		},
+		groupedText: async (probe) => {
+			if (livePages.size !== 1)
+				throw new Error('Witness grouped-text measurement requires exactly one live page');
+			const [page] = livePages;
+			if (page === undefined)
+				throw new Error('Witness grouped-text measurement requires exactly one live page');
+			return await page.evaluate(
+				(requested: {
+					group: string;
+					name: string;
+					nameAttribute: string | null;
+					item: string;
+				}) => {
+					/**
+					 * What the element renders to a reader. For a form control that
+					 * is its current value rather than its markup text: a text box
+					 * the application has written into shows the value, and its
+					 * `textContent` is whatever the template shipped.
+					 */
+					const rendered = (element: Element): string => {
+						if (
+							element instanceof HTMLInputElement ||
+							element instanceof HTMLTextAreaElement ||
+							element instanceof HTMLSelectElement
+						)
+							return element.value.trim();
+						return (element.textContent ?? '').trim();
+					};
+					const groups = [...document.querySelectorAll(requested.group)];
+					if (groups.length === 0)
+						throw new Error(`grouped-text probe matched no group: ${requested.group}`);
+					return groups.map((group) => {
+						const named = group.querySelector(requested.name);
+						if (named === null)
+							throw new Error(
+								`grouped-text probe matched no name element: ${requested.name}`,
+							);
+						const name =
+							requested.nameAttribute === null
+								? rendered(named)
+								: (named.getAttribute(requested.nameAttribute) ?? '');
+						if (name.length === 0)
+							throw new Error(
+								`grouped-text probe read an empty group name: ${requested.name}`,
+							);
+						return {
+							name,
+							items: [...group.querySelectorAll(requested.item)].map(rendered),
+						};
+					});
+				},
+				{
+					group: probe.group,
+					name: probe.name,
+					nameAttribute: probe.nameAttribute ?? null,
+					item: probe.item,
+				},
+			);
+		},
+		browserStorageKeys: async () => {
+			if (livePages.size !== 1)
+				throw new Error('Witness browser-storage measurement requires exactly one live page');
+			const [page] = livePages;
+			if (page === undefined)
+				throw new Error('Witness browser-storage measurement requires exactly one live page');
+			return await page.evaluate(() => ({
+				localStorage: Object.keys(globalThis.localStorage).sort(),
+				sessionStorage: Object.keys(globalThis.sessionStorage).sort(),
+			}));
 		},
 		serviceWorkerObserverFinalization: () => {
 			const finalization = observer?.readback() ?? null;

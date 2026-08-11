@@ -56,6 +56,17 @@ import {
 	WITNESS_ANGULAR_FACTORIOLAB_FAILED_REQUESTS,
 } from '../../../core/src/receipts/witness-angular-factoriolab.ts';
 import {
+	WITNESS_ANGULAR_JIRA_CLONE_CANCELLED_DUPLICATE_FETCHES,
+	WITNESS_ANGULAR_JIRA_CLONE_CONSOLE_ERRORS,
+	WITNESS_ANGULAR_JIRA_CLONE_FAILED_REQUESTS,
+	WITNESS_ANGULAR_JIRA_CLONE_FILTER_NARROWED,
+	WITNESS_ANGULAR_JIRA_CLONE_FILTER_TERM,
+	WITNESS_ANGULAR_JIRA_CLONE_MOCKED_SEAMS,
+	WITNESS_ANGULAR_JIRA_CLONE_TOOLTIP,
+	type WitnessAngularJiraCloneBoardEvidence,
+	type WitnessAngularJiraCloneColumn,
+} from '../../../core/src/receipts/witness-angular-jira-clone.ts';
+import {
 	WITNESS_REACT_HOSPITALRUN_CONSOLE_ERRORS,
 	WITNESS_REACT_HOSPITALRUN_FAILED_REQUESTS,
 } from '../../../core/src/receipts/witness-react-hospitalrun.ts';
@@ -74,6 +85,8 @@ import {
 	type PlaywrightWitnessHost,
 	type ServiceWorkerTelemetry,
 	type WitnessDifferentialEvent,
+	type WitnessGroupedText,
+	type WitnessGroupedTextProbe,
 	type WitnessObservedRequestOutcome,
 	type WitnessRenderedStyle,
 	type WitnessRenderedStyleProbe,
@@ -226,8 +239,16 @@ type JourneyLifecycle = {
 	 * styling claim can never rest on nothing having been measured.
 	 */
 	renderedStyles(): Promise<WitnessRenderedStyle[]>;
+	/**
+	 * Reads the ordered item text of every group the probe matches off the live
+	 * page, for a journey whose claim is about what the application's own store
+	 * settled to rather than about the gesture that provoked it.
+	 */
+	groupedText(probe: WitnessGroupedTextProbe): Promise<WitnessGroupedText[]>;
+	/** The keys this origin holds in browser storage, for a persistence claim. */
+	browserStorageKeys(): Promise<{ localStorage: string[]; sessionStorage: string[] }>;
 };
-type AppSpec = {
+export type AppSpec = {
 	app: App;
 	framework: WitnessRealAppRun['framework'];
 	canonicalReceipt: string;
@@ -1503,6 +1524,180 @@ const FACTORIOLAB_TYPED_RATE_DIGIT = '0' as const;
  */
 const FACTORIOLAB_JOURNEY_NAVIGATIONS = 7;
 
+/**
+ * jira-clone journey inputs.
+ *
+ * Every selector below is the application's own: the board columns are the
+ * drop lists Angular CDK gives its own status ids, the cards are the
+ * application's `issue-card` elements, and the modal surfaces are the
+ * components the application renders into the overlay. Nothing here is a test
+ * hook the application does not otherwise have.
+ */
+const JIRA_CLONE_VIEWPORT = { width: 1280, height: 720 } as const;
+const JIRA_CLONE_ROUTE = '/project/board' as const;
+const JIRA_CLONE_COLUMN = '.board-dnd-list' as const;
+const JIRA_CLONE_BACKLOG = '#Backlog' as const;
+const JIRA_CLONE_SELECTED = '#Selected' as const;
+/** The four drop-list ids, which are also the names the board evidence records. */
+const JIRA_CLONE_BACKLOG_COLUMN = 'Backlog' as const;
+const JIRA_CLONE_SELECTED_COLUMN = 'Selected' as const;
+const JIRA_CLONE_BACKLOG_CARDS = `${JIRA_CLONE_BACKLOG} issue-card` as const;
+const JIRA_CLONE_SELECTED_CARDS = `${JIRA_CLONE_SELECTED} issue-card` as const;
+const JIRA_CLONE_FIRST_BACKLOG_CARD = `${JIRA_CLONE_BACKLOG_CARDS}:nth-of-type(1)` as const;
+const JIRA_CLONE_FIRST_SELECTED_CARD = `${JIRA_CLONE_SELECTED_CARDS}:nth-of-type(1)` as const;
+const JIRA_CLONE_FIRST_SELECTED_TITLE = `${JIRA_CLONE_FIRST_SELECTED_CARD} p` as const;
+/**
+ * The board as a whole, read group by group. The group's name is the drop
+ * list's own id rather than its heading, because the heading interleaves the
+ * column's issue count with its display name and the identity of a column has
+ * to survive the count changing under a drag.
+ */
+const JIRA_CLONE_BOARD_PROBE = {
+	group: JIRA_CLONE_COLUMN,
+	name: '.cdk-drop-list',
+	nameAttribute: 'id',
+	item: 'issue-card p',
+} as const satisfies WitnessGroupedTextProbe;
+/** The open issue modal, read the same way: its type line names it, its title box is the item. */
+const JIRA_CLONE_MODAL_PROBE = {
+	group: 'issue-detail',
+	name: 'issue-type j-button button',
+	item: 'issue-title textarea',
+} as const satisfies WitnessGroupedTextProbe;
+const JIRA_CLONE_DRAG_ISSUE = 'Angular Spotify 🎧' as const;
+/**
+ * Interpolated pointer steps for the board drag. Angular CDK begins tracking a
+ * drag only after the pointer has moved past its own threshold, so the gesture
+ * is made of enough real moves to cross it rather than one jump the library
+ * never observes.
+ */
+const JIRA_CLONE_DRAG_STEPS = 10;
+const JIRA_CLONE_MODAL_TYPE = 'issue-detail issue-type j-button button' as const;
+const JIRA_CLONE_MODAL_STATUS = 'issue-detail issue-status j-button button' as const;
+const JIRA_CLONE_MODAL_TITLE = 'issue-detail issue-title textarea' as const;
+const JIRA_CLONE_MODAL_DESCRIPTION = 'issue-detail issue-description .ql-editor' as const;
+const JIRA_CLONE_MODAL_CLOSE = 'issue-detail j-button[icon="times"] button' as const;
+const JIRA_CLONE_ISSUE_TYPE_LINE = 'Story-2021' as const;
+/**
+ * The status the dragged issue reports once its modal is reopened. This is the
+ * settled Akita state rather than the drop animation, and it is also the
+ * mutation seam: the string is shipped in the migrated bundle exactly once, and
+ * overwriting it has to turn this journey red.
+ */
+export const JIRA_CLONE_MUTATION_SEAM = 'Selected for Development' as const;
+/**
+ * A fragment of the seeded description, rendered as read-only rich text. The
+ * journey asserts that it renders and never that it can be edited: the editor
+ * is a Quill surface that refuses synthetic keystrokes, so an edit claim would
+ * record the driver's limitation rather than the application's behavior.
+ */
+const JIRA_CLONE_DESCRIPTION_TEXT = 'I wanted to introduce you my latest application' as const;
+const JIRA_CLONE_DESCRIPTION_NONCLAIM =
+	'The description editor is a Quill surface that does not accept the synthetic keystrokes the driver produces, so editing it is not claimed; the journey asserts only that the seeded description renders.' as const;
+/**
+ * Typed onto the end of the issue title with a real key sequence. It carries no
+ * fragment of the filter term below, so the filter's narrowed shape stays a
+ * fact about the one issue the journey created rather than about this edit.
+ */
+const JIRA_CLONE_TITLE_SUFFIX = ' [edited]' as const;
+/**
+ * The create-issue control is the third navbar item. The second opens a search
+ * drawer whose overlay intercepts every later pointer gesture, which is
+ * recorded here so the next reader does not rediscover it by hanging a journey.
+ */
+const JIRA_CLONE_CREATE_CONTROL = 'aside.navbarLeft .item:nth-of-type(3) .itemIcon' as const;
+const JIRA_CLONE_CREATE_MODAL = 'add-issue-modal' as const;
+const JIRA_CLONE_CREATE_TITLE = 'add-issue-modal input.form-input' as const;
+const JIRA_CLONE_CREATE_SUBMIT =
+	'add-issue-modal .form-action j-button:nth-of-type(1) button' as const;
+const JIRA_CLONE_CREATED_ISSUE = `${WITNESS_ANGULAR_JIRA_CLONE_FILTER_TERM} created issue` as const;
+const JIRA_CLONE_FILTER_INPUT = 'board-filter input.form-input' as const;
+/** The four columns' card selectors, in the order the board lays them out. */
+const JIRA_CLONE_COLUMN_CARDS = [
+	JIRA_CLONE_BACKLOG_CARDS,
+	JIRA_CLONE_SELECTED_CARDS,
+	'#InProgress issue-card',
+	'#Done issue-card',
+] as const;
+const JIRA_CLONE_TOOLTIP = '.ant-tooltip-inner' as const;
+const JIRA_CLONE_AVATAR = `${JIRA_CLONE_BACKLOG_CARDS} j-avatar` as const;
+/**
+ * The seven rendered-appearance probes. The migration replaced the component
+ * library's narrow per-component style entry points with its single aggregate
+ * stylesheet, so the two lanes ship different style bytes on purpose; these
+ * measurements are how the receipt says that difference is invisible, and the
+ * behavior digest requires both lanes to produce them identically.
+ */
+const JIRA_CLONE_STYLE_PROBES = [
+	{
+		label: 'issue-card',
+		selector: `${JIRA_CLONE_BACKLOG_CARDS} .issue`,
+		properties: ['background-color', 'border-radius', 'box-shadow', 'font-size', 'color'],
+	},
+	{
+		label: 'board-column',
+		selector: JIRA_CLONE_COLUMN,
+		properties: ['width', 'margin-right', 'background-color'],
+	},
+	{
+		label: 'column-header',
+		selector: `${JIRA_CLONE_COLUMN} div.uppercase`,
+		properties: ['text-transform', 'font-size', 'color'],
+	},
+	{
+		label: 'filter-input',
+		selector: JIRA_CLONE_FILTER_INPUT,
+		properties: ['height', 'border-radius', 'background-color', 'font-size'],
+	},
+	{ label: 'navbar', selector: 'aside.navbarLeft', properties: ['background-color', 'width'] },
+	{ label: 'sidebar', selector: '.sidebar', properties: ['background-color', 'width'] },
+	{
+		label: 'document-body',
+		selector: 'body',
+		properties: ['font-family', 'background-color', 'overflow-y'],
+	},
+] as const satisfies readonly WitnessRenderedStyleProbe[];
+/**
+ * Every navigation after the initial document load, which is not itself
+ * recorded as one: the redirect the router makes from the root to the board,
+ * the one real document reload, and the redirect the router makes again as the
+ * reloaded application boots. Modal surfaces deliberately contribute none — an
+ * issue modal that started pushing a route of its own would show up here as a
+ * count that no longer matches.
+ */
+const JIRA_CLONE_JOURNEY_NAVIGATIONS = 3;
+/** The board is the only route the journey ever occupies; the labels name the stage. */
+const jiraCloneStage = (stage: string): string => `${JIRA_CLONE_ROUTE} (${stage})`;
+const jiraCloneColumns = (groups: readonly WitnessGroupedText[]): WitnessAngularJiraCloneColumn[] =>
+	groups.map((group) => ({ column: group.name, issues: [...group.items] }));
+const jiraCloneCounts = (columns: readonly WitnessAngularJiraCloneColumn[]): number[] =>
+	columns.map((column) => column.issues.length);
+
+/**
+ * The one non-loopback seam the application posts to is its error-reporting
+ * envelope, and it is answered with the empty JSON document the reporting
+ * client expects so the report completes instead of retrying. Everything else
+ * the application reaches for is a script or an image, answered empty. Nothing
+ * leaves the machine either way, and the account identifiers these endpoints
+ * carry live in the query, which is never recorded.
+ */
+export async function angularJiraCloneTransport(
+	request: WitnessTransportRequest,
+): Promise<WitnessTransportDecision> {
+	const endpoint = `${request.protocol}//${request.host}${request.pathname}`;
+	const reporting = WITNESS_ANGULAR_JIRA_CLONE_MOCKED_SEAMS.migrated.some(
+		(seam) => seam.method === request.method && seam.path === endpoint && seam.method === 'POST',
+	);
+	return reporting
+		? {
+				action: 'fulfill',
+				status: 200,
+				contentType: 'application/json',
+				body: Buffer.from('{}'),
+			}
+		: { action: 'fulfill', status: 204, contentType: 'text/plain', body: Buffer.alloc(0) };
+}
+
 const apps: AppSpec[] = [
 	{
 		app: 'react-boilerplate',
@@ -2367,6 +2562,326 @@ const apps: AppSpec[] = [
 			};
 		},
 	},
+	{
+		app: 'angular-jira-clone',
+		framework: 'angular',
+		canonicalReceipt: 'evidence/runs/angular-jira-clone/mj3c-build-parity.json',
+		canonicalDigest: 'a52921a5e4507688220c6296afdbcb97665484701b3c0097e7f930766de72eb3',
+		sources: {
+			baseline: '.versionless/cache/angular-jira-clone-baseline/rebuild/dist-1',
+			migrated: '.versionless/stage/angular-jira-clone-mj2/dist-a',
+		},
+		viewport: JIRA_CLONE_VIEWPORT,
+		consoleErrorInventory: WITNESS_ANGULAR_JIRA_CLONE_CONSOLE_ERRORS,
+		failedRequestInventory: WITNESS_ANGULAR_JIRA_CLONE_FAILED_REQUESTS,
+		cancelledDuplicateFetches: WITNESS_ANGULAR_JIRA_CLONE_CANCELLED_DUPLICATE_FETCHES,
+		mockedNonLoopbackSeams: WITNESS_ANGULAR_JIRA_CLONE_MOCKED_SEAMS,
+		renderedStyleProbes: JIRA_CLONE_STYLE_PROBES,
+		transport: async (request) => await angularJiraCloneTransport(request),
+		journey: async (context, page, _transportEvidence, lifecycle) => {
+			if (lifecycle.expectedServiceWorker !== null)
+				throw new Error('jira-clone journey received a service-worker expectation');
+			const checkpoints = [
+				await zeroServiceWorkerCheckpoint(lifecycle, 'before-interactions'),
+			];
+			const measuredRoutes: WitnessMeasuredScrollAbsence['routes'] = [];
+			/**
+			 * The generic scroll measurement, taken at every stage of the journey.
+			 * The board pins the document to the viewport and gives its own columns
+			 * the overflow, so this is what licenses the receipt to claim no scroll
+			 * coverage: a stage that started overflowing would fail here rather than
+			 * pass silently unexercised.
+			 */
+			const measure = async (stage: string): Promise<void> => {
+				const extents = await lifecycle.viewportScroll();
+				if (
+					extents.clientHeight !== JIRA_CLONE_VIEWPORT.height ||
+					extents.scrollHeight > extents.clientHeight ||
+					extents.scrollY !== 0
+				)
+					throw new Error(
+						`jira-clone stage overflows the viewport the receipt says it does not: ${stage} ${canonicalize(extents)}`,
+					);
+				measuredRoutes.push({
+					route: jiraCloneStage(stage),
+					scrollHeight: extents.scrollHeight,
+					clientHeight: extents.clientHeight,
+				});
+			};
+			const board = async (): Promise<WitnessAngularJiraCloneColumn[]> =>
+				jiraCloneColumns(await lifecycle.groupedText(JIRA_CLONE_BOARD_PROBE));
+			const issuesIn = (
+				columns: readonly WitnessAngularJiraCloneColumn[],
+				name: string,
+			): string[] => columns.find((column) => column.column === name)?.issues ?? [];
+			const storageIsEmpty = async (stage: string): Promise<string[]> => {
+				const keys = await lifecycle.browserStorageKeys();
+				if (keys.localStorage.length !== 0 || keys.sessionStorage.length !== 0)
+					throw new Error(
+						`jira-clone wrote browser storage the receipt says it does not: ${stage} ${canonicalize(keys)}`,
+					);
+				return keys.localStorage;
+			};
+			// `mouseover` is deliberately not tracked here, and the reason is
+			// measured rather than assumed: this is the one journey in the corpus
+			// with a real pointer drag, and the drag's interpolated moves cross
+			// whatever elements lie on the path, so the count differs run to run
+			// (29 against 30 across the two lanes when it was tracked). Pinning it
+			// would pin pointer geometry. The hover itself loses nothing — it is
+			// recorded as an interaction of its own kind, and the tooltip it
+			// reveals is asserted by its rendered text.
+			await page.trackEvents('click', 'input', 'change', 'keydown');
+
+			// (a) The seeded board, as the application solves it from the project
+			// document it bundles. Appearance is measured here, on the seeded
+			// board, so both lanes and both passes measure the same layout.
+			await context.expect.page.count(page, JIRA_CLONE_COLUMN, JIRA_CLONE_COLUMN_CARDS.length);
+			await context.expect.page.text(
+				page,
+				`${JIRA_CLONE_FIRST_BACKLOG_CARD} p`,
+				JIRA_CLONE_DRAG_ISSUE,
+			);
+			const renderedStyles = await lifecycle.renderedStyles();
+			await measure('seeded board');
+
+			// (b) A genuine hover on a card's assignee avatar, for the tooltip the
+			// application renders into its own overlay.
+			await page.hover(JIRA_CLONE_AVATAR);
+			await context.expect.page.text(
+				page,
+				JIRA_CLONE_TOOLTIP,
+				WITNESS_ANGULAR_JIRA_CLONE_TOOLTIP,
+			);
+
+			// (c) A real pointer drag across the board. What is asserted is not the
+			// gesture but the state it settled: the card leaves one column, lands
+			// first in the other, and both columns' counts move with it.
+			const beforeDrag = await board();
+			const dragIndex = issuesIn(beforeDrag, JIRA_CLONE_BACKLOG_COLUMN).indexOf(
+				JIRA_CLONE_DRAG_ISSUE,
+			);
+			if (dragIndex < 0)
+				throw new Error(`jira-clone seeded board is missing ${JIRA_CLONE_DRAG_ISSUE}`);
+			const backlogRows = issuesIn(beforeDrag, JIRA_CLONE_BACKLOG_COLUMN).length;
+			const selectedRows = issuesIn(beforeDrag, JIRA_CLONE_SELECTED_COLUMN).length;
+			// The drop point is the card currently at the top of the target
+			// column rather than the column box, and the reason is measured
+			// rather than stylistic: the column is taller than the viewport, so
+			// bringing the column box into view before the press scrolls the
+			// board and moves the source card out from under the pointer. A
+			// person dropping a card at the top of a column aims at the card
+			// that is already there, which is what this does.
+			await page.drag(JIRA_CLONE_FIRST_BACKLOG_CARD, JIRA_CLONE_FIRST_SELECTED_CARD, {
+				steps: JIRA_CLONE_DRAG_STEPS,
+			});
+			await context.expect.page.count(page, JIRA_CLONE_BACKLOG_CARDS, backlogRows - 1);
+			await context.expect.page.count(page, JIRA_CLONE_SELECTED_CARDS, selectedRows + 1);
+			await context.expect.page.text(
+				page,
+				JIRA_CLONE_FIRST_SELECTED_TITLE,
+				JIRA_CLONE_DRAG_ISSUE,
+			);
+			const afterDrag = await board();
+			const droppedIndex = issuesIn(afterDrag, JIRA_CLONE_SELECTED_COLUMN).indexOf(
+				JIRA_CLONE_DRAG_ISSUE,
+			);
+			if (droppedIndex < 0)
+				throw new Error('jira-clone drag did not settle the issue into its target column');
+			await measure('after the board drag');
+
+			// (d) The issue modal on the card the drag moved. Its status line is
+			// the settled store rather than the drop animation, and its description
+			// renders as read-only rich text.
+			await page.click(JIRA_CLONE_FIRST_SELECTED_CARD);
+			await context.expect.page.text(page, JIRA_CLONE_MODAL_TYPE, JIRA_CLONE_ISSUE_TYPE_LINE);
+			await context.expect.page.text(page, JIRA_CLONE_MODAL_STATUS, JIRA_CLONE_MUTATION_SEAM);
+			await context.expect.page.exists(page, JIRA_CLONE_MODAL_DESCRIPTION);
+			await context.expect.page.bodyText(page, { contains: JIRA_CLONE_DESCRIPTION_TEXT });
+			const openedTitle = (await lifecycle.groupedText(JIRA_CLONE_MODAL_PROBE))[0]?.items[0];
+			if (openedTitle === undefined || openedTitle.length === 0)
+				throw new Error('jira-clone issue modal rendered no title to edit');
+			const typedTitle = `${openedTitle}${JIRA_CLONE_TITLE_SUFFIX}`;
+
+			// The caret is put at the end of the field with a real key, the suffix
+			// is typed, and the field is blurred with another real key, so the
+			// application sees the keydown / input / change sequence a person makes.
+			await page.press(JIRA_CLONE_MODAL_TITLE, 'End');
+			await page.type(JIRA_CLONE_MODAL_TITLE, JIRA_CLONE_TITLE_SUFFIX, { redact: false });
+			await page.press(JIRA_CLONE_MODAL_TITLE, 'Tab');
+			await context.expect.page.text(page, JIRA_CLONE_FIRST_SELECTED_TITLE, typedTitle);
+			await page.click(JIRA_CLONE_MODAL_CLOSE);
+			await context.expect.page.count(page, JIRA_CLONE_MODAL_PROBE.group, 0);
+			await context.expect.page.text(page, JIRA_CLONE_FIRST_SELECTED_TITLE, typedTitle);
+
+			// Reopening is what makes this evidence about the application's store
+			// rather than about a text box retaining what was typed into it.
+			await page.click(JIRA_CLONE_FIRST_SELECTED_CARD);
+			await context.expect.page.text(page, JIRA_CLONE_MODAL_TYPE, JIRA_CLONE_ISSUE_TYPE_LINE);
+			const reopenedTitle = (await lifecycle.groupedText(JIRA_CLONE_MODAL_PROBE))[0]?.items[0];
+			if (reopenedTitle === undefined)
+				throw new Error('jira-clone reopened issue modal rendered no title');
+			await page.click(JIRA_CLONE_MODAL_CLOSE);
+			await context.expect.page.count(page, JIRA_CLONE_MODAL_PROBE.group, 0);
+			await measure('after the modal title edit');
+
+			// (e) An issue created through the navbar control, typed into the
+			// modal-scoped title field and submitted by the form's own button.
+			const beforeCreate = await board();
+			const createdColumn = issuesIn(beforeCreate, JIRA_CLONE_BACKLOG_COLUMN).length;
+			await page.click(JIRA_CLONE_CREATE_CONTROL);
+			await context.expect.page.exists(page, JIRA_CLONE_CREATE_MODAL);
+			await page.type(JIRA_CLONE_CREATE_TITLE, JIRA_CLONE_CREATED_ISSUE, { redact: false });
+			await page.click(JIRA_CLONE_CREATE_SUBMIT);
+			await context.expect.page.count(page, JIRA_CLONE_CREATE_MODAL, 0);
+			await context.expect.page.count(page, JIRA_CLONE_BACKLOG_CARDS, createdColumn + 1);
+			await context.expect.page.text(
+				page,
+				`${JIRA_CLONE_BACKLOG_CARDS}:nth-of-type(${createdColumn + 1}) p`,
+				JIRA_CLONE_CREATED_ISSUE,
+			);
+			const afterCreate = await board();
+			await measure('after the created issue');
+
+			// (f) The board filter, narrowed by a typed term and widened again by a
+			// full clear. One Backspace widens nothing — the remaining prefix still
+			// matches — so the gesture is select-all and then Backspace.
+			const beforeFilter = jiraCloneCounts(afterCreate);
+			await page.type(
+				JIRA_CLONE_FILTER_INPUT,
+				WITNESS_ANGULAR_JIRA_CLONE_FILTER_TERM,
+				{ redact: false },
+			);
+			for (const [index, selector] of JIRA_CLONE_COLUMN_CARDS.entries())
+				await context.expect.page.count(
+					page,
+					selector,
+					WITNESS_ANGULAR_JIRA_CLONE_FILTER_NARROWED[index]!,
+				);
+			const narrowed = jiraCloneCounts(await board());
+			await page.press(JIRA_CLONE_FILTER_INPUT, 'a', { modifiers: ['Meta'] });
+			await page.press(JIRA_CLONE_FILTER_INPUT, 'Backspace');
+			for (const [index, selector] of JIRA_CLONE_COLUMN_CARDS.entries())
+				await context.expect.page.count(page, selector, beforeFilter[index]!);
+			const afterClear = jiraCloneCounts(await board());
+			await measure('after the filter was cleared');
+			await context.expect.page.outcome(page, {
+				events: {
+					click: { atLeast: 6 },
+					input: { atLeast: 3 },
+					change: { atLeast: 1 },
+					keydown: { atLeast: 4 },
+				},
+			});
+			checkpoints.push(await zeroServiceWorkerCheckpoint(lifecycle, 'after-interactions'));
+			await storageIsEmpty('after interactions');
+
+			// (g) A real document reload. Nothing the journey did survives it: the
+			// board lives in an in-memory store, the application writes no browser
+			// storage and talks to no backend, so what comes back is the seed.
+			await page.reload();
+			await context.expect.page.count(page, JIRA_CLONE_BACKLOG_CARDS, backlogRows);
+			await context.expect.page.text(
+				page,
+				`${JIRA_CLONE_FIRST_BACKLOG_CARD} p`,
+				JIRA_CLONE_DRAG_ISSUE,
+			);
+			await context.expect.page.bodyText(page, {
+				notContains: JIRA_CLONE_CREATED_ISSUE,
+			});
+			const afterReload = await board();
+			const localStorageKeys = await storageIsEmpty('after the online reload');
+			await measure('after the online reload');
+			checkpoints.push(
+				await zeroServiceWorkerCheckpoint(lifecycle, 'after-online-reload'),
+			);
+			await clean(
+				context,
+				page,
+				JIRA_CLONE_JOURNEY_NAVIGATIONS,
+				lifecycle.expectedConsoleErrors,
+				// Still exact. The pinned inventory total is zero, and the second
+				// term is the number of cancelled duplicate fetches this run's
+				// category actually admitted, measured from the page's own ledger.
+				lifecycle.expectedFailedRequests + lifecycle.admittedCancelledDuplicateFetches(),
+			);
+			const applicationJourney: WitnessAngularJiraCloneBoardEvidence = {
+				drag: {
+					state: 'measured-genuine-pointer-drag',
+					surface: 'angular-jira-clone',
+					pointer: 'genuine-pointer-down-move-up',
+					issue: JIRA_CLONE_DRAG_ISSUE,
+					from: { column: JIRA_CLONE_BACKLOG_COLUMN, index: dragIndex },
+					to: { column: JIRA_CLONE_SELECTED_COLUMN, index: droppedIndex },
+					before: beforeDrag,
+					after: afterDrag,
+				},
+				modalTitleEdit: {
+					state: 'measured-modal-round-trip',
+					route: JIRA_CLONE_ROUTE,
+					before: openedTitle,
+					typed: typedTitle,
+					afterReopen: reopenedTitle,
+					descriptionRendering: 'not-claimed',
+					descriptionNonclaimReason: JIRA_CLONE_DESCRIPTION_NONCLAIM,
+				},
+				createIssue: {
+					state: 'measured-created-row',
+					control: 'navbar-item-3',
+					column: JIRA_CLONE_BACKLOG_COLUMN,
+					rowsBefore: createdColumn,
+					rowsAfter: issuesIn(afterCreate, JIRA_CLONE_BACKLOG_COLUMN).length,
+				},
+				filter: {
+					state: 'measured-narrow-and-widen',
+					term: WITNESS_ANGULAR_JIRA_CLONE_FILTER_TERM,
+					beforeFilter,
+					narrowed,
+					wideningGesture: 'select-all-then-backspace',
+					afterClear,
+				},
+				tooltip: {
+					state: 'measured-hover-tooltip',
+					text: WITNESS_ANGULAR_JIRA_CLONE_TOOLTIP,
+				},
+				reloadRestore: {
+					state: 'measured-seed-board-restored',
+					localStorageKeys: localStorageKeys as [],
+					sessionStorageKeys: [],
+					backend: 'none',
+					survivesOnlineReload: false,
+					afterReload,
+				},
+			};
+			return {
+				assertions: [
+					'seeded board solved in the browser from the bundled project document',
+					'assignee tooltip reached by a genuine hover on an issue card avatar',
+					'genuine pointer drag that moves an issue between board columns and settles the store',
+					'issue modal whose status line reports the column the drag moved the issue into',
+					'seeded issue description rendered as read-only rich text',
+					'modal title edit that survives closing and reopening the modal and changes the board card',
+					'issue created through the navbar control and appended to its column',
+					'board filtered to a single matching row and widened back by a full clear',
+					'no route ever left the board, and no modal surface pushed one',
+					'in-memory board restored to its seed by an online reload, with no browser storage written',
+					'no service worker registered, controlling, cached or requested in either lane',
+					'clean page',
+				],
+				offlineEvidence: { state: 'not-applicable' },
+				zeroServiceWorker: { checkpoints },
+				renderedStyles,
+				applicationJourney,
+				scrollAbsence: {
+					state: 'measured-no-overflowing-document',
+					viewport: { ...JIRA_CLONE_VIEWPORT },
+					routes: measuredRoutes,
+					documentOverflow:
+						'the application pins the document to the viewport and gives the board columns their own overflow, so no stage of the journey produces a scrollable document',
+					claimed: false,
+				},
+			};
+		},
+	},
 ];
 
 async function exists(file: string): Promise<boolean> {
@@ -2674,6 +3189,8 @@ async function executeRun(
 					);
 				return await host.renderedStyles(probes);
 			},
+			groupedText: async (probe) => await host.groupedText(probe),
+			browserStorageKeys: host.browserStorageKeys,
 		});
 		await context.receipt.capture('journey-complete');
 	});
@@ -3082,6 +3599,36 @@ export async function executeAngularFactoriolabWitnessRun(options: {
 	});
 }
 
+/**
+ * The jira-clone Witness specification, reachable so its declared inventories,
+ * probes and seams can be checked against the receipt schema that enforces them
+ * without launching a browser.
+ */
+export function angularJiraCloneWitnessSpec(): AppSpec {
+	const app = apps.find((candidate) => candidate.app === 'angular-jira-clone');
+	if (app === undefined) throw new Error('jira-clone Witness specification is absent');
+	return app;
+}
+
+/**
+ * jira-clone ships no service worker in either lane and never calls
+ * `register()`, so the run is executed under the zero-worker policy: the
+ * browser context still allows registration, and the journey is required to
+ * observe nothing registered, controlling, cached or requested at each of its
+ * three checkpoints.
+ */
+export async function executeAngularJiraCloneWitnessRun(options: {
+	lane: Lane;
+	pass: 1 | 2;
+	laneRoot: string;
+	receiptRoot: string;
+}): Promise<WitnessRealAppRun> {
+	return await executeRun(angularJiraCloneWitnessSpec(), options.lane, options.pass, {
+		...options,
+		serviceWorkerPolicy: 'zero',
+	});
+}
+
 async function zeroServiceWorkerCheckpoint(
 	lifecycle: JourneyLifecycle,
 	phase: 'before-interactions' | 'after-interactions' | 'after-online-reload',
@@ -3342,6 +3889,15 @@ async function runReactBaselineDifferentialProfile(
 						'react baseline differential lane declares no rendered-style probes',
 					);
 				},
+				// The same refusal, for the same reason: this lane exists to
+				// diagnose a service worker, and a reading it never took must
+				// not be able to come back as an empty measurement.
+				groupedText: () => {
+					throw new Error(
+						'react baseline differential lane takes no grouped-text readings',
+					);
+				},
+				browserStorageKeys: host.browserStorageKeys,
 			});
 			telemetry =
 				journey.timeoutTelemetry ??
