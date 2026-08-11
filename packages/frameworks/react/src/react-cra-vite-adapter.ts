@@ -7,8 +7,9 @@ import * as path from 'pathe';
  *
  * Every export here is application agnostic: the shapes handled are the ones
  * create-react-app itself defines (HTML template placeholders, `process.env`
- * inlining, webpack tilde specifiers, and the copied public directory). No
- * capability branches on an application name, revision, or source string.
+ * inlining, the ambient `global` identifier, webpack tilde specifiers, and the
+ * copied public directory). No capability branches on an application name,
+ * revision, or source string.
  */
 
 export type CraEnvironment = Readonly<Record<string, string>>;
@@ -87,6 +88,41 @@ export function craProcessEnvironmentDefines(
 		),
 		'process.env': JSON.stringify(sorted),
 	});
+}
+
+/**
+ * The ambient identifier webpack 4 provides to every module it bundles for the
+ * browser. webpack's runtime declares `global` itself (its `node.global`
+ * option defaults to `true` on the webpack 4 line create-react-app 3 and 4
+ * pin), so a dependency written against Node's `global` keeps working inside a
+ * webpack browser bundle. Vite emits no such declaration: the same dependency
+ * reaches the browser with a free `global` reference and throws
+ * `ReferenceError: global is not defined` on first evaluation. Mapping the
+ * identifier onto `globalThis` restores exactly the binding webpack supplied
+ * and nothing else — it is a compile-time substitution of one free identifier,
+ * so member accesses, property keys and locally bound `global` names are left
+ * alone, and modules that never mention it emit byte-identical output.
+ */
+export function craGlobalIdentifierDefines(): Readonly<Record<string, string>> {
+	return Object.freeze({ global: 'globalThis' });
+}
+
+export type CraDefineConfig = Readonly<{ define: Readonly<Record<string, string>> }>;
+export type CraDefinePlugin = Readonly<{ name: string; config(): CraDefineConfig }>;
+
+/**
+ * Contribute the webpack `global` binding as a Vite `define` entry. It is
+ * contributed through the plugin's own configuration rather than asked of every
+ * consumer, so any build that adopts the create-react-app adapter inherits the
+ * ambient identifier its bundler used to provide.
+ */
+export function createCraGlobalIdentifierPlugin(): CraDefinePlugin {
+	return {
+		name: 'versionless-cra-global-identifier',
+		config() {
+			return { define: craGlobalIdentifierDefines() };
+		},
+	};
 }
 
 /**
@@ -195,15 +231,20 @@ export type CraViteAdapterOptions = Readonly<{
 	templateFile?: string;
 }>;
 
-export type CraViteAdapterPlugins = readonly [CraTransformPlugin, CraOutputPlugin];
+export type CraViteAdapterPlugins = readonly [
+	CraTransformPlugin,
+	CraDefinePlugin,
+	CraOutputPlugin,
+];
 
 /**
- * The create-react-app compatibility plugin set: tilde CSS specifier rewriting
- * plus public directory replication.
+ * The create-react-app compatibility plugin set: tilde CSS specifier rewriting,
+ * the ambient `global` identifier, plus public directory replication.
  */
 export function createCraViteAdapter(options: CraViteAdapterOptions): CraViteAdapterPlugins {
 	return [
 		createCraTildeCssImportPlugin(),
+		createCraGlobalIdentifierPlugin(),
 		createCraPublicDirectoryPlugin({
 			directory: options.publicDirectory,
 			exclude: [options.templateFile ?? 'index.html'],

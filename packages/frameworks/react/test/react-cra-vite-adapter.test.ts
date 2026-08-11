@@ -1,11 +1,15 @@
-import { mkdir, mkdtemp, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
+import { createContext, runInContext } from 'node:vm';
 import * as path from 'pathe';
+import { build } from 'vite';
 import { describe, expect, test } from 'vitest';
 import {
 	craEntryDocument,
+	craGlobalIdentifierDefines,
 	craProcessEnvironmentDefines,
 	craPublicAssetPaths,
+	createCraGlobalIdentifierPlugin,
 	createCraPublicDirectoryPlugin,
 	createCraTildeCssImportPlugin,
 	createCraViteAdapter,
@@ -77,6 +81,100 @@ describe('create-react-app process environment defines', () => {
 	});
 });
 
+/**
+ * webpack 4 — the bundler create-react-app 3 and 4 pin — declares `global` in
+ * its own runtime for browser targets, so every dependency written against
+ * Node's `global` keeps evaluating inside a webpack bundle. Vite declares
+ * nothing of the sort, so those same dependencies reach the browser with a free
+ * `global` reference and throw `ReferenceError: global is not defined` before
+ * the application can mount. The control build below is that failure, observed
+ * rather than asserted from memory; the adapted build is the fix.
+ */
+describe('the ambient webpack global identifier', () => {
+	const dependencySource = [
+		// The shape era dependencies use: an unguarded feature probe on `global`.
+		'export const scheduler =',
+		"	typeof global.queueMicrotask === 'function'",
+		"		? 'queueMicrotask'",
+		"		: typeof global.MutationObserver === 'function'",
+		"			? 'mutation-observer'",
+		"			: 'timeout';",
+		'export const sameRealm = global === globalThis;',
+		'export const untouched = { global: 1 };',
+		'export const shadowed = ((global) => global)("local");',
+		'',
+	].join('\n');
+
+	async function buildProbe(withAdapter: boolean): Promise<string> {
+		const root = await mkdtemp(path.join(tmpdir(), 'versionless-cra-global-'));
+		try {
+			await writeFile(path.join(root, 'dependency.js'), dependencySource);
+			await writeFile(
+				path.join(root, 'entry.js'),
+				[
+					"import { sameRealm, scheduler, shadowed, untouched } from './dependency.js';",
+					'export const probe = { sameRealm, scheduler, shadowed, untouched };',
+					'',
+				].join('\n'),
+			);
+			const outDir = path.join(root, 'dist');
+			await build({
+				root,
+				logLevel: 'silent',
+				plugins: withAdapter ? [createCraGlobalIdentifierPlugin()] : [],
+				build: {
+					outDir,
+					minify: false,
+					lib: {
+						entry: path.join(root, 'entry.js'),
+						formats: ['iife'],
+						name: 'probe',
+						fileName: () => 'probe.js',
+					},
+				},
+			});
+			return await readFile(path.join(outDir, 'probe.js'), 'utf8');
+		} finally {
+			await rm(root, { recursive: true, force: true });
+		}
+	}
+
+	function evaluateInBrowserLikeRealm(code: string): Record<string, unknown> {
+		// A realm with no `global` binding, exactly like a browser window.
+		const context = createContext({ queueMicrotask: (task: () => void) => task() });
+		runInContext(code, context);
+		return (context as { probe?: { probe?: Record<string, unknown> } }).probe
+			?.probe as Record<string, unknown>;
+	}
+
+	test('an unadapted build throws the webpack-provided identifier away', async () => {
+		const code = await buildProbe(false);
+		expect(code).toContain('global.queueMicrotask');
+		expect(() => evaluateInBrowserLikeRealm(code)).toThrow('global is not defined');
+	});
+
+	test('the adapted build evaluates and resolves global to globalThis', async () => {
+		const code = await buildProbe(true);
+		expect(code).not.toContain('global.queueMicrotask');
+		expect(code).toContain('globalThis.queueMicrotask');
+		const probe = evaluateInBrowserLikeRealm(code);
+		expect(probe.scheduler).toBe('queueMicrotask');
+		expect(probe.sameRealm).toBe(true);
+		// Only the free identifier moves: property keys and local bindings stay.
+		expect(probe.untouched).toEqual({ global: 1 });
+		expect(probe.shadowed).toBe('local');
+	});
+
+	test('the define map is one frozen entry and rides the plugin configuration', () => {
+		const defines = craGlobalIdentifierDefines();
+		expect(defines).toEqual({ global: 'globalThis' });
+		expect(Object.isFrozen(defines)).toBe(true);
+		const plugin = createCraGlobalIdentifierPlugin();
+		expect(plugin.name).toBe('versionless-cra-global-identifier');
+		expect(plugin.config()).toEqual({ define: { global: 'globalThis' } });
+	});
+});
+
 describe('webpack tilde specifiers in CSS', () => {
 	test('rewrites quoted and url() imports without touching relative ones', () => {
 		const code = [
@@ -137,8 +235,10 @@ describe('create-react-app public directory', () => {
 		await expect(plugin.closeBundle.handler()).rejects.toThrow('outDir is unresolved');
 	});
 	test('the composed adapter excludes the template by default', () => {
-		const [transform, output] = createCraViteAdapter({ publicDirectory: tmpdir() });
+		const [transform, define, output] = createCraViteAdapter({ publicDirectory: tmpdir() });
 		expect(transform.name).toBe('versionless-cra-tilde-css-import');
+		expect(define.name).toBe('versionless-cra-global-identifier');
+		expect(define.config()).toEqual({ define: { global: 'globalThis' } });
 		expect(output.name).toBe('versionless-cra-public-directory');
 		expect(output.closeBundle.order).toBe('post');
 	});
