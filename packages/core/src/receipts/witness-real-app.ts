@@ -28,6 +28,14 @@ export const WITNESS_REAL_APP_NAMES = [
 	 * substitution possible without touching a line of its source.
 	 */
 	'react-linkfree',
+	/**
+	 * The OLD-VITE-ORIGIN vertical, and the first in the corpus whose origin
+	 * bundler is Vite itself rather than a webpack-era toolchain: Vite 2.9.5 to
+	 * Vite 8.0.16, six majors apart. Its API surface is answered by a frozen
+	 * synthetic same-origin projection, because the application talks to a Go
+	 * backend that is out of the ingested cell entirely.
+	 */
+	'react-memos',
 ] as const;
 /** Every named app must contribute two lanes observed twice each. */
 export const WITNESS_REAL_APP_RUNS = WITNESS_REAL_APP_NAMES.length * 4;

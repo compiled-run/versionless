@@ -105,6 +105,15 @@ import {
 	type WitnessReactLinkfreeJourney,
 } from '../../../core/src/receipts/witness-react-linkfree.ts';
 import {
+	REACT_MEMOS_BUILD_LANES_PATH,
+	REACT_MEMOS_BUILD_LANES_SHA256,
+	WITNESS_REACT_MEMOS_CONSOLE_ERRORS,
+	WITNESS_REACT_MEMOS_FAILED_REQUESTS,
+	WITNESS_REACT_MEMOS_STYLE_PROBES,
+	type WitnessReactMemosJourney,
+	type WitnessReactMemosLedgerEntry,
+} from '../../../core/src/receipts/witness-react-memos.ts';
+import {
 	LINKFREE_AVATAR_FALLBACK_HOST,
 	LINKFREE_AVATAR_HOST,
 	LINKFREE_JOURNEY_PROFILE,
@@ -120,6 +129,19 @@ import {
 	PAPERCUPS_SOCKET_PATH,
 	PAPERCUPS_USER,
 } from './papercups-projection.ts';
+import {
+	createMemosProjection,
+	MEMOS_OWNER_PASSWORD,
+	MEMOS_PINNED_REVISION,
+	MEMOS_PROJECTION_BEHAVIOR_DIGEST,
+	MEMOS_PROJECTION_LABEL,
+	MEMOS_SEED,
+	memosSeedDigest,
+	memosTagsInContent,
+	type MemosProjection,
+	type MemosProjectionDecision,
+	type MemosProjectionLedgerRecord,
+} from './memos-projection.ts';
 import { createPhoenixSocketUpgrade } from './phoenix-socket.ts';
 import {
 	createPlaywrightWitnessHost,
@@ -170,7 +192,8 @@ type App =
 	| 'angular-factoriolab'
 	| 'angular-jira-clone'
 	| 'next-killedbygoogle-v3-0-0'
-	| 'react-linkfree';
+	| 'react-linkfree'
+	| 'react-memos';
 type Lane = 'baseline' | 'migrated';
 type JourneyEvidence = {
 	assertions: string[];
@@ -305,6 +328,15 @@ export type AppSpec = {
 	framework: WitnessRealAppRun['framework'];
 	canonicalReceipt: string;
 	canonicalDigest: string;
+	/**
+	 * How {@link AppSpec.canonicalDigest} binds the retained build receipt.
+	 * Almost every vertical publishes an `integrity.canonicalDigest` and is
+	 * bound by it, which is the default. A vertical whose retained receipt
+	 * carries no such field is bound by the sha256 of its exact bytes instead —
+	 * the same strength of binding, taken over the whole file, and named rather
+	 * than borrowed from a field that is not there.
+	 */
+	canonicalBinding?: 'integrity-digest' | 'file-sha256';
 	sources: Record<Lane, string>;
 	initialRoute?: string;
 	/**
@@ -375,7 +407,13 @@ export type AppSpec = {
 	 */
 	loopback?(): {
 		api(request: StaticServerApiRequest): Promise<StaticServerApiResponse | null>;
-		upgrade(
+		/**
+		 * Omitted by an application that opens no socket. The origin then
+		 * registers no upgrade handler at all, so an unexpected upgrade is left
+		 * unanswered rather than quietly absorbed by a handler written for an
+		 * application that never asks for one.
+		 */
+		upgrade?(
 			request: IncomingMessage,
 			socket: Duplex,
 			head: Buffer,
@@ -1979,6 +2017,152 @@ export async function reactLinkfreeTransport(
 	if (endpoint.startsWith(`${LINKFREE_AVATAR_HOST}/`))
 		return { action: 'fulfill', status: 404, contentType: 'text/plain', body: Buffer.alloc(0) };
 	return { action: 'fulfill', status: 204, contentType: 'text/plain', body: Buffer.alloc(0) };
+}
+
+/**
+ * Memos journey inputs.
+ *
+ * Every selector below is the application's own class, transcribed from
+ * `web/src` at the pinned revision, and every count is derived from the frozen
+ * projection seed rather than written down twice.
+ */
+const MEMOS_VIEWPORT = { width: 1280, height: 720 } as const;
+/**
+ * The visible list-status text the memo list renders once it has fetched and is
+ * not filtering. The journey asserts it, so replacing its bytes makes the
+ * browser journey genuinely red rather than merely changing an unread constant.
+ */
+export const MEMOS_MUTATION_SEAM = 'Fetching completed 🎉' as const;
+const MEMOS_SIGNIN_EMAIL = '.page-wrapper.signin input[type="email"]' as const;
+const MEMOS_SIGNIN_PASSWORD = '.page-wrapper.signin input[type="password"]' as const;
+const MEMOS_SIGNIN_BUTTON = '.page-wrapper.signin .signin-btn' as const;
+const MEMOS_HEADER_TITLE = '.memos-header-container .title-text' as const;
+const MEMOS_USERNAME = '.user-banner-container .username-text' as const;
+const MEMOS_LIST_ENTRY = '.memo-list-container > .memo-wrapper' as const;
+const MEMOS_LIST_STATUS = '.memo-list-container .status-text' as const;
+const MEMOS_EDITOR_INPUT = '.memo-editor-container .common-editor-inputer' as const;
+const MEMOS_EDITOR_SAVE = '.memo-editor-container .confirm-btn' as const;
+const MEMOS_SEARCH_INPUT = '.search-bar-container .text-input' as const;
+const MEMOS_TAG_ITEM = '.tags-container > .tag-item-container' as const;
+const MEMOS_SIDEBAR_SETTING =
+	'.sidebar-wrapper .action-btns-container > button:nth-of-type(2)' as const;
+const MEMOS_SIDEBAR_TRASH =
+	'.sidebar-wrapper .action-btns-container > button:nth-of-type(3)' as const;
+const MEMOS_TRASH_ENTRY = '.memo-trash-dialog .deleted-memos-container > .memo-wrapper' as const;
+const MEMOS_TRASH_CLOSE = '.memo-trash-dialog .dialog-header-container .close-btn' as const;
+const MEMOS_SETTING_USERNAME = '.setting-dialog .username-label input' as const;
+const MEMOS_SETTING_CONFIRM = '.setting-dialog .username-label .confirm-btn' as const;
+const MEMOS_SETTING_CLOSE = '.setting-dialog .dialog-content-container > .close-btn' as const;
+/** The seeded memo the archive journey moves to the recycle bin and back. */
+const MEMOS_ARCHIVED_MEMO_ID = 2;
+const MEMOS_ARCHIVED_MEMO = `.memo-wrapper.memos-${String(MEMOS_ARCHIVED_MEMO_ID)}` as const;
+/**
+ * The memo's action column. It is the hover target rather than the `…` control
+ * inside it because the menu the hover reveals is positioned OVER that control,
+ * so the pointer necessarily ends up on the menu; hovering the column the menu
+ * belongs to says what actually happens instead of pretending the pointer
+ * stays on the button underneath it.
+ */
+const MEMOS_ARCHIVED_ACTION_COLUMN =
+	`${MEMOS_ARCHIVED_MEMO} .memo-top-wrapper > .btns-container` as const;
+const MEMOS_ARCHIVED_ACTIONS = `${MEMOS_ARCHIVED_MEMO} .more-action-btns-wrapper` as const;
+const MEMOS_ARCHIVED_DELETE = `${MEMOS_ARCHIVED_MEMO} .btn.delete-btn` as const;
+const MEMOS_TRASH_RESTORE =
+	`.memo-trash-dialog ${MEMOS_ARCHIVED_MEMO} .btn.restore-btn` as const;
+const MEMOS_COMPOSED_CONTENT =
+	'Witnessed compose on the retained lane. #evidence recorded.' as const;
+/** The projection mints identifiers from the seed's own high-water mark. */
+const MEMOS_COMPOSED_MEMO_ID = MEMOS_SEED.memos.length + 1;
+const MEMOS_COMPOSED_MEMO = `.memo-wrapper.memos-${String(MEMOS_COMPOSED_MEMO_ID)}` as const;
+/** A substring of exactly one seeded memo, so the narrowed count is one. */
+const MEMOS_SEARCH_TERM = 'majors' as const;
+const MEMOS_TAG = 'migration' as const;
+const MEMOS_NEXT_USERNAME = 'evidence-owner' as const;
+/**
+ * The exact number of recorded navigations.
+ *
+ * This application has no router library: it writes its own history entries
+ * through `history.replaceState`, once per query change, so a typed search
+ * records one navigation per keystroke. That makes the count large and it makes
+ * it EXACT — every one of them is the application's own call — so it is pinned
+ * rather than bounded.
+ */
+export const MEMOS_JOURNEY_NAVIGATIONS = 13;
+/** Seeded live memos, plus the one the journey writes. */
+const MEMOS_SEEDED_LIVE = MEMOS_SEED.memos.filter(
+	(record) => record.rowStatus === 'NORMAL',
+).length;
+const MEMOS_SEEDED_ARCHIVED = MEMOS_SEED.memos.length - MEMOS_SEEDED_LIVE;
+const MEMOS_LIVE_AFTER_COMPOSE = MEMOS_SEEDED_LIVE + 1;
+/** The tags the projection derives from the live seeded memos, in its own order. */
+const MEMOS_TAGS = [
+	...new Set(
+		MEMOS_SEED.memos
+			.filter((record) => record.rowStatus === 'NORMAL')
+			.flatMap((record) => memosTagsInContent(record.content)),
+	),
+].sort();
+
+/**
+ * The per-run projection instance.
+ *
+ * The loopback factory is invoked once per run by {@link executeRun}, so this
+ * always holds the projection the browser in front of it is talking to, and the
+ * journey can read the ledger that projection actually wrote rather than a
+ * reconstruction of it.
+ */
+let memosProjection: MemosProjection | null = null;
+const memosProjectionForRun = (): MemosProjection => {
+	if (memosProjection === null)
+		throw new Error('Memos journey ran without its frozen synthetic projection');
+	return memosProjection;
+};
+
+/**
+ * The ordered ledger the most recent Memos run's projection wrote, so the whole
+ * sequence can be published as an artifact alongside the tally the receipt
+ * digests.
+ */
+export function reactMemosProjectionLedger(): MemosProjectionLedgerRecord[] {
+	return memosProjectionForRun().ledger();
+}
+
+/**
+ * The projection ledger, tallied by request identity instead of by sequence.
+ *
+ * The application fires several of its mount requests concurrently, so the
+ * ORDER two runs record them in is a property of the event loop rather than of
+ * the application. Tallying by identity keeps every method, path, endpoint,
+ * decision and status in the evidence — and keeps the count of each exact —
+ * without pinning a race.
+ */
+function memosLedgerTally(
+	records: readonly MemosProjectionLedgerRecord[],
+): WitnessReactMemosLedgerEntry[] {
+	const tally = new Map<string, WitnessReactMemosLedgerEntry>();
+	for (const entry of records) {
+		const key = canonicalize({
+			method: entry.method,
+			pathname: entry.pathname,
+			endpoint: entry.endpoint,
+			decision: entry.decision,
+			status: entry.status,
+		});
+		const found = tally.get(key);
+		if (found === undefined)
+			tally.set(key, {
+				method: entry.method,
+				pathname: entry.pathname,
+				endpoint: entry.endpoint,
+				decision: entry.decision,
+				status: entry.status,
+				count: 1,
+			});
+		else found.count += 1;
+	}
+	return [...tally.entries()]
+		.sort(([left], [right]) => compareUtf16CodeUnits(left, right))
+		.map(([, entry]) => entry);
 }
 
 const apps: AppSpec[] = [
@@ -3772,6 +3956,361 @@ const apps: AppSpec[] = [
 			};
 		},
 	},
+	{
+		app: 'react-memos',
+		framework: 'react',
+		// This vertical's retained build-lane receipt carries no
+		// `integrity.canonicalDigest`, so it is bound by the sha256 of its exact
+		// bytes instead of by a field it does not have.
+		canonicalReceipt: REACT_MEMOS_BUILD_LANES_PATH,
+		canonicalDigest: REACT_MEMOS_BUILD_LANES_SHA256,
+		canonicalBinding: 'file-sha256',
+		sources: {
+			baseline: '.versionless/work/react-memos-v0-1-3/baseline/dist-run1',
+			migrated: '.versionless/work/react-memos-v0-1-3/target/dist-vite-run1',
+		},
+		viewport: MEMOS_VIEWPORT,
+		consoleErrorInventory: WITNESS_REACT_MEMOS_CONSOLE_ERRORS,
+		failedRequestInventory: WITNESS_REACT_MEMOS_FAILED_REQUESTS,
+		renderedStyleProbes: WITNESS_REACT_MEMOS_STYLE_PROBES,
+		/**
+		 * The whole `/api` surface, answered same-origin by the frozen synthetic
+		 * projection. A fresh instance per run, so no run inherits another's
+		 * writes; nothing here is a captured production payload.
+		 */
+		loopback: () => {
+			const projection = createMemosProjection();
+			memosProjection = projection;
+			return { api: projection.api };
+		},
+		journey: async (context, page, _transportEvidence, lifecycle) => {
+			if (lifecycle.expectedServiceWorker !== null)
+				throw new Error('Memos journey received a service-worker expectation');
+			const projection = memosProjectionForRun();
+			/**
+			 * The projection's `/api` decisions, and the origin's `/api`
+			 * requests. Both exclude the static-asset traffic that passes
+			 * through the same seam: the claim under test is that the client
+			 * filters WITHOUT asking the server for data, not that a page with
+			 * `cache-control: no-store` stops re-fetching the icons inside a
+			 * card React just re-rendered.
+			 */
+			const apiRecords = (): number =>
+				projection.ledger().filter((entry) => entry.decision !== 'declined-non-api').length;
+			const apiOriginRequests = (): number =>
+				lifecycle.staticRequests().filter((path) => path.startsWith('/api/')).length;
+			const originRequests = (): number => lifecycle.staticRequests().length;
+			const routeExtents: Array<{
+				route: string;
+				scrollHeight: number;
+				clientHeight: number;
+			}> = [];
+			/**
+			 * The generic document measurement, taken at every stage the journey
+			 * occupies. It is what licenses the scroll claim to be an absence
+			 * rather than an omission: no stage is left unmeasured.
+			 */
+			const measure = async (route: string): Promise<void> => {
+				const extents = await lifecycle.viewportScroll();
+				if (extents.clientHeight !== MEMOS_VIEWPORT.height)
+					throw new Error(
+						`Memos stage measured against an unexpected viewport: ${route} ${canonicalize(extents)}`,
+					);
+				if (extents.scrollHeight > extents.clientHeight)
+					throw new Error(
+						`Memos stage overflows the document it is claimed not to: ${route} ${canonicalize(extents)}`,
+					);
+				routeExtents.push({
+					route,
+					scrollHeight: extents.scrollHeight,
+					clientHeight: extents.clientHeight,
+				});
+			};
+			await page.trackEvents('click', 'input', 'keydown', 'mouseover');
+
+			// (a) The session gate, observed from outside. The home route asks
+			// `GET /api/user/me` before a session exists, the projection refuses
+			// it, and the application replaces history with its signin route.
+			await context.expect.page.text(page, MEMOS_SIGNIN_BUTTON, 'Sign in');
+			await context.expect.page.bodyText(page, { contains: 'self-hosted' });
+			const gateRecord = projection
+				.ledger()
+				.find((entry) => entry.endpoint === 'user.me.get');
+			if (gateRecord?.status !== 401 || gateRecord.authenticated !== false)
+				throw new Error(
+					`Memos session gate did not refuse the signed-out probe: ${canonicalize(gateRecord ?? null)}`,
+				);
+			await measure('/signin (the session gate)');
+
+			// (b) The application's own sign-in form, with the amended owner pair
+			// the pinned client-side validator accepts.
+			await page.hover(MEMOS_SIGNIN_EMAIL);
+			await page.type(MEMOS_SIGNIN_EMAIL, MEMOS_SEED.users[0]!.email, { redact: false });
+			await page.type(MEMOS_SIGNIN_PASSWORD, MEMOS_OWNER_PASSWORD);
+			await page.click(MEMOS_SIGNIN_BUTTON);
+			await context.expect.page.text(page, MEMOS_HEADER_TITLE, 'MEMOS');
+			await context.expect.page.text(page, MEMOS_USERNAME, MEMOS_SEED.users[0]!.name);
+			await context.expect.page.count(page, MEMOS_LIST_ENTRY, MEMOS_SEEDED_LIVE);
+			await context.expect.page.text(page, MEMOS_LIST_STATUS, MEMOS_MUTATION_SEAM);
+			const renderedStyles = await lifecycle.renderedStyles();
+			await measure('/ (signed in)');
+
+			// (c) A memo composed in the application's own editor and saved. The
+			// typed content has to reach the list AND the projection ledger: a
+			// store that rendered without a write would pass the first and fail
+			// the second.
+			await page.type(MEMOS_EDITOR_INPUT, MEMOS_COMPOSED_CONTENT, { redact: false });
+			await page.click(MEMOS_EDITOR_SAVE);
+			await context.expect.page.count(page, MEMOS_LIST_ENTRY, MEMOS_LIVE_AFTER_COMPOSE);
+			await context.expect.page.bodyText(page, { contains: MEMOS_COMPOSED_CONTENT });
+			await context.expect.page.count(page, MEMOS_COMPOSED_MEMO, 1);
+			const created = projection
+				.ledger()
+				.find((entry) => entry.endpoint === 'memo.create' && entry.status === 200);
+			if (created === undefined)
+				throw new Error('Memos compose did not reach the projection ledger');
+			await measure('/ (after the memo was saved)');
+
+			// (d) A typed search and a tag filter, both solved in the browser
+			// from the store the application already holds. Nothing may leave
+			// the page while they narrow, and that is measured rather than
+			// asserted: the projection ledger and the origin request log are
+			// both required to be unchanged across the whole block.
+			const apiBeforeSearch = apiRecords();
+			const apiOriginBeforeSearch = apiOriginRequests();
+			const originBeforeSearch = originRequests();
+			await page.type(MEMOS_SEARCH_INPUT, MEMOS_SEARCH_TERM, { redact: false });
+			await context.expect.page.count(page, MEMOS_LIST_ENTRY, 1);
+			await context.expect.page.count(page, MEMOS_ARCHIVED_MEMO, 1);
+			await measure('/ (the typed search narrowed the list)');
+			await page.press(MEMOS_SEARCH_INPUT, 'a', { modifiers: ['Meta'] });
+			await page.press(MEMOS_SEARCH_INPUT, 'Backspace');
+			await context.expect.page.count(page, MEMOS_LIST_ENTRY, MEMOS_LIVE_AFTER_COMPOSE);
+			const searchApiDelta = apiRecords() - apiBeforeSearch;
+			const searchApiOriginDelta = apiOriginRequests() - apiOriginBeforeSearch;
+			const searchAssetDelta = originRequests() - originBeforeSearch - searchApiOriginDelta;
+
+			const apiBeforeTag = apiRecords();
+			const apiOriginBeforeTag = apiOriginRequests();
+			const originBeforeTag = originRequests();
+			await context.expect.page.count(page, MEMOS_TAG_ITEM, MEMOS_TAGS.length);
+			const tagIndex = MEMOS_TAGS.indexOf(MEMOS_TAG) + 1;
+			const tagSelector = `${MEMOS_TAG_ITEM}:nth-of-type(${String(tagIndex)})`;
+			await context.expect.page.text(page, `${tagSelector} .tag-text`, MEMOS_TAG);
+			await page.click(tagSelector);
+			await context.expect.page.count(page, MEMOS_LIST_ENTRY, 2);
+			await measure('/ (the tag filter narrowed the list)');
+			await page.click(tagSelector);
+			await context.expect.page.count(page, MEMOS_LIST_ENTRY, MEMOS_LIVE_AFTER_COMPOSE);
+			const tagApiDelta = apiRecords() - apiBeforeTag;
+			const tagApiOriginDelta = apiOriginRequests() - apiOriginBeforeTag;
+			const tagAssetDelta = originRequests() - originBeforeTag - tagApiOriginDelta;
+			if (
+				searchApiDelta !== 0 ||
+				searchApiOriginDelta !== 0 ||
+				tagApiDelta !== 0 ||
+				tagApiOriginDelta !== 0
+			)
+				throw new Error(
+					`Memos client-side filtering fired API requests: ${canonicalize({
+						searchApiDelta,
+						searchApiOriginDelta,
+						tagApiDelta,
+						tagApiOriginDelta,
+					})}`,
+				);
+
+			// (e) A hover with an observable result: the memo's action menu is
+			// display:none until the pointer is over the control that reveals it.
+			await context.expect.page.computedStyle(page, MEMOS_ARCHIVED_ACTIONS, {
+				display: 'none',
+			});
+			await page.hover(MEMOS_ARCHIVED_ACTION_COLUMN);
+			await context.expect.page.computedStyle(page, MEMOS_ARCHIVED_ACTIONS, {
+				display: 'flex',
+			});
+
+			// (f) Archive behind the application's own two-click confirmation,
+			// then restore through the recycle bin. The first click only arms
+			// the control; asserting its label is what proves the second click
+			// is a confirmation rather than a repeat.
+			await context.expect.page.text(page, MEMOS_ARCHIVED_DELETE, 'Delete');
+			await page.click(MEMOS_ARCHIVED_DELETE);
+			await context.expect.page.text(page, MEMOS_ARCHIVED_DELETE, 'Delete!');
+			await page.click(MEMOS_ARCHIVED_DELETE);
+			await context.expect.page.count(page, MEMOS_LIST_ENTRY, MEMOS_SEEDED_LIVE);
+			await context.expect.page.count(page, `${MEMOS_LIST_ENTRY}${MEMOS_ARCHIVED_MEMO}`, 0);
+			await page.click(MEMOS_SIDEBAR_TRASH);
+			await context.expect.page.count(
+				page,
+				MEMOS_TRASH_ENTRY,
+				MEMOS_SEEDED_ARCHIVED + 1,
+			);
+			await page.click(MEMOS_TRASH_RESTORE);
+			await context.expect.page.count(page, MEMOS_TRASH_ENTRY, MEMOS_SEEDED_ARCHIVED);
+			await page.click(MEMOS_TRASH_CLOSE);
+			await context.expect.page.count(page, MEMOS_LIST_ENTRY, MEMOS_LIVE_AFTER_COMPOSE);
+			await context.expect.page.count(page, `${MEMOS_LIST_ENTRY}${MEMOS_ARCHIVED_MEMO}`, 1);
+			await measure('/ (after the archive was restored)');
+
+			// (g) The settings dialog, and the one write in this journey that is
+			// not about memos at all: the account rename the application sends
+			// as `PATCH /api/user/me`.
+			await page.click(MEMOS_SIDEBAR_SETTING);
+			await context.expect.page.bodyText(page, { contains: 'Account Information' });
+			await page.press(MEMOS_SETTING_USERNAME, 'a', { modifiers: ['Meta'] });
+			await page.type(MEMOS_SETTING_USERNAME, MEMOS_NEXT_USERNAME, { redact: false });
+			await page.click(MEMOS_SETTING_CONFIRM);
+			await context.expect.page.text(page, MEMOS_USERNAME, MEMOS_NEXT_USERNAME);
+			const patched = projection
+				.ledger()
+				.find((entry) => entry.endpoint === 'user.me.patch' && entry.status === 200);
+			if (patched === undefined || patched.method !== 'PATCH')
+				throw new Error('Memos account rename did not reach the projection ledger');
+			await measure('/ (the settings dialog is open)');
+			await page.click(MEMOS_SETTING_CLOSE);
+			await context.expect.page.text(page, MEMOS_LIST_STATUS, MEMOS_MUTATION_SEAM);
+
+			const ledger = projection.ledger();
+			const decisions = (decision: MemosProjectionDecision): number =>
+				ledger.filter((entry) => entry.decision === decision).length;
+			await context.expect.page.outcome(page, {
+				events: {
+					click: { atLeast: 9 },
+					input: { atLeast: 60 },
+					keydown: { atLeast: 60 },
+					mouseover: { atLeast: 2 },
+				},
+			});
+			await clean(
+				context,
+				page,
+				MEMOS_JOURNEY_NAVIGATIONS,
+				lifecycle.expectedConsoleErrors,
+				lifecycle.expectedFailedRequests,
+			);
+			const applicationJourney: WitnessReactMemosJourney = {
+				projection: {
+					state: 'frozen-synthetic-loopback-projection',
+					label: MEMOS_PROJECTION_LABEL,
+					pinnedRevision: MEMOS_PINNED_REVISION,
+					behaviorDigest: MEMOS_PROJECTION_BEHAVIOR_DIGEST,
+					seedSha256: memosSeedDigest(),
+					transport: 'same-origin-bounded-loopback-api',
+					ledger: {
+						state: 'measured-projection-ledger',
+						records: ledger.length,
+						apiRecords: ledger.length - decisions('declined-non-api'),
+						served: decisions('served'),
+						refusedUnknown: decisions('refused-unknown'),
+						refusedUnprojected: decisions('refused-unprojected'),
+						declinedNonApi: decisions('declined-non-api'),
+						entries: memosLedgerTally(
+							ledger.filter((entry) => entry.decision !== 'declined-non-api'),
+						),
+					},
+				},
+				gate: {
+					state: 'measured-session-gate',
+					signedOutStatus: 401,
+					signedOutRoute: '/signin',
+					signedInRoute: '/',
+					signedInBy: "the application's own Signin form",
+					owner: MEMOS_SEED.users[0]!.email,
+					ownerPassesPinnedValidator: true,
+				},
+				compose: {
+					state: 'measured-memo-created',
+					content: MEMOS_COMPOSED_CONTENT,
+					memoId: MEMOS_COMPOSED_MEMO_ID,
+					listBefore: MEMOS_SEEDED_LIVE,
+					listAfter: MEMOS_LIVE_AFTER_COMPOSE,
+					endpoint: 'memo.create',
+					status: 200,
+				},
+				search: {
+					state: 'measured-client-side-narrowing',
+					term: MEMOS_SEARCH_TERM,
+					beforeFilter: MEMOS_LIVE_AFTER_COMPOSE,
+					narrowed: 1,
+					afterClear: MEMOS_LIVE_AFTER_COMPOSE,
+					wideningGesture: 'select-all-then-backspace',
+					apiRecordsDuringFilter: 0,
+					apiOriginRequestsDuringFilter: 0,
+					assetRequestsDuringFilter: searchAssetDelta,
+				},
+				tagFilter: {
+					state: 'measured-client-side-tag-filter',
+					tags: [...MEMOS_TAGS],
+					tag: MEMOS_TAG,
+					narrowed: 2,
+					afterRestore: MEMOS_LIVE_AFTER_COMPOSE,
+					apiRecordsDuringFilter: 0,
+					apiOriginRequestsDuringFilter: 0,
+					assetRequestsDuringFilter: tagAssetDelta,
+				},
+				archive: {
+					state: 'measured-two-click-archive-and-restore',
+					memoId: MEMOS_ARCHIVED_MEMO_ID,
+					firstClickLabel: 'Delete',
+					confirmLabel: 'Delete!',
+					listAfterArchive: MEMOS_SEEDED_LIVE,
+					trashEntries: MEMOS_SEEDED_ARCHIVED + 1,
+					trashEntriesAfterRestore: MEMOS_SEEDED_ARCHIVED,
+					listAfterRestore: MEMOS_LIVE_AFTER_COMPOSE,
+					archivedRowStatus: 'ARCHIVED',
+					restoredRowStatus: 'NORMAL',
+				},
+				settings: {
+					state: 'measured-account-patch',
+					previousName: MEMOS_SEED.users[0]!.name,
+					nextName: MEMOS_NEXT_USERNAME,
+					endpoint: 'user.me.patch',
+					method: 'PATCH',
+					path: '/api/user/me',
+					status: 200,
+					renderedUsername: MEMOS_NEXT_USERNAME,
+				},
+				hover: {
+					state: 'measured-hover-revealed-actions',
+					selector: MEMOS_ARCHIVED_ACTION_COLUMN,
+					hiddenDisplay: 'none',
+					revealedDisplay: 'flex',
+				},
+				routeExtents: {
+					state: 'measured-per-route-document-extents',
+					viewport: { ...MEMOS_VIEWPORT },
+					routes: routeExtents,
+				},
+			};
+			return {
+				assertions: [
+					'the session gate refuses the signed-out probe and the application replaces history with its own signin route',
+					"a real session opened through the application's own Signin form with the amended owner pair",
+					'the seeded memo list rendered behind the gate, pinned memo first',
+					'a memo composed in the application own editor, rendered in the list and recorded as a create in the projection ledger',
+					'a typed search narrowed the list and a select-all clear restored it, with no request fired',
+					'a tag filter narrowed the list and a second click on the same tag restored it, with no request fired',
+					'the memo action menu revealed by a genuine hover, measured as display none then flex',
+					'archive behind the application own two-click confirmation, removal from the list, restore through the recycle bin and return to the list',
+					'an account rename sent as PATCH /api/user/me and rendered back into the user banner',
+					'every projection decision served; no unknown-endpoint and no withheld-endpoint refusal',
+					'clean page',
+				],
+				offlineEvidence: { state: 'not-applicable' },
+				renderedStyles,
+				applicationJourney,
+				scrollAbsence: {
+					state: 'measured-no-overflowing-document',
+					viewport: { ...MEMOS_VIEWPORT },
+					routes: routeExtents,
+					documentOverflow:
+						'the application pins its page wrapper to the viewport height and scrolls its own memo list and sidebar panels internally, so the document never overflows and there is no document scroll surface to gesture at',
+					claimed: false,
+				},
+			};
+		},
+	},
 ];
 
 async function exists(file: string): Promise<boolean> {
@@ -3890,7 +4429,11 @@ async function bindCanonicalReceipts(): Promise<WitnessRealAppReceipt['canonical
 			const value = JSON.parse(bytes.toString('utf8')) as {
 				integrity?: { canonicalDigest?: string };
 			};
-			if (value.integrity?.canonicalDigest !== app.canonicalDigest)
+			const bound =
+				app.canonicalBinding === 'file-sha256'
+					? sha256(bytes)
+					: value.integrity?.canonicalDigest;
+			if (bound !== app.canonicalDigest)
 				throw new Error(`${app.app} canonical receipt silently rebound`);
 			return {
 				app: app.app,
@@ -4467,6 +5010,26 @@ export async function executeReactHospitalrunWitnessRun(options: {
 	const app = apps.find((candidate) => candidate.app === 'react-hospitalrun');
 	if (app === undefined) throw new Error('HospitalRun Witness specification is absent');
 	return await executeRun(app, options.lane, options.pass, options);
+}
+
+/**
+ * The Memos Witness specification, reachable so its declared inventories,
+ * probes and lane bindings can be checked against the receipt schema that
+ * enforces them without launching a browser.
+ */
+export function reactMemosWitnessSpec(): AppSpec {
+	const app = apps.find((candidate) => candidate.app === 'react-memos');
+	if (app === undefined) throw new Error('Memos Witness specification is absent');
+	return app;
+}
+
+export async function executeReactMemosWitnessRun(options: {
+	lane: Lane;
+	pass: 1 | 2;
+	laneRoot: string;
+	receiptRoot: string;
+}): Promise<WitnessRealAppRun> {
+	return await executeRun(reactMemosWitnessSpec(), options.lane, options.pass, options);
 }
 
 export async function executeReactLinkfreeWitnessRun(options: {

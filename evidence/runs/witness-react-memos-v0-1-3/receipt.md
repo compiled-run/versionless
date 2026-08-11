@@ -1,0 +1,34 @@
+# Memos v0.1.3 — direct Witness browser proof
+
+- Result: pass
+- Canonical SHA-256: 71964ddaba63710462e1c6faa6322598a4afb0800f3c4826c7ef4e5a6ca01cfa
+- Runs: 2 baseline + 2 migrated production-static browser journeys
+- Behavioral parity: d5e08daffeb7765ba6722700587762a702fe74b5357f32fa4d069512014ad934
+- Migration class: OLD-VITE-ORIGIN — vite 2.9.5 to vite 8.0.16 (rolldown 1.0.3), node 16.20.2 to node 24.15.0
+- Build lanes: `evidence/runs/react-memos-v0-1-3/t006-build-lanes.json` bound by sha256-over-the-exact-bytes `9d0139c40d273eeb8b97d831116aaf52f80e35409444c8cee6173e8876d600aa` — the retained build-lane receipt for this vertical declares no integrity.canonicalDigest, so the browser proof binds it by the sha256 of its exact bytes rather than by a field it does not carry
+- Era build deviation (baseline): the declared `yarn build (tsc && vite build)` fails, exit 2, inside the tsc gate; four errors, all in node_modules, none under src, so the era lane ran `node node_modules/vite/bin/vite.js build` — a labelled deviation, not the declared build
+- API: a frozen synthetic same-origin projection, behaviour digest `b17da56bba70249f1d3b25b2837083b80ba0ae8c1c2899f710fc1eaf9b059902`, seed `fixtures/react-memos-v0-1-3/witness-projection-seed.json` at `3694ff4647588679036bbd713baf49f78513e04c34221af4aa4968e9f887fced`. No captured production payload and no real user data are involved.
+- Seed amendment (lrapr-t006/u12b-memos-seed-and-witness): credentials-only — the seeded owner email, the owner name derived from it, and the owner passphrase; it superseded seed `cf422f2cda23b4c777d27b2bccd68a24b53cac027dbe57347e1b150fc8cdb7ff` and behaviour digest `1672b43f0f01379b74890013cf145ed87164873cff037d4b6ace072a1fa79493`
+- Session: the application's own Signin form opens the `GET /api/user/me` gate; before it, the gate answers 401 and the application replaces history with `/signin`
+- Journey: a memo composed and saved (`memo.create`, list 3 to 4), a typed search narrowing 4 to 1 and restoring 4, a tag filter narrowing to 2 and restoring 4, a two-click archive and a restore through the recycle bin, and an account rename through `PATCH /api/user/me`
+- No API request fired while the client filtered: 0 projection API records and 0 `/api` origin requests across the typed search, and the same across the tag filter. The 4 and 4 requests those two blocks did make are the memo-card icons, re-fetched because the origin answers `cache-control: no-store`.
+- Projection ledger: 50 decisions — 19 on the `/api` surface, all served, with 0 unknown-endpoint and 0 withheld-endpoint refusals, and 31 static-asset requests declined through to the file server
+- Router: application-authored-pathname-switch over `/signin` and `/` with a `*` fallback; 13 recorded navigations
+- Console-error inventory (exact, whole journey, per lane) — baseline: 1x `Failed to load resource: the server responded with a status of 401 (Unauthorized)`; migrated: 1x `Failed to load resource: the server responded with a status of 401 (Unauthorized)`
+- Failed requests: none in either lane
+- Rendered appearance: 5 probes measured off the live page in both lanes; the baseline ships the stylesheet Vite 2.9.5 emitted and the migrated lane ships the one Vite 8.0.16 emitted, 2454 bytes smaller and differently named, and the two still resolve to identical appearance at every probe
+- Scroll: measured-no-overflowing-document across 7 measured stages at 1280x720 — the application pins its page wrapper to the viewport height and scrolls its own memo list and sidebar panels internally, so the document never overflows and there is no document scroll surface to gesture at
+- Mutation proof: `Fetching completed 🎉` in `assets/index--evLqhuM.js` at offset 264148 made the journey red, byte-identical restoration made it green again
+- React lineage readiness: unchanged at 1/4; this vertical is not counted
+
+- This is one React lineage under direct Witness and does not establish generic React, generic Vite, or generic old-Vite-to-Vite-8 support.
+- The React lineage readiness score is unchanged at 1/4; this vertical is not counted before Judge audit.
+- The API this journey talks to is a frozen synthetic loopback projection authored for this fixture, not the repository's Go backend. No captured production payload, no real account and no real user data are involved, and nothing here is evidence about that backend.
+- The seeded owner credentials were amended after the projection was frozen, because the pinned application's own client-side validator refused the original pair. The superseded seed digest and behaviour digest are recorded in this receipt; nothing but the owner pair moved.
+- The baseline lane was NOT built with the repository's declared build command: `tsc && vite build` fails in its tsc gate at this revision, so the era lane ran `vite build` alone. Every baseline claim here stands on that deviated command.
+- Scroll is not tested. Every stage the journey occupies was measured at 1280x720 and none of them overflows the document, because the application pins its page wrapper to the viewport and scrolls its own panels; no scroll coverage is claimed.
+- Drag is not tested because the visited routes have no genuine drag surface.
+- `POST /api/resource` is enumerated in the pinned client and deliberately not projected, so no claim is made about file upload or about the `/h/r/:id/:filename` byte stream behind it.
+- The application’s own cypress or unit suites were not run; this is a browser proof of the journeys named above, not a substitute for the upstream suite.
+- Locality is process-scoped and does not establish operating-system-wide isolation.
+- Receipts prove reproducibility and hash integrity, not certification, authenticity, signer identity, compliance, or an earned SLSA level.
