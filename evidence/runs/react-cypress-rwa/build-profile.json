@@ -1,0 +1,595 @@
+{
+	"schemaVersion": "versionless.react-cypress-rwa-build-profile.v1",
+	"result": "holdout-falsification-run-complete-baseline-green-migrated-red",
+	"unit": "lrapr-t008/hx2-migration-under-freeze",
+	"fixture": "react-cypress-rwa",
+	"role": "holdout",
+	"holdoutDiscipline": {
+		"statement": "This application is the falsification-run holdout for the frozen React adapters. It may not influence product code. The migrated lane is red and is recorded exactly as it failed.",
+		"frozenSubtrees": [
+			"packages/frameworks/react",
+			"packages/frameworks/angular",
+			"packages/core/src/migrations",
+			"packages/core/src/bundlers",
+			"packages/core/src/analysis"
+		],
+		"compositeFingerprint": "d9f75ef677cb850f664cc188abf77b8ebfd24e84cb58d147b74e9bbaa143eb77",
+		"fingerprintRecomputedByThisUnit": true,
+		"adapterBytesChanged": 0,
+		"adapterChangesProposedAndExecuted": 0,
+		"redBuildPatchedAround": false
+	},
+	"source": {
+		"repository": "https://github.com/cypress-io/cypress-realworld-app",
+		"ref": "refs/tags/v1.0.18",
+		"revision": "f6b5cf3a1799998dab71181eeed59460f8ada5f4",
+		"archiveSha256": "bd9319272dabc1e7263a0186e0aaae011f6219e6e106363d2c89426f9357b315",
+		"license": "MIT",
+		"frontendRoot": ".",
+		"react": "17.0.2",
+		"reactScripts": "4.0.3",
+		"webpack": "4.44.2",
+		"typescript": "4.3.4"
+	},
+	"workArea": {
+		"root": ".versionless/work/react-cypress-rwa",
+		"baseline": ".versionless/work/react-cypress-rwa/baseline",
+		"target": ".versionless/work/react-cypress-rwa/target",
+		"materializedFrom": ".versionless/cache/react-cypress-rwa-source/verify/extracted/cypress-realworld-app-f6b5cf3a1799998dab71181eeed59460f8ada5f4",
+		"bothLanesMaterializedFromTheSameExtractedTree": true
+	},
+	"digest": {
+		"scheme": "sha256(canonicalize(files))",
+		"note": "Every lane digest below is sha256 over the canonicalized file list recorded beside it, so any reader can recompute it from this document alone. canonicalize is packages/core/src/receipts/canonicalize.ts, the same canonicalizer the receipt integrity block uses."
+	},
+	"dependencyAcquisition": {
+		"consentId": "VL-LEGACY-CORPUS-2026-08-10",
+		"mode": "consented",
+		"registryHosts": [
+			"registry.yarnpkg.com"
+		],
+		"packageManager": "yarn 1.22.22 on Node 14.16.1 (darwin-x64 under Rosetta 2)",
+		"installCommand": "yarn install --frozen-lockfile --ignore-scripts --non-interactive",
+		"frozenLockfileAccepted": true,
+		"lockfile": {
+			"file": "yarn.lock",
+			"sha256": "34f0c1b71d3ed8747121f07fb0dd74a8b1269f82967109f951702d362214e822"
+		},
+		"manifest": {
+			"file": "package.json",
+			"sha256": "8ee4252ce4ec8f666f0de3a3bb4b9e1dcecdd1e18f4c91f13221cf0965e96a8b"
+		},
+		"bothLanesInstalledFromTheSameFrozenLockfile": true,
+		"lanesShareOneDependencyClosure": "Both lanes installed the same committed yarn.lock under --frozen-lockfile, so the only difference between them is the bundler, not the dependency closure.",
+		"hostDeviation": {
+			"variable": "SKIP_YARN_COREPACK_CHECK=1",
+			"why": "yarn 1 walks every ancestor directory for a packageManager field and refuses to run when it finds one naming another package manager. The work area lives inside this repository, whose root manifest declares pnpm@10.33.2. The check therefore fires on a fact about the harness, not about the application. Skipping it restores the application’s own install and changes nothing else.",
+			"appliesTo": "both lanes equally"
+		},
+		"offlineAfterInstall": true
+	},
+	"runtimeCells": {
+		"baseline": {
+			"node": "14.16.1",
+			"declaredBy": [
+				".nvmrc",
+				".node-version"
+			],
+			"source": "https://nodejs.org/dist/v14.16.1/node-v14.16.1-darwin-x64.tar.gz",
+			"sha256": "b762b72fc149629b7e394ea9b75a093cad709a9f2f71480942945d8da0fc1218",
+			"platform": "darwin-x64 executed on darwin-arm64 through Rosetta 2",
+			"honestLabel": "exact-pin: the version the repository names for itself, no deviation taken"
+		},
+		"target": {
+			"node": "24.15.0",
+			"vite": "8.0.16",
+			"bundler": "rolldown 1.0.3"
+		}
+	},
+	"baselineLane": {
+		"command": "yarn build:ci",
+		"commandNote": "build:ci is the script all three of the repository’s own CI definitions invoke (.circleci/config.yml twice, buildspec.yml once). Its prebuild:ci hook copies the committed AWS Cognito mock into src/aws-exports.js, which src/containers/AppCognito.tsx imports. The plain `build` script omits that hook and cannot compile at this revision; that is a pre-existing property of the application, observed and recorded, not repaired.",
+		"result": "green",
+		"builds": 2,
+		"deterministic": true,
+		"byteStableAcrossRebuilds": true,
+		"first": {
+			"digest": "57cea24966c61963914da814e8348c970f11468127228c070def6c6472980028",
+			"files": [
+				{
+					"path": "asset-manifest.json",
+					"sha256": "45862297cab6e8520274d0bd143695fda4a0cba6bb9a8229cd883b71afe861d9"
+				},
+				{
+					"path": "favicon.ico",
+					"sha256": "965301d82ae5432e113c4bf2fe253789812e4cf207cb49103bf71b72e6e08645"
+				},
+				{
+					"path": "img/rwa-readme-screenshot.png",
+					"sha256": "72493b5b4a94a4be6bc83010ed3fd598e4d9a0720d6f3d766eeb61a2455edd2c"
+				},
+				{
+					"path": "index.html",
+					"sha256": "042efe9d6b016f738371a48250be2e7723de415cf784c5d444ae3c6e556160ce"
+				},
+				{
+					"path": "logo192.png",
+					"sha256": "15d08b02d78823c12616b72d1b5adb0520940016b89bae1f758e6f1a105597ff"
+				},
+				{
+					"path": "logo512.png",
+					"sha256": "6c9a88867fefa2489b91fb85dab7cbec88f1022193ede7320da0ac3c45429519"
+				},
+				{
+					"path": "manifest.json",
+					"sha256": "50b3d8c3903af3f78d871b94557ab14f4e39ca192eaca3d2cfa863c867279a14"
+				},
+				{
+					"path": "robots.txt",
+					"sha256": "3ff0048f3edebfe57ead4ccbb645660094be33f7df63b6f4ee65f631f91c5d35"
+				},
+				{
+					"path": "static/css/3.b0240029.chunk.css",
+					"sha256": "10f49ab32b86df7a703afd9e36d8fe4973c96921dfac151548034ac0b898c21c"
+				},
+				{
+					"path": "static/css/3.b0240029.chunk.css.map",
+					"sha256": "be6c4d893d89dda49045b51d44a98aa609c7df2d9e6728bd00fc68d87c3f17c1"
+				},
+				{
+					"path": "static/js/10.7b7d31a5.chunk.js",
+					"sha256": "ea0b3c4c2915fe24e2c4416be7c9c3ca72bbdd5ccb66661631b6eafcd1c50964"
+				},
+				{
+					"path": "static/js/10.7b7d31a5.chunk.js.map",
+					"sha256": "ddd8eafb3ef9ba88ad0cab2da9d90efff9c96d00dd8b3ee06d65a20dbc7637c6"
+				},
+				{
+					"path": "static/js/11.4cccd93f.chunk.js",
+					"sha256": "4c8b83a00b52ff9c920acb2be01aa4b4d2af957fbf8da62dab2991ab16b0027e"
+				},
+				{
+					"path": "static/js/11.4cccd93f.chunk.js.map",
+					"sha256": "c4809a223eb4df2e8220feb77a2604a604242595ef121ae41efd7158127d4092"
+				},
+				{
+					"path": "static/js/12.87bacd5a.chunk.js",
+					"sha256": "3a0e9a728b4739a825e2c6f27ba1eb93d81e48d2be0d94a9f3e1e5e84ce097cf"
+				},
+				{
+					"path": "static/js/12.87bacd5a.chunk.js.map",
+					"sha256": "71f2764ecdb9c37df6f248f6ead6bb2e6f5597235d116633dd2d35b675147e0c"
+				},
+				{
+					"path": "static/js/13.8630bdd1.chunk.js",
+					"sha256": "496b652042184dc5a1613108b9d054cd6b5ecd1fd270586af8a6882d53da6fa5"
+				},
+				{
+					"path": "static/js/13.8630bdd1.chunk.js.map",
+					"sha256": "e9d0fc5cfad800f55ed33c9a26ff7c93c3af646d39a6eb3e84a10fe3660ce895"
+				},
+				{
+					"path": "static/js/14.8c10266f.chunk.js",
+					"sha256": "b3ba45507c5061aa80167359b8d419f1e51b5b3589a7a8afed3b944a2b544b1f"
+				},
+				{
+					"path": "static/js/14.8c10266f.chunk.js.map",
+					"sha256": "1881942a54588635db49dcfc6320aae200cd38aa86fea12973fb1825a5d3aeed"
+				},
+				{
+					"path": "static/js/15.0ca84779.chunk.js",
+					"sha256": "a6159905263026ec5263da46442b70a2d8081e0a17cbc7553ae73294d920fc3a"
+				},
+				{
+					"path": "static/js/15.0ca84779.chunk.js.LICENSE.txt",
+					"sha256": "28353cd9b927a746b3af2ee77caf57b7fcbb589dd878e576a6c0dc73b5f65e16"
+				},
+				{
+					"path": "static/js/15.0ca84779.chunk.js.map",
+					"sha256": "c94afb4f7748704b82df38ad683f8cabc54d2d5905d7ce18dffc2ae6c510fa3a"
+				},
+				{
+					"path": "static/js/16.5eb49207.chunk.js",
+					"sha256": "b59d59a6f109ef7efa64ca61b934362103258c405b111d08fa64eb6aab372b71"
+				},
+				{
+					"path": "static/js/16.5eb49207.chunk.js.map",
+					"sha256": "49095d0331d71f0dc65ae46da897afac7245de46cff944860fdaef313fdd75c1"
+				},
+				{
+					"path": "static/js/17.909acbd4.chunk.js",
+					"sha256": "bfc5a47d5aaf15dd71514e906e48b422580692bbcef3db8293386497cc6bf6a8"
+				},
+				{
+					"path": "static/js/17.909acbd4.chunk.js.map",
+					"sha256": "999ee61c9e9b86ca3aebb639328d481121ab7f6acb6f4fda9273eb9e55eea1d0"
+				},
+				{
+					"path": "static/js/18.4ff5cc24.chunk.js",
+					"sha256": "5fd8c51d52dcbb95059133258e1b1b1a4a2dcb3cf1fde63d2a9651853ac97d35"
+				},
+				{
+					"path": "static/js/18.4ff5cc24.chunk.js.map",
+					"sha256": "195c11427bcf7b4a9ae0da9f30254359e0fd9b775586a07d92519591b9b520d7"
+				},
+				{
+					"path": "static/js/19.e5221111.chunk.js",
+					"sha256": "6b80312871e174fff987a951c50c4eb5ec01bcf4c49a8753bc02e3ceae367735"
+				},
+				{
+					"path": "static/js/19.e5221111.chunk.js.map",
+					"sha256": "cb66f496ae4876b0e4c487ccd4b590afd68fc63668ef44b4ce026f27e62d19d5"
+				},
+				{
+					"path": "static/js/20.db7d4625.chunk.js",
+					"sha256": "61c142b6a4ec7239ecb9d8bd989df98e459d8fd8848dee9dbb7567e3574ed701"
+				},
+				{
+					"path": "static/js/20.db7d4625.chunk.js.map",
+					"sha256": "36acadbc52d2956570ff2e05fe1a6e3692c1ec385662266aff3d8e9cccccc008"
+				},
+				{
+					"path": "static/js/21.a27d0133.chunk.js",
+					"sha256": "14efaefb6b062731cbe19e0654193b44ee2f21688d353a2d231d80f5ce84147a"
+				},
+				{
+					"path": "static/js/21.a27d0133.chunk.js.map",
+					"sha256": "2e0e9551423f0930fdbabcc90d74bf58c90c29f2236fc799555961599a8cd48a"
+				},
+				{
+					"path": "static/js/22.3c724d81.chunk.js",
+					"sha256": "a6a53bc900fc9bfc57ca6bdeb8e4a91725f8e8b7ef6265e09d484d602b953674"
+				},
+				{
+					"path": "static/js/22.3c724d81.chunk.js.map",
+					"sha256": "a232cdaf365deeaf1caf95a148ccae7ac361df99f4a03628706aede1e868d390"
+				},
+				{
+					"path": "static/js/23.04006759.chunk.js",
+					"sha256": "f676331a9687df707906723f27bbe4f15702ec07cfad1cfd8002699e584aa075"
+				},
+				{
+					"path": "static/js/23.04006759.chunk.js.map",
+					"sha256": "5204d658721d0206c6beeb833500dadad9063a9c827b3378b78efae0416fde36"
+				},
+				{
+					"path": "static/js/24.029a370d.chunk.js",
+					"sha256": "3ef2cce7874a81c9c3caccb1d5c6d23cb5bbdbf7263ff5b3b4e8e970892df17e"
+				},
+				{
+					"path": "static/js/24.029a370d.chunk.js.map",
+					"sha256": "86d544660e2aaf221ef1d0eee034322a9891636ade35d73cf66b65f378d02219"
+				},
+				{
+					"path": "static/js/25.13f18c1f.chunk.js",
+					"sha256": "bf05d5bad1ea290752f744f191a17d7968b642d8485593c438608ee20c60cc15"
+				},
+				{
+					"path": "static/js/25.13f18c1f.chunk.js.map",
+					"sha256": "35df9d41be070b14ef34751bb457227c237b1148a2a5af9de2ca0c3e476ce647"
+				},
+				{
+					"path": "static/js/26.2035dfbf.chunk.js",
+					"sha256": "7366767e55467a3365988e9ac08e1a53727865aecda8a7002c30eadbe4c8c888"
+				},
+				{
+					"path": "static/js/26.2035dfbf.chunk.js.map",
+					"sha256": "f31fcf5d7d131d855bfa6cb6ec640f9c110b53d3631954a88f14830fd4e91631"
+				},
+				{
+					"path": "static/js/27.b33f0c4b.chunk.js",
+					"sha256": "e57f1925e7024225a4287bf87978376966c78e9058d3dc69f413113fb695c325"
+				},
+				{
+					"path": "static/js/27.b33f0c4b.chunk.js.map",
+					"sha256": "deb5f15afffee4e9816861ac20c74e5b8d460e2e1cbb8e572889982d2a9a9f6e"
+				},
+				{
+					"path": "static/js/28.0156b63f.chunk.js",
+					"sha256": "66b02eab944030057086b2fca4f99b7edaef5e69f0d52a6a1d0c9fea69427def"
+				},
+				{
+					"path": "static/js/28.0156b63f.chunk.js.map",
+					"sha256": "485b5bf8183857e7e389820d92e484b843bf6edf89e6e5c11bd172761816b43c"
+				},
+				{
+					"path": "static/js/29.8c7aeca7.chunk.js",
+					"sha256": "f861bc7d1e184c0ef50f1ca97be5657f8cedae7980dc565b75891be19fd4fff9"
+				},
+				{
+					"path": "static/js/29.8c7aeca7.chunk.js.map",
+					"sha256": "c04e39c4f02d7f74702274be6e31097a43b7af7e0aa30456cea2552c5526fefc"
+				},
+				{
+					"path": "static/js/3.65c0dd34.chunk.js",
+					"sha256": "faec8e5578f9cab2c768be1ef5d460542e0156c7d3f32a0f82c4b48aba9db14f"
+				},
+				{
+					"path": "static/js/3.65c0dd34.chunk.js.LICENSE.txt",
+					"sha256": "8702c7b057b9560eb5d7c5b9e26d9a9dc4c715b843157a5877cb2deac00a66eb"
+				},
+				{
+					"path": "static/js/3.65c0dd34.chunk.js.map",
+					"sha256": "50957777183ff952891b5048600192a9ce7de0a43c13c9f674747395ef610f06"
+				},
+				{
+					"path": "static/js/30.56df4b61.chunk.js",
+					"sha256": "f19a7e7359cdc82abc436dfcc7de88d6eb7372ffae680dcdc787584103e54c02"
+				},
+				{
+					"path": "static/js/30.56df4b61.chunk.js.map",
+					"sha256": "9012b52fa27a2c59a9a8c7ff2190afb1b28d019f7f760bce482a3833464fa21e"
+				},
+				{
+					"path": "static/js/31.7942eddd.chunk.js",
+					"sha256": "562bf91fc9833bd22b051cceb26053e58ad48fedeba1a1783c8c33dc200ccc12"
+				},
+				{
+					"path": "static/js/31.7942eddd.chunk.js.map",
+					"sha256": "d598c141d7f81b19463301f2dd2608af628efcef296f376f82e07aa091814a63"
+				},
+				{
+					"path": "static/js/32.1c3ae373.chunk.js",
+					"sha256": "a6ee69c0571aa6358e4b1c256bf8cb23a028015e22c1f86885ccd3007a950a12"
+				},
+				{
+					"path": "static/js/32.1c3ae373.chunk.js.map",
+					"sha256": "bb89a647762a238a73c4298906b29cdcc9d356f87c3aa8a5aa5d6e9076d2d092"
+				},
+				{
+					"path": "static/js/33.0d431de6.chunk.js",
+					"sha256": "49c17b695743f50ccf048d3e5b42205459c3abcf9e8a108445800d7cc3c02000"
+				},
+				{
+					"path": "static/js/33.0d431de6.chunk.js.LICENSE.txt",
+					"sha256": "3a77de513a8b913936cf8fd93b05e202e51c90a62634339cd42184df0e9fa418"
+				},
+				{
+					"path": "static/js/33.0d431de6.chunk.js.map",
+					"sha256": "97403bf75f17bade255300551d99e058e1d19e51b65edf0a5c59fcb4a039e1f7"
+				},
+				{
+					"path": "static/js/34.b7e56b29.chunk.js",
+					"sha256": "7c83f9dce09e1cc3218615d8a2e975af671510ed27b3febc32be288e7fd01ab8"
+				},
+				{
+					"path": "static/js/34.b7e56b29.chunk.js.map",
+					"sha256": "13549b4303227eecc99cbf40570aa8c79500893b5881178df4d640efe550095e"
+				},
+				{
+					"path": "static/js/4.f855991a.chunk.js",
+					"sha256": "ecab347705768beb60404bb1699e34ec7bafa3d33fbd1a4b991273da44d6dbaa"
+				},
+				{
+					"path": "static/js/4.f855991a.chunk.js.LICENSE.txt",
+					"sha256": "0d8f66cd4afb566cb5b7e1540c68f43b939d3eba12ace290f18abc4f4cb53ed0"
+				},
+				{
+					"path": "static/js/4.f855991a.chunk.js.map",
+					"sha256": "26a3ec7ec8003a88606a9d5dc854e32564bb024c8d60bd544764dc79dc45db92"
+				},
+				{
+					"path": "static/js/5.e3b4d833.chunk.js",
+					"sha256": "72973de101981a7a7af11caedfc6aa6a12d14c3cef1f11a8552e7196e50d0de2"
+				},
+				{
+					"path": "static/js/5.e3b4d833.chunk.js.map",
+					"sha256": "67ac5725db4e54bde9bf3bb296984d2cc9b0714efe7918f738256ac61e570e82"
+				},
+				{
+					"path": "static/js/6.c09292af.chunk.js",
+					"sha256": "182916a04071e6fc1556460cdb73689dca0a8797d13f1f4cd5c7d8aa27e2f453"
+				},
+				{
+					"path": "static/js/6.c09292af.chunk.js.map",
+					"sha256": "04317475a082e30b361ba1a205df9942ab5a59bcd8f55c933a4188ffb45d63bb"
+				},
+				{
+					"path": "static/js/7.1f90d2ae.chunk.js",
+					"sha256": "79e825340dd3c821c6409112839678611913fb85b040044f96db6e3f37057205"
+				},
+				{
+					"path": "static/js/7.1f90d2ae.chunk.js.map",
+					"sha256": "d4ebde2fd779e6828334de306d1c5b6703b3293adc9399ae9d70b72bc2e84d41"
+				},
+				{
+					"path": "static/js/8.bd988ac6.chunk.js",
+					"sha256": "d0292a93699a6106c857069752d635a8ee1e5ff68a45d199e15822547057a7fc"
+				},
+				{
+					"path": "static/js/8.bd988ac6.chunk.js.map",
+					"sha256": "6737e3fb278f060c1f73337566577398155bc541f113dba7f3e03f7603d72947"
+				},
+				{
+					"path": "static/js/9.012c4105.chunk.js",
+					"sha256": "fd6778c3b8ce76482259f53703cd365458b4d601b983333c361e6d5b6a751dfe"
+				},
+				{
+					"path": "static/js/9.012c4105.chunk.js.map",
+					"sha256": "6abaa5b7ed4c63af4281512951768fcb7945d64dd069ce135eb8d9d119ef4f15"
+				},
+				{
+					"path": "static/js/main.bf709c84.chunk.js",
+					"sha256": "d6d3ae13ac1c00a3b24598da0b6dd294e389de66b8ccd91ddb35895ce0505f6b"
+				},
+				{
+					"path": "static/js/main.bf709c84.chunk.js.map",
+					"sha256": "802c36d838249290eb123705e5e9d430a6146aa7791dbd990b8d0ea6788d7d16"
+				},
+				{
+					"path": "static/js/polyfills-css-shim.b6642950.chunk.js",
+					"sha256": "46f1e71672862b6e0e2dd92ab54ea68291fd988ac279ffee54ef000f9fbad8d9"
+				},
+				{
+					"path": "static/js/polyfills-css-shim.b6642950.chunk.js.map",
+					"sha256": "27d6ad8674040147a6017cd80d9a48de26ea59118f3b0faeeadd2987ee08ace7"
+				},
+				{
+					"path": "static/js/runtime-main.33e298e1.js",
+					"sha256": "0d289919c2329682a586d0a0b4b2e70d4ec53efb8203c2a4ace37e51ca384cfb"
+				},
+				{
+					"path": "static/js/runtime-main.33e298e1.js.map",
+					"sha256": "fe163893edffacda5ac80be3a624e621e7425787ddcbf845d53dd37d3b33e5fc"
+				}
+			]
+		},
+		"second": {
+			"digest": "57cea24966c61963914da814e8348c970f11468127228c070def6c6472980028"
+		},
+		"fileCount": 84
+	},
+	"migratedLane": {
+		"command": "vite build --config fixtures/react-cypress-rwa/vite.config.ts",
+		"adapterComposition": "createCraViteAdapter, applied as it stands",
+		"genericCapabilitiesOnly": true,
+		"holdoutSpecificConfiguration": "none",
+		"fixtureDeclaredFacts": {
+			"entryModule": "/src/index.tsx",
+			"publicDirectory": "public",
+			"templateFile": "index.html",
+			"environmentPrefix": "REACT_APP_",
+			"environment": {
+				"NODE_ENV": "production",
+				"PUBLIC_URL": "",
+				"REACT_APP_BACKEND_PORT": "3001",
+				"REACT_APP_PORT": "3000"
+			},
+			"environmentNote": "The REACT_APP_ entries are not hand-listed: the fixture config reads the application’s own committed .env and applies create-react-app’s own prefix rule to it."
+		},
+		"entryDocumentSha256": "96c4b57713901459094aca9a4a26c93479b48766d7b518fba320a3ed4c383c14",
+		"result": "red",
+		"attempts": 2,
+		"stableAcrossAttempts": true,
+		"stableAcrossAttemptsNote": "Both attempts exited the same way with the same itemized demand, so the red is a measurement rather than a flake.",
+		"exitCode": 1,
+		"modulesTransformedBeforeFailure": 10181,
+		"demands": [
+			{
+				"code": "UNLOADABLE_DEPENDENCY",
+				"module": "node_modules/faker/lib/locales/it/name/first_name.js",
+				"importer": "node_modules/faker/lib/locales/it/name/index.js",
+				"line": 5,
+				"column": 27,
+				"detail": "stream did not contain valid UTF-8"
+			}
+		]
+	},
+	"falsificationFinding": {
+		"verdict": "the frozen create-react-app adapter does not carry this application",
+		"missingCapability": "non-UTF-8 module source decoding",
+		"statement": "webpack 4 decoded every module’s bytes leniently, so a dependency file stored in ISO-8859-1 reached the bundle with its bytes replaced rather than rejected. Vite 8’s bundler requires every module source to be valid UTF-8 and refuses to load one that is not. The frozen adapter has no capability covering byte-level source decoding, so the build stops.",
+		"exactDemand": {
+			"code": "UNLOADABLE_DEPENDENCY",
+			"module": "node_modules/faker/lib/locales/it/name/first_name.js",
+			"importer": "node_modules/faker/lib/locales/it/name/index.js",
+			"line": 5,
+			"column": 27,
+			"construct": "name.first_name = require(\"./first_name\");",
+			"compilerText": "stream did not contain valid UTF-8"
+		},
+		"offendingFile": {
+			"path": "node_modules/faker/lib/locales/it/name/first_name.js",
+			"package": "faker@5.5.3",
+			"bytes": 21980,
+			"sha256": "02a9f8a91945f0ed006e7b79efcfc7b9548f20e90042c5a0e84acaa6f654eb1d",
+			"encoding": "ISO-8859-1, not UTF-8",
+			"invalidUtf8ByteCount": 6,
+			"invalidBytes": [
+				{
+					"offset": 5170,
+					"byte": "0xf9",
+					"latin1": "ù",
+					"inWord": "Esaù"
+				},
+				{
+					"offset": 6973,
+					"byte": "0xe8",
+					"latin1": "è",
+					"inWord": "Giosuè"
+				},
+				{
+					"offset": 9233,
+					"byte": "0xe8",
+					"latin1": "è",
+					"inWord": "Mosè"
+				},
+				{
+					"offset": 9538,
+					"byte": "0xf2",
+					"latin1": "ò",
+					"inWord": "Nicolò"
+				},
+				{
+					"offset": 9570,
+					"byte": "0xe8",
+					"latin1": "è",
+					"inWord": "Noè"
+				}
+			],
+			"invalidBytesNote": "Five of the six invalid bytes are listed; all six are accented characters in Italian given names."
+		},
+		"reachedFromApplicationCode": {
+			"importer": "src/utils/transactionUtils.ts",
+			"construct": "import faker from \"faker\";",
+			"note": "This is production application source, not test-only code, so faker 5.5.3 is genuinely in the browser module graph. faker’s locale index eagerly requires every locale file, so the Italian name list is pulled in whether or not the application uses that locale."
+		},
+		"whyThisIsNotAnAdapterBug": "The adapter’s five capabilities are about module semantics: tilde CSS specifiers, webpack’s sloppy-mode CommonJS wrapper, webpack’s Node core shim table, the ambient global identifier, and public directory replication. Source decoding sits below all of them, at the point where the bundler turns bytes into text. Nothing in the frozen composition is positioned to intervene there.",
+		"actionTaken": "none. Recorded as a finding. No adapter change was proposed or executed."
+	},
+	"observedButNotFatal": {
+		"externalizedNodeCoreModules": [
+			{
+				"module": "fs",
+				"importer": "node_modules/dotenv/lib/main.js"
+			}
+		],
+		"note": "Vite externalized `fs` for the browser where dotenv requires it. The adapter’s shim table deliberately omits the specifiers webpack itself emitted an empty module for, so this is reported rather than resolved. It is a warning, not the failure; the build passed it and continued for 10181 modules before stopping on the demand above."
+	},
+	"applicationFilesChanged": {
+		"count": 0,
+		"countNote": "Zero application source files were edited by hand, matching the papercups and HospitalRun precedent. The three files below are all generated, and the first two are generated by the application’s own committed scripts in BOTH lanes alike.",
+		"generatedByTheApplicationsOwnScripts": [
+			{
+				"path": "src/aws-exports.js",
+				"by": "yarn predev:cognito:ci (ncp scripts/mock-aws-exports.js src/aws-exports.js)",
+				"lanes": "both"
+			},
+			{
+				"path": "aws-exports-es5.js",
+				"by": "yarn predev:cognito:ci (ncp scripts/mock-aws-exports-es5.js aws-exports-es5.js)",
+				"lanes": "both"
+			}
+		],
+		"generatedByTheMigration": [
+			{
+				"path": "index.html",
+				"by": "craEntryDocument, from the immutable public/index.html template",
+				"lanes": "migrated only",
+				"sha256": "96c4b57713901459094aca9a4a26c93479b48766d7b518fba320a3ed4c383c14"
+			}
+		],
+		"handEditedSourceFiles": []
+	},
+	"serviceWorkerState": {
+		"applicationRegistersOne": false,
+		"evidence": "src/index.tsx contains no serviceWorker import and no registration call; the tree ships no serviceWorker.ts and no src/service-worker.js. create-react-app 4 emits a worker only when the application opts in.",
+		"baselineOutputContainsWorkerAssets": false,
+		"baselineWorkerAssets": [],
+		"consequence": "Neither lane has a service worker, so the registration difference recorded for other fixtures in this corpus does not arise here. Nothing is claimed either way about runtime caching."
+	},
+	"parity": {
+		"comparable": false,
+		"reason": "Build-level parity needs two built lanes. Only the baseline built, so no output comparison is made. The baseline inventory is recorded in full so a future comparison has a fixed reference.",
+		"declaredDifferences": [
+			"The baseline build is a webpack 4 create-react-app production build; the migrated lane produced no output at all."
+		],
+		"nonClaims": [
+			"No claim that this application can be migrated by the frozen adapter. It cannot, at this revision, and that is the recorded result.",
+			"No claim that a single additional capability would make it green: the build stopped at the first unloadable module, so any demand behind that point is unobserved.",
+			"No runtime, boot, or behavioural parity is claimed. The migrated lane never produced a bundle to boot.",
+			"No claim about the four external auth provider modes; the local passport-local mode is the only one exercisable offline and no lane exercised it.",
+			"The baseline lane is a build measurement only. It was not booted in this unit."
+		]
+	}
+}
