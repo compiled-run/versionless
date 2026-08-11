@@ -14,6 +14,13 @@
 
 import { REMOVED_BUILDER_PACKAGES, compareStrings } from './angular-target-cell.ts';
 import type { AngularTargetCell } from './angular-target-cell.ts';
+import {
+	WRAPPER_BUILDER_REPLACEMENTS,
+	WRAPPER_ONLY_OPTIONS,
+	analyzeCustomWebpackFragment,
+	builderPackageOf,
+	type WebpackFragmentAnalysis,
+} from './custom-webpack-absorption.ts';
 
 export type ConfigChange = Readonly<{ path: string; from: string | null; to: string | null }>;
 
@@ -22,7 +29,19 @@ export type WorkspaceMigration = Readonly<{
 	changes: readonly ConfigChange[];
 	removedPackages: readonly string[];
 	unhandled: readonly string[];
+	/**
+	 * Webpack fragments that are no longer referenced by any target, because the
+	 * wrapper builder that read them was absorbed back into the official builder.
+	 */
+	absorbedFragments: readonly WebpackFragmentAnalysis[];
 }>;
+
+/**
+ * Webpack fragments a wrapper builder may reference, keyed by the path the
+ * workspace writes for them. A referenced fragment that is not supplied here
+ * cannot be read, and an unread fragment is never absorbed.
+ */
+export type WebpackFragmentSources = Readonly<Record<string, string>>;
 
 type JsonObject = Record<string, unknown>;
 
@@ -116,13 +135,99 @@ function objectAt(value: unknown): JsonObject | null {
 		: null;
 }
 
+/** `./webpack.config.js` and `webpack.config.js` name the same file. */
+export function normalizeFragmentPath(value: string): string {
+	return value.startsWith('./') ? value.slice(2) : value;
+}
+
+/** The fragment a wrapper target references, or null when it references none. */
+function fragmentPathOf(target: JsonObject): string | null {
+	const options = objectAt(target['options']);
+	const declared = options === null ? undefined : objectAt(options['customWebpackConfig']);
+	const path = declared?.['path'];
+	return typeof path === 'string' ? normalizeFragmentPath(path) : null;
+}
+
+type WrapperAbsorption = Readonly<{
+	/** True when every fragment any wrapper target references can be absorbed. */
+	absorbed: boolean;
+	analyses: readonly WebpackFragmentAnalysis[];
+	blockers: readonly string[];
+	/** Wrapper packages released once every one of their targets is absorbed. */
+	releasedPackages: readonly string[];
+}>;
+
+/**
+ * Decide, for the whole workspace at once, whether the wrapper builders can be
+ * absorbed back into the official ones.
+ *
+ * The decision is workspace-wide rather than per target because the wrapper is
+ * one dependency serving all of them, and because a wrapper target that names no
+ * fragment of its own — a `dev-server` reading its browser target's — is only
+ * absorbable if the fragment that target names is. Absorbing some targets and
+ * not others would leave the package installed and the build half-migrated, so
+ * one unreadable fragment refuses the lot.
+ */
+function planWrapperAbsorption(
+	projects: JsonObject,
+	fragments: WebpackFragmentSources,
+): WrapperAbsorption {
+	const analyses = new Map<string, WebpackFragmentAnalysis>();
+	const blockers: string[] = [];
+	const releasedPackages = new Set<string>();
+	let sawWrapper = false;
+	for (const projectValue of Object.values(projects)) {
+		const project = objectAt(projectValue);
+		if (project === null) continue;
+		const architect = objectAt(project['architect']) ?? objectAt(project['targets']);
+		if (architect === null) continue;
+		for (const targetValue of Object.values(architect)) {
+			const target = objectAt(targetValue);
+			const builder = target === null ? null : target['builder'];
+			if (typeof builder !== 'string') continue;
+			const official = WRAPPER_BUILDER_REPLACEMENTS[builder];
+			if (official === undefined) continue;
+			sawWrapper = true;
+			const released = builderPackageOf(builder);
+			if (released !== null) releasedPackages.add(released);
+			const fragmentPath = target === null ? null : fragmentPathOf(target);
+			if (fragmentPath === null) continue;
+			if (analyses.has(fragmentPath)) continue;
+			const source = fragments[fragmentPath] ?? fragments[`./${fragmentPath}`];
+			if (source === undefined) {
+				blockers.push(
+					`${fragmentPath} is referenced by ${builder} but its contents were not supplied, ` +
+						'so what it adds to the build cannot be read and the wrapper was left in place',
+				);
+				continue;
+			}
+			analyses.set(fragmentPath, analyzeCustomWebpackFragment(fragmentPath, source, official));
+		}
+	}
+	for (const analysis of analyses.values())
+		if (!analysis.absorbable)
+			for (const blocker of analysis.blockers)
+				blockers.push(`${analysis.path}: ${blocker}`);
+	return Object.freeze({
+		absorbed: sawWrapper && blockers.length === 0,
+		analyses: Object.freeze([...analyses.values()]),
+		blockers: Object.freeze(blockers),
+		releasedPackages: Object.freeze([...releasedPackages].sort(compareStrings)),
+	});
+}
+
 function migrateBuilderOptions(
 	options: JsonObject,
 	prefix: string,
 	changes: ConfigChange[],
+	wrapperAbsorbed: boolean,
 ): JsonObject {
 	const next: JsonObject = {};
 	for (const [key, value] of Object.entries(options)) {
+		if (wrapperAbsorbed && WRAPPER_ONLY_OPTIONS.includes(key)) {
+			changes.push({ path: `${prefix}.${key}`, from: JSON.stringify(value), to: null });
+			continue;
+		}
 		if (REMOVED_BUILDER_OPTIONS.includes(key)) {
 			changes.push({ path: `${prefix}.${key}`, from: JSON.stringify(value), to: null });
 			continue;
@@ -153,6 +258,7 @@ function migrateBuilderOptions(
 export function migrateAngularWorkspace(
 	source: string,
 	cell: AngularTargetCell,
+	fragments: WebpackFragmentSources = {},
 ): WorkspaceMigration {
 	const workspace = parseStrictJson(source, 'workspace');
 	const changes: ConfigChange[] = [];
@@ -164,9 +270,35 @@ export function migrateAngularWorkspace(
 			changes.push({ path: 'defaultProject', from: JSON.stringify(value), to: null });
 			continue;
 		}
+		if (key === 'cli') {
+			const cli = objectAt(value);
+			if (cli !== null && 'defaultCollection' in cli) {
+				const { defaultCollection, ...rest } = cli;
+				const collections =
+					typeof defaultCollection === 'string' ? [defaultCollection] : defaultCollection;
+				next[key] = { ...rest, schematicCollections: collections };
+				changes.push({
+					path: 'cli.defaultCollection',
+					from: JSON.stringify(defaultCollection),
+					to: null,
+				});
+				changes.push({
+					path: 'cli.schematicCollections',
+					from: null,
+					to: JSON.stringify(collections),
+				});
+				continue;
+			}
+		}
 		next[key] = value;
 	}
 	const projects = objectAt(next['projects']);
+	const absorption =
+		projects === null
+			? { absorbed: false, analyses: [], blockers: [], releasedPackages: [] }
+			: planWrapperAbsorption(projects, fragments);
+	unhandled.push(...absorption.blockers);
+	if (absorption.absorbed) for (const name of absorption.releasedPackages) removedPackages.add(name);
 	if (projects !== null) {
 		const migratedProjects: JsonObject = {};
 		for (const [projectName, projectValue] of Object.entries(projects)) {
@@ -184,8 +316,17 @@ export function migrateAngularWorkspace(
 			const migratedTargets: JsonObject = {};
 			for (const [targetName, targetValue] of Object.entries(architect)) {
 				const target = objectAt(targetValue);
-				const builder = target === null ? null : target['builder'];
+				let builder = target === null ? null : target['builder'];
 				const targetPath = `projects.${projectName}.${architectKey}.${targetName}`;
+				if (
+					absorption.absorbed &&
+					typeof builder === 'string' &&
+					WRAPPER_BUILDER_REPLACEMENTS[builder] !== undefined
+				) {
+					const official = WRAPPER_BUILDER_REPLACEMENTS[builder] as string;
+					changes.push({ path: `${targetPath}.builder`, from: builder, to: official });
+					builder = official;
+				}
 				if (typeof builder === 'string' && REMOVED_BUILDERS.includes(builder)) {
 					changes.push({ path: targetPath, from: builder, to: null });
 					for (const name of REMOVED_BUILDER_PACKAGES[builder] ?? [])
@@ -208,13 +349,14 @@ export function migrateAngularWorkspace(
 					migratedTargets[targetName] = targetValue;
 					continue;
 				}
-				const migratedTarget: JsonObject = { ...target };
+				const migratedTarget: JsonObject = { ...target, builder };
 				const options = objectAt(target['options']);
 				if (options !== null)
 					migratedTarget['options'] = migrateBuilderOptions(
 						options,
 						`${targetPath}.options`,
 						changes,
+						absorption.absorbed,
 					);
 				const configurations = objectAt(target['configurations']);
 				if (configurations !== null) {
@@ -228,6 +370,7 @@ export function migrateAngularWorkspace(
 										configuration,
 										`${targetPath}.configurations.${name}`,
 										changes,
+										absorption.absorbed,
 									);
 					}
 					migratedTarget['configurations'] = migratedConfigurations;
@@ -243,6 +386,7 @@ export function migrateAngularWorkspace(
 		changes: Object.freeze(changes),
 		removedPackages: Object.freeze([...removedPackages].sort(compareStrings)),
 		unhandled: Object.freeze(unhandled),
+		absorbedFragments: Object.freeze(absorption.absorbed ? absorption.analyses : []),
 	});
 }
 

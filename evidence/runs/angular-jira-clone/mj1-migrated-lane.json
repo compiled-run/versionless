@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "versionless.angular-jira-clone-migrated-lane.v1",
+  "unit": "lrapr-t005/mj1-jira-clone-migration-lanes",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "result": "red-at-closure-install",
+  "meaning": "The migrated tree exists and its changeset is recorded beside this file. The Angular 16.2 dependency closure it asks for does not resolve, so no migrated build ran, no migrated inventory exists, and no build-level parity is recorded. This file records that state; it does not record a lane that did not happen.",
+  "cell": {
+    "node": "v16.20.2",
+    "architecture": "darwin-arm64, native — no translation layer",
+    "npm": "8.19.4 (bundled with the runtime)",
+    "intendedCommand": "ng build --configuration production (never reached)",
+    "builder": "@angular-devkit/build-angular:browser (Angular 16.2), the builder the absorption restored"
+  },
+  "acquisition": {
+    "purpose": "Install the declared Angular 16.2 dependency closure the migrated manifest asks for.",
+    "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+    "networkMode": "consented",
+    "method": "npm install --no-audit --no-fund (no lockfile carried over: the era lockfileVersion 2 pins the Angular 13 closure)",
+    "outcome": "failed — npm ERESOLVE, no package was downloaded and no node_modules was written",
+    "migratedManifestSha256": "fc7740f794accbb62e29f4f86c275da1971f98571cffa5a1565bb950e39b354b",
+    "urlsAcquired": [],
+    "urlsAcquiredNote": "None. The resolver refused before fetching any tarball, so there is no acquired URL or digest to record. Registry metadata reads made by the resolver are the only network traffic this step produced.",
+    "stderrTail": "npm ERR! code ERESOLVE\nnpm ERR! ERESOLVE unable to resolve dependency tree\nnpm ERR! \nnpm ERR! While resolving: jira-clone-angular-frontend@1.0.0\nnpm ERR! Found: @angular/common@16.2.12\nnpm ERR! node_modules/@angular/common\nnpm ERR!   @angular/common@\"^16.2.0\" from the root project\nnpm ERR! \nnpm ERR! Could not resolve dependency:\nnpm ERR! peer @angular/common@\"^13.0.1\" from @ant-design/icons-angular@13.1.0\nnpm ERR! node_modules/@ant-design/icons-angular\nnpm ERR!   @ant-design/icons-angular@\"^13.1.0\" from the root project\nnpm ERR! \nnpm ERR! Fix the upstream dependency conflict, or retry"
+  },
+  "blocker": {
+    "shape": "Angular-major-coupled community libraries",
+    "firstConflict": "@ant-design/icons-angular@13.1.0 declares peer @angular/common@^13.0.1; the aligned root asks for @angular/common@^16.2.0.",
+    "why": "This application draws on a community library layer the factoriolab application did not have. Those packages version in lockstep with the Angular major and each one declares a peer range on it, so an era copy of any of them refuses the target line. The adapter’s cell aligns the Angular packages, the devkit, @angular-eslint and the test toolchain; it says nothing about ng-zorro-antd, @ant-design/icons-angular, Akita, @ngneat/*, @sentry/angular, ngx-quill, Storybook, codelyzer or nz-tslint-rules, and inventing versions for them here would be a guess written into a manifest.",
+    "knownAtRisk": [
+      "@ant-design/icons-angular ^13.1.0 — the conflict npm reported first",
+      "ng-zorro-antd ^13.1.0 — peers @angular/core ^13",
+      "@datorama/akita ^7.1.1 with @datorama/akita-ng-entity-service ^7.0.0, @datorama/akita-ng-router-store ^7.0.0, @datorama/akita-ngdevtools ^7.0.0",
+      "@ngneat/content-loader ^6.0.0, @ngneat/until-destroy ^8.0.3, @ngneat/tailwind ^7.0.3",
+      "@sentry/angular ^6.18.1",
+      "ngx-quill ^16.1.2",
+      "@storybook/angular ^6.1.11 and its four addons",
+      "codelyzer ^6.0.0 and nz-tslint-rules ^0.901.2, both tied to a TSLint line that has no Angular 16 release at all"
+    ],
+    "knownAtRiskNote": "This list is read off the era manifest’s declared peer surface. Only the first entry was observed failing: npm stops at the first unresolvable peer, so the rest are candidates, not observations."
+  },
+  "whatDidWork": [
+    "The custom-webpack absorption is generic and it fired: the fragment was read statically, every capability it declares was matched against the official builder’s own postcss pipeline, both wrapper targets went back to the devkit builder, and @angular-builders/custom-webpack was released.",
+    "The upstream-invalid `extractCss` key was removed by the adapter’s existing generic removed-option table, with no application-specific patch — the same deletion the ingest had to make by hand.",
+    "`cli.defaultCollection` was rewritten to `cli.schematicCollections`, the CLI’s own rename, as a generic workspace-key transform."
+  ],
+  "notEstablished": [
+    "No migrated build ran. Nothing here establishes that the migrated tree compiles, emits, or would emit anything at all.",
+    "No build-level parity exists for this cell, because only one of the two lanes produced an inventory.",
+    "The absorption fired, but no build has yet confirmed that the official builder’s native Tailwind wiring produces the same styles the fragment produced. That confirmation needs the migrated lane to go green.",
+    "Nothing here is a production-readiness, pilot, certification or general Angular support claim."
+  ],
+  "recordedRisks": [
+    "The application initialises Sentry with a hard-coded DSN in src/main.ts. The DSN is present in every artifact both lanes emit. Its value is deliberately not reproduced anywhere in this evidence tree.",
+    "The application initialises Google Analytics with a hard-coded measurement id in src/app/core/services/google-analytics.service.ts. The id is present in every artifact both lanes emit. Its value is deliberately not reproduced anywhere in this evidence tree.",
+    "Neither lane opened a browser, so neither made nor observed a request to Sentry or to Google. Their presence in the bundles is recorded as presence, not as behaviour."
+  ],
+  "digest": "bcbdaa63cdbcef50556df6bc1c82cc1e3b500e270b17ada1f6da2cbbc10137e4"
+}

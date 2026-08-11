@@ -78,6 +78,7 @@ export const ANGULAR_16_BROWSER_CELL: AngularTargetCell = Object.freeze({
 		'@angular-devkit/': '^16.2.0',
 		'@schematics/': '^16.2.0',
 		'@ngrx/': '^16.3.0',
+		'@angular-eslint/': '^16.1.0',
 	}),
 	testPackages: Object.freeze({
 		'@types/jasmine': '~4.3.0',
@@ -92,6 +93,7 @@ export const ANGULAR_16_BROWSER_CELL: AngularTargetCell = Object.freeze({
 		'Angular 16 accepts Node ^16.14.0 || ^18.10.0; this host carries a native Node 16.20.2, which is inside that range.',
 		'The `browser` builder the era workspace already declares is still the mainstream application builder on the Angular 16 line, so the builder identity survives the hop unchanged.',
 		'A newer line was not declared because it would pair an unverified Node line with a builder swap in the same step, and neither could be evidenced here.',
+		'@angular-eslint is versioned in lockstep with the Angular major it lints — its 16.x line is the one published for Angular 16 — and its schematics package pins a peer range on the matching @angular/cli major. An era @angular-eslint left in place makes the closure unresolvable, so the family is aligned with the framework rather than left behind.',
 		'The test toolchain is declared as the versions this line’s own schematics generate. Leaving it at its era ranges is not a neutral choice: an era jasmine pinned below what a floating karma reporter range now demands makes the dependency closure unresolvable, so the install that the build cell needs cannot happen at all.',
 	]),
 	nonclaims: Object.freeze([

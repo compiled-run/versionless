@@ -25,6 +25,7 @@ import {
 import {
 	migrateAngularTsConfig,
 	migrateAngularWorkspace,
+	normalizeFragmentPath,
 	type ConfigChange,
 } from './angular-workspace-migration.ts';
 
@@ -36,6 +37,12 @@ export type AngularMigrationInput = Readonly<{
 	tsConfig: WorkspaceFile;
 	/** Application source modules, as read from the workspace. */
 	sourceModules: readonly WorkspaceFile[];
+	/**
+	 * Webpack fragments a wrapper builder reads, keyed by the path the workspace
+	 * writes for them. A fragment a target references but that is not supplied
+	 * here is reported unread and its wrapper builder is left in place.
+	 */
+	webpackFragments?: readonly WorkspaceFile[];
 }>;
 
 export type MigratedFile = Readonly<{
@@ -108,8 +115,17 @@ export function migrateAngularCliEraWorkspace(
 	cell: AngularTargetCell,
 ): AngularMigration {
 	const unhandled: string[] = [];
-	const workspace = migrateAngularWorkspace(input.workspaceConfig.source, cell);
+	const fragments: Record<string, string> = {};
+	for (const fragment of input.webpackFragments ?? [])
+		fragments[normalizeFragmentPath(fragment.path)] = fragment.source;
+	const workspace = migrateAngularWorkspace(input.workspaceConfig.source, cell, fragments);
 	unhandled.push(...workspace.unhandled);
+	for (const absorbed of workspace.absorbedFragments)
+		unhandled.push(
+			`${absorbed.path} was absorbed into the official builder and is no longer referenced by any ` +
+				`target; it was left in the tree rather than deleted. Absorbed capabilities: ` +
+				absorbed.capabilities.map((entry) => `${entry.kind} ${entry.detail}`).join(', '),
+		);
 	const manifest: unknown = JSON.parse(input.packageManifest.source);
 	if (typeof manifest !== 'object' || manifest === null || Array.isArray(manifest))
 		throw new Error('Angular migration: the package manifest is not a JSON object');
