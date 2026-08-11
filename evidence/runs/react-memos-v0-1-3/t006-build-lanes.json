@@ -1,0 +1,369 @@
+{
+	"schemaVersion": "versionless.legacy-build-parity.v1",
+	"slug": "react-memos-v0-1-3",
+	"unit": "lrapr-t006/u6-memos-migration-lanes",
+	"consentId": "VL-LEGACY-CORPUS-2026-08-10",
+	"migrationClass": "OLD-VITE-ORIGIN",
+	"migrationClassNote": "The portfolio's first migration whose ORIGIN bundler is Vite itself. Every React migration recorded before this one lifted a webpack-era toolchain (create-react-app) onto Vite. Here both lanes are Vite: the origin is Vite 2.9.5 and the target is Vite 8.0.16, six major versions apart. The work is therefore config translation and removed-client-API restoration rather than binding restoration, and it exercises a different adapter surface (react-vite-origin-adapter) from the CRA path.",
+	"laneDigestScheme": "sha256(canonicalize(files))",
+	"revision": "565fe0cc567c02deb59fc04830df707ea7476d52",
+	"frontendRoot": "web",
+	"baselineLane": {
+		"label": "era-pinned baseline",
+		"bundler": "vite 2.9.5",
+		"plugin": "@vitejs/plugin-react 1.3.1",
+		"runtime": {
+			"node": "16.20.2",
+			"platform": "darwin-arm64"
+		},
+		"runtimeDeviation": "era-consistent, NOT repository-pinned: the repository pins Node 14.18.2 (alpine) in its Dockerfile frontend stage; Node 14 has no darwin-arm64 build. Carried forward from the ingest.",
+		"closure": "the repository's own committed web/yarn.lock, installed with --frozen-lockfile (accepted), 347 locked entries",
+		"buildCommandDeviation": "the repository's declared `tsc && vite build` fails in its tsc gate at this revision, so the era lane runs `vite build` alone; this is a labelled deviation, not the declared build",
+		"declaredBuildCommand": "yarn build (tsc && vite build)",
+		"declaredBuildCommandOutcomeAtThisRevision": "fails, exit 2, inside the tsc gate; four errors, all in node_modules, none under src",
+		"commandRun": "node node_modules/vite/bin/vite.js build",
+		"modulesTransformed": 898,
+		"rebuilds": 2,
+		"deterministic": true,
+		"digest": "b43d49d87f49e0221304ae93de5844016b2af912427eb009b62dd4dc570f4f0e",
+		"secondDigest": "b43d49d87f49e0221304ae93de5844016b2af912427eb009b62dd4dc570f4f0e",
+		"inventory": [
+			{
+				"path": "assets/index.1a33c512.css",
+				"sha256": "99681613d9602928441c0135cbc90ffeb6798215a3fbe33e8f8a9ca3f224116b",
+				"bytes": 103118
+			},
+			{
+				"path": "assets/index.7cb90e06.js",
+				"sha256": "fecd43de9d927f85b102a9d082660d90dc001e9784c08fea70a4545a4d479e5b",
+				"bytes": 270022
+			},
+			{
+				"path": "icons/add.svg",
+				"sha256": "fdedaed9a32de6a12d757a6e5932262bc2e23c86bbf6d309991c27a3ebf2e968",
+				"bytes": 137
+			},
+			{
+				"path": "icons/arrow-left.svg",
+				"sha256": "5f0c5e3bc8847eeb8b290e8dab7b3ca875adab06278c8fc791f0298975902b4f",
+				"bytes": 137
+			},
+			{
+				"path": "icons/arrow-right.svg",
+				"sha256": "7ea5f89f442b129cc112d29eda0c9cc7ab993d0e4ef2e345ee12b632234f4b9b",
+				"bytes": 138
+			},
+			{
+				"path": "icons/checkbox-active.svg",
+				"sha256": "6f20c51eccbb9775505eff02adb8908d6ecab6de92206edb764e8bcc3300ab0a",
+				"bytes": 308
+			},
+			{
+				"path": "icons/checkbox.svg",
+				"sha256": "6399dd2084bda5f4e54b744e2f5489dba95d3c75f4b2fbc90494cdb1a47aaa8d",
+				"bytes": 249
+			},
+			{
+				"path": "icons/close.svg",
+				"sha256": "1471cd00ea2fcb3c9c387c30b15c258532073cbe0a9a58ad77f319b06e512bd0",
+				"bytes": 210
+			},
+			{
+				"path": "icons/download.svg",
+				"sha256": "4938fe109528609e433a511268352c1110bbe487ec14726dd31195368b40ec46",
+				"bytes": 220
+			},
+			{
+				"path": "icons/edit.svg",
+				"sha256": "289d3e2131e916a4095ba5e5c3c6004f0920e590a470e328576fdab6b90fb20a",
+				"bytes": 319
+			},
+			{
+				"path": "icons/image.svg",
+				"sha256": "c502f9e62d874421f40add018004c9978d7300a190e260bd5385871f250487a4",
+				"bytes": 296
+			},
+			{
+				"path": "icons/menu.svg",
+				"sha256": "ed674774a7e7f489884ec53e0182c36073ad311b9a6da14a6f5e34ab59a5938b",
+				"bytes": 204
+			},
+			{
+				"path": "icons/more-white.svg",
+				"sha256": "bdd3e4af6894ca3673c7170fc3ad12895fba770b650be231aac72051e05a104f",
+				"bytes": 306
+			},
+			{
+				"path": "icons/more.svg",
+				"sha256": "8fa97a6c2a6520b9fdf727d1e0a221a0275e5e4d40ff8504315fbd3dc6aeb823",
+				"bytes": 306
+			},
+			{
+				"path": "icons/pin.svg",
+				"sha256": "6c8779275b009e17deff7f27c9da72e04850341e562750c086c32902f84410c8",
+				"bytes": 229
+			},
+			{
+				"path": "icons/search.svg",
+				"sha256": "a1784767a3562d142b3355f7017f455a6095e0b676a471bf58815a83bab9561b",
+				"bytes": 393
+			},
+			{
+				"path": "icons/share.svg",
+				"sha256": "a0ab3d758b0a71ffe793005d22dc3f2f56652febc21457f9d9ff78411e872e9a",
+				"bytes": 1873
+			},
+			{
+				"path": "icons/tag.svg",
+				"sha256": "a0fdaeaae2055b22ff8248c0c7f70d6f4e33a1b1d2186bd7368c3e11bf709ca2",
+				"bytes": 301
+			},
+			{
+				"path": "index.html",
+				"sha256": "a0fde323a2dc45ce52c3a7a3581d7d2747f1fd337d8acf40c07e9fd230980789",
+				"bytes": 553
+			},
+			{
+				"path": "logo.svg",
+				"sha256": "70e742ab922babdaa930879fef7149a81136035e26d12d19623f79bcfd2526b5",
+				"bytes": 121
+			}
+		]
+	},
+	"targetLane": {
+		"label": "migrated target",
+		"bundler": "vite 8.0.16 (rolldown 1.0.3)",
+		"plugin": "none — see configTranslation.plugins",
+		"runtime": {
+			"node": "24.15.0",
+			"platform": "darwin-arm64"
+		},
+		"closure": "unchanged. The application's own dependency closure is the era one, byte-for-byte: the target cell reuses the lockfile-pinned tree the baseline installed. Nothing was resolved against the 2026 registry for this lane, and no network request was made by it. The only moving part is the bundler, which is the workspace's own vite 8.0.16.",
+		"closureNote": "This is the honest consequence of a Vite-to-Vite lift and it is recorded rather than engineered: no target closure install was needed, so the consented network allowance for one went unused. VERSIONLESS_NETWORK_MODE was `offline` for every build in this unit.",
+		"commandRun": "vite build --config fixtures/react-memos-v0-1-3/vite.config.ts",
+		"modulesTransformed": 839,
+		"rebuilds": 2,
+		"deterministic": true,
+		"digest": "2d20431ed7a235195e8d26ce0f2d987a41e6dec308401815b877ae838c358b7d",
+		"secondDigest": "2d20431ed7a235195e8d26ce0f2d987a41e6dec308401815b877ae838c358b7d",
+		"inventory": [
+			{
+				"path": "assets/index--evLqhuM.js",
+				"sha256": "213f0ac30c5adbb8e632c2c21acc9849c9fe7a5d398066c828475d2c333cf606",
+				"bytes": 267879
+			},
+			{
+				"path": "assets/index-CcAHXjRI.css",
+				"sha256": "8ec1ab9d197df713704837673cc33707e7d8fbe1bbd9d9cd6cd993277cf15a51",
+				"bytes": 100664
+			},
+			{
+				"path": "icons/add.svg",
+				"sha256": "fdedaed9a32de6a12d757a6e5932262bc2e23c86bbf6d309991c27a3ebf2e968",
+				"bytes": 137
+			},
+			{
+				"path": "icons/arrow-left.svg",
+				"sha256": "5f0c5e3bc8847eeb8b290e8dab7b3ca875adab06278c8fc791f0298975902b4f",
+				"bytes": 137
+			},
+			{
+				"path": "icons/arrow-right.svg",
+				"sha256": "7ea5f89f442b129cc112d29eda0c9cc7ab993d0e4ef2e345ee12b632234f4b9b",
+				"bytes": 138
+			},
+			{
+				"path": "icons/checkbox-active.svg",
+				"sha256": "6f20c51eccbb9775505eff02adb8908d6ecab6de92206edb764e8bcc3300ab0a",
+				"bytes": 308
+			},
+			{
+				"path": "icons/checkbox.svg",
+				"sha256": "6399dd2084bda5f4e54b744e2f5489dba95d3c75f4b2fbc90494cdb1a47aaa8d",
+				"bytes": 249
+			},
+			{
+				"path": "icons/close.svg",
+				"sha256": "1471cd00ea2fcb3c9c387c30b15c258532073cbe0a9a58ad77f319b06e512bd0",
+				"bytes": 210
+			},
+			{
+				"path": "icons/download.svg",
+				"sha256": "4938fe109528609e433a511268352c1110bbe487ec14726dd31195368b40ec46",
+				"bytes": 220
+			},
+			{
+				"path": "icons/edit.svg",
+				"sha256": "289d3e2131e916a4095ba5e5c3c6004f0920e590a470e328576fdab6b90fb20a",
+				"bytes": 319
+			},
+			{
+				"path": "icons/image.svg",
+				"sha256": "c502f9e62d874421f40add018004c9978d7300a190e260bd5385871f250487a4",
+				"bytes": 296
+			},
+			{
+				"path": "icons/menu.svg",
+				"sha256": "ed674774a7e7f489884ec53e0182c36073ad311b9a6da14a6f5e34ab59a5938b",
+				"bytes": 204
+			},
+			{
+				"path": "icons/more-white.svg",
+				"sha256": "bdd3e4af6894ca3673c7170fc3ad12895fba770b650be231aac72051e05a104f",
+				"bytes": 306
+			},
+			{
+				"path": "icons/more.svg",
+				"sha256": "8fa97a6c2a6520b9fdf727d1e0a221a0275e5e4d40ff8504315fbd3dc6aeb823",
+				"bytes": 306
+			},
+			{
+				"path": "icons/pin.svg",
+				"sha256": "6c8779275b009e17deff7f27c9da72e04850341e562750c086c32902f84410c8",
+				"bytes": 229
+			},
+			{
+				"path": "icons/search.svg",
+				"sha256": "a1784767a3562d142b3355f7017f455a6095e0b676a471bf58815a83bab9561b",
+				"bytes": 393
+			},
+			{
+				"path": "icons/share.svg",
+				"sha256": "a0ab3d758b0a71ffe793005d22dc3f2f56652febc21457f9d9ff78411e872e9a",
+				"bytes": 1873
+			},
+			{
+				"path": "icons/tag.svg",
+				"sha256": "a0fdaeaae2055b22ff8248c0c7f70d6f4e33a1b1d2186bd7368c3e11bf709ca2",
+				"bytes": 301
+			},
+			{
+				"path": "index.html",
+				"sha256": "f2c857a06f48765417dcbff800ea1087968b0efafe12dba9fe0988d6257cb671",
+				"bytes": 560
+			},
+			{
+				"path": "logo.svg",
+				"sha256": "70e742ab922babdaa930879fef7149a81136035e26d12d19623f79bcfd2526b5",
+				"bytes": 121
+			}
+		]
+	},
+	"applicationFilesChanged": {
+		"scope": "src",
+		"filesCompared": 120,
+		"changed": []
+	},
+	"applicationFilesChangedNote": "Zero of the 120 files under web/src differ between the reconciled source at the pinned revision and the migrated target, by sha256. The migration is entirely at the configuration boundary. The comparison walks both trees and compares every file rather than checking a remembered list, and it would report an added or removed file as well as a modified one.",
+	"configTranslation": {
+		"options": [
+			{
+				"option": "plugins",
+				"disposition": "translated",
+				"note": "Each era plugin is translated individually; an untranslatable plugin refuses the plan."
+			},
+			{
+				"option": "server",
+				"disposition": "carried",
+				"note": "Dev-server options — proxy, cors, port — keep their shape. A production build lane never reads them, so this capability carries them across without claiming to have exercised them."
+			}
+		],
+		"plugins": [
+			{
+				"package": "@vitejs/plugin-react",
+				"target": "@vitejs/plugin-react",
+				"role": "On the Vite 2 line this plugin performed the JSX transform through Babel and installed React Fast Refresh in serve mode. Current Vite performs the JSX transform in its own bundler, driven by the workspace tsconfig, so the plugin is no longer what makes JSX compile.",
+				"coverage": "A production build lane exercises neither Fast Refresh nor the dev-only half of this plugin, so a green build establishes nothing about them. When the target lane omits the plugin, that omission is a claim about the build only."
+			}
+		],
+		"buildTarget": [
+			"es2020",
+			"edge88",
+			"firefox78",
+			"chrome87",
+			"safari14"
+		],
+		"dynamicOptionKeys": 0
+	},
+	"clientApiRewrites": [],
+	"clientApiRewritesNote": "The removed-client-API capability was applied to every application module and rewrote nothing, because this source calls no removed Vite client API. That is a finding about this application, not a statement that the capability is inert: it is exercised against `import.meta.globEager` in the adapter test suite, and it refused this build once already, when a `.tsx` module was parsed as JavaScript — a defect the refusal surfaced and which was fixed rather than suppressed.",
+	"buildLevelParity": {
+		"fileCount": {
+			"baseline": 20,
+			"target": 20,
+			"equal": true
+		},
+		"byKind": {
+			"baseline": {
+				"stylesheet": {
+					"count": 1,
+					"bytes": 103118
+				},
+				"javascript-chunk": {
+					"count": 1,
+					"bytes": 270022
+				},
+				"static-asset": {
+					"count": 17,
+					"bytes": 5747
+				},
+				"entry-document": {
+					"count": 1,
+					"bytes": 553
+				}
+			},
+			"target": {
+				"javascript-chunk": {
+					"count": 1,
+					"bytes": 267879
+				},
+				"stylesheet": {
+					"count": 1,
+					"bytes": 100664
+				},
+				"static-asset": {
+					"count": 17,
+					"bytes": 5747
+				},
+				"entry-document": {
+					"count": 1,
+					"bytes": 560
+				}
+			}
+		},
+		"staticAssetNamesIdentical": true,
+		"staticAssetBytesIdentical": true,
+		"hashedAssetNamesDiffer": true
+	},
+	"declaredDifferences": [
+		{
+			"difference": "hashed asset file names differ between the lanes",
+			"why": "Vite 2 and Vite 8 compute content hashes differently and emit different chunk contents, so `assets/index.<hash>.css` and `assets/index-<hash>.css` never coincide. The naming separator itself also changed (`.` to `-`).",
+			"material": false
+		},
+		{
+			"difference": "the target emits a larger JavaScript chunk (267.87 kB vs 263.69 kB)",
+			"why": "Two known contributions, neither measured apart from the other: rolldown's own chunk shape differs from rollup 2's, and this build states the era syntax target explicitly (es2020, edge88, firefox78, chrome87, safari14) rather than inheriting Vite 8's newer rolling baseline, which keeps down-levelling the era build performed. Which share belongs to which is NOT established here.",
+			"material": false
+		},
+		{
+			"difference": "module counts differ (898 baseline, 839 target)",
+			"why": "The two bundlers count transformed modules differently, and the era `@vitejs/plugin-react` 1.3.1 contributed modules of its own to the baseline graph that the target build does not have. No claim is made that the two graphs contain the same application modules; only that both lanes built from the same, unmodified 120-file source.",
+			"material": false
+		},
+		{
+			"difference": "the era plugin is absent from the target lane",
+			"why": "@vitejs/plugin-react 1.x owned the JSX transform on the Vite 2 line; Vite 8 performs it in its own bundler from this workspace's tsconfig (`jsx: react-jsx`). The plugin's other half is React Fast Refresh, a dev-server capability. See the coverage note in configTranslation.plugins.",
+			"material": true,
+			"materialityNote": "Material because it is a deliberate change of the build graph, recorded as a decision rather than discovered as a side effect. It is a claim about the production build only."
+		}
+	],
+	"nonclaims": [
+		"This record establishes BUILD-LEVEL facts only: that both lanes build, that each rebuilds byte-identically, and what each emitted. It establishes nothing about behavior.",
+		"No browser was driven by this unit. Neither lane was loaded, mounted, or exercised. Whether the migrated bundle renders, or renders the same thing the era bundle rendered, is NOT established here and is owed to a later witness unit.",
+		"The application cannot run without its Go backend: every data call is same-origin /api/* with credentials, and Home redirects to /signin unless a session exists. That session-gated /api surface is a witness-phase problem and this unit neither stood the backend up nor stubbed it.",
+		"The declared build command `tsc && vite build` still does not succeed at this revision, in either lane. The migration did not repair the pinned revision's broken typecheck gate and does not claim to; the era lane's deviation is carried forward with its label.",
+		"Identical file counts and identical static assets across the lanes are not parity of the built application. The JavaScript and CSS payloads differ in bytes and were not compared semantically.",
+		"No pilot status, production readiness, certification, or legal approval is established by this record."
+	]
+}

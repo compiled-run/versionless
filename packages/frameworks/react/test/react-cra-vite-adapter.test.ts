@@ -987,6 +987,7 @@ describe('React adapter overfitting guard', () => {
 			'cypress',
 			'faker',
 			'hospitalrun',
+			'memos',
 			'papercups',
 			'realworld',
 			'sqlpad',
