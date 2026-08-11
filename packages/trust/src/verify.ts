@@ -16,6 +16,7 @@ import { WITNESS_ANGULAR_REALWORLD_RECEIPT_PATH } from '../../core/src/receipts/
 import { REACT_PAPERCUPS_FIXTURE } from '../../core/src/receipts/witness-react-papercups.ts';
 import { REACT_HOSPITALRUN_FIXTURE } from '../../core/src/receipts/witness-react-hospitalrun.ts';
 import { ANGULAR_FACTORIOLAB_FIXTURE } from '../../core/src/receipts/witness-angular-factoriolab.ts';
+import { ANGULAR_JIRA_CLONE_FIXTURE } from '../../core/src/receipts/witness-angular-jira-clone.ts';
 import {
 	SCRIPT_SURFACE_SCHEMA,
 	verifyScriptSurface,
@@ -30,6 +31,8 @@ import {
 	NEXT_TAILWIND_EXCLUSION,
 	ANGULAR_FACTORIOLAB_TRUST_MATRIX_CELLS,
 	ANGULAR_FACTORIOLAB_TRUST_RECEIPTS,
+	ANGULAR_JIRA_CLONE_TRUST_MATRIX_CELLS,
+	ANGULAR_JIRA_CLONE_TRUST_RECEIPTS,
 	REACT_HOSPITALRUN_TRUST_MATRIX_CELLS,
 	REACT_HOSPITALRUN_TRUST_RECEIPTS,
 	REACT_PAPERCUPS_TRUST_MATRIX_CELLS,
@@ -502,7 +505,9 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 		runtimeObservationControl.pciCompliance !== 'not-claimed'
 	)
 		throw new Error('Controls contain an unsupported enterprise assurance claim');
-	const factoriolabIntegrated = transaction.kind === 'angular-factoriolab-browser-proof';
+	const jiraCloneIntegrated = transaction.kind === 'angular-jira-clone-browser-proof';
+	const factoriolabIntegrated =
+		transaction.kind === 'angular-factoriolab-browser-proof' || jiraCloneIntegrated;
 	const hospitalrunIntegrated =
 		transaction.kind === 'react-hospitalrun-browser-proof' || factoriolabIntegrated;
 	const papercupsIntegrated =
@@ -515,7 +520,8 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 				(transaction.nextKilledByGoogleIntegrated ? 1 : 0) +
 				(papercupsIntegrated ? 1 : 0) +
 				(hospitalrunIntegrated ? 1 : 0) +
-				(factoriolabIntegrated ? 1 : 0)
+				(factoriolabIntegrated ? 1 : 0) +
+				(jiraCloneIntegrated ? 1 : 0)
 	)
 		throw new Error('Corpus matrix cell count does not match transaction state');
 	if (
@@ -538,11 +544,20 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 		);
 	if (
 		factoriolabIntegrated &&
+		!jiraCloneIntegrated &&
 		(manifest.receipts.length !== ANGULAR_FACTORIOLAB_TRUST_RECEIPTS ||
 			matrix.cells.length !== ANGULAR_FACTORIOLAB_TRUST_MATRIX_CELLS)
 	)
 		throw new Error(
 			'Angular factoriolab browser proof must pin exactly twenty-one receipts and nineteen matrix cells',
+		);
+	if (
+		jiraCloneIntegrated &&
+		(manifest.receipts.length !== ANGULAR_JIRA_CLONE_TRUST_RECEIPTS ||
+			matrix.cells.length !== ANGULAR_JIRA_CLONE_TRUST_MATRIX_CELLS)
+	)
+		throw new Error(
+			'Angular jira-clone browser proof must pin exactly twenty-two receipts and twenty matrix cells',
 		);
 	const matrixSource = asRecord(matrix.derivedFrom, 'corpus matrix derivation');
 	if (
@@ -818,6 +833,49 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 			throw new Error('Angular factoriolab matrix cell is not derived from corpus conformance');
 	} else if (factoriolabCell !== undefined || factoriolabVertical !== undefined)
 		throw new Error('Angular factoriolab evidence is claimed outside its transaction state');
+	const jiraCloneCell = cells.get(ANGULAR_JIRA_CLONE_FIXTURE);
+	const jiraCloneVertical = emittedConformance.verticals.find(
+		(value) => asRecord(value, 'corpus vertical').id === ANGULAR_JIRA_CLONE_FIXTURE,
+	);
+	if (jiraCloneIntegrated) {
+		const row = asRecord(jiraCloneVertical, 'Angular jira-clone conformance vertical');
+		const jiraCloneApplication = emittedConformance.applications.find(
+			(value) => asRecord(value, 'corpus application').id === row.application,
+		);
+		if (
+			jiraCloneCell === undefined ||
+			jiraCloneApplication === undefined ||
+			canonicalize(
+				asRecord(jiraCloneApplication, 'Angular jira-clone application').verticals,
+			) !== canonicalize([ANGULAR_JIRA_CLONE_FIXTURE]) ||
+			jiraCloneCell.state !== 'verified' ||
+			jiraCloneCell.scope !==
+				'fixture-specific-angular-cli-custom-webpack-browser-builder-13-to-16' ||
+			jiraCloneCell.genericAngularSupport !== 'not-claimed' ||
+			jiraCloneCell.framework !== 'angular' ||
+			jiraCloneCell.framework !== row.framework ||
+			jiraCloneCell.designatedPilot !== row.designatedPilot ||
+			jiraCloneCell.runtime !== row.runtime ||
+			jiraCloneCell.bundler !== row.bundler ||
+			jiraCloneCell.track !== row.track ||
+			jiraCloneCell.browserProof !== row.browserProof ||
+			jiraCloneCell.serviceWorker !== row.serviceWorker ||
+			jiraCloneCell.serviceWorkerMasked !== row.serviceWorkerMasked ||
+			row.serviceWorkerMasked !== false ||
+			jiraCloneCell.scrollSurface !== row.scrollSurface ||
+			jiraCloneCell.productionReadiness !== row.productionReadiness ||
+			canonicalize(jiraCloneCell.locality) !== canonicalize(row.locality) ||
+			canonicalize(jiraCloneCell.readinessScoreboard) !==
+				canonicalize(row.readinessScoreboard) ||
+			canonicalize(row.readinessScoreboard) !==
+				canonicalize({
+					angularLineage: { ready: 1, total: 4, counted: false },
+					overall: { ready: 3, total: 12 },
+				})
+		)
+			throw new Error('Angular jira-clone matrix cell is not derived from corpus conformance');
+	} else if (jiraCloneCell !== undefined || jiraCloneVertical !== undefined)
+		throw new Error('Angular jira-clone evidence is claimed outside its transaction state');
 	const phonecat = cells.get('angular-phonecat');
 	if (
 		phonecat?.framework !== 'angularjs' ||
@@ -923,6 +981,13 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 				)
 			: report.includes(
 					'factoriolab Angular CLI 10.1→Angular 16.2 browser-builder direct-Witness browser proof',
+				)) ||
+		(jiraCloneIntegrated
+			? !report.includes(
+					'jira-clone Angular CLI 13.2 custom-webpack→Angular 16.2 browser-builder direct-Witness browser proof',
+				)
+			: report.includes(
+					'jira-clone Angular CLI 13.2 custom-webpack→Angular 16.2 browser-builder direct-Witness browser proof',
 				))
 	)
 		throw new Error('Derived Markdown does not match canonical transaction state');

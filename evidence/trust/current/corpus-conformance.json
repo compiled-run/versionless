@@ -1,8 +1,8 @@
 {
   "schemaVersion": "versionless.corpus-conformance.v1",
   "summary": {
-    "verticals": 14,
-    "sourceApplications": 7,
+    "verticals": 15,
+    "sourceApplications": 8,
     "designatedPilotsVerified": 0
   },
   "verticals": [
@@ -783,6 +783,68 @@
         }
       },
       "designatedPilot": false
+    },
+    {
+      "id": "angular-jira-clone",
+      "application": "angular-jira-clone",
+      "framework": "angular",
+      "receiptPath": "evidence/runs/witness-angular-jira-clone/receipt.json",
+      "receiptDigest": "4642564e7ee1ff46668cce76c5db0dc832cce41afe1ceda5611fa2eaf78dfc99",
+      "canonicalReceipts": [
+        {
+          "path": "evidence/runs/angular-jira-clone/mj3c-source-migration.json",
+          "schemaVersion": "versionless.angular-jira-clone-source-migration.v3",
+          "digest": "d522d6d7eab4a2b2b4a0937311acf784d842f906b44334a2adc280612dc09729",
+          "sha256": "f0d681c93d28f1f6ae0eae2e4416eb67fbfe5693c090a306540802fb840bbdbc"
+        },
+        {
+          "path": "evidence/runs/angular-jira-clone/mj3c-era-baseline.json",
+          "schemaVersion": "versionless.angular-jira-clone-era-baseline.v2",
+          "digest": "be3c41771a49ee1de8bc366bf8641db7abaaf5f455c7615af51cf35915789b33",
+          "sha256": "3211963049e3d389830e6051bf5ee2e6b717ab45fb6f89736e9eaf9aa5449a39"
+        },
+        {
+          "path": "evidence/runs/angular-jira-clone/mj3c-migrated-build.json",
+          "schemaVersion": "versionless.angular-jira-clone-migrated-build.v1",
+          "digest": "c477d9294a2a582e21ebe162121aa3304dc0b41b1f0b0adaf58e40a43a8cd8ff",
+          "sha256": "15e3de51d4bdccafd183c1b0bfaec48b32d7511103a2a167ae0e2b497dda20fd"
+        },
+        {
+          "path": "evidence/runs/angular-jira-clone/mj3c-build-parity.json",
+          "schemaVersion": "versionless.angular-jira-clone-build-parity.v1",
+          "digest": "a52921a5e4507688220c6296afdbcb97665484701b3c0097e7f930766de72eb3",
+          "sha256": "7f5a6c49c5fec4eec52b2fb268d1aab3a659e28b0ae8a47a1dd97c8d92aea64f"
+        }
+      ],
+      "runtime": "node-16.20.2",
+      "bundler": "angular-cli-13.2-custom-webpack-browser-builder-to-angular-16.2-browser-builder",
+      "track": "production-readiness-direct-witness-angular13-to-angular16-browser-builder",
+      "locality": {
+        "mode": "offline",
+        "scope": "process-scoped",
+        "osWideIsolation": false,
+        "successfulNonLoopback": 0,
+        "mockedNonLoopbackSeams": 10
+      },
+      "browserProof": "verified-direct-witness",
+      "browserRuns": 4,
+      "behaviorDigest": "18e281d93e0f50a632ed0a4c9bc613e9b5601ca0a5ec68a36c578e6ed6620308",
+      "serviceWorker": "no-service-worker-in-either-lane",
+      "serviceWorkerMasked": false,
+      "scrollSurface": "measured-no-overflowing-document",
+      "productionReadiness": "verified-direct-witness",
+      "readinessScoreboard": {
+        "angularLineage": {
+          "counted": false,
+          "ready": 1,
+          "total": 4
+        },
+        "overall": {
+          "ready": 3,
+          "total": 12
+        }
+      },
+      "designatedPilot": false
     }
   ],
   "applications": [
@@ -1081,6 +1143,56 @@
         "scrollSurface": "measured-no-overflowing-document",
         "locality": "process-scoped-not-os-wide"
       }
+    },
+    {
+      "id": "angular-jira-clone",
+      "source": {
+        "repository": "https://github.com/trungvose/jira-clone-angular",
+        "ref": "none — a bare commit sha was pinned; no tag was requested or relied on",
+        "revision": "059455b9933a236456524925065bce2c295e2d9a",
+        "rootTreeSha": "d5a79170609bb7b135a4c146a4565b3e7d53a92b",
+        "archiveSha256": "d913ad5d4686b6a236799166c7c781f624b3901a1826304e00c36eca82896bc5",
+        "archiveBytes": 8048993,
+        "license": "MIT",
+        "licenseSha256": "c45956b16a34a9e0c74a93163f497174e373623333e47ce3251b4d0107120b09"
+      },
+      "verticals": [
+        "angular-jira-clone"
+      ],
+      "conformance": {
+        "browserProof": "direct-witness-verified",
+        "runs": 4,
+        "behaviorDigest": "18e281d93e0f50a632ed0a4c9bc613e9b5601ca0a5ec68a36c578e6ed6620308",
+        "mutation": "pass",
+        "mutationRestoration": "byte-identical",
+        "serviceWorker": "no-service-worker-in-either-lane",
+        "serviceWorkerMasked": false,
+        "persistence": {
+          "backend": "none",
+          "board": "in-memory-store",
+          "browserStorage": "none-written",
+          "stubbed": false,
+          "survivesOnlineReload": false
+        },
+        "readinessScoreboard": {
+          "angularLineage": {
+            "counted": false,
+            "ready": 1,
+            "total": 4
+          },
+          "overall": {
+            "ready": 3,
+            "total": 12
+          }
+        }
+      },
+      "boundaries": {
+        "track": "production-readiness-direct-witness-angular13-to-angular16-browser-builder",
+        "designatedPilot": false,
+        "genericAngularSupport": "not-claimed",
+        "scrollSurface": "measured-no-overflowing-document",
+        "locality": "process-scoped-not-os-wide"
+      }
     }
   ],
   "frameworkLanes": [
@@ -1169,6 +1281,6 @@
   },
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "ee79b3723b627d87c39cb79672922c75904954636c5f8e5cc4b828637a20b5da"
+    "canonicalDigest": "619f90332984e231be3842caf220d7de14f024ebb18de75741bfdc39ba3dda66"
   }
 }

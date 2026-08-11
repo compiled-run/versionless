@@ -76,7 +76,10 @@ export async function appendAngularFactoriolabAggregateMembers(rootDir = root): 
 	const members = await angularFactoriolabAggregateMembers(rootDir);
 	if (factoriolabPaths(fixtures).length === 1) {
 		const state = deriveCorpusTransactionState(fixtures);
-		if (state.kind !== 'angular-factoriolab-browser-proof')
+		if (
+			state.kind !== 'angular-factoriolab-browser-proof' &&
+			state.kind !== 'angular-jira-clone-browser-proof'
+		)
 			throw new Error('Angular factoriolab aggregate membership is already inconsistent');
 		return { kind: state.kind, receipts: state.receipts, appended: false };
 	}
@@ -125,7 +128,10 @@ export async function main(args = process.argv.slice(2)): Promise<void> {
 						const state = deriveCorpusTransactionState(
 							aggregate.fixtures.map((item) => record(item, 'member')),
 						);
-						if (state.kind !== 'angular-factoriolab-browser-proof')
+						if (
+							state.kind !== 'angular-factoriolab-browser-proof' &&
+							state.kind !== 'angular-jira-clone-browser-proof'
+						)
 							throw new Error('Angular factoriolab aggregate membership is absent');
 						return { kind: state.kind, receipts: state.receipts, appended: false };
 					})()

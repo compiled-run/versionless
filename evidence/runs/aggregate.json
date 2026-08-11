@@ -201,6 +201,16 @@
       "result": "pass",
       "receipt": "evidence/runs/witness-angular-factoriolab/receipt.json",
       "digest": "2e7da3056e489958d868917155b6ded61f014b046ee2b020c20ad71a31d86cdd"
+    },
+    {
+      "id": "witness-angular-jira-clone",
+      "framework": "angular",
+      "track": "production-readiness-direct-witness-angular13-to-angular16-browser-builder",
+      "bundler": "angular-cli-13.2-custom-webpack-browser-builder-to-angular-16.2-browser-builder",
+      "runtime": "node-16.20.2",
+      "result": "pass",
+      "receipt": "evidence/runs/witness-angular-jira-clone/receipt.json",
+      "digest": "4642564e7ee1ff46668cce76c5db0dc832cce41afe1ceda5611fa2eaf78dfc99"
     }
   ],
   "unsupported": []

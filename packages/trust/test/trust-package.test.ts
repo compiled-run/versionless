@@ -21,6 +21,8 @@ import {
 import {
 	ANGULAR_FACTORIOLAB_TRUST_MATRIX_CELLS,
 	ANGULAR_FACTORIOLAB_TRUST_RECEIPTS,
+	ANGULAR_JIRA_CLONE_TRUST_MATRIX_CELLS,
+	ANGULAR_JIRA_CLONE_TRUST_RECEIPTS,
 	generateTrustPackage,
 	licenseInventory,
 	NPM_LOCK_ACQUISITION_PREFLIGHT,
@@ -638,7 +640,8 @@ snapshots:
 				item.id !== 'witness-react-papercups' &&
 				item.id !== 'react-hospitalrun' &&
 				item.id !== 'witness-react-hospitalrun' &&
-				item.id !== 'witness-angular-factoriolab',
+				item.id !== 'witness-angular-factoriolab' &&
+				item.id !== 'witness-angular-jira-clone',
 		);
 		const avataaarsTransaction = deriveCorpusTransactionState([
 			...withoutAvataaars,
@@ -946,15 +949,19 @@ snapshots:
 				integrity: { canonicalDigest: string };
 			};
 			expect(conformance.summary).toEqual({
-				verticals: 14,
-				sourceApplications: 7,
+				verticals: 15,
+				sourceApplications: 8,
 				designatedPilotsVerified: 0,
 			});
 			expect(conformance.frameworkLanes).toHaveLength(3);
-			// The first Angular-lineage browser-proof cell: one member, one
-			// vertical, and an Angular-lineage scoreboard that stays uncounted.
-			expect(matrix.cells).toHaveLength(ANGULAR_FACTORIOLAB_TRUST_MATRIX_CELLS);
-			expect(first.receipts).toHaveLength(ANGULAR_FACTORIOLAB_TRUST_RECEIPTS);
+			// Two Angular-lineage browser-proof cells now, each one member and
+			// one vertical, and both Angular-lineage scoreboards stay uncounted.
+			expect(matrix.cells).toHaveLength(ANGULAR_JIRA_CLONE_TRUST_MATRIX_CELLS);
+			expect(first.receipts).toHaveLength(ANGULAR_JIRA_CLONE_TRUST_RECEIPTS);
+			expect(ANGULAR_JIRA_CLONE_TRUST_MATRIX_CELLS).toBe(
+				ANGULAR_FACTORIOLAB_TRUST_MATRIX_CELLS + 1,
+			);
+			expect(ANGULAR_JIRA_CLONE_TRUST_RECEIPTS).toBe(ANGULAR_FACTORIOLAB_TRUST_RECEIPTS + 1);
 			expect(matrix.cells.find((cell) => cell.id === 'angular-factoriolab')).toMatchObject({
 				framework: 'angular',
 				state: 'verified',
@@ -969,10 +976,34 @@ snapshots:
 					overall: { ready: 3, total: 12 },
 				},
 			});
+			expect(matrix.cells.find((cell) => cell.id === 'angular-jira-clone')).toMatchObject({
+				framework: 'angular',
+				state: 'verified',
+				scope: 'fixture-specific-angular-cli-custom-webpack-browser-builder-13-to-16',
+				genericAngularSupport: 'not-claimed',
+				browserProof: 'verified-direct-witness',
+				serviceWorker: 'no-service-worker-in-either-lane',
+				serviceWorkerMasked: false,
+				scrollSurface: 'measured-no-overflowing-document',
+				locality: {
+					mode: 'offline',
+					scope: 'process-scoped',
+					osWideIsolation: false,
+					successfulNonLoopback: 0,
+					mockedNonLoopbackSeams: 10,
+				},
+				readinessScoreboard: {
+					angularLineage: { ready: 1, total: 4, counted: false },
+					overall: { ready: 3, total: 12 },
+				},
+			});
 			expect(conformance.integrity.canonicalDigest).toHaveLength(64);
 			const report = await readFile(path.join(fixture.current, 'report.md'), 'utf8');
 			expect(report).toContain(
 				'factoriolab Angular CLI 10.1→Angular 16.2 browser-builder direct-Witness browser proof',
+			);
+			expect(report).toContain(
+				'jira-clone Angular CLI 13.2 custom-webpack→Angular 16.2 browser-builder direct-Witness browser proof',
 			);
 			expect(report).toContain(
 				'The immutable Killed by Google Next.js 12 Pages/webpack production vertical is verified only for its exact fixture',

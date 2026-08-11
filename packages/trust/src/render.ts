@@ -62,6 +62,9 @@ export function renderTrustReport(inputs: RenderInputs): string {
 	const angularFactoriolabWitnessVerified = inputs.manifest.receipts.some(
 		(item) => item.path === 'evidence/runs/witness-angular-factoriolab/receipt.json',
 	);
+	const angularJiraCloneWitnessVerified = inputs.manifest.receipts.some(
+		(item) => item.path === 'evidence/runs/witness-angular-jira-clone/receipt.json',
+	);
 	const nextKilledByGoogleWitnessVerified = inputs.manifest.receipts.some(
 		(item) => item.path === 'evidence/runs/witness-next-killedbygoogle/receipt.json',
 	);
@@ -101,6 +104,7 @@ ${reactBoilerplateZeroSwVerified ? '- React Boilerplate current zero-service-wor
 ${reactPapercupsWitnessVerified ? '- Papercups v1.0.0 create-react-app→Vite 8 direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, and React-lineage readiness stays **1/4** because this vertical is explicitly **not counted**.' : '- Papercups create-react-app direct-Witness browser proof: **not-tested**.'}
 ${reactHospitalrunWitnessVerified ? '- HospitalRun v2.0.0-alpha.7 create-react-app→Vite 8 direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, its baseline/migrated service-worker difference is **recorded, not masked**, and React-lineage readiness stays **1/4** because this vertical is explicitly **not counted**.' : '- HospitalRun create-react-app direct-Witness browser proof: **not-tested**.'}
 ${angularFactoriolabWitnessVerified ? '- factoriolab Angular CLI 10.1→Angular 16.2 browser-builder direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, the first Angular-lineage browser proof beside RealWorld, and Angular-lineage readiness stays **1/4** because this vertical is explicitly **not counted**.' : '- factoriolab Angular CLI direct-Witness browser proof: **not-tested**.'}
+${angularJiraCloneWitnessVerified ? '- jira-clone Angular CLI 13.2 custom-webpack→Angular 16.2 browser-builder direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, the second Angular-lineage browser proof beside factoriolab, and Angular-lineage readiness stays **1/4** because this vertical is explicitly **not counted**.' : '- jira-clone Angular CLI custom-webpack direct-Witness browser proof: **not-tested**.'}
 ${nextKilledByGoogleWitnessVerified ? '- Older-Next direct-Witness candidate: **verified, not counted (0/4) pending final Judge audit**.' : '- Older-Next production readiness: **0/4; not-tested**.'}
 - [Data-flow and control mappings](controls.json) — review inputs, not audit conclusions.
 - [Retention and purge status](retention.json) — unresolved policy remains unknown/not-tested.

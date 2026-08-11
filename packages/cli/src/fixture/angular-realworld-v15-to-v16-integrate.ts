@@ -129,7 +129,8 @@ function assertAggregate(value: unknown, requireIntegrated: boolean): Record<str
 			kind === 'react-zero-sw-reconciliation' ||
 			kind === 'react-papercups-browser-proof' ||
 			kind === 'react-hospitalrun-browser-proof' ||
-			kind === 'angular-factoriolab-browser-proof'
+			kind === 'angular-factoriolab-browser-proof' ||
+			kind === 'angular-jira-clone-browser-proof'
 		)
 			return aggregate;
 	} catch {

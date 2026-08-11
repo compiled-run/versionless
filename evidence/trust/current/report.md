@@ -1,8 +1,8 @@
 # Versionless project trust package
 
-- Canonical SHA-256: `021245ba79c57e2a58cab4a7d8a1bee986fb7f8ed8e90d628d150a211ad3a967`
-- Deterministic core: `4e0f3d81d284693ca80cab2f3bfa152fd4da80c6f7528bb3871c30f3497fe12b`
-- Generated observation: `2026-08-11T06:35:14.801Z`
+- Canonical SHA-256: `c5ddf84e6de0fb1780fe123d83e749ed79b3a5af64e3e0426862a3648def0fd7`
+- Deterministic core: `6d906891b44ac1c504d3b14d09f1be30be13cfbd8337c2fcdb1a4645ae20bbd9`
+- Generated observation: `2026-08-11T11:40:04.809Z`
 - Vulnerability input freshness: **verified** (seven-day maximum age)
 - Integrity: **hash-only; authenticity is not established**
 - Assurance: **this package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation**
@@ -14,7 +14,7 @@
 - [Vulnerability and KEV report](vulnerabilities.json) — cached OSV batch and CISA KEV observations only.
 - [SLSA/in-toto-shaped provenance](provenance.json) — shape only; no SLSA level or signer authenticity is claimed.
 - [Supported corpus/runtime/bundler matrix](matrix.json) — unsupported and untested cells remain visible.
-- [Corpus conformance](corpus-conformance.json) — `ee79b3723b627d87c39cb79672922c75904954636c5f8e5cc4b828637a20b5da`; 14 verified verticals grouped into exactly 7 source applications; zero designated pilots are verified.
+- [Corpus conformance](corpus-conformance.json) — `619f90332984e231be3842caf220d7de14f024ebb18de75741bfdc39ba3dda66`; 15 verified verticals grouped into exactly 8 source applications; zero designated pilots are verified.
 - The immutable Killed by Google Next.js 12 Pages/webpack production vertical is verified only for its exact fixture; synthetic Next.js 12 Pages, 13 transition/App, and 14 App classification lanes remain **not-tested**, and generic Next.js support is not claimed.
 - [Static script/resource surface](script-surface.json) — truthfully remains scoped to the prior nine verticals, two applications, and eighteen exact static deployment entrypoints; T220 is **not included** because its script surface was not separately observed; dynamic script insertion: **not-tested**; payment-page applicability: **not established**; PCI compliance is **not claimed**.
 - [Qualified-journey runtime script observation](runtime-script-observation.json) — truthfully remains scoped to 36 runs across the prior nine verticals, two applications, and eighteen lanes; T220 is **not included** because its runtime scripts were not separately observed; this is **not global dynamic-insertion coverage**.
@@ -25,6 +25,7 @@
 - Papercups v1.0.0 create-react-app→Vite 8 direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, and React-lineage readiness stays **1/4** because this vertical is explicitly **not counted**.
 - HospitalRun v2.0.0-alpha.7 create-react-app→Vite 8 direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, its baseline/migrated service-worker difference is **recorded, not masked**, and React-lineage readiness stays **1/4** because this vertical is explicitly **not counted**.
 - factoriolab Angular CLI 10.1→Angular 16.2 browser-builder direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, the first Angular-lineage browser proof beside RealWorld, and Angular-lineage readiness stays **1/4** because this vertical is explicitly **not counted**.
+- jira-clone Angular CLI 13.2 custom-webpack→Angular 16.2 browser-builder direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, the second Angular-lineage browser proof beside factoriolab, and Angular-lineage readiness stays **1/4** because this vertical is explicitly **not counted**.
 - Older-Next direct-Witness candidate: **verified, not counted (0/4) pending final Judge audit**.
 - [Data-flow and control mappings](controls.json) — review inputs, not audit conclusions.
 - [Retention and purge status](retention.json) — unresolved policy remains unknown/not-tested.
@@ -54,6 +55,7 @@ The dependency graph is a rooted complete inventory. Exact transitive dependency
 - `evidence/runs/react-hospitalrun/t004-run.json`: `1fa0278923101efe6af370a44d0ef90e3309ac4c7a823fad448eb196cca37cd8` (verified)
 - `evidence/runs/witness-react-hospitalrun/receipt.json`: `275e435c8518f8978782e6c555ad8c4dd0d6e5401e2ef1acef8856f596648aaa` (verified)
 - `evidence/runs/witness-angular-factoriolab/receipt.json`: `2e7da3056e489958d868917155b6ded61f014b046ee2b020c20ad71a31d86cdd` (verified)
+- `evidence/runs/witness-angular-jira-clone/receipt.json`: `4642564e7ee1ff46668cce76c5db0dc832cce41afe1ceda5611fa2eaf78dfc99` (verified)
 
 ## Known gaps
 
