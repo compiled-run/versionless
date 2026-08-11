@@ -1,0 +1,1352 @@
+{
+  "schemaVersion": "versionless.legacy-dependency-closure.v1",
+  "slug": "react-linkfree-v0-72-0",
+  "frontendRoot": ".",
+  "frontendRootNote": "Single-package repository. The React application IS the repository root; there is no monorepo scoping to record.",
+  "source": {
+    "verifiedSourceRoot": "<cache>/react-linkfree-v0-72-0-source/verify/extracted/BioDrop-367d77297b5753644e11ecd22cf80e59c87b0dc8",
+    "packageJsonPath": "package.json",
+    "packageJsonSha256": "c7d87cd15f8db40f292b845f33cc6b919b2e8fc24d4a643bef093531b5c2fa50",
+    "packageJsonBytes": 3024
+  },
+  "lockState": {
+    "committedWithSource": true,
+    "committedLockfiles": [
+      "package-lock.json"
+    ],
+    "lockfileFormat": "npm package-lock lockfileVersion 2",
+    "lockfileVersion": 2,
+    "lockfileVersionNote": "lockfileVersion 2 is the npm 7 / npm 8 hybrid format: it carries both the modern `packages` map and the legacy `dependencies` tree, so it is readable by npm 6 and authoritative for npm 7+. It is recorded exactly as found. This is the first npm-lock cell in the portfolio, which until now carried yarn and pnpm locks.",
+    "lockfileBytes": 1501476,
+    "lockfileSha256": "fbd7042bb85fc05e9dccb46199a0a06815b279938de770a906cb49c290e74b48",
+    "searchedFor": [
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml"
+    ],
+    "searchScope": "the full recursive git tree at the pinned revision (653 blobs)",
+    "otherLockfilesInTree": [],
+    "declaredRangeStyle": "caret ranges throughout package.json, with exactly one exact pin (prettier 2.4.0). Every range is resolved to an exact version by the committed lockfile.",
+    "ciAccepted": true,
+    "ciAcceptedNote": "`npm ci` succeeded. npm ci refuses to run when package.json and package-lock.json disagree about the dependency graph, so its success establishes that the committed lockfile is in sync with the manifest and that NOTHING was re-resolved against the 2026 registry.",
+    "versionSkewObserved": {
+      "manifestVersion": "0.72.0",
+      "lockRootPackageVersion": "0.70.1",
+      "skew": true,
+      "note": "The lockfile's own root entry records the package version as 0.70.1 while package.json says 0.72.0 — the lockfile was last regenerated two releases earlier and only the version string is stale. npm ci does not compare that field, and it did not object. Recorded as found; it is not corrected here."
+    },
+    "consequence": "The closure IS pinned by the repository and npm ci accepted it, so every outcome recorded in baseline-attempt.json is a property of the pinned revision rather than of today's registry.",
+    "state": "pinned-upstream"
+  },
+  "lockfileAnalysis": {
+    "entries": 1825,
+    "linkEntries": 0,
+    "entriesWithResolvedUrl": 1825,
+    "entriesWithIntegrityHash": 1825,
+    "entriesWithoutResolvedUrl": 0,
+    "entriesWithoutIntegrityHash": 0,
+    "integrityAlgorithms": {
+      "sha512": 1825
+    },
+    "registryHosts": {
+      "registry.npmjs.org": 1825
+    },
+    "distinctPackageNames": 1321,
+    "packagesPinnedAtMoreThanOneVersion": 169,
+    "multiVersionPackages": [
+      {
+        "name": "@babel/code-frame",
+        "versions": [
+          "7.12.11",
+          "7.18.6"
+        ]
+      },
+      {
+        "name": "@eslint/eslintrc",
+        "versions": [
+          "0.4.3",
+          "1.3.0"
+        ]
+      },
+      {
+        "name": "@humanwhocodes/config-array",
+        "versions": [
+          "0.5.0",
+          "0.9.5"
+        ]
+      },
+      {
+        "name": "@jest/console",
+        "versions": [
+          "27.5.1",
+          "28.1.3"
+        ]
+      },
+      {
+        "name": "@jest/test-result",
+        "versions": [
+          "27.5.1",
+          "28.1.3"
+        ]
+      },
+      {
+        "name": "@jest/types",
+        "versions": [
+          "26.6.2",
+          "27.5.1",
+          "28.1.3"
+        ]
+      },
+      {
+        "name": "@jridgewell/gen-mapping",
+        "versions": [
+          "0.1.1",
+          "0.3.2"
+        ]
+      },
+      {
+        "name": "@testing-library/dom",
+        "versions": [
+          "7.31.2",
+          "8.16.0"
+        ]
+      },
+      {
+        "name": "@types/estree",
+        "versions": [
+          "0.0.39",
+          "0.0.51",
+          "1.0.0"
+        ]
+      },
+      {
+        "name": "@types/yargs",
+        "versions": [
+          "15.0.14",
+          "16.0.4",
+          "17.0.10"
+        ]
+      },
+      {
+        "name": "acorn",
+        "versions": [
+          "7.4.1",
+          "8.7.1"
+        ]
+      },
+      {
+        "name": "ajv",
+        "versions": [
+          "6.12.6",
+          "8.11.0"
+        ]
+      },
+      {
+        "name": "ajv-keywords",
+        "versions": [
+          "3.5.2",
+          "5.1.0"
+        ]
+      },
+      {
+        "name": "ansi-regex",
+        "versions": [
+          "3.0.1",
+          "5.0.1",
+          "6.0.1"
+        ]
+      },
+      {
+        "name": "ansi-styles",
+        "versions": [
+          "3.2.1",
+          "4.3.0",
+          "5.2.0",
+          "6.1.0"
+        ]
+      },
+      {
+        "name": "arg",
+        "versions": [
+          "2.0.0",
+          "5.0.2"
+        ]
+      },
+      {
+        "name": "argparse",
+        "versions": [
+          "1.0.10",
+          "2.0.1"
+        ]
+      },
+      {
+        "name": "aria-query",
+        "versions": [
+          "4.2.2",
+          "5.0.0"
+        ]
+      },
+      {
+        "name": "array-flatten",
+        "versions": [
+          "1.1.1",
+          "2.1.2"
+        ]
+      },
+      {
+        "name": "bn.js",
+        "versions": [
+          "4.12.0",
+          "5.2.1"
+        ]
+      },
+      {
+        "name": "brace-expansion",
+        "versions": [
+          "1.1.11",
+          "2.0.1"
+        ]
+      },
+      {
+        "name": "browserify",
+        "versions": [
+          "16.5.2",
+          "17.0.0"
+        ]
+      },
+      {
+        "name": "bytes",
+        "versions": [
+          "3.0.0",
+          "3.1.2"
+        ]
+      },
+      {
+        "name": "camelcase",
+        "versions": [
+          "4.1.0",
+          "5.3.1",
+          "6.3.0"
+        ]
+      },
+      {
+        "name": "chalk",
+        "versions": [
+          "2.4.1",
+          "2.4.2",
+          "3.0.0",
+          "4.1.2"
+        ]
+      },
+      {
+        "name": "char-regex",
+        "versions": [
+          "1.0.2",
+          "2.0.1"
+        ]
+      },
+      {
+        "name": "chokidar",
+        "versions": [
+          "3.5.2",
+          "3.5.3"
+        ]
+      },
+      {
+        "name": "cli-truncate",
+        "versions": [
+          "2.1.0",
+          "3.1.0"
+        ]
+      },
+      {
+        "name": "color-convert",
+        "versions": [
+          "1.9.3",
+          "2.0.1"
+        ]
+      },
+      {
+        "name": "color-name",
+        "versions": [
+          "1.1.3",
+          "1.1.4"
+        ]
+      },
+      {
+        "name": "colors",
+        "versions": [
+          "1.0.3",
+          "1.4.0"
+        ]
+      },
+      {
+        "name": "commander",
+        "versions": [
+          "2.20.3",
+          "5.1.0",
+          "6.2.1",
+          "7.2.0",
+          "8.3.0",
+          "9.4.0"
+        ]
+      },
+      {
+        "name": "compression",
+        "versions": [
+          "1.7.3",
+          "1.7.4"
+        ]
+      },
+      {
+        "name": "content-disposition",
+        "versions": [
+          "0.5.2",
+          "0.5.4"
+        ]
+      },
+      {
+        "name": "convert-source-map",
+        "versions": [
+          "1.1.3",
+          "1.8.0"
+        ]
+      },
+      {
+        "name": "core-js",
+        "versions": [
+          "2.6.12",
+          "3.23.4"
+        ]
+      },
+      {
+        "name": "core-util-is",
+        "versions": [
+          "1.0.2",
+          "1.0.3"
+        ]
+      },
+      {
+        "name": "cosmiconfig",
+        "versions": [
+          "4.0.0",
+          "6.0.0",
+          "7.0.1"
+        ]
+      },
+      {
+        "name": "cross-spawn",
+        "versions": [
+          "5.1.0",
+          "6.0.5",
+          "7.0.3"
+        ]
+      },
+      {
+        "name": "css-select",
+        "versions": [
+          "2.1.0",
+          "4.3.0"
+        ]
+      },
+      {
+        "name": "css-tree",
+        "versions": [
+          "1.0.0-alpha.37",
+          "1.1.3"
+        ]
+      },
+      {
+        "name": "css-what",
+        "versions": [
+          "3.4.2",
+          "6.1.0"
+        ]
+      },
+      {
+        "name": "cssom",
+        "versions": [
+          "0.3.8",
+          "0.4.4"
+        ]
+      },
+      {
+        "name": "cucumber-expressions",
+        "versions": [
+          "5.0.18",
+          "6.6.2"
+        ]
+      },
+      {
+        "name": "debug",
+        "versions": [
+          "2.6.9",
+          "3.2.7",
+          "4.3.4"
+        ]
+      },
+      {
+        "name": "depd",
+        "versions": [
+          "1.1.2",
+          "2.0.0"
+        ]
+      },
+      {
+        "name": "diff-sequences",
+        "versions": [
+          "27.5.1",
+          "28.1.1"
+        ]
+      },
+      {
+        "name": "doctrine",
+        "versions": [
+          "2.1.0",
+          "3.0.0"
+        ]
+      },
+      {
+        "name": "dom-serializer",
+        "versions": [
+          "0.2.2",
+          "1.4.1"
+        ]
+      },
+      {
+        "name": "domelementtype",
+        "versions": [
+          "1.3.1",
+          "2.3.0"
+        ]
+      },
+      {
+        "name": "domutils",
+        "versions": [
+          "1.7.0",
+          "2.8.0"
+        ]
+      },
+      {
+        "name": "emittery",
+        "versions": [
+          "0.10.2",
+          "0.8.1"
+        ]
+      },
+      {
+        "name": "emoji-regex",
+        "versions": [
+          "8.0.0",
+          "9.2.2"
+        ]
+      },
+      {
+        "name": "escape-string-regexp",
+        "versions": [
+          "1.0.5",
+          "2.0.0",
+          "4.0.0"
+        ]
+      },
+      {
+        "name": "eslint",
+        "versions": [
+          "7.32.0",
+          "8.19.0"
+        ]
+      },
+      {
+        "name": "eslint-scope",
+        "versions": [
+          "5.1.1",
+          "7.1.1"
+        ]
+      },
+      {
+        "name": "eslint-utils",
+        "versions": [
+          "2.1.0",
+          "3.0.0"
+        ]
+      },
+      {
+        "name": "eslint-visitor-keys",
+        "versions": [
+          "1.3.0",
+          "2.1.0",
+          "3.3.0"
+        ]
+      },
+      {
+        "name": "espree",
+        "versions": [
+          "7.3.1",
+          "9.3.2"
+        ]
+      },
+      {
+        "name": "estraverse",
+        "versions": [
+          "4.3.0",
+          "5.3.0"
+        ]
+      },
+      {
+        "name": "events",
+        "versions": [
+          "2.1.0",
+          "3.3.0"
+        ]
+      },
+      {
+        "name": "execa",
+        "versions": [
+          "0.7.0",
+          "1.0.0",
+          "4.1.0",
+          "5.1.1"
+        ]
+      },
+      {
+        "name": "figures",
+        "versions": [
+          "2.0.0",
+          "3.2.0"
+        ]
+      },
+      {
+        "name": "find-up",
+        "versions": [
+          "2.1.0",
+          "3.0.0",
+          "4.1.0",
+          "5.0.0"
+        ]
+      },
+      {
+        "name": "form-data",
+        "versions": [
+          "2.3.3",
+          "3.0.1"
+        ]
+      },
+      {
+        "name": "fs-extra",
+        "versions": [
+          "10.1.0",
+          "9.1.0"
+        ]
+      },
+      {
+        "name": "get-stream",
+        "versions": [
+          "3.0.0",
+          "4.1.0",
+          "5.2.0",
+          "6.0.1"
+        ]
+      },
+      {
+        "name": "glob-parent",
+        "versions": [
+          "5.1.2",
+          "6.0.2"
+        ]
+      },
+      {
+        "name": "globals",
+        "versions": [
+          "11.12.0",
+          "13.16.0"
+        ]
+      },
+      {
+        "name": "has-flag",
+        "versions": [
+          "3.0.0",
+          "4.0.0"
+        ]
+      },
+      {
+        "name": "http-errors",
+        "versions": [
+          "1.6.3",
+          "2.0.0"
+        ]
+      },
+      {
+        "name": "human-signals",
+        "versions": [
+          "1.1.1",
+          "2.1.0"
+        ]
+      },
+      {
+        "name": "iconv-lite",
+        "versions": [
+          "0.4.24",
+          "0.6.3"
+        ]
+      },
+      {
+        "name": "ignore",
+        "versions": [
+          "4.0.6",
+          "5.2.0"
+        ]
+      },
+      {
+        "name": "indent-string",
+        "versions": [
+          "3.2.0",
+          "4.0.0"
+        ]
+      },
+      {
+        "name": "inherits",
+        "versions": [
+          "2.0.1",
+          "2.0.3",
+          "2.0.4"
+        ]
+      },
+      {
+        "name": "ini",
+        "versions": [
+          "1.3.8",
+          "2.0.0"
+        ]
+      },
+      {
+        "name": "ipaddr.js",
+        "versions": [
+          "1.9.1",
+          "2.0.1"
+        ]
+      },
+      {
+        "name": "is-fullwidth-code-point",
+        "versions": [
+          "2.0.0",
+          "3.0.0",
+          "4.0.0"
+        ]
+      },
+      {
+        "name": "is-stream",
+        "versions": [
+          "1.1.0",
+          "2.0.1"
+        ]
+      },
+      {
+        "name": "isarray",
+        "versions": [
+          "0.0.1",
+          "1.0.0"
+        ]
+      },
+      {
+        "name": "jest-diff",
+        "versions": [
+          "27.5.1",
+          "28.1.3"
+        ]
+      },
+      {
+        "name": "jest-get-type",
+        "versions": [
+          "27.5.1",
+          "28.0.2"
+        ]
+      },
+      {
+        "name": "jest-matcher-utils",
+        "versions": [
+          "27.5.1",
+          "28.1.3"
+        ]
+      },
+      {
+        "name": "jest-message-util",
+        "versions": [
+          "27.5.1",
+          "28.1.3"
+        ]
+      },
+      {
+        "name": "jest-regex-util",
+        "versions": [
+          "27.5.1",
+          "28.0.2"
+        ]
+      },
+      {
+        "name": "jest-util",
+        "versions": [
+          "27.5.1",
+          "28.1.3"
+        ]
+      },
+      {
+        "name": "jest-watcher",
+        "versions": [
+          "27.5.1",
+          "28.1.3"
+        ]
+      },
+      {
+        "name": "jest-worker",
+        "versions": [
+          "26.6.2",
+          "27.5.1",
+          "28.1.3"
+        ]
+      },
+      {
+        "name": "js-yaml",
+        "versions": [
+          "3.14.1",
+          "4.1.0"
+        ]
+      },
+      {
+        "name": "jsesc",
+        "versions": [
+          "0.5.0",
+          "2.5.2"
+        ]
+      },
+      {
+        "name": "json-schema-traverse",
+        "versions": [
+          "0.4.1",
+          "1.0.0"
+        ]
+      },
+      {
+        "name": "json5",
+        "versions": [
+          "1.0.1",
+          "2.2.1"
+        ]
+      },
+      {
+        "name": "levn",
+        "versions": [
+          "0.3.0",
+          "0.4.1"
+        ]
+      },
+      {
+        "name": "listr2",
+        "versions": [
+          "3.14.0",
+          "4.0.5"
+        ]
+      },
+      {
+        "name": "loader-utils",
+        "versions": [
+          "2.0.2",
+          "3.2.0"
+        ]
+      },
+      {
+        "name": "locate-path",
+        "versions": [
+          "2.0.0",
+          "3.0.0",
+          "5.0.0",
+          "6.0.0"
+        ]
+      },
+      {
+        "name": "lodash.memoize",
+        "versions": [
+          "3.0.4",
+          "4.1.2"
+        ]
+      },
+      {
+        "name": "lower-case",
+        "versions": [
+          "1.1.4",
+          "2.0.2"
+        ]
+      },
+      {
+        "name": "lru-cache",
+        "versions": [
+          "4.1.5",
+          "6.0.0"
+        ]
+      },
+      {
+        "name": "mdn-data",
+        "versions": [
+          "2.0.14",
+          "2.0.4"
+        ]
+      },
+      {
+        "name": "mime-db",
+        "versions": [
+          "1.33.0",
+          "1.52.0"
+        ]
+      },
+      {
+        "name": "mime-types",
+        "versions": [
+          "2.1.18",
+          "2.1.35"
+        ]
+      },
+      {
+        "name": "minimatch",
+        "versions": [
+          "3.0.4",
+          "3.1.2",
+          "5.1.0"
+        ]
+      },
+      {
+        "name": "ms",
+        "versions": [
+          "2.0.0",
+          "2.1.2",
+          "2.1.3"
+        ]
+      },
+      {
+        "name": "no-case",
+        "versions": [
+          "2.3.2",
+          "3.0.4"
+        ]
+      },
+      {
+        "name": "npm-run-path",
+        "versions": [
+          "2.0.2",
+          "4.0.1"
+        ]
+      },
+      {
+        "name": "nth-check",
+        "versions": [
+          "1.0.2",
+          "2.1.1"
+        ]
+      },
+      {
+        "name": "optionator",
+        "versions": [
+          "0.8.3",
+          "0.9.1"
+        ]
+      },
+      {
+        "name": "p-limit",
+        "versions": [
+          "1.3.0",
+          "2.3.0",
+          "3.1.0"
+        ]
+      },
+      {
+        "name": "p-locate",
+        "versions": [
+          "2.0.0",
+          "3.0.0",
+          "4.1.0",
+          "5.0.0"
+        ]
+      },
+      {
+        "name": "p-try",
+        "versions": [
+          "1.0.0",
+          "2.2.0"
+        ]
+      },
+      {
+        "name": "parse-json",
+        "versions": [
+          "4.0.0",
+          "5.2.0"
+        ]
+      },
+      {
+        "name": "path-browserify",
+        "versions": [
+          "0.0.1",
+          "1.0.1"
+        ]
+      },
+      {
+        "name": "path-exists",
+        "versions": [
+          "3.0.0",
+          "4.0.0"
+        ]
+      },
+      {
+        "name": "path-key",
+        "versions": [
+          "2.0.1",
+          "3.1.1"
+        ]
+      },
+      {
+        "name": "path-to-regexp",
+        "versions": [
+          "0.1.7",
+          "1.8.0",
+          "2.2.1"
+        ]
+      },
+      {
+        "name": "picocolors",
+        "versions": [
+          "0.2.1",
+          "1.0.0"
+        ]
+      },
+      {
+        "name": "postcss",
+        "versions": [
+          "7.0.39",
+          "8.4.14"
+        ]
+      },
+      {
+        "name": "prelude-ls",
+        "versions": [
+          "1.1.2",
+          "1.2.1"
+        ]
+      },
+      {
+        "name": "pretty-format",
+        "versions": [
+          "26.6.2",
+          "27.5.1",
+          "28.1.3"
+        ]
+      },
+      {
+        "name": "punycode",
+        "versions": [
+          "1.3.2",
+          "1.4.1",
+          "2.1.1"
+        ]
+      },
+      {
+        "name": "qs",
+        "versions": [
+          "6.10.3",
+          "6.5.3"
+        ]
+      },
+      {
+        "name": "range-parser",
+        "versions": [
+          "1.2.0",
+          "1.2.1"
+        ]
+      },
+      {
+        "name": "react-is",
+        "versions": [
+          "16.13.1",
+          "17.0.2",
+          "18.2.0"
+        ]
+      },
+      {
+        "name": "readable-stream",
+        "versions": [
+          "2.3.7",
+          "3.6.0"
+        ]
+      },
+      {
+        "name": "regenerator-runtime",
+        "versions": [
+          "0.11.1",
+          "0.13.9"
+        ]
+      },
+      {
+        "name": "resolve",
+        "versions": [
+          "1.22.1",
+          "2.0.0-next.4"
+        ]
+      },
+      {
+        "name": "resolve-from",
+        "versions": [
+          "4.0.0",
+          "5.0.0"
+        ]
+      },
+      {
+        "name": "rxjs",
+        "versions": [
+          "6.6.7",
+          "7.5.6"
+        ]
+      },
+      {
+        "name": "safe-buffer",
+        "versions": [
+          "5.1.2",
+          "5.2.1"
+        ]
+      },
+      {
+        "name": "schema-utils",
+        "versions": [
+          "2.7.0",
+          "2.7.1",
+          "3.1.1",
+          "4.0.0"
+        ]
+      },
+      {
+        "name": "semver",
+        "versions": [
+          "5.7.1",
+          "6.3.0",
+          "7.0.0",
+          "7.3.7"
+        ]
+      },
+      {
+        "name": "serialize-javascript",
+        "versions": [
+          "4.0.0",
+          "6.0.0"
+        ]
+      },
+      {
+        "name": "setprototypeof",
+        "versions": [
+          "1.1.0",
+          "1.2.0"
+        ]
+      },
+      {
+        "name": "shebang-command",
+        "versions": [
+          "1.2.0",
+          "2.0.0"
+        ]
+      },
+      {
+        "name": "shebang-regex",
+        "versions": [
+          "1.0.0",
+          "3.0.0"
+        ]
+      },
+      {
+        "name": "slash",
+        "versions": [
+          "3.0.0",
+          "4.0.0"
+        ]
+      },
+      {
+        "name": "slice-ansi",
+        "versions": [
+          "3.0.0",
+          "4.0.0",
+          "5.0.0"
+        ]
+      },
+      {
+        "name": "source-map",
+        "versions": [
+          "0.5.6",
+          "0.5.7",
+          "0.6.1",
+          "0.7.4",
+          "0.8.0-beta.0"
+        ]
+      },
+      {
+        "name": "statuses",
+        "versions": [
+          "1.5.0",
+          "2.0.1"
+        ]
+      },
+      {
+        "name": "stream-browserify",
+        "versions": [
+          "2.0.2",
+          "3.0.0"
+        ]
+      },
+      {
+        "name": "string_decoder",
+        "versions": [
+          "1.1.1",
+          "1.3.0"
+        ]
+      },
+      {
+        "name": "string-argv",
+        "versions": [
+          "0.0.2",
+          "0.3.1"
+        ]
+      },
+      {
+        "name": "string-length",
+        "versions": [
+          "4.0.2",
+          "5.0.1"
+        ]
+      },
+      {
+        "name": "string-width",
+        "versions": [
+          "2.1.1",
+          "4.2.3",
+          "5.1.2"
+        ]
+      },
+      {
+        "name": "strip-ansi",
+        "versions": [
+          "4.0.0",
+          "6.0.1",
+          "7.0.1"
+        ]
+      },
+      {
+        "name": "strip-bom",
+        "versions": [
+          "3.0.0",
+          "4.0.0"
+        ]
+      },
+      {
+        "name": "strip-json-comments",
+        "versions": [
+          "2.0.1",
+          "3.1.1"
+        ]
+      },
+      {
+        "name": "supports-color",
+        "versions": [
+          "5.5.0",
+          "7.2.0",
+          "8.1.1",
+          "9.2.2"
+        ]
+      },
+      {
+        "name": "svgo",
+        "versions": [
+          "1.3.2",
+          "2.8.0"
+        ]
+      },
+      {
+        "name": "tapable",
+        "versions": [
+          "1.1.3",
+          "2.2.1"
+        ]
+      },
+      {
+        "name": "through2",
+        "versions": [
+          "2.0.5",
+          "4.0.2"
+        ]
+      },
+      {
+        "name": "tough-cookie",
+        "versions": [
+          "2.5.0",
+          "4.0.0"
+        ]
+      },
+      {
+        "name": "tr46",
+        "versions": [
+          "1.0.1",
+          "2.1.0"
+        ]
+      },
+      {
+        "name": "tslib",
+        "versions": [
+          "1.14.1",
+          "2.4.0"
+        ]
+      },
+      {
+        "name": "type",
+        "versions": [
+          "1.2.0",
+          "2.6.0"
+        ]
+      },
+      {
+        "name": "type-check",
+        "versions": [
+          "0.3.2",
+          "0.4.0"
+        ]
+      },
+      {
+        "name": "type-fest",
+        "versions": [
+          "0.16.0",
+          "0.20.2",
+          "0.21.3"
+        ]
+      },
+      {
+        "name": "universalify",
+        "versions": [
+          "0.1.2",
+          "2.0.0"
+        ]
+      },
+      {
+        "name": "util",
+        "versions": [
+          "0.10.3",
+          "0.10.4",
+          "0.12.4"
+        ]
+      },
+      {
+        "name": "verror",
+        "versions": [
+          "1.10.0",
+          "1.10.1"
+        ]
+      },
+      {
+        "name": "webidl-conversions",
+        "versions": [
+          "4.0.2",
+          "5.0.0",
+          "6.1.0"
+        ]
+      },
+      {
+        "name": "webpack-sources",
+        "versions": [
+          "1.4.3",
+          "2.3.1",
+          "3.2.3"
+        ]
+      },
+      {
+        "name": "whatwg-url",
+        "versions": [
+          "7.1.0",
+          "8.7.0"
+        ]
+      },
+      {
+        "name": "which",
+        "versions": [
+          "1.3.1",
+          "2.0.2"
+        ]
+      },
+      {
+        "name": "wrap-ansi",
+        "versions": [
+          "6.2.0",
+          "7.0.0"
+        ]
+      },
+      {
+        "name": "ws",
+        "versions": [
+          "7.5.9",
+          "8.8.1"
+        ]
+      },
+      {
+        "name": "yallist",
+        "versions": [
+          "2.1.2",
+          "4.0.0"
+        ]
+      }
+    ]
+  },
+  "counts": {
+    "declaredDependencies": 14,
+    "declaredDevDependencies": 16,
+    "lockedEntries": 1825,
+    "installedTopLevelPackageDirectories": 1078,
+    "nestedNodeModulesDirectories": 175,
+    "npmReportedPackagesAdded": 1825,
+    "npmReportedPackagesAudited": 1826
+  },
+  "keyResolutions": {
+    "react-scripts": "5.0.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-router-dom": "5.3.3",
+    "primereact": "6.6.0",
+    "webpack": "5.73.0",
+    "babel-loader": "8.2.5",
+    "typescript": "4.7.4",
+    "cypress": "8.7.0",
+    "purgecss": "3.1.3",
+    "@fullhuman/postcss-purgecss": "3.1.3"
+  },
+  "purgecssBinaryProvenance": {
+    "declaredInManifest": false,
+    "declaredPackage": "@fullhuman/postcss-purgecss ^3.0.0 (a devDependency)",
+    "binaryProvidedBy": "purgecss, a TRANSITIVE dependency of @fullhuman/postcss-purgecss",
+    "resolvedVersion": "3.1.3",
+    "binPath": "node_modules/.bin/purgecss -> ../purgecss/bin/purgecss.js",
+    "note": "The repository's declared `postbuild` step invokes a CLI it never declares a direct dependency on. It worked here only because npm hoisted the transitive `purgecss` package's bin into node_modules/.bin. This is a real fragility of the declared pipeline and is recorded rather than smoothed over."
+  },
+  "observedResolution": {
+    "what": "The baseline install materialised the committed lockfile exactly; nothing was re-resolved. No generated lockfile is published, because the upstream lockfile already pins the closure.",
+    "installer": "npm 8.19.4 (bundled with Node 16.20.2, darwin-arm64)",
+    "command": "npm ci --ignore-scripts",
+    "installedOn": "2026-08-11",
+    "auditSummary": "npm reported 90 vulnerabilities (17 low, 20 moderate, 42 high, 11 critical) against this 2022 closure. That is expected for a four-year-old CRA 5 dependency graph and is recorded as an observation. No remediation was attempted and none is implied.",
+    "deprecationWarnings": [
+      "stable@0.1.8",
+      "source-map-resolve@0.6.0",
+      "svgo@1.3.2",
+      "gherkin@5.1.0",
+      "cucumber-expressions@6.6.2",
+      "cucumber@4.2.1",
+      "core-js@2.6.12",
+      "cucumber-expressions@5.0.18",
+      "querystring@0.2.0"
+    ]
+  },
+  "closureSha256": "fbd7042bb85fc05e9dccb46199a0a06815b279938de770a906cb49c290e74b48",
+  "nonclaims": [
+    "Per-artifact byte digests were not independently mirrored in this unit; the recorded integrity hashes are the ones the committed lockfile declares.",
+    "The vulnerability counts are npm's own audit output against today's advisory database. No exploitability assessment is made and no security finding is claimed.",
+    "A pinned, resolvable closure establishes no browser behavior, licence compatibility of transitive dependencies, migration feasibility, or production readiness.",
+    "No licence determination is made for any package in the closure."
+  ]
+}

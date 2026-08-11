@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-tag-delta.v1",
+  "slug": "react-linkfree-v0-72-0",
+  "annotatedTag": {
+    "ref": "refs/tags/v0.72.0",
+    "tagObjectSha": "36313ba4c2b8dc7ebce1ce4665eba2e64cb2c753",
+    "tagMessage": "v0.72.0\n",
+    "taggerDate": "2022-08-31T15:24:28Z",
+    "tagSignatureVerified": false,
+    "tagVerificationReason": "unsigned",
+    "targetCommitSha": "e527a935b9d37d8cde6db40f15c99ace4005280a",
+    "targetCommitDate": "2022-08-31T15:24:28Z",
+    "targetRootTreeSha": "e4367ebed488ff05f855c92d167c62f94c5d361f"
+  },
+  "pinnedCommit": {
+    "sha": "367d77297b5753644e11ecd22cf80e59c87b0dc8",
+    "date": "2022-08-31T16:08:13Z",
+    "message": "ci: more workflows to ReviewPad (#1703)\n\n* Update reviewpad.yml\r\n\r\n* Add waiting for reviewers label with reviewpad\r\n\r\n* feat: add workflows for waiting for reviewers and commit lint\r\n\r\n* chore: more workflows",
+    "parents": [
+      "e527a935b9d37d8cde6db40f15c99ace4005280a"
+    ],
+    "rootTreeSha": "4946205e9a3822d08a2aca9179c6267cede8fb0f",
+    "signatureVerified": true,
+    "verificationReason": "valid"
+  },
+  "relationship": "The pinned commit is the DIRECT CHILD of the commit the annotated tag v0.72.0 points at. The pinned revision is one commit AFTER the v0.72.0 release tag, not the release tag itself.",
+  "delta": {
+    "parentBlobs": 653,
+    "pinnedBlobs": 653,
+    "added": [],
+    "removed": [],
+    "modified": [
+      {
+        "path": "reviewpad.yml",
+        "fromSha": "cffd80994dbd382475fd61c8ad45a8ff16b8ee16",
+        "toSha": "58c301228954389275b8c6b96423d7e6d6f46222",
+        "fromSize": 450,
+        "toSize": 2161
+      }
+    ],
+    "changedPathCount": 1,
+    "changedPaths": [
+      "reviewpad.yml"
+    ],
+    "touchesApplicationSource": false
+  }
+}

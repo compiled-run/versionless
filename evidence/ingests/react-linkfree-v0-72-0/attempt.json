@@ -1,0 +1,76 @@
+{
+  "schemaVersion": "versionless.official-source-attempt.v1",
+  "unit": "lrapr-t006/u5-ingest-linkfree",
+  "candidate": {
+    "repositoryAsNamedByThePacket": "EddieHubCommunity/LinkFree",
+    "repositoryCanonicalAtAcquisition": "EddieHubCommunity/BioDrop",
+    "renameNote": "The repository was renamed upstream from LinkFree to BioDrop and has since been archived. The packet's name is the historical one. GitHub answers the old name with a 301 to the numeric repository id, which is how this unit discovered the canonical name; the rename is recorded rather than papered over.",
+    "requestedTag": "v0.72.0",
+    "expectedCommitSha": "367d77297b5753644e11ecd22cf80e59c87b0dc8",
+    "expectationSource": "a prior read-only scout unit (lrapr-t006/u2, 2026-08-11); re-verified from the wire by this unit rather than trusted",
+    "frontendRoot": ".",
+    "frontendRootNote": "Single-package repository: the React application IS the repository root. There is no monorepo scoping to record."
+  },
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "networkMode": "consented",
+  "result": "started",
+  "network": {
+    "method": "GET",
+    "credentials": "none",
+    "requestEncoding": "identity",
+    "redirectsAllowed": "recorded-and-followed-only-within-github-hosts",
+    "redirectPolicy": "Redirects are not silently followed. Each hop is written to probe-ledger.ndjson with its status and Location, at most two hops are permitted per request, and a hop whose target host is neither api.github.com nor codeload.github.com aborts the transaction. This policy exists precisely because the candidate repository was renamed upstream and the packet names it by its former name.",
+    "retriesAllowed": false,
+    "alternateHostsAllowed": false
+  },
+  "allowlist": [
+    "https://api.github.com/repos/EddieHubCommunity/LinkFree",
+    "https://api.github.com/repositories/<repository-id-reached-by-recorded-rename-redirect>",
+    "https://api.github.com/repos/<canonical-full-name>/git/ref/tags/v0.72.0",
+    "https://api.github.com/repos/<canonical-full-name>/git/tags/<validated-tag-object-sha>",
+    "https://api.github.com/repos/<canonical-full-name>/git/commits/<validated-commit-sha>",
+    "https://api.github.com/repos/<canonical-full-name>/git/trees/<validated-tree-sha>?recursive=1",
+    "https://codeload.github.com/<canonical-full-name>/tar.gz/<validated-commit-sha>"
+  ],
+  "caps": {
+    "maximumAcceptedResponses": 10,
+    "maximumApiResponseBytes": 16777216,
+    "maximumArchiveBytes": 134217728,
+    "maximumRedirectHopsPerRequest": 2,
+    "requiredArchiveStreams": 2
+  },
+  "requiredRevisionWindow": {
+    "from": "2018-01-01T00:00:00Z",
+    "through": "2023-08-10T00:00:00Z"
+  },
+  "admissionGates": [
+    "mit-license-file-text-bytes-at-the-pinned-revision",
+    "real-substantive-application-not-template-demo-or-library",
+    "genuine-create-react-app-5-webpack-5-era-origin-bundler",
+    "pinned-revision-era-coherent",
+    "browser-ui-plausibly-supporting-three-or-more-substantive-user-journeys",
+    "zero-git-lfs-pointers-in-the-tree"
+  ],
+  "gateFailurePolicy": "Any gate failure is recorded append-only and the unit returns blocked. Substituting a different candidate is not permitted.",
+  "publication": {
+    "evidenceRoot": "evidence/ingests/react-linkfree-v0-72-0",
+    "cacheRoot": ".versionless/cache/react-linkfree-v0-72-0-source",
+    "fixtureRoot": "fixtures/react-linkfree-v0-72-0",
+    "transactional": true,
+    "readinessCredit": false
+  },
+  "baselineNetwork": {
+    "purpose": "one truthful baseline dependency install for the declared legacy cell, followed by the repository's own declared production build including its generate.js prebuild and its purgecss postbuild",
+    "allowedHosts": ["registry.npmjs.org"],
+    "note": "Package-manager fetches during the baseline install are performed by npm itself and are recorded in aggregate in the baseline attempt record, not URL-by-URL in the source ledger."
+  },
+  "dataHandlingPolicy": {
+    "concern": "public/data contains one JSON profile per contributor, and each file is NAMED by that contributor's username.",
+    "rule": "The profile corpus is treated as application content addressed by digest. It is counted, digested in aggregate, and characterised by host histograms only. No individual username, data filename, or profile field value is emitted into any Versionless evidence record.",
+    "exception": "The copyright holder named in the repository's own LICENSE file is recorded verbatim, because the licence text is the primary evidence for the rights gate."
+  },
+  "nonclaims": [
+    "Starting this transaction establishes no tag identity, license, source integrity, dependency closure, framework, build, browser behavior, migration feasibility, pilot status, or production readiness.",
+    "The resulting evidence is reproducibility evidence, not certification or legal approval."
+  ]
+}

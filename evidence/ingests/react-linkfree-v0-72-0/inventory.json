@@ -1,0 +1,361 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-inventory.v1",
+  "slug": "react-linkfree-v0-72-0",
+  "reconciledSourceRoot": "<cache>/react-linkfree-v0-72-0-source/verify/extracted/BioDrop-367d77297b5753644e11ecd22cf80e59c87b0dc8",
+  "totals": {
+    "files": 653,
+    "bytes": 2504175
+  },
+  "partition": {
+    "applicationSource": {
+      "files": 35,
+      "bytes": 36359
+    },
+    "profileData": {
+      "files": 561,
+      "bytes": 448757
+    },
+    "publicOther": {
+      "files": 9,
+      "bytes": 452091
+    },
+    "e2eSuite": {
+      "files": 9,
+      "bytes": 5974
+    },
+    "ciAndTooling": {
+      "files": 19,
+      "bytes": 13704
+    },
+    "repositoryRootOther": {
+      "files": 20,
+      "bytes": 1547290
+    }
+  },
+  "applicationSource": {
+    "srcFiles": 35,
+    "jsxComponents": 21,
+    "cssFiles": 8,
+    "componentPaths": [
+      "src/Components/Footer.js",
+      "src/Components/Home.js",
+      "src/Components/Icons/GetIcons.js",
+      "src/Components/ImageLoader.js",
+      "src/Components/Links.js",
+      "src/Components/Milestones.js",
+      "src/Components/Navbar.js",
+      "src/Components/Profile.js",
+      "src/Components/ScrollToTopBtn.js",
+      "src/Components/Search/Placeholders.js",
+      "src/Components/Search/Search.js",
+      "src/Components/Search/Searchbar.js",
+      "src/Components/Search/Users.js",
+      "src/Components/Search/filterProfileType.js",
+      "src/Components/ShareIcon.js",
+      "src/Components/ShareProfile.js",
+      "src/Components/StyledLink.js",
+      "src/Components/UserProfile/ErrorPage.js",
+      "src/Components/UserProfile/Placeholder.js",
+      "src/Components/UserProfile/ProfilePage.js",
+      "src/Components/UserProfile/User.js"
+    ],
+    "configJson": [
+      "src/config/links.json",
+      "src/config/user.json"
+    ],
+    "unitTestFiles": 0
+  },
+  "e2eSuite": {
+    "runner": "cypress 8 with cypress-cucumber-preprocessor 4 (nonGlobalStepDefinitions)",
+    "featureFiles": [
+      "cypress/integration/404.feature",
+      "cypress/integration/homepage.feature",
+      "cypress/integration/search.feature",
+      "cypress/integration/user.feature"
+    ],
+    "stepDefinitionFiles": [
+      "cypress/integration/common/actions.js"
+    ],
+    "configuredTestFileGlob": "**/*.feature",
+    "note": "This is an UPSTREAM-authored end-to-end suite. Unlike most fixtures in this corpus, this repository ships its own behavioural oracle."
+  },
+  "profileData": {
+    "handling": "Files under public/data are named by contributor username. They are the application's content. This record counts and digests them IN AGGREGATE; no individual username, filename, or profile field value is emitted into Versionless evidence.",
+    "fileCount": 561,
+    "bytes": 448757,
+    "aggregateDigestSha256": "2a2e8ba5292a0bbfb5524e1dce8559c019d47d6de12bc4b8ac3949dc3afeadf5",
+    "aggregateDigestMethod": "sha256 over the sorted, newline-joined list of the per-file sha256 digests, so the corpus content is addressable without naming any contributor.",
+    "schemaFields": [
+      "avatar",
+      "bio",
+      "links",
+      "milestone",
+      "milestones",
+      "name",
+      "type"
+    ],
+    "profilesWithBio": 559,
+    "profileTypeHistogram": {
+      "personal": 549,
+      "community": 6,
+      "(absent)": 5,
+      "Personal": 1
+    },
+    "totalDeclaredLinks": 1666,
+    "avatarHostHistogram": {
+      "github.com": 555,
+      "avatars.githubusercontent.com": 3,
+      "user-images.githubusercontent.com": 1,
+      "camo.githubusercontent.com": 1,
+      "cdn.nhcarrigan.com": 1
+    },
+    "topLinkHostHistogram": [
+      {
+        "host": "github.com",
+        "count": 560
+      },
+      {
+        "host": "twitter.com",
+        "count": 500
+      },
+      {
+        "host": "linkedin.com",
+        "count": 267
+      },
+      {
+        "host": "instagram.com",
+        "count": 48
+      },
+      {
+        "host": "youtube.com",
+        "count": 40
+      },
+      {
+        "host": "",
+        "count": 14
+      },
+      {
+        "host": "dev.to",
+        "count": 14
+      },
+      {
+        "host": "facebook.com",
+        "count": 9
+      },
+      {
+        "host": "medium.com",
+        "count": 8
+      },
+      {
+        "host": "hashnode.com",
+        "count": 7
+      },
+      {
+        "host": "discord.gg",
+        "count": 7
+      },
+      {
+        "host": "(unparseable)",
+        "count": 5
+      },
+      {
+        "host": "showwcase.com",
+        "count": 4
+      },
+      {
+        "host": "gitlab.com",
+        "count": 4
+      },
+      {
+        "host": "stackoverflow.com",
+        "count": 3
+      }
+    ],
+    "egressCharacter": "Avatar values are absolute image URLs, overwhelmingly on GitHub's avatar/asset hosts. They are <img> loads only: no script, no XHR, no credential. They are blockable at the network layer without changing application logic, and a later witness unit can stub them."
+  },
+  "buildPipeline": {
+    "prebuildCodegen": {
+      "script": "generate.js",
+      "wiredBy": "\"build\": \"npm run generate && react-scripts build\" and \"prestart\": \"npm run generate\"",
+      "reads": "public/data/*.json",
+      "writes": "public/list.json",
+      "emitsPerProfile": [
+        "type",
+        "name",
+        "username",
+        "avatar",
+        "linkCount"
+      ],
+      "note": "public/list.json is NOT committed to the repository. It is generated at build time from the profile data directory. Any build lane that skips generate.js will produce an application whose home and search pages have no user list to load.",
+      "listJsonCommitted": false
+    },
+    "postbuildPurge": {
+      "script": "purgecss --config ./purgecss.config.js --output build/static/css",
+      "wiredBy": "npm lifecycle: \"postbuild\" fires automatically after \"build\"",
+      "config": {
+        "content": [
+          "build/index.html",
+          "build/static/js/*.js"
+        ],
+        "css": [
+          "./build/static/css/*.css"
+        ]
+      },
+      "declaredDevDependency": "@fullhuman/postcss-purgecss ^3.0.0",
+      "binaryProvenanceNote": "package.json declares @fullhuman/postcss-purgecss but NOT the `purgecss` CLI package itself. The `purgecss` binary therefore has to come from a transitive dependency's bin, which is a fragile arrangement; the baseline attempt records what actually happened."
+    }
+  },
+  "declaredCell": {
+    "enginesField": null,
+    "packageManagerField": null,
+    "nvmrc": false,
+    "toolVersions": false,
+    "npmrc": false,
+    "dockerfileBaseImage": "node:15 (both the development and the production stage)",
+    "ciNodeVersion": "16 (actions/setup-node@v2 with node-version: '16', in .github/workflows/build.yml, for both the build job and the e2e tests job)",
+    "ciInstallCommand": "npm ci",
+    "ciBuildCommand": "npm run build",
+    "ciTestCommand": "npm run test:e2e",
+    "workflows": [
+      ".github/workflows/build.yml",
+      ".github/workflows/community.yml",
+      ".github/workflows/deploy.yml",
+      ".github/workflows/kubescape.yml",
+      ".github/workflows/prettier.yml",
+      ".github/workflows/release.yml",
+      ".github/workflows/reviewpad.yml"
+    ]
+  },
+  "lockfile": {
+    "path": "package-lock.json",
+    "bytes": 1501476,
+    "sha256": "fbd7042bb85fc05e9dccb46199a0a06815b279938de770a906cb49c290e74b48",
+    "lockfileVersion": 2,
+    "rootPackageVersionInLock": "0.70.1",
+    "manifestVersion": "0.72.0",
+    "versionSkew": true
+  },
+  "byExtension": {
+    "json": {
+      "files": 570,
+      "bytes": 1955045
+    },
+    "png": {
+      "files": 3,
+      "bytes": 392414
+    },
+    "webp": {
+      "files": 1,
+      "bytes": 53024
+    },
+    "js": {
+      "files": 31,
+      "bytes": 36365
+    },
+    "md": {
+      "files": 7,
+      "bytes": 27103
+    },
+    "yml": {
+      "files": 16,
+      "bytes": 13971
+    },
+    "(none)": {
+      "files": 7,
+      "bytes": 12797
+    },
+    "ico": {
+      "files": 1,
+      "bytes": 4286
+    },
+    "css": {
+      "files": 8,
+      "bytes": 3470
+    },
+    "feature": {
+      "files": 4,
+      "bytes": 2259
+    },
+    "html": {
+      "files": 1,
+      "bytes": 1783
+    },
+    "yaml": {
+      "files": 3,
+      "bytes": 1591
+    },
+    "txt": {
+      "files": 1,
+      "bytes": 67
+    }
+  },
+  "keyFileDigests": [
+    {
+      "path": "LICENSE",
+      "bytes": 1075,
+      "sha256": "3b5b430ae7e6151220591e69a8a056482a13d36518357c025619cf0d60be50bf"
+    },
+    {
+      "path": "README.md",
+      "bytes": 6085,
+      "sha256": "8844f13e278b848e28227fe2d9c6a2885c6b0b213305243b415263c6cfbe6c6d"
+    },
+    {
+      "path": "package.json",
+      "bytes": 3024,
+      "sha256": "c7d87cd15f8db40f292b845f33cc6b919b2e8fc24d4a643bef093531b5c2fa50"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 1501476,
+      "sha256": "fbd7042bb85fc05e9dccb46199a0a06815b279938de770a906cb49c290e74b48"
+    },
+    {
+      "path": "generate.js",
+      "bytes": 741,
+      "sha256": "c9aa61ed427c00ab826aa4e980236a868fdf3ef01bba5741c854602b932424bb"
+    },
+    {
+      "path": "purgecss.config.js",
+      "bytes": 188,
+      "sha256": "bc1386cad40bfd52f0912f733855e3fdd6196a7cf9ce3b6afba203ef5810083e"
+    },
+    {
+      "path": "Dockerfile",
+      "bytes": 615,
+      "sha256": "4aee9b781d33473ca4164c6689ffff616ab0b50a30e1c0bdc50a898c54641d91"
+    },
+    {
+      "path": "cypress.json",
+      "bytes": 34,
+      "sha256": "927c6b49df91bfea7ffc0da4876b827f0194070d91c1ef0d990808a9097993a5"
+    },
+    {
+      "path": "src/App.js",
+      "bytes": 1021,
+      "sha256": "79519c519e0e732b05cde9f69d347963eaa277b81d74fe12ac044d79d285feee"
+    },
+    {
+      "path": "src/index.js",
+      "bytes": 494,
+      "sha256": "65f5809d451535481adf06004c27de29bca81492295addf5f4f0d9e57d48cb32"
+    },
+    {
+      "path": "src/config/user.json",
+      "bytes": 21,
+      "sha256": "377265e08dc867a72ac91841dd5975c6b953534f426c3c479297600a55ca362a"
+    },
+    {
+      "path": "public/index.html",
+      "bytes": 1783,
+      "sha256": "fa8c8f9da7a0aefd8ceeefa3cd59c293ded595f2bb1a65b6a869babcdebab242"
+    }
+  ],
+  "presenceChecks": {
+    "committedNodeModules": 0,
+    "committedBuildDirectories": 0,
+    "dotEnvFiles": [],
+    "gitattributes": [],
+    "generatedListJsonCommitted": false
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-rights.v1",
+  "slug": "react-linkfree-v0-72-0",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "revision": {
+    "repository": "EddieHubCommunity/BioDrop (named EddieHubCommunity/LinkFree at the pinned revision; renamed and archived upstream since)",
+    "pinnedCommitSha": "367d77297b5753644e11ecd22cf80e59c87b0dc8",
+    "rootTreeSha": "4946205e9a3822d08a2aca9179c6267cede8fb0f",
+    "tagNote": "refs/tags/v0.72.0 is an annotated, unsigned tag pointing at the pinned commit's PARENT. See tag-delta.json. The licence file is byte-identical at both revisions."
+  },
+  "declaration": {
+    "identifier": "MIT",
+    "identifierSource": "verbatim MIT text in the repository-root LICENSE file at the pinned revision, read out of the reconciled archive",
+    "copyrightNotice": "Copyright (c) 2021 - 2022 Eddie Jaoude",
+    "manifestLicenseField": "MIT",
+    "manifestLicenseFieldNote": "Unlike several fixtures in this corpus, package.json DOES declare \"license\": \"MIT\", so the file-level grant and the manifest agree. npm raised no 'No license field' warning during install.",
+    "githubDetectedLicense": "MIT (spdx_id MIT) as reported by the repository metadata response; the file text is the primary evidence and agrees with it",
+    "dualLicensed": false,
+    "sourceAvailableCarveOut": false
+  },
+  "textFidelity": {
+    "matchesCanonicalMitTemplate": "substantially, with one observed difference",
+    "difference": "The final word of the warranty-disclaimer paragraph is 'SOFTWARE' with NO terminating period; the canonical MIT template ends 'SOFTWARE.'. Nothing else deviates: the permission grant, the notice-retention clause, and the warranty disclaimer are present verbatim.",
+    "materiality": "None for the grant. A missing full stop changes no operative term. It is recorded because this record's job is to describe the bytes that are actually there, not the template they resemble."
+  },
+  "artifacts": [
+    {
+      "path": "LICENSE",
+      "role": "repository-root-licence",
+      "gitBlobSha": "3df71e6b3f4d049fb6ae1aa1344a4887887086a3",
+      "bytes": 1075,
+      "sha256": "3b5b430ae7e6151220591e69a8a056482a13d36518357c025619cf0d60be50bf",
+      "firstLine": "MIT License",
+      "copyrightLine": "Copyright (c) 2021 - 2022 Eddie Jaoude",
+      "permissionGrantPresent": true,
+      "noticeRetentionClausePresent": true,
+      "warrantyDisclaimerPresent": true,
+      "expectedBlobShaFromPriorScout": "3df71e6b…",
+      "expectedBlobShaConfirmed": true,
+      "expectedBytesFromPriorScout": 1075,
+      "expectedBytesConfirmed": true,
+      "expectedCopyrightLineFromPriorScout": "Copyright (c) 2021 - 2022 Eddie Jaoude",
+      "expectedCopyrightLineConfirmed": true
+    },
+    {
+      "path": "package.json",
+      "role": "application-manifest",
+      "gitBlobSha": "35bc5cab4089592fb2866ac16992c5da539f87e0",
+      "bytes": 3024,
+      "sha256": "c7d87cd15f8db40f292b845f33cc6b919b2e8fc24d4a643bef093531b5c2fa50",
+      "licenseField": "MIT",
+      "privateField": false,
+      "packageName": "linkfree",
+      "packageVersion": "0.72.0",
+      "author": "EddieHubCommunity",
+      "privateFieldNote": "\"private\": false is declared explicitly. The package was nonetheless never published to npm as a library; it is an application and its manifest's `main` points at the build-time codegen script generate.js."
+    }
+  ],
+  "inventory": {
+    "licenceFilesInTree": 1,
+    "licenceFilePaths": ["LICENSE"],
+    "additionalLicenceOrNoticeFiles": 0,
+    "vendoredThirdPartySources": 0,
+    "committedNodeModules": 0,
+    "committedDistDirectories": 0,
+    "note": "CODE_OF_CONDUCT.md, CONTRIBUTING.md, SECURITY.md and CHANGELOG.md are present at the repository root; none carries licence terms. No third-party source is vendored into the tree."
+  },
+  "contributedContentPosture": {
+    "reviewed": true,
+    "what": "public/data holds 561 JSON profile files, one per contributor, each named by that contributor's GitHub username and each carrying a display name, a short bio, an avatar URL, and a list of outbound links. This is the application's content corpus and it was contributed by real people.",
+    "handlingRule": "Versionless evidence treats this corpus as application content addressed by digest. It is counted, aggregate-digested, and characterised by host histograms only. No individual username, data filename, display name, bio, or link value is emitted into any Versionless evidence record, and none may be introduced by later work.",
+    "aggregateDigestSha256": "recorded in inventory.json under profileData.aggregateDigestSha256",
+    "licencePosition": "The contributions were made into a repository carrying a repository-wide MIT grant, and the MIT grant on its face covers the repository's files including these. This record states that reading explicitly because the files are personal profile data rather than code.",
+    "unknownPreserved": "Whether each contributor separately intended, or would today intend, their personal profile data to be redistributed as part of a migration-evidence corpus is NOT established by the MIT grant and is not resolved here. Any Versionless artifact that would republish this data to a wider audience should revisit that question rather than rely on this record.",
+    "practicalMitigation": "The application does not require this corpus to be real to function. generate.js will build public/list.json from ANY set of profile JSON files, so a later witness or migration unit can substitute a synthetic corpus and exercise every journey without redistributing contributor data."
+  },
+  "retainedAssetRights": {
+    "reviewed": true,
+    "brandedAssets": [
+      "public/eddiehub_community_logo.webp",
+      "public/logo192.png",
+      "public/logo512.png",
+      "public/favicon.ico",
+      "public/mockup.png"
+    ],
+    "position": "EddieHub and LinkFree/BioDrop brand marks are retained under the upstream project's ownership. They are carried only as part of the immutable source archive and are not relicensed, rebranded, or reused as Versionless assets.",
+    "unknownPreserved": "Trademark rights are separate from the MIT copyright grant and are neither established nor disclaimed here."
+  },
+  "thirdPartyRuntimeAssets": {
+    "reviewed": true,
+    "what": "Avatar images are loaded at runtime from absolute third-party URLs (overwhelmingly GitHub avatar/asset hosts), and src/utils.js falls back to https://avatars.dicebear.com for a generated initials SVG when an avatar fails to load.",
+    "position": "None of these images is redistributed by Versionless: they are referenced by URL from content that is itself carried under the upstream MIT grant. No image bytes are copied into this corpus.",
+    "detail": "runtime-egress.json"
+  },
+  "obligations": [
+    "Retain the MIT notice and permission text in any copy or substantial portion of the source, including in any Versionless artifact derived from it.",
+    "The MIT grant covers the repository's own files; each of the 1825 packages in the pinned closure carries its own terms, which this record does not evaluate.",
+    "The production build emits build/static/js/main.<hash>.js.LICENSE.txt, a webpack-generated aggregation of preserved licence banners from bundled dependencies. Any redistribution of the built artifact must carry that file with it."
+  ],
+  "nonclaims": [
+    "This is a record of the licence text present at the pinned revision, not a legal opinion, licence-compatibility finding, or legal approval.",
+    "No licence determination is made for the 1825-entry dependency closure.",
+    "No determination is made about the personal-data or privacy posture of redistributing the contributor profile corpus; the open question is recorded above rather than answered."
+  ]
+}

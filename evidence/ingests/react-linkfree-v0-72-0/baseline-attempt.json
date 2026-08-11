@@ -1,0 +1,195 @@
+{
+  "schemaVersion": "versionless.legacy-baseline-attempt.v1",
+  "slug": "react-linkfree-v0-72-0",
+  "unit": "lrapr-t006/u5-ingest-linkfree",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "frontendRoot": ".",
+  "purpose": "One truthful baseline: install the repository's own pinned dependency closure with its own package manager, then run the repository's own declared build command UNMODIFIED, so that the generate.js prebuild and the purgecss postbuild each fire exactly as the repository wires them, and record each step's real outcome.",
+  "declaredCell": {
+    "repositoryDeclaresANodeVersion": true,
+    "whereDeclared": [
+      {
+        "source": ".github/workflows/build.yml",
+        "declares": "actions/setup-node@v2 with node-version: '16', in BOTH the build job and the e2e tests job",
+        "commands": "npm ci; npm run lint; npm run build (build job) and npm ci; npm run test:e2e (tests job)",
+        "authority": "This is the repository's own continuous-integration contract — the cell in which the maintainers actually asserted this revision builds."
+      },
+      {
+        "source": "Dockerfile",
+        "declares": "FROM node:15 for both the development and the production stage",
+        "commands": "npm ci --ignore-scripts; npm run build",
+        "authority": "The image build. Node 15 was already end-of-life when this revision was cut, and it disagrees with CI."
+      }
+    ],
+    "declarationConflict": "The two declarations DISAGREE: CI says Node 16, the Dockerfile says Node 15. This unit followed CI, because CI is where the maintainers gated merges and because Node 15 is a non-LTS line that was already unsupported at the pinned date. The conflict is recorded rather than resolved silently.",
+    "otherDeclarations": {
+      "enginesField": null,
+      "packageManagerField": null,
+      "nvmrc": null,
+      "toolVersions": null,
+      "npmrc": null
+    },
+    "declaredPackageManager": "npm, invoked as `npm ci` in both CI and the Dockerfile, corroborated by the committed package-lock.json (lockfileVersion 2)",
+    "declaredBuildCommand": "npm run build",
+    "declaredBuildCommandExpands": "npm run generate && react-scripts build, with npm firing the `postbuild` lifecycle hook (purgecss) afterwards"
+  },
+  "cellUsed": {
+    "node": "16.20.2",
+    "platform": "darwin-arm64 (native; no Rosetta 2)",
+    "npm": "8.19.4 (the version bundled with Node 16.20.2)",
+    "packageManager": "npm 8.19.4",
+    "packageManagerProvenance": "npm was not installed separately; the bundled npm of the staged Node 16 runtime was used, and nothing was installed globally or into the repository.",
+    "runtimeProvenance": {
+      "url": "https://nodejs.org/dist/v16.20.2/node-v16.20.2-darwin-arm64.tar.gz",
+      "sha256": "6a5c4108475871362d742b988566f3fe307f6a67ce14634eb3fbceb4f9eea88c",
+      "digestVerifiedAgainstOfficialShasums": true,
+      "reusedFrom": "an already-acquired and digest-verified Node 16.20.2 darwin-arm64 runtime in this workspace's cache; it was copied into this unit's baseline cell and NO new runtime download was made by this unit",
+      "verifiedByThisUnit": "This unit did not re-verify the tarball digest, because it copied an extracted tree rather than re-downloading the tarball. It confirmed only that the staged binary reports v16.20.2."
+    }
+  },
+  "cellDeviationFromDeclared": {
+    "deviated": true,
+    "deviationCharacter": "minor — major version honoured, platform differs",
+    "declared": "Node 16 (unpinned minor) on ubuntu-latest, per .github/workflows/build.yml",
+    "used": "Node 16.20.2 on darwin-arm64",
+    "justification": "CI declares the Node MAJOR only ('16'), not a minor, so any Node 16 satisfies the declaration. 16.20.2 is the final Node 16 release and is therefore the most faithful reading of an unpinned '16' as of the pinned date's line. The remaining difference is the platform: ubuntu-x64 in CI versus darwin-arm64 here.",
+    "honestLabel": "era-consistent AND major-version-faithful to the repository's CI declaration; NOT platform-faithful.",
+    "strongerThanUsual": "This is a closer match to a declared cell than most fixtures in this corpus achieve: the repository declares a Node major and this baseline ran that major, rather than raising it for platform reasons.",
+    "unknownPreserved": "Whether the outcomes below reproduce on ubuntu-x64 was NOT tested and is not claimed. The build is a webpack 5 / babel pipeline with no native compilation step observed, but that is an inference and is recorded as such rather than as a finding."
+  },
+  "install": {
+    "command": "npm ci --ignore-scripts",
+    "commandNotes": {
+      "npmCi": "npm ci was used because it is what the repository's own CI and Dockerfile use. npm ci REFUSES to run when package.json and package-lock.json disagree about the dependency graph, so its success is itself evidence that the committed lockfile is in sync and that nothing was re-resolved against the 2026 registry.",
+      "ignoreScripts": "Lifecycle scripts were disabled by policy. This matters concretely here: it suppressed cypress@8.7.0's postinstall, which would otherwise have downloaded the Cypress binary from a non-allowlisted host, and it suppressed `prepare: husky install`. The Dockerfile uses --ignore-scripts too, so this matches one of the repository's own declared invocations."
+    },
+    "outcome": "succeeded",
+    "exitStatus": 0,
+    "wallClockSeconds": 11,
+    "packagesAdded": 1825,
+    "packagesAudited": 1826,
+    "installedTopLevelPackageDirectories": 1078,
+    "nestedNodeModulesDirectories": 175,
+    "lockedEntries": 1825,
+    "everyEntryHasResolvedUrlAndIntegrity": true,
+    "integrityAlgorithms": { "sha512": 1825 },
+    "registryHosts": ["registry.npmjs.org"],
+    "warnings": [
+      "9 deprecation warnings (stable, source-map-resolve, svgo, gherkin, cucumber-expressions x2, cucumber, core-js, querystring)",
+      "npm audit reported 90 vulnerabilities (17 low, 20 moderate, 42 high, 11 critical) against this 2022 closure"
+    ],
+    "auditNote": "The audit counts are npm's own output against today's advisory database and are expected for a four-year-old CRA 5 graph. No remediation was attempted, none is implied, and no security finding is claimed.",
+    "detail": "closure.json"
+  },
+  "build": {
+    "label": "the declared build, run exactly as the repository declares it — no deviation",
+    "command": "CI=true npm run build",
+    "ciEnvNote": "CI=true was set because that is how the repository's own build.yml runs on GitHub Actions; under CRA 5 it makes the build non-interactive and treats lint warnings as errors. It is a faithfulness measure, not a relaxation.",
+    "expands": "npm run generate && react-scripts build, then npm's `postbuild` hook",
+    "outcome": "succeeded",
+    "exitStatus": 0,
+    "wallClockSeconds": 8,
+    "buildArtifactProduced": true,
+    "steps": [
+      {
+        "step": 1,
+        "name": "prebuild codegen",
+        "wiring": "the first half of the `build` script: `npm run generate`",
+        "command": "node generate.js",
+        "outcome": "succeeded",
+        "what": "Read all 561 JSON profile files from public/data and wrote public/list.json, a single array carrying type, name, username, avatar and linkCount per profile.",
+        "emitted": { "public/list.json": "72625 bytes" },
+        "materialFact": "public/list.json is NOT committed to the repository. It exists only after generate.js runs. Any build lane that skips this step produces an application whose home and search pages have no user list to fetch, so the codegen step is load-bearing for two of the four upstream journeys rather than cosmetic."
+      },
+      {
+        "step": 2,
+        "name": "production bundle",
+        "wiring": "the second half of the `build` script",
+        "command": "react-scripts build",
+        "outcome": "succeeded",
+        "reported": "Compiled successfully.",
+        "reactScripts": "5.0.1",
+        "webpack": "5.73.0",
+        "gzipSizesAsReportedByCra": {
+          "build/static/js/main.93d99c04.js": "103.86 kB",
+          "build/static/css/main.aa835dbe.css": "77.79 kB",
+          "build/static/js/787.86603928.chunk.js": "1.67 kB"
+        },
+        "warnings": [
+          "Browserslist: caniuse-lite is outdated (emitted twice). An advisory from the 2022-pinned caniuse-lite in the closure; it did not affect the exit status."
+        ],
+        "lintGate": "CRA 5 runs eslint inline during the build. With CI=true, warnings would have failed the build. None was raised."
+      },
+      {
+        "step": 3,
+        "name": "postbuild css purge",
+        "wiring": "npm lifecycle: `postbuild` fires automatically after `build`",
+        "command": "purgecss --config ./purgecss.config.js --output build/static/css",
+        "outcome": "succeeded",
+        "exitStatus": 0,
+        "purgecssVersion": "3.1.3",
+        "measuredEffect": {
+          "prePurgeCssBytes": 619824,
+          "postPurgeCssBytes": 50728,
+          "reductionBytes": 569096,
+          "reductionPercent": 91.8,
+          "measurementMethod": "A measurement re-run of the SAME declared pipeline, split at the npm lifecycle boundary: `react-scripts build`, stat, then `npm run postbuild`, stat. Nothing about the commands changed; only a stat was taken in between. See drivers/05-purge-boundary.sh.",
+          "why": "PrimeReact 6 ships four large stylesheets (a saga-blue theme, primereact.min.css, primeflex.css, primeicons.css) that the application imports wholesale in src/App.js. Purgecss discards the rules no built markup or script references."
+        },
+        "observedDefect": {
+          "what": "build/static/css/main.aa835dbe.css.map is left at 933691 bytes, still describing the 619824-byte PRE-purge stylesheet, while the .css beside it is now 50728 bytes.",
+          "consequence": "The shipped CSS source map is stale and no longer maps to its stylesheet. This is a real property of the repository's declared pipeline — purgecss rewrites the css and does not update the map — and it is recorded as an observation about the fixture, not as a defect introduced here.",
+          "materiality": "Cosmetic for the running application; relevant to any later migration lane that compares emitted artifacts between the legacy build and a replacement build, because the map is a genuine difference the legacy pipeline produces."
+        },
+        "fragility": {
+          "what": "package.json declares @fullhuman/postcss-purgecss but never declares the `purgecss` CLI package it invokes.",
+          "whyItWorked": "npm hoisted the transitive purgecss@3.1.3 into node_modules/.bin/purgecss.",
+          "consequence": "The declared postbuild step depends on a hoisting accident. A package manager with a stricter layout, or a closure change that de-hoists purgecss, would break `npm run build` at the postbuild step even though nothing about the application changed."
+        }
+      }
+    ],
+    "emitted": {
+      "totalFilesInBuild": 583,
+      "buildSizeKilobytes": 13272,
+      "javascript": {
+        "build/static/js/main.93d99c04.js": 367126,
+        "build/static/js/787.86603928.chunk.js": 4341,
+        "build/static/js/main.93d99c04.js.LICENSE.txt": 1290,
+        "sourceMaps": "main.93d99c04.js.map at 8867434 bytes and 787.86603928.chunk.js.map at 9899 bytes"
+      },
+      "css": { "build/static/css/main.aa835dbe.css": 50728, "build/static/css/main.aa835dbe.css.map": 933691 },
+      "generatedData": { "build/list.json": 72625, "build/data/*.json": 561 },
+      "note": "The 561 per-profile JSON files are copied verbatim into the build output by CRA's public-directory copy, so the profile route fetches them individually at runtime while the home and search routes read the generated list.json."
+    },
+    "whatThisEstablishes": "The repository's declared production build — codegen, webpack 5 bundle, and css purge — runs to completion on its own pinned closure in a Node 16 cell and emits a complete static site. This is a GREEN baseline: the first CRA 5 cell in the portfolio builds clean.",
+    "whatThisDoesNotEstablish": "Nothing here was loaded in a browser. No route was rendered, no journey was exercised, and the upstream cypress suite was NOT run — the Cypress binary was never downloaded, because install ran with --ignore-scripts."
+  },
+  "upstreamTestSuiteNotRun": {
+    "suite": "cypress 8.7.0 with cypress-cucumber-preprocessor, four .feature files (homepage, search, user, 404)",
+    "declaredCommand": "npm run test:e2e, which is `concurrently -k --success first \"npm run cypress:run\" \"npm run start\"`",
+    "run": false,
+    "why": "Running it requires the Cypress binary, whose download is a postinstall that this unit's --ignore-scripts policy suppressed and whose host is outside the consented acquisition allowlist. Fetching it would have been network beyond this unit's consent.",
+    "consequence": "This fixture HAS an upstream behavioural oracle, but this unit did not exercise it and makes no claim about whether it passes. Standing it up is a natural next unit and needs its own network consent for the Cypress binary host."
+  },
+  "network": {
+    "hostsContacted": ["registry.npmjs.org"],
+    "purpose": "npm's own fetching for the pinned closure only",
+    "urlByUrlLedger": false,
+    "urlByUrlLedgerNote": "Per-package fetches were performed by npm itself and are recorded here in aggregate, not URL-by-URL in the source ledger. Every resolved URL in the closure points at registry.npmjs.org and carries a sha512 integrity hash; see closure.json.",
+    "buildMadeNoNetworkRequest": "The declared build is fully local: generate.js reads public/data from disk, react-scripts bundles from disk, and purgecss reads the emitted build output. No avatar or profile URL is fetched at build time — those are runtime <img> loads only.",
+    "afterBaseline": "closed"
+  },
+  "cache": {
+    "root": "<workspace>/.versionless/cache/react-linkfree-v0-72-0-baseline",
+    "app": "<workspace>/.versionless/cache/react-linkfree-v0-72-0-baseline/app",
+    "logs": "<workspace>/.versionless/cache/react-linkfree-v0-72-0-baseline/logs",
+    "runtime": "<workspace>/.versionless/cache/react-linkfree-v0-72-0-baseline/runtime",
+    "gitIgnored": true,
+    "note": "The baseline cell is a copy of the reconciled source. The reconciled source tree itself was never modified. Neither the installed tree nor the emitted build is published into the repository."
+  },
+  "nonclaims": [
+    "A successful install and a successful declared build establish that this source compiles in this cell. They establish nothing about whether the resulting site renders correctly, whether any route resolves, or whether any user journey works.",
+    "No browser was driven and the upstream cypress suite was not run, so nothing here establishes that this application works.",
+    "This record establishes no migration feasibility, pilot status, production readiness, certification, or legal approval."
+  ]
+}

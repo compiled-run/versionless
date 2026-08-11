@@ -1,0 +1,140 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-provenance.v1",
+  "slug": "react-linkfree-v0-72-0",
+  "unit": "lrapr-t006/u5-ingest-linkfree",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "networkMode": "consented",
+  "purpose": "Admit and immutably ingest the third-slot React candidate for board task T006: the portfolio's first create-react-app 5 / webpack 5 cell and its first npm package-lock cell, with an upstream-authored end-to-end suite and no backend.",
+  "upstream": {
+    "repositoryAsNamedByThePacket": "EddieHubCommunity/LinkFree",
+    "repositoryCanonicalAtAcquisition": "EddieHubCommunity/BioDrop",
+    "repositoryId": 405139301,
+    "renamedUpstream": true,
+    "archivedUpstream": true,
+    "homepageEndpoint": "https://api.github.com/repos/EddieHubCommunity/LinkFree (301 -> https://api.github.com/repositories/405139301)",
+    "nearestTag": "refs/tags/v0.72.0",
+    "tagKind": "annotated",
+    "tagObjectSha": "36313ba4c2b8dc7ebce1ce4665eba2e64cb2c753",
+    "tagSignature": "unsigned",
+    "tagTargetCommitSha": "e527a935b9d37d8cde6db40f15c99ace4005280a",
+    "pinnedCommitSha": "367d77297b5753644e11ecd22cf80e59c87b0dc8",
+    "pinnedCommitIsTagTarget": false,
+    "pinnedCommitRelationshipToTag": "direct child of the tag target; the two trees differ in exactly one blob, reviewpad.yml (a CI bot config). See tag-delta.json.",
+    "commitDate": "2022-08-31T16:08:13Z",
+    "commitMessage": "ci: more workflows to ReviewPad (#1703)",
+    "commitVerification": "GitHub reports verification.verified=true, reason 'valid' — the commit is signed",
+    "rootTreeSha": "4946205e9a3822d08a2aca9179c6267cede8fb0f",
+    "monorepo": false,
+    "ingestedSubtree": "the whole repository (single-package application)"
+  },
+  "archive": {
+    "endpoint": "https://codeload.github.com/EddieHubCommunity/BioDrop/tar.gz/367d77297b5753644e11ecd22cf80e59c87b0dc8",
+    "mediaType": "application/gzip",
+    "bytes": 966908,
+    "sha256": "7cef1a1c2ae251e3738d8b8a6c5fe94b118bf13d3a5bae7b522b8db9c1c334ef",
+    "streamsFetched": 2,
+    "streamsByteIdentical": true,
+    "singleRoot": "BioDrop-367d77297b5753644e11ecd22cf80e59c87b0dc8",
+    "singleRootNote": "codeload names the archive root from the repository's CURRENT name, so the root says BioDrop even though the revision predates the rename.",
+    "regularFiles": 653,
+    "normalizedManifestSha256": "65f4205eed8392a5328243c585ccc61d9902669c3fe4ed2382b37744994a30c5"
+  },
+  "reconciliation": {
+    "method": "every extracted regular file was hashed as a git blob object and compared against the recursive tree at the pinned revision",
+    "gitBlobs": 653,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "specialEntries": 0,
+    "symlinks": 0,
+    "gitlinks": 0,
+    "treeTruncated": false,
+    "archiveMatchesGitTree": true,
+    "gitLfsPointerFiles": 0,
+    "gitattributesInTree": 0,
+    "pathTraversalEntries": 0,
+    "absolutePathEntries": 0
+  },
+  "redirectHandling": {
+    "why": "The packet names the repository by a name that no longer exists upstream, so a redirect was expected and the usual no-redirect policy could not simply be applied.",
+    "policy": "Redirects were not silently followed. Each hop was written to probe-ledger.ndjson with its status and Location; at most two hops per request were permitted; and a hop whose target host was neither api.github.com nor codeload.github.com would have aborted the transaction.",
+    "observed": "Exactly one redirect: 301 from https://api.github.com/repos/EddieHubCommunity/LinkFree to https://api.github.com/repositories/405139301. Every subsequent request was issued directly against the canonical name and answered 200 with no further hop."
+  },
+  "chain": [
+    {
+      "step": "probe-repo-tag-commit-tree",
+      "producedBy": "evidence/ingests/react-linkfree-v0-72-0/drivers/01-probe.mjs",
+      "network": "consented acquisition",
+      "records": "probe-tree.json, probe-ledger.ndjson, transcript.ndjson"
+    },
+    {
+      "step": "tag-delta-between-v0-72-0-and-pinned-commit",
+      "producedBy": "evidence/ingests/react-linkfree-v0-72-0/drivers/01b-tag-delta.mjs",
+      "network": "consented acquisition",
+      "records": "tag-delta.json, probe-ledger.ndjson, transcript.ndjson",
+      "why": "The probe revealed that the pinned commit is not the tag target. This step establishes the discrepancy in bytes — a blob-level diff of the two trees — rather than describing it."
+    },
+    {
+      "step": "fetch-archive-twice-extract-and-reconcile",
+      "producedBy": "evidence/ingests/react-linkfree-v0-72-0/drivers/02-acquire.mjs",
+      "network": "consented acquisition",
+      "records": "reconciliation.json, probe-ledger.ndjson, transcript.ndjson"
+    },
+    {
+      "step": "offline-inventory-of-reconciled-source",
+      "producedBy": "evidence/ingests/react-linkfree-v0-72-0/drivers/03-inventory.mjs",
+      "network": "none",
+      "records": "inventory.json, transcript.ndjson"
+    },
+    {
+      "step": "baseline-install-and-declared-build",
+      "producedBy": "evidence/ingests/react-linkfree-v0-72-0/drivers/04-baseline.sh",
+      "network": "package-manager fetching only (registry.npmjs.org)",
+      "records": "baseline-attempt.json"
+    },
+    {
+      "step": "purgecss-lifecycle-boundary-measurement",
+      "producedBy": "evidence/ingests/react-linkfree-v0-72-0/drivers/05-purge-boundary.sh",
+      "network": "none",
+      "records": "baseline-attempt.json",
+      "why": "A re-run of the SAME declared pipeline split at the npm lifecycle boundary, so the postbuild purge could be stated in bytes. No command was changed; only a stat was taken between `react-scripts build` and `npm run postbuild`."
+    },
+    {
+      "step": "closure-analysis",
+      "producedBy": "evidence/ingests/react-linkfree-v0-72-0/drivers/06-closure.mjs",
+      "network": "none",
+      "records": "closure.json, transcript.ndjson"
+    }
+  ],
+  "machinery": {
+    "written": [
+      "Six driver scripts under evidence/ingests/react-linkfree-v0-72-0/drivers/. They are working tools, not evidence: the network-touching ones refuse to run unless VERSIONLESS_NETWORK_MODE=consented and VERSIONLESS_CONSENT_ID matches, each writes only into this evidence directory and the git-ignored cache, and together they make this ingest re-runnable end to end."
+    ],
+    "reused": [
+      "The evidence shape established by evidence/ingests/react-memos-v0-1-3/ and its predecessors: attempt/source documents, a per-response ledger with byte count and digest, blob-level archive-to-git-tree parity, declared-cell honesty, and non-claim discipline.",
+      "A Node 16.20.2 darwin-arm64 runtime already acquired and digest-verified against the official nodejs.org SHASUMS256.txt by an earlier ingest in this workspace; it was copied into this unit's baseline cell and no new runtime download was made."
+    ],
+    "notWritten": [
+      "No module, driver, or script was added under packages/**, scripts/**, or docs/**; the packet places them out of contract.",
+      "No core enum or fixture-id union was edited. Serialization of this fixture into the workspace's closed fixture-id union belongs to the serial phase, not to this unit."
+    ]
+  },
+  "dataHandling": {
+    "concern": "public/data holds 561 profile JSON files, each NAMED by a real contributor's GitHub username.",
+    "rule": "Treated as application content addressed by digest. Counted, aggregate-digested, and characterised by host histograms only. No individual username, data filename, display name, bio, or link value appears in any record this unit produced.",
+    "verification": "The drivers that touch the corpus (03-inventory.mjs) emit only counts, histograms and an aggregate digest by construction; no per-file name or field value reaches an evidence record.",
+    "aggregateDigestLocation": "inventory.json -> profileData.aggregateDigestSha256"
+  },
+  "cache": {
+    "root": "<workspace>/.versionless/cache/react-linkfree-v0-72-0-source",
+    "verifiedSource": "<workspace>/.versionless/cache/react-linkfree-v0-72-0-source/verify/extracted/BioDrop-367d77297b5753644e11ecd22cf80e59c87b0dc8",
+    "baseline": "<workspace>/.versionless/cache/react-linkfree-v0-72-0-baseline",
+    "gitIgnored": true,
+    "note": "Cache trees are git-ignored and ephemeral; the durable record is this evidence directory plus fixtures/react-linkfree-v0-72-0/fixture.json."
+  },
+  "nonclaims": [
+    "Byte-identical duplicate fetches and blob-level git-tree parity establish source integrity for this revision only. The commit's signature is reported valid by GitHub, but this unit did not verify it against a key it trusts, and the annotated tag is unsigned and in any case does not point at the pinned commit.",
+    "A green install and a green declared build establish that this source compiles in this cell. No browser was driven and the upstream cypress suite was not run.",
+    "This provenance record establishes no migration feasibility, pilot status, production readiness, certification, or legal approval."
+  ]
+}

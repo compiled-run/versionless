@@ -1,0 +1,276 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-admission.v1",
+  "unit": "lrapr-t006/u5-ingest-linkfree",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "networkMode": "consented",
+  "slug": "react-linkfree-v0-72-0",
+  "boardTask": "T006",
+  "trancheRole": "Third-slot React candidate: the portfolio's FIRST create-react-app 5 / webpack 5 cell, and its FIRST npm package-lock cell. The corpus previously carried CRA 1-4, Vite, Next and yarn/pnpm locks; both of these are new coverage.",
+  "priorScout": {
+    "existed": true,
+    "unit": "lrapr-t006/u2",
+    "date": "2026-08-11",
+    "role": "read-only; supplied the target repository, tag, expected commit sha, and a set of claims about the tree",
+    "reverificationPolicy": "Every gate below was re-verified by this unit from the wire and from the reconciled archive at the pinned revision. The scout's findings were used as a hypothesis, not as evidence.",
+    "expectedCommitShaConfirmed": true,
+    "scoutClaimsCorrected": [
+      {
+        "claim": "commit 367d77297b5753644e11ecd22cf80e59c87b0dc8 = v0.72.0",
+        "found": "The pinned commit is NOT the target of the v0.72.0 tag. refs/tags/v0.72.0 is an annotated, unsigned tag (tag object 36313ba4c2b8dc7ebce1ce4665eba2e64cb2c753, tagger date 2022-08-31T15:24:28Z) pointing at commit e527a935b9d37d8cde6db40f15c99ace4005280a. The pinned commit is that commit's DIRECT CHILD, made 44 minutes later.",
+        "materiality": "MATERIAL for the ref language, IMMATERIAL for the application. The two trees differ in exactly one blob — reviewpad.yml, a code-review bot config. Zero application source, manifest, lockfile or profile data files differ, so the application at the pinned revision is byte-identical to the v0.72.0 release. Full path-level diff in tag-delta.json.",
+        "resolution": "The packet mandates the slug literally, so the slug is unchanged. Whether to re-pin to the tag target is flagged for the PM and not decided here."
+      },
+      {
+        "claim": "repo since renamed BioDrop, archived",
+        "found": "Confirmed and refined. The canonical full name at acquisition is EddieHubCommunity/BioDrop and the repository IS archived. The old name answers with a 301 to the numeric repository id 405139301, which is the stable identity across the rename. The archive root directory is therefore named BioDrop-<sha>, not LinkFree-<sha>.",
+        "materiality": "Operational: every later unit must fetch under the canonical name or accept a redirect, and must expect the BioDrop- archive root."
+      },
+      {
+        "claim": "no engines, no packageManager",
+        "found": "Confirmed for package.json, but INCOMPLETE as a statement about the declared cell. The repository declares Node in two other places, and they DISAGREE: .github/workflows/build.yml pins node-version '16' for both the build and the e2e jobs, while the Dockerfile uses FROM node:15 for both stages.",
+        "materiality": "Material for the baseline. This unit followed CI (Node 16) and recorded the conflict; see baseline-attempt.json."
+      },
+      {
+        "claim": "avatars resolve to GitHub image URLs (image-only egress, blockable)",
+        "found": "Confirmed as the dominant case (560 of 561 avatars are on GitHub hosts; one is on a contributor's own CDN), but INCOMPLETE. src/utils.js installs an <img> onerror fallback to https://avatars.dicebear.com. Blocking GitHub alone therefore redirects egress to a SECOND live third-party host rather than eliminating it.",
+        "materiality": "Material for any later witness unit's hermeticity; recorded in runtime-egress.json."
+      }
+    ],
+    "scoutClaimsConfirmed": [
+      "MIT LICENSE at repository root, blob 3df71e6b3f4d049fb6ae1aa1344a4887887086a3, 1075 bytes, 'Copyright (c) 2021 - 2022 Eddie Jaoude'",
+      "react ^17.0.2 (lockfile-pinned 17.0.2), react-scripts ^5.0.1 (pinned 5.0.1), react-router-dom ^5.3.0 (pinned 5.3.3), PrimeReact 6 (pinned 6.6.0)",
+      "purgecss postbuild step and a generate.js prebuild codegen step",
+      "package-lock.json is lockfileVersion 2 at 1501476 bytes (~1.5 MB)",
+      "653 blobs in the tree",
+      "profile data fully local: public/data/*.json -> generate.js -> public/list.json",
+      "no .gitattributes and zero LFS pointers (byte-scanned, not inferred)",
+      "pinned revision date 2022-08-31"
+    ]
+  },
+  "admitted": {
+    "repository": "EddieHubCommunity/BioDrop (EddieHubCommunity/LinkFree at the pinned revision)",
+    "product": "LinkFree — an open-source alternative to Linktree: a single-page directory of community members, each with a public profile page listing their bio, avatar and outbound links, plus a searchable index of all profiles",
+    "pinnedCommitSha": "367d77297b5753644e11ecd22cf80e59c87b0dc8",
+    "commitDate": "2022-08-31T16:08:13Z",
+    "nearestTag": "v0.72.0 (annotated, unsigned, pointing at the pinned commit's parent)",
+    "frontendRoot": ".",
+    "decision": "admitted"
+  },
+  "gates": [
+    {
+      "gate": "mit-license-file-text-bytes-at-the-pinned-revision",
+      "result": "pass",
+      "evidence": {
+        "rootLicensePath": "LICENSE",
+        "gitBlobSha": "3df71e6b3f4d049fb6ae1aa1344a4887887086a3",
+        "fileSha256": "3b5b430ae7e6151220591e69a8a056482a13d36518357c025619cf0d60be50bf",
+        "bytes": 1075,
+        "headerLine": "MIT License",
+        "copyrightLine": "Copyright (c) 2021 - 2022 Eddie Jaoude",
+        "manifestLicenseField": "MIT",
+        "manifestCorroboration": "package.json declares \"license\": \"MIT\", so file and manifest agree — stronger corroboration than several fixtures in this corpus, which carry the grant in the LICENSE file alone.",
+        "otherLicenceLikeFilesInTree": 0,
+        "textFidelityNote": "Verbatim MIT except that the disclaimer's final 'SOFTWARE' carries no terminating period. No operative term differs.",
+        "quotedFromArchive": "The licence text was read out of the extracted archive, which reconciles blob-for-blob with the git tree at the pinned revision.",
+        "openQuestionRecorded": "The 561 contributor profile files are personal data contributed under the repository's MIT grant. Whether contributors would intend that data to be redistributed in a migration-evidence corpus is recorded as unresolved in license.json rather than answered.",
+        "detail": "license.json"
+      }
+    },
+    {
+      "gate": "real-substantive-application-not-template-demo-or-library",
+      "result": "pass",
+      "evidence": {
+        "repositoryShape": "A single-package create-react-app application with no backend. Data is static JSON served from its own origin: 561 committed profile files plus a build-time-generated index.",
+        "blobsInTree": 653,
+        "totalBytes": 2504175,
+        "applicationSourceFiles": 35,
+        "applicationSourceBytes": 36359,
+        "jsxComponents": 21,
+        "profileDataFiles": 561,
+        "profileDataBytes": 448757,
+        "totalDeclaredLinksInCorpus": 1666,
+        "e2eSuiteFiles": 9,
+        "publishedAsLibrary": false,
+        "isStarterTemplate": false,
+        "hasUnitTests": false,
+        "hasEndToEndTests": true,
+        "whyNotATemplate": "This is a live product with a homepage (linkfree.eddiehub.org), a released version line at 0.72.0, a 561-contributor content corpus accumulated through community pull requests, a Kubernetes deployment directory, seven CI workflows, a Dockerfile, a code of conduct, a contributing guide and a changelog. It is a real community project, not a scaffold.",
+        "notableInternals": "A build-time codegen step (generate.js) that flattens the profile corpus into an index; a PrimeReact 6 component layer with a purgecss postbuild to cut the resulting stylesheet; an icon-mapping layer (Components/Icons/GetIcons.js) over react-icons; a profile-type filter; a share-profile component; a scroll-to-top control; and an image loader with a third-party fallback.",
+        "sizeCaveat": "The application source is modest — 35 files, ~36 KB — and most of the repository's bytes are content and lockfile. It is admitted as substantive on the strength of being a real, released, multi-route product with an upstream E2E suite, not on source volume. This is recorded plainly rather than inflated."
+      }
+    },
+    {
+      "gate": "genuine-create-react-app-5-webpack-5-era-origin-bundler",
+      "result": "pass",
+      "evidence": {
+        "declaredReactScripts": "^5.0.1",
+        "resolvedReactScriptsFromCommittedLockfile": "5.0.1",
+        "resolvedWebpack": "5.73.0",
+        "resolvedBabelLoader": "8.2.5",
+        "ejected": false,
+        "ejectedEvidence": "No config/ or scripts/ directory, no webpack config anywhere in the tree, and the `eject` script is still present and unused. The build is driven entirely by react-scripts.",
+        "buildScript": "npm run generate && react-scripts build",
+        "startScript": "react-scripts start, with a `prestart` that runs the same codegen",
+        "entry": "public/index.html plus src/index.js — the CRA template shape",
+        "noVite": "no vite, no rollup config, no esbuild, and no @vitejs plugin anywhere in the tree",
+        "originBundlerConfirmed": "create-react-app 5.0.1 over webpack 5.73.0, resolved from the repository's own committed lockfile rather than from a fresh resolution.",
+        "buildProvenObservable": "react-scripts 5.0.1 was RUN in this unit and compiled successfully, emitting a 367 KB main bundle and a code-split chunk. Webpack 5 is not merely declared here; it was exercised. See baseline-attempt.json.",
+        "whyThisMatters": "The corpus previously had no CRA 5 / webpack 5 cell. CRA 5 differs materially from CRA 4 — webpack 5, no automatic Node core-module polyfills, a different asset pipeline — so the migration lane this fixture supports is genuinely new coverage rather than a duplicate of an existing cell."
+      }
+    },
+    {
+      "gate": "pinned-revision-era-coherent",
+      "result": "pass",
+      "evidence": {
+        "pinnedCommitSha": "367d77297b5753644e11ecd22cf80e59c87b0dc8",
+        "commitDate": "2022-08-31T16:08:13Z",
+        "commitMessage": "ci: more workflows to ReviewPad (#1703)",
+        "commitSignature": "GitHub reports verification.verified=true, reason 'valid'. The commit is signed; the tag object is not.",
+        "evaluatedOn": "2026-08-11",
+        "ageYearsApproximate": 4.0,
+        "withinRequiredWindow": true,
+        "requiredWindow": "2018-01-01 through 2023-08-10",
+        "eraCoherence": "Every era marker agrees on mid-to-late 2022: react-scripts 5.0.1 (April 2022), webpack 5.73.0 (June 2022), react 17.0.2 (March 2021, still current for React-17-line apps in 2022), react-router-dom 5.3.3 (June 2022), primereact 6.6.0, cypress 8.7.0, typescript 4.7.4, prettier 2.4.0. The lockfile's resolutions are all era-contemporary with the commit date because the lockfile is committed and was not re-resolved.",
+        "reactVersionNote": "React 17 in an August 2022 application is one major behind (React 18 shipped March 2022). That is era-COHERENT rather than era-leading, and it is a useful property for a migration corpus: this fixture carries a React 17 / CRA 5 combination that a real migration would have to move forward on two axes.",
+        "upstreamRepositoryArchived": true,
+        "upstreamArchivedNote": "The upstream repository is archived and read-only, so its refs can no longer move. That is unusually favourable for a corpus fixture, but the commit sha and the recorded archive digest remain the operative pin.",
+        "unknownPreserved": "This unit records GitHub's signature verdict for the commit; it did not itself verify the signature against a key it trusts."
+      }
+    },
+    {
+      "gate": "browser-ui-plausibly-supporting-three-or-more-substantive-user-journeys",
+      "result": "pass",
+      "evidence": {
+        "routerLibrary": "react-router-dom 5.3.3 — BrowserRouter with a Switch and three Routes, the genuine v5 API (Switch, not Routes; children, not element)",
+        "topLevelRoutes": ["/search", "/:username", "/"],
+        "routeDrivenJourneys": true,
+        "routeDrivenNote": "Unlike the dialog-driven fixtures in this corpus, this application's journeys ARE route-driven, including a dynamic profile segment. A later witness unit can drive it by URL navigation.",
+        "singleUserMode": "src/config/user.json carries an empty username. When it is set, App.js bypasses the router entirely and renders one profile — a self-host mode. At the pinned revision it is empty, so the full multi-route surface is active.",
+        "requiredMinimum": 3,
+        "observed": 4,
+        "observedNote": "All four are backed by an UPSTREAM-AUTHORED cypress suite. These are not journeys inferred from components; they are journeys the maintainers themselves wrote executable scenarios for.",
+        "candidateJourneys": [
+          {
+            "journey": "load the homepage and see the community directory",
+            "surface": "/ -> Components/Home.js",
+            "data": "GET /list.json, the generate.js output",
+            "upstreamScenario": "cypress/integration/homepage.feature — 'Opening the homepage'",
+            "plausibility": "declared-and-code-backed-and-upstream-tested"
+          },
+          {
+            "journey": "navigate to search and filter the directory by name, including the no-results path",
+            "surface": "/search -> Components/Search/Search.js with Searchbar, Users and filterProfileType",
+            "data": "GET /list.json, filtered client-side",
+            "upstreamScenario": "cypress/integration/search.feature — four scenarios: navigating to search, the search box rendering, a search with results narrowing the list, and a search with no results showing 'No users found, please try with another name.'",
+            "plausibility": "declared-and-code-backed-and-upstream-tested",
+            "note": "This is the richest journey in the fixture: it exercises routing, data loading, controlled input, live filtering, and an empty state."
+          },
+          {
+            "journey": "open a user profile by dynamic route segment and see their links",
+            "surface": "/:username -> Components/UserProfile/User.js -> ProfilePage.js, with Links, Milestones and ShareProfile",
+            "data": "GET /data/<username>.json",
+            "upstreamScenario": "cypress/integration/user.feature — three scenarios: clicking through from the homepage, deep-linking directly to a profile URL, and asserting that declared links render as anchors",
+            "plausibility": "declared-and-code-backed-and-upstream-tested"
+          },
+          {
+            "journey": "request an unknown profile and get the not-found state",
+            "surface": "/:username with no matching data file -> Components/UserProfile/ErrorPage.js",
+            "data": "GET /data/<unknown>.json returns 404; the component renders 'Profile not found'",
+            "upstreamScenario": "cypress/integration/404.feature — asserts 'Profile not found' in main, the footer still rendering, and 'Search' absent from main",
+            "plausibility": "declared-and-code-backed-and-upstream-tested",
+            "note": "A genuine error-path journey, which most fixtures in this corpus lack."
+          }
+        ],
+        "backendDependencyForJourneys": "NONE. There is no backend, no session, and no database. Every journey is satisfied by static JSON served from the application's own origin, so `serve -s build` is sufficient to exercise all four.",
+        "runtimeThirdPartyDependency": "Avatar <img> loads reach GitHub hosts, with a dicebear fallback on error. No journey depends on them and no upstream scenario asserts on an image; see runtime-egress.json.",
+        "unknownPreserved": "No browser was driven in this unit and the cypress suite was NOT run — the Cypress binary was never downloaded. None of these journeys is established as actually exercisable; they are established as declared, code-backed, and upstream-scripted."
+      }
+    },
+    {
+      "gate": "zero-git-lfs-pointers-in-the-tree",
+      "result": "pass",
+      "evidence": {
+        "gitattributesFilesInTree": 0,
+        "filesScanned": 653,
+        "lfsPointerHeadersFound": 0,
+        "method": "Every extracted regular file was checked for the `version https://git-lfs.github.com/spec/` pointer header, independently of whether any .gitattributes declares an LFS filter.",
+        "why": "The factoriolab lesson: a tree can carry LFS pointers whose declaration is not visible in the ingest's own scope. Absence is scanned for, not assumed.",
+        "detail": "reconciliation.json"
+      }
+    }
+  ],
+  "recordedRisks": [
+    {
+      "risk": "the pinned commit is not the tagged release the slug names",
+      "finding": "refs/tags/v0.72.0 points at e527a935b9d37d8cde6db40f15c99ace4005280a; the packet pinned its child 367d77297b5753644e11ecd22cf80e59c87b0dc8. The trees differ in exactly one blob, reviewpad.yml, a code-review bot config — no application source, manifest, lockfile or profile data.",
+      "consequence": "The fixture's APPLICATION content is byte-identical to v0.72.0, so the slug is accurate about what matters and imprecise about the ref. Any document that says 'this fixture is the v0.72.0 tag' would be wrong; 'this fixture is the v0.72.0 application' is right.",
+      "state": "recorded; PM may wish to re-pin to the tag target, which this unit did not do because the packet forbids substitution"
+    },
+    {
+      "risk": "the repository declares two conflicting Node versions",
+      "finding": "CI (build.yml) says Node 16 for both the build and the e2e jobs; the Dockerfile says node:15 for both stages. Node 15 was already end-of-life at the pinned date.",
+      "consequence": "This unit followed CI and ran Node 16.20.2. The baseline is therefore faithful to the repository's declared MAJOR, which is a closer match than most fixtures in this corpus achieve; only the platform (darwin-arm64 vs ubuntu-x64) differs.",
+      "state": "recorded; deviation labelled in baseline-attempt.json"
+    },
+    {
+      "risk": "the declared postbuild step invokes an undeclared binary",
+      "finding": "package.json's `postbuild` runs `purgecss`, but the manifest declares only @fullhuman/postcss-purgecss. The purgecss@3.1.3 CLI reached node_modules/.bin only because npm hoisted it as a transitive dependency.",
+      "consequence": "The declared build works by hoisting accident. A stricter package-manager layout, or any closure change that de-hoists purgecss, breaks `npm run build` at the postbuild step without any application change. Any migration lane that changes package managers must re-check this.",
+      "state": "recorded; observed directly"
+    },
+    {
+      "risk": "the build emits a stale CSS source map",
+      "finding": "purgecss rewrites build/static/css/main.<hash>.css from 619824 to 50728 bytes and does not touch the 933691-byte .css.map beside it, which still describes the pre-purge stylesheet.",
+      "consequence": "The legacy pipeline ships a source map that does not map to its stylesheet. Relevant to any later artifact-comparison work, which would otherwise attribute the difference to the replacement build.",
+      "state": "recorded; measured at the lifecycle boundary"
+    },
+    {
+      "risk": "the generated index is not committed",
+      "finding": "public/list.json is absent from the tree and is produced only by generate.js. The home and search routes both fetch it.",
+      "consequence": "Any build lane that skips the codegen step yields an application whose two most-tested journeys have no data. The codegen is load-bearing, not cosmetic.",
+      "state": "recorded"
+    },
+    {
+      "risk": "the upstream E2E suite was not run",
+      "finding": "The four cypress feature files are the strongest asset this fixture has, but running them needs the Cypress binary, whose postinstall download this unit's --ignore-scripts policy suppressed and whose host is outside the consented allowlist.",
+      "consequence": "This fixture has an upstream behavioural oracle that remains unexercised. Standing it up is a natural next unit and requires its own network consent.",
+      "state": "recorded"
+    },
+    {
+      "risk": "the profile corpus is real contributors' personal data",
+      "finding": "561 JSON files, each named by a GitHub username and carrying a display name, bio, avatar and links, contributed by real people.",
+      "consequence": "Versionless evidence treats the corpus as content addressed by digest and emits no individual username or field value. A later unit can substitute a synthetic corpus, since generate.js is corpus-agnostic — though the upstream cypress scenarios assert on specific real profiles and would need rewriting.",
+      "state": "recorded; handling rule fixed in attempt.json and license.json"
+    },
+    {
+      "risk": "blocking GitHub avatars redirects egress rather than eliminating it",
+      "finding": "src/utils.js installs an <img> onerror fallback to https://avatars.dicebear.com.",
+      "consequence": "A witness unit that blocks only the GitHub hosts will still make live third-party requests. Both must be blocked or stubbed.",
+      "state": "recorded in runtime-egress.json"
+    },
+    {
+      "risk": "the lockfile's own version string is stale",
+      "finding": "package-lock.json's root entry records version 0.70.1 while package.json says 0.72.0. npm ci does not compare that field and did not object.",
+      "consequence": "None observed for the install or the build. Recorded as found; it indicates the lockfile was last regenerated two releases earlier, which is itself a small signal about how tightly the closure tracked the manifest.",
+      "state": "recorded"
+    },
+    {
+      "risk": "the closure carries many known vulnerabilities",
+      "finding": "npm audit reported 90 vulnerabilities (17 low, 20 moderate, 42 high, 11 critical) against this 2022 CRA 5 graph.",
+      "consequence": "Expected for a four-year-old closure and not remediated. Recorded as an observation about the fixture's age; no exploitability assessment is made and no security finding is claimed.",
+      "state": "recorded"
+    },
+    {
+      "risk": "the upstream repository was renamed and archived",
+      "finding": "LinkFree was renamed BioDrop and the repository is now archived. The old API path answers 301 to repository id 405139301, and the codeload archive root is named BioDrop-<sha>.",
+      "consequence": "Archival is favourable — the refs cannot move again. The rename is an operational fact every later unit must handle: fetch under the canonical name, and expect the BioDrop- archive root.",
+      "state": "recorded"
+    }
+  ],
+  "nonclaims": [
+    "Admission fixes an identity and records gate findings. It establishes no browser behavior, journey exercisability, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "The journey list is read from the components, the router and the upstream cypress scenarios; no journey was driven in a browser by this unit and the cypress suite was not run.",
+    "A green install and a green declared build establish that this source compiles in this cell. They establish nothing about whether the resulting site renders correctly.",
+    "No adapter, transform, or migration lane is declared for this fixture by the unit that ingested it."
+  ]
+}

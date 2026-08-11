@@ -1,0 +1,180 @@
+{
+  "schemaVersion": "versionless.official-source.v1",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "unit": "lrapr-t006/u5-ingest-linkfree",
+  "slug": "react-linkfree-v0-72-0",
+  "result": "source-bound",
+  "startedAt": "2026-08-11T14:48:21Z",
+  "completedAt": "2026-08-11T14:50:02Z",
+  "timestampNote": "Per-request wall-clock timestamps are recorded in probe-ledger.ndjson and transcript.ndjson; the values above bound the acquisition window only.",
+  "repository": {
+    "id": 405139301,
+    "fullName": "EddieHubCommunity/BioDrop",
+    "fullNameAsNamedByThePacket": "EddieHubCommunity/LinkFree",
+    "renamedUpstream": true,
+    "renameEvidence": "GET https://api.github.com/repos/EddieHubCommunity/LinkFree answered 301 with Location https://api.github.com/repositories/405139301, and that resource reports full_name EddieHubCommunity/BioDrop. The redirect hop and its Location are recorded in probe-ledger.ndjson. The numeric repository id 405139301 is the stable identity across the rename; the archive was fetched under the canonical name.",
+    "private": false,
+    "archived": true,
+    "archivedNote": "The upstream repository is ARCHIVED and read-only. Unlike most fixtures in this corpus, its refs cannot move again, which strengthens — but does not replace — the commit-sha pin recorded below.",
+    "disabled": false,
+    "fork": false,
+    "defaultBranch": "main",
+    "createdAt": "2021-09-10T16:08:27Z",
+    "pushedAt": "2024-07-01T07:13:31Z",
+    "responseBytes": 6985,
+    "responseSha256": "c18fac80614b0e6189bfcd8ed0df1b55a92afd1a2207e5a7ae25d89ebd7544df",
+    "githubDetectedLicense": {
+      "key": "mit",
+      "spdxId": "MIT"
+    },
+    "monorepo": false
+  },
+  "revision": {
+    "pinnedCommitSha": "367d77297b5753644e11ecd22cf80e59c87b0dc8",
+    "commitDate": "2022-08-31T16:08:13Z",
+    "commitAuthorDate": "2022-08-31T16:08:13Z",
+    "commitMessage": "ci: more workflows to ReviewPad (#1703)",
+    "commitVerification": "verified (GitHub reports verification.verified=true, reason 'valid'). The COMMIT carries a valid signature; the tag object does not.",
+    "commitParents": [
+      "e527a935b9d37d8cde6db40f15c99ace4005280a"
+    ],
+    "rootTreeSha": "4946205e9a3822d08a2aca9179c6267cede8fb0f",
+    "treeEntries": 672,
+    "treeBlobs": 653,
+    "treeDirectories": 19,
+    "treeSymlinks": 0,
+    "treeGitlinks": 0,
+    "treeExecutableBlobs": 2,
+    "treeTruncated": false,
+    "expectedCommitShaFromPriorScout": "367d77297b5753644e11ecd22cf80e59c87b0dc8",
+    "expectedCommitShaConfirmedFromWire": true,
+    "tagRelationship": {
+      "materialCorrection": true,
+      "scoutClaim": "commit 367d77297b5753644e11ecd22cf80e59c87b0dc8 = v0.72.0",
+      "found": "refs/tags/v0.72.0 is an ANNOTATED tag (ref object type `tag`, tag object 36313ba4c2b8dc7ebce1ce4665eba2e64cb2c753, tagger date 2022-08-31T15:24:28Z, message 'v0.72.0', UNSIGNED). It points at commit e527a935b9d37d8cde6db40f15c99ace4005280a — NOT at the pinned commit. The pinned commit is that commit's DIRECT CHILD, made 44 minutes later.",
+      "delta": "The two trees differ in exactly ONE blob: reviewpad.yml, a code-review bot configuration file. Zero application source files, zero manifests, zero lockfiles, and zero profile data files differ. Establishing this cost two extra API requests, both ledgered, and the full path-level diff is in tag-delta.json.",
+      "consequence": "The slug react-linkfree-v0-72-0 is mandated literally by the packet and the application tree at the pinned revision is byte-identical to the v0.72.0 release. The slug is therefore accurate about the APPLICATION and imprecise about the REF. What is pinned and immutable is the commit sha, not the tag.",
+      "notResolvedByThisUnit": "Whether the portfolio would rather pin the tag target e527a935b9d37d8cde6db40f15c99ace4005280a is a decision for the PM. This unit ingested the sha the packet named and recorded the discrepancy in full."
+    }
+  },
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/EddieHubCommunity/LinkFree",
+      "status": 301,
+      "redirectTo": "https://api.github.com/repositories/405139301",
+      "followed": true,
+      "reason": "upstream repository rename"
+    },
+    {
+      "endpoint": "https://api.github.com/repositories/405139301",
+      "status": 200,
+      "bytes": 6985,
+      "sha256": "c18fac80614b0e6189bfcd8ed0df1b55a92afd1a2207e5a7ae25d89ebd7544df"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/EddieHubCommunity/BioDrop/git/ref/tags/v0.72.0",
+      "status": 200,
+      "bytes": 355,
+      "sha256": "6cb8d156d122fd19ea4ea85e3f11e58cb266a35b6d96cc8ddcc3bd7f07b3a98f"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/EddieHubCommunity/BioDrop/git/tags/36313ba4c2b8dc7ebce1ce4665eba2e64cb2c753",
+      "status": 200,
+      "bytes": 712,
+      "sha256": "3e5cafa067f34049eecc4f7e4766ac8adf20f293d4f039bb0e4783ce477be8fc"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/EddieHubCommunity/BioDrop/git/commits/367d77297b5753644e11ecd22cf80e59c87b0dc8",
+      "status": 200,
+      "bytes": 2298,
+      "sha256": "7489ae297171013a6098a20e8578cd4c97869cfef76823d8350bf6dfa93286e9"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/EddieHubCommunity/BioDrop/git/trees/4946205e9a3822d08a2aca9179c6267cede8fb0f?recursive=1",
+      "status": 200,
+      "bytes": 163400,
+      "sha256": "1474c1b4ba6bb7afbecf4293ae25f171584b4fdd13ff96dca861eee978f9f6d9"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/EddieHubCommunity/BioDrop/git/commits/e527a935b9d37d8cde6db40f15c99ace4005280a",
+      "status": 200,
+      "bytes": 1217,
+      "purpose": "tag-delta: the commit the v0.72.0 tag actually points at",
+      "sha256": "d076af5b2a476ea97f52d4828e1632fe6fb30d44f4695476aae910708c04136f"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/EddieHubCommunity/BioDrop/git/trees/e4367ebed488ff05f855c92d167c62f94c5d361f?recursive=1",
+      "status": 200,
+      "bytes": 163399,
+      "purpose": "tag-delta: the tree of the tagged commit, diffed blob-for-blob against the pinned tree",
+      "sha256": "3928d3ea8b69e2822ce15a099bcac3d301310523acf68cc1b391be521eb12164"
+    },
+    {
+      "endpoint": "https://codeload.github.com/EddieHubCommunity/BioDrop/tar.gz/367d77297b5753644e11ecd22cf80e59c87b0dc8",
+      "status": 200,
+      "bytes": 966908,
+      "sha256": "7cef1a1c2ae251e3738d8b8a6c5fe94b118bf13d3a5bae7b522b8db9c1c334ef",
+      "stream": 1
+    },
+    {
+      "endpoint": "https://codeload.github.com/EddieHubCommunity/BioDrop/tar.gz/367d77297b5753644e11ecd22cf80e59c87b0dc8",
+      "status": 200,
+      "bytes": 966908,
+      "sha256": "7cef1a1c2ae251e3738d8b8a6c5fe94b118bf13d3a5bae7b522b8db9c1c334ef",
+      "stream": 2
+    }
+  ],
+  "requestLedgerNote": "probe-ledger.ndjson is the authoritative per-request record: every URL above appears there with its wall-clock timestamp, status, byte count, and sha256 over the exact response bytes. The list above is a summary of it.",
+  "archiveParity": {
+    "singleRoot": "BioDrop-367d77297b5753644e11ecd22cf80e59c87b0dc8",
+    "singleRootNote": "The archive root carries the CURRENT repository name (BioDrop), not the historical one, because codeload names the root from the repository's present name. The tarball contents are nonetheless the pinned revision, as the blob-level parity below proves.",
+    "safeEntries": 672,
+    "regularFiles": 653,
+    "directories": 19,
+    "specialEntries": 0,
+    "gitBlobs": 653,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "normalizedManifestSha256": "65f4205eed8392a5328243c585ccc61d9902669c3fe4ed2382b37744994a30c5",
+    "method": "Blob-level: every regular file in the extracted archive was hashed as a git blob object and compared byte-for-byte against the sha recorded for the same path in the recursive git tree. Detail in reconciliation.json.",
+    "pathTraversalEntries": 0,
+    "absolutePathEntries": 0,
+    "gitLfsPointerFiles": 0,
+    "gitLfsNote": "The tree carries no .gitattributes at any depth, so no LFS filter is declared. Every one of the 653 extracted files was nevertheless byte-scanned for the `version https://git-lfs.github.com/spec/` pointer header and none was found. LFS absence is established by scanning the bytes, not inferred from the absence of .gitattributes."
+  },
+  "transaction": {
+    "attemptedRequests": 10,
+    "acceptedResponses": 9,
+    "redirectsObserved": 1,
+    "redirectsFollowed": 1,
+    "redirectReason": "upstream repository rename, LinkFree -> BioDrop, target host api.github.com",
+    "acceptedWireBytes": 2272182,
+    "acceptedDecodedBytes": 2272182,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "credentialsSent": 0,
+    "archivesByteIdentical": true,
+    "archiveMatchesGitTree": true,
+    "publishedSource": true,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "cache": {
+    "root": "<workspace>/.versionless/cache/react-linkfree-v0-72-0-source",
+    "archive1": "<workspace>/.versionless/cache/react-linkfree-v0-72-0-source/archive/archive-1.tar.gz",
+    "archive2": "<workspace>/.versionless/cache/react-linkfree-v0-72-0-source/archive/archive-2.tar.gz",
+    "verifiedSource": "<workspace>/.versionless/cache/react-linkfree-v0-72-0-source/verify/extracted/BioDrop-367d77297b5753644e11ecd22cf80e59c87b0dc8",
+    "gitIgnored": true,
+    "rawMetadataPortable": false
+  },
+  "networkClosed": {
+    "afterAcquisition": true,
+    "note": "After the archive fetch, the only further network use in this unit was npm's own fetching during the single baseline install, recorded in aggregate in baseline-attempt.json. No further URL was requested by this unit's drivers. The declared build itself made no network request: generate.js reads the local profile directory and purgecss reads the local build output."
+  },
+  "nonclaims": [
+    "The pinned commit is signed and its signature is reported valid by GitHub, but this unit did not itself verify the signature against a key it trusts; it records GitHub's verification verdict. The annotated tag object is unsigned, and in any case does not point at the pinned commit.",
+    "Byte-identical duplicate fetches and blob-level git-tree parity establish source integrity for this revision only.",
+    "No dependency closure, build, browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval is established by this record."
+  ]
+}

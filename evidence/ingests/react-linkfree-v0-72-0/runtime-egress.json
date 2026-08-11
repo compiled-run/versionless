@@ -1,0 +1,86 @@
+{
+  "schemaVersion": "versionless.legacy-corpus-runtime-egress.v1",
+  "slug": "react-linkfree-v0-72-0",
+  "unit": "lrapr-t006/u5-ingest-linkfree",
+  "purpose": "Characterise, from the source and the emitted build only, what this application would reach for at RUNTIME. This matters because the fixture is destined for browser-level witness work, and a fixture that silently depends on the live internet produces flaky evidence.",
+  "method": "Static: every absolute URL in src/, public/index.html and public/manifest.json was enumerated, and the 561 profile JSON files were parsed to histogram their avatar hosts and outbound link hosts in aggregate. No browser was driven and no request was made.",
+  "buildTimeEgress": {
+    "requests": 0,
+    "note": "The declared build is fully local. generate.js reads public/data from disk; react-scripts bundles from disk; purgecss reads the emitted build output. Confirmed by the baseline: install and build were the only network-touching steps and only npm contacted the network."
+  },
+  "runtimeEgress": {
+    "sameOriginData": {
+      "what": "The application has NO backend. Its data layer is static JSON fetched from its own origin.",
+      "endpoints": [
+        "GET /list.json — the generate.js output, read by the home and search routes",
+        "GET /data/<profile>.json — one file per profile, read by the user-profile route",
+        "GET /app.json — a version stamp"
+      ],
+      "consequence": "This is the most self-contained fixture shape in the corpus so far: `serve -s build` is sufficient to run it. There is no server to stand up, no database, and no session."
+    },
+    "thirdPartyImageLoads": {
+      "character": "image-only, no script, no XHR, no credential, no cookie",
+      "avatarHostHistogram": {
+        "github.com": 555,
+        "avatars.githubusercontent.com": 3,
+        "user-images.githubusercontent.com": 1,
+        "camo.githubusercontent.com": 1,
+        "cdn.nhcarrigan.com": 1
+      },
+      "fallbackAvatarHost": {
+        "host": "avatars.dicebear.com",
+        "where": "src/utils.js setDefaultSVG, wired to the <img> onerror handler",
+        "behaviour": "When an avatar image fails to load, the handler clears onerror and swaps the src to https://avatars.dicebear.com/api/initials/<name>.svg.",
+        "materialWarning": "This is a cascading failure path, not a static reference: BLOCKING the GitHub avatar hosts without also blocking or stubbing dicebear will cause every avatar to fall back to a second live third-party request rather than to a local placeholder. A witness unit must stub or block BOTH, or it will still be talking to the internet."
+      },
+      "blockable": true,
+      "blockabilityAssessment": "Yes. Avatars are decorative <img> sources. Blocking them degrades appearance only; no route, no data fetch, and no journey depends on an avatar loading. None of the four upstream cypress scenarios asserts on an image."
+    },
+    "outboundLinksInContent": {
+      "what": "The profile corpus declares 1666 outbound links, rendered as anchor hrefs on profile pages.",
+      "topHostHistogram": [
+        { "host": "github.com", "count": 560 },
+        { "host": "twitter.com", "count": 500 },
+        { "host": "linkedin.com", "count": 267 },
+        { "host": "instagram.com", "count": 48 },
+        { "host": "youtube.com", "count": 40 },
+        { "host": "(empty host)", "count": 14 },
+        { "host": "dev.to", "count": 14 },
+        { "host": "facebook.com", "count": 9 },
+        { "host": "medium.com", "count": 8 },
+        { "host": "hashnode.com", "count": 7 },
+        { "host": "discord.gg", "count": 7 },
+        { "host": "(unparseable)", "count": 5 },
+        { "host": "showwcase.com", "count": 4 },
+        { "host": "gitlab.com", "count": 4 },
+        { "host": "stackoverflow.com", "count": 3 }
+      ],
+      "egressCharacter": "NONE at load time. These are href targets. A browser fetches them only if a user clicks, and no upstream scenario clicks one.",
+      "dataQualityObservation": "19 of the 1666 link URLs are malformed — 14 parse to an empty host and 5 fail URL parsing outright. This is upstream content data quality, recorded as found; it is not corrected here and it is not a defect introduced by this ingest."
+    },
+    "staticThirdPartyReferencesInSource": {
+      "hosts": [
+        "github.com",
+        "twitter.com",
+        "www.linkedin.com",
+        "www.facebook.com",
+        "developers.google.com",
+        "bit.ly",
+        "avatars.dicebear.com"
+      ],
+      "note": "Most of these are share-intent URL templates in the share-profile component and icon-mapping references, not load-time requests."
+    }
+  },
+  "witnessGuidance": {
+    "offlineViability": "HIGH. Serve build/ statically and the application is fully functional offline except for avatar images.",
+    "requiredStubs": [
+      "Block or stub the GitHub avatar/asset hosts AND avatars.dicebear.com together, for the cascading reason recorded above."
+    ],
+    "syntheticCorpusOption": "generate.js will build list.json from ANY set of profile JSON files. A later unit can replace the 561 real contributor profiles with a small synthetic corpus and exercise every journey without redistributing contributor data — but note that the upstream cypress scenarios assert on specific real profile content and would need rewriting against the synthetic corpus.",
+    "notEstablished": "No browser was driven by this unit. Everything above is read from source and from the emitted build."
+  },
+  "nonclaims": [
+    "This is a static characterisation of what the code would request. It is not an observed network trace, and a browser may make requests this analysis does not predict.",
+    "No claim is made that blocking the listed hosts is sufficient to make this fixture hermetic; that must be verified by a unit that actually drives a browser."
+  ]
+}
