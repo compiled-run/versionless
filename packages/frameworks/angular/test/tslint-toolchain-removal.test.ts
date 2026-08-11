@@ -133,7 +133,15 @@ describe('TSLint toolchain removal', () => {
 		const manifest: unknown = JSON.parse(
 			migration.files.find((entry) => entry.path === 'package.json')?.source ?? '{}',
 		);
+		/**
+		 * The TSLint packages are gone and `eslint` is untouched. The builder
+		 * package is present because the migrated workspace still runs a build
+		 * target and the manifest handed in declared nothing that provides it —
+		 * a different capability's doing, asserted here so that the drop this
+		 * test is about is read against the whole manifest rather than a slice.
+		 */
 		expect((manifest as Record<string, unknown>)['devDependencies']).toEqual({
+			'@angular-devkit/build-angular': '^16.2.0',
 			eslint: '^8.2.0',
 		});
 		expect(

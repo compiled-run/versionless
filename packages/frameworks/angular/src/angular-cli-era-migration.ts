@@ -47,6 +47,7 @@ import {
 	type SynthesizedWorkspace,
 } from './angular-cli-json-workspace-synthesis.ts';
 import { tslintConfigRemovals } from './tslint-toolchain-removal.ts';
+import { declareBuilderPackages } from './builder-package-declaration.ts';
 
 export type WorkspaceFile = Readonly<{ path: string; source: string }>;
 
@@ -248,16 +249,28 @@ export function migrateAngularCliEraWorkspace(
 	const declared = declareUndeclaredRuntimeDependencies(aligned.manifest, holes, cell);
 	unhandled.push(...declared.unhandled);
 	declaredDifferences.push(...declared.declaredDifferences);
+	/**
+	 * The packages the migrated workspace's own targets name are declared last,
+	 * after every capability that decides which targets survive: a builder
+	 * declaration for a target the workspace migration removed would install a
+	 * toolchain nothing runs.
+	 */
+	const builders = declareBuilderPackages(declared.manifest, workspace.config, cell);
+	unhandled.push(...builders.unhandled);
 	const tsConfig = migrateAngularTsConfig(input.tsConfig.source, cell);
 	unhandled.push(...tsConfig.unhandled);
 	const files: MigratedFile[] = [
 		file(
 			input.packageManifest,
-			`${JSON.stringify(declared.manifest, null, 2)}\n`,
+			`${JSON.stringify(builders.manifest, null, 2)}\n`,
 			'workspace',
 			[
 				...aligned.changes.map(describeDependencyChange),
 				...declared.declarations.map(
+					(entry) =>
+						`added ${entry.field}.${entry.name} = ${entry.range} — ${entry.reason}`,
+				),
+				...builders.declarations.map(
 					(entry) =>
 						`added ${entry.field}.${entry.name} = ${entry.range} — ${entry.reason}`,
 				),

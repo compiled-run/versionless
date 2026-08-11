@@ -1,5 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { migrateAngularSourceModule } from '../src/angular-source-migration.ts';
+import {
+	migrateAngularSourceModule,
+	RXJS_SIX_SPECIFIER_REPLACEMENTS,
+} from '../src/angular-source-migration.ts';
 
 describe('Angular source migration', () => {
 	it('rewrites zone.js dist specifiers to package entry points', () => {
@@ -68,6 +71,43 @@ describe('Angular source migration', () => {
 			"export * from 'zone.js/dist/zone';\n",
 		);
 		expect(migration.source).toBe("export * from 'zone.js';\n");
+	});
+
+	it('collapses an RxJS 5 deep type entry point onto the package root', () => {
+		const migration = migrateAngularSourceModule(
+			'src/app/model/thing.ts',
+			"import { Observable } from 'rxjs/Observable';\nimport { Subject } from 'rxjs/Subject';\n",
+		);
+		expect(migration.source).toBe(
+			"import { Observable } from 'rxjs';\nimport { Subject } from 'rxjs';\n",
+		);
+		expect(migration.changes).toEqual([
+			{ kind: 'module-specifier', line: 1, from: 'rxjs/Observable', to: 'rxjs' },
+			{ kind: 'module-specifier', line: 2, from: 'rxjs/Subject', to: 'rxjs' },
+		]);
+	});
+
+	it('reports an RxJS patch import rather than half-removing the prototype patching', () => {
+		const source = "import 'rxjs/add/operator/map';\nimport 'rxjs/add/observable/of';\n";
+		const migration = migrateAngularSourceModule('src/app/rxjs-operators.ts', source);
+		expect(migration.source).toBe(source);
+		expect(migration.changed).toBe(false);
+		expect(migration.unhandled).toHaveLength(2);
+		expect(migration.unhandled.join(' ')).toContain('rxjs/add/operator/map');
+		expect(migration.unhandled.join(' ')).toContain('pipe');
+	});
+
+	it('leaves an rxjs specifier the table does not carry exactly as written', () => {
+		const source = "import { map } from 'rxjs/operators';\nimport { of } from 'rxjs';\n";
+		expect(migrateAngularSourceModule('src/app/d.ts', source).source).toBe(source);
+	});
+
+	it('rewrites every RxJS 5 deep entry point onto the package root and nothing else', () => {
+		for (const [from, to] of Object.entries(RXJS_SIX_SPECIFIER_REPLACEMENTS)) {
+			expect(to).toBe('rxjs');
+			expect(from.startsWith('rxjs/')).toBe(true);
+			expect(from.slice('rxjs/'.length).includes('/')).toBe(false);
+		}
 	});
 
 	it('fails loudly on a module it cannot parse rather than counting it unchanged', () => {

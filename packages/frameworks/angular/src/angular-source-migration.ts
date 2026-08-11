@@ -52,6 +52,56 @@ export const RENAMED_MODULE_EXPORTS: Readonly<Record<string, Readonly<Record<str
 		'@angular/core/testing': Object.freeze({ async: 'waitForAsync' }),
 	});
 
+/**
+ * RxJS's own package restructure, keyed by the RxJS 5 deep entry point it
+ * replaced. RxJS 5 published one module per exported type at the package root
+ * — `rxjs/Observable`, `rxjs/Subject` and their siblings — and RxJS 6 collapsed
+ * every one of them into the package's own root export. The deep paths were not
+ * moved: they no longer exist, so a module that imports one does not resolve on
+ * any line at or beyond 6.
+ *
+ * Every entry here is a name RxJS re-exports from the package root, checked
+ * against the `rxjs` 7.8 type surface rather than remembered: the rewrite is
+ * only correct if the binding the module already names is reachable from
+ * `'rxjs'`, and a type whose deep module went away *without* a root export
+ * would be a removal for a caller to answer, not a specifier to rewrite.
+ */
+export const RXJS_SIX_SPECIFIER_REPLACEMENTS: Readonly<Record<string, string>> = Object.freeze({
+	'rxjs/AsyncSubject': 'rxjs',
+	'rxjs/BehaviorSubject': 'rxjs',
+	'rxjs/ConnectableObservable': 'rxjs',
+	'rxjs/Notification': 'rxjs',
+	'rxjs/Observable': 'rxjs',
+	'rxjs/Observer': 'rxjs',
+	'rxjs/Operator': 'rxjs',
+	'rxjs/ReplaySubject': 'rxjs',
+	'rxjs/Scheduler': 'rxjs',
+	'rxjs/Subject': 'rxjs',
+	'rxjs/Subscriber': 'rxjs',
+	'rxjs/Subscription': 'rxjs',
+});
+
+/**
+ * The RxJS 5 patch-import prefix. `import 'rxjs/add/operator/map'` installed an
+ * operator onto `Observable.prototype` as a side effect, and RxJS 6 removed
+ * both the module and the prototype patching it performed.
+ *
+ * This capability does not rewrite these imports, and the refusal is the point.
+ * Deleting the import is only half the edit: the `.map(…)` and `.catch(…)`
+ * call sites it enabled are method calls on an observable, and turning them
+ * into `.pipe(map(…), catchError(…))` is a call-site rewrite across every
+ * module that inherited the patched prototype — not a specifier substitution.
+ * A half-applied patch removal produces a tree that compiles nowhere and hides
+ * why, so each patch import is reported by name instead.
+ */
+export const RXJS_PATCH_IMPORT_PREFIX = 'rxjs/add/';
+
+/** Era module specifiers this capability rewrites, from every table it carries. */
+export const ERA_SPECIFIER_REPLACEMENTS: Readonly<Record<string, string>> = Object.freeze({
+	...ZONE_JS_SPECIFIER_REPLACEMENTS,
+	...RXJS_SIX_SPECIFIER_REPLACEMENTS,
+});
+
 export type SourceChange = Readonly<{
 	kind: 'module-specifier' | 'renamed-export';
 	line: number;
@@ -167,7 +217,16 @@ export function migrateAngularSourceModule(path: string, source: string): Source
 			continue;
 		const literal = sourceLiteral(declaration.source);
 		if (literal === null) continue;
-		const replacement = ZONE_JS_SPECIFIER_REPLACEMENTS[literal.value];
+		if (literal.value.startsWith(RXJS_PATCH_IMPORT_PREFIX)) {
+			unhandled.push(
+				`${path} imports ${literal.value}, an RxJS 5 patch module that RxJS 6 removed along ` +
+					`with the prototype patching it performed. Removing the import alone would leave ` +
+					`the operator call sites it enabled calling a method that no longer exists, so it ` +
+					`is reported rather than rewritten: the call sites have to move to \`pipe\` first.`,
+			);
+			continue;
+		}
+		const replacement = ERA_SPECIFIER_REPLACEMENTS[literal.value];
 		if (replacement !== undefined)
 			edits.push({
 				start: literal.span[0],

@@ -111,6 +111,15 @@ export const ANGULAR_16_ECOSYSTEM_PACKAGES: EcosystemPackages = Object.freeze({
 		range: '^16.2.2',
 		fact: 'ng-zorro-antd versions in lockstep with the Angular major: 16.2.2 is the last 16.x release and declares peer @angular/core ^16.0.0 across the six @angular packages it uses. It depends on @ant-design/icons-angular ^16.0.0 and @angular/cdk ^16.0.0, both of which this cell also carries. 17.0.0 declares ^17.0.0.',
 	}),
+	'@angular/http': Object.freeze({
+		kind: 'no-successor',
+		fact: '@angular/http stops at 7.2.16 and is deprecated on the registry with "Package no longer supported. Use @angular/common instead". Angular removed the package after the 7 line; there is no 8.x and no 16.x, so the `@angular/` family range this cell writes for its own packages names a version that was never published. The HTTP client that succeeded it is `@angular/common/http`, an entry point of a package this cell already carries, so the dependency is dropped rather than pinned to a v7 line beside a v16 framework.',
+	}),
+	'@angular/flex-layout': Object.freeze({
+		kind: 'aligned',
+		range: '^15.0.0-beta.42',
+		fact: '@angular/flex-layout stops at 15.0.0-beta.42 — the newest version published on any line, and the `latest` dist-tag — so the `@angular/` family range this cell writes for Angular\'s own packages names a 16.x that was never published. Under this cell\'s rule 15.0.0-beta.42 is still the newest satisfying line: it declares peer @angular/core, @angular/common and @angular/platform-browser ">=15.0.2", @angular/cdk ">=15.0.0" and rxjs "^6.5.3 || ^7.4.0", all satisfied by the ^16.2.0 and ~7.8.0 this cell writes, and it declares no engines.node. The package is deprecated on the registry ("consider using CSS Flexbox and CSS Grid"); that is recorded here rather than acted on, because dropping a layout library an application imports is a source decision, not a cell reading.',
+	}),
 	'@ctrl/tinycolor': Object.freeze({
 		kind: 'aligned',
 		range: '^4.2.0',
