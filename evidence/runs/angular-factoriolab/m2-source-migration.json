@@ -1,0 +1,145 @@
+{
+  "schemaVersion": "versionless.angular-factoriolab-source-migration.v1",
+  "unit": "lrapr-t005/m2-factoriolab-build-lanes",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "result": "source-migration-recorded",
+  "supersedes": [
+    "evidence/runs/angular-factoriolab/m1-source-migration.json, which recorded applicationFilesChanged: 2 from the adapter as it stood before either build lane ran.",
+    "The count grew to 3 because the target-cell build rejected @ngrx/effects’ removed Effect decorator, a shape no source-level inspection had flagged."
+  ],
+  "source": {
+    "commit": "5f54abbdcac518d8ebf7e136c4348384d9b1a2bb",
+    "archiveUrl": "https://codeload.github.com/factoriolab/factoriolab/tar.gz/5f54abbdcac518d8ebf7e136c4348384d9b1a2bb",
+    "archiveSha256": "11f2ce939f4be04b11e77b7f12e13d7449bf944b9bfefbeca237c46dea12f7ed",
+    "bytes": 267218
+  },
+  "cell": {
+    "id": "angular-16-browser-builder",
+    "angularLine": "16.2",
+    "builder": "@angular-devkit/build-angular:browser",
+    "nodeLine": "16.20.2",
+    "typescriptRange": "~5.1.3",
+    "rationale": [
+      "Angular 16 accepts Node ^16.14.0 || ^18.10.0; this host carries a native Node 16.20.2, which is inside that range.",
+      "The `browser` builder the era workspace already declares is still the mainstream application builder on the Angular 16 line, so the builder identity survives the hop unchanged.",
+      "A newer line was not declared because it would pair an unverified Node line with a builder swap in the same step, and neither could be evidenced here.",
+      "The test toolchain is declared as the versions this line’s own schematics generate. Leaving it at its era ranges is not a neutral choice: an era jasmine pinned below what a floating karma reporter range now demands makes the dependency closure unresolvable, so the install that the build cell needs cannot happen at all."
+    ]
+  },
+  "migration": {
+    "applicationFilesScanned": 157,
+    "applicationFilesChanged": 3,
+    "workspaceFilesChanged": 3,
+    "files": [
+      {
+        "path": "package.json",
+        "kind": "workspace",
+        "sha256Before": "051f928938dd0bbd55cd24de9f8c6330b5eb07728e0b10e0fd97658224e6eb18",
+        "sha256After": "c12ff49d0d2939bfb02b75195446cc10897a69dc52bbe8b3740a2bcccde93afa",
+        "changes": [
+          "dependencies.@angular/animations: ~10.1.5 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "dependencies.@angular/common: ~10.1.5 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "dependencies.@angular/compiler: ~10.1.5 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "dependencies.@angular/core: ~10.1.5 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "dependencies.@angular/forms: ~10.1.5 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "dependencies.@angular/platform-browser: ~10.1.5 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "dependencies.@angular/platform-browser-dynamic: ~10.1.5 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "dependencies.@angular/router: ~10.1.5 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "dependencies.@ngrx/effects: ^10.0.1 -> ^16.3.0 — aligned to angular-16-browser-builder",
+          "dependencies.@ngrx/store: ^10.0.1 -> ^16.3.0 — aligned to angular-16-browser-builder",
+          "dependencies.@ngrx/store-devtools: ^10.0.1 -> ^16.3.0 — aligned to angular-16-browser-builder",
+          "dependencies.rxjs: ~6.6.3 -> ~7.8.0 — aligned to angular-16-browser-builder",
+          "dependencies.tslib: ^2.0.3 -> ^2.3.0 — aligned to angular-16-browser-builder",
+          "dependencies.zone.js: ~0.10.3 -> ~0.13.0 — aligned to angular-16-browser-builder",
+          "devDependencies.@angular-devkit/build-angular: ^0.1001.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "devDependencies.@angular/cli: ^10.1.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "devDependencies.@angular/compiler-cli: ~10.1.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "devDependencies.@angular/language-service: ~10.1.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+          "devDependencies.@types/jasmine: ^3.5.14 -> ~4.3.0 — aligned to the test toolchain angular-16-browser-builder generates",
+          "removed devDependencies.@types/jasminewd2 (was ~2.0.3) — released by a builder target the workspace migration removed",
+          "removed devDependencies.codelyzer (was ^6.0.1) — released by a builder target the workspace migration removed",
+          "devDependencies.jasmine-core: ~3.5.0 -> ~4.6.0 — aligned to the test toolchain angular-16-browser-builder generates",
+          "removed devDependencies.jasmine-spec-reporter (was ~5.0.0) — released by a builder target the workspace migration removed",
+          "devDependencies.karma: ~5.0.0 -> ~6.4.0 — aligned to the test toolchain angular-16-browser-builder generates",
+          "devDependencies.karma-chrome-launcher: ~3.1.0 -> ~3.2.0 — aligned to the test toolchain angular-16-browser-builder generates",
+          "devDependencies.karma-jasmine: ~3.3.0 -> ~5.1.0 — aligned to the test toolchain angular-16-browser-builder generates",
+          "devDependencies.karma-jasmine-html-reporter: ^1.5.0 -> ~2.1.0 — aligned to the test toolchain angular-16-browser-builder generates",
+          "removed devDependencies.protractor (was ~7.0.0) — released by a builder target the workspace migration removed",
+          "removed devDependencies.tslint (was ^6.1.3) — released by a builder target the workspace migration removed",
+          "devDependencies.typescript: ^4.0.3 -> ~5.1.3 — aligned to angular-16-browser-builder"
+        ]
+      },
+      {
+        "path": "angular.json",
+        "kind": "workspace",
+        "sha256Before": "8ea2a5081c346939c434dc431e694f1b8ef619762843f5083882480d5ea8467b",
+        "sha256After": "c427057d597b6de0e2b862388b7030ccc20aacb2e2f4e8a88aae6454fdcae50e",
+        "changes": [
+          "removed defaultProject (was \"factorio-lab\")",
+          "projects.factorio-lab.architect.build.options.polyfills: \"src/polyfills.ts\" -> [\"src/polyfills.ts\"]",
+          "removed projects.factorio-lab.architect.build.configurations.production.extractCss (was true)",
+          "removed projects.factorio-lab.architect.build.configurations.staging.extractCss (was true)",
+          "projects.factorio-lab.architect.test.options.polyfills: \"src/polyfills.ts\" -> [\"src/polyfills.ts\"]",
+          "removed projects.factorio-lab.architect.lint (was @angular-devkit/build-angular:tslint)",
+          "removed projects.factorio-lab.architect.e2e (was @angular-devkit/build-angular:protractor)"
+        ]
+      },
+      {
+        "path": "tsconfig.json",
+        "kind": "workspace",
+        "sha256Before": "4d7d62d71cdfa21b9f211de9cfd292bdf03229e33402cbe9caea06d266d0a35f",
+        "sha256After": "6c3e787f22add66e12a84f8fa044dd792cc83964c7205ad5d9bf42bd8f4b9e5e",
+        "changes": [
+          "compilerOptions.target: \"es2015\" -> \"ES2022\"",
+          "compilerOptions.module: \"es2020\" -> \"ES2022\"",
+          "added compilerOptions.useDefineForClassFields = false"
+        ]
+      },
+      {
+        "path": "src/app/store/datasets/datasets.effects.ts",
+        "kind": "application",
+        "sha256Before": "e6841e409c725af599d74154e355742837410898c2c74efe57cc71347e2be2a6",
+        "sha256After": "498a20b4e23eb801d0510df9a915d0fd9e60c639bc172d98dd852c0db4911eab",
+        "changes": [
+          "line 19: ngrx-effect-decorator @Effect({ dispatch: false }) loadMod$ -> loadMod$ = createEffect(() => …, { dispatch: false })",
+          "line 25: ngrx-effect-decorator @Effect() appLoad$ -> appLoad$ = createEffect(() => …)",
+          "line 49: ngrx-effect-decorator @Effect() setBaseId$ -> setBaseId$ = createEffect(() => …)"
+        ]
+      },
+      {
+        "path": "src/polyfills.ts",
+        "kind": "application",
+        "sha256Before": "e74225c7ab207ce1175e3e7de290b31a0f922351881ad939a9368790d0d0a0b3",
+        "sha256After": "abe918d5fd23100e411b7699747d61175fe1aba7371f5124062cafe3951220e5",
+        "changes": [
+          "line 58: module-specifier zone.js/dist/zone -> zone.js"
+        ]
+      },
+      {
+        "path": "src/test.ts",
+        "kind": "application",
+        "sha256Before": "2ef7414525709ae2303a878e2a18d122ccb9560c1b1738c60e7f90f8a821f0dd",
+        "sha256After": "32f5e49c48751e0c8d5ce65725d57e40e2b4672070dbd10983be2844b9ee6221",
+        "changes": [
+          "line 3: module-specifier zone.js/dist/zone-testing -> zone.js/testing"
+        ]
+      }
+    ]
+  },
+  "unhandled": [
+    "projects.factorio-lab.architect.lint used @angular-devkit/build-angular:tslint, which the 16.2 devkit does not ship; the target was removed and no replacement capability was chosen for it",
+    "projects.factorio-lab.architect.e2e used @angular-devkit/build-angular:protractor, which the 16.2 devkit does not ship; the target was removed and no replacement capability was chosen for it",
+    "devDependencies.karma-coverage-istanbul-reporter is coupled to the Angular test cell but is not part of the toolchain angular-16-browser-builder generates, so it was left at its era range",
+    "devDependencies.karma-junit-reporter is coupled to the Angular test cell but is not part of the toolchain angular-16-browser-builder generates, so it was left at its era range",
+    "compilerOptions.lib was left as declared; the 16.2 line does not require a specific lib set and narrowing one could remove a type surface the application relies on"
+  ],
+  "notEstablished": [
+    "This record states what the adapter changed. Whether the changed tree installs and builds is recorded separately, in the build-lane records beside it, and neither is implied here.",
+    "No test-cell outcome is established: the karma/jasmine toolchain was aligned so the dependency closure could resolve, and no test run was attempted.",
+    "No browser behaviour, runtime parity or user-visible equivalence was observed."
+  ],
+  "nonclaims": [
+    "This record states which bytes a set of reusable transforms changed in one pinned tree. It establishes no migration feasibility, no production readiness, no certification and no support claim for Angular applications generally."
+  ],
+  "digest": "9b8ab59d3b7317480e9984f761460a487f2d64eb5d6dde6552c7953a56d221c0"
+}

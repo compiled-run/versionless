@@ -1,0 +1,818 @@
+{
+  "schemaVersion": "versionless.angular-factoriolab-build-parity.v1",
+  "unit": "lrapr-t005/m2-factoriolab-build-lanes",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "result": "build-level-parity-recorded",
+  "meaning": "Both lanes built. This record lines their emitted files up by emission point — the file name with the builder’s content hash and the era line’s differential-loading suffix removed — and states where the bytes agree, where they differ, and by how much.",
+  "eraFileCount": 42,
+  "migratedFileCount": 39,
+  "identicalPayloads": [
+    "MaterialIcons-Regular.eot",
+    "MaterialIcons-Regular.ttf",
+    "MaterialIcons-Regular.woff",
+    "MaterialIcons-Regular.woff2",
+    "assets/GitHub.png",
+    "assets/logo.png",
+    "assets/transparent.gif",
+    "data/0.16/data.json",
+    "data/0.16/icons.png",
+    "data/0.17/data.json",
+    "data/0.17/icons.png",
+    "data/0.18/data.json",
+    "data/0.18/icons.png",
+    "data/1.0/data.json",
+    "data/1.0/icons.png",
+    "data/app/data.json",
+    "data/app/icons.png",
+    "data/bio-industries/data.json",
+    "data/bio-industries/icons.png",
+    "data/bobs-angels/data.json",
+    "data/bobs-angels/icons.png",
+    "data/factorio-extended-plus/data.json",
+    "data/factorio-extended-plus/icons.png",
+    "data/index.ts",
+    "data/krastorio2/data.json",
+    "data/krastorio2/icons.png",
+    "data/pyanodons/data.json",
+    "data/pyanodons/icons.png",
+    "data/research/data.json",
+    "data/research/icons.png",
+    "data/space-exploration/data.json",
+    "data/space-exploration/icons.png",
+    "favicon.ico"
+  ],
+  "onlyInEra": [],
+  "onlyInMigrated": [],
+  "entries": [
+    {
+      "emissionPoint": "3rdpartylicenses.txt",
+      "era": [
+        {
+          "path": "3rdpartylicenses.txt",
+          "bytes": 59549,
+          "sha256": "342ceabd222bf5f91f146df9e01599488e0cc6c2b4f78ddcfb2294dfa68f08cc"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "3rdpartylicenses.txt",
+          "bytes": 56931,
+          "sha256": "4bcaa8feca18a5e3ba1d749a2783f6a3909b7ca57773e5a8137058ad2d664a87"
+        }
+      ],
+      "bytesIdentical": false,
+      "byteDelta": -2618
+    },
+    {
+      "emissionPoint": "MaterialIcons-Regular.eot",
+      "era": [
+        {
+          "path": "MaterialIcons-Regular.4674f8ded773cb03e824.eot",
+          "bytes": 143258,
+          "sha256": "39ebc508d7bc2c76c667ff2eb51cb5d6a3cc4ee6de2ba76e5f270a1d2ac893ec"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "MaterialIcons-Regular.1e50f5c2ffa6aba4.eot",
+          "bytes": 143258,
+          "sha256": "39ebc508d7bc2c76c667ff2eb51cb5d6a3cc4ee6de2ba76e5f270a1d2ac893ec"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "MaterialIcons-Regular.ttf",
+      "era": [
+        {
+          "path": "MaterialIcons-Regular.5e7382c63da0098d634a.ttf",
+          "bytes": 128180,
+          "sha256": "541996b221e1bd3ef2a56fcbeb6b52aefde13b2598bc9a7688faa948fefe4f1d"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "MaterialIcons-Regular.196fa4a92dd6fa73.ttf",
+          "bytes": 128180,
+          "sha256": "541996b221e1bd3ef2a56fcbeb6b52aefde13b2598bc9a7688faa948fefe4f1d"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "MaterialIcons-Regular.woff",
+      "era": [
+        {
+          "path": "MaterialIcons-Regular.83bebaf37c09c7e1c3ee.woff",
+          "bytes": 57620,
+          "sha256": "e699f9a3e52908c31b02e0e6991148ebee3509de8486220f7938aa1f7350320a"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "MaterialIcons-Regular.db852539204b1a34.woff",
+          "bytes": 57620,
+          "sha256": "e699f9a3e52908c31b02e0e6991148ebee3509de8486220f7938aa1f7350320a"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "MaterialIcons-Regular.woff2",
+      "era": [
+        {
+          "path": "MaterialIcons-Regular.cff684e59ffb052d72cb.woff2",
+          "bytes": 44300,
+          "sha256": "a471c93b4d744ef3eb4f8cd2a05a9abe28bac71d4cf3ed99747165df8e2de311"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "MaterialIcons-Regular.7ea2023eeca07427.woff2",
+          "bytes": 44300,
+          "sha256": "a471c93b4d744ef3eb4f8cd2a05a9abe28bac71d4cf3ed99747165df8e2de311"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "assets/GitHub.png",
+      "era": [
+        {
+          "path": "assets/GitHub.png",
+          "bytes": 1714,
+          "sha256": "0439ce60ab65403fb5ddba3849f2b24fde6a83178f83a5bfb835176178a6ed1d"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "assets/GitHub.png",
+          "bytes": 1714,
+          "sha256": "0439ce60ab65403fb5ddba3849f2b24fde6a83178f83a5bfb835176178a6ed1d"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "assets/logo.png",
+      "era": [
+        {
+          "path": "assets/logo.png",
+          "bytes": 19468,
+          "sha256": "39764634c4954917d8ffe8b84108aaf476452c52b05c6f7148d67385730d5fbc"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "assets/logo.png",
+          "bytes": 19468,
+          "sha256": "39764634c4954917d8ffe8b84108aaf476452c52b05c6f7148d67385730d5fbc"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "assets/transparent.gif",
+      "era": [
+        {
+          "path": "assets/transparent.gif",
+          "bytes": 42,
+          "sha256": "af9dbf02c85319fda5ed6e97828a8328ce87a4a11e2a95d506654bf7dee244f4"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "assets/transparent.gif",
+          "bytes": 42,
+          "sha256": "af9dbf02c85319fda5ed6e97828a8328ce87a4a11e2a95d506654bf7dee244f4"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "data/0.16/data.json",
+      "era": [
+        {
+          "path": "data/0.16/data.json",
+          "bytes": 74710,
+          "sha256": "652e4b4ffd3514f993c7b2052110a01c3136ef00d683e61c9b932f33274e7762"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "data/0.16/data.json",
+          "bytes": 74710,
+          "sha256": "652e4b4ffd3514f993c7b2052110a01c3136ef00d683e61c9b932f33274e7762"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "data/0.16/icons.png",
+      "era": [
+        {
+          "path": "data/0.16/icons.png",
+          "bytes": 582211,
+          "sha256": "0f7ca2a676a259b069366d1b608f7820740a694c6b94ae27c0d4462f8013ca11"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "data/0.16/icons.png",
+          "bytes": 582211,
+          "sha256": "0f7ca2a676a259b069366d1b608f7820740a694c6b94ae27c0d4462f8013ca11"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "data/0.17/data.json",
+      "era": [
+        {
+          "path": "data/0.17/data.json",
+          "bytes": 74706,
+          "sha256": "5e714f078fcdfcc3d04545b2b5f9c99c2b040d4f606559e6a31f0240bca329df"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "data/0.17/data.json",
+          "bytes": 74706,
+          "sha256": "5e714f078fcdfcc3d04545b2b5f9c99c2b040d4f606559e6a31f0240bca329df"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "data/0.17/icons.png",
+      "era": [
+        {
+          "path": "data/0.17/icons.png",
+          "bytes": 603164,
+          "sha256": "1ad772d1fda95e0773eed3e38064e8a4178b3b2d434766c3724e8a3313b0cb15"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "data/0.17/icons.png",
+          "bytes": 603164,
+          "sha256": "1ad772d1fda95e0773eed3e38064e8a4178b3b2d434766c3724e8a3313b0cb15"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "data/0.18/data.json",
+      "era": [
+        {
+          "path": "data/0.18/data.json",
+          "bytes": 74706,
+          "sha256": "1f2b09a7679beef594bee2ac21d04b178fb43146cab777683424dd62bbc61a68"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "data/0.18/data.json",
+          "bytes": 74706,
+          "sha256": "1f2b09a7679beef594bee2ac21d04b178fb43146cab777683424dd62bbc61a68"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "data/0.18/icons.png",
+      "era": [
+        {
+          "path": "data/0.18/icons.png",
+          "bytes": 1569171,
+          "sha256": "ecd19a4166d5ca484fc7f0258b340fef862c4baacf9392d5ac3c29e26a9a44f7"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "data/0.18/icons.png",
+          "bytes": 1569171,
+          "sha256": "ecd19a4166d5ca484fc7f0258b340fef862c4baacf9392d5ac3c29e26a9a44f7"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "data/1.0/data.json",
+      "era": [
+        {
+          "path": "data/1.0/data.json",
+          "bytes": 75641,
+          "sha256": "3bae87263a9e184e9f4ce47ba37c5788319408cdb4bd5718699283db9a4804b1"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "data/1.0/data.json",
+          "bytes": 75641,
+          "sha256": "3bae87263a9e184e9f4ce47ba37c5788319408cdb4bd5718699283db9a4804b1"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "data/1.0/icons.png",
+      "era": [
+        {
+          "path": "data/1.0/icons.png",
+          "bytes": 1589425,
+          "sha256": "3a707a8a09f5f761d1fa95aa2022f27d40faee3f13ca1545e8c6d16c2a736e32"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "data/1.0/icons.png",
+          "bytes": 1589425,
+          "sha256": "3a707a8a09f5f761d1fa95aa2022f27d40faee3f13ca1545e8c6d16c2a736e32"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "data/app/data.json",
+      "era": [
+        {
+          "path": "data/app/data.json",
+          "bytes": 1248,
+          "sha256": "6ab9724409ad49f87151d267f5edab46323de1e374e7e0da63e77c612d199117"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "data/app/data.json",
+          "bytes": 1248,
+          "sha256": "6ab9724409ad49f87151d267f5edab46323de1e374e7e0da63e77c612d199117"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "data/app/icons.png",
+      "era": [
+        {
+          "path": "data/app/icons.png",
+          "bytes": 117592,
+          "sha256": "eaee704f84ce842f5432f94c37cd9246dd2f6646d5c77e1770527cfde7b63c3b"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "data/app/icons.png",
+          "bytes": 117592,
+          "sha256": "eaee704f84ce842f5432f94c37cd9246dd2f6646d5c77e1770527cfde7b63c3b"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "data/bio-industries/data.json",
+      "era": [
+        {
+          "path": "data/bio-industries/data.json",
+          "bytes": 108723,
+          "sha256": "2f8e3804d230d1f042e5530c037f71cdc87289579f216dddd137749222591f08"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "data/bio-industries/data.json",
+          "bytes": 108723,
+          "sha256": "2f8e3804d230d1f042e5530c037f71cdc87289579f216dddd137749222591f08"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "data/bio-industries/icons.png",
+      "era": [
+        {
+          "path": "data/bio-industries/icons.png",
+          "bytes": 2238805,
+          "sha256": "d506277077ff8971443841ea8ac52387fb6bb86c71f0f969c844c3edb04d000a"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "data/bio-industries/icons.png",
+          "bytes": 2238805,
+          "sha256": "d506277077ff8971443841ea8ac52387fb6bb86c71f0f969c844c3edb04d000a"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "data/bobs-angels/data.json",
+      "era": [
+        {
+          "path": "data/bobs-angels/data.json",
+          "bytes": 1168759,
+          "sha256": "d11944470038e484913c8fc59d5bb81ed6f380b30fc42f1fa79e2fe4574bcd78"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "data/bobs-angels/data.json",
+          "bytes": 1168759,
+          "sha256": "d11944470038e484913c8fc59d5bb81ed6f380b30fc42f1fa79e2fe4574bcd78"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "data/bobs-angels/icons.png",
+      "era": [
+        {
+          "path": "data/bobs-angels/icons.png",
+          "bytes": 6396855,
+          "sha256": "2ccdc78765e3bf2c90c3aa800cb8a05e5561a31a8011a7d34f4583498d09e168"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "data/bobs-angels/icons.png",
+          "bytes": 6396855,
+          "sha256": "2ccdc78765e3bf2c90c3aa800cb8a05e5561a31a8011a7d34f4583498d09e168"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "data/factorio-extended-plus/data.json",
+      "era": [
+        {
+          "path": "data/factorio-extended-plus/data.json",
+          "bytes": 125848,
+          "sha256": "1b51b34e10cdbb1889e7bf2a1d0ebf3296e621dd7a57fc89dfebb3d4caebf12e"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "data/factorio-extended-plus/data.json",
+          "bytes": 125848,
+          "sha256": "1b51b34e10cdbb1889e7bf2a1d0ebf3296e621dd7a57fc89dfebb3d4caebf12e"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "data/factorio-extended-plus/icons.png",
+      "era": [
+        {
+          "path": "data/factorio-extended-plus/icons.png",
+          "bytes": 2305591,
+          "sha256": "844e0e07d21f0655f313d7dee5e205b4af30538916d48772038b288c0d6c356e"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "data/factorio-extended-plus/icons.png",
+          "bytes": 2305591,
+          "sha256": "844e0e07d21f0655f313d7dee5e205b4af30538916d48772038b288c0d6c356e"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "data/index.ts",
+      "era": [
+        {
+          "path": "data/index.ts",
+          "bytes": 776,
+          "sha256": "2f1b528630af6e63384641b315c8d8c8f0e19efe1afeada36b8114c21dacb82a"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "data/index.ts",
+          "bytes": 776,
+          "sha256": "2f1b528630af6e63384641b315c8d8c8f0e19efe1afeada36b8114c21dacb82a"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "data/krastorio2/data.json",
+      "era": [
+        {
+          "path": "data/krastorio2/data.json",
+          "bytes": 186758,
+          "sha256": "a4dd4840faa53f314390164d78b0558017c1e6c843d79bced4cde7cebb3957de"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "data/krastorio2/data.json",
+          "bytes": 186758,
+          "sha256": "a4dd4840faa53f314390164d78b0558017c1e6c843d79bced4cde7cebb3957de"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "data/krastorio2/icons.png",
+      "era": [
+        {
+          "path": "data/krastorio2/icons.png",
+          "bytes": 3471510,
+          "sha256": "92db730ca26f131c985aa5adcb3d7181212312c731321c9a78e96c238670ae30"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "data/krastorio2/icons.png",
+          "bytes": 3471510,
+          "sha256": "92db730ca26f131c985aa5adcb3d7181212312c731321c9a78e96c238670ae30"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "data/pyanodons/data.json",
+      "era": [
+        {
+          "path": "data/pyanodons/data.json",
+          "bytes": 1093961,
+          "sha256": "e678f51edd6d1d506fb84c3317124b1d173756a2b470a35e7488de4afc172b71"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "data/pyanodons/data.json",
+          "bytes": 1093961,
+          "sha256": "e678f51edd6d1d506fb84c3317124b1d173756a2b470a35e7488de4afc172b71"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "data/pyanodons/icons.png",
+      "era": [
+        {
+          "path": "data/pyanodons/icons.png",
+          "bytes": 7161448,
+          "sha256": "35802d9d62ed1344a304dbe6afc92c3070fa88f0a13b49b90503a8f84baa86ee"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "data/pyanodons/icons.png",
+          "bytes": 7161448,
+          "sha256": "35802d9d62ed1344a304dbe6afc92c3070fa88f0a13b49b90503a8f84baa86ee"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "data/research/data.json",
+      "era": [
+        {
+          "path": "data/research/data.json",
+          "bytes": 4185,
+          "sha256": "34e95733ebd7634aa8e1f57fb223e653052a3aa88f90b3c49be6aafca18e36c4"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "data/research/data.json",
+          "bytes": 4185,
+          "sha256": "34e95733ebd7634aa8e1f57fb223e653052a3aa88f90b3c49be6aafca18e36c4"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "data/research/icons.png",
+      "era": [
+        {
+          "path": "data/research/icons.png",
+          "bytes": 73437,
+          "sha256": "76ffbe863353a320156069566557ebaede4dde2d79198d93261bc5a8f8f83f0c"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "data/research/icons.png",
+          "bytes": 73437,
+          "sha256": "76ffbe863353a320156069566557ebaede4dde2d79198d93261bc5a8f8f83f0c"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "data/space-exploration/data.json",
+      "era": [
+        {
+          "path": "data/space-exploration/data.json",
+          "bytes": 358684,
+          "sha256": "473c753c5aa52847a43670e374d9fd458ad0c9b5c5e627173c1c4c7e2342d6e4"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "data/space-exploration/data.json",
+          "bytes": 358684,
+          "sha256": "473c753c5aa52847a43670e374d9fd458ad0c9b5c5e627173c1c4c7e2342d6e4"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "data/space-exploration/icons.png",
+      "era": [
+        {
+          "path": "data/space-exploration/icons.png",
+          "bytes": 4735090,
+          "sha256": "43a106c1875d4d8599a9ea18854202d1964815fda789c385e96912c3286c081d"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "data/space-exploration/icons.png",
+          "bytes": 4735090,
+          "sha256": "43a106c1875d4d8599a9ea18854202d1964815fda789c385e96912c3286c081d"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "favicon.ico",
+      "era": [
+        {
+          "path": "favicon.ico",
+          "bytes": 15406,
+          "sha256": "17205881f9aca8dc439e9ad25165e63842d29508ce25f9b5df33707d490c8fef"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "favicon.ico",
+          "bytes": 15406,
+          "sha256": "17205881f9aca8dc439e9ad25165e63842d29508ce25f9b5df33707d490c8fef"
+        }
+      ],
+      "bytesIdentical": true,
+      "byteDelta": 0
+    },
+    {
+      "emissionPoint": "index.html",
+      "era": [
+        {
+          "path": "index.html",
+          "bytes": 1405,
+          "sha256": "a44a7c84a224b2d5a4ca3620c182bade450ce052f31d225bb1fc1ba3bac260c2"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "index.html",
+          "bytes": 1485,
+          "sha256": "1477fe35d8acc49ddc3d05edb95d3e394dbf8460bc2b4381081f3dce05349f81"
+        }
+      ],
+      "bytesIdentical": false,
+      "byteDelta": 80
+    },
+    {
+      "emissionPoint": "main.js",
+      "era": [
+        {
+          "path": "main-es2015.eea9ba8efe962b30a458.js",
+          "bytes": 713020,
+          "sha256": "2f6590d5b9488f2199ad21c60d55564b76b49b976c69db9b0fe485e28a44fde3"
+        },
+        {
+          "path": "main-es5.eea9ba8efe962b30a458.js",
+          "bytes": 824421,
+          "sha256": "cb06b9984689a6149686a7a80bfe116763d119ddce3daa211f81dffd2ee0aedf"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "main.67d430ecd5f9b9bf.js",
+          "bytes": 699405,
+          "sha256": "c03128a2d15f0430ae744ab81875089f3f392b1fab1899dbdaf1cb517c169158"
+        }
+      ],
+      "bytesIdentical": false,
+      "byteDelta": -838036
+    },
+    {
+      "emissionPoint": "polyfills.js",
+      "era": [
+        {
+          "path": "polyfills-es2015.bef47453b7b5e19c6cd0.js",
+          "bytes": 58096,
+          "sha256": "29f45b7a6f053b104fdf57ed46e02019fc1726e6a381b3847234c4feb80eb22b"
+        },
+        {
+          "path": "polyfills-es5.bddea0c318f60fefc5fe.js",
+          "bytes": 153200,
+          "sha256": "4e724a615b64d9aca82f0648466c949fee98496124a47dc0d3c17e8a63c4e66a"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "polyfills.634357a966fc30bd.js",
+          "bytes": 54939,
+          "sha256": "86ac62f9846d031f0556134ee5a1d71b5045650ebbea79158a58aa497f9cb784"
+        }
+      ],
+      "bytesIdentical": false,
+      "byteDelta": -156357
+    },
+    {
+      "emissionPoint": "runtime.js",
+      "era": [
+        {
+          "path": "runtime-es2015.66c79b9d36e7169e27b0.js",
+          "bytes": 1485,
+          "sha256": "6c5acbb82a46a4971660f65131241dffcc28828f4dbd76b8ec7bab0b468250f8"
+        },
+        {
+          "path": "runtime-es5.66c79b9d36e7169e27b0.js",
+          "bytes": 1485,
+          "sha256": "6c5acbb82a46a4971660f65131241dffcc28828f4dbd76b8ec7bab0b468250f8"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "runtime.b28f7c887ca8251b.js",
+          "bytes": 1170,
+          "sha256": "ae310487be34f7335db7c3ac75ef6c2dace6dc177ccd6c4eaa1abcdb49011079"
+        }
+      ],
+      "bytesIdentical": false,
+      "byteDelta": -1800
+    },
+    {
+      "emissionPoint": "styles.css",
+      "era": [
+        {
+          "path": "styles.163c52775b1d3dc4ccb0.css",
+          "bytes": 3710,
+          "sha256": "a55af8d9c72306c1d3a73f74c7ab4aa1bd71ee7415e9963ddfe6ba87eb367868"
+        }
+      ],
+      "migrated": [
+        {
+          "path": "styles.1920cec2f325ff85.css",
+          "bytes": 3660,
+          "sha256": "0ab27dbad7bcb5c92abea6bb86077e61e159bcda15ec25887ed7f9a5eb9e47e7"
+        }
+      ],
+      "bytesIdentical": false,
+      "byteDelta": -50
+    }
+  ],
+  "knownDifferences": [
+    "The era lane emits both an ES2015 and an ES5 copy of every JavaScript entry point (differential loading, six files); the migrated lane emits one copy of each (three files). Angular removed ES5 output support, and the migrated build said so: it named kaios 2.5 and op_mini all as browsers in the project’s own browserslist that it would ignore. The migrated output therefore does not serve those browsers, and no claim is made that they were unimportant.",
+    "The migrated index.html inlines critical CSS into a <style> element and loads the stylesheet with media=\"print\" onload, with a <noscript> fallback beside it. That is the modern builder’s critical-CSS inlining, on by default in a production configuration; the era builder emitted a plain stylesheet link. The <html> element gains a data-critters-container attribute from it.",
+    "The migrated index.html is minified — attribute quoting and whitespace differ throughout — where the era builder passed the source document through nearly verbatim.",
+    "Every non-JavaScript payload is byte-identical across the lanes: the four Material Icons font files, the three assets, the favicon, and all 25 files under data/. Only their content-hashed file names differ, because the two builders hash differently.",
+    "The application’s own Google Analytics tag survives both lanes verbatim in index.html. It is recorded as present, not exercised: no lane loaded a browser and no request to googletagmanager.com was made or observed.",
+    "3rdpartylicenses.txt differs in both size and content, which follows from the dependency closure being a different one."
+  ],
+  "nonclaims": [
+    "This is build-level parity only. Nothing here establishes runtime equivalence, visual equivalence, or that either build works in a browser; witnessing is a separate step that has not run.",
+    "A byte-identical payload means the two builders emitted the same file. It does not mean the two applications load it the same way.",
+    "Nothing here is a production-readiness, pilot, certification or general Angular support claim."
+  ],
+  "digest": "4430f24ba6af8d7fd6d90faa0d4eb2fb275aab717cb9edd345f4a8ab6eb8957d"
+}

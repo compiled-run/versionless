@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "versionless.angular-factoriolab-migration-attempt.v1",
+  "unit": "lrapr-t005/m1-factoriolab-migration",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "result": "partial",
+  "purpose": "Build the first reusable Angular CLI era migration adapter and apply it to the pinned angular-factoriolab tree, recording truthfully what it changed and what it did not establish.",
+  "workspacePreconditionFound": {
+    "expectedByPacket": "era baseline green under Rosetta x64 Node 12.14.1 in .versionless/cache/angular-factoriolab-baseline",
+    "observed": "absent — neither .versionless/cache/angular-factoriolab-baseline nor .versionless/cache/angular-factoriolab-source exists in this workspace; .versionless/cache and .versionless/stage are gitignored and were not carried across from the a1 ingest unit",
+    "consequence": "no era baseline rebuild could be repeated in this unit, and no installed dependency closure existed to build either lane from"
+  },
+  "acquisition": {
+    "performed": [
+      {
+        "purpose": "re-materialise the pinned application source that the migration transforms operate on",
+        "method": "GET",
+        "url": "https://codeload.github.com/factoriolab/factoriolab/tar.gz/5f54abbdcac518d8ebf7e136c4348384d9b1a2bb",
+        "credentials": "none",
+        "bytes": 267218,
+        "sha256": "11f2ce939f4be04b11e77b7f12e13d7449bf944b9bfefbeca237c46dea12f7ed",
+        "digestMatches": "evidence/ingests/angular-factoriolab/source.json and fixtures/angular-factoriolab/fixture.json record the identical url, byte count and sha256; the archive fetched here is byte-identical to the one the ingest unit admitted",
+        "corroboration": "the package.json and angular.json read out of the extracted tree hash to 051f928938dd0bbd55cd24de9f8c6330b5eb07728e0b10e0fd97658224e6eb18 and 8ea2a5081c346939c434dc431e694f1b8ef619762843f5083882480d5ea8467b, the values the fixture manifest already records",
+        "destination": ".versionless/stage/angular-factoriolab-m1 (gitignored)"
+      }
+    ],
+    "notPerformed": [
+      "No Git LFS payload was fetched. The 26 payloads matter only to a build, and no build was attempted.",
+      "No package manager ran. Neither the era closure nor the target cell closure was installed, so no registry was contacted for dependencies."
+    ],
+    "consentReading": "The one fetch above re-acquires an artifact this consent already admitted, at the same pinned digest, for the same corpus. It acquires no new subject and no new host."
+  },
+  "delivered": [
+    "packages/frameworks/angular: four reusable, application-agnostic migration capabilities (target cell + manifest alignment, angular.json workspace migration, tsconfig migration, analyzer-driven application source migration) plus a composed changeset that counts application and workspace files separately.",
+    "An overfitting guard test asserting no corpus application identifier appears anywhere in the adapter's product surface.",
+    "evidence/runs/angular-factoriolab/m1-source-migration.json: the adapter applied to the pinned tree, with per-file before/after digests and itemised changes, sealed by a recomputable digest."
+  ],
+  "counted": {
+    "applicationFilesScanned": 157,
+    "applicationFilesChanged": 2,
+    "workspaceFilesChanged": 3,
+    "meaning": "applicationFilesChanged counts .ts modules under src/ whose bytes the adapter's source transform changed. It excludes package.json, angular.json and tsconfig.json, which are counted as workspace files so that the application count cannot be inflated by a version bump."
+  },
+  "owed": [
+    "Era baseline: re-materialise the LFS payloads, install the era closure under the Rosetta x64 Node 12.14.1 cell and rebuild twice for byte stability.",
+    "Target cell: install the Angular 16 browser-builder closure under native Node 16.20.2 (one consented dependency acquisition), build twice for byte stability, and record every URL and digest.",
+    "Build-level parity: dist inventory, entry shapes, known differences as recorded non-claims.",
+    "Whatever the target build then rejects. The adapter's unhandled list already names the shapes it knowingly leaves: the removed tslint and protractor targets have no replacement capability, the karma/jasmine test cell is untouched, and no ngrx 10-to-16 or RxJS 6-to-7 source migration exists yet."
+  ],
+  "cutLine": "This unit delivers the reusable transforms and a truthful source-level changeset against the real pinned tree. It does not deliver either build lane, because the workspace carried no materialised baseline and installing two full Angular dependency closures plus four production builds does not fit the unit.",
+  "nonclaims": [
+    "Nothing here establishes that the migrated tree compiles, builds, or behaves as the era baseline did.",
+    "No determinism claim is made about either lane in this unit; neither lane was built once, let alone twice.",
+    "No production readiness, pilot status, certification or general Angular support claim is made or implied."
+  ]
+}

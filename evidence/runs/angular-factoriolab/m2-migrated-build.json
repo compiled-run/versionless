@@ -1,0 +1,251 @@
+{
+  "schemaVersion": "versionless.angular-factoriolab-migrated-build.v1",
+  "unit": "lrapr-t005/m2-factoriolab-build-lanes",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "result": "byte-stable",
+  "cell": {
+    "node": "v16.20.2",
+    "architecture": "darwin-arm64, native",
+    "npm": "8.19.4",
+    "command": "ng build --configuration production",
+    "builder": "@angular-devkit/build-angular:browser (Angular 16.2)"
+  },
+  "acquisition": {
+    "purpose": "Install the declared Angular 16.2 dependency closure the migrated manifest asks for. One acquisition, one host, no credentials.",
+    "method": "npm install (no lockfile carried over; the era lockfileVersion 1 pins the Angular 10 closure)",
+    "hosts": [
+      "registry.npmjs.org"
+    ],
+    "packagesLocked": 1085,
+    "packagesWithResolvedUrl": 1085,
+    "packagesWithIntegrityDigest": 1085,
+    "integrityAlgorithm": "sha512, on every locked package",
+    "lockfileVersion": 2,
+    "lockfileSha256": "e1c8b6f495a559da3bc07ab813384d774474632c78c706359b44e75967c3d4c1",
+    "recordNote": "Every acquired URL and its digest is recorded in the generated package-lock.json, whose own digest is pinned above. Network was used for this step only; both builds ran with no further acquisition."
+  },
+  "firstAttempt": {
+    "outcome": "failed",
+    "reason": "The dependency closure would not resolve at all: the era jasmine-core ~3.5.0 sits below the >=3.8 peer that karma-jasmine-html-reporter ^1.5.0 now floats to. The era test toolchain blocks the install the build cell needs, which is why the target cell now declares one."
+  },
+  "secondAttempt": {
+    "outcome": "failed",
+    "reason": "With the closure installed, the production build stopped on @ngrx/effects: TS2305, Module '@ngrx/effects' has no exported member 'Effect'. NgRx removed the decorator in 15. This is the shape m1's source-level count could not see."
+  },
+  "builds": [
+    {
+      "run": 1,
+      "status": 0,
+      "files": 39
+    },
+    {
+      "run": 2,
+      "status": 0,
+      "files": 39
+    }
+  ],
+  "byteStable": true,
+  "inventory": [
+    {
+      "path": "3rdpartylicenses.txt",
+      "sha256": "4bcaa8feca18a5e3ba1d749a2783f6a3909b7ca57773e5a8137058ad2d664a87",
+      "bytes": 56931
+    },
+    {
+      "path": "MaterialIcons-Regular.196fa4a92dd6fa73.ttf",
+      "sha256": "541996b221e1bd3ef2a56fcbeb6b52aefde13b2598bc9a7688faa948fefe4f1d",
+      "bytes": 128180
+    },
+    {
+      "path": "MaterialIcons-Regular.1e50f5c2ffa6aba4.eot",
+      "sha256": "39ebc508d7bc2c76c667ff2eb51cb5d6a3cc4ee6de2ba76e5f270a1d2ac893ec",
+      "bytes": 143258
+    },
+    {
+      "path": "MaterialIcons-Regular.7ea2023eeca07427.woff2",
+      "sha256": "a471c93b4d744ef3eb4f8cd2a05a9abe28bac71d4cf3ed99747165df8e2de311",
+      "bytes": 44300
+    },
+    {
+      "path": "MaterialIcons-Regular.db852539204b1a34.woff",
+      "sha256": "e699f9a3e52908c31b02e0e6991148ebee3509de8486220f7938aa1f7350320a",
+      "bytes": 57620
+    },
+    {
+      "path": "assets/GitHub.png",
+      "sha256": "0439ce60ab65403fb5ddba3849f2b24fde6a83178f83a5bfb835176178a6ed1d",
+      "bytes": 1714
+    },
+    {
+      "path": "assets/logo.png",
+      "sha256": "39764634c4954917d8ffe8b84108aaf476452c52b05c6f7148d67385730d5fbc",
+      "bytes": 19468
+    },
+    {
+      "path": "assets/transparent.gif",
+      "sha256": "af9dbf02c85319fda5ed6e97828a8328ce87a4a11e2a95d506654bf7dee244f4",
+      "bytes": 42
+    },
+    {
+      "path": "data/0.16/data.json",
+      "sha256": "652e4b4ffd3514f993c7b2052110a01c3136ef00d683e61c9b932f33274e7762",
+      "bytes": 74710
+    },
+    {
+      "path": "data/0.16/icons.png",
+      "sha256": "0f7ca2a676a259b069366d1b608f7820740a694c6b94ae27c0d4462f8013ca11",
+      "bytes": 582211
+    },
+    {
+      "path": "data/0.17/data.json",
+      "sha256": "5e714f078fcdfcc3d04545b2b5f9c99c2b040d4f606559e6a31f0240bca329df",
+      "bytes": 74706
+    },
+    {
+      "path": "data/0.17/icons.png",
+      "sha256": "1ad772d1fda95e0773eed3e38064e8a4178b3b2d434766c3724e8a3313b0cb15",
+      "bytes": 603164
+    },
+    {
+      "path": "data/0.18/data.json",
+      "sha256": "1f2b09a7679beef594bee2ac21d04b178fb43146cab777683424dd62bbc61a68",
+      "bytes": 74706
+    },
+    {
+      "path": "data/0.18/icons.png",
+      "sha256": "ecd19a4166d5ca484fc7f0258b340fef862c4baacf9392d5ac3c29e26a9a44f7",
+      "bytes": 1569171
+    },
+    {
+      "path": "data/1.0/data.json",
+      "sha256": "3bae87263a9e184e9f4ce47ba37c5788319408cdb4bd5718699283db9a4804b1",
+      "bytes": 75641
+    },
+    {
+      "path": "data/1.0/icons.png",
+      "sha256": "3a707a8a09f5f761d1fa95aa2022f27d40faee3f13ca1545e8c6d16c2a736e32",
+      "bytes": 1589425
+    },
+    {
+      "path": "data/app/data.json",
+      "sha256": "6ab9724409ad49f87151d267f5edab46323de1e374e7e0da63e77c612d199117",
+      "bytes": 1248
+    },
+    {
+      "path": "data/app/icons.png",
+      "sha256": "eaee704f84ce842f5432f94c37cd9246dd2f6646d5c77e1770527cfde7b63c3b",
+      "bytes": 117592
+    },
+    {
+      "path": "data/bio-industries/data.json",
+      "sha256": "2f8e3804d230d1f042e5530c037f71cdc87289579f216dddd137749222591f08",
+      "bytes": 108723
+    },
+    {
+      "path": "data/bio-industries/icons.png",
+      "sha256": "d506277077ff8971443841ea8ac52387fb6bb86c71f0f969c844c3edb04d000a",
+      "bytes": 2238805
+    },
+    {
+      "path": "data/bobs-angels/data.json",
+      "sha256": "d11944470038e484913c8fc59d5bb81ed6f380b30fc42f1fa79e2fe4574bcd78",
+      "bytes": 1168759
+    },
+    {
+      "path": "data/bobs-angels/icons.png",
+      "sha256": "2ccdc78765e3bf2c90c3aa800cb8a05e5561a31a8011a7d34f4583498d09e168",
+      "bytes": 6396855
+    },
+    {
+      "path": "data/factorio-extended-plus/data.json",
+      "sha256": "1b51b34e10cdbb1889e7bf2a1d0ebf3296e621dd7a57fc89dfebb3d4caebf12e",
+      "bytes": 125848
+    },
+    {
+      "path": "data/factorio-extended-plus/icons.png",
+      "sha256": "844e0e07d21f0655f313d7dee5e205b4af30538916d48772038b288c0d6c356e",
+      "bytes": 2305591
+    },
+    {
+      "path": "data/index.ts",
+      "sha256": "2f1b528630af6e63384641b315c8d8c8f0e19efe1afeada36b8114c21dacb82a",
+      "bytes": 776
+    },
+    {
+      "path": "data/krastorio2/data.json",
+      "sha256": "a4dd4840faa53f314390164d78b0558017c1e6c843d79bced4cde7cebb3957de",
+      "bytes": 186758
+    },
+    {
+      "path": "data/krastorio2/icons.png",
+      "sha256": "92db730ca26f131c985aa5adcb3d7181212312c731321c9a78e96c238670ae30",
+      "bytes": 3471510
+    },
+    {
+      "path": "data/pyanodons/data.json",
+      "sha256": "e678f51edd6d1d506fb84c3317124b1d173756a2b470a35e7488de4afc172b71",
+      "bytes": 1093961
+    },
+    {
+      "path": "data/pyanodons/icons.png",
+      "sha256": "35802d9d62ed1344a304dbe6afc92c3070fa88f0a13b49b90503a8f84baa86ee",
+      "bytes": 7161448
+    },
+    {
+      "path": "data/research/data.json",
+      "sha256": "34e95733ebd7634aa8e1f57fb223e653052a3aa88f90b3c49be6aafca18e36c4",
+      "bytes": 4185
+    },
+    {
+      "path": "data/research/icons.png",
+      "sha256": "76ffbe863353a320156069566557ebaede4dde2d79198d93261bc5a8f8f83f0c",
+      "bytes": 73437
+    },
+    {
+      "path": "data/space-exploration/data.json",
+      "sha256": "473c753c5aa52847a43670e374d9fd458ad0c9b5c5e627173c1c4c7e2342d6e4",
+      "bytes": 358684
+    },
+    {
+      "path": "data/space-exploration/icons.png",
+      "sha256": "43a106c1875d4d8599a9ea18854202d1964815fda789c385e96912c3286c081d",
+      "bytes": 4735090
+    },
+    {
+      "path": "favicon.ico",
+      "sha256": "17205881f9aca8dc439e9ad25165e63842d29508ce25f9b5df33707d490c8fef",
+      "bytes": 15406
+    },
+    {
+      "path": "index.html",
+      "sha256": "1477fe35d8acc49ddc3d05edb95d3e394dbf8460bc2b4381081f3dce05349f81",
+      "bytes": 1485
+    },
+    {
+      "path": "main.67d430ecd5f9b9bf.js",
+      "sha256": "c03128a2d15f0430ae744ab81875089f3f392b1fab1899dbdaf1cb517c169158",
+      "bytes": 699405
+    },
+    {
+      "path": "polyfills.634357a966fc30bd.js",
+      "sha256": "86ac62f9846d031f0556134ee5a1d71b5045650ebbea79158a58aa497f9cb784",
+      "bytes": 54939
+    },
+    {
+      "path": "runtime.b28f7c887ca8251b.js",
+      "sha256": "ae310487be34f7335db7c3ac75ef6c2dace6dc177ccd6c4eaa1abcdb49011079",
+      "bytes": 1170
+    },
+    {
+      "path": "styles.1920cec2f325ff85.css",
+      "sha256": "0ab27dbad7bcb5c92abea6bb86077e61e159bcda15ec25887ed7f9a5eb9e47e7",
+      "bytes": 3660
+    }
+  ],
+  "notEstablished": [
+    "A green production build establishes that the migrated tree compiles and emits. It establishes nothing about whether the emitted application runs, renders, or behaves as the era build did.",
+    "No test was run on either lane. The karma/jasmine toolchain was aligned so the closure could resolve, and nothing was executed with it.",
+    "Two consecutive builds on one host is repeatability, not reproducibility."
+  ],
+  "digest": "371649fc4e032bd1e99372ac7afa6f54642b061d0300e37f6603e2e5880cfd65"
+}

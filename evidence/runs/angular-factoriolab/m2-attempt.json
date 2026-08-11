@@ -1,0 +1,78 @@
+{
+  "schemaVersion": "versionless.angular-factoriolab-migration-attempt.v2",
+  "unit": "lrapr-t005/m2-factoriolab-build-lanes",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "result": "completed",
+  "purpose": "Run both build lanes of the angular-factoriolab migration cell: rebuild the era baseline from the restored cache for byte stability, and take the adapter's composed changeset through a real Angular 16.2 install and production build, extending the adapter's reusable capabilities as the builds demanded and recording build-level parity honestly.",
+  "supersedes": {
+    "record": "evidence/runs/angular-factoriolab/m1-source-migration.json",
+    "reason": "m1's record was produced by an adapter that no longer exists and would not reproduce from this tree. It is replaced by m2-source-migration.json rather than kept beside it, because a superseded record that cannot be regenerated is a trap for the next reader.",
+    "m1Counts": { "applicationFilesChanged": 2, "workspaceFilesChanged": 3 },
+    "m2Counts": { "applicationFilesChanged": 3, "workspaceFilesChanged": 3 }
+  },
+  "eraBaselineLane": {
+    "outcome": "green, byte-stable, and byte-identical to the ingest unit's build",
+    "cell": "Rosetta x64 Node 12.14.1, npm 6.13.4, npm run build -- --prod",
+    "builds": "two consecutive builds, both status 0, 42 dist files each",
+    "byteStable": true,
+    "reproducesIngestBuild": true,
+    "deviationCarried": "The 26 Git LFS payloads the pinned tree carries as pointer stubs stay materialised, each verified against its pointer oid. The unmodified tree still cannot build; that is the a1 finding, unchanged.",
+    "record": "evidence/runs/angular-factoriolab/m2-era-baseline.json"
+  },
+  "migratedLane": {
+    "outcome": "green, byte-stable",
+    "cell": "native arm64 Node 16.20.2, npm 8.19.4, ng build --configuration production, @angular-devkit/build-angular:browser on Angular 16.2",
+    "builds": "two consecutive builds, both status 0, 39 dist files each",
+    "byteStable": true,
+    "reachedAfter": [
+      "A failed install: the era jasmine-core ~3.5.0 sits below the >=3.8 peer that karma-jasmine-html-reporter ^1.5.0 now floats to, so the dependency closure would not resolve at all.",
+      "A failed build: @ngrx/effects removed the Effect decorator export in 15, so the module carrying three @Effect() properties did not compile (TS2305)."
+    ],
+    "record": "evidence/runs/angular-factoriolab/m2-migrated-build.json"
+  },
+  "realityCheck": {
+    "expectedByPacket": "m1's applicationFilesChanged: 2 was measured without building; an Angular 10-to-16 lift will almost certainly demand more.",
+    "observed": "It demanded exactly one more application file, and one capability that changes no application file at all. TypeScript 5.1 raised no diagnostic on this tree, RxJS 7 raised none, and the ngrx 10-to-16 hop cost one module rather than the several the packet allowed for. The count moved 2 -> 3, not 2 -> many.",
+    "whatTheBuildFoundThatInspectionDidNot": [
+      "The install-blocking test toolchain. A source-level pass sees a manifest range and has no way to know that a floating peer range now excludes it; only resolving the closure shows that.",
+      "The removed NgRx decorator. m1's source pass rewrote module specifiers and renamed exports, neither of which describes a decorator that no longer exists."
+    ],
+    "notOverfitted": "Both new capabilities are keyed on ecosystem facts — the versions an Angular line's own schematics generate, and an export NgRx removed — never on this application. The overfitting guard is green."
+  },
+  "capabilitiesAdded": [
+    {
+      "capability": "target-cell test toolchain alignment",
+      "surface": "packages/frameworks/angular/src/angular-target-cell.ts (testPackages)",
+      "shape": "Align the karma/jasmine packages to the versions the declared Angular line's own schematics generate; leave any test package outside that set at its era range and report it.",
+      "coverage": "Makes the dependency closure resolvable. Migrates no karma configuration file and establishes nothing about whether tests then run.",
+      "reportedUnhandled": [
+        "devDependencies.karma-coverage-istanbul-reporter",
+        "devDependencies.karma-junit-reporter"
+      ]
+    },
+    {
+      "capability": "NgRx @Effect() decorator migration",
+      "surface": "packages/frameworks/angular/src/ngrx-effects-migration.ts",
+      "shape": "Replace properties decorated with @ngrx/effects' removed Effect decorator with createEffect(() => …) initialisers, carrying the decorator's configuration object through verbatim as the factory's second argument, and rewrite the import to match.",
+      "coverage": "Analyzer-driven and binding-resolved: an Effect imported from anywhere else is untouched, an aliased NgRx import is followed, and a property this capability cannot rewrite safely is left whole and reported rather than half-edited.",
+      "appliedHere": "src/app/store/datasets/datasets.effects.ts, three effects (one with { dispatch: false })"
+    }
+  ],
+  "buildParity": {
+    "record": "evidence/runs/angular-factoriolab/m2-build-parity.json",
+    "eraFileCount": 42,
+    "migratedFileCount": 39,
+    "identicalPayloads": 33,
+    "orphanedEmissionPoints": 0,
+    "summary": "Every non-JavaScript payload is byte-identical across the lanes — fonts, assets, favicon, all 25 data files — differing only in the content hash each builder stamps into the file name. The three-file gap is the era line's ES5 differential-loading copies, which Angular 16 no longer emits."
+  },
+  "notEstablished": [
+    "No browser opened either build. No runtime, visual or behavioural equivalence is observed; witnessing is the next unit's work and has not run.",
+    "No test suite was run on either lane.",
+    "Byte stability across two consecutive builds on one host is repeatability, not reproducibility across hosts or time.",
+    "The removed tslint and protractor targets still have no replacement capability, and the workspace's own karma configuration was not migrated."
+  ],
+  "nonclaims": [
+    "Two green build lanes and a recorded parity table establish that this one pinned application compiles and emits on the declared target cell. They establish no production readiness, no pilot status, no certification, and no general Angular migration support claim."
+  ]
+}
