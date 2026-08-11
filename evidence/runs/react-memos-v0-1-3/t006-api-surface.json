@@ -1,0 +1,436 @@
+{
+	"schemaVersion": "versionless.witness-api-surface.v1",
+	"slug": "react-memos-v0-1-3",
+	"unit": "lrapr-t006/u11-memos-api-projection",
+	"revision": "565fe0cc567c02deb59fc04830df707ea7476d52",
+	"frontendRoot": "web",
+	"sourceFile": "web/src/helpers/api.ts",
+	"sourceSha256": "c2f18788c6beccbe29b8c21010739ec24c4a7f823174eac91dabf3d88895ceef",
+	"extraction": {
+		"method": "axios call sites read out of the pinned helper with magic-regexp, one call per exported function",
+		"callsExtracted": 21,
+		"agreesWithDeclaration": true
+	},
+	"sessionModel": {
+		"gate": "pages/Home.tsx calls GET /api/user/me on mount and replaces history with /signin unless it yields a user",
+		"establish": "POST /api/auth/login or POST /api/auth/signup, then GET /api/user/me",
+		"clear": "POST /api/auth/logout",
+		"transport": "axios sets withCredentials, so the real backend carries a cookie; the loopback API seam carries no headers, so the projection holds the session as per-run in-memory state instead",
+		"signup": "the sign-up button appears only while GET /api/status reports no owner; the projection grants OWNER only when no owner exists and records a USER otherwise"
+	},
+	"endpoints": [
+		{
+			"helper": "getSystemStatus",
+			"method": "GET",
+			"path": "/api/status",
+			"query": null,
+			"request": "none",
+			"response": "ResponseObject<T> — the UI reads `response.data.data` as SystemStatus: `owner` decides the sign-in button, `profile.mode` prefills the form when it is \"dev\"",
+			"session": "none",
+			"consumers": [
+				{
+					"file": "src/pages/Signin.tsx",
+					"symbol": "api.getSystemStatus"
+				},
+				{
+					"file": "src/components/AboutSiteDialog.tsx",
+					"symbol": "api.getSystemStatus"
+				}
+			],
+			"endpoint": "status",
+			"note": "The only route the pinned client calls before a session exists. An absent owner turns the sign-in button into \"Sign up as Owner\"."
+		},
+		{
+			"helper": "login",
+			"method": "POST",
+			"path": "/api/auth/login",
+			"query": null,
+			"request": "{ email, password }",
+			"response": "ResponseObject<T> — the UI reads `response.data.data` as User; Signin discards the body and re-reads the session through userService.doSignIn",
+			"session": "establishes",
+			"consumers": [
+				{
+					"file": "src/pages/Signin.tsx",
+					"symbol": "api.login"
+				}
+			],
+			"endpoint": "auth.login",
+			"note": "A non-2xx makes axios throw, which the page turns into a toast; the projection answers 401 for values it does not hold."
+		},
+		{
+			"helper": "signup",
+			"method": "POST",
+			"path": "/api/auth/signup",
+			"query": null,
+			"request": "{ email, password, role, name } — the page always sends role \"OWNER\"",
+			"response": "ResponseObject<T> — the UI reads `response.data.data` as User",
+			"session": "establishes",
+			"consumers": [
+				{
+					"file": "src/pages/Signin.tsx",
+					"symbol": "api.signup"
+				}
+			],
+			"endpoint": "auth.signup",
+			"note": "Reachable only while /api/status reports no owner. The projection grants OWNER only when no owner exists and otherwise records a USER."
+		},
+		{
+			"helper": "signout",
+			"method": "POST",
+			"path": "/api/auth/logout",
+			"query": null,
+			"request": "none",
+			"response": "ignored — userService clears the store before it calls",
+			"session": "clears",
+			"consumers": [
+				{
+					"file": "src/services/userService.ts",
+					"symbol": "api.signout"
+				}
+			],
+			"endpoint": "auth.logout",
+			"note": "Sign-out is what puts the session gate back in force for the next navigation."
+		},
+		{
+			"helper": "createUser",
+			"method": "POST",
+			"path": "/api/user",
+			"query": null,
+			"request": "UserCreate { email, password, name, role }",
+			"response": "ResponseObject<T> — the UI reads `response.data.data` as User; MemberSection refetches the list afterwards",
+			"session": "required",
+			"consumers": [
+				{
+					"file": "src/components/Settings/MemberSection.tsx",
+					"symbol": "api.createUser"
+				}
+			],
+			"endpoint": "user.create",
+			"note": "Owner-only in the settings dialog; the projection answers 403 for a non-owner session."
+		},
+		{
+			"helper": "getUser",
+			"method": "GET",
+			"path": "/api/user/me",
+			"query": null,
+			"request": "none",
+			"response": "ResponseObject<T> — the UI reads `response.data.data` as User; userService converts createdTs/updatedTs from seconds to milliseconds",
+			"session": "required",
+			"consumers": [
+				{
+					"file": "src/services/userService.ts",
+					"symbol": "api.getUser"
+				}
+			],
+			"endpoint": "user.me.get",
+			"note": "THE session gate. Home.tsx replaces history with /signin whenever this does not yield a user, so every behind-the-gate journey depends on it."
+		},
+		{
+			"helper": "getUserList",
+			"method": "GET",
+			"path": "/api/user",
+			"query": null,
+			"request": "none",
+			"response": "ResponseObject<T> — the UI reads `response.data.data` as User[] rendered by the member table",
+			"session": "required",
+			"consumers": [
+				{
+					"file": "src/components/Settings/MemberSection.tsx",
+					"symbol": "api.getUserList"
+				}
+			],
+			"endpoint": "user.list",
+			"note": "Same path as createUser, disambiguated by method alone."
+		},
+		{
+			"helper": "patchUser",
+			"method": "PATCH",
+			"path": "/api/user/me",
+			"query": null,
+			"request": "UserPatch { name?, password?, resetOpenId? }",
+			"response": "ResponseObject<T> — the UI reads `response.data.data` as User, merged into the store",
+			"session": "required",
+			"consumers": [
+				{
+					"file": "src/services/userService.ts",
+					"symbol": "api.patchUser"
+				}
+			],
+			"endpoint": "user.me.patch",
+			"note": "The account-settings surface: display name, password change and open-id reset all arrive here. Preference toggles never do — they are localStorage only."
+		},
+		{
+			"helper": "getMemoList",
+			"method": "GET",
+			"path": "/api/memo",
+			"query": null,
+			"request": "none",
+			"response": "ResponseObject<T> — the UI reads `response.data.data` as Memo[]; memoService drops ARCHIVED rows client-side and rescales timestamps",
+			"session": "required",
+			"consumers": [
+				{
+					"file": "src/services/memoService.ts",
+					"symbol": "api.getMemoList"
+				}
+			],
+			"endpoint": "memo.list",
+			"note": "The list the home page renders. Search, tag filter and type filter are computed client-side in helpers/filter.ts over exactly this payload."
+		},
+		{
+			"helper": "getArchivedMemoList",
+			"method": "GET",
+			"path": "/api/memo",
+			"query": "?rowStatus=ARCHIVED",
+			"request": "none",
+			"response": "ResponseObject<T> — the UI reads `response.data.data` as Memo[] rendered by the recycle-bin dialog",
+			"session": "required",
+			"consumers": [
+				{
+					"file": "src/services/memoService.ts",
+					"symbol": "api.getArchivedMemoList"
+				}
+			],
+			"endpoint": "memo.list",
+			"note": "Same route as getMemoList with a hard-coded query, so the projection has to honour rowStatus rather than always returning everything."
+		},
+		{
+			"helper": "createMemo",
+			"method": "POST",
+			"path": "/api/memo",
+			"query": null,
+			"request": "MemoCreate { content, createdTs? }",
+			"response": "ResponseObject<T> — the UI reads `response.data.data` as Memo, prepended to the store",
+			"session": "required",
+			"consumers": [
+				{
+					"file": "src/services/memoService.ts",
+					"symbol": "api.createMemo"
+				}
+			],
+			"endpoint": "memo.create",
+			"note": "The editor save path, and also the JSON import in PreferencesSection which supplies its own createdTs."
+		},
+		{
+			"helper": "patchMemo",
+			"method": "PATCH",
+			"path": "/api/memo/:id",
+			"query": null,
+			"request": "MemoPatch { id, content?, rowStatus? }",
+			"response": "ResponseObject<T> — the UI reads `response.data.data` as Memo",
+			"session": "required",
+			"consumers": [
+				{
+					"file": "src/services/memoService.ts",
+					"symbol": "api.patchMemo"
+				}
+			],
+			"endpoint": "memo.patch",
+			"note": "Carries three journeys at once: edit content, archive (rowStatus ARCHIVED) and restore from the recycle bin (rowStatus NORMAL)."
+		},
+		{
+			"helper": "pinMemo",
+			"method": "POST",
+			"path": "/api/memo/:id/organizer",
+			"query": null,
+			"request": "{ pinned: true }",
+			"response": "ignored — the store patch is applied optimistically",
+			"session": "required",
+			"consumers": [
+				{
+					"file": "src/services/memoService.ts",
+					"symbol": "api.pinMemo"
+				}
+			],
+			"endpoint": "memo.organizer",
+			"note": "Shares one route with unpinMemo; only the body differs."
+		},
+		{
+			"helper": "unpinMemo",
+			"method": "POST",
+			"path": "/api/memo/:id/organizer",
+			"query": null,
+			"request": "{ pinned: false }",
+			"response": "ignored — the store patch is applied optimistically",
+			"session": "required",
+			"consumers": [
+				{
+					"file": "src/services/memoService.ts",
+					"symbol": "api.unpinMemo"
+				}
+			],
+			"endpoint": "memo.organizer",
+			"note": "The second half of the organizer route."
+		},
+		{
+			"helper": "deleteMemo",
+			"method": "DELETE",
+			"path": "/api/memo/:id",
+			"query": null,
+			"request": "none",
+			"response": "ignored",
+			"session": "required",
+			"consumers": [
+				{
+					"file": "src/services/memoService.ts",
+					"symbol": "api.deleteMemo"
+				}
+			],
+			"endpoint": "memo.delete",
+			"note": "Permanent delete from the recycle bin, distinct from the archive patch above."
+		},
+		{
+			"helper": "getShortcutList",
+			"method": "GET",
+			"path": "/api/shortcut",
+			"query": null,
+			"request": "none",
+			"response": "ResponseObject<T> — the UI reads `response.data.data` as Shortcut[]; the sidebar splits them by rowStatus into pinned and unpinned",
+			"session": "required",
+			"consumers": [
+				{
+					"file": "src/services/shortcutService.ts",
+					"symbol": "api.getShortcutList"
+				}
+			],
+			"endpoint": "shortcut.list",
+			"note": "Fetched on ShortcutList mount, so it is part of the first behind-the-gate paint."
+		},
+		{
+			"helper": "createShortcut",
+			"method": "POST",
+			"path": "/api/shortcut",
+			"query": null,
+			"request": "ShortcutCreate { title, payload } where payload is a JSON-encoded filter array",
+			"response": "ResponseObject<T> — the UI reads `response.data.data` as Shortcut",
+			"session": "required",
+			"consumers": [
+				{
+					"file": "src/services/shortcutService.ts",
+					"symbol": "api.createShortcut"
+				}
+			],
+			"endpoint": "shortcut.create",
+			"note": "The saved-search journey: the dialog encodes the active filters into payload."
+		},
+		{
+			"helper": "patchShortcut",
+			"method": "PATCH",
+			"path": "/api/shortcut/:id",
+			"query": null,
+			"request": "ShortcutPatch { id, title?, payload?, rowStatus? }",
+			"response": "ResponseObject<T> — the UI reads `response.data.data` as Shortcut",
+			"session": "required",
+			"consumers": [
+				{
+					"file": "src/services/shortcutService.ts",
+					"symbol": "api.patchShortcut"
+				}
+			],
+			"endpoint": "shortcut.patch",
+			"note": "Rename, re-filter, and pin/unpin — the sidebar pins a shortcut by setting rowStatus ARCHIVED."
+		},
+		{
+			"helper": "deleteShortcutById",
+			"method": "DELETE",
+			"path": "/api/shortcut/:id",
+			"query": null,
+			"request": "none",
+			"response": "ignored",
+			"session": "required",
+			"consumers": [
+				{
+					"file": "src/services/shortcutService.ts",
+					"symbol": "api.deleteShortcutById"
+				}
+			],
+			"endpoint": "shortcut.delete",
+			"note": "Removes the shortcut from the sidebar list."
+		},
+		{
+			"helper": "uploadFile",
+			"method": "POST",
+			"path": "/api/resource",
+			"query": null,
+			"request": "multipart/form-data with one `file` part",
+			"response": "ResponseObject<T> — the UI reads `response.data.data` as Resource; the editor inserts `![](/h/r/{id}/{filename})` into the memo body",
+			"session": "required",
+			"consumers": [
+				{
+					"file": "src/services/resourceService.ts",
+					"symbol": "api.uploadFile"
+				}
+			],
+			"endpoint": null,
+			"note": "WITHHELD. No journey uploads a file, and the inserted URL points at a `/h/r/:id/:filename` byte stream outside /api that the projection would also have to invent. The projection refuses it as a named withheld endpoint rather than fabricating a resource pipeline."
+		},
+		{
+			"helper": "getTagList",
+			"method": "GET",
+			"path": "/api/tag",
+			"query": null,
+			"request": "none",
+			"response": "ResponseObject<T> — the UI reads `response.data.data` as string[] rendered by the sidebar tag list",
+			"session": "required",
+			"consumers": [
+				{
+					"file": "src/services/memoService.ts",
+					"symbol": "api.getTagList"
+				}
+			],
+			"endpoint": "tag.list",
+			"note": "Server-derived in the real backend. The projection derives it from the seeded memo content under the client's own `#tag ` rule so the tag list and the client-side tag filter agree."
+		}
+	],
+	"clientOnlySurfaces": [
+		{
+			"surface": "search, tag filter and type filter",
+			"implementation": "src/helpers/filter.ts over the already-fetched memo list",
+			"note": "No request is issued when the user searches or picks a tag; the filter runs against the store."
+		},
+		{
+			"surface": "editor preferences (split words, hide image urls, markdown parser)",
+			"implementation": "src/helpers/storage.ts writing localStorage",
+			"note": "Preference toggles never reach the API. Only account settings (name, password, open-id reset) do, through PATCH /api/user/me."
+		},
+		{
+			"surface": "uploaded image bytes",
+			"implementation": "`/h/r/:id/:filename`, a same-origin path outside /api",
+			"note": "Reachable only after an upload, which the projection withholds."
+		}
+	],
+	"withheldEndpoints": [
+		{
+			"endpoint": "resource.upload",
+			"method": "POST",
+			"path": "/api/resource",
+			"reason": "no journey uploads a file; projecting an upload would mean inventing a resource pipeline and a `/h/r/:id/:filename` byte stream that no witness observes"
+		}
+	],
+	"projection": {
+		"module": "packages/cli/src/witness/memos-projection.ts",
+		"projectedEndpoints": [
+			"status",
+			"auth.login",
+			"auth.signup",
+			"auth.logout",
+			"user.create",
+			"user.list",
+			"user.me.get",
+			"user.me.patch",
+			"memo.list",
+			"memo.create",
+			"memo.patch",
+			"memo.organizer",
+			"memo.delete",
+			"tag.list",
+			"shortcut.list",
+			"shortcut.create",
+			"shortcut.patch",
+			"shortcut.delete"
+		],
+		"seedFixture": "fixtures/react-memos-v0-1-3/witness-projection-seed.json",
+		"seedSha256": "cf422f2cda23b4c777d27b2bccd68a24b53cac027dbe57347e1b150fc8cdb7ff",
+		"behaviorDigest": "1672b43f0f01379b74890013cf145ed87164873cff037d4b6ace072a1fa79493"
+	},
+	"scope": "API projection only: this unit publishes no journeys, no witness receipt and no witness run entry."
+}

@@ -1,0 +1,84 @@
+{
+	"label": "synthetic-fixture-evidence-data",
+	"users": [
+		{
+			"id": 1,
+			"createdTs": 1785574800,
+			"updatedTs": 1785574800,
+			"rowStatus": "NORMAL",
+			"role": "OWNER",
+			"email": "owner@versionless-evidence.invalid",
+			"name": "owner@versionless-evidence.invalid",
+			"openId": "synthetic-open-id-owner"
+		}
+	],
+	"credentials": [
+		{
+			"userId": 1,
+			"password": "synthetic-owner-passphrase"
+		}
+	],
+	"memos": [
+		{
+			"id": 1,
+			"creatorId": 1,
+			"createdTs": 1785661200,
+			"updatedTs": 1785661200,
+			"rowStatus": "NORMAL",
+			"content": "Pinned the era baseline for the retained build. #evidence tracked in the run ledger.",
+			"pinned": true
+		},
+		{
+			"id": 2,
+			"creatorId": 1,
+			"createdTs": 1785747600,
+			"updatedTs": 1785747600,
+			"rowStatus": "NORMAL",
+			"content": "The origin bundler is itself Vite, six majors back. #migration notes stay with the lane.",
+			"pinned": false
+		},
+		{
+			"id": 3,
+			"creatorId": 1,
+			"createdTs": 1785834000,
+			"updatedTs": 1785834000,
+			"rowStatus": "NORMAL",
+			"content": "Config translation replaced the removed client APIs. #migration #evidence both apply.",
+			"pinned": false
+		},
+		{
+			"id": 4,
+			"creatorId": 1,
+			"createdTs": 1785920400,
+			"updatedTs": 1785920400,
+			"rowStatus": "ARCHIVED",
+			"content": "Superseded draft kept only to prove restore from the recycle bin. #archive holds it.",
+			"pinned": false
+		}
+	],
+	"shortcuts": [
+		{
+			"id": 1,
+			"creatorId": 1,
+			"rowStatus": "ARCHIVED",
+			"createdTs": 1786006800,
+			"updatedTs": 1786006800,
+			"title": "Evidence",
+			"payload": "[{\"type\":\"TAG\",\"value\":{\"operator\":\"CONTAIN\",\"value\":\"evidence\"},\"relation\":\"AND\"}]"
+		},
+		{
+			"id": 2,
+			"creatorId": 1,
+			"rowStatus": "NORMAL",
+			"createdTs": 1786093200,
+			"updatedTs": 1786093200,
+			"title": "Migration",
+			"payload": "[{\"type\":\"TAG\",\"value\":{\"operator\":\"CONTAIN\",\"value\":\"migration\"},\"relation\":\"AND\"}]"
+		}
+	],
+	"profile": {
+		"mode": "prod",
+		"version": "0.1.3"
+	},
+	"sha256": "cf422f2cda23b4c777d27b2bccd68a24b53cac027dbe57347e1b150fc8cdb7ff"
+}
