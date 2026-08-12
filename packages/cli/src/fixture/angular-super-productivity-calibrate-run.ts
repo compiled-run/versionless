@@ -34,7 +34,7 @@ const laneRoots = {
 		root,
 		'.versionless/cache/angular-super-productivity-v2-13-15-baseline/dist-run2',
 	),
-	migrated: join(root, '.versionless/stage/angular-super-productivity-v2-13-15-u18b/dist-23'),
+	migrated: join(root, '.versionless/stage/angular-super-productivity-v2-13-15-u18b/dist-25'),
 } as const;
 
 const VIEWPORT = { width: 1280, height: 900 } as const;
@@ -208,6 +208,84 @@ export async function calibrateAngularSuperProductivityLane(
 					.trim();
 			}
 		}
+
+		// Legs (c) time-tracking and (b) drag reorder, driven here for the first
+		// time before either is pinned. A second task is created so the reorder
+		// has a permutation to settle into, and every reading is printed.
+		const iconProbe = { group: 'main-header .play-btn', name: 'mat-icon', item: 'mat-icon' } as const;
+		const readIcon = async (): Promise<unknown> =>
+			host.groupedText(iconProbe).then(
+				(groups) => groups.flatMap((group) => group.items),
+				(error: unknown) => `refused: ${error instanceof Error ? error.message : String(error)}`,
+			);
+		const readTitles = async (): Promise<unknown> =>
+			host.groupedText({ group: 'task', name: '.task-title', item: '.task-title' } as const).then(
+				(groups) => groups.map((group) => group.name),
+				(error: unknown) => `refused: ${error instanceof Error ? error.message : String(error)}`,
+			);
+		const cb: Record<string, unknown> = {};
+		// Assigned before the drives so a step that throws still leaves every
+		// reading taken up to that point in the printed record, rather than losing
+		// the whole block to one refusal.
+		legs['legs-c-b'] = cb;
+		await page.type('add-task-bar input', 'Witness calibration task two', { redact: false });
+		await page.press('add-task-bar input', 'Enter');
+		await new Promise<void>((settle) => void setTimeout(settle, 1_000));
+		cb['titles-after-second-create'] = await readTitles();
+		for (const selector of [
+			'main-header .play-btn',
+			'task .play-icon-indicator',
+			'task .time-wrapper',
+			'task .time-wrapper .time-val',
+			'task .drag-handle',
+			'task .drag-handle.handle-par',
+			'.task-list-inner',
+			'.task-list-inner[dragula]',
+		]) {
+			try {
+				await context.expect.page.count(page, selector, 0);
+				cb[`count:${selector}`] = 0;
+			} catch (error: unknown) {
+				cb[`count:${selector}`] = (error instanceof Error ? error.message : String(error))
+					.split('\n')[0]!
+					.trim();
+			}
+		}
+		// Leg (c): the icon flip on the global tracking control.
+		cb['icon-before-start'] = await readIcon();
+		try {
+			await page.click('main-header .play-btn');
+			await new Promise<void>((settle) => void setTimeout(settle, 1_200));
+			cb['icon-after-start'] = await readIcon();
+			cb['play-indicator-after-start'] = await host
+				.groupedText({ group: 'task .play-icon-indicator', name: 'task .play-icon-indicator', item: 'task .play-icon-indicator' } as const)
+				.then((g) => g.length, (e: unknown) => `refused: ${e instanceof Error ? e.message : String(e)}`);
+			cb['time-val-after-start'] = await host
+				.groupedText({ group: 'task .time-wrapper', name: '.time-val', item: '.time-val' } as const)
+				.then((g) => g, (e: unknown) => `refused: ${e instanceof Error ? e.message : String(e)}`);
+			await page.click('main-header .play-btn');
+			await new Promise<void>((settle) => void setTimeout(settle, 800));
+			cb['icon-after-stop'] = await readIcon();
+		} catch (error: unknown) {
+			cb['time-tracking-error'] = error instanceof Error ? error.message : String(error);
+		}
+		// Leg (b): the dragula reorder, initiated on the parent drag handle.
+		cb['order-before-drag'] = await readTitles();
+		try {
+			await page.drag(
+				'task-list:first-of-type task:nth-of-type(1) .drag-handle.handle-par',
+				'task-list:first-of-type task:nth-of-type(2) .drag-handle.handle-par',
+				{ steps: 24 },
+			);
+			await new Promise<void>((settle) => void setTimeout(settle, 1_200));
+			cb['order-after-drag'] = await readTitles();
+			cb['indexeddb-after-drag'] = await host
+				.indexedDbKeys()
+				.then((i) => i, (e: unknown) => `refused: ${e instanceof Error ? e.message : String(e)}`);
+		} catch (error: unknown) {
+			cb['drag-error'] = error instanceof Error ? error.message : String(error);
+		}
+		cb['pageErrors-during-cb'] = 'see page summary';
 		await context.receipt.capture('calibration-complete');
 	});
 	let status = 'unknown';
