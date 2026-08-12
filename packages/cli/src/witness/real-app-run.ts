@@ -6585,6 +6585,39 @@ export async function executeAngularFactoriolabWitnessRun(options: {
 }
 
 /**
+ * The byte mutation seam for the Super Productivity migrated lane.
+ *
+ * It is the Ivy component selector of the create-project dialog — the very
+ * control leg (d) drives — emitted exactly once across the served bundle, in the
+ * one module that carries the compiled component definition. The journey opens
+ * that dialog and asserts a single `dialog-create-project` host element renders;
+ * overwriting the selector in place renames the host tag, so the assertion
+ * observes zero and the run is red with a message that names the seam, and the
+ * uniqueness demanded by the corpus discipline means no second copy elsewhere in
+ * the bundle can absorb the overwrite.
+ */
+export const SUPER_PRODUCTIVITY_MUTATION_SEAM = 'dialog-create-project' as const;
+
+/**
+ * Super Productivity ships and registers a real ngsw in both lanes, so the run
+ * uses the default (canonical) service-worker policy: the browser context allows
+ * the registration the application's own root module makes, and the journey
+ * measures the worker that succeeds at its three checkpoints rather than an
+ * absence.
+ */
+export async function executeAngularSuperProductivityWitnessRun(options: {
+	lane: Lane;
+	pass: 1 | 2;
+	laneRoot: string;
+	receiptRoot: string;
+}): Promise<WitnessRealAppRun> {
+	const app = apps.find((candidate) => candidate.app === ANGULAR_SUPER_PRODUCTIVITY_APP);
+	if (app === undefined)
+		throw new Error('Super Productivity Witness specification is absent');
+	return await executeRun(app, options.lane, options.pass, options);
+}
+
+/**
  * The jira-clone Witness specification, reachable so its declared inventories,
  * probes and seams can be checked against the receipt schema that enforces them
  * without launching a browser.
