@@ -1,0 +1,362 @@
+{
+  "schemaVersion": "versionless.angular-tiny-translator-data-loss-cause.v1",
+  "unit": "lrapr-t006/u19i-data-loss-root-cause",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "result": "attributed-app-latent-bug-exposed-our-pipe-translation-cleared",
+  "attributedCause": "app-latent-bug-exposed",
+  "meaning": "The migrated lane loses a typed translation because the application’s own `setDisabledState` rebuilds `this.form` and never re-subscribes, and Angular 16 calls `setDisabledState` on every ControlValueAccessor as it attaches — including an enabled one. Angular 5 called it only for a control that was already disabled, so on the era cell the method never ran and the bug never fired. The debounced subscription our `.pipe(debounceTime(200))` translation carries is alive and correct: it is watching a FormGroup the view was detached from a microtask after it was built. Nothing typed ever reaches it, `propagateChange` is never called, the outer control stays pristine, and the commit writes the ORIGINAL text under a changed state.",
+  "mechanism": [
+    "ngOnInit → initForm() builds FormGroup A {displayedText, icuMessages} and subscribes A.valueChanges.pipe(debounceTime(200)) → valueChanged → propagateChange.",
+    "@angular/forms 16.2.12 setUpControl calls valueAccessor.setDisabledState(control.disabled) unconditionally, because CALL_SET_DISABLED_STATE defaults to `always`.",
+    "The application’s setDisabledState assigns this.form = a NEW FormGroup B {displayedText} and does not touch this.subscription.",
+    "The template’s [formGroup]=\"form\" now binds the view to B. Typing updates B, so the textarea goes ng-dirty; A never receives a value, so debounceTime never arms.",
+    "propagateChange — Angular’s own updateControl closure — is therefore never called, the host app-normalized-message-input stays ng-pristine, translate-unit._editedTargetMessage keeps the unit’s original message, and commitChanges() writes that original message with the new target state."
+  ],
+  "refuted": [
+    {
+      "hypothesis": "our transform’s output (the rxjs-prototype-patch pipe translation)",
+      "verdict": "refuted",
+      "evidence": "The positive control drives the very FormGroup the translated chain subscribes to and the chain emits on time — see measurements.migrated.positiveControlEmittedAfterMs. The compiled site in the shipped bundle is `this.form.valueChanges.pipe(Yd(200)).subscribe(...)` where Yd is rxjs 7’s debounceTime, and the subscription is open at the moment of loss. The capability’s edit is `.debounceTime(200)` → `.pipe(debounceTime(200))`, which is the documented rxjs 5→7 equivalent, and it changed nothing else in the method."
+    },
+    {
+      "hypothesis": "an ecosystem/runtime interaction — dual rxjs copies, zone.js scheduling, or NgZone starving the debounce timer",
+      "verdict": "refuted",
+      "evidence": "One rxjs is reachable at run time in the migrated closure (7.8.2); the only other install is rxjs 5.5.2 nested under `ngx-i18nsupport`, a devDependency build tool the application never imports (its source imports `ngx-i18nsupport-lib`, which declares no rxjs). The bundle carries exactly one debounceTime definition, and the two FormGroups’ valueChanges share one Observable prototype. Scheduling is not starved: no 200 ms timer is armed at all while typing, and the same scheduler delivers the positive control on time."
+    }
+  ],
+  "exposedBy": {
+    "change": "Angular’s `callSetDisabledState` default",
+    "eraBehaviour": "@angular/forms 5.0.3 setUpControl registers registerOnDisabledChange and never calls setDisabledState while attaching a control.",
+    "migratedBehaviour": "@angular/forms 16.2.12 setUpControl calls it when `control.disabled || callSetDisabledState === 'always'`, and CALL_SET_DISABLED_STATE’s root factory returns `always`.",
+    "angularsOwnWords": "The migrated framework source names the era behaviour a bug: “The legacy behavior only calls the CVA’s `setDisabledState` if the control is disabled. If the `callSetDisabledState` option is set to `always`, then this bug is fixed and the method is always called.”",
+    "vendorCompatibilitySwitch": "ReactiveFormsModule.withConfig({callSetDisabledState: 'whenDisabledForLegacyCode'}), or the CALL_SET_DISABLED_STATE injection token, restores the era behaviour exactly. Angular ships it for this migration."
+  },
+  "staticEvidence": {
+    "component": {
+      "file": "src/app/normalized-message-input/normalized-message-input.component.ts",
+      "eraSha256": "803c780f10bdad7b09babe51c09dac2a1f1bb45b1531c7dae9cd38876db5043b",
+      "migratedSha256": "2b43ee70cd0f9ba5d18669ca0e5ceb6ac478a0084b251b5bad3ad0eb2305e828",
+      "eraChain": "this.subscription = this.form.valueChanges.debounceTime(200).subscribe(formValue => {\n      this.valueChanged(formValue);\n    });",
+      "migratedChain": "this.subscription = this.form.valueChanges.pipe(debounceTime(200)).subscribe(formValue => {\n      this.valueChanged(formValue);\n    });",
+      "setDisabledStateEra": "setDisabledState?(isDisabled: boolean): void {\n    this.disabled = isDisabled;\n    this.form = this.formBuilder.group({displayedText: [{value: this.textToDisplay(), disabled: this.disabled}]});\n  }",
+      "setDisabledStateMigrated": "setDisabledState?(isDisabled: boolean): void {\n    this.disabled = isDisabled;\n    this.form = this.formBuilder.group({displayedText: [{value: this.textToDisplay(), disabled: this.disabled}]});\n  }",
+      "setDisabledStateIdenticalAcrossTheLift": true,
+      "ourTranslation": "`.debounceTime(200)` → `.pipe(debounceTime(200))`, with `debounceTime` imported from `rxjs/operators` and `Subscription` moved from `rxjs/Subscription` to `rxjs` — the rxjs-prototype-patch capability’s output, and the only edit this capability made to this file."
+    },
+    "angularForms": {
+      "eraVersion": "5.0.3",
+      "migratedVersion": "16.2.12",
+      "eraSetUpControl": "function setUpControl(control, dir) {\n    if (!control)\n        _throwError(dir, 'Cannot find control with');\n    if (!dir.valueAccessor)\n        _throwError(dir, 'No value accessor for form control with');\n    control.validator = Validators.compose([/** @type {?} */ ((control.validator)), dir.validator]);\n    control.asyncValidator = Validators.composeAsync([/** @type {?} */ ((control.asyncValidator)), dir.asyncValidator]); /** @type {?} */\n    ((dir.valueAccessor)).writeValue(control.value);\n    setUpViewChangePipeline(control, dir);\n    setUpModelChangePipeline(control, dir);\n    setUpBlurPipeline(control, dir);\n    if (/** @type {?} */ ((dir.valueAccessor)).setDisabledState) {\n        control.registerOnDisabledChange(function (isDisabled) { /** @type {?} */ ((/** @type {?} */ ((dir.valueAccessor)).setDisabledState))(isDisabled); });\n    }\n    // re-run validation when validator binding changes, e.g. minlength=3 -> minlength=4\n    dir._rawValidators.forEach(function (validator) {\n        if ((/** @type {?} */ (validator)).registerOnValidatorChange)\n            /** @type {?} */ (((/** @type {?} */ (validator)).registerOnValidatorChange))(function () { return control.updateValueAndValidity(); });\n    });\n    dir._rawAsyncValidators.forEach(function (validator) {\n        if ((/** @type {?} */ (validator)).registerOnValidatorChange)\n            /** @type {?} */ (((/** @type {?} */ (validator)).registerOnValidatorChange))(function () { return control.updateValueAndValidity(); });\n    });\n}",
+      "migratedSetUpControl": "function setUpControl(control, dir, callSetDisabledState = setDisabledStateDefault) {\n    if (typeof ngDevMode === 'undefined' || ngDevMode) {\n        if (!control)\n            _throwError(dir, 'Cannot find control with');\n        if (!dir.valueAccessor)\n            _throwMissingValueAccessorError(dir);\n    }\n    setUpValidators(control, dir);\n    dir.valueAccessor.writeValue(control.value);\n    // The legacy behavior only calls the CVA's `setDisabledState` if the control is disabled.\n    // If the `callSetDisabledState` option is set to `always`, then this bug is fixed and\n    // the method is always called.\n    if (control.disabled || callSetDisabledState === 'always') {\n        dir.valueAccessor.setDisabledState?.(control.disabled);\n    }\n    setUpViewChangePipeline(control, dir);\n    setUpModelChangePipeline(control, dir);\n    setUpBlurPipeline(control, dir);\n    setUpDisabledChangeHandler(control, dir);\n}",
+      "migratedDefault": "const setDisabledStateDefault = 'always';",
+      "eraPassesControlDisabledWhileAttaching": false,
+      "eraDefersToRegisterOnDisabledChange": true,
+      "migratedPassesControlDisabledWhileAttaching": true,
+      "migratedAttachGuard": "if (control.disabled || callSetDisabledState === 'always') {\n        dir.valueAccessor.setDisabledState?.(control.disabled);\n    }"
+    },
+    "runtime": {
+      "eraRxjs": "5.5.2",
+      "migratedRxjs": "7.8.2",
+      "eraZone": "0.8.17",
+      "migratedZone": "0.13.3",
+      "eraRxjsInstalls": [
+        {
+          "path": "node_modules/rxjs",
+          "version": "5.5.2",
+          "reachableAtRuntime": true
+        }
+      ],
+      "migratedRxjsInstalls": [
+        {
+          "path": "node_modules/@angular-devkit/architect/node_modules/rxjs",
+          "version": "7.8.1",
+          "reachableAtRuntime": false
+        },
+        {
+          "path": "node_modules/@angular-devkit/build-angular/node_modules/rxjs",
+          "version": "7.8.1",
+          "reachableAtRuntime": false
+        },
+        {
+          "path": "node_modules/@angular-devkit/build-webpack/node_modules/rxjs",
+          "version": "7.8.1",
+          "reachableAtRuntime": false
+        },
+        {
+          "path": "node_modules/@angular-devkit/core/node_modules/rxjs",
+          "version": "7.8.1",
+          "reachableAtRuntime": false
+        },
+        {
+          "path": "node_modules/@angular-devkit/schematics/node_modules/rxjs",
+          "version": "7.8.1",
+          "reachableAtRuntime": false
+        },
+        {
+          "path": "node_modules/ngx-i18nsupport/node_modules/rxjs",
+          "version": "5.5.2",
+          "reachableAtRuntime": false
+        },
+        {
+          "path": "node_modules/rxjs",
+          "version": "7.8.2",
+          "reachableAtRuntime": true
+        }
+      ]
+    },
+    "migratedBundle": {
+      "file": "main.2e2ecec27aebe0e1.js",
+      "sha256": "ea2cb359d9d30cc73cc6be5c455f47b37f5963a19c06478c368f372c13842e2a",
+      "compiledChain": "this.subscription=this.form.valueChanges.pipe(Yd(200)).subscribe(e=>{this.valueChanged(e)})}",
+      "compiledSetDisabledState": "setDisabledState(e){this.disabled=e,this.form=this.formBuilder.group({displayedText:[{value:this.textToDisplay(),disabled:this.disabled}]})}",
+      "debounceTimeDefinitionsInBundle": 1
+    }
+  },
+  "measurements": {
+    "era": {
+      "pageErrors": [],
+      "beforeTyping": {
+        "hostClass": "ng-untouched ng-pristine ng-valid",
+        "textareaDirty": false,
+        "textareaValue": "Synthetic greeting unit",
+        "undoDisabled": ""
+      },
+      "afterSettle": {
+        "hostClass": "ng-untouched ng-valid ng-dirty",
+        "textareaDirty": true,
+        "textareaValue": "PROBE TEXT",
+        "undoDisabled": null
+      },
+      "debounceTimers": [
+        {
+          "delay": 200,
+          "scheduledAt": 18,
+          "fired": 0,
+          "firedAt": [],
+          "cleared": 19
+        },
+        {
+          "delay": 200,
+          "scheduledAt": 19,
+          "fired": 0,
+          "firedAt": [],
+          "cleared": 20
+        },
+        {
+          "delay": 200,
+          "scheduledAt": 20,
+          "fired": 0,
+          "firedAt": [],
+          "cleared": 21
+        },
+        {
+          "delay": 200,
+          "scheduledAt": 21,
+          "fired": 0,
+          "firedAt": [],
+          "cleared": 22
+        },
+        {
+          "delay": 200,
+          "scheduledAt": 22,
+          "fired": 0,
+          "firedAt": [],
+          "cleared": 22
+        },
+        {
+          "delay": 200,
+          "scheduledAt": 22,
+          "fired": 0,
+          "firedAt": [],
+          "cleared": 23
+        },
+        {
+          "delay": 200,
+          "scheduledAt": 23,
+          "fired": 0,
+          "firedAt": [],
+          "cleared": 24
+        },
+        {
+          "delay": 200,
+          "scheduledAt": 24,
+          "fired": 0,
+          "firedAt": [],
+          "cleared": 24
+        },
+        {
+          "delay": 200,
+          "scheduledAt": 24,
+          "fired": 0,
+          "firedAt": [],
+          "cleared": 25
+        },
+        {
+          "delay": 200,
+          "scheduledAt": 25,
+          "fired": 1,
+          "firedAt": [
+            226
+          ],
+          "cleared": 226
+        }
+      ],
+      "lastDebounceTimerFiredAfterMs": 226
+    },
+    "migrated": {
+      "pageErrors": [],
+      "events": [
+        {
+          "k": "initForm",
+          "ro": true,
+          "t": -31
+        },
+        {
+          "k": "initForm",
+          "ro": true,
+          "t": -31
+        },
+        {
+          "k": "initForm",
+          "ro": false,
+          "t": -31
+        },
+        {
+          "k": "initForm",
+          "ro": false,
+          "t": -31
+        },
+        {
+          "k": "setDisabledState",
+          "arg": false,
+          "ro": false,
+          "t": -31,
+          "hadSub": true
+        },
+        {
+          "k": "registerOnChange",
+          "ro": false,
+          "t": -31
+        },
+        {
+          "k": "rawValueChangesOnLiveForm",
+          "t": 16
+        },
+        {
+          "k": "rawValueChangesOnLiveForm",
+          "t": 17
+        },
+        {
+          "k": "rawValueChangesOnLiveForm",
+          "t": 18
+        },
+        {
+          "k": "rawValueChangesOnLiveForm",
+          "t": 19
+        },
+        {
+          "k": "rawValueChangesOnLiveForm",
+          "t": 20
+        },
+        {
+          "k": "rawValueChangesOnLiveForm",
+          "t": 20
+        },
+        {
+          "k": "rawValueChangesOnLiveForm",
+          "t": 21
+        },
+        {
+          "k": "rawValueChangesOnLiveForm",
+          "t": 21
+        },
+        {
+          "k": "rawValueChangesOnLiveForm",
+          "t": 22
+        },
+        {
+          "k": "rawValueChangesOnLiveForm",
+          "t": 23
+        },
+        {
+          "k": "positiveControlSetValue",
+          "t": 3027
+        },
+        {
+          "k": "rawValueChangesOnSubscribedForm",
+          "ro": false,
+          "t": 3027
+        },
+        {
+          "k": "debouncedEmit",
+          "ro": false,
+          "t": 3231
+        },
+        {
+          "k": "valueChanged",
+          "ro": false,
+          "t": 3231
+        }
+      ],
+      "beforeTyping": {
+        "hostClass": "ng-untouched ng-pristine ng-valid",
+        "textareaDirty": false,
+        "textareaValue": "Synthetic greeting unit",
+        "undoDisabled": "true"
+      },
+      "afterSettle": {
+        "hostClass": "ng-untouched ng-pristine ng-valid",
+        "textareaDirty": true,
+        "textareaValue": "PROBE TEXT",
+        "undoDisabled": "true"
+      },
+      "afterPositiveControl": {
+        "hostClass": "ng-untouched ng-pristine ng-valid",
+        "textareaDirty": true,
+        "textareaValue": "PROBE TEXT",
+        "undoDisabled": "true"
+      },
+      "identity": {
+        "componentFormIsTheSubscribedForm": false,
+        "componentFormControls": [
+          "displayedText"
+        ],
+        "subscribedFormControls": [
+          "displayedText",
+          "icuMessages"
+        ],
+        "valueChangesPrototypesIdentical": true,
+        "subscriptionClosed": false,
+        "registeredOnChangeSource": "e=>{t._pendingValue=e,t._pendingChange=!0,t._pendingDirty=!0,\"change\"===t.updateOn&&VM(t,n)}"
+      },
+      "debounceTimersWhileTyping": 0,
+      "propagateChangeCallsFromTyping": 0,
+      "positiveControlEmittedAfterMs": 204
+    }
+  },
+  "instrumentation": {
+    "what": "Four byte-exact sites of the migrated lane’s own shipped main bundle are served with counters inserted. Each replacement contains the original statements unchanged; each site must occur exactly once or the driver refuses to run. The era lane is served unmodified.",
+    "sites": [
+      "initForm",
+      "setDisabledState",
+      "registerOnChange",
+      "valueChanged"
+    ],
+    "networkPolicy": "loopback only; every non-loopback request is aborted"
+  },
+  "recommendation": {
+    "decision": "repair-in-the-adapter, not in the application",
+    "capabilityGap": "No capability defect is proven, so nothing is being fixed in an existing transform. What is missing is a capability: an Angular forms era-compatibility transform that, when an application crossing the v15 boundary implements `setDisabledState` on a custom ControlValueAccessor, provides CALL_SET_DISABLED_STATE as 'whenDisabledForLegacyCode' (or configures ReactiveFormsModule/FormsModule with it).",
+    "whyThatShape": "It is the vendor’s own switch for exactly this migration, it restores the era semantics byte-for-byte at the seam that changed, and it touches no application logic — which keeps the zero-manual-steps claim honest. Repairing the application’s setDisabledState instead would be us fixing somebody’s latent bug and calling it a migration.",
+    "detectionShape": "A class that implements setDisabledState and whose body assigns to a field the template binds a form directive to is the detectable shape; the general shape is any CVA whose setDisabledState has effects beyond toggling a disabled flag.",
+    "recordedRegardless": "The application’s setDisabledState is genuinely broken — it also drops the `icuMessages` control the ICU branch of its own template binds — and that stays recorded against the application whether or not the adapter suppresses the call."
+  },
+  "notEstablished": [
+    "No fix is applied in this unit. packages/frameworks/angular/src is untouched and the capability described above does not exist yet.",
+    "The ICU branch of the component was not exercised: the synthetic fixture carries no ICU message, so the dropped `icuMessages` control is a code-level reading of the same defective method, not a measured symptom.",
+    "The exact Angular minor that changed the default was not bisected. Both endpoints are read out of the two installed closures, which is what this lift actually crossed.",
+    "The Witness receipt for this vertical was not re-run. This record attributes the break u19h measured; it does not re-measure the journey.",
+    "Nothing was published over the migrated lane, and neither lane was rebuilt or edited."
+  ],
+  "digest": "cd7503cc9813e4a51ef5dd8c5fd2a93495ecc91c7fa8b040b8a456d3cfb60267"
+}
