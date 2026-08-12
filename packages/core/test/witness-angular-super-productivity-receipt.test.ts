@@ -259,6 +259,31 @@ function run(lane: 'baseline' | 'migrated', pass: 1 | 2): WitnessAngularSuperPro
 				currentTasksOnStart: 1,
 				currentTasksOnStop: 0,
 			},
+			settings: {
+				state: 'measured-settings-change',
+				projectSwitch: {
+					control: 'section.projects > button[mat-menu-item]',
+					dialog: 'dialog-create-project',
+					titleControl: 'main-header .current-project-title',
+					switchControl: 'side-nav .project:nth-of-type(2) > button[mat-menu-item]',
+					newProjectTitle: 'Witness leg-d project',
+					currentTitleBefore: 'Super Productivity',
+					currentTitleAfter: 'Witness leg-d project',
+					projectCountBefore: 1,
+					projectCountAfter: 2,
+				},
+				theme: {
+					autoContrastControl: 'section.config-section:nth-of-type(2) mat-checkbox',
+					control: 'section.config-section:nth-of-type(2) mat-select',
+					styleVar: '--palette-primary-contrast-50',
+					// The theme rgb is a declared lane difference: the two lanes shift the
+					// same var by the same driven gesture but land on differently-formatted
+					// values, and only the FACT of the shift travels in the parity digest.
+					styleValueBefore: lane === 'baseline' ? '0,0,0' : 'rgba(0, 0, 0, .87)',
+					styleValueAfter: lane === 'baseline' ? '255,255,255' : 'rgba(255, 255, 255, 1)',
+				},
+				shortcut: { key: 'w', hostTag: 'work-view', hostTagPresentAfter: 1 },
+			},
 		},
 		scroll: {
 			state: 'measured-genuine-viewport-scroll',
@@ -541,6 +566,89 @@ describe('Angular Super Productivity Witness receipt', () => {
 		receipt.integrity.canonicalDigest = witnessAngularSuperProductivityDigest(receipt);
 		expect(() => parseWitnessAngularSuperProductivityReceipt(receipt)).toThrow(
 			'time-tracking evidence differs',
+		);
+	});
+
+	it('rejects a project-switch that did not grow the side-nav project list', () => {
+		const receipt = fixture();
+		for (const run of receipt.runs) {
+			run.applicationJourney.settings!.projectSwitch.projectCountAfter =
+				run.applicationJourney.settings!.projectSwitch.projectCountBefore;
+			run.semanticDigest = witnessAngularSuperProductivityRawDigest(run);
+			run.behaviorDigest = witnessAngularSuperProductivityBehaviorDigest(
+				run,
+				DECLARED_DIFFERENCE_LABELS,
+			);
+		}
+		receipt.integrity.canonicalDigest = witnessAngularSuperProductivityDigest(receipt);
+		expect(() => parseWitnessAngularSuperProductivityReceipt(receipt)).toThrow(
+			'settings evidence differs',
+		);
+	});
+
+	it('rejects a switch that did not flip the current-project title to the new project', () => {
+		const receipt = fixture();
+		for (const run of receipt.runs) {
+			// The title changed, but to something other than the project the create
+			// named: the switch did not land on the created project.
+			run.applicationJourney.settings!.projectSwitch.currentTitleAfter = 'Some other project';
+			run.semanticDigest = witnessAngularSuperProductivityRawDigest(run);
+			run.behaviorDigest = witnessAngularSuperProductivityBehaviorDigest(
+				run,
+				DECLARED_DIFFERENCE_LABELS,
+			);
+		}
+		receipt.integrity.canonicalDigest = witnessAngularSuperProductivityDigest(receipt);
+		expect(() => parseWitnessAngularSuperProductivityReceipt(receipt)).toThrow(
+			'settings evidence differs',
+		);
+	});
+
+	it('rejects a driven theme control whose measured style var did not shift', () => {
+		const receipt = fixture();
+		for (const run of receipt.runs) {
+			// The driven change left the measured contrast var where it started: no
+			// shift, so nothing was proven driven.
+			run.applicationJourney.settings!.theme.styleValueAfter =
+				run.applicationJourney.settings!.theme.styleValueBefore;
+			run.semanticDigest = witnessAngularSuperProductivityRawDigest(run);
+			run.behaviorDigest = witnessAngularSuperProductivityBehaviorDigest(
+				run,
+				DECLARED_DIFFERENCE_LABELS,
+			);
+		}
+		receipt.integrity.canonicalDigest = witnessAngularSuperProductivityDigest(receipt);
+		expect(() => parseWitnessAngularSuperProductivityReceipt(receipt)).toThrow(
+			'settings evidence differs',
+		);
+	});
+
+	it('round-trips a theme shift whose rgb is formatted differently across lanes', () => {
+		// The two lanes shift the same var by the same driven gesture but land on
+		// differently-formatted rgb — the declared lane difference. The parity
+		// digest carries only the FACT of the shift, so the two lanes still agree.
+		const receipt = parseWitnessAngularSuperProductivityReceipt(fixture());
+		const baseline = receipt.runs.find((entry) => entry.lane === 'baseline')!;
+		const migrated = receipt.runs.find((entry) => entry.lane === 'migrated')!;
+		expect(baseline.applicationJourney.settings!.theme.styleValueAfter).not.toBe(
+			migrated.applicationJourney.settings!.theme.styleValueAfter,
+		);
+		expect(new Set(receipt.runs.map((entry) => entry.behaviorDigest)).size).toBe(1);
+	});
+
+	it('rejects a shortcut that never brought the work view', () => {
+		const receipt = fixture();
+		for (const run of receipt.runs) {
+			run.applicationJourney.settings!.shortcut.hostTagPresentAfter = 0;
+			run.semanticDigest = witnessAngularSuperProductivityRawDigest(run);
+			run.behaviorDigest = witnessAngularSuperProductivityBehaviorDigest(
+				run,
+				DECLARED_DIFFERENCE_LABELS,
+			);
+		}
+		receipt.integrity.canonicalDigest = witnessAngularSuperProductivityDigest(receipt);
+		expect(() => parseWitnessAngularSuperProductivityReceipt(receipt)).toThrow(
+			'settings evidence differs',
 		);
 	});
 

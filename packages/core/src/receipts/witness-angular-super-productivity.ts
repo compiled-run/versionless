@@ -654,6 +654,86 @@ export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_KEY_ORDER_CORRECTION = Object.fr
 });
 
 /**
+ * Leg (d): the settings-change, the last journey leg — measured identically in
+ * structure on both lanes by the theme-calibration driver, with the one lane
+ * difference declared below rather than folded away.
+ *
+ * It has three measured parts:
+ *
+ *  - The project-switch spine (GREEN, deterministic). The side-nav
+ *    `addProject()` control opens `dialog-create-project`; a title typed into its
+ *    text input and submitted grows the side-nav project list from one to two;
+ *    switching to the new project through its side-nav button flips
+ *    `main-header .current-project-title` to the created title. This is the leg's
+ *    spine.
+ *
+ *  - The driven theme control. u20c2l ruled that the witness PageHandle cannot
+ *    drive a native `input[type=color]` — it has no fill/evaluate primitive, and
+ *    char-press and arrow keys leave the control's value unchanged — so the
+ *    color-save palette shift is unprovable and is NOT claimed. The control
+ *    driven instead is the project theme form's own `huePrimary` mat-select:
+ *    unchecking the `isAutoContrast` checkbox reveals and enables the hue
+ *    thresholds, and picking a hue other than the 500 default moves
+ *    `setContrastColorThresholdPrimary`, which shifts the measured
+ *    `--palette-primary-contrast-50` custom property from a dark contrast to a
+ *    light one. That shift is provably DRIVEN, because the mat-select's value
+ *    genuinely changed under a click. The exact rgb strings differ across lanes —
+ *    the Angular 8 `angular-material-css-vars` emits a bare `r,g,b` triple and
+ *    the Angular 16 one an `rgba(r, g, b, a)` — a declared lane difference, not a
+ *    failure; the DRIVEN shift itself (dark contrast becoming light) holds in
+ *    both.
+ *
+ *  - One keyboard shortcut. `w` (goToWorkView) navigates to the work view from
+ *    the project settings and its `work-view` host tag renders — a measurable
+ *    effect. `b` (toggleBacklog) produced no visible toggle in the observed state
+ *    — the work view rendered no backlog panel to toggle — recorded as a measured
+ *    limitation rather than claimed as an effect.
+ */
+export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_SETTINGS = Object.freeze({
+	state: 'measured-settings-change',
+	projectSwitch: Object.freeze({
+		addControl: 'section.projects > button[mat-menu-item]',
+		dialog: 'dialog-create-project',
+		titleInput: 'dialog-create-project input:not([type=color])',
+		submit: 'dialog-create-project button[type=submit]',
+		switchControl: 'side-nav .project:nth-of-type(2) > button[mat-menu-item]',
+		titleControl: 'main-header .current-project-title',
+		measuredCurrentTitleBefore: 'Super Productivity',
+		measuredNewProjectTitle: 'Witness leg-d project',
+		measuredProjectCountBefore: 1,
+		measuredProjectCountAfter: 2,
+	}),
+	theme: Object.freeze({
+		autoContrastControl: 'section.config-section:nth-of-type(2) mat-checkbox',
+		control: 'section.config-section:nth-of-type(2) mat-select',
+		submit: 'section.config-section:nth-of-type(2) .submit-button',
+		hueOption: '.cdk-overlay-container mat-option:first-of-type',
+		styleProbe: 'body',
+		styleVar: '--palette-primary-contrast-50',
+		drivenBy: 'uncheck-isAutoContrast-then-pick-a-non-default-huePrimary-and-save',
+		colorInputUndriveable:
+			'the witness PageHandle has no fill/evaluate primitive and char-press and arrow keys leave a native `input[type=color]` unchanged (u20c2l), so a color-save palette shift is unprovable and is not claimed; the click-driveable mat-select is driven instead',
+		measuredBaselineBefore: '0,0,0',
+		measuredBaselineAfter: '255,255,255',
+		measuredMigratedBefore: 'rgba(0, 0, 0, .87)',
+		measuredMigratedAfter: 'rgba(255, 255, 255, 1)',
+		laneDifference:
+			'the shifted contrast rgb differs across lanes — the Angular 8 `angular-material-css-vars` emits a bare `r,g,b` triple and the Angular 16 one an `rgba(r, g, b, a)` — a declared lane difference recorded here, not a failure; what both lanes agree on is that the driven mat-select change flipped the measured `--palette-primary-contrast-50` from a dark contrast to a light one',
+	}),
+	shortcut: Object.freeze({
+		key: 'w',
+		effect: 'goToWorkView',
+		hostTag: 'work-view',
+		measuredHostTagPresentAfter: 1,
+		backlogToggleNonClaim:
+			'the `b` (toggleBacklog) shortcut produced no visible toggle in the observed state — the work view rendered no backlog panel to toggle, split and backlog both unchanged — so no effect is claimed for it',
+	}),
+	lanes: Object.freeze(['baseline', 'migrated']),
+	published: false,
+	masked: false,
+});
+
+/**
  * What the browser found in the migrated lane that eight rounds of green builds
  * could not: the third invisible-to-build regression this cell has produced.
  *
@@ -831,6 +911,36 @@ export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_JOURNEY = Object.freeze({
 		iconAfterStart: 'pause',
 		iconAfterStop: 'play_arrow',
 	}),
+	/**
+	 * Leg (d), the settings-change — the last journey leg, measured identically in
+	 * structure on both lanes. The project-switch spine is green and deterministic;
+	 * the theme control is the click-driveable `huePrimary` mat-select (never the
+	 * undriveable color input, per u20c2l); the shortcut is `w`. Every fact behind
+	 * these anchors is on {@link WITNESS_ANGULAR_SUPER_PRODUCTIVITY_SETTINGS}.
+	 */
+	settingsChange: Object.freeze({
+		projectSwitch: Object.freeze({
+			addControl: 'section.projects > button[mat-menu-item]',
+			dialog: 'dialog-create-project',
+			titleInput: 'dialog-create-project input:not([type=color])',
+			submit: 'dialog-create-project button[type=submit]',
+			switchControl: 'side-nav .project:nth-of-type(2) > button[mat-menu-item]',
+			titleControl: 'main-header .current-project-title',
+			currentTitleBefore: 'Super Productivity',
+			newProjectTitle: 'Witness leg-d project',
+			projectCountBefore: 1,
+			projectCountAfter: 2,
+		}),
+		theme: Object.freeze({
+			autoContrastControl: 'section.config-section:nth-of-type(2) mat-checkbox',
+			control: 'section.config-section:nth-of-type(2) mat-select',
+			submit: 'section.config-section:nth-of-type(2) .submit-button',
+			hueOption: '.cdk-overlay-container mat-option:first-of-type',
+			styleProbe: 'body',
+			styleVar: '--palette-primary-contrast-50',
+		}),
+		shortcut: Object.freeze({ key: 'w', hostTag: 'work-view' }),
+	}),
 });
 
 /**
@@ -987,19 +1097,67 @@ export type WitnessAngularSuperProductivityTimeTracking = {
 };
 
 /**
+ * The settled result of the settings-change, leg (d) — the last journey leg.
+ *
+ * Three measured parts, each a RULE rather than a pinned literal, because the
+ * one lane-divergent part (the theme rgb) is a declared difference and the rest
+ * is measured the same in both lanes:
+ *
+ *  - `projectSwitch`: the create grew the side-nav list by exactly one, and the
+ *    switch flipped the current-project title to the project the create named —
+ *    `currentTitleAfter` equals `newProjectTitle` and differs from
+ *    `currentTitleBefore`. The literal titles are measured and travel, because
+ *    they are the application's own and agree across lanes.
+ *  - `theme`: the driven `huePrimary` mat-select change shifted the measured
+ *    `styleVar` — `styleValueBefore` differs from `styleValueAfter`. The literal
+ *    rgb values are per-lane and may differ (the declared lane difference on
+ *    {@link WITNESS_ANGULAR_SUPER_PRODUCTIVITY_SETTINGS}); the parity digest
+ *    carries only the fact THAT the driven change shifted the var, not the value.
+ *  - `shortcut`: `w` brought the work view — its host tag rendered after the
+ *    press. The `b` non-claim is recorded on the settings constant.
+ */
+export type WitnessAngularSuperProductivitySettings = {
+	state: 'measured-settings-change';
+	projectSwitch: {
+		control: string;
+		dialog: string;
+		titleControl: string;
+		switchControl: string;
+		newProjectTitle: string;
+		currentTitleBefore: string;
+		currentTitleAfter: string;
+		projectCountBefore: number;
+		projectCountAfter: number;
+	};
+	theme: {
+		autoContrastControl: string;
+		control: string;
+		styleVar: string;
+		styleValueBefore: string;
+		styleValueAfter: string;
+	};
+	shortcut: {
+		key: string;
+		hostTag: string;
+		hostTagPresentAfter: number;
+	};
+};
+
+/**
  * The application-specific journey evidence.
  *
  * `typeface` and `persistence` are the facts legs (a) and (e) measure and are
- * always present. `drag` (leg b) and `timeTracking` (leg c) are the legs this
- * unit lands the SHAPE of: the parser requires both once a browser has driven
- * the journey, but they are typed optional so the producer this schema will get
- * next can populate them without the not-yet-updated wiring failing to compile.
+ * always present. `drag` (leg b), `timeTracking` (leg c) and `settings` (leg d)
+ * are the legs this journey drives: the parser requires all three once a browser
+ * has driven the journey, but they are typed optional so a producer can populate
+ * them without the not-yet-updated wiring failing to compile.
  */
 export type WitnessAngularSuperProductivityJourney = {
 	typeface: WitnessAngularSuperProductivityTypeface;
 	persistence: WitnessAngularSuperProductivityPersistenceEvidence;
 	drag?: WitnessAngularSuperProductivityDrag;
 	timeTracking?: WitnessAngularSuperProductivityTimeTracking;
+	settings?: WitnessAngularSuperProductivitySettings;
 };
 
 /**
@@ -1278,6 +1436,26 @@ export function witnessAngularSuperProductivityBehaviorDigest(
 				currentTasksOnStart: journey?.timeTracking?.currentTasksOnStart,
 				currentTasksOnStop: journey?.timeTracking?.currentTasksOnStop,
 			},
+			// Leg (d) is behavioural, and both lanes must agree on it — but the theme
+			// rgb it shifts is a declared lane difference, so only the FACT of the
+			// driven shift travels here, never the value. The project-switch titles
+			// and the shortcut are the application's own and agree, so they travel in
+			// full.
+			settings: {
+				state: journey?.settings?.state,
+				projectSwitch: journey?.settings?.projectSwitch,
+				theme: {
+					control: journey?.settings?.theme.control,
+					autoContrastControl: journey?.settings?.theme.autoContrastControl,
+					styleVar: journey?.settings?.theme.styleVar,
+					shifted:
+						journey?.settings === undefined
+							? undefined
+							: journey.settings.theme.styleValueBefore !==
+								journey.settings.theme.styleValueAfter,
+				},
+				shortcut: journey?.settings?.shortcut,
+			},
 			scroll: typed.scroll,
 			successfulNonLoopback: run.successfulNonLoopback,
 		}),
@@ -1542,6 +1720,55 @@ function assertTimeTracking(
 }
 
 /**
+ * Leg (d): the settings-change, checked as three rules rather than against pinned
+ * literals. The project-switch grew the side-nav list by exactly one and the
+ * switch flipped the current-project title to the created project; the driven
+ * `huePrimary` mat-select change shifted the measured contrast style var (the
+ * rgb it lands on is per-lane and is not held equal here — that is the declared
+ * lane difference on {@link WITNESS_ANGULAR_SUPER_PRODUCTIVITY_SETTINGS}); and
+ * the `w` shortcut brought the work view. The unprovable color-input path is not
+ * claimed at all, per u20c2l.
+ */
+function assertSettings(
+	journey: WitnessAngularSuperProductivityJourney | undefined,
+	label: string,
+): void {
+	const settings = journey?.settings;
+	if (
+		settings === undefined ||
+		settings.state !== 'measured-settings-change' ||
+		// The project-switch spine.
+		settings.projectSwitch.control.length === 0 ||
+		settings.projectSwitch.dialog.length === 0 ||
+		settings.projectSwitch.titleControl.length === 0 ||
+		settings.projectSwitch.switchControl.length === 0 ||
+		settings.projectSwitch.newProjectTitle.length === 0 ||
+		settings.projectSwitch.currentTitleBefore.length === 0 ||
+		// The create grew the side-nav project list by exactly one.
+		settings.projectSwitch.projectCountAfter !== settings.projectSwitch.projectCountBefore + 1 ||
+		// The switch flipped the current-project title to the project the create
+		// named, so the title changed and it changed to the new project.
+		settings.projectSwitch.currentTitleBefore === settings.projectSwitch.currentTitleAfter ||
+		settings.projectSwitch.currentTitleAfter !== settings.projectSwitch.newProjectTitle ||
+		// The driven theme control.
+		settings.theme.control.length === 0 ||
+		settings.theme.autoContrastControl.length === 0 ||
+		settings.theme.styleVar.length === 0 ||
+		settings.theme.styleValueBefore.length === 0 ||
+		settings.theme.styleValueAfter.length === 0 ||
+		// The driven change shifted the measured style var: before differs from
+		// after. The value itself is a declared lane difference and not checked
+		// equal across lanes.
+		settings.theme.styleValueBefore === settings.theme.styleValueAfter ||
+		// The shortcut brought the work view.
+		settings.shortcut.key.length === 0 ||
+		settings.shortcut.hostTag.length === 0 ||
+		settings.shortcut.hostTagPresentAfter < 1
+	)
+		throw new Error(`Angular Super Productivity settings evidence differs: ${label}`);
+}
+
+/**
  * Every recorded route is a hash route naming one of the application's own
  * declared routes, or a parameterised child of one. The sequence itself belongs
  * to the journey and is required to be identical across the four runs by the
@@ -1742,6 +1969,7 @@ export function parseWitnessAngularSuperProductivityReceipt(
 		assertPersistence(run.applicationJourney, key);
 		assertDrag(run.applicationJourney, key);
 		assertTimeTracking(run.applicationJourney, key);
+		assertSettings(run.applicationJourney, key);
 		assertWitnessAngularSuperProductivityServiceWorker(run.serviceWorker, key);
 		assertScroll(run.scroll, key);
 		behaviors.add(run.behaviorDigest);
@@ -1890,6 +2118,11 @@ export function renderWitnessAngularSuperProductivityReceipt(
 		timeTracking === undefined
 			? 'the header play button icon flips on start and back on stop, setting and clearing a current task'
 			: `the header play button icon flipped from \`${timeTracking.iconBeforeStart}\` to \`${timeTracking.iconAfterStart}\` on start and back to \`${timeTracking.iconAfterStop}\` on stop, with the start setting ${timeTracking.currentTasksOnStart} current task and the stop clearing it`;
+	const settings = receipt.runs[0]?.applicationJourney.settings;
+	const settingsChange =
+		settings === undefined
+			? 'the project-switch spine flips the current-project title, a driven theme control shifts a measured contrast var, and the `w` shortcut brings the work view'
+			: `creating a project grew the side-nav list from ${settings.projectSwitch.projectCountBefore} to ${settings.projectSwitch.projectCountAfter} and switching to it flipped \`${settings.projectSwitch.titleControl}\` to \`${settings.projectSwitch.currentTitleAfter}\`; the driven \`${settings.theme.control}\` shifted \`${settings.theme.styleVar}\` from \`${settings.theme.styleValueBefore}\` to \`${settings.theme.styleValueAfter}\`; the \`${settings.shortcut.key}\` shortcut brought the \`${settings.shortcut.hostTag}\` host tag`;
 	return `# Super Productivity v2.13.15 — direct Witness browser proof
 
 - Result: pass
@@ -1914,6 +2147,7 @@ ${chain}
 - Routing: ${receipt.routeShape.router}; every recorded route is a \`${receipt.routeShape.prefix}\` route naming one of the application's own ${receipt.routeShape.known.length} declared routes
 - Drag: ${receipt.dragSurface.state} — the application's own ${receipt.dragSurface.mechanism} reorders the task list, and this vertical drives it: ${drag}
 - Time tracking: leg (c) — ${timer}
+- Settings change: leg (d) — ${settingsChange}
 - Mutation proof: \`${receipt.mutation.seam}\` in \`${receipt.mutation.path}\` at offset ${receipt.mutation.offset} made the journey red, byte-identical restoration made it green again
 - Scroll: ${scroll}
 - Angular lineage readiness: unchanged at ${receipt.readiness.angularLineage.ready}/${receipt.readiness.angularLineage.total}; this vertical is not counted

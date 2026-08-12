@@ -15,6 +15,7 @@ import {
 	WITNESS_ANGULAR_SUPER_PRODUCTIVITY_ROUTE_SHAPE,
 	WITNESS_ANGULAR_SUPER_PRODUCTIVITY_SEAMS,
 	WITNESS_ANGULAR_SUPER_PRODUCTIVITY_SERVICE_WORKER,
+	WITNESS_ANGULAR_SUPER_PRODUCTIVITY_SETTINGS,
 	WITNESS_ANGULAR_SUPER_PRODUCTIVITY_STYLE_PROBES,
 	WITNESS_ANGULAR_SUPER_PRODUCTIVITY_TYPEFACE,
 	WITNESS_ANGULAR_SUPER_PRODUCTIVITY_TIME_TRACKING_REANCHOR,
@@ -284,6 +285,52 @@ describe('the drag surface and the deliberate absences', () => {
 		expect(reanchor.perTaskStartButtonHoverGated.length).toBeGreaterThan(0);
 		expect(reanchor.published).toBe(false);
 		expect(reanchor.masked).toBe(false);
+	});
+
+	it('pins leg (d): the project-switch spine, a driven theme control, and the `w` shortcut', () => {
+		const leg = journey.settingsChange;
+		const settings = WITNESS_ANGULAR_SUPER_PRODUCTIVITY_SETTINGS;
+		// The project-switch spine: the addProject control, the dialog, the switch,
+		// and the count growing one to two.
+		expect(leg.projectSwitch.addControl).toBe(settings.projectSwitch.addControl);
+		expect(leg.projectSwitch.dialog).toBe('dialog-create-project');
+		expect(leg.projectSwitch.titleInput).toContain(':not([type=color])');
+		expect(leg.projectSwitch.switchControl).toContain('.project:nth-of-type(2)');
+		expect(leg.projectSwitch.titleControl).toBe('main-header .current-project-title');
+		expect(leg.projectSwitch.projectCountAfter).toBe(leg.projectSwitch.projectCountBefore + 1);
+		expect(leg.projectSwitch.newProjectTitle.length).toBeGreaterThan(0);
+		expect(leg.projectSwitch.currentTitleBefore).not.toBe(leg.projectSwitch.newProjectTitle);
+		// The theme control is the click-driveable mat-select, NOT the untouchable
+		// color input, and it is measured against a contrast custom property.
+		expect(leg.theme.control).toContain('mat-select');
+		expect(leg.theme.control).not.toContain('input[type=color]');
+		expect(leg.theme.autoContrastControl).toContain('mat-checkbox');
+		expect(leg.theme.styleVar).toBe('--palette-primary-contrast-50');
+		expect(leg.theme.styleProbe).toBe('body');
+		// The shortcut is `w`, whose measurable effect is the work-view host tag.
+		expect(leg.shortcut.key).toBe('w');
+		expect(leg.shortcut.hostTag).toBe(journey.hostTag);
+	});
+
+	it('records the color-input non-claim and the theme lane difference as measurements', () => {
+		const settings = WITNESS_ANGULAR_SUPER_PRODUCTIVITY_SETTINGS;
+		expect(settings.state).toBe('measured-settings-change');
+		// u20c2l: the native color input is undriveable, so no color-save shift is
+		// claimed; the driven mat-select is what carries the leg instead.
+		expect(settings.theme.colorInputUndriveable.length).toBeGreaterThan(0);
+		expect(settings.theme.control).toContain('mat-select');
+		// The shifted rgb differs across lanes, and that is a declared difference,
+		// not a failure: baseline emits a bare triple, migrated an rgba().
+		expect(settings.theme.measuredBaselineBefore).not.toBe(settings.theme.measuredMigratedBefore);
+		expect(settings.theme.measuredBaselineBefore).not.toBe(settings.theme.measuredBaselineAfter);
+		expect(settings.theme.measuredMigratedBefore).not.toBe(settings.theme.measuredMigratedAfter);
+		expect(settings.theme.laneDifference.length).toBeGreaterThan(0);
+		// The `b` shortcut had no visible toggle in the observed state, recorded as
+		// a measured limitation rather than claimed as an effect.
+		expect(settings.shortcut.backlogToggleNonClaim.length).toBeGreaterThan(0);
+		expect(settings.shortcut.key).toBe('w');
+		expect(settings.published).toBe(false);
+		expect(settings.masked).toBe(false);
 	});
 
 	it('carries the work-view host-tag correction as a measurement, not a note', () => {
