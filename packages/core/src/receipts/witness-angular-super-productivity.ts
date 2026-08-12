@@ -1,7 +1,11 @@
+import { createRegExp, digit } from 'magic-regexp';
 import { readFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'pathe';
 import { canonicalize, sha256 } from './canonicalize.ts';
-import { WITNESS_NON_LOOPBACK_QUERY_FREE_PATH_RULE } from './witness-real-app.ts';
+import {
+	WITNESS_NON_LOOPBACK_QUERY_FREE_PATH_RULE,
+	WITNESS_REAL_APP_DRAG_SURFACES,
+} from './witness-real-app.ts';
 import type {
 	WitnessConsoleErrorInventory,
 	WitnessConsoleErrorInventoryEntry,
@@ -533,24 +537,27 @@ export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_ACCOMMODATION_PAYLOAD = Object.f
 });
 
 /**
- * Why this application is not on the closed drag-surface list yet, stated so
- * the absence is a position rather than an oversight.
+ * The application's admission to the closed drag-surface list, stated so the
+ * membership is a position the schema stands behind rather than a convenience.
  *
  * Super Productivity has a genuine drag surface — its task list reorders by
- * drag, through the era's own dragula binding — and it is the strongest
- * candidate in the corpus for the first drag membership since jira-clone. That
- * is exactly why membership is not taken here: the list admits an application
- * whose drag has been driven and whose settled result has been asserted
- * exactly, and no browser has been driven at this application yet. Until then
- * every run of this vertical must record drag as not-tested, and the parser
- * below fails a run that records one.
+ * drag, through the era's own dragula binding — and it is the second member of
+ * the closed list after jira-clone. What earns the membership is the surface
+ * itself: the application's own `ng2-dragula` binding on the task list is a real
+ * reorder gesture a journey can drive, so the vertical is required to drive it
+ * rather than refuse it, and the parser below fails a run of this vertical that
+ * records NO drag. The pin here is the REQUIREMENT and the rule its settled
+ * order has to satisfy; the literal task order the reorder produces is measured
+ * by the calibration driver and pinned when this proof is published, exactly as
+ * the rendered-style differences and the worker's settled state are.
  */
 export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_DRAG_SURFACE = Object.freeze({
-	state: 'not-a-member-of-the-closed-drag-surface-list',
+	state: 'member-of-the-closed-drag-surface-list',
+	surface: ANGULAR_SUPER_PRODUCTIVITY_APP,
 	hasDragSurface: true,
 	mechanism: 'ng2-dragula 2.1.1 in the era lane, on the task list',
-	driven: false,
-	why: 'membership is earned by a measured drag whose settled result the journey asserts exactly; this proof drives no journey and claims no drag',
+	requirement:
+		'a run of this vertical must record a genuine task-list reorder whose settled order is a permutation of the order before the move, with the application’s own store list agreeing with the rendered list after it',
 	masked: false,
 });
 
@@ -737,7 +744,13 @@ export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_JOURNEY = Object.freeze({
 	 */
 	externalAssetCachedAfterReload:
 		'https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700&display=swap',
-	drag: 'not-driven',
+	/**
+	 * The surface leg (b) drives: the application's own dragula-bound task list.
+	 * This names WHICH surface the reorder gesture targets, not the order it
+	 * settles to — that order is measured by the calibration driver and pinned
+	 * when this proof is published.
+	 */
+	drag: 'task-list-reorder',
 });
 
 /**
@@ -837,9 +850,66 @@ export type WitnessAngularSuperProductivityPersistenceEvidence = {
 	survivesOnlineReload: true;
 };
 
+/**
+ * The settled result of the task-list reorder, leg (b).
+ *
+ * The gesture is a genuine dragula pointer drag on the application's own task
+ * list, and what the shape pins is a RULE rather than a measured order: the
+ * task that moved is named, the rendered list before and after the move are
+ * both recorded, the after-order is a permutation of the before-order — nothing
+ * created or lost by moving one task — the order actually changed, and the
+ * order the application's own store settled to matches the order the page
+ * rendered. The literal titles and the from/to positions are measured by the
+ * calibration driver and pinned when this proof is published; this shape
+ * refuses a run whose store disagrees with its rendered list, or one that
+ * dropped or duplicated a task while moving one, or one whose "after" order is
+ * the "before" order unchanged.
+ */
+export type WitnessAngularSuperProductivityDrag = {
+	state: 'measured-task-list-reorder';
+	surface: (typeof WITNESS_REAL_APP_DRAG_SURFACES)[number];
+	pointer: 'genuine-dragula-pointer-down-move-up';
+	movedTask: string;
+	renderedOrderBefore: string[];
+	renderedOrderAfter: string[];
+	storeOrderAfter: string[];
+};
+
+/**
+ * The settled result of starting a task's timer, leg (c).
+ *
+ * Starting the timer flips the control's icon and renders a running time value;
+ * the shape pins the RULE the calibration driver's measurement has to satisfy
+ * rather than the icons or the value themselves. The anchor is the icon flip:
+ * the control shows one icon before the timer is started and a different one
+ * after, so a run whose before- and after-icons are equal recorded no flip and
+ * fails. A play indicator has to be present once tracking is on, and a time
+ * value has to render carrying at least one digit — the exact icons, the exact
+ * indicator and the exact duration are measured by the driver and pinned when
+ * this proof is published.
+ */
+export type WitnessAngularSuperProductivityTimeTracking = {
+	state: 'measured-task-time-tracking';
+	iconBeforeStart: string;
+	iconAfterStart: string;
+	playIndicatorPresent: true;
+	trackedTimeValue: string;
+};
+
+/**
+ * The application-specific journey evidence.
+ *
+ * `typeface` and `persistence` are the facts legs (a) and (e) measure and are
+ * always present. `drag` (leg b) and `timeTracking` (leg c) are the legs this
+ * unit lands the SHAPE of: the parser requires both once a browser has driven
+ * the journey, but they are typed optional so the producer this schema will get
+ * next can populate them without the not-yet-updated wiring failing to compile.
+ */
 export type WitnessAngularSuperProductivityJourney = {
 	typeface: WitnessAngularSuperProductivityTypeface;
 	persistence: WitnessAngularSuperProductivityPersistenceEvidence;
+	drag?: WitnessAngularSuperProductivityDrag;
+	timeTracking?: WitnessAngularSuperProductivityTimeTracking;
 };
 
 /**
@@ -1097,6 +1167,25 @@ export function witnessAngularSuperProductivityBehaviorDigest(
 				localStorageKeysAfterJourney: journey?.persistence.localStorageKeysAfterJourney,
 				survivesOnlineReload: journey?.persistence.survivesOnlineReload,
 			},
+			// Legs (b) and (c) are behavioural, so both lanes must agree on the
+			// settled reorder and the timer flip in full; they travel here rather
+			// than staying in the lane-specific byte inventory.
+			drag: {
+				state: journey?.drag?.state,
+				surface: journey?.drag?.surface,
+				pointer: journey?.drag?.pointer,
+				movedTask: journey?.drag?.movedTask,
+				renderedOrderBefore: journey?.drag?.renderedOrderBefore,
+				renderedOrderAfter: journey?.drag?.renderedOrderAfter,
+				storeOrderAfter: journey?.drag?.storeOrderAfter,
+			},
+			timeTracking: {
+				state: journey?.timeTracking?.state,
+				iconBeforeStart: journey?.timeTracking?.iconBeforeStart,
+				iconAfterStart: journey?.timeTracking?.iconAfterStart,
+				playIndicatorPresent: journey?.timeTracking?.playIndicatorPresent,
+				trackedTimeValue: journey?.timeTracking?.trackedTimeValue,
+			},
 			scroll: typed.scroll,
 			successfulNonLoopback: run.successfulNonLoopback,
 		}),
@@ -1295,6 +1384,66 @@ function assertPersistence(
 		throw new Error(`Angular Super Productivity persistence evidence differs: ${label}`);
 }
 
+/** A rendered time value carries at least one digit; the exact value is publish-time. */
+const TRACKED_TIME_VALUE_HAS_DIGIT = createRegExp(digit);
+
+/**
+ * Leg (b): the task-list reorder, checked as a rule rather than against a pinned
+ * order. The moved task is named and is in the list, the after-order is a
+ * permutation of the before-order that actually changed, and the store the
+ * application settled to agrees with the list the page rendered.
+ */
+function assertDrag(
+	journey: WitnessAngularSuperProductivityJourney | undefined,
+	label: string,
+): void {
+	const drag = journey?.drag;
+	if (
+		drag === undefined ||
+		drag.state !== 'measured-task-list-reorder' ||
+		drag.surface !== ANGULAR_SUPER_PRODUCTIVITY_APP ||
+		!(WITNESS_REAL_APP_DRAG_SURFACES as readonly string[]).includes(drag.surface) ||
+		drag.pointer !== 'genuine-dragula-pointer-down-move-up' ||
+		drag.movedTask.length === 0 ||
+		!Array.isArray(drag.renderedOrderBefore) ||
+		!Array.isArray(drag.renderedOrderAfter) ||
+		!Array.isArray(drag.storeOrderAfter) ||
+		drag.renderedOrderBefore.length === 0 ||
+		// The reorder is a permutation: the same multiset in a different order.
+		drag.renderedOrderBefore.length !== drag.renderedOrderAfter.length ||
+		[...drag.renderedOrderBefore].sort().join('\n') !==
+			[...drag.renderedOrderAfter].sort().join('\n') ||
+		drag.renderedOrderBefore.join('\n') === drag.renderedOrderAfter.join('\n') ||
+		// The task that moved is one the list actually held before the move.
+		!drag.renderedOrderBefore.includes(drag.movedTask) ||
+		// The store and the page agree on where the move left the list.
+		drag.storeOrderAfter.join('\n') !== drag.renderedOrderAfter.join('\n')
+	)
+		throw new Error(`Angular Super Productivity drag evidence differs: ${label}`);
+}
+
+/**
+ * Leg (c): starting a task's timer. The anchor is the icon flip — the control
+ * shows a different icon after the timer starts than before — plus a play
+ * indicator once tracking is on and a rendered time value carrying a digit.
+ */
+function assertTimeTracking(
+	journey: WitnessAngularSuperProductivityJourney | undefined,
+	label: string,
+): void {
+	const tracking = journey?.timeTracking;
+	if (
+		tracking === undefined ||
+		tracking.state !== 'measured-task-time-tracking' ||
+		tracking.iconBeforeStart.length === 0 ||
+		tracking.iconAfterStart.length === 0 ||
+		tracking.iconBeforeStart === tracking.iconAfterStart ||
+		tracking.playIndicatorPresent !== true ||
+		!TRACKED_TIME_VALUE_HAS_DIGIT.test(tracking.trackedTimeValue)
+	)
+		throw new Error(`Angular Super Productivity time-tracking evidence differs: ${label}`);
+}
+
 /**
  * Every recorded route is a hash route naming one of the application's own
  * declared routes, or a parameterised child of one. The sequence itself belongs
@@ -1468,11 +1617,12 @@ export function parseWitnessAngularSuperProductivityReceipt(
 			!exact(run.observerFinalization.workerEvents, run.serviceWorker?.workerEvents) ||
 			run.servedStatic.byteIdentical !== true ||
 			run.interactions.length === 0 ||
-			// Drag membership is earned by a measured drag, and this proof drives
-			// none. A run that recorded one would be claiming a surface the closed
-			// list has not admitted.
-			run.interactions.some((interaction) => interaction.kind === 'drag') ||
-			run.witnessRecord.interactions.some((interaction) => interaction.kind === 'drag') ||
+			// Drag membership is earned, so a run must record the reorder gesture
+			// rather than refuse it — in both the interaction list and the witness
+			// record the browser observed. Its settled order is checked by
+			// `assertDrag` below.
+			!run.interactions.some((interaction) => interaction.kind === 'drag') ||
+			!run.witnessRecord.interactions.some((interaction) => interaction.kind === 'drag') ||
 			run.semanticDigest !== witnessAngularSuperProductivityRawDigest(run) ||
 			run.behaviorDigest !==
 				witnessAngularSuperProductivityBehaviorDigest(run, declaredDifferenceLabels)
@@ -1493,6 +1643,8 @@ export function parseWitnessAngularSuperProductivityReceipt(
 		assertRenderedStyles(run.renderedStyles, key);
 		assertTypeface(run.applicationJourney, key);
 		assertPersistence(run.applicationJourney, key);
+		assertDrag(run.applicationJourney, key);
+		assertTimeTracking(run.applicationJourney, key);
 		assertWitnessAngularSuperProductivityServiceWorker(run.serviceWorker, key);
 		assertScroll(run.scroll, key);
 		behaviors.add(run.behaviorDigest);
@@ -1631,6 +1783,16 @@ export function renderWitnessAngularSuperProductivityReceipt(
 		receipt.scroll.state === 'measured-genuine-viewport-scroll'
 			? `${receipt.scroll.state} on \`${receipt.scroll.route}\` — ${receipt.scroll.scrollHeight}px of document in a ${receipt.scroll.clientHeight}px viewport, moved by a genuine wheel gesture`
 			: `${receipt.scroll.state} — ${receipt.scroll.documentOverflow}`;
+	const dragLeg = receipt.runs[0]?.applicationJourney.drag;
+	const drag =
+		dragLeg === undefined
+			? receipt.dragSurface.requirement
+			: `\`${dragLeg.movedTask}\` moved and the ${dragLeg.renderedOrderAfter.length}-task list settled to a new order its own store agreed with`;
+	const timeTracking = receipt.runs[0]?.applicationJourney.timeTracking;
+	const timer =
+		timeTracking === undefined
+			? 'the timer flips the control icon and renders a running value'
+			: `the control icon flipped from \`${timeTracking.iconBeforeStart}\` to \`${timeTracking.iconAfterStart}\` and a running value \`${timeTracking.trackedTimeValue}\` rendered`;
 	return `# Super Productivity v2.13.15 — direct Witness browser proof
 
 - Result: pass
@@ -1653,7 +1815,8 @@ ${chain}
 - Rendered appearance: ${receipt.renderedStyleParity.probes} probes measured off the live page in both lanes; every probe outside the declared differences resolves identically. Declared differences: ${differences}
 - Persistence: ${receipt.persistence.store} under \`${receipt.persistence.databaseName}\`/\`${receipt.persistence.storeName}\`, backend ${receipt.persistence.backend}, stubbed: ${String(receipt.persistence.stubbed)}
 - Routing: ${receipt.routeShape.router}; every recorded route is a \`${receipt.routeShape.prefix}\` route naming one of the application's own ${receipt.routeShape.known.length} declared routes
-- Drag: ${receipt.dragSurface.state} — the application has one (${receipt.dragSurface.mechanism}) and this proof does not drive it; ${receipt.dragSurface.why}
+- Drag: ${receipt.dragSurface.state} — the application's own ${receipt.dragSurface.mechanism} reorders the task list, and this vertical drives it: ${drag}
+- Time tracking: leg (c) — ${timer}
 - Mutation proof: \`${receipt.mutation.seam}\` in \`${receipt.mutation.path}\` at offset ${receipt.mutation.offset} made the journey red, byte-identical restoration made it green again
 - Scroll: ${scroll}
 - Angular lineage readiness: unchanged at ${receipt.readiness.angularLineage.ready}/${receipt.readiness.angularLineage.total}; this vertical is not counted

@@ -226,12 +226,13 @@ describe('the service worker and the typeface', () => {
 	});
 });
 
-describe('the deliberate absences', () => {
-	it('declares no drag, no file input and no download surface', () => {
-		// The application has the corpus's strongest drag surface and this
-		// specification does not touch it: membership is earned by a measured drag
-		// whose settled result a journey asserts exactly.
-		expect(journey.drag).toBe('not-driven');
+describe('the drag surface and the deliberate absences', () => {
+	it('names the task-list reorder as the surface leg (b) drives, with no file input or download', () => {
+		// The application has the corpus's strongest drag surface after jira-clone,
+		// and this vertical now drives it: the journey names WHICH surface the leg
+		// targets — the dragula-bound task list — while the order it settles to is
+		// measured by the calibration driver and pinned at publish.
+		expect(journey.drag).toBe('task-list-reorder');
 		expect(spec.fileInputs).toBeUndefined();
 		expect(spec.downloads).toBeUndefined();
 	});

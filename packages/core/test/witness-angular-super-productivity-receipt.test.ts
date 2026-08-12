@@ -117,14 +117,16 @@ function run(lane: 'baseline' | 'migrated', pass: 1 | 2): WitnessAngularSuperPro
 		interactions: [
 			{ kind: 'click', selector: '#fixture' },
 			{ kind: 'type', selector: '#fixture' },
+			{ kind: 'drag', selector: 'task-list task' },
 		],
-		assertions: ['the created task is listed'],
+		assertions: ['the created task is listed', 'the reordered task list settled'],
 		routes: ['/#/work-view', '#/config', '#/daily-summary/2019-12-05'],
 		trackedEvents: ['click', 'input'],
 		witnessRecord: {
 			interactions: [
 				{ kind: 'click', selector: '#fixture' },
 				{ kind: 'type', selector: '#fixture' },
+				{ kind: 'drag', selector: 'task-list task' },
 			],
 			navigationPaths: ['#/work-view'],
 			trackedEventCounts: { click: 5, input: 7 },
@@ -239,6 +241,22 @@ function run(lane: 'baseline' | 'migrated', pass: 1 | 2): WitnessAngularSuperPro
 				localStorageKeysAfterJourney: ['SUP_LAST_ACTIVE'],
 				survivesOnlineReload: true,
 			},
+			drag: {
+				state: 'measured-task-list-reorder',
+				surface: ANGULAR_SUPER_PRODUCTIVITY_APP,
+				pointer: 'genuine-dragula-pointer-down-move-up',
+				movedTask: 'Witness task alpha',
+				renderedOrderBefore: ['Witness task alpha', 'Witness task beta', 'Witness task gamma'],
+				renderedOrderAfter: ['Witness task beta', 'Witness task alpha', 'Witness task gamma'],
+				storeOrderAfter: ['Witness task beta', 'Witness task alpha', 'Witness task gamma'],
+			},
+			timeTracking: {
+				state: 'measured-task-time-tracking',
+				iconBeforeStart: 'play_arrow',
+				iconAfterStart: 'pause',
+				playIndicatorPresent: true,
+				trackedTimeValue: '0:05',
+			},
 		},
 		scroll: {
 			state: 'measured-genuine-viewport-scroll',
@@ -348,10 +366,15 @@ function fixture(): WitnessAngularSuperProductivityReceipt {
 }
 
 describe('Angular Super Productivity Witness receipt', () => {
-	it('is admitted to the closed real-app list as an Angular vertical and not to the drag list', () => {
+	it('is admitted to the closed real-app list as an Angular vertical and to the drag list', () => {
 		expect(WITNESS_REAL_APP_NAMES).toContain(ANGULAR_SUPER_PRODUCTIVITY_APP);
-		expect(WITNESS_REAL_APP_DRAG_SURFACES as readonly string[]).not.toContain(
+		expect(WITNESS_REAL_APP_DRAG_SURFACES as readonly string[]).toContain(
 			ANGULAR_SUPER_PRODUCTIVITY_APP,
+		);
+		// jira-clone and super-productivity are the two members of the closed list.
+		expect(WITNESS_REAL_APP_DRAG_SURFACES).toHaveLength(2);
+		expect(WITNESS_ANGULAR_SUPER_PRODUCTIVITY_DRAG_SURFACE.state).toBe(
+			'member-of-the-closed-drag-surface-list',
 		);
 		expect(fixture().runs.every((entry) => entry.framework === 'angular')).toBe(true);
 	});
@@ -415,11 +438,15 @@ describe('Angular Super Productivity Witness receipt', () => {
 		);
 	});
 
-	it('rejects a run that records a drag it has not earned', () => {
+	it('rejects a run that refuses the drag it must now record', () => {
 		const receipt = fixture();
 		const run = receipt.runs[0]!;
-		run.interactions[0]!.kind = 'drag';
-		run.witnessRecord.interactions[0]!.kind = 'drag';
+		// Strip the earned reorder gesture from the interaction list; a member of the
+		// closed drag list that recorded no drag is refusing a surface it must drive.
+		run.interactions = run.interactions.filter((interaction) => interaction.kind !== 'drag');
+		run.witnessRecord.interactions = run.witnessRecord.interactions.filter(
+			(interaction) => interaction.kind !== 'drag',
+		);
 		run.semanticDigest = witnessAngularSuperProductivityRawDigest(run);
 		run.behaviorDigest = witnessAngularSuperProductivityBehaviorDigest(
 			run,
@@ -427,6 +454,60 @@ describe('Angular Super Productivity Witness receipt', () => {
 		);
 		receipt.integrity.canonicalDigest = witnessAngularSuperProductivityDigest(receipt);
 		expect(() => parseWitnessAngularSuperProductivityReceipt(receipt)).toThrow('run differs');
+	});
+
+	it('rejects a reorder whose store disagrees with the rendered list', () => {
+		const receipt = fixture();
+		for (const run of receipt.runs) {
+			run.applicationJourney.drag!.storeOrderAfter = [
+				...run.applicationJourney.drag!.renderedOrderAfter,
+			].reverse();
+			run.semanticDigest = witnessAngularSuperProductivityRawDigest(run);
+			run.behaviorDigest = witnessAngularSuperProductivityBehaviorDigest(
+				run,
+				DECLARED_DIFFERENCE_LABELS,
+			);
+		}
+		receipt.integrity.canonicalDigest = witnessAngularSuperProductivityDigest(receipt);
+		expect(() => parseWitnessAngularSuperProductivityReceipt(receipt)).toThrow(
+			'drag evidence differs',
+		);
+	});
+
+	it('rejects an after-order that is not a permutation of the order before the move', () => {
+		const receipt = fixture();
+		for (const run of receipt.runs) {
+			const drag = run.applicationJourney.drag!;
+			// Drop a task in the move: a reorder may not create or lose one.
+			drag.renderedOrderAfter = drag.renderedOrderAfter.slice(0, -1);
+			drag.storeOrderAfter = [...drag.renderedOrderAfter];
+			run.semanticDigest = witnessAngularSuperProductivityRawDigest(run);
+			run.behaviorDigest = witnessAngularSuperProductivityBehaviorDigest(
+				run,
+				DECLARED_DIFFERENCE_LABELS,
+			);
+		}
+		receipt.integrity.canonicalDigest = witnessAngularSuperProductivityDigest(receipt);
+		expect(() => parseWitnessAngularSuperProductivityReceipt(receipt)).toThrow(
+			'drag evidence differs',
+		);
+	});
+
+	it('rejects a time-tracking leg whose icon never flipped', () => {
+		const receipt = fixture();
+		for (const run of receipt.runs) {
+			run.applicationJourney.timeTracking!.iconAfterStart =
+				run.applicationJourney.timeTracking!.iconBeforeStart;
+			run.semanticDigest = witnessAngularSuperProductivityRawDigest(run);
+			run.behaviorDigest = witnessAngularSuperProductivityBehaviorDigest(
+				run,
+				DECLARED_DIFFERENCE_LABELS,
+			);
+		}
+		receipt.integrity.canonicalDigest = witnessAngularSuperProductivityDigest(receipt);
+		expect(() => parseWitnessAngularSuperProductivityReceipt(receipt)).toThrow(
+			'time-tracking evidence differs',
+		);
 	});
 
 	it('checks the declared style differences in both directions', () => {

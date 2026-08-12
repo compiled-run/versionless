@@ -55,9 +55,9 @@ export const WITNESS_REAL_APP_NAMES = [
 	 * asserting a zero.
 	 *
 	 * It is also the first whose state lives in IndexedDB rather than in local
-	 * storage, and the first with a genuine drag surface since jira-clone — which
-	 * it is deliberately not a member of the closed drag list for, because that
-	 * membership is earned by a measured drag and no journey has driven one.
+	 * storage, and the second member of the closed drag list after jira-clone:
+	 * its task list reorders through the era's own dragula binding, a genuine
+	 * drag surface the vertical's journey now drives rather than refuses.
 	 */
 	'angular-super-productivity',
 ] as const;
@@ -70,9 +70,14 @@ export const WITNESS_REAL_APP_RUNS = WITNESS_REAL_APP_NAMES.length * 4;
  * available: it is only honest where the application has a genuine drag surface
  * whose settled result can be asserted exactly, so every other application in
  * the corpus continues to record drag as not-tested and fails the run if one
- * appears.
+ * appears. Two applications earn it — jira-clone's board columns and
+ * super-productivity's dragula-bound task list — and each admits its own
+ * settled-order shape in its own schema.
  */
-export const WITNESS_REAL_APP_DRAG_SURFACES = ['angular-jira-clone'] as const;
+export const WITNESS_REAL_APP_DRAG_SURFACES = [
+	'angular-jira-clone',
+	'angular-super-productivity',
+] as const;
 
 export type WitnessGesture = 'click' | 'type' | 'press' | 'hover' | 'scroll' | 'drag';
 export type WitnessServiceWorkerTelemetry = {
