@@ -289,7 +289,7 @@ function fixture(): WitnessAngularSuperProductivityReceipt {
 			intendedFailure: true,
 			lane: 'migrated',
 			seam: 'the task the work view lists after the journey created it',
-			path: 'dist-23/main.96bfd856bd1e081a.js',
+			path: 'dist-25/main.389e30ec3e83a786.js',
 			offset: 4096,
 			beforeSha256: digestOf('before'),
 			mutatedSha256: digestOf('mutated'),
@@ -589,7 +589,7 @@ describe('Angular Super Productivity Witness receipt', () => {
 		);
 	});
 
-	it('binds the era digest correction and the offline font lane by their exact bytes', async () => {
+	it('binds the era digest correction and the dist-25 rebind lane by their exact bytes', async () => {
 		expect(ANGULAR_SUPER_PRODUCTIVITY_CANONICAL_RECEIPTS).toHaveLength(2);
 		for (const bound of ANGULAR_SUPER_PRODUCTIVITY_CANONICAL_RECEIPTS) {
 			const bytes = await readFile(path.join(root, bound.path));
@@ -609,13 +609,14 @@ describe('Angular Super Productivity Witness receipt', () => {
 
 	it('ends the migrated lane chain at the lane it serves', () => {
 		const chain = ANGULAR_SUPER_PRODUCTIVITY_MIGRATED_LANE_CHAIN;
-		expect(chain).toHaveLength(2);
+		expect(chain).toHaveLength(3);
 		expect(chain.at(-1)!.contradictedBy).toBeNull();
 		expect(chain.at(-1)!.record).toBe(
 			ANGULAR_SUPER_PRODUCTIVITY_CANONICAL_RECEIPTS.find((bound) => bound.lane === 'migrated')!
 				.path,
 		);
-		expect(chain[0]!.contradictedBy).not.toBeNull();
+		// Every superseded link in the chain names what its successor could not see.
+		for (const link of chain.slice(0, -1)) expect(link.contradictedBy).not.toBeNull();
 	});
 
 	it('binds the one accommodation payload the inventory names', async () => {

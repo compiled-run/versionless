@@ -5248,7 +5248,7 @@ const angularSuperProductivitySpec: AppSpec = {
 	framework: 'angular',
 	sources: {
 		baseline: '.versionless/cache/angular-super-productivity-v2-13-15-baseline/dist-run2',
-		migrated: '.versionless/stage/angular-super-productivity-v2-13-15-u18b/dist-23',
+		migrated: '.versionless/stage/angular-super-productivity-v2-13-15-u18b/dist-25',
 	},
 	/**
 	 * Deep-linked rather than opened bare. The bare document records its

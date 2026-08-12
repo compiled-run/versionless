@@ -1,0 +1,472 @@
+{
+  "schemaVersion": "versionless.angular-super-productivity-dist25-rebind-lane.v1",
+  "unit": "lrapr-t006/u20c2g-rebind-dist25",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "result": "migrated-lane-rebound-to-dist25-reorder-in-the-booting-bytes-regression-gone-offline-green-deterministic-modulo-the-clock",
+  "meaning": "The migrated lane u23 bound (dist-23) is immutable and stays the record of the offline font seam, but it lacks the template-binding-reorder and throws the split regression once per load: the `<split>` element binds `splitPos` before its two element inputs, so under Ivy the position setter runs against undefined elements and the work view throws `addClass` on undefined — a defect a green build cannot report, measured in a browser by u20c2e against dist-23 and dist-25 on the same host and day. This record rebinds the migrated lane to dist-25: the u20c2e round assembled the migrated tree with the reorder in it, disabled the Angular 16 font inliner with u23's capability, and rebuilt twice under the offline egress guard into dist-25 and dist-26. The two builds make no egress attempt, are green, emit the same 62-artifact worker-complete census u23 measured, and agree with each other file for file except the one clock field in the generated service-worker manifest. The compiled `<split>` property order in the emitted application chunk sets both element inputs before the position input, so the fix survives the compiler into the booting bytes, and the emitted document links the same Roboto stylesheet with nothing inlined, exactly as the era build emitted it.",
+  "supersedes": {
+    "record": "u23-offline-font-lane.json",
+    "unit": "lrapr-t006/u23-super-productivity-offline-rebuild",
+    "by": "reference",
+    "bytesSha256": "0512ec62aaf3219b323f70b837e666cab8e65ddb8cafdebddeac85e339bae36c",
+    "digest": "b429f1cfcee07633160c6d03e8e37dd8b052b5b5d20f5c6eedd2d6437f172514",
+    "canonicalRoot": "dist-23",
+    "why": "u23's dist-23/dist-24 bytes are unchanged and it stays the migrated lane's record of the offline font seam: the font inliner off, the era `<link>` restored, and zero egress across two green builds under a process-scoped guard. What it could not see is that the lane it bound throws the split regression once per load, because the reorder fix did not exist when it built. This record replaces it as the bound migrated lane, because dist-25 is the lane whose bytes carry the fix and load clean.",
+    "carriesForward": "The font-inlining-disable capability, the era-faithful font seam, the offline egress guard and the 62-artifact worker-complete census are all carried forward — re-measured here against dist-25/dist-26 rather than asserted from u23. The manual-migration bill and the accommodation payload u18h recorded are untouched and un-re-measured by this round."
+  },
+  "regressionGone": {
+    "state": "measured-in-a-browser-by-the-u20c2e-behavior-proof-carried-here-by-reference",
+    "boundTo": {
+      "record": "evidence/runs/angular-super-productivity-v2-13-15/u20c2e-assemble-rebuild-behavior.json",
+      "digest": "eaf8775025dff1fe8595de9dd6e42c2f2fa52898de56dd0b228c721b7795d711",
+      "bytesSha256": "c8d39e39f6bde5457115aca6da0eaa108a96ebedd116ce3973297693e87001fa"
+    },
+    "route": "/#/work-view",
+    "control": {
+      "root": "dist-23",
+      "pageErrors": 1,
+      "splitConsoleErrors": 3
+    },
+    "migrated": {
+      "root": "dist-25",
+      "pageErrors": 0,
+      "splitConsoleErrors": 0
+    },
+    "site": "src/app/pages/work-view/split/split.component.ts — the @Input() set splitPos accessor, through @angular/platform-browser's addClass",
+    "reading": "The control lane (dist-23, no reorder) still throws the recorded addClass-on-undefined once per load; the bound lane rebuilt here (dist-25, reorder) loads with zero page errors and none of the split console errors. Same host, same day: a clean control would have meant the host measured nothing. This record does not re-run the browser; it carries the u20c2e proof by reference and binds it by digest and byte sha256."
+  },
+  "reorderInBundle": {
+    "state": "measured-position-input-bound-after-both-element-inputs",
+    "mainChunk": "main.389e30ec3e83a786.js",
+    "splitTopEl": 1633000,
+    "splitBottomEl": 1632981,
+    "splitPos": 1633016,
+    "positionLast": true,
+    "reading": "Read from the emitted application chunk: the compiled `<split>` property instructions set `splitTopEl` and `splitBottomEl` before `splitPos`, so under Ivy the position setter runs after both elements are populated. The fix is a template-order fact and it survives the compiler into the booting bytes."
+  },
+  "applicationFilesChanged": {
+    "scanned": 574,
+    "changed": 41,
+    "reorderFile": "src/app/pages/work-view/work-view-page.component.html",
+    "reorderChanges": [
+      "line 128: template-binding-reorder on <split> (SplitComponent) — containerEl, counter, isAnimateBtn, splitBottomEl, splitPos, splitTopEl -> containerEl, counter, isAnimateBtn, splitBottomEl, splitTopEl, splitPos, forced by splitBottomEl -> splitPos; splitTopEl -> splitPos"
+    ],
+    "note": "The template-binding-reorder is among the migrated application-source changes carried into this lane: the `<split>` element in work-view-page.component.html binds its two element inputs before the position input, which is the source form of the fix read out of the booting bytes above. The counts are u20c2e's scan of the assembled tree, carried by reference."
+  },
+  "builds": [
+    {
+      "name": "build-25",
+      "outputRoot": "dist-25",
+      "exitStatus": 0,
+      "egressAttempts": 0
+    },
+    {
+      "name": "build-26",
+      "outputRoot": "dist-26",
+      "exitStatus": 0,
+      "egressAttempts": 0
+    }
+  ],
+  "egressFree": true,
+  "determinism": {
+    "claim": "build-25 and build-26 ran the same command over the same bytes with no edit between them, each into a cleaned output directory, under the same egress guard u23 used.",
+    "runs": 2,
+    "identical": false,
+    "files": 62,
+    "differingAcrossRuns": [
+      "ngsw.json"
+    ],
+    "inventorySha256": "2bfa70b9b69b06cba6b9bbc697c5d671799004270aa782ecd3dcd19663733a75",
+    "deterministicModuloClock": true,
+    "verdict": "Deterministic modulo ngsw.json, which differs in timestamp and nothing else.",
+    "manifestKeysDiffering": [
+      "timestamp"
+    ],
+    "manifestHashTableIdentical": true,
+    "ngswClockField": "ngsw.json is the file that differs, and it was compared key by key rather than by hash. The generated manifest stamps the build's wall clock into `timestamp`; that is the only key whose value moved, and the hashTable — every emitted file with its digest, worker chunks included — is identical between the two runs.",
+    "sassRandomFiles": "None differed BETWEEN this lane's two runs, which is what u18i, u18j and u23 also saw and is not a claim that the era Sass `random()` instability cannot appear. The main chunk this lane emits differs from the one u23 emitted for two reasons at once — the reorder moves the compiled `<split>` property calls and the unseeded confetti keyframe moves its box-shadow literals — so the content hash moved and the file is renamed, reported under `census` rather than hidden."
+  },
+  "artifactsEmitted": 62,
+  "canonicalRoot": "dist-25",
+  "repeatedRoot": "dist-26",
+  "inventory": [
+    {
+      "path": "3rdpartylicenses.txt",
+      "sha256": "3408b70f92e296cf4939022c89c67b0ac90bbce330b56010e639c2265435b527",
+      "bytes": 92488
+    },
+    {
+      "path": "MaterialIcons-Regular.196fa4a92dd6fa73.ttf",
+      "sha256": "b7f4a3ab562048f28dd1fa691601bc43363a61d0f876d16d8316c52e4f32d696",
+      "bytes": 128180
+    },
+    {
+      "path": "MaterialIcons-Regular.1e50f5c2ffa6aba4.eot",
+      "sha256": "8c998b4a9c0acbb9fe5dd572c206a5a33fdd5ca2b58db87fc3b893beac85068d",
+      "bytes": 143258
+    },
+    {
+      "path": "MaterialIcons-Regular.7ea2023eeca07427.woff2",
+      "sha256": "a87d66c91b2e7dc5530aef76c03bd6a3d25ea5826110bf4803b561b811cc8726",
+      "bytes": 44300
+    },
+    {
+      "path": "MaterialIcons-Regular.db852539204b1a34.woff",
+      "sha256": "c4a1baec300d09e03a8380b85918267ee80faae8e00c6c56b48e2e74b1d9b38d",
+      "bytes": 57620
+    },
+    {
+      "path": "assets/fonts/MaterialIcons-Regular.eot",
+      "sha256": "8c998b4a9c0acbb9fe5dd572c206a5a33fdd5ca2b58db87fc3b893beac85068d",
+      "bytes": 143258
+    },
+    {
+      "path": "assets/fonts/MaterialIcons-Regular.svg",
+      "sha256": "cd1b53120159084b89bdebce8393d91a9f89193af8db25c4096543fdeb3e1fb9",
+      "bytes": 294314
+    },
+    {
+      "path": "assets/fonts/MaterialIcons-Regular.ttf",
+      "sha256": "b7f4a3ab562048f28dd1fa691601bc43363a61d0f876d16d8316c52e4f32d696",
+      "bytes": 128180
+    },
+    {
+      "path": "assets/fonts/MaterialIcons-Regular.woff",
+      "sha256": "c4a1baec300d09e03a8380b85918267ee80faae8e00c6c56b48e2e74b1d9b38d",
+      "bytes": 57620
+    },
+    {
+      "path": "assets/fonts/MaterialIcons-Regular.woff2",
+      "sha256": "a87d66c91b2e7dc5530aef76c03bd6a3d25ea5826110bf4803b561b811cc8726",
+      "bytes": 44300
+    },
+    {
+      "path": "assets/i18n/ar.json",
+      "sha256": "a5b989c1c81db6c09bf34f248088d2ad6035fc1109f8196f6f8711d087e1f2e7",
+      "bytes": 63235
+    },
+    {
+      "path": "assets/i18n/de.json",
+      "sha256": "35b19d3a99c2af1c5ff650c7ce94f5c68b0f502eaf69e46761be271e110a18c0",
+      "bytes": 53945
+    },
+    {
+      "path": "assets/i18n/en.json",
+      "sha256": "715c6264d774e9226f16c3a7b473ac71ea9ce5421ebf01716f0a506767a6d4c2",
+      "bytes": 47356
+    },
+    {
+      "path": "assets/i18n/es.json",
+      "sha256": "4ce3453d6934b43b95933d6bc11b4dfda1ba0cfdff8dbd5dae2663fd464553e5",
+      "bytes": 53490
+    },
+    {
+      "path": "assets/i18n/fr.json",
+      "sha256": "f9083a92453b46cae41138ca010ac61d8e7e140d342d852ea77f71419d9a8338",
+      "bytes": 54985
+    },
+    {
+      "path": "assets/i18n/it.json",
+      "sha256": "dfa92f9c014e1df6911bca42696ce6e243f63c19f61b60f079dc4c3ba33429df",
+      "bytes": 57153
+    },
+    {
+      "path": "assets/i18n/ja.json",
+      "sha256": "d2206a040d50221a62eca2c39d2a356a44e362a39ee376cc378f0f0701ca3a32",
+      "bytes": 60290
+    },
+    {
+      "path": "assets/i18n/ko.json",
+      "sha256": "34dd8d7e4b3480ab879e6f0b9bf9780c64eceea4f8a64402201d651d712740bf",
+      "bytes": 54333
+    },
+    {
+      "path": "assets/i18n/pt.json",
+      "sha256": "31a14c02c659d86f0383cf782670631981a56e0468ce5c839db7a8c3a423f3a4",
+      "bytes": 51853
+    },
+    {
+      "path": "assets/i18n/ru.json",
+      "sha256": "28f5f63a9a043b374bd466911c328818d23ef4ec0233856944e8c471f9ed2cb7",
+      "bytes": 74319
+    },
+    {
+      "path": "assets/i18n/tr.json",
+      "sha256": "6f84ece791a8262cabb092c078e1d260dd19602a2b5e68236db365984e52500d",
+      "bytes": 51923
+    },
+    {
+      "path": "assets/i18n/zh.json",
+      "sha256": "7d416973303333c382e048534271cb4f6aae3e38529a2fcd6fc499eaba865b7f",
+      "bytes": 46167
+    },
+    {
+      "path": "assets/icons/apple-touch-icon.png",
+      "sha256": "85960e154f27ba312992bab89e7e3c5ac01a67cac7639c220528ed729fb67dcf",
+      "bytes": 4723
+    },
+    {
+      "path": "assets/icons/browserconfig.xml",
+      "sha256": "8da3a82a9f3ccc439c35cfe5d4d1735004965ec3eb072d9173188d05596a3dec",
+      "bytes": 246
+    },
+    {
+      "path": "assets/icons/drag-handle.svg",
+      "sha256": "cbc23d4431512e584b1bcaccc3fcc9531cf18ee7b7717d1acd0ddcf1c3892893",
+      "bytes": 661
+    },
+    {
+      "path": "assets/icons/favicon-16x16.png",
+      "sha256": "4561811b0031663590fc2a3e79cc5ffa87cb234341e90626d141632fc98f47e4",
+      "bytes": 803
+    },
+    {
+      "path": "assets/icons/favicon-32x32.png",
+      "sha256": "dca3b9c79a68c0e96ee39c80fa5e29e3f5163718f9855824e8fe72e87f46288b",
+      "bytes": 1332
+    },
+    {
+      "path": "assets/icons/github.svg",
+      "sha256": "7f3f65e96f77126be0ebfba43fdaceeaedb016ee404a8fe755408f20bc3f2ded",
+      "bytes": 991
+    },
+    {
+      "path": "assets/icons/icon-128x128.png",
+      "sha256": "e705e876d984b468042a5754b7606fec63f18ed5c95d39efdcb3e8d0b08e64a3",
+      "bytes": 7029
+    },
+    {
+      "path": "assets/icons/icon-144x144.png",
+      "sha256": "2eac5789a5a9d77baa35269301c6263e4e1eb1e91d751148d00734f7187fd924",
+      "bytes": 6345
+    },
+    {
+      "path": "assets/icons/icon-192x192.png",
+      "sha256": "51c98d11e64370dda10825df534dd9584e38e802383951fc07497d82b05acdd2",
+      "bytes": 10003
+    },
+    {
+      "path": "assets/icons/icon-512x512.png",
+      "sha256": "60a7c2bdba9c62b1bbed5b049a73f774a234626d340c5c481e90a0b6f9e2666f",
+      "bytes": 30559
+    },
+    {
+      "path": "assets/icons/icon-72x72.png",
+      "sha256": "4660e3bbd9519c6080af943610dda55722b4d842df80abf02ac967f0975a5a52",
+      "bytes": 3119
+    },
+    {
+      "path": "assets/icons/icon-96x96.png",
+      "sha256": "bdf24630a68c0679ab16c74c1a3a98d806ec341c45ddd920f2193706a9dc5dc4",
+      "bytes": 4604
+    },
+    {
+      "path": "assets/icons/jira.svg",
+      "sha256": "431bbdba3bb8799d7b2c8bcee32d5d07e6cf3121d650e1f26874eca82ac91181",
+      "bytes": 2426
+    },
+    {
+      "path": "assets/icons/mstile-150x150.png",
+      "sha256": "9e80444a8b066c0fa98d73886818bb465c435372c9cd340cd989699136b8cc7b",
+      "bytes": 6818
+    },
+    {
+      "path": "assets/icons/play.svg",
+      "sha256": "6c1a285483d3f1af35b60a1ea78a2179fce5d0806d7feec50ee8b39aa028b4dd",
+      "bytes": 305
+    },
+    {
+      "path": "assets/icons/safari-pinned-tab.svg",
+      "sha256": "981d38538e7a00fa0e42185369310f0a3684ec6db3373dba11a7be1cfd7f1b24",
+      "bytes": 1075
+    },
+    {
+      "path": "assets/icons/sp.svg",
+      "sha256": "f787079d18b637fbcf218e4cf79e94f5a64d041503884a46907cd5d376811332",
+      "bytes": 392
+    },
+    {
+      "path": "assets/service-workers/msg.js",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "assets/snd/positive.ogg",
+      "sha256": "2fc3feaadf1f13cad52ef1a4ce1a84eb61bfa016050b2beee6199b9a53647175",
+      "bytes": 99826
+    },
+    {
+      "path": "assets/snd/tick.mp3",
+      "sha256": "ef67993f9c8bafccb0917c0eb3aee3ebbc3206e28838dc1f654026490c5ea9ed",
+      "bytes": 1584
+    },
+    {
+      "path": "assets/unicorn.png",
+      "sha256": "3f6d76b07edca3a50839c3bf06475218438c81d6049f417c9ca8d006f4c9ae74",
+      "bytes": 1254
+    },
+    {
+      "path": "favicon.ico",
+      "sha256": "2d979be8a209e141d1c811284cc60c506cc9051544b5b80d6bb1fa3cb2e4bdae",
+      "bytes": 15086
+    },
+    {
+      "path": "index.html",
+      "sha256": "eebd7f36eac872745f7144357fe4b0eb17170ed94a5b1f7fbeae57411fa90dfc",
+      "bytes": 39854
+    },
+    {
+      "path": "lz.b385162c14c81c3d.js",
+      "sha256": "1a32b9e83fdddaa7d71a42e777b930c4e22989ae98dd46410f527d4e9ba8d699",
+      "bytes": 5488
+    },
+    {
+      "path": "lz.b385162c14c81c3d.js.map",
+      "sha256": "dbf550e7404bd3b2b1000866a5a752f057d68806ff5a94172f74681cf96e309a",
+      "bytes": 28901
+    },
+    {
+      "path": "main.389e30ec3e83a786.js",
+      "sha256": "4d09428b485c78915f2c901ab44dda28c727343a536fb95d25a83e7bf33af100",
+      "bytes": 3156205
+    },
+    {
+      "path": "main.389e30ec3e83a786.js.map",
+      "sha256": "61788770dda862cbbdfa6850b8f39213e3b52446ed21626deb45ef532ded9b13",
+      "bytes": 13637185
+    },
+    {
+      "path": "manifest.json",
+      "sha256": "1a649e67b6db1f9ade5e194ed6e32cdc4b29b8095933734b7637af6b19a5d05d",
+      "bytes": 925
+    },
+    {
+      "path": "ngsw-worker.js",
+      "sha256": "069150154df1442268b519b178b0b6111baa80faf1d526aa1dc2df3b3387ba18",
+      "bytes": 68180
+    },
+    {
+      "path": "ngsw.json",
+      "sha256": "782d887a0d6c5b993177ba6530d16f7a14b92c7dea49f8106463a9a692297c36",
+      "bytes": 6621
+    },
+    {
+      "path": "polyfills.cf6f5be77fa16c3c.js",
+      "sha256": "eab25e327177f9f26c73d8579bd1d4c968333d2d9a122941132c1b84598f3416",
+      "bytes": 161497
+    },
+    {
+      "path": "polyfills.cf6f5be77fa16c3c.js.map",
+      "sha256": "b091fa68561318106f72a85fd448a400136df0868514a0c879e2a1cc2daef88c",
+      "bytes": 853947
+    },
+    {
+      "path": "reminder.0448ba3c639cbcc1.js",
+      "sha256": "01ecb6e813141e26ea0d35495cddb6bb1abdff293f7c70c06d99731d0080b3d7",
+      "bytes": 349
+    },
+    {
+      "path": "reminder.0448ba3c639cbcc1.js.map",
+      "sha256": "565c140e7bca886b060d6e5997abfeb2c3947c6bc148cfced341728f6b9ffafa",
+      "bytes": 2100
+    },
+    {
+      "path": "runtime.fd04501cf45ea8af.js",
+      "sha256": "2587457d15a18d950f389360cb5b3df7ed70e2de07b2bc879c663c131fe79a0c",
+      "bytes": 2147
+    },
+    {
+      "path": "runtime.fd04501cf45ea8af.js.map",
+      "sha256": "9e10f8765586044988c60cc73e634abb800dd66accc1b79525c2c54a18b46034",
+      "bytes": 11210
+    },
+    {
+      "path": "safety-worker.js",
+      "sha256": "d78db50c10c10efe021c77baef0d0b6398315423a988b558e0f63728d7cba306",
+      "bytes": 746
+    },
+    {
+      "path": "styles.796d2cf2d0763557.css",
+      "sha256": "b3172b1c8bdf3af098ac5ad75f2f5ced6aca04809b25f098297a050a593d744e",
+      "bytes": 203120
+    },
+    {
+      "path": "styles.796d2cf2d0763557.css.map",
+      "sha256": "160735baef63addca7d3dca7202c7107ded6e21e5a1ff416793854d13a98e387",
+      "bytes": 490348
+    },
+    {
+      "path": "worker-basic.min.js",
+      "sha256": "d78db50c10c10efe021c77baef0d0b6398315423a988b558e0f63728d7cba306",
+      "bytes": 746
+    }
+  ],
+  "census": {
+    "claim": "The 62-artifact census u23 published is re-verified in the rebound dist, by logical name and by count, and every file whose bytes moved is named.",
+    "method": "u18j's own elision: every `.<hex>` segment of at least eight digits removed from a file name wherever it appears, so that a chunk and its map are both recognised across a moved content hash.",
+    "supersededRoot": "dist-23",
+    "supersededFiles": 62,
+    "rebuiltFiles": 62,
+    "logicalNames": 62,
+    "logicalNamesMatchSuperseded": true,
+    "censusHolds": true,
+    "byteIdenticalToSuperseded": 58,
+    "changedAgainstSuperseded": [
+      "index.html",
+      "ngsw.json"
+    ],
+    "renamedAgainstSuperseded": {
+      "gone": [
+        "main.96bfd856bd1e081a.js",
+        "main.96bfd856bd1e081a.js.map"
+      ],
+      "new": [
+        "main.389e30ec3e83a786.js",
+        "main.389e30ec3e83a786.js.map"
+      ]
+    },
+    "reading": "62 files in dist-23, 62 files in dist-25, the same set of logical names. index.html and ngsw.json changed bytes under an unchanged name — the document names the moved main chunk and the manifest lists the digests of everything else — and the main chunk and its map are renamed under a moved content hash. Everything else is byte-identical to the lane u23 bound, worker chunks included."
+  },
+  "workerChunks": {
+    "claim": "Both web worker chunks survive the rebind, byte-identical to the ones u23 bound, still in the emitted inventory.",
+    "emitted": [
+      "lz.b385162c14c81c3d.js",
+      "lz.b385162c14c81c3d.js.map",
+      "reminder.0448ba3c639cbcc1.js",
+      "reminder.0448ba3c639cbcc1.js.map"
+    ],
+    "byteIdenticalToSuperseded": true,
+    "supersededEmitted": [
+      "lz.b385162c14c81c3d.js",
+      "lz.b385162c14c81c3d.js.map",
+      "reminder.0448ba3c639cbcc1.js",
+      "reminder.0448ba3c639cbcc1.js.map"
+    ]
+  },
+  "document": {
+    "state": "measured-era-faithful-font-seam",
+    "sourceIndex": "src/index.html",
+    "sourceFontLinks": [
+      "https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700&display=swap"
+    ],
+    "emittedIndex": "dist-25/index.html",
+    "emittedFontLinks": [
+      "https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700&amp;display=swap"
+    ],
+    "emittedFontLinksMatchSource": true,
+    "inlinedFontFaceRules": 0,
+    "preconnectEmitted": false,
+    "reading": "The emitted document links the same Roboto stylesheet the application's own source links, and carries no `@font-face` rule and no preconnect the builder minted — the same era-faithful seam u23 restored, re-measured here on dist-25."
+  },
+  "notEstablished": [
+    "The regression-gone fact is not re-measured here. It is the u20c2e behavior proof, carried by reference and bound by that record's digest and byte sha256; nothing in this round loads a browser.",
+    "No witness journey was run in this round by design. Whether the application runs, mounts or keeps what a user types is not established here — that is the bound browser proof this lane is the input to.",
+    "The offline egress facts are u20c2e's, read from its build record. This round re-reads the emitted trees; it did not itself run the two builds under the guard.",
+    "The era lane was not rebuilt, re-measured or touched by this round."
+  ],
+  "recordedRisks": [
+    "The service-worker manifest lists the digest of every emitted file, so any future round that changes one byte of one bundle changes ngsw.json too.",
+    "`.angular/cache` was not cleared between the two builds of the u20c2e round. That the two runs agree is therefore consistent with both a deterministic pipeline and a warm cache, and the era Sass literals moving across the supersede boundary is the reason to say so."
+  ],
+  "digest": "18c1ced0f17b319cd3d4405ad082a46f9f842c678d02749f72fe7214f2aea5a3"
+}

@@ -74,6 +74,16 @@ export const ANGULAR_SUPER_PRODUCTIVITY_SOURCE = Object.freeze({
  * written and is superseded by reference; what this proof binds is the
  * correction, because the correction is the record whose digests describe the
  * bytes a browser is served.
+ *
+ * The MIGRATED entry is not u23's dist-23 lane either. u23 built the offline-
+ * faithful lane before the template-binding-reorder existed, and the lane it
+ * bound throws the split regression once per load — a defect a green build
+ * cannot report and u20c2e measured in a browser. u23's dist-23/dist-24 bytes
+ * stay exactly as they were written and are superseded by reference; what this
+ * proof binds is the u20c2g rebind lane over dist-25, the same offline, font-
+ * inliner-disabled lane rebuilt from a tree carrying the reorder, deterministic
+ * modulo the service-worker clock across dist-25 and dist-26, whose booting
+ * bytes carry the fix and load clean.
  */
 export const ANGULAR_SUPER_PRODUCTIVITY_CANONICAL_RECEIPTS = Object.freeze([
 	Object.freeze({
@@ -97,14 +107,14 @@ export const ANGULAR_SUPER_PRODUCTIVITY_CANONICAL_RECEIPTS = Object.freeze([
 	}),
 	Object.freeze({
 		lane: 'migrated',
-		path: 'evidence/runs/angular-super-productivity-v2-13-15/u23-offline-font-lane.json',
-		schemaVersion: 'versionless.angular-super-productivity-offline-font-lane.v1',
-		digest: 'b429f1cfcee07633160c6d03e8e37dd8b052b5b5d20f5c6eedd2d6437f172514',
-		sha256: '0512ec62aaf3219b323f70b837e666cab8e65ddb8cafdebddeac85e339bae36c',
-		canonicalRoot: 'dist-23',
-		repeatedRoot: 'dist-24',
+		path: 'evidence/runs/angular-super-productivity-v2-13-15/u20c2g-dist25-rebind-lane.json',
+		schemaVersion: 'versionless.angular-super-productivity-dist25-rebind-lane.v1',
+		digest: '18c1ced0f17b319cd3d4405ad082a46f9f842c678d02749f72fe7214f2aea5a3',
+		sha256: 'c1b136972bcffb2e46ccbde1a5ea5cdb51900cdfa2d5306dfa0e4b85e7210c95',
+		canonicalRoot: 'dist-25',
+		repeatedRoot: 'dist-26',
 		files: 62,
-		inventorySha256: '3cdfa4e2c992773dce0953b32da5121ca11e92be669021a88c22df9c8ee193ae',
+		inventorySha256: '2bfa70b9b69b06cba6b9bbc697c5d671799004270aa782ecd3dcd19663733a75',
 	}),
 ]);
 
@@ -183,12 +193,14 @@ export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_SASS_RANDOM_BOUNDARY = Object.fr
  * the binding above is the end of a sequence of measurements rather than a
  * choice.
  *
- * Both records are immutable and still on disk, and the supersession is by
- * reference: u23 names u18j and says what it could not see. What it could not
- * see is where forty-five `@font-face` rules in its own emitted document came
- * from — no input contains them — and the answer, established by a control
- * build that died on the fetch, is that the builder went to the font host while
- * the build was running.
+ * All three records are immutable and still on disk, and every supersession is
+ * by reference: u23 names u18j and says what it could not see — where forty-five
+ * `@font-face` rules in its own emitted document came from, which a control
+ * build that died on the fetch established was the font host reached while the
+ * build ran. u20c2g in turn names u23 and says what IT could not see: the lane
+ * u23 bound throws the split regression once per load, because the template-
+ * binding-reorder did not exist when it built. The lane served here is dist-25,
+ * which carries the reorder into the booting bytes and loads clean.
  */
 export const ANGULAR_SUPER_PRODUCTIVITY_MIGRATED_LANE_CHAIN = Object.freeze([
 	Object.freeze({
@@ -204,6 +216,14 @@ export const ANGULAR_SUPER_PRODUCTIVITY_MIGRATED_LANE_CHAIN = Object.freeze([
 		root: 'dist-23',
 		published:
 			'the same lane built without asking a third party for anything: the font inliner off, the era `<link>` back in the document, zero egress attempts across two green builds under a process-scoped guard, and a control build of the previous workspace dying on the fetch it needed',
+		contradictedBy:
+			'a browser reading of its own dist-23 bytes: the `<split>` element binds `splitPos` before its two element inputs, so under Ivy the position setter runs against undefined elements and the work view throws `addClass` on undefined once per load — a regression invisible to the green build, fixed by the template-binding-reorder the dist-25 rebuild carries (measured by u20c2e)',
+	}),
+	Object.freeze({
+		record: 'evidence/runs/angular-super-productivity-v2-13-15/u20c2g-dist25-rebind-lane.json',
+		root: 'dist-25',
+		published:
+			'the same offline, font-inliner-disabled lane rebuilt from a tree carrying the template-binding-reorder: zero egress across two green builds, the same 62-artifact worker-complete census u23 measured, deterministic modulo the service-worker clock across dist-25 and dist-26, and the reorder read back out of the emitted application chunk so the fix lands in the booting bytes and the work view loads with zero page errors',
 		contradictedBy: null,
 	}),
 ]);
