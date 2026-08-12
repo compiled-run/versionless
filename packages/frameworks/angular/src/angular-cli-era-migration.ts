@@ -35,6 +35,12 @@ import {
 	type EntryComponentsChange,
 } from './entry-components-removal.ts';
 import {
+	readDirectiveBindingDependencies,
+	reorderTemplateBindings,
+	type BindingReorderChange,
+	type DirectiveBindingReading,
+} from './template-binding-reorder.ts';
+import {
 	declareUndeclaredRuntimeDependencies,
 	undeclaredRuntimeDependencies,
 	type InstalledPackage,
@@ -61,6 +67,15 @@ export type AngularMigrationInput = Readonly<{
 	tsConfig: WorkspaceFile;
 	/** Application source modules, as read from the workspace. */
 	sourceModules: readonly WorkspaceFile[];
+	/**
+	 * Component templates the application owns, kept apart from
+	 * {@link sourceModules} because they are not modules: no source transform
+	 * parses them, and the only capability that reads them reorders directive
+	 * bindings a component class proves are order-dependent. A tree that supplies
+	 * none has none reordered, which is a different thing from having none to
+	 * reorder.
+	 */
+	templates?: readonly WorkspaceFile[];
 	/**
 	 * Webpack fragments a wrapper builder reads, keyed by the path the workspace
 	 * writes for them. A fragment a target references but that is not supplied
@@ -177,6 +192,13 @@ function describeSourceChange(
  */
 function describeEntryComponentsChange(change: EntryComponentsChange): string {
 	return `line ${change.line}: ${change.kind} of ${change.symbols.join(', ')}`;
+}
+
+function describeBindingReorderChange(change: BindingReorderChange): string {
+	return (
+		`line ${change.line}: ${change.kind} on <${change.element}> (${change.directive}) — ` +
+		`${change.before.join(', ')} -> ${change.after.join(', ')}, forced by ${change.edges.join('; ')}`
+	);
 }
 
 function file(
@@ -356,6 +378,33 @@ export function migrateAngularCliEraWorkspace(
 				...sentry.changes.map(describeSourceChange),
 				...entryComponents.changes.map(describeEntryComponentsChange),
 			]),
+		);
+	}
+	/**
+	 * Templates are the last application capability, and it is cross-file by
+	 * nature: whether a call site's binding order is safe is a question about the
+	 * directive the element resolves to, read from that directive's own class.
+	 * The readings are taken from the modules as the per-module capabilities left
+	 * them, so a directive whose imports those capabilities rewrote still
+	 * resolves. A template no directive reading touches is carried through
+	 * unchanged and still counted, so the scanned total means what it says.
+	 */
+	const directiveReadings: DirectiveBindingReading[] = [];
+	for (const entry of files)
+		if (entry.kind === 'application' && entry.path.endsWith('.ts'))
+			directiveReadings.push(...readDirectiveBindingDependencies(entry.path, entry.source));
+	for (const template of [...(input.templates ?? [])].sort((left, right) =>
+		compareStrings(left.path, right.path),
+	)) {
+		const reordered = reorderTemplateBindings(template.path, template.source, directiveReadings);
+		unhandled.push(...reordered.unhandled);
+		files.push(
+			file(
+				template,
+				reordered.source,
+				'application',
+				reordered.changes.map(describeBindingReorderChange),
+			),
 		);
 	}
 	/**

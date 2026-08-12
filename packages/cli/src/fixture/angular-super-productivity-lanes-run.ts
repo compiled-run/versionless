@@ -202,6 +202,23 @@ async function styleSheetsBelow(directory: string, root: string): Promise<Worksp
 	return files;
 }
 
+/** Every component template below a directory, as workspace files. */
+async function templatesBelow(directory: string, root: string): Promise<WorkspaceFile[]> {
+	const files: WorkspaceFile[] = [];
+	for (const entry of (await readdir(directory, { withFileTypes: true })).sort((left, right) =>
+		left.name < right.name ? -1 : 1,
+	)) {
+		const item = path.join(directory, entry.name);
+		if (entry.isDirectory()) {
+			files.push(...(await templatesBelow(item, root)));
+			continue;
+		}
+		if (!entry.isFile() || path.extname(entry.name) !== '.html') continue;
+		files.push({ path: path.relative(root, item), source: await readFile(item, 'utf8') });
+	}
+	return files;
+}
+
 /** Every workspace-relative path the tree carries, excluding installed packages. */
 async function workspacePathsBelow(directory: string, root: string): Promise<string[]> {
 	const paths: string[] = [];
@@ -247,6 +264,7 @@ export async function composeMigration(tree: string): Promise<AngularMigration> 
 				source: await readFile(path.join(tree, 'tsconfig.json'), 'utf8'),
 			},
 			sourceModules,
+			templates: await templatesBelow(source, tree),
 			styleSheets: await styleSheetsBelow(source, tree),
 			workspaceFiles: await workspacePathsBelow(tree, tree),
 		},
