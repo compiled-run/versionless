@@ -333,11 +333,14 @@ export async function readTypeMemberSurface(
 }
 
 /** The base-class round, driven by the compiler's own TS2314 lines. */
-async function baseClassRound(log: string): Promise<CapabilityOutcome> {
+export async function baseClassRound(
+	log: string,
+	tree: string = APPLIED_TREE,
+): Promise<CapabilityOutcome> {
 	const byFile = readUnparameterisedBaseClasses(log);
 	const wanted = new Map<string, string>();
 	for (const [file, diagnostics] of byFile) {
-		const absolute = path.join(APPLIED_TREE, file);
+		const absolute = path.join(tree, file);
 		if (!existsSync(absolute)) continue;
 		const source = await readFile(absolute, 'utf8');
 		for (const diagnostic of diagnostics) {
@@ -352,12 +355,12 @@ async function baseClassRound(log: string): Promise<CapabilityOutcome> {
 	}
 	const readings: GenericBaseClassReading[] = [];
 	for (const [name, specifier] of [...wanted].sort())
-		readings.push(await readGenericBaseClass(APPLIED_TREE, name, specifier));
+		readings.push(await readGenericBaseClass(tree, name, specifier));
 	const changed: string[] = [];
 	const changes: string[] = [];
 	const unhandled: string[] = [];
 	for (const [file, diagnostics] of byFile) {
-		const absolute = path.join(APPLIED_TREE, file);
+		const absolute = path.join(tree, file);
 		if (!existsSync(absolute)) {
 			unhandled.push(`${file}: the diagnostic names a file the applied tree does not carry`);
 			continue;
@@ -396,16 +399,19 @@ async function baseClassRound(log: string): Promise<CapabilityOutcome> {
 }
 
 /** The member-rename round, driven by TS2339 lines that name a declared type. */
-async function memberRenameRound(log: string): Promise<CapabilityOutcome> {
+export async function memberRenameRound(
+	log: string,
+	tree: string = APPLIED_TREE,
+): Promise<CapabilityOutcome> {
 	const byFile = readMissingMembers(log);
 	const surfaces: TypeMemberSurfaceReading[] = [];
 	for (const rename of DOCUMENTED_MEMBER_RENAMES)
-		surfaces.push(await readTypeMemberSurface(APPLIED_TREE, rename.package, rename.type));
+		surfaces.push(await readTypeMemberSurface(tree, rename.package, rename.type));
 	const changed: string[] = [];
 	const changes: string[] = [];
 	const unhandled: string[] = [];
 	for (const [file, diagnostics] of byFile) {
-		const absolute = path.join(APPLIED_TREE, file);
+		const absolute = path.join(tree, file);
 		if (!existsSync(absolute)) continue;
 		if (!file.endsWith('.ts')) {
 			unhandled.push(

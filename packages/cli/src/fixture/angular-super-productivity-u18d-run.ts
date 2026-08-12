@@ -180,10 +180,10 @@ export async function readExportSurface(
 }
 
 /** The stylesheet round, re-asked of a closure that reads exports maps. */
-async function tildeRound(): Promise<CapabilityOutcome> {
-	const sheets = await filesBelow(path.join(APPLIED_TREE, 'src'), '.scss');
-	const relative = (file: string): string => path.relative(APPLIED_TREE, file);
-	const closure = styleClosure(APPLIED_TREE);
+export async function tildeRound(tree: string = APPLIED_TREE): Promise<CapabilityOutcome> {
+	const sheets = await filesBelow(path.join(tree, 'src'), '.scss');
+	const relative = (file: string): string => path.relative(tree, file);
+	const closure = styleClosure(tree);
 	const renames = successorForkRenames(ANGULAR_16_BROWSER_CELL);
 	const changed: string[] = [];
 	const changes: string[] = [];
@@ -209,11 +209,14 @@ async function tildeRound(): Promise<CapabilityOutcome> {
 }
 
 /** The rename round, driven by the compiler's own suggestions in a build log. */
-async function suggestedRenameRound(log: string): Promise<CapabilityOutcome> {
+export async function suggestedRenameRound(
+	log: string,
+	tree: string = APPLIED_TREE,
+): Promise<CapabilityOutcome> {
 	const byFile = readSuggestedExportRenames(log);
 	const packages = new Set<string>();
 	for (const file of byFile.keys()) {
-		const absolute = path.join(APPLIED_TREE, file);
+		const absolute = path.join(tree, file);
 		if (!existsSync(absolute)) continue;
 		const source = await readFile(absolute, 'utf8');
 		const module = parseModule('u18d rename round', file, source);
@@ -226,13 +229,13 @@ async function suggestedRenameRound(log: string): Promise<CapabilityOutcome> {
 	}
 	const surfaces: ExportSurfaceReading[] = [];
 	for (const name of [...packages].sort())
-		if (existsSync(path.join(APPLIED_TREE, 'node_modules', name)))
-			surfaces.push(await readExportSurface(APPLIED_TREE, name));
+		if (existsSync(path.join(tree, 'node_modules', name)))
+			surfaces.push(await readExportSurface(tree, name));
 	const changed: string[] = [];
 	const changes: string[] = [];
 	const unhandled: string[] = [];
 	for (const [file, diagnostics] of byFile) {
-		const absolute = path.join(APPLIED_TREE, file);
+		const absolute = path.join(tree, file);
 		if (!existsSync(absolute)) {
 			unhandled.push(`${file}: the diagnostic names a file the applied tree does not carry`);
 			continue;

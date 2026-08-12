@@ -144,17 +144,17 @@ export type CapabilityOutcome = Readonly<{
  * from disk and writes it back, so the order is a statement about which reading
  * is current, not about which transform matters more.
  */
-export async function applyRound(): Promise<readonly CapabilityOutcome[]> {
-	const modules = await filesBelow(path.join(APPLIED_TREE, 'src'), '.ts');
-	const sheets = await filesBelow(path.join(APPLIED_TREE, 'src'), '.scss');
-	const relative = (file: string): string => path.relative(APPLIED_TREE, file);
+export async function applyRound(tree: string = APPLIED_TREE): Promise<readonly CapabilityOutcome[]> {
+	const modules = await filesBelow(path.join(tree, 'src'), '.ts');
+	const sheets = await filesBelow(path.join(tree, 'src'), '.scss');
+	const relative = (file: string): string => path.relative(tree, file);
 	const outcomes: CapabilityOutcome[] = [];
 
 	const renames = successorForkRenames(ANGULAR_16_BROWSER_CELL);
 	for (const [name, successor] of Object.entries(renames)) {
 		const disposition = ANGULAR_16_BROWSER_CELL.ecosystemPackages[name];
 		if (disposition === undefined || disposition.kind !== 'successor-fork') continue;
-		const surface = await readSuccessorSurface(APPLIED_TREE, successor);
+		const surface = await readSuccessorSurface(tree, successor);
 		const changed: string[] = [];
 		const changes: string[] = [];
 		const unhandled: string[] = [];
@@ -183,7 +183,7 @@ export async function applyRound(): Promise<readonly CapabilityOutcome[]> {
 		});
 	}
 
-	const barrel = await readPackageSurface(APPLIED_TREE, BARREL_PACKAGE);
+	const barrel = await readPackageSurface(tree, BARREL_PACKAGE);
 	const barrelChanged: string[] = [];
 	const barrelChanges: string[] = [];
 	const barrelUnhandled: string[] = [];
@@ -212,7 +212,7 @@ export async function applyRound(): Promise<readonly CapabilityOutcome[]> {
 	 */
 	const closure: ClosureFileReading = Object.freeze({
 		carries: (relativePath: string): boolean =>
-			existsSync(path.join(APPLIED_TREE, 'node_modules', relativePath)),
+			existsSync(path.join(tree, 'node_modules', relativePath)),
 	});
 	const tildeChanged: string[] = [];
 	const tildeChanges: string[] = [];

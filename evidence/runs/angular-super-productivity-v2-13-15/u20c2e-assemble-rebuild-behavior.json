@@ -1,0 +1,102 @@
+{
+  "schemaVersion": "versionless.angular-super-productivity-assemble-rebuild-behavior.v1",
+  "unit": "lrapr-t006/u20c2e-assemble-rebuild-behavior",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "result": "reassembled-offline-rebuilt-regression-gone",
+  "supersedes": {
+    "record": "u23-offline-font-lane.json",
+    "by": "reference",
+    "note": "u23 built the offline-faithful lane before the template-binding-reorder existed; its dist-23/dist-24 bytes are immutable and dist-23 is read here as the behavior control. This lane rebuilds into dist-25/dist-26 and adds the reorder fix and its runtime proof."
+  },
+  "assembly": {
+    "entrypoint": "assembleMigratedTree in packages/cli/src/fixture/angular-super-productivity-assemble.ts",
+    "evidenceFree": "The entrypoint writes no evidence record and no round file; its only side effect is the migrated tree. The u18*-* records stay reproducible because their drivers still call the same exported round functions with the same defaults.",
+    "stages": [
+      "u18c",
+      "u18d",
+      "u18e",
+      "u18f",
+      "u18g",
+      "u18h",
+      "u18i",
+      "u18j"
+    ],
+    "composedFrom": "composeMigration (carrying the template-binding-reorder and entry-components removal) then the u18c-u18j accommodation rounds, in the order the u18b→u18j sequence ran them.",
+    "logDrivenRoundsScopedBy": "fixtures/angular-super-productivity-v2-13-15/diagnostics/build-{2,3,4,5,6}.log, committed so the assembly is deterministic from source plus committed inputs and depends on no intermediate build.",
+    "manualStepsApplied": 7,
+    "electronRedirected": 4,
+    "determinism": {
+      "runs": 2,
+      "files": 799,
+      "identical": true,
+      "firstDigest": "3f69af76a7c30ac375e2ab1c1b7732ed81486ec7f42d0c341199d849778f2b98",
+      "secondDigest": "3f69af76a7c30ac375e2ab1c1b7732ed81486ec7f42d0c341199d849778f2b98",
+      "meaning": "Assembling the tree twice from the same source and committed inputs produced byte-identical migrated source, file for file."
+    }
+  },
+  "applicationFilesChanged": {
+    "scanned": 574,
+    "changed": 41,
+    "reorderFile": "src/app/pages/work-view/work-view-page.component.html",
+    "reorderChanges": [
+      "line 128: template-binding-reorder on <split> (SplitComponent) — containerEl, counter, isAnimateBtn, splitBottomEl, splitPos, splitTopEl -> containerEl, counter, isAnimateBtn, splitBottomEl, splitTopEl, splitPos, forced by splitBottomEl -> splitPos; splitTopEl -> splitPos"
+    ],
+    "note": "The template-binding-reorder is now among the migrated application-source changes: the <split> element in work-view-page.component.html binds its two element inputs before the position input, which is the source form of the fix."
+  },
+  "build": {
+    "command": "node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng.js build --configuration production",
+    "offlineGuard": "Both builds ran under u22's in-process egress guard with the font inliner disabled; a non-loopback connection would have been refused and recorded.",
+    "builds": [
+      {
+        "name": "build-25",
+        "outputRoot": "dist-25",
+        "exitStatus": 0,
+        "egressAttempts": 0
+      },
+      {
+        "name": "build-26",
+        "outputRoot": "dist-26",
+        "exitStatus": 0,
+        "egressAttempts": 0
+      }
+    ],
+    "reorderInBundle": {
+      "mainChunk": "main.389e30ec3e83a786.js",
+      "positionLast": true,
+      "meaning": "Read from the emitted application chunk: the compiled <split> property instructions set splitTopEl and splitBottomEl before splitPos, so under Ivy the position setter runs after both elements are populated. The fix survives the compiler into the booting bytes."
+    }
+  },
+  "behavior": {
+    "host": "Playwright chromium headless shell, offline, Roboto stylesheet answered in-context with an empty body — the calibration driver's host, pointed at these roots.",
+    "route": "/#/work-view",
+    "control": {
+      "root": "dist-23",
+      "status": "passed",
+      "pageErrors": 1,
+      "splitConsoleErrors": 3,
+      "splitConsoleMessages": [
+        "GLOBAL_ERROR_HANDLER TypeError: Cannot read properties of undefined (reading 'classList')",
+        "GLOBAL_ERROR_HANDLER Error: TypeError: Cannot read properties of undefined (reading 'classList')",
+        "addClass (webpack:///node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs:608:11)"
+      ]
+    },
+    "migrated": {
+      "root": "dist-25",
+      "status": "passed",
+      "pageErrors": 0,
+      "splitConsoleErrors": 0,
+      "splitConsoleMessages": []
+    },
+    "regression": {
+      "site": "src/app/pages/work-view/split/split.component.ts — the @Input() set splitPos accessor, through @angular/platform-browser's addClass",
+      "priorPageErrorsPerLoad": 1,
+      "meaning": "The control lane (dist-23, no reorder) still throws the recorded addClass-on-undefined once per load; the rebuilt lane (dist-25, reorder) loads with zero page errors and none of the split console errors. Same host, same day: a clean control would have meant the host measured nothing."
+    }
+  },
+  "notEstablished": [
+    "The behavior check loads the work view and reads what the browser threw; it is not the full bound journey, and no parity claim beyond the split regression is made here.",
+    "A byte-identical migrated source across two assemblies is a determinism claim about the source the entrypoint writes, not about the emitted bundle, which still carries the era Sass random() nondeterminism the lane records elsewhere.",
+    "The rebuild is green and offline; nothing here re-establishes the u23 font-inlining locality finding, which this record carries forward by reference rather than re-measuring."
+  ],
+  "digest": "eaf8775025dff1fe8595de9dd6e42c2f2fa52898de56dd0b228c721b7795d711"
+}

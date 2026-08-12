@@ -365,14 +365,17 @@ function typesOf(value: unknown): string | null {
 }
 
 /** The chip-list round, driven by the compiler's own NG8001 lines. */
-async function splitElementRound(log: string): Promise<CapabilityOutcome> {
+export async function splitElementRound(
+	log: string,
+	tree: string = APPLIED_TREE,
+): Promise<CapabilityOutcome> {
 	const byFile = readUnknownElements(log);
 	const changed: string[] = [];
 	const changes: string[] = [];
 	const unhandled: string[] = [];
 	const described: string[] = [];
 	for (const split of DOCUMENTED_ELEMENT_SPLITS) {
-		const reading = await readElementSplit(APPLIED_TREE, split, 'chips', 'MatChipInput');
+		const reading = await readElementSplit(tree, split, 'chips', 'MatChipInput');
 		described.push(
 			`${split.package}@${reading.version} <${split.replaced}> ` +
 				`(${String(reading.components.length)} components, text input: ` +
@@ -381,7 +384,7 @@ async function splitElementRound(log: string): Promise<CapabilityOutcome> {
 		);
 		for (const [file, elements] of byFile) {
 			if (!elements.includes(split.replaced)) continue;
-			const absolute = path.join(APPLIED_TREE, file);
+			const absolute = path.join(tree, file);
 			if (!existsSync(absolute)) {
 				unhandled.push(`${file}: the diagnostic names a file the applied tree does not carry`);
 				continue;
@@ -409,10 +412,13 @@ async function splitElementRound(log: string): Promise<CapabilityOutcome> {
 }
 
 /** The removed-entry-point round, driven by the compiler's own TS2307 lines. */
-async function symbolSuccessorRound(log: string): Promise<CapabilityOutcome> {
+export async function symbolSuccessorRound(
+	log: string,
+	tree: string = APPLIED_TREE,
+): Promise<CapabilityOutcome> {
 	const readings: RootSurfaceReading[] = [];
 	for (const claim of DOCUMENTED_SYMBOL_SUCCESSORS)
-		readings.push(await readRootSurface(APPLIED_TREE, claim.package, claim.specifier));
+		readings.push(await readRootSurface(tree, claim.package, claim.specifier));
 	const wanted = new Set<string>();
 	for (const raw of log.split('\n')) {
 		const line = raw.trim();
@@ -426,7 +432,7 @@ async function symbolSuccessorRound(log: string): Promise<CapabilityOutcome> {
 	const changes: string[] = [];
 	const unhandled: string[] = [];
 	for (const file of [...wanted].sort()) {
-		const absolute = path.join(APPLIED_TREE, file);
+		const absolute = path.join(tree, file);
 		if (!existsSync(absolute) || !file.endsWith('.ts')) continue;
 		const source = await readFile(absolute, 'utf8');
 		const migration = succeedRemovedEntryPointSymbols(

@@ -166,9 +166,9 @@ export type RoundOutcome = Readonly<{
 }>;
 
 /** The Sass mixin round, read off the installed closure the stylesheet imports. */
-export async function sassMixinRound(): Promise<RoundOutcome> {
-	const modulesRoot = path.join(APPLIED_TREE, 'node_modules');
-	const stylesheet = path.join(APPLIED_TREE, STYLE_ENTRY);
+export async function sassMixinRound(tree: string = APPLIED_TREE): Promise<RoundOutcome> {
+	const modulesRoot = path.join(tree, 'node_modules');
+	const stylesheet = path.join(tree, STYLE_ENTRY);
 	const { surface, files } = await readImportedSassSurface(stylesheet, modulesRoot);
 	const source = await readFile(stylesheet, 'utf8');
 	const migration = renameHyphenatedSassMixins(STYLE_ENTRY, source, surface);
@@ -195,13 +195,13 @@ export async function sassMixinRound(): Promise<RoundOutcome> {
 }
 
 /** The JSON named-import round, read off the resolved manifest itself. */
-export async function jsonNamedImportRound(): Promise<RoundOutcome> {
+export async function jsonNamedImportRound(tree: string = APPLIED_TREE): Promise<RoundOutcome> {
 	const changed: string[] = [];
 	const changes: string[] = [];
 	const unhandled: string[] = [];
 	const reading: string[] = [];
 	for (const file of ENVIRONMENT_MODULES) {
-		const absolute = path.join(APPLIED_TREE, file);
+		const absolute = path.join(tree, file);
 		if (!existsSync(absolute)) continue;
 		const source = await readFile(absolute, 'utf8');
 		const parsedFor: JsonModuleReading = (specifier: string) => {
@@ -250,8 +250,8 @@ export async function jsonNamedImportRound(): Promise<RoundOutcome> {
  * the workspace file, the import graph by following each entry's own relative
  * `@import` rules, so nothing here assumes a layout.
  */
-export async function urlRebaseRound(): Promise<RoundOutcome> {
-	const workspace: unknown = JSON.parse(readFileSync(path.join(APPLIED_TREE, 'angular.json'), 'utf8'));
+export async function urlRebaseRound(tree: string = APPLIED_TREE): Promise<RoundOutcome> {
+	const workspace: unknown = JSON.parse(readFileSync(path.join(tree, 'angular.json'), 'utf8'));
 	const entries = new Set<string>();
 	const projects = (workspace as { projects?: Record<string, unknown> }).projects ?? {};
 	for (const project of Object.values(projects)) {
@@ -271,7 +271,7 @@ export async function urlRebaseRound(): Promise<RoundOutcome> {
 		const key = `${next.root}\u0000${next.file}`;
 		if (seen.has(key)) continue;
 		seen.add(key);
-		const absolute = path.join(APPLIED_TREE, next.file);
+		const absolute = path.join(tree, next.file);
 		if (!existsSync(absolute)) continue;
 		const text = await readFile(absolute, 'utf8');
 		for (const match of text.matchAll(/@import\s+['"]([^'"\n]+)['"]/gu)) {
@@ -282,7 +282,7 @@ export async function urlRebaseRound(): Promise<RoundOutcome> {
 				base,
 				`${base}.scss`,
 				path.join(path.dirname(base), `_${path.basename(base)}.scss`),
-			].find((option) => existsSync(path.join(APPLIED_TREE, option)));
+			].find((option) => existsSync(path.join(tree, option)));
 			if (candidate === undefined) continue;
 			importedBy.set(candidate, (importedBy.get(candidate) ?? new Set()).add(path.dirname(next.root)));
 			queue.push(Object.freeze({ file: candidate, root: next.root }));
@@ -292,10 +292,10 @@ export async function urlRebaseRound(): Promise<RoundOutcome> {
 	const changes: string[] = [];
 	const unhandled: string[] = [];
 	for (const partial of [...importedBy.keys()].sort()) {
-		const absolute = path.join(APPLIED_TREE, partial);
+		const absolute = path.join(tree, partial);
 		const source = await readFile(absolute, 'utf8');
 		const reading: StylesheetTreeReading = Object.freeze({
-			carries: (treePath: string): boolean => existsSync(path.join(APPLIED_TREE, treePath)),
+			carries: (treePath: string): boolean => existsSync(path.join(tree, treePath)),
 			entryDirectories: Object.freeze([...(importedBy.get(partial) ?? new Set<string>())].sort()),
 		});
 		const migration = rebaseStylesheetUrls(partial, source, reading);

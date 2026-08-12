@@ -428,7 +428,10 @@ async function filesBelow(root: string, extension: string): Promise<readonly str
  * A step that matches more than once is a failure, because a table of literal
  * edits that matches ambiguously is not a record of anything.
  */
-async function applyStep(step: ManualStep): Promise<ManualStepOutcome> {
+export async function applyStep(
+	step: ManualStep,
+	tree: string = APPLIED_TREE,
+): Promise<ManualStepOutcome> {
 	if (step.before === '' && step.after === '')
 		return Object.freeze({
 			id: step.id,
@@ -439,7 +442,7 @@ async function applyStep(step: ManualStep): Promise<ManualStepOutcome> {
 			beforeLine: null,
 			reason: step.reason,
 		});
-	const absolute = path.join(APPLIED_TREE, step.file);
+	const absolute = path.join(tree, step.file);
 	if (!existsSync(absolute))
 		throw new Error(`u18h step ${step.id}: the applied tree carries no ${step.file}`);
 	const source = await readFile(absolute, 'utf8');
@@ -490,18 +493,18 @@ async function applyStep(step: ManualStep): Promise<ManualStepOutcome> {
  * it, and listing twenty identical edits would inflate the manual-step count
  * without adding a single decision to it.
  */
-async function electronRedirect(): Promise<
-	Readonly<{ payload: string; redirected: readonly string[] }>
-> {
-	const payload = path.join(APPLIED_TREE, 'src/app/core/electron/electron.service.ts');
+export async function electronRedirect(
+	tree: string = APPLIED_TREE,
+): Promise<Readonly<{ payload: string; redirected: readonly string[] }>> {
+	const payload = path.join(tree, 'src/app/core/electron/electron.service.ts');
 	await mkdir(path.dirname(payload), { recursive: true });
 	await writeFile(
 		payload,
 		await readFile(path.join(FIXTURE_DIRECTORY, 'accommodations/electron.service.ts'), 'utf8'),
 	);
 	const redirected: string[] = [];
-	for (const absolute of await filesBelow(path.join(APPLIED_TREE, 'src'), '.ts')) {
-		const file = path.relative(APPLIED_TREE, absolute);
+	for (const absolute of await filesBelow(path.join(tree, 'src'), '.ts')) {
+		const file = path.relative(tree, absolute);
 		if (file === 'src/app/core/electron/electron.service.ts') continue;
 		const source = await readFile(absolute, 'utf8');
 		// Only a real import declaration is rewritten. `local-storage.ts` carries a
@@ -521,7 +524,10 @@ async function electronRedirect(): Promise<
 }
 
 /** The `Subject<void>` round, driven by the compiler's own TS2554 lines. */
-async function voidSubjectRound(log: string): Promise<CapabilityOutcome> {
+export async function voidSubjectRound(
+	log: string,
+	tree: string = APPLIED_TREE,
+): Promise<CapabilityOutcome> {
 	const wanted = new Set<string>();
 	for (const raw of log.split('\n')) {
 		const line = raw.trim();
@@ -535,7 +541,7 @@ async function voidSubjectRound(log: string): Promise<CapabilityOutcome> {
 	const changes: string[] = [];
 	const unhandled: string[] = [];
 	for (const file of [...wanted].sort()) {
-		const absolute = path.join(APPLIED_TREE, file);
+		const absolute = path.join(tree, file);
 		if (!existsSync(absolute) || !file.endsWith('.ts')) {
 			unhandled.push(`${file}: the diagnostic names a file the applied tree does not carry`);
 			continue;

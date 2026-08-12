@@ -1,0 +1,674 @@
+One or more browsers which are configured in the project's Browserslist configuration will be ignored as ES5 output is not supported by the Angular CLI.
+Ignored browsers: node 26.7.0, node 24.19.0, node 22.23.0, op_mini all
+- Generating browser application bundles (phase: setup)...
+    Components styles sourcemaps are not generated when styles optimization is enabled.
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+
+./src/app/core-ui/main-header/main-header.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($s, -4) or calc($s / -4)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+src/app/core-ui/main-header/main-header.component.scss 177:13  root stylesheet
+
+
+./src/app/core-ui/main-header/main-header.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($s, 2) or calc($s / 2)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+src/app/core-ui/main-header/main-header.component.scss 221:17  root stylesheet
+
+
+./src/app/core-ui/main-header/main-header.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($s, 2) or calc($s / 2)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+src/app/core-ui/main-header/main-header.component.scss 238:12  root stylesheet
+
+
+./src/app/core-ui/side-nav/side-nav.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($s, 2) or calc($s / 2)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+src/app/core-ui/side-nav/side-nav.component.scss 110:12  root stylesheet
+
+
+./src/app/features/bookmark/bookmark-bar/bookmark-bar.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($s, 1.5) or calc($s / 1.5)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+src/app/features/bookmark/bookmark-bar/bookmark-bar.component.scss 3:14  root stylesheet
+
+
+./src/app/features/bookmark/bookmark-bar/bookmark-bar.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($sTopBottom, 2) or calc($sTopBottom / 2)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+src/app/features/bookmark/bookmark-bar/bookmark-bar.component.scss 4:14  root stylesheet
+
+
+./src/app/features/tasks/task-additional-info/task-additional-info.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($s, 2) or calc($s / 2)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+src/app/features/tasks/task-additional-info/task-additional-info.component.scss 15:13  root stylesheet
+
+
+./src/app/features/tasks/task/task.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation This operation is parsed as:
+
+    $task-is-done-dim-opacity + 0.1
+
+but you may have intended it to mean:
+
+    $task-is-done-dim-opacity (+0.1)
+
+Add a space after + to clarify that it's meant to be a binary operation, or wrap
+it in parentheses to make it a unary operation. This will be an error in future
+versions of Sass.
+
+More info and automated migrator: https://sass-lang.com/d/strict-unary
+
+null
+
+./src/app/features/tasks/task/task.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($s, 2) or calc($s / 2)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+src/app/features/tasks/task/task.component.scss 329:18  root stylesheet
+
+
+./src/app/features/worklog/worklog.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($s, 2) or calc($s / 2)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+src/app/features/worklog/worklog.component.scss 83:20  root stylesheet
+
+
+./src/app/pages/daily-summary/daily-summary.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation $lightness: Passing a number without unit % (50) is deprecated.
+
+To preserve current behavior: $lightness * 1%
+
+More info: https://sass-lang.com/d/function-units
+
+src/app/pages/daily-summary/daily-summary.component.scss 184:69  root stylesheet
+
+
+./src/app/pages/daily-summary/daily-summary.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation $saturation: Passing a number without unit % (100) is deprecated.
+
+To preserve current behavior: $saturation * 1%
+
+More info: https://sass-lang.com/d/function-units
+
+src/app/pages/daily-summary/daily-summary.component.scss 184:69  root stylesheet
+
+
+./src/app/pages/daily-summary/daily-summary.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($height, 1.2) or calc($height / 1.2)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+src/app/pages/daily-summary/daily-summary.component.scss 184:50  root stylesheet
+
+
+./src/app/pages/daily-summary/daily-summary.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($s, 2) or calc($s / 2)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+src/app/pages/daily-summary/daily-summary.component.scss 80:15  root stylesheet
+
+
+./src/app/pages/daily-summary/daily-summary.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($width, 2) or calc($width / 2)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+src/app/pages/daily-summary/daily-summary.component.scss 184:18  root stylesheet
+
+
+./src/app/pages/project-page/project-page.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($s, 2) or calc($s / 2)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+src/app/pages/project-page/project-page.component.scss 30:12  root stylesheet
+
+
+./src/app/pages/schedule-page/schedule-page.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($s, 2) or calc($s / 2)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+src/app/pages/schedule-page/schedule-page.component.scss 6:12  root stylesheet
+
+
+./src/app/pages/schedule-page/schedule-page.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($s, 2) or calc($s / 2)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+src/app/pages/schedule-page/schedule-page.component.scss 78:15  root stylesheet
+
+
+./src/app/ui/duration/input-duration-slider/input-duration-slider.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation This operation is parsed as:
+
+    -$this-handle-size / 2 + $this-circle-width / 2
+
+but you may have intended it to mean:
+
+    -$this-handle-size / 2 (+$this-circle-width / 2)
+
+Add a space after + to clarify that it's meant to be a binary operation, or wrap
+it in parentheses to make it a unary operation. This will be an error in future
+versions of Sass.
+
+More info and automated migrator: https://sass-lang.com/d/strict-unary
+
+null
+
+./src/app/ui/duration/input-duration-slider/input-duration-slider.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($circle-size, 2) or calc($circle-size / 2)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+src/app/ui/duration/input-duration-slider/input-duration-slider.component.scss 26:48  onCircle()
+src/app/ui/duration/input-duration-slider/input-duration-slider.component.scss 114:5  root stylesheet
+
+
+./src/app/ui/duration/input-duration-slider/input-duration-slider.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($item-size, 2) or calc($item-size / 2)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+src/app/ui/duration/input-duration-slider/input-duration-slider.component.scss 17:13  onCircle()
+src/app/ui/duration/input-duration-slider/input-duration-slider.component.scss 114:5  root stylesheet
+
+
+./src/app/ui/duration/input-duration-slider/input-duration-slider.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($this-handle-size, 2) or calc($this-handle-size / 2)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+src/app/ui/duration/input-duration-slider/input-duration-slider.component.scss 5:26  root stylesheet
+
+
+./src/app/ui/duration/input-duration-slider/input-duration-slider.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div(-$this-handle-size, 2) or calc(-1 * $this-handle-size / 2)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+src/app/ui/duration/input-duration-slider/input-duration-slider.component.scss 159:10  root stylesheet
+
+
+./src/app/ui/duration/input-duration-slider/input-duration-slider.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div(360, $item-count) or calc(360 / $item-count)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+src/app/ui/duration/input-duration-slider/input-duration-slider.component.scss 21:12  onCircle()
+src/app/ui/duration/input-duration-slider/input-duration-slider.component.scss 114:5  root stylesheet
+
+
+./src/app/ui/duration/input-duration-slider/input-duration-slider.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+2 repetitive deprecation warnings omitted.
+Run in verbose mode to see all warnings.
+
+null
+
+./src/app/ui/inline-input/inline-input.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($s, 2) or calc($s / 2)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+src/app/ui/inline-input/inline-input.component.scss 44:12  root stylesheet
+
+
+./src/app/ui/inline-input/inline-input.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($s, 2) or calc($s / 2)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+src/app/ui/inline-input/inline-input.component.scss 44:17  root stylesheet
+
+
+Warning: /Users/jacksm5pro/dev/open-source/versionless/.versionless/stage/angular-super-productivity-v2-13-15-u18b/app/node_modules/ng2-dragula/fesm2022/ng2-dragula.mjs depends on 'dragula'. CommonJS or AMD dependencies can cause optimization bailouts.
+For more info see: https://angular.io/guide/build#configuring-commonjs-dependencies
+
+Warning: /Users/jacksm5pro/dev/open-source/versionless/.versionless/stage/angular-super-productivity-v2-13-15-u18b/app/src/app/core/error-handler/global-error-handler.class.ts depends on 'stacktrace-js'. CommonJS or AMD dependencies can cause optimization bailouts.
+For more info see: https://angular.io/guide/build#configuring-commonjs-dependencies
+
+Warning: /Users/jacksm5pro/dev/open-source/versionless/.versionless/stage/angular-super-productivity-v2-13-15-u18b/app/src/app/core/language/language.service.ts depends on 'moment'. CommonJS or AMD dependencies can cause optimization bailouts.
+For more info see: https://angular.io/guide/build#configuring-commonjs-dependencies
+
+Warning: /Users/jacksm5pro/dev/open-source/versionless/.versionless/stage/angular-super-productivity-v2-13-15-u18b/app/src/app/core/persistence/database.service.ts depends on 'localforage'. CommonJS or AMD dependencies can cause optimization bailouts.
+For more info see: https://angular.io/guide/build#configuring-commonjs-dependencies
+
+Warning: /Users/jacksm5pro/dev/open-source/versionless/.versionless/stage/angular-super-productivity-v2-13-15-u18b/app/src/app/features/issue/jira/jira-issue/jira-issue-content/jira-issue-content.component.ts depends on 'jira2md'. CommonJS or AMD dependencies can cause optimization bailouts.
+For more info see: https://angular.io/guide/build#configuring-commonjs-dependencies
+
+Warning: /Users/jacksm5pro/dev/open-source/versionless/.versionless/stage/angular-super-productivity-v2-13-15-u18b/app/src/app/features/reminder/reminder.service.ts depends on 'throttle-debounce'. CommonJS or AMD dependencies can cause optimization bailouts.
+For more info see: https://angular.io/guide/build#configuring-commonjs-dependencies
+
+Warning: /Users/jacksm5pro/dev/open-source/versionless/.versionless/stage/angular-super-productivity-v2-13-15-u18b/app/src/app/util/download.ts depends on 'file-saver'. CommonJS or AMD dependencies can cause optimization bailouts.
+For more info see: https://angular.io/guide/build#configuring-commonjs-dependencies
+
+
+
+./src/styles.scss - Error: Module build failed (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Undefined mixin.
+  ╷
+5 │ @include initMaterialCssVars();
+  │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+  src/styles/themes.scss 5:1  @import
+  src/styles.scss 2:9         root stylesheet
+
+./src/styles.scss?ngGlobalStyle - Error: Module build failed (from ./node_modules/@angular-devkit/build-angular/node_modules/mini-css-extract-plugin/dist/loader.js):
+HookWebpackError: Module build failed (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Can't find stylesheet to import.
+  ╷
+2 │ @import '~angular-material-css-vars/public-util';
+  │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+  src/_variables.scss 2:9  @import
+  src/styles.scss 1:9      root stylesheet
+
+./src/environments/environment.ts:4:2-9 - Error: Should not import the named export 'version' (imported as 'version') from default-exporting module (only default export is available soon)
+
+./node_modules/@ngx-formly/core/fesm2022/ngx-formly-core.mjs - Error: Module build failed (from ./node_modules/@angular-devkit/build-angular/src/tools/babel/webpack-loader.js):
+TypeError: Cannot create property 'message' on string '/Users/jacksm5pro/dev/open-source/versionless/.versionless/stage/angular-super-productivity-v2-13-15-u18b/app/node_modules/@ngx-formly/core/fesm2022/ngx-formly-core.mjs: This application depends upon a library published using Angular version 18.2.13, which requires Angular version 17.0.0 or newer to work correctly.
+Consider upgrading your application to use a more recent version of Angular.
+  2191 | class FormlyGroup extends FieldType {
+  2192 |     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: FormlyGroup, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
+> 2193 |     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: FormlyGroup, selector: "formly-group", host: { properties: { "class": "field.fieldGroupClassName || \"\"" } }, usesInheritance: true, ngImport: i0, template: `
+       |                          ^
+  2194 |     @for (f of field.fieldGroup; track $index) {
+  2195 |       <formly-field [field]="f"></formly-field>
+  2196 |     }'
+
+./node_modules/@ngx-formly/material/fesm2022/ngx-formly-material-checkbox.mjs - Error: Module build failed (from ./node_modules/@angular-devkit/build-angular/src/tools/babel/webpack-loader.js):
+TypeError: Cannot create property 'message' on string '/Users/jacksm5pro/dev/open-source/versionless/.versionless/stage/angular-super-productivity-v2-13-15-u18b/app/node_modules/@ngx-formly/material/fesm2022/ngx-formly-material-checkbox.mjs: This application depends upon a library published using Angular version 18.2.13, which requires Angular version 17.0.0 or newer to work correctly.
+Consider upgrading your application to use a more recent version of Angular.
+  63 |     }
+  64 |     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: FormlyFieldCheckbox, deps: [{ token: i0.Renderer2 }, { token: i1.FocusMonitor }], target: i0.ɵɵFactoryTarget.Component }); }
+> 65 |     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: FormlyFieldCheckbox, selector: "formly-field-mat-checkbox", viewQueries: [{ propertyName: "checkbox", first: true, predicate: MatCheckbox, descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: `
+     |                          ^
+  66 |     <mat-checkbox
+  67 |       [formControl]="formControl"
+  68 |       [id]="id"'
+
+./node_modules/@ngx-formly/material/fesm2022/ngx-formly-material-form-field.mjs - Error: Module build failed (from ./node_modules/@angular-devkit/build-angular/src/tools/babel/webpack-loader.js):
+TypeError: Cannot create property 'message' on string '/Users/jacksm5pro/dev/open-source/versionless/.versionless/stage/angular-super-productivity-v2-13-15-u18b/app/node_modules/@ngx-formly/material/fesm2022/ngx-formly-material-form-field.mjs: This application depends upon a library published using Angular version 18.2.13, which requires Angular version 17.0.0 or newer to work correctly.
+Consider upgrading your application to use a more recent version of Angular.
+  38 |     }
+  39 |     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: FormlyWrapperFormField, deps: [{ token: i0.Renderer2 }, { token: i0.ElementRef }, { token: i1.FocusMonitor }], target: i0.ɵɵFactoryTarget.Component }); }
+> 40 |     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: FormlyWrapperFormField, selector: "formly-wrapper-mat-form-field", viewQueries: [{ propertyName: "formField", first: true, predicate: MatFormField, descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: `
+     |                          ^
+  41 |     <!-- fix https://github.com/angular/material2/pull/7083 by setting width to 100% -->
+  42 |     <mat-form-field
+  43 |       [hideRequiredMarker]="true"'
+
+./node_modules/@ngx-formly/material/fesm2022/ngx-formly-material-input.mjs - Error: Module build failed (from ./node_modules/@angular-devkit/build-angular/src/tools/babel/webpack-loader.js):
+TypeError: Cannot create property 'message' on string '/Users/jacksm5pro/dev/open-source/versionless/.versionless/stage/angular-super-productivity-v2-13-15-u18b/app/node_modules/@ngx-formly/material/fesm2022/ngx-formly-material-input.mjs: This application depends upon a library published using Angular version 18.2.13, which requires Angular version 17.0.0 or newer to work correctly.
+Consider upgrading your application to use a more recent version of Angular.
+  15 |     }
+  16 |     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: FormlyFieldInput, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
+> 17 |     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: FormlyFieldInput, selector: "formly-field-mat-input", usesInheritance: true, ngImport: i0, template: `
+     |                          ^
+  18 |     @if (type !== 'number') {
+  19 |       <input
+  20 |         matInput'
+
+./node_modules/@ngx-formly/material/fesm2022/ngx-formly-material-multicheckbox.mjs - Error: Module build failed (from ./node_modules/@angular-devkit/build-angular/src/tools/babel/webpack-loader.js):
+TypeError: Cannot create property 'message' on string '/Users/jacksm5pro/dev/open-source/versionless/.versionless/stage/angular-super-productivity-v2-13-15-u18b/app/node_modules/@ngx-formly/material/fesm2022/ngx-formly-material-multicheckbox.mjs: This application depends upon a library published using Angular version 18.2.13, which requires Angular version 17.0.0 or newer to work correctly.
+Consider upgrading your application to use a more recent version of Angular.
+  42 |     }
+  43 |     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: FormlyFieldMultiCheckbox, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
+> 44 |     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: FormlyFieldMultiCheckbox, selector: "formly-field-mat-multicheckbox", host: { properties: { "id": "id" } }, viewQueries: [{ propertyName: "checkboxes", predicate: MatCheckbox, descendants: true }], usesInheritance: true, ngImport: i0, template: `
+     |                          ^
+  45 |     @for (option of props.options | formlySelectOptions: field | async; track $index; let i = $index) {
+  46 |       <mat-checkbox
+  47 |         [id]="id + '_' + i"'
+
+./node_modules/@ngx-formly/material/fesm2022/ngx-formly-material-radio.mjs - Error: Module build failed (from ./node_modules/@angular-devkit/build-angular/src/tools/babel/webpack-loader.js):
+TypeError: Cannot create property 'message' on string '/Users/jacksm5pro/dev/open-source/versionless/.versionless/stage/angular-super-productivity-v2-13-15-u18b/app/node_modules/@ngx-formly/material/fesm2022/ngx-formly-material-radio.mjs: This application depends upon a library published using Angular version 18.2.13, which requires Angular version 17.0.0 or newer to work correctly.
+Consider upgrading your application to use a more recent version of Angular.
+  42 |     }
+  43 |     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: FormlyFieldRadio, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
+> 44 |     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: FormlyFieldRadio, selector: "formly-field-mat-radio", viewQueries: [{ propertyName: "radioGroup", first: true, predicate: MatRadioGroup, descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: `
+     |                          ^
+  45 |     <mat-radio-group
+  46 |       [formControl]="formControl"
+  47 |       [formlyAttributes]="field"'
+
+./node_modules/@ngx-formly/material/fesm2022/ngx-formly-material-select.mjs - Error: Module build failed (from ./node_modules/@angular-devkit/build-angular/src/tools/babel/webpack-loader.js):
+TypeError: Cannot create property 'message' on string '/Users/jacksm5pro/dev/open-source/versionless/.versionless/stage/angular-super-productivity-v2-13-15-u18b/app/node_modules/@ngx-formly/material/fesm2022/ngx-formly-material-select.mjs: This application depends upon a library published using Angular version 18.2.13, which requires Angular version 17.0.0 or newer to work correctly.
+Consider upgrading your application to use a more recent version of Angular.
+  68 |     }
+  69 |     static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "18.2.13", ngImport: i0, type: FormlyFieldSelect, deps: null, target: i0.ɵɵFactoryTarget.Component }); }
+> 70 |     static { this.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "17.0.0", version: "18.2.13", type: FormlyFieldSelect, selector: "formly-field-mat-select", viewQueries: [{ propertyName: "select", first: true, predicate: MatSelect, descendants: true, static: true }], usesInheritance: true, ngImport: i0, template: `
+     |                          ^
+  71 |     <ng-template #selectAll let-selectOptions="selectOptions">
+  72 |       <mat-option (click)="toggleSelectAll(selectOptions)">
+  73 |         <mat-pseudo-checkbox class="mat-option-pseudo-checkbox" [state]="getSelectAllState(selectOptions)">'
+
+Error: src/app/app.module.ts:41:34 - error TS2554: Expected 0 arguments, but got 3.
+
+41   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+Error: src/app/app.module.ts:51:5 - error NG6002: This import contains errors, which may affect components that depend on this NgModule.
+
+51     ProjectModule,
+       ~~~~~~~~~~~~~
+
+
+Error: src/app/app.module.ts:56:5 - error NG6002: This import contains errors, which may affect components that depend on this NgModule.
+
+56     CoreUiModule,
+       ~~~~~~~~~~~~
+
+
+Error: src/app/app.module.ts:57:5 - error NG6002: This import contains errors, which may affect components that depend on this NgModule.
+
+57     PagesModule,
+       ~~~~~~~~~~~
+
+
+Error: src/app/app.module.ts:58:5 - error NG6002: This import contains errors, which may affect components that depend on this NgModule.
+
+58     MainHeaderModule,
+       ~~~~~~~~~~~~~~~~
+
+
+Error: src/app/app.module.ts:63:5 - error NG6002: This import contains errors, which may affect components that depend on this NgModule.
+
+63     CoreUiModule,
+       ~~~~~~~~~~~~
+
+
+Error: src/app/core-ui/core-ui.module.ts:13:5 - error NG6002: This import contains errors, which may affect components that depend on this NgModule.
+
+13     MainHeaderModule,
+       ~~~~~~~~~~~~~~~~
+
+
+Error: src/app/core-ui/core-ui.module.ts:19:5 - error NG6003: This export contains errors, which may affect components that depend on this NgModule.
+
+19     MainHeaderModule,
+       ~~~~~~~~~~~~~~~~
+
+
+Error: src/app/core-ui/main-header/main-header.module.ts:14:5 - error NG6002: This import contains errors, which may affect components that depend on this NgModule.
+
+14     ProjectModule,
+       ~~~~~~~~~~~~~
+
+
+Error: src/app/core/theme/global-theme.service.ts:163:52 - error TS2345: Argument of type '{ legend: { labels: { fontColor: string; }; }; scales: { xAxes: { ticks: { fontColor: string; }; gridLines: { color: string; }; }[]; yAxes: { ticks: { fontColor: string; }; gridLines: { color: string; }; }[]; }; } | { ...; }' is not assignable to parameter of type '_DeepPartialObject<CoreChartOptions<keyof ChartTypeRegistry> & ElementChartOptions<keyof ChartTypeRegistry> & PluginChartOptions<...> & DatasetChartOptions<...> & ScaleChartOptions<...>>'.
+  Type '{ legend: { labels: { fontColor: string; }; }; scales: { xAxes: { ticks: { fontColor: string; }; gridLines: { color: string; }; }[]; yAxes: { ticks: { fontColor: string; }; gridLines: { color: string; }; }[]; }; }' is not assignable to type '_DeepPartialObject<CoreChartOptions<keyof ChartTypeRegistry> & ElementChartOptions<keyof ChartTypeRegistry> & PluginChartOptions<...> & DatasetChartOptions<...> & ScaleChartOptions<...>>'.
+    Types of property 'scales' are incompatible.
+      Type '{ xAxes: { ticks: { fontColor: string; }; gridLines: { color: string; }; }[]; yAxes: { ticks: { fontColor: string; }; gridLines: { color: string; }; }[]; }' is not assignable to type '_DeepPartialObject<{ [key: string]: ScaleOptionsByType<"radialLinear" | keyof CartesianScaleTypeRegistry>; }>'.
+        Property 'xAxes' is incompatible with index signature.
+          Type '{ ticks: { fontColor: string; }; gridLines: { color: string; }; }[]' is not assignable to type '_DeepPartialObject<{ type: "time"; } & Omit<CartesianScaleOptions, "max" | "min"> & { min: string | number; max: string | number; suggestedMin: string | number; ... 5 more ...; ticks: TimeScaleTickOptions; }> | ... 4 more ... | _DeepPartialObject<...>'.
+            Type '{ ticks: { fontColor: string; }; gridLines: { color: string; }; }[]' is not assignable to type '_DeepPartialObject<{ type: "radialLinear"; } & CoreScaleOptions & { animate: boolean; startAngle: number; angleLines: { display: boolean; color: Scriptable<Color, ScriptableScaleContext>; lineWidth: Scriptable<...>; borderDash: Scriptable<...>; borderDashOffset: Scriptable<...>; }; ... 7 more ...; ticks: RadialTickO...'.
+              Types of property 'reverse' are incompatible.
+                Type '() => { ticks: { fontColor: string; }; gridLines: { color: string; }; }[]' is not assignable to type 'boolean'.
+
+163     this._chartThemeService.setColorschemesOptions(overrides);
+                                                       ~~~~~~~~~
+
+
+Error: src/app/features/config/global-config.service.ts:88:28 - error TS2554: Expected 1 arguments, but got 0.
+
+88       this._onNoCfgLoaded$.next();
+                              ~~~~~~
+
+  node_modules/rxjs/dist/types/internal/Subject.d.ts:31:10
+    31     next(value: T): void;
+                ~~~~~~~~
+    An argument for 'value' was not provided.
+
+
+Error: src/app/features/google/google-api.service.ts:143:9 - error TS2794: Expected 1 arguments, but got 0. Did you forget to include 'void' in your type argument to 'Promise'?
+
+143         resolve();
+            ~~~~~~~~~
+
+  node_modules/typescript/lib/lib.es2015.promise.d.ts:31:34
+    31     new <T>(executor: (resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void): Promise<T>;
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~
+    An argument for 'value' was not provided.
+
+
+Error: src/app/features/google/google-api.service.ts:150:11 - error TS2794: Expected 1 arguments, but got 0. Did you forget to include 'void' in your type argument to 'Promise'?
+
+150           resolve();
+              ~~~~~~~~~
+
+  node_modules/typescript/lib/lib.es2015.promise.d.ts:31:34
+    31     new <T>(executor: (resolve: (value: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void): Promise<T>;
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~
+    An argument for 'value' was not provided.
+
+
+Error: src/app/features/google/store/google-drive-sync.effects.ts:84:44 - error TS2322: Type 'Observable<unknown>' is not assignable to type 'EffectResult<Action>'.
+  Type 'Observable<unknown>' is not assignable to type 'Observable<Action>'.
+    Property 'type' is missing in type '{}' but required in type 'Action'.
+
+ 84   initialImport$: any = createEffect(() => this._actions$.pipe(
+                                               ~~~~~~~~~~~~~~~~~~~~
+ 85     ofType(
+    ~~~~~~~~~~~
+... 
+113     }),
+    ~~~~~~~
+114   ));
+    ~~~
+
+  node_modules/@ngrx/store/src/models.d.ts:3:5
+    3     type: string;
+          ~~~~
+    'type' is declared here.
+  node_modules/@ngrx/effects/src/effect_creator.d.ts:12:103
+    12 }, DT extends DispatchType<C>, OT extends ObservableType<DT, OT>, R extends EffectResult<OT>>(source: () => R & ConditionallyDisallowActionCreator<DT, R>, config?: C): R & CreateEffectMetadata;
+                                                                                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    The expected type comes from the return type of this signature.
+
+
+Error: src/app/features/google/store/google-drive-sync.effects.ts:116:45 - error TS2322: Type 'Observable<unknown>' is not assignable to type 'EffectResult<Action>'.
+
+116   changeSyncFile$: any = createEffect(() => this._actions$.pipe(
+                                                ~~~~~~~~~~~~~~~~~~~~
+117     ofType(
+    ~~~~~~~~~~~
+... 
+156     }),
+    ~~~~~~~
+157   ));
+    ~~~
+
+  node_modules/@ngrx/effects/src/effect_creator.d.ts:12:103
+    12 }, DT extends DispatchType<C>, OT extends ObservableType<DT, OT>, R extends EffectResult<OT>>(source: () => R & ConditionallyDisallowActionCreator<DT, R>, config?: C): R & CreateEffectMetadata;
+                                                                                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    The expected type comes from the return type of this signature.
+
+
+Error: src/app/features/google/store/google-drive-sync.effects.ts:223:35 - error TS2322: Type 'Observable<unknown>' is not assignable to type 'EffectResult<Action>'.
+
+223   save$: any = createEffect(() => this._actions$.pipe(
+                                      ~~~~~~~~~~~~~~~~~~~~
+224     ofType(
+    ~~~~~~~~~~~
+... 
+252     ),
+    ~~~~~~
+253   ));
+    ~~~
+
+  node_modules/@ngrx/effects/src/effect_creator.d.ts:12:103
+    12 }, DT extends DispatchType<C>, OT extends ObservableType<DT, OT>, R extends EffectResult<OT>>(source: () => R & ConditionallyDisallowActionCreator<DT, R>, config?: C): R & CreateEffectMetadata;
+                                                                                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    The expected type comes from the return type of this signature.
+
+
+Error: src/app/features/issue/jira/jira.module.ts:16:5 - error NG6002: 'NgxElectronModule' does not appear to be an NgModule class.
+
+16     NgxElectronModule,
+       ~~~~~~~~~~~~~~~~~
+
+  node_modules/ngx-electron/public_api.d.ts:3:22
+    3 export declare class NgxElectronModule {
+                           ~~~~~~~~~~~~~~~~~
+    This likely means that the library (ngx-electron) which declares NgxElectronModule is not compatible with Angular Ivy. Check if a newer version of the library is available, and update if so. Also consider checking with the library's authors to see if the library is expected to be compatible with Ivy.
+
+
+Error: src/app/features/metric/metric.component.ts:4:9 - error TS2305: Module '"ng2-charts"' has no exported member 'Color'.
+
+4 import {Color} from 'ng2-charts';
+          ~~~~~
+
+
+Error: src/app/features/metric/metric.component.ts:24:5 - error TS2322: Type '{ responsive: true; legend: { position: string; }; }' is not assignable to type '_DeepPartialObject<CoreChartOptions<keyof ChartTypeRegistry> & ElementChartOptions<keyof ChartTypeRegistry> & PluginChartOptions<...> & DatasetChartOptions<...> & ScaleChartOptions<...>>'.
+  Object literal may only specify known properties, and 'legend' does not exist in type '_DeepPartialObject<CoreChartOptions<keyof ChartTypeRegistry> & ElementChartOptions<keyof ChartTypeRegistry> & PluginChartOptions<...> & DatasetChartOptions<...> & ScaleChartOptions<...>>'.
+
+24     legend: {
+       ~~~~~~
+
+
+Error: src/app/features/metric/metric.model.ts:2:9 - error TS2305: Module '"ng2-charts"' has no exported member 'Label'.
+
+2 import {Label, SingleDataSet} from 'ng2-charts';
+          ~~~~~
+
+
+Error: src/app/features/metric/metric.model.ts:2:16 - error TS2305: Module '"ng2-charts"' has no exported member 'SingleDataSet'.
+
+2 import {Label, SingleDataSet} from 'ng2-charts';
+                 ~~~~~~~~~~~~~
+
+
+Error: src/app/features/project/project.module.ts:19:5 - error NG6002: This import contains errors, which may affect components that depend on this NgModule.
+
+19     JiraModule,
+       ~~~~~~~~~~
+
+
+Error: src/app/features/tasks/store/task-internal.effects.ts:113:32 - error TS2769: No overload matches this call.
+  Overload 1 of 9, '(mapFn: (state: object) => any): (source$: Observable<object>) => Observable<any>', gave the following error.
+    Argument of type 'MemoizedSelectorWithProps<object, { day: string; }, any, (s1: any, props: { day: string; }) => any>' is not assignable to parameter of type '(state: object) => any'.
+      Target signature provides too few arguments. Expected 2 or more, but got 1.
+  Overload 2 of 9, '(key: string | number | symbol): (source$: Observable<any>) => Observable<any>', gave the following error.
+    Argument of type 'MemoizedSelectorWithProps<object, { day: string; }, any, (s1: any, props: { day: string; }) => any>' is not assignable to parameter of type 'string | number | symbol'.
+
+113       this._store$.pipe(select(selectTasksWorkedOnOrDoneFlat)),
+                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+Error: src/app/features/worklog/worklog-export/worklog-export.component.ts:15:8 - error TS1259: Module '"/Users/jacksm5pro/dev/open-source/versionless/.versionless/stage/angular-super-productivity-v2-13-15-u18b/app/node_modules/clipboard/src/clipboard"' can only be default-imported using the 'allowSyntheticDefaultImports' flag
+
+15 import Clipboard from 'clipboard';
+          ~~~~~~~~~
+
+  node_modules/clipboard/src/clipboard.d.ts:89:1
+    89 export = ClipboardJS;
+       ~~~~~~~~~~~~~~~~~~~~~
+    This module is declared with 'export =', and can only be used with a default import when using the 'allowSyntheticDefaultImports' flag.
+
+
+Error: src/app/pages/config-page/config-page.module.ts:15:5 - error NG6002: This import contains errors, which may affect components that depend on this NgModule.
+
+15     JiraModule,
+       ~~~~~~~~~~
+
+
+Error: src/app/pages/pages.module.ts:15:5 - error NG6002: This import contains errors, which may affect components that depend on this NgModule.
+
+15     ConfigPageModule,
+       ~~~~~~~~~~~~~~~~
+
+
+Error: src/app/pages/pages.module.ts:16:5 - error NG6002: This import contains errors, which may affect components that depend on this NgModule.
+
+16     ProjectPageModule,
+       ~~~~~~~~~~~~~~~~~
+
+
+Error: src/app/pages/pages.module.ts:22:5 - error NG6002: This import contains errors, which may affect components that depend on this NgModule.
+
+22     ProjectSettingsModule,
+       ~~~~~~~~~~~~~~~~~~~~~
+
+
+Error: src/app/pages/project-page/project-page.module.ts:11:5 - error NG6002: This import contains errors, which may affect components that depend on this NgModule.
+
+11     ProjectModule
+       ~~~~~~~~~~~~~
+
+
+Error: src/app/pages/project-settings/project-settings.module.ts:16:5 - error NG6002: This import contains errors, which may affect components that depend on this NgModule.
+
+16     JiraModule,
+       ~~~~~~~~~~
+
+
+

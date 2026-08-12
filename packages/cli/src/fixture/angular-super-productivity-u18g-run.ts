@@ -123,21 +123,21 @@ async function readExportAssignment(
  * a compiler flag applies to every module in the program, so the reading that
  * justifies it has to be of every module too.
  */
-async function interopRound(): Promise<CapabilityOutcome> {
-	const modules = await filesBelow(path.join(APPLIED_TREE, 'src'), '.ts');
+export async function interopRound(tree: string = APPLIED_TREE): Promise<CapabilityOutcome> {
+	const modules = await filesBelow(path.join(tree, 'src'), '.ts');
 	const readings: ModuleInteropReading[] = [];
 	for (const file of modules) {
 		const source = await readFile(file, 'utf8');
-		readings.push(readModuleInterop(path.relative(APPLIED_TREE, file), source));
+		readings.push(readModuleInterop(path.relative(tree, file), source));
 	}
 	const wanted = new Set<string>();
 	for (const reading of readings)
 		for (const site of reading.defaultImports) wanted.add(packageOfSpecifier(site.specifier));
 	const packages: ExportAssignmentReading[] = [];
 	for (const name of [...wanted].sort())
-		packages.push(await readExportAssignment(APPLIED_TREE, name));
+		packages.push(await readExportAssignment(tree, name));
 
-	const config = path.join(APPLIED_TREE, 'tsconfig.json');
+	const config = path.join(tree, 'tsconfig.json');
 	const migration = enableSyntheticDefaultImports(
 		await readFile(config, 'utf8'),
 		readings,
@@ -178,7 +178,10 @@ async function interopRound(): Promise<CapabilityOutcome> {
 }
 
 /** The promise-executor round, driven by the compiler's own TS2794 lines. */
-async function voidExecutorRound(log: string): Promise<CapabilityOutcome> {
+export async function voidExecutorRound(
+	log: string,
+	tree: string = APPLIED_TREE,
+): Promise<CapabilityOutcome> {
 	const wanted = new Set<string>();
 	for (const raw of log.split('\n')) {
 		const line = raw.trim();
@@ -192,7 +195,7 @@ async function voidExecutorRound(log: string): Promise<CapabilityOutcome> {
 	const changes: string[] = [];
 	const unhandled: string[] = [];
 	for (const file of [...wanted].sort()) {
-		const absolute = path.join(APPLIED_TREE, file);
+		const absolute = path.join(tree, file);
 		if (!existsSync(absolute) || !file.endsWith('.ts')) {
 			unhandled.push(`${file}: the diagnostic names a file the applied tree does not carry`);
 			continue;
