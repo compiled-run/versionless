@@ -12,10 +12,12 @@
  * receipt. Its only output is stdout.
  */
 
+import { readFileSync } from 'node:fs';
 import { basename, join, resolve } from 'pathe';
 import { box, runBoxes } from '@async/witness';
 import { joinURL } from 'ufo';
 import { canonicalize } from '../../../core/src/receipts/canonicalize.ts';
+import { WITNESS_ANGULAR_SUPER_PRODUCTIVITY_STYLE_PROBES } from '../../../core/src/receipts/witness-angular-super-productivity.ts';
 import { witnessNodeFileSystem } from '../witness/node-filesystem.ts';
 import { createPlaywrightWitnessHost } from '../witness/playwright-host.ts';
 import { startStaticServer } from '../witness/real-app-run.ts';
@@ -38,6 +40,17 @@ const laneRoots = {
 const VIEWPORT = { width: 1280, height: 900 } as const;
 
 /**
+ * The route the driver deep-links to.
+ *
+ * The bare document was measured first and records its navigation as `#/`,
+ * which is not one of the nine routes the application declares — the router
+ * renders the work view for it through the wildcard, and a recorded `#/` would
+ * be a navigation the application did not name. Deep-linking the declared route
+ * is what makes the recorded navigation a declared one.
+ */
+const INITIAL_ROUTE = '/#/work-view';
+
+/**
  * The candidate selectors, read out of the application's own templates rather
  * than guessed: the shell, the work view, the add-task surface, the task list
  * and the two controls the time-tracking and theme legs would be anchored on.
@@ -49,7 +62,15 @@ const CANDIDATES = [
 	'main-header .project-settings-btn',
 	'mat-drawer-container',
 	'side-nav',
+	// Corrected in the u20c2a round. The first calibration pass asked for
+	// `work-view-page` because that is what the component's FILE is called; the
+	// component's own `selector` is `work-view`, and the earlier pass measured
+	// the mistake honestly as zero. The wrong spelling is kept beside the right
+	// one so the correction stays visible in the driver rather than only in a
+	// note: a reader can see both asked, and the counts say which one the
+	// application actually renders.
 	'work-view-page',
+	'work-view',
 	'.work-view-header',
 	'add-task-bar',
 	'add-task-bar input',
@@ -66,6 +87,25 @@ const CANDIDATES = [
 	'banner',
 	'mat-progress-bar',
 ] as const;
+
+/**
+ * The observed page record out of the box receipt, narrowed to the four things
+ * an exact inventory has to be pinned from: what the console said, what the
+ * browser failed to fetch, what the page threw, and where it navigated.
+ */
+function pageSummary(receiptPath: string): unknown {
+	const receipt = JSON.parse(readFileSync(receiptPath, 'utf8')) as {
+		boxes?: Array<{ pages?: Array<Record<string, unknown>> }>;
+	};
+	const page = receipt.boxes?.[0]?.pages?.[0];
+	if (page === undefined) return null;
+	return {
+		consoleMessages: page.consoleMessages,
+		pageErrors: page.pageErrors,
+		failedRequests: page.failedRequests,
+		navigations: page.navigations,
+	};
+}
 
 export async function calibrateAngularSuperProductivityLane(
 	lane: 'baseline' | 'migrated',
@@ -84,6 +124,9 @@ export async function calibrateAngularSuperProductivityLane(
 		),
 		contextProfile: 'current-witness',
 		viewport: VIEWPORT,
+		// The reader is an opt-in and this driver opts in, because reading the
+		// store's keys either side of a create is the whole of leg (e).
+		indexedDb: 'read-keys',
 		// The application's own `index.html` links the Roboto stylesheet, so the
 		// seam is answered inside the context with an empty body exactly as the
 		// TinyTranslator vertical answers its icon stylesheet. Nothing leaves the
@@ -99,8 +142,9 @@ export async function calibrateAngularSuperProductivityLane(
 	let telemetry: unknown;
 	let storage: unknown;
 	let scroll: unknown;
+	const legs: Record<string, unknown> = {};
 	const definition = box(`super-productivity-calibrate-${lane}`, async (context) => {
-		const page = await context.browser.visit(joinURL(staticServer.origin, '/'));
+		const page = await context.browser.visit(joinURL(staticServer.origin, INITIAL_ROUTE));
 		for (const selector of CANDIDATES) {
 			// Asked for as zero: a candidate that genuinely resolves nothing passes
 			// and is recorded as absent, and one that resolves reports its actual
@@ -117,6 +161,53 @@ export async function calibrateAngularSuperProductivityLane(
 		telemetry = await host.serviceWorkerTelemetry(10_000);
 		storage = await host.browserStorageKeys();
 		scroll = await host.viewportScroll();
+
+		// Legs (a) and (e), driven here before either is pinned into a journey.
+		// Every reading is printed rather than asserted: what this pass is for is
+		// finding out what the application does, and an assertion written before
+		// the reading exists is a guess with a stack trace.
+		const titleProbe = { group: 'task', name: '.task-title', item: '.task-title' } as const;
+		const report = async (stage: string): Promise<void> => {
+			legs[stage] = {
+				indexedDb: await host.indexedDbKeys().then(
+					(inventory) => inventory,
+					(error: unknown) => `refused: ${error instanceof Error ? error.message : String(error)}`,
+				),
+				localStorage: await host.browserStorageKeys(),
+				taskTitles: await host.groupedText(titleProbe).then(
+					(groups) => groups,
+					(error: unknown) => `refused: ${error instanceof Error ? error.message : String(error)}`,
+				),
+				scroll: await host.viewportScroll(),
+			};
+		};
+		legs['renderedStyles'] = await host.renderedStyles(
+			WITNESS_ANGULAR_SUPER_PRODUCTIVITY_STYLE_PROBES.map((probe) => ({
+				label: probe.label,
+				selector: probe.selector,
+				properties: [...probe.properties],
+			})),
+		);
+		await report('before-create');
+		await page.trackEvents('click', 'input', 'keydown');
+		await page.type('add-task-bar input', 'Witness calibration task', { redact: false });
+		await page.press('add-task-bar input', 'Enter');
+		await new Promise<void>((settle) => void setTimeout(settle, 1_500));
+		await report('after-create');
+		await page.reload();
+		await new Promise<void>((settle) => void setTimeout(settle, 2_500));
+		await report('after-reload');
+		legs['after-reload-telemetry'] = await host.serviceWorkerTelemetry(10_000);
+		for (const selector of ['task-list', 'task-list task', 'task', 'task .task-title']) {
+			try {
+				await context.expect.page.count(page, selector, 0);
+				legs[`count:${selector}`] = 0;
+			} catch (error: unknown) {
+				legs[`count:${selector}`] = (error instanceof Error ? error.message : String(error))
+					.split('\n')[0]!
+					.trim();
+			}
+		}
 		await context.receipt.capture('calibration-complete');
 	});
 	let status = 'unknown';
@@ -155,6 +246,8 @@ export async function calibrateAngularSuperProductivityLane(
 			telemetry,
 			storage,
 			scroll,
+			legs,
+			page: receiptPath === '' ? null : pageSummary(receiptPath),
 			requestOutcomes: host.requestOutcomes(),
 			staticPaths: staticServer.requests(),
 		})}\n`,

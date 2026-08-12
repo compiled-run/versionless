@@ -534,6 +534,246 @@ export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_DRAG_SURFACE = Object.freeze({
 	masked: false,
 });
 
+/**
+ * A calibration contradiction, recorded rather than quietly fixed.
+ *
+ * The first calibration driver asked the live page for `work-view-page`,
+ * because that is what the component's FILE is called. It resolved zero in both
+ * lanes, twice, and the reason is that the component's own `selector` is
+ * `work-view`: the filename and the host tag are different names for the same
+ * component, and only one of them is ever in the DOM. The wrong spelling is
+ * kept beside the right one in the driver's candidate list so both are asked on
+ * every pass, and the counts — one and zero, in that order — are what settles
+ * it. Nothing published ever carried the wrong spelling; this exists so the
+ * correction is a measurement in the record rather than a silent edit.
+ */
+export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_HOST_TAG_CORRECTION = Object.freeze({
+	state: 'measured-host-tag-correction',
+	corrected: 'work-view-page',
+	correction: 'work-view',
+	why: 'the work view component is declared in `work-view-page.component.ts` with `selector: “work-view”`; the file name is not a host tag and never resolves in the DOM',
+	measuredCorrectedCount: 0,
+	measuredCorrectionCount: 1,
+	lanes: Object.freeze(['baseline', 'migrated']),
+	published: false,
+	masked: false,
+});
+
+/**
+ * The second calibration contradiction, in the harness rather than in a pin.
+ *
+ * The IndexedDB key reader sorted its keys with `localeCompare`, which asks the
+ * browser's collator. This application's store is the first one in the corpus
+ * where that produces a different answer from UTF-16 code-unit order, and the
+ * receipt schemas all check published key lists against `[...values].sort()` —
+ * code-unit order. So the reader was returning a list its own schema would have
+ * rejected, and on top of that the collator's answer depends on an ICU locale
+ * nobody declared. The reader was corrected; the check was not relaxed.
+ */
+export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_KEY_ORDER_CORRECTION = Object.freeze({
+	state: 'measured-reader-ordering-correction',
+	corrected: 'browser-collator-localeCompare',
+	correction: 'utf16-code-unit',
+	disagreedOn: Object.freeze([
+		'SUP_PROJECT_META_LIST',
+		'SUP_P_DEFAULT_TASKS_STATE',
+		'SUP_P_DEFAULT_TASK_ATTACHMENT_STATE',
+	]),
+	why: 'every receipt schema in this corpus checks a published key list against `[...values].sort()`, which is code-unit order; a reader that answered in collation order was handing its schema a list the schema would refuse, and answering in a locale nobody declared while doing it',
+	published: false,
+	masked: false,
+});
+
+/**
+ * What the browser found in the migrated lane that eight rounds of green builds
+ * could not: the third invisible-to-build regression this cell has produced.
+ *
+ * Both lanes were driven through legs (a) and (e) by the calibration driver.
+ * The era lane is clean — no page error, no console error, no failed request.
+ * The migrated lane creates the task, persists it and reloads it exactly as the
+ * era lane does, and while it does so its own `GLOBAL_ERROR_HANDLER` reports a
+ * `TypeError` twice per load out of the work view's `split` component: an
+ * `@Input() set splitPos` calls the renderer's `addClass` against an element
+ * reference that is `undefined` at the time the input is set.
+ *
+ * It is recorded here and NOT pinned into either lane's expected-console-error
+ * inventory. An expected-error inventory is an accounting mechanism for
+ * diagnostics that are understood and accounted for, never an allowance, and a
+ * regression admitted into one stops being visible. Both lanes therefore pin
+ * the empty inventory the era lane measures, and the migrated lane stays red on
+ * this until it is repaired — which is the correct state for a fact nobody has
+ * fixed yet.
+ */
+export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_MIGRATED_LANE_REGRESSION = Object.freeze({
+	state: 'measured-migrated-lane-runtime-regression-unrepaired',
+	lane: 'migrated',
+	error: "TypeError: Cannot read properties of undefined (reading 'classList')",
+	site: 'src/app/pages/work-view/split/split.component.ts — the `@Input() set splitPos` accessor, through `@angular/platform-browser`’s `addClass`',
+	perDocumentLoad: 1,
+	pageErrorsPerLoad: 1,
+	consoleErrorsPerLoad: 2,
+	baselineOccurrences: 0,
+	invisibleTo: 'both build lanes — the migrated lane is green at 62 artifacts and the input setter is never executed by a build',
+	foundBy: 'the leg (a)/(e) calibration pass, driven through both lanes with the page-error and console tallies read off the box receipt',
+	admittedIntoInventory: false,
+	why: 'an expected-console-error inventory accounts for understood diagnostics; admitting an unrepaired regression into one would retire the only mechanism that reports it',
+	masked: false,
+});
+
+/**
+ * The empty per-lane console-error inventory, pinned for BOTH lanes.
+ *
+ * The era lane measured it. The migrated lane does not, and the difference is
+ * the regression above rather than an allowance this inventory should grow to
+ * fit. Pinning empty in both lanes is what keeps that difference a failure.
+ */
+export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_CONSOLE_ERRORS = Object.freeze({
+	baseline: Object.freeze([]),
+	migrated: Object.freeze([]),
+}) as Readonly<Record<'baseline' | 'migrated', readonly WitnessConsoleErrorInventoryEntry[]>>;
+
+/**
+ * The empty per-lane failed-request inventory. Measured empty in both lanes:
+ * every asset the document asks for is served from the bounded loopback origin,
+ * and the one non-loopback request is the declared font seam, answered
+ * in-context with a 200.
+ */
+export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_FAILED_REQUESTS = Object.freeze({
+	baseline: Object.freeze([]),
+	migrated: Object.freeze([]),
+}) as Readonly<Record<'baseline' | 'migrated', readonly WitnessFailedRequestInventoryEntry[]>>;
+
+/**
+ * The seam membership per lane. Both lanes carry the same single member, which
+ * is what the shared declaration above says and what the parser checks; this is
+ * the per-lane shape the run specification consumes.
+ */
+export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_LANE_SEAMS = Object.freeze({
+	baseline: WITNESS_ANGULAR_SUPER_PRODUCTIVITY_SEAMS,
+	migrated: WITNESS_ANGULAR_SUPER_PRODUCTIVITY_SEAMS,
+}) as Readonly<Record<'baseline' | 'migrated', readonly WitnessMockedNonLoopbackSeamEntry[]>>;
+
+/**
+ * The two journey legs this specification drives, and every fact about them
+ * that the calibration pass measured identically in both lanes.
+ *
+ * Leg (a) is a create: the application boots into planning mode with no tasks
+ * at all, and the add-task bar is configured `[isAddToBacklog]="false"`, so a
+ * title typed into it and committed with Enter lands in today's list rather
+ * than in the backlog. Leg (e) is a document reload: there is no backend, the
+ * task is in the application's own IndexedDB store, and what comes back is what
+ * leg (a) put there.
+ *
+ * The key censuses are the measurement leg (e) rests on. Two keys exist before
+ * anything is typed — the project meta list the application seeds itself and
+ * its reminder record — and committing one task adds the four state documents
+ * the application writes for the default project. Nothing is removed, which the
+ * receipt schema checks in that direction as well.
+ */
+export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_JOURNEY = Object.freeze({
+	initialRoute: '/#/work-view',
+	viewport: Object.freeze({ width: 1280, height: 900 }),
+	/** The recorded navigations: the deep-linked work view, and the reload. */
+	navigations: 2,
+	hostTag: 'work-view',
+	addTaskInput: 'add-task-bar input',
+	taskList: 'task-list',
+	taskListTask: 'task-list task',
+	taskTitle: 'task-list task .task-title',
+	/** Measured: the work view renders an undone list and a done list. */
+	taskLists: 2,
+	taskTitleText: 'Witness leg-a task',
+	keysBeforeJourney: Object.freeze(['SUP_PROJECT_META_LIST', 'SUP_REMINDER']),
+	/**
+	 * In UTF-16 code-unit order, which is what the reader now produces and what
+	 * `sortedUnique` above requires. The first calibration pass read them through
+	 * the browser's collator and got `SUP_PROJECT_META_LIST` in the middle of the
+	 * list; that reading disagreed with this schema, and the reader was corrected
+	 * rather than the check relaxed.
+	 */
+	keysAfterJourney: Object.freeze([
+		'SUP_PROJECT_META_LIST',
+		'SUP_P_DEFAULT_ISSUE_STATE_GITHUB',
+		'SUP_P_DEFAULT_ISSUE_STATE_JIRA',
+		'SUP_P_DEFAULT_TASKS_STATE',
+		'SUP_P_DEFAULT_TASK_ATTACHMENT_STATE',
+		'SUP_REMINDER',
+	]),
+	localStorageKeysBeforeJourney: Object.freeze([]),
+	localStorageKeysAfterJourney: Object.freeze(['SUP_LAST_ACTIVE']),
+	/**
+	 * The store localforage settles on in this context, recorded rather than
+	 * pinned as a property of the application: the reader found the `SUP`
+	 * database with `SUP_STORE` in it, which is the IndexedDB driver.
+	 */
+	driverInUse: 'INDEXEDDB',
+	/**
+	 * The application's own `ngsw-config.json` declares an `externalAssets` group
+	 * over the Google Fonts hosts at `installMode: lazy`. The first document load
+	 * caches nothing from it — the worker is not controlling the page yet — and
+	 * the load after the reload caches the stylesheet the application's own
+	 * `<link>` asks for, which is why the third checkpoint is the first one whose
+	 * cache reading carries a cross-origin member.
+	 */
+	externalAssetCachedAfterReload:
+		'https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700&display=swap',
+	drag: 'not-driven',
+});
+
+/**
+ * Which probe the typeface reading is anchored on, and why it is not the one a
+ * reader would reach for first.
+ *
+ * The schema requires the two lanes to publish the SAME typeface record,
+ * because both are served the same answered stylesheet and the degradation is
+ * therefore one fact measured twice rather than a difference across the lift.
+ * The document body would be the obvious anchor and cannot be used for it: the
+ * calibration pass measured `Roboto, "Helvetica Neue", sans-serif` in the era
+ * lane and `Roboto, sans-serif` in the migrated one, because Angular Material's
+ * typography configuration dropped the second family between 8.2 and 16.2. That
+ * is a genuine declared style difference and it belongs in the declared-
+ * difference list, not folded into a typeface record that then could not be
+ * equal across lanes.
+ *
+ * The side navigation declares `Roboto, sans-serif` in the application's own
+ * stylesheet and resolves identically in both lanes, so it is what the reading
+ * is taken from. Both anchors agree on the only thing the record asserts: the
+ * linked family is declared, and — with the stylesheet answered empty — no
+ * `@font-face` ever defines it, so the browser falls through to the generic.
+ */
+export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_TYPEFACE_PROBE = 'side-navigation' as const;
+
+/** Why the linked typeface degrades, in both lanes, identically. */
+export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_TYPEFACE_DEGRADATION_CAUSE =
+	'the application’s own `index.html` links the Roboto stylesheet and its own styles declare the family, but the harness answers that stylesheet in-context with an empty body, so no `@font-face` rule ever defines Roboto and the browser falls through the declared list to the generic family; the declaration is what is measured, the glyphs are what never arrive, and nothing leaves the machine to fetch them' as const;
+
+/**
+ * The rendered-appearance readings the calibration pass took in both lanes, and
+ * the two probes that differ.
+ *
+ * It is recorded rather than pinned into the receipt: the declared-difference
+ * membership belongs to the runs that publish it, and no run has published yet.
+ * What this is for is the next unit — it is the measurement a declared
+ * difference has to be written from, and writing one from anything else is how
+ * a receipt ends up declaring a difference nobody measured.
+ */
+export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_MEASURED_STYLE_DIFFERENCES = Object.freeze([
+	Object.freeze({
+		label: 'header-icon-button',
+		property: 'font-family',
+		baseline: 'Roboto, "Helvetica Neue", sans-serif',
+		migrated: 'Arial',
+		why: 'the era lane resolves the button through Angular Material 8’s typography config; the MDC-based button in 16.2 sets no family on the host at all, so the element falls through to the user-agent default',
+	}),
+	Object.freeze({
+		label: 'document-body',
+		property: 'font-family',
+		baseline: 'Roboto, "Helvetica Neue", sans-serif',
+		migrated: 'Roboto, sans-serif',
+		why: 'Angular Material’s default typography configuration dropped `"Helvetica Neue"` from the family list between 8.2 and 16.2',
+	}),
+]);
+
 /** One lane's service-worker checkpoint, recorded from the browser. */
 export type WitnessAngularSuperProductivityServiceWorkerCheckpoint = {
 	phase: 'before-interactions' | 'after-interactions' | 'after-online-reload';

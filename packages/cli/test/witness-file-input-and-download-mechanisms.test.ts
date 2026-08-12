@@ -236,22 +236,24 @@ describe('the verticals that predate both mechanisms', () => {
 });
 
 /**
- * The third opt-in, walked the same way, at the moment where the count is still
- * zero.
+ * The third opt-in, walked the same way, now that exactly one vertical declares
+ * it.
  *
- * The two mechanisms above are checked as "exactly one declares them"; this one
- * is checked as "none does", which is the same discipline one step earlier. It
- * is worth writing down now rather than when the first vertical opts in: a
- * reader of this suite can see that the reader shipped ahead of any application
- * using it, and the day one does, this expectation fails and has to be
- * rewritten deliberately instead of a second vertical quietly joining.
+ * This block used to assert that none did, and said in as many words that the
+ * day one opted in the expectation would fail and have to be rewritten
+ * deliberately rather than letting a second vertical quietly join. That day is
+ * this one: Super Productivity keeps its state in its own localforage store
+ * under `SUP`/`SUP_STORE`, and its reload-persistence leg reads the keys of it.
+ * The discipline is unchanged and the count is now one — a second application
+ * appearing in this list fails the first expectation exactly as an unnoticed
+ * first one used to.
  */
-describe('the IndexedDB key reader, before any vertical declares it', () => {
-	it('is declared by no published application spec', () => {
+describe('the IndexedDB key reader, with exactly one vertical declaring it', () => {
+	it('is declared by exactly one published application spec', () => {
 		expect(witnessRealAppSpecs.length).toBeGreaterThan(0);
 		expect(
 			witnessRealAppSpecs.filter((spec) => spec.indexedDb !== undefined).map((spec) => spec.app),
-		).toEqual([]);
+		).toEqual(['angular-super-productivity']);
 	});
 
 	it('leaves every published spec in a byte-identical browser context', () => {
@@ -272,14 +274,21 @@ describe('the IndexedDB key reader, before any vertical declares it', () => {
 		}
 	});
 
-	it('therefore refuses the reading for every one of them', async () => {
-		for (const spec of witnessRealAppSpecs)
-			await expect(
-				createPlaywrightWitnessHost({
-					chromiumExecutable: '/nonexistent',
-					...(spec.indexedDb === undefined ? {} : { indexedDb: spec.indexedDb }),
-				}).indexedDbKeys(),
-				spec.app,
-			).rejects.toThrow(/IndexedDB key reading is not declared/);
+	it('therefore refuses the reading for every spec that did not declare it', async () => {
+		for (const spec of witnessRealAppSpecs) {
+			const reading = createPlaywrightWitnessHost({
+				chromiumExecutable: '/nonexistent',
+				...(spec.indexedDb === undefined ? {} : { indexedDb: spec.indexedDb }),
+			}).indexedDbKeys();
+			// The one declaring spec is refused too, and the refusal it gets is the
+			// measurement that separates the two cases: it is turned away for having
+			// no live page rather than for not having asked, which is the only way
+			// to see from outside that the declaration is what carries the right.
+			await expect(reading, spec.app).rejects.toThrow(
+				spec.indexedDb === undefined
+					? /IndexedDB key reading is not declared/
+					: /IndexedDB key reading requires exactly one live page/,
+			);
+		}
 	});
 });

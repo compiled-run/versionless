@@ -77,6 +77,21 @@ import {
 	type WitnessAngularJiraCloneColumn,
 } from '../../../core/src/receipts/witness-angular-jira-clone.ts';
 import {
+	ANGULAR_SUPER_PRODUCTIVITY_APP,
+	ANGULAR_SUPER_PRODUCTIVITY_CANONICAL_RECEIPTS,
+	WITNESS_ANGULAR_SUPER_PRODUCTIVITY_CONSOLE_ERRORS,
+	WITNESS_ANGULAR_SUPER_PRODUCTIVITY_FAILED_REQUESTS,
+	WITNESS_ANGULAR_SUPER_PRODUCTIVITY_JOURNEY,
+	WITNESS_ANGULAR_SUPER_PRODUCTIVITY_LANE_SEAMS,
+	WITNESS_ANGULAR_SUPER_PRODUCTIVITY_PERSISTENCE,
+	WITNESS_ANGULAR_SUPER_PRODUCTIVITY_SERVICE_WORKER,
+	WITNESS_ANGULAR_SUPER_PRODUCTIVITY_STYLE_PROBES,
+	WITNESS_ANGULAR_SUPER_PRODUCTIVITY_TYPEFACE,
+	WITNESS_ANGULAR_SUPER_PRODUCTIVITY_TYPEFACE_DEGRADATION_CAUSE,
+	WITNESS_ANGULAR_SUPER_PRODUCTIVITY_TYPEFACE_PROBE,
+	type WitnessAngularSuperProductivityJourney,
+} from '../../../core/src/receipts/witness-angular-super-productivity.ts';
+import {
 	ANGULAR_TINY_TRANSLATOR_APP,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_BASELINE_SEAMS,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_DOWNLOAD_SURFACE,
@@ -167,6 +182,7 @@ import { createPhoenixSocketUpgrade } from './phoenix-socket.ts';
 import {
 	createPlaywrightWitnessHost,
 	isWitnessLoopbackUrl,
+	witnessIndexedDbStringKeys,
 	type PlaywrightWitnessHost,
 	type ServiceWorkerTelemetry,
 	type WitnessCapturedDownload,
@@ -219,7 +235,8 @@ type App =
 	| 'next-killedbygoogle-v3-0-0'
 	| 'react-linkfree'
 	| 'react-memos'
-	| 'angular-tiny-translator';
+	| 'angular-tiny-translator'
+	| 'angular-super-productivity';
 type Lane = 'baseline' | 'migrated';
 type JourneyEvidence = {
 	assertions: string[];
@@ -5181,6 +5198,288 @@ export async function executeAngularTinyTranslatorWitnessRun(options: {
 		...options,
 		serviceWorkerPolicy: 'zero',
 	});
+}
+
+/**
+ * The Super Productivity specification.
+ *
+ * It is deliberately a skeleton with two legs in it rather than the whole
+ * journey. The application's surface admits at least five — create, complete,
+ * time-track, theme, reload — and the two here are the pair that stand on their
+ * own: leg (a) creates a task through the application's own add-task bar, and
+ * leg (e) reloads the document and reads the same task back out of the
+ * application's own IndexedDB store. Everything a later leg needs is already
+ * shaped for it: the legs are separate helpers over one shared measurement
+ * scaffold, the checkpoint list is built in journey order rather than assembled
+ * at the end, and the scroll reading is taken at every stage, so a leg that
+ * lands between (a) and (e) inserts a call rather than rewriting the journey.
+ *
+ * Two things this specification declares are worth reading as decisions.
+ *
+ * The IndexedDB reader is opted into, and it is the only application in the
+ * corpus that opts in: the persistence claim here is about the application's own
+ * localforage store, and the alternative to reading its keys would be inferring
+ * persistence from what the page happened to re-render.
+ *
+ * Drag is NOT declared and is not driven. The application has the strongest
+ * drag surface in the corpus and the closed membership list is still not taking
+ * it, because membership is earned by a measured drag whose settled result a
+ * journey asserts exactly, and this journey drives none.
+ */
+const SUPER_PRODUCTIVITY_JOURNEY = WITNESS_ANGULAR_SUPER_PRODUCTIVITY_JOURNEY;
+
+/** The migrated build record this proof serves, bound by the sha256 of its bytes. */
+const SUPER_PRODUCTIVITY_BOUND_MIGRATED = ANGULAR_SUPER_PRODUCTIVITY_CANONICAL_RECEIPTS.find(
+	(bound) => bound.lane === 'migrated',
+);
+if (SUPER_PRODUCTIVITY_BOUND_MIGRATED === undefined)
+	throw new Error('Super Productivity bound migrated build record is absent');
+
+const angularSuperProductivitySpec: AppSpec = {
+	app: ANGULAR_SUPER_PRODUCTIVITY_APP,
+	canonicalReceipt: SUPER_PRODUCTIVITY_BOUND_MIGRATED.path,
+	/**
+	 * The bound record publishes a top-level `digest` over its own content rather
+	 * than an `integrity.canonicalDigest`, so the honest binding is the sha256 of
+	 * its exact bytes — the same value the receipt schema binds it by.
+	 */
+	canonicalDigest: SUPER_PRODUCTIVITY_BOUND_MIGRATED.sha256,
+	canonicalBinding: 'file-sha256',
+	framework: 'angular',
+	sources: {
+		baseline: '.versionless/cache/angular-super-productivity-v2-13-15-baseline/dist-run2',
+		migrated: '.versionless/stage/angular-super-productivity-v2-13-15-u18b/dist-23',
+	},
+	/**
+	 * Deep-linked rather than opened bare. The bare document records its
+	 * navigation as `#/`, which the router resolves through its `**` route onto
+	 * the work view — a route the application does not declare, and one the
+	 * receipt schema refuses as a recorded navigation. Asking for the declared
+	 * route is what makes the recorded navigation a declared one.
+	 */
+	initialRoute: SUPER_PRODUCTIVITY_JOURNEY.initialRoute,
+	viewport: SUPER_PRODUCTIVITY_JOURNEY.viewport,
+	consoleErrorInventory: WITNESS_ANGULAR_SUPER_PRODUCTIVITY_CONSOLE_ERRORS,
+	failedRequestInventory: WITNESS_ANGULAR_SUPER_PRODUCTIVITY_FAILED_REQUESTS,
+	mockedNonLoopbackSeams: WITNESS_ANGULAR_SUPER_PRODUCTIVITY_LANE_SEAMS,
+	renderedStyleProbes: WITNESS_ANGULAR_SUPER_PRODUCTIVITY_STYLE_PROBES,
+	indexedDb: 'read-keys',
+	/**
+	 * The one seam either lane reaches for: the Roboto stylesheet the
+	 * application's own `index.html` links. It is answered in-context with an
+	 * empty body, so nothing leaves the machine and the request is still written
+	 * down — and the glyphs never arrive, which is the typeface degradation the
+	 * journey measures rather than hides.
+	 */
+	transport: async () => ({
+		action: 'fulfill',
+		status: 200,
+		contentType: 'text/css',
+		body: Buffer.alloc(0),
+	}),
+	journey: async (context, page, _transportEvidence, lifecycle) => {
+		if (lifecycle.expectedServiceWorker !== null)
+			throw new Error('Super Productivity journey received a service-worker expectation');
+		const script = WITNESS_ANGULAR_SUPER_PRODUCTIVITY_SERVICE_WORKER.script;
+		const checkpoints: WitnessRealServiceWorkerCheckpoint[] = [
+			await realServiceWorkerCheckpoint(lifecycle, 'before-interactions', script),
+		];
+		const measuredRoutes: WitnessMeasuredScrollAbsence['routes'] = [];
+		/**
+		 * Taken at every stage. The application pins its drawer container to the
+		 * viewport and scrolls its own inner panels, so a stage that started
+		 * overflowing fails here rather than passing silently unexercised.
+		 */
+		const measure = async (stage: string): Promise<void> => {
+			const extents = await lifecycle.viewportScroll();
+			if (
+				extents.clientHeight !== SUPER_PRODUCTIVITY_JOURNEY.viewport.height ||
+				extents.scrollHeight > extents.clientHeight ||
+				extents.scrollY !== 0
+			)
+				throw new Error(
+					`Super Productivity stage overflows the viewport the receipt says it does not: ${stage} ${canonicalize(extents)}`,
+				);
+			measuredRoutes.push({
+				route: stage,
+				scrollHeight: extents.scrollHeight,
+				clientHeight: extents.clientHeight,
+			});
+		};
+		/** The application's own store, read for its keys and never its values. */
+		const storeKeys = async (): Promise<string[]> =>
+			witnessIndexedDbStringKeys(
+				await lifecycle.indexedDbKeys(),
+				WITNESS_ANGULAR_SUPER_PRODUCTIVITY_PERSISTENCE.databaseName,
+				WITNESS_ANGULAR_SUPER_PRODUCTIVITY_PERSISTENCE.storeName,
+			);
+		const localKeys = async (): Promise<string[]> => {
+			const keys = await lifecycle.browserStorageKeys();
+			if (keys.sessionStorage.length !== 0)
+				throw new Error(
+					`Super Productivity wrote session storage the receipt says it does not: ${canonicalize(keys.sessionStorage)}`,
+				);
+			return [...keys.localStorage].sort();
+		};
+		await page.trackEvents('click', 'input', 'keydown');
+
+		// The application as it boots: the work view's own host tag — `work-view`,
+		// not the component's file name — its two task lists, and no task in
+		// either of them. Nothing has been seeded; this application starts empty.
+		await context.expect.page.count(page, SUPER_PRODUCTIVITY_JOURNEY.hostTag, 1);
+		await context.expect.page.count(
+			page,
+			SUPER_PRODUCTIVITY_JOURNEY.taskList,
+			SUPER_PRODUCTIVITY_JOURNEY.taskLists,
+		);
+		await context.expect.page.count(page, SUPER_PRODUCTIVITY_JOURNEY.taskListTask, 0);
+		const renderedStyles = await lifecycle.renderedStyles();
+		const keysBeforeJourney = await storeKeys();
+		const localStorageKeysBeforeJourney = await localKeys();
+		await measure(`${SUPER_PRODUCTIVITY_JOURNEY.initialRoute} (before the create)`);
+
+		// (a) The create. The add-task bar is configured `[isAddToBacklog]="false"`
+		// in the work view's own template, so a title committed with Enter lands in
+		// today's list rather than in the backlog — which is what the count below
+		// is actually testing, and why it is asserted on `task-list task` rather
+		// than on `task` anywhere in the document.
+		await page.type(
+			SUPER_PRODUCTIVITY_JOURNEY.addTaskInput,
+			SUPER_PRODUCTIVITY_JOURNEY.taskTitleText,
+			{ redact: false },
+		);
+		await page.press(SUPER_PRODUCTIVITY_JOURNEY.addTaskInput, 'Enter');
+		await context.expect.page.count(page, SUPER_PRODUCTIVITY_JOURNEY.taskListTask, 1);
+		await context.expect.page.text(
+			page,
+			SUPER_PRODUCTIVITY_JOURNEY.taskTitle,
+			SUPER_PRODUCTIVITY_JOURNEY.taskTitleText,
+		);
+		await measure(`${SUPER_PRODUCTIVITY_JOURNEY.initialRoute} (after the create)`);
+		checkpoints.push(await realServiceWorkerCheckpoint(lifecycle, 'after-interactions', script));
+
+		// (e) A real document reload. There is no backend: the task is in the
+		// application's own IndexedDB store, and what comes back is what leg (a)
+		// put there rather than a seed the harness supplied.
+		await page.reload();
+		await context.expect.page.count(page, SUPER_PRODUCTIVITY_JOURNEY.taskListTask, 1);
+		await context.expect.page.text(
+			page,
+			SUPER_PRODUCTIVITY_JOURNEY.taskTitle,
+			SUPER_PRODUCTIVITY_JOURNEY.taskTitleText,
+		);
+		const keysAfterJourney = await storeKeys();
+		const localStorageKeysAfterJourney = await localKeys();
+		await measure(`${SUPER_PRODUCTIVITY_JOURNEY.initialRoute} (after the online reload)`);
+		checkpoints.push(
+			await realServiceWorkerCheckpoint(lifecycle, 'after-online-reload', script),
+		);
+		// The census is the persistence claim. Committing one task adds the four
+		// state documents the application writes for its default project and takes
+		// nothing away, and the reload changes neither list — which is what makes
+		// the re-rendered title a read out of the store rather than a survival of
+		// the page.
+		if (
+			canonicalize(keysBeforeJourney) !==
+				canonicalize(SUPER_PRODUCTIVITY_JOURNEY.keysBeforeJourney) ||
+			canonicalize(keysAfterJourney) !==
+				canonicalize(SUPER_PRODUCTIVITY_JOURNEY.keysAfterJourney) ||
+			canonicalize(localStorageKeysBeforeJourney) !==
+				canonicalize(SUPER_PRODUCTIVITY_JOURNEY.localStorageKeysBeforeJourney) ||
+			canonicalize(localStorageKeysAfterJourney) !==
+				canonicalize(SUPER_PRODUCTIVITY_JOURNEY.localStorageKeysAfterJourney)
+		)
+			throw new Error(
+				`Super Productivity key census differs from the pinned measurement: ${canonicalize({
+					keysBeforeJourney,
+					keysAfterJourney,
+					localStorageKeysBeforeJourney,
+					localStorageKeysAfterJourney,
+				})}`,
+			);
+		await context.expect.page.outcome(page, {
+			events: { input: { atLeast: 1 }, keydown: { atLeast: 1 } },
+		});
+		await clean(
+			context,
+			page,
+			SUPER_PRODUCTIVITY_JOURNEY.navigations,
+			lifecycle.expectedConsoleErrors,
+			lifecycle.expectedFailedRequests,
+		);
+		// Anchored on the probe both lanes agree on rather than on the document
+		// body, whose family list genuinely differs across the lift. The reasoning
+		// is in the schema beside the constant.
+		const typefaceProbe = renderedStyles.find(
+			(probe) => probe.label === WITNESS_ANGULAR_SUPER_PRODUCTIVITY_TYPEFACE_PROBE,
+		);
+		const resolvedFontFamily = typefaceProbe?.properties['font-family'];
+		if (resolvedFontFamily === undefined || resolvedFontFamily.length === 0)
+			throw new Error('Super Productivity typeface probe resolved no font family');
+		const applicationJourney: WitnessAngularSuperProductivityJourney = {
+			typeface: {
+				state: 'measured-typeface-degradation',
+				cause: WITNESS_ANGULAR_SUPER_PRODUCTIVITY_TYPEFACE_DEGRADATION_CAUSE,
+				fontFaceDeclared: resolvedFontFamily.includes(
+					WITNESS_ANGULAR_SUPER_PRODUCTIVITY_TYPEFACE,
+				),
+				resolvedFontFamily,
+				masked: false,
+			},
+			persistence: {
+				store: WITNESS_ANGULAR_SUPER_PRODUCTIVITY_PERSISTENCE.store,
+				databaseName: WITNESS_ANGULAR_SUPER_PRODUCTIVITY_PERSISTENCE.databaseName,
+				storeName: WITNESS_ANGULAR_SUPER_PRODUCTIVITY_PERSISTENCE.storeName,
+				backend: 'none',
+				stubbed: false,
+				driverInUse: SUPER_PRODUCTIVITY_JOURNEY.driverInUse,
+				keysBeforeJourney,
+				keysAfterJourney,
+				localStorageKeysBeforeJourney,
+				localStorageKeysAfterJourney,
+				survivesOnlineReload: true,
+			},
+		};
+		return {
+			assertions: [
+				'the work view rendered on the application own declared `#/work-view` route, under its own `work-view` host tag, with two task lists and no task in either',
+				'a task created through the application own add-task bar by typing a title and committing it with Enter, landing in today list rather than in the backlog',
+				'the created task rendered in the task list with the typed title read back off the page',
+				'the application own IndexedDB store read for its KEYS either side of the create, adding the four state documents the application writes for its default project and removing none',
+				'the task surviving a real document reload, read back off the re-rendered list with the store census unchanged',
+				'a real ngsw registered, activated and controlling the page at all three checkpoints, with the worker scripts the build shipped byte-identical either side of the run',
+				'the linked Roboto stylesheet answered in-context, with the resolved family measured rather than assumed',
+				'no drag driven and none claimed',
+				'clean page',
+			],
+			offlineEvidence: { state: 'not-applicable' },
+			realServiceWorker: {
+				script,
+				shippedWorkerFiles: WITNESS_ANGULAR_SUPER_PRODUCTIVITY_SERVICE_WORKER.shippedWorkerFiles,
+				checkpoints,
+			},
+			renderedStyles,
+			applicationJourney,
+			scrollAbsence: {
+				state: 'measured-no-overflowing-document',
+				viewport: { ...SUPER_PRODUCTIVITY_JOURNEY.viewport },
+				routes: measuredRoutes,
+				documentOverflow:
+					'the application pins its drawer container to the viewport and gives the task lists their own overflow, so no stage of the journey produces a scrollable document',
+				claimed: false,
+			},
+		};
+	},
+};
+apps.push(angularSuperProductivitySpec);
+
+/**
+ * The Super Productivity Witness specification, reachable so its declared
+ * inventories, probes, seams and its opt-in IndexedDB reader can be checked
+ * against the receipt schema that enforces them without launching a browser.
+ */
+export function angularSuperProductivityWitnessSpec(): AppSpec {
+	return angularSuperProductivitySpec;
 }
 
 /**

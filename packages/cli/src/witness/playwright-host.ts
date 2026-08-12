@@ -301,11 +301,25 @@ export async function readWitnessIndexedDbKeys(): Promise<WitnessIndexedDbKeyInv
 			for (const storeName of storeNames) {
 				const store = transaction.objectStore(storeName);
 				const keys = (await settled(store.getAllKeys())).map(renderKey);
-				keys.sort((left, right) =>
-					`${left.kind} ${left.key}`.localeCompare(
-						`${right.kind} ${right.key}`,
-					),
-				);
+				// Ordered by UTF-16 code unit rather than by `localeCompare`.
+					// The first spelling of this sort used `localeCompare` and was
+					// wrong twice over: it asks the browser's collator, so the order
+					// depends on an ICU locale nobody declared, and it does not agree
+					// with the order the receipt schemas require — every one of them
+					// checks a published key list against `[...values].sort()`, which
+					// is code-unit order. Super Productivity's own store is where the
+					// disagreement is visible: the collator puts
+					// `SUP_P_DEFAULT_TASK_ATTACHMENT_STATE` before
+					// `SUP_P_DEFAULT_TASKS_STATE` and `SUP_PROJECT_META_LIST` after
+					// both, and code-unit order puts all three the other way round, so
+					// a reading taken through the collator fails the schema that
+					// receives it. Comparing with `<` is exactly what the default sort
+					// does, which is the point.
+					keys.sort((left, right) => {
+						const leftKey = `${left.kind}\0${left.key}`;
+						const rightKey = `${right.kind}\0${right.key}`;
+						return leftKey < rightKey ? -1 : leftKey > rightKey ? 1 : 0;
+					});
 				stores.push({
 					name: storeName,
 					keyPath: store.keyPath,
@@ -1338,11 +1352,30 @@ export function createPlaywrightWitnessHost(options: {
 							const cache = await caches.open(name);
 							const paths = (await cache.keys()).map((request) => {
 								const url = new URL(request.url);
-								if (url.origin !== location.origin)
-									throw new Error(
-										'service-worker cache contains a cross-origin request',
-									);
-								return `${url.pathname}${url.search}`;
+								// A same-origin member is recorded as a path because the
+								// loopback origin's port is ephemeral and would make the
+								// reading un-comparable between runs. A cross-origin member
+								// has no such problem and is recorded whole.
+								//
+								// It used to be refused instead. The refusal said the reader
+								// could not describe such a member, which was true of a
+								// reader that only emitted paths, and it was safe for as long
+								// as no application in the corpus put one in a cache — a run
+								// that did would have died here, so no published receipt can
+								// contain one. Super Productivity does put one there: its own
+								// `ngsw-config.json` declares an `externalAssets` group over
+								// the Google Fonts hosts at `installMode: lazy`, so the first
+								// document load caches nothing (the worker is not yet
+								// controlling the page) and the load after it caches the
+								// stylesheet the application's own `<link>` asks for. That is
+								// the application's declared behaviour, and a reader that
+								// threw on it would be refusing to record a fact rather than
+								// protecting one. Recording it is strictly more information
+								// than refusing, and the origin is written down rather than
+								// flattened into something that would read as a local path.
+								return url.origin === location.origin
+									? `${url.pathname}${url.search}`
+									: url.href;
 							});
 							return { name, paths: paths.sort() };
 						}),
