@@ -16,6 +16,7 @@ import {
 	WITNESS_ANGULAR_TINY_TRANSLATOR_MAT_ICON_DEGRADATIONS,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_ROUTE_SHAPE,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_SCHEMA,
+	WITNESS_ANGULAR_TINY_TRANSLATOR_SERVICE_WORKER_ATTEMPT,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_STYLE_DIFFERENCES,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_STYLE_PROBES,
 	witnessAngularTinyTranslatorAggregateMember,
@@ -250,6 +251,7 @@ function fixture(): WitnessAngularTinyTranslatorReceipt {
 			migrated: [MIGRATED_SEAM],
 		},
 		fontSeamDifference: WITNESS_ANGULAR_TINY_TRANSLATOR_FONT_SEAM_DIFFERENCE,
+		serviceWorkerAttempt: WITNESS_ANGULAR_TINY_TRANSLATOR_SERVICE_WORKER_ATTEMPT,
 		matIconDegradations: {
 			baseline: runs[0]!.applicationJourney.matIcon,
 			migrated: runs[2]!.applicationJourney.matIcon,
@@ -355,7 +357,7 @@ describe('Angular TinyTranslator direct Witness receipt schema', () => {
 			]),
 		).toEqual([
 			['baseline', 'dist/rebuild-1', 'dist/rebuild-2', true],
-			['migrated', 'dist-7', 'dist-8', true],
+			['migrated', 'dist-11', 'dist-12', true],
 		]);
 	});
 
@@ -571,8 +573,8 @@ describe('Angular TinyTranslator route shape, persistence and accommodations', (
 	it('carries the zero-manual-step framing with its inventory and journey obligation', () => {
 		const receipt = parseWitnessAngularTinyTranslatorReceipt(fixture());
 		expect(receipt.accommodations.manualMigrationSteps).toBe(0);
-		expect(receipt.accommodations.inventory.applicationFilesChanged).toBe(9);
-		expect(receipt.accommodations.inventory.capabilities).toBe(5);
+		expect(receipt.accommodations.inventory.applicationFilesChanged).toBe(10);
+		expect(receipt.accommodations.inventory.capabilities).toBe(7);
 		expect(receipt.accommodations.inventory.record).toBe(
 			ANGULAR_TINY_TRANSLATOR_CANONICAL_RECEIPTS[1]!.path,
 		);

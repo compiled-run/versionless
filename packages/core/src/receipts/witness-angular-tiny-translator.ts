@@ -63,6 +63,13 @@ export const ANGULAR_TINY_TRANSLATOR_SOURCE = Object.freeze({
  * digest for digest. Serving `rebuild-1` or `dist-7` is therefore serving the
  * lane, not one arbitrary build of it, and the verifier below re-reads the
  * byte-identity claim out of the bound receipt rather than trusting this list.
+ *
+ * The migrated entry is `u19f`, not `u17d`. u17d's bytes are unchanged and it
+ * remains the record of what it measured — a green, deterministic build — but
+ * the artifact it published throws before Angular bootstraps, which is a thing
+ * no build lane could see and a browser sees in a second. u19f supersedes it by
+ * reference: same application source, two configuration files and one declared
+ * package different, and an output root that mounts.
  */
 export const ANGULAR_TINY_TRANSLATOR_CANONICAL_RECEIPTS = Object.freeze([
 	Object.freeze({
@@ -78,12 +85,12 @@ export const ANGULAR_TINY_TRANSLATOR_CANONICAL_RECEIPTS = Object.freeze([
 	}),
 	Object.freeze({
 		lane: 'migrated',
-		path: 'evidence/runs/angular-tiny-translator-v0-12-0/u17d-final-green-lane.json',
-		schemaVersion: 'versionless.angular-tiny-translator-final-lane.v1',
-		digest: '88be4807ed80b6f7a4e7238e42c94aa88d8aa1b01603aca74902166f2345ca45',
-		sha256: '60d3631b7e0e49797a22ed9e05135672475165fdcf4649f3da9c914af7726291',
-		canonicalRoot: 'dist-7',
-		repeatedRoot: 'dist-8',
+		path: 'evidence/runs/angular-tiny-translator-v0-12-0/u19f-localize-boot-green-lane.json',
+		schemaVersion: 'versionless.angular-tiny-translator-localize-lane.v1',
+		digest: '55e7fba39bf9b98400da6984aa7767484623d151d6036d2c29c04bd62971d41a',
+		sha256: '46c8494c19e42cfeb19d9c47261be9b9182906d36aa3798e96e5adbedcd3dbc8',
+		canonicalRoot: 'dist-11',
+		repeatedRoot: 'dist-12',
 		files: 524,
 		byteIdenticalSibling: true,
 	}),
@@ -174,6 +181,38 @@ export const WITNESS_ANGULAR_TINY_TRANSLATOR_MAT_ICON_DEGRADATIONS = Object.free
 		rendersLigatureText: true,
 		masked: false,
 	}),
+});
+
+/**
+ * What this application actually does about a service worker, measured.
+ *
+ * The receipt used to claim the opposite — that the application never attempted
+ * a registration and the zero was its own behavior. A browser load of either
+ * lane's production output contradicts that flatly: the application registers a
+ * worker at the literal `%BASE_HREF%ngsw-worker.js`, the placeholder
+ * unsubstituted, and the request comes back 400 because no worker is shipped at
+ * that path or any other. Upstream substitutes the placeholder in a separate
+ * `replace` npm script that its `build-prod-<lang>` chain runs and that
+ * `ng build` alone never runs, so the plain production variant — the only one
+ * either lane builds — carries the defect by construction.
+ *
+ * It is an era defect that survives the migration unchanged, in both directions:
+ * the migration did not introduce it, and no capability in this vertical
+ * repaired it. Recording it is the point. A proof that pinned zero service
+ * workers and got one by not looking is a proof that can be contradicted by
+ * opening the page.
+ */
+export const WITNESS_ANGULAR_TINY_TRANSLATOR_SERVICE_WORKER_ATTEMPT = Object.freeze({
+	state: 'measured-era-defect-carried-across-the-migration',
+	attempted: true,
+	script: '%BASE_HREF%ngsw-worker.js',
+	httpStatus: 400,
+	registered: false,
+	shippedWorkerFiles: 0,
+	cause: 'the registration argument carries the un-substituted literal `%BASE_HREF%`, which upstream replaces in a separate npm script that `ng build` never runs, and the plain production variant ships no worker script at any path',
+	introducedByMigration: false,
+	repairedHere: false,
+	masked: false,
 });
 
 /** The family name the inlined rule declares, matched against the measurement. */
@@ -308,10 +347,10 @@ export const WITNESS_ANGULAR_TINY_TRANSLATOR_DOWNLOAD_SURFACE = Object.freeze({
 export const WITNESS_ANGULAR_TINY_TRANSLATOR_ACCOMMODATIONS = Object.freeze({
 	manualMigrationSteps: 0,
 	inventory: Object.freeze({
-		record: 'evidence/runs/angular-tiny-translator-v0-12-0/u17d-final-green-lane.json',
-		applicationFilesChanged: 9,
-		capabilities: 5,
-		note: 'Every edit was made by a generic capability reading the installed closure or the compiler, and the nine files and five capabilities are itemised in the bound migrated build receipt rather than summarised here.',
+		record: 'evidence/runs/angular-tiny-translator-v0-12-0/u19f-localize-boot-green-lane.json',
+		applicationFilesChanged: 10,
+		capabilities: 7,
+		note: 'Every edit was made by a generic capability reading the installed closure, the compiler or the application\u2019s own templates. Nine application files and five capabilities are itemised in u17d, which u19f supersedes by reference; the tenth file is the runtime-globals shim u19e generated, and the two capabilities added after u17d are the ones that made the artifact evaluate at all \u2014 node-core-runtime-globals and template-i18n-runtime. Those two also changed two configuration files, the workspace and the manifest, which are not application source and are itemised in u19e and u19f.',
 	}),
 	journeyObligations: Object.freeze([
 		'FileReader-service parity: the migrated lane inserted a `typeof` guard where `FileReader.result` is typed `string | ArrayBuffer`, and the build lane recorded as a declared difference that nothing it ran observed the guarded statements. The browser proof must load a translation file through the application own file input in BOTH lanes and assert the parse is identical, which is what turns that declared difference into an observed one.',
@@ -414,6 +453,7 @@ export type WitnessAngularTinyTranslatorReceipt = {
 	 */
 	mockedSeams: Record<'baseline' | 'migrated', WitnessMockedNonLoopbackSeamEntry[]>;
 	fontSeamDifference: typeof WITNESS_ANGULAR_TINY_TRANSLATOR_FONT_SEAM_DIFFERENCE;
+	serviceWorkerAttempt: typeof WITNESS_ANGULAR_TINY_TRANSLATOR_SERVICE_WORKER_ATTEMPT;
 	matIconDegradations: Record<'baseline' | 'migrated', WitnessAngularTinyTranslatorMatIcon>;
 	renderedStyleParity: {
 		state: 'measured-resolved-styles-with-declared-differences';
@@ -946,6 +986,10 @@ export function parseWitnessAngularTinyTranslatorReceipt(
 		!exact(receipt.mockedSeams?.baseline, WITNESS_ANGULAR_TINY_TRANSLATOR_BASELINE_SEAMS) ||
 		exact(receipt.mockedSeams.baseline, receipt.mockedSeams.migrated) ||
 		!exact(receipt.fontSeamDifference, WITNESS_ANGULAR_TINY_TRANSLATOR_FONT_SEAM_DIFFERENCE) ||
+		!exact(
+			receipt.serviceWorkerAttempt,
+			WITNESS_ANGULAR_TINY_TRANSLATOR_SERVICE_WORKER_ATTEMPT,
+		) ||
 		!exact(receipt.matIconDegradations?.baseline, baseline.applicationJourney.matIcon) ||
 		!exact(receipt.matIconDegradations.migrated, migrated.applicationJourney.matIcon) ||
 		receipt.renderedStyleParity?.state !==
@@ -1043,6 +1087,7 @@ export function renderWitnessAngularTinyTranslatorReceipt(
 - Files the page produced: ${downloads}. ${receipt.downloads.rule}
 - Mocked non-loopback seams (answered in-context, none left the machine) — baseline: ${seams('baseline')}; migrated: ${seams('migrated')}
 - Recorded font-seam difference: ${receipt.fontSeamDifference.cause}; masked: ${String(receipt.fontSeamDifference.masked)}
+- Service worker: the application attempts a registration at \`${receipt.serviceWorkerAttempt.script}\` and the request is answered ${String(receipt.serviceWorkerAttempt.httpStatus)}; registered: ${String(receipt.serviceWorkerAttempt.registered)}; introduced by the migration: ${String(receipt.serviceWorkerAttempt.introducedByMigration)}; masked: ${String(receipt.serviceWorkerAttempt.masked)}
 - Icon degradation, measured per lane — ${icon('baseline')}; ${icon('migrated')}
 - Rendered appearance: ${receipt.renderedStyleParity.probes} probes measured off the live page in both lanes; every probe outside the declared differences resolves identically. Declared differences: ${differences}
 - Persistence: ${receipt.persistence.store}, backend ${receipt.persistence.backend}, stubbed: ${String(receipt.persistence.stubbed)}, survives an online reload: ${String(receipt.persistence.survivesOnlineReload)}

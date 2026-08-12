@@ -16,6 +16,7 @@ export * from './angular-cli-era-migration.ts';
 export * from './barrel-entry-point-split.ts';
 export * from './node-core-binding-migration.ts';
 export * from './node-core-runtime-globals.ts';
+export * from './template-i18n-runtime.ts';
 export * from './rxjs-prototype-patch-migration.ts';
 export * from './deep-import-redirection.ts';
 export * from './entry-components-removal.ts';

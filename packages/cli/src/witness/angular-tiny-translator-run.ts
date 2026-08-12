@@ -15,6 +15,7 @@ import {
 	WITNESS_ANGULAR_TINY_TRANSLATOR_FONT_SEAM_DIFFERENCE,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_ROUTE_SHAPE,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_SCHEMA,
+	WITNESS_ANGULAR_TINY_TRANSLATOR_SERVICE_WORKER_ATTEMPT,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_STYLE_DIFFERENCES,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_STYLE_PROBES,
 	witnessAngularTinyTranslatorBehaviorDigest,
@@ -317,7 +318,7 @@ export const WITNESS_ANGULAR_TINY_TRANSLATOR_NONCLAIMS: readonly string[] = Obje
 	'Neither lane ends up with the Material Icons glyphs, and the two lanes fail to get them differently. Both degradations are measured and recorded rather than masked, and neither is a regression of the migration: the font seam is answered inside the browser context so that nothing leaves the machine.',
 	'Two of the four rendered-appearance probes are declared to differ across the eleven-major lift and are checked in both directions — a probe outside the declaration that differs fails the run, and a declared difference that stopped being real fails it too.',
 	'Byte parity across the lanes is not claimed and is recorded separately by the bound build receipts; eleven majors of bundler produce different file names and different byte counts by construction.',
-	'Neither build ships or registers a service worker. The browser context allowed registration and the application never attempted one, so the zero is the application’s own behavior rather than a policy imposed to produce it.',
+	'Neither build ships a service worker, and BOTH attempt to register one. The application registers at the literal `%BASE_HREF%ngsw-worker.js` — a placeholder upstream substitutes in a separate npm script that `ng build` never runs — and the request is answered 400 in both lanes. It is an era defect that survives the migration: the migration did not introduce it and no capability here repaired it, and it is recorded rather than suppressed.',
 	'Locality is process-scoped and does not establish operating-system-wide isolation.',
 	'Receipts prove reproducibility and hash integrity, not certification, authenticity, signer identity, compliance, or an earned SLSA level.',
 ]);
@@ -390,6 +391,7 @@ export async function runWitnessAngularTinyTranslator(): Promise<WitnessAngularT
 			migrated: [...migrated.mockedNonLoopbackSeams.category],
 		},
 		fontSeamDifference: WITNESS_ANGULAR_TINY_TRANSLATOR_FONT_SEAM_DIFFERENCE,
+		serviceWorkerAttempt: WITNESS_ANGULAR_TINY_TRANSLATOR_SERVICE_WORKER_ATTEMPT,
 		matIconDegradations: {
 			baseline: baseline.applicationJourney.matIcon,
 			migrated: migrated.applicationJourney.matIcon,

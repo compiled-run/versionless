@@ -4592,7 +4592,7 @@ const angularTinyTranslatorSpec: AppSpec = {
 	canonicalDigest: '88be4807ed80b6f7a4e7238e42c94aa88d8aa1b01603aca74902166f2345ca45',
 	sources: {
 		baseline: '.versionless/cache/angular-tiny-translator-v0-12-0-baseline/app/dist/rebuild-1',
-		migrated: '.versionless/stage/angular-tiny-translator-v0-12-0-u17b/dist-7',
+		migrated: '.versionless/stage/angular-tiny-translator-v0-12-0-u17b/dist-11',
 	},
 	initialRoute: TINY_TRANSLATOR_INITIAL_ROUTE,
 	viewport: TINY_TRANSLATOR_VIEWPORT,
