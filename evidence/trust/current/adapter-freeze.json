@@ -1,18 +1,18 @@
 {
   "schemaVersion": "versionless.trust.v1",
   "freeze": {
-    "commit": "57b308a573dd582c844ce401fb1161cd70e9bc66",
+    "commit": "cce34175340273919c0b70341dfada5533f0307c",
     "algorithm": "sha256",
-    "composite": "d9f75ef677cb850f664cc188abf77b8ebfd24e84cb58d147b74e9bbaa143eb77",
+    "composite": "5de7df565fb8e445a45f9f8f43eac27b80b71189d59e4df243e93471406a260c",
     "preimage": "newline-terminated `<path> <tree-oid>` lines in the listed subtree order",
     "subtrees": [
       {
         "path": "packages/frameworks/react",
-        "treeOid": "ae219d37efe52b2aebd51d116108169a0456ad93"
+        "treeOid": "9b2af393179749a4093f46e587e7f4fd9ce09b47"
       },
       {
         "path": "packages/frameworks/angular",
-        "treeOid": "46ed07a7ff95277dfd99e7cddb14bd8cf806719b"
+        "treeOid": "ca3824d0595d1fa88d37feda6b1785dfd79e72c4"
       },
       {
         "path": "packages/core/src/migrations",
@@ -28,7 +28,13 @@
       }
     ],
     "state": "frozen",
-    "claim": "The migration engine adapter surface is byte-stable at this commit."
+    "claim": "The migration engine adapter surface is byte-stable at this commit.",
+    "supersedes": {
+      "composite": "d9f75ef677cb850f664cc188abf77b8ebfd24e84cb58d147b74e9bbaa143eb77",
+      "commit": "57b308a573dd582c844ce401fb1161cd70e9bc66",
+      "state": "superseded",
+      "reopenReason": "T999 audit: the tranche-one d9f75ef6 freeze was falsified for cypress-realworld-app holdout carriage (missing non-UTF-8 module source decoding). The adapter surface was reopened behind a new Judge freeze boundary and re-frozen at composite 5de7df56 once the follow-on tranche landed."
+    }
   },
   "holdoutPublishing": {
     "state": "outside-freeze",

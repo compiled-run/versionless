@@ -4,25 +4,25 @@
     {
       "name": "packages/cli/dist/cli.js",
       "digest": {
-        "sha256": "386a5d21353c1981e10d028208aee985b37cc287f34662f6dbdb297c1fe09db0"
+        "sha256": "9f06a59c4e8a159d142c417a675b5cd5d3b9044207431e717fe2c521a94878ce"
       }
     },
     {
       "name": "packages/cli/dist/index.js",
       "digest": {
-        "sha256": "514adc0912ddbd63b47b10e6f1b1800ec6126901190664c8dd493eabfb4e4970"
+        "sha256": "e909e6a0fa93fad03965e5e948ab40d8c9f105ab0825d089c4b0cb19d33430ba"
       }
     },
     {
-      "name": "packages/cli/dist/verify-B8yeJR-m.js",
+      "name": "packages/cli/dist/verify-ClsBt6hk.js",
       "digest": {
-        "sha256": "d571f42c6b21185186da46797778bec1c662702378c4b7d4817276733131757f"
+        "sha256": "d66f5bc6ab4ae253884d1d9c3074ad66eb9b52505e7fc3ed306e514107781b4a"
       }
     },
     {
       "name": "packages/core/dist/index.js",
       "digest": {
-        "sha256": "2b25fc851e3839392e3d0d766e9a43aac52f9327d4f69aeaeae4e906e6e2a153"
+        "sha256": "74bf5b91ec02020e61f8b33a5beaf3e06acc10176d2c726c4aafd2da4b61cdd8"
       }
     },
     {
@@ -64,7 +64,7 @@
     {
       "name": "packages/trust/dist/index.js",
       "digest": {
-        "sha256": "971a81642f5bdb29d5672c95e9a932165ee7da1fbfd36bce60d04eda19994bda"
+        "sha256": "251cc04ceb37ef3101779d09bd22d581e2bc9f9cd82f2eae2c75886af4910807"
       }
     }
   ],
@@ -354,19 +354,19 @@
       "byproducts": [
         {
           "path": "packages/cli/dist/cli.js",
-          "sha256": "386a5d21353c1981e10d028208aee985b37cc287f34662f6dbdb297c1fe09db0"
+          "sha256": "9f06a59c4e8a159d142c417a675b5cd5d3b9044207431e717fe2c521a94878ce"
         },
         {
           "path": "packages/cli/dist/index.js",
-          "sha256": "514adc0912ddbd63b47b10e6f1b1800ec6126901190664c8dd493eabfb4e4970"
+          "sha256": "e909e6a0fa93fad03965e5e948ab40d8c9f105ab0825d089c4b0cb19d33430ba"
         },
         {
-          "path": "packages/cli/dist/verify-B8yeJR-m.js",
-          "sha256": "d571f42c6b21185186da46797778bec1c662702378c4b7d4817276733131757f"
+          "path": "packages/cli/dist/verify-ClsBt6hk.js",
+          "sha256": "d66f5bc6ab4ae253884d1d9c3074ad66eb9b52505e7fc3ed306e514107781b4a"
         },
         {
           "path": "packages/core/dist/index.js",
-          "sha256": "2b25fc851e3839392e3d0d766e9a43aac52f9327d4f69aeaeae4e906e6e2a153"
+          "sha256": "74bf5b91ec02020e61f8b33a5beaf3e06acc10176d2c726c4aafd2da4b61cdd8"
         },
         {
           "path": "packages/experiments/dist/index.js",
@@ -394,7 +394,7 @@
         },
         {
           "path": "packages/trust/dist/index.js",
-          "sha256": "971a81642f5bdb29d5672c95e9a932165ee7da1fbfd36bce60d04eda19994bda"
+          "sha256": "251cc04ceb37ef3101779d09bd22d581e2bc9f9cd82f2eae2c75886af4910807"
         }
       ]
     }

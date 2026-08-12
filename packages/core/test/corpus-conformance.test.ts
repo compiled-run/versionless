@@ -401,7 +401,7 @@ describe('canonical corpus conformance', () => {
 		// the three cells behind the React-lineage numerator.
 		expect(result.coverage).toMatchObject({
 			productionReadiness: expect.objectContaining({
-				reactLineage: { ready: 3, total: 4, counted: true, candidate: 'judge-approved' },
+				reactLineage: { ready: 6, total: 6, counted: true, candidate: 'judge-approved' },
 			}),
 		});
 	});
@@ -501,7 +501,7 @@ describe('canonical corpus conformance', () => {
 		// the three cells behind the React-lineage numerator.
 		expect(result.coverage).toMatchObject({
 			productionReadiness: expect.objectContaining({
-				reactLineage: { ready: 3, total: 4, counted: true, candidate: 'judge-approved' },
+				reactLineage: { ready: 6, total: 6, counted: true, candidate: 'judge-approved' },
 			}),
 		});
 	});
@@ -599,13 +599,13 @@ describe('canonical corpus conformance', () => {
 				locality: 'process-scoped-not-os-wide',
 			},
 		});
-		// The T007 Judge counts this vertical and declines RealWorld's zero
-		// application-file version bump, so the Angular numerator is the two
-		// applications whose source really moved.
+		// The Judge counts this vertical and demotes RealWorld's zero
+		// application-file version bump out of the denominator, so after the T016
+		// re-freeze the Angular numerator is the four non-demoted counted cells.
 		expect(result.coverage).toMatchObject({
 			productionReadiness: expect.objectContaining({
 				angularLineage: {
-					ready: 2,
+					ready: 4,
 					total: 4,
 					counted: true,
 					candidate: 'judge-approved',
@@ -716,12 +716,13 @@ describe('canonical corpus conformance', () => {
 				locality: 'process-scoped-not-os-wide',
 			},
 		});
-		// The second counted Angular application completes the numerator; the
-		// declined RealWorld cell stays in the ledger with its reason.
+		// After the T016 re-freeze all four non-demoted Angular cells are counted;
+		// the demoted RealWorld cell stays in the ledger with its reason and out of
+		// the denominator.
 		expect(result.coverage).toMatchObject({
 			productionReadiness: expect.objectContaining({
 				angularLineage: {
-					ready: 2,
+					ready: 4,
 					total: 4,
 					counted: true,
 					candidate: 'judge-approved',
@@ -1084,7 +1085,9 @@ describe('canonical corpus conformance', () => {
 			lineage: string;
 			witnessReceipt: string;
 			counted: boolean;
+			demoted: boolean;
 			reason: string;
+			reactSubTag?: string;
 		}>;
 		// Every cell carries a reason, counted or not: the ledger is the record
 		// of the decision, not just of the score.
@@ -1102,9 +1105,10 @@ describe('canonical corpus conformance', () => {
 			'angular-tiny-translator-v0-12-0',
 			'angular-super-productivity-v2-13-15',
 		]);
-		// The newest verticals are visible and uncounted: their Witness receipts
-		// are verified, they carry a reason, and no lineage numerator moves
-		// because of them.
+		// After the T016 re-freeze the five newest verticals are counted: their
+		// Witness receipts are verified, they carry a reason, and each moves its
+		// lineage numerator. next-killedbygoogle-v3-0-0 is reclassified from Next
+		// to the React lineage (legacy-Next member) per the charter oracle.
 		for (const cell of [
 			'react-memos-v0-1-3',
 			'next-killedbygoogle-v3-0-0',
@@ -1112,27 +1116,45 @@ describe('canonical corpus conformance', () => {
 			'angular-tiny-translator-v0-12-0',
 			'angular-super-productivity-v2-13-15',
 		])
-			expect(ledger.find((entry) => entry.cell === cell)).toMatchObject({ counted: false });
-		expect((readiness.reactLineage as { ready: number }).ready).toBe(3);
-		// The Next-lineage cell reaches no published numerator: olderNext stays
-		// the standing 0/4 pending the final Judge audit.
-		expect(readiness.olderNext).toMatchObject({ ready: 0, total: 4, counted: false });
+			expect(ledger.find((entry) => entry.cell === cell)).toMatchObject({ counted: true });
+		// The reclassified legacy-Next cell counts inside React with its
+		// informational sub-tag, not a separate Next lineage.
+		expect(ledger.find((entry) => entry.cell === 'next-killedbygoogle-v3-0-0')).toMatchObject({
+			lineage: 'react',
+			counted: true,
+			reactSubTag: 'legacy-next',
+		});
+		expect((readiness.reactLineage as { ready: number }).ready).toBe(6);
+		// The olderNext separate numerator is retired, not deleted: it is recorded
+		// as an informational React sub-tag rather than a standing 0/4 gate.
+		expect(readiness.olderNext).toMatchObject({
+			retired: true,
+			reclassifiedInto: 'reactLineage',
+			reactSubTag: 'legacy-next',
+		});
 		// RealWorld is demoted, not deleted: its Witness receipt is still the
-		// cell's evidence and the non-counting reason names the measurement.
+		// cell's evidence, the reason names the measurement, and it is excluded
+		// from the Angular denominator.
 		const realworld = ledger.find((cell) => cell.cell === 'angular-realworld-v15-to-v16');
 		expect(realworld).toMatchObject({
 			counted: false,
+			demoted: true,
 			witnessReceipt: 'evidence/runs/witness-angular-realworld/receipt.json',
 		});
 		expect(realworld?.reason).toContain('applicationFilesChanged=0');
-		// The numerators are the counted cells and nothing else.
+		// The numerators are the counted cells and the denominators the non-demoted
+		// cells, and nothing else.
 		for (const lineage of ['react', 'angular']) {
 			const score = readiness[`${lineage}Lineage`] as { ready: number; total: number };
 			expect(score.ready).toBe(
 				ledger.filter((cell) => cell.lineage === lineage && cell.counted).length,
 			);
-			expect(score.total).toBe(4);
+			expect(score.total).toBe(
+				ledger.filter((cell) => cell.lineage === lineage && !cell.demoted).length,
+			);
 		}
+		expect((readiness.reactLineage as { total: number }).total).toBe(6);
+		expect((readiness.angularLineage as { total: number }).total).toBe(4);
 		expect(
 			result.applications.find((application) => application.id === 'angular-realworld'),
 		).toBeDefined();
@@ -1601,20 +1623,20 @@ describe('canonical corpus conformance', () => {
 		const readiness = (result.coverage as Record<string, unknown>)
 			.productionReadiness as Record<string, unknown>;
 		expect(readiness.reactLineage).toEqual({
-			ready: 3,
-			total: 4,
+			ready: 6,
+			total: 6,
 			counted: true,
 			candidate: 'judge-approved',
 		});
 		expect(readiness.angularLineage).toEqual({
-			ready: 2,
+			ready: 4,
 			total: 4,
 			counted: true,
 			candidate: 'judge-approved',
 		});
 		const ledger = readiness.judgeCounting as Array<Record<string, unknown>>;
-		expect(ledger.filter((cell) => cell.lineage === 'react' && cell.counted)).toHaveLength(3);
-		expect(ledger.filter((cell) => cell.lineage === 'angular' && cell.counted)).toHaveLength(2);
+		expect(ledger.filter((cell) => cell.lineage === 'react' && cell.counted)).toHaveLength(6);
+		expect(ledger.filter((cell) => cell.lineage === 'angular' && cell.counted)).toHaveLength(4);
 	});
 
 	it('refuses an aggregate whose holdout record has been dropped or rewritten', async () => {

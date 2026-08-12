@@ -742,4 +742,118 @@ describe('synthetic evidence policy', () => {
 				expect(() => assertSyntheticEvidence(unsafe)).toThrow('Sensitive material refused');
 		});
 	});
+
+	/**
+	 * The adapter-freeze record names the real commit at which the frozen adapter
+	 * surface was established, and that commit's forty hex characters can open with
+	 * a long digit run — cce3417's re-freeze SHA carries a fourteen-digit run — that
+	 * the primary-account-number detector cannot tell from a card number. The
+	 * commit must be published verbatim (substituting a different commit would
+	 * falsify which commit the freeze was computed at), so the admission is pinned
+	 * from both sides: the exact object id is accepted under the freeze record's
+	 * commit key, and every neighbouring shape still trips.
+	 */
+	describe('adapter freeze commit object IDs', () => {
+		const freezeCommit = 'cce34175340273919c0b70341dfada5533f0307c';
+		const freezeDigitRun = '34175340273919';
+		const supersedesCommit = '57b308a573dd582c844ce401fb1161cd70e9bc66';
+		const freezeDoc = (freeze: Record<string, unknown>) => ({
+			schemaVersion: 'versionless.trust.v1',
+			freeze: {
+				commit: freezeCommit,
+				algorithm: 'sha256',
+				composite: 'a'.repeat(64),
+				preimage: 'newline-terminated `<path> <tree-oid>` lines in the listed subtree order',
+				subtrees: [{ path: 'packages/frameworks/react', treeOid: 'b'.repeat(40) }],
+				state: 'frozen',
+				claim: 'The migration engine adapter surface is byte-stable at this commit.',
+				...freeze,
+			},
+			holdoutPublishing: { state: 'outside-freeze' },
+			capabilities: {},
+			angularHoldout: { state: 'deferred' },
+		});
+
+		test('admits the freeze commit object ID under the freeze and supersedes commit keys', () => {
+			expect(freezeCommit).toHaveLength(40);
+			expect(freezeCommit.includes(freezeDigitRun)).toBe(true);
+			expect(freezeDigitRun).toHaveLength(14);
+			expect(() => assertSyntheticEvidence(freezeDoc({}))).not.toThrow();
+			expect(() =>
+				assertSyntheticEvidence(
+					freezeDoc({
+						supersedes: {
+							commit: freezeCommit,
+							composite: 'c'.repeat(64),
+							state: 'superseded',
+						},
+					}),
+				),
+			).not.toThrow();
+		});
+
+		test('keeps refusing every value under the commit key that is not an exact lowercase object ID', () => {
+			for (const value of [
+				freezeDigitRun,
+				`${freezeDigitRun} `,
+				'4111111111111111',
+				freezeCommit.toUpperCase(),
+				freezeCommit.slice(0, 39),
+				`${freezeCommit}a`,
+				'3'.repeat(40),
+				`${freezeCommit.slice(0, 39)}g`,
+			])
+				expect(findSensitiveSignals(freezeDoc({ commit: value }))).toContainEqual({
+					path: '$.freeze.commit',
+					kind: 'pan-like-value',
+				});
+		});
+
+		test('keeps refusing the object ID under any non-commit key of the freeze record', () => {
+			for (const key of ['composite', 'preimage', 'commitCopy', 'parentCommit'])
+				expect(findSensitiveSignals(freezeDoc({ [key]: freezeCommit }))).toContainEqual({
+					path: `$.freeze.${key}`,
+					kind: 'pan-like-value',
+				});
+			expect(
+				findSensitiveSignals(
+					freezeDoc({
+						supersedes: {
+							commit: supersedesCommit,
+							composite: freezeCommit,
+							state: 'superseded',
+						},
+					}),
+				),
+			).toContainEqual({ path: '$.freeze.supersedes.composite', kind: 'pan-like-value' });
+		});
+
+		test('keeps refusing the object ID outside a freeze record commit key', () => {
+			const onRoot = freezeDoc({}) as Record<string, unknown>;
+			onRoot.commit = freezeCommit;
+			expect(findSensitiveSignals(onRoot)).toContainEqual({
+				path: '$.commit',
+				kind: 'pan-like-value',
+			});
+		});
+
+		test('keeps refusing the freeze commit object ID outside the adapter-freeze document', () => {
+			for (const unsafe of [
+				{ freeze: { commit: freezeCommit } },
+				{ wrapper: freezeDoc({}) },
+				{ ...freezeDoc({}), schemaVersion: 'versionless.trust.v2' },
+				(() => {
+					const document = freezeDoc({});
+					(document.freeze as Record<string, unknown>).state = 'thawed';
+					return document;
+				})(),
+				(() => {
+					const document = freezeDoc({});
+					(document.freeze as Record<string, unknown>).algorithm = 'sha512';
+					return document;
+				})(),
+			])
+				expect(() => assertSyntheticEvidence(unsafe)).toThrow('Sensitive material refused');
+		});
+	});
 });

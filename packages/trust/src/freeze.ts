@@ -7,7 +7,7 @@ import { TRUST_SCHEMA, asRecord, asString } from './schema.ts';
  * The freeze is a claim about exact bytes, so it is pinned to an exact commit
  * rather than to a branch name that can move underneath it.
  */
-export const ADAPTER_FREEZE_COMMIT = '57b308a573dd582c844ce401fb1161cd70e9bc66' as const;
+export const ADAPTER_FREEZE_COMMIT = 'cce34175340273919c0b70341dfada5533f0307c' as const;
 
 /**
  * The frozen subtrees, in the exact order the composite fingerprint hashes them.
@@ -18,8 +18,8 @@ export const ADAPTER_FREEZE_COMMIT = '57b308a573dd582c844ce401fb1161cd70e9bc66' 
  * order is part of the claim, not an incidental detail of how it was computed.
  */
 export const ADAPTER_FREEZE_SUBTREES = [
-	{ path: 'packages/frameworks/react', treeOid: 'ae219d37efe52b2aebd51d116108169a0456ad93' },
-	{ path: 'packages/frameworks/angular', treeOid: '46ed07a7ff95277dfd99e7cddb14bd8cf806719b' },
+	{ path: 'packages/frameworks/react', treeOid: '9b2af393179749a4093f46e587e7f4fd9ce09b47' },
+	{ path: 'packages/frameworks/angular', treeOid: 'ca3824d0595d1fa88d37feda6b1785dfd79e72c4' },
 	{ path: 'packages/core/src/migrations', treeOid: '5237ce5990af3623206bcd2301047a59c80731cf' },
 	{ path: 'packages/core/src/bundlers', treeOid: 'cec2f0b56fbb7897f38d579be805e19982380ca6' },
 	{ path: 'packages/core/src/analysis', treeOid: '262dc8b7528c92883c2300914eb7d42579fb856b' },
@@ -34,7 +34,28 @@ export const ADAPTER_FREEZE_SUBTREES = [
  * recompute it from a checkout without this package.
  */
 export const ADAPTER_FREEZE_COMPOSITE =
-	'd9f75ef677cb850f664cc188abf77b8ebfd24e84cb58d147b74e9bbaa143eb77' as const;
+	'5de7df565fb8e445a45f9f8f43eac27b80b71189d59e4df243e93471406a260c' as const;
+
+/**
+ * The tranche-one freeze this record supersedes, retained by reference.
+ *
+ * The d9f75ef6 composite over the five subtrees at commit 57b308a was the
+ * tranche-one freeze. It was legitimately reopened (T999 audit): the frozen
+ * create-react-app adapter did not carry the cypress-realworld-app holdout, so
+ * d9f75ef6 was falsified for CRA holdout carriage and the adapter surface was
+ * reopened for the follow-on tranche behind a new Judge freeze boundary. The
+ * expanded React and Angular adapters were then re-frozen at the new composite.
+ * The prior composite is recorded as superseded rather than deleted so the
+ * freeze history stays legible and the holdout receipt's frozenAdapterFingerprint
+ * still points at the boundary it actually ran against.
+ */
+export const ADAPTER_FREEZE_SUPERSEDES = {
+	composite: 'd9f75ef677cb850f664cc188abf77b8ebfd24e84cb58d147b74e9bbaa143eb77',
+	commit: '57b308a573dd582c844ce401fb1161cd70e9bc66',
+	state: 'superseded' as const,
+	reopenReason:
+		'T999 audit: the tranche-one d9f75ef6 freeze was falsified for cypress-realworld-app holdout carriage (missing non-UTF-8 module source decoding). The adapter surface was reopened behind a new Judge freeze boundary and re-frozen at composite 5de7df56 once the follow-on tranche landed.',
+} as const;
 
 /**
  * Rebuilds the preimage the composite fingerprint is taken over.
@@ -126,6 +147,7 @@ export function adapterFreezeRecord(): Record<string, unknown> {
 			subtrees: ADAPTER_FREEZE_SUBTREES.map((subtree) => ({ ...subtree })),
 			state: 'frozen',
 			claim: 'The migration engine adapter surface is byte-stable at this commit.',
+			supersedes: { ...ADAPTER_FREEZE_SUPERSEDES },
 		},
 		holdoutPublishing: {
 			state: 'outside-freeze',

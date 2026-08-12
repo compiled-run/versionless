@@ -182,11 +182,12 @@ export const NEXTJS_SYNTHETIC_NOT_TESTED_LANES = [
 }));
 
 /**
- * The denominator every production-readiness lineage score is measured against:
- * four immutable source applications per lineage. It is a target count, not a
- * count of evidence, so it stays constant while the numerator is derived.
+ * The two lineages the charter oracle recognises. Next.js-on-React is
+ * React-lineage per the charter's completion target ("six React-lineage
+ * applications ... at least one legacy Next.js app"), so there is no separate
+ * Next oracle lineage — only React and Angular. (T016 charter ruling.)
  */
-export const LINEAGE_READINESS_TOTAL = 4 as const;
+export type LineageId = 'react' | 'angular';
 
 /**
  * One production-readiness lineage cell as the Judge ruled on it.
@@ -198,19 +199,27 @@ export const LINEAGE_READINESS_TOTAL = 4 as const;
  * cannot reach a numerator without a verified Witness receipt in the corpus and
  * a declined cell cannot be quietly dropped to flatter a score.
  *
- * A cell whose lineage has no published numerator — the Next lineage, whose
- * readiness is still the standing `olderNext` 0/4 pending the final Judge audit
- * — still belongs in this ledger. It is verified evidence about a source
- * application, so hiding it would be the flattering edit; carrying it with
- * `counted: false` is the honest one, and `countedLineageCells` never reads it.
+ * `demoted` excludes a cell from its lineage *denominator*: a demoted cell stays
+ * in the ledger with its reason but counts toward neither the numerator nor the
+ * total. The denominator is therefore the number of non-demoted cells in the
+ * lineage, derived rather than a fixed target. angular-realworld is the only
+ * demoted cell (applicationFilesChanged=0), so the Angular total is four, not
+ * five.
+ *
+ * `reactSubTag` is an informational-only record, never a gate. It marks the
+ * legacy-Next member the charter oracle counts as React-lineage; the retired
+ * `olderNext` separate numerator was finer tracking, not an oracle lineage, and
+ * folds into React through this sub-tag rather than a second scoreboard.
  */
 export interface LineageCountingCell {
 	readonly cell: string;
 	readonly application: string;
-	readonly lineage: 'react' | 'angular' | 'next';
+	readonly lineage: LineageId;
 	readonly witnessReceipt: string;
 	readonly counted: boolean;
+	readonly demoted: boolean;
 	readonly reason: string;
+	readonly reactSubTag?: 'legacy-next';
 }
 
 /**
@@ -242,6 +251,7 @@ function lineageCountingLedger(present: {
 					lineage: 'react' as const,
 					witnessReceipt: WITNESS_REACT_BOILERPLATE_RECEIPT_PATH,
 					counted: true,
+					demoted: false,
 					reason: 'Judge-accepted: webpack 4.30.0 to Vite 8.0.16 across Node 16 to Node 24 with a direct-Witness browser proof, byte-identical mutation restoration, and a current zero-service-worker policy reconciliation on the same immutable source.',
 				}
 			: null,
@@ -252,6 +262,7 @@ function lineageCountingLedger(present: {
 					lineage: 'react' as const,
 					witnessReceipt: WITNESS_REACT_PAPERCUPS_RECEIPT_PATH,
 					counted: true,
+					demoted: false,
 					reason: 'Judge-accepted: a create-react-app 3.4.1 production application really moved to a Vite 8 build, with behavioral parity and mutation restoration proven in the browser rather than inferred from the build.',
 				}
 			: null,
@@ -262,6 +273,7 @@ function lineageCountingLedger(present: {
 					lineage: 'react' as const,
 					witnessReceipt: WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
 					counted: true,
+					demoted: false,
 					reason: 'Judge-accepted: a create-react-app 3.4.4 application on Node 12 reached a booting Vite 8 build on Node 24, and its baseline/migrated service-worker difference is recorded rather than masked, so the cell is counted with its difference visible.',
 				}
 			: null,
@@ -272,7 +284,8 @@ function lineageCountingLedger(present: {
 					lineage: 'angular' as const,
 					witnessReceipt: WITNESS_ANGULAR_REALWORLD_RECEIPT_PATH,
 					counted: false,
-					reason: 'Judge-declined for the numerator: the migration changed applicationFilesChanged=0 application files, so it is an Angular 15-to-16 dependency version bump rebuilt under AOT rather than a proven application migration. Its browser-proof receipt stays verified and retained; only its counting is reclassified.',
+					demoted: true,
+					reason: 'Judge-declined and demoted from the denominator: the migration changed applicationFilesChanged=0 application files, so it is an Angular 15-to-16 dependency version bump rebuilt under AOT rather than a proven application migration. Its browser-proof receipt stays verified and retained; it is excluded from the Angular denominator rather than counted, which is why the Angular total is four non-demoted cells and not five.',
 				}
 			: null,
 		present.factoriolab
@@ -282,6 +295,7 @@ function lineageCountingLedger(present: {
 					lineage: 'angular' as const,
 					witnessReceipt: WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH,
 					counted: true,
+					demoted: false,
 					reason: 'Judge-accepted: Angular CLI 10.1 to 16.2 browser-builder across six majors with application source really rewritten, proven in the browser with byte-identical mutation restoration.',
 				}
 			: null,
@@ -292,6 +306,7 @@ function lineageCountingLedger(present: {
 					lineage: 'angular' as const,
 					witnessReceipt: WITNESS_ANGULAR_JIRA_CLONE_RECEIPT_PATH,
 					counted: true,
+					demoted: false,
 					reason: 'Judge-accepted: Angular CLI 13.2 custom-webpack to 16.2 browser-builder, absorbing a non-default builder and rewriting application source, proven in the browser on a second independent Angular application.',
 				}
 			: null,
@@ -301,18 +316,21 @@ function lineageCountingLedger(present: {
 					application: 'react-memos',
 					lineage: 'react' as const,
 					witnessReceipt: WITNESS_REACT_MEMOS_RECEIPT_PATH,
-					counted: false,
-					reason: 'Not counted pending Judge audit: the browser proof is verified and retained, but this vertical is an old-Vite-origin lane rather than a create-react-app one and its own receipt declares counted:false, so it stays visible in the ledger without reaching the React numerator.',
+					counted: true,
+					demoted: false,
+					reason: 'Judge-accepted (T016 re-freeze audit): a substantive old-Vite-origin React application (Vite 2.9.5 to Vite 8) really migrated with a direct-Witness browser proof and byte-identical mutation restoration. React-lineage is measured by the charter oracle regardless of origin bundler, so it counts toward the React numerator; the receipt keeps its own per-vertical scoreboard recorded rather than masked.',
 				}
 			: null,
 		present.killedbygoogleV3
 			? {
 					cell: NEXT_KILLEDBYGOOGLE_V3_FIXTURE,
 					application: NEXT_KILLEDBYGOOGLE_V3_FIXTURE,
-					lineage: 'next' as const,
+					lineage: 'react' as const,
 					witnessReceipt: WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH,
-					counted: false,
-					reason: 'Not counted pending Judge audit: the browser proof is verified and retained, and its own receipt declares counted:false against the Next lineage, whose readiness stays the standing olderNext 0/4 until the final Judge audit rules on it.',
+					counted: true,
+					demoted: false,
+					reactSubTag: 'legacy-next' as const,
+					reason: 'Judge-accepted (T016 charter ruling): Next.js-on-React is React-lineage per the charter completion target ("six React-lineage applications ... at least one legacy Next.js app"), so this legacy-Next v3.0.0 vertical is the legacy-Next member of the six and counts toward the React numerator. It carries the informational legacy-next sub-tag; its baseline/migrated document-delivery difference stays recorded rather than masked, and the retired olderNext separate numerator folds into React here.',
 				}
 			: null,
 		present.linkfree
@@ -321,8 +339,9 @@ function lineageCountingLedger(present: {
 					application: 'react-linkfree',
 					lineage: 'react' as const,
 					witnessReceipt: WITNESS_REACT_LINKFREE_RECEIPT_PATH,
-					counted: false,
-					reason: 'Not counted pending Judge audit: the browser proof is verified and retained, but it was run over a synthetic profile corpus staged through the application’s own codegen rather than the shipped dataset, and its own receipt declares counted:false, so it stays visible without reaching the React numerator.',
+					counted: true,
+					demoted: false,
+					reason: 'Judge-accepted (T016 re-freeze audit): a create-react-app 5 application really migrated to a Vite 8 build with a direct-Witness browser proof and byte-identical mutation restoration. Its synthetic profile corpus is the recorded boundary of the claim, published rather than hidden, and does not disqualify the migration from the React numerator; the receipt keeps its own per-vertical scoreboard recorded rather than masked.',
 				}
 			: null,
 		present.tinyTranslator
@@ -331,8 +350,9 @@ function lineageCountingLedger(present: {
 					application: 'angular-tiny-translator',
 					lineage: 'angular' as const,
 					witnessReceipt: WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH,
-					counted: false,
-					reason: 'Not counted pending Judge audit: the browser proof is verified and retained, but its own receipt declares counted:false against the Angular lineage — an era-defect service-worker registration is carried across the migration and stays recorded rather than masked — so it stays visible without reaching the Angular numerator.',
+					counted: true,
+					demoted: false,
+					reason: 'Judge-accepted (T016 re-freeze audit): an eleven-major Angular CLI 1.5.4 to 16.2 browser-builder lift with application source really rewritten, proven in the browser with byte-identical mutation restoration. Its era-defect service-worker registration stays recorded rather than masked and does not disqualify the migration from the Angular numerator; the receipt keeps its own per-vertical scoreboard recorded rather than masked.',
 				}
 			: null,
 		present.superProductivity
@@ -341,8 +361,9 @@ function lineageCountingLedger(present: {
 					application: 'angular-super-productivity',
 					lineage: 'angular' as const,
 					witnessReceipt: WITNESS_ANGULAR_SUPER_PRODUCTIVITY_RECEIPT_PATH,
-					counted: false,
-					reason: 'Not counted pending Judge audit: the browser proof is verified and retained, but its own receipt declares counted:false against the Angular lineage — the lift carries declared cross-lane appearance differences and an unseeded Sass random() build instability across the supersede boundary, recorded rather than masked — so it stays visible without reaching the Angular numerator.',
+					counted: true,
+					demoted: false,
+					reason: 'Judge-accepted (T016 re-freeze audit): an eight-major Angular CLI 8.3.4 to 16.2 browser-builder lift with application source really rewritten, proven in the browser. Its declared cross-lane appearance differences and unseeded Sass random() build instability across the supersede boundary stay recorded rather than masked and do not disqualify the migration from the Angular numerator; the receipt keeps its own per-vertical scoreboard recorded rather than masked.',
 				}
 			: null,
 	];
@@ -355,8 +376,20 @@ function lineageCountingLedger(present: {
  * The score is the number of accepted cells and nothing else, so it cannot be
  * set to a value the ledger does not support.
  */
-function countedLineageCells(ledger: LineageCountingCell[], lineage: 'react' | 'angular'): number {
+function countedLineageCells(ledger: LineageCountingCell[], lineage: LineageId): number {
 	return ledger.filter((cell) => cell.lineage === lineage && cell.counted).length;
+}
+
+/**
+ * Derives one lineage's denominator off the Judge's ledger.
+ *
+ * The total is the number of non-demoted cells in the lineage and nothing else,
+ * so it cannot be hand-set: a demoted cell (angular-realworld) is excluded and
+ * every other present cell is in-denominator. In the completed corpus this
+ * derives to six for React and four for Angular.
+ */
+function lineageDenominator(ledger: LineageCountingCell[], lineage: LineageId): number {
+	return ledger.filter((cell) => cell.lineage === lineage && !cell.demoted).length;
 }
 
 /**
@@ -3699,6 +3732,8 @@ export async function analyzeCorpusConformance(
 	});
 	const reactLineageReady = countedLineageCells(judgeCounting, 'react');
 	const angularLineageReady = countedLineageCells(judgeCounting, 'angular');
+	const reactLineageTotal = lineageDenominator(judgeCounting, 'react');
+	const angularLineageTotal = lineageDenominator(judgeCounting, 'angular');
 	const holdouts = await holdoutLedger(root, aggregate);
 	assertHoldoutsAreUncounted(judgeCounting, holdouts);
 
@@ -3725,13 +3760,13 @@ export async function analyzeCorpusConformance(
 			productionReadiness: {
 				reactLineage: {
 					ready: reactLineageReady,
-					total: LINEAGE_READINESS_TOTAL,
+					total: reactLineageTotal,
 					counted: reactLineageReady > 0,
 					candidate: reactLineageReady > 0 ? 'judge-approved' : 'not-tested',
 				},
 				angularLineage: {
 					ready: angularLineageReady,
-					total: LINEAGE_READINESS_TOTAL,
+					total: angularLineageTotal,
 					counted: angularLineageReady > 0,
 					candidate: angularLineageReady > 0 ? 'judge-approved' : 'not-tested',
 				},
@@ -3741,14 +3776,28 @@ export async function analyzeCorpusConformance(
 				 * numerator and hidden from none of them.
 				 */
 				holdouts,
+				/**
+					 * The retired olderNext scoreboard. The charter oracle has exactly
+					 * two lineages (React, Angular), so olderNext was never an oracle
+					 * lineage — it was finer tracking of the legacy-Next member. Per the
+					 * T016 charter ruling it is retired to this informational React
+					 * sub-tag rather than deleted: Next.js-on-React is React-lineage, the
+					 * legacy-Next member (next-killedbygoogle-v3-0-0) is now counted
+					 * within the React numerator, and the older-Next direct-Witness
+					 * candidate folds into React here rather than standing as a separate
+					 * 0/4 gate. Recorded, never a silent gate change.
+					 */
 				olderNext: {
-					ready: 0,
-					total: 4,
-					counted: false,
+					retired: true,
+					formerNumerator: '0/4',
+					reclassifiedInto: 'reactLineage',
+					reactSubTag: 'legacy-next',
+					reason:
+						'Next.js-on-React is React-lineage per the charter oracle; the olderNext 0/4 separate numerator was finer tracking, not an oracle lineage, and is retired into the React numerator with the legacy-Next member counted there.',
 					candidate:
 						nextKilledByGoogleWitness === null
 							? 'not-tested'
-							: 'verified-pending-judge',
+							: 'reclassified-into-react-lineage',
 				},
 				harness: { ready: 0, total: 4 },
 				phonecat: 'unsupported-visible-transition-not-counted',

@@ -206,7 +206,9 @@ type EvidenceContext =
 	| 't138-official-tree-row'
 	| 'corpus-conformance-applications'
 	| 'corpus-conformance-application'
-	| 'corpus-conformance-application-source';
+	| 'corpus-conformance-application-source'
+	| 'adapter-freeze-record'
+	| 'adapter-freeze-supersedes';
 
 const runtimeObservationSchema = 'versionless.runtime-script-observation.v1';
 const runtimeObservationRootKeys = new Set([
@@ -472,6 +474,32 @@ function isCorpusConformanceDocument(value: Record<string, unknown>): boolean {
 	);
 }
 
+/**
+ * Recognises the derived adapter-freeze record document.
+ *
+ * The freeze record is authored evidence about a Git state, so it publishes the
+ * exact commit at which the adapter surface was frozen — and that commit's forty
+ * hex characters can open with a long digit run (cce3417's freeze SHA carries a
+ * fourteen-digit run) that is indistinguishable from a primary account number to
+ * the digit-run detector. The document is recognised by its distinctive freeze
+ * substructure — the `versionless.trust.v1` schema plus a `freeze` object
+ * carrying a commit, a composite, `algorithm: 'sha256'`, `state: 'frozen'`, and a
+ * subtree list — which no other trust artifact shares.
+ */
+function isAdapterFreezeDocument(value: Record<string, unknown>): boolean {
+	if (value.schemaVersion !== 'versionless.trust.v1') return false;
+	const freeze = value.freeze;
+	if (freeze === null || typeof freeze !== 'object' || Array.isArray(freeze)) return false;
+	const record = freeze as Record<string, unknown>;
+	return (
+		typeof record.commit === 'string' &&
+		typeof record.composite === 'string' &&
+		record.algorithm === 'sha256' &&
+		record.state === 'frozen' &&
+		Array.isArray(record.subtrees)
+	);
+}
+
 function childContext(
 	context: EvidenceContext,
 	key: string,
@@ -480,6 +508,7 @@ function childContext(
 	rootIsT124Provenance: boolean,
 	rootIsT138Provenance: boolean,
 	rootIsCorpusConformance: boolean,
+	rootIsAdapterFreeze: boolean,
 ): EvidenceContext {
 	if (rootIsCycloneDx17 && key === 'components') return 'cyclonedx-components';
 	if (context === 'cyclonedx-component' && key === 'hashes') return 'cyclonedx-hashes';
@@ -493,6 +522,9 @@ function childContext(
 	if (rootIsCorpusConformance && key === 'applications') return 'corpus-conformance-applications';
 	if (context === 'corpus-conformance-application' && key === 'source')
 		return 'corpus-conformance-application-source';
+	if (rootIsAdapterFreeze && key === 'freeze') return 'adapter-freeze-record';
+	if (context === 'adapter-freeze-record' && key === 'supersedes')
+		return 'adapter-freeze-supersedes';
 	return 'ordinary';
 }
 
@@ -566,6 +598,33 @@ function isCorpusProvenanceRevisionObjectId(
 	);
 }
 
+/**
+ * Admits the git commit object id the adapter-freeze record was computed at.
+ *
+ * The freeze record names the real commit at which the frozen adapter state was
+ * established, and that commit — cce3417's re-freeze SHA among them — can open
+ * with a fourteen-digit run indistinguishable from a primary account number to
+ * the digit-run detector. The admission is exactly as narrow as a git object id:
+ * the value must be exactly forty lowercase hex characters including at least one
+ * letter, the key must be the freeze record's `commit` key, and that key must sit
+ * either directly on the freeze record or on its `supersedes` record inside a
+ * document whose root is exactly the adapter-freeze shape. A bare digit run, a
+ * wrong-length or upper-case value, an object id under any other key, and an
+ * object id in any other document all keep tripping the detector — the record
+ * names the commit, the scanner only learns the git-object-id shape.
+ */
+function isAdapterFreezeCommitObjectId(
+	value: string,
+	key: string,
+	context: EvidenceContext,
+): boolean {
+	return (
+		(context === 'adapter-freeze-record' || context === 'adapter-freeze-supersedes') &&
+		key === 'commit' &&
+		isLowercaseHex(value, 40, true)
+	);
+}
+
 function collectSensitiveSignals(
 	value: unknown,
 	path: string,
@@ -585,6 +644,7 @@ function collectSensitiveSignals(
 		const rootIsT138Provenance = path === '$' && isT138ProvenanceDocument(record);
 		const rootIsT138ImmutableFixture = path === '$' && isT138ImmutableFixtureDocument(record);
 		const rootIsCorpusConformance = path === '$' && isCorpusConformanceDocument(record);
+		const rootIsAdapterFreeze = path === '$' && isAdapterFreezeDocument(record);
 		if (
 			path === '$' &&
 			targetsT138ProvenanceContext(record) &&
@@ -611,7 +671,8 @@ function collectSensitiveSignals(
 					isCycloneDxSha256Content(child, key, record, context) ||
 					isT124OfficialTreeObjectId(child, key, context) ||
 					isT138OfficialTreeObjectId(child, key, context) ||
-					isCorpusProvenanceRevisionObjectId(child, key, context);
+					isCorpusProvenanceRevisionObjectId(child, key, context) ||
+					isAdapterFreezeCommitObjectId(child, key, context);
 				if (!digest && panLike.test(child))
 					findings.push({ path: childPath, kind: 'pan-like-value' });
 			} else {
@@ -627,6 +688,7 @@ function collectSensitiveSignals(
 						rootIsT124Provenance,
 						rootIsT138Provenance,
 						rootIsCorpusConformance,
+						rootIsAdapterFreeze,
 					),
 				);
 			}
