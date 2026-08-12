@@ -231,6 +231,29 @@ type JourneyEvidence = {
 		}>;
 	};
 	/**
+	 * Evidence for an application that ATTEMPTS a service-worker registration and
+	 * is refused, which is a different fact from an application that never asks.
+	 *
+	 * The zero-worker shape above asserts an empty observer trace, and an
+	 * application whose registration is rejected does not have one: the browser
+	 * opens a registration record for the attempt and reports the script it could
+	 * not fetch. Folding that into the zero shape would have meant either
+	 * asserting something untrue or dropping the assertion, so the attempt gets
+	 * its own shape — every settled fact of the zero shape still asserted, plus
+	 * the attempt trace recorded exactly rather than required to be absent.
+	 */
+	refusedServiceWorker?: {
+		attempt: { script: string; scopePath: string };
+		checkpoints: Array<{
+			phase: 'before-interactions' | 'after-interactions' | 'after-online-reload';
+			state: 'timeout';
+			registrations: 0;
+			controller: null;
+			cacheNames: [];
+			attemptEvents: ServiceWorkerTelemetry['workerEvents'];
+		}>;
+	};
+	/**
 	 * Runtime zero-service-worker evidence for an application whose legacy build
 	 * still emits a worker script it never registers. The emitted bytes are
 	 * recorded rather than asserted away, and the runtime is required to show no
@@ -2321,8 +2344,20 @@ const TT_FILTER_ALL = `${TT_UNIT_LIST} mat-radio-button[value=all]` as const;
 const TT_FILTER_BY_SUBSTRING = `${TT_UNIT_LIST} mat-radio-button[value=bySubstring]` as const;
 const TT_FILTER_SUBSTRING_INPUT = '#selectfilter input[type=text]' as const;
 const TT_TRANSLATION_INPUT = '#translationinput textarea' as const;
-const TT_MARK_TRANSLATED = 'button:text-is("mark as translated")' as const;
-const TT_MARK_REVIEWED = 'button:text-is("mark as reviewed")' as const;
+/**
+ * The two state-change controls, addressed by the exact label a reader sees
+ * inside them rather than by an exact match on the button itself.
+ *
+ * Angular Material wraps a button's content in an element of its own in both
+ * eras — `.mat-button-wrapper` at 5.0.0-rc.2, `.mdc-button__label` at 16.2 —
+ * so the smallest element carrying the label is that wrapper, and an exact-text
+ * pseudo-class anchored on `button` matches neither lane. Anchoring the exact
+ * match on whatever element actually holds the text keeps the assertion exact —
+ * `mark as translated` never matches `mark as translated, but not reviewed` —
+ * while leaving the wrapper's identity to the framework, where it belongs.
+ */
+const TT_MARK_TRANSLATED = 'button:has(:text-is("mark as translated"))' as const;
+const TT_MARK_REVIEWED = 'button:has(:text-is("mark as reviewed"))' as const;
 const TT_EXPORT_BUTTON = 'app-project-status app-translation-file-status button' as const;
 /**
  * The mutation seam: the visible label of the control that opens the file
@@ -2371,16 +2406,55 @@ const WITNESS_ANGULAR_TINY_TRANSLATOR_MIGRATED_SEAMS = Object.freeze([
 	Object.freeze({ method: 'GET', path: TINY_TRANSLATOR_MIGRATED_FONT }),
 ]) as readonly WitnessMockedNonLoopbackSeamEntry[];
 /**
- * Both lanes are held to an EMPTY exact console-error inventory, which is the
- * strictest setting of that mechanism rather than a blanket allowance: any
- * message at all lands outside the inventory and fails the run. The same is
- * true of the failed-request inventory — every declared seam is answered with a
- * 200, so no request the browser makes is allowed to fail.
+ * The measured per-lane console-error inventories.
+ *
+ * Neither lane is empty, and the reason is the one defect this vertical records
+ * rather than suppresses: the application registers a service worker at the
+ * literal `%BASE_HREF%ngsw-worker.js`, the placeholder unsubstituted, and the
+ * static server answers that path 400. The browser reports the fetch failure
+ * itself, identically in both lanes, and then each lane's framework reports the
+ * rejected registration in its OWN words — which is a real, observable
+ * difference across eleven majors rather than one message to be normalized:
+ *
+ * - Angular 5's `ServiceWorkerModule` lets the rejection escape into zone.js,
+ *   which prints it as an uncaught in-promise `ERROR`, stack and all;
+ * - Angular 16 catches it in `SwRegistrationOptions` and prints one line.
+ *
+ * Both are pinned exactly, message for message and count for count, so a lane
+ * that stopped attempting the registration, started succeeding at it, or grew
+ * any other error would fail the run rather than pass quietly. The
+ * failed-request inventories stay empty: a 400 is an answered request, not a
+ * failed one, and no request the browser makes is allowed to fail.
  */
+/**
+ * The registration the application attempts, exactly as it asks for it: the
+ * literal placeholder path, at the document scope. Both lanes ask for this and
+ * both are refused, and every observer event either lane produces has to name
+ * it.
+ */
+export const TINY_TRANSLATOR_SERVICE_WORKER_ATTEMPT = Object.freeze({
+	script: '/%BASE_HREF%ngsw-worker.js',
+	scopePath: '/',
+});
+const TT_SERVICE_WORKER_FETCH_ERROR =
+	'A bad HTTP response code (400) was received when fetching the script.' as const;
+const TT_ERA_SERVICE_WORKER_REGISTRATION_ERROR =
+	"ERROR Error: Uncaught (in promise): TypeError: Failed to register a ServiceWorker for scope ('{production-static-origin}/') with script ('{production-static-origin}/%BASE_HREF%ngsw-worker.js'): A bad HTTP response code (400) was received when fetching the script.\nTypeError: Failed to register a ServiceWorker for scope ('{production-static-origin}/') with script ('{production-static-origin}/%BASE_HREF%ngsw-worker.js'): A bad HTTP response code (400) was received when fetching the script.\n    at i ({production-static-origin}/polyfills.54fe3ea07e05cf80d217.bundle.js:1:38959)\n    at {production-static-origin}/polyfills.54fe3ea07e05cf80d217.bundle.js:1:38381\n    at {production-static-origin}/polyfills.54fe3ea07e05cf80d217.bundle.js:1:40608\n    at e.invoke ({production-static-origin}/polyfills.54fe3ea07e05cf80d217.bundle.js:1:34863)\n    at Object.onInvoke ({production-static-origin}/main.4791d4b061c314d0e010.bundle.js:1:93929)\n    at e.invoke ({production-static-origin}/polyfills.54fe3ea07e05cf80d217.bundle.js:1:34803)\n    at r.run ({production-static-origin}/polyfills.54fe3ea07e05cf80d217.bundle.js:1:30034)\n    at {production-static-origin}/polyfills.54fe3ea07e05cf80d217.bundle.js:1:39499\n    at e.invokeTask ({production-static-origin}/polyfills.54fe3ea07e05cf80d217.bundle.js:1:35547)\n    at Object.onInvokeTask ({production-static-origin}/main.4791d4b061c314d0e010.bundle.js:1:93843)" as const;
+const TT_MIGRATED_SERVICE_WORKER_REGISTRATION_ERROR =
+	"Service worker registration failed with: TypeError: Failed to register a ServiceWorker for scope ('{production-static-origin}/') with script ('{production-static-origin}/%BASE_HREF%ngsw-worker.js'): A bad HTTP response code (400) was received when fetching the script." as const;
 export const WITNESS_ANGULAR_TINY_TRANSLATOR_CONSOLE_ERRORS: Record<
 	Lane,
 	readonly WitnessConsoleErrorInventoryEntry[]
-> = { baseline: [], migrated: [] };
+> = {
+	baseline: [
+		{ message: TT_SERVICE_WORKER_FETCH_ERROR, count: 1 },
+		{ message: TT_ERA_SERVICE_WORKER_REGISTRATION_ERROR, count: 1 },
+	],
+	migrated: [
+		{ message: TT_SERVICE_WORKER_FETCH_ERROR, count: 1 },
+		{ message: TT_MIGRATED_SERVICE_WORKER_REGISTRATION_ERROR, count: 1 },
+	],
+};
 export const WITNESS_ANGULAR_TINY_TRANSLATOR_FAILED_REQUESTS: Record<
 	Lane,
 	readonly WitnessFailedRequestInventoryEntry[]
@@ -4588,8 +4662,19 @@ export const TINY_TRANSLATOR_JOURNEY_NAVIGATIONS = 6;
 const angularTinyTranslatorSpec: AppSpec = {
 	app: ANGULAR_TINY_TRANSLATOR_APP,
 	framework: 'angular',
-	canonicalReceipt: 'evidence/runs/angular-tiny-translator-v0-12-0/u17d-final-green-lane.json',
-	canonicalDigest: '88be4807ed80b6f7a4e7238e42c94aa88d8aa1b01603aca74902166f2345ca45',
+	/**
+	 * The build record that pins the served migrated root, bound by the sha256 of
+	 * its exact bytes: this record publishes a top-level `digest` over its own
+	 * content rather than an `integrity.canonicalDigest`, so binding it by file
+	 * bytes is the honest binding rather than a looser one.
+	 *
+	 * It is u19f, not u17d, because `dist-11` is u19f's root. u17d's `dist-7` is
+	 * the green deterministic build whose artifact never bootstraps.
+	 */
+	canonicalReceipt:
+		'evidence/runs/angular-tiny-translator-v0-12-0/u19f-localize-boot-green-lane.json',
+	canonicalDigest: '46c8494c19e42cfeb19d9c47261be9b9182906d36aa3798e96e5adbedcd3dbc8',
+	canonicalBinding: 'file-sha256',
 	sources: {
 		baseline: '.versionless/cache/angular-tiny-translator-v0-12-0-baseline/app/dist/rebuild-1',
 		migrated: '.versionless/stage/angular-tiny-translator-v0-12-0-u17b/dist-11',
@@ -4608,7 +4693,13 @@ const angularTinyTranslatorSpec: AppSpec = {
 	journey: async (context, page, _transportEvidence, lifecycle) => {
 		if (lifecycle.expectedServiceWorker !== null)
 			throw new Error('TinyTranslator journey received a service-worker expectation');
-		const checkpoints = [await zeroServiceWorkerCheckpoint(lifecycle, 'before-interactions')];
+		const checkpoints = [
+			await refusedServiceWorkerCheckpoint(
+				lifecycle,
+				'before-interactions',
+				TINY_TRANSLATOR_SERVICE_WORKER_ATTEMPT,
+			),
+		];
 		const measuredRoutes: WitnessMeasuredScrollAbsence['routes'] = [];
 		/**
 		 * The generic scroll measurement, taken at every stage. The application
@@ -4664,7 +4755,15 @@ const angularTinyTranslatorSpec: AppSpec = {
 		// in both lanes: the toolbar, an icon, a raised button and the document.
 		await page.click(TT_HOME_CREATE_LINK);
 		await context.expect.page.exists(page, TT_CREATE_FORM);
-		await context.expect.page.text(page, TT_UPLOAD_LABEL, TINY_TRANSLATOR_MUTATION_SEAM);
+		// The label the seam lives in also carries a `mat-icon`, and with the font
+		// seam answered in-context that icon renders as its ligature TEXT — so the
+		// element's exact text content is `open_in_browser` plus the seam, and
+		// pinning it exactly would be pinning the icon degradation into an
+		// assertion about a label. The label is asserted to exist, and the seam is
+		// asserted as rendered text: mutating the seam in the served bundle takes
+		// the string off the page and this assertion goes red on it.
+		await context.expect.page.exists(page, TT_UPLOAD_LABEL);
+		await context.expect.page.bodyText(page, { contains: TINY_TRANSLATOR_MUTATION_SEAM });
 		const renderedStyles = await lifecycle.renderedStyles();
 		const iconGroups = await lifecycle.groupedText(TT_ICON_PROBE);
 		const renderedIcon = iconGroups[0]?.items[0];
@@ -4716,7 +4815,12 @@ const angularTinyTranslatorSpec: AppSpec = {
 		await page.press(TT_TRANSLATION_INPUT, 'a', { modifiers: ['Meta'] });
 		await page.type(TT_TRANSLATION_INPUT, TT_TRANSLATION_TEXT, { redact: false });
 		await page.click(TT_MARK_TRANSLATED);
-		await context.expect.page.bodyText(page, { contains: 'State translated' });
+		// Measured: `markTranslated()` commits and the view advances to the next
+		// unit, and the list's default filter is `Untranslated units`, so the unit
+		// just translated leaves the list rather than re-rendering as
+		// `State translated`. What the page shows instead is the project's own
+		// progress reading, which is the application's account of the same fact.
+		await context.expect.page.bodyText(page, { contains: '33 % translated' });
 
 		// (f) The reviewer's state change, reached through the application's own
 		// project editor rather than by rewriting its store.
@@ -4769,7 +4873,13 @@ const angularTinyTranslatorSpec: AppSpec = {
 				keydown: { atLeast: 4 },
 			},
 		});
-		checkpoints.push(await zeroServiceWorkerCheckpoint(lifecycle, 'after-interactions'));
+		checkpoints.push(
+			await refusedServiceWorkerCheckpoint(
+				lifecycle,
+				'after-interactions',
+				TINY_TRANSLATOR_SERVICE_WORKER_ATTEMPT,
+			),
+		);
 
 		// (i) A real document reload. There is no backend: the project lives in
 		// browser local storage, and what comes back is what the journey put
@@ -4783,7 +4893,13 @@ const angularTinyTranslatorSpec: AppSpec = {
 		await context.expect.page.bodyText(page, { contains: TT_TRANSLATION_TEXT });
 		const keysAfterJourney = await storageKeys();
 		await measure(`${TINY_TRANSLATOR_TRANSLATE_ROUTE} (after the online reload)`);
-		checkpoints.push(await zeroServiceWorkerCheckpoint(lifecycle, 'after-online-reload'));
+		checkpoints.push(
+			await refusedServiceWorkerCheckpoint(
+				lifecycle,
+				'after-online-reload',
+				TINY_TRANSLATOR_SERVICE_WORKER_ATTEMPT,
+			),
+		);
 		await clean(
 			context,
 			page,
@@ -4837,11 +4953,14 @@ const angularTinyTranslatorSpec: AppSpec = {
 				'translation file exported through the application own downloader and the captured bytes carrying the typed translation',
 				'project tooltip reached by a genuine hover on the toolbar control',
 				'project and translation restored from browser local storage by an online reload',
-				'no service worker registered, controlling, cached or requested in either lane',
+				'a service-worker registration attempted at the literal `%BASE_HREF%ngsw-worker.js`, answered 400 and refused in both lanes, with nothing registered, installing, waiting, active, controlling or cached at any of the three checkpoints',
 				'clean page',
 			],
 			offlineEvidence: { state: 'not-applicable' },
-			zeroServiceWorker: { checkpoints },
+			refusedServiceWorker: {
+				attempt: { ...TINY_TRANSLATOR_SERVICE_WORKER_ATTEMPT },
+				checkpoints,
+			},
 			renderedStyles,
 			applicationJourney,
 			scrollAbsence: {
@@ -5390,6 +5509,21 @@ async function executeRun(
 						workerEvents: observerFinalization.workerEvents,
 					},
 				}),
+		...(completedJourney.refusedServiceWorker === undefined
+			? {}
+			: {
+					refusedServiceWorker: {
+						...completedJourney.refusedServiceWorker,
+						outputFiles: beforeInventory.serviceWorkers,
+						requests: differentialEvents.filter(
+							(event) =>
+								event.detail.serviceWorker === true ||
+								event.urlPath === '/sw.js' ||
+								event.urlPath === '/service-worker.js',
+						),
+						workerEvents: observerFinalization.workerEvents,
+					},
+				}),
 		...(completedJourney.zeroServiceWorkerRuntime === undefined
 			? {}
 			: {
@@ -5750,7 +5884,11 @@ async function zeroServiceWorkerCheckpoint(
 		telemetry.cacheEntries.length !== 0 ||
 		telemetry.workerEvents.length !== 0
 	)
-		throw new Error('zero-service-worker policy assertion failed');
+		// The refusal carries what was observed. An assertion that only says it
+		// failed makes the next reader guess which of nine facts moved.
+		throw new Error(
+			`zero-service-worker policy assertion failed: ${phase} ${canonicalize(telemetry)}`,
+		);
 	return {
 		phase,
 		state: 'timeout',
@@ -5758,6 +5896,60 @@ async function zeroServiceWorkerCheckpoint(
 		controller: null,
 		cacheNames: [],
 		workerEvents: [],
+	};
+}
+
+/**
+ * The checkpoint for a registration the browser refuses.
+ *
+ * Every settled fact the zero-worker checkpoint asserts is asserted here too —
+ * nothing ready, nothing registered, nothing installing, waiting or active,
+ * nothing controlling the page and no CacheStorage entry. What is NOT asserted
+ * away is the observer trace: a rejected registration still leaves a record of
+ * the attempt, and every event in it is required to name the script the
+ * application asked for and the scope it asked for it at. An event about any
+ * other script, or a registration that got as far as a version worth running,
+ * fails the checkpoint.
+ */
+async function refusedServiceWorkerCheckpoint(
+	lifecycle: JourneyLifecycle,
+	phase: 'before-interactions' | 'after-interactions' | 'after-online-reload',
+	attempt: { script: string; scopePath: string },
+): Promise<
+	NonNullable<JourneyEvidence['refusedServiceWorker']>['checkpoints'][number]
+> {
+	const telemetry = await lifecycle.serviceWorkerTelemetry(250);
+	const attemptEvents = telemetry.workerEvents;
+	const named = attemptEvents.every((event) =>
+		event.kind === 'registration'
+			? event.scopePath === attempt.scopePath
+			: event.kind === 'version'
+				? event.scriptPath === attempt.script && event.runningStatus === 'stopped'
+				: false,
+	);
+	if (
+		telemetry.state !== 'timeout' ||
+		telemetry.registration.scriptPath !== null ||
+		telemetry.registration.scope !== null ||
+		telemetry.registration.installing !== null ||
+		telemetry.registration.waiting !== null ||
+		telemetry.registration.active !== null ||
+		telemetry.controller !== null ||
+		telemetry.cacheNames.length !== 0 ||
+		telemetry.cacheEntries.length !== 0 ||
+		attemptEvents.length === 0 ||
+		!named
+	)
+		throw new Error(
+			`refused-service-worker checkpoint failed: ${phase} ${canonicalize(telemetry)}`,
+		);
+	return {
+		phase,
+		state: 'timeout',
+		registrations: 0,
+		controller: null,
+		cacheNames: [],
+		attemptEvents,
 	};
 }
 

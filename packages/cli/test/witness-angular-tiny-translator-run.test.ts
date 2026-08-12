@@ -22,6 +22,7 @@ import {
 	buildFileInputLoadInventory,
 	TINY_TRANSLATOR_JOURNEY_NAVIGATIONS,
 	TINY_TRANSLATOR_MUTATION_SEAM,
+	TINY_TRANSLATOR_SERVICE_WORKER_ATTEMPT,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_CONSOLE_ERRORS,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_FAILED_REQUESTS,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_SEAMS,
@@ -67,17 +68,45 @@ describe('the TinyTranslator journey wiring', () => {
 			).toContain(difference.label);
 	});
 
-	it('holds both lanes to an empty exact console and failed-request inventory', () => {
-		expect(WITNESS_ANGULAR_TINY_TRANSLATOR_CONSOLE_ERRORS).toEqual({
-			baseline: [],
-			migrated: [],
-		});
+	it('pins the measured console errors per lane and an empty failed-request inventory', () => {
+		// Both lanes carry exactly two console errors, and both are the refused
+		// service-worker registration this vertical records rather than masks: the
+		// browser's own fetch failure, identical in both lanes, and the
+		// framework's report of the rejection, different in each because Angular 5
+		// lets it escape into zone.js and Angular 16 catches it.
+		for (const lane of ['baseline', 'migrated'] as const) {
+			const pinned = WITNESS_ANGULAR_TINY_TRANSLATOR_CONSOLE_ERRORS[lane];
+			expect(pinned).toHaveLength(2);
+			for (const entry of pinned) {
+				expect(entry.count).toBe(1);
+				expect(entry.message).toContain('400');
+			}
+			expect(pinned[1]!.message).toContain(
+				TINY_TRANSLATOR_SERVICE_WORKER_ATTEMPT.script.slice(1),
+			);
+		}
+		// The two lanes report the rejection differently, and that difference is a
+		// measured fact rather than something to normalize away.
+		expect(WITNESS_ANGULAR_TINY_TRANSLATOR_CONSOLE_ERRORS.baseline[1]!.message).not.toBe(
+			WITNESS_ANGULAR_TINY_TRANSLATOR_CONSOLE_ERRORS.migrated[1]!.message,
+		);
+		// A 400 is an answered request, not a failed one, so nothing the browser
+		// asks for is allowed to fail in either lane.
 		expect(WITNESS_ANGULAR_TINY_TRANSLATOR_FAILED_REQUESTS).toEqual({
 			baseline: [],
 			migrated: [],
 		});
 		expect(spec.consoleErrorInventory).toBe(WITNESS_ANGULAR_TINY_TRANSLATOR_CONSOLE_ERRORS);
 		expect(spec.failedRequestInventory).toBe(WITNESS_ANGULAR_TINY_TRANSLATOR_FAILED_REQUESTS);
+	});
+
+	it('binds the build record that pins the migrated root it serves', () => {
+		// `dist-11` is u19f's root. u17d's `dist-7` is the green deterministic
+		// build whose artifact never bootstraps, so binding it here would bind the
+		// proof to a record that does not describe what is served.
+		expect(spec.canonicalReceipt).toContain('u19f-localize-boot-green-lane.json');
+		expect(spec.canonicalBinding).toBe('file-sha256');
+		expect(spec.sources.migrated.endsWith('dist-11')).toBe(true);
 	});
 
 	it('publishes nonclaims that name what the proof does not establish', () => {
