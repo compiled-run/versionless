@@ -148,9 +148,12 @@ import {
 	isWitnessLoopbackUrl,
 	type PlaywrightWitnessHost,
 	type ServiceWorkerTelemetry,
+	type WitnessCapturedDownload,
 	type WitnessDifferentialEvent,
+	type WitnessFileInputDeclaration,
 	type WitnessGroupedText,
 	type WitnessGroupedTextProbe,
+	type WitnessLoadedFileInput,
 	type WitnessObservedRequestOutcome,
 	type WitnessRenderedStyle,
 	type WitnessRenderedStyleProbe,
@@ -322,6 +325,19 @@ type JourneyLifecycle = {
 	groupedText(probe: WitnessGroupedTextProbe): Promise<WitnessGroupedText[]>;
 	/** The keys this origin holds in browser storage, for a persistence claim. */
 	browserStorageKeys(): Promise<{ localStorage: string[]; sessionStorage: string[] }>;
+	/**
+	 * Hands the page the fixture behind one of this application's declared
+	 * file-input surfaces. A journey whose application declared none gets an
+	 * error rather than a load, which is what keeps the mechanism an opt-in
+	 * rather than a capability every journey inherits.
+	 */
+	loadFileInput(label: string): Promise<WitnessLoadedFileInput>;
+	/**
+	 * Reads back every download the page produced, for an application that
+	 * declared it produces them. Errors for one that did not, because its
+	 * context refused downloads and there is nothing to read.
+	 */
+	capturedDownloads(): Promise<WitnessCapturedDownload[]>;
 };
 export type AppSpec = {
 	app: App;
@@ -383,6 +399,19 @@ export type AppSpec = {
 	 * measures, identical in both lanes so the two measurements are comparable.
 	 */
 	renderedStyleProbes?: readonly WitnessRenderedStyleProbe[];
+	/**
+	 * The file-input surfaces this application declares, and the absolute root
+	 * its repository-relative fixture paths resolve against. Declaring it is the
+	 * only way a file ever reaches the page: an application that omits it runs
+	 * with the mechanism absent, and its journey cannot ask for one.
+	 */
+	fileInputs?: WitnessFileInputDeclaration;
+	/**
+	 * Declares that this application produces downloads. It is the only thing
+	 * that grants the browser context `acceptDownloads`, so an application that
+	 * omits it runs in a context that refuses them.
+	 */
+	downloads?: 'capture';
 	/**
 	 * Replaces identifiers the application itself mints at runtime with a stable
 	 * placeholder, so a recorded route is comparable across runs. It normalizes
@@ -1086,10 +1115,7 @@ const clean = async (
 
 const CONSOLE_ORIGIN_PLACEHOLDER = '{production-static-origin}' as const;
 
-function tallyConsoleErrors(
-	page: PageRecord,
-	origin: string,
-): WitnessConsoleErrorInventoryEntry[] {
+function tallyConsoleErrors(page: PageRecord, origin: string): WitnessConsoleErrorInventoryEntry[] {
 	const counts = new Map<string, number>();
 	for (const message of page.consoleMessages) {
 		if (message.level !== 'error') continue;
@@ -1245,7 +1271,9 @@ function buildFailedRequestInventory(
 			reason: entry.reason,
 			count: entry.count,
 		}))
-		.sort((left, right) => compareUtf16CodeUnits(failedRequestKey(left), failedRequestKey(right)));
+		.sort((left, right) =>
+			compareUtf16CodeUnits(failedRequestKey(left), failedRequestKey(right)),
+		);
 	const pinnedKeys = new Set(pinned.map(failedRequestKey));
 	const outside = observed.filter((entry) => !pinnedKeys.has(failedRequestKey(entry)));
 	if (outside.length > 0)
@@ -1295,7 +1323,10 @@ export function buildCancelledDuplicateFetchInventory(
 	const pinned = category
 		.map((entry) => ({ method: entry.method, path: entry.path, reason: entry.reason }))
 		.sort((left, right) =>
-			compareUtf16CodeUnits(cancelledDuplicateFetchKey(left), cancelledDuplicateFetchKey(right)),
+			compareUtf16CodeUnits(
+				cancelledDuplicateFetchKey(left),
+				cancelledDuplicateFetchKey(right),
+			),
 		);
 	if (new Set(pinned.map(cancelledDuplicateFetchKey)).size !== pinned.length)
 		throw new Error('cancelled-duplicate-fetch category repeats a member');
@@ -1416,8 +1447,7 @@ export function buildMockedNonLoopbackSeamInventory(
 		if (outcome.status !== null && !statuses.includes(outcome.status))
 			statuses.push(outcome.status);
 		statuses.sort((left, right) => left - right);
-		if (existing === undefined)
-			seen.set(key, { ...entry, requests: 1, statuses });
+		if (existing === undefined) seen.set(key, { ...entry, requests: 1, statuses });
 		else existing.requests += 1;
 	}
 	if (outside.length > 0)
@@ -1482,8 +1512,7 @@ const normalizeHospitalrunRoute = (path: string): string =>
 
 const sidebarItem = (label: string): string =>
 	`.sidebar .nav-item.list-group-item:text-is(${JSON.stringify(label)})`;
-const patientTab = (label: string): string =>
-	`button.nav-link:text-is(${JSON.stringify(label)})`;
+const patientTab = (label: string): string => `button.nav-link:text-is(${JSON.stringify(label)})`;
 
 /**
  * Papercups journey inputs derived from the frozen loopback projection rather
@@ -1560,8 +1589,7 @@ const FACTORIOLAB_NAV_FLOW = 'ul[role=navigation] li:nth-child(3)' as const;
 const FACTORIOLAB_SETTINGS = 'lab-settings' as const;
 const FACTORIOLAB_PER_HOUR = 'label[title="Display rates per hour"]' as const;
 const FACTORIOLAB_NAME_STATE = 'lab-settings i[title="Name and save this state"]' as const;
-const FACTORIOLAB_STATE_NAME_INPUT =
-	'lab-settings input[placeholder="Enter a name..."]' as const;
+const FACTORIOLAB_STATE_NAME_INPUT = 'lab-settings input[placeholder="Enter a name..."]' as const;
 const FACTORIOLAB_SAVE_STATE = 'lab-settings i[title="Save this state"]' as const;
 const FACTORIOLAB_DELETE_STATE = 'lab-settings i[title="Delete this saved state"]' as const;
 const FACTORIOLAB_FLOW_MESSAGE = 'lab-list td.message' as const;
@@ -1776,7 +1804,8 @@ export async function angularJiraCloneTransport(
 ): Promise<WitnessTransportDecision> {
 	const endpoint = `${request.protocol}//${request.host}${request.pathname}`;
 	const reporting = WITNESS_ANGULAR_JIRA_CLONE_MOCKED_SEAMS.migrated.some(
-		(seam) => seam.method === request.method && seam.path === endpoint && seam.method === 'POST',
+		(seam) =>
+			seam.method === request.method && seam.path === endpoint && seam.method === 'POST',
 	);
 	return reporting
 		? {
@@ -2067,8 +2096,7 @@ const MEMOS_ARCHIVED_ACTION_COLUMN =
 	`${MEMOS_ARCHIVED_MEMO} .memo-top-wrapper > .btns-container` as const;
 const MEMOS_ARCHIVED_ACTIONS = `${MEMOS_ARCHIVED_MEMO} .more-action-btns-wrapper` as const;
 const MEMOS_ARCHIVED_DELETE = `${MEMOS_ARCHIVED_MEMO} .btn.delete-btn` as const;
-const MEMOS_TRASH_RESTORE =
-	`.memo-trash-dialog ${MEMOS_ARCHIVED_MEMO} .btn.restore-btn` as const;
+const MEMOS_TRASH_RESTORE = `.memo-trash-dialog ${MEMOS_ARCHIVED_MEMO} .btn.restore-btn` as const;
 const MEMOS_COMPOSED_CONTENT =
 	'Witnessed compose on the retained lane. #evidence recorded.' as const;
 /** The projection mints identifiers from the seed's own high-water mark. */
@@ -2089,9 +2117,7 @@ const MEMOS_NEXT_USERNAME = 'evidence-owner' as const;
  */
 export const MEMOS_JOURNEY_NAVIGATIONS = 13;
 /** Seeded live memos, plus the one the journey writes. */
-const MEMOS_SEEDED_LIVE = MEMOS_SEED.memos.filter(
-	(record) => record.rowStatus === 'NORMAL',
-).length;
+const MEMOS_SEEDED_LIVE = MEMOS_SEED.memos.filter((record) => record.rowStatus === 'NORMAL').length;
 const MEMOS_SEEDED_ARCHIVED = MEMOS_SEED.memos.length - MEMOS_SEEDED_LIVE;
 const MEMOS_LIVE_AFTER_COMPOSE = MEMOS_SEEDED_LIVE + 1;
 /** The tags the projection derives from the live seeded memos, in its own order. */
@@ -2987,9 +3013,7 @@ const apps: AppSpec[] = [
 			await page.click(FACTORIOLAB_NAV_SETTINGS);
 			await context.expect.page.count(page, FACTORIOLAB_SETTINGS, 0);
 			await measure('/list#p=iron-plate*10&s=*************3600 (after online reload)');
-			checkpoints.push(
-				await zeroServiceWorkerCheckpoint(lifecycle, 'after-online-reload'),
-			);
+			checkpoints.push(await zeroServiceWorkerCheckpoint(lifecycle, 'after-online-reload'));
 			await clean(
 				context,
 				page,
@@ -3102,7 +3126,11 @@ const apps: AppSpec[] = [
 			// (a) The seeded board, as the application solves it from the project
 			// document it bundles. Appearance is measured here, on the seeded
 			// board, so both lanes and both passes measure the same layout.
-			await context.expect.page.count(page, JIRA_CLONE_COLUMN, JIRA_CLONE_COLUMN_CARDS.length);
+			await context.expect.page.count(
+				page,
+				JIRA_CLONE_COLUMN,
+				JIRA_CLONE_COLUMN_CARDS.length,
+			);
 			await context.expect.page.text(
 				page,
 				`${JIRA_CLONE_FIRST_BACKLOG_CARD} p`,
@@ -3184,7 +3212,8 @@ const apps: AppSpec[] = [
 			// rather than about a text box retaining what was typed into it.
 			await page.click(JIRA_CLONE_FIRST_SELECTED_CARD);
 			await context.expect.page.text(page, JIRA_CLONE_MODAL_TYPE, JIRA_CLONE_ISSUE_TYPE_LINE);
-			const reopenedTitle = (await lifecycle.groupedText(JIRA_CLONE_MODAL_PROBE))[0]?.items[0];
+			const reopenedTitle = (await lifecycle.groupedText(JIRA_CLONE_MODAL_PROBE))[0]
+				?.items[0];
 			if (reopenedTitle === undefined)
 				throw new Error('jira-clone reopened issue modal rendered no title');
 			await page.click(JIRA_CLONE_MODAL_CLOSE);
@@ -3213,11 +3242,9 @@ const apps: AppSpec[] = [
 			// full clear. One Backspace widens nothing — the remaining prefix still
 			// matches — so the gesture is select-all and then Backspace.
 			const beforeFilter = jiraCloneCounts(afterCreate);
-			await page.type(
-				JIRA_CLONE_FILTER_INPUT,
-				WITNESS_ANGULAR_JIRA_CLONE_FILTER_TERM,
-				{ redact: false },
-			);
+			await page.type(JIRA_CLONE_FILTER_INPUT, WITNESS_ANGULAR_JIRA_CLONE_FILTER_TERM, {
+				redact: false,
+			});
 			for (const [index, selector] of JIRA_CLONE_COLUMN_CARDS.entries())
 				await context.expect.page.count(
 					page,
@@ -3258,9 +3285,7 @@ const apps: AppSpec[] = [
 			const afterReload = await board();
 			const localStorageKeys = await storageIsEmpty('after the online reload');
 			await measure('after the online reload');
-			checkpoints.push(
-				await zeroServiceWorkerCheckpoint(lifecycle, 'after-online-reload'),
-			);
+			checkpoints.push(await zeroServiceWorkerCheckpoint(lifecycle, 'after-online-reload'));
 			await clean(
 				context,
 				page,
@@ -3376,9 +3401,7 @@ const apps: AppSpec[] = [
 			 * the advertising slot, which is a list item and not a record — the
 			 * application's own arithmetic, asserted rather than assumed.
 			 */
-			const settled = async (
-				records: number,
-			): Promise<WitnessNextKilledbygoogleV3Counts> => {
+			const settled = async (records: number): Promise<WitnessNextKilledbygoogleV3Counts> => {
 				const listItems = records + WITNESS_NEXT_KILLEDBYGOOGLE_V3_AD_LIST_ITEMS;
 				await context.expect.page.count(page, KBG_RECORD, records);
 				await context.expect.page.count(page, KBG_LIST_ITEM, listItems);
@@ -3545,9 +3568,7 @@ const apps: AppSpec[] = [
 				throw new Error(
 					`killedbygoogle wrote browser storage the receipt says it does not: ${canonicalize(storage)}`,
 				);
-			checkpoints.push(
-				await zeroServiceWorkerCheckpoint(lifecycle, 'after-online-reload'),
-			);
+			checkpoints.push(await zeroServiceWorkerCheckpoint(lifecycle, 'after-online-reload'));
 			await clean(
 				context,
 				page,
@@ -3745,7 +3766,11 @@ const apps: AppSpec[] = [
 				LINKFREE_PROFILE_USERNAME,
 				`(${LINKFREE_JOURNEY_PROFILE.username})`,
 			);
-			await context.expect.page.text(page, LINKFREE_PROFILE_BIO, LINKFREE_JOURNEY_PROFILE.bio);
+			await context.expect.page.text(
+				page,
+				LINKFREE_PROFILE_BIO,
+				LINKFREE_JOURNEY_PROFILE.bio,
+			);
 			await context.expect.page.bodyText(page, { contains: 'Community' });
 			await context.expect.page.count(
 				page,
@@ -3790,7 +3815,10 @@ const apps: AppSpec[] = [
 			// is what proves the control is visible: a hidden element is not
 			// actionable and the click would fail rather than pass quietly.
 			const beforeScroll = await measure(LINKFREE_PROFILE_ROUTE);
-			if (beforeScroll.scrollHeight <= beforeScroll.clientHeight || beforeScroll.scrollY !== 0)
+			if (
+				beforeScroll.scrollHeight <= beforeScroll.clientHeight ||
+				beforeScroll.scrollY !== 0
+			)
 				throw new Error(
 					`LinkFree profile route is not a scrollable surface: ${canonicalize(beforeScroll)}`,
 				);
@@ -4141,11 +4169,7 @@ const apps: AppSpec[] = [
 			await context.expect.page.count(page, MEMOS_LIST_ENTRY, MEMOS_SEEDED_LIVE);
 			await context.expect.page.count(page, `${MEMOS_LIST_ENTRY}${MEMOS_ARCHIVED_MEMO}`, 0);
 			await page.click(MEMOS_SIDEBAR_TRASH);
-			await context.expect.page.count(
-				page,
-				MEMOS_TRASH_ENTRY,
-				MEMOS_SEEDED_ARCHIVED + 1,
-			);
+			await context.expect.page.count(page, MEMOS_TRASH_ENTRY, MEMOS_SEEDED_ARCHIVED + 1);
 			await page.click(MEMOS_TRASH_RESTORE);
 			await context.expect.page.count(page, MEMOS_TRASH_ENTRY, MEMOS_SEEDED_ARCHIVED);
 			await page.click(MEMOS_TRASH_CLOSE);
@@ -4312,6 +4336,15 @@ const apps: AppSpec[] = [
 		},
 	},
 ];
+
+/**
+ * The published application specs, exported so the two opt-in browser
+ * mechanisms can be held to their own construction rather than to an intention:
+ * a reader — and a test — can see directly that every vertical that predates
+ * them declares neither a file-input surface nor a download surface, which is
+ * what makes "those journeys are untouched" a checkable fact.
+ */
+export const witnessRealAppSpecs: readonly AppSpec[] = apps;
 
 async function exists(file: string): Promise<boolean> {
 	return access(file).then(
@@ -4585,6 +4618,11 @@ async function executeRun(
 				: undefined,
 		...(app.serviceWorkers === undefined ? {} : { serviceWorkers: app.serviceWorkers }),
 		...(app.viewport === undefined ? {} : { viewport: app.viewport }),
+		// Both mechanisms are per-application opt-ins and are spread in only
+		// where the application declared them, so an application that declares
+		// neither is run by exactly the host it was run by before they existed.
+		...(app.fileInputs === undefined ? {} : { fileInputs: app.fileInputs }),
+		...(app.downloads === undefined ? {} : { downloads: app.downloads }),
 	});
 	const expectedConsoleErrors = (app.consoleErrorInventory?.[lane] ?? []).reduce(
 		(sum, entry) => sum + entry.count,
@@ -4618,13 +4656,13 @@ async function executeRun(
 			renderedStyles: async () => {
 				const probes = app.renderedStyleProbes ?? [];
 				if (probes.length === 0)
-					throw new Error(
-						`${app.app} declares no rendered-style probes to measure`,
-					);
+					throw new Error(`${app.app} declares no rendered-style probes to measure`);
 				return await host.renderedStyles(probes);
 			},
 			groupedText: async (probe) => await host.groupedText(probe),
 			browserStorageKeys: host.browserStorageKeys,
+			loadFileInput: host.loadFileInput,
+			capturedDownloads: host.capturedDownloads,
 		});
 		await context.receipt.capture('journey-complete');
 	});
@@ -5394,6 +5432,10 @@ async function runReactBaselineDifferentialProfile(
 					);
 				},
 				browserStorageKeys: host.browserStorageKeys,
+				// This lane declares neither opt-in, so both mechanisms refuse
+				// exactly as they do for every application that declares none.
+				loadFileInput: host.loadFileInput,
+				capturedDownloads: host.capturedDownloads,
 			});
 			telemetry =
 				journey.timeoutTelemetry ??

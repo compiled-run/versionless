@@ -36,6 +36,14 @@ export const WITNESS_REAL_APP_NAMES = [
 	 * backend that is out of the ingested cell entirely.
 	 */
 	'react-memos',
+	/**
+	 * The `.angular-cli.json` band vertical, and the corpus's longest lift:
+	 * Angular 5 to Angular 16.2, eleven majors. It is also the first application
+	 * here whose journey has to hand the page a file and read back a file the
+	 * page produced — it is a browser-only translation-file editor with no
+	 * backend at all — which is why the two opt-in mechanisms below exist.
+	 */
+	'angular-tiny-translator',
 ] as const;
 /** Every named app must contribute two lanes observed twice each. */
 export const WITNESS_REAL_APP_RUNS = WITNESS_REAL_APP_NAMES.length * 4;
@@ -246,13 +254,12 @@ export type WitnessCancelledDuplicateFetchCategoryEntry = {
  * `corroboratingSuccesses` is the number of times the same page fetched the
  * same path and method successfully, and must be at least one.
  */
-export type WitnessCancelledDuplicateFetchInstance =
-	WitnessCancelledDuplicateFetchCategoryEntry & {
-		cancelled: number;
-		corroboratingSuccesses: number;
-		/** The distinct response statuses of those successful fetches, ascending. */
-		corroboratingStatuses: number[];
-	};
+export type WitnessCancelledDuplicateFetchInstance = WitnessCancelledDuplicateFetchCategoryEntry & {
+	cancelled: number;
+	corroboratingSuccesses: number;
+	/** The distinct response statuses of those successful fetches, ascending. */
+	corroboratingStatuses: number[];
+};
 
 /**
  * Accounting for the cancelled-duplicate-fetch category. This is a category,
@@ -347,6 +354,85 @@ export type WitnessRenderedStyleMeasurement = {
 export type WitnessRenderedStyleEvidence = {
 	state: 'measured-resolved-styles';
 	probes: WitnessRenderedStyleMeasurement[];
+};
+
+/**
+ * The exact rule that governs handing a file to a page, carried in the receipt
+ * so a reader checks the rule rather than trusting the label.
+ *
+ * The mechanism is an opt-in and not a capability journeys may reach for: the
+ * application declares the surface — the selector, and the fixture that is
+ * loaded into it — and the harness loads exactly that. An application that
+ * declares no file-input surface is run without the mechanism at all, so the
+ * eleven verticals that never asked for it cannot have been changed by it.
+ */
+export const WITNESS_FILE_INPUT_LOAD_RULE =
+	'A file is handed to a page only through a surface the application itself declared, by selector and by fixture. The harness loads that fixture and no other, and records the bytes it handed over by file name, byte length and sha256. An application that declares no file-input surface has no way to load one.' as const;
+
+/**
+ * The exact rule that governs reading back a file a page produced.
+ *
+ * Accepting downloads is a browser-context capability, and granting it to an
+ * application that never claimed to produce one would mean a download could
+ * succeed unobserved. So it is granted only where the application declares it,
+ * and where it is granted every download is read back rather than counted:
+ * suggested filename, byte length and sha256 of the bytes the browser wrote.
+ */
+export const WITNESS_DOWNLOAD_CAPTURE_RULE =
+	'A browser context accepts downloads only where the application declared that it produces them. Where it did, every download the page produced is read back by suggested filename, byte length and sha256 and ledgered individually. An application that declared none runs in a context that refuses downloads, so one it never claimed to produce cannot succeed unobserved.' as const;
+
+/** One file-input surface an application declared, by selector and fixture. */
+export type WitnessFileInputSurfaceEntry = {
+	label: string;
+	selector: string;
+	/**
+	 * The fixture as declared: a repository-relative path, never a host-specific
+	 * absolute one, so the evidence names the file rather than the machine.
+	 */
+	fixturePath: string;
+};
+
+/** One load as it happened, recorded from the exact bytes handed to the page. */
+export type WitnessFileInputLoadEntry = WitnessFileInputSurfaceEntry & {
+	/** The name the page's own `File` object carries. */
+	fileName: string;
+	bytes: number;
+	sha256: string;
+};
+
+/**
+ * Accounting for the file-input mechanism, held to the same non-masking
+ * discipline as the other inventories: every declared surface is either loaded
+ * or explicitly unused, and `outsideDeclaration` must stay empty by
+ * construction — a load through a surface nobody declared is impossible to
+ * reach and fails the run if it is ever recorded.
+ */
+export type WitnessFileInputLoadInventory = {
+	policy: 'declared-file-input-surfaces-only';
+	rule: typeof WITNESS_FILE_INPUT_LOAD_RULE;
+	declared: WitnessFileInputSurfaceEntry[];
+	loaded: WitnessFileInputLoadEntry[];
+	unused: WitnessFileInputSurfaceEntry[];
+	outsideDeclaration: [];
+};
+
+/** One download as the browser wrote it, read back rather than counted. */
+export type WitnessCapturedDownloadEntry = {
+	suggestedFilename: string;
+	bytes: number;
+	sha256: string;
+};
+
+/**
+ * Accounting for the download-capture mechanism. `acceptDownloads` records the
+ * browser-context capability this run was granted, so a reader can see that the
+ * capability and the evidence came from the same declaration.
+ */
+export type WitnessDownloadCaptureInventory = {
+	policy: 'declared-download-surface-only';
+	rule: typeof WITNESS_DOWNLOAD_CAPTURE_RULE;
+	acceptDownloads: true;
+	captured: WitnessCapturedDownloadEntry[];
 };
 
 /**
@@ -473,6 +559,16 @@ export type WitnessRealAppRun = {
 	failedRequestInventory?: WitnessFailedRequestInventory;
 	cancelledDuplicateFetches?: WitnessCancelledDuplicateFetchInventory;
 	mockedNonLoopbackSeams?: WitnessMockedNonLoopbackSeamInventory;
+	/**
+	 * Present exactly when the application declared a file-input surface. Its
+	 * absence is the evidence that this run's page was never handed a file.
+	 */
+	fileInputLoads?: WitnessFileInputLoadInventory;
+	/**
+	 * Present exactly when the application declared that it produces downloads.
+	 * Its absence is the evidence that this run's browser context refused them.
+	 */
+	downloadCaptures?: WitnessDownloadCaptureInventory;
 	renderedStyles?: WitnessRenderedStyleEvidence;
 	applicationJourney?: WitnessApplicationJourneyEvidence;
 	scrollSurface?: WitnessScrollSurface;

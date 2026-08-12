@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Synthetic XLIFF 1.2 authored for the Versionless browser proof. Every unit
+     below is invented for this evidence: no upstream project's strings, and no
+     third party's translated content, is reproduced here. -->
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="versionless.witness.template">
+    <body>
+      <trans-unit id="versionless.witness.greeting" datatype="html">
+        <source>Synthetic greeting unit</source>
+        <target state="new">Synthetic greeting unit</target>
+      </trans-unit>
+      <trans-unit id="versionless.witness.farewell" datatype="html">
+        <source>Synthetic farewell unit</source>
+        <target state="new">Synthetic farewell unit</target>
+      </trans-unit>
+      <trans-unit id="versionless.witness.counter" datatype="html">
+        <source>Synthetic unit with a placeholder</source>
+        <target state="new">Synthetic unit with a placeholder</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

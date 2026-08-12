@@ -1,3 +1,5 @@
+import { readFile } from 'node:fs/promises';
+import { basename, isAbsolute, join, normalize } from 'pathe';
 import type {
 	BrowserConsoleMessage,
 	BrowserLaunchOptions,
@@ -13,12 +15,15 @@ import {
 	chromium,
 	type Browser,
 	type BrowserContext,
+	type BrowserContextOptions,
 	type CDPSession,
+	type Download,
 	type Page,
 	type Request,
 	type Route,
 } from 'playwright';
 import { parseHost, parseURL } from 'ufo';
+import { sha256 } from '../../../core/src/receipts/canonicalize.ts';
 
 export type ServiceWorkerTelemetry = {
 	state: 'ready' | 'timeout';
@@ -155,6 +160,148 @@ export type WitnessGroupedTextProbe = {
 /** One group as the page rendered it: its name, and its items in order. */
 export type WitnessGroupedText = { name: string; items: string[] };
 
+/**
+ * One file-input surface an application declares, and the only way a file ever
+ * reaches a page under this host.
+ *
+ * The declaration is the whole mechanism: it names the input the file is loaded
+ * into and the fixture that is loaded into it, and the host will load that
+ * fixture and nothing else. `fixturePath` is repository-relative on purpose —
+ * it is copied verbatim into the evidence, and a host-specific absolute path has
+ * no business in a published receipt. The absolute location it is read from is
+ * the caller's declared root, which is never recorded.
+ */
+export type WitnessFileInputSurface = {
+	/** How the journey asks for this surface. Unique within an application. */
+	label: string;
+	selector: string;
+	/** Repository-relative path of the fixture handed to the page. */
+	fixturePath: string;
+};
+
+/** The declared surfaces plus the absolute root the paths resolve against. */
+export type WitnessFileInputDeclaration = {
+	/** Absolute directory the declared fixture paths resolve against. Never recorded. */
+	root: string;
+	surfaces: readonly WitnessFileInputSurface[];
+};
+
+/** One load as it happened, recorded from the exact bytes handed to the page. */
+export type WitnessLoadedFileInput = WitnessFileInputSurface & {
+	fileName: string;
+	bytes: number;
+	sha256: string;
+};
+
+/** One download as the browser wrote it, read back rather than counted. */
+export type WitnessCapturedDownload = {
+	suggestedFilename: string;
+	bytes: number;
+	sha256: string;
+};
+
+/**
+ * The browser-context options this host constructs, exposed rather than inlined
+ * so the absence of a capability is checkable rather than merely intended: an
+ * application that declares no download surface must produce options with no
+ * `acceptDownloads` key at all, and that is a fact a test can hold.
+ */
+export function witnessBrowserContextOptions(options: {
+	serviceWorkers?: 'allow' | 'block';
+	viewport?: { width: number; height: number };
+	contextProfile?: 'current-witness' | 'canonical-t060';
+	downloads?: 'capture';
+}): BrowserContextOptions {
+	return {
+		serviceWorkers: options.serviceWorkers ?? 'allow',
+		...(options.viewport === undefined ? {} : { viewport: options.viewport }),
+		...(options.contextProfile === 'canonical-t060'
+			? {
+					locale: 'en-US',
+					timezoneId: 'America/Chicago',
+					viewport: { width: 1280, height: 720 },
+				}
+			: {}),
+		// Granted only by declaration. Playwright's own default refuses
+		// downloads, so an application that declared none runs in a context that
+		// cannot complete one.
+		...(options.downloads === 'capture' ? { acceptDownloads: true } : {}),
+	};
+}
+
+/**
+ * The declared surfaces, checked as a declaration rather than trusted as one: a
+ * surface with no label or selector, a duplicated label, or a fixture path that
+ * is absolute or climbs out of the declared root is refused here rather than
+ * being discovered in the evidence.
+ */
+export function validateWitnessFileInputDeclaration(
+	declaration: WitnessFileInputDeclaration,
+): WitnessFileInputDeclaration {
+	if (!isAbsolute(declaration.root))
+		throw new Error('Witness file-input declaration needs an absolute fixture root');
+	if (declaration.surfaces.length === 0)
+		throw new Error('Witness file-input declaration names no surface');
+	const labels = new Set<string>();
+	for (const surface of declaration.surfaces) {
+		const relative = normalize(surface.fixturePath);
+		if (
+			surface.label.length === 0 ||
+			surface.selector.length === 0 ||
+			surface.fixturePath.length === 0 ||
+			isAbsolute(surface.fixturePath) ||
+			relative.startsWith('..')
+		)
+			throw new Error(`Witness file-input surface is malformed: ${surface.label}`);
+		if (labels.has(surface.label))
+			throw new Error(`Witness file-input surface is declared twice: ${surface.label}`);
+		labels.add(surface.label);
+	}
+	return declaration;
+}
+
+/**
+ * The declared surface a journey asked for. A journey that asks for a surface
+ * the application never declared, or asks at all where nothing was declared,
+ * gets an error rather than a silently skipped load.
+ */
+export function witnessFileInputSurface(
+	declaration: WitnessFileInputDeclaration | undefined,
+	label: string,
+): WitnessFileInputSurface {
+	if (declaration === undefined)
+		throw new Error('Witness file-input mechanism is not declared by this application');
+	const surface = declaration.surfaces.find((candidate) => candidate.label === label);
+	if (surface === undefined)
+		throw new Error(`Witness file-input surface is not declared: ${label}`);
+	return surface;
+}
+
+/** The record of a load, taken from the bytes themselves. */
+export function recordWitnessLoadedFileInput(
+	surface: WitnessFileInputSurface,
+	bytes: Buffer,
+): WitnessLoadedFileInput {
+	return {
+		label: surface.label,
+		selector: surface.selector,
+		fixturePath: surface.fixturePath,
+		fileName: basename(surface.fixturePath),
+		bytes: bytes.length,
+		sha256: sha256(bytes),
+	};
+}
+
+/** The record of a download, taken from the bytes the browser wrote. */
+export function recordWitnessCapturedDownload(
+	suggestedFilename: string,
+	bytes: Buffer,
+): WitnessCapturedDownload {
+	if (suggestedFilename.length === 0)
+		throw new Error('Witness download capture read an unnamed download');
+	return { suggestedFilename, bytes: bytes.length, sha256: sha256(bytes) };
+}
+
 export type PlaywrightWitnessHost = {
 	browser: WitnessBrowser;
 	locality(): { successfulNonLoopback: 0; mockedNonLoopback: number };
@@ -185,6 +332,21 @@ export type PlaywrightWitnessHost = {
 	browserStorageKeys(): Promise<{ localStorage: string[]; sessionStorage: string[] }>;
 	/** Every request outcome the page reported, in observation order. */
 	requestOutcomes(): WitnessObservedRequestOutcome[];
+	/**
+	 * Hands the live page the fixture the named declared surface points at,
+	 * through the browser's own file-input mechanism, and records what was
+	 * handed over. Refuses where the application declared no such surface.
+	 */
+	loadFileInput(label: string): Promise<WitnessLoadedFileInput>;
+	/** Every load this run performed, in the order it performed them. */
+	loadedFileInputs(): WitnessLoadedFileInput[];
+	/**
+	 * Reads back every download the page produced. Refuses where the application
+	 * declared no download surface, because a context that never accepted
+	 * downloads has nothing to read back and saying otherwise would be a claim
+	 * about a mechanism that was not running.
+	 */
+	capturedDownloads(): Promise<WitnessCapturedDownload[]>;
 };
 
 const MAX_TELEMETRY_TIMEOUT_MS = 15_000;
@@ -585,10 +747,29 @@ export function createPlaywrightWitnessHost(options: {
 	serviceWorkers?: 'allow' | 'block';
 	/** Explicit context viewport, so scroll-surface claims are measured against a stated size. */
 	viewport?: { width: number; height: number };
+	/**
+	 * The application's declared file-input surfaces. Omitted by every
+	 * application that has none, and omitting it is not a default that can be
+	 * reached around: with no declaration there is no surface to name, so
+	 * {@link PlaywrightWitnessHost.loadFileInput} refuses every call.
+	 */
+	fileInputs?: WitnessFileInputDeclaration;
+	/**
+	 * Declares that this application produces downloads. It is the only thing
+	 * that puts `acceptDownloads` on the browser context, so an application that
+	 * omits it is run in a context whose downloads the browser itself refuses.
+	 */
+	downloads?: 'capture';
 }): PlaywrightWitnessHost {
 	let successfulNonLoopback = 0;
 	let mockedNonLoopback = 0;
 	const requestOutcomes: WitnessObservedRequestOutcome[] = [];
+	const fileInputs =
+		options.fileInputs === undefined
+			? undefined
+			: validateWitnessFileInputDeclaration(options.fileInputs);
+	const loadedFileInputs: WitnessLoadedFileInput[] = [];
+	const capturedDownloads: Array<Promise<WitnessCapturedDownload>> = [];
 	const livePages = new Set<Page>();
 	const workerEvents: ServiceWorkerTelemetry['workerEvents'] = [];
 	let observer: Awaited<ReturnType<typeof observeServiceWorkers>> | null = null;
@@ -663,17 +844,20 @@ export function createPlaywrightWitnessHost(options: {
 					executablePath: options.chromiumExecutable,
 					headless,
 				});
-				const context: BrowserContext = await browser.newContext({
-					serviceWorkers: options.serviceWorkers ?? 'allow',
-					...(options.viewport === undefined ? {} : { viewport: options.viewport }),
-					...(options.contextProfile === 'canonical-t060'
-						? {
-								locale: 'en-US',
-								timezoneId: 'America/Chicago',
-								viewport: { width: 1280, height: 720 },
-							}
-						: {}),
-				});
+				const context: BrowserContext = await browser.newContext(
+					witnessBrowserContextOptions({
+						...(options.serviceWorkers === undefined
+							? {}
+							: { serviceWorkers: options.serviceWorkers }),
+						...(options.viewport === undefined ? {} : { viewport: options.viewport }),
+						...(options.contextProfile === undefined
+							? {}
+							: { contextProfile: options.contextProfile }),
+						...(options.downloads === undefined
+							? {}
+							: { downloads: options.downloads }),
+					}),
+				);
 				context.on('request', (request) => {
 					const parsed = parseURL(request.url());
 					diagnosticEvent({
@@ -728,6 +912,21 @@ export function createPlaywrightWitnessHost(options: {
 							workerEvents,
 							diagnosticEvent,
 						);
+						// Downloads are a page event, and the listener exists only
+						// where the application declared the surface — the same
+						// declaration that put `acceptDownloads` on the context.
+						if (options.downloads === 'capture')
+							page.on('download', (download: Download) => {
+								capturedDownloads.push(
+									(async () => {
+										const file = await download.path();
+										return recordWitnessCapturedDownload(
+											download.suggestedFilename(),
+											await readFile(file),
+										);
+									})(),
+								);
+							});
 						livePages.add(page);
 						const closePage = async (): Promise<void> => {
 							if (observer === null)
@@ -762,6 +961,26 @@ export function createPlaywrightWitnessHost(options: {
 		},
 		locality: () => ({ successfulNonLoopback: 0, mockedNonLoopback }),
 		requestOutcomes: () => [...requestOutcomes],
+		loadFileInput: async (label) => {
+			const surface = witnessFileInputSurface(fileInputs, label);
+			if (livePages.size !== 1)
+				throw new Error('Witness file-input load requires exactly one live page');
+			const [page] = livePages;
+			if (page === undefined)
+				throw new Error('Witness file-input load requires exactly one live page');
+			const absolute = join(fileInputs!.root, surface.fixturePath);
+			const bytes = await readFile(absolute);
+			await page.locator(surface.selector).first().setInputFiles(absolute);
+			const loaded = recordWitnessLoadedFileInput(surface, bytes);
+			loadedFileInputs.push(loaded);
+			return loaded;
+		},
+		loadedFileInputs: () => loadedFileInputs.map((loaded) => ({ ...loaded })),
+		capturedDownloads: async () => {
+			if (options.downloads !== 'capture')
+				throw new Error('Witness download capture is not declared by this application');
+			return await Promise.all(capturedDownloads);
+		},
 		viewportScroll: async () => {
 			if (livePages.size !== 1)
 				throw new Error('Witness viewport measurement requires exactly one live page');
@@ -776,10 +995,14 @@ export function createPlaywrightWitnessHost(options: {
 		},
 		renderedStyles: async (probes) => {
 			if (livePages.size !== 1)
-				throw new Error('Witness rendered-style measurement requires exactly one live page');
+				throw new Error(
+					'Witness rendered-style measurement requires exactly one live page',
+				);
 			const [page] = livePages;
 			if (page === undefined)
-				throw new Error('Witness rendered-style measurement requires exactly one live page');
+				throw new Error(
+					'Witness rendered-style measurement requires exactly one live page',
+				);
 			return await page.evaluate(
 				(requested: Array<{ label: string; selector: string; properties: string[] }>) =>
 					requested.map((probe) => {
@@ -871,10 +1094,14 @@ export function createPlaywrightWitnessHost(options: {
 		},
 		browserStorageKeys: async () => {
 			if (livePages.size !== 1)
-				throw new Error('Witness browser-storage measurement requires exactly one live page');
+				throw new Error(
+					'Witness browser-storage measurement requires exactly one live page',
+				);
 			const [page] = livePages;
 			if (page === undefined)
-				throw new Error('Witness browser-storage measurement requires exactly one live page');
+				throw new Error(
+					'Witness browser-storage measurement requires exactly one live page',
+				);
 			return await page.evaluate(() => ({
 				localStorage: Object.keys(globalThis.localStorage).sort(),
 				sessionStorage: Object.keys(globalThis.sessionStorage).sort(),
