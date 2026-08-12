@@ -1076,8 +1076,13 @@ function assertRouteShape(routes: string[], label: string): void {
  * Those are measurements, they travel in the parity digest so the two lanes
  * cannot disagree about them silently, and they are pinned when this proof is
  * published.
+ *
+ * Exported so a producer can round-trip the shape it builds against the parser
+ * that will judge it, without first assembling a whole four-run receipt around
+ * it. A shape checked only as part of a receipt is a shape whose own rules are
+ * only ever exercised through everything else's.
  */
-function assertServiceWorker(
+export function assertWitnessAngularSuperProductivityServiceWorker(
 	worker: WitnessAngularSuperProductivityServiceWorker | undefined,
 	label: string,
 ): void {
@@ -1228,7 +1233,7 @@ export function parseWitnessAngularSuperProductivityReceipt(
 		assertRenderedStyles(run.renderedStyles, key);
 		assertTypeface(run.applicationJourney, key);
 		assertPersistence(run.applicationJourney, key);
-		assertServiceWorker(run.serviceWorker, key);
+		assertWitnessAngularSuperProductivityServiceWorker(run.serviceWorker, key);
 		assertScroll(run.scroll, key);
 		behaviors.add(run.behaviorDigest);
 	}

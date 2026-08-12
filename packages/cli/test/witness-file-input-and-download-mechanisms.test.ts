@@ -234,3 +234,52 @@ describe('the verticals that predate both mechanisms', () => {
 		}
 	});
 });
+
+/**
+ * The third opt-in, walked the same way, at the moment where the count is still
+ * zero.
+ *
+ * The two mechanisms above are checked as "exactly one declares them"; this one
+ * is checked as "none does", which is the same discipline one step earlier. It
+ * is worth writing down now rather than when the first vertical opts in: a
+ * reader of this suite can see that the reader shipped ahead of any application
+ * using it, and the day one does, this expectation fails and has to be
+ * rewritten deliberately instead of a second vertical quietly joining.
+ */
+describe('the IndexedDB key reader, before any vertical declares it', () => {
+	it('is declared by no published application spec', () => {
+		expect(witnessRealAppSpecs.length).toBeGreaterThan(0);
+		expect(
+			witnessRealAppSpecs.filter((spec) => spec.indexedDb !== undefined).map((spec) => spec.app),
+		).toEqual([]);
+	});
+
+	it('leaves every published spec in a byte-identical browser context', () => {
+		// The reader is the right to ask a question, not a context capability, so
+		// unlike `acceptDownloads` there is nothing for it to put on the options.
+		// A vertical that opted in would still be run in exactly this context.
+		for (const spec of witnessRealAppSpecs) {
+			const base = {
+				...(spec.serviceWorkers === undefined
+					? {}
+					: { serviceWorkers: spec.serviceWorkers }),
+				...(spec.viewport === undefined ? {} : { viewport: spec.viewport }),
+				...(spec.downloads === undefined ? {} : { downloads: spec.downloads }),
+			};
+			expect(witnessBrowserContextOptions(base), spec.app).toEqual(
+				witnessBrowserContextOptions({ ...base }),
+			);
+		}
+	});
+
+	it('therefore refuses the reading for every one of them', async () => {
+		for (const spec of witnessRealAppSpecs)
+			await expect(
+				createPlaywrightWitnessHost({
+					chromiumExecutable: '/nonexistent',
+					...(spec.indexedDb === undefined ? {} : { indexedDb: spec.indexedDb }),
+				}).indexedDbKeys(),
+				spec.app,
+			).rejects.toThrow(/IndexedDB key reading is not declared/);
+	});
+});

@@ -485,6 +485,50 @@ export type WitnessServiceWorkerRequestTally = WitnessServiceWorkerRequestEvent 
 	count: number;
 };
 
+/**
+ * One phased reading of a service worker that is genuinely running.
+ *
+ * The phases are the journey's own three moments — before it touches anything,
+ * after it has, and after a reload that put the page back on the network — so a
+ * worker that only looks installed at one of them cannot pass for one that
+ * survived the journey.
+ */
+export type WitnessRealServiceWorkerCheckpoint = {
+	phase: 'before-interactions' | 'after-interactions' | 'after-online-reload';
+	telemetry: WitnessServiceWorkerTelemetry;
+};
+
+/**
+ * A lane whose service-worker registration SUCCEEDS, which until now no shape in
+ * this corpus could record.
+ *
+ * Every existing worker shape is a shape of absence: an application that never
+ * asks, one whose registration the context refuses, one whose legacy build emits
+ * a script it unregisters. Each of those asserts an empty settled state, so none
+ * of them can carry a worker that installed, activated and took control — the
+ * assertions that make them strong are exactly the assertions such a lane would
+ * fail. This is the additive fourth member, and it is strong in the opposite
+ * direction: the settled state is recorded rather than required to be empty, the
+ * worker scripts the build shipped are read from the served tree before and
+ * after the run and must be byte-identical, and the observer's own trace may not
+ * be empty, because a browser that registered a worker recorded doing so.
+ */
+export type WitnessRealServiceWorkerEvidence = {
+	/** The script the application asked the browser to register. */
+	script: string;
+	checkpoints: WitnessRealServiceWorkerCheckpoint[];
+	/** The worker scripts the build emitted, read from the served tree either side of the run. */
+	outputFiles: Array<{ path: string; beforeSha256: string; afterSha256: string }>;
+	workerEvents: WitnessServiceWorkerTelemetry['workerEvents'];
+};
+
+/** The three phases, in the order a journey reaches them. */
+export const WITNESS_REAL_SERVICE_WORKER_PHASES = [
+	'before-interactions',
+	'after-interactions',
+	'after-online-reload',
+] as const;
+
 export type WitnessRealAppRun = {
 	app: (typeof WITNESS_REAL_APP_NAMES)[number];
 	framework: 'react' | 'angularjs' | 'next' | 'angular';

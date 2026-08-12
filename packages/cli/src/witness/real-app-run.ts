@@ -55,6 +55,9 @@ import {
 	type WitnessOfflineEvidence,
 	type WitnessRealAppReceipt,
 	type WitnessRealAppRun,
+	type WitnessRealServiceWorkerCheckpoint,
+	type WitnessRealServiceWorkerEvidence,
+	WITNESS_REAL_SERVICE_WORKER_PHASES,
 	type WitnessServiceWorkerTelemetry,
 } from '../../../core/src/index.ts';
 import {
@@ -171,6 +174,7 @@ import {
 	type WitnessFileInputDeclaration,
 	type WitnessGroupedText,
 	type WitnessGroupedTextProbe,
+	type WitnessIndexedDbKeyInventory,
 	type WitnessLoadedFileInput,
 	type WitnessObservedRequestOutcome,
 	type WitnessRenderedStyle,
@@ -290,6 +294,25 @@ type JourneyEvidence = {
 			workerEvents: [];
 		}>;
 	};
+	/**
+	 * Evidence for a lane whose worker genuinely succeeds — the fourth member,
+	 * and the first that is not a shape of absence.
+	 *
+	 * The three shapes above all assert an empty settled state, which is what
+	 * makes each of them strong and also what makes none of them usable here: a
+	 * worker that installed, activated and took control fails every one of their
+	 * assertions. So it gets its own member rather than a relaxation of theirs,
+	 * and the existing shapes are untouched. What the journey supplies is the
+	 * script it asked the browser to register, the worker files the build shipped
+	 * so their bytes can be read either side of the run, and the three phased
+	 * readings; the run supplies the digests and the observer's own trace.
+	 */
+	realServiceWorker?: {
+		script: string;
+		/** The worker scripts this build emits, named so the served tree can be read for them. */
+		shippedWorkerFiles: readonly string[];
+		checkpoints: readonly WitnessRealServiceWorkerCheckpoint[];
+	};
 	scrollSurface?: WitnessScrollSurface;
 	/**
 	 * The measured counterpart of {@link JourneyEvidence.scrollSurface}, for a
@@ -367,6 +390,13 @@ type JourneyLifecycle = {
 	groupedText(probe: WitnessGroupedTextProbe): Promise<WitnessGroupedText[]>;
 	/** The keys this origin holds in browser storage, for a persistence claim. */
 	browserStorageKeys(): Promise<{ localStorage: string[]; sessionStorage: string[] }>;
+	/**
+	 * The databases, stores and store KEYS this origin holds in IndexedDB, for an
+	 * application that declared it keeps state there. A journey whose application
+	 * declared nothing gets an error rather than an empty reading, which is what
+	 * keeps this an opt-in rather than a capability every journey inherits.
+	 */
+	indexedDbKeys(): Promise<WitnessIndexedDbKeyInventory>;
 	/**
 	 * Hands the page the fixture behind one of this application's declared
 	 * file-input surfaces. A journey whose application declared none gets an
@@ -461,6 +491,14 @@ export type AppSpec = {
 	 * omits it runs in a context that refuses them.
 	 */
 	downloads?: 'capture';
+	/**
+	 * Declares that this application keeps state in IndexedDB and that its proof
+	 * reads the keys of it. It grants the journey one question and changes
+	 * nothing else: the browser context an application that omits it is run in is
+	 * byte-identical to the one it was run in before this mechanism existed, and
+	 * its journey has no way to ask.
+	 */
+	indexedDb?: 'read-keys';
 	/**
 	 * Replaces identifiers the application itself mints at runtime with a stable
 	 * placeholder, so a recorded route is comparable across runs. It normalizes
@@ -602,6 +640,17 @@ type StaticInventory = {
 	digest: string;
 	applicationSha256: string;
 	serviceWorkers: Array<{ path: string; sha256: string }>;
+	/**
+	 * Every file in the served tree with its digest, in path order.
+	 *
+	 * The `serviceWorkers` list above is a closed two-name filter that several
+	 * published receipts are bound to, so widening it to admit a build whose
+	 * worker scripts are named something else would rewrite their evidence. This
+	 * carries the whole tree instead, and a shape that needs a differently named
+	 * worker file resolves it here by name without touching what anyone else
+	 * already published.
+	 */
+	entries: Array<{ path: string; sha256: string }>;
 };
 type StaticResponseLedgerEntry = {
 	method: string;
@@ -679,6 +728,7 @@ async function staticInventory(staticRoot: string): Promise<StaticInventory> {
 		serviceWorkers: entries.filter(
 			(entry) => entry.path === 'sw.js' || entry.path === 'service-worker.js',
 		),
+		entries,
 	};
 }
 
@@ -5419,6 +5469,10 @@ async function executeRun(
 		// neither is run by exactly the host it was run by before they existed.
 		...(app.fileInputs === undefined ? {} : { fileInputs: app.fileInputs }),
 		...(app.downloads === undefined ? {} : { downloads: app.downloads }),
+		// The third opt-in, spread in the same way and for the same reason. It
+		// puts nothing on the browser context, so an application that omits it is
+		// run by exactly the host it was run by before the reader existed.
+		...(app.indexedDb === undefined ? {} : { indexedDb: app.indexedDb }),
 	});
 	const expectedConsoleErrors = (app.consoleErrorInventory?.[lane] ?? []).reduce(
 		(sum, entry) => sum + entry.count,
@@ -5457,6 +5511,7 @@ async function executeRun(
 			},
 			groupedText: async (probe) => await host.groupedText(probe),
 			browserStorageKeys: host.browserStorageKeys,
+			indexedDbKeys: host.indexedDbKeys,
 			loadFileInput: host.loadFileInput,
 			capturedDownloads: host.capturedDownloads,
 			capturedDownloadTexts: host.capturedDownloadTexts,
@@ -5685,6 +5740,19 @@ async function executeRun(
 						workerEvents: observerFinalization.workerEvents,
 					},
 				}),
+		// The succeeding-worker record. The digests either side of the run and the
+		// finalized observer trace come from here rather than from the journey,
+		// because a journey that supplied its own would be reporting on itself.
+		...(completedJourney.realServiceWorker === undefined
+			? {}
+			: {
+					serviceWorker: buildRealServiceWorkerEvidence({
+						...completedJourney.realServiceWorker,
+						before: beforeInventory.entries,
+						after: afterInventory.entries,
+						workerEvents: observerFinalization.workerEvents,
+					}),
+				}),
 		...(completedJourney.scrollSurface === undefined
 			? {}
 			: { scrollSurface: completedJourney.scrollSurface }),
@@ -5752,6 +5820,24 @@ async function executeRun(
 			: { applicationJourney: completedJourney.applicationJourney }),
 		successfulNonLoopback: host.locality().successfulNonLoopback,
 	};
+	/**
+	 * A run records exactly one worker story. The succeeding shape and the three
+	 * absence shapes are contradictory readings of the same browser, so a run
+	 * carrying two of them is a run whose evidence disagrees with itself.
+	 */
+	const workerShapes = (
+		[
+			'serviceWorker',
+			'zeroServiceWorker',
+			'refusedServiceWorker',
+			'zeroServiceWorkerRuntime',
+			'blockedServiceWorkerRuntime',
+		] as const
+	).filter((shape) => shape in runWithoutDigest);
+	if (workerShapes.length > 1)
+		throw new Error(
+			`service-worker evidence records contradictory shapes: ${canonicalize(workerShapes)}`,
+		);
 	if ('blockedServiceWorkerRuntime' in runWithoutDigest) {
 		const blocked = runWithoutDigest.blockedServiceWorkerRuntime;
 		if (
@@ -6088,6 +6174,103 @@ async function refusedServiceWorkerCheckpoint(
 	};
 }
 
+/**
+ * The checkpoint for a worker that is genuinely running, which is the inverse of
+ * the two above: nothing is asserted to be empty, and quite a lot is asserted to
+ * be present.
+ *
+ * The reading has to have SETTLED — `ready` rather than the timeout every
+ * absence shape records — and the registration has to name the script the
+ * application asked for, at a scope, with an active version. What is
+ * deliberately not asserted is which version, which caches, or whether the page
+ * is controlled at this particular phase: those are measurements that differ
+ * legitimately between the first checkpoint and the last, and an application's
+ * own receipt schema is where they are pinned and compared across lanes.
+ */
+export async function realServiceWorkerCheckpoint(
+	lifecycle: { serviceWorkerTelemetry(timeoutMs: number): Promise<ServiceWorkerTelemetry> },
+	phase: (typeof WITNESS_REAL_SERVICE_WORKER_PHASES)[number],
+	script: string,
+	timeoutMs = 10_000,
+): Promise<WitnessRealServiceWorkerCheckpoint> {
+	const telemetry = await lifecycle.serviceWorkerTelemetry(timeoutMs);
+	if (
+		telemetry.state !== 'ready' ||
+		telemetry.registration.scriptPath === null ||
+		!telemetry.registration.scriptPath.endsWith(script) ||
+		telemetry.registration.scope === null ||
+		telemetry.registration.active === null ||
+		telemetry.workerEvents.length === 0
+	)
+		// The refusal carries the reading, so the next reader does not have to
+		// guess which of six facts moved.
+		throw new Error(
+			`real-service-worker checkpoint failed: ${phase} ${canonicalize(telemetry)}`,
+		);
+	return { phase, telemetry: { ...telemetry, state: 'ready' } };
+}
+
+/**
+ * Assembles the succeeding-worker record from what the journey measured and what
+ * the run read off the served tree, refusing anything it cannot stand behind.
+ *
+ * It is a separate exported function rather than an inline spread in
+ * {@link executeRun} for one reason: a shape whose only exercise is a live
+ * browser run is a shape whose rules are never tested. This one is pure, so the
+ * record a run would publish can be built in process and put in front of the
+ * parser that will judge it.
+ */
+export function buildRealServiceWorkerEvidence(input: {
+	script: string;
+	shippedWorkerFiles: readonly string[];
+	checkpoints: readonly WitnessRealServiceWorkerCheckpoint[];
+	before: readonly { path: string; sha256: string }[];
+	after: readonly { path: string; sha256: string }[];
+	workerEvents: WitnessServiceWorkerTelemetry['workerEvents'];
+}): WitnessRealServiceWorkerEvidence {
+	if (input.script.length === 0)
+		throw new Error('real-service-worker evidence names no registered script');
+	if (
+		input.checkpoints.length !== WITNESS_REAL_SERVICE_WORKER_PHASES.length ||
+		input.checkpoints.some(
+			(checkpoint, index) =>
+				checkpoint.phase !== WITNESS_REAL_SERVICE_WORKER_PHASES[index] ||
+				checkpoint.telemetry.state !== 'ready' ||
+				checkpoint.telemetry.registration.scriptPath === null ||
+				!checkpoint.telemetry.registration.scriptPath.endsWith(input.script) ||
+				checkpoint.telemetry.registration.scope === null,
+		)
+	)
+		throw new Error(
+			`real-service-worker evidence is not three settled phased checkpoints: ${canonicalize(
+				input.checkpoints.map((checkpoint) => checkpoint.phase),
+			)}`,
+		);
+	// A browser that registered a worker recorded doing so. An empty trace here
+	// would mean the observer saw nothing the checkpoints say happened.
+	if (input.workerEvents.length === 0)
+		throw new Error('real-service-worker evidence carries an empty observer trace');
+	const shipped = [...input.shippedWorkerFiles].sort();
+	if (shipped.length === 0 || new Set(shipped).size !== shipped.length)
+		throw new Error('real-service-worker evidence names no distinct shipped worker files');
+	const outputFiles = shipped.map((path) => {
+		const before = input.before.find((entry) => entry.path === path);
+		const after = input.after.find((entry) => entry.path === path);
+		if (before === undefined || after === undefined)
+			throw new Error(`real-service-worker shipped file is absent from the served tree: ${path}`);
+		// A served tree the worker rewrote is not the tree the lane was bound to.
+		if (before.sha256 !== after.sha256)
+			throw new Error(`real-service-worker shipped file changed during the run: ${path}`);
+		return { path, beforeSha256: before.sha256, afterSha256: after.sha256 };
+	});
+	return {
+		script: input.script,
+		checkpoints: input.checkpoints.map((checkpoint) => ({ ...checkpoint })),
+		outputFiles,
+		workerEvents: input.workerEvents,
+	};
+}
+
 function reactBoilerplateZeroSwSpec(): AppSpec {
 	const canonical = apps.find((candidate) => candidate.app === 'react-boilerplate');
 	if (canonical === undefined)
@@ -6323,6 +6506,7 @@ async function runReactBaselineDifferentialProfile(
 					);
 				},
 				browserStorageKeys: host.browserStorageKeys,
+				indexedDbKeys: host.indexedDbKeys,
 				// This lane declares neither opt-in, so both mechanisms refuse
 				// exactly as they do for every application that declares none.
 				loadFileInput: host.loadFileInput,

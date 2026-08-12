@@ -201,6 +201,151 @@ export type WitnessCapturedDownload = {
 };
 
 /**
+ * One key an object store holds, and how the store held it.
+ *
+ * The rendered form is always a string because that is what a receipt can carry
+ * and compare, and `kind` is what keeps that rendering honest: a store keyed by
+ * an auto-incrementing integer and a store keyed by the decimal text of that
+ * integer are different stores, and a bare string list could not tell a reader
+ * which one it was looking at.
+ */
+export type WitnessIndexedDbKey = { kind: 'string' | 'number'; key: string };
+
+/**
+ * One object store, named with the metadata that explains its keys — never its
+ * values. `keyPath` and `autoIncrement` are the store's own declaration of where
+ * its keys come from, which is exactly what a reader needs to interpret the
+ * list below and is not application data.
+ */
+export type WitnessIndexedDbObjectStore = {
+	name: string;
+	keyPath: string | string[] | null;
+	autoIncrement: boolean;
+	keys: WitnessIndexedDbKey[];
+};
+
+/** One database the origin holds, at the version the reader observed it. */
+export type WitnessIndexedDbDatabase = {
+	name: string;
+	version: number;
+	stores: WitnessIndexedDbObjectStore[];
+};
+
+/**
+ * Everything this reader is willing to say about an origin's IndexedDB.
+ *
+ * The state name is the discipline, stated in the evidence rather than only in
+ * this comment: keys are read and values are not. An application that keeps a
+ * person's tasks, notes or translations in IndexedDB has put their data there,
+ * and a receipt that recorded it would be publishing that data. What a
+ * persistence claim actually needs is which databases exist, which stores are in
+ * them and which keys those stores hold — every one of which is a fact about
+ * the application's own schema rather than about anybody's content.
+ */
+export type WitnessIndexedDbKeyInventory = {
+	state: 'read-keys-only';
+	databases: WitnessIndexedDbDatabase[];
+};
+
+/**
+ * The reader itself, exported as a self-contained function because that is the
+ * only form in which the page can run it and a test can too: the host hands
+ * this exact function to the browser, so what a test exercises in process is
+ * the same source the live page evaluates rather than a second implementation
+ * written to agree with it.
+ *
+ * It refuses rather than coerces in three places, and each refusal is a
+ * measurement. An origin whose IndexedDB cannot be enumerated is not an origin
+ * with no databases. A database that has to be CREATED to be read did not exist
+ * to be read. And a key that is neither a string nor a finite number — a Date, a
+ * binary key, a compound array key — has a shape this record cannot carry, so it
+ * says so instead of flattening it into text that would read as a key the store
+ * does not have.
+ */
+export async function readWitnessIndexedDbKeys(): Promise<WitnessIndexedDbKeyInventory> {
+	const factory = globalThis.indexedDB as IDBFactory | undefined;
+	if (factory === undefined || typeof factory.databases !== 'function')
+		throw new Error('Witness IndexedDB key reader found no enumerable IndexedDB');
+	const settled = async <Value>(pending: IDBRequest<Value>): Promise<Value> =>
+		await new Promise<Value>((resolve, reject) => {
+			pending.onsuccess = (): void => resolve(pending.result);
+			pending.onerror = (): void =>
+				reject(new Error('Witness IndexedDB key reader could not read a store'));
+		});
+	const renderKey = (key: IDBValidKey): WitnessIndexedDbKey => {
+		if (typeof key === 'string') return { kind: 'string', key };
+		if (typeof key === 'number' && Number.isFinite(key))
+			return { kind: 'number', key: String(key) };
+		throw new Error('Witness IndexedDB key reader refuses a key it cannot record faithfully');
+	};
+	const names = (await factory.databases())
+		.map((entry) => entry.name)
+		.filter((name): name is string => typeof name === 'string' && name.length > 0)
+		.sort();
+	const databases: WitnessIndexedDbDatabase[] = [];
+	for (const name of names) {
+		const opened = await new Promise<IDBDatabase>((resolve, reject) => {
+			const pending = factory.open(name);
+			pending.onupgradeneeded = (): void =>
+				reject(
+					new Error('Witness IndexedDB key reader refuses to create a database it reads'),
+				);
+			pending.onsuccess = (): void => resolve(pending.result);
+			pending.onerror = (): void =>
+				reject(new Error('Witness IndexedDB key reader could not open a database'));
+		});
+		const storeNames = Array.from(opened.objectStoreNames).sort();
+		const stores: WitnessIndexedDbObjectStore[] = [];
+		if (storeNames.length !== 0) {
+			const transaction = opened.transaction(storeNames, 'readonly');
+			for (const storeName of storeNames) {
+				const store = transaction.objectStore(storeName);
+				const keys = (await settled(store.getAllKeys())).map(renderKey);
+				keys.sort((left, right) =>
+					`${left.kind} ${left.key}`.localeCompare(
+						`${right.kind} ${right.key}`,
+					),
+				);
+				stores.push({
+					name: storeName,
+					keyPath: store.keyPath,
+					autoIncrement: store.autoIncrement,
+					keys,
+				});
+			}
+		}
+		databases.push({ name, version: opened.version, stores });
+		opened.close();
+	}
+	return { state: 'read-keys-only', databases };
+}
+
+/**
+ * The string keys of one named store, for a persistence claim whose store is
+ * string-keyed and says so.
+ *
+ * It resolves the store by database and store name and refuses everything else:
+ * a database or store that is absent, and a key the store held as a number
+ * where the caller declared strings. A caller that quietly dropped the numeric
+ * keys would be publishing a shorter list than the store holds.
+ */
+export function witnessIndexedDbStringKeys(
+	inventory: WitnessIndexedDbKeyInventory,
+	databaseName: string,
+	storeName: string,
+): string[] {
+	const database = inventory.databases.find((candidate) => candidate.name === databaseName);
+	if (database === undefined)
+		throw new Error(`Witness IndexedDB key reading found no database: ${databaseName}`);
+	const store = database.stores.find((candidate) => candidate.name === storeName);
+	if (store === undefined)
+		throw new Error(`Witness IndexedDB key reading found no object store: ${storeName}`);
+	if (store.keys.some((key) => key.kind !== 'string'))
+		throw new Error(`Witness IndexedDB object store is not string-keyed: ${storeName}`);
+	return store.keys.map((key) => key.key);
+}
+
+/**
  * The browser-context options this host constructs, exposed rather than inlined
  * so the absence of a capability is checkable rather than merely intended: an
  * application that declares no download surface must produce options with no
@@ -330,6 +475,14 @@ export type PlaywrightWitnessHost = {
 	 * storage it would have written to, not asserted from its source.
 	 */
 	browserStorageKeys(): Promise<{ localStorage: string[]; sessionStorage: string[] }>;
+	/**
+	 * The databases, object stores and store keys the page's own origin holds in
+	 * IndexedDB, for an application that declared it keeps state there. Refuses
+	 * every call where the application declared nothing, so a vertical that never
+	 * opted in is one whose IndexedDB was never opened rather than one whose
+	 * reading happened to come back empty.
+	 */
+	indexedDbKeys(): Promise<WitnessIndexedDbKeyInventory>;
 	/** Every request outcome the page reported, in observation order. */
 	requestOutcomes(): WitnessObservedRequestOutcome[];
 	/**
@@ -771,6 +924,17 @@ export function createPlaywrightWitnessHost(options: {
 	 * omits it is run in a context whose downloads the browser itself refuses.
 	 */
 	downloads?: 'capture';
+	/**
+	 * Declares that this application keeps state in IndexedDB and that its proof
+	 * reads the KEYS of that state.
+	 *
+	 * Unlike the two declarations above, this one changes nothing about the
+	 * browser context: it is purely the right to ask a question, so a vertical
+	 * that omits it runs in a byte-identical context and simply has no way to ask.
+	 * That is deliberate — an opt-in that altered the context would make every
+	 * non-opted vertical's run depend on a mechanism it never uses.
+	 */
+	indexedDb?: 'read-keys';
 }): PlaywrightWitnessHost {
 	let successfulNonLoopback = 0;
 	let mockedNonLoopback = 0;
@@ -1132,6 +1296,18 @@ export function createPlaywrightWitnessHost(options: {
 				localStorage: Object.keys(globalThis.localStorage).sort(),
 				sessionStorage: Object.keys(globalThis.sessionStorage).sort(),
 			}));
+		},
+		indexedDbKeys: async () => {
+			if (options.indexedDb !== 'read-keys')
+				throw new Error('Witness IndexedDB key reading is not declared by this application');
+			if (livePages.size !== 1)
+				throw new Error('Witness IndexedDB key reading requires exactly one live page');
+			const [page] = livePages;
+			if (page === undefined)
+				throw new Error('Witness IndexedDB key reading requires exactly one live page');
+			// The exact exported function, handed to the page rather than restated
+			// inline, so the reading a test exercises is the reading that runs.
+			return await page.evaluate(readWitnessIndexedDbKeys);
 		},
 		serviceWorkerObserverFinalization: () => {
 			const finalization = observer?.readback() ?? null;
