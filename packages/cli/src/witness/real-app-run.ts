@@ -400,6 +400,19 @@ type JourneyLifecycle = {
 	 */
 	renderedStyles(): Promise<WitnessRenderedStyle[]>;
 	/**
+	 * Reads a CALLER-specified probe list off the live page at the point of the
+	 * call — the ad-hoc, two-phase counterpart of {@link renderedStyles}. The
+	 * fixed reader above takes one reading of the application's own declared probe
+	 * list; a leg whose claim is a WITHIN-journey shift — a custom CSS property
+	 * read before a gesture and again after it — cannot be expressed by that
+	 * single fixed reading, and takes each reading through this instead. It reads
+	 * only the probes it is handed and touches neither the declared list nor the
+	 * fixed end-of-journey measurement, which is what keeps it additive; an empty
+	 * probe list is refused, so a two-phase claim can never rest on nothing having
+	 * been measured.
+	 */
+	probeStyles(probes: readonly WitnessRenderedStyleProbe[]): Promise<WitnessRenderedStyle[]>;
+	/**
 	 * Reads the ordered item text of every group the probe matches off the live
 	 * page, for a journey whose claim is about what the application's own store
 	 * settled to rather than about the gesture that provoked it.
@@ -1206,6 +1219,27 @@ async function expectedPhonecatImages(laneRoot: string): Promise<{
 	if (nonDefaultImage === undefined)
 		throw new Error('PhoneCat immutable Nexus S non-default image is absent');
 	return { detailSha256: sha256(detail), defaultImage, nonDefaultImage };
+}
+
+/**
+ * The additive two-phase style probe read behind {@link JourneyLifecycle.probeStyles}.
+ *
+ * The fixed {@link JourneyLifecycle.renderedStyles} reads the application's own
+ * declared probe list once, at the end of the journey, and every vertical rests
+ * its styling claim on it. A leg whose claim is a within-journey shift — a
+ * custom CSS property read before a gesture and again after it — cannot be
+ * expressed by that single fixed reading. This is the ad-hoc counterpart: it
+ * reads only the caller's probe list and is disjoint from the declared probes,
+ * so the fixed measurement every other vertical takes is untouched. It refuses
+ * an empty list, holding the same discipline the fixed reader does — a two-phase
+ * claim can never rest on nothing having been measured.
+ */
+export function assertWitnessAdHocStyleProbes(
+	probes: readonly WitnessRenderedStyleProbe[],
+): readonly WitnessRenderedStyleProbe[] {
+	if (probes.length === 0)
+		throw new Error('a two-phase style probe requires at least one probe to read');
+	return probes;
 }
 
 /**
@@ -5474,6 +5508,133 @@ const angularSuperProductivitySpec: AppSpec = {
 					localStorageKeysAfterJourney,
 				})}`,
 			);
+		// (d) The settings-change — the last journey leg, and last on purpose.
+		// The project switch below changes the current project, so the leg-(e)
+		// persistence census above had to be read from the project the rest of the
+		// journey built BEFORE this leg moves off it: create→c→b→reload→read the
+		// store→d.
+		const settingsChange = SUPER_PRODUCTIVITY_JOURNEY.settingsChange;
+		const readCurrentProjectTitle = async (): Promise<string> => {
+			const [group] = await lifecycle.groupedText(settingsChange.currentTitleProbe);
+			const title = group?.name;
+			if (title === undefined || title.length === 0)
+				throw new Error('Super Productivity current-project title read empty');
+			return title;
+		};
+		// The ad-hoc two-phase probe leg (d) needs: the contrast custom property on
+		// the body, read once before the theme control is driven and once after. It is
+		// disjoint from the fixed end-of-journey style probes taken above.
+		const themeProbe: readonly WitnessRenderedStyleProbe[] = [
+			{
+				label: 'theme-contrast',
+				selector: settingsChange.theme.styleProbe,
+				properties: [settingsChange.theme.styleVar],
+			},
+		];
+		const readContrast = async (): Promise<string> => {
+			const [probe] = await lifecycle.probeStyles(themeProbe);
+			const value = probe?.properties[settingsChange.theme.styleVar];
+			if (value === undefined || value.length === 0)
+				throw new Error('Super Productivity theme contrast custom property read empty');
+			return value;
+		};
+
+		// The project-switch spine. One project exists — the default the application
+		// seeds — and the side-nav addProject() control opens the create dialog. A
+		// title typed into it and submitted grows the side-nav project list from one to
+		// two; the count settling at two is the measurement, not a timer.
+		const currentTitleBefore = await readCurrentProjectTitle();
+		await context.expect.page.count(page, settingsChange.projectSwitch.projectList, 1);
+		await page.click(settingsChange.projectSwitch.addControl);
+		await context.expect.page.count(page, settingsChange.projectSwitch.dialog, 1);
+		await page.type(
+			settingsChange.projectSwitch.titleInput,
+			settingsChange.projectSwitch.newProjectTitle,
+			{ redact: false },
+		);
+		await page.click(settingsChange.projectSwitch.submit);
+		await context.expect.page.count(page, settingsChange.projectSwitch.dialog, 0);
+		await context.expect.page.count(page, settingsChange.projectSwitch.projectList, 2);
+
+		// Switch to the created project. The header current-project title flips to the
+		// created title — the settled anchor the switch is read against — and the
+		// switch itself records no navigation: it re-renders the work view in place
+		// rather than changing the route.
+		await page.click(settingsChange.projectSwitch.switchControl);
+		await context.expect.page.text(
+			page,
+			settingsChange.projectSwitch.titleControl,
+			settingsChange.projectSwitch.newProjectTitle,
+		);
+		const currentTitleAfter = await readCurrentProjectTitle();
+
+		// Into the current project's settings through the header control, and the theme
+		// config-section expanded so its own controls render. The scroll on this route
+		// is measured like every other stage; the application pins its drawer container
+		// to the viewport here too, so it records as absence.
+		await page.click(settingsChange.settingsNav);
+		await context.expect.page.count(page, settingsChange.theme.autoContrastControl, 1);
+		await measure('/#/project-settings (the settings-change leg)');
+		await page.click(settingsChange.theme.expandControl);
+
+		// The before-read: the contrast custom property as it resolves under the
+		// default auto-contrast theme — a dark contrast.
+		const styleValueBefore = await readContrast();
+
+		// The driven theme control. Unchecking isAutoContrast and saving reveals and
+		// enables the huePrimary select; opening it and picking a hue other than the
+		// 500 default and saving moves setContrastColorThresholdPrimary, which shifts
+		// the measured contrast var. The undriveable native color input is never
+		// touched (u20c2l).
+		await page.click(`${settingsChange.theme.autoContrastControl} label`);
+		await page.click(settingsChange.theme.submit);
+		await context.expect.page.count(page, settingsChange.theme.control, 1);
+		await page.click(settingsChange.theme.control);
+		await page.click(settingsChange.theme.hueOption);
+		await page.click(settingsChange.theme.submit);
+
+		// The after-read: the same custom property after the driven change — a light
+		// contrast. The exact rgb differs across lanes (a declared difference), but the
+		// dark→light shift holds in both, and a run whose driven change moved nothing is
+		// red here rather than silently equal.
+		const styleValueAfter = await readContrast();
+		if (styleValueBefore === styleValueAfter)
+			throw new Error(
+				`Super Productivity theme control drove no measured contrast shift: ${styleValueBefore}`,
+			);
+
+		// The `w` shortcut brings the work view back from the settings route; its host
+		// tag rendering after the press is the measurable effect.
+		await page.press('body', settingsChange.shortcut.key);
+		await context.expect.page.count(page, SUPER_PRODUCTIVITY_JOURNEY.hostTag, 1);
+		await measure('/#/work-view (after the `w` shortcut)');
+		const settings: WitnessAngularSuperProductivityJourney['settings'] = {
+			state: 'measured-settings-change',
+			projectSwitch: {
+				control: settingsChange.projectSwitch.addControl,
+				dialog: settingsChange.projectSwitch.dialog,
+				titleControl: settingsChange.projectSwitch.titleControl,
+				switchControl: settingsChange.projectSwitch.switchControl,
+				newProjectTitle: settingsChange.projectSwitch.newProjectTitle,
+				currentTitleBefore,
+				currentTitleAfter,
+				projectCountBefore: 1,
+				projectCountAfter: 2,
+			},
+			theme: {
+				autoContrastControl: settingsChange.theme.autoContrastControl,
+				control: settingsChange.theme.control,
+				styleVar: settingsChange.theme.styleVar,
+				styleValueBefore,
+				styleValueAfter,
+			},
+			shortcut: {
+				key: settingsChange.shortcut.key,
+				hostTag: settingsChange.shortcut.hostTag,
+				hostTagPresentAfter: 1,
+			},
+		};
+
 		await context.expect.page.outcome(page, {
 			events: { input: { atLeast: 1 }, keydown: { atLeast: 1 } },
 		});
@@ -5534,6 +5695,7 @@ const angularSuperProductivitySpec: AppSpec = {
 				currentTasksOnStart: 1,
 				currentTasksOnStop: 0,
 			},
+			settings,
 		};
 		return {
 			assertions: [
@@ -5547,6 +5709,9 @@ const angularSuperProductivitySpec: AppSpec = {
 				'the two tasks surviving a real document reload in the drag-settled order, read back off the re-rendered list — the store agreeing with the drag — with the store census unchanged',
 				'a real ngsw registered, activated and controlling the page at all three checkpoints, with the worker scripts the build shipped byte-identical either side of the run',
 				'the linked Roboto stylesheet answered in-context, with the resolved family measured rather than assumed',
+				'leg (d): a second project created through the application own addProject() dialog, growing the side-nav project list from one to two, and switching to it flipping the header current-project title to the created project',
+				'leg (d): the project theme own huePrimary mat-select driven to a non-default hue after unchecking isAutoContrast, shifting the measured `--palette-primary-contrast-50` contrast custom property from a dark contrast to a light one — the driven change never the undriveable color input',
+				'leg (d): the `w` shortcut bringing the work view back from the project settings, its host tag rendered after the press',
 				'clean page',
 			],
 			offlineEvidence: { state: 'not-applicable' },
@@ -5905,6 +6070,8 @@ async function executeRun(
 					throw new Error(`${app.app} declares no rendered-style probes to measure`);
 				return await host.renderedStyles(probes);
 			},
+			probeStyles: async (probes) =>
+				await host.renderedStyles(assertWitnessAdHocStyleProbes(probes)),
 			groupedText: async (probe) => await host.groupedText(probe),
 			browserStorageKeys: host.browserStorageKeys,
 			indexedDbKeys: host.indexedDbKeys,
@@ -6891,6 +7058,13 @@ async function runReactBaselineDifferentialProfile(
 				renderedStyles: () => {
 					throw new Error(
 						'react baseline differential lane declares no rendered-style probes',
+					);
+				},
+				// The same refusal for the ad-hoc two-phase read: this lane exists to
+				// diagnose a service worker and takes no styling measurement at all.
+				probeStyles: () => {
+					throw new Error(
+						'react baseline differential lane takes no ad-hoc style probes',
 					);
 				},
 				// The same refusal, for the same reason: this lane exists to

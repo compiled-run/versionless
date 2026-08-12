@@ -22,7 +22,10 @@ import {
 	WITNESS_ANGULAR_SUPER_PRODUCTIVITY_TYPEFACE_DEGRADATION_CAUSE,
 	WITNESS_ANGULAR_SUPER_PRODUCTIVITY_TYPEFACE_PROBE,
 } from '../../core/src/receipts/witness-angular-super-productivity.ts';
-import { angularSuperProductivityWitnessSpec } from '../src/witness/real-app-run.ts';
+import {
+	angularSuperProductivityWitnessSpec,
+	assertWitnessAdHocStyleProbes,
+} from '../src/witness/real-app-run.ts';
 
 const spec = angularSuperProductivityWitnessSpec();
 const journey = WITNESS_ANGULAR_SUPER_PRODUCTIVITY_JOURNEY;
@@ -70,8 +73,11 @@ describe('the Super Productivity journey wiring', () => {
 		expect(journey.initialRoute.startsWith(`/${WITNESS_ANGULAR_SUPER_PRODUCTIVITY_ROUTE_SHAPE.prefix}`)).toBe(
 			true,
 		);
-		// The deep-linked document and the reload leg (e) performs: two, exactly.
-		expect(journey.navigations).toBe(2);
+		// After the deep-linked load: the leg-(e) reload (two — the document commit
+		// and the router's own hash settle each record one) and the two leg-(d)
+		// hash navigations (into `#/project-settings` and back to `#/work-view`).
+		// The leg-(d) project switch records none. Four, exactly.
+		expect(journey.navigations).toBe(4);
 	});
 
 	it('measures against a stated viewport, because it claims scroll absence', () => {
@@ -352,5 +358,74 @@ describe('the drag surface and the deliberate absences', () => {
 		// the census this journey pins, which is how the contradiction surfaced.
 		for (const key of correction.disagreedOn)
 			expect([...journey.keysAfterJourney]).toContain(key);
+	});
+});
+
+describe('the additive two-phase style probe', () => {
+	it('refuses an empty probe list, so a two-phase claim rests on a real reading', () => {
+		expect(() => assertWitnessAdHocStyleProbes([])).toThrow();
+	});
+
+	it('returns the caller probe list unchanged, reading only what it is handed', () => {
+		// It is the ad-hoc counterpart of the fixed reader: it measures the caller's
+		// probes, never the application's declared list, which is what lets a leg
+		// take a within-journey before/after reading without a second declaration.
+		const probes = [
+			{
+				label: 'theme-contrast',
+				selector: 'body',
+				properties: ['--palette-primary-contrast-50'],
+			},
+		];
+		expect(assertWitnessAdHocStyleProbes(probes)).toBe(probes);
+	});
+
+	it('is additive: the leg-(d) contrast var is disjoint from the fixed end-of-journey probes', () => {
+		// The fixed probe list every vertical measures is untouched — the leg-(d)
+		// custom property is not a property any fixed probe reads, so the two-phase
+		// reading cannot disturb the end-of-journey measurement.
+		const themeVar = journey.settingsChange.theme.styleVar;
+		expect(themeVar).toBe('--palette-primary-contrast-50');
+		expect(spec.renderedStyleProbes).toBe(WITNESS_ANGULAR_SUPER_PRODUCTIVITY_STYLE_PROBES);
+		for (const probe of WITNESS_ANGULAR_SUPER_PRODUCTIVITY_STYLE_PROBES)
+			expect([...probe.properties]).not.toContain(themeVar);
+	});
+});
+
+describe('leg (d) drive-side wiring', () => {
+	const settings = journey.settingsChange;
+
+	it('reads the current-project title through a grouped-text probe on the header', () => {
+		expect(settings.currentTitleProbe.group).toBe('main-header');
+		expect(settings.currentTitleProbe.name).toBe('.current-project-title');
+		expect(settings.currentTitleProbe.item).toBe('.current-project-title');
+		// The probe reads the same control the evidence names as the title control.
+		expect(settings.projectSwitch.titleControl).toBe(
+			`${settings.currentTitleProbe.group} ${settings.currentTitleProbe.name}`,
+		);
+	});
+
+	it('routes to the settings through the header control the style probes also anchor on', () => {
+		expect(settings.settingsNav).toBe('main-header .project-settings-btn');
+		expect(
+			WITNESS_ANGULAR_SUPER_PRODUCTIVITY_STYLE_PROBES.map((probe) => probe.selector),
+		).toContain(settings.settingsNav);
+	});
+
+	it('counts the growing project list on the side-nav member the switch selects within', () => {
+		expect(settings.projectSwitch.projectList).toBe('side-nav .project');
+		// The switch control is the second member of exactly the list the count
+		// grows, so the count and the switch cannot be reading different surfaces.
+		expect(settings.projectSwitch.switchControl.startsWith(settings.projectSwitch.projectList)).toBe(
+			true,
+		);
+	});
+
+	it('expands the same theme config-section its driven controls are scoped to', () => {
+		const themeSection = 'section.config-section:nth-of-type(2)';
+		expect(settings.theme.expandControl.startsWith(themeSection)).toBe(true);
+		expect(settings.theme.autoContrastControl.startsWith(themeSection)).toBe(true);
+		expect(settings.theme.control.startsWith(themeSection)).toBe(true);
+		expect(settings.theme.submit.startsWith(themeSection)).toBe(true);
 	});
 });

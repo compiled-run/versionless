@@ -822,8 +822,16 @@ export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_LANE_SEAMS = Object.freeze({
 export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_JOURNEY = Object.freeze({
 	initialRoute: '/#/work-view',
 	viewport: Object.freeze({ width: 1280, height: 900 }),
-	/** The recorded navigations: the deep-linked work view, and the reload. */
-	navigations: 2,
+	/**
+	 * The recorded main-frame navigations after the initial deep-linked load: the
+	 * leg-(e) reload (two, as the document commit and the router's own hash settle
+	 * each record one), and the two leg-(d) hash navigations — into
+	 * `#/project-settings` through the header control, and back to `#/work-view`
+	 * through the `w` shortcut. The leg-(d) project SWITCH records none: it is a
+	 * store change that re-renders the work view in place rather than a route
+	 * change, as the calibration driver measured. Four, exactly.
+	 */
+	navigations: 4,
 	hostTag: 'work-view',
 	addTaskInput: 'add-task-bar input',
 	taskList: 'task-list',
@@ -919,6 +927,14 @@ export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_JOURNEY = Object.freeze({
 	 * these anchors is on {@link WITNESS_ANGULAR_SUPER_PRODUCTIVITY_SETTINGS}.
 	 */
 	settingsChange: Object.freeze({
+		/** The grouped-text probe the current-project title is read through. */
+		currentTitleProbe: Object.freeze({
+			group: 'main-header',
+			name: '.current-project-title',
+			item: '.current-project-title',
+		}),
+		/** The header control that routes to the current project's settings. */
+		settingsNav: 'main-header .project-settings-btn',
 		projectSwitch: Object.freeze({
 			addControl: 'section.projects > button[mat-menu-item]',
 			dialog: 'dialog-create-project',
@@ -926,6 +942,8 @@ export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_JOURNEY = Object.freeze({
 			submit: 'dialog-create-project button[type=submit]',
 			switchControl: 'side-nav .project:nth-of-type(2) > button[mat-menu-item]',
 			titleControl: 'main-header .current-project-title',
+			/** The side-nav member the create grows from one to two. */
+			projectList: 'side-nav .project',
 			currentTitleBefore: 'Super Productivity',
 			newProjectTitle: 'Witness leg-d project',
 			projectCountBefore: 1,
@@ -934,6 +952,8 @@ export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_JOURNEY = Object.freeze({
 		theme: Object.freeze({
 			autoContrastControl: 'section.config-section:nth-of-type(2) mat-checkbox',
 			control: 'section.config-section:nth-of-type(2) mat-select',
+			/** The collapsible title that expands the theme config-section. */
+			expandControl: 'section.config-section:nth-of-type(2) .collapsible-title',
 			submit: 'section.config-section:nth-of-type(2) .submit-button',
 			hueOption: '.cdk-overlay-container mat-option:first-of-type',
 			styleProbe: 'body',
