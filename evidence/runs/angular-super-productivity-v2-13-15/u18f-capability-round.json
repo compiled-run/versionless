@@ -1,0 +1,199 @@
+{
+	"schemaVersion": "versionless.angular-super-productivity-capability-round.v1",
+	"unit": "lrapr-t006/u18f-super-productivity-chips-round",
+	"consentId": "VL-LEGACY-CORPUS-2026-08-10",
+	"result": "capabilities-fired-build-red-smaller-remainder",
+	"meaning": "The two demands u18e read and refused were both answered, and the way they were answered is the point of this record. The chip-list refusal was that Material 16 publishes three successors where Material 8 published one and the package does not say which one a given list became. That is still true. What this unit found is that the package does say which one a list *hosting a text input* became — MatChipInput declares `set chipGrid(value: MatChipGrid)`, so the container a matChipInput belongs to is typed, not documented — and that the unspecialised container is the one the other two extend, which is also declared. Between those two readings and the bindings the element carries, the successor is resolved from facts rather than chosen. The second demand, rxjs/internal-compatibility, is a written-down successor and is recorded as one. The production build was run again and is still red, at 30 diagnostics against u18e's 33.",
+	"previous": "u18e-capability-round.json",
+	"changeset": "u18-composed-changeset.json",
+	"tree": {
+		"stage": ".versionless/stage/angular-super-productivity-v2-13-15-u18b",
+		"applied": ".versionless/stage/angular-super-productivity-v2-13-15-u18b/app",
+		"from": ".versionless/cache/angular-super-productivity-v2-13-15-source/verify/extracted/super-productivity-2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+		"commit": "2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+		"reuse": "The stage tree u18b staged was reused and this unit's capability round was run over the tree u18e left, not over a freshly composed one. build-5.log is the same tree as build-4.log plus three files. The u18c capabilities were re-run first, as u18d and u18e re-ran them, and changed nothing."
+	},
+	"cell": {
+		"node": "v16.20.2",
+		"nodeSource": ".versionless/cache/angular-jira-clone-runtime/node-v16.20.2-darwin-arm64",
+		"architecture": "darwin-arm64, native — no translation layer",
+		"builder": "@angular-devkit/build-angular:browser (Angular 16.2)",
+		"environment": { "NG_CLI_ANALYTICS": "false" }
+	},
+	"acquisition": {
+		"purpose": "None. No package was installed, no manifest was changed and no network was reached in this unit; the closure u18c resolved was read, not altered.",
+		"networkMode": "none"
+	},
+	"adapterChanges": [
+		{
+			"file": "packages/frameworks/angular/src/split-element-successor.ts",
+			"capability": "split-element-successor",
+			"appNameBranches": 0,
+			"reading": "NG8001 is the shape a *split* leaves behind and it is not a rename, so the capability does not carry a from→to pair. It carries a claim naming three successors by role — input-bearing, selection, general — and then refuses that claim five ways against the installed declarations before touching a tag: the replaced element really has to be gone from the entry point's selectors; each named successor has to be declared and to carry exactly one element-form selector; the input-bearing one has to be the component the text-input directive's own host binding is typed to; the general one has to appear in the declared extends chain of both others; and neither specialisation may extend the other. Per call site the shape is then read off the template: a descendant matching the text-input directive's selector whose `for` binding names one of *this* element's references is the input-bearing fact; a binding only the selection successor declares is the selection fact; neither is the general shape. Two facts at once, or a text input naming some other list, matches none of the documented shapes and is refused by name. So is an element carrying a binding the chosen successor does not declare and that is not a universal HTML attribute — the replaced component's surface is gone from the tree, so a binding nothing accounts for might be a foreign directive or might be an input this rewrite would silently drop, and from here the two are indistinguishable. The children are answered more strongly than the container: a container's content query is *typed*, so the child it accepts is declared rather than documented, and because that child extends the child the application wrote its input and output surface is a superset by the declaration's own arithmetic. That is why the child rename needs no per-binding check and why a child whose component the queried one does not extend is refused instead of renamed."
+		},
+		{
+			"file": "packages/frameworks/angular/src/removed-entry-point-symbol-successor.ts",
+			"capability": "removed-entry-point-symbol-successor",
+			"appNameBranches": 0,
+			"reading": "This is a written-down successor, and the record states it plainly: nothing in rxjs@7.8.2 connects `fromPromise` to `from`. It is the same kind of claim as addAll→setAll, and it is not derived from the tree. What the tree is asked is whether it can refuse the claim, and it is asked four times. The removed specifier has to actually be unreachable — asked of the exports map where there is one. The root has to publish the successor, and it has to *not* publish the replaced name; a root that still publishes `fromPromise` is a root where the specifier is the only thing that went away. And every use of the symbol has to be the call shape the claim was stated for: `from` is an overload set and the claim is written for the one-argument promise form only, so a two-argument call, a member access, an alias, or the symbol passed as a value refuses the whole declaration. Half a rewrite would leave a binding pointing at a module the tree does not answer while claiming the file was migrated."
+		}
+	],
+	"capabilityOutcomes": [
+		{
+			"capability": "split-element-successor",
+			"firedOn": "2 templates — src/app/ui/chip-list-input/chip-list-input.component.html:2 and src/app/ui/datetime-input/datetime-input.component.html:23 — resolving to two *different* successors.",
+			"filesChanged": 2,
+			"refused": 0,
+			"reading": "@angular/material@16.2.14's chips entry point declares six components. MatChipGrid (mat-chip-grid) extends MatChipGridBase extends MatChipSet and queries `_chips: QueryList<MatChipRow>`; MatChipListbox (mat-chip-listbox) extends MatChipSet and queries `QueryList<MatChipOption>`; MatChipSet (mat-chip-set) extends neither of the others and queries `QueryList<MatChip>`. MatChipInput's selector is `input[matChipInputFor]` and its host input is declared `set chipGrid(value: MatChipGrid)`. Those facts satisfied all five checks on the documented split, so the round proceeded.",
+			"perSite": [
+				{
+					"site": "src/app/ui/chip-list-input/chip-list-input.component.html:2",
+					"shape": "input-bearing",
+					"fact": "The list declares the reference #chipListElRef and contains an <input> whose [matChipInputFor] names it.",
+					"written": "<mat-chip-list> → <mat-chip-grid>, and the <mat-chip> inside it → <mat-chip-row>, because MatChipGrid's content query is typed to MatChipRow and MatChipRow extends MatChip. The chip's (removed) and [removable] were not checked and did not need to be: they are MatChip's, and MatChipRow inherits them by extending it."
+				},
+				{
+					"site": "src/app/ui/datetime-input/datetime-input.component.html:23",
+					"shape": "general",
+					"fact": "The list hosts no matChipInput and carries no binding at all, so it matches neither discriminating shape.",
+					"written": "<mat-chip-list> → <mat-chip-set>. Its six <mat-chip> children were left as they are, because MatChipSet's content query is typed to MatChip and the element already resolves to it.",
+					"correctsThePacket": "The unit was dispatched on the reading that both call sites host a matChipInput and both therefore become mat-chip-grid. The template contradicts that for this site: lines 23–31 are six click-handling chips with no input element, no template reference and no bindings on the container. The capability keys on the facts rather than on the expectation and resolved it to the static-display successor, which is what Material's documented mapping says a chip list with neither a text input nor selection bindings became. If the intended reading had been forced onto this site it would have written a form control with no control in it."
+				}
+			],
+			"clearedDiagnostics": "NG8001 2 → 0."
+		},
+		{
+			"capability": "removed-entry-point-symbol-successor",
+			"firedOn": "1 module — src/app/features/issue/jira/jira-api.service.ts:22 — `import {fromPromise} from 'rxjs/internal-compatibility'` becoming `import {from} from 'rxjs'`, with the one call site at line 308 rewritten from fromPromise(promise) to from(promise).",
+			"filesChanged": 1,
+			"refused": 0,
+			"reading": "rxjs@7.8.2's exports map does not name ./internal-compatibility, and the root declaration surface publishes 187 names of which `from` is one and `fromPromise` is not. The single use in the module is `fromPromise(promise)` — one argument, in callee position — which is the shape the claim is written for. The module's other three rxjs declarations were left exactly as they are; the rewrite replaces one declaration and does not merge it into the existing 'rxjs' one, because merging would restate specifiers this capability did not read.",
+			"clearedDiagnostics": "TS2307 1 → 0."
+		},
+		{
+			"capability": "successor-fork-package, barrel-entry-point-split, webpack-tilde-style-specifier",
+			"firedOn": "Re-run over the applied tree and found their u18c and u18d work already in place.",
+			"filesChanged": 0,
+			"refused": 0,
+			"clearedDiagnostics": "None new. These are the earlier capabilities, re-run to establish that the round is repeatable."
+		}
+	],
+	"readingsTakenWithoutWriting": [
+		{
+			"family": "@angular/material legacy-chips",
+			"question": "Whether the tree's `@angular/material/legacy-chips` entry point — which does still declare mat-chip-list — is the successor the two templates should have been pointed at.",
+			"reading": "It is installed: @angular/material@16.2.14 ships legacy-chips beside chips. But the application's own NgModule imports MatChipsModule from '@angular/material/chips' (src/app/ui/ui.module.ts:13), so the compiler's complaint is about the module the application declared, not about the package. Redirecting the module import instead of the templates would be a different edit answering a different question, and it would point the application at an entry point Material removes in 17.",
+			"outcome": "Not written. Recorded so that the choice between the two answers is visible rather than implicit."
+		}
+	],
+	"applicationFilesChanged": {
+		"differingFromPristine": 64,
+		"pristineFilesUnderSrc": 796,
+		"newInThisUnit": 3,
+		"newFiles": [
+			"src/app/features/issue/jira/jira-api.service.ts",
+			"src/app/ui/chip-list-input/chip-list-input.component.html",
+			"src/app/ui/datetime-input/datetime-input.component.html"
+		],
+		"filesAddedUnderSrc": 0,
+		"filesRemovedUnderSrc": 1,
+		"removedFiles": ["src/tslint.json"],
+		"meaning": "64 application files under src/ differ byte-for-byte from the pristine extracted tree at commit 2943c5c, against u18e's 61. The three named above are the three this unit wrote and are the whole of the difference. The removed src/tslint.json is not this unit's: it is the tslint-toolchain-removal capability's, from the composed changeset, and u18e's counting method did not carry it. It is stated here because a record that counts only the files present in both trees is not counting the whole difference."
+	},
+	"build": {
+		"command": "node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng.js build --configuration production",
+		"log": ".versionless/stage/angular-super-productivity-v2-13-15-u18b/build-5.log",
+		"exitStatus": 1,
+		"artifactsEmitted": 0,
+		"diagnosticCountsBefore": {
+			"NG6002": 15,
+			"NG6003": 1,
+			"NG8001": 2,
+			"TS1259": 1,
+			"TS2305": 3,
+			"TS2307": 1,
+			"TS2322": 4,
+			"TS2345": 1,
+			"TS2554": 2,
+			"TS2769": 1,
+			"TS2794": 2
+		},
+		"diagnosticCounts": {
+			"NG6002": 15,
+			"NG6003": 1,
+			"TS1259": 1,
+			"TS2305": 3,
+			"TS2322": 4,
+			"TS2345": 1,
+			"TS2554": 2,
+			"TS2769": 1,
+			"TS2794": 2
+		},
+		"diagnosticTotalBefore": 33,
+		"diagnosticTotal": 30,
+		"countingMethod": "Every `error TS####` / `error NG####` occurrence in the build log, counted the same way in both columns. The before column is u18e's recorded after-state and is build-4.log.",
+		"cleared": {
+			"NG8001": "2 → 0 (split-element-successor)",
+			"TS2307": "1 → 0 (removed-entry-point-symbol-successor)"
+		},
+		"unmoved": "NG6002 15, TS2322 4, TS2305 3, TS2554 2, TS2794 2, NG6003 1, TS1259 1, TS2345 1, TS2769 1. Every one is a demand u18d and u18e itemised, and none of them was attempted in this unit. Two capabilities were the honest cut line: each needed a reading of a kind this adapter had not taken before, and a third would not have been written and tested inside this unit's budget."
+	},
+	"remainingDemands": [
+		{
+			"family": "ng2-charts symbols with no successor",
+			"file": "src/app/features/metric/metric.model.ts:2, src/app/features/metric/metric.component.ts:4",
+			"symbol": "Label, SingleDataSet, Color",
+			"library": "ng2-charts 2.3 → 5.0.4",
+			"observed": "3 TS2305, one per symbol: Module '\"ng2-charts\"' has no exported member 'Label' / 'SingleDataSet' / 'Color'.",
+			"neededTransform": "Unchanged from u18e. The compiler offers no successor for any of the three, which is why the rename capability never sees them: it reads TS2724 and these are TS2305. ng2-charts 5.0.4 publishes five root exports and none of them is a type alias for a chart label or a colour; chart.js 4 carries the replacements under different names and a different shape. A written-down-successor claim of the kind this unit added for rxjs could reach `Color` if someone wrote the mapping down and the root could refuse it, but `SingleDataSet` and `Label` are shapes rather than names and no arity guard makes them safe."
+		},
+		{
+			"family": "chart.js 2 options literals",
+			"file": "src/app/features/metric/metric.component.ts:24, src/app/core/theme/global-theme.service.ts:163",
+			"symbol": "{ responsive, legend: { position } } and { legend: { labels: { fontColor } }, scales: { xAxes: [...], yAxes: [...] } }",
+			"library": "chart.js 2.8 → 4.5.1",
+			"observed": "1 TS2322 and 1 TS2345 against _DeepPartialObject<CoreChartOptions & …>.",
+			"neededTransform": "Unchanged and unattempted. chart.js 4 restructured the options schema: `legend` moved under `plugins`, and the `xAxes`/`yAxes` arrays became a keyed `scales` object with `grid` in place of `gridLines` and `ticks.color` in place of `ticks.fontColor`. A literal reshaping is a different kind of edit from anything this adapter performs, and whether the installed type surface can drive it is still the question nobody has asked."
+		},
+		{
+			"family": "@ngrx/effects createEffect result typing",
+			"file": "src/app/features/google/store/google-drive-sync.effects.ts:84, :116, :223",
+			"symbol": "createEffect(() => …, { dispatch: false })",
+			"library": "@ngrx/effects 8.3 → 16.3",
+			"observed": "3 TS2322: Type 'Observable<unknown>' is not assignable to type 'EffectResult<Action>'.",
+			"neededTransform": "Unchanged from u18c, u18d and u18e, and three of the remaining four TS2322. The wrapper the createEffect migration wrote is correct and the effect body's inferred type is not. Whether the cause is the body or a module around it is still not established."
+		},
+		{
+			"family": "three unrelated call sites and NgxElectronModule",
+			"file": "src/app/app.module.ts:41, src/app/features/config/global-config.service.ts:88, src/app/features/issue/jira/jira.module.ts:16, src/app/features/tasks/store/task-internal.effects.ts:113",
+			"symbol": "a three-argument call the module now declares as taking none; a zero-argument call that now takes one; NgxElectronModule; one unmatched overload",
+			"library": "Angular 8 → 16 across four unrelated declarations",
+			"observed": "2 TS2554, 1 TS2769, 1 NG6002: 'NgxElectronModule' does not appear to be an NgModule class.",
+			"neededTransform": "Unattempted. The NgxElectronModule one is still a reading nobody has taken: whether ngx-electron 2.2.0 publishes an Ivy-compatible module is a measurement of the installed package, and it is the one of these four that a capability rather than a source answer could reach."
+		},
+		{
+			"family": "TypeScript 3.5 → 5.1 call sites",
+			"file": "src/app/features/worklog/worklog-export/worklog-export.component.ts:15, src/app/features/google/google-api.service.ts:143 and :150",
+			"symbol": "import Clipboard from 'clipboard'; new Promise<…>(resolve => resolve())",
+			"library": "TypeScript 3.5 → 5.1",
+			"observed": "1 TS1259 on the default import of 'clipboard', and 2 TS2794 on resolve() calls the compiler now wants an argument for.",
+			"neededTransform": "Unchanged and unattempted: a tsconfig decision the workspace capability has to make explicitly, and a two-line call-site edit. This is the cheapest remaining family and the one a next unit should take first."
+		},
+		{
+			"family": "downstream module errors",
+			"file": "src/app/app.module.ts and eight other NgModules",
+			"symbol": "NG6002 / NG6003",
+			"library": "Angular 16.2",
+			"observed": "15 NG6002 and 1 NG6003, unmoved from u18d and u18e.",
+			"neededTransform": "None of its own. Every one of these says an imported or exported module contains errors, and the errors are the families above. The count did not move in this unit because the two templates this unit rewrote were reported as NG8001 against the templates rather than as NG6002 against ui.module.ts, and NG8001 is exactly what cleared. This family is the census's own accounting of the others and should be expected to collapse when they do, not attacked directly."
+		}
+	],
+	"notEstablished": [
+		"Whether the application runs. Nothing in this unit reached a runtime; the build emits no artifacts and 30 diagnostics remain.",
+		"Whether the two chip surfaces behave as they did on Material 8. The rewrite makes both templates compile against the installed chips module and nothing here tests that the input-bearing one still adds a chip on Enter or that the static one still fires its click handlers.",
+		"Whether mat-chip-set is what this application's author would have written for the datetime chips. It is what the documented mapping says a chip list with neither a text input nor a selection binding became, and it is what the facts in that template resolve to. An author who wanted those six chips to be selectable would have written a selection binding, and the capability would then have resolved a listbox.",
+		"Whether the split capability generalises past chips. It is parameterised on a documented three-role split and refuses everything the installed declarations do not confirm, so its failure mode is silence — but chips is the only split written down, and whether another library's split has the same three roles has not been measured.",
+		"Whether fromPromise(x) and from(x) are the same function for every x. The claim is written down, not derived; the arity guard narrows it to the single-argument form and the root surface refuses it against the wrong release, but neither establishes that the two agree on a non-promise ObservableInput.",
+		"Whether the sass at-rules u18d re-specified resolve. The TypeScript program still fails before the stylesheet pipeline is reached, in this build as in the last three."
+	]
+}

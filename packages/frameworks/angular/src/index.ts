@@ -25,3 +25,5 @@ export * from './successor-fork-package.ts';
 export * from './suggested-export-rename.ts';
 export * from './unparameterised-base-class.ts';
 export * from './declared-type-member-rename.ts';
+export * from './split-element-successor.ts';
+export * from './removed-entry-point-symbol-successor.ts';
