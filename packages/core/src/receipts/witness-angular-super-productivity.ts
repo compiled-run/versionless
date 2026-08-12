@@ -705,7 +705,7 @@ export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_SETTINGS = Object.freeze({
 	}),
 	theme: Object.freeze({
 		autoContrastControl: 'section.config-section:nth-of-type(2) mat-checkbox',
-		control: 'section.config-section:nth-of-type(2) mat-select',
+		control: 'section.config-section:nth-of-type(2) mat-select[id*="huePrimary"]',
 		submit: 'section.config-section:nth-of-type(2) .submit-button',
 		hueOption: '.cdk-overlay-container mat-option:first-of-type',
 		styleProbe: 'body',
@@ -837,8 +837,17 @@ export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_JOURNEY = Object.freeze({
 	taskList: 'task-list',
 	taskListTask: 'task-list task',
 	taskTitle: 'task-list task .task-title',
-	/** Measured: the work view renders an undone list and a done list. */
-	taskLists: 2,
+	/**
+	 * Measured (u20c2q, both lanes): the work view renders exactly ONE
+	 * `task-list` — the undone list — throughout the journey. The done-tasks
+	 * list is a second `task-list` the work view renders only once a task has
+	 * been marked done, and this journey never completes one, so it never
+	 * mounts. The first calibration reading assumed the done list was always
+	 * present and pinned 2; the asserting drive read 1 at boot on both lanes,
+	 * and the pin is corrected to what the DOM renders rather than the check
+	 * relaxed.
+	 */
+	taskLists: 1,
 	taskTitleText: 'Witness leg-a task',
 	keysBeforeJourney: Object.freeze(['SUP_PROJECT_META_LIST', 'SUP_REMINDER']),
 	/**
@@ -951,7 +960,17 @@ export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_JOURNEY = Object.freeze({
 		}),
 		theme: Object.freeze({
 			autoContrastControl: 'section.config-section:nth-of-type(2) mat-checkbox',
-			control: 'section.config-section:nth-of-type(2) mat-select',
+			/**
+			 * The huePrimary threshold select, pinned by the stable `huePrimary`
+			 * substring formly stamps into its field id (measured u20c2q:
+			 * `formly_17_select_huePrimary_4` era, `formly_15_select_huePrimary_4`
+			 * migrated — the numeric prefix differs by lane, the substring does not).
+			 * The bare `mat-select` selector the first calibration used matched all
+			 * THREE revealed hue selects (huePrimary, hueAccent, hueWarn), so it is
+			 * corrected to the one that uniquely resolves the primary control whose
+			 * threshold moves the measured `--palette-primary-contrast-50`.
+			 */
+			control: 'section.config-section:nth-of-type(2) mat-select[id*="huePrimary"]',
 			/** The collapsible title that expands the theme config-section. */
 			expandControl: 'section.config-section:nth-of-type(2) .collapsible-title',
 			submit: 'section.config-section:nth-of-type(2) .submit-button',
@@ -1323,7 +1342,28 @@ function renderedStyleProjection(
 	const differing = new Set(declaredDifferenceLabels);
 	return {
 		state: evidence?.state,
-		agreeing: (evidence?.probes ?? []).filter((probe) => !differing.has(probe.label)),
+		// The label, selector and resolved CSS properties of every probe the two
+		// lanes agree on — but NOT the measured pixel geometry.
+		// `assertRenderedStyleDifferences` defines rendered-style parity as an
+		// equality of `properties` alone, and the declared-difference mechanism can
+		// only speak about a probe whose properties differ. The width and height are
+		// lane-dependent rendered appearance rather than behaviour: this application
+		// lifts across Angular Material's pre-MDC→MDC rewrite, which moves the toolbar
+		// height (measured u20c2q: 48 in the era lane, 56 in the migrated one) and the
+		// scrollbar-driven side-nav width by a few pixels (199 against 196) while
+		// every CSS property the probes read resolves identically in both lanes.
+		// Since the probes' properties agree they cannot be declared differences, and
+		// folding their geometry into the shared digest would make it disagree about a
+		// difference the schema's own style-parity check deliberately ignores. The
+		// geometry stays in the run (and `assertRenderedStyles` still bounds it
+		// non-negative per probe); only the behaviour projection drops it.
+		agreeing: (evidence?.probes ?? [])
+			.filter((probe) => !differing.has(probe.label))
+			.map((probe) => ({
+				label: probe.label,
+				selector: probe.selector,
+				properties: probe.properties,
+			})),
 		declaredDifferenceLabels: (evidence?.probes ?? [])
 			.map((probe) => probe.label)
 			.filter((label) => differing.has(label)),

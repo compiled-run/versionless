@@ -5374,8 +5374,9 @@ const angularSuperProductivitySpec: AppSpec = {
 		await page.trackEvents('click', 'input', 'keydown');
 
 		// The application as it boots: the work view's own host tag — `work-view`,
-		// not the component's file name — its two task lists, and no task in
-		// either of them. Nothing has been seeded; this application starts empty.
+		// not the component's file name — its one task list (the undone list; the
+		// done list only mounts once a task is completed, which this journey never
+		// does), and no task in it. Nothing has been seeded; this app starts empty.
 		await context.expect.page.count(page, SUPER_PRODUCTIVITY_JOURNEY.hostTag, 1);
 		await context.expect.page.count(
 			page,
@@ -5473,6 +5474,14 @@ const angularSuperProductivitySpec: AppSpec = {
 		// store, and what comes back — read off the re-rendered list — is the store
 		// list, which is what makes it the store's own agreement with the drag.
 		await page.reload();
+		// The reload replaces the document, so the event tracking armed at boot is
+		// gone with it (the witness stores tracked occurrences in a page global that
+		// a full reload destroys, and the outcome sync reads the CURRENT global).
+		// Re-arm it here so leg (d)'s genuine input and keydown — typing the new
+		// project's title and pressing the `w` shortcut, both after this reload — are
+		// the occurrences the end-of-journey outcome assertion measures. This is not
+		// a navigation and does not change the pinned navigation count.
+		await page.trackEvents('click', 'input', 'keydown');
 		await context.expect.page.count(page, SUPER_PRODUCTIVITY_JOURNEY.taskListTask, 2);
 		const storeOrderAfter = await readOrder();
 		if (canonicalize(storeOrderAfter) !== canonicalize(renderedOrderAfter))
@@ -5571,11 +5580,16 @@ const angularSuperProductivitySpec: AppSpec = {
 		// Into the current project's settings through the header control, and the theme
 		// config-section expanded so its own controls render. The scroll on this route
 		// is measured like every other stage; the application pins its drawer container
-		// to the viewport here too, so it records as absence.
+		// to the viewport here too, so it records as absence. The auto-contrast
+		// checkbox is counted AFTER the expand, not before: the config-section is a
+		// collapsible whose body is not in the DOM while it is collapsed (measured
+		// u20c2q — the asserting drive read 0 for the checkbox before the expand and 1
+		// after, on both lanes), so the assertion that the theme section carries its
+		// one checkbox is the post-expand reading.
 		await page.click(settingsChange.settingsNav);
-		await context.expect.page.count(page, settingsChange.theme.autoContrastControl, 1);
 		await measure('/#/project-settings (the settings-change leg)');
 		await page.click(settingsChange.theme.expandControl);
+		await context.expect.page.count(page, settingsChange.theme.autoContrastControl, 1);
 
 		// The before-read: the contrast custom property as it resolves under the
 		// default auto-contrast theme — a dark contrast.
@@ -5699,7 +5713,7 @@ const angularSuperProductivitySpec: AppSpec = {
 		};
 		return {
 			assertions: [
-				'the work view rendered on the application own declared `#/work-view` route, under its own `work-view` host tag, with two task lists and no task in either',
+				'the work view rendered on the application own declared `#/work-view` route, under its own `work-view` host tag, with one task list and no task in it',
 				'a task created through the application own add-task bar by typing a title and committing it with Enter, landing in today list rather than in the backlog',
 				'the created task rendered in the task list with the typed title read back off the page',
 				'a second task created the same way, the two rendering first-created on top, which is the order leg (b) reorders from',

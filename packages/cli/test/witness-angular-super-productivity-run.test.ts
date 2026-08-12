@@ -197,7 +197,7 @@ describe('the two journey legs', () => {
 		expect(journey.taskListTask.startsWith(`${journey.taskList} `)).toBe(true);
 		expect(journey.taskTitle.startsWith(`${journey.taskListTask} `)).toBe(true);
 		expect(journey.taskTitleText.length).toBeGreaterThan(0);
-		expect(journey.taskLists).toBe(2);
+		expect(journey.taskLists).toBe(1);
 	});
 });
 

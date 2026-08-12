@@ -420,6 +420,35 @@ describe('Angular Super Productivity Witness receipt', () => {
 		);
 	});
 
+	it('keeps the behavior digest invariant to per-lane probe geometry, but not to a CSS property', () => {
+		// The Angular Material pre-MDC→MDC lift moves the toolbar height (48→56) and
+		// the scrollbar-driven side-nav width by a few pixels while every CSS property
+		// the probes read resolves identically (measured u20c2q, both lanes). Those
+		// probes' properties agree, so they cannot be declared differences; the shared
+		// behavior digest must therefore ignore the geometry — exactly as
+		// `assertRenderedStyleDifferences` already does — while still reacting to any
+		// CSS property that actually moved.
+		const base = run('baseline', 1);
+		const geometryOnly = structuredClone(base);
+		for (const probe of geometryOnly.renderedStyles.probes) {
+			probe.width += 8;
+			probe.height += 8;
+		}
+		expect(
+			witnessAngularSuperProductivityBehaviorDigest(geometryOnly, DECLARED_DIFFERENCE_LABELS),
+		).toBe(witnessAngularSuperProductivityBehaviorDigest(base, DECLARED_DIFFERENCE_LABELS));
+
+		const propertyChanged = structuredClone(base);
+		const agreeing = propertyChanged.renderedStyles.probes.find(
+			(probe) => !DECLARED_DIFFERENCE_LABELS.includes(probe.label),
+		)!;
+		const property = Object.keys(agreeing.properties)[0]!;
+		agreeing.properties[property] = `${agreeing.properties[property]}-moved`;
+		expect(
+			witnessAngularSuperProductivityBehaviorDigest(propertyChanged, DECLARED_DIFFERENCE_LABELS),
+		).not.toBe(witnessAngularSuperProductivityBehaviorDigest(base, DECLARED_DIFFERENCE_LABELS));
+	});
+
 	it('rejects a rebound source, build lane or determinism record', () => {
 		// The published constants are frozen, and their receipt fields inherit that
 		// readonly-ness by type. Reaching past it is exactly what these cases are

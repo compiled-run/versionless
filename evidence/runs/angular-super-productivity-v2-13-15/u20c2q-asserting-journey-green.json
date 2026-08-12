@@ -1,0 +1,108 @@
+{
+  "schemaVersion": "versionless.angular-super-productivity-asserting-journey-green.v1",
+  "unit": "lrapr-t006/u20c2q-asserting-journey-green",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "result": "asserting-journey-drives-green-both-lanes-one-shared-behavior-digest",
+  "supersedes": {
+    "record": "none",
+    "note": "This is not a build record and rebuilds nothing. It records the calibration of the five-leg ASSERTING witness journey (executeAngularSuperProductivityWitnessRun) against the two bound lanes, and every JOURNEY pin the asserting run corrected from a value the calibration driver had only measured, not asserted."
+  },
+  "premise": {
+    "found": "a5366f7 added the runner scaffolding and found the asserting journey RED-fails at boot (taskLists=2). The 'five legs green' claim came from the CALIBRATION driver, not the asserting journey, so every JOURNEY pin needed validation against a real asserting run.",
+    "method": "RED-first drive of the real asserting journey on baseline dist-run2 AND migrated dist-25, each pin the asserting run contradicted corrected ONLY to the measured value, measured on both lanes.",
+    "lanes": {
+      "baseline": ".versionless/cache/angular-super-productivity-v2-13-15-baseline/dist-run2",
+      "migrated": ".versionless/stage/angular-super-productivity-v2-13-15-u18b/dist-25"
+    },
+    "driver": "packages/cli/src/fixture/angular-super-productivity-u20c2q-drive.ts (asserting drive) + angular-super-productivity-u20c2q-dom-probe.ts (raw-DOM measurement of leg-d theme section)"
+  },
+  "pinCorrections": [
+    {
+      "pin": "WITNESS_ANGULAR_SUPER_PRODUCTIVITY_JOURNEY.taskLists",
+      "from": 2,
+      "to": 1,
+      "measuredOn": ["baseline", "migrated"],
+      "measurement": "the asserting boot assertion read exactly 1 `task-list` element throughout on both lanes; the done-tasks list is a second `task-list` the work view mounts only once a task is marked done, which this journey never does.",
+      "kind": "app-shape-fact-pin-correction",
+      "recordedComment": "receipts constant + drive-side comment + assertion string + wiring test updated"
+    },
+    {
+      "pin": "leg-(d) drive order: count(theme.autoContrastControl) vs page.click(theme.expandControl)",
+      "from": "counted the theme-section mat-checkbox BEFORE expanding the collapsible section",
+      "to": "count AFTER the expand",
+      "measuredOn": ["baseline", "migrated"],
+      "measurement": "the config-section is a collapsible whose body is not in the DOM while collapsed; the asserting drive read 0 checkboxes before the expand and 1 after, on both lanes. The calibration driver already expanded before reading; the asserting journey had the two steps out of order.",
+      "kind": "drive-order-correction (real-app-run.ts)"
+    },
+    {
+      "pin": "WITNESS_ANGULAR_SUPER_PRODUCTIVITY_SETTINGS.theme.control and JOURNEY.settingsChange.theme.control",
+      "from": "section.config-section:nth-of-type(2) mat-select",
+      "to": "section.config-section:nth-of-type(2) mat-select[id*=\"huePrimary\"]",
+      "measuredOn": ["baseline", "migrated"],
+      "measurement": "unchecking isAutoContrast reveals THREE hue selects (huePrimary, hueAccent, hueWarn); the bare `mat-select` selector matched 3, not 1. formly stamps the field key into a stable id substring — `formly_17_select_huePrimary_4` (era) / `formly_15_select_huePrimary_4` (migrated); the numeric prefix differs by lane, the `huePrimary` substring does not — so `mat-select[id*=\"huePrimary\"]` uniquely resolves the primary control whose threshold moves `--palette-primary-contrast-50`.",
+      "kind": "mis-calibrated-selector-correction"
+    },
+    {
+      "pin": "leg-(e) drive: event tracking across the document reload",
+      "from": "trackEvents armed once at boot; the final outcome assertion observed 0 input and 0 keydown",
+      "to": "re-arm page.trackEvents('click','input','keydown') immediately after page.reload()",
+      "measuredOn": ["baseline", "migrated"],
+      "measurement": "a full document reload replaces the page and destroys the witness event-tracking global (syncTrackedEvents reads the CURRENT global). Re-arming after the reload makes leg-(d)'s genuine input (typing the new project title) and keydown (the `w` shortcut), both after the reload, the occurrences the end-of-journey outcome assertion measures. Not a navigation; the navigations=4 pin is unchanged.",
+      "kind": "drive-correction (real-app-run.ts)"
+    },
+    {
+      "pin": "witnessAngularSuperProductivityBehaviorDigest renderedStyleProjection: probe geometry",
+      "from": "the shared behavior digest folded in each agreeing probe's full geometry (width/height)",
+      "to": "the digest projects only each agreeing probe's {label, selector, properties}",
+      "measuredOn": ["baseline", "migrated"],
+      "measurement": "with all four other legs green, the two lanes' behavior digests diverged on exactly one field: renderedStyles.agreeing. Every CSS property both probes read resolved identically, but the Angular Material pre-MDC->MDC lift moves the main-header geometry (height 48 era / 56 migrated; width 1080 / 1083) and the scrollbar-driven side-nav width (199 / 196). The schema's own rendered-style parity (assertRenderedStyleDifferences) compares `properties` alone, and the declared-difference mechanism can only speak about a probe whose properties differ — these probes' properties agree, so they cannot be declared. The geometry is lane-dependent rendered appearance, not behaviour; the digest is aligned to the schema's properties-only parity definition. Geometry stays in the run and assertRenderedStyles still bounds it non-negative per probe.",
+      "kind": "digest-projection-alignment (packages/core, properties-only, matching assertRenderedStyleDifferences)",
+      "notADeclaredDifference": "side-navigation is the typeface anchor (WITNESS_ANGULAR_SUPER_PRODUCTIVITY_TYPEFACE_PROBE) and its font-family agrees across lanes; it must NOT be a declared difference, and its properties agree, so declaring it was both forbidden and impossible."
+    }
+  ],
+  "legsDrivenGreen": [
+    "(a) create a task through the app's own add-task bar into today's list (not the backlog)",
+    "(b) genuine dragula reorder reversing the created pair, store agreeing with the rendered list",
+    "(c) header play-button timer flip play_arrow->pause->play_arrow with one current task then cleared",
+    "(d) settings-change: second project created + switched (title flips), huePrimary threshold driven to flip --palette-primary-contrast-50 dark->light, `w` shortcut back to the work view",
+    "(e) real document reload rehydrating the two tasks in drag-settled order from IndexedDB, key census grown by the four default-project state documents"
+  ],
+  "finalGreenMeasurements": {
+    "sharedBehaviorDigest": "a38d983e921fd5dec9e3d18e0726d75f3c011deea1b389ffd0d4291c3f26f8b8",
+    "behaviorDigestParity": "baseline == migrated (identical; lane-to-lane equality also proves the digest carries no per-run nondeterminism)",
+    "baseline": {
+      "result": "pass",
+      "cleanPage": true,
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0,
+      "successfulNonLoopback": 0,
+      "routes": ["/#/work-view", "/#/work-view", "/#/project-settings", "/#/work-view"],
+      "rawDigest": "08adced8fcaaa8ad14f4196c7f5e1b6d06a46dd5fe9c2ebb64217c2fe26de5c0"
+    },
+    "migrated": {
+      "result": "pass",
+      "cleanPage": true,
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0,
+      "successfulNonLoopback": 0,
+      "routes": ["/#/work-view", "/#/work-view", "/#/project-settings", "/#/work-view"],
+      "rawDigest": "91ed08ee84073cffc5b920b782d1b836963c864b0e4e6f0a3786afa6d68a932d"
+    },
+    "rawDigestNote": "rawDigests differ by construction — the two lanes' byte inventories are eight majors of bundler apart; only the lane-independent behavior digest is required to agree, and it does."
+  },
+  "migratedLaneRegressionStatus": {
+    "regression": "the u20c2a split.component Ivy-input-order TypeError (classList)",
+    "status": "gone on the served dist-25",
+    "evidence": "the migrated asserting journey drove all five legs with pageErrors 0 and cleanPage true — the template-binding-reorder capability (u20c2c) that u20c2e proved on the rebuilt dist-25 holds under the full asserting drive."
+  },
+  "declaredPerLaneDifferencesUnchanged": [
+    "typeface anchored on side-navigation resolves 'Roboto, sans-serif' identically in both lanes; the two font-family style differences (header-icon-button, document-body) stay in WITNESS_ANGULAR_SUPER_PRODUCTIVITY_MEASURED_STYLE_DIFFERENCES",
+    "leg-(d) theme rgb format is per-lane (baseline bare triple '0,0,0'->'255,255,255'; migrated 'rgba(0, 0, 0, .87)'->'rgba(255, 255, 255, 1)') — only the FACT of the shift travels in the behavior digest"
+  ],
+  "notEstablished": [
+    "This unit publishes no witness receipt; the deliverable is the green asserting journey, the corrected pins and this calibration record. The publish is the next unit.",
+    "The asserting journey was driven pass 1 on each lane by the u20c2q driver; the lane-to-lane behavior-digest equality demonstrates freedom from per-run nondeterminism, which is what a second pass would otherwise establish."
+  ]
+}
