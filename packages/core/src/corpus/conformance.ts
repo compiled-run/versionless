@@ -116,8 +116,11 @@ import {
 } from '../receipts/witness-angular-super-productivity.ts';
 import {
 	HOLDOUT_REACT_CYPRESS_RWA_APPLICATION,
+	HOLDOUT_REACT_CYPRESS_RWA_RECEIPT_PATH,
 	holdoutReactCypressRwaCorpusRecord,
+	holdoutReactCypressRwaRerunCorpusRecord,
 	verifyHoldoutReactCypressRwaEvidence,
+	verifyHoldoutReactCypressRwaRerunEvidence,
 } from '../receipts/holdout-react-cypress-rwa.ts';
 
 export const CORPUS_CONFORMANCE_SCHEMA = 'versionless.corpus-conformance.v1' as const;
@@ -417,6 +420,23 @@ async function holdoutLedger(
 		throw new Error('Aggregate holdout record differs from its verified receipt');
 	if (derived.countedInLineageNumerator !== false || derived.outcome !== 'failed')
 		throw new Error('Corpus holdout record misstates its counting or outcome');
+	// The T017 re-run supersedes the tranche-one FAIL by reference. The published
+	// holdout membership above stays the immutable tranche-one record; the re-run
+	// is bound here as a superseding verification so the corpus ledger reflects
+	// its outcome every gate run — proven, still counted in no numerator, and
+	// pointing back at the record it supersedes rather than overwriting it.
+	const rerunVerified = await verifyHoldoutReactCypressRwaRerunEvidence(root);
+	const rerun = holdoutReactCypressRwaRerunCorpusRecord(rerunVerified.receipt);
+	if (rerun.countedInLineageNumerator !== false || rerun.outcome !== 'failed')
+		throw new Error('Corpus holdout re-run record misstates its counting or outcome');
+	if (
+		rerun.supersedes !== HOLDOUT_REACT_CYPRESS_RWA_RECEIPT_PATH ||
+		rerun.supersededDigest !== verified.receipt.integrity.canonicalDigest ||
+		rerun.priorGapNowHandled !== true
+	)
+		throw new Error('Corpus holdout re-run must supersede the tranche-one receipt by reference');
+	if (rerunVerified.receipt.capabilityAdvance.nowHandledByFrozenCapability !== true)
+		throw new Error('Corpus holdout re-run must record the prior gap as handled');
 	return [derived as unknown as Record<string, unknown>];
 }
 

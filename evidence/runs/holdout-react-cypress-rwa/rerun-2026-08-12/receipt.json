@@ -1,0 +1,201 @@
+{
+  "schemaVersion": "versionless.holdout-react-cypress-rwa-rerun.v1",
+  "role": "holdout",
+  "holdoutOutcome": "failed",
+  "reason": "missing-export tolerance for a self-inconsistent dependency ES module",
+  "unit": "lrapr-t017/h1-cypress-rwa-holdout-rerun",
+  "fixture": "react-cypress-rwa",
+  "application": "cypress-realworld-app",
+  "framework": "react",
+  "supersedes": {
+    "unit": "lrapr-t008/hx2-migration-under-freeze",
+    "receipt": "evidence/runs/holdout-react-cypress-rwa/receipt.json",
+    "receiptDigest": "7ec6f18b27d2967cd533ba89505e8a76590c1866aec8bd7a8d8543cd87743aae",
+    "priorFrozenFingerprint": "d9f75ef677cb850f664cc188abf77b8ebfd24e84cb58d147b74e9bbaa143eb77",
+    "priorReason": "non-UTF-8 module source decoding",
+    "priorGapNowHandled": true,
+    "note": "The tranche-one FAIL receipt is immutable and superseded by reference only. This re-run is a new dated record against the re-frozen adapters."
+  },
+  "source": {
+    "repository": "https://github.com/cypress-io/cypress-realworld-app",
+    "ref": "refs/tags/v1.0.18",
+    "revision": "f6b5cf3a1799998dab71181eeed59460f8ada5f4",
+    "archiveSha256": "bd9319272dabc1e7263a0186e0aaae011f6219e6e106363d2c89426f9357b315",
+    "frontendRoot": ".",
+    "license": "MIT",
+    "react": "17.0.2",
+    "reactScripts": "4.0.3",
+    "webpack": "4.44.2",
+    "typescript": "4.3.4"
+  },
+  "runEvidence": [
+    {
+      "path": "evidence/runs/react-cypress-rwa/rerun-2026-08-12/build-profile.json",
+      "sha256": "981fbff5b2c8a4e257544bf6ba6abb25334c686fd56605edd6e0a89f4795d1ae"
+    },
+    {
+      "path": "evidence/runs/react-cypress-rwa/rerun-2026-08-12/run.md",
+      "sha256": "33d9cb4cfee97a2317b207e74480813e561ad9eac03aec41f6daa48816e45d26"
+    },
+    {
+      "path": "evidence/runs/react-cypress-rwa/rerun-2026-08-12/migrated-error.log",
+      "sha256": "6dd02948f7dd8bb2d6b140ade19e318dee8948fc5f0b91ed4d44d514dd5ac435"
+    }
+  ],
+  "frozenAdapter": {
+    "composition": "createCraViteAdapter, applied as it stands",
+    "compositeFingerprint": "5de7df565fb8e445a45f9f8f43eac27b80b71189d59e4df243e93471406a260c",
+    "subtrees": [
+      "packages/frameworks/react",
+      "packages/frameworks/angular",
+      "packages/core/src/migrations",
+      "packages/core/src/bundlers",
+      "packages/core/src/analysis"
+    ],
+    "recomputedByThisUnit": true,
+    "bytesChanged": 0,
+    "changesProposedAndExecuted": 0,
+    "redBuildPatchedAround": false,
+    "genericCapabilitiesOnly": true,
+    "holdoutSpecificConfiguration": "none",
+    "harnessBranchedOnHoldoutIdentity": false
+  },
+  "capabilityAdvance": {
+    "priorBlocker": "non-UTF-8 module source decoding (faker 5.5.3 ISO-8859-1 locale file)",
+    "nowHandledByFrozenCapability": true,
+    "frozenCapability": "craModuleSourceEncoding — the generic CRA non-UTF-8 module source decoding capability, now inside the frozen react adapter",
+    "modulesTransformedTrancheOne": 10181,
+    "modulesTransformedRerun": 10182,
+    "evidence": "Tranche-one stopped DURING the transform phase, unable to load node_modules/faker/lib/locales/it/name/first_name.js (the ISO-8859-1 file). The re-run transforms that file (module count advances by one, from 10181 to 10182) and completes the entire transform phase, reaching the rendering-chunks stage before failing on a strictly later, different demand. The faker non-UTF-8 blocker is handled by the frozen capability."
+  },
+  "lanes": {
+    "sharedClosure": {
+      "bothLanesMaterializedFromTheSameExtractedTree": true,
+      "bothLanesInstalledFromTheSameFrozenLockfile": true,
+      "lockfileSha256": "34f0c1b71d3ed8747121f07fb0dd74a8b1269f82967109f951702d362214e822",
+      "manifestSha256": "8ee4252ce4ec8f666f0de3a3bb4b9e1dcecdd1e18f4c91f13221cf0965e96a8b",
+      "statement": "Both lanes were materialized from the same digest-verified extraction and installed the same committed yarn.lock under --frozen-lockfile, so the only difference between them is the bundler, not the dependency closure. The closure was already resident from the ingest; no new network install was required for this re-run and every build ran offline."
+    },
+    "baseline": {
+      "outcome": "green",
+      "command": "yarn build:ci",
+      "node": "14.16.1",
+      "declaredBy": [
+        ".nvmrc",
+        ".node-version"
+      ],
+      "platform": "darwin-x64 executed on darwin-arm64 through Rosetta 2",
+      "builds": 2,
+      "byteStableAcrossRebuilds": true,
+      "laneDigest": "57cea24966c61963914da814e8348c970f11468127228c070def6c6472980028",
+      "secondLaneDigest": "57cea24966c61963914da814e8348c970f11468127228c070def6c6472980028",
+      "reproducesTrancheOneBaseline": true,
+      "fileCount": 84,
+      "digestScheme": "sha256(canonicalize(files))"
+    },
+    "migrated": {
+      "outcome": "red",
+      "command": "vite build --config fixtures/react-cypress-rwa/vite.config.ts",
+      "node": "24.15.0",
+      "vite": "8.0.16",
+      "bundler": "rolldown 1.0.3",
+      "attempts": 2,
+      "stableAcrossAttempts": true,
+      "exitCode": 1,
+      "modulesTransformedBeforeFailure": 10182,
+      "failurePhase": "rendering chunks (binding resolution), after the transform phase completed",
+      "demands": [
+        {
+          "code": "MISSING_EXPORT",
+          "module": "node_modules/react-virtualized/dist/es/WindowScroller/WindowScroller.js",
+          "importer": "node_modules/react-virtualized/dist/es/WindowScroller/utils/onScroll.js",
+          "line": 74,
+          "column": 10,
+          "detail": "\"bpfrpt_proptype_WindowScroller\" is not exported by node_modules/react-virtualized/dist/es/WindowScroller/WindowScroller.js"
+        }
+      ],
+      "outputProduced": false
+    }
+  },
+  "identityProof": {
+    "statement": "Both attempts exited the same way with the same itemized demand, so the red is a measurement rather than a flake.",
+    "baselineAttempts": 2,
+    "baselineDigestsIdentical": true,
+    "migratedAttempts": 2,
+    "migratedDemandsIdentical": true,
+    "demandDigest": "f07a56c46e6b23720ada6b3a3d34c2aed637b31c84b7442c81892a0c6fa196e8"
+  },
+  "finding": {
+    "missingCapability": "missing-export tolerance for a self-inconsistent dependency ES module",
+    "verdict": "the frozen create-react-app adapter does not yet carry this application: one further, strictly-later generic gap remains",
+    "statement": "react-virtualized 9.22.3 ships an ES-module build whose files import babel-plugin-flow-react-proptypes marker bindings (bpfrpt_proptype_*) that the corresponding modules never export. node_modules/react-virtualized/dist/es/WindowScroller/utils/onScroll.js imports { bpfrpt_proptype_WindowScroller } from ../WindowScroller.js, but WindowScroller.js exports no such name. webpack 4 tolerated an import of a non-existent named ESM binding by resolving it to undefined, so the baseline builds. Vite 8's bundler (rolldown) treats a missing named export as a hard error and refuses to render the chunk. The frozen composition has no capability covering dangling named-export tolerance, so the build stops.",
+    "exactDemand": {
+      "code": "MISSING_EXPORT",
+      "module": "node_modules/react-virtualized/dist/es/WindowScroller/WindowScroller.js",
+      "importer": "node_modules/react-virtualized/dist/es/WindowScroller/utils/onScroll.js",
+      "line": 74,
+      "column": 10,
+      "construct": "import { bpfrpt_proptype_WindowScroller } from \"../WindowScroller.js\";",
+      "symbol": "bpfrpt_proptype_WindowScroller",
+      "compilerText": "\"bpfrpt_proptype_WindowScroller\" is not exported by \"node_modules/react-virtualized/dist/es/WindowScroller/WindowScroller.js\"."
+    },
+    "offendingFile": {
+      "path": "node_modules/react-virtualized/dist/es/WindowScroller/WindowScroller.js",
+      "package": "react-virtualized@9.22.3",
+      "bytes": 10304,
+      "sha256": "e1ca7edf3407b5e97e106986a792a0fe4c0141f7d347041a7b9e626a1d610458",
+      "exportsTheDemandedName": false,
+      "note": "WindowScroller.js declares no export named bpfrpt_proptype_WindowScroller; no file in the react-virtualized ES build exports it."
+    },
+    "importerFile": {
+      "path": "node_modules/react-virtualized/dist/es/WindowScroller/utils/onScroll.js",
+      "bytes": 2354,
+      "sha256": "101ed7b09c5adefb83e8ab5044024f3a3f1488ff9f9500c339fbd28a57a7283f"
+    },
+    "scopeOfDefect": {
+      "danglingImportFilesInEsBuild": 28,
+      "note": "28 files across react-virtualized's dist/es build carry the same dangling bpfrpt_proptype_* import pattern; this is the first one rolldown resolves and rejects."
+    },
+    "reachedFromApplicationCode": {
+      "importer": "src/components/TransactionInfiniteList.tsx",
+      "construct": "import { InfiniteLoader, List, Index } from \"react-virtualized\";",
+      "note": "This is production application source (the transaction infinite-scroll list), not test-only code, so react-virtualized is genuinely in the browser module graph."
+    },
+    "whyThisIsNotAnAdapterBug": "The adapter's generic capabilities are about module semantics and byte-level decoding: tilde CSS specifiers, webpack's sloppy-mode CommonJS wrapper, webpack's Node core shim table, the ambient global identifier, public directory replication, and non-UTF-8 source decoding. Dangling named-export tolerance is a distinct semantic: it lives in the bundler's binding-resolution stage, where an import of a name a module never exported is either resolved to undefined (webpack) or rejected (rolldown). Nothing in the frozen composition is positioned to intervene there.",
+    "actionTaken": "none. Recorded as a finding. No adapter change was proposed or executed."
+  },
+  "observedButNotFatal": {
+    "externalizedNodeCoreModules": [
+      {
+        "module": "fs",
+        "importer": "node_modules/dotenv/lib/main.js"
+      }
+    ],
+    "note": "Vite externalized fs for the browser where dotenv requires it, exactly as in tranche-one. The adapter's shim table deliberately omits the specifiers webpack itself emitted an empty module for, so this is reported rather than resolved. It is a warning, not the failure; the build passed it and transformed all 10182 modules before stopping at the rendering-chunks stage."
+  },
+  "applicationInfluence": {
+    "handEditedSourceFiles": [],
+    "applicationFilesChanged": 0,
+    "adapterBytesChanged": 0,
+    "attestation": "The holdout influenced nothing. Zero adapter bytes changed and zero application source files were hand-edited; the red build was recorded, not repaired."
+  },
+  "parity": {
+    "comparable": false,
+    "reason": "Build-level parity needs two built lanes. Only the baseline built; the migrated lane produced no output at all (only the replicated public assets were written before the build failed at rendering chunks). The baseline inventory is recorded in full so a future comparison has a fixed reference.",
+    "declaredDifferences": [
+      "The baseline build is a webpack 4 create-react-app production build; the migrated lane produced no JavaScript output."
+    ]
+  },
+  "nonclaims": [
+    "No claim that this application can be migrated by the frozen adapter. It cannot, at this revision, and that is the recorded result.",
+    "No claim that a single additional capability would make it green: the build stopped at the first dangling-export module rolldown rejected, so any demand behind that point is unobserved.",
+    "No runtime, boot, or behavioural parity is claimed. The migrated lane never produced a bundle to boot.",
+    "No claim about the four external auth provider modes; the local passport-session mode is the only one exercisable offline and no lane exercised it.",
+    "The baseline lane is a build measurement only. It was not booted in this unit.",
+    "No browser evidence exists for either lane in this re-run. No journey ran, no page was loaded, and nothing is claimed about behavior."
+  ],
+  "integrity": {
+    "algorithm": "sha256",
+    "canonicalDigest": "b64cd0a929c32e37d6ee1874357ae580a39bc1517adc24dbfb5551aabc44cac6"
+  }
+}
