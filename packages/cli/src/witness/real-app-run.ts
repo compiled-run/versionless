@@ -2456,6 +2456,14 @@ const WITNESS_ANGULAR_TINY_TRANSLATOR_MIGRATED_SEAMS = Object.freeze([
  * any other error would fail the run rather than pass quietly. The
  * failed-request inventories stay empty: a 400 is an answered request, not a
  * failed one, and no request the browser makes is allowed to fail.
+ *
+ * The counts are two, not one, and that is measured rather than doubled for
+ * safety: the application attempts the registration on every document load, and
+ * this journey performs two — the initial load and the online reload the
+ * persistence claim rests on. Each load produces the browser's own fetch failure
+ * and the framework's own report of the rejected registration, so each message
+ * is pinned at exactly two occurrences and a lane that stopped attempting the
+ * registration on either load fails the run.
  */
 /**
  * The registration the application attempts, exactly as it asks for it: the
@@ -2478,12 +2486,12 @@ export const WITNESS_ANGULAR_TINY_TRANSLATOR_CONSOLE_ERRORS: Record<
 	readonly WitnessConsoleErrorInventoryEntry[]
 > = {
 	baseline: [
-		{ message: TT_SERVICE_WORKER_FETCH_ERROR, count: 1 },
-		{ message: TT_ERA_SERVICE_WORKER_REGISTRATION_ERROR, count: 1 },
+		{ message: TT_SERVICE_WORKER_FETCH_ERROR, count: 2 },
+		{ message: TT_ERA_SERVICE_WORKER_REGISTRATION_ERROR, count: 2 },
 	],
 	migrated: [
-		{ message: TT_SERVICE_WORKER_FETCH_ERROR, count: 1 },
-		{ message: TT_MIGRATED_SERVICE_WORKER_REGISTRATION_ERROR, count: 1 },
+		{ message: TT_SERVICE_WORKER_FETCH_ERROR, count: 2 },
+		{ message: TT_MIGRATED_SERVICE_WORKER_REGISTRATION_ERROR, count: 2 },
 	],
 };
 export const WITNESS_ANGULAR_TINY_TRANSLATOR_FAILED_REQUESTS: Record<
@@ -4699,16 +4707,18 @@ const angularTinyTranslatorSpec: AppSpec = {
 	 * content rather than an `integrity.canonicalDigest`, so binding it by file
 	 * bytes is the honest binding rather than a looser one.
 	 *
-	 * It is u19f, not u17d, because `dist-11` is u19f's root. u17d's `dist-7` is
-	 * the green deterministic build whose artifact never bootstraps.
+	 * It is u19k, the end of a chain of three: u17d's `dist-7` is the green
+	 * deterministic build whose artifact never bootstraps, u19f's `dist-11` is the
+	 * one that mounts and silently discards a typed translation, and `dist-13` is
+	 * the one that mounts and keeps it.
 	 */
 	canonicalReceipt:
-		'evidence/runs/angular-tiny-translator-v0-12-0/u19f-localize-boot-green-lane.json',
-	canonicalDigest: '46c8494c19e42cfeb19d9c47261be9b9182906d36aa3798e96e5adbedcd3dbc8',
+		'evidence/runs/angular-tiny-translator-v0-12-0/u19k-cva-legacy-disabled-state-lane.json',
+	canonicalDigest: '98713ed1530d73f1f0801faa318d6b22a5783a1c2d98efeef1206a8cb1dd5771',
 	canonicalBinding: 'file-sha256',
 	sources: {
 		baseline: '.versionless/cache/angular-tiny-translator-v0-12-0-baseline/app/dist/rebuild-1',
-		migrated: '.versionless/stage/angular-tiny-translator-v0-12-0-u17b/dist-11',
+		migrated: '.versionless/stage/angular-tiny-translator-v0-12-0-u17b/dist-13',
 	},
 	initialRoute: TINY_TRANSLATOR_INITIAL_ROUTE,
 	viewport: TINY_TRANSLATOR_VIEWPORT,
@@ -4889,6 +4899,18 @@ const angularTinyTranslatorSpec: AppSpec = {
 		// The reviewed state itself, read back through the filter that does show it:
 		// all three units, the reviewed one first, carrying the state the reviewer
 		// committed.
+		//
+		// Measured on both lanes, stage by stage, by
+		// `packages/cli/src/fixture/angular-tiny-translator-allunits-probe-run.ts`:
+		// the lanes agree at every stage of the reviewer half — three units on the
+		// application's default `Untranslated` filter, two once the translator
+		// commits, one under `Review needed`, none once the reviewer commits, and
+		// three again with `All units` selected and `State final` on the page. The
+		// earlier reading of two here was this journey clicking the radio HOST
+		// rather than its label, which selects nothing: the list stayed on
+		// `Untranslated`, and two is exactly what that filter shows at this point.
+		// The count below is the application's own answer once the filter it was
+		// asked for is the one it is on.
 		await page.click(TT_FILTER_ALL);
 		await context.expect.page.count(
 			page,
@@ -4965,12 +4987,34 @@ const angularTinyTranslatorSpec: AppSpec = {
 		// browser local storage, and what comes back is what the journey put
 		// there rather than a seed the harness supplied.
 		await page.reload();
+		// Measured on both lanes, stage by stage, by
+		// `packages/cli/src/fixture/angular-tiny-translator-allunits-probe-run.ts`:
+		// the reload restores the project out of local storage and the list comes
+		// back on the application's OWN default filter — `Untranslated units` — so
+		// what it renders is the two units nobody translated, not all three. The
+		// unit the reviewer finalized is restored and simply outside that view,
+		// which is the filter doing its job rather than data going missing; the two
+		// steps below widen the view and read it back. Asserting three here was
+		// asserting a filter state the application never restores.
+		await context.expect.page.count(
+			page,
+			TT_UNIT_LIST_ITEM,
+			WITNESS_ANGULAR_TINY_TRANSLATOR_FILE_INPUT_FIXTURE.transUnits - 1,
+		);
+		await page.click(TT_FILTER_ALL);
 		await context.expect.page.count(
 			page,
 			TT_UNIT_LIST_ITEM,
 			WITNESS_ANGULAR_TINY_TRANSLATOR_FILE_INPUT_FIXTURE.transUnits,
 		);
+		// Measured: the restored list renders each unit's source and target
+		// truncated, so the typed translation is not on the page until the unit is
+		// opened. Opening it is what reads back both halves of the persistence
+		// claim — the text the translator typed and the state the reviewer
+		// committed, neither of which the harness put anywhere.
+		await page.click(`${TT_UNIT_LIST} mat-list-item:nth-of-type(1)`);
 		await context.expect.page.bodyText(page, { contains: TT_TRANSLATION_TEXT });
+		await context.expect.page.bodyText(page, { contains: 'State final' });
 		const keysAfterJourney = await storageKeys();
 		await measure(`${TINY_TRANSLATOR_TRANSLATE_ROUTE} (after the online reload)`);
 		checkpoints.push(
@@ -5033,7 +5077,7 @@ const angularTinyTranslatorSpec: AppSpec = {
 				'unit list narrowed by a typed substring and restored by a full clear',
 				'translation file exported through the application own downloader and the captured bytes carrying the typed translation',
 				'project tooltip reached by a genuine hover on the toolbar control',
-				'project and translation restored from browser local storage by an online reload',
+				'project restored from browser local storage by an online reload, on the application own default filter, and the typed translation and the reviewed state read back off the restored unit',
 				'a service-worker registration attempted at the literal `%BASE_HREF%ngsw-worker.js`, answered 400 and refused in both lanes, with nothing registered, installing, waiting, active, controlling or cached at any of the three checkpoints',
 				'clean page',
 			],
@@ -5596,12 +5640,16 @@ async function executeRun(
 					refusedServiceWorker: {
 						...completedJourney.refusedServiceWorker,
 						outputFiles: beforeInventory.serviceWorkers,
-						requests: differentialEvents.filter(
-							(event) =>
-								event.detail.serviceWorker === true ||
-								event.urlPath === '/sw.js' ||
-								event.urlPath === '/service-worker.js',
-						),
+						/**
+						 * The same projection the blocked-runtime shape uses. The wall
+						 * clock and the run-global sequence number are dropped because
+						 * they cannot reproduce; who observed the request, in what
+						 * phase, for which path and with what detail is identical run
+						 * to run. This is the first shape in which the difference is
+						 * visible: an application that never asks produces no requests
+						 * here, and this one produces the registration it is refused.
+						 */
+						requests: serviceWorkerRequests,
 						workerEvents: observerFinalization.workerEvents,
 					},
 				}),

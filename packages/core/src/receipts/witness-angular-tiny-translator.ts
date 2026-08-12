@@ -20,6 +20,8 @@ import type {
 	WitnessRealAppRun,
 	WitnessRenderedStyleEvidence,
 	WitnessRenderedStyleMeasurement,
+	WitnessServiceWorkerRequestEvent,
+	WitnessServiceWorkerTelemetry,
 } from './witness-real-app.ts';
 
 export const WITNESS_ANGULAR_TINY_TRANSLATOR_SCHEMA =
@@ -64,12 +66,15 @@ export const ANGULAR_TINY_TRANSLATOR_SOURCE = Object.freeze({
  * lane, not one arbitrary build of it, and the verifier below re-reads the
  * byte-identity claim out of the bound receipt rather than trusting this list.
  *
- * The migrated entry is `u19f`, not `u17d`. u17d's bytes are unchanged and it
- * remains the record of what it measured — a green, deterministic build — but
- * the artifact it published throws before Angular bootstraps, which is a thing
- * no build lane could see and a browser sees in a second. u19f supersedes it by
- * reference: same application source, two configuration files and one declared
- * package different, and an output root that mounts.
+ * The migrated entry is `u19k`, and the chain that leads to it is the point.
+ * u17d built a green, deterministic lane whose artifact throws before Angular
+ * bootstraps; u19f repaired the boot and published a root that mounts; a driven
+ * browser then found that the mounted application takes a typed translation
+ * nowhere. Each record's bytes are unchanged and each remains the record of what
+ * it measured — every supersession here is by reference, never by rewrite —
+ * because each was contradicted by a measurement the previous round could not
+ * make. u19k is the lane whose artifact both mounts and keeps what is typed into
+ * it, and it is the only migrated lane this proof is allowed to serve.
  */
 export const ANGULAR_TINY_TRANSLATOR_CANONICAL_RECEIPTS = Object.freeze([
 	Object.freeze({
@@ -85,14 +90,131 @@ export const ANGULAR_TINY_TRANSLATOR_CANONICAL_RECEIPTS = Object.freeze([
 	}),
 	Object.freeze({
 		lane: 'migrated',
-		path: 'evidence/runs/angular-tiny-translator-v0-12-0/u19f-localize-boot-green-lane.json',
-		schemaVersion: 'versionless.angular-tiny-translator-localize-lane.v1',
-		digest: '55e7fba39bf9b98400da6984aa7767484623d151d6036d2c29c04bd62971d41a',
-		sha256: '46c8494c19e42cfeb19d9c47261be9b9182906d36aa3798e96e5adbedcd3dbc8',
-		canonicalRoot: 'dist-11',
-		repeatedRoot: 'dist-12',
+		path: 'evidence/runs/angular-tiny-translator-v0-12-0/u19k-cva-legacy-disabled-state-lane.json',
+		schemaVersion: 'versionless.angular-tiny-translator-cva-lane.v1',
+		digest: '67ee98601be55f947ffec86cc1e00f3753b4deb2575c821cb3c6d12713c41135',
+		sha256: '98713ed1530d73f1f0801faa318d6b22a5783a1c2d98efeef1206a8cb1dd5771',
+		canonicalRoot: 'dist-13',
+		repeatedRoot: 'dist-14',
 		files: 524,
 		byteIdenticalSibling: true,
+	}),
+]);
+
+/**
+ * The migrated lane's supersession chain, published so a reader can see that the
+ * binding above is the end of a sequence of measurements rather than a choice.
+ *
+ * Every record in it is immutable and still on disk. Each was superseded by
+ * reference — the later record names the earlier one and says what it could not
+ * see — and each supersession was forced by a browser measurement, which is the
+ * whole argument this vertical makes: a build lane can be green, deterministic
+ * and byte-stable over a lane that does not work.
+ */
+export const ANGULAR_TINY_TRANSLATOR_MIGRATED_LANE_CHAIN = Object.freeze([
+	Object.freeze({
+		record: 'evidence/runs/angular-tiny-translator-v0-12-0/u17d-final-green-lane.json',
+		root: 'dist-7',
+		published: 'a green, deterministic, byte-stable production build of the eleven-major lift',
+		contradictedBy:
+			'a browser load: the artifact throws `process is not defined` before Angular bootstraps',
+	}),
+	Object.freeze({
+		record: 'evidence/runs/angular-tiny-translator-v0-12-0/u19f-localize-boot-green-lane.json',
+		root: 'dist-11',
+		published: 'the first migrated artifact of this cell that mounts and renders its own title',
+		contradictedBy:
+			'a driven browser: a translation typed into the editor never reaches the outer control, and the export carries the original text under a changed state',
+	}),
+	Object.freeze({
+		record:
+			'evidence/runs/angular-tiny-translator-v0-12-0/u19k-cva-legacy-disabled-state-lane.json',
+		root: 'dist-13',
+		published:
+			'the lane that mounts AND keeps what is typed into it: the discriminator that caught the loss agrees across both lanes',
+		contradictedBy: null,
+	}),
+]);
+
+/**
+ * The amendments this schema has taken, each one a claim it used to make that a
+ * measurement contradicted.
+ *
+ * An amendment is recorded rather than applied silently, because the corrected
+ * claim and the corrected receipt are the same object: a reader who only sees
+ * the current text cannot tell whether it was measured or assumed. Each entry
+ * names what was claimed, what was measured, what the schema does now, and the
+ * record the measurement lives in.
+ */
+export const WITNESS_ANGULAR_TINY_TRANSLATOR_RECORDED_AMENDMENTS = Object.freeze([
+	Object.freeze({
+		subject: 'service-worker registration',
+		claimed:
+			'the application never attempts a registration, so every run carries an empty observer trace and zero worker events',
+		measured:
+			'both lanes register at the literal `%BASE_HREF%ngsw-worker.js`, the request is answered 400, the registration is refused, and the browser still opens an observer record for the attempt',
+		amendment:
+			'the run carries a `refusedServiceWorker` shape instead: every settled fact of the zero-worker shape is still asserted — nothing registered, installing, waiting, active, controlling or cached at any of three checkpoints — and the attempt trace is recorded exactly, with every event required to name the script and the scope the application asked for',
+		record: 'evidence/runs/angular-tiny-translator-v0-12-0/u19d-witness-calibration-red.json',
+	}),
+	Object.freeze({
+		subject: 'console-error parity across the lanes',
+		claimed:
+			'the two lanes agree on their console-error inventories, so the inventory travels whole in the lane-independent behavior digest',
+		measured:
+			'each framework reports the SAME refused registration in its own words — Angular 5 lets it escape into zone.js as an uncaught in-promise error with a stack, Angular 16 catches it in `SwRegistrationOptions` and prints one line',
+		amendment:
+			'the membership is pinned per lane and checked exactly against the published per-lane inventory; only the policy, the total and the entry count travel in the parity digest, exactly as the mocked-seam membership already did',
+		record: 'evidence/runs/angular-tiny-translator-v0-12-0/u19d-witness-calibration-red.json',
+	}),
+	Object.freeze({
+		subject: 'the canonical migrated output root',
+		claimed:
+			'the migrated lane this proof serves is u17d’s `dist-7`, on the strength of a green, deterministic, byte-stable build',
+		measured:
+			'`dist-7` throws before Angular bootstraps, and `dist-11` — which mounts — silently discards a typed translation',
+		amendment:
+			'the binding moved twice, each time by reference and each time forced by a browser measurement; `dist-13` is the served root and the chain is published in full',
+		record:
+			'evidence/runs/angular-tiny-translator-v0-12-0/u19k-cva-legacy-disabled-state-lane.json',
+	}),
+]);
+
+/**
+ * The three findings this vertical's browser phase produced, and what each one
+ * cost to repair. They are carried in the receipt because they are the cell's
+ * result: the build lanes were green before any of them was known.
+ */
+export const WITNESS_ANGULAR_TINY_TRANSLATOR_MIGRATION_FINDINGS = Object.freeze([
+	Object.freeze({
+		finding: 'the migrated bundle threw `process is not defined` before Angular bootstrapped',
+		invisibleTo: 'both build lanes — green, deterministic and byte-stable over the same artifact',
+		foundBy: 'a browser load of the canonical output root',
+		cause: 'the era build inlined Node core globals the Angular 16 browser builder does not',
+		repair: 'the node-core-runtime-globals coherence capability, generic and cell-driven',
+		record: 'evidence/runs/angular-tiny-translator-v0-12-0/u19e-node-core-runtime-globals.json',
+	}),
+	Object.freeze({
+		finding: 'the migrated bundle then threw `$localize is not defined` at bootstrap',
+		invisibleTo: 'both build lanes',
+		foundBy: 'a browser load of the next canonical output root',
+		cause: "this application's templates are i18n-marked, and the Angular 16 compiler emits `$localize` tagged templates the bundle evaluates at run time where the era compiler substituted translations into its factories",
+		repair:
+			"the template-i18n-runtime capability, which reads the markers out of the compiler's own parse and declares the package and entry point the target cell publishes",
+		record:
+			'evidence/runs/angular-tiny-translator-v0-12-0/u19f-localize-boot-green-lane.json',
+	}),
+	Object.freeze({
+		finding:
+			'the mounted migrated application silently discarded a typed translation: the textarea went dirty, the outer control stayed pristine, and the export carried the ORIGINAL text under `state="final"`',
+		invisibleTo:
+			'both build lanes and the boot check — the artifact builds, mounts, renders and exports',
+		foundBy:
+			"the journey's own settled-reaction anchor: the application enables its undo control exactly when it has taken an edit, and on the migrated lane it never did",
+		cause: "the application's own `setDisabledState` rebuilds the `FormGroup` its debounced subscription watches; Angular 16 calls that method on every accessor as it attaches a control, and Angular 5 called it only for a control already disabled, so the latent bug never fired on the era cell. Both rival hypotheses were refuted by measurement — our own rxjs pipe translation by a positive control that emitted on time, and a dual-rxjs interaction by a closure census finding one runtime-reachable copy",
+		repair:
+			"the forms-legacy-call-set-disabled-state capability, which declares the vendor's own `callSetDisabledState: 'whenDisabledForLegacyCode'` switch on the modules that attach accessors and leaves the defective accessor exactly as its authors wrote it",
+		record: 'evidence/runs/angular-tiny-translator-v0-12-0/u19i-data-loss-cause.json',
 	}),
 ]);
 
@@ -347,10 +469,11 @@ export const WITNESS_ANGULAR_TINY_TRANSLATOR_DOWNLOAD_SURFACE = Object.freeze({
 export const WITNESS_ANGULAR_TINY_TRANSLATOR_ACCOMMODATIONS = Object.freeze({
 	manualMigrationSteps: 0,
 	inventory: Object.freeze({
-		record: 'evidence/runs/angular-tiny-translator-v0-12-0/u19f-localize-boot-green-lane.json',
+		record:
+			'evidence/runs/angular-tiny-translator-v0-12-0/u19k-cva-legacy-disabled-state-lane.json',
 		applicationFilesChanged: 10,
-		capabilities: 7,
-		note: 'Every edit was made by a generic capability reading the installed closure, the compiler or the application\u2019s own templates. Nine application files and five capabilities are itemised in u17d, which u19f supersedes by reference; the tenth file is the runtime-globals shim u19e generated, and the two capabilities added after u17d are the ones that made the artifact evaluate at all \u2014 node-core-runtime-globals and template-i18n-runtime. Those two also changed two configuration files, the workspace and the manifest, which are not application source and are itemised in u19e and u19f.',
+		capabilities: 8,
+		note: 'Every edit was made by a generic capability reading the installed closure, the compiler, the application\u2019s own templates or its own value accessors. Nine application files and five capabilities are itemised in u17d, which u19f supersedes by reference and u19k supersedes in turn; the tenth file is the runtime-globals shim u19e generated. The three capabilities added after u17d are the ones the browser phase forced \u2014 node-core-runtime-globals and template-i18n-runtime made the artifact evaluate at all, and forms-legacy-call-set-disabled-state made it keep what a translator types. The third changed no new file: it added an import and two configured module factories to the module that bootstraps, which is already one of the nine. The first two also changed two configuration files, the workspace and the manifest, which are not application source and are itemised in u19e and u19f.',
 	}),
 	journeyObligations: Object.freeze([
 		'FileReader-service parity: the migrated lane inserted a `typeof` guard where `FileReader.result` is typed `string | ArrayBuffer`, and the build lane recorded as a declared difference that nothing it ran observed the guarded statements. The browser proof must load a translation file through the application own file input in BOTH lanes and assert the parse is identical, which is what turns that declared difference into an observed one.',
@@ -394,7 +517,37 @@ export type WitnessAngularTinyTranslatorJourney = {
 	persistence: WitnessAngularTinyTranslatorPersistence;
 };
 
+/**
+ * The refused-registration evidence, recorded per run.
+ *
+ * This is the shape the first recorded amendment produced. Every settled fact of
+ * the zero-worker shape is still asserted here — nothing registered, installing,
+ * waiting, active, controlling the page or cached, at each of three checkpoints
+ * spanning the journey — and what is NOT asserted away is the attempt trace: a
+ * browser that refuses a registration still opens a record of the attempt, and
+ * pretending otherwise would have been a claim this application contradicts on
+ * every load. Each event is required to name the script and the scope the
+ * application asked for.
+ */
+export type WitnessAngularTinyTranslatorRefusedServiceWorker = {
+	attempt: { script: string; scopePath: string };
+	checkpoints: Array<{
+		phase: 'before-interactions' | 'after-interactions' | 'after-online-reload';
+		state: 'timeout';
+		registrations: 0;
+		controller: null;
+		cacheNames: [];
+		attemptEvents: WitnessServiceWorkerTelemetry['workerEvents'];
+	}>;
+	/** The worker scripts the build emitted, which for both lanes is none. */
+	outputFiles: Array<{ path: string; beforeSha256: string; afterSha256: string }>;
+	/** Every service-worker-scoped request the run observed, wall clock stripped. */
+	requests: WitnessServiceWorkerRequestEvent[];
+	workerEvents: WitnessServiceWorkerTelemetry['workerEvents'];
+};
+
 export type WitnessAngularTinyTranslatorRun = WitnessRealAppRun & {
+	refusedServiceWorker: WitnessAngularTinyTranslatorRefusedServiceWorker;
 	consoleErrorInventory: WitnessConsoleErrorInventory;
 	failedRequestInventory: WitnessFailedRequestInventory;
 	mockedNonLoopbackSeams: WitnessMockedNonLoopbackSeamInventory;
@@ -454,6 +607,25 @@ export type WitnessAngularTinyTranslatorReceipt = {
 	mockedSeams: Record<'baseline' | 'migrated', WitnessMockedNonLoopbackSeamEntry[]>;
 	fontSeamDifference: typeof WITNESS_ANGULAR_TINY_TRANSLATOR_FONT_SEAM_DIFFERENCE;
 	serviceWorkerAttempt: typeof WITNESS_ANGULAR_TINY_TRANSLATOR_SERVICE_WORKER_ATTEMPT;
+	/** The supersession chain behind the migrated lane this proof serves. */
+	migratedLaneChain: typeof ANGULAR_TINY_TRANSLATOR_MIGRATED_LANE_CHAIN;
+	/** What the browser phase found that no build lane could, and what repaired it. */
+	migrationFindings: typeof WITNESS_ANGULAR_TINY_TRANSLATOR_MIGRATION_FINDINGS;
+	/** The claims this schema used to make that a measurement contradicted. */
+	amendments: typeof WITNESS_ANGULAR_TINY_TRANSLATOR_RECORDED_AMENDMENTS;
+	/**
+	 * The outcome of the one obligation the build lanes handed this proof: the
+	 * declared FileReader difference, arbitrated by loading a file through the
+	 * application's own input in both lanes and comparing what it parsed.
+	 */
+	fileReaderArbitration: {
+		state: 'arbitrated-declared-difference';
+		obligation: string;
+		outcome: 'identical-parse-in-both-lanes';
+		parsedUnits: number;
+		parsedDigest: string;
+		inBehaviorDigest: true;
+	};
 	matIconDegradations: Record<'baseline' | 'migrated', WitnessAngularTinyTranslatorMatIcon>;
 	renderedStyleParity: {
 		state: 'measured-resolved-styles-with-declared-differences';
@@ -574,8 +746,37 @@ export function witnessAngularTinyTranslatorBehaviorDigest(
 				hmrControls: run.servedStatic.hmrControls,
 				serviceWorkerScripts: run.servedStatic.serviceWorkers.length,
 			},
-			consoleErrorInventory: run.consoleErrorInventory,
+			// Amended by measurement: the two lanes report the SAME refused
+			// registration in their own frameworks' words, so the membership is the
+			// recorded per-lane difference and only the accounting travels. The
+			// messages themselves are checked exactly, per lane, against the
+			// inventory the receipt publishes.
+			consoleErrorPolicy: {
+				policy: run.consoleErrorInventory?.policy,
+				originPlaceholder: run.consoleErrorInventory?.originPlaceholder,
+				outsideInventory: run.consoleErrorInventory?.outsideInventory,
+				entries: run.consoleErrorInventory?.observed.length,
+				total: run.consoleErrorInventory?.total,
+			},
 			failedRequestInventory: run.failedRequestInventory,
+			// The settled half of the refused registration, which both lanes must
+			// agree on. The attempt trace itself stays in the run: each lane's
+			// browser opens its own record of the same refusal, and each event is
+			// held to naming the script and scope the application asked for.
+			refusedServiceWorkerSettled: {
+				attempt: (run as WitnessAngularTinyTranslatorRun).refusedServiceWorker?.attempt,
+				outputFiles: (run as WitnessAngularTinyTranslatorRun).refusedServiceWorker
+					?.outputFiles,
+				checkpoints: (
+					(run as WitnessAngularTinyTranslatorRun).refusedServiceWorker?.checkpoints ?? []
+				).map((checkpoint) => ({
+					phase: checkpoint.phase,
+					state: checkpoint.state,
+					registrations: checkpoint.registrations,
+					controller: checkpoint.controller,
+					cacheNames: checkpoint.cacheNames,
+				})),
+			},
 			// The membership is the recorded difference, so only the shape and the
 			// count travel; the members themselves are checked per lane.
 			mockedSeamPolicy: {
@@ -887,6 +1088,58 @@ function assertRouteShape(routes: string[], label: string): void {
 	}
 }
 
+/**
+ * The refused registration, asserted as the first recorded amendment defines it.
+ *
+ * The settled facts are held exactly: three checkpoints in journey order, each
+ * with nothing registered, nothing controlling and no cache, and no worker
+ * script emitted by either build. The trace is held to naming the attempt — a
+ * registration event at the scope the application asked for, or a version event
+ * for the script it asked for that never got as far as running — and it may not
+ * be empty, because a browser that refused a registration recorded one.
+ */
+function assertRefusedServiceWorker(
+	refused: WitnessAngularTinyTranslatorRefusedServiceWorker | undefined,
+	attempt: typeof WITNESS_ANGULAR_TINY_TRANSLATOR_SERVICE_WORKER_ATTEMPT,
+	label: string,
+): void {
+	const phases = ['before-interactions', 'after-interactions', 'after-online-reload'];
+	const names = (
+		events: WitnessAngularTinyTranslatorRefusedServiceWorker['workerEvents'],
+	): boolean =>
+		events.length !== 0 &&
+		events.every((event) =>
+			event.kind === 'registration'
+				? event.scopePath === '/'
+				: event.kind === 'version'
+					? event.scriptPath.endsWith(attempt.script) && event.runningStatus === 'stopped'
+					: false,
+		);
+	if (
+		refused === undefined ||
+		!refused.attempt.script.endsWith(attempt.script) ||
+		refused.attempt.scopePath !== '/' ||
+		!exact(
+			refused.checkpoints.map((checkpoint) => checkpoint.phase),
+			phases,
+		) ||
+		refused.checkpoints.some(
+			(checkpoint) =>
+				checkpoint.state !== 'timeout' ||
+				checkpoint.registrations !== 0 ||
+				checkpoint.controller !== null ||
+				checkpoint.cacheNames.length !== 0 ||
+				!names(checkpoint.attemptEvents),
+		) ||
+		refused.outputFiles.length !== attempt.shippedWorkerFiles ||
+		!names(refused.workerEvents) ||
+		// The 400 the registration is answered with is an answered request, never a
+		// failed one, so nothing here may appear in the failed-request inventory.
+		refused.requests.some((request) => typeof request.source !== 'string')
+	)
+		throw new Error(`Angular TinyTranslator refused service-worker evidence differs: ${label}`);
+}
+
 function assertScrollAbsence(
 	absence: WitnessMeasuredScrollAbsence | undefined,
 	label: string,
@@ -940,7 +1193,11 @@ export function parseWitnessAngularTinyTranslatorReceipt(
 			run.witnessRecord.consoleErrors !== run.consoleErrorInventory?.total ||
 			run.witnessRecord.failedRequests !== run.failedRequestInventory?.total ||
 			run.offlineEvidence.state !== 'not-applicable' ||
-			run.observerFinalization.workerEvents.length !== 0 ||
+			// Amended by measurement: this run's observer trace is NOT empty, and
+			// asserting that it was is the claim the browser contradicted. What is
+			// required instead is that the finalized trace is exactly the trace the
+			// refused attempt left, held to naming the attempt below.
+			!exact(run.observerFinalization.workerEvents, run.refusedServiceWorker?.workerEvents) ||
 			run.servedStatic.byteIdentical !== true ||
 			run.scrollSurface !== undefined ||
 			run.interactions.length === 0 ||
@@ -971,6 +1228,11 @@ export function parseWitnessAngularTinyTranslatorReceipt(
 		assertMatIcon(run.applicationJourney, run.lane, key);
 		assertFileReaderParity(run.applicationJourney, key);
 		assertPersistence(run.applicationJourney, key);
+		assertRefusedServiceWorker(
+			run.refusedServiceWorker,
+			WITNESS_ANGULAR_TINY_TRANSLATOR_SERVICE_WORKER_ATTEMPT,
+			key,
+		);
 		assertScrollAbsence(run.scrollAbsence, key);
 		behaviors.add(run.behaviorDigest);
 	}
@@ -990,6 +1252,29 @@ export function parseWitnessAngularTinyTranslatorReceipt(
 			receipt.serviceWorkerAttempt,
 			WITNESS_ANGULAR_TINY_TRANSLATOR_SERVICE_WORKER_ATTEMPT,
 		) ||
+		!exact(receipt.migratedLaneChain, ANGULAR_TINY_TRANSLATOR_MIGRATED_LANE_CHAIN) ||
+		// The chain has to end at the lane this proof actually serves, or the story
+		// it tells is about some other build.
+		receipt.migratedLaneChain.at(-1)?.record !==
+			receipt.canonicalReceipts.find((bound) => bound.lane === 'migrated')?.path ||
+		receipt.migratedLaneChain.at(-1)?.contradictedBy !== null ||
+		!exact(receipt.migrationFindings, WITNESS_ANGULAR_TINY_TRANSLATOR_MIGRATION_FINDINGS) ||
+		!exact(receipt.amendments, WITNESS_ANGULAR_TINY_TRANSLATOR_RECORDED_AMENDMENTS) ||
+		receipt.fileReaderArbitration?.state !== 'arbitrated-declared-difference' ||
+		receipt.fileReaderArbitration.outcome !== 'identical-parse-in-both-lanes' ||
+		receipt.fileReaderArbitration.inBehaviorDigest !== true ||
+		// The arbitration is the journey's own reading, not a second claim beside
+		// it: it has to be the parity the runs measured, in both lanes.
+		!exact(
+			receipt.accommodations.journeyObligations,
+			[receipt.fileReaderArbitration.obligation],
+		) ||
+		receipt.fileReaderArbitration.parsedUnits !==
+			baseline.applicationJourney.fileReaderParity.parsedUnits ||
+		receipt.fileReaderArbitration.parsedDigest !==
+			baseline.applicationJourney.fileReaderParity.parsedDigest ||
+		receipt.fileReaderArbitration.parsedDigest !==
+			migrated.applicationJourney.fileReaderParity.parsedDigest ||
 		!exact(receipt.matIconDegradations?.baseline, baseline.applicationJourney.matIcon) ||
 		!exact(receipt.matIconDegradations.migrated, migrated.applicationJourney.matIcon) ||
 		receipt.renderedStyleParity?.state !==
@@ -1066,6 +1351,24 @@ export function renderWitnessAngularTinyTranslatorReceipt(
 	const differences = receipt.renderedStyleParity.declaredDifferences
 		.map((entry) => `\`${entry.label}\` — ${entry.why}`)
 		.join('; ');
+	const findings = receipt.migrationFindings
+		.map(
+			(entry) =>
+				`  - ${entry.finding} — invisible to ${entry.invisibleTo}; found by ${entry.foundBy}; cause: ${entry.cause}; repaired by ${entry.repair} (\`${entry.record}\`)`,
+		)
+		.join('\n');
+	const chain = receipt.migratedLaneChain
+		.map(
+			(entry) =>
+				`  - \`${entry.record}\` (${entry.root}) published ${entry.published}${entry.contradictedBy === null ? ' — this is the lane served here' : `, contradicted by ${entry.contradictedBy}`}`,
+		)
+		.join('\n');
+	const amendments = receipt.amendments
+		.map(
+			(entry) =>
+				`  - ${entry.subject}: claimed ${entry.claimed}; measured ${entry.measured}; amended so that ${entry.amendment} (\`${entry.record}\`)`,
+		)
+		.join('\n');
 	const downloads = receipt.downloads.captured
 		.map(
 			(entry) =>
@@ -1083,6 +1386,13 @@ export function renderWitnessAngularTinyTranslatorReceipt(
 - Bound build lanes: ${lanes}
 - Migration: Angular 5.0.3 to Angular 16.2 — eleven majors, the longest lift in the corpus — at ${receipt.accommodations.manualMigrationSteps} manual migration steps; the ${receipt.accommodations.inventory.applicationFilesChanged} changed application files and ${receipt.accommodations.inventory.capabilities} capabilities that changed them are itemised in \`${receipt.accommodations.inventory.record}\`
 - Journey obligation carried into this proof: ${receipt.accommodations.journeyObligations.join(' ')}
+- FileReader arbitration: ${receipt.fileReaderArbitration.outcome} — the application's own input was handed the same file in both lanes and both parsed ${String(receipt.fileReaderArbitration.parsedUnits)} units to digest \`${receipt.fileReaderArbitration.parsedDigest.slice(0, 12)}\`; the parse participates in the behavioral parity digest above, so the obligation is discharged by measurement rather than by assertion
+- What the browser phase found that the build lanes could not:
+${findings}
+- Migrated lane supersession chain (every record immutable, every supersession by reference):
+${chain}
+- Recorded schema amendments (claims this receipt used to make that a measurement contradicted):
+${amendments}
 - File handed to the page: \`${receipt.fileInput.fixture.fileName}\` (${receipt.fileInput.fixture.format}, ${receipt.fileInput.fixture.transUnits} units, ${receipt.fileInput.fixture.bytes} bytes, sha256 ${receipt.fileInput.fixture.sha256.slice(0, 12)}), through the one declared surface. ${receipt.fileInput.rule}
 - Files the page produced: ${downloads}. ${receipt.downloads.rule}
 - Mocked non-loopback seams (answered in-context, none left the machine) — baseline: ${seams('baseline')}; migrated: ${seams('migrated')}

@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { sha256 } from '../src/receipts/canonicalize.ts';
 import {
 	ANGULAR_TINY_TRANSLATOR_CANONICAL_RECEIPTS,
+	ANGULAR_TINY_TRANSLATOR_MIGRATED_LANE_CHAIN,
 	ANGULAR_TINY_TRANSLATOR_SOURCE,
 	parseWitnessAngularTinyTranslatorReceipt,
 	renderWitnessAngularTinyTranslatorReceipt,
@@ -14,6 +15,8 @@ import {
 	WITNESS_ANGULAR_TINY_TRANSLATOR_FILE_INPUT_SURFACES,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_FONT_SEAM_DIFFERENCE,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_MAT_ICON_DEGRADATIONS,
+	WITNESS_ANGULAR_TINY_TRANSLATOR_MIGRATION_FINDINGS,
+	WITNESS_ANGULAR_TINY_TRANSLATOR_RECORDED_AMENDMENTS,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_ROUTE_SHAPE,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_SCHEMA,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_SERVICE_WORKER_ATTEMPT,
@@ -47,6 +50,26 @@ const MIGRATED_SEAM = {
 };
 
 const digestOf = (label: string): string => sha256(label);
+
+/**
+ * The registration this application attempts and is refused, and the observer
+ * trace the refusal leaves behind.
+ *
+ * The trace is NOT empty, and that is the point of the first recorded
+ * amendment: the schema used to require an empty one, and a browser load of
+ * either lane contradicts that on every page. Every event here names the script
+ * and the scope the application asked for, which is what the schema holds it to.
+ */
+const ATTEMPT_SCRIPT = '/%BASE_HREF%ngsw-worker.js';
+const ATTEMPT_EVENTS = [
+	{ kind: 'registration', scopePath: '/' },
+	{
+		kind: 'version',
+		scriptPath: ATTEMPT_SCRIPT,
+		status: 'redundant',
+		runningStatus: 'stopped',
+	},
+];
 
 function styleProbes(lane: 'baseline' | 'migrated') {
 	return WITNESS_ANGULAR_TINY_TRANSLATOR_STYLE_PROBES.map((probe) => ({
@@ -125,7 +148,30 @@ function run(lane: 'baseline' | 'migrated', pass: 1 | 2): WitnessAngularTinyTran
 			state: 'target-closed',
 			detach: 'owned-detach-complete',
 			pageClose: 'owned-page-close-complete',
-			workerEvents: [],
+			workerEvents: ATTEMPT_EVENTS,
+		},
+		refusedServiceWorker: {
+			attempt: { script: ATTEMPT_SCRIPT, scopePath: '/' },
+			checkpoints: (
+				['before-interactions', 'after-interactions', 'after-online-reload'] as const
+			).map((phase) => ({
+				phase,
+				state: 'timeout',
+				registrations: 0,
+				controller: null,
+				cacheNames: [],
+				attemptEvents: ATTEMPT_EVENTS,
+			})),
+			outputFiles: [],
+			requests: [
+				{
+					source: 'browser',
+					phase: 'requestfailed',
+					urlPath: ATTEMPT_SCRIPT,
+					detail: { serviceWorker: true, status: 400 },
+				},
+			],
+			workerEvents: ATTEMPT_EVENTS,
 		},
 		successfulNonLoopback: 0,
 		consoleErrorInventory: {
@@ -252,6 +298,17 @@ function fixture(): WitnessAngularTinyTranslatorReceipt {
 		},
 		fontSeamDifference: WITNESS_ANGULAR_TINY_TRANSLATOR_FONT_SEAM_DIFFERENCE,
 		serviceWorkerAttempt: WITNESS_ANGULAR_TINY_TRANSLATOR_SERVICE_WORKER_ATTEMPT,
+		migratedLaneChain: ANGULAR_TINY_TRANSLATOR_MIGRATED_LANE_CHAIN,
+		migrationFindings: WITNESS_ANGULAR_TINY_TRANSLATOR_MIGRATION_FINDINGS,
+		amendments: WITNESS_ANGULAR_TINY_TRANSLATOR_RECORDED_AMENDMENTS,
+		fileReaderArbitration: {
+			state: 'arbitrated-declared-difference',
+			obligation: WITNESS_ANGULAR_TINY_TRANSLATOR_ACCOMMODATIONS.journeyObligations[0]!,
+			outcome: 'identical-parse-in-both-lanes',
+			parsedUnits: runs[0]!.applicationJourney.fileReaderParity.parsedUnits,
+			parsedDigest: runs[0]!.applicationJourney.fileReaderParity.parsedDigest,
+			inBehaviorDigest: true,
+		},
 		matIconDegradations: {
 			baseline: runs[0]!.applicationJourney.matIcon,
 			migrated: runs[2]!.applicationJourney.matIcon,
@@ -357,8 +414,133 @@ describe('Angular TinyTranslator direct Witness receipt schema', () => {
 			]),
 		).toEqual([
 			['baseline', 'dist/rebuild-1', 'dist/rebuild-2', true],
-			['migrated', 'dist-11', 'dist-12', true],
+			['migrated', 'dist-13', 'dist-14', true],
 		]);
+	});
+
+	it('records the refused registration instead of asserting an empty observer trace', () => {
+		const receipt = parseWitnessAngularTinyTranslatorReceipt(fixture());
+		for (const published of receipt.runs) {
+			expect(published.observerFinalization.workerEvents.length).toBeGreaterThan(0);
+			expect(published.refusedServiceWorker.checkpoints.map((point) => point.phase)).toEqual([
+				'before-interactions',
+				'after-interactions',
+				'after-online-reload',
+			]);
+			for (const point of published.refusedServiceWorker.checkpoints) {
+				expect(point.registrations).toBe(0);
+				expect(point.controller).toBeNull();
+				expect(point.cacheNames).toEqual([]);
+				expect(point.attemptEvents.length).toBeGreaterThan(0);
+			}
+			expect(published.refusedServiceWorker.outputFiles).toEqual([]);
+		}
+	});
+
+	it('rejects a run whose attempt trace is empty, which is the claim the browser contradicted', () => {
+		const copy = fixture();
+		for (const published of copy.runs) {
+			published.observerFinalization.workerEvents = [];
+			published.refusedServiceWorker.workerEvents = [];
+			for (const point of published.refusedServiceWorker.checkpoints)
+				point.attemptEvents = [];
+		}
+		expect(() => parseWitnessAngularTinyTranslatorReceipt(resealedDeep(copy))).toThrow(
+			/refused service-worker evidence differs/,
+		);
+	});
+
+	it('rejects an attempt trace naming a script the application never asked for', () => {
+		const copy = fixture();
+		const trace = [
+			{
+				kind: 'version' as const,
+				scriptPath: '/ngsw-worker.js',
+				status: 'activated',
+				runningStatus: 'running',
+			},
+		];
+		for (const published of copy.runs) {
+			published.observerFinalization.workerEvents = trace;
+			published.refusedServiceWorker.workerEvents = trace;
+			for (const point of published.refusedServiceWorker.checkpoints)
+				point.attemptEvents = trace;
+		}
+		expect(() => parseWitnessAngularTinyTranslatorReceipt(resealedDeep(copy))).toThrow(
+			/refused service-worker evidence differs/,
+		);
+	});
+
+	it('rejects a checkpoint that reports a worker controlling the page', () => {
+		const copy = fixture();
+		copy.runs[0]!.refusedServiceWorker.checkpoints[1]!.controller = 'activated' as never;
+		expect(() => parseWitnessAngularTinyTranslatorReceipt(resealedDeep(copy))).toThrow(
+			/refused service-worker evidence differs/,
+		);
+	});
+
+	it('rejects a finalized trace that disagrees with the attempt the run recorded', () => {
+		const copy = fixture();
+		copy.runs[0]!.observerFinalization.workerEvents = [
+			{ kind: 'registration', scopePath: '/' },
+		];
+		expect(() => parseWitnessAngularTinyTranslatorReceipt(resealedDeep(copy))).toThrow(
+			/Witness run differs/,
+		);
+	});
+
+	it('keeps the per-lane console-error membership out of the parity digest and exact in the receipt', () => {
+		const receipt = parseWitnessAngularTinyTranslatorReceipt(fixture());
+		const digest = receipt.runs[0]!.behaviorDigest;
+		const copy = structuredClone(receipt.runs[0]!);
+		// A lane whose framework words the same refusal differently keeps the
+		// parity digest — the amendment — and the membership is still checked
+		// exactly against the published per-lane inventory elsewhere.
+		copy.consoleErrorInventory!.expected = [{ message: 'a differently worded refusal', count: 1 }];
+		copy.consoleErrorInventory!.observed = [{ message: 'a differently worded refusal', count: 1 }];
+		copy.consoleErrorInventory!.total = 1;
+		expect(witnessAngularTinyTranslatorBehaviorDigest(copy)).not.toBe(digest);
+		copy.consoleErrorInventory!.total = 0;
+		copy.consoleErrorInventory!.expected = [];
+		copy.consoleErrorInventory!.observed = [];
+		expect(witnessAngularTinyTranslatorBehaviorDigest(copy)).toBe(digest);
+	});
+
+	it('publishes the amendments, the findings and the lane chain the served root ends', () => {
+		const receipt = parseWitnessAngularTinyTranslatorReceipt(fixture());
+		expect(receipt.amendments).toEqual(WITNESS_ANGULAR_TINY_TRANSLATOR_RECORDED_AMENDMENTS);
+		expect(receipt.migrationFindings).toEqual(
+			WITNESS_ANGULAR_TINY_TRANSLATOR_MIGRATION_FINDINGS,
+		);
+		expect(receipt.migratedLaneChain.at(-1)!.record).toBe(
+			ANGULAR_TINY_TRANSLATOR_CANONICAL_RECEIPTS[1]!.path,
+		);
+		expect(
+			receipt.migratedLaneChain.filter((entry) => entry.contradictedBy !== null),
+		).toHaveLength(2);
+		const rendered = renderWitnessAngularTinyTranslatorReceipt(receipt);
+		expect(rendered).toContain('Recorded schema amendments');
+		expect(rendered).toContain('silently discarded a typed translation');
+		expect(rendered).toContain('identical-parse-in-both-lanes');
+	});
+
+	it('rejects a lane chain that does not end at the lane this proof serves', () => {
+		const copy = fixture();
+		copy.migratedLaneChain = ANGULAR_TINY_TRANSLATOR_MIGRATED_LANE_CHAIN.slice(
+			0,
+			2,
+		) as unknown as typeof ANGULAR_TINY_TRANSLATOR_MIGRATED_LANE_CHAIN;
+		expect(() => parseWitnessAngularTinyTranslatorReceipt(resealedDeep(copy))).toThrow(
+			/integrity differs/,
+		);
+	});
+
+	it('rejects a FileReader arbitration that does not match what the runs parsed', () => {
+		const copy = fixture();
+		copy.fileReaderArbitration.parsedDigest = digestOf('a parse nobody measured');
+		expect(() => parseWitnessAngularTinyTranslatorReceipt(resealedDeep(copy))).toThrow(
+			/integrity differs/,
+		);
 	});
 
 	it('rejects a receipt re-pointed at a different build receipt', () => {
@@ -574,7 +756,7 @@ describe('Angular TinyTranslator route shape, persistence and accommodations', (
 		const receipt = parseWitnessAngularTinyTranslatorReceipt(fixture());
 		expect(receipt.accommodations.manualMigrationSteps).toBe(0);
 		expect(receipt.accommodations.inventory.applicationFilesChanged).toBe(10);
-		expect(receipt.accommodations.inventory.capabilities).toBe(7);
+		expect(receipt.accommodations.inventory.capabilities).toBe(8);
 		expect(receipt.accommodations.inventory.record).toBe(
 			ANGULAR_TINY_TRANSLATOR_CANONICAL_RECEIPTS[1]!.path,
 		);

@@ -5,6 +5,7 @@ import { canonicalize, sha256 } from '../../../core/src/receipts/canonicalize.ts
 import {
 	ANGULAR_TINY_TRANSLATOR_CANONICAL_RECEIPTS,
 	ANGULAR_TINY_TRANSLATOR_FIXTURE,
+	ANGULAR_TINY_TRANSLATOR_MIGRATED_LANE_CHAIN,
 	ANGULAR_TINY_TRANSLATOR_SOURCE,
 	parseWitnessAngularTinyTranslatorReceipt,
 	renderWitnessAngularTinyTranslatorReceipt,
@@ -13,6 +14,8 @@ import {
 	WITNESS_ANGULAR_TINY_TRANSLATOR_FILE_INPUT_FIXTURE,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_FILE_INPUT_SURFACES,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_FONT_SEAM_DIFFERENCE,
+	WITNESS_ANGULAR_TINY_TRANSLATOR_MIGRATION_FINDINGS,
+	WITNESS_ANGULAR_TINY_TRANSLATOR_RECORDED_AMENDMENTS,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_ROUTE_SHAPE,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_SCHEMA,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_SERVICE_WORKER_ATTEMPT,
@@ -42,15 +45,17 @@ const fixtureEvidence = join(root, 'evidence/runs/angular-tiny-translator-v0-12-
 const witnessEvidence = join(root, 'evidence/runs/witness-angular-tiny-translator-v0-12-0');
 const stageRoot = join(root, '.versionless/stage/witness-angular-tiny-translator-v0-12-0');
 /**
- * The migrated lane's build tree, and the output root the u19f record pins as
+ * The migrated lane's build tree, and the output root the u19k record pins as
  * canonical. The tree is a working directory rather than committed bytes, so
  * this proof cannot assume it survived: {@link migratedLaneRoot} regenerates it
  * from the committed flow when it is absent and, either way, refuses to serve
  * it until it matches the inventory the record published.
  *
- * The root is `dist-11`, not `dist-7`. u17d's `dist-7` is a green, deterministic
- * build whose artifact throws before Angular bootstraps — the thing u19d found
- * by opening it in a browser — and u19f supersedes it with the tree that mounts.
+ * The root is `dist-13`, the third the browser phase produced. u17d's `dist-7`
+ * is a green, deterministic build whose artifact throws before Angular
+ * bootstraps; u19f's `dist-11` mounts and silently discards a typed translation;
+ * u19k's `dist-13` mounts and keeps it. Each supersession is by reference and
+ * each was forced by a measurement no build lane could make.
  */
 const migratedStage = join(root, '.versionless/stage/angular-tiny-translator-v0-12-0-u17b');
 const sourceOutputs = {
@@ -58,9 +63,9 @@ const sourceOutputs = {
 		root,
 		'.versionless/cache/angular-tiny-translator-v0-12-0-baseline/app/dist/rebuild-1',
 	),
-	migrated: join(migratedStage, 'dist-11'),
+	migrated: join(migratedStage, 'dist-13'),
 } as const;
-/** The build the u19f record pins for the canonical output root. */
+/** The build the u19k record pins for the canonical output root. */
 const MIGRATED_BUILD_COMMAND = 'npx ng build --configuration production' as const;
 const laneFileCounts = { baseline: 524, migrated: 524 } as const;
 
@@ -83,7 +88,7 @@ async function files(directory: string): Promise<string[]> {
 	return output.sort();
 }
 
-/** Every file of an emitted artifact, addressed exactly as the u19f record does. */
+/** Every file of an emitted artifact, addressed exactly as the u19k record does. */
 async function inventoryOf(rootDirectory: string): Promise<InventoryEntry[]> {
 	const entries: InventoryEntry[] = [];
 	for (const file of await files(rootDirectory)) {
@@ -121,7 +126,7 @@ async function migratedLaneRecord(): Promise<{
 }
 
 /**
- * The digest the u19f record computed over its own inventory: the pretty-printed
+ * The digest the u19k record computed over its own inventory: the pretty-printed
  * JSON array with a trailing newline, exactly as the recording flow wrote it.
  * Recomputing it here rather than accepting the record's own number is what
  * makes the comparison a check instead of a restatement.
@@ -154,7 +159,7 @@ async function run(command: string, args: readonly string[], cwd: string): Promi
  * The migrated lane's canonical output root, regenerated when it is missing and
  * verified either way.
  *
- * The regeneration is the same offline production build the u19f record pins,
+ * The regeneration is the same offline production build the u19k record pins,
  * run over the same staged application tree that record itemises; nothing is
  * re-migrated here, because the migration is already applied in that tree. The
  * verification is what the proof actually rests on: the emitted inventory has
@@ -396,6 +401,22 @@ export async function runWitnessAngularTinyTranslator(): Promise<WitnessAngularT
 		},
 		fontSeamDifference: WITNESS_ANGULAR_TINY_TRANSLATOR_FONT_SEAM_DIFFERENCE,
 		serviceWorkerAttempt: WITNESS_ANGULAR_TINY_TRANSLATOR_SERVICE_WORKER_ATTEMPT,
+		migratedLaneChain: ANGULAR_TINY_TRANSLATOR_MIGRATED_LANE_CHAIN,
+		migrationFindings: WITNESS_ANGULAR_TINY_TRANSLATOR_MIGRATION_FINDINGS,
+		amendments: WITNESS_ANGULAR_TINY_TRANSLATOR_RECORDED_AMENDMENTS,
+		/**
+		 * The arbitration outcome, read out of the runs rather than declared beside
+		 * them: the obligation the build lanes handed this proof is the one the
+		 * schema publishes, and the numbers are the parse both lanes measured.
+		 */
+		fileReaderArbitration: {
+			state: 'arbitrated-declared-difference',
+			obligation: WITNESS_ANGULAR_TINY_TRANSLATOR_ACCOMMODATIONS.journeyObligations[0]!,
+			outcome: 'identical-parse-in-both-lanes',
+			parsedUnits: baseline.applicationJourney.fileReaderParity.parsedUnits,
+			parsedDigest: baseline.applicationJourney.fileReaderParity.parsedDigest,
+			inBehaviorDigest: true,
+		},
 		matIconDegradations: {
 			baseline: baseline.applicationJourney.matIcon,
 			migrated: migrated.applicationJourney.matIcon,

@@ -3,6 +3,7 @@ import path from 'node:path';
 import {
 	ANGULAR_TINY_TRANSLATOR_APP,
 	ANGULAR_TINY_TRANSLATOR_CANONICAL_RECEIPTS,
+	ANGULAR_TINY_TRANSLATOR_MIGRATED_LANE_CHAIN,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_BASELINE_SEAMS,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_DOWNLOAD_SURFACE,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_FILE_INPUT_FIXTURE,
@@ -69,16 +70,20 @@ describe('the TinyTranslator journey wiring', () => {
 	});
 
 	it('pins the measured console errors per lane and an empty failed-request inventory', () => {
-		// Both lanes carry exactly two console errors, and both are the refused
-		// service-worker registration this vertical records rather than masks: the
-		// browser's own fetch failure, identical in both lanes, and the
+		// Both lanes carry exactly two distinct console errors, and both are the
+		// refused service-worker registration this vertical records rather than
+		// masks: the browser's own fetch failure, identical in both lanes, and the
 		// framework's report of the rejection, different in each because Angular 5
 		// lets it escape into zone.js and Angular 16 catches it.
+		//
+		// Each is pinned at two occurrences, measured: the application attempts the
+		// registration on every document load and the journey performs two — the
+		// initial load and the online reload the persistence claim rests on.
 		for (const lane of ['baseline', 'migrated'] as const) {
 			const pinned = WITNESS_ANGULAR_TINY_TRANSLATOR_CONSOLE_ERRORS[lane];
 			expect(pinned).toHaveLength(2);
 			for (const entry of pinned) {
-				expect(entry.count).toBe(1);
+				expect(entry.count).toBe(2);
 				expect(entry.message).toContain('400');
 			}
 			expect(pinned[1]!.message).toContain(
@@ -101,12 +106,16 @@ describe('the TinyTranslator journey wiring', () => {
 	});
 
 	it('binds the build record that pins the migrated root it serves', () => {
-		// `dist-11` is u19f's root. u17d's `dist-7` is the green deterministic
-		// build whose artifact never bootstraps, so binding it here would bind the
-		// proof to a record that does not describe what is served.
-		expect(spec.canonicalReceipt).toContain('u19f-localize-boot-green-lane.json');
+		// `dist-13` is u19k's root, the end of a three-record chain. u17d's
+		// `dist-7` never bootstraps and u19f's `dist-11` mounts and silently drops
+		// a typed translation, so binding either here would bind the proof to a
+		// record that does not describe what is served.
+		expect(spec.canonicalReceipt).toContain('u19k-cva-legacy-disabled-state-lane.json');
 		expect(spec.canonicalBinding).toBe('file-sha256');
-		expect(spec.sources.migrated.endsWith('dist-11')).toBe(true);
+		expect(spec.sources.migrated.endsWith('dist-13')).toBe(true);
+		expect(spec.canonicalReceipt).toBe(
+			ANGULAR_TINY_TRANSLATOR_MIGRATED_LANE_CHAIN.at(-1)!.record,
+		);
 	});
 
 	it('publishes nonclaims that name what the proof does not establish', () => {
