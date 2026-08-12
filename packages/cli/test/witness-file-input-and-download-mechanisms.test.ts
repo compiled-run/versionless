@@ -170,17 +170,53 @@ describe('per-application download-capture opt-in', () => {
 	});
 });
 
+/**
+ * Exactly one application declares the mechanisms, and it is named here rather
+ * than detected, so a second vertical quietly declaring one would fail the
+ * count below instead of joining an exemption.
+ */
+const DECLARING_APP = 'angular-tiny-translator';
+const predatingSpecs = witnessRealAppSpecs.filter((spec) => spec.app !== DECLARING_APP);
+
+describe('the one vertical that declares both mechanisms', () => {
+	it('is the only one, and declares a surface and a download surface', () => {
+		const declaring = witnessRealAppSpecs.filter(
+			(spec) => spec.fileInputs !== undefined || spec.downloads !== undefined,
+		);
+		expect(declaring.map((spec) => spec.app)).toEqual([DECLARING_APP]);
+		const spec = declaring[0]!;
+		expect(spec.downloads).toBe('capture');
+		expect(spec.fileInputs?.surfaces).toEqual([
+			...WITNESS_ANGULAR_TINY_TRANSLATOR_FILE_INPUT_SURFACES,
+		]);
+		expect(path.isAbsolute(spec.fileInputs!.root)).toBe(true);
+	});
+
+	it('is therefore run in a context that accepts downloads and resolves that surface', () => {
+		const spec = witnessRealAppSpecs.find((candidate) => candidate.app === DECLARING_APP)!;
+		const options = witnessBrowserContextOptions({
+			...(spec.viewport === undefined ? {} : { viewport: spec.viewport }),
+			...(spec.downloads === undefined ? {} : { downloads: spec.downloads }),
+		});
+		expect(options.acceptDownloads).toBe(true);
+		expect(witnessFileInputSurface(spec.fileInputs, 'translation-file').label).toBe(
+			'translation-file',
+		);
+	});
+});
+
 describe('the verticals that predate both mechanisms', () => {
 	it('declares neither opt-in in any published application spec', () => {
-		expect(witnessRealAppSpecs.length).toBeGreaterThan(0);
-		for (const spec of witnessRealAppSpecs) {
+		expect(predatingSpecs.length).toBeGreaterThan(0);
+		expect(predatingSpecs.length).toBe(witnessRealAppSpecs.length - 1);
+		for (const spec of predatingSpecs) {
 			expect(spec.fileInputs, spec.app).toBeUndefined();
 			expect(spec.downloads, spec.app).toBeUndefined();
 		}
 	});
 
 	it('is therefore run in a context with no downloads capability and no file surface', async () => {
-		for (const spec of witnessRealAppSpecs) {
+		for (const spec of predatingSpecs) {
 			const options = witnessBrowserContextOptions({
 				...(spec.serviceWorkers === undefined
 					? {}

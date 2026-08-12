@@ -347,6 +347,17 @@ export type PlaywrightWitnessHost = {
 	 * about a mechanism that was not running.
 	 */
 	capturedDownloads(): Promise<WitnessCapturedDownload[]>;
+	/**
+	 * The decoded text of the same downloads, for a journey whose claim is about
+	 * what the produced file CONTAINS rather than about one having been produced.
+	 *
+	 * It is gated by the same declaration and reads the same already-captured
+	 * bytes; what it deliberately does not do is put the content into evidence.
+	 * A produced file is the application's own data — here, somebody's
+	 * translations — and the receipt records its name, length and digest. The
+	 * text exists so an assertion can be made against it and then discarded.
+	 */
+	capturedDownloadTexts(): Promise<string[]>;
 };
 
 const MAX_TELEMETRY_TIMEOUT_MS = 15_000;
@@ -769,7 +780,13 @@ export function createPlaywrightWitnessHost(options: {
 			? undefined
 			: validateWitnessFileInputDeclaration(options.fileInputs);
 	const loadedFileInputs: WitnessLoadedFileInput[] = [];
-	const capturedDownloads: Array<Promise<WitnessCapturedDownload>> = [];
+	/**
+	 * Each download is read once, at the moment the browser finishes writing it,
+	 * and both the ledger record and the decoded text come out of that one read.
+	 * Reading later would be reading a file the context may already have removed.
+	 */
+	const capturedDownloads: Array<Promise<{ record: WitnessCapturedDownload; text: string }>> =
+		[];
 	const livePages = new Set<Page>();
 	const workerEvents: ServiceWorkerTelemetry['workerEvents'] = [];
 	let observer: Awaited<ReturnType<typeof observeServiceWorkers>> | null = null;
@@ -920,10 +937,14 @@ export function createPlaywrightWitnessHost(options: {
 								capturedDownloads.push(
 									(async () => {
 										const file = await download.path();
-										return recordWitnessCapturedDownload(
-											download.suggestedFilename(),
-											await readFile(file),
-										);
+										const bytes = await readFile(file);
+										return {
+											record: recordWitnessCapturedDownload(
+												download.suggestedFilename(),
+												bytes,
+											),
+											text: bytes.toString('utf8'),
+										};
 									})(),
 								);
 							});
@@ -979,7 +1000,12 @@ export function createPlaywrightWitnessHost(options: {
 		capturedDownloads: async () => {
 			if (options.downloads !== 'capture')
 				throw new Error('Witness download capture is not declared by this application');
-			return await Promise.all(capturedDownloads);
+			return (await Promise.all(capturedDownloads)).map((entry) => entry.record);
+		},
+		capturedDownloadTexts: async () => {
+			if (options.downloads !== 'capture')
+				throw new Error('Witness download capture is not declared by this application');
+			return (await Promise.all(capturedDownloads)).map((entry) => entry.text);
 		},
 		viewportScroll: async () => {
 			if (livePages.size !== 1)

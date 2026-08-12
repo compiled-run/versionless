@@ -43,6 +43,13 @@ import {
 	type WitnessScrollSurface,
 	type WitnessServiceWorkerRequestEvent,
 	type WitnessServiceWorkerRequestTally,
+	type WitnessCapturedDownloadEntry,
+	type WitnessDownloadCaptureInventory,
+	type WitnessFileInputLoadEntry,
+	type WitnessFileInputLoadInventory,
+	type WitnessFileInputSurfaceEntry,
+	WITNESS_DOWNLOAD_CAPTURE_RULE,
+	WITNESS_FILE_INPUT_LOAD_RULE,
 	type WitnessMutationProof,
 	type WitnessNextPrerenderPayloadEvidence,
 	type WitnessOfflineEvidence,
@@ -66,6 +73,16 @@ import {
 	type WitnessAngularJiraCloneBoardEvidence,
 	type WitnessAngularJiraCloneColumn,
 } from '../../../core/src/receipts/witness-angular-jira-clone.ts';
+import {
+	ANGULAR_TINY_TRANSLATOR_APP,
+	WITNESS_ANGULAR_TINY_TRANSLATOR_BASELINE_SEAMS,
+	WITNESS_ANGULAR_TINY_TRANSLATOR_FILE_INPUT_FIXTURE,
+	WITNESS_ANGULAR_TINY_TRANSLATOR_FILE_INPUT_SURFACES,
+	WITNESS_ANGULAR_TINY_TRANSLATOR_ICON_FONT_FAMILY,
+	WITNESS_ANGULAR_TINY_TRANSLATOR_MAT_ICON_DEGRADATIONS,
+	WITNESS_ANGULAR_TINY_TRANSLATOR_STYLE_PROBES,
+	type WitnessAngularTinyTranslatorJourney,
+} from '../../../core/src/receipts/witness-angular-tiny-translator.ts';
 import {
 	WITNESS_REACT_HOSPITALRUN_CONSOLE_ERRORS,
 	WITNESS_REACT_HOSPITALRUN_FAILED_REQUESTS,
@@ -196,7 +213,8 @@ type App =
 	| 'angular-jira-clone'
 	| 'next-killedbygoogle-v3-0-0'
 	| 'react-linkfree'
-	| 'react-memos';
+	| 'react-memos'
+	| 'angular-tiny-translator';
 type Lane = 'baseline' | 'migrated';
 type JourneyEvidence = {
 	assertions: string[];
@@ -338,6 +356,13 @@ type JourneyLifecycle = {
 	 * context refused downloads and there is nothing to read.
 	 */
 	capturedDownloads(): Promise<WitnessCapturedDownload[]>;
+	/**
+	 * The decoded text of those same downloads, so a journey can assert what the
+	 * application actually wrote into the file rather than only that a file of
+	 * some length appeared. The text is asserted and discarded; the evidence
+	 * keeps the name, the byte length and the digest.
+	 */
+	capturedDownloadTexts(): Promise<string[]>;
 };
 export type AppSpec = {
 	app: App;
@@ -1507,6 +1532,70 @@ const HOSPITALRUN_PATIENT_ID = createRegExp(
 	[global],
 );
 const HOSPITALRUN_PATIENT_ID_PLACEHOLDER = '/patients/{created-patient-id}' as const;
+/**
+ * Accounting for the file-input mechanism, built from the declaration and from
+ * what the host actually handed over.
+ *
+ * Every declared surface is either loaded or explicitly unused, and a load
+ * whose label is not in the declaration is impossible to reach — the host
+ * refuses it — so `outsideDeclaration` is empty by construction. It is still
+ * computed rather than asserted: if a future change ever made one reachable,
+ * this would carry it into the evidence instead of hiding it.
+ */
+export function buildFileInputLoadInventory(
+	declared: readonly WitnessFileInputSurfaceEntry[],
+	loaded: readonly WitnessFileInputLoadEntry[],
+): WitnessFileInputLoadInventory {
+	const surfaces = declared.map((surface) => ({
+		label: surface.label,
+		selector: surface.selector,
+		fixturePath: surface.fixturePath,
+	}));
+	const declaredLabels = new Set(surfaces.map((surface) => surface.label));
+	const loadedLabels = new Set(loaded.map((entry) => entry.label));
+	const outside = loaded.filter((entry) => !declaredLabels.has(entry.label));
+	if (outside.length > 0)
+		throw new Error(
+			`Witness file-input load left the declaration: ${canonicalize(outside.map((entry) => entry.label))}`,
+		);
+	return {
+		policy: 'declared-file-input-surfaces-only',
+		rule: WITNESS_FILE_INPUT_LOAD_RULE,
+		declared: surfaces,
+		loaded: loaded.map((entry) => ({
+			label: entry.label,
+			selector: entry.selector,
+			fixturePath: entry.fixturePath,
+			fileName: entry.fileName,
+			bytes: entry.bytes,
+			sha256: entry.sha256,
+		})),
+		unused: surfaces.filter((surface) => !loadedLabels.has(surface.label)),
+		outsideDeclaration: [],
+	};
+}
+
+/**
+ * Accounting for the download-capture mechanism. `acceptDownloads` is stated
+ * rather than inferred: the inventory exists only where the declaration granted
+ * the capability, so recording the capability alongside the files is what lets
+ * a reader see that the two came from the same declaration.
+ */
+export function buildDownloadCaptureInventory(
+	captured: readonly WitnessCapturedDownloadEntry[],
+): WitnessDownloadCaptureInventory {
+	return {
+		policy: 'declared-download-surface-only',
+		rule: WITNESS_DOWNLOAD_CAPTURE_RULE,
+		acceptDownloads: true,
+		captured: captured.map((file) => ({
+			suggestedFilename: file.suggestedFilename,
+			bytes: file.bytes,
+			sha256: file.sha256,
+		})),
+	};
+}
+
 const normalizeHospitalrunRoute = (path: string): string =>
 	path.replace(HOSPITALRUN_PATIENT_ID, HOSPITALRUN_PATIENT_ID_PLACEHOLDER);
 
@@ -2189,6 +2278,153 @@ function memosLedgerTally(
 	return [...tally.entries()]
 		.sort(([left], [right]) => compareUtf16CodeUnits(left, right))
 		.map(([, entry]) => entry);
+}
+
+/**
+ * TinyTranslator's journey inputs.
+ *
+ * Every selector here is element-, id- or attribute-based, and that is a
+ * consequence of the lift rather than a style preference: Angular Material
+ * rewrote its own class names onto MDC between 5.0.0-rc.2 and 16.2, so a
+ * class-pinned selector would be measuring the framework's naming rather than
+ * the application's surface. The ids are the application's own.
+ */
+const TINY_TRANSLATOR_VIEWPORT = { width: 1280, height: 1024 } as const;
+/**
+ * The journey deep-links to the application's own home route rather than to
+ * `/`. The router runs with `useHash: true` and `/` redirects into a
+ * guard-protected route that bounces straight back to `/home`, so starting at
+ * `/` would record one navigation that is not a hash route at all and one that
+ * only exists because the guard refused. Starting where the guard would have
+ * left us records the same page by the application's own route name.
+ */
+const TINY_TRANSLATOR_INITIAL_ROUTE = '/#/home' as const;
+const TINY_TRANSLATOR_HOME_ROUTE = '/#/home' as const;
+const TINY_TRANSLATOR_CREATE_ROUTE = '/#/createproject' as const;
+const TINY_TRANSLATOR_TRANSLATE_ROUTE = '/#/translate' as const;
+const TINY_TRANSLATOR_EDIT_ROUTE = '/#/editproject' as const;
+const TT_APP_TITLE = '#apptitle' as const;
+const TT_EDIT_PROJECT_LINK = `a[href="${TINY_TRANSLATOR_EDIT_ROUTE.slice(1)}"]` as const;
+const TT_TOOLTIP = 'mat-tooltip-component' as const;
+const TT_HOME_CREATE_LINK = 'a[mat-raised-button]' as const;
+const TT_CREATE_FORM = '#createProjectForm' as const;
+const TT_EDIT_FORM = '#editProjectForm' as const;
+const TT_PROJECT_NAME_INPUT = `${TT_CREATE_FORM} input[formControlName=projectName]` as const;
+const TT_UPLOAD_LABEL = 'label[for=fileupload]' as const;
+const TT_WORKFLOW_WITH_REVIEW = 'mat-radio-button[value=withReview]' as const;
+const TT_ROLE_REVIEWER = 'mat-radio-button[value=reviewer]' as const;
+const TT_ADD_PROJECT_BUTTON = `${TT_CREATE_FORM} button[mat-raised-button]` as const;
+const TT_SAVE_PROJECT_BUTTON = `${TT_EDIT_FORM} button[mat-raised-button]` as const;
+const TT_UNIT_LIST = 'app-translate-unit-list' as const;
+const TT_UNIT_LIST_ITEM = `${TT_UNIT_LIST} mat-list-item` as const;
+const TT_FILTER_ALL = `${TT_UNIT_LIST} mat-radio-button[value=all]` as const;
+const TT_FILTER_BY_SUBSTRING = `${TT_UNIT_LIST} mat-radio-button[value=bySubstring]` as const;
+const TT_FILTER_SUBSTRING_INPUT = '#selectfilter input[type=text]' as const;
+const TT_TRANSLATION_INPUT = '#translationinput textarea' as const;
+const TT_MARK_TRANSLATED = 'button:text-is("mark as translated")' as const;
+const TT_MARK_REVIEWED = 'button:text-is("mark as reviewed")' as const;
+const TT_EXPORT_BUTTON = 'app-project-status app-translation-file-status button' as const;
+/**
+ * The mutation seam: the visible label of the control that opens the file
+ * picker. It is load-bearing three times over — a reader sees it, the journey
+ * asserts it exactly on the create-project route, and it names the very
+ * mechanism this vertical exists to exercise — and it occurs exactly once in
+ * exactly one served module of the migrated build.
+ */
+export const TINY_TRANSLATOR_MUTATION_SEAM = 'Upload a translation file (xlf, xtb)' as const;
+/** The project the journey creates through the application's own form. */
+const TT_PROJECT_NAME = 'versionless-witness' as const;
+/** The substring the journey narrows the unit list with, and then fully clears. */
+const TT_FILTER_TERM = 'greeting' as const;
+/** The translation the journey types into the first unit. */
+const TT_TRANSLATION_TEXT = 'Synthetic greeting unit, witnessed' as const;
+/** The unit the export is parsed for, by the id the synthetic fixture declares. */
+const TT_EXPORTED_UNIT_ID = 'versionless.witness.greeting' as const;
+/** The icons the toolbar renders, read as text because the font never arrives. */
+const TT_ICON_PROBE: WitnessGroupedTextProbe = {
+	group: 'mat-toolbar',
+	name: TT_APP_TITLE,
+	item: 'mat-icon',
+};
+/**
+ * The parsed translation file as the application rendered it: one group per
+ * unit row, its two lines — source and target — in order. This is the reading
+ * the FileReader parity obligation rests on, and it is a measurement of the
+ * parse rather than of the load.
+ */
+const TT_UNIT_PROBE: WitnessGroupedTextProbe = {
+	group: TT_UNIT_LIST_ITEM,
+	name: 'h4',
+	item: 'h4',
+};
+/** The identifier the application mints per project, normalized out of the keys. */
+const TT_PROJECT_KEY_PREFIX = 'tinytranslator.project.' as const;
+const TT_PROJECT_KEY_PLACEHOLDER = `${TT_PROJECT_KEY_PREFIX}{generated-project-id}` as const;
+/**
+ * The seam the migrated build reaches for: the font file the builder's inlined
+ * `@font-face` rule points at, pinned query-free exactly as the document
+ * declares it. The baseline's seam is the stylesheet, pinned by the schema.
+ */
+const TINY_TRANSLATOR_MIGRATED_FONT =
+	'https://fonts.gstatic.com/s/materialicons/v145/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2' as const;
+const WITNESS_ANGULAR_TINY_TRANSLATOR_MIGRATED_SEAMS = Object.freeze([
+	Object.freeze({ method: 'GET', path: TINY_TRANSLATOR_MIGRATED_FONT }),
+]) as readonly WitnessMockedNonLoopbackSeamEntry[];
+/**
+ * Both lanes are held to an EMPTY exact console-error inventory, which is the
+ * strictest setting of that mechanism rather than a blanket allowance: any
+ * message at all lands outside the inventory and fails the run. The same is
+ * true of the failed-request inventory — every declared seam is answered with a
+ * 200, so no request the browser makes is allowed to fail.
+ */
+export const WITNESS_ANGULAR_TINY_TRANSLATOR_CONSOLE_ERRORS: Record<
+	Lane,
+	readonly WitnessConsoleErrorInventoryEntry[]
+> = { baseline: [], migrated: [] };
+export const WITNESS_ANGULAR_TINY_TRANSLATOR_FAILED_REQUESTS: Record<
+	Lane,
+	readonly WitnessFailedRequestInventoryEntry[]
+> = { baseline: [], migrated: [] };
+export const WITNESS_ANGULAR_TINY_TRANSLATOR_SEAMS: Record<
+	Lane,
+	readonly WitnessMockedNonLoopbackSeamEntry[]
+> = {
+	baseline: WITNESS_ANGULAR_TINY_TRANSLATOR_BASELINE_SEAMS,
+	migrated: WITNESS_ANGULAR_TINY_TRANSLATOR_MIGRATED_SEAMS,
+};
+
+/**
+ * Both declared seams are answered inside the browser context with an empty
+ * body, which is what makes the two icon degradations observable rather than
+ * asserted: the era lane never receives a `@font-face` rule at all, and the
+ * migrated lane receives the rule inlined by its own builder and never receives
+ * the font behind it. Nothing leaves the machine either way.
+ */
+export async function angularTinyTranslatorTransport(
+	request: WitnessTransportRequest,
+): Promise<WitnessTransportDecision> {
+	return {
+		action: 'fulfill',
+		status: 200,
+		contentType: request.pathname.endsWith('.woff2') ? 'font/woff2' : 'text/css',
+		body: Buffer.alloc(0),
+	};
+}
+
+/**
+ * The project key the application mints carries a UUID it generates at run
+ * time, so the raw key differs in every pass and would make the lane pair
+ * disagree about a fact neither lane decides. Only the generated identifier is
+ * replaced; every other key is recorded exactly as the application wrote it.
+ */
+function tinyTranslatorStorageKeys(keys: readonly string[]): string[] {
+	return [
+		...new Set(
+			keys.map((key) =>
+				key.startsWith(TT_PROJECT_KEY_PREFIX) ? TT_PROJECT_KEY_PLACEHOLDER : key,
+			),
+		),
+	].sort((left, right) => compareUtf16CodeUnits(left, right));
 }
 
 const apps: AppSpec[] = [
@@ -4338,6 +4574,316 @@ const apps: AppSpec[] = [
 ];
 
 /**
+ * The recorded navigations: the deep-linked home document, the create-project
+ * route, the translate route the application pushes when the project is added,
+ * the project editor and back, and the online reload at the end.
+ */
+export const TINY_TRANSLATOR_JOURNEY_NAVIGATIONS = 6;
+
+/**
+ * The TinyTranslator specification, appended rather than woven in: it is the
+ * first application in the corpus that declares either opt-in mechanism, and
+ * keeping it whole is what lets a reader see the two declarations in one place.
+ */
+const angularTinyTranslatorSpec: AppSpec = {
+	app: ANGULAR_TINY_TRANSLATOR_APP,
+	framework: 'angular',
+	canonicalReceipt: 'evidence/runs/angular-tiny-translator-v0-12-0/u17d-final-green-lane.json',
+	canonicalDigest: '88be4807ed80b6f7a4e7238e42c94aa88d8aa1b01603aca74902166f2345ca45',
+	sources: {
+		baseline: '.versionless/cache/angular-tiny-translator-v0-12-0-baseline/app/dist/rebuild-1',
+		migrated: '.versionless/stage/angular-tiny-translator-v0-12-0-u17b/dist-7',
+	},
+	initialRoute: TINY_TRANSLATOR_INITIAL_ROUTE,
+	viewport: TINY_TRANSLATOR_VIEWPORT,
+	consoleErrorInventory: WITNESS_ANGULAR_TINY_TRANSLATOR_CONSOLE_ERRORS,
+	failedRequestInventory: WITNESS_ANGULAR_TINY_TRANSLATOR_FAILED_REQUESTS,
+	mockedNonLoopbackSeams: WITNESS_ANGULAR_TINY_TRANSLATOR_SEAMS,
+	renderedStyleProbes: WITNESS_ANGULAR_TINY_TRANSLATOR_STYLE_PROBES,
+	// The two opt-ins. Everything the journey is allowed to hand the page, and
+	// the only reason its context accepts a download at all.
+	fileInputs: { root, surfaces: WITNESS_ANGULAR_TINY_TRANSLATOR_FILE_INPUT_SURFACES },
+	downloads: 'capture',
+	transport: async (request) => await angularTinyTranslatorTransport(request),
+	journey: async (context, page, _transportEvidence, lifecycle) => {
+		if (lifecycle.expectedServiceWorker !== null)
+			throw new Error('TinyTranslator journey received a service-worker expectation');
+		const checkpoints = [await zeroServiceWorkerCheckpoint(lifecycle, 'before-interactions')];
+		const measuredRoutes: WitnessMeasuredScrollAbsence['routes'] = [];
+		/**
+		 * The generic scroll measurement, taken at every stage. The application
+		 * pins its container to the viewport and gives the unit list and the
+		 * editor pane their own overflow, so a stage that started overflowing
+		 * fails here rather than passing silently unexercised.
+		 */
+		const measure = async (stage: string): Promise<void> => {
+			const extents = await lifecycle.viewportScroll();
+			if (
+				extents.clientHeight !== TINY_TRANSLATOR_VIEWPORT.height ||
+				extents.scrollHeight > extents.clientHeight ||
+				extents.scrollY !== 0
+			)
+				throw new Error(
+					`TinyTranslator stage overflows the viewport the receipt says it does not: ${stage} ${canonicalize(extents)}`,
+				);
+			measuredRoutes.push({
+				route: stage,
+				scrollHeight: extents.scrollHeight,
+				clientHeight: extents.clientHeight,
+			});
+		};
+		const storageKeys = async (): Promise<string[]> => {
+			const keys = await lifecycle.browserStorageKeys();
+			if (keys.sessionStorage.length !== 0)
+				throw new Error(
+					`TinyTranslator wrote session storage the receipt says it does not: ${canonicalize(keys.sessionStorage)}`,
+				);
+			return tinyTranslatorStorageKeys(keys.localStorage);
+		};
+		await page.trackEvents('click', 'input', 'change', 'keydown');
+
+		// (a) The empty application, on its own home route, before anything has
+		// been handed to it.
+		await context.expect.page.text(page, TT_APP_TITLE, 'Tiny Translator');
+		await context.expect.page.bodyText(page, {
+			contains: 'Currently there is no open project.',
+		});
+		const keysBeforeJourney = await storageKeys();
+		await measure(TINY_TRANSLATOR_HOME_ROUTE);
+
+		// (b) A genuine hover on the toolbar's project control, for the tooltip
+		// the application renders into its own overlay.
+		await page.hover(TT_EDIT_PROJECT_LINK);
+		await context.expect.page.text(
+			page,
+			TT_TOOLTIP,
+			'Details of the project (click to open)',
+		);
+
+		// (c) The create-project route, where every declared style probe exists
+		// in both lanes: the toolbar, an icon, a raised button and the document.
+		await page.click(TT_HOME_CREATE_LINK);
+		await context.expect.page.exists(page, TT_CREATE_FORM);
+		await context.expect.page.text(page, TT_UPLOAD_LABEL, TINY_TRANSLATOR_MUTATION_SEAM);
+		const renderedStyles = await lifecycle.renderedStyles();
+		const iconGroups = await lifecycle.groupedText(TT_ICON_PROBE);
+		const renderedIcon = iconGroups[0]?.items[0];
+		if (renderedIcon === undefined || renderedIcon.length === 0)
+			throw new Error('TinyTranslator toolbar rendered no icon text to measure');
+		const iconProbe = renderedStyles.find((probe) => probe.label === 'material-icon');
+		const resolvedFontFamily = iconProbe?.properties['font-family'];
+		if (resolvedFontFamily === undefined || resolvedFontFamily.length === 0)
+			throw new Error('TinyTranslator icon probe resolved no font family');
+		await measure(TINY_TRANSLATOR_CREATE_ROUTE);
+
+		// (d) The project the journey creates through the application's own
+		// form, with the synthetic translation file handed to the real hidden
+		// file input. This load is the parity arbitration itself: the migrated
+		// lane inserted a `typeof` guard into the FileReader service, and
+		// nothing the build lanes ran observed the guarded statements. What
+		// follows — the parse, and its digest — is that observation.
+		await page.type(TT_PROJECT_NAME_INPUT, TT_PROJECT_NAME, { redact: false });
+		const loaded = await lifecycle.loadFileInput('translation-file');
+		if (
+			loaded.fileName !== WITNESS_ANGULAR_TINY_TRANSLATOR_FILE_INPUT_FIXTURE.fileName ||
+			loaded.sha256 !== WITNESS_ANGULAR_TINY_TRANSLATOR_FILE_INPUT_FIXTURE.sha256
+		)
+			throw new Error('TinyTranslator was handed a file the schema does not declare');
+		await context.expect.page.bodyText(page, { contains: loaded.fileName });
+		await context.expect.page.bodyText(page, {
+			contains: `${WITNESS_ANGULAR_TINY_TRANSLATOR_FILE_INPUT_FIXTURE.transUnits} entries`,
+		});
+		// The review workflow, so both state changes the application models are
+		// reachable: a translator marks a unit translated, a reviewer marks it
+		// final. The single-user workflow would collapse them into one.
+		await page.click(TT_WORKFLOW_WITH_REVIEW);
+		await page.click(TT_ADD_PROJECT_BUTTON);
+		await context.expect.page.exists(page, TT_UNIT_LIST);
+		await context.expect.page.count(
+			page,
+			TT_UNIT_LIST_ITEM,
+			WITNESS_ANGULAR_TINY_TRANSLATOR_FILE_INPUT_FIXTURE.transUnits,
+		);
+		const parsedUnits = await lifecycle.groupedText(TT_UNIT_PROBE);
+		if (parsedUnits.length !== WITNESS_ANGULAR_TINY_TRANSLATOR_FILE_INPUT_FIXTURE.transUnits)
+			throw new Error('TinyTranslator parsed a different number of units than it rendered');
+		await context.expect.page.bodyText(page, { contains: 'State new' });
+		await measure(TINY_TRANSLATOR_TRANSLATE_ROUTE);
+
+		// (e) A translation typed into the application's own editor, and the
+		// state change the translator role can make.
+		await page.click(`${TT_UNIT_LIST} mat-list-item:nth-of-type(1)`);
+		await page.press(TT_TRANSLATION_INPUT, 'a', { modifiers: ['Meta'] });
+		await page.type(TT_TRANSLATION_INPUT, TT_TRANSLATION_TEXT, { redact: false });
+		await page.click(TT_MARK_TRANSLATED);
+		await context.expect.page.bodyText(page, { contains: 'State translated' });
+
+		// (f) The reviewer's state change, reached through the application's own
+		// project editor rather than by rewriting its store.
+		await page.click(TT_EDIT_PROJECT_LINK);
+		await context.expect.page.exists(page, TT_EDIT_FORM);
+		await page.click(TT_ROLE_REVIEWER);
+		await page.click(TT_SAVE_PROJECT_BUTTON);
+		await context.expect.page.bodyText(page, {
+			contains: 'You are currently working as reviewer!',
+		});
+		await page.click(TT_MARK_REVIEWED);
+		await context.expect.page.bodyText(page, { contains: 'State final' });
+		await measure(`${TINY_TRANSLATOR_TRANSLATE_ROUTE} (after the reviewed state change)`);
+
+		// (g) The unit filter, narrowed by a typed substring and widened again
+		// by a full clear rather than by re-selecting the unfiltered radio.
+		await page.click(TT_FILTER_BY_SUBSTRING);
+		await page.type(TT_FILTER_SUBSTRING_INPUT, TT_FILTER_TERM, { redact: false });
+		await context.expect.page.count(page, TT_UNIT_LIST_ITEM, 1);
+		await page.press(TT_FILTER_SUBSTRING_INPUT, 'a', { modifiers: ['Meta'] });
+		await page.press(TT_FILTER_SUBSTRING_INPUT, 'Backspace');
+		await context.expect.page.count(
+			page,
+			TT_UNIT_LIST_ITEM,
+			WITNESS_ANGULAR_TINY_TRANSLATOR_FILE_INPUT_FIXTURE.transUnits,
+		);
+		await page.click(TT_FILTER_ALL);
+
+		// (h) The export, through the application's own downloader service. The
+		// captured bytes are read back and parsed: an export that did not carry
+		// the typed translation would be a download that happened and a file
+		// that did not say anything.
+		await page.click(TT_EXPORT_BUTTON);
+		const captured = await lifecycle.capturedDownloads();
+		const exported = (await lifecycle.capturedDownloadTexts())[0];
+		if (captured.length !== 1 || exported === undefined)
+			throw new Error('TinyTranslator export produced no single captured download');
+		if (
+			!exported.includes(TT_EXPORTED_UNIT_ID) ||
+			!exported.includes(TT_TRANSLATION_TEXT) ||
+			!exported.includes('<target state="final"')
+		)
+			throw new Error('TinyTranslator export did not carry the typed translation');
+		await measure(`${TINY_TRANSLATOR_TRANSLATE_ROUTE} (after the export)`);
+		await context.expect.page.outcome(page, {
+			events: {
+				click: { atLeast: 8 },
+				input: { atLeast: 2 },
+				change: { atLeast: 2 },
+				keydown: { atLeast: 4 },
+			},
+		});
+		checkpoints.push(await zeroServiceWorkerCheckpoint(lifecycle, 'after-interactions'));
+
+		// (i) A real document reload. There is no backend: the project lives in
+		// browser local storage, and what comes back is what the journey put
+		// there rather than a seed the harness supplied.
+		await page.reload();
+		await context.expect.page.count(
+			page,
+			TT_UNIT_LIST_ITEM,
+			WITNESS_ANGULAR_TINY_TRANSLATOR_FILE_INPUT_FIXTURE.transUnits,
+		);
+		await context.expect.page.bodyText(page, { contains: TT_TRANSLATION_TEXT });
+		const keysAfterJourney = await storageKeys();
+		await measure(`${TINY_TRANSLATOR_TRANSLATE_ROUTE} (after the online reload)`);
+		checkpoints.push(await zeroServiceWorkerCheckpoint(lifecycle, 'after-online-reload'));
+		await clean(
+			context,
+			page,
+			TINY_TRANSLATOR_JOURNEY_NAVIGATIONS,
+			lifecycle.expectedConsoleErrors,
+			lifecycle.expectedFailedRequests,
+		);
+		const degradation = WITNESS_ANGULAR_TINY_TRANSLATOR_MAT_ICON_DEGRADATIONS[lifecycle.lane];
+		if (
+			resolvedFontFamily.includes(WITNESS_ANGULAR_TINY_TRANSLATOR_ICON_FONT_FAMILY) !==
+			degradation.iconFontFamilyDeclared
+		)
+			throw new Error(
+				`TinyTranslator ${lifecycle.lane} icon family disagrees with its declared degradation: ${resolvedFontFamily}`,
+			);
+		const applicationJourney: WitnessAngularTinyTranslatorJourney = {
+			matIcon: {
+				state: degradation.state,
+				cause: degradation.cause,
+				iconFontFamilyDeclared: degradation.iconFontFamilyDeclared,
+				rendersLigatureText: true,
+				masked: false,
+				resolvedFontFamily,
+				renderedText: renderedIcon,
+			},
+			fileReaderParity: {
+				state: 'measured-identical-parse-across-lanes',
+				assertion:
+					'The application own file input was handed the synthetic translation file in both lanes, read by the capability-edited FileReader service, and the units it parsed were rendered and read back off the page. This journey IS the arbitration of the declared FileReader difference: the digest below is the parse itself, and it participates in the behavior digest the two lanes must agree on.',
+				parsedUnits: parsedUnits.length,
+				parsedDigest: sha256(canonicalize(parsedUnits)),
+			},
+			persistence: {
+				store: 'browser-local-storage',
+				service: 'the applications own BackendLocalStorageService behind BackendServiceAPI',
+				backend: 'none',
+				stubbed: false,
+				keysBeforeJourney,
+				keysAfterJourney,
+				survivesOnlineReload: true,
+			},
+		};
+		return {
+			assertions: [
+				'project created through the application own form on its own create-project route',
+				'synthetic translation file handed to the application own hidden file input and parsed by its FileReader service',
+				'parsed units rendered and read back off the page, identically in both lanes',
+				'translation typed into the application own editor and marked translated by a translator',
+				'reviewer role set through the application own project editor and the unit marked final',
+				'unit list narrowed by a typed substring and restored by a full clear',
+				'translation file exported through the application own downloader and the captured bytes carrying the typed translation',
+				'project tooltip reached by a genuine hover on the toolbar control',
+				'project and translation restored from browser local storage by an online reload',
+				'no service worker registered, controlling, cached or requested in either lane',
+				'clean page',
+			],
+			offlineEvidence: { state: 'not-applicable' },
+			zeroServiceWorker: { checkpoints },
+			renderedStyles,
+			applicationJourney,
+			scrollAbsence: {
+				state: 'measured-no-overflowing-document',
+				viewport: { ...TINY_TRANSLATOR_VIEWPORT },
+				routes: measuredRoutes,
+				documentOverflow:
+					'the application pins its container to the viewport and gives the unit list and the editor pane their own overflow, so no stage of the journey produces a scrollable document',
+				claimed: false,
+			},
+		};
+	},
+};
+apps.push(angularTinyTranslatorSpec);
+
+/**
+ * The TinyTranslator Witness specification, reachable so its declared
+ * inventories, probes, seams and the two opt-in mechanisms can be checked
+ * against the receipt schema that enforces them without launching a browser.
+ */
+export function angularTinyTranslatorWitnessSpec(): AppSpec {
+	return angularTinyTranslatorSpec;
+}
+
+/**
+ * Neither lane ships or registers a service worker, so the run is executed
+ * under the zero-worker policy: the browser context still allows registration
+ * and the journey is required to observe nothing at each of its checkpoints.
+ */
+export async function executeAngularTinyTranslatorWitnessRun(options: {
+	lane: Lane;
+	pass: 1 | 2;
+	laneRoot: string;
+	receiptRoot: string;
+}): Promise<WitnessRealAppRun> {
+	return await executeRun(angularTinyTranslatorSpec, options.lane, options.pass, {
+		...options,
+		serviceWorkerPolicy: 'zero',
+	});
+}
+
+/**
  * The published application specs, exported so the two opt-in browser
  * mechanisms can be held to their own construction rather than to an intention:
  * a reader — and a test — can see directly that every vertical that predates
@@ -4663,6 +5209,7 @@ async function executeRun(
 			browserStorageKeys: host.browserStorageKeys,
 			loadFileInput: host.loadFileInput,
 			capturedDownloads: host.capturedDownloads,
+			capturedDownloadTexts: host.capturedDownloadTexts,
 		});
 		await context.receipt.capture('journey-complete');
 	});
@@ -4905,6 +5452,23 @@ async function executeRun(
 						staticServer.origin,
 						app.mockedNonLoopbackSeams[lane],
 					),
+				}),
+		// Both opt-in mechanisms report themselves only where the application
+		// declared them. An application that declared neither carries neither
+		// key, so the absence of the mechanism is visible in the evidence rather
+		// than having to be taken on trust.
+		...(app.fileInputs === undefined
+			? {}
+			: {
+					fileInputLoads: buildFileInputLoadInventory(
+						app.fileInputs.surfaces,
+						host.loadedFileInputs(),
+					),
+				}),
+		...(app.downloads === undefined
+			? {}
+			: {
+					downloadCaptures: buildDownloadCaptureInventory(await host.capturedDownloads()),
 				}),
 		...(completedJourney.renderedStyles === undefined
 			? {}
@@ -5436,6 +6000,7 @@ async function runReactBaselineDifferentialProfile(
 				// exactly as they do for every application that declares none.
 				loadFileInput: host.loadFileInput,
 				capturedDownloads: host.capturedDownloads,
+				capturedDownloadTexts: host.capturedDownloadTexts,
 			});
 			telemetry =
 				journey.timeoutTelemetry ??
