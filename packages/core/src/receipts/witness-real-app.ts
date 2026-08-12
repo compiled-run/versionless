@@ -44,6 +44,22 @@ export const WITNESS_REAL_APP_NAMES = [
 	 * backend at all — which is why the two opt-in mechanisms below exist.
 	 */
 	'angular-tiny-translator',
+	/**
+	 * The Angular 8 pre-Ivy ViewEngine vertical, and the first application here
+	 * whose production output ships a REAL service worker in both lanes: the era
+	 * build and the migrated build each emit `ngsw-worker.js`, `safety-worker.js`
+	 * and a generated manifest, and the application registers one on every
+	 * production load. Every other worker story in this corpus is an absence or a
+	 * refusal; this one is a registration that succeeds, which is why its schema
+	 * measures the settled state at three checkpoints per lane instead of
+	 * asserting a zero.
+	 *
+	 * It is also the first whose state lives in IndexedDB rather than in local
+	 * storage, and the first with a genuine drag surface since jira-clone — which
+	 * it is deliberately not a member of the closed drag list for, because that
+	 * membership is earned by a measured drag and no journey has driven one.
+	 */
+	'angular-super-productivity',
 ] as const;
 /** Every named app must contribute two lanes observed twice each. */
 export const WITNESS_REAL_APP_RUNS = WITNESS_REAL_APP_NAMES.length * 4;

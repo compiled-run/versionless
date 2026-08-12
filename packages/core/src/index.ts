@@ -28,6 +28,7 @@ export * from './receipts/witness-react-memos.ts';
 export * from './receipts/witness-angular-factoriolab.ts';
 export * from './receipts/witness-angular-jira-clone.ts';
 export * from './receipts/witness-angular-tiny-translator.ts';
+export * from './receipts/witness-angular-super-productivity.ts';
 export * from './receipts/witness-next-killedbygoogle-v3.ts';
 export * from './receipts/react-avataaars-compatibility.ts';
 export * from './receipts/react-calculator.ts';
