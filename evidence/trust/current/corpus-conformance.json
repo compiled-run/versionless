@@ -1,8 +1,8 @@
 {
   "schemaVersion": "versionless.corpus-conformance.v1",
   "summary": {
-    "verticals": 18,
-    "sourceApplications": 10,
+    "verticals": 19,
+    "sourceApplications": 11,
     "designatedPilotsVerified": 0
   },
   "verticals": [
@@ -987,6 +987,56 @@
         }
       },
       "designatedPilot": false
+    },
+    {
+      "id": "angular-tiny-translator-v0-12-0",
+      "application": "angular-tiny-translator",
+      "framework": "angular",
+      "receiptPath": "evidence/runs/witness-angular-tiny-translator-v0-12-0/receipt.json",
+      "receiptDigest": "65b0a976823010e224ee76058e14d4dfee4ac643c8a32826128968a754c083ca",
+      "canonicalReceipts": [
+        {
+          "path": "evidence/runs/angular-tiny-translator-v0-12-0/u17-era-baseline.json",
+          "schemaVersion": "versionless.angular-tiny-translator-era-baseline.v1",
+          "digest": "f996cc39a4b24f30782591e967ddf02fe8448a950db71015ff9f9d214f8c23b6",
+          "sha256": "43ba7cbea92a931566d44bb74e0006a7e541f5f77e8ee589d6814aaa48ab17c5"
+        },
+        {
+          "path": "evidence/runs/angular-tiny-translator-v0-12-0/u22-offline-font-lane.json",
+          "schemaVersion": "versionless.angular-tiny-translator-offline-font-lane.v1",
+          "digest": "f6cdf12244ea7983af68b7d0483900da9fdaee6afe62aff825b1e9fa7b9a2b6e",
+          "sha256": "78a2094d74b2df53b5d2d0dbe52fc4eb928206a5b692a47143308a10ee567917"
+        }
+      ],
+      "runtime": "node-8.9.3-to-node-16.20.2",
+      "bundler": "angular-cli-1.5.4-webpack-3.8.1-to-angular-16.2-browser-builder",
+      "track": "production-readiness-direct-witness-angular5-to-angular16-browser-builder",
+      "locality": {
+        "mode": "offline",
+        "scope": "process-scoped",
+        "osWideIsolation": false,
+        "successfulNonLoopback": 0,
+        "mockedNonLoopbackSeams": 1
+      },
+      "browserProof": "verified-direct-witness",
+      "browserRuns": 4,
+      "behaviorDigest": "890ddd697619de1273c1bddf5cb504d7cad9eeb54c4503d8a458f3c72bd6405f",
+      "serviceWorkerAttempt": "measured-era-defect-carried-across-the-migration",
+      "serviceWorkerAttemptMasked": false,
+      "scrollSurface": "measured-no-overflowing-document",
+      "productionReadiness": "verified-direct-witness",
+      "readinessScoreboard": {
+        "angularLineage": {
+          "counted": false,
+          "ready": 1,
+          "total": 4
+        },
+        "overall": {
+          "ready": 3,
+          "total": 12
+        }
+      },
+      "designatedPilot": false
     }
   ],
   "applications": [
@@ -1483,6 +1533,57 @@
         "scrollSurface": "measured-genuine-viewport-scroll",
         "locality": "process-scoped-not-os-wide"
       }
+    },
+    {
+      "id": "angular-tiny-translator",
+      "source": {
+        "repository": "https://github.com/martinroob/tiny-translator",
+        "ref": "refs/tags/v0.12.0",
+        "tagKind": "lightweight — no tag object, no tagger and no signature; the commit is unsigned",
+        "revision": "08dcacf6a41d5a6f6dfbc71d858adcdc4c85691a",
+        "rootTreeSha": "ba39de904e28030dcc8a09e28bbd1b0db7247bb7",
+        "archiveSha256": "424209463bcccca1714d520e2f68c55d54b204c69367bbeefcdf930d01d3ac18",
+        "archiveBytes": 186861,
+        "frontendRoot": ".",
+        "license": "MIT",
+        "licenseSha256": "b33e2f180e3d22c42c1511895a448e9aafb848a51a43a9cfae163f19f7288fb9"
+      },
+      "verticals": [
+        "angular-tiny-translator-v0-12-0"
+      ],
+      "conformance": {
+        "browserProof": "direct-witness-verified",
+        "runs": 4,
+        "behaviorDigest": "890ddd697619de1273c1bddf5cb504d7cad9eeb54c4503d8a458f3c72bd6405f",
+        "mutation": "pass",
+        "mutationRestoration": "byte-identical",
+        "serviceWorkerAttempt": "measured-era-defect-carried-across-the-migration",
+        "serviceWorkerAttemptMasked": false,
+        "persistence": {
+          "backend": "none",
+          "store": "browser-local-storage",
+          "stubbed": false,
+          "survivesOnlineReload": true
+        },
+        "readinessScoreboard": {
+          "angularLineage": {
+            "counted": false,
+            "ready": 1,
+            "total": 4
+          },
+          "overall": {
+            "ready": 3,
+            "total": 12
+          }
+        }
+      },
+      "boundaries": {
+        "track": "production-readiness-direct-witness-angular5-to-angular16-browser-builder",
+        "designatedPilot": false,
+        "genericAngularSupport": "not-claimed",
+        "scrollSurface": "measured-no-overflowing-document",
+        "locality": "process-scoped-not-os-wide"
+      }
     }
   ],
   "frameworkLanes": [
@@ -1630,6 +1731,14 @@
           "witnessReceipt": "evidence/runs/witness-react-linkfree-v0-72-0/receipt.json",
           "counted": false,
           "reason": "Not counted pending Judge audit: the browser proof is verified and retained, but it was run over a synthetic profile corpus staged through the application’s own codegen rather than the shipped dataset, and its own receipt declares counted:false, so it stays visible without reaching the React numerator."
+        },
+        {
+          "cell": "angular-tiny-translator-v0-12-0",
+          "application": "angular-tiny-translator",
+          "lineage": "angular",
+          "witnessReceipt": "evidence/runs/witness-angular-tiny-translator-v0-12-0/receipt.json",
+          "counted": false,
+          "reason": "Not counted pending Judge audit: the browser proof is verified and retained, but its own receipt declares counted:false against the Angular lineage — an era-defect service-worker registration is carried across the migration and stays recorded rather than masked — so it stays visible without reaching the Angular numerator."
         }
       ],
       "holdouts": [
@@ -1670,6 +1779,6 @@
   },
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "e5f76aa7dfc3ca58951c7efffed4fc771cd23793ebc77d6e495cc00cd4959319"
+    "canonicalDigest": "258477f40cb03631c21913cc5814bbfcdf5372775911f9c3541792e1018b4d4c"
   }
 }

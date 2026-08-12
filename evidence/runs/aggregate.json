@@ -241,6 +241,16 @@
       "result": "pass",
       "receipt": "evidence/runs/witness-react-linkfree-v0-72-0/receipt.json",
       "digest": "2277ad1947280d898f577f418f8b4a34ca775b91156bc1e1de488bde28eae4ba"
+    },
+    {
+      "id": "witness-angular-tiny-translator",
+      "framework": "angular",
+      "track": "production-readiness-direct-witness-angular5-to-angular16-browser-builder",
+      "bundler": "angular-cli-1.5.4-webpack-3.8.1-to-angular-16.2-browser-builder",
+      "runtime": "node-8.9.3-to-node-16.20.2",
+      "result": "pass",
+      "receipt": "evidence/runs/witness-angular-tiny-translator-v0-12-0/receipt.json",
+      "digest": "65b0a976823010e224ee76058e14d4dfee4ac643c8a32826128968a754c083ca"
     }
   ],
   "holdouts": [

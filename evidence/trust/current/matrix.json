@@ -2,7 +2,7 @@
   "schemaVersion": "versionless.trust.v1",
   "derivedFrom": {
     "path": "corpus-conformance.json",
-    "sha256": "e5f76aa7dfc3ca58951c7efffed4fc771cd23793ebc77d6e495cc00cd4959319"
+    "sha256": "258477f40cb03631c21913cc5814bbfcdf5372775911f9c3541792e1018b4d4c"
   },
   "cells": [
     {
@@ -423,6 +423,40 @@
           "counted": false,
           "ready": 1,
           "total": 4
+        }
+      }
+    },
+    {
+      "id": "angular-tiny-translator-v0-12-0",
+      "framework": "angular",
+      "designatedPilot": false,
+      "runtime": "node-8.9.3-to-node-16.20.2",
+      "bundler": "angular-cli-1.5.4-webpack-3.8.1-to-angular-16.2-browser-builder",
+      "state": "verified",
+      "track": "production-readiness-direct-witness-angular5-to-angular16-browser-builder",
+      "scope": "fixture-specific-angular-cli-1-5-4-webpack-3-to-angular-16.2-browser-builder",
+      "genericAngularSupport": "not-claimed",
+      "browserProof": "verified-direct-witness",
+      "serviceWorkerAttempt": "measured-era-defect-carried-across-the-migration",
+      "serviceWorkerAttemptMasked": false,
+      "scrollSurface": "measured-no-overflowing-document",
+      "locality": {
+        "mode": "offline",
+        "scope": "process-scoped",
+        "osWideIsolation": false,
+        "successfulNonLoopback": 0,
+        "mockedNonLoopbackSeams": 1
+      },
+      "productionReadiness": "verified-direct-witness",
+      "readinessScoreboard": {
+        "angularLineage": {
+          "counted": false,
+          "ready": 1,
+          "total": 4
+        },
+        "overall": {
+          "ready": 3,
+          "total": 12
         }
       }
     },

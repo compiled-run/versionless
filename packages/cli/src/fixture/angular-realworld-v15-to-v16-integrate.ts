@@ -133,7 +133,8 @@ function assertAggregate(value: unknown, requireIntegrated: boolean): Record<str
 			kind === 'angular-jira-clone-browser-proof' ||
 			kind === 'react-memos-browser-proof' ||
 			kind === 'next-killedbygoogle-v3-browser-proof' ||
-			kind === 'react-linkfree-browser-proof'
+			kind === 'react-linkfree-browser-proof' ||
+			kind === 'angular-tiny-translator-browser-proof'
 		)
 			return aggregate;
 	} catch {

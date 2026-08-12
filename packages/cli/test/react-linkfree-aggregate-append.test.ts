@@ -11,6 +11,7 @@ import {
 	WITNESS_REACT_LINKFREE_RECEIPT_PATH,
 } from '../../core/src/receipts/witness-react-linkfree.ts';
 import { WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH } from '../../core/src/receipts/witness-next-killedbygoogle-v3.ts';
+import { WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH } from '../../core/src/receipts/witness-angular-tiny-translator.ts';
 import { deriveCorpusTransactionState } from '../../core/src/corpus/conformance.ts';
 
 const repositoryRoot = path.resolve(import.meta.dirname, '../../..');
@@ -36,7 +37,11 @@ async function stagedRoot(): Promise<string> {
 		await copyFile(path.join(repositoryRoot, relative), destination);
 	}
 	await rewrite(directory, (members) =>
-		members.filter((member) => member.receipt !== WITNESS_REACT_LINKFREE_RECEIPT_PATH),
+		members.filter(
+			(member) =>
+				member.receipt !== WITNESS_REACT_LINKFREE_RECEIPT_PATH &&
+				member.receipt !== WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH,
+		),
 	);
 	expect(await fixtures(directory)).toHaveLength(24);
 	return directory;
@@ -83,11 +88,14 @@ describe('React LinkFree aggregate append', () => {
 			'utf8',
 		);
 		const parsed = JSON.parse(published) as { fixtures: Array<Record<string, unknown>> };
-		expect(parsed.fixtures).toHaveLength(25);
-		expect(parsed.fixtures.at(-1)?.receipt).toBe(WITNESS_REACT_LINKFREE_RECEIPT_PATH);
+		expect(parsed.fixtures).toHaveLength(26);
+		expect(parsed.fixtures.slice(-2).map((member) => member.receipt)).toEqual([
+			WITNESS_REACT_LINKFREE_RECEIPT_PATH,
+			WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH,
+		]);
 		await expect(appendReactLinkfreeAggregateMembers(repositoryRoot)).resolves.toEqual({
-			kind: 'react-linkfree-browser-proof',
-			receipts: 25,
+			kind: 'angular-tiny-translator-browser-proof',
+			receipts: 26,
 			appended: false,
 		});
 		expect(

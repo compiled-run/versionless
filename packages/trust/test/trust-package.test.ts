@@ -27,6 +27,8 @@ import {
 	NEXT_KILLEDBYGOOGLE_V3_TRUST_RECEIPTS,
 	REACT_LINKFREE_TRUST_MATRIX_CELLS,
 	REACT_LINKFREE_TRUST_RECEIPTS,
+	ANGULAR_TINY_TRANSLATOR_TRUST_MATRIX_CELLS,
+	ANGULAR_TINY_TRANSLATOR_TRUST_RECEIPTS,
 	REACT_MEMOS_TRUST_MATRIX_CELLS,
 	REACT_MEMOS_TRUST_RECEIPTS,
 	generateTrustPackage,
@@ -656,7 +658,8 @@ snapshots:
 				item.id !== 'witness-angular-jira-clone' &&
 				item.id !== 'witness-react-memos-v0-1-3' &&
 				item.id !== 'witness-next-killedbygoogle-v3-0-0' &&
-				item.id !== 'witness-react-linkfree-v0-72-0',
+				item.id !== 'witness-react-linkfree-v0-72-0' &&
+				item.id !== 'witness-angular-tiny-translator',
 		);
 		const avataaarsTransaction = deriveCorpusTransactionState([
 			...withoutAvataaars,
@@ -965,16 +968,16 @@ snapshots:
 				integrity: { canonicalDigest: string };
 			};
 			expect(conformance.summary).toEqual({
-				verticals: 18,
-				sourceApplications: 10,
+				verticals: 19,
+				sourceApplications: 11,
 				designatedPilotsVerified: 0,
 			});
 			expect(conformance.frameworkLanes).toHaveLength(3);
-			// Three more browser-proof cells now, each one member and one
+			// Four more browser-proof cells now, each one member and one
 			// vertical, and every one of their lineage scoreboards stays
 			// uncounted.
-			expect(matrix.cells).toHaveLength(REACT_LINKFREE_TRUST_MATRIX_CELLS);
-			expect(first.receipts).toHaveLength(REACT_LINKFREE_TRUST_RECEIPTS);
+			expect(matrix.cells).toHaveLength(ANGULAR_TINY_TRANSLATOR_TRUST_MATRIX_CELLS);
+			expect(first.receipts).toHaveLength(ANGULAR_TINY_TRANSLATOR_TRUST_RECEIPTS);
 			expect(ANGULAR_JIRA_CLONE_TRUST_MATRIX_CELLS).toBe(
 				ANGULAR_FACTORIOLAB_TRUST_MATRIX_CELLS + 1,
 			);
@@ -989,6 +992,10 @@ snapshots:
 				NEXT_KILLEDBYGOOGLE_V3_TRUST_MATRIX_CELLS + 1,
 			);
 			expect(REACT_LINKFREE_TRUST_RECEIPTS).toBe(NEXT_KILLEDBYGOOGLE_V3_TRUST_RECEIPTS + 1);
+			expect(ANGULAR_TINY_TRANSLATOR_TRUST_MATRIX_CELLS).toBe(
+				REACT_LINKFREE_TRUST_MATRIX_CELLS + 1,
+			);
+			expect(ANGULAR_TINY_TRANSLATOR_TRUST_RECEIPTS).toBe(REACT_LINKFREE_TRUST_RECEIPTS + 1);
 			expect(matrix.cells.find((cell) => cell.id === 'angular-factoriolab')).toMatchObject({
 				framework: 'angular',
 				state: 'verified',

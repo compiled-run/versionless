@@ -103,6 +103,12 @@ import {
 	witnessReactLinkfreeAggregateMember,
 } from '../receipts/witness-react-linkfree.ts';
 import {
+	ANGULAR_TINY_TRANSLATOR_FIXTURE,
+	verifyWitnessAngularTinyTranslatorEvidence,
+	WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH,
+	witnessAngularTinyTranslatorAggregateMember,
+} from '../receipts/witness-angular-tiny-translator.ts';
+import {
 	HOLDOUT_REACT_CYPRESS_RWA_APPLICATION,
 	holdoutReactCypressRwaCorpusRecord,
 	verifyHoldoutReactCypressRwaEvidence,
@@ -219,6 +225,7 @@ function lineageCountingLedger(present: {
 	memos: boolean;
 	killedbygoogleV3: boolean;
 	linkfree: boolean;
+	tinyTranslator: boolean;
 }): LineageCountingCell[] {
 	const cells: Array<LineageCountingCell | null> = [
 		present.reactBoilerplate
@@ -309,6 +316,16 @@ function lineageCountingLedger(present: {
 					witnessReceipt: WITNESS_REACT_LINKFREE_RECEIPT_PATH,
 					counted: false,
 					reason: 'Not counted pending Judge audit: the browser proof is verified and retained, but it was run over a synthetic profile corpus staged through the application’s own codegen rather than the shipped dataset, and its own receipt declares counted:false, so it stays visible without reaching the React numerator.',
+				}
+			: null,
+		present.tinyTranslator
+			? {
+					cell: ANGULAR_TINY_TRANSLATOR_FIXTURE,
+					application: 'angular-tiny-translator',
+					lineage: 'angular' as const,
+					witnessReceipt: WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH,
+					counted: false,
+					reason: 'Not counted pending Judge audit: the browser proof is verified and retained, but its own receipt declares counted:false against the Angular lineage — an era-defect service-worker registration is carried across the migration and stays recorded rather than masked — so it stays visible without reaching the Angular numerator.',
 				}
 			: null,
 	];
@@ -497,8 +514,8 @@ interface JourneyProjection {
 export interface CorpusConformance {
 	schemaVersion: typeof CORPUS_CONFORMANCE_SCHEMA;
 	summary: {
-		verticals: 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18;
-		sourceApplications: 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
+		verticals: 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19;
+		sourceApplications: 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
 		designatedPilotsVerified: 0;
 	};
 	verticals: Array<Record<string, unknown>>;
@@ -727,6 +744,31 @@ export type CorpusTransactionState = Readonly<
 			resolvedDependencies: 38;
 	  }
 	| {
+			/**
+			 * The TinyTranslator Angular CLI 1.5.4 lineage joins on top of the
+			 * LinkFree browser proof and is the third Angular-lineage browser
+			 * proof to enter the aggregate. Like factoriolab and jira-clone it
+			 * publishes one member rather than a pair: its two build-lane
+			 * receipts — the era baseline and the offline-font migrated lane —
+			 * are sealed inside the Witness receipt by both canonical digest and
+			 * exact bytes rather than carried as separate aggregate rows, so the
+			 * Witness receipt is the whole of its membership. It is a separate
+			 * immutable source application, so it is a new vertical, and its
+			 * Angular-lineage readiness remains explicitly uncounted: the receipt
+			 * records an era-defect service-worker registration carried across the
+			 * migration rather than masking it.
+			 */
+			kind: 'angular-tiny-translator-browser-proof';
+			nextKilledByGoogleIntegrated: true;
+			angularRealworldWitnessIntegrated: true;
+			reactBoilerplateWitnessIntegrated: true;
+			nextKilledByGoogleWitnessIntegrated: true;
+			verticals: 19;
+			sourceApplications: 11;
+			receipts: 26;
+			resolvedDependencies: 39;
+	  }
+	| {
 			kind: 'react-avataaars-candidate';
 			nextKilledByGoogleIntegrated: true;
 			angularRealworldWitnessIntegrated: true;
@@ -945,25 +987,57 @@ function deriveReactTrioTransactionState(
 	if (
 		!sha256Pattern.test(linkfreeDigest) ||
 		canonicalize(linkfreeRecord) !==
-			canonicalize(witnessReactLinkfreeAggregateMember(linkfreeDigest)) ||
-		byPath.size !== canonicalReceipts.length + 16
+			canonicalize(witnessReactLinkfreeAggregateMember(linkfreeDigest))
 	)
 		throw new Error('React LinkFree aggregate membership mismatch');
+	const linkfreeOrder = [...killedbygoogleOrder, WITNESS_REACT_LINKFREE_RECEIPT_PATH];
+	const tinyTranslator = byPath.get(WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH);
+	if (!tinyTranslator) {
+		if (byPath.size !== canonicalReceipts.length + 16)
+			throw new Error('React LinkFree aggregate membership mismatch');
+		assertOrderedAggregate(orderedPaths, linkfreeOrder, 'React LinkFree browser proof');
+		return {
+			kind: 'react-linkfree-browser-proof',
+			nextKilledByGoogleIntegrated: true,
+			angularRealworldWitnessIntegrated: true,
+			reactBoilerplateWitnessIntegrated: true,
+			nextKilledByGoogleWitnessIntegrated: true,
+			verticals: 18,
+			sourceApplications: 10,
+			receipts: 25,
+			resolvedDependencies: 38,
+		};
+	}
+	const tinyTranslatorRecord = record(
+		tinyTranslator,
+		'Angular TinyTranslator Witness aggregate fixture',
+	);
+	const tinyTranslatorDigest = string(
+		tinyTranslatorRecord.digest,
+		'Angular TinyTranslator Witness aggregate digest',
+	);
+	if (
+		!sha256Pattern.test(tinyTranslatorDigest) ||
+		canonicalize(tinyTranslatorRecord) !==
+			canonicalize(witnessAngularTinyTranslatorAggregateMember(tinyTranslatorDigest)) ||
+		byPath.size !== canonicalReceipts.length + 17
+	)
+		throw new Error('Angular TinyTranslator aggregate membership mismatch');
 	assertOrderedAggregate(
 		orderedPaths,
-		[...killedbygoogleOrder, WITNESS_REACT_LINKFREE_RECEIPT_PATH],
-		'React LinkFree browser proof',
+		[...linkfreeOrder, WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH],
+		'Angular TinyTranslator browser proof',
 	);
 	return {
-		kind: 'react-linkfree-browser-proof',
+		kind: 'angular-tiny-translator-browser-proof',
 		nextKilledByGoogleIntegrated: true,
 		angularRealworldWitnessIntegrated: true,
 		reactBoilerplateWitnessIntegrated: true,
 		nextKilledByGoogleWitnessIntegrated: true,
-		verticals: 18,
-		sourceApplications: 10,
-		receipts: 25,
-		resolvedDependencies: 38,
+		verticals: 19,
+		sourceApplications: 11,
+		receipts: 26,
+		resolvedDependencies: 39,
 	};
 }
 
@@ -2321,6 +2395,118 @@ async function reactLinkfreeConformanceRows(
 	};
 }
 
+/**
+ * Derives the TinyTranslator conformance rows.
+ *
+ * This is the third Angular-lineage browser proof in the corpus and follows the
+ * factoriolab/jira-clone idiom exactly: there is no retained migration member to
+ * read metadata from, because the two build-lane receipts are sealed inside the
+ * Witness receipt by canonical digest and exact bytes, so the emitted
+ * `canonicalReceipts` list is that sealed binding and the lane identity comes
+ * from the single Witness aggregate member. Everything else is read out of the
+ * verified receipt.
+ *
+ * The service-worker fact is the one most easily lost in a summary, so the rows
+ * carry it as the receipt measured it: a registration the era application always
+ * attempted and that the migration neither introduced nor repaired, answered 400
+ * and registering nothing, published as `serviceWorkerAttempt` rather than a
+ * masked absence. The persistence block is emitted exactly as measured — a
+ * browser-local-storage store with no backend that survives an online reload —
+ * and the locality row publishes the mocked non-loopback seam count beside the
+ * zero successful non-loopback requests.
+ */
+async function angularTinyTranslatorConformanceRows(
+	root: string,
+	aggregateByPath: Map<string, unknown>,
+): Promise<{ vertical: Record<string, unknown>; application: Record<string, unknown> }> {
+	const verified = await verifyWitnessAngularTinyTranslatorEvidence(root);
+	const witnessMember = record(
+		aggregateByPath.get(WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH),
+		'Angular TinyTranslator Witness aggregate fixture',
+	);
+	if (witnessMember.digest !== verified.digest)
+		throw new Error('Angular TinyTranslator Witness aggregate digest differs');
+	const receipt = verified.receipt;
+	const run = receipt.runs[0];
+	if (!run) throw new Error('Angular TinyTranslator Witness receipt carries no runs');
+	const id = string(receipt.fixture, 'Angular TinyTranslator receipt fixture');
+	const application = string(run.app, 'Angular TinyTranslator application identity');
+	const behaviorDigest = string(run.behaviorDigest, 'Angular TinyTranslator behavior digest');
+	const track = string(witnessMember.track, 'Angular TinyTranslator Witness aggregate track');
+	const source = {
+		repository: normalizeURL(receipt.source.repository),
+		ref: receipt.source.ref,
+		tagKind: receipt.source.tagKind,
+		revision: receipt.source.revision,
+		rootTreeSha: receipt.source.rootTreeSha,
+		archiveSha256: receipt.source.archiveSha256,
+		archiveBytes: receipt.source.archiveBytes,
+		frontendRoot: receipt.source.frontendRoot,
+		license: receipt.source.license,
+		licenseSha256: receipt.source.licenseSha256,
+	};
+	const locality = {
+		mode: receipt.locality.mode,
+		scope: 'process-scoped',
+		osWideIsolation: receipt.locality.osWideIsolation,
+		successfulNonLoopback: receipt.locality.successfulNonLoopback,
+		mockedNonLoopbackSeams: receipt.locality.mockedNonLoopbackSeams,
+	};
+	return {
+		vertical: {
+			id,
+			application,
+			framework: string(witnessMember.framework, 'Angular TinyTranslator aggregate framework'),
+			receiptPath: WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH,
+			receiptDigest: verified.digest,
+			canonicalReceipts: receipt.canonicalReceipts.map((bound) => ({
+				path: bound.path,
+				schemaVersion: bound.schemaVersion,
+				digest: bound.digest,
+				sha256: bound.sha256,
+			})),
+			runtime: string(witnessMember.runtime, 'Angular TinyTranslator aggregate runtime'),
+			bundler: string(witnessMember.bundler, 'Angular TinyTranslator aggregate bundler'),
+			track,
+			locality,
+			browserProof: 'verified-direct-witness',
+			browserRuns: receipt.runs.length,
+			behaviorDigest,
+			serviceWorkerAttempt: receipt.serviceWorkerAttempt.state,
+			serviceWorkerAttemptMasked: receipt.serviceWorkerAttempt.masked,
+			scrollSurface: receipt.scrollAbsence.state,
+			productionReadiness: 'verified-direct-witness',
+			readinessScoreboard: receipt.readiness,
+			designatedPilot: false,
+		},
+		application: {
+			id: application,
+			source,
+			verticals: [id],
+			conformance: {
+				browserProof: 'direct-witness-verified',
+				runs: receipt.runs.length,
+				behaviorDigest,
+				mutation: receipt.mutation.restoredRun,
+				mutationRestoration: receipt.mutation.restoredByteIdentically
+					? 'byte-identical'
+					: 'not-byte-identical',
+				serviceWorkerAttempt: receipt.serviceWorkerAttempt.state,
+				serviceWorkerAttemptMasked: receipt.serviceWorkerAttempt.masked,
+				persistence: receipt.persistence,
+				readinessScoreboard: receipt.readiness,
+			},
+			boundaries: {
+				track,
+				designatedPilot: false,
+				genericAngularSupport: 'not-claimed',
+				scrollSurface: receipt.scrollAbsence.state,
+				locality: 'process-scoped-not-os-wide',
+			},
+		},
+	};
+}
+
 export async function analyzeCorpusConformance(
 	options: CorpusConformanceOptions = {},
 ): Promise<CorpusConformance> {
@@ -2804,7 +2990,8 @@ export async function analyzeCorpusConformance(
 			transaction.kind === 'angular-jira-clone-browser-proof' ||
 			transaction.kind === 'react-memos-browser-proof' ||
 			transaction.kind === 'next-killedbygoogle-v3-browser-proof' ||
-			transaction.kind === 'react-linkfree-browser-proof'
+			transaction.kind === 'react-linkfree-browser-proof' ||
+			transaction.kind === 'angular-tiny-translator-browser-proof'
 				? transaction.kind === 'react-zero-sw-reconciliation'
 					? 2
 					: transaction.kind === 'react-papercups-browser-proof'
@@ -2823,7 +3010,10 @@ export async function analyzeCorpusConformance(
 											: transaction.kind ===
 												  'react-linkfree-browser-proof'
 												? 11
-												: 1
+												: transaction.kind ===
+													  'angular-tiny-translator-browser-proof'
+													? 12
+													: 1
 				: 0)
 	)
 		throw new Error('Aggregate contains an unknown or extra receipt');
@@ -2845,7 +3035,9 @@ export async function analyzeCorpusConformance(
 	 * cascade once keeps every row, receipt-count and matrix check reading the
 	 * same answer instead of restating a longer disjunction at each use.
 	 */
-	const linkfreeIntegrated = transaction.kind === 'react-linkfree-browser-proof';
+	const tinyTranslatorIntegrated = transaction.kind === 'angular-tiny-translator-browser-proof';
+	const linkfreeIntegrated =
+		transaction.kind === 'react-linkfree-browser-proof' || tinyTranslatorIntegrated;
 	const killedbygoogleV3Integrated =
 		transaction.kind === 'next-killedbygoogle-v3-browser-proof' || linkfreeIntegrated;
 	const memosIntegrated =
@@ -2880,6 +3072,9 @@ export async function analyzeCorpusConformance(
 		: null;
 	const linkfree = linkfreeIntegrated
 		? await reactLinkfreeConformanceRows(root, aggregateByPath)
+		: null;
+	const tinyTranslator = tinyTranslatorIntegrated
+		? await angularTinyTranslatorConformanceRows(root, aggregateByPath)
 		: null;
 	if (transaction.kind === 'react-zero-sw-reconciliation' || papercupsIntegrated) {
 		const migration = await verifyReceipt(REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH, {
@@ -3130,6 +3325,7 @@ export async function analyzeCorpusConformance(
 	if (memos) verticals.push(memos.vertical);
 	if (killedbygoogleV3) verticals.push(killedbygoogleV3.vertical);
 	if (linkfree) verticals.push(linkfree.vertical);
+	if (tinyTranslator) verticals.push(tinyTranslator.vertical);
 
 	const applications: Array<Record<string, unknown>> = [
 		{
@@ -3252,6 +3448,7 @@ export async function analyzeCorpusConformance(
 		...(jiraClone ? [jiraClone.application] : []),
 		...(memos ? [memos.application] : []),
 		...(linkfree ? [linkfree.application] : []),
+		...(tinyTranslator ? [tinyTranslator.application] : []),
 	];
 	if (
 		verticals.length !== transaction.verticals ||
@@ -3271,6 +3468,7 @@ export async function analyzeCorpusConformance(
 		memos: memos !== null,
 		killedbygoogleV3: killedbygoogleV3 !== null,
 		linkfree: linkfree !== null,
+		tinyTranslator: tinyTranslator !== null,
 	});
 	const reactLineageReady = countedLineageCells(judgeCounting, 'react');
 	const angularLineageReady = countedLineageCells(judgeCounting, 'angular');

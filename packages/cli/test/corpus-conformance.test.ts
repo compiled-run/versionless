@@ -22,8 +22,8 @@ describe('corpus conformance CLI', () => {
 		expect(result.status).toBe(0);
 		expect(JSON.parse(result.stdout)).toMatchObject({
 			result: 'pass',
-			verticals: 18,
-			sourceApplications: 10,
+			verticals: 19,
+			sourceApplications: 11,
 		});
 	});
 

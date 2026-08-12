@@ -11,7 +11,10 @@ const root = path.resolve(import.meta.dirname, '../../../..');
 const aggregatePath = path.join(root, 'evidence/runs/aggregate.json');
 
 /** Every state in which the LinkFree member is already published. */
-const APPENDED_KINDS = new Set(['react-linkfree-browser-proof']);
+const APPENDED_KINDS = new Set([
+	'react-linkfree-browser-proof',
+	'angular-tiny-translator-browser-proof',
+]);
 
 function record(value: unknown, label: string): Record<string, unknown> {
 	if (!value || typeof value !== 'object' || Array.isArray(value))

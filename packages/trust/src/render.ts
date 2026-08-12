@@ -122,6 +122,9 @@ export function renderTrustReport(inputs: RenderInputs): string {
 	const reactLinkfreeWitnessVerified = inputs.manifest.receipts.some(
 		(item) => item.path === 'evidence/runs/witness-react-linkfree-v0-72-0/receipt.json',
 	);
+	const angularTinyTranslatorWitnessVerified = inputs.manifest.receipts.some(
+		(item) => item.path === 'evidence/runs/witness-angular-tiny-translator-v0-12-0/receipt.json',
+	);
 	const nextKilledByGoogleWitnessVerified = inputs.manifest.receipts.some(
 		(item) => item.path === 'evidence/runs/witness-next-killedbygoogle/receipt.json',
 	);
@@ -166,6 +169,7 @@ ${angularJiraCloneWitnessVerified ? `- jira-clone Angular CLI 13.2 custom-webpac
 ${reactMemosWitnessVerified ? '- memos v0.1.3 Vite 2.9.5→Vite 8 old-Vite-origin direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, the first React-lineage vertical whose origin bundler is Vite rather than webpack, and React-lineage readiness stays **3/4** because this vertical is explicitly **not counted**.' : '- memos old-Vite-origin direct-Witness browser proof: **not-tested**.'}
 ${nextKilledbygoogleV3WitnessVerified ? '- killedbygoogle v3.0.0 Next 12 static-export→Vite 8 client-build direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, its baseline/migrated document-delivery difference is **recorded, not masked**, and Next-lineage readiness stays **0/4** because this vertical is explicitly **not counted**.' : '- killedbygoogle v3.0.0 legacy-Next direct-Witness browser proof: **not-tested**.'}
 ${reactLinkfreeWitnessVerified ? '- LinkFree v0.72.0 create-react-app 5→Vite 8 direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, its proof ran over a **synthetic profile corpus** staged through the application\'s own codegen rather than the shipped dataset, and React-lineage readiness stays **3/4** because this vertical is explicitly **not counted**.' : '- LinkFree create-react-app 5 direct-Witness browser proof: **not-tested**.'}
+${angularTinyTranslatorWitnessVerified ? `- tiny-translator Angular CLI 1.5.4→Angular 16.2 browser-builder direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, an eleven-major lift whose era-defect service-worker registration is **recorded, not masked**, and Angular-lineage readiness stays **${angularLineage}** because this vertical is explicitly **not counted**.` : '- tiny-translator Angular CLI 1.5.4 direct-Witness browser proof: **not-tested**.'}
 ${nextKilledByGoogleWitnessVerified ? '- Older-Next direct-Witness candidate: **verified, not counted (0/4) pending final Judge audit**.' : '- Older-Next production readiness: **0/4; not-tested**.'}
 ${holdouts}
 - [Data-flow and control mappings](controls.json) — review inputs, not audit conclusions.

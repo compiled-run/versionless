@@ -86,7 +86,8 @@ export async function appendReactPapercupsAggregateMembers(rootDir = root): Prom
 			state.kind !== 'angular-jira-clone-browser-proof' &&
 			state.kind !== 'react-memos-browser-proof' &&
 			state.kind !== 'next-killedbygoogle-v3-browser-proof' &&
-			state.kind !== 'react-linkfree-browser-proof'
+			state.kind !== 'react-linkfree-browser-proof' &&
+			state.kind !== 'angular-tiny-translator-browser-proof'
 		)
 			throw new Error('React Papercups aggregate membership is already inconsistent');
 		return { kind: state.kind, receipts: state.receipts, appended: false };
@@ -146,7 +147,8 @@ export async function main(args = process.argv.slice(2)): Promise<void> {
 							state.kind !== 'angular-jira-clone-browser-proof' &&
 							state.kind !== 'react-memos-browser-proof' &&
 							state.kind !== 'next-killedbygoogle-v3-browser-proof' &&
-							state.kind !== 'react-linkfree-browser-proof'
+							state.kind !== 'react-linkfree-browser-proof' &&
+							state.kind !== 'angular-tiny-translator-browser-proof'
 						)
 							throw new Error('React Papercups aggregate membership is absent');
 						return { kind: state.kind, receipts: state.receipts, appended: false };

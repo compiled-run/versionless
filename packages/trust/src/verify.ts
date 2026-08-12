@@ -20,6 +20,7 @@ import { ANGULAR_JIRA_CLONE_FIXTURE } from '../../core/src/receipts/witness-angu
 import { REACT_MEMOS_FIXTURE } from '../../core/src/receipts/witness-react-memos.ts';
 import { NEXT_KILLEDBYGOOGLE_V3_FIXTURE } from '../../core/src/receipts/witness-next-killedbygoogle-v3.ts';
 import { REACT_LINKFREE_FIXTURE } from '../../core/src/receipts/witness-react-linkfree.ts';
+import { ANGULAR_TINY_TRANSLATOR_FIXTURE } from '../../core/src/receipts/witness-angular-tiny-translator.ts';
 import {
 	SCRIPT_SURFACE_SCHEMA,
 	verifyScriptSurface,
@@ -36,6 +37,8 @@ import {
 	ANGULAR_FACTORIOLAB_TRUST_RECEIPTS,
 	ANGULAR_JIRA_CLONE_TRUST_MATRIX_CELLS,
 	ANGULAR_JIRA_CLONE_TRUST_RECEIPTS,
+	ANGULAR_TINY_TRANSLATOR_TRUST_MATRIX_CELLS,
+	ANGULAR_TINY_TRANSLATOR_TRUST_RECEIPTS,
 	NEXT_KILLEDBYGOOGLE_V3_TRUST_MATRIX_CELLS,
 	NEXT_KILLEDBYGOOGLE_V3_TRUST_RECEIPTS,
 	REACT_LINKFREE_TRUST_MATRIX_CELLS,
@@ -592,7 +595,9 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 		runtimeObservationControl.pciCompliance !== 'not-claimed'
 	)
 		throw new Error('Controls contain an unsupported enterprise assurance claim');
-	const linkfreeIntegrated = transaction.kind === 'react-linkfree-browser-proof';
+	const tinyTranslatorIntegrated = transaction.kind === 'angular-tiny-translator-browser-proof';
+	const linkfreeIntegrated =
+		transaction.kind === 'react-linkfree-browser-proof' || tinyTranslatorIntegrated;
 	const killedbygoogleV3Integrated =
 		transaction.kind === 'next-killedbygoogle-v3-browser-proof' || linkfreeIntegrated;
 	const memosIntegrated =
@@ -617,7 +622,8 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 				(jiraCloneIntegrated ? 1 : 0) +
 				(memosIntegrated ? 1 : 0) +
 				(killedbygoogleV3Integrated ? 1 : 0) +
-				(linkfreeIntegrated ? 1 : 0)
+				(linkfreeIntegrated ? 1 : 0) +
+				(tinyTranslatorIntegrated ? 1 : 0)
 	)
 		throw new Error('Corpus matrix cell count does not match transaction state');
 	if (
@@ -676,11 +682,20 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 		);
 	if (
 		linkfreeIntegrated &&
+		!tinyTranslatorIntegrated &&
 		(manifest.receipts.length !== REACT_LINKFREE_TRUST_RECEIPTS ||
 			matrix.cells.length !== REACT_LINKFREE_TRUST_MATRIX_CELLS)
 	)
 		throw new Error(
 			'React LinkFree browser proof must pin exactly twenty-five receipts and twenty-three matrix cells',
+		);
+	if (
+		tinyTranslatorIntegrated &&
+		(manifest.receipts.length !== ANGULAR_TINY_TRANSLATOR_TRUST_RECEIPTS ||
+			matrix.cells.length !== ANGULAR_TINY_TRANSLATOR_TRUST_MATRIX_CELLS)
+	)
+		throw new Error(
+			'Angular TinyTranslator browser proof must pin exactly twenty-six receipts and twenty-four matrix cells',
 		);
 	const matrixSource = asRecord(matrix.derivedFrom, 'corpus matrix derivation');
 	if (
@@ -1148,6 +1163,51 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 			throw new Error('React LinkFree matrix cell is not derived from corpus conformance');
 	} else if (linkfreeCell !== undefined || linkfreeVertical !== undefined)
 		throw new Error('React LinkFree evidence is claimed outside its transaction state');
+	const tinyTranslatorCell = cells.get(ANGULAR_TINY_TRANSLATOR_FIXTURE);
+	const tinyTranslatorVertical = emittedConformance.verticals.find(
+		(value) => asRecord(value, 'corpus vertical').id === ANGULAR_TINY_TRANSLATOR_FIXTURE,
+	);
+	if (tinyTranslatorIntegrated) {
+		const row = asRecord(tinyTranslatorVertical, 'Angular TinyTranslator conformance vertical');
+		const tinyTranslatorApplication = emittedConformance.applications.find(
+			(value) => asRecord(value, 'corpus application').id === row.application,
+		);
+		if (
+			tinyTranslatorCell === undefined ||
+			tinyTranslatorApplication === undefined ||
+			canonicalize(
+				asRecord(tinyTranslatorApplication, 'Angular TinyTranslator application').verticals,
+			) !== canonicalize([ANGULAR_TINY_TRANSLATOR_FIXTURE]) ||
+			tinyTranslatorCell.state !== 'verified' ||
+			tinyTranslatorCell.scope !==
+				'fixture-specific-angular-cli-1-5-4-webpack-3-to-angular-16.2-browser-builder' ||
+			tinyTranslatorCell.genericAngularSupport !== 'not-claimed' ||
+			tinyTranslatorCell.framework !== 'angular' ||
+			tinyTranslatorCell.framework !== row.framework ||
+			tinyTranslatorCell.designatedPilot !== row.designatedPilot ||
+			tinyTranslatorCell.runtime !== row.runtime ||
+			tinyTranslatorCell.bundler !== row.bundler ||
+			tinyTranslatorCell.track !== row.track ||
+			tinyTranslatorCell.browserProof !== row.browserProof ||
+			tinyTranslatorCell.serviceWorkerAttempt !== row.serviceWorkerAttempt ||
+			tinyTranslatorCell.serviceWorkerAttemptMasked !== row.serviceWorkerAttemptMasked ||
+			row.serviceWorkerAttemptMasked !== false ||
+			tinyTranslatorCell.scrollSurface !== row.scrollSurface ||
+			tinyTranslatorCell.productionReadiness !== row.productionReadiness ||
+			canonicalize(tinyTranslatorCell.locality) !== canonicalize(row.locality) ||
+			canonicalize(tinyTranslatorCell.readinessScoreboard) !==
+				canonicalize(row.readinessScoreboard) ||
+			canonicalize(row.readinessScoreboard) !==
+				canonicalize({
+					angularLineage: { ready: 1, total: 4, counted: false },
+					overall: { ready: 3, total: 12 },
+				})
+		)
+			throw new Error(
+				'Angular TinyTranslator matrix cell is not derived from corpus conformance',
+			);
+	} else if (tinyTranslatorCell !== undefined || tinyTranslatorVertical !== undefined)
+		throw new Error('Angular TinyTranslator evidence is claimed outside its transaction state');
 	const phonecat = cells.get('angular-phonecat');
 	if (
 		phonecat?.framework !== 'angularjs' ||
@@ -1289,6 +1349,13 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 				)
 			: report.includes(
 					'LinkFree v0.72.0 create-react-app 5→Vite 8 direct-Witness browser proof',
+				)) ||
+		(tinyTranslatorIntegrated
+			? !report.includes(
+					'tiny-translator Angular CLI 1.5.4→Angular 16.2 browser-builder direct-Witness browser proof',
+				)
+			: report.includes(
+					'tiny-translator Angular CLI 1.5.4→Angular 16.2 browser-builder direct-Witness browser proof',
 				))
 	)
 		throw new Error('Derived Markdown does not match canonical transaction state');

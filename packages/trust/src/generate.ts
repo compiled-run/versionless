@@ -85,6 +85,11 @@ import {
 	verifyWitnessReactLinkfreeEvidence,
 	WITNESS_REACT_LINKFREE_RECEIPT_PATH,
 } from '../../core/src/receipts/witness-react-linkfree.ts';
+import {
+	ANGULAR_TINY_TRANSLATOR_FIXTURE,
+	verifyWitnessAngularTinyTranslatorEvidence,
+	WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH,
+} from '../../core/src/receipts/witness-angular-tiny-translator.ts';
 import { verifyScriptSurface } from '../../core/src/enterprise/script-surface.ts';
 import {
 	parseRuntimeObservationConfig,
@@ -214,6 +219,18 @@ export const REACT_LINKFREE_TRUST_RECEIPTS = 25 as const;
 export const REACT_LINKFREE_TRUST_MATRIX_CELLS = 23 as const;
 
 /**
+ * Exact receipt and matrix-cell counts the TinyTranslator browser-proof
+ * transaction pins for itself: the twenty-five LinkFree-state receipts plus this
+ * lane's single Witness receipt, and the twenty-three prior matrix cells plus
+ * the TinyTranslator cell. Like factoriolab and jira-clone this lane adds one
+ * receipt rather than two, because its two build-lane receipts are sealed inside
+ * the Witness receipt rather than carried as separate aggregate members. No
+ * other transaction state is affected by these counts.
+ */
+export const ANGULAR_TINY_TRANSLATOR_TRUST_RECEIPTS = 26 as const;
+export const ANGULAR_TINY_TRANSLATOR_TRUST_MATRIX_CELLS = 24 as const;
+
+/**
  * Verifies a retained build receipt through the browser proof that seals it.
  * A sealed build receipt is not a generic migration receipt, so it is verified
  * against the exact byte digest and canonical digest the Witness receipt binds,
@@ -309,6 +326,8 @@ export async function verifyTrustReceipt(
 		return verifyWitnessNextKilledbygoogleV3Evidence(root);
 	if (receiptPath === WITNESS_REACT_LINKFREE_RECEIPT_PATH)
 		return verifyWitnessReactLinkfreeEvidence(root);
+	if (receiptPath === WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH)
+		return verifyWitnessAngularTinyTranslatorEvidence(root);
 	if (receiptPath === NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH)
 		return verifyNextKilledByGoogleEvidence(root, true);
 	if (receiptPath === REACT_AVATAAARS_COMPATIBILITY_RECEIPT_PATH)
@@ -396,6 +415,10 @@ const WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT = {
 } as const;
 const WITNESS_REACT_LINKFREE_RECEIPT = {
 	path: WITNESS_REACT_LINKFREE_RECEIPT_PATH,
+	digest: null,
+} as const;
+const WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT = {
+	path: WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH,
 	digest: null,
 } as const;
 const PHONECAT_VITE_RECEIPT = {
@@ -1025,6 +1048,7 @@ function matrix(conformance: CorpusConformance): Record<string, unknown> {
 	const memos = verticals.get(REACT_MEMOS_FIXTURE);
 	const killedbygoogleV3 = verticals.get(NEXT_KILLEDBYGOOGLE_V3_FIXTURE);
 	const linkfree = verticals.get(REACT_LINKFREE_FIXTURE);
+	const tinyTranslator = verticals.get(ANGULAR_TINY_TRANSLATOR_FIXTURE);
 	return {
 		schemaVersion: TRUST_SCHEMA,
 		derivedFrom: {
@@ -1367,6 +1391,31 @@ function matrix(conformance: CorpusConformance): Record<string, unknown> {
 						})(),
 					]
 				: []),
+			...(tinyTranslator
+				? [
+						(() => {
+							const cell = asRecord(tinyTranslator, 'Angular TinyTranslator conformance');
+							return {
+								id: ANGULAR_TINY_TRANSLATOR_FIXTURE,
+								framework: cell.framework,
+								designatedPilot: cell.designatedPilot,
+								runtime: cell.runtime,
+								bundler: cell.bundler,
+								state: 'verified',
+								track: cell.track,
+								scope: 'fixture-specific-angular-cli-1-5-4-webpack-3-to-angular-16.2-browser-builder',
+								genericAngularSupport: 'not-claimed',
+								browserProof: cell.browserProof,
+								serviceWorkerAttempt: cell.serviceWorkerAttempt,
+								serviceWorkerAttemptMasked: cell.serviceWorkerAttemptMasked,
+								scrollSurface: cell.scrollSurface,
+								locality: cell.locality,
+								productionReadiness: cell.productionReadiness,
+								readinessScoreboard: cell.readinessScoreboard,
+							};
+						})(),
+					]
+				: []),
 			...conformance.frameworkLanes.map((lane) => ({
 				...lane,
 				state: 'not-tested',
@@ -1600,7 +1649,10 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 	const hasWitnessAngularRealworldReceipt = transaction.angularRealworldWitnessIntegrated;
 	const hasWitnessReactBoilerplateReceipt = transaction.reactBoilerplateWitnessIntegrated;
 	const hasWitnessNextKilledByGoogleReceipt = transaction.nextKilledByGoogleWitnessIntegrated;
-	const hasReactLinkfreeReceipts = transaction.kind === 'react-linkfree-browser-proof';
+	const hasAngularTinyTranslatorReceipts =
+		transaction.kind === 'angular-tiny-translator-browser-proof';
+	const hasReactLinkfreeReceipts =
+		transaction.kind === 'react-linkfree-browser-proof' || hasAngularTinyTranslatorReceipts;
 	const hasNextKilledbygoogleV3Receipts =
 		transaction.kind === 'next-killedbygoogle-v3-browser-proof' || hasReactLinkfreeReceipts;
 	const hasReactMemosReceipts =
@@ -1641,6 +1693,7 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 		...(hasReactMemosReceipts ? [WITNESS_REACT_MEMOS_RECEIPT] : []),
 		...(hasNextKilledbygoogleV3Receipts ? [WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT] : []),
 		...(hasReactLinkfreeReceipts ? [WITNESS_REACT_LINKFREE_RECEIPT] : []),
+		...(hasAngularTinyTranslatorReceipts ? [WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT] : []),
 		...reactAvataaarsCompatibilityTrustReceipts(transaction),
 		...reactCalculatorTrustReceipts(transaction),
 		...reactGraphiQL013TrustReceipts(transaction),
@@ -1683,8 +1736,17 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 		receipts.length !== NEXT_KILLEDBYGOOGLE_V3_TRUST_RECEIPTS
 	)
 		throw new Error('KilledByGoogle v3 browser proof does not preserve exactly 24 receipts');
-	if (hasReactLinkfreeReceipts && receipts.length !== REACT_LINKFREE_TRUST_RECEIPTS)
+	if (
+		hasReactLinkfreeReceipts &&
+		!hasAngularTinyTranslatorReceipts &&
+		receipts.length !== REACT_LINKFREE_TRUST_RECEIPTS
+	)
 		throw new Error('React LinkFree browser proof does not preserve exactly 25 receipts');
+	if (
+		hasAngularTinyTranslatorReceipts &&
+		receipts.length !== ANGULAR_TINY_TRANSLATOR_TRUST_RECEIPTS
+	)
+		throw new Error('Angular TinyTranslator browser proof does not preserve exactly 26 receipts');
 	const verifiedReceipts = [];
 	for (const expected of receipts) {
 		const verified = await verifyTrustReceipt(root, expected.path);
