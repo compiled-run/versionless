@@ -1,0 +1,386 @@
+{
+	"schemaVersion": "versionless.angular-super-productivity-capability-round.v1",
+	"unit": "lrapr-t006/u18h-super-productivity-green-close",
+	"consentId": "VL-LEGACY-CORPUS-2026-08-10",
+	"result": "source-census-cleared-build-red-on-a-new-family",
+	"meaning": "Every one of the 27 diagnostics u18g left is gone, and the build is still red. Those two facts are the whole of this record. The 27 were the compiler's objections to application source, and this round answered all of them: one by a capability, nineteen by explicit source edits that no capability can derive and that are itemised here one at a time with their file, their before, their after and the reason nothing in the tree carries the mapping. What the build does now is get past the TypeScript program for the first time in this cell's history and fail in the bundler, on three families nobody had seen because nothing had ever reached them: @ngx-formly resolved to a release built for Angular 18 against a cell that pins Angular 16, a Sass mixin the installed angular-material-css-vars no longer defines, and a named import of a JSON module the bundler refuses. None of the three is application source and none of them is what this unit was cutting at. The honest headline is that the source migration of this application is finished and the closure it was migrated onto is not.",
+	"previous": "u18g-capability-round.json",
+	"changeset": "u18-composed-changeset.json",
+	"ruling": {
+		"name": "fixture-scoped manual-migration accommodation",
+		"statement": "Where a demand has no derivable generic mapping, an explicit source edit is authorised, recorded per edit as a manual-migration-step with file, before, after and the reason no capability can derive it. Capabilities first wherever provable; accommodations are the recorded remainder, never the shortcut.",
+		"whereTheyLive": "packages/cli/src/fixture/angular-super-productivity-u18h-run.ts carries the edit table; fixtures/angular-super-productivity-v2-13-15/accommodations/electron.service.ts carries the one payload file. Nothing was added to packages/frameworks and no product code names this application.",
+		"whyTheCountIsTheProduct": "A manual-migration-step is the tool saying, at a named line, that human judgement is required here. Nineteen of them is not a defeat and it is not a footnote: it is the itemised bill for migrating this application, and it is the number a fleet operator would plan against."
+	},
+	"tree": {
+		"stage": ".versionless/stage/angular-super-productivity-v2-13-15-u18b",
+		"applied": ".versionless/stage/angular-super-productivity-v2-13-15-u18b/app",
+		"from": ".versionless/cache/angular-super-productivity-v2-13-15-source/verify/extracted/super-productivity-2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+		"commit": "2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+		"reuse": "The tree u18g left, carried forward. build-7.log is that tree plus this round's edits. The u18c capabilities were re-run first, as every round since has done, and changed nothing.",
+		"reRunnable": "Every step is a literal replacement that must match exactly once or the driver fails naming the step, and a step whose text is already replaced is reported as already-applied rather than re-applied. The driver was run twice over the same tree: 19 applied on the first pass, 19 already-applied and 0 applied on the second, with no file changed."
+	},
+	"cell": {
+		"node": "v16.20.2",
+		"nodeSource": ".versionless/cache/angular-jira-clone-runtime/node-v16.20.2-darwin-arm64",
+		"architecture": "darwin-arm64, native — no translation layer",
+		"builder": "@angular-devkit/build-angular:browser (Angular 16.2)",
+		"environment": { "NG_CLI_ANALYTICS": "false" }
+	},
+	"acquisition": {
+		"purpose": "None. No package was installed, no manifest was changed and no network was reached in this unit.",
+		"networkMode": "none"
+	},
+	"adapterChanges": [
+		{
+			"file": "packages/frameworks/angular/src/subject-void-type-argument.ts",
+			"capability": "subject-void-type-argument",
+			"appNameBranches": 0,
+			"reading": "The same movement u18g's promise capability answers, one library over, and it is worth saying why that makes it derivable rather than a coincidence. RxJS 6 declared `Subject#next` as `next(value?: T)`, so `next()` type-checked at every T and an un-parameterised `new Subject()` — inferring `unknown` — was an ordinary way to spell a signal that carries nothing. RxJS 7 removed the optionality. The successor is not a name the compiler suggests and it is not written down in any declaration; it is a fact about the subject's own uses, which is exactly the kind of claim that can be proven from the tree. So the capability proves it: the constructor has to be the `Subject` imported from rxjs resolved by binding, the subject has to be private to the module — a private class property or a non-exported local, because a subject reachable from outside has `next` calls this file cannot read — every `.next` on it has to be called with no argument, and at least one such call has to exist or there is no diagnostic here to answer. One `next(value)` anywhere and the declaration is left exactly as it is, because void is then simply the wrong answer. Uses that only read the subject — subscribing, merging it into another observable, handing it out as an Observable — are passed over rather than refused: a `Subject<void>` is an `Observable<void>` and its subscribers receive what they always received, which is nothing. A class property is not a binding the scope analysis carries, so its uses are read off `this` inside the owning class body, and a class that nests another class is refused rather than guessed at, because a `this` inside it may not be this class."
+		}
+	],
+	"capabilityOutcomes": [
+		{
+			"capability": "subject-void-type-argument",
+			"firedOn": "1 module — src/app/features/config/global-config.service.ts line 64 — `private _onNoCfgLoaded$ = new Subject()` becoming `new Subject<void>()`.",
+			"filesChanged": 1,
+			"refused": 0,
+			"reading": "Two modules were named by TS2554 and only one of them carries a subject; the other is the TranslateHttpLoader construction, which is a manual step below. The subject is private, it is merged into the public `onCfgLoaded$` — a read, which is passed over — and the module makes exactly one `next` call on it, at line 88, with no argument. That is the whole of the evidence and it is all in one file.",
+			"clearedDiagnostics": "1 of the 2 TS2554."
+		},
+		{
+			"capability": "successor-fork-package, barrel-entry-point-split, webpack-tilde-style-specifier",
+			"firedOn": "Re-run over the applied tree and found their u18c and u18d work already in place.",
+			"filesChanged": 0,
+			"refused": 0,
+			"clearedDiagnostics": "None new. These are the earlier capabilities, re-run to establish that the round is repeatable."
+		}
+	],
+	"manualMigrationSteps": {
+		"total": 19,
+		"distinctDecisions": 8,
+		"countingMethod": "One step per literal replacement, and every step is in the driver's table with its exact before and after. `distinctDecisions` is the smaller number a reader may want: the steps collapse into eight decisions, because four of them are the one decision about @ngx-translate applied at four places in one file and three of them are the one decision about createEffect applied at three fields.",
+		"notCountedHere": "The ngx-electron specifier redirect. It is one decision — the package is replaced by a local service — mechanically applied at the 20 modules that named it, and listing 20 identical import rewrites as 20 manual steps would inflate the count without adding a decision to it. The 20 modules are listed under `electronRedirect`.",
+		"steps": [
+			{
+				"id": "chart-options-pie",
+				"family": "chart.js 2 options literals",
+				"file": "src/app/features/metric/metric.component.ts",
+				"before": "pieChartOptions: ChartOptions = { responsive: true, legend: { position: 'top' } }",
+				"after": "pieChartOptions: ChartOptions = { responsive: true, plugins: { legend: { position: 'top' } } }",
+				"whyNoCapability": "chart.js 4 moved `legend` under `plugins`. The installed chart.js 4.5.1 declarations carry no deprecated alias, no successor annotation and no trace of the old key, so there is nothing in the tree a capability could read the mapping off. It exists only in chart.js's migration prose, and prose is not a surface."
+			},
+			{
+				"id": "chart-options-theme",
+				"family": "chart.js 2 options literals",
+				"file": "src/app/core/theme/global-theme.service.ts",
+				"before": "{ legend: { labels: {fontColor} }, scales: { xAxes: [{ticks: {fontColor}, gridLines: {color}}], yAxes: [...] } }",
+				"after": "{ plugins: { legend: { labels: {color} } }, scales: { x: {ticks: {color}, grid: {color}}, y: {...} } }",
+				"whyNoCapability": "Four movements in one literal: `legend` under `plugins`, `gridLines` to `grid`, `ticks.fontColor` to `ticks.color`, and the `xAxes`/`yAxes` arrays to a record keyed by axis id. The first three are renames only prose records. The fourth is a reshaping with no derivable key at all — the id is not in the array element — and a capability that reshaped it would have to invent `x` and `y`. This step invents them, which is what makes it a step: they are chart.js 4's default cartesian ids and these are line and pie charts with one axis each, so the decision is defensible and it is still a decision."
+			},
+			{
+				"id": "ng2-charts-label-aliases",
+				"family": "ng2-charts symbols with no successor",
+				"file": "src/app/features/metric/metric.model.ts",
+				"before": "import {Label, SingleDataSet} from 'ng2-charts';",
+				"after": "export type Label = string | string[]; export type SingleDataSet = number[];",
+				"whyNoCapability": "ng2-charts 5.0.4 publishes five root exports and none is a successor for either alias, and the compiler offers none — these are TS2305, not TS2724, so the suggested-export-rename capability never sees them. The aliases are re-declared at the shape this application uses them at, which the application's own chart data proves and no package does."
+			},
+			{
+				"id": "ng2-charts-colors-input",
+				"family": "ng2-charts symbols with no successor",
+				"file": "src/app/features/metric/metric.component.ts",
+				"before": "import {Color} from 'ng2-charts';",
+				"after": "removed",
+				"whyNoCapability": "`Color` is removed rather than replaced because the input it fed is gone. ng2-charts 5's BaseChartDirective declares type, legend, data, options, plugins, labels and datasets, and no `colors`; per-dataset colour in chart.js 4 is a property of the dataset. There is no successor binding for the value to be passed to."
+			},
+			{
+				"id": "ng2-charts-colors-field",
+				"family": "ng2-charts symbols with no successor",
+				"file": "src/app/features/metric/metric.component.ts",
+				"before": "lineChartColors: Color[] = [];",
+				"after": "removed",
+				"whyNoCapability": "The field goes with the binding that read it. It was initialised empty and never written, so nothing about how these charts are coloured changes."
+			},
+			{
+				"id": "ng2-charts-colors-binding",
+				"family": "ng2-charts symbols with no successor",
+				"file": "src/app/features/metric/metric.component.html",
+				"before": "<canvas [chartType]=\"lineChartType\" [colors]=\"lineChartColors\"",
+				"after": "<canvas [type]=\"lineChartType\"",
+				"whyNoCapability": "The removed input's binding, and the `chartType` → `type` rename in the same tag. The rename is in the directive's own declaration and is the one movement here a capability could in principle prove — but it would have to rewrite a template, which this adapter does not do, so it is recorded with the rest rather than claimed."
+			},
+			{
+				"id": "ng2-charts-pie-chart-type-1",
+				"family": "ng2-charts symbols with no successor",
+				"file": "src/app/features/metric/metric.component.html",
+				"before": "<canvas [chartType]=\"pieChartType\" [data]=\"improvementCounts.data\"",
+				"after": "<canvas [type]=\"pieChartType\" [data]=\"improvementCounts.data\"",
+				"whyNoCapability": "The same `chartType` → `type` rename, at the first pie chart. It is derivable in principle — the rename is in ng2-charts 5's own directive declaration — but only by a capability that rewrites templates, and this adapter has none."
+			},
+			{
+				"id": "ng2-charts-pie-chart-type-2",
+				"family": "ng2-charts symbols with no successor",
+				"file": "src/app/features/metric/metric.component.html",
+				"before": "<canvas [chartType]=\"pieChartType\" [data]=\"obstructionCounts.data\"",
+				"after": "<canvas [type]=\"pieChartType\" [data]=\"obstructionCounts.data\"",
+				"whyNoCapability": "The same rename at the second pie chart, recorded separately because it is a separate line in a separate element and the count is meant to say how many lines a human decided about."
+			},
+			{
+				"id": "translate-http-loader-factory",
+				"family": "three unrelated call sites",
+				"file": "src/app/app.module.ts",
+				"before": "export function createTranslateLoader(http: HttpClient) { return new TranslateHttpLoader(http, './assets/i18n/', '.json'); }",
+				"after": "removed",
+				"whyNoCapability": "@ngx-translate/http-loader 17 declares `constructor()` and takes its HttpClient and its prefix/suffix from the injector, so the era's three-argument construction is TS2554. The successor is a provider function the package exports, and no capability can derive that a constructor's parameters became a provider's configuration object: the two declarations have no relationship the tree records."
+			},
+			{
+				"id": "translate-http-loader-import",
+				"family": "three unrelated call sites",
+				"file": "src/app/app.module.ts",
+				"before": "import {TranslateLoader, TranslateModule} …; import {TranslateHttpLoader} …",
+				"after": "import {TranslateModule} …; import {provideTranslateHttpLoader} …",
+				"whyNoCapability": "The import surface the removed factory used. Same decision as the step above, spelled at the imports."
+			},
+			{
+				"id": "translate-http-loader-module",
+				"family": "three unrelated call sites",
+				"file": "src/app/app.module.ts",
+				"before": "TranslateModule.forRoot({loader: {provide: TranslateLoader, useFactory: createTranslateLoader, deps: [HttpClient]}})",
+				"after": "TranslateModule.forRoot()",
+				"whyNoCapability": "The loader is provided by the provider function rather than by a factory entry, which is the shape the package documents for 17."
+			},
+			{
+				"id": "translate-http-loader-provider",
+				"family": "three unrelated call sites",
+				"file": "src/app/app.module.ts",
+				"before": "providers: [ErrorHandler, HAMMER_GESTURE_CONFIG]",
+				"after": "providers: [… , provideTranslateHttpLoader({prefix: './assets/i18n/', suffix: '.json'})]",
+				"whyNoCapability": "The two strings the era's constructor call carried, in the place version 17 reads them from. They are not the package's defaults — it defaults to `/assets/i18n/` and this application serves from `./` — so dropping them would have changed where translations are fetched from at runtime. This is the step in the set that most repays being written down."
+			},
+			{
+				"id": "selector-props-call",
+				"family": "three unrelated call sites",
+				"file": "src/app/features/tasks/store/task-internal.effects.ts",
+				"before": "this._store$.pipe(select(selectTasksWorkedOnOrDoneFlat))",
+				"after": "this._store$.pipe(select(selectTasksWorkedOnOrDoneFlat, undefined as unknown as { day: string }))",
+				"whyNoCapability": "`selectTasksWorkedOnOrDoneFlat` is a MemoizedSelectorWithProps and @ngrx/store 16 has no overload of `select` that takes one with no props — TS2769, none of nine overloads matches. Every mechanical answer is wrong: making the projector's parameter optional does not change the selector's type, and passing a real `{day}` here would change what the effect reads. The era's overload passed `undefined`; this passes `undefined`. The selector's own first line is `if (!props) { return null; }`, so its behaviour at this call site is unchanged, including the fact — pre-existing, not introduced — that the effect then reads that null."
+			},
+			{
+				"id": "create-effect-initial-import",
+				"family": "@ngrx/effects createEffect result typing",
+				"file": "src/app/features/google/store/google-drive-sync.effects.ts",
+				"before": "initialImport$: any = createEffect(() => this._actions$.pipe(",
+				"after": "initialImport$: any = createEffect(() => <Observable<Action>>this._actions$.pipe(",
+				"whyNoCapability": "The cause is one step behind the diagnostic and u18c through u18g never found it: each of these three pipelines ends in a concatMap or exhaustMap whose projector is annotated `: any`, and rxjs 7 resolves `ObservedValueOf<any>` to `unknown`. So the pipeline is `Observable<unknown>` and @ngrx/effects 16 requires `Observable<Action>`. Removing the `: any` annotations would be a rewrite of three effect bodies with no way to predict what they infer to; the assertion states what the pipeline emits, which is what the field's own annotation one token earlier already says."
+			},
+			{
+				"id": "create-effect-change-sync-file",
+				"family": "@ngrx/effects createEffect result typing",
+				"file": "src/app/features/google/store/google-drive-sync.effects.ts",
+				"before": "changeSyncFile$: any = createEffect(() => this._actions$.pipe(",
+				"after": "changeSyncFile$: any = createEffect(() => <Observable<Action>>this._actions$.pipe(",
+				"whyNoCapability": "The second of the three: the same `: any`-annotated projector, the same `Observable<unknown>`, the same requirement for `Observable<Action>`. A separate step because it is a separate field."
+			},
+			{
+				"id": "create-effect-save",
+				"family": "@ngrx/effects createEffect result typing",
+				"file": "src/app/features/google/store/google-drive-sync.effects.ts",
+				"before": "save$: any = createEffect(() => this._actions$.pipe(",
+				"after": "save$: any = createEffect(() => <Observable<Action>>this._actions$.pipe(",
+				"whyNoCapability": "The third of the three, same shape and same reason. Three steps rather than one, because the count is meant to say how many lines a human had to decide about."
+			},
+			{
+				"id": "create-effect-action-import",
+				"family": "@ngrx/effects createEffect result typing",
+				"file": "src/app/features/google/store/google-drive-sync.effects.ts",
+				"before": "import {Store} from '@ngrx/store';",
+				"after": "import {Action, Store} from '@ngrx/store';",
+				"whyNoCapability": "The type the three assertions name. A step rather than a capability for the same reason they are: the import exists only to support an edit nothing in the tree derives."
+			},
+			{
+				"id": "electron-module-import",
+				"family": "ngx-electron is not consumable by this cell",
+				"file": "src/app/features/issue/jira/jira.module.ts",
+				"before": "import {NgxElectronModule} from 'ngx-electron';",
+				"after": "removed",
+				"whyNoCapability": "u18g measured it: ngx-electron@2.2.0 is a View Engine package — metadata.json, no ɵmod, no partial-compilation declaration — and Angular 16 removed ngcc. No rewrite of application source makes an NgModule out of a class with no module definition. This is a package decision, and the decision is the one the ingest records for the web lane: Electron is out of scope."
+			},
+			{
+				"id": "electron-module-entry",
+				"family": "ngx-electron is not consumable by this cell",
+				"file": "src/app/features/issue/jira/jira.module.ts",
+				"before": "NgxElectronModule, (in @NgModule imports)",
+				"after": "removed",
+				"whyNoCapability": "The import-list entry the NG6002 is written at. Nothing replaces it: the injectable the module provided is `providedIn: 'root'` in the local re-implementation, which is where all twenty of its consumers already inject it from."
+			}
+		]
+	},
+	"electronRedirect": {
+		"decision": "The one injectable the application uses from ngx-electron, re-implemented locally from the installed package's own UMD bundle, and the package's import specifier redirected at every module that named it.",
+		"payload": "fixtures/angular-super-productivity-v2-13-15/accommodations/electron.service.ts → src/app/core/electron/electron.service.ts",
+		"modulesRedirected": 20,
+		"modules": [
+			"src/app/app.component.ts",
+			"src/app/core-ui/shortcut/shortcut.service.ts",
+			"src/app/core/error-handler/global-error-handler.class.ts",
+			"src/app/core/notify/notify.service.ts",
+			"src/app/core/theme/global-theme.service.ts",
+			"src/app/features/attachment/attachment-link/attachment-link.directive.ts",
+			"src/app/features/bookmark/bookmark-link/bookmark-link.directive.ts",
+			"src/app/features/config/store/global-config.effects.ts",
+			"src/app/features/google/google-api.service.ts",
+			"src/app/features/issue/jira/jira-api.service.ts",
+			"src/app/features/pomodoro/store/pomodoro.effects.ts",
+			"src/app/features/reminder/reminder.module.ts",
+			"src/app/features/tasks/store/task-db.effects.ts",
+			"src/app/features/tasks/store/task-electron.effects.ts",
+			"src/app/features/time-tracking/idle.service.ts",
+			"src/app/features/time-tracking/take-a-break/take-a-break.service.ts",
+			"src/app/features/ui-helper/ui-helper.service.ts",
+			"src/app/imex/local-backup/local-backup.service.ts",
+			"src/app/pages/daily-summary/daily-summary.component.ts",
+			"src/app/ui/inline-markdown/inline-markdown.component.ts"
+		],
+		"notRedirected": [
+			"src/app/core/persistence/local-storage.ts — its ngx-electron import is commented out, and a comment is not an import. The rewrite matches import declarations at the start of a line only.",
+			"src/app/features/time-tracking/take-a-break/take-a-break.service.spec.ts — the same, and it is not in the production program either."
+		],
+		"behaviourDifferences": [
+			"The service is `providedIn: 'root'` where the package's was provided by NgxElectronModule. The module is gone and something has to provide it; root is where all twenty consumers already inject it from.",
+			"Members are typed structurally rather than against the `electron` package's declarations, which this web lane does not install.",
+			"The platform tests read `this.process`, which is the package's own accessor for `remote.process`, where the package read the bare Node `process` global. Both return the same platform string inside Electron and both are unreachable outside it, because `isElectronApp` guards them and is false in a browser. The era's webpack shimmed the global; Angular 16's builder does not."
+		],
+		"notEstablished": "Whether the Electron lane still works. It is not built here and never was — this cell builds the web lane only — so what this records is that the web lane no longer depends on a package the cell cannot consume, not that the desktop application is unaffected."
+	},
+	"applicationFilesChanged": {
+		"countingMethod": "Whole-tree, per the standing ruling: every file under the application root except node_modules/, dist/, .angular/, coverage/ and .git/, compared by SHA-256 against the pristine extracted tree at commit 2943c5c. Files present in only one of the two trees are counted as differences, not skipped.",
+		"wholeTree": {
+			"pristineFiles": 967,
+			"appliedFiles": 966,
+			"differingInBoth": 84,
+			"filesAdded": 2,
+			"addedFiles": ["package-lock.json", "src/app/core/electron/electron.service.ts"],
+			"filesRemoved": 3,
+			"removedFiles": ["src/tslint.json", "tslint.json", "yarn.lock"],
+			"totalDifferences": 89,
+			"differingOutsideSrc": ["angular.json", "package.json", "tsconfig.json"]
+		},
+		"previousTotalDifferences": 72,
+		"differingUnderSrcInBoth": 81,
+		"pristineFilesUnderSrc": 796,
+		"thisUnit": {
+			"filesWritten": 28,
+			"capabilityDriven": 1,
+			"capabilityDrivenFiles": ["src/app/features/config/global-config.service.ts"],
+			"manualMigrationStepFiles": 8,
+			"manualMigrationStepFileList": [
+				"src/app/app.module.ts",
+				"src/app/core/theme/global-theme.service.ts",
+				"src/app/features/google/store/google-drive-sync.effects.ts",
+				"src/app/features/issue/jira/jira.module.ts",
+				"src/app/features/metric/metric.component.html",
+				"src/app/features/metric/metric.component.ts",
+				"src/app/features/metric/metric.model.ts",
+				"src/app/features/tasks/store/task-internal.effects.ts"
+			],
+			"electronRedirectFiles": 20,
+			"newFiles": ["src/app/core/electron/electron.service.ts"],
+			"overlap": "Two files are in both the step list and the redirect list — jira.module.ts and global-theme.service.ts — so 28 distinct files were written: 1 + 8 + 20 + 1 new, less those two.",
+			"newlyDiffering": 16,
+			"meaning": "16 of the 28 were already differing from pristine before this unit ran, which is why the whole-tree count moves by 17 (16 newly differing plus one added file) and not by 28. The separation the ruling asks for is the first three fields: exactly one file in this tree was written by a capability this round, and eight were written by hand."
+		}
+	},
+	"build": {
+		"command": "node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng.js build --configuration production",
+		"log": ".versionless/stage/angular-super-productivity-v2-13-15-u18b/build-7.log",
+		"exitStatus": 1,
+		"artifactsEmitted": 0,
+		"diagnosticCountsBefore": {
+			"NG6002": 15,
+			"NG6003": 1,
+			"TS2305": 3,
+			"TS2322": 4,
+			"TS2345": 1,
+			"TS2554": 2,
+			"TS2769": 1
+		},
+		"diagnosticCounts": {},
+		"diagnosticTotalBefore": 27,
+		"diagnosticTotal": 0,
+		"countingMethod": "Every `error TS####` / `error NG####` occurrence in the build log, counted the same way in both columns. The before column is u18g's recorded after-state and is build-6.log.",
+		"cleared": {
+			"NG6002": "15 → 0",
+			"NG6003": "1 → 0",
+			"TS2305": "3 → 0",
+			"TS2322": "4 → 0",
+			"TS2345": "1 → 0",
+			"TS2554": "2 → 0",
+			"TS2769": "1 → 0"
+		},
+		"downstreamArithmetic": "u18g said fourteen of the sixteen NG6002/NG6003 lines were downstream of five real demands and that nobody had done the arithmetic. The arithmetic is now done by the fact of the thing: five demands were answered and sixteen accounting lines went with them, so the census overstated the work by exactly those fourteen and the two real ones were jira.module.ts's ngx-electron and nothing else.",
+		"convergence": "269 → 110 → 57 → 33 → 30 → 27 → 0 across u18c, u18d, u18e, u18f, u18g and u18h.",
+		"stillRed": "The TypeScript program compiles and the bundler does not. Three families, none of them application source, none of them previously reachable:",
+		"bundlerFailures": [
+			{
+				"family": "@ngx-formly published for a newer Angular",
+				"count": 7,
+				"modules": "@ngx-formly/core and six @ngx-formly/material entry points",
+				"observed": "Module build failed: 'This application depends upon a library published using Angular version 18.2.13, which requires Angular version 17.0.0 or newer to work correctly.'",
+				"cause": "The composed changeset writes `@ngx-formly/core: ^7.1.0` and `@ngx-formly/material: ^7.1.0` into the manifest, and 7.1.0 is built against Angular 18. This cell pins Angular 16.2. The successor version chosen for this package is not consumable by the target version chosen for the framework, and that is a fact about the changeset rather than about the application: no source edit answers it.",
+				"whatItNeeds": "A closure decision — the @ngx-formly release built for Angular 16, which is the 6.x line — and an install to realise it. Both are outside this unit: the install needs network and consent, and the manifest is the composed changeset's."
+			},
+			{
+				"family": "angular-material-css-vars mixin",
+				"count": 2,
+				"modules": "src/styles.scss, twice — once through sass-loader and once through mini-css-extract-plugin, which is the same failure reported by two loaders",
+				"observed": "Undefined mixin: `@include initMaterialCssVars();` at src/styles/themes.scss:5",
+				"cause": "The installed angular-material-css-vars no longer defines the mixin the era's stylesheet includes. u18d re-specified this file's at-rules and every round since has recorded that the program never reached the stylesheet pipeline to find out whether they resolve. This round reached it. They do not.",
+				"whatItNeeds": "A reading of the installed package's Sass surface and either a successor mixin name or a recorded accommodation. It is the next cheapest family and it is a genuinely new one."
+			},
+			{
+				"family": "named import of a JSON module",
+				"count": 1,
+				"modules": "src/environments/environment.ts:4",
+				"observed": "Should not import the named export 'version' (imported as 'version') from default-exporting module (only default export is available soon)",
+				"cause": "The environment file reads `version` out of package.json by named import. webpack 5 treats a JSON module as default-exporting and refuses the named binding.",
+				"whatItNeeds": "One source edit, and it is small. It was not attempted here because it was not visible until this build."
+			}
+		],
+		"determinismNotEstablished": "The build was run once. The ×2 deterministic-modulo-Sass-random comparison the unit asked for was not performed, because there is no green build to compare: a second run of a red build establishes only that the same failure repeats, and the failure is in the bundler's module graph rather than in anything this round wrote."
+	},
+	"remainingDemands": [
+		{
+			"family": "@ngx-formly resolved past the cell's Angular",
+			"file": "package.json (composed changeset), 7 bundler failures",
+			"symbol": "@ngx-formly/core@7.1.0, @ngx-formly/material@7.1.0",
+			"library": "@ngx-formly 5.x → 7.1.0, against Angular 16.2",
+			"observed": "7 × 'library published using Angular version 18.2.13, which requires Angular version 17.0.0 or newer'.",
+			"neededTransform": "None in the application. A closure correction — 6.x is the @ngx-formly line built for Angular 16 — and the install that realises it. This is the largest remaining family and it is not a source demand at all."
+		},
+		{
+			"family": "angular-material-css-vars Sass surface",
+			"file": "src/styles/themes.scss:5",
+			"symbol": "initMaterialCssVars()",
+			"library": "angular-material-css-vars",
+			"observed": "1 undefined mixin, reported twice by two loaders.",
+			"neededTransform": "Unknown until the installed package's Sass entry points are read. The era's mixin may have a successor name, in which case a written-down-successor capability of the kind u18f added for rxjs could reach it; if it does not, it is an accommodation."
+		},
+		{
+			"family": "named import of a JSON module",
+			"file": "src/environments/environment.ts:4",
+			"symbol": "import {version} from '../../package.json'",
+			"library": "webpack 5",
+			"observed": "1 module-graph error.",
+			"neededTransform": "A default import and a property read. One line, and derivable: the resolved module is JSON, and JSON modules have exactly one export shape."
+		}
+	],
+	"notEstablished": [
+		"Whether the application runs. Nothing here reached a runtime; the build emits no artifacts.",
+		"Whether the 19 manual steps are behaviour-preserving beyond what each one's entry claims. Three of them are worth naming again: the chart axis ids `x` and `y` are invented, the `Observable<Action>` assertions state a type nobody checked against every action the three effects can emit, and the ng2-charts `Label`/`SingleDataSet` aliases are written at the shape this application happens to use rather than at the shape ng2-charts 2 declared. Each is recorded where it was made.",
+		"Whether removing NgxElectronModule leaves the desktop lane working. The web lane no longer depends on a package this cell cannot consume; the Electron lane is not built here and was not measured.",
+		"Whether the build is deterministic. It was run once, red, and a red build's determinism is not the property the unit was asked to establish.",
+		"Whether logical-name parity against the era lane holds. It cannot be measured: parity is a comparison of emitted artifacts and this build emits none.",
+		"How many further families sit behind the three bundler ones. Nothing has ever bundled this application on this closure, so the same thing that just happened — a phase completing and revealing the next — can happen again."
+	]
+}
