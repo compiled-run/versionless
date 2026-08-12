@@ -1,0 +1,225 @@
+{
+  "schemaVersion": "versionless.angular-tiny-translator-witness-red.v1",
+  "unit": "u19d-tiny-translator-calibrate-publish",
+  "result": "witness-calibration-red-migrated-lane-does-not-boot",
+  "meaning": "The calibration pass this unit opened with answered a question that comes before its four uncalibrated facts. The migrated production build — the exact tree the bound u17d record published — throws before Angular bootstraps and renders nothing at all, and the era build attempts a service-worker registration the Witness schema says neither build attempts. Neither lane can be published as a passing browser proof, so nothing was published. This record is the refusal, with the measurements it rests on.",
+  "measuredBy": "one Witness pass per lane, executed by the same runner the proof would have used, against staged copies of the two pinned output roots; page errors, console errors and requests read back out of the runner own per-pass receipts, with the ephemeral loopback origin normalized to a placeholder",
+  "pinnedRoots": {
+    "baseline": {
+      "root": "evidence-bound era lane canonical root dist/rebuild-1",
+      "files": 524,
+      "inventorySha256": "dec01b10cef602781559917cdaf0561be6da57ad5a57ecefadf804cbd630b4dd"
+    },
+    "migrated": {
+      "root": "evidence-bound migrated lane canonical root dist-7",
+      "files": 524,
+      "inventorySha256": "30c5c3be8143fc0697b6829208ed30cd1e6b281db63bdcd834a571c74692e0e1",
+      "boundRecord": "u17d-final-green-lane.json",
+      "boundRecordDigest": "88be4807ed80b6f7a4e7238e42c94aa88d8aa1b01603aca74902166f2345ca45",
+      "boundRecordSha256": "60d3631b7e0e49797a22ed9e05135672475165fdcf4649f3da9c914af7726291",
+      "boundInventorySha256": "30c5c3be8143fc0697b6829208ed30cd1e6b281db63bdcd834a571c74692e0e1",
+      "isTheBoundArtifact": true
+    }
+  },
+  "findings": [
+    {
+      "id": "migrated-lane-does-not-boot",
+      "lane": "migrated",
+      "severity": "red",
+      "kind": "runtime-only migration regression, invisible to both build lanes",
+      "observed": {
+        "booted": false,
+        "pageErrors": [
+          "process is not defined"
+        ],
+        "consoleErrors": [],
+        "requests": [
+          {
+            "status": 200,
+            "url": "{production-static-origin}/",
+            "failedReason": null
+          },
+          {
+            "status": 200,
+            "url": "{production-static-origin}/runtime.7a06415f264db653.js",
+            "failedReason": null
+          },
+          {
+            "status": 200,
+            "url": "{production-static-origin}/styles.9a6d68070f1f7d79.css",
+            "failedReason": null
+          },
+          {
+            "status": 200,
+            "url": "{production-static-origin}/polyfills.cba3c9ee0f127471.js",
+            "failedReason": null
+          },
+          {
+            "status": 200,
+            "url": "{production-static-origin}/styles.9a6d68070f1f7d79.css",
+            "failedReason": null
+          },
+          {
+            "status": 200,
+            "url": "{production-static-origin}/main.2e2ecec27aebe0e1.js",
+            "failedReason": null
+          }
+        ],
+        "refusal": "linked Witness runtime journey failed: expected '#apptitle' to have text \"Tiny Translator\", but no element matched the selector (page {production-static-origin}/#/home, waited 10000ms)"
+      },
+      "byteEvidence": {
+        "needle": "if(process.env",
+        "sites": [
+          {
+            "path": "main.2e2ecec27aebe0e1.js",
+            "sha256": "ea2cb359d9d30cc73cc6be5c455f47b37f5963a19c06478c368f372c13842e2a",
+            "bytes": 1649250,
+            "offset": 1614357,
+            "count": 1
+          }
+        ]
+      },
+      "cause": "ngx-i18nsupport-lib — the library that parses the translation files this application exists to edit — requires the Node core module `util`. The era webpack 3 build supplied both that module and a `process` shim automatically. The migrated lane declares `util@0.12.5` (the u17c node-core-module capability) but nothing supplies `process`, and `util` reads `process.env.NODE_DEBUG` at module evaluation time, so the main bundle throws before Angular bootstraps.",
+      "consequence": "The migrated lane renders nothing. No journey can pass on it truthfully, so the FileReader parity arbitration this vertical was built to perform cannot be attempted: the parse path is behind a bundle that never evaluates.",
+      "alreadyRecordedAsRisk": "The bound u17d record carries this exact dependency as a recorded risk — \"`util@0.12.5`, the browser implementation of the Node core module, remains in the declared closure for ngx-i18nsupport-lib\". This unit measures what that risk does in a browser.",
+      "notFixedHere": "The fix belongs to the migration capability that declares the shim, which is outside this unit file contract, and it invalidates the bound build record. Nothing was patched, masked or worked around here."
+    },
+    {
+      "id": "era-lane-registers-a-service-worker",
+      "lane": "baseline",
+      "severity": "red",
+      "kind": "schema premise contradicted by measurement",
+      "observed": {
+        "booted": true,
+        "pageErrors": [],
+        "consoleErrors": [
+          "A bad HTTP response code (400) was received when fetching the script.",
+          "ERROR Error: Uncaught (in promise): TypeError: Failed to register a ServiceWorker for scope ('{production-static-origin}/') with script ('{production-static-origin}/%BASE_HREF%ngsw-worker.js'): A bad HTTP response code (400) was received when fetching the script.\nTypeError: Failed to register a ServiceWorker for scope ('{production-static-origin}/') with script ('{production-static-origin}/%BASE_HREF%ngsw-worker.js'): A bad HTTP response code (400) was received when fetching the script.\n    at i ({production-static-origin}/polyfills.54fe3ea07e05cf80d217.bundle.js:1:38959)\n    at {production-static-origin}/polyfills.54fe3ea07e05cf80d217.bundle.js:1:38381\n    at {production-static-origin}/polyfills.54fe3ea07e05cf80d217.bundle.js:1:40608\n    at e.invoke ({production-static-origin}/polyfills.54fe3ea07e05cf80d217.bundle.js:1:34863)\n    at Object.onInvoke ({production-static-origin}/main.4791d4b061c314d0e010.bundle.js:1:93929)\n    at e.invoke ({production-static-origin}/polyfills.54fe3ea07e05cf80d217.bundle.js:1:34803)\n    at r.run ({production-static-origin}/polyfills.54fe3ea07e05cf80d217.bundle.js:1:30034)\n    at {production-static-origin}/polyfills.54fe3ea07e05cf80d217.bundle.js:1:39499\n    at e.invokeTask ({production-static-origin}/polyfills.54fe3ea07e05cf80d217.bundle.js:1:35547)\n    at Object.onInvokeTask ({production-static-origin}/main.4791d4b061c314d0e010.bundle.js:1:93843)"
+        ],
+        "requests": [
+          {
+            "status": 200,
+            "url": "{production-static-origin}/",
+            "failedReason": null
+          },
+          {
+            "status": 200,
+            "url": "https://fonts.googleapis.com/icon?family=Material+Icons",
+            "failedReason": null
+          },
+          {
+            "status": 200,
+            "url": "{production-static-origin}/styles.b46c4641346515b74cbc.bundle.css",
+            "failedReason": null
+          },
+          {
+            "status": 200,
+            "url": "{production-static-origin}/inline.63f08307ee16d0c5aa48.bundle.js",
+            "failedReason": null
+          },
+          {
+            "status": 200,
+            "url": "{production-static-origin}/polyfills.54fe3ea07e05cf80d217.bundle.js",
+            "failedReason": null
+          },
+          {
+            "status": 200,
+            "url": "{production-static-origin}/main.4791d4b061c314d0e010.bundle.js",
+            "failedReason": null
+          },
+          {
+            "status": 200,
+            "url": "{production-static-origin}/de.903d6a160f661be07930.svg",
+            "failedReason": null
+          },
+          {
+            "status": 200,
+            "url": "{production-static-origin}/fr.24841de9d5ad4cebb1be.svg",
+            "failedReason": null
+          },
+          {
+            "status": 200,
+            "url": "{production-static-origin}/gb.fd72d9b5184b47afb2f7.svg",
+            "failedReason": null
+          },
+          {
+            "status": 200,
+            "url": "{production-static-origin}/us.2382ea7ec7cc55bfe1cc.svg",
+            "failedReason": null
+          },
+          {
+            "status": 200,
+            "url": "{production-static-origin}/ru.073f6ef795fdf4440534.svg",
+            "failedReason": null
+          },
+          {
+            "status": 200,
+            "url": "{production-static-origin}/cn.5d8314255775eb78b427.svg",
+            "failedReason": null
+          },
+          {
+            "status": 200,
+            "url": "{production-static-origin}/in.8a512f06f7a5e40b4712.svg",
+            "failedReason": null
+          },
+          {
+            "status": 200,
+            "url": "{production-static-origin}/sa.6fb5af379618cef52817.svg",
+            "failedReason": null
+          },
+          {
+            "status": 200,
+            "url": "{production-static-origin}/br.f66931e863eedd609440.svg",
+            "failedReason": null
+          }
+        ],
+        "refusal": "linked Witness runtime journey failed: zero-service-worker policy assertion failed; static paths: [\"/\",\"/styles.b46c4641346515b74cbc.bundle.css\",\"/inline.63f08307ee16d0c5aa48.bundle.js\",\"/polyfills.54fe3ea07e05cf80d217.bundle.js\",\"/main.4791d4b061c314d0e010.bundle.js\",\"/%BASE_HREF%ngsw-worker.js\",\"/gb.fd72d9b5184b47afb2f7.svg\",\"/de.903d6a160f661be07930.svg\",\"/fr.24841de9d5ad4cebb1be.svg\",\"/us.2382ea7ec7cc55bfe1cc.svg\",\"/ru.073f6ef795fdf4440534.svg\",\"/cn.5d8314255775eb78b427.svg\",\"/sa.6fb5af379618cef52817.svg\",\"/in.8a512f06f7a5e40b4712.svg\",\"/br.f66931e863eedd609440.svg\"]"
+      },
+      "byteEvidence": {
+        "needle": "%BASE_HREF%ngsw-worker.js",
+        "sites": [
+          {
+            "path": "main.4791d4b061c314d0e010.bundle.js",
+            "sha256": "97d13fca786716e6792f0c8c6415402557690ec007d76ee05bb81aa901cb65f6",
+            "bytes": 1478877,
+            "offset": 1414393,
+            "count": 1
+          }
+        ],
+        "shippedServiceWorkerFiles": []
+      },
+      "cause": "The era production build was emitted with the service worker enabled, and its AOT factory carries the registration argument `%BASE_HREF%ngsw-worker.js` with the placeholder unsubstituted: upstream substitutes it in a separate `replace` npm script that `ng build --prod` alone never runs. The build also ships no worker script at any path, so the registration could not have succeeded even with the placeholder resolved.",
+      "consequence": "Three published premises are contradicted at once: the zero-service-worker policy the runner executes this application under, the empty baseline console-error inventory, and the nonclaim that neither build registers a service worker and that the zero is the application own behavior. The application does attempt one, and it fails.",
+      "notFixedHere": "This finding is calibratable — the attempt, its failure and its two console errors could all be pinned exactly — but calibrating it would publish a lane pair whose other half does not boot. It is recorded and left uncalibrated."
+    }
+  ],
+  "uncalibratedFacts": [
+    {
+      "fact": "TINY_TRANSLATOR_JOURNEY_NAVIGATIONS",
+      "state": "unmeasurable",
+      "why": "the journey never reaches its clean-page assertion in either lane"
+    },
+    {
+      "fact": "per-lane console-error inventories",
+      "state": "partially-measured",
+      "why": "the era lane measured two errors, both consequences of the failed service-worker registration; the migrated lane measured a page error and no console error, because nothing after the throw ran"
+    },
+    {
+      "fact": "scroll absence",
+      "state": "unmeasurable",
+      "why": "no stage of the journey is reached in either lane"
+    },
+    {
+      "fact": "Material 5-vs-16 selector viability",
+      "state": "unmeasurable",
+      "why": "the migrated lane renders no DOM to select against, and the era lane refuses before its first selector"
+    }
+  ],
+  "notEstablished": [
+    "Nothing here establishes that the migrated build is wrong in any other respect. Its build lanes are green and deterministic and that record stands unchanged; what is established is that the artifact those lanes emitted does not run in a browser.",
+    "No claim is made about how many other failures lie behind the boot failure. One throw was measured, and a bundle that throws at evaluation hides everything after it.",
+    "The era lane was refused at its first checkpoint, so nothing is established about the rest of its journey either.",
+    "No Witness receipt was published for this vertical, and the readiness tallies are unchanged and uncounted."
+  ],
+  "digest": "68322c28284e4b747dcbf452f9c9effcbc29cc7142e5baf9116df8e65e57f16f"
+}
