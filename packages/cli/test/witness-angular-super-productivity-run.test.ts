@@ -17,6 +17,7 @@ import {
 	WITNESS_ANGULAR_SUPER_PRODUCTIVITY_SERVICE_WORKER,
 	WITNESS_ANGULAR_SUPER_PRODUCTIVITY_STYLE_PROBES,
 	WITNESS_ANGULAR_SUPER_PRODUCTIVITY_TYPEFACE,
+	WITNESS_ANGULAR_SUPER_PRODUCTIVITY_TIME_TRACKING_REANCHOR,
 	WITNESS_ANGULAR_SUPER_PRODUCTIVITY_TYPEFACE_DEGRADATION_CAUSE,
 	WITNESS_ANGULAR_SUPER_PRODUCTIVITY_TYPEFACE_PROBE,
 } from '../../core/src/receipts/witness-angular-super-productivity.ts';
@@ -230,11 +231,59 @@ describe('the drag surface and the deliberate absences', () => {
 	it('names the task-list reorder as the surface leg (b) drives, with no file input or download', () => {
 		// The application has the corpus's strongest drag surface after jira-clone,
 		// and this vertical now drives it: the journey names WHICH surface the leg
-		// targets — the dragula-bound task list — while the order it settles to is
-		// measured by the calibration driver and pinned at publish.
+		// targets — the dragula-bound task list — and pins the order it settles to,
+		// measured identically in both lanes by the u20c2j calibration driver.
 		expect(journey.drag).toBe('task-list-reorder');
 		expect(spec.fileInputs).toBeUndefined();
 		expect(spec.downloads).toBeUndefined();
+	});
+
+	it('pins leg (b): a second task, and an up-drag that reverses the pair into a real permutation', () => {
+		const reorder = journey.reorder;
+		expect(journey.secondTaskTitleText.length).toBeGreaterThan(0);
+		// The moved task is the second one, and the up-drag targets the second
+		// task's own parent drag handle dropped onto the first.
+		expect(reorder.movedTask).toBe(journey.secondTaskTitleText);
+		expect(reorder.dragHandle).toContain('task:nth-of-type(2)');
+		expect(reorder.dragHandle).toContain('.drag-handle.handle-par');
+		expect(reorder.dropTarget).toContain('task:nth-of-type(1)');
+		// The after-order is a genuine permutation of the before-order: same
+		// multiset, different sequence, and the moved task is one the list held.
+		expect([...reorder.renderedOrderAfter].sort()).toEqual([...reorder.renderedOrderBefore].sort());
+		expect(reorder.renderedOrderAfter).not.toEqual(reorder.renderedOrderBefore);
+		expect(reorder.renderedOrderBefore).toContain(reorder.movedTask);
+		// The two pinned titles are exactly the two tasks legs (a) and (b) create.
+		expect([...reorder.renderedOrderBefore].sort()).toEqual(
+			[journey.taskTitleText, journey.secondTaskTitleText].sort(),
+		);
+	});
+
+	it('pins leg (c) re-anchored on the header play button, with the contradicted sub-rules recorded as non-claims', () => {
+		const timer = journey.timeTracking;
+		const reanchor = WITNESS_ANGULAR_SUPER_PRODUCTIVITY_TIME_TRACKING_REANCHOR;
+		// The anchor is the header button icon flip, not the per-task indicator or
+		// the time value the first shape pinned.
+		expect(timer.playButton).toBe('main-header .play-btn');
+		expect(timer.iconProbe.group).toBe('main-header .play-btn');
+		expect(timer.currentTask).toBe('task.isCurrent');
+		expect(timer.iconBeforeStart).toBe('play_arrow');
+		expect(timer.iconAfterStart).toBe('pause');
+		// A round trip: the stop returns the control to its resting icon.
+		expect(timer.iconAfterStop).toBe(timer.iconBeforeStart);
+		expect(timer.iconAfterStart).not.toBe(timer.iconBeforeStart);
+		// The two dropped sub-rules are recorded as truthful non-claims, per mw1e.
+		expect(reanchor.corrected).toEqual([
+			'per-task-play-icon-indicator-present',
+			'per-task-time-val-carries-a-digit',
+		]);
+		expect(reanchor.measuredIconBeforeStart).toBe(timer.iconBeforeStart);
+		expect(reanchor.measuredIconAfterStart).toBe(timer.iconAfterStart);
+		expect(reanchor.measuredCurrentTasksOnStart).toBe(1);
+		expect(reanchor.measuredCurrentTasksOnStop).toBe(0);
+		expect(reanchor.subMinuteTimeValueHidden.length).toBeGreaterThan(0);
+		expect(reanchor.perTaskStartButtonHoverGated.length).toBeGreaterThan(0);
+		expect(reanchor.published).toBe(false);
+		expect(reanchor.masked).toBe(false);
 	});
 
 	it('carries the work-view host-tag correction as a measurement, not a note', () => {

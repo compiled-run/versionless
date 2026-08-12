@@ -241,22 +241,42 @@ export async function calibrateAngularSuperProductivityLane(
 					.trim();
 			}
 		}
-		// Leg (c): start tracking on the FIRST task via its own start button, so
-		// the task becomes current and the play indicator on it renders. Read the
-		// header icon, the per-task indicator and the rendered time value.
-		const readIndicator = async (): Promise<unknown> =>
-			host
-				.groupedText({ group: 'task', name: '.play-icon-indicator', item: '.play-icon-indicator' } as const)
-				.then((g) => g, (e: unknown) => `refused: ${e instanceof Error ? e.message : String(e)}`);
+		// Leg (c), re-anchored (u20c2j): the hover-gated per-task `.start-task-btn`
+		// is not visible to a click, so the timer is driven through the header's own
+		// global play button, whose `mat-icon` flips play_arrow→pause on start and
+		// back on stop. Every reading — the icon, the per-task current marker and the
+		// store keys — is taken before start, after start and after stop.
+		const readStoreKeys = async (): Promise<unknown> =>
+			host.indexedDbKeys().then(
+				(inv) =>
+					inv.databases
+						.find((d) => d.name === 'SUP')
+						?.stores.find((s) => s.name === 'SUP_STORE')
+						?.keys.map((k) => k.key) ?? 'no SUP_STORE',
+				(e: unknown) => `refused: ${e instanceof Error ? e.message : String(e)}`,
+			);
+		const readCurrentCount = async (selector: string): Promise<number | string> => {
+			try {
+				await context.expect.page.count(page, selector, 0);
+				return 0;
+			} catch (error: unknown) {
+				return (error instanceof Error ? error.message : String(error)).split('\n')[0]!.trim();
+			}
+		};
 		cb['icon-before-start'] = await readIcon();
+		cb['current-before-start'] = await readCurrentCount('task.isCurrent');
+		cb['store-before-start'] = await readStoreKeys();
 		try {
-			await page.click('task-list:first-of-type task:nth-of-type(1) .start-task-btn');
-			await new Promise<void>((settle) => void setTimeout(settle, 3_000));
-			cb['icon-after-start-via-task'] = await readIcon();
-			cb['play-indicator-after-task-start'] = await readIndicator();
-			cb['time-val-after-task-start'] = await host
-				.groupedText({ group: 'task .time-wrapper', name: '.time-val', item: '.time-val' } as const)
-				.then((g) => g, (e: unknown) => `refused: ${e instanceof Error ? e.message : String(e)}`);
+			await page.click('main-header .play-btn');
+			await new Promise<void>((settle) => void setTimeout(settle, 2_000));
+			cb['icon-after-header-start'] = await readIcon();
+			cb['current-after-header-start'] = await readCurrentCount('task.isCurrent');
+			cb['store-after-header-start'] = await readStoreKeys();
+			await page.click('main-header .play-btn');
+			await new Promise<void>((settle) => void setTimeout(settle, 2_000));
+			cb['icon-after-header-stop'] = await readIcon();
+			cb['current-after-header-stop'] = await readCurrentCount('task.isCurrent');
+			cb['store-after-header-stop'] = await readStoreKeys();
 		} catch (error: unknown) {
 			cb['time-tracking-error'] = error instanceof Error ? error.message : String(error);
 		}

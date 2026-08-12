@@ -5321,6 +5321,22 @@ const angularSuperProductivitySpec: AppSpec = {
 				);
 			return [...keys.localStorage].sort();
 		};
+		/** The rendered task titles in document order, for legs (b) and (e). */
+		const readOrder = async (): Promise<string[]> =>
+			(await lifecycle.groupedText(SUPER_PRODUCTIVITY_JOURNEY.taskTitleProbe)).map(
+				(group) => group.name,
+			);
+		/** The single icon the header's own global play button renders, for leg (c). */
+		const readHeaderIcon = async (): Promise<string> => {
+			const icons = (
+				await lifecycle.groupedText(SUPER_PRODUCTIVITY_JOURNEY.timeTracking.iconProbe)
+			).flatMap((group) => group.items);
+			if (icons.length !== 1)
+				throw new Error(
+					`Super Productivity header play button rendered ${icons.length} icons, not one`,
+				);
+			return icons[0]!;
+		};
 		await page.trackEvents('click', 'input', 'keydown');
 
 		// The application as it boots: the work view's own host tag — `work-view`,
@@ -5356,18 +5372,79 @@ const angularSuperProductivitySpec: AppSpec = {
 			SUPER_PRODUCTIVITY_JOURNEY.taskTitleText,
 		);
 		await measure(`${SUPER_PRODUCTIVITY_JOURNEY.initialRoute} (after the create)`);
+
+		// A second task, so leg (b) has a list to reorder. It lands below the
+		// first, and that first-created-on-top order is where leg (b) begins.
+		await page.type(
+			SUPER_PRODUCTIVITY_JOURNEY.addTaskInput,
+			SUPER_PRODUCTIVITY_JOURNEY.secondTaskTitleText,
+			{ redact: false },
+		);
+		await page.press(SUPER_PRODUCTIVITY_JOURNEY.addTaskInput, 'Enter');
+		await context.expect.page.count(page, SUPER_PRODUCTIVITY_JOURNEY.taskListTask, 2);
+		const renderedOrderBefore = await readOrder();
+		if (
+			canonicalize(renderedOrderBefore) !==
+			canonicalize(SUPER_PRODUCTIVITY_JOURNEY.reorder.renderedOrderBefore)
+		)
+			throw new Error(
+				`Super Productivity created list differs from the pinned before-order: ${canonicalize(renderedOrderBefore)}`,
+			);
+		await measure(`${SUPER_PRODUCTIVITY_JOURNEY.initialRoute} (after the second create)`);
+
+		// (c) Time tracking, anchored on the header's own global play button. The
+		// per-task start button is hover-gated and the accrued value is sub-minute
+		// (both recorded as non-claims on the re-anchor constant), so the anchor is
+		// the header button icon: it flips play_arrow to pause on start with one
+		// task made current, and back to play_arrow on stop with it cleared. A
+		// settled anchor read off the DOM, never a timing.
+		const iconBeforeStart = await readHeaderIcon();
+		if (iconBeforeStart !== SUPER_PRODUCTIVITY_JOURNEY.timeTracking.iconBeforeStart)
+			throw new Error(`Super Productivity header icon before start differs: ${iconBeforeStart}`);
+		await context.expect.page.count(page, SUPER_PRODUCTIVITY_JOURNEY.timeTracking.currentTask, 0);
+		await page.click(SUPER_PRODUCTIVITY_JOURNEY.timeTracking.playButton);
+		await context.expect.page.count(page, SUPER_PRODUCTIVITY_JOURNEY.timeTracking.currentTask, 1);
+		const iconAfterStart = await readHeaderIcon();
+		if (iconAfterStart !== SUPER_PRODUCTIVITY_JOURNEY.timeTracking.iconAfterStart)
+			throw new Error(`Super Productivity header icon after start differs: ${iconAfterStart}`);
+		await page.click(SUPER_PRODUCTIVITY_JOURNEY.timeTracking.playButton);
+		await context.expect.page.count(page, SUPER_PRODUCTIVITY_JOURNEY.timeTracking.currentTask, 0);
+		const iconAfterStop = await readHeaderIcon();
+		if (iconAfterStop !== SUPER_PRODUCTIVITY_JOURNEY.timeTracking.iconAfterStop)
+			throw new Error(`Super Productivity header icon after stop differs: ${iconAfterStop}`);
+		await measure(`${SUPER_PRODUCTIVITY_JOURNEY.initialRoute} (after time tracking)`);
+
+		// (b) The reorder. A genuine dragula pointer drag on the SECOND task's own
+		// parent drag handle, dropped up onto the first task, reverses the pair. The
+		// down-drag leaves the order unchanged and is not used.
+		await page.drag(
+			SUPER_PRODUCTIVITY_JOURNEY.reorder.dragHandle,
+			SUPER_PRODUCTIVITY_JOURNEY.reorder.dropTarget,
+			{ steps: SUPER_PRODUCTIVITY_JOURNEY.reorder.steps },
+		);
+		await context.expect.page.count(page, SUPER_PRODUCTIVITY_JOURNEY.taskListTask, 2);
+		const renderedOrderAfter = await readOrder();
+		if (
+			canonicalize(renderedOrderAfter) !==
+			canonicalize(SUPER_PRODUCTIVITY_JOURNEY.reorder.renderedOrderAfter)
+		)
+			throw new Error(
+				`Super Productivity reordered list differs from the pinned after-order: ${canonicalize(renderedOrderAfter)}`,
+			);
+		await measure(`${SUPER_PRODUCTIVITY_JOURNEY.initialRoute} (after the reorder)`);
 		checkpoints.push(await realServiceWorkerCheckpoint(lifecycle, 'after-interactions', script));
 
-		// (e) A real document reload. There is no backend: the task is in the
-		// application's own IndexedDB store, and what comes back is what leg (a)
-		// put there rather than a seed the harness supplied.
+		// (e) A real document reload. There is no backend: the two tasks and the
+		// order the drag settled them into are in the application's own IndexedDB
+		// store, and what comes back — read off the re-rendered list — is the store
+		// list, which is what makes it the store's own agreement with the drag.
 		await page.reload();
-		await context.expect.page.count(page, SUPER_PRODUCTIVITY_JOURNEY.taskListTask, 1);
-		await context.expect.page.text(
-			page,
-			SUPER_PRODUCTIVITY_JOURNEY.taskTitle,
-			SUPER_PRODUCTIVITY_JOURNEY.taskTitleText,
-		);
+		await context.expect.page.count(page, SUPER_PRODUCTIVITY_JOURNEY.taskListTask, 2);
+		const storeOrderAfter = await readOrder();
+		if (canonicalize(storeOrderAfter) !== canonicalize(renderedOrderAfter))
+			throw new Error(
+				`Super Productivity store order after reload differs from the rendered reorder: ${canonicalize(storeOrderAfter)}`,
+			);
 		const keysAfterJourney = await storeKeys();
 		const localStorageKeysAfterJourney = await localKeys();
 		await measure(`${SUPER_PRODUCTIVITY_JOURNEY.initialRoute} (after the online reload)`);
@@ -5439,17 +5516,37 @@ const angularSuperProductivitySpec: AppSpec = {
 				localStorageKeysAfterJourney,
 				survivesOnlineReload: true,
 			},
+			drag: {
+				state: 'measured-task-list-reorder',
+				surface: ANGULAR_SUPER_PRODUCTIVITY_APP,
+				pointer: 'genuine-dragula-pointer-down-move-up',
+				movedTask: SUPER_PRODUCTIVITY_JOURNEY.reorder.movedTask,
+				renderedOrderBefore,
+				renderedOrderAfter,
+				storeOrderAfter,
+			},
+			timeTracking: {
+				state: 'measured-task-time-tracking',
+				control: 'main-header .play-btn mat-icon',
+				iconBeforeStart,
+				iconAfterStart,
+				iconAfterStop,
+				currentTasksOnStart: 1,
+				currentTasksOnStop: 0,
+			},
 		};
 		return {
 			assertions: [
 				'the work view rendered on the application own declared `#/work-view` route, under its own `work-view` host tag, with two task lists and no task in either',
 				'a task created through the application own add-task bar by typing a title and committing it with Enter, landing in today list rather than in the backlog',
 				'the created task rendered in the task list with the typed title read back off the page',
-				'the application own IndexedDB store read for its KEYS either side of the create, adding the four state documents the application writes for its default project and removing none',
-				'the task surviving a real document reload, read back off the re-rendered list with the store census unchanged',
+				'a second task created the same way, the two rendering first-created on top, which is the order leg (b) reorders from',
+				'leg (c): the header own global play button flipping its icon from play_arrow to pause on start with one task made current, and back to play_arrow on stop with the current task cleared',
+				'leg (b): a genuine dragula pointer drag on the second task own parent handle, dropped up onto the first, reversing the pair into a real permutation of the order before the move',
+				'the application own IndexedDB store read for its KEYS either side of the journey, adding the four state documents the application writes for its default project and removing none',
+				'the two tasks surviving a real document reload in the drag-settled order, read back off the re-rendered list — the store agreeing with the drag — with the store census unchanged',
 				'a real ngsw registered, activated and controlling the page at all three checkpoints, with the worker scripts the build shipped byte-identical either side of the run',
 				'the linked Roboto stylesheet answered in-context, with the resolved family measured rather than assumed',
-				'no drag driven and none claimed',
 				'clean page',
 			],
 			offlineEvidence: { state: 'not-applicable' },

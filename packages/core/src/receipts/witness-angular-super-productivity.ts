@@ -1,4 +1,3 @@
-import { createRegExp, digit } from 'magic-regexp';
 import { readFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'pathe';
 import { canonicalize, sha256 } from './canonicalize.ts';
@@ -562,6 +561,49 @@ export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_DRAG_SURFACE = Object.freeze({
 });
 
 /**
+ * The leg-(c) anchor correction, recorded rather than quietly fixed (per mw1e).
+ *
+ * The first time-tracking shape pinned two sub-rules the live application then
+ * contradicted, measured identically in both lanes by the u20c2j calibration:
+ *
+ *  - a per-task `.play-icon-indicator` had to be present once tracking was on.
+ *    Nothing renders it through the header start, so the probe stays at zero.
+ *  - a `.time-val` had to render carrying at least one digit. The application's
+ *    own `ms-to-string` formats a sub-minute duration as `-`, so the time a
+ *    journey accrues never reaches a digit and the value is always `-`.
+ *
+ * On top of that, the per-task `.start-task-btn` the first driver clicked is
+ * hover-gated: it resolves in the DOM but is not visible to a click, so the
+ * click times out. The timer is therefore driven through the header's own
+ * global play button, whose `mat-icon` flips `play_arrow`→`pause` on start and
+ * back on stop, and the shape is re-anchored on that flip plus the current task
+ * the start sets. The two dropped sub-rules are kept here as truthful
+ * non-claims, so the correction is a measurement in the record rather than a
+ * silent edit; nothing published ever carried them.
+ */
+export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_TIME_TRACKING_REANCHOR = Object.freeze({
+	state: 'measured-time-tracking-anchor-correction',
+	corrected: Object.freeze([
+		'per-task-play-icon-indicator-present',
+		'per-task-time-val-carries-a-digit',
+	]),
+	correction: 'header-play-button-icon-flip-plus-current-task',
+	control: 'main-header .play-btn mat-icon',
+	measuredIconBeforeStart: 'play_arrow',
+	measuredIconAfterStart: 'pause',
+	measuredIconAfterStop: 'play_arrow',
+	measuredCurrentTasksOnStart: 1,
+	measuredCurrentTasksOnStop: 0,
+	subMinuteTimeValueHidden:
+		'the application’s own `ms-to-string` formats a sub-minute duration as `-`, so a journey’s accrued `.time-val` never carries a digit and reads `-`',
+	perTaskStartButtonHoverGated:
+		'the per-task `.start-task-btn` resolves in the DOM but is hover-gated and never visible to a click, so the timer is driven through the header button instead',
+	lanes: Object.freeze(['baseline', 'migrated']),
+	published: false,
+	masked: false,
+});
+
+/**
  * A calibration contradiction, recorded rather than quietly fixed.
  *
  * The first calibration driver asked the live page for `work-view-page`,
@@ -746,11 +788,49 @@ export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_JOURNEY = Object.freeze({
 		'https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700&display=swap',
 	/**
 	 * The surface leg (b) drives: the application's own dragula-bound task list.
-	 * This names WHICH surface the reorder gesture targets, not the order it
-	 * settles to — that order is measured by the calibration driver and pinned
-	 * when this proof is published.
+	 * This names WHICH surface the reorder gesture targets; the order it settles
+	 * to is `reorder` below, measured by the calibration driver in both lanes.
 	 */
 	drag: 'task-list-reorder',
+	/** Leg (a) creates `taskTitleText`; leg (b) needs a second task to reorder. */
+	secondTaskTitleText: 'Witness leg-b task',
+	/** The ordered task-title probe legs (b) and (e) read the rendered list through. */
+	taskTitleProbe: Object.freeze({ group: 'task', name: '.task-title', item: '.task-title' }),
+	/**
+	 * Leg (b), the task-list reorder, measured identically in both lanes by the
+	 * u20c2j calibration. The two tasks render first-created on top; dragging the
+	 * SECOND task's own parent drag handle UP onto the first reverses the pair.
+	 * The down-drag leaves the order unchanged and is not used. The store agrees
+	 * with the rendered list, read back through the leg-(e) reload that rehydrates
+	 * the work view from it.
+	 */
+	reorder: Object.freeze({
+		dragHandle: 'task-list:first-of-type task:nth-of-type(2) .drag-handle.handle-par',
+		dropTarget: 'task-list:first-of-type task:nth-of-type(1)',
+		steps: 30,
+		movedTask: 'Witness leg-b task',
+		renderedOrderBefore: Object.freeze(['Witness leg-a task', 'Witness leg-b task']),
+		renderedOrderAfter: Object.freeze(['Witness leg-b task', 'Witness leg-a task']),
+	}),
+	/**
+	 * Leg (c), the timer, re-anchored on the header's own global play button per
+	 * u20c2j — see WITNESS_ANGULAR_SUPER_PRODUCTIVITY_TIME_TRACKING_REANCHOR for
+	 * the two per-task sub-rules the live application contradicted. Starting flips
+	 * the button icon play_arrow→pause and sets one current task; stopping flips
+	 * it back and clears it. Measured identically in both lanes.
+	 */
+	timeTracking: Object.freeze({
+		playButton: 'main-header .play-btn',
+		iconProbe: Object.freeze({
+			group: 'main-header .play-btn',
+			name: 'mat-icon',
+			item: 'mat-icon',
+		}),
+		currentTask: 'task.isCurrent',
+		iconBeforeStart: 'play_arrow',
+		iconAfterStart: 'pause',
+		iconAfterStop: 'play_arrow',
+	}),
 });
 
 /**
@@ -876,24 +956,34 @@ export type WitnessAngularSuperProductivityDrag = {
 };
 
 /**
- * The settled result of starting a task's timer, leg (c).
+ * The settled result of starting and stopping a task's timer, leg (c),
+ * re-anchored after the u20c2j calibration contradicted the first shape.
  *
- * Starting the timer flips the control's icon and renders a running time value;
- * the shape pins the RULE the calibration driver's measurement has to satisfy
- * rather than the icons or the value themselves. The anchor is the icon flip:
- * the control shows one icon before the timer is started and a different one
- * after, so a run whose before- and after-icons are equal recorded no flip and
- * fails. A play indicator has to be present once tracking is on, and a time
- * value has to render carrying at least one digit — the exact icons, the exact
- * indicator and the exact duration are measured by the driver and pinned when
- * this proof is published.
+ * The anchor is the header's own global play button. Starting the timer through
+ * it flips the button's `mat-icon` from `play_arrow` to `pause` and sets exactly
+ * one current task; stopping it flips the icon back and clears the current task.
+ * The shape pins the RULE the calibration measured on both lanes rather than the
+ * literal icons: the before- and after-start icons differ (the flip), the
+ * after-stop icon returns to the before-start icon (the round trip), starting
+ * set one current task and stopping cleared it. The exact icon names are
+ * recorded on {@link WITNESS_ANGULAR_SUPER_PRODUCTIVITY_TIME_TRACKING_REANCHOR}.
+ *
+ * The first shape carried two sub-rules the live application contradicted and
+ * they are gone: it required a per-task `.play-icon-indicator` to be present,
+ * and a `.time-val` carrying a digit. Both are recorded as truthful non-claims
+ * on the re-anchor constant — the application's `ms-to-string` hides sub-minute
+ * durations so a journey's `.time-val` is always `-`, and the per-task
+ * `.start-task-btn` is hover-gated and never visible to a click, which is why
+ * the timer is driven through the header rather than the task.
  */
 export type WitnessAngularSuperProductivityTimeTracking = {
 	state: 'measured-task-time-tracking';
+	control: 'main-header .play-btn mat-icon';
 	iconBeforeStart: string;
 	iconAfterStart: string;
-	playIndicatorPresent: true;
-	trackedTimeValue: string;
+	iconAfterStop: string;
+	currentTasksOnStart: number;
+	currentTasksOnStop: number;
 };
 
 /**
@@ -1181,10 +1271,12 @@ export function witnessAngularSuperProductivityBehaviorDigest(
 			},
 			timeTracking: {
 				state: journey?.timeTracking?.state,
+				control: journey?.timeTracking?.control,
 				iconBeforeStart: journey?.timeTracking?.iconBeforeStart,
 				iconAfterStart: journey?.timeTracking?.iconAfterStart,
-				playIndicatorPresent: journey?.timeTracking?.playIndicatorPresent,
-				trackedTimeValue: journey?.timeTracking?.trackedTimeValue,
+				iconAfterStop: journey?.timeTracking?.iconAfterStop,
+				currentTasksOnStart: journey?.timeTracking?.currentTasksOnStart,
+				currentTasksOnStop: journey?.timeTracking?.currentTasksOnStop,
 			},
 			scroll: typed.scroll,
 			successfulNonLoopback: run.successfulNonLoopback,
@@ -1384,9 +1476,6 @@ function assertPersistence(
 		throw new Error(`Angular Super Productivity persistence evidence differs: ${label}`);
 }
 
-/** A rendered time value carries at least one digit; the exact value is publish-time. */
-const TRACKED_TIME_VALUE_HAS_DIGIT = createRegExp(digit);
-
 /**
  * Leg (b): the task-list reorder, checked as a rule rather than against a pinned
  * order. The moved task is named and is in the list, the after-order is a
@@ -1423,9 +1512,11 @@ function assertDrag(
 }
 
 /**
- * Leg (c): starting a task's timer. The anchor is the icon flip — the control
- * shows a different icon after the timer starts than before — plus a play
- * indicator once tracking is on and a rendered time value carrying a digit.
+ * Leg (c): starting and stopping a task's timer through the header play button.
+ * The anchor is the icon flip on that control — a different icon after the timer
+ * starts than before, and the before-icon back again after it stops — plus the
+ * current task the start sets and the stop clears. The dropped play-indicator
+ * and time-value sub-rules are recorded as non-claims on the re-anchor constant.
  */
 function assertTimeTracking(
 	journey: WitnessAngularSuperProductivityJourney | undefined,
@@ -1435,11 +1526,17 @@ function assertTimeTracking(
 	if (
 		tracking === undefined ||
 		tracking.state !== 'measured-task-time-tracking' ||
+		tracking.control !== WITNESS_ANGULAR_SUPER_PRODUCTIVITY_TIME_TRACKING_REANCHOR.control ||
 		tracking.iconBeforeStart.length === 0 ||
 		tracking.iconAfterStart.length === 0 ||
+		tracking.iconAfterStop.length === 0 ||
+		// The flip: start shows a different icon than rest.
 		tracking.iconBeforeStart === tracking.iconAfterStart ||
-		tracking.playIndicatorPresent !== true ||
-		!TRACKED_TIME_VALUE_HAS_DIGIT.test(tracking.trackedTimeValue)
+		// The round trip: stopping returns the control to its resting icon.
+		tracking.iconAfterStop !== tracking.iconBeforeStart ||
+		// Starting set exactly one current task; stopping cleared it.
+		tracking.currentTasksOnStart !== 1 ||
+		tracking.currentTasksOnStop !== 0
 	)
 		throw new Error(`Angular Super Productivity time-tracking evidence differs: ${label}`);
 }
@@ -1791,8 +1888,8 @@ export function renderWitnessAngularSuperProductivityReceipt(
 	const timeTracking = receipt.runs[0]?.applicationJourney.timeTracking;
 	const timer =
 		timeTracking === undefined
-			? 'the timer flips the control icon and renders a running value'
-			: `the control icon flipped from \`${timeTracking.iconBeforeStart}\` to \`${timeTracking.iconAfterStart}\` and a running value \`${timeTracking.trackedTimeValue}\` rendered`;
+			? 'the header play button icon flips on start and back on stop, setting and clearing a current task'
+			: `the header play button icon flipped from \`${timeTracking.iconBeforeStart}\` to \`${timeTracking.iconAfterStart}\` on start and back to \`${timeTracking.iconAfterStop}\` on stop, with the start setting ${timeTracking.currentTasksOnStart} current task and the stop clearing it`;
 	return `# Super Productivity v2.13.15 — direct Witness browser proof
 
 - Result: pass

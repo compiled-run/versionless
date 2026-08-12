@@ -252,10 +252,12 @@ function run(lane: 'baseline' | 'migrated', pass: 1 | 2): WitnessAngularSuperPro
 			},
 			timeTracking: {
 				state: 'measured-task-time-tracking',
+				control: 'main-header .play-btn mat-icon',
 				iconBeforeStart: 'play_arrow',
 				iconAfterStart: 'pause',
-				playIndicatorPresent: true,
-				trackedTimeValue: '0:05',
+				iconAfterStop: 'play_arrow',
+				currentTasksOnStart: 1,
+				currentTasksOnStop: 0,
 			},
 		},
 		scroll: {
@@ -498,6 +500,38 @@ describe('Angular Super Productivity Witness receipt', () => {
 		for (const run of receipt.runs) {
 			run.applicationJourney.timeTracking!.iconAfterStart =
 				run.applicationJourney.timeTracking!.iconBeforeStart;
+			run.semanticDigest = witnessAngularSuperProductivityRawDigest(run);
+			run.behaviorDigest = witnessAngularSuperProductivityBehaviorDigest(
+				run,
+				DECLARED_DIFFERENCE_LABELS,
+			);
+		}
+		receipt.integrity.canonicalDigest = witnessAngularSuperProductivityDigest(receipt);
+		expect(() => parseWitnessAngularSuperProductivityReceipt(receipt)).toThrow(
+			'time-tracking evidence differs',
+		);
+	});
+
+	it('rejects a stop that did not return the control icon to rest', () => {
+		const receipt = fixture();
+		for (const run of receipt.runs) {
+			run.applicationJourney.timeTracking!.iconAfterStop = 'pause';
+			run.semanticDigest = witnessAngularSuperProductivityRawDigest(run);
+			run.behaviorDigest = witnessAngularSuperProductivityBehaviorDigest(
+				run,
+				DECLARED_DIFFERENCE_LABELS,
+			);
+		}
+		receipt.integrity.canonicalDigest = witnessAngularSuperProductivityDigest(receipt);
+		expect(() => parseWitnessAngularSuperProductivityReceipt(receipt)).toThrow(
+			'time-tracking evidence differs',
+		);
+	});
+
+	it('rejects a stop that never cleared the current task', () => {
+		const receipt = fixture();
+		for (const run of receipt.runs) {
+			run.applicationJourney.timeTracking!.currentTasksOnStop = 1;
 			run.semanticDigest = witnessAngularSuperProductivityRawDigest(run);
 			run.behaviorDigest = witnessAngularSuperProductivityBehaviorDigest(
 				run,
