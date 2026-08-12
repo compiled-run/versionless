@@ -190,9 +190,170 @@ export async function calibrateAngularSuperProductivityLane(
 		);
 		await report('before-create');
 		await page.trackEvents('click', 'input', 'keydown');
+
+		// PM ruling from u20c2i: drive EVERY mutation before the single leg-(e)
+		// reload. The after-reload add-task-bar hang the earlier pass hit is a
+		// property of the reloaded page, so the two creates, the timer, the drag
+		// and the settings change all happen here, and the reload is last.
+		const readIcon = async (): Promise<unknown> =>
+			host
+				.groupedText({ group: 'main-header .play-btn', name: 'mat-icon', item: 'mat-icon' } as const)
+				.then(
+					(groups) => groups.flatMap((group) => group.items),
+					(error: unknown) => `refused: ${error instanceof Error ? error.message : String(error)}`,
+				);
+		const readTitles = async (): Promise<unknown> =>
+			host.groupedText({ group: 'task', name: '.task-title', item: '.task-title' } as const).then(
+				(groups) => groups.map((group) => group.name),
+				(error: unknown) => `refused: ${error instanceof Error ? error.message : String(error)}`,
+			);
+		const cb: Record<string, unknown> = {};
+		// Assigned before the drives so a step that throws still leaves every
+		// reading taken up to that point in the printed record, rather than losing
+		// the whole block to one refusal.
+		legs['legs-c-b-d'] = cb;
+
 		await page.type('add-task-bar input', 'Witness calibration task', { redact: false });
 		await page.press('add-task-bar input', 'Enter');
 		await new Promise<void>((settle) => void setTimeout(settle, 1_500));
+		cb['titles-after-first-create'] = await readTitles();
+		await page.type('add-task-bar input', 'Witness calibration task two', { redact: false });
+		await page.press('add-task-bar input', 'Enter');
+		await new Promise<void>((settle) => void setTimeout(settle, 1_000));
+		cb['titles-after-second-create'] = await readTitles();
+		for (const selector of [
+			'main-header .play-btn',
+			'task .play-icon-indicator',
+			'task .time-wrapper',
+			'task .time-wrapper .time-val',
+			'task .drag-handle',
+			'task .drag-handle.handle-par',
+			'.task-list-inner',
+			'.task-list-inner[dragula]',
+			'task .start-task-btn',
+		]) {
+			try {
+				await context.expect.page.count(page, selector, 0);
+				cb[`count:${selector}`] = 0;
+			} catch (error: unknown) {
+				cb[`count:${selector}`] = (error instanceof Error ? error.message : String(error))
+					.split('\n')[0]!
+					.trim();
+			}
+		}
+		// Leg (c): start tracking on the FIRST task via its own start button, so
+		// the task becomes current and the play indicator on it renders. Read the
+		// header icon, the per-task indicator and the rendered time value.
+		const readIndicator = async (): Promise<unknown> =>
+			host
+				.groupedText({ group: 'task', name: '.play-icon-indicator', item: '.play-icon-indicator' } as const)
+				.then((g) => g, (e: unknown) => `refused: ${e instanceof Error ? e.message : String(e)}`);
+		cb['icon-before-start'] = await readIcon();
+		try {
+			await page.click('task-list:first-of-type task:nth-of-type(1) .start-task-btn');
+			await new Promise<void>((settle) => void setTimeout(settle, 3_000));
+			cb['icon-after-start-via-task'] = await readIcon();
+			cb['play-indicator-after-task-start'] = await readIndicator();
+			cb['time-val-after-task-start'] = await host
+				.groupedText({ group: 'task .time-wrapper', name: '.time-val', item: '.time-val' } as const)
+				.then((g) => g, (e: unknown) => `refused: ${e instanceof Error ? e.message : String(e)}`);
+		} catch (error: unknown) {
+			cb['time-tracking-error'] = error instanceof Error ? error.message : String(error);
+		}
+		// Leg (b): the dragula reorder, initiated on the parent drag handle. Two
+		// strategies are tried in one pass: drop onto the second task's handle,
+		// and — if the order did not change — drag the second task's handle UP
+		// onto the first. Every reading is printed.
+		cb['order-before-drag'] = await readTitles();
+		try {
+			await page.drag(
+				'task-list:first-of-type task:nth-of-type(1) .drag-handle.handle-par',
+				'task-list:first-of-type task:nth-of-type(2)',
+				{ steps: 30 },
+			);
+			await new Promise<void>((settle) => void setTimeout(settle, 1_200));
+			cb['order-after-drag-down'] = await readTitles();
+			const afterDown = (await readTitles()) as string[];
+			if (
+				Array.isArray(afterDown) &&
+				afterDown.join('\n') === (cb['order-before-drag'] as string[]).join('\n')
+			) {
+				await page.drag(
+					'task-list:first-of-type task:nth-of-type(2) .drag-handle.handle-par',
+					'task-list:first-of-type task:nth-of-type(1)',
+					{ steps: 30 },
+				);
+				await new Promise<void>((settle) => void setTimeout(settle, 1_200));
+				cb['order-after-drag-up'] = await readTitles();
+			}
+			cb['indexeddb-after-drag'] = await host
+				.indexedDbKeys()
+				.then((i) => i, (e: unknown) => `refused: ${e instanceof Error ? e.message : String(e)}`);
+		} catch (error: unknown) {
+			cb['drag-error'] = error instanceof Error ? error.message : String(error);
+		}
+
+		// Leg (d): settings-change. The app exposes NO dark-theme UI control in
+		// v2.13.15 (the isDarkMode formly field is commented out), so the real
+		// control driven is the project theme colour. Every selector is asked as
+		// a count first, then the surface is exercised and the palette custom
+		// properties are read before/after. Exploratory: printed, never asserted.
+		const dd: Record<string, unknown> = {};
+		legs['leg-d'] = dd;
+		const paletteProps = [
+			'--palette-primary-500',
+			'--palette-accent-500',
+			'--palette-primary-400',
+			'--c-primary',
+			'--c-accent',
+		];
+		const readPalette = async (): Promise<unknown> =>
+			host
+				.renderedStyles([
+					{ label: 'body-palette', selector: 'body', properties: [...paletteProps] },
+					{ label: 'drawer-palette', selector: 'mat-drawer-container', properties: [...paletteProps] },
+				])
+				.then(
+					(probes) => probes,
+					(e: unknown) => `refused: ${e instanceof Error ? e.message : String(e)}`,
+				);
+		try {
+			dd['palette-before'] = await readPalette();
+			for (const selector of [
+				'side-nav',
+				'side-nav button[mat-menu-item]',
+				'side-nav .tour-addProjectBtn',
+				'side-nav mat-expansion-panel',
+				'.projects',
+			]) {
+				try {
+					await context.expect.page.count(page, selector, 0);
+					dd[`count:${selector}`] = 0;
+				} catch (error: unknown) {
+					dd[`count:${selector}`] = (error instanceof Error ? error.message : String(error))
+						.split('\n')[0]!
+						.trim();
+				}
+			}
+			// A keyboard shortcut: `b` toggles the backlog. Read the split state
+			// before and after so the effect is measured rather than assumed.
+			dd['split-count-before-shortcut'] = await host
+				.groupedText({ group: 'split', name: 'split', item: 'split' } as const)
+				.then((g) => g.length, (e: unknown) => `refused: ${e instanceof Error ? e.message : String(e)}`);
+			await page.press('body', 'b');
+			await new Promise<void>((settle) => void setTimeout(settle, 800));
+			dd['backlog-count-after-b'] = await host
+				.groupedText({ group: 'backlog', name: 'backlog', item: 'backlog' } as const)
+				.then((g) => g.length, (e: unknown) => `refused: ${e instanceof Error ? e.message : String(e)}`);
+			await page.press('body', 'w');
+			await new Promise<void>((settle) => void setTimeout(settle, 500));
+			dd['route-after-w'] = 'see page navigations';
+		} catch (error: unknown) {
+			dd['leg-d-error'] = error instanceof Error ? error.message : String(error);
+		}
+		cb['pageErrors-during-cb'] = 'see page summary';
+
+		// (e) The single reload, LAST, after every mutation has been driven.
 		await report('after-create');
 		await page.reload();
 		await new Promise<void>((settle) => void setTimeout(settle, 2_500));
@@ -208,84 +369,6 @@ export async function calibrateAngularSuperProductivityLane(
 					.trim();
 			}
 		}
-
-		// Legs (c) time-tracking and (b) drag reorder, driven here for the first
-		// time before either is pinned. A second task is created so the reorder
-		// has a permutation to settle into, and every reading is printed.
-		const iconProbe = { group: 'main-header .play-btn', name: 'mat-icon', item: 'mat-icon' } as const;
-		const readIcon = async (): Promise<unknown> =>
-			host.groupedText(iconProbe).then(
-				(groups) => groups.flatMap((group) => group.items),
-				(error: unknown) => `refused: ${error instanceof Error ? error.message : String(error)}`,
-			);
-		const readTitles = async (): Promise<unknown> =>
-			host.groupedText({ group: 'task', name: '.task-title', item: '.task-title' } as const).then(
-				(groups) => groups.map((group) => group.name),
-				(error: unknown) => `refused: ${error instanceof Error ? error.message : String(error)}`,
-			);
-		const cb: Record<string, unknown> = {};
-		// Assigned before the drives so a step that throws still leaves every
-		// reading taken up to that point in the printed record, rather than losing
-		// the whole block to one refusal.
-		legs['legs-c-b'] = cb;
-		await page.type('add-task-bar input', 'Witness calibration task two', { redact: false });
-		await page.press('add-task-bar input', 'Enter');
-		await new Promise<void>((settle) => void setTimeout(settle, 1_000));
-		cb['titles-after-second-create'] = await readTitles();
-		for (const selector of [
-			'main-header .play-btn',
-			'task .play-icon-indicator',
-			'task .time-wrapper',
-			'task .time-wrapper .time-val',
-			'task .drag-handle',
-			'task .drag-handle.handle-par',
-			'.task-list-inner',
-			'.task-list-inner[dragula]',
-		]) {
-			try {
-				await context.expect.page.count(page, selector, 0);
-				cb[`count:${selector}`] = 0;
-			} catch (error: unknown) {
-				cb[`count:${selector}`] = (error instanceof Error ? error.message : String(error))
-					.split('\n')[0]!
-					.trim();
-			}
-		}
-		// Leg (c): the icon flip on the global tracking control.
-		cb['icon-before-start'] = await readIcon();
-		try {
-			await page.click('main-header .play-btn');
-			await new Promise<void>((settle) => void setTimeout(settle, 1_200));
-			cb['icon-after-start'] = await readIcon();
-			cb['play-indicator-after-start'] = await host
-				.groupedText({ group: 'task .play-icon-indicator', name: 'task .play-icon-indicator', item: 'task .play-icon-indicator' } as const)
-				.then((g) => g.length, (e: unknown) => `refused: ${e instanceof Error ? e.message : String(e)}`);
-			cb['time-val-after-start'] = await host
-				.groupedText({ group: 'task .time-wrapper', name: '.time-val', item: '.time-val' } as const)
-				.then((g) => g, (e: unknown) => `refused: ${e instanceof Error ? e.message : String(e)}`);
-			await page.click('main-header .play-btn');
-			await new Promise<void>((settle) => void setTimeout(settle, 800));
-			cb['icon-after-stop'] = await readIcon();
-		} catch (error: unknown) {
-			cb['time-tracking-error'] = error instanceof Error ? error.message : String(error);
-		}
-		// Leg (b): the dragula reorder, initiated on the parent drag handle.
-		cb['order-before-drag'] = await readTitles();
-		try {
-			await page.drag(
-				'task-list:first-of-type task:nth-of-type(1) .drag-handle.handle-par',
-				'task-list:first-of-type task:nth-of-type(2) .drag-handle.handle-par',
-				{ steps: 24 },
-			);
-			await new Promise<void>((settle) => void setTimeout(settle, 1_200));
-			cb['order-after-drag'] = await readTitles();
-			cb['indexeddb-after-drag'] = await host
-				.indexedDbKeys()
-				.then((i) => i, (e: unknown) => `refused: ${e instanceof Error ? e.message : String(e)}`);
-		} catch (error: unknown) {
-			cb['drag-error'] = error instanceof Error ? error.message : String(error);
-		}
-		cb['pageErrors-during-cb'] = 'see page summary';
 		await context.receipt.capture('calibration-complete');
 	});
 	let status = 'unknown';
