@@ -336,7 +336,7 @@ describe('Angular TinyTranslator direct Witness receipt schema', () => {
 			bundler: 'angular-cli-1.5.4-webpack-3.8.1-to-angular-16.2-browser-builder',
 			runtime: 'node-8.9.3-to-node-16.20.2',
 			result: 'pass',
-			receipt: 'evidence/runs/witness-angular-tiny-translator/receipt.json',
+			receipt: 'evidence/runs/witness-angular-tiny-translator-v0-12-0/receipt.json',
 			digest: receipt.integrity.canonicalDigest,
 		});
 	});

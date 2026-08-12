@@ -25,7 +25,7 @@ import type {
 export const WITNESS_ANGULAR_TINY_TRANSLATOR_SCHEMA =
 	'versionless.witness-angular-tiny-translator.v1' as const;
 export const WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH =
-	'evidence/runs/witness-angular-tiny-translator/receipt.json' as const;
+	'evidence/runs/witness-angular-tiny-translator-v0-12-0/receipt.json' as const;
 export const ANGULAR_TINY_TRANSLATOR_FIXTURE = 'angular-tiny-translator-v0-12-0' as const;
 export const ANGULAR_TINY_TRANSLATOR_APP = 'angular-tiny-translator' as const;
 

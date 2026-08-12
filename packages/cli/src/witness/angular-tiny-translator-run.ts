@@ -38,8 +38,8 @@ import { verifyLinkedWitnessProvenance } from './provenance.ts';
 
 const root = resolve(import.meta.dirname, '../../../..');
 const fixtureEvidence = join(root, 'evidence/runs/angular-tiny-translator-v0-12-0');
-const witnessEvidence = join(root, 'evidence/runs/witness-angular-tiny-translator');
-const stageRoot = join(root, '.versionless/stage/witness-angular-tiny-translator');
+const witnessEvidence = join(root, 'evidence/runs/witness-angular-tiny-translator-v0-12-0');
+const stageRoot = join(root, '.versionless/stage/witness-angular-tiny-translator-v0-12-0');
 /**
  * The migrated lane's build tree, and the output root the u17d record pins as
  * canonical. The tree is a working directory rather than committed bytes, so

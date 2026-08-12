@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "versionless.angular-tiny-translator-runtime-globals.v1",
+  "unit": "lrapr-t006/u19e-browser-globals-rebuild",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "result": "node-core-globals-supplied-build-green-boot-still-red-on-a-new-cause",
+  "meaning": "u19d measured that the migrated production build throws `process is not defined` before Angular bootstraps, because `util@0.12.5` — declared for ngx-i18nsupport-lib — reads `process.env.NODE_DEBUG` at module evaluation. A capability now reads that requirement out of the installed module's own bytes and supplies exactly the object graph the reading spells, through the builder's own polyfills seam. The build is green and byte-stable over two runs, and the browser no longer throws that error. It does not boot: the same load now reports `$localize is not defined`, a second runtime global with a different cause, and this record says so rather than publishing a lane that mounts nothing.",
+  "capability": {
+    "name": "node-core-runtime-globals",
+    "package": "@versionless/angular",
+    "answers": "the evaluation half of a declared node-core module: resolution was closed by declaring `util`, and nothing supplied the runtime surface its browser evaluation reads",
+    "mechanism": "Every unresolved reference of every file the installed module's own code reaches is classified. A reference inside a function body, or under `typeof`, is not evaluated when the module is evaluated and cannot throw, so it proves no need and the global is refused by name. A reference the module dereferences at load through non-computed members is proven, and the shim materialises exactly the objects that path walks through — leaves are left undefined, because that is what a browser honestly has. A global reached at load in a way an object graph cannot satisfy — called, constructed, assigned to, or through a computed key — is refused by name rather than half-supplied. The names ECMAScript, the web platform and the CommonJS wrapper already bind are never candidates. The shim is delivered as an ordinary polyfills entry point, first in the list, which is the builder's own seam for a module the document has to evaluate before `main`.",
+    "refusedHere": [
+      "Buffer is referenced by this module, but every reference to it is inside a function body or under `typeof`, neither of which runs — or can throw — when the module is evaluated. The reading does not prove it is needed, so it is not supplied"
+    ],
+    "declaredDifferences": [
+      "globalThis.process exists in this application's browser context where it did not before, as the object graph process, process.env. It is supplied for util@0.12.5, whose evaluation reads process.env.NODE_DEBUG, process.env.NODE_DEBUG, and any other code in the bundle that tests for it will now find it. Every leaf is undefined, so a reader of one gets what a browser honestly has rather than a value this capability made up."
+    ],
+    "supplied": [
+      "process supplied as an empty object when the host binds nothing there",
+      "process.env supplied as an empty object when the host binds nothing there"
+    ]
+  },
+  "applied": {
+    "tree": ".versionless/stage/angular-tiny-translator-v0-12-0-u17b/app",
+    "declaredNodeCoreModules": [
+      "util"
+    ],
+    "filesChanged": [
+      "src/node-core-runtime-globals.ts"
+    ],
+    "workspaceChanges": [],
+    "workspaceUnhandled": []
+  },
+  "builds": [
+    {
+      "name": "build-9",
+      "exitStatus": 0,
+      "files": 524
+    },
+    {
+      "name": "build-10",
+      "exitStatus": 0,
+      "files": 524
+    }
+  ],
+  "determinism": {
+    "claim": "build-9 and build-10 ran the same command over the same bytes with no edit between them, each into a cleaned output directory, and emitted the same inventory.",
+    "runs": 2,
+    "identical": true,
+    "inventorySha256": "9669c9d1635eb64c968b3150726af609b86d89baff67b0376e9f7aa168fa6d28",
+    "command": "npx ng build --configuration production"
+  },
+  "boot": {
+    "laneRoot": "/Users/jacksm5pro/dev/open-source/versionless/.versionless/stage/angular-tiny-translator-v0-12-0-u17b/dist-9",
+    "url": "{production-static-origin}/#/home",
+    "booted": false,
+    "renderedTitle": null,
+    "pageErrors": [],
+    "consoleErrors": [
+      "ERROR ReferenceError: $localize is not defined\n    at consts ({production-static-origin}/main.2e2ecec27aebe0e1.js:1:1256638)\n    at Y_ ({production-static-origin}/main.2e2ecec27aebe0e1.js:1:67778)\n    at zC ({production-static-origin}/main.2e2ecec27aebe0e1.js:1:67514)\n    at z4 ({production-static-origin}/main.2e2ecec27aebe0e1.js:1:81110)\n    at $l.create ({production-static-origin}/main.2e2ecec27aebe0e1.js:1:81219)\n    at t.bootstrap ({production-static-origin}/main.2e2ecec27aebe0e1.js:1:130405)\n    at {production-static-origin}/main.2e2ecec27aebe0e1.js:1:128931\n    at Array.forEach (<anonymous>)\n    at t._moduleDoBootstrap ({production-static-origin}/main.2e2ecec27aebe0e1.js:1:128918)\n    at {production-static-origin}/main.2e2ecec27aebe0e1.js:1:128620",
+      "A bad HTTP response code (400) was received when fetching the script.",
+      "Service worker registration failed with: TypeError: Failed to register a ServiceWorker for scope ('{production-static-origin}/') with script ('{production-static-origin}/%BASE_HREF%ngsw-worker.js'): A bad HTTP response code (400) was received when fetching the script."
+    ],
+    "refusal": "page.waitForFunction: Timeout 10000ms exceeded."
+  },
+  "notEstablished": [
+    "This record supersedes nothing. u17d remains the bound migrated build record, and the digests the Witness schema pins to it are unchanged, because the artifact this round emitted does not mount either.",
+    "Nothing here establishes that `$localize` is the last runtime global between this bundle and a boot. One throw was measured, and a bundle that throws during bootstrap hides everything after it.",
+    "No journey ran. The four facts u19d left uncalibrated are still uncalibrated, and no Witness receipt was published.",
+    "The era lane was not rebuilt, re-measured or touched by this round."
+  ],
+  "digest": "3b62901070308eb5cd8cd9dd9358dba2ffde10ee2308d6483860f1b535014e45"
+}
