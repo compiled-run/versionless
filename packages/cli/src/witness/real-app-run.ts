@@ -76,6 +76,7 @@ import {
 import {
 	ANGULAR_TINY_TRANSLATOR_APP,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_BASELINE_SEAMS,
+	WITNESS_ANGULAR_TINY_TRANSLATOR_DOWNLOAD_SURFACE,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_FILE_INPUT_FIXTURE,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_FILE_INPUT_SURFACES,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_ICON_FONT_FAMILY,
@@ -2340,10 +2341,40 @@ const TT_ADD_PROJECT_BUTTON = `${TT_CREATE_FORM} button[mat-raised-button]` as c
 const TT_SAVE_PROJECT_BUTTON = `${TT_EDIT_FORM} button[mat-raised-button]` as const;
 const TT_UNIT_LIST = 'app-translate-unit-list' as const;
 const TT_UNIT_LIST_ITEM = `${TT_UNIT_LIST} mat-list-item` as const;
-const TT_FILTER_ALL = `${TT_UNIT_LIST} mat-radio-button[value=all]` as const;
-const TT_FILTER_BY_SUBSTRING = `${TT_UNIT_LIST} mat-radio-button[value=bySubstring]` as const;
+/**
+ * The unit list's filter radios, addressed by the element that actually selects
+ * them.
+ *
+ * Measured in both lanes: the filter group lays its radios out in a column, so
+ * every `mat-radio-button` host stretches to the full width of that column and
+ * the centre of its box — where a click lands — is empty space beside the
+ * control rather than on it. Nothing intercepts the click, so it does not fail;
+ * it simply selects nothing, and a journey that clicked the host would go on
+ * asserting against the filter it thought it had left. The label is what
+ * selects the radio.
+ *
+ * The search radio needs one step more. Its label wraps the search box as well
+ * as the word, so a click at the label's centre lands inside that box instead
+ * of activating the label; the word the label renders is the target. The radios
+ * elsewhere in the application — the workflow and role choices on the two
+ * project forms — are laid out in rows that hug their content, and their hosts
+ * are clicked directly.
+ */
+const TT_FILTER_ALL = `${TT_UNIT_LIST} mat-radio-button[value=all] label` as const;
+const TT_FILTER_NEEDS_REVIEW =
+	`${TT_UNIT_LIST} mat-radio-button[value=needsReview] label` as const;
+const TT_FILTER_BY_SUBSTRING =
+	`${TT_UNIT_LIST} mat-radio-button[value=bySubstring] label :text-is("Search")` as const;
 const TT_FILTER_SUBSTRING_INPUT = '#selectfilter input[type=text]' as const;
 const TT_TRANSLATION_INPUT = '#translationinput textarea' as const;
+/**
+ * The editor's undo control, which the application enables exactly when it has
+ * registered an edit to the unit currently in the editor. It is the only icon
+ * button inside the translation form — the two beside the state heading are
+ * outside it — and its disabled state is the application's own answer to
+ * "have you taken what was typed yet?".
+ */
+const TT_UNDO_BUTTON = '#translation button[mat-icon-button]' as const;
 /**
  * The two state-change controls, addressed by the exact label a reader sees
  * inside them rather than by an exact match on the button itself.
@@ -4814,6 +4845,13 @@ const angularTinyTranslatorSpec: AppSpec = {
 		await page.click(`${TT_UNIT_LIST} mat-list-item:nth-of-type(1)`);
 		await page.press(TT_TRANSLATION_INPUT, 'a', { modifiers: ['Meta'] });
 		await page.type(TT_TRANSLATION_INPUT, TT_TRANSLATION_TEXT, { redact: false });
+		// Measured: the editor propagates what was typed through a 200 ms debounce
+		// of its own, so a commit issued on the last keystroke commits the message
+		// the unit already had — the state changes and the text does not, and the
+		// exported file says so. The application's own reaction to having taken
+		// the edit is that its undo control stops being disabled, so that is what
+		// the journey waits for: a wait on the application, not on a timer.
+		await context.expect.page.attribute(page, TT_UNDO_BUTTON, 'disabled', null);
 		await page.click(TT_MARK_TRANSLATED);
 		// Measured: `markTranslated()` commits and the view advances to the next
 		// unit, and the list's default filter is `Untranslated units`, so the unit
@@ -4831,7 +4869,33 @@ const angularTinyTranslatorSpec: AppSpec = {
 		await context.expect.page.bodyText(page, {
 			contains: 'You are currently working as reviewer!',
 		});
+		// Measured: review mode alone does not put `mark as reviewed` on the page.
+		// The control is rendered only for a unit whose state is `translated`, and
+		// the editor is still holding the unit the translator's commit advanced to,
+		// which is `new`. The application's own route back to the translated unit is
+		// the `Review needed` filter it renders for exactly this step of the two-role
+		// workflow: selecting it drops every other unit out of the view, and the one
+		// unit left becomes the current one.
+		await page.click(TT_FILTER_NEEDS_REVIEW);
+		await context.expect.page.count(page, TT_UNIT_LIST_ITEM, 1);
+		await context.expect.page.bodyText(page, { contains: 'State translated' });
 		await page.click(TT_MARK_REVIEWED);
+		// Measured: `markReviewed()` commits and the view is refreshed under the same
+		// filter, so the unit the reviewer just made `final` leaves `Review needed` —
+		// the list empties, and the editor, with no unit left to show, renders its
+		// own empty surface rather than `State final`.
+		await context.expect.page.count(page, TT_UNIT_LIST_ITEM, 0);
+		await context.expect.page.bodyText(page, { contains: 'No Translation Unit' });
+		// The reviewed state itself, read back through the filter that does show it:
+		// all three units, the reviewed one first, carrying the state the reviewer
+		// committed.
+		await page.click(TT_FILTER_ALL);
+		await context.expect.page.count(
+			page,
+			TT_UNIT_LIST_ITEM,
+			WITNESS_ANGULAR_TINY_TRANSLATOR_FILE_INPUT_FIXTURE.transUnits,
+		);
+		await page.click(`${TT_UNIT_LIST} mat-list-item:nth-of-type(1)`);
 		await context.expect.page.bodyText(page, { contains: 'State final' });
 		await measure(`${TINY_TRANSLATOR_TRANSLATE_ROUTE} (after the reviewed state change)`);
 
@@ -4854,7 +4918,23 @@ const angularTinyTranslatorSpec: AppSpec = {
 		// the typed translation would be a download that happened and a file
 		// that did not say anything.
 		await page.click(TT_EXPORT_BUTTON);
-		const captured = await lifecycle.capturedDownloads();
+		// Measured: the click returns as soon as the application has handed its
+		// blob to the browser, and the browser finishes writing the file after
+		// that — reading the capture ledger once, immediately, races it and finds
+		// nothing. The download surface declares how many files this export
+		// produces, so the settled ledger is polled under a fixed bound and
+		// required to reach that count rather than accepted wherever it happened
+		// to be. A ledger that never reaches it fails the assertion below.
+		let captured = await lifecycle.capturedDownloads();
+		for (
+			let attempt = 0;
+			attempt < 400 &&
+			captured.length < WITNESS_ANGULAR_TINY_TRANSLATOR_DOWNLOAD_SURFACE.expectedDownloads;
+			attempt += 1
+		) {
+			await new Promise<void>((settle) => void setTimeout(settle, 25));
+			captured = await lifecycle.capturedDownloads();
+		}
 		const exported = (await lifecycle.capturedDownloadTexts())[0];
 		if (captured.length !== 1 || exported === undefined)
 			throw new Error('TinyTranslator export produced no single captured download');
@@ -4948,7 +5028,8 @@ const angularTinyTranslatorSpec: AppSpec = {
 				'synthetic translation file handed to the application own hidden file input and parsed by its FileReader service',
 				'parsed units rendered and read back off the page, identically in both lanes',
 				'translation typed into the application own editor and marked translated by a translator',
-				'reviewer role set through the application own project editor and the unit marked final',
+				'reviewer role set through the application own project editor, the translated unit reached through the application own Review needed filter, and marked final',
+				'the reviewed unit measured leaving the Review needed filter as the reviewer commits it, and its final state read back through the unfiltered list',
 				'unit list narrowed by a typed substring and restored by a full clear',
 				'translation file exported through the application own downloader and the captured bytes carrying the typed translation',
 				'project tooltip reached by a genuine hover on the toolbar control',
