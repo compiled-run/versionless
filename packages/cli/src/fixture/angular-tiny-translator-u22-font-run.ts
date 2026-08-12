@@ -217,9 +217,17 @@ const objectAt = (value: unknown): Json | null =>
  * configuration is only rewritten when it declares the option itself, because
  * writing one into a configuration that inherits is a change to what that
  * configuration means. Both rules are the capability's, not this driver's.
+ *
+ * The tree is a parameter with this lane's tree as its default, because the
+ * defect the capability answers is a builder default rather than a property of
+ * any application: every migrated Angular 16 lane on the u21 rebuild list needs
+ * exactly this application performed against its own workspace, and a second
+ * copy of it would be a second thing to keep honest.
  */
-export async function applyFontInliningDisable(): Promise<WorkspaceApplication> {
-	const file = path.join(APPLIED_TREE, 'angular.json');
+export async function applyFontInliningDisable(
+	tree: string = APPLIED_TREE,
+): Promise<WorkspaceApplication> {
+	const file = path.join(tree, 'angular.json');
 	const source = await readFile(file, 'utf8');
 	const workspace = JSON.parse(source) as Json;
 	const sites: FontInliningSite[] = [];
