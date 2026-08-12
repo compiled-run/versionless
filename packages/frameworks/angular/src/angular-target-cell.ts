@@ -72,8 +72,45 @@ export type SuccessorForkPackage = Readonly<{
 	lineage: ForkLineage;
 }>;
 
+/**
+ * The Angular version a published library was *compiled with*, read off the
+ * library's own emitted partial declarations.
+ *
+ * This exists because a library's declared `@angular/*` peer ranges are a claim
+ * its author maintains by hand and can therefore leave behind, and when they are
+ * left behind the peer rule reads them faithfully and selects a line the cell
+ * cannot consume. The compiled-with version is not maintained by hand: the
+ * Angular compiler stamps it into every `ɵɵngDeclare*` call it emits, and the
+ * linker in the consuming application refuses a library whose stamp comes from a
+ * newer Angular major than the compiler doing the linking — "This application
+ * depends upon a library published using Angular version X, which requires
+ * Angular version Y or newer to work correctly". It is the declaration that
+ * actually decides, so where the peers do not discriminate it is the one that is
+ * read.
+ */
+export type AngularBuildStamp = Readonly<{
+	/** The published version of the library the stamp was read from. */
+	libraryVersion: string;
+	/** The Angular version the library's partial declarations carry. */
+	compiledWith: string;
+	/** The published file the stamp was read in. */
+	readFrom: string;
+}>;
+
 export type EcosystemPackage =
-	| Readonly<{ kind: 'aligned'; range: string; fact: string }>
+	| Readonly<{
+			kind: 'aligned';
+			range: string;
+			fact: string;
+			/**
+			 * The compiled-with reading, present on entries whose declared peers do
+			 * not discriminate between the library's lines. Absent means the peers
+			 * decided and nothing further was needed.
+			 */
+			buildStamp?: AngularBuildStamp;
+			/** Lines the peer rule admitted and the compiled-with reading excluded. */
+			excludedByBuildStamp?: readonly AngularBuildStamp[];
+	  }>
 	| Readonly<{ kind: 'no-successor'; fact: string }>
 	| SuccessorForkPackage;
 
@@ -146,6 +183,27 @@ export type AngularTargetCell = Readonly<{
  *
  * `fact` is the reading, not a justification: each one names the published
  * version and the declaration on it that the rule tested.
+ *
+ * ## The peer-strictness refinement
+ *
+ * The rule above tests declared peers, and declared peers are hand-maintained.
+ * A library whose author never updated them publishes the same peer object
+ * across three Angular majors, and the rule then reads it faithfully and selects
+ * the newest line — which is exactly what happened to `@ngx-formly`, whose 6.x
+ * and 7.x lines both declare `@angular/forms ">=13.2.0"` and no `@angular/core`
+ * peer at all. Nothing in the peer declarations distinguishes a release built for
+ * Angular 13 from one built for Angular 18, so on that evidence alone the rule
+ * cannot be right.
+ *
+ * The refinement is not a special case and it is not an exception list. Where a
+ * candidate line's declared `@angular/*` peers do not discriminate between the
+ * library's own lines — they are absent, or identical across the majors under
+ * consideration — the selection is decided by the version the Angular compiler
+ * stamped into the library's published partial declarations, which no author
+ * maintains by hand. That reading is recorded on the entry as
+ * {@link AngularBuildStamp}, together with the lines it excluded, and it is
+ * tested by {@link cellAcceptsBuildStamp}: a library stamped with an Angular
+ * major above the cell's is refused, because the cell's linker refuses it.
  */
 export const ANGULAR_16_ECOSYSTEM_PACKAGES: EcosystemPackages = Object.freeze({
 	'@ant-design/icons-angular': Object.freeze({
@@ -209,13 +267,47 @@ export const ANGULAR_16_ECOSYSTEM_PACKAGES: EcosystemPackages = Object.freeze({
 	}),
 	'@ngx-formly/core': Object.freeze({
 		kind: 'aligned',
-		range: '^7.1.0',
-		fact: '@ngx-formly/core 7.1.0 is the newest release published and declares peer @angular/forms ">=13.2.0" and rxjs "^6.5.3 || ^7.0.0", both satisfied by this cell. It declares no @angular/core peer and no engines.node, so nothing on either axis excludes it.',
+		range: '^6.3.12',
+		fact: '@ngx-formly/core is the entry that made the peer-strictness refinement necessary, and the reading that corrects it is worth stating in full. Its declared peers do not move: 6.1.8, 6.2.2, 6.3.9, 6.3.12, 7.0.0, 7.0.1 and 7.1.0 every one declare exactly {"@angular/forms": ">=13.2.0", "rxjs": "^6.5.3 || ^7.0.0"}, no @angular/core peer and no engines.node. Read that way the peer rule selects 7.1.0, the newest release and the `latest` dist-tag, and 7.1.0 is unusable here: the Angular linker refuses it with "This application depends upon a library published using Angular version 18.2.13, which requires Angular version 17.0.0 or newer to work correctly". So the peers were not misread — they are simply not a discriminating declaration for this package, and the compiled-with stamp is. Every 7.x release carries version "18.2.13" in its partial declarations and ships the Angular-16-and-later fesm2022 layout; every 6.x release back to 6.1.8 carries "13.3.12" and ships the Angular-13-era fesm2015/fesm2020 layout. 6.3.12 is therefore the newest line this cell accepts, and it is the newest 6.x published. Read from https://registry.npmjs.org/@ngx-formly/core and https://unpkg.com/@ngx-formly/core@6.3.12/fesm2020/ngx-formly-core.mjs under consent VL-LEGACY-CORPUS-2026-08-10 on 2026-08-11.',
+		buildStamp: Object.freeze({
+			libraryVersion: '6.3.12',
+			compiledWith: '13.3.12',
+			readFrom: 'https://unpkg.com/@ngx-formly/core@6.3.12/fesm2020/ngx-formly-core.mjs',
+		}),
+		excludedByBuildStamp: Object.freeze([
+			Object.freeze({
+				libraryVersion: '7.1.0',
+				compiledWith: '18.2.13',
+				readFrom: 'https://unpkg.com/@ngx-formly/core@7.1.0/fesm2022/ngx-formly-core.mjs',
+			}),
+			Object.freeze({
+				libraryVersion: '7.0.1',
+				compiledWith: '18.2.13',
+				readFrom: 'https://unpkg.com/@ngx-formly/core@7.0.1/fesm2022/ngx-formly-core.mjs',
+			}),
+			Object.freeze({
+				libraryVersion: '7.0.0',
+				compiledWith: '18.2.13',
+				readFrom: 'https://unpkg.com/@ngx-formly/core@7.0.0/fesm2022/ngx-formly-core.mjs',
+			}),
+		]),
 	}),
 	'@ngx-formly/material': Object.freeze({
 		kind: 'aligned',
-		range: '^7.1.0',
-		fact: '@ngx-formly/material 7.1.0 declares peer @ngx-formly/core "7.1.0" as an exact version, so the two packages move together or not at all; it also declares peer @angular/material ">=16.0.0", satisfied by the ^16.2.0 this cell writes for the @angular/ family.',
+		range: '^6.3.12',
+		fact: '@ngx-formly/material declares peer @ngx-formly/core at an exact version on every release — "6.3.12" on 6.3.12, "7.1.0" on 7.1.0 — so the two packages move together or not at all, and the core reading decides this one. Its other peer, @angular/material, declares ">=13.0.0" on the whole 6.x line and ">=16.0.0" on 7.1.0; both are satisfied by the ^16.2.0 this cell writes, which is again a declaration that does not discriminate. 6.3.12 carries Angular "13.3.12" in its partial declarations where 7.1.0 carries "18.2.13". Read from https://registry.npmjs.org/@ngx-formly/material and https://unpkg.com/@ngx-formly/material@6.3.12/fesm2020/ngx-formly-material.mjs under consent VL-LEGACY-CORPUS-2026-08-10 on 2026-08-11. The type surface the cell was already relying on is unchanged across the correction: material 6.3.12 declares `abstract class FieldType<F extends FormlyFieldConfig<FormlyFieldProps>>` with one parameter and no default, exactly as 7.1.0 does, and core 6.3.12 publishes `interface FieldTypeConfig<T = FormlyFieldConfig[\'props\']> extends FormlyFieldConfig<T>` declaring formControl and props, exactly as 7.1.0 does.',
+		buildStamp: Object.freeze({
+			libraryVersion: '6.3.12',
+			compiledWith: '13.3.12',
+			readFrom: 'https://unpkg.com/@ngx-formly/material@6.3.12/fesm2020/ngx-formly-material.mjs',
+		}),
+		excludedByBuildStamp: Object.freeze([
+			Object.freeze({
+				libraryVersion: '7.1.0',
+				compiledWith: '18.2.13',
+				readFrom: 'https://unpkg.com/@ngx-formly/material@7.1.0/fesm2022/ngx-formly-material.mjs',
+			}),
+		]),
 	}),
 	'@ngx-translate/core': Object.freeze({
 		kind: 'aligned',
@@ -442,6 +534,61 @@ export const REMOVED_BUILDER_PACKAGES: Readonly<Record<string, readonly string[]
 export function compareStrings(left: string, right: string): number {
 	if (left === right) return 0;
 	return left < right ? -1 : 1;
+}
+
+/** The major of a dotted version string, or null when it carries none. */
+export function majorOf(version: string): number | null {
+	const head = version.split('.')[0] ?? '';
+	if (!/^\d+$/u.test(head)) return null;
+	return Number.parseInt(head, 10);
+}
+
+/**
+ * Does a cell's Angular line accept a library carrying this compiled-with stamp.
+ *
+ * The Angular linker in the consuming application reads the partial declarations
+ * a library published and refuses the ones a *newer* Angular major emitted,
+ * because their shape is not one it knows how to link. A stamp at or below the
+ * cell's major is accepted; a stamp above it is not, and that is the whole of
+ * the test. A stamp whose major cannot be read is refused, because an unreadable
+ * declaration is not evidence of compatibility.
+ */
+export function cellAcceptsBuildStamp(angularLine: string, stamp: AngularBuildStamp): boolean {
+	const cell = majorOf(angularLine);
+	const library = majorOf(stamp.compiledWith);
+	if (cell === null || library === null) return false;
+	return library <= cell;
+}
+
+/**
+ * Every entry in a cell's ecosystem table whose recorded readings contradict
+ * the cell — an aligned line the cell's linker would refuse, or an exclusion
+ * the cell would in fact have accepted.
+ *
+ * This is the peer-strictness refinement made checkable rather than asserted:
+ * the table states compiled-with readings, and this says whether they support
+ * the ranges beside them.
+ */
+export function buildStampContradictions(cell: AngularTargetCell): readonly string[] {
+	const problems: string[] = [];
+	for (const [name, disposition] of Object.entries(cell.ecosystemPackages).sort(([left], [right]) =>
+		compareStrings(left, right),
+	)) {
+		if (disposition.kind !== 'aligned') continue;
+		const { buildStamp, excludedByBuildStamp } = disposition;
+		if (buildStamp !== undefined && !cellAcceptsBuildStamp(cell.angularLine, buildStamp))
+			problems.push(
+				`${name}: aligned to ${disposition.range}, but ${buildStamp.libraryVersion} is stamped ` +
+					`Angular ${buildStamp.compiledWith}, which Angular ${cell.angularLine} does not link.`,
+			);
+		for (const excluded of excludedByBuildStamp ?? [])
+			if (cellAcceptsBuildStamp(cell.angularLine, excluded))
+				problems.push(
+					`${name}: ${excluded.libraryVersion} is recorded as excluded by its stamp ` +
+						`Angular ${excluded.compiledWith}, which Angular ${cell.angularLine} does link.`,
+				);
+	}
+	return Object.freeze(problems);
 }
 
 /**

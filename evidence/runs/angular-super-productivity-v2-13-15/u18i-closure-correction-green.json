@@ -1,0 +1,314 @@
+{
+	"schemaVersion": "versionless.angular-super-productivity-capability-round.v1",
+	"unit": "lrapr-t006/u18i-closure-correction-green",
+	"consentId": "VL-LEGACY-CORPUS-2026-08-10",
+	"result": "green",
+	"meaning": "The super-productivity migrated lane builds. `ng build --configuration production` on the Angular 16 browser builder exits 0 and emits 58 files, which is the first green this application has ever produced on this closure. The three bundler families u18h found are all closed, and one that nobody had seen was found and closed behind them, because closing the first three is what let the pipeline reach it. Three of the four were answered by capabilities in packages/frameworks and one by a correction to the target cell's own ecosystem reading; no accommodation was added in this round, and the nineteen u18h recorded are carried forward unchanged and re-verified. What is not closed is stated as plainly: the build is green and the emitted artifact is missing two logical names the era lane emitted, for a reason this round measured and names below.",
+	"previous": "u18h-capability-round.json",
+	"changeset": "u18-composed-changeset.json",
+	"tree": {
+		"stage": ".versionless/stage/angular-super-productivity-v2-13-15-u18b",
+		"applied": ".versionless/stage/angular-super-productivity-v2-13-15-u18b/app",
+		"from": ".versionless/cache/angular-super-productivity-v2-13-15-source/verify/extracted/super-productivity-2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+		"commit": "2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+		"reuse": "The tree u18h left, carried forward, with the @ngx-formly closure correction installed into it and this round's four capability edits applied on top. build-8.log is the first build after the correction and the first two capabilities; build-9.log and build-10.log are the two green builds after the fourth.",
+		"reRunnable": "The u18i driver was run twice. On the second run the Sass mixin and JSON import rounds reported 0 files changed and 0 refusals — their work was already in place and neither found anything left to answer — and the url-rebase round, added between the runs, reported its 4 changes once. Every capability here is a function of the tree it reads, so a re-run over an already-migrated tree finds nothing to do rather than doing it twice."
+	},
+	"cell": {
+		"node": "v16.20.2",
+		"nodeSource": ".versionless/cache/angular-jira-clone-runtime/node-v16.20.2-darwin-arm64",
+		"architecture": "darwin-arm64, native — no translation layer",
+		"builder": "@angular-devkit/build-angular:browser (Angular 16.2)",
+		"environment": {
+			"NG_CLI_ANALYTICS": "false"
+		}
+	},
+	"closureCorrection": {
+		"ruling": "@ngx-formly closure correction, authorised for this unit.",
+		"package": [
+			"@ngx-formly/core",
+			"@ngx-formly/material"
+		],
+		"from": "^7.1.0",
+		"to": "^6.3.12",
+		"whereCorrected": "packages/frameworks/angular/src/angular-target-cell.ts — the cell's own ecosystem table. This is not an application edit and it is not a fixture edit: the wrong range was a fact the cell asserted about the Angular 16 community layer, so it is corrected where that fact lives, and it now applies to every application this cell is pointed at.",
+		"whyTheMechanicalRuleMisSelected": {
+			"verdict": "The rule read the declarations correctly. The declarations do not discriminate.",
+			"reading": "The cell's rule is: take the newest line whose declared peer ranges and engines.node this cell satisfies. @ngx-formly/core declares the same peerDependencies object on 6.1.8, 6.2.2, 6.3.9, 6.3.10, 6.3.11, 6.3.12, 7.0.0-alpha.0, 7.0.0, 7.0.1 and 7.1.0 — {\"@angular/forms\": \">=13.2.0\", \"rxjs\": \"^6.5.3 || ^7.0.0\"} — with no @angular/core peer and no engines.node anywhere on the line. Nothing in that declaration distinguishes a release built for Angular 13 from one built for Angular 18, so the rule selected 7.1.0 because it is newest and satisfies everything declared, which it does. The peers are loose and stale, and that is the recorded cause; the rule did not misread them.",
+			"whatActuallyDecides": "The Angular version the compiler stamped into the published partial declarations, which no author maintains by hand. Every 7.x release of @ngx-formly/core and @ngx-formly/material carries version \"18.2.13\" in its ɵɵngDeclare* calls and ships the Angular-16-and-later fesm2022 layout; every 6.x release back to 6.1.8 carries \"13.3.12\" and ships the Angular-13-era fesm2015/fesm2020 layout. Angular 16's linker refuses the first and accepts the second, which is exactly the error the build reported.",
+			"readFrom": [
+				"https://registry.npmjs.org/@ngx-formly/core",
+				"https://registry.npmjs.org/@ngx-formly/material",
+				"https://unpkg.com/@ngx-formly/core@6.3.12/fesm2020/ngx-formly-core.mjs",
+				"https://unpkg.com/@ngx-formly/core@7.1.0/fesm2022/ngx-formly-core.mjs",
+				"https://unpkg.com/@ngx-formly/core@7.0.1/fesm2022/ngx-formly-core.mjs",
+				"https://unpkg.com/@ngx-formly/core@7.0.0/fesm2022/ngx-formly-core.mjs",
+				"https://unpkg.com/@ngx-formly/material@6.3.12/fesm2020/ngx-formly-material.mjs",
+				"https://unpkg.com/@ngx-formly/material@6.3.12/form-field/field.type.d.ts",
+				"https://unpkg.com/@ngx-formly/core@6.3.12/lib/templates/field.type.d.ts"
+			],
+			"readOn": "2026-08-11"
+		},
+		"ruleRefinement": {
+			"name": "peer-strictness refinement",
+			"statement": "Where a candidate line's declared @angular/* peers do not discriminate between the library's own lines — absent, or identical across the majors under consideration — the selection is decided by the Angular version stamped in the library's published partial declarations. The reading is recorded on the entry as an AngularBuildStamp together with the lines it excluded.",
+			"executable": "packages/frameworks/angular/src/angular-target-cell.ts — `majorOf`, `cellAcceptsBuildStamp` and `buildStampContradictions`. The last walks a cell's whole ecosystem table and reports any aligned range its own recorded stamp contradicts, or any exclusion the cell would in fact have accepted, so the refinement is checkable rather than asserted.",
+			"test": "packages/frameworks/angular/test/angular-target-cell.test.ts — four cases: the accept/refuse boundary at the cell's major, an unreadable stamp refused, the Angular 16 table found free of contradictions, and a deliberately contradictory table reported.",
+			"notGeneralisedFurther": "Only @ngx-formly carries a stamp reading today. Every other entry in the Angular 16 table was decided by peers that did discriminate, and back-filling stamps for all of them was not attempted here; an entry with no stamp means the peers decided, not that nobody looked."
+		},
+		"install": {
+			"consented": true,
+			"command": "npm install --no-audit --no-fund --ignore-scripts @ngx-formly/core@6.3.12 @ngx-formly/material@6.3.12",
+			"networkMode": "registry only, for this install and the version readings above; offline for both builds",
+			"resolved": [
+				{
+					"package": "@ngx-formly/core",
+					"version": "6.3.12",
+					"url": "https://registry.npmjs.org/@ngx-formly/core/-/core-6.3.12.tgz",
+					"integrity": "sha512-88MOfn9dM1B33t04jl8x0Glh0Ed0lUKMkhYajicRH7ZHTmwIdla1SQjiblp2C+EcCFvsY7XAU2/JUZQdl56aUw=="
+				},
+				{
+					"package": "@ngx-formly/material",
+					"version": "6.3.12",
+					"url": "https://registry.npmjs.org/@ngx-formly/material/-/material-6.3.12.tgz",
+					"integrity": "sha512-0WYikqtoUR/4DuiuGDT8LOOrBvhrGwh5yX+SkB4YJYNUnl8pBPar9BmaFl3DJt95R30fQk66zu0PlR6XG0mq7w=="
+				}
+			],
+			"changedPackages": 2,
+			"note": "Two packages changed and nothing else moved: the correction is inside the range the rest of the closure already resolved against."
+		},
+		"u18eEditRecheck": {
+			"edit": "u18e's unparameterised-base-class capability wrote `extends FieldType<FieldTypeConfig>` on two components — src/app/ui/duration/input-duration-formly/input-duration-formly.component.ts:11 and src/app/features/config/keyboard-input/keyboard-input.component.ts:11 — against the 7.1.0 surface.",
+			"recheck": "The 6.x surface declares the same two things. @ngx-formly/material@6.3.12 form-field/field.type.d.ts declares `abstract class FieldType<F extends FormlyFieldConfig<FormlyFieldProps>> extends CoreFieldType<F>`, one parameter and no default, exactly as 7.1.0 does; @ngx-formly/core@6.3.12 lib/templates/field.type.d.ts declares `interface FieldTypeConfig<T = FormlyFieldConfig['props']> extends FormlyFieldConfig<T>` with formControl and props, exactly as 7.1.0 does. The warrant the capability recorded holds against the corrected closure without a re-run changing a byte, and the green build is the confirmation: had the argument been wrong for 6.x, TS2314 or TS2344 would have returned.",
+			"capabilityReRun": "Not required and not performed. The capability is idempotent over an already-parameterised extends clause and the surface it reads for the proof is unchanged."
+		}
+	},
+	"capabilitiesAdded": [
+		{
+			"capability": "sass-mixin-hyphenation-successor",
+			"file": "packages/frameworks/angular/src/sass-mixin-hyphenation-successor.ts",
+			"test": "packages/frameworks/angular/test/sass-mixin-hyphenation-successor.test.ts",
+			"appNameBranches": 0,
+			"family": "angular-material-css-vars mixin",
+			"reading": "The installed angular-material-css-vars@5.0.3 was read before anything was written, through the exports-map machinery the cell already carries: the stylesheet's two bare @import rules — 'angular-material-css-vars/public-util' and 'angular-material-css-vars/main' — are answered by the package's exports map under the `sass` condition at ./src/lib/_public-util.scss and ./src/lib/_main.scss, and those two files declare 14 mixins between them. `initMaterialCssVars` is not one of them. `init-material-css-vars` is, at _main.scss:76, with five parameters every one of which carries a default. So the era spelling and the installed spelling are the same identifier written two ways, and that is a fact about the surface rather than a mapping anyone wrote down. The capability derives it: hyphenate the included name at its case boundaries, fold the surface's own declarations the same way — Sass already folds hyphen and underscore together, so the fold extends a rule the language has rather than inventing one — and rewrite only when exactly one declaration folds to the same identifier and its parameter list accepts the call as written. Two candidates, none, a name the surface still declares, or an arity the declaration would reject, and nothing is written and the reason is recorded by name. A namespaced `@include mat.all-component-themes(...)` is passed over untouched, because a namespace resolves through its own binding and is not this capability's business.",
+			"ruledAccommodation": false
+		},
+		{
+			"capability": "json-module-named-import",
+			"file": "packages/frameworks/angular/src/json-module-named-import.ts",
+			"test": "packages/frameworks/angular/test/json-module-named-import.test.ts",
+			"appNameBranches": 0,
+			"family": "named import of a JSON module",
+			"reading": "The shape was read before it was called: `import {version} from '../../package.json'`, and the same line in environment.prod.ts, which the production configuration's fileReplacements swaps in and which the bundler would have objected to next. It is exactly the resolveJsonModule named-versus-default interop. TypeScript types a .json module as an object literal type and lets every top-level key be imported by name, so the program compiles; webpack 5 gives a JSON module one export, the default, and refuses the named binding at the module-graph layer after the program has compiled. The successor shape is not a choice, which is what makes it derivable: a JSON module has exactly one export shape, so a named binding is a property of the default export and nothing else. The capability takes the default and destructures the same names off it, so every use site keeps the identifier it already had, and it checks each name against the parsed JSON first — a key the module does not declare is refused rather than rewritten into a read of undefined. The local for the default is the module's own file name in camel case, extension folded in, which is why it reads `packageJson` and not `package`: `package` is a reserved word in strict mode and would not have been a legal binding.",
+			"ruledAccommodation": false
+		},
+		{
+			"capability": "stylesheet-url-rebase",
+			"file": "packages/frameworks/angular/src/stylesheet-url-rebase.ts",
+			"test": "packages/frameworks/angular/test/stylesheet-url-rebase.test.ts",
+			"appNameBranches": 0,
+			"family": "url() in an imported partial, resolved against the entry",
+			"newFamily": true,
+			"reading": "This is the family nobody had seen, and it was only reachable because the other three were closed first. @import in Sass is textual: a partial's rules end up inside the entry sheet and a relative url() in them is a string in the emitted CSS with no record of which file wrote it. The era pipeline resolved such a url against the entry, and src/styles/font/material-icons.scss was written to that behaviour — url(assets/fonts/MaterialIcons-Regular.woff2), correct from src/styles.scss. The modern pipeline runs resolve-url-loader with source maps on and rebases each url onto the originating partial, so the same string became src/styles/font/assets/fonts/... and webpack reported 4 × Can't resolve. The successor is arithmetic with exactly one answer, and the capability writes it only when the arithmetic has exactly one answer: the url must fail to resolve from the partial's own directory, must resolve from the directory of an entry that imports the partial, and every entry importing it must resolve it to the same file. Then the url is rewritten to that file expressed relative to the partial, which is the spelling the rebasing pipeline turns back into the path the era pipeline produced. Data, absolute, fragment and scheme urls are passed over; a partial two entries would resolve differently is refused rather than decided.",
+			"ruledAccommodation": false
+		}
+	],
+	"capabilityOutcomes": [
+		{
+			"capability": "sass-mixin-hyphenation-successor",
+			"filesChanged": [],
+			"changes": [],
+			"unhandled": [],
+			"reading": [
+				"surface read from 2 file(s) the stylesheet's @import rules resolve to: angular-material-css-vars/src/lib/_main.scss, angular-material-css-vars/src/lib/_public-util.scss",
+				"14 mixin declaration(s) in that surface"
+			]
+		},
+		{
+			"capability": "json-module-named-import",
+			"filesChanged": [],
+			"changes": [],
+			"unhandled": [],
+			"reading": []
+		},
+		{
+			"capability": "stylesheet-url-rebase",
+			"filesChanged": [
+				"src/styles/font/material-icons.scss"
+			],
+			"changes": [
+				"src/styles/font/material-icons.scss line 5: url(assets/fonts/MaterialIcons-Regular.eot) → url(../../assets/fonts/MaterialIcons-Regular.eot) (both spellings name src/assets/fonts/MaterialIcons-Regular.eot)",
+				"src/styles/font/material-icons.scss line 8: url(assets/fonts/MaterialIcons-Regular.woff2) → url(../../assets/fonts/MaterialIcons-Regular.woff2) (both spellings name src/assets/fonts/MaterialIcons-Regular.woff2)",
+				"src/styles/font/material-icons.scss line 9: url(assets/fonts/MaterialIcons-Regular.woff) → url(../../assets/fonts/MaterialIcons-Regular.woff) (both spellings name src/assets/fonts/MaterialIcons-Regular.woff)",
+				"src/styles/font/material-icons.scss line 10: url(assets/fonts/MaterialIcons-Regular.ttf) → url(../../assets/fonts/MaterialIcons-Regular.ttf) (both spellings name src/assets/fonts/MaterialIcons-Regular.ttf)"
+			],
+			"unhandled": [],
+			"reading": [
+				"1 entry stylesheet(s) named by angular.json: src/styles.scss",
+				"31 imported partial(s) reached from them"
+			]
+		}
+	],
+	"accommodations": {
+		"addedThisRound": 0,
+		"carriedForward": 19,
+		"carriedForwardSource": "u18h-capability-round.json — 19 manual-migration-steps over 8 distinct decisions, plus the ngx-electron specifier redirect at 20 modules, which u18h counts as one decision rather than 20 steps.",
+		"inventoryComplete": "The complete accommodation inventory for this cell is: the 19 manual-migration-steps in packages/cli/src/fixture/angular-super-productivity-u18h-run.ts, and the one payload file fixtures/angular-super-productivity-v2-13-15/accommodations/electron.service.ts redirected at 20 modules. u18i adds nothing to it. Every edit this round made is capability-driven or, in the @ngx-formly case, a correction to a cell reading; none of it is an accommodation and none of it is application-shaped.",
+		"whyZeroIsNotACelebration": "The four families this round met all had derivable answers, which is a property of the families and not of the round. u18h's nineteen are still nineteen and the bill for migrating this application is still what it was."
+	},
+	"applicationFilesChanged": {
+		"countingMethod": "Whole-tree, per the standing ruling: every file under the application root except node_modules/, dist/, .angular/, coverage/ and .git/, compared by SHA-256 against the pristine extracted tree at commit 2943c5c4f13c3ce4dece0abf4f9c39739dde4192.",
+		"wholeTree": {
+			"pristineFiles": 967,
+			"appliedFiles": 966,
+			"differingInBoth": 87,
+			"filesAdded": 2,
+			"addedFiles": [
+				"package-lock.json",
+				"src/app/core/electron/electron.service.ts"
+			],
+			"filesRemoved": 3,
+			"removedFiles": [
+				"src/tslint.json",
+				"tslint.json",
+				"yarn.lock"
+			],
+			"totalDifferences": 92,
+			"differingOutsideSrc": [
+				"angular.json",
+				"package.json",
+				"tsconfig.json",
+				"package-lock.json",
+				"tslint.json",
+				"yarn.lock"
+			]
+		},
+		"previousTotalDifferences": 89,
+		"thisUnit": {
+			"filesWritten": 5,
+			"capabilityDriven": 4,
+			"capabilityDrivenFiles": [
+				"src/styles/themes.scss",
+				"src/environments/environment.ts",
+				"src/environments/environment.prod.ts",
+				"src/styles/font/material-icons.scss"
+			],
+			"accommodationDriven": 0,
+			"accommodationDrivenFiles": [],
+			"closureCorrectionFiles": [
+				"package.json",
+				"package-lock.json"
+			],
+			"newlyDiffering": 3,
+			"separation": "Four of the five files this unit wrote were written by a capability in packages/frameworks, each from a reading of the installed tree; the fifth pair — package.json and its lock — is the closure correction, which is a manifest fact and not a source edit. Zero accommodations. The whole-tree total moves 89 → 92 rather than by five, because package.json and src/styles/themes.scss were already differing before this round ran."
+		}
+	},
+	"build": {
+		"command": "node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng.js build --configuration production",
+		"logs": [
+			{
+				"log": ".versionless/stage/angular-super-productivity-v2-13-15-u18b/build-8.log",
+				"exitStatus": 1,
+				"errors": 4,
+				"meaning": "After the @ngx-formly correction and the first two capabilities. The seven formly failures, the two mixin failures and the one JSON failure are all gone; what is left is the fourth family, reported 4 times, which nothing had ever been able to reach before."
+			},
+			{
+				"log": ".versionless/stage/angular-super-productivity-v2-13-15-u18b/build-9.log",
+				"exitStatus": 0,
+				"errors": 0,
+				"warnings": 17,
+				"artifactsEmitted": 58,
+				"seconds": "Time: 8817ms as the builder reported it",
+				"meaning": "Green."
+			},
+			{
+				"log": ".versionless/stage/angular-super-productivity-v2-13-15-u18b/build-10.log",
+				"exitStatus": 0,
+				"errors": 0,
+				"artifactsEmitted": 58,
+				"meaning": "The second green build, run for the determinism comparison."
+			}
+		],
+		"convergence": "269 → 110 → 57 → 33 → 30 → 27 → 0 source diagnostics across u18c–u18h, then 10 → 4 → 0 bundler errors across u18i's three builds.",
+		"initialBundles": [
+			{
+				"name": "main",
+				"file": "main.4b09f10ca40259f4.js",
+				"rawSize": "3.01 MB",
+				"transfer": "582.21 kB"
+			},
+			{
+				"name": "styles",
+				"file": "styles.796d2cf2d0763557.css",
+				"rawSize": "198.36 kB",
+				"transfer": "15.84 kB"
+			},
+			{
+				"name": "polyfills",
+				"file": "polyfills.cf6f5be77fa16c3c.js",
+				"rawSize": "157.71 kB",
+				"transfer": "48.99 kB"
+			},
+			{
+				"name": "runtime",
+				"file": "runtime.1b1dca06d2d2b7a1.js",
+				"rawSize": "1.75 kB",
+				"transfer": "929 bytes"
+			}
+		],
+		"initialTotal": {
+			"rawSize": "3.36 MB",
+			"transfer": "647.95 kB"
+		},
+		"warningsNotErrors": "17 warnings, none of them a demand this round is answering: eight are `part of the TypeScript compilation but it's unused`, which is a tsconfig include breadth statement, one is the file-saver CommonJS bailout, and the rest are sass deprecation notices from the stylesheet pipeline."
+	},
+	"determinism": {
+		"runs": 2,
+		"comparison": "build-9 and build-10, whole emitted tree, SHA-256 per file.",
+		"files": 58,
+		"identical": 57,
+		"differing": [
+			"ngsw.json"
+		],
+		"cause": "ngsw.json differs in exactly one field, `timestamp` — 1786502255097 against 1786502276848, twenty-one seconds apart, which is the wall clock of the two builds. Every other key of the two manifests is byte-identical, including every hash it lists, and every one of the other 57 emitted files including the hashed main, styles, polyfills and runtime bundles is byte-identical.",
+		"sassRandomFiles": "None differed. The Sass-random instability the era baseline recorded did not appear in either of these two runs; that is what these two runs show and not a claim that it cannot appear.",
+		"verdict": "Deterministic modulo one recorded clock field."
+	},
+	"logicalNameParity": {
+		"method": "Emitted file names with their content hashes elided, compared as sets against the era lane's 64-file inventory in u18-era-baseline.json.",
+		"eraLogicalNames": 64,
+		"migratedLogicalNames": 58,
+		"common": 58,
+		"inMigratedNotInEra": [],
+		"inEraNotInMigrated": [
+			"lz.worker.js",
+			"lz.worker.js.map",
+			"polyfills-es5.js",
+			"polyfills-es5.js.map",
+			"reminder.worker.js",
+			"reminder.worker.js.map"
+		],
+		"verdict": "The migrated lane emits a strict subset. It invents no artifact the era lane did not emit, and it is missing six logical names in two groups.",
+		"polyfillsEs5": "polyfills-es5.js and its map are differential loading, which the Angular 13 line removed from the browser builder. Their absence is the framework's decision and is expected of any Angular 16 build.",
+		"webWorkers": {
+			"missing": [
+				"lz.worker.js",
+				"lz.worker.js.map",
+				"reminder.worker.js",
+				"reminder.worker.js.map"
+			],
+			"measured": "The two application web workers are not emitted as chunks. angular.json still carries webWorkerTsConfig: tsconfig.worker.json and the two tsconfig files are still in the tree, so the workspace still declares them; what has changed is the call. Both sites write the era form — `new Worker('./lz.worker', {type: 'module'})` at src/app/core/compression/compression.service.ts:18 and `new Worker('./reminder.worker', …)` at src/app/features/reminder/reminder.service.ts:52 — and webpack 5 recognises a worker only through `new Worker(new URL('./x.worker', import.meta.url), …)`. A plain string is an ordinary argument to it, so no chunk is emitted and no error is reported: the build is green and the two workers would 404 at runtime.",
+			"status": "A new family, measured and not closed. It is not a build demand — it costs no error and no warning — and it is the first thing this cell has found that a green build does not surface. It is stated here rather than acted on because acting on it is a source transform this unit did not budget, and because a transform that rewrites a Worker construction should be proven against the workspace's own webWorkerTsConfig rather than pattern-matched.",
+			"derivableInPrinciple": "Probably. The reading would be: the workspace declares webWorkerTsConfig, the argument is a string literal resolving to a .worker.ts the tree carries, and the options object already says type: 'module'. That is enough to write the URL form. Nothing here establishes it."
+		}
+	},
+	"notEstablished": [
+		"Whether the application runs. The build emits 58 artifacts and nothing here loaded one in a browser.",
+		"Whether the two web workers work. They are measured as not emitted, above, and the web lane is green without them, which means the build cannot tell anyone.",
+		"Whether the 19 accommodations u18h recorded are behaviour-preserving beyond what each entry claims. This round changed none of them and re-measured none of them; the build being green establishes that they compile and bundle, which they already did.",
+		"Whether removing NgxElectronModule leaves the desktop lane working. Still not built here and still not measured.",
+		"Whether the emitted bundles behave as the era bundles did. Logical-name parity is a comparison of names; not one byte of the two lanes' JavaScript was compared, and the era lane is Angular 8 output where this is Angular 16 output, so a byte comparison would not have meant anything either.",
+		"Whether @ngx-formly 6.3.12 behaves as 7.1.0 would have. The correction is a linker-compatibility reading and a type-surface recheck. The two components that extend FieldType compile and bundle against it; nothing here renders a form.",
+		"Whether the Angular 16 ecosystem table's other entries need the peer-strictness refinement. Only @ngx-formly was re-read under it. An entry without a build stamp means its peers discriminated, not that its stamp was checked and found fine."
+	]
+}

@@ -3,7 +3,12 @@ import {
 	ANGULAR_16_BROWSER_CELL,
 	alignAngularPackageManifest,
 	alignedVersionRange,
+	buildStampContradictions,
+	cellAcceptsBuildStamp,
 	ecosystemDispositionOf,
+	majorOf,
+	type AngularBuildStamp,
+	type AngularTargetCell,
 } from '../src/angular-target-cell.ts';
 
 describe('Angular target cell', () => {
@@ -163,5 +168,67 @@ describe('Angular target cell ecosystem table', () => {
 		expect(ecosystemDispositionOf('tslint', ANGULAR_16_BROWSER_CELL)?.kind).toBe('no-successor');
 		expect(ecosystemDispositionOf('lodash', ANGULAR_16_BROWSER_CELL)).toBeNull();
 		expect(alignedVersionRange('tslint', ANGULAR_16_BROWSER_CELL)).toBeNull();
+	});
+});
+
+describe('the peer-strictness refinement', () => {
+	it('accepts a stamp at or below the cell’s major and refuses one above it', () => {
+		expect(majorOf('16.2')).toBe(16);
+		expect(majorOf('')).toBeNull();
+		const thirteen: AngularBuildStamp = Object.freeze({
+			libraryVersion: '6.3.12',
+			compiledWith: '13.3.12',
+			readFrom: 'https://unpkg.com/@ngx-formly/core@6.3.12/fesm2020/ngx-formly-core.mjs',
+		});
+		const eighteen: AngularBuildStamp = Object.freeze({
+			libraryVersion: '7.1.0',
+			compiledWith: '18.2.13',
+			readFrom: 'https://unpkg.com/@ngx-formly/core@7.1.0/fesm2022/ngx-formly-core.mjs',
+		});
+		expect(cellAcceptsBuildStamp('16.2', thirteen)).toBe(true);
+		expect(cellAcceptsBuildStamp('16.2', eighteen)).toBe(false);
+		expect(cellAcceptsBuildStamp('16.2', { ...thirteen, compiledWith: '16.2.12' })).toBe(true);
+		expect(cellAcceptsBuildStamp('16.2', { ...thirteen, compiledWith: 'unknown' })).toBe(false);
+	});
+
+	it('finds no contradiction between the Angular 16 table’s stamps and its ranges', () => {
+		expect(buildStampContradictions(ANGULAR_16_BROWSER_CELL)).toEqual([]);
+	});
+
+	it('reports an aligned line the cell’s linker would refuse', () => {
+		const broken: AngularTargetCell = Object.freeze({
+			...ANGULAR_16_BROWSER_CELL,
+			ecosystemPackages: Object.freeze({
+				'@example/lib': Object.freeze({
+					kind: 'aligned',
+					range: '^7.1.0',
+					fact: 'peers do not discriminate',
+					buildStamp: Object.freeze({
+						libraryVersion: '7.1.0',
+						compiledWith: '18.2.13',
+						readFrom: 'https://unpkg.com/@example/lib@7.1.0/fesm2022/lib.mjs',
+					}),
+				}),
+			}),
+		});
+		expect(buildStampContradictions(broken)).toEqual([
+			'@example/lib: aligned to ^7.1.0, but 7.1.0 is stamped Angular 18.2.13, which Angular 16.2 does not link.',
+		]);
+	});
+
+	it('carries the @ngx-formly correction as a reading, not an assertion', () => {
+		const core = ANGULAR_16_BROWSER_CELL.ecosystemPackages['@ngx-formly/core'];
+		const material = ANGULAR_16_BROWSER_CELL.ecosystemPackages['@ngx-formly/material'];
+		expect(core?.kind).toBe('aligned');
+		expect(material?.kind).toBe('aligned');
+		if (core?.kind !== 'aligned' || material?.kind !== 'aligned') return;
+		expect(core.range).toBe('^6.3.12');
+		expect(material.range).toBe('^6.3.12');
+		expect(core.buildStamp?.compiledWith).toBe('13.3.12');
+		expect(core.excludedByBuildStamp?.map((stamp) => stamp.libraryVersion)).toEqual([
+			'7.1.0',
+			'7.0.1',
+			'7.0.0',
+		]);
 	});
 });

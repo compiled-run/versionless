@@ -30,3 +30,6 @@ export * from './removed-entry-point-symbol-successor.ts';
 export * from './synthetic-default-import-interop.ts';
 export * from './promise-executor-void-parameter.ts';
 export * from './subject-void-type-argument.ts';
+export * from './sass-mixin-hyphenation-successor.ts';
+export * from './json-module-named-import.ts';
+export * from './stylesheet-url-rebase.ts';
