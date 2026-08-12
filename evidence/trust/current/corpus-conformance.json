@@ -1,8 +1,8 @@
 {
   "schemaVersion": "versionless.corpus-conformance.v1",
   "summary": {
-    "verticals": 19,
-    "sourceApplications": 11,
+    "verticals": 20,
+    "sourceApplications": 12,
     "designatedPilotsVerified": 0
   },
   "verticals": [
@@ -1037,6 +1037,70 @@
         }
       },
       "designatedPilot": false
+    },
+    {
+      "id": "angular-super-productivity-v2-13-15",
+      "application": "angular-super-productivity",
+      "framework": "angular",
+      "receiptPath": "evidence/runs/witness-angular-super-productivity-v2-13-15/receipt.json",
+      "receiptDigest": "5d8ed797897b7ad05bda5daf2a15c1634aec5252bd3addbe3b31b5a3f327e365",
+      "canonicalReceipts": [
+        {
+          "path": "evidence/runs/angular-super-productivity-v2-13-15/u21-era-baseline-digest-correction.json",
+          "schemaVersion": "versionless.angular-super-productivity-era-baseline-digest-correction.v1",
+          "digest": "dd695e78c6d94bbcf64e595fff170b3a7666e12af5a55d12ffc5d7f2c1985b96",
+          "sha256": "39cef85b3c33a1aace8ed6309cc3707b50d51c85345588236a2bf5f5593b8f18"
+        },
+        {
+          "path": "evidence/runs/angular-super-productivity-v2-13-15/u20c2g-dist25-rebind-lane.json",
+          "schemaVersion": "versionless.angular-super-productivity-dist25-rebind-lane.v1",
+          "digest": "18c1ced0f17b319cd3d4405ad082a46f9f842c678d02749f72fe7214f2aea5a3",
+          "sha256": "c1b136972bcffb2e46ccbde1a5ea5cdb51900cdfa2d5306dfa0e4b85e7210c95"
+        }
+      ],
+      "runtime": "node-12.14.1-to-node-16.20.2",
+      "bundler": "angular-cli-8.3.4-webpack-4-to-angular-16.2-browser-builder",
+      "track": "production-readiness-direct-witness-angular8-viewengine-to-angular16-browser-builder",
+      "locality": {
+        "mode": "offline",
+        "scope": "process-scoped",
+        "osWideIsolation": false,
+        "successfulNonLoopback": 0,
+        "mockedNonLoopbackSeams": 1
+      },
+      "browserProof": "verified-direct-witness",
+      "browserRuns": 4,
+      "behaviorDigest": "d90ec2ca7e8ea609845518300d0b1e7d9f4908100bdabcc15b44879931dd380a",
+      "serviceWorker": "declared-real-ngsw-in-both-lanes-settled-state-measured-at-witness-time",
+      "serviceWorkerMasked": false,
+      "scrollSurface": "measured-no-overflowing-document",
+      "determinism": {
+        "baseline": "measured-not-byte-stable-across-rebuilds",
+        "migrated": "measured-deterministic-modulo-the-service-worker-manifest-timestamp"
+      },
+      "declaredDifferences": [
+        {
+          "label": "header-icon-button",
+          "why": "the era lane resolves the button through Angular Material 8’s typography config; the MDC-based button in 16.2 sets no family on the host at all, so the element falls through to the user-agent default"
+        },
+        {
+          "label": "document-body",
+          "why": "Angular Material’s default typography configuration dropped `\"Helvetica Neue\"` from the family list between 8.2 and 16.2"
+        }
+      ],
+      "productionReadiness": "verified-direct-witness",
+      "readinessScoreboard": {
+        "angularLineage": {
+          "counted": false,
+          "ready": 1,
+          "total": 4
+        },
+        "overall": {
+          "ready": 3,
+          "total": 12
+        }
+      },
+      "designatedPilot": false
     }
   ],
   "applications": [
@@ -1584,6 +1648,80 @@
         "scrollSurface": "measured-no-overflowing-document",
         "locality": "process-scoped-not-os-wide"
       }
+    },
+    {
+      "id": "angular-super-productivity",
+      "source": {
+        "repository": "https://github.com/super-productivity/super-productivity",
+        "ref": "refs/tags/v2.13.15",
+        "tagKind": "annotated — a tag object exists and is unsigned; the commit is unsigned",
+        "revision": "2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+        "rootTreeSha": "c609e059de5c000e5a95799d33427b4c1df04d1e",
+        "archiveSha256": "dead2f5334350459f930f5d5235322e5af38e577c79557d3370e497bf15f24eb",
+        "archiveBytes": 4072238,
+        "frontendRoot": ".",
+        "license": "MIT",
+        "licenseSha256": "2e279de19632b5694d24b0ac06fd5b837ec487bf821302d9ce195379850a5fcb"
+      },
+      "verticals": [
+        "angular-super-productivity-v2-13-15"
+      ],
+      "conformance": {
+        "browserProof": "direct-witness-verified",
+        "runs": 4,
+        "behaviorDigest": "d90ec2ca7e8ea609845518300d0b1e7d9f4908100bdabcc15b44879931dd380a",
+        "mutation": "pass",
+        "mutationRestoration": "byte-identical",
+        "serviceWorker": "declared-real-ngsw-in-both-lanes-settled-state-measured-at-witness-time",
+        "serviceWorkerMasked": false,
+        "persistence": {
+          "backend": "none",
+          "compression": "lz-string, in one of the application’s two web workers",
+          "databaseName": "SUP",
+          "driverPreference": [
+            "INDEXEDDB",
+            "WEBSQL",
+            "LOCALSTORAGE"
+          ],
+          "localStorageKeyPrefix": "SUP_",
+          "service": "the application’s own DatabaseService over localforage, plus a namespaced localStorage surface",
+          "store": "browser-indexed-db-through-localforage",
+          "storeName": "SUP_STORE",
+          "stubbed": false
+        },
+        "determinism": {
+          "baseline": "measured-not-byte-stable-across-rebuilds",
+          "migrated": "measured-deterministic-modulo-the-service-worker-manifest-timestamp"
+        },
+        "declaredDifferences": [
+          {
+            "label": "header-icon-button",
+            "why": "the era lane resolves the button through Angular Material 8’s typography config; the MDC-based button in 16.2 sets no family on the host at all, so the element falls through to the user-agent default"
+          },
+          {
+            "label": "document-body",
+            "why": "Angular Material’s default typography configuration dropped `\"Helvetica Neue\"` from the family list between 8.2 and 16.2"
+          }
+        ],
+        "readinessScoreboard": {
+          "angularLineage": {
+            "counted": false,
+            "ready": 1,
+            "total": 4
+          },
+          "overall": {
+            "ready": 3,
+            "total": 12
+          }
+        }
+      },
+      "boundaries": {
+        "track": "production-readiness-direct-witness-angular8-viewengine-to-angular16-browser-builder",
+        "designatedPilot": false,
+        "genericAngularSupport": "not-claimed",
+        "scrollSurface": "measured-no-overflowing-document",
+        "locality": "process-scoped-not-os-wide"
+      }
     }
   ],
   "frameworkLanes": [
@@ -1739,6 +1877,14 @@
           "witnessReceipt": "evidence/runs/witness-angular-tiny-translator-v0-12-0/receipt.json",
           "counted": false,
           "reason": "Not counted pending Judge audit: the browser proof is verified and retained, but its own receipt declares counted:false against the Angular lineage — an era-defect service-worker registration is carried across the migration and stays recorded rather than masked — so it stays visible without reaching the Angular numerator."
+        },
+        {
+          "cell": "angular-super-productivity-v2-13-15",
+          "application": "angular-super-productivity",
+          "lineage": "angular",
+          "witnessReceipt": "evidence/runs/witness-angular-super-productivity-v2-13-15/receipt.json",
+          "counted": false,
+          "reason": "Not counted pending Judge audit: the browser proof is verified and retained, but its own receipt declares counted:false against the Angular lineage — the lift carries declared cross-lane appearance differences and an unseeded Sass random() build instability across the supersede boundary, recorded rather than masked — so it stays visible without reaching the Angular numerator."
         }
       ],
       "holdouts": [
@@ -1779,6 +1925,6 @@
   },
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "258477f40cb03631c21913cc5814bbfcdf5372775911f9c3541792e1018b4d4c"
+    "canonicalDigest": "f0087f090c98c344561676408e7a8d4d3f63edf1cd6fde23f74d5682d7f226db"
   }
 }

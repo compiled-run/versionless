@@ -100,7 +100,8 @@ function prepublicationFixtures(fixtures: Array<Record<string, unknown>>) {
 			fixture.id !== 'witness-react-memos-v0-1-3' &&
 			fixture.id !== 'witness-next-killedbygoogle-v3-0-0' &&
 			fixture.id !== 'witness-react-linkfree-v0-72-0' &&
-			fixture.id !== 'witness-angular-tiny-translator',
+			fixture.id !== 'witness-angular-tiny-translator' &&
+			fixture.id !== 'witness-angular-super-productivity',
 	);
 }
 
@@ -204,16 +205,16 @@ async function rebindPhonecatViteArtifact(
 }
 
 describe('canonical corpus conformance', () => {
-	it('derives the canonical nineteen verticals as eleven narrowly scoped source applications', async () => {
+	it('derives the canonical twenty verticals as twelve narrowly scoped source applications', async () => {
 		const result = await analyzeCorpusConformance({ rootDir: root });
 		expect(verifyCorpusConformanceDigest(result)).toBe(result.integrity.canonicalDigest);
 		expect(result.summary).toEqual({
-			verticals: 19,
-			sourceApplications: 11,
+			verticals: 20,
+			sourceApplications: 12,
 			designatedPilotsVerified: 0,
 		});
-		expect(result.verticals).toHaveLength(19);
-		expect(result.applications).toHaveLength(11);
+		expect(result.verticals).toHaveLength(20);
+		expect(result.applications).toHaveLength(12);
 		expect(result.applications[0]).toMatchObject({
 			id: 'react-boilerplate',
 			boundaries: {
@@ -334,7 +335,7 @@ describe('canonical corpus conformance', () => {
 			reactPapercupsAggregateMember(verified.receipt.canonicalReceipt.canonicalDigest),
 		);
 		expect(witnessMember).toEqual(witnessReactPapercupsAggregateMember(verified.digest));
-		expect(result.verticals.at(-8)).toEqual({
+		expect(result.verticals.at(-9)).toEqual({
 			id: 'react-papercups-v1-0-0',
 			application: 'papercups',
 			framework: 'react',
@@ -364,7 +365,7 @@ describe('canonical corpus conformance', () => {
 			readinessScoreboard: { reactLineage: { ready: 1, total: 4, counted: false }, overall: { ready: 3, total: 12 } },
 			designatedPilot: false,
 		});
-		expect(result.applications.at(-7)).toEqual({
+		expect(result.applications.at(-8)).toEqual({
 			id: 'papercups',
 			source: {
 				repository: 'https://github.com/papercups-io/papercups',
@@ -421,7 +422,7 @@ describe('canonical corpus conformance', () => {
 			reactHospitalrunAggregateMember(verified.receipt.canonicalReceipt.canonicalDigest),
 		);
 		expect(witnessMember).toEqual(witnessReactHospitalrunAggregateMember(verified.digest));
-		expect(result.verticals.at(-7)).toEqual({
+		expect(result.verticals.at(-8)).toEqual({
 			id: 'react-hospitalrun',
 			application: 'react-hospitalrun',
 			framework: 'react',
@@ -456,7 +457,7 @@ describe('canonical corpus conformance', () => {
 			},
 			designatedPilot: false,
 		});
-		expect(result.applications.at(-6)).toEqual({
+		expect(result.applications.at(-7)).toEqual({
 			id: 'react-hospitalrun',
 			source: {
 				repository: 'https://github.com/HospitalRun/hospitalrun-frontend',
@@ -521,7 +522,7 @@ describe('canonical corpus conformance', () => {
 			aggregate.fixtures.filter((item) => String(item.id).includes('factoriolab')),
 		).toHaveLength(1);
 		expect(witnessMember).toEqual(witnessAngularFactoriolabAggregateMember(verified.digest));
-		expect(result.verticals.at(-6)).toEqual({
+		expect(result.verticals.at(-7)).toEqual({
 			id: 'angular-factoriolab',
 			application: 'angular-factoriolab',
 			framework: 'angular',
@@ -555,8 +556,8 @@ describe('canonical corpus conformance', () => {
 			},
 			designatedPilot: false,
 		});
-		expect(result.verticals.at(-6)).not.toHaveProperty('migrationTrack');
-		expect(result.applications.at(-5)).toEqual({
+		expect(result.verticals.at(-7)).not.toHaveProperty('migrationTrack');
+		expect(result.applications.at(-6)).toEqual({
 			id: 'angular-factoriolab',
 			source: {
 				repository: 'https://github.com/factoriolab/factoriolab',
@@ -631,7 +632,7 @@ describe('canonical corpus conformance', () => {
 		).toHaveLength(1);
 		expect(verified.receipt.canonicalReceipts).toHaveLength(4);
 		expect(witnessMember).toEqual(witnessAngularJiraCloneAggregateMember(verified.digest));
-		expect(result.verticals.at(-5)).toEqual({
+		expect(result.verticals.at(-6)).toEqual({
 			id: 'angular-jira-clone',
 			application: 'angular-jira-clone',
 			framework: 'angular',
@@ -669,8 +670,8 @@ describe('canonical corpus conformance', () => {
 			},
 			designatedPilot: false,
 		});
-		expect(result.verticals.at(-5)).not.toHaveProperty('migrationTrack');
-		expect(result.applications.at(-4)).toEqual({
+		expect(result.verticals.at(-6)).not.toHaveProperty('migrationTrack');
+		expect(result.applications.at(-5)).toEqual({
 			id: 'angular-jira-clone',
 			source: {
 				repository: 'https://github.com/trungvose/jira-clone-angular',
@@ -745,7 +746,7 @@ describe('canonical corpus conformance', () => {
 		expect(
 			aggregate.fixtures.find((item) => item.receipt === WITNESS_REACT_MEMOS_RECEIPT_PATH),
 		).toEqual(witnessReactMemosAggregateMember(verified.digest));
-		expect(result.verticals.at(-4)).toEqual({
+		expect(result.verticals.at(-5)).toEqual({
 			id: 'react-memos-v0-1-3',
 			application: 'react-memos',
 			framework: 'react',
@@ -791,9 +792,9 @@ describe('canonical corpus conformance', () => {
 		// The application never registers a service worker and the receipt
 		// measures none, so the row emits no service-worker field rather than a
 		// manufactured one.
-		expect(result.verticals.at(-4)).not.toHaveProperty('serviceWorker');
-		expect(result.verticals.at(-4)).not.toHaveProperty('migrationTrack');
-		expect(result.applications.at(-3)).toEqual({
+		expect(result.verticals.at(-5)).not.toHaveProperty('serviceWorker');
+		expect(result.verticals.at(-5)).not.toHaveProperty('migrationTrack');
+		expect(result.applications.at(-4)).toEqual({
 			id: 'react-memos',
 			source: {
 				repository: 'https://github.com/usememos/memos',
@@ -858,7 +859,7 @@ describe('canonical corpus conformance', () => {
 		expect((earlier?.source as Record<string, unknown>).revision).toBe(
 			verified.receipt.source.revision,
 		);
-		expect(result.verticals.at(-3)).toEqual({
+		expect(result.verticals.at(-4)).toEqual({
 			id: 'next-killedbygoogle-v3-0-0',
 			application: 'killedbygoogle',
 			framework: 'next',
@@ -902,7 +903,7 @@ describe('canonical corpus conformance', () => {
 			},
 			designatedPilot: false,
 		});
-		expect(result.verticals.at(-3)).not.toHaveProperty('migrationTrack');
+		expect(result.verticals.at(-4)).not.toHaveProperty('migrationTrack');
 		// The proof is a second vertical on ONE immutable source, not an
 		// eleventh source application: the same repository at the same revision
 		// with the same archive digest is not two applications, so the summary
@@ -978,7 +979,7 @@ describe('canonical corpus conformance', () => {
 		expect(
 			aggregate.fixtures.find((item) => item.receipt === WITNESS_REACT_LINKFREE_RECEIPT_PATH),
 		).toEqual(witnessReactLinkfreeAggregateMember(verified.digest));
-		expect(result.verticals.at(-2)).toEqual({
+		expect(result.verticals.at(-3)).toEqual({
 			id: 'react-linkfree-v0-72-0',
 			application: 'react-linkfree',
 			framework: 'react',
@@ -1020,8 +1021,8 @@ describe('canonical corpus conformance', () => {
 			},
 			designatedPilot: false,
 		});
-		expect(result.verticals.at(-2)).not.toHaveProperty('migrationTrack');
-		expect(result.applications.at(-2)).toEqual({
+		expect(result.verticals.at(-3)).not.toHaveProperty('migrationTrack');
+		expect(result.applications.at(-3)).toEqual({
 			id: 'react-linkfree',
 			source: {
 				repository: 'https://github.com/EddieHubCommunity/BioDrop',
@@ -1099,6 +1100,7 @@ describe('canonical corpus conformance', () => {
 			'next-killedbygoogle-v3-0-0',
 			'react-linkfree-v0-72-0',
 			'angular-tiny-translator-v0-12-0',
+			'angular-super-productivity-v2-13-15',
 		]);
 		// The newest verticals are visible and uncounted: their Witness receipts
 		// are verified, they carry a reason, and no lineage numerator moves
@@ -1108,6 +1110,7 @@ describe('canonical corpus conformance', () => {
 			'next-killedbygoogle-v3-0-0',
 			'react-linkfree-v0-72-0',
 			'angular-tiny-translator-v0-12-0',
+			'angular-super-productivity-v2-13-15',
 		])
 			expect(ledger.find((entry) => entry.cell === cell)).toMatchObject({ counted: false });
 		expect((readiness.reactLineage as { ready: number }).ready).toBe(3);

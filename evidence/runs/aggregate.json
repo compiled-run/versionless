@@ -251,6 +251,16 @@
       "result": "pass",
       "receipt": "evidence/runs/witness-angular-tiny-translator-v0-12-0/receipt.json",
       "digest": "65b0a976823010e224ee76058e14d4dfee4ac643c8a32826128968a754c083ca"
+    },
+    {
+      "id": "witness-angular-super-productivity",
+      "framework": "angular",
+      "track": "production-readiness-direct-witness-angular8-viewengine-to-angular16-browser-builder",
+      "bundler": "angular-cli-8.3.4-webpack-4-to-angular-16.2-browser-builder",
+      "runtime": "node-12.14.1-to-node-16.20.2",
+      "result": "pass",
+      "receipt": "evidence/runs/witness-angular-super-productivity-v2-13-15/receipt.json",
+      "digest": "5d8ed797897b7ad05bda5daf2a15c1634aec5252bd3addbe3b31b5a3f327e365"
     }
   ],
   "holdouts": [

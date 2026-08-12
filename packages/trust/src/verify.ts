@@ -21,6 +21,7 @@ import { REACT_MEMOS_FIXTURE } from '../../core/src/receipts/witness-react-memos
 import { NEXT_KILLEDBYGOOGLE_V3_FIXTURE } from '../../core/src/receipts/witness-next-killedbygoogle-v3.ts';
 import { REACT_LINKFREE_FIXTURE } from '../../core/src/receipts/witness-react-linkfree.ts';
 import { ANGULAR_TINY_TRANSLATOR_FIXTURE } from '../../core/src/receipts/witness-angular-tiny-translator.ts';
+import { ANGULAR_SUPER_PRODUCTIVITY_FIXTURE } from '../../core/src/receipts/witness-angular-super-productivity.ts';
 import {
 	SCRIPT_SURFACE_SCHEMA,
 	verifyScriptSurface,
@@ -37,6 +38,8 @@ import {
 	ANGULAR_FACTORIOLAB_TRUST_RECEIPTS,
 	ANGULAR_JIRA_CLONE_TRUST_MATRIX_CELLS,
 	ANGULAR_JIRA_CLONE_TRUST_RECEIPTS,
+	ANGULAR_SUPER_PRODUCTIVITY_TRUST_MATRIX_CELLS,
+	ANGULAR_SUPER_PRODUCTIVITY_TRUST_RECEIPTS,
 	ANGULAR_TINY_TRANSLATOR_TRUST_MATRIX_CELLS,
 	ANGULAR_TINY_TRANSLATOR_TRUST_RECEIPTS,
 	NEXT_KILLEDBYGOOGLE_V3_TRUST_MATRIX_CELLS,
@@ -595,7 +598,10 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 		runtimeObservationControl.pciCompliance !== 'not-claimed'
 	)
 		throw new Error('Controls contain an unsupported enterprise assurance claim');
-	const tinyTranslatorIntegrated = transaction.kind === 'angular-tiny-translator-browser-proof';
+	const superProductivityIntegrated =
+		transaction.kind === 'angular-super-productivity-browser-proof';
+	const tinyTranslatorIntegrated =
+		transaction.kind === 'angular-tiny-translator-browser-proof' || superProductivityIntegrated;
 	const linkfreeIntegrated =
 		transaction.kind === 'react-linkfree-browser-proof' || tinyTranslatorIntegrated;
 	const killedbygoogleV3Integrated =
@@ -623,7 +629,8 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 				(memosIntegrated ? 1 : 0) +
 				(killedbygoogleV3Integrated ? 1 : 0) +
 				(linkfreeIntegrated ? 1 : 0) +
-				(tinyTranslatorIntegrated ? 1 : 0)
+				(tinyTranslatorIntegrated ? 1 : 0) +
+				(superProductivityIntegrated ? 1 : 0)
 	)
 		throw new Error('Corpus matrix cell count does not match transaction state');
 	if (
@@ -691,11 +698,20 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 		);
 	if (
 		tinyTranslatorIntegrated &&
+		!superProductivityIntegrated &&
 		(manifest.receipts.length !== ANGULAR_TINY_TRANSLATOR_TRUST_RECEIPTS ||
 			matrix.cells.length !== ANGULAR_TINY_TRANSLATOR_TRUST_MATRIX_CELLS)
 	)
 		throw new Error(
 			'Angular TinyTranslator browser proof must pin exactly twenty-six receipts and twenty-four matrix cells',
+		);
+	if (
+		superProductivityIntegrated &&
+		(manifest.receipts.length !== ANGULAR_SUPER_PRODUCTIVITY_TRUST_RECEIPTS ||
+			matrix.cells.length !== ANGULAR_SUPER_PRODUCTIVITY_TRUST_MATRIX_CELLS)
+	)
+		throw new Error(
+			'Angular Super Productivity browser proof must pin exactly twenty-seven receipts and twenty-five matrix cells',
 		);
 	const matrixSource = asRecord(matrix.derivedFrom, 'corpus matrix derivation');
 	if (
@@ -1208,6 +1224,58 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 			);
 	} else if (tinyTranslatorCell !== undefined || tinyTranslatorVertical !== undefined)
 		throw new Error('Angular TinyTranslator evidence is claimed outside its transaction state');
+	const superProductivityCell = cells.get(ANGULAR_SUPER_PRODUCTIVITY_FIXTURE);
+	const superProductivityVertical = emittedConformance.verticals.find(
+		(value) => asRecord(value, 'corpus vertical').id === ANGULAR_SUPER_PRODUCTIVITY_FIXTURE,
+	);
+	if (superProductivityIntegrated) {
+		const row = asRecord(
+			superProductivityVertical,
+			'Angular Super Productivity conformance vertical',
+		);
+		const superProductivityApplication = emittedConformance.applications.find(
+			(value) => asRecord(value, 'corpus application').id === row.application,
+		);
+		if (
+			superProductivityCell === undefined ||
+			superProductivityApplication === undefined ||
+			canonicalize(
+				asRecord(superProductivityApplication, 'Angular Super Productivity application')
+					.verticals,
+			) !== canonicalize([ANGULAR_SUPER_PRODUCTIVITY_FIXTURE]) ||
+			superProductivityCell.state !== 'verified' ||
+			superProductivityCell.scope !==
+				'fixture-specific-angular-cli-8-3-4-webpack-4-to-angular-16.2-browser-builder' ||
+			superProductivityCell.genericAngularSupport !== 'not-claimed' ||
+			superProductivityCell.framework !== 'angular' ||
+			superProductivityCell.framework !== row.framework ||
+			superProductivityCell.designatedPilot !== row.designatedPilot ||
+			superProductivityCell.runtime !== row.runtime ||
+			superProductivityCell.bundler !== row.bundler ||
+			superProductivityCell.track !== row.track ||
+			superProductivityCell.browserProof !== row.browserProof ||
+			superProductivityCell.serviceWorker !== row.serviceWorker ||
+			superProductivityCell.serviceWorkerMasked !== row.serviceWorkerMasked ||
+			row.serviceWorkerMasked !== false ||
+			superProductivityCell.scrollSurface !== row.scrollSurface ||
+			canonicalize(superProductivityCell.determinism) !== canonicalize(row.determinism) ||
+			canonicalize(superProductivityCell.declaredDifferences) !==
+				canonicalize(row.declaredDifferences) ||
+			superProductivityCell.productionReadiness !== row.productionReadiness ||
+			canonicalize(superProductivityCell.locality) !== canonicalize(row.locality) ||
+			canonicalize(superProductivityCell.readinessScoreboard) !==
+				canonicalize(row.readinessScoreboard) ||
+			canonicalize(row.readinessScoreboard) !==
+				canonicalize({
+					angularLineage: { ready: 1, total: 4, counted: false },
+					overall: { ready: 3, total: 12 },
+				})
+		)
+			throw new Error(
+				'Angular Super Productivity matrix cell is not derived from corpus conformance',
+			);
+	} else if (superProductivityCell !== undefined || superProductivityVertical !== undefined)
+		throw new Error('Angular Super Productivity evidence is claimed outside its transaction state');
 	const phonecat = cells.get('angular-phonecat');
 	if (
 		phonecat?.framework !== 'angularjs' ||
@@ -1356,6 +1424,13 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 				)
 			: report.includes(
 					'tiny-translator Angular CLI 1.5.4→Angular 16.2 browser-builder direct-Witness browser proof',
+				)) ||
+		(superProductivityIntegrated
+			? !report.includes(
+					'super-productivity Angular CLI 8.3.4→Angular 16.2 browser-builder direct-Witness browser proof',
+				)
+			: report.includes(
+					'super-productivity Angular CLI 8.3.4→Angular 16.2 browser-builder direct-Witness browser proof',
 				))
 	)
 		throw new Error('Derived Markdown does not match canonical transaction state');

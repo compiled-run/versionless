@@ -59,7 +59,8 @@ describe('Killed by Google integration', () => {
 					fixture.id !== 'witness-react-memos-v0-1-3' &&
 					fixture.id !== 'witness-next-killedbygoogle-v3-0-0' &&
 					fixture.id !== 'witness-react-linkfree-v0-72-0' &&
-					fixture.id !== 'witness-angular-tiny-translator',
+					fixture.id !== 'witness-angular-tiny-translator' &&
+					fixture.id !== 'witness-angular-super-productivity',
 			),
 		};
 	};

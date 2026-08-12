@@ -90,6 +90,11 @@ import {
 	verifyWitnessAngularTinyTranslatorEvidence,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH,
 } from '../../core/src/receipts/witness-angular-tiny-translator.ts';
+import {
+	ANGULAR_SUPER_PRODUCTIVITY_FIXTURE,
+	verifyWitnessAngularSuperProductivityEvidence,
+	WITNESS_ANGULAR_SUPER_PRODUCTIVITY_RECEIPT_PATH,
+} from '../../core/src/receipts/witness-angular-super-productivity.ts';
 import { verifyScriptSurface } from '../../core/src/enterprise/script-surface.ts';
 import {
 	parseRuntimeObservationConfig,
@@ -231,6 +236,19 @@ export const ANGULAR_TINY_TRANSLATOR_TRUST_RECEIPTS = 26 as const;
 export const ANGULAR_TINY_TRANSLATOR_TRUST_MATRIX_CELLS = 24 as const;
 
 /**
+ * Exact receipt and matrix-cell counts the super-productivity browser-proof
+ * transaction pins for itself: the twenty-six TinyTranslator-state receipts plus
+ * this lane's single Witness receipt, and the twenty-four prior matrix cells
+ * plus the super-productivity cell. Like factoriolab, jira-clone and
+ * tiny-translator this lane adds one receipt rather than two, because its two
+ * build-lane receipts are sealed inside the Witness receipt rather than carried
+ * as separate aggregate members. This is the last portfolio cell of the matrix,
+ * and no other transaction state is affected by these counts.
+ */
+export const ANGULAR_SUPER_PRODUCTIVITY_TRUST_RECEIPTS = 27 as const;
+export const ANGULAR_SUPER_PRODUCTIVITY_TRUST_MATRIX_CELLS = 25 as const;
+
+/**
  * Verifies a retained build receipt through the browser proof that seals it.
  * A sealed build receipt is not a generic migration receipt, so it is verified
  * against the exact byte digest and canonical digest the Witness receipt binds,
@@ -328,6 +346,8 @@ export async function verifyTrustReceipt(
 		return verifyWitnessReactLinkfreeEvidence(root);
 	if (receiptPath === WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH)
 		return verifyWitnessAngularTinyTranslatorEvidence(root);
+	if (receiptPath === WITNESS_ANGULAR_SUPER_PRODUCTIVITY_RECEIPT_PATH)
+		return verifyWitnessAngularSuperProductivityEvidence(root);
 	if (receiptPath === NEXT_KILLED_BY_GOOGLE_RECEIPT_PATH)
 		return verifyNextKilledByGoogleEvidence(root, true);
 	if (receiptPath === REACT_AVATAAARS_COMPATIBILITY_RECEIPT_PATH)
@@ -419,6 +439,10 @@ const WITNESS_REACT_LINKFREE_RECEIPT = {
 } as const;
 const WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT = {
 	path: WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH,
+	digest: null,
+} as const;
+const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_RECEIPT = {
+	path: WITNESS_ANGULAR_SUPER_PRODUCTIVITY_RECEIPT_PATH,
 	digest: null,
 } as const;
 const PHONECAT_VITE_RECEIPT = {
@@ -1049,6 +1073,7 @@ function matrix(conformance: CorpusConformance): Record<string, unknown> {
 	const killedbygoogleV3 = verticals.get(NEXT_KILLEDBYGOOGLE_V3_FIXTURE);
 	const linkfree = verticals.get(REACT_LINKFREE_FIXTURE);
 	const tinyTranslator = verticals.get(ANGULAR_TINY_TRANSLATOR_FIXTURE);
+	const superProductivity = verticals.get(ANGULAR_SUPER_PRODUCTIVITY_FIXTURE);
 	return {
 		schemaVersion: TRUST_SCHEMA,
 		derivedFrom: {
@@ -1416,6 +1441,36 @@ function matrix(conformance: CorpusConformance): Record<string, unknown> {
 						})(),
 					]
 				: []),
+			...(superProductivity
+				? [
+						(() => {
+							const cell = asRecord(
+								superProductivity,
+								'Angular Super Productivity conformance',
+							);
+							return {
+								id: ANGULAR_SUPER_PRODUCTIVITY_FIXTURE,
+								framework: cell.framework,
+								designatedPilot: cell.designatedPilot,
+								runtime: cell.runtime,
+								bundler: cell.bundler,
+								state: 'verified',
+								track: cell.track,
+								scope: 'fixture-specific-angular-cli-8-3-4-webpack-4-to-angular-16.2-browser-builder',
+								genericAngularSupport: 'not-claimed',
+								browserProof: cell.browserProof,
+								serviceWorker: cell.serviceWorker,
+								serviceWorkerMasked: cell.serviceWorkerMasked,
+								scrollSurface: cell.scrollSurface,
+								determinism: cell.determinism,
+								declaredDifferences: cell.declaredDifferences,
+								locality: cell.locality,
+								productionReadiness: cell.productionReadiness,
+								readinessScoreboard: cell.readinessScoreboard,
+							};
+						})(),
+					]
+				: []),
 			...conformance.frameworkLanes.map((lane) => ({
 				...lane,
 				state: 'not-tested',
@@ -1649,8 +1704,11 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 	const hasWitnessAngularRealworldReceipt = transaction.angularRealworldWitnessIntegrated;
 	const hasWitnessReactBoilerplateReceipt = transaction.reactBoilerplateWitnessIntegrated;
 	const hasWitnessNextKilledByGoogleReceipt = transaction.nextKilledByGoogleWitnessIntegrated;
+	const hasAngularSuperProductivityReceipts =
+		transaction.kind === 'angular-super-productivity-browser-proof';
 	const hasAngularTinyTranslatorReceipts =
-		transaction.kind === 'angular-tiny-translator-browser-proof';
+		transaction.kind === 'angular-tiny-translator-browser-proof' ||
+		hasAngularSuperProductivityReceipts;
 	const hasReactLinkfreeReceipts =
 		transaction.kind === 'react-linkfree-browser-proof' || hasAngularTinyTranslatorReceipts;
 	const hasNextKilledbygoogleV3Receipts =
@@ -1694,6 +1752,9 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 		...(hasNextKilledbygoogleV3Receipts ? [WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT] : []),
 		...(hasReactLinkfreeReceipts ? [WITNESS_REACT_LINKFREE_RECEIPT] : []),
 		...(hasAngularTinyTranslatorReceipts ? [WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT] : []),
+		...(hasAngularSuperProductivityReceipts
+			? [WITNESS_ANGULAR_SUPER_PRODUCTIVITY_RECEIPT]
+			: []),
 		...reactAvataaarsCompatibilityTrustReceipts(transaction),
 		...reactCalculatorTrustReceipts(transaction),
 		...reactGraphiQL013TrustReceipts(transaction),
@@ -1744,9 +1805,17 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 		throw new Error('React LinkFree browser proof does not preserve exactly 25 receipts');
 	if (
 		hasAngularTinyTranslatorReceipts &&
+		!hasAngularSuperProductivityReceipts &&
 		receipts.length !== ANGULAR_TINY_TRANSLATOR_TRUST_RECEIPTS
 	)
 		throw new Error('Angular TinyTranslator browser proof does not preserve exactly 26 receipts');
+	if (
+		hasAngularSuperProductivityReceipts &&
+		receipts.length !== ANGULAR_SUPER_PRODUCTIVITY_TRUST_RECEIPTS
+	)
+		throw new Error(
+			'Angular Super Productivity browser proof does not preserve exactly 27 receipts',
+		);
 	const verifiedReceipts = [];
 	for (const expected of receipts) {
 		const verified = await verifyTrustReceipt(root, expected.path);

@@ -59,7 +59,8 @@ function assertAggregate(value: unknown, requireIntegrated: boolean): Record<str
 			kind === 'react-memos-browser-proof' ||
 			kind === 'next-killedbygoogle-v3-browser-proof' ||
 			kind === 'react-linkfree-browser-proof' ||
-			kind === 'angular-tiny-translator-browser-proof'
+			kind === 'angular-tiny-translator-browser-proof' ||
+			kind === 'angular-super-productivity-browser-proof'
 		)
 			return aggregate;
 	} catch {

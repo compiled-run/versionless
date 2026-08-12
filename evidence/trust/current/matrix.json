@@ -2,7 +2,7 @@
   "schemaVersion": "versionless.trust.v1",
   "derivedFrom": {
     "path": "corpus-conformance.json",
-    "sha256": "258477f40cb03631c21913cc5814bbfcdf5372775911f9c3541792e1018b4d4c"
+    "sha256": "f0087f090c98c344561676408e7a8d4d3f63edf1cd6fde23f74d5682d7f226db"
   },
   "cells": [
     {
@@ -440,6 +440,54 @@
       "serviceWorkerAttempt": "measured-era-defect-carried-across-the-migration",
       "serviceWorkerAttemptMasked": false,
       "scrollSurface": "measured-no-overflowing-document",
+      "locality": {
+        "mode": "offline",
+        "scope": "process-scoped",
+        "osWideIsolation": false,
+        "successfulNonLoopback": 0,
+        "mockedNonLoopbackSeams": 1
+      },
+      "productionReadiness": "verified-direct-witness",
+      "readinessScoreboard": {
+        "angularLineage": {
+          "counted": false,
+          "ready": 1,
+          "total": 4
+        },
+        "overall": {
+          "ready": 3,
+          "total": 12
+        }
+      }
+    },
+    {
+      "id": "angular-super-productivity-v2-13-15",
+      "framework": "angular",
+      "designatedPilot": false,
+      "runtime": "node-12.14.1-to-node-16.20.2",
+      "bundler": "angular-cli-8.3.4-webpack-4-to-angular-16.2-browser-builder",
+      "state": "verified",
+      "track": "production-readiness-direct-witness-angular8-viewengine-to-angular16-browser-builder",
+      "scope": "fixture-specific-angular-cli-8-3-4-webpack-4-to-angular-16.2-browser-builder",
+      "genericAngularSupport": "not-claimed",
+      "browserProof": "verified-direct-witness",
+      "serviceWorker": "declared-real-ngsw-in-both-lanes-settled-state-measured-at-witness-time",
+      "serviceWorkerMasked": false,
+      "scrollSurface": "measured-no-overflowing-document",
+      "determinism": {
+        "baseline": "measured-not-byte-stable-across-rebuilds",
+        "migrated": "measured-deterministic-modulo-the-service-worker-manifest-timestamp"
+      },
+      "declaredDifferences": [
+        {
+          "label": "header-icon-button",
+          "why": "the era lane resolves the button through Angular Material 8’s typography config; the MDC-based button in 16.2 sets no family on the host at all, so the element falls through to the user-agent default"
+        },
+        {
+          "label": "document-body",
+          "why": "Angular Material’s default typography configuration dropped `\"Helvetica Neue\"` from the family list between 8.2 and 16.2"
+        }
+      ],
       "locality": {
         "mode": "offline",
         "scope": "process-scoped",

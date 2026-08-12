@@ -1,8 +1,8 @@
 # Versionless project trust package
 
-- Canonical SHA-256: `33078b2d5fe112fcd69cb80a79680b4f78fce3c7d7aa2c7092425bdeea427189`
-- Deterministic core: `ac6d488af1954d25b1835b2d9062fa89fb6c620156b446d487ae8cd7d6ef5bca`
-- Generated observation: `2026-08-12T19:10:31.605Z`
+- Canonical SHA-256: `348fefdd8d2866e861c0b9a76df90d4d87dfcc40e57bd8f137927e53a84d497b`
+- Deterministic core: `2e4cb3f13c2a739d19b080dfb83d4cb424f691570034acc89b9d85113206d2de`
+- Generated observation: `2026-08-12T19:47:49.926Z`
 - Vulnerability input freshness: **verified** (seven-day maximum age)
 - Integrity: **hash-only; authenticity is not established**
 - Assurance: **this package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation**
@@ -15,7 +15,7 @@
 - [SLSA/in-toto-shaped provenance](provenance.json) — shape only; no SLSA level or signer authenticity is claimed.
 - [Supported corpus/runtime/bundler matrix](matrix.json) — unsupported and untested cells remain visible.
 - [Adapter freeze record](adapter-freeze.json) — the migration engine adapter surface is frozen at commit `57b308a573dd582c844ce401fb1161cd70e9bc66` with composite SHA-256 `d9f75ef677cb850f664cc188abf77b8ebfd24e84cb58d147b74e9bbaa143eb77`; the receipts, corpus, and witness registries are deliberately **outside** the freeze so holdout evidence can still be published additively.
-- [Corpus conformance](corpus-conformance.json) — `258477f40cb03631c21913cc5814bbfcdf5372775911f9c3541792e1018b4d4c`; 19 verified verticals grouped into exactly 11 source applications; zero designated pilots are verified.
+- [Corpus conformance](corpus-conformance.json) — `f0087f090c98c344561676408e7a8d4d3f63edf1cd6fde23f74d5682d7f226db`; 20 verified verticals grouped into exactly 12 source applications; zero designated pilots are verified.
 - The immutable Killed by Google Next.js 12 Pages/webpack production vertical is verified only for its exact fixture; synthetic Next.js 12 Pages, 13 transition/App, and 14 App classification lanes remain **not-tested**, and generic Next.js support is not claimed.
 - [Static script/resource surface](script-surface.json) — truthfully remains scoped to the prior nine verticals, two applications, and eighteen exact static deployment entrypoints; T220 is **not included** because its script surface was not separately observed; dynamic script insertion: **not-tested**; payment-page applicability: **not established**; PCI compliance is **not claimed**.
 - [Qualified-journey runtime script observation](runtime-script-observation.json) — truthfully remains scoped to 36 runs across the prior nine verticals, two applications, and eighteen lanes; T220 is **not included** because its runtime scripts were not separately observed; this is **not global dynamic-insertion coverage**.
@@ -31,6 +31,7 @@
 - killedbygoogle v3.0.0 Next 12 static-export→Vite 8 client-build direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, its baseline/migrated document-delivery difference is **recorded, not masked**, and Next-lineage readiness stays **0/4** because this vertical is explicitly **not counted**.
 - LinkFree v0.72.0 create-react-app 5→Vite 8 direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, its proof ran over a **synthetic profile corpus** staged through the application's own codegen rather than the shipped dataset, and React-lineage readiness stays **3/4** because this vertical is explicitly **not counted**.
 - tiny-translator Angular CLI 1.5.4→Angular 16.2 browser-builder direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, an eleven-major lift whose era-defect service-worker registration is **recorded, not masked**, and Angular-lineage readiness stays **2/4** because this vertical is explicitly **not counted**.
+- super-productivity Angular CLI 8.3.4→Angular 16.2 browser-builder direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, an eight-major lift whose declared cross-lane appearance differences and unseeded Sass random() build instability across the supersede boundary are **recorded, not masked**, and Angular-lineage readiness stays **2/4** because this vertical is explicitly **not counted**.
 - Older-Next direct-Witness candidate: **verified, not counted (0/4) pending final Judge audit**.
 - Holdout `holdout-react-cypress-rwa` (cypress-realworld-app, react lineage): **attempted; outcome failed**. Baseline lane green, migrated lane red identically across 2 attempts against frozen adapter composite `d9f75ef677cb850f664cc188abf77b8ebfd24e84cb58d147b74e9bbaa143eb77` with 0 adapter bytes changed. Recorded missing capability for the follow-on tranche: **non-UTF-8 module source decoding**. It is **counted in no lineage numerator** and published rather than dropped: [evidence/runs/holdout-react-cypress-rwa/receipt.json](../../../evidence/runs/holdout-react-cypress-rwa/receipt.json) `7ec6f18b27d2967cd533ba89505e8a76590c1866aec8bd7a8d8543cd87743aae`.
 - [Data-flow and control mappings](controls.json) — review inputs, not audit conclusions.
@@ -66,6 +67,7 @@ The dependency graph is a rooted complete inventory. Exact transitive dependency
 - `evidence/runs/witness-next-killedbygoogle-v3-0-0/receipt.json`: `660cb5027139735a5174a5bb8e89fceb9fa6b0327f4a479e174137e789d52a79` (verified)
 - `evidence/runs/witness-react-linkfree-v0-72-0/receipt.json`: `2277ad1947280d898f577f418f8b4a34ca775b91156bc1e1de488bde28eae4ba` (verified)
 - `evidence/runs/witness-angular-tiny-translator-v0-12-0/receipt.json`: `65b0a976823010e224ee76058e14d4dfee4ac643c8a32826128968a754c083ca` (verified)
+- `evidence/runs/witness-angular-super-productivity-v2-13-15/receipt.json`: `5d8ed797897b7ad05bda5daf2a15c1634aec5252bd3addbe3b31b5a3f327e365` (verified)
 
 ## Adapter freeze and capability status
 

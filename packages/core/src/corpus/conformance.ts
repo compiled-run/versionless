@@ -109,6 +109,12 @@ import {
 	witnessAngularTinyTranslatorAggregateMember,
 } from '../receipts/witness-angular-tiny-translator.ts';
 import {
+	ANGULAR_SUPER_PRODUCTIVITY_FIXTURE,
+	verifyWitnessAngularSuperProductivityEvidence,
+	WITNESS_ANGULAR_SUPER_PRODUCTIVITY_RECEIPT_PATH,
+	witnessAngularSuperProductivityAggregateMember,
+} from '../receipts/witness-angular-super-productivity.ts';
+import {
 	HOLDOUT_REACT_CYPRESS_RWA_APPLICATION,
 	holdoutReactCypressRwaCorpusRecord,
 	verifyHoldoutReactCypressRwaEvidence,
@@ -226,6 +232,7 @@ function lineageCountingLedger(present: {
 	killedbygoogleV3: boolean;
 	linkfree: boolean;
 	tinyTranslator: boolean;
+	superProductivity: boolean;
 }): LineageCountingCell[] {
 	const cells: Array<LineageCountingCell | null> = [
 		present.reactBoilerplate
@@ -326,6 +333,16 @@ function lineageCountingLedger(present: {
 					witnessReceipt: WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH,
 					counted: false,
 					reason: 'Not counted pending Judge audit: the browser proof is verified and retained, but its own receipt declares counted:false against the Angular lineage — an era-defect service-worker registration is carried across the migration and stays recorded rather than masked — so it stays visible without reaching the Angular numerator.',
+				}
+			: null,
+		present.superProductivity
+			? {
+					cell: ANGULAR_SUPER_PRODUCTIVITY_FIXTURE,
+					application: 'angular-super-productivity',
+					lineage: 'angular' as const,
+					witnessReceipt: WITNESS_ANGULAR_SUPER_PRODUCTIVITY_RECEIPT_PATH,
+					counted: false,
+					reason: 'Not counted pending Judge audit: the browser proof is verified and retained, but its own receipt declares counted:false against the Angular lineage — the lift carries declared cross-lane appearance differences and an unseeded Sass random() build instability across the supersede boundary, recorded rather than masked — so it stays visible without reaching the Angular numerator.',
 				}
 			: null,
 	];
@@ -514,8 +531,8 @@ interface JourneyProjection {
 export interface CorpusConformance {
 	schemaVersion: typeof CORPUS_CONFORMANCE_SCHEMA;
 	summary: {
-		verticals: 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19;
-		sourceApplications: 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11;
+		verticals: 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20;
+		sourceApplications: 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 		designatedPilotsVerified: 0;
 	};
 	verticals: Array<Record<string, unknown>>;
@@ -769,6 +786,33 @@ export type CorpusTransactionState = Readonly<
 			resolvedDependencies: 39;
 	  }
 	| {
+			/**
+			 * The super-productivity Angular CLI 8.3.4 lineage joins on top of the
+			 * TinyTranslator browser proof and is the fourth Angular-lineage
+			 * browser proof to enter the aggregate, and the last portfolio cell of
+			 * this matrix. Like factoriolab, jira-clone and tiny-translator it
+			 * publishes one member rather than a pair: its two build-lane receipts
+			 * — the era-baseline digest correction and the deterministic-modulo-the
+			 * -service-worker-manifest migrated lane — are sealed inside the Witness
+			 * receipt by both canonical digest and exact bytes rather than carried
+			 * as separate aggregate rows, so the Witness receipt is the whole of its
+			 * membership. It is a separate immutable source application, so it is a
+			 * new vertical, and its Angular-lineage readiness remains explicitly
+			 * uncounted: the receipt records declared cross-lane appearance
+			 * differences and an unseeded Sass random() build instability carried
+			 * across the supersede boundary rather than masking either.
+			 */
+			kind: 'angular-super-productivity-browser-proof';
+			nextKilledByGoogleIntegrated: true;
+			angularRealworldWitnessIntegrated: true;
+			reactBoilerplateWitnessIntegrated: true;
+			nextKilledByGoogleWitnessIntegrated: true;
+			verticals: 20;
+			sourceApplications: 12;
+			receipts: 27;
+			resolvedDependencies: 40;
+	  }
+	| {
 			kind: 'react-avataaars-candidate';
 			nextKilledByGoogleIntegrated: true;
 			angularRealworldWitnessIntegrated: true;
@@ -1019,25 +1063,61 @@ function deriveReactTrioTransactionState(
 	if (
 		!sha256Pattern.test(tinyTranslatorDigest) ||
 		canonicalize(tinyTranslatorRecord) !==
-			canonicalize(witnessAngularTinyTranslatorAggregateMember(tinyTranslatorDigest)) ||
-		byPath.size !== canonicalReceipts.length + 17
+			canonicalize(witnessAngularTinyTranslatorAggregateMember(tinyTranslatorDigest))
 	)
 		throw new Error('Angular TinyTranslator aggregate membership mismatch');
+	const tinyTranslatorOrder = [...linkfreeOrder, WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH];
+	const superProductivity = byPath.get(WITNESS_ANGULAR_SUPER_PRODUCTIVITY_RECEIPT_PATH);
+	if (!superProductivity) {
+		if (byPath.size !== canonicalReceipts.length + 17)
+			throw new Error('Angular TinyTranslator aggregate membership mismatch');
+		assertOrderedAggregate(
+			orderedPaths,
+			tinyTranslatorOrder,
+			'Angular TinyTranslator browser proof',
+		);
+		return {
+			kind: 'angular-tiny-translator-browser-proof',
+			nextKilledByGoogleIntegrated: true,
+			angularRealworldWitnessIntegrated: true,
+			reactBoilerplateWitnessIntegrated: true,
+			nextKilledByGoogleWitnessIntegrated: true,
+			verticals: 19,
+			sourceApplications: 11,
+			receipts: 26,
+			resolvedDependencies: 39,
+		};
+	}
+	const superProductivityRecord = record(
+		superProductivity,
+		'Angular Super Productivity Witness aggregate fixture',
+	);
+	const superProductivityDigest = string(
+		superProductivityRecord.digest,
+		'Angular Super Productivity Witness aggregate digest',
+	);
+	if (
+		!sha256Pattern.test(superProductivityDigest) ||
+		canonicalize(superProductivityRecord) !==
+			canonicalize(witnessAngularSuperProductivityAggregateMember(superProductivityDigest)) ||
+		byPath.size !== canonicalReceipts.length + 18
+	)
+		throw new Error('Angular Super Productivity aggregate membership mismatch');
 	assertOrderedAggregate(
 		orderedPaths,
-		[...linkfreeOrder, WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH],
-		'Angular TinyTranslator browser proof',
+		[...tinyTranslatorOrder, WITNESS_ANGULAR_SUPER_PRODUCTIVITY_RECEIPT_PATH],
+		'Angular Super Productivity browser proof',
 	);
 	return {
-		kind: 'angular-tiny-translator-browser-proof',
+		kind: 'angular-super-productivity-browser-proof',
 		nextKilledByGoogleIntegrated: true,
 		angularRealworldWitnessIntegrated: true,
 		reactBoilerplateWitnessIntegrated: true,
 		nextKilledByGoogleWitnessIntegrated: true,
-		verticals: 19,
-		sourceApplications: 11,
-		receipts: 26,
-		resolvedDependencies: 39,
+		verticals: 20,
+		sourceApplications: 12,
+		receipts: 27,
+		resolvedDependencies: 40,
 	};
 }
 
@@ -2507,6 +2587,140 @@ async function angularTinyTranslatorConformanceRows(
 	};
 }
 
+/**
+ * Derives the super-productivity conformance rows.
+ *
+ * This is the fourth Angular-lineage browser proof in the corpus and the last
+ * portfolio cell of this matrix; it follows the factoriolab/jira-clone/
+ * tiny-translator idiom exactly: there is no retained migration member to read
+ * metadata from, because the two build-lane receipts are sealed inside the
+ * Witness receipt by canonical digest and exact bytes, so the emitted
+ * `canonicalReceipts` list is that sealed binding and the lane identity comes
+ * from the single Witness aggregate member. Everything else is read out of the
+ * verified receipt.
+ *
+ * super-productivity's facts differ from tiny-translator's and the rows carry
+ * them as the receipt measured them. The service worker is a REAL `ngsw-worker`
+ * registration present in both lanes — not a refused attempt — so it is
+ * published as `serviceWorker` with the constant's own settled-state string and
+ * `masked:false`, not as a `serviceWorkerAttempt`. Persistence is the
+ * application's own localforage/IndexedDB store rather than a browser
+ * local-storage surface. The lift's declared cross-lane appearance differences
+ * — the MDC typography family fallthrough and the dropped Helvetica-Neue family
+ * — are emitted as the vertical's `declaredDifferences`, and the per-lane
+ * determinism reading is carried beside them, because the unseeded Sass
+ * `random()` build instability crossing the supersede boundary is the fact most
+ * easily lost in a summary. The scroll surface is emitted as measured: a journey
+ * that found no overflowing document because the application pins its own
+ * drawer container to the viewport.
+ */
+async function angularSuperProductivityConformanceRows(
+	root: string,
+	aggregateByPath: Map<string, unknown>,
+): Promise<{ vertical: Record<string, unknown>; application: Record<string, unknown> }> {
+	const verified = await verifyWitnessAngularSuperProductivityEvidence(root);
+	const witnessMember = record(
+		aggregateByPath.get(WITNESS_ANGULAR_SUPER_PRODUCTIVITY_RECEIPT_PATH),
+		'Angular Super Productivity Witness aggregate fixture',
+	);
+	if (witnessMember.digest !== verified.digest)
+		throw new Error('Angular Super Productivity Witness aggregate digest differs');
+	const receipt = verified.receipt;
+	const run = receipt.runs[0];
+	if (!run) throw new Error('Angular Super Productivity Witness receipt carries no runs');
+	const id = string(receipt.fixture, 'Angular Super Productivity receipt fixture');
+	const application = string(run.app, 'Angular Super Productivity application identity');
+	const behaviorDigest = string(run.behaviorDigest, 'Angular Super Productivity behavior digest');
+	const track = string(witnessMember.track, 'Angular Super Productivity Witness aggregate track');
+	const source = {
+		repository: normalizeURL(receipt.source.repository),
+		ref: receipt.source.ref,
+		tagKind: receipt.source.tagKind,
+		revision: receipt.source.revision,
+		rootTreeSha: receipt.source.rootTreeSha,
+		archiveSha256: receipt.source.archiveSha256,
+		archiveBytes: receipt.source.archiveBytes,
+		frontendRoot: receipt.source.frontendRoot,
+		license: receipt.source.license,
+		licenseSha256: receipt.source.licenseSha256,
+	};
+	const locality = {
+		mode: receipt.locality.mode,
+		scope: 'process-scoped',
+		osWideIsolation: receipt.locality.osWideIsolation,
+		successfulNonLoopback: receipt.locality.successfulNonLoopback,
+		mockedNonLoopbackSeams: receipt.locality.mockedNonLoopbackSeams,
+	};
+	const determinism = {
+		baseline: receipt.determinism.baseline.state,
+		migrated: receipt.determinism.migrated.state,
+	};
+	const declaredDifferences = receipt.renderedStyleParity.declaredDifferences.map((entry) => ({
+		label: entry.label,
+		why: entry.why,
+	}));
+	return {
+		vertical: {
+			id,
+			application,
+			framework: string(
+				witnessMember.framework,
+				'Angular Super Productivity aggregate framework',
+			),
+			receiptPath: WITNESS_ANGULAR_SUPER_PRODUCTIVITY_RECEIPT_PATH,
+			receiptDigest: verified.digest,
+			canonicalReceipts: receipt.canonicalReceipts.map((bound) => ({
+				path: bound.path,
+				schemaVersion: bound.schemaVersion,
+				digest: bound.digest,
+				sha256: bound.sha256,
+			})),
+			runtime: string(witnessMember.runtime, 'Angular Super Productivity aggregate runtime'),
+			bundler: string(witnessMember.bundler, 'Angular Super Productivity aggregate bundler'),
+			track,
+			locality,
+			browserProof: 'verified-direct-witness',
+			browserRuns: receipt.runs.length,
+			behaviorDigest,
+			serviceWorker: receipt.serviceWorker.state,
+			serviceWorkerMasked: receipt.serviceWorker.masked,
+			scrollSurface: receipt.scroll.state,
+			determinism,
+			declaredDifferences,
+			productionReadiness: 'verified-direct-witness',
+			readinessScoreboard: receipt.readiness,
+			designatedPilot: false,
+		},
+		application: {
+			id: application,
+			source,
+			verticals: [id],
+			conformance: {
+				browserProof: 'direct-witness-verified',
+				runs: receipt.runs.length,
+				behaviorDigest,
+				mutation: receipt.mutation.restoredRun,
+				mutationRestoration: receipt.mutation.restoredByteIdentically
+					? 'byte-identical'
+					: 'not-byte-identical',
+				serviceWorker: receipt.serviceWorker.state,
+				serviceWorkerMasked: receipt.serviceWorker.masked,
+				persistence: receipt.persistence,
+				determinism,
+				declaredDifferences,
+				readinessScoreboard: receipt.readiness,
+			},
+			boundaries: {
+				track,
+				designatedPilot: false,
+				genericAngularSupport: 'not-claimed',
+				scrollSurface: receipt.scroll.state,
+				locality: 'process-scoped-not-os-wide',
+			},
+		},
+	};
+}
+
 export async function analyzeCorpusConformance(
 	options: CorpusConformanceOptions = {},
 ): Promise<CorpusConformance> {
@@ -2991,7 +3205,8 @@ export async function analyzeCorpusConformance(
 			transaction.kind === 'react-memos-browser-proof' ||
 			transaction.kind === 'next-killedbygoogle-v3-browser-proof' ||
 			transaction.kind === 'react-linkfree-browser-proof' ||
-			transaction.kind === 'angular-tiny-translator-browser-proof'
+			transaction.kind === 'angular-tiny-translator-browser-proof' ||
+			transaction.kind === 'angular-super-productivity-browser-proof'
 				? transaction.kind === 'react-zero-sw-reconciliation'
 					? 2
 					: transaction.kind === 'react-papercups-browser-proof'
@@ -3013,7 +3228,10 @@ export async function analyzeCorpusConformance(
 												: transaction.kind ===
 													  'angular-tiny-translator-browser-proof'
 													? 12
-													: 1
+													: transaction.kind ===
+														  'angular-super-productivity-browser-proof'
+														? 13
+														: 1
 				: 0)
 	)
 		throw new Error('Aggregate contains an unknown or extra receipt');
@@ -3035,7 +3253,10 @@ export async function analyzeCorpusConformance(
 	 * cascade once keeps every row, receipt-count and matrix check reading the
 	 * same answer instead of restating a longer disjunction at each use.
 	 */
-	const tinyTranslatorIntegrated = transaction.kind === 'angular-tiny-translator-browser-proof';
+	const superProductivityIntegrated =
+		transaction.kind === 'angular-super-productivity-browser-proof';
+	const tinyTranslatorIntegrated =
+		transaction.kind === 'angular-tiny-translator-browser-proof' || superProductivityIntegrated;
 	const linkfreeIntegrated =
 		transaction.kind === 'react-linkfree-browser-proof' || tinyTranslatorIntegrated;
 	const killedbygoogleV3Integrated =
@@ -3075,6 +3296,9 @@ export async function analyzeCorpusConformance(
 		: null;
 	const tinyTranslator = tinyTranslatorIntegrated
 		? await angularTinyTranslatorConformanceRows(root, aggregateByPath)
+		: null;
+	const superProductivity = superProductivityIntegrated
+		? await angularSuperProductivityConformanceRows(root, aggregateByPath)
 		: null;
 	if (transaction.kind === 'react-zero-sw-reconciliation' || papercupsIntegrated) {
 		const migration = await verifyReceipt(REACT_BOILERPLATE_ZERO_SW_RECEIPT_PATH, {
@@ -3326,6 +3550,7 @@ export async function analyzeCorpusConformance(
 	if (killedbygoogleV3) verticals.push(killedbygoogleV3.vertical);
 	if (linkfree) verticals.push(linkfree.vertical);
 	if (tinyTranslator) verticals.push(tinyTranslator.vertical);
+	if (superProductivity) verticals.push(superProductivity.vertical);
 
 	const applications: Array<Record<string, unknown>> = [
 		{
@@ -3449,6 +3674,7 @@ export async function analyzeCorpusConformance(
 		...(memos ? [memos.application] : []),
 		...(linkfree ? [linkfree.application] : []),
 		...(tinyTranslator ? [tinyTranslator.application] : []),
+		...(superProductivity ? [superProductivity.application] : []),
 	];
 	if (
 		verticals.length !== transaction.verticals ||
@@ -3469,6 +3695,7 @@ export async function analyzeCorpusConformance(
 		killedbygoogleV3: killedbygoogleV3 !== null,
 		linkfree: linkfree !== null,
 		tinyTranslator: tinyTranslator !== null,
+		superProductivity: superProductivity !== null,
 	});
 	const reactLineageReady = countedLineageCells(judgeCounting, 'react');
 	const angularLineageReady = countedLineageCells(judgeCounting, 'angular');

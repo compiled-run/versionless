@@ -15,6 +15,7 @@ const APPENDED_KINDS = new Set([
 	'next-killedbygoogle-v3-browser-proof',
 	'react-linkfree-browser-proof',
 	'angular-tiny-translator-browser-proof',
+	'angular-super-productivity-browser-proof',
 ]);
 
 function record(value: unknown, label: string): Record<string, unknown> {

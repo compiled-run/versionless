@@ -25,6 +25,7 @@ import { WITNESS_REACT_MEMOS_RECEIPT_PATH } from '../src/receipts/witness-react-
 import { WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH } from '../src/receipts/witness-next-killedbygoogle-v3.ts';
 import { WITNESS_REACT_LINKFREE_RECEIPT_PATH } from '../src/receipts/witness-react-linkfree.ts';
 import { WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH } from '../src/receipts/witness-angular-tiny-translator.ts';
+import { WITNESS_ANGULAR_SUPER_PRODUCTIVITY_RECEIPT_PATH } from '../src/receipts/witness-angular-super-productivity.ts';
 
 const root = path.resolve(import.meta.dirname, '../../..');
 
@@ -201,7 +202,8 @@ describe('Papercups corpus transaction state', () => {
 				fixture.receipt !== WITNESS_REACT_MEMOS_RECEIPT_PATH &&
 				fixture.receipt !== WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH &&
 				fixture.receipt !== WITNESS_REACT_LINKFREE_RECEIPT_PATH &&
-				fixture.receipt !== WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH,
+				fixture.receipt !== WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH &&
+				fixture.receipt !== WITNESS_ANGULAR_SUPER_PRODUCTIVITY_RECEIPT_PATH,
 		);
 		expect(fixtures).toHaveLength(16);
 		return fixtures;
@@ -222,7 +224,8 @@ describe('Papercups corpus transaction state', () => {
 				fixture.receipt !== WITNESS_REACT_MEMOS_RECEIPT_PATH &&
 				fixture.receipt !== WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH &&
 				fixture.receipt !== WITNESS_REACT_LINKFREE_RECEIPT_PATH &&
-				fixture.receipt !== WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH,
+				fixture.receipt !== WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH &&
+				fixture.receipt !== WITNESS_ANGULAR_SUPER_PRODUCTIVITY_RECEIPT_PATH,
 		);
 		expect(fixtures).toHaveLength(18);
 		return fixtures;
@@ -232,9 +235,9 @@ describe('Papercups corpus transaction state', () => {
 
 	it('derives the exact composition from the published aggregate', async () => {
 		const receipt = await published();
-		const published26 = await aggregateFixtures();
-		expect(published26).toHaveLength(26);
-		expect(published26.slice(-10, -8)).toEqual([
+		const published27 = await aggregateFixtures();
+		expect(published27).toHaveLength(27);
+		expect(published27.slice(-11, -9)).toEqual([
 			migrationMember,
 			witnessReactPapercupsAggregateMember(receipt.integrity.canonicalDigest),
 		]);

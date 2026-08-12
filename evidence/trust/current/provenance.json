@@ -4,25 +4,25 @@
     {
       "name": "packages/cli/dist/cli.js",
       "digest": {
-        "sha256": "ea2ff9182d2ebc48ce9749492ebe119e455a2fe7ac1c8df286768a2ea65e1ad4"
+        "sha256": "386a5d21353c1981e10d028208aee985b37cc287f34662f6dbdb297c1fe09db0"
       }
     },
     {
       "name": "packages/cli/dist/index.js",
       "digest": {
-        "sha256": "6f4e5d001c01c6217cda1c97ea0f0a1213b69dd754798af1c0512c9be5c28da3"
+        "sha256": "514adc0912ddbd63b47b10e6f1b1800ec6126901190664c8dd493eabfb4e4970"
       }
     },
     {
-      "name": "packages/cli/dist/verify-Cc3KBkW5.js",
+      "name": "packages/cli/dist/verify-B8yeJR-m.js",
       "digest": {
-        "sha256": "5685a571be811136b7287021ee581a182fa6107937529d2e7d2f21f92feadf27"
+        "sha256": "d571f42c6b21185186da46797778bec1c662702378c4b7d4817276733131757f"
       }
     },
     {
       "name": "packages/core/dist/index.js",
       "digest": {
-        "sha256": "545fdb771296b6e27d5bf0a138279c6c4e1ea97f79a5b371a4d44a9598858c36"
+        "sha256": "2b25fc851e3839392e3d0d766e9a43aac52f9327d4f69aeaeae4e906e6e2a153"
       }
     },
     {
@@ -64,7 +64,7 @@
     {
       "name": "packages/trust/dist/index.js",
       "digest": {
-        "sha256": "34011663fc9724461e34dafe810703cac9387a695ffa2e21720d312d7af92e65"
+        "sha256": "971a81642f5bdb29d5672c95e9a932165ee7da1fbfd36bce60d04eda19994bda"
       }
     }
   ],
@@ -108,7 +108,7 @@
         {
           "uri": "evidence/runs/aggregate.json",
           "digest": {
-            "sha256": "029007e60e32bb4a6b406f53cb69416f0ed8c73ed92570aefdd412654063bfe7"
+            "sha256": "8cdb2c138012c439c11ec5bebb5bd7bbc586dc1048e7496ea9a4f83eb10dd9d4"
           }
         },
         {
@@ -211,6 +211,12 @@
           "uri": "evidence/runs/witness-angular-realworld/receipt.json",
           "digest": {
             "sha256": "122496b1ccb5c1da57945868cdea5bb93fab90164534efa5867025d25c01df34"
+          }
+        },
+        {
+          "uri": "evidence/runs/witness-angular-super-productivity-v2-13-15/receipt.json",
+          "digest": {
+            "sha256": "5d8ed797897b7ad05bda5daf2a15c1634aec5252bd3addbe3b31b5a3f327e365"
           }
         },
         {
@@ -348,19 +354,19 @@
       "byproducts": [
         {
           "path": "packages/cli/dist/cli.js",
-          "sha256": "ea2ff9182d2ebc48ce9749492ebe119e455a2fe7ac1c8df286768a2ea65e1ad4"
+          "sha256": "386a5d21353c1981e10d028208aee985b37cc287f34662f6dbdb297c1fe09db0"
         },
         {
           "path": "packages/cli/dist/index.js",
-          "sha256": "6f4e5d001c01c6217cda1c97ea0f0a1213b69dd754798af1c0512c9be5c28da3"
+          "sha256": "514adc0912ddbd63b47b10e6f1b1800ec6126901190664c8dd493eabfb4e4970"
         },
         {
-          "path": "packages/cli/dist/verify-Cc3KBkW5.js",
-          "sha256": "5685a571be811136b7287021ee581a182fa6107937529d2e7d2f21f92feadf27"
+          "path": "packages/cli/dist/verify-B8yeJR-m.js",
+          "sha256": "d571f42c6b21185186da46797778bec1c662702378c4b7d4817276733131757f"
         },
         {
           "path": "packages/core/dist/index.js",
-          "sha256": "545fdb771296b6e27d5bf0a138279c6c4e1ea97f79a5b371a4d44a9598858c36"
+          "sha256": "2b25fc851e3839392e3d0d766e9a43aac52f9327d4f69aeaeae4e906e6e2a153"
         },
         {
           "path": "packages/experiments/dist/index.js",
@@ -388,7 +394,7 @@
         },
         {
           "path": "packages/trust/dist/index.js",
-          "sha256": "34011663fc9724461e34dafe810703cac9387a695ffa2e21720d312d7af92e65"
+          "sha256": "971a81642f5bdb29d5672c95e9a932165ee7da1fbfd36bce60d04eda19994bda"
         }
       ]
     }
@@ -397,6 +403,6 @@
     "slsaLevel": "not-claimed",
     "signerAuthenticity": "unknown",
     "gitProvenance": "unknown",
-    "aggregateFixtures": 26
+    "aggregateFixtures": 27
   }
 }

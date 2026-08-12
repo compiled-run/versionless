@@ -14,6 +14,7 @@ import { WITNESS_REACT_MEMOS_RECEIPT_PATH } from '../../core/src/receipts/witnes
 import { WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH } from '../../core/src/receipts/witness-next-killedbygoogle-v3.ts';
 import { WITNESS_REACT_LINKFREE_RECEIPT_PATH } from '../../core/src/receipts/witness-react-linkfree.ts';
 import { WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH } from '../../core/src/receipts/witness-angular-tiny-translator.ts';
+import { WITNESS_ANGULAR_SUPER_PRODUCTIVITY_RECEIPT_PATH } from '../../core/src/receipts/witness-angular-super-productivity.ts';
 
 /**
  * The exact receipt paths appended after the zero-service-worker
@@ -31,18 +32,19 @@ const POST_ZERO_SW_RECEIPT_PATHS = new Set<unknown>([
 	WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH,
 	WITNESS_REACT_LINKFREE_RECEIPT_PATH,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH,
+	WITNESS_ANGULAR_SUPER_PRODUCTIVITY_RECEIPT_PATH,
 ]);
 
 /**
  * The canonical aggregate with the Papercups pair, the HospitalRun pair, and
- * the factoriolab, jira-clone, memos, killedbygoogle v3, LinkFree and
- * TinyTranslator members rolled back.
+ * the factoriolab, jira-clone, memos, killedbygoogle v3, LinkFree,
+ * TinyTranslator and super-productivity members rolled back.
  *
  * Publication transactions for the earlier Witness verticals are defined
  * against their exact predecessor state. Now that the published aggregate has
- * advanced to the TinyTranslator browser proof, those transactions are replayed
- * against a staged copy of the exact pre-append membership rather than against
- * a loosened predecessor check.
+ * advanced to the super-productivity browser proof, those transactions are
+ * replayed against a staged copy of the exact pre-append membership rather than
+ * against a loosened predecessor check.
  */
 export async function preAppendAggregate(root: string): Promise<string> {
 	const aggregate = JSON.parse(

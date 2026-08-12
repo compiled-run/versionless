@@ -14,6 +14,7 @@ const aggregatePath = path.join(root, 'evidence/runs/aggregate.json');
 const APPENDED_KINDS = new Set([
 	'react-linkfree-browser-proof',
 	'angular-tiny-translator-browser-proof',
+	'angular-super-productivity-browser-proof',
 ]);
 
 function record(value: unknown, label: string): Record<string, unknown> {
