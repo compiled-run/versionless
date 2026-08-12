@@ -1,0 +1,356 @@
+{
+  "schemaVersion": "versionless.angular-super-productivity-era-baseline-digest-correction.v1",
+  "unit": "lrapr-t006/u21-corpus-integrity-corrections",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "result": "digest-values-corrected-original-superseded-by-reference",
+  "supersedes": {
+    "path": "evidence/runs/angular-super-productivity-v2-13-15/u18-era-baseline.json",
+    "schemaVersion": "versionless.angular-super-productivity-era-baseline.v1",
+    "digest": "a1a449ce01961bf09d5b92e297e1e98781a55dcf4de4bfee49e89e75dd242803",
+    "sha256": "d15bda4fd2824d1f28be0a89b148a04c0e1139279b6e95651745b2615dc06c5d"
+  },
+  "defect": "The build-lane inventory walker read each emitted file as bytes and then digested `bytes.toString('binary')`. Node's `binary` encoding is latin1, so the bytes were decoded to one code point per byte and the resulting string was re-encoded as UTF-8 before hashing. For a file made only of bytes below 0x80 that round trip is the identity and the published digest is correct by coincidence; for any file carrying a byte at or above 0x80 every such byte was widened to two, and the published value is sha256(UTF-8(latin1(bytes))) rather than sha256(bytes). The walker is shared by every Angular build-lane record, which is why the fix is one line in one function rather than a repair applied per record.",
+  "basis": "latin1 decoding is a bijection between the 256 byte values and the first 256 Unicode code points, and UTF-8 encoding is injective on code-point sequences, so the composition byte-string -> latin1 -> UTF-8 is injective. Two files therefore hashed to the same wrong digest exactly when their bytes were identical, and to different wrong digests exactly when their bytes differed. Every equality and inequality the affected records assert — byte stability across rebuilds, reproduction of the ingest build, and which emission points carry identical payloads across the two lanes — is preserved unchanged by the correction. What was wrong is the published values, not the conclusions drawn from comparing them.",
+  "immutability": "This correction does not re-publish the record it corrects, and does not re-publish any witness receipt that binds it. The original stays exactly as it was written, byte for byte, and is superseded by reference: a reader following the original reaches this record through the supersede chain, and a reader following a witness receipt still finds the bytes that receipt bound.",
+  "conclusionsResting": [
+    "`byteStable: false` and the six-path `differingPaths` list are digest comparisons between rebuild 2 and rebuild 3. Both sides were hashed the same wrong way, so both survive the correction unchanged — and the lane was already recorded as not byte-stable, which is the harder direction to reach by accident.",
+    "The `instability` findings name a Sass `random()` call as the cause of the moving main chunk. That was chased to a source line, not inferred from a digest, and is untouched by this correction."
+  ],
+  "corrections": [
+    {
+      "at": "inventory[].sha256",
+      "recomputedFrom": ".versionless/cache/angular-super-productivity-v2-13-15-baseline/dist-run2",
+      "basis": "recomputed-from-retained-tree",
+      "valuesTotal": 64,
+      "valuesCorrected": 42,
+      "valuesAlreadyCorrect": 22,
+      "corrected": [
+        {
+          "path": "3rdpartylicenses.txt",
+          "bytes": 80351,
+          "published": "fce007796e499fa49525308ea106d03a39e4f2c4505c22c0da204eb680fae446",
+          "corrected": "36295de5cf570867e2a6168430d0f045495ad29fd1cd6893895390cebf473ec6",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "MaterialIcons-Regular.012cf6a10129e2275d79.woff",
+          "bytes": 57620,
+          "published": "e699f9a3e52908c31b02e0e6991148ebee3509de8486220f7938aa1f7350320a",
+          "corrected": "c4a1baec300d09e03a8380b85918267ee80faae8e00c6c56b48e2e74b1d9b38d",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "MaterialIcons-Regular.570eb83859dc23dd0eec.woff2",
+          "bytes": 44300,
+          "published": "a471c93b4d744ef3eb4f8cd2a05a9abe28bac71d4cf3ed99747165df8e2de311",
+          "corrected": "a87d66c91b2e7dc5530aef76c03bd6a3d25ea5826110bf4803b561b811cc8726",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "MaterialIcons-Regular.a37b0c01c0baf1888ca8.ttf",
+          "bytes": 128180,
+          "published": "541996b221e1bd3ef2a56fcbeb6b52aefde13b2598bc9a7688faa948fefe4f1d",
+          "corrected": "b7f4a3ab562048f28dd1fa691601bc43363a61d0f876d16d8316c52e4f32d696",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "MaterialIcons-Regular.e79bfd88537def476913.eot",
+          "bytes": 143258,
+          "published": "39ebc508d7bc2c76c667ff2eb51cb5d6a3cc4ee6de2ba76e5f270a1d2ac893ec",
+          "corrected": "8c998b4a9c0acbb9fe5dd572c206a5a33fdd5ca2b58db87fc3b893beac85068d",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/fonts/MaterialIcons-Regular.eot",
+          "bytes": 143258,
+          "published": "39ebc508d7bc2c76c667ff2eb51cb5d6a3cc4ee6de2ba76e5f270a1d2ac893ec",
+          "corrected": "8c998b4a9c0acbb9fe5dd572c206a5a33fdd5ca2b58db87fc3b893beac85068d",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/fonts/MaterialIcons-Regular.ttf",
+          "bytes": 128180,
+          "published": "541996b221e1bd3ef2a56fcbeb6b52aefde13b2598bc9a7688faa948fefe4f1d",
+          "corrected": "b7f4a3ab562048f28dd1fa691601bc43363a61d0f876d16d8316c52e4f32d696",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/fonts/MaterialIcons-Regular.woff",
+          "bytes": 57620,
+          "published": "e699f9a3e52908c31b02e0e6991148ebee3509de8486220f7938aa1f7350320a",
+          "corrected": "c4a1baec300d09e03a8380b85918267ee80faae8e00c6c56b48e2e74b1d9b38d",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/fonts/MaterialIcons-Regular.woff2",
+          "bytes": 44300,
+          "published": "a471c93b4d744ef3eb4f8cd2a05a9abe28bac71d4cf3ed99747165df8e2de311",
+          "corrected": "a87d66c91b2e7dc5530aef76c03bd6a3d25ea5826110bf4803b561b811cc8726",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/i18n/ar.json",
+          "bytes": 63235,
+          "published": "5ae49a8fce12c5af1ff078239f778570d87b8348baeb7e286bd0e2d65d1a3b60",
+          "corrected": "a5b989c1c81db6c09bf34f248088d2ad6035fc1109f8196f6f8711d087e1f2e7",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/i18n/de.json",
+          "bytes": 53945,
+          "published": "1e2e783bdf02a82acd8f71651eb0dc775e7c0d488e52072bd01f933f69a4e04c",
+          "corrected": "35b19d3a99c2af1c5ff650c7ce94f5c68b0f502eaf69e46761be271e110a18c0",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/i18n/en.json",
+          "bytes": 47356,
+          "published": "6b522d877792ded3ad8cdb76aae1a4f5b7f8452f01f72a62f396bc4e246c5e90",
+          "corrected": "715c6264d774e9226f16c3a7b473ac71ea9ce5421ebf01716f0a506767a6d4c2",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/i18n/es.json",
+          "bytes": 53490,
+          "published": "812a84d72ce515a380187ab4d7963b3c7ed05d448deb5032cb3336d58658c016",
+          "corrected": "4ce3453d6934b43b95933d6bc11b4dfda1ba0cfdff8dbd5dae2663fd464553e5",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/i18n/fr.json",
+          "bytes": 54985,
+          "published": "211b79e72f1243ecb8739f88b2989f1081c9ab1e4ad870a82137be6cd8c8cfde",
+          "corrected": "f9083a92453b46cae41138ca010ac61d8e7e140d342d852ea77f71419d9a8338",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/i18n/it.json",
+          "bytes": 57153,
+          "published": "dc22cc9496aaef7b3afb0c5644e41428e73af1a65e777d911b683b30cf8a2400",
+          "corrected": "dfa92f9c014e1df6911bca42696ce6e243f63c19f61b60f079dc4c3ba33429df",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/i18n/ja.json",
+          "bytes": 60290,
+          "published": "f2893c1fa558232dd681dc8cd4d6c7190873c9de2bd02aa53c021c517e6e80bf",
+          "corrected": "d2206a040d50221a62eca2c39d2a356a44e362a39ee376cc378f0f0701ca3a32",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/i18n/ko.json",
+          "bytes": 54333,
+          "published": "847b4d6d983dec37ceabab9d1016e8c2a36ed5ca1c1d9b2d7313607e63a8c4e4",
+          "corrected": "34dd8d7e4b3480ab879e6f0b9bf9780c64eceea4f8a64402201d651d712740bf",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/i18n/pt.json",
+          "bytes": 51853,
+          "published": "94dea3081ca14fa1f4c8dd5658a0a9da5b5a6244748f99c872a31bd7d52341f0",
+          "corrected": "31a14c02c659d86f0383cf782670631981a56e0468ce5c839db7a8c3a423f3a4",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/i18n/ru.json",
+          "bytes": 74319,
+          "published": "23d13bf50dca75fa1a34cda85f26777da0892323379059fce0f0b0eb4331c866",
+          "corrected": "28f5f63a9a043b374bd466911c328818d23ef4ec0233856944e8c471f9ed2cb7",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/i18n/tr.json",
+          "bytes": 51923,
+          "published": "fcc1f101f23114832f07778ac6ae7193a17695d226ce930e02031a6127827a40",
+          "corrected": "6f84ece791a8262cabb092c078e1d260dd19602a2b5e68236db365984e52500d",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/i18n/zh.json",
+          "bytes": 46167,
+          "published": "4116ece639e25ce146419c60d318a7e159b176bc1b1445dfe091aba716c5208d",
+          "corrected": "7d416973303333c382e048534271cb4f6aae3e38529a2fcd6fc499eaba865b7f",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/icons/apple-touch-icon.png",
+          "bytes": 4723,
+          "published": "aee8392a487b70e403a25ae1a6543222d770d1c86efaf23d1e5d60b3da239fc6",
+          "corrected": "85960e154f27ba312992bab89e7e3c5ac01a67cac7639c220528ed729fb67dcf",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/icons/favicon-16x16.png",
+          "bytes": 803,
+          "published": "b7924d265a175423a0d65849e7cd4921fddd54af352ac50708cd5ebb7e47cfe6",
+          "corrected": "4561811b0031663590fc2a3e79cc5ffa87cb234341e90626d141632fc98f47e4",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/icons/favicon-32x32.png",
+          "bytes": 1332,
+          "published": "3461e814c56f21916735509a1e645e6e389481bdd9590f1768757bdb24fe8bc4",
+          "corrected": "dca3b9c79a68c0e96ee39c80fa5e29e3f5163718f9855824e8fe72e87f46288b",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/icons/icon-128x128.png",
+          "bytes": 7029,
+          "published": "f95eb993d87ddb9dfac45ec94576e3df3523e8a7da2643e04d4e6e9910bf0949",
+          "corrected": "e705e876d984b468042a5754b7606fec63f18ed5c95d39efdcb3e8d0b08e64a3",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/icons/icon-144x144.png",
+          "bytes": 6345,
+          "published": "f0df2a37c1823c9088a41773eea227aacfc8c9297abf4f2a44200ca6e78f78b9",
+          "corrected": "2eac5789a5a9d77baa35269301c6263e4e1eb1e91d751148d00734f7187fd924",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/icons/icon-192x192.png",
+          "bytes": 10003,
+          "published": "ca2985d89f5f6df2248297bb42aad555370f15b405c3b074afa62cc97a5db134",
+          "corrected": "51c98d11e64370dda10825df534dd9584e38e802383951fc07497d82b05acdd2",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/icons/icon-512x512.png",
+          "bytes": 30559,
+          "published": "743b6249e5b35689c3928ddd6691067917f4b09e84f5826f8bf5a48708735f0d",
+          "corrected": "60a7c2bdba9c62b1bbed5b049a73f774a234626d340c5c481e90a0b6f9e2666f",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/icons/icon-72x72.png",
+          "bytes": 3119,
+          "published": "711530e8c7300cbf6e0f1f85729370537f9c333c6365f72b3c3733f7a9ea201f",
+          "corrected": "4660e3bbd9519c6080af943610dda55722b4d842df80abf02ac967f0975a5a52",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/icons/icon-96x96.png",
+          "bytes": 4604,
+          "published": "e076e6b4794c4b79c2689223e68858fdc3381b30605bf5b6fe2850aedcf9b093",
+          "corrected": "bdf24630a68c0679ab16c74c1a3a98d806ec341c45ddd920f2193706a9dc5dc4",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/icons/mstile-150x150.png",
+          "bytes": 6818,
+          "published": "18292da60c41521eee0645ba4868d43e4eddf1ce3ce88b931de86b26b3b3215c",
+          "corrected": "9e80444a8b066c0fa98d73886818bb465c435372c9cd340cd989699136b8cc7b",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/snd/positive.ogg",
+          "bytes": 99826,
+          "published": "ecb2eb18ed32402b1d3d372c14b095801901572a398fdb45ac3644ca4cc8d61f",
+          "corrected": "2fc3feaadf1f13cad52ef1a4ce1a84eb61bfa016050b2beee6199b9a53647175",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/snd/tick.mp3",
+          "bytes": 1584,
+          "published": "50e1b97e968cc2f82f2494360700dff567ad1722f8cfc6523a418cdd200e509d",
+          "corrected": "ef67993f9c8bafccb0917c0eb3aee3ebbc3206e28838dc1f654026490c5ea9ed",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/unicorn.png",
+          "bytes": 1254,
+          "published": "31f107ff5a340d7cbb63071d3ce801eaad2cac317d82d252eb97a73d2b1e313b",
+          "corrected": "3f6d76b07edca3a50839c3bf06475218438c81d6049f417c9ca8d006f4c9ae74",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "favicon.ico",
+          "bytes": 15086,
+          "published": "1f40b45133e67eecb20d3dc927a043ea0f240f4187f8d26e11f9950224f0ae49",
+          "corrected": "2d979be8a209e141d1c811284cc60c506cc9051544b5b80d6bb1fa3cb2e4bdae",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "index.html",
+          "bytes": 6873,
+          "published": "3948c33903af5c36114a9048e663608a5cb8eb94f290b179989f291d00c94ae9",
+          "corrected": "bf31441b063e347e58ae28dc5de99976d87cf76842439334b86479cf67abbec4",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "main.2b292dc79b76876e9ea9.js",
+          "bytes": 3812042,
+          "published": "d02d6b636f657633375064ee61a6d38dfbfe1879d2ebd70d215ea7921622e49d",
+          "corrected": "2cce903c840f9029674ab7757a775c75e09b4284bff687e78b16689880ea1c6a",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "main.2b292dc79b76876e9ea9.js.map",
+          "bytes": 16012401,
+          "published": "c3473c92e89cb0a6dde985c0e8b90cc2f5e67c1b44321453ac819ec07e8de829",
+          "corrected": "957f02dfca3a9d46f464e9fe65953729c16c7af2e503249d193916ffaf62aa72",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "polyfills-es5.2abe3ed7e5365deecf2a.js",
+          "bytes": 205822,
+          "published": "db758df027100df720cde062a5d0b0d15a1cb4034b1d69b83a078daba4311451",
+          "corrected": "1db960fe24839850f0f3e213136d4bef69f09c03212e59a46dac574ee1e20c00",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "polyfills-es5.2abe3ed7e5365deecf2a.js.map",
+          "bytes": 989373,
+          "published": "1613e95652ad232d71f14a27ba83dc9198b2ef82173d0fba97ab25573084b2a8",
+          "corrected": "a7c1d9939dba56d54636250d76465feb7cbf6950241f5b0b1a572f0488bbb23a",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "polyfills.ba9ede11574490fb99be.js",
+          "bytes": 124393,
+          "published": "22967f56f698de84a0dd1181143b6a9785307ea1fcaf1373b20eb6d0af9984ad",
+          "corrected": "6407971d8dbf2f96eca7d4620b76bf6ba2218098cc7c484d761ed5145855f764",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "polyfills.ba9ede11574490fb99be.js.map",
+          "bytes": 597103,
+          "published": "ad6bcaaeed760e6896b937bbf6ecde786af3490372092bdf12cc8c7ac83eb25e",
+          "corrected": "0cbeb4f970065467108964a2947adc3e35cd82b6b9475ae118e29d885f948f10",
+          "carriesHighBytes": true
+        }
+      ],
+      "alreadyCorrect": [
+        "assets/fonts/MaterialIcons-Regular.svg",
+        "assets/icons/browserconfig.xml",
+        "assets/icons/drag-handle.svg",
+        "assets/icons/github.svg",
+        "assets/icons/jira.svg",
+        "assets/icons/play.svg",
+        "assets/icons/safari-pinned-tab.svg",
+        "assets/icons/sp.svg",
+        "assets/service-workers/msg.js",
+        "lz.46c6d785ad9411bfb3da.worker.js",
+        "lz.46c6d785ad9411bfb3da.worker.js.map",
+        "manifest.json",
+        "ngsw-worker.js",
+        "ngsw.json",
+        "reminder.3ac70ee532363281f1c3.worker.js",
+        "reminder.3ac70ee532363281f1c3.worker.js.map",
+        "runtime.270bd8f33f8d16d6a229.js",
+        "runtime.270bd8f33f8d16d6a229.js.map",
+        "safety-worker.js",
+        "styles.db712f54a585028f32b9.css",
+        "styles.db712f54a585028f32b9.css.map",
+        "worker-basic.min.js"
+      ]
+    }
+  ],
+  "fixedAt": "packages/cli/src/fixture/angular-factoriolab-build-lanes-run.ts, in `inventoryOf`: the digest is now taken over the file bytes. The shared hasher in angular-factoriolab-migration-run.ts accepts a byte array so that passing bytes is the natural call and passing a decoded string is the odd one. `packages/cli/test/digest-byte-fidelity.test.ts` pins the walker against a fixture whose bytes make the three candidate answers three different digests, so a regression to latin1 — or to a lossy UTF-8 read — fails rather than publishing a wrong number that still compares equal to itself.",
+  "notEstablished": [
+    "Nothing was rebuilt. The corrected digests are a re-read of the retained tree the original record was taken from, at the byte lengths the original published; they are not a new build and establish nothing about reproducibility that the original did not already establish.",
+    "This correction changes published digest values and nothing else. No result, no conclusion and no non-claim of the original record is amended, withdrawn or strengthened here.",
+    "The correction does not audit the original record for any other defect. It addresses the latin1 digest defect and says nothing about the rest of the record."
+  ],
+  "digest": "dd695e78c6d94bbcf64e595fff170b3a7666e12af5a55d12ffc5d7f2c1985b96"
+}

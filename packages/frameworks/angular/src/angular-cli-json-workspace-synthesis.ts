@@ -27,6 +27,7 @@
 import type { AngularTargetCell } from './angular-target-cell.ts';
 import { compareStrings } from './angular-target-cell.ts';
 import type { ConfigChange } from './angular-workspace-migration.ts';
+import { fontInliningDifference, fontInliningDisabled } from './font-inlining-disable.ts';
 
 type JsonObject = Record<string, unknown>;
 
@@ -102,9 +103,17 @@ export const MODERN_PRODUCTION_CONFIGURATION = 'production';
  * turned off source maps, named chunks and the separate vendor chunk. CSS
  * extraction is unconditional on a modern production build and has no option
  * left, so it is not restated here; the rest map one for one.
+ *
+ * `optimization` is the one entry that is not the bare era flag. The era flag
+ * was a boolean and the modern option is a boolean *or* an object; written as
+ * the boolean it would also switch on the modern line's build-time font
+ * inliner, which the era CLI did not have and which fetches from a font host
+ * during the build. It is written as the object form that keeps every other
+ * optimisation at the schema's own default and disables only that fetch — see
+ * `font-inlining-disable.ts` for why the cell decided that.
  */
 export const ERA_PRODUCTION_BUILD_OPTIONS: Readonly<Record<string, unknown>> = Object.freeze({
-	optimization: true,
+	optimization: fontInliningDisabled(true),
 	outputHashing: 'all',
 	sourceMap: false,
 	namedChunks: false,
@@ -477,6 +486,12 @@ export function synthesizeAngularWorkspace(
 							'than command-line flags. CSS extraction is unconditional there and has no option left, ' +
 							'so it is not restated',
 					);
+					declaredDifferences.push(
+						fontInliningDifference(
+							`projects.${appName}.architect.build.configurations.${configurationName}.optimization`,
+							cell,
+						),
+					);
 				} else
 					changes.push({
 						path: `projects.${appName}.architect.build.configurations.${configurationName}`,
@@ -486,6 +501,21 @@ export function synthesizeAngularWorkspace(
 				configurations[configurationName] = configuration;
 			}
 
+		// The browser builder's `optimization` option defaults to on, and with it
+		// the build-time font inliner, so a target that declares nothing still
+		// fetches from a font host during `ng build`. The base options carry the
+		// explicit equivalent of that default with only the fetch turned off, so
+		// the unconfigured build is corrected as well as the production one.
+		const baseOptimization = fontInliningDisabled(undefined);
+		buildOptions['optimization'] = baseOptimization;
+		changes.push({
+			path: `projects.${appName}.architect.build.options.optimization`,
+			from: null,
+			to: JSON.stringify(baseOptimization),
+		});
+		declaredDifferences.push(
+			fontInliningDifference(`projects.${appName}.architect.build.options.optimization`, cell),
+		);
 		const build: JsonObject = {
 			builder: '@angular-devkit/build-angular:browser',
 			options: buildOptions,

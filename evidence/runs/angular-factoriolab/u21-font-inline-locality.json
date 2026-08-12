@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "versionless.angular-font-inline-locality.v1",
+  "unit": "lrapr-t006/u21-corpus-integrity-corrections",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "result": "undeclared-build-time-fetch-absent",
+  "lane": "angular-factoriolab",
+  "defect": "Angular 16's browser builder inlines external font stylesheets during an optimized build: `optimization` defaults to on, `optimization.fonts` defaults to on inside it, and the inliner then fetches every Google Fonts and Adobe Fonts stylesheet the application links and pastes the CSS into the emitted index.html. The devkit's own schema says the option requires internet access. The era builders had no such capability, so this is a migration-introduced build-time request against a corpus that declares `alternateHostsAllowed: false`, and it makes the emitted bytes depend on what a third-party host served on the build day.",
+  "method": "The reading is taken from two documents: the application's own src/index.html, for what it links, and the emitted index.html, for what the build put there. The signature of the inliner is not a font host appearing in the emitted document — the era build emitted the link element too, and the browser fetching it at runtime is the faithful behaviour. The signature is an @font-face rule in the emitted document that appears in no source file, because that rule is the body of a stylesheet the builder went and fetched.",
+  "reading": {
+    "sourceIndex": ".versionless/cache/angular-factoriolab-source/verify/extracted/src/index.html",
+    "sourceFontLinks": [],
+    "emittedDocument": ".versionless/stage/angular-factoriolab-m2/dist-a/index.html",
+    "emittedFontHosts": [],
+    "inlinedFontFaceRules": 0
+  },
+  "fetchedAtBuildTime": false,
+  "finding": "The application's own index.html links no external font stylesheet, so the inliner had nothing to fetch and made no request. The emitted document carries no inlined @font-face rule, which is consistent. This lane is unaffected and needs no rebuild for this finding.",
+  "publishedRecordsAffected": "none",
+  "rebuildRequired": false,
+  "fixedAt": "packages/frameworks/angular/src/font-inlining-disable.ts, applied generically by the workspace migration and by the CLI 1.x workspace synthesis. Every browser-family target in a migrated workspace carries `optimization.fonts.inline: false`, written into the base options as well as into every configuration that declares the option, because the builder default is on and an absent option is therefore not a safe one. A configuration that declares `optimization: false` is left alone, so the fix never switches optimisation on. Each site is recorded as a declared difference of the cell: the migrated lane ships the same link element the era build shipped and the browser fetches the stylesheet at runtime, which is both the behaviour-faithful and the offline-faithful answer.",
+  "notEstablished": [
+    "This is a reading of an emitted document, not an observation of the build. No build was run and no network traffic was captured here; what is established is that the emitted document carries CSS that exists in no input, which is only explicable as a fetch.",
+    "Nothing is rebuilt by this record. The rebuild list is its output, and the rebuilds themselves — and the supersede chains for the records they replace — belong to the units that run them.",
+    "A lane recorded as unaffected is unaffected *for this defect*. It says nothing about any other undeclared request a build might make."
+  ],
+  "digest": "8130b44163cea96b7021ba4e228ddeedce998a1fc26d5a82f16de848d827eee3"
+}

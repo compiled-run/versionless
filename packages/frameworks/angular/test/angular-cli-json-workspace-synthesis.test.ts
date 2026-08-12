@@ -118,7 +118,13 @@ describe('Angular CLI 1.x workspace synthesis', () => {
 			{ replace: 'src/environments/environment.ts', with: 'src/environments/environment.prod.ts' },
 		]);
 		expect(configurations['production']).toMatchObject({
-			optimization: true,
+			/**
+			 * The era `--prod` flag was a boolean. It is written as the object form
+			 * here because the boolean would also switch on the modern line's
+			 * build-time font inliner, which fetches from a font host during the
+			 * build; every other optimisation stays at the schema's own default.
+			 */
+			optimization: { scripts: true, styles: true, fonts: { inline: false } },
 			outputHashing: 'all',
 			sourceMap: false,
 			vendorChunk: false,
@@ -126,6 +132,36 @@ describe('Angular CLI 1.x workspace synthesis', () => {
 			aot: true,
 		});
 		expect(build['defaultConfiguration']).toBe('production');
+	});
+
+	it('disables the build-time font fetch on the base options as well as production', () => {
+		const synthesis = synthesizeAngularWorkspace(eraWorkspace, ANGULAR_16_BROWSER_CELL);
+		const build = (projectOf(synthesis.config, 'any-project')['architect'] as JsonObject)[
+			'build'
+		] as JsonObject;
+		/**
+		 * The browser builder's `optimization` defaults to on, so a target that
+		 * declares nothing still inlines fonts. The base options carry the
+		 * explicit equivalent of that default with only the fetch turned off, so
+		 * an unconfigured `ng build` is corrected too and not just `--configuration
+		 * production`.
+		 */
+		expect((build['options'] as JsonObject)['optimization']).toEqual({
+			scripts: true,
+			styles: true,
+			fonts: { inline: false },
+		});
+		expect(synthesis.declaredDifferences.join('\n')).toContain('font inlining disabled');
+		expect(synthesis.changes).toContainEqual({
+			path: 'projects.any-project.architect.build.options.optimization',
+			from: null,
+			to: JSON.stringify({ scripts: true, styles: true, fonts: { inline: false } }),
+		});
+		/** The karma target has no `optimization` option at all and must not gain one. */
+		const test = (projectOf(synthesis.config, 'any-project')['architect'] as JsonObject)[
+			'test'
+		] as JsonObject | undefined;
+		expect((test?.['options'] as JsonObject | undefined)?.['optimization']).toBeUndefined();
 	});
 
 	it('drops the identity environment as a declared difference rather than a configuration', () => {

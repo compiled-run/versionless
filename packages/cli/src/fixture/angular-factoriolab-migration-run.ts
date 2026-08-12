@@ -38,7 +38,19 @@ export const MIGRATION_RECORD_FILE = 'm2-source-migration.json';
 export const MIGRATION_UNIT = 'lrapr-t005/m2-factoriolab-build-lanes';
 export const CONSENT_ID = 'VL-LEGACY-CORPUS-2026-08-10';
 
-export function sha256(value: string): string {
+/**
+ * The sha256 of a value, hashing bytes as bytes and text as its UTF-8 encoding.
+ *
+ * The `Uint8Array` overload exists because it is the only correct way to digest
+ * a file: a digest that addresses an artifact has to be taken over the artifact's
+ * own bytes. Passing a *decoded* string here instead re-encodes it before
+ * hashing, and for any decoding other than UTF-8 that changes the input — which
+ * is exactly the defect u21 corrected in the build-lane inventory walker, where
+ * files were read as bytes, decoded latin1 and then hashed, so every file
+ * carrying a byte at or above 0x80 published sha256(UTF-8(latin1(bytes)))
+ * instead of sha256(bytes).
+ */
+export function sha256(value: string | Uint8Array): string {
 	return createHash('sha256').update(value).digest('hex');
 }
 

@@ -78,15 +78,35 @@ describe('TSLint toolchain removal', () => {
 		];
 		expect(Object.keys((projects?.['any-app']?.['architect'] as object) ?? {})).toEqual(['build']);
 		expect(Object.keys((projects?.['a-second-app']?.['architect'] as object) ?? {})).toEqual([]);
-		expect(migration.declaredDifferences).toHaveLength(2);
-		expect(migration.declaredDifferences[0]).toContain('projects.any-app.architect.lint');
-		expect(migration.declaredDifferences[0]).toContain('carries no TSLint line');
-		expect(migration.declaredDifferences[1]).toContain('projects.a-second-app.architect.lint');
+		const tslintDifferences = migration.declaredDifferences.filter((line) =>
+			line.includes('TSLint'),
+		);
+		expect(tslintDifferences).toHaveLength(2);
+		expect(tslintDifferences[0]).toContain('projects.any-app.architect.lint');
+		expect(tslintDifferences[0]).toContain('carries no TSLint line');
+		expect(tslintDifferences[1]).toContain('projects.a-second-app.architect.lint');
+		/**
+		 * The browser target is also corrected for build-time font inlining, so
+		 * the total is the two TSLint removals plus that one. Pinned rather than
+		 * left open, so a third unrelated difference appearing here is a failure.
+		 */
+		expect(migration.declaredDifferences).toHaveLength(3);
+		expect(
+			migration.declaredDifferences.filter((line) => line.includes('font inlining disabled')),
+		).toHaveLength(1);
 	});
 
 	it('leaves a TSLint target alone on a cell that still carries the line', () => {
 		const migration = migrateAngularWorkspace(WORKSPACE, CELL_WITH_TSLINT);
-		expect(migration.declaredDifferences).toEqual([]);
+		expect(migration.declaredDifferences.filter((line) => line.includes('TSLint'))).toEqual([]);
+		/**
+		 * The one difference this cell does declare is the font-inlining one on
+		 * the browser target, which is a fact about the modern builder and not
+		 * about the lint line. Asserted by name so the empty TSLint list above
+		 * cannot be satisfied by a list that is empty for the wrong reason.
+		 */
+		expect(migration.declaredDifferences).toHaveLength(1);
+		expect(migration.declaredDifferences[0]).toContain('font inlining disabled');
 		expect(migration.config).toContain('some-community-builder:tslint');
 		/**
 		 * The devkit's own `:tslint` target still goes, on this cell as on any

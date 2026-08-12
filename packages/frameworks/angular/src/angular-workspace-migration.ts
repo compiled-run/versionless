@@ -22,6 +22,11 @@ import {
 	type WebpackFragmentAnalysis,
 } from './custom-webpack-absorption.ts';
 import {
+	builderInlinesFonts,
+	fontInliningDifference,
+	fontInliningDisabled,
+} from './font-inlining-disable.ts';
+import {
 	isTslintBuilder,
 	targetLineDropsTslint,
 	tslintTargetRemoval,
@@ -240,13 +245,33 @@ function planWrapperAbsorption(
 	});
 }
 
+/**
+ * Where and how to turn the build-time font inliner off, for one options block.
+ *
+ * `writeWhenAbsent` separates the two kinds of block. A target's `options` is
+ * the base of the merge, so an absent `optimization` there really is the
+ * schema's default of `true` and the option has to be written out to disable
+ * the fetch. A named `configuration` is merged *over* that base, so an absent
+ * `optimization` there inherits whatever the base settled and writing one would
+ * override a `false` the workspace deliberately declared — turning optimisation
+ * on for a development configuration. A configuration is therefore corrected
+ * only where it declares the option itself.
+ */
+type FontInliningSite = Readonly<{
+	cell: AngularTargetCell;
+	declaredDifferences: string[];
+	writeWhenAbsent: boolean;
+}>;
+
 function migrateBuilderOptions(
 	options: JsonObject,
 	prefix: string,
 	changes: ConfigChange[],
 	wrapperAbsorbed: boolean,
+	fontInlining: FontInliningSite | null,
 ): JsonObject {
 	const next: JsonObject = {};
+	let declaresOptimization = false;
 	for (const [key, value] of Object.entries(options)) {
 		if (wrapperAbsorbed && WRAPPER_ONLY_OPTIONS.includes(key)) {
 			changes.push({ path: `${prefix}.${key}`, from: JSON.stringify(value), to: null });
@@ -265,7 +290,35 @@ function migrateBuilderOptions(
 			});
 			continue;
 		}
+		if (key === 'optimization' && fontInlining !== null) {
+			declaresOptimization = true;
+			const disabled = fontInliningDisabled(value);
+			next[key] = disabled ?? value;
+			if (disabled !== null) {
+				changes.push({
+					path: `${prefix}.optimization`,
+					from: JSON.stringify(value),
+					to: JSON.stringify(disabled),
+				});
+				fontInlining.declaredDifferences.push(
+					fontInliningDifference(`${prefix}.optimization`, fontInlining.cell),
+				);
+			}
+			continue;
+		}
 		next[key] = value;
+	}
+	if (fontInlining !== null && fontInlining.writeWhenAbsent && !declaresOptimization) {
+		const disabled = fontInliningDisabled(undefined);
+		next['optimization'] = disabled;
+		changes.push({
+			path: `${prefix}.optimization`,
+			from: null,
+			to: JSON.stringify(disabled),
+		});
+		fontInlining.declaredDifferences.push(
+			fontInliningDifference(`${prefix}.optimization`, fontInlining.cell),
+		);
 	}
 	return next;
 }
@@ -386,6 +439,9 @@ export function migrateAngularWorkspace(
 					continue;
 				}
 				const migratedTarget: JsonObject = { ...target, builder };
+				const inlinesFonts = typeof builder === 'string' && builderInlinesFonts(builder);
+				const fontSite = (writeWhenAbsent: boolean): FontInliningSite | null =>
+					inlinesFonts ? { cell, declaredDifferences, writeWhenAbsent } : null;
 				const options = objectAt(target['options']);
 				if (options !== null)
 					migratedTarget['options'] = migrateBuilderOptions(
@@ -393,6 +449,7 @@ export function migrateAngularWorkspace(
 						`${targetPath}.options`,
 						changes,
 						absorption.absorbed,
+						fontSite(true),
 					);
 				const configurations = objectAt(target['configurations']);
 				if (configurations !== null) {
@@ -407,6 +464,7 @@ export function migrateAngularWorkspace(
 										`${targetPath}.configurations.${name}`,
 										changes,
 										absorption.absorbed,
+										fontSite(false),
 									);
 					}
 					migratedTarget['configurations'] = migratedConfigurations;

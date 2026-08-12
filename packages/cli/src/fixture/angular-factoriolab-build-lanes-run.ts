@@ -39,7 +39,22 @@ export const MIGRATED_STAGE_DIRECTORY = path.join(
 
 export type DistEntry = Readonly<{ path: string; sha256: string; bytes: number }>;
 
-/** Every file below `directory`, digested, ordered by path. */
+/**
+ * Every file below `directory`, digested, ordered by path.
+ *
+ * The digest is taken over the file's bytes. It used to be taken over
+ * `bytes.toString('binary')` — a latin1 decode, which Node then re-encoded as
+ * UTF-8 before hashing — so any file carrying a byte at or above 0x80 was
+ * published under sha256(UTF-8(latin1(bytes))) rather than sha256(bytes). Every
+ * lane record this walker produced is shared by that defect, which is why the
+ * fix is here rather than in any one driver. What the defect did *not* do is
+ * change any comparison this walker feeds: latin1 is a bijection between bytes
+ * and the first 256 code points and UTF-8 encoding is injective, so the
+ * composed map is injective and two files hashed the wrong way agreed exactly
+ * when their bytes agreed. The published *values* were wrong; the equalities
+ * drawn from them were not. See the u21 correction records under
+ * `evidence/runs/`.
+ */
 export async function inventoryOf(directory: string): Promise<DistEntry[]> {
 	const entries: DistEntry[] = [];
 	const walk = async (current: string): Promise<void> => {
@@ -53,7 +68,7 @@ export async function inventoryOf(directory: string): Promise<DistEntry[]> {
 			const bytes = await readFile(full);
 			entries.push({
 				path: path.relative(directory, full).split(path.sep).join('/'),
-				sha256: sha256(bytes.toString('binary')),
+				sha256: sha256(bytes),
 				bytes: bytes.byteLength,
 			});
 		}

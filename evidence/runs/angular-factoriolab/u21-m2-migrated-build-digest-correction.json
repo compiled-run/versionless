@@ -1,0 +1,218 @@
+{
+  "schemaVersion": "versionless.angular-factoriolab-migrated-build-digest-correction.v1",
+  "unit": "lrapr-t006/u21-corpus-integrity-corrections",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "result": "digest-values-corrected-original-superseded-by-reference",
+  "supersedes": {
+    "path": "evidence/runs/angular-factoriolab/m2-migrated-build.json",
+    "schemaVersion": "versionless.angular-factoriolab-migrated-build.v1",
+    "digest": "371649fc4e032bd1e99372ac7afa6f54642b061d0300e37f6603e2e5880cfd65",
+    "sha256": "600a8ea3e6fa95be1b83d33b18a89dac5f7938bcc0bd9ce7fcd10e828d56d170"
+  },
+  "defect": "The build-lane inventory walker read each emitted file as bytes and then digested `bytes.toString('binary')`. Node's `binary` encoding is latin1, so the bytes were decoded to one code point per byte and the resulting string was re-encoded as UTF-8 before hashing. For a file made only of bytes below 0x80 that round trip is the identity and the published digest is correct by coincidence; for any file carrying a byte at or above 0x80 every such byte was widened to two, and the published value is sha256(UTF-8(latin1(bytes))) rather than sha256(bytes). The walker is shared by every Angular build-lane record, which is why the fix is one line in one function rather than a repair applied per record.",
+  "basis": "latin1 decoding is a bijection between the 256 byte values and the first 256 Unicode code points, and UTF-8 encoding is injective on code-point sequences, so the composition byte-string -> latin1 -> UTF-8 is injective. Two files therefore hashed to the same wrong digest exactly when their bytes were identical, and to different wrong digests exactly when their bytes differed. Every equality and inequality the affected records assert — byte stability across rebuilds, reproduction of the ingest build, and which emission points carry identical payloads across the two lanes — is preserved unchanged by the correction. What was wrong is the published values, not the conclusions drawn from comparing them.",
+  "immutability": "This correction does not re-publish the record it corrects, and does not re-publish any witness receipt that binds it. The original stays exactly as it was written, byte for byte, and is superseded by reference: a reader following the original reaches this record through the supersede chain, and a reader following a witness receipt still finds the bytes that receipt bound.",
+  "conclusionsResting": [
+    "`byteStable: true` compares this inventory against the second migrated build, both hashed the same wrong way. Preserved by injectivity.",
+    "`acquisition.lockfileSha256` is not affected. It is taken over a UTF-8 read of package-lock.json rather than through the inventory walker, and it recomputes identically from the retained lockfile."
+  ],
+  "corrections": [
+    {
+      "at": "inventory[].sha256",
+      "recomputedFrom": ".versionless/stage/angular-factoriolab-m2/dist-a",
+      "basis": "recomputed-from-retained-tree",
+      "valuesTotal": 39,
+      "valuesCorrected": 23,
+      "valuesAlreadyCorrect": 16,
+      "corrected": [
+        {
+          "path": "3rdpartylicenses.txt",
+          "bytes": 56931,
+          "published": "4bcaa8feca18a5e3ba1d749a2783f6a3909b7ca57773e5a8137058ad2d664a87",
+          "corrected": "cb8f43a5d918f3ca8f8f957285c46be49ba8a61e3f654424f4ade8731e9b3b52",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "MaterialIcons-Regular.196fa4a92dd6fa73.ttf",
+          "bytes": 128180,
+          "published": "541996b221e1bd3ef2a56fcbeb6b52aefde13b2598bc9a7688faa948fefe4f1d",
+          "corrected": "b7f4a3ab562048f28dd1fa691601bc43363a61d0f876d16d8316c52e4f32d696",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "MaterialIcons-Regular.1e50f5c2ffa6aba4.eot",
+          "bytes": 143258,
+          "published": "39ebc508d7bc2c76c667ff2eb51cb5d6a3cc4ee6de2ba76e5f270a1d2ac893ec",
+          "corrected": "8c998b4a9c0acbb9fe5dd572c206a5a33fdd5ca2b58db87fc3b893beac85068d",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "MaterialIcons-Regular.7ea2023eeca07427.woff2",
+          "bytes": 44300,
+          "published": "a471c93b4d744ef3eb4f8cd2a05a9abe28bac71d4cf3ed99747165df8e2de311",
+          "corrected": "a87d66c91b2e7dc5530aef76c03bd6a3d25ea5826110bf4803b561b811cc8726",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "MaterialIcons-Regular.db852539204b1a34.woff",
+          "bytes": 57620,
+          "published": "e699f9a3e52908c31b02e0e6991148ebee3509de8486220f7938aa1f7350320a",
+          "corrected": "c4a1baec300d09e03a8380b85918267ee80faae8e00c6c56b48e2e74b1d9b38d",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/GitHub.png",
+          "bytes": 1714,
+          "published": "0439ce60ab65403fb5ddba3849f2b24fde6a83178f83a5bfb835176178a6ed1d",
+          "corrected": "2495121b685778bd251e2b9ceea4124cf98479ec86e7d159658e47fa790f2c0e",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/logo.png",
+          "bytes": 19468,
+          "published": "39764634c4954917d8ffe8b84108aaf476452c52b05c6f7148d67385730d5fbc",
+          "corrected": "5913aa327c5a0b64927febce5c74051cb7beb88ee6625469828a73ec62108238",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "assets/transparent.gif",
+          "bytes": 42,
+          "published": "af9dbf02c85319fda5ed6e97828a8328ce87a4a11e2a95d506654bf7dee244f4",
+          "corrected": "ef1955ae757c8b966c83248350331bd3a30f658ced11f387f8ebf05ab3368629",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "data/0.16/icons.png",
+          "bytes": 582211,
+          "published": "0f7ca2a676a259b069366d1b608f7820740a694c6b94ae27c0d4462f8013ca11",
+          "corrected": "b9b3676ac3afbcfb06ca6ed4479addfebd4a064f698e4a0dfc7f079c103e64dd",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "data/0.17/icons.png",
+          "bytes": 603164,
+          "published": "1ad772d1fda95e0773eed3e38064e8a4178b3b2d434766c3724e8a3313b0cb15",
+          "corrected": "f15e0e9b9c24bc528d27a5382a993d850feebdcab6be48682c8bc1c6578229cf",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "data/0.18/icons.png",
+          "bytes": 1569171,
+          "published": "ecd19a4166d5ca484fc7f0258b340fef862c4baacf9392d5ac3c29e26a9a44f7",
+          "corrected": "54397b4c8523f9974af48022a1893ee8acd95a7cd958265b300800392612d6f0",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "data/1.0/icons.png",
+          "bytes": 1589425,
+          "published": "3a707a8a09f5f761d1fa95aa2022f27d40faee3f13ca1545e8c6d16c2a736e32",
+          "corrected": "69f61e2ffca4c5fd17557e5d7f97ec1e9d26b84a35ea61f64c1fa618b5e9f016",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "data/app/icons.png",
+          "bytes": 117592,
+          "published": "eaee704f84ce842f5432f94c37cd9246dd2f6646d5c77e1770527cfde7b63c3b",
+          "corrected": "c16a418e92b68535040e4e90b91f32ff151968c024b09b34a3d014be114ad73f",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "data/bio-industries/icons.png",
+          "bytes": 2238805,
+          "published": "d506277077ff8971443841ea8ac52387fb6bb86c71f0f969c844c3edb04d000a",
+          "corrected": "5050ca105032b07291987ce4add0d1962ce42138bd1857b03747b8598b378e2c",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "data/bobs-angels/icons.png",
+          "bytes": 6396855,
+          "published": "2ccdc78765e3bf2c90c3aa800cb8a05e5561a31a8011a7d34f4583498d09e168",
+          "corrected": "ab6e8e8539177363a65c71ab7601411b594634edeb6b814d8805c61f200e6eaa",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "data/factorio-extended-plus/icons.png",
+          "bytes": 2305591,
+          "published": "844e0e07d21f0655f313d7dee5e205b4af30538916d48772038b288c0d6c356e",
+          "corrected": "f4760f254a10afab607c736322af2724479e37d7b2e1176c0c5a024d0957efd3",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "data/krastorio2/data.json",
+          "bytes": 186758,
+          "published": "a4dd4840faa53f314390164d78b0558017c1e6c843d79bced4cde7cebb3957de",
+          "corrected": "c0494b4f27048cc8f52c3728bd4432f5c5e5e2be23d4569f4b40ef9f00eebae4",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "data/krastorio2/icons.png",
+          "bytes": 3471510,
+          "published": "92db730ca26f131c985aa5adcb3d7181212312c731321c9a78e96c238670ae30",
+          "corrected": "875a6d0409547fa2c3b2489a958a38e5791b67da4a75bd2d5fe3f70fe654b68f",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "data/pyanodons/icons.png",
+          "bytes": 7161448,
+          "published": "35802d9d62ed1344a304dbe6afc92c3070fa88f0a13b49b90503a8f84baa86ee",
+          "corrected": "4427109773e0c20ab1fbd43cd725029fbf2e6358348b7c6c949a968fddb5541c",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "data/research/icons.png",
+          "bytes": 73437,
+          "published": "76ffbe863353a320156069566557ebaede4dde2d79198d93261bc5a8f8f83f0c",
+          "corrected": "f8a0885996e899c7638e7f119fdb9fafb26de8a7e8c48c952abfdadf89374b27",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "data/space-exploration/data.json",
+          "bytes": 358684,
+          "published": "473c753c5aa52847a43670e374d9fd458ad0c9b5c5e627173c1c4c7e2342d6e4",
+          "corrected": "3fc3e1665ede9e7fd9bb1f28c34cd6c2b6ff4d0ffb423d5e51d8cbafaa803016",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "data/space-exploration/icons.png",
+          "bytes": 4735090,
+          "published": "43a106c1875d4d8599a9ea18854202d1964815fda789c385e96912c3286c081d",
+          "corrected": "e0262fcc598de5fe5fdda9b0693c73f159fde34cc5f791e4b088b58393b1fcda",
+          "carriesHighBytes": true
+        },
+        {
+          "path": "favicon.ico",
+          "bytes": 15406,
+          "published": "17205881f9aca8dc439e9ad25165e63842d29508ce25f9b5df33707d490c8fef",
+          "corrected": "85aedd55b375a41a1de4f7e1048b41b4c17cccfa7174768a5fc8576ee7b0c4be",
+          "carriesHighBytes": true
+        }
+      ],
+      "alreadyCorrect": [
+        "data/0.16/data.json",
+        "data/0.17/data.json",
+        "data/0.18/data.json",
+        "data/1.0/data.json",
+        "data/app/data.json",
+        "data/bio-industries/data.json",
+        "data/bobs-angels/data.json",
+        "data/factorio-extended-plus/data.json",
+        "data/index.ts",
+        "data/pyanodons/data.json",
+        "data/research/data.json",
+        "index.html",
+        "main.67d430ecd5f9b9bf.js",
+        "polyfills.634357a966fc30bd.js",
+        "runtime.b28f7c887ca8251b.js",
+        "styles.1920cec2f325ff85.css"
+      ]
+    }
+  ],
+  "fixedAt": "packages/cli/src/fixture/angular-factoriolab-build-lanes-run.ts, in `inventoryOf`: the digest is now taken over the file bytes. The shared hasher in angular-factoriolab-migration-run.ts accepts a byte array so that passing bytes is the natural call and passing a decoded string is the odd one. `packages/cli/test/digest-byte-fidelity.test.ts` pins the walker against a fixture whose bytes make the three candidate answers three different digests, so a regression to latin1 — or to a lossy UTF-8 read — fails rather than publishing a wrong number that still compares equal to itself.",
+  "notEstablished": [
+    "Nothing was rebuilt. The corrected digests are a re-read of the retained tree the original record was taken from, at the byte lengths the original published; they are not a new build and establish nothing about reproducibility that the original did not already establish.",
+    "This correction changes published digest values and nothing else. No result, no conclusion and no non-claim of the original record is amended, withdrawn or strengthened here.",
+    "The correction does not audit the original record for any other defect. It addresses the latin1 digest defect and says nothing about the rest of the record."
+  ],
+  "witnessBinding": "The published factoriolab witness receipt (packages/core/src/receipts/witness-angular-factoriolab.ts) binds all three build-lane records, each by the seal digest the record computed over its own body and by the sha256 of the record file's exact bytes. It does *not* bind any artifact digest from inside those records. Both bindings still verify against the originals, which this unit left untouched, so the receipt is not broken and is deliberately not re-published here. What the Judge should see plainly is the transitive consequence: the receipt binds bytes that contain affected values, so a reader who follows the chain from the witness proof into the build receipts reaches latin1 digests unless they also follow the supersede chain to this record. That is a gap in navigability, not in the binding — and it is why these corrections exist as records the originals point to rather than as edits.",
+  "digest": "9e24332478d85916341690557e8341479fe593474bcacce667c93160d95deaf6"
+}

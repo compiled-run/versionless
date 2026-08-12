@@ -47,9 +47,10 @@ describe('Angular workspace migration', () => {
 		expect(architect['build']?.['options']).toEqual({
 			polyfills: ['src/polyfills.ts'],
 			main: 'src/main.ts',
+			optimization: { scripts: true, styles: true, fonts: { inline: false } },
 		});
 		expect(architect['build']?.['configurations']).toEqual({
-			production: { optimization: true },
+			production: { optimization: { scripts: true, styles: true, fonts: { inline: false } } },
 		});
 		expect(migration.removedPackages).toEqual(['codelyzer', 'tslint']);
 	});
