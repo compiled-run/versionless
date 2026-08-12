@@ -33,3 +33,4 @@ export * from './subject-void-type-argument.ts';
 export * from './sass-mixin-hyphenation-successor.ts';
 export * from './json-module-named-import.ts';
 export * from './stylesheet-url-rebase.ts';
+export * from './web-worker-url-specifier.ts';

@@ -1,0 +1,253 @@
+{
+	"schemaVersion": "versionless.angular-super-productivity-capability-round.v1",
+	"unit": "lrapr-t006/u18j-worker-chunks-parity",
+	"consentId": "VL-LEGACY-CORPUS-2026-08-10",
+	"result": "green",
+	"meaning": "The one family a green build could not report is closed, and the cell's build story is complete. u18i left the lane green at 58 artifacts and named the thing the green did not cover: both of the application's web workers were constructed from a string specifier, which webpack 5 does not recognise as a worker request, so no chunk was emitted, no error was raised, and the workers would have 404'd at runtime. One capability answers it — an analyzer-driven rewrite of the era construction into the URL form, provable from the workspace's own worker declaration — and after it the build emits 62 artifacts including both worker chunks, which the runtime chunk references and the service-worker manifest precaches. Three builds agree file for file except the one clock field. Logical-name parity against the era lane is now stated with every asymmetry named: the workers emit, and they emit under a different logical name than the era lane gave them, for a reason read out of the builder's own webpack.",
+	"previous": "u18i-closure-correction-green.json",
+	"changeset": "u18-composed-changeset.json",
+	"tree": {
+		"stage": ".versionless/stage/angular-super-productivity-v2-13-15-u18b",
+		"applied": ".versionless/stage/angular-super-productivity-v2-13-15-u18b/app",
+		"from": ".versionless/cache/angular-super-productivity-v2-13-15-source/verify/extracted/super-productivity-2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+		"commit": "2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+		"reuse": "The tree u18i left, carried forward unchanged, with this round's two capability edits applied on top. build-11.log is the first build after them and the artifact census; build-12.log and build-13.log are the two further builds the determinism comparison is made over.",
+		"reRunnable": "The capability is a function of the module and the workspace reading, and it recognises the form it writes. A second pass over an already-rewritten construction reports no change and no refusal, which the capability's own idempotence test states and the driver reproduces on the tree."
+	},
+	"cell": {
+		"node": "v16.20.2",
+		"nodeSource": ".versionless/cache/angular-jira-clone-runtime/node-v16.20.2-darwin-arm64",
+		"architecture": "darwin-arm64, native — no translation layer",
+		"builder": "@angular-devkit/build-angular:browser (Angular 16.2)",
+		"bundler": "webpack 5.94.0, the copy the builder carries at node_modules/@angular-devkit/build-angular/node_modules/webpack",
+		"environment": {
+			"NG_CLI_ANALYTICS": "false"
+		}
+	},
+	"capabilitiesAdded": [
+		{
+			"capability": "web-worker-url-specifier",
+			"file": "packages/frameworks/angular/src/web-worker-url-specifier.ts",
+			"test": "packages/frameworks/angular/test/web-worker-url-specifier.test.ts",
+			"appNameBranches": 0,
+			"family": "web worker constructed from a string specifier",
+			"newFamily": true,
+			"reading": "The era's CLI carried a webpack 4 worker plugin that treated `new Worker('./x.worker', {type: 'module'})` as a worker request: it compiled the named module under the workspace's webWorkerTsConfig and emitted it as its own chunk. Webpack 5 dropped the plugin and replaced it with a rule in the module graph that recognises exactly one spelling — `new Worker(new URL('./x.worker', import.meta.url), …)`. A plain string is an ordinary argument to that rule, so nothing is parsed and nothing is emitted, and nothing is reported either: this is the one family in this cell that a green build cannot surface. The successor is not a choice — `new URL(specifier, import.meta.url)` is the only construction webpack 5 resolves, the specifier inside it is the one already written, and the options object is untouched — so what has to be proven is that the construction is a worker request at all. That is three readings, each of the tree rather than of a name: the workspace declares web-worker support and the tsconfig it names is present; the string specifier resolves, from the module that writes it, to a file the tree carries that the worker tsconfig's own `include` patterns reach; and the construction's shape matches — the global `Worker` by binding rather than by spelling, a string-literal first argument, and options already declaring `type: 'module'`, which is what the emitted chunk's format has to be. Everything else is refused by name: a specifier this reader cannot read, a specifier naming no worker source, options with no readable `type` or a `type` other than module, an options literal whose membership is not static, a module whose own root scope binds `Worker`. A construction already in the URL form is passed over in silence, which is what makes a second pass a no-op.",
+			"refusesRatherThanGuesses": [
+				"the workspace declares no web-worker support",
+				"the first argument is not a string literal",
+				"the specifier resolves to no worker source the worker tsconfig includes",
+				"the options declare no readable `type`, or a `type` other than 'module'",
+				"the module's root scope binds the name Worker"
+			],
+			"ruledAccommodation": false
+		}
+	],
+	"capabilityOutcomes": [
+		{
+			"capability": "web-worker-url-specifier",
+			"driver": "packages/cli/src/fixture/angular-super-productivity-u18j-run.ts",
+			"filesChanged": [
+				"src/app/core/compression/compression.service.ts",
+				"src/app/features/reminder/reminder.service.ts"
+			],
+			"changes": [
+				"src/app/core/compression/compression.service.ts line 18: new Worker('./lz.worker', …) → new Worker(new URL('./lz.worker', import.meta.url), …) (the specifier names src/app/core/compression/lz.worker.ts, which the workspace's worker tsconfig includes)",
+				"src/app/features/reminder/reminder.service.ts line 52: new Worker('./reminder.worker', …) → new Worker(new URL('./reminder.worker', import.meta.url), …) (the specifier names src/app/features/reminder/reminder.worker.ts, which the workspace's worker tsconfig includes)"
+			],
+			"unhandled": [],
+			"reading": [
+				"1 webWorkerTsConfig declaration(s) in angular.json: tsconfig.worker.json",
+				"1 of them present in the tree: tsconfig.worker.json",
+				"1 include pattern(s) from those tsconfigs: src/**/*.worker.ts",
+				"559 module(s) under src/, 7 of which write the identifier Worker and were handed to the capability"
+			],
+			"note": "Seven modules write the identifier `Worker` and two of them construct one. The other five are src/app/features/reminder/reminder.worker.ts, which is a worker source and not a caller, and src/app/app.module.ts, src/app/core/notify/notify.module.ts, src/app/core/notify/notify.service.ts and src/main.ts, which write it only inside ServiceWorker and ServiceWorkerModule. None of the five carries a `new Worker` construction, so the capability had no business in them and said nothing — not a refusal, an absence."
+		}
+	],
+	"accommodations": {
+		"addedThisRound": 0,
+		"carriedForward": 19,
+		"carriedForwardSource": "u18h-capability-round.json — 19 manual-migration-steps over 8 distinct decisions, plus the ngx-electron specifier redirect at 20 modules, which u18h counts as one decision rather than 20 steps.",
+		"inventoryComplete": "The complete accommodation inventory for this cell, unchanged since u18h and final as of this round, is: the 19 manual-migration-steps in packages/cli/src/fixture/angular-super-productivity-u18h-run.ts, over the five families u18h names — @ngrx/effects createEffect result typing, chart.js 2 options literals, ng2-charts symbols with no successor, ngx-electron is not consumable by this cell, and three unrelated call sites — and the one payload file fixtures/angular-super-productivity-v2-13-15/accommodations/electron.service.ts, redirected at 20 modules. u18i added nothing to it and u18j adds nothing to it. Every application edit this round made was written by a capability in packages/frameworks from a reading of the tree.",
+		"whyZeroIsNotACelebration": "This family had a derivable answer, which is a property of the family and not of the round. The bill for migrating this application is still the nineteen steps and the one payload file u18h recorded; two rounds of capabilities have not reduced it by one."
+	},
+	"applicationFilesChanged": {
+		"countingMethod": "Whole-tree, per the standing ruling: every file under the application root except node_modules/, dist/, .angular/, coverage/, out-tsc/ and .git/, compared by SHA-256 against the pristine extracted tree at commit 2943c5c4f13c3ce4dece0abf4f9c39739dde4192.",
+		"wholeTree": {
+			"pristineFiles": 967,
+			"appliedFiles": 966,
+			"differingInBoth": 89,
+			"filesAdded": 2,
+			"addedFiles": ["package-lock.json", "src/app/core/electron/electron.service.ts"],
+			"filesRemoved": 3,
+			"removedFiles": ["src/tslint.json", "tslint.json", "yarn.lock"],
+			"totalDifferences": 94,
+			"differingOutsideSrc": ["angular.json", "package.json", "tsconfig.json"],
+			"differingUnderSrcInBoth": 86
+		},
+		"previousTotalDifferences": 92,
+		"thisUnit": {
+			"filesWritten": 2,
+			"capabilityDriven": 2,
+			"capabilityDrivenFiles": [
+				"src/app/core/compression/compression.service.ts",
+				"src/app/features/reminder/reminder.service.ts"
+			],
+			"accommodationDriven": 0,
+			"accommodationDrivenFiles": [],
+			"newlyDiffering": 2,
+			"separation": "Both files this unit wrote were written by a capability in packages/frameworks, from the workspace's own worker declaration and the tree's own worker sources. Zero accommodations, zero hand edits, zero closure changes. The whole-tree total moves 92 → 94 by exactly the two files, because neither had been touched by any earlier round."
+		},
+		"finalSplit": {
+			"statement": "The cell's whole-tree bill, complete: 94 differences against the pristine tree — 89 files differing in both trees, 2 added, 3 removed.",
+			"capabilityDrivenAcrossTheCell": "Every source difference under src/ was written by a capability in packages/frameworks except the 19 manual-migration-steps u18h recorded and the one accommodation payload file, and every difference outside src/ — angular.json, package.json, tsconfig.json, the removed tslint files and the lockfile swap — is workspace-and-closure migration the cell's own machinery performs.",
+			"accommodationDrivenAcrossTheCell": "19 manual-migration-steps and 1 payload file at 20 redirected specifiers, all of them from u18h, none from u18i, none from u18j."
+		}
+	},
+	"build": {
+		"command": "node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng.js build --configuration production",
+		"logs": [
+			{
+				"log": ".versionless/stage/angular-super-productivity-v2-13-15-u18b/build-11.log",
+				"exitStatus": 0,
+				"errors": 0,
+				"warnings": 15,
+				"artifactsEmitted": 62,
+				"seconds": "Time: 14986ms as the builder reported it",
+				"meaning": "The first build after the worker rewrite. Green, and four artifacts larger than u18i's green: the two worker chunks and their two maps."
+			},
+			{
+				"log": ".versionless/stage/angular-super-productivity-v2-13-15-u18b/build-12.log",
+				"exitStatus": 0,
+				"errors": 0,
+				"warnings": 15,
+				"artifactsEmitted": 62,
+				"seconds": "Time: 7521ms",
+				"meaning": "The second green build, for the determinism comparison."
+			},
+			{
+				"log": ".versionless/stage/angular-super-productivity-v2-13-15-u18b/build-13.log",
+				"exitStatus": 0,
+				"errors": 0,
+				"warnings": 15,
+				"artifactsEmitted": 62,
+				"seconds": "Time: 7200ms",
+				"meaning": "A third green build, run so that the one differing artifact could be compared field by field rather than only by hash."
+			}
+		],
+		"convergence": "269 → 110 → 57 → 33 → 30 → 27 → 0 source diagnostics across u18c–u18h, then 10 → 4 → 0 bundler errors across u18i's three builds, then 58 → 62 emitted artifacts across u18i's green and this round's.",
+		"initialBundles": [
+			{ "name": "main", "file": "main.16c574808792bb85.js", "rawSize": "3.01 MB", "transfer": "582.32 kB" },
+			{ "name": "styles", "file": "styles.796d2cf2d0763557.css", "rawSize": "198.36 kB", "transfer": "15.84 kB" },
+			{ "name": "polyfills", "file": "polyfills.cf6f5be77fa16c3c.js", "rawSize": "157.71 kB", "transfer": "48.99 kB" },
+			{ "name": "runtime", "file": "runtime.f4c3930e0b618578.js", "rawSize": "2.10 kB", "transfer": "1.07 kB" }
+		],
+		"initialTotal": { "rawSize": "3.36 MB", "transfer": "648.21 kB" },
+		"lazyChunks": [
+			{ "name": "lz", "file": "lz.b385162c14c81c3d.js", "rawSize": "5.36 kB", "transfer": "1.56 kB" },
+			{ "name": "reminder", "file": "reminder.0448ba3c639cbcc1.js", "rawSize": "349 bytes", "transfer": "231 bytes" }
+		],
+		"warningsNotErrors": "15 warnings, counted as lines beginning `Warning:`, two fewer than the 17 u18i's green reported, and the two that went are the evidence this round is most exposed on: `src/app/core/compression/lz.worker.ts is part of the TypeScript compilation but it's unused` and the same line for reminder.worker.ts. They were unused because nothing in the module graph reached them; they are not unused now. The 15 that remain are 8 further `part of the TypeScript compilation but it's unused`, which is a tsconfig include-breadth statement, and 7 CommonJS-or-AMD optimisation-bailout notices. The 26 Dart Sass deprecation notices the stylesheet pipeline prints are not `Warning:` lines and are not counted among the 15.",
+		"runtimeChunkAlsoBecameLarger": "runtime went 1.75 kB → 2.10 kB between u18i's green and this one, which is the chunk-id-to-filename map growing by the two worker chunks."
+	},
+	"workerChunks": {
+		"claim": "The two web workers are emitted as their own chunks, referenced by the emitted runtime, and precached by the emitted service-worker manifest.",
+		"emitted": [
+			"lz.b385162c14c81c3d.js",
+			"lz.b385162c14c81c3d.js.map",
+			"reminder.0448ba3c639cbcc1.js",
+			"reminder.0448ba3c639cbcc1.js.map"
+		],
+		"evidence": [
+			"The builder's own Lazy Chunk Files table in build-11.log lists lz and reminder, which it did not in u18i's build-9.log or build-10.log.",
+			"dist/lz.b385162c14c81c3d.js carries the lz-string implementation and a message handler; the chunk is the worker source compiled, not an empty entry.",
+			"dist/runtime.f4c3930e0b618578.js carries the string b385162c14c81c3d, which is the chunk-id-to-filename map naming the lz chunk — the emitted application knows the file it has to fetch.",
+			"dist/ngsw.json's hashTable lists /lz.b385162c14c81c3d.js and /reminder.0448ba3c639cbcc1.js among its 46 entries, so the generated service worker precaches both.",
+			"The two `is part of the TypeScript compilation but it's unused` warnings for lz.worker.ts and reminder.worker.ts disappeared between build-10 and build-11."
+		],
+		"notEmittedBefore": "u18i's build-9 and build-10 emitted 58 files and none of them was a worker chunk. The delta is exactly four files and exactly the two constructions this round rewrote."
+	},
+	"determinism": {
+		"runs": 3,
+		"comparison": "build-11, build-12 and build-13, whole emitted tree, SHA-256 per file.",
+		"files": 62,
+		"identical": 61,
+		"differing": ["ngsw.json"],
+		"pairwise": "11 against 12: 61 of 62 identical, ngsw.json differing. 12 against 13: the same 61 identical and the same one differing. Every hashed bundle, both worker chunks and all four maps are byte-identical across all three.",
+		"cause": "ngsw.json differs in exactly one field. The two manifests kept from build-12 and build-13 were compared key by key: `timestamp` — 1786503302879 against 1786503355124, fifty-two seconds apart, which is the wall clock of the two builds — is the only key whose value differs, and the 46-entry hashTable is identical between them, worker chunks included.",
+		"artefactsKept": [
+			".versionless/stage/angular-super-productivity-v2-13-15-u18b/build-11-dist.sha256",
+			".versionless/stage/angular-super-productivity-v2-13-15-u18b/build-12-dist.sha256",
+			".versionless/stage/angular-super-productivity-v2-13-15-u18b/build-13-dist.sha256",
+			".versionless/stage/angular-super-productivity-v2-13-15-u18b/ngsw-build-12.json",
+			".versionless/stage/angular-super-productivity-v2-13-15-u18b/ngsw-build-13.json"
+		],
+		"sassRandomFiles": "None differed across the three runs. The Sass-random instability the era baseline recorded did not appear; that is what these three runs show and not a claim that it cannot appear.",
+		"verdict": "Deterministic modulo one recorded clock field."
+	},
+	"logicalNameParity": {
+		"method": "Emitted file names with their content hashes elided — every `.<hex>` segment removed wherever it appears in the name — compared as sets against the era lane's 64-file inventory in u18-era-baseline.json. This is the same elision u18i used and it reproduces u18i's reading of the u18i tree exactly.",
+		"eraLogicalNames": 64,
+		"migratedLogicalNames": 62,
+		"common": 58,
+		"inMigratedNotInEra": ["lz.js", "lz.js.map", "reminder.js", "reminder.js.map"],
+		"inEraNotInMigrated": [
+			"lz.worker.js",
+			"lz.worker.js.map",
+			"polyfills-es5.js",
+			"polyfills-es5.js.map",
+			"reminder.worker.js",
+			"reminder.worker.js.map"
+		],
+		"verdict": "The migrated lane is no longer a strict subset, and the four names it now emits that the era lane did not are the four worker artifacts under a different logical name. Both lanes emit both workers; they disagree about what the files are called. Every asymmetry is named below and none of them is a missing artifact.",
+		"asymmetries": [
+			{
+				"names": ["polyfills-es5.js", "polyfills-es5.js.map"],
+				"kind": "declared difference",
+				"reading": "Differential loading, which the Angular 13 line removed from the browser builder. Their absence is the framework's decision and is expected of any Angular 16 build. Unchanged from u18i."
+			},
+			{
+				"names": [
+					"lz.worker.js",
+					"lz.worker.js.map",
+					"reminder.worker.js",
+					"reminder.worker.js.map",
+					"lz.js",
+					"lz.js.map",
+					"reminder.js",
+					"reminder.js.map"
+				],
+				"kind": "naming difference, not a missing artifact",
+				"reading": "Both lanes emit both worker chunks. They are named differently because the two bundlers name a worker chunk from different things. The era's webpack 4 worker plugin named the chunk after the module it compiled, giving lz.worker and reminder.worker. Webpack 5 names it from the construction's own options: node_modules/@angular-devkit/build-angular/node_modules/webpack/lib/dependencies/WorkerPlugin.js, at the block that reads `if (!Object.prototype.hasOwnProperty.call(entryOptions, \"name\") && options && typeof options.name === \"string\") entryOptions.name = options.name;`, takes the chunk name straight from the `name` property of the options object. This application's two constructions declare `name: 'lz'` and `name: 'reminder'`, and the builder's Lazy Chunk Files table names the chunks lz and reminder accordingly.",
+				"whyNotClosed": "Closing it by name would mean editing the application's `name: 'lz'` to `name: 'lz.worker'`. That option is not a filename: it is the worker's own `self.name` at runtime and is observable by the application, so changing it to make an emitted filename match a webpack 4 convention would alter runtime-visible state for a cosmetic parity. It is recorded as a difference rather than answered.",
+				"readFrom": [
+					".versionless/stage/angular-super-productivity-v2-13-15-u18b/app/node_modules/@angular-devkit/build-angular/node_modules/webpack/lib/dependencies/WorkerPlugin.js",
+					".versionless/stage/angular-super-productivity-v2-13-15-u18b/build-11.log"
+				]
+			}
+		],
+		"countReconciliation": "62 = 58 common + 4 emitted under the modern worker chunk name. 64 = 58 common + 2 differential-loading polyfills + 4 emitted under the era worker chunk name. No artifact the era lane emitted is missing from the migrated lane except the two differential-loading polyfills, and the migrated lane still invents nothing the era lane did not also produce under some name."
+	},
+	"cellBuildStoryComplete": {
+		"statement": "This record closes the build story for the angular-super-productivity-v2-13-15 cell. Nothing about this application's production build is now measured-but-unanswered.",
+		"what": [
+			"The build is green on the Angular 16 browser builder and emits 62 artifacts.",
+			"Three consecutive builds are byte-identical except one clock field in the generated service-worker manifest.",
+			"Logical-name parity against the era lane is 58 common with two named asymmetries and no missing artifact beyond the framework's own removal of differential loading.",
+			"Every application file the migration changed is accounted for, split into 2 capability-driven files this round, the capability-driven files of every earlier round, and the 19 manual-migration-steps plus 1 payload file that make up the entire accommodation bill.",
+			"The one family a green build could not report — workers that compile, bundle green and 404 — was found by parity rather than by the build, and is closed by a capability rather than by an accommodation."
+		],
+		"whatItDoesNotClose": "Everything under notEstablished. A complete build story is not a complete migration: nothing here has run the application."
+	},
+	"notEstablished": [
+		"Whether the application runs. The build emits 62 artifacts and nothing here loaded one in a browser.",
+		"Whether the two web workers work. This round establishes that they are compiled, emitted, referenced by the runtime chunk and precached by the service-worker manifest. It does not establish that either worker answers a message, because nothing here started one.",
+		"Whether the emitted worker chunks behave as the era worker chunks did. Not one byte of the two lanes' worker output was compared, and the era output is a webpack 4 chunk where this is a webpack 5 chunk.",
+		"Whether the 19 accommodations u18h recorded are behaviour-preserving beyond what each entry claims. This round changed none of them and re-measured none of them.",
+		"Whether removing NgxElectronModule leaves the desktop lane working. Still not built here and still not measured.",
+		"Whether the emitted bundles behave as the era bundles did. Logical-name parity is a comparison of names.",
+		"Whether the worker chunk naming difference has any consequence beyond the filename. The application reads no chunk filename that this round found, but nothing here searched the tree exhaustively for one, and the service worker's manifest is generated from the emitted names rather than from a written-down list.",
+		"Whether any other application in this corpus carries the same worker family. The capability is written to the shape rather than to this tree, and it has been run against exactly one tree."
+	]
+}
