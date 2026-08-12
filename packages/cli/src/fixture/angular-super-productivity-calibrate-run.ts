@@ -12,7 +12,7 @@
  * receipt. Its only output is stdout.
  */
 
-import { readFileSync } from 'node:fs';
+import { appendFileSync, readFileSync } from 'node:fs';
 import { basename, join, resolve } from 'pathe';
 import { box, runBoxes } from '@async/witness';
 import { joinURL } from 'ufo';
@@ -315,9 +315,13 @@ export async function calibrateAngularSuperProductivityLane(
 
 		// Leg (d): settings-change. The app exposes NO dark-theme UI control in
 		// v2.13.15 (the isDarkMode formly field is commented out), so the real
-		// control driven is the project theme colour. Every selector is asked as
-		// a count first, then the surface is exercised and the palette custom
-		// properties are read before/after. Exploratory: printed, never asserted.
+		// controls driven are: a second project created through the side-nav
+		// addProject() dialog and switched to, then its PRIMARY theme colour
+		// changed through the /project-settings formly config-section save, and
+		// one keyboard shortcut. Every selector is asked as a count first, the
+		// surfaces are exercised, and the palette custom properties and the
+		// shell's current-project title are read before/after. Printed, never
+		// asserted.
 		const dd: Record<string, unknown> = {};
 		legs['leg-d'] = dd;
 		const paletteProps = [
@@ -334,42 +338,195 @@ export async function calibrateAngularSuperProductivityLane(
 					{ label: 'drawer-palette', selector: 'mat-drawer-container', properties: [...paletteProps] },
 				])
 				.then(
-					(probes) => probes,
+					(probes) =>
+						probes.map((p) => ({ label: p.label, properties: p.properties })),
 					(e: unknown) => `refused: ${e instanceof Error ? e.message : String(e)}`,
 				);
+		// The box PageHandle exposes NO evaluate/fill primitive, so the count is
+		// read out of the retry-until-timeout assertion's refusal: asking for 0
+		// and parsing the observed N. A present element costs one assertion
+		// window, so this is used sparingly.
+		const readCount = async (selector: string): Promise<number | string> => {
+			try {
+				await context.expect.page.count(page, selector, 0);
+				return 0;
+			} catch (error: unknown) {
+				const line = (error instanceof Error ? error.message : String(error))
+					.split('\n')[0]!
+					.trim();
+				const m = line.match(/observed (\d+)/);
+				return m ? Number(m[1]) : line;
+			}
+		};
+		const readCurrentProjectTitle = async (): Promise<unknown> =>
+			host
+				.groupedText({
+					group: 'main-header',
+					name: '.current-project-title',
+					item: '.current-project-title',
+				} as const)
+				.then(
+					(g) => g.map((x) => x.name),
+					(e: unknown) => `refused: ${e instanceof Error ? e.message : String(e)}`,
+				);
+		const readProjectTitles = async (): Promise<unknown> =>
+			host
+				.groupedText({
+					group: 'side-nav .project',
+					name: 'button[mat-menu-item]',
+					item: 'button[mat-menu-item]',
+				} as const)
+				.then(
+					(g) => g.map((x) => x.name),
+					(e: unknown) => `refused: ${e instanceof Error ? e.message : String(e)}`,
+				);
+		const ckPath =
+			process.env.LEG_D_CK ??
+			join(receiptDir, 'leg-d-checkpoints.log');
+		const ck = (m: string): void => {
+			try {
+				appendFileSync(ckPath, `${new Date().toISOString()} [${lane}] ${m}\n`);
+			} catch {
+				/* diagnostic only */
+			}
+		};
+		ck('leg-d reached (before before-reads)');
+		// The number actually present, parsed out of the count refusal, so an
+		// interaction is only driven against an element the page really has —
+		// char-by-char typing against a missing element would burn one interaction
+		// timeout per character.
+		const actualCount = async (selector: string): Promise<number> => {
+			const r = await readCount(selector);
+			return typeof r === 'number' ? r : -1;
+		};
+		// Attempt the click with a bounded timeout and report the outcome, rather
+		// than pre-checking with a full assertion window per selector.
+		const clickIfPresent = async (selector: string): Promise<string> => {
+			try {
+				await page.click(selector, { timeoutMs: 4_000 });
+				return 'clicked';
+			} catch (error: unknown) {
+				const msg = (error instanceof Error ? error.message : String(error)).split('\n')[0]!;
+				ck(`click failed: ${selector} — ${msg}`);
+				return `failed: ${msg}`;
+			}
+		};
 		try {
 			dd['palette-before'] = await readPalette();
-			for (const selector of [
-				'side-nav',
-				'side-nav button[mat-menu-item]',
-				'side-nav .tour-addProjectBtn',
-				'side-nav mat-expansion-panel',
-				'.projects',
-			]) {
+			dd['current-project-title-before'] = await readCurrentProjectTitle();
+			dd['project-titles-before'] = await readProjectTitles();
+			ck('opening addProject dialog');
+
+			// (d.1) Open the addProject() dialog from the side-nav.
+			dd['add-clicked'] = await clickIfPresent('section.projects > button[mat-menu-item]');
+			await new Promise<void>((settle) => void setTimeout(settle, 1_200));
+			dd['dialog-count'] = await readCount('dialog-create-project');
+			ck('dialog opened, setting title');
+			// Type a title into the formly title input (a TEXT input, so char-press
+			// works) — only if present, so a missing input costs one bounded count
+			// rather than one interaction timeout per character.
+			const titleInput = 'dialog-create-project input:not([type=color])';
+			const titleCount = await actualCount(titleInput);
+			dd['title-input-count'] = titleCount;
+			if (titleCount > 0) {
 				try {
-					await context.expect.page.count(page, selector, 0);
-					dd[`count:${selector}`] = 0;
+					await page.type(titleInput, 'Witness leg-d project', { redact: false, timeoutMs: 4_000 });
+					dd['title-typed'] = true;
 				} catch (error: unknown) {
-					dd[`count:${selector}`] = (error instanceof Error ? error.message : String(error))
-						.split('\n')[0]!
-						.trim();
+					dd['title-typed'] = `failed: ${error instanceof Error ? error.message : String(error)}`;
 				}
+				await new Promise<void>((settle) => void setTimeout(settle, 500));
+				ck('title set, clicking save');
+				dd['save-clicked'] = await clickIfPresent('dialog-create-project button[type=submit]');
+				await new Promise<void>((settle) => void setTimeout(settle, 1_500));
+			} else {
+				dd['title-input'] = 'absent';
 			}
-			// A keyboard shortcut: `b` toggles the backlog. Read the split state
-			// before and after so the effect is measured rather than assumed.
-			dd['split-count-before-shortcut'] = await host
-				.groupedText({ group: 'split', name: 'split', item: 'split' } as const)
-				.then((g) => g.length, (e: unknown) => `refused: ${e instanceof Error ? e.message : String(e)}`);
-			await page.press('body', 'b');
-			await new Promise<void>((settle) => void setTimeout(settle, 800));
-			dd['backlog-count-after-b'] = await host
-				.groupedText({ group: 'backlog', name: 'backlog', item: 'backlog' } as const)
-				.then((g) => g.length, (e: unknown) => `refused: ${e instanceof Error ? e.message : String(e)}`);
+			dd['dialog-count-after-save'] = await readCount('dialog-create-project');
+			dd['project-titles-after-add'] = await readProjectTitles();
+			dd['side-nav-project-count-after-add'] = await readCount('side-nav .project');
+			ck('switching to new project');
+
+			// (d.2) Switch to the new (second) project via its side-nav button.
+			dd['switch-clicked'] = await clickIfPresent(
+				'side-nav .project:nth-of-type(2) > button[mat-menu-item]',
+			);
+			await new Promise<void>((settle) => void setTimeout(settle, 1_500));
+			dd['current-project-title-after-switch'] = await readCurrentProjectTitle();
+			dd['route-after-switch'] = 'see page navigations';
+			dd['palette-after-switch'] = await readPalette();
+			ck('navigating to project-settings');
+
+			// (d.3) Go to the current project's settings via the header control.
+			dd['settings-nav-clicked'] = await clickIfPresent('main-header .project-settings-btn');
+			await new Promise<void>((settle) => void setTimeout(settle, 1_500));
+			dd['route-after-settings-nav'] = 'see page navigations';
+			dd['config-section-count'] = await readCount('section.config-section');
+			ck('expanding theme config-section');
+			// Expand the 2nd config-section (the collapsible theme form).
+			dd['expand-clicked'] = await clickIfPresent(
+				'section.config-section:nth-of-type(2) .collapsible-title',
+			);
+			await new Promise<void>((settle) => void setTimeout(settle, 1_200));
+			dd['palette-before-save'] = await readPalette();
+			ck('setting colour input value');
+			// The box PageHandle has no fill/evaluate. Test whether ANY available
+			// primitive can change a native input[type=color]: char-press typing,
+			// and clicking-then-pressing. Palette is measured after each so the
+			// question "can the witness drive this control at all" is answered by
+			// measurement rather than assumed.
+			const colorInput = 'section.config-section:nth-of-type(2) input[type=color]';
+			const colorCount = await actualCount(colorInput);
+			dd['color-input-count'] = colorCount;
+			if (colorCount > 0) {
+				try {
+					await page.type(colorInput, '#ff0000', { redact: false, timeoutMs: 4_000 });
+					dd['color-type-attempt'] = 'typed';
+				} catch (error: unknown) {
+					dd['color-type-attempt'] = `failed: ${error instanceof Error ? error.message : String(error)}`;
+				}
+				await new Promise<void>((settle) => void setTimeout(settle, 400));
+				dd['palette-after-color-type'] = await readPalette();
+				try {
+					await page.click(colorInput, { timeoutMs: 4_000 });
+					for (const key of ['ArrowUp', 'ArrowUp', 'PageUp']) {
+						await page.press(colorInput, key, { timeoutMs: 3_000 });
+					}
+					dd['color-press-attempt'] = 'pressed';
+				} catch (error: unknown) {
+					dd['color-press-attempt'] = `failed: ${error instanceof Error ? error.message : String(error)}`;
+				}
+				await new Promise<void>((settle) => void setTimeout(settle, 400));
+				dd['palette-after-color-press'] = await readPalette();
+				ck('clicking theme submit');
+				dd['save-color-clicked'] = await clickIfPresent(
+					'section.config-section:nth-of-type(2) .submit-button',
+				);
+				await new Promise<void>((settle) => void setTimeout(settle, 1_800));
+			} else {
+				dd['color-input'] = 'absent';
+			}
+			dd['palette-after-save'] = await readPalette();
+
+			// (d.4) A keyboard shortcut. `w` (goToWorkView) and `b` (toggleBacklog)
+			// are both measured; the observable effect in this DOM state decides
+			// which the journey anchors on.
+			ck('keyboard shortcuts');
+			dd['route-before-shortcut'] = 'see page navigations';
 			await page.press('body', 'w');
-			await new Promise<void>((settle) => void setTimeout(settle, 500));
+			await new Promise<void>((settle) => void setTimeout(settle, 1_000));
 			dd['route-after-w'] = 'see page navigations';
+			dd['host-tag-after-w'] = await readCount('work-view');
+			dd['split-count-before-b'] = await readCount('split');
+			await page.press('body', 'b');
+			await new Promise<void>((settle) => void setTimeout(settle, 1_000));
+			dd['route-after-b'] = 'see page navigations';
+			dd['split-count-after-b'] = await readCount('split');
+			dd['backlog-count-after-b'] = await readCount('backlog');
+			ck('leg-d done');
 		} catch (error: unknown) {
 			dd['leg-d-error'] = error instanceof Error ? error.message : String(error);
+			ck(`error: ${error instanceof Error ? error.message : String(error)}`);
 		}
 		cb['pageErrors-during-cb'] = 'see page summary';
 
