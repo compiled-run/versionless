@@ -1,8 +1,8 @@
 # Versionless project trust package
 
-- Canonical SHA-256: `4d0c912417f4de824438e5343707361dcfb98aabb1dceb388aa1b28ac0e2bbfb`
-- Deterministic core: `1ff7581b972fa36e75004353f7d764472839c0c48a4c45a74103f68799bade89`
-- Generated observation: `2026-08-12T20:56:39.325Z`
+- Canonical SHA-256: `45955055e02583b02af713388a34438fa8c8ca579aee9e1e3339fcdfda59908a`
+- Deterministic core: `8ab35ddbb13e9c2cdcf7f6d40c80a1eeafe73f74099d6f430ebbac5dc445c221`
+- Generated observation: `2026-08-12T21:28:24.448Z`
 - Vulnerability input freshness: **verified** (seven-day maximum age)
 - Integrity: **hash-only; authenticity is not established**
 - Assurance: **this package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation**
@@ -14,6 +14,7 @@
 - [Vulnerability and KEV report](vulnerabilities.json) — cached OSV batch and CISA KEV observations only.
 - [SLSA/in-toto-shaped provenance](provenance.json) — shape only; no SLSA level or signer authenticity is claimed.
 - [Supported corpus/runtime/bundler matrix](matrix.json) — unsupported and untested cells remain visible.
+- [Capability-coverage map](capability-coverage.json) — every exported migration capability with its proving applications and derived generality classification; single-application capabilities are named experimental, not claimed general.
 - [Adapter freeze record](adapter-freeze.json) — the migration engine adapter surface is frozen at commit `cce34175340273919c0b70341dfada5533f0307c` with composite SHA-256 `5de7df565fb8e445a45f9f8f43eac27b80b71189d59e4df243e93471406a260c`; the receipts, corpus, and witness registries are deliberately **outside** the freeze so holdout evidence can still be published additively.
 - [Corpus conformance](corpus-conformance.json) — `55f0fdbbee42b02058e109d8d10d64081b803be3e1c5d5863b06acb279693fa5`; 20 verified verticals grouped into exactly 12 source applications; zero designated pilots are verified.
 - The immutable Killed by Google Next.js 12 Pages/webpack production vertical is verified only for its exact fixture; synthetic Next.js 12 Pages, 13 transition/App, and 14 App classification lanes remain **not-tested**, and generic Next.js support is not claimed.
@@ -102,6 +103,68 @@ Proven on exactly one application and therefore **experimental / out-of-matrix**
 - angular: `ngrx-effects-migration`
 
 Angular holdout ingestion is **deferred post-T006**, and no candidate is admitted without a mandatory license-text-at-pin pre-screen.
+
+## Capability-coverage map
+
+The map is the machine-readable evidence record [capability-coverage.json](capability-coverage.json); classification is derived from the count of distinct independent applications and is never hand-set. A capability is claimed **general** only once at least 2 independent applications prove it.
+
+- React lineage: 1/7 capabilities cross-proven.
+- Angular lineage: 7/41 capabilities cross-proven.
+- Total: **8 cross-proven (in-matrix)**, **40 experimental (out-of-matrix)** across 48 enumerated capabilities.
+
+Cross-proven on at least two independent applications, and therefore in the matrix:
+
+- react: `react-cra-vite-adapter` — 3 application(s) (papercups, react-hospitalrun, react-linkfree)
+- angular: `angular-target-cell` — 4 application(s) (angular-factoriolab, angular-jira-clone, angular-super-productivity, angular-tiny-translator)
+- angular: `angular-workspace-migration` — 4 application(s) (angular-factoriolab, angular-jira-clone, angular-super-productivity, angular-tiny-translator)
+- angular: `angular-source-migration` — 4 application(s) (angular-factoriolab, angular-jira-clone, angular-super-productivity, angular-tiny-translator)
+- angular: `ngrx-effects-migration` — 2 application(s) (angular-factoriolab, angular-super-productivity)
+- angular: `webpack-tilde-style-specifier` — 2 application(s) (angular-super-productivity, angular-tiny-translator)
+- angular: `barrel-entry-point-split` — 2 application(s) (angular-super-productivity, angular-tiny-translator)
+- angular: `angular-cli-era-migration` — 4 application(s) (angular-factoriolab, angular-jira-clone, angular-super-productivity, angular-tiny-translator)
+
+Proven on fewer than two independent applications — single-application or unproven coverage — and therefore **experimental / out-of-matrix**:
+
+- react: `react-next-static-adapter` — 1 application(s) (next-killedbygoogle)
+- react: `react-vite-origin-adapter` — 1 application(s) (react-memos)
+- react: `react-connect-to-hooks` — 1 application(s) (react-boilerplate)
+- react: `react-data-flow-connect-to-hooks` — 1 application(s) (react-boilerplate)
+- react: `react-composed-migration` — 1 application(s) (react-boilerplate)
+- react: `react-class-lifecycle-to-hooks` — 1 application(s) (react-avataaars)
+- angular: `template-analysis` — 1 application(s) (angular-fuxa)
+- angular: `semantic-module` — 1 application(s) (angular-super-productivity)
+- angular: `undeclared-runtime-dependency` — 0 application(s) (unproven coverage)
+- angular: `package-exports-style-imports` — 0 application(s) (unproven coverage)
+- angular: `modal-content-params-migration` — 1 application(s) (angular-jira-clone)
+- angular: `custom-webpack-absorption` — 1 application(s) (angular-jira-clone)
+- angular: `tslint-toolchain-removal` — 1 application(s) (angular-jira-clone)
+- angular: `font-inlining-disable` — 1 application(s) (angular-tiny-translator)
+- angular: `angular-cli-json-workspace-synthesis` — 1 application(s) (angular-tiny-translator)
+- angular: `builder-package-declaration` — 0 application(s) (unproven coverage)
+- angular: `node-core-binding-migration` — 1 application(s) (angular-tiny-translator)
+- angular: `node-core-runtime-globals` — 1 application(s) (angular-tiny-translator)
+- angular: `template-i18n-runtime` — 1 application(s) (angular-tiny-translator)
+- angular: `rxjs-prototype-patch-migration` — 1 application(s) (angular-tiny-translator)
+- angular: `deep-import-redirection` — 1 application(s) (angular-tiny-translator)
+- angular: `entry-components-removal` — 1 application(s) (angular-tiny-translator)
+- angular: `module-with-providers-type-argument` — 1 application(s) (angular-tiny-translator)
+- angular: `widened-union-narrowing` — 1 application(s) (angular-tiny-translator)
+- angular: `forms-legacy-disabled-state` — 1 application(s) (angular-tiny-translator)
+- angular: `template-binding-reorder` — 1 application(s) (angular-super-productivity)
+- angular: `declared-type-member-rename` — 1 application(s) (angular-super-productivity)
+- angular: `json-module-named-import` — 1 application(s) (angular-super-productivity)
+- angular: `promise-executor-void-parameter` — 1 application(s) (angular-super-productivity)
+- angular: `removed-entry-point-symbol-successor` — 1 application(s) (angular-super-productivity)
+- angular: `sass-mixin-hyphenation-successor` — 1 application(s) (angular-super-productivity)
+- angular: `split-element-successor` — 1 application(s) (angular-super-productivity)
+- angular: `stylesheet-url-rebase` — 1 application(s) (angular-super-productivity)
+- angular: `subject-void-type-argument` — 1 application(s) (angular-super-productivity)
+- angular: `successor-fork-package` — 1 application(s) (angular-super-productivity)
+- angular: `suggested-export-rename` — 1 application(s) (angular-super-productivity)
+- angular: `unparameterised-base-class` — 1 application(s) (angular-super-productivity)
+- angular: `web-worker-url-specifier` — 1 application(s) (angular-super-productivity)
+- angular: `synthetic-default-import-interop` — 1 application(s) (angular-super-productivity)
+- angular: `sentry-v8-migration` — 1 application(s) (angular-jira-clone)
 
 ## Known gaps
 

@@ -1,0 +1,1026 @@
+{
+  "schemaVersion": "versionless.capability-coverage.v1",
+  "purpose": "Map every exported migration capability to the independent applications that prove it, and derive its generality classification from that proof count",
+  "crossProvenThreshold": 2,
+  "method": [
+    "Enumerated from the @versionless/react and @versionless/angular index barrels: seven React modules and forty-one Angular modules.",
+    "Proving applications are the independent applications whose recorded migration exercised the capability — a direct invocation in the application migration fixture, or a construct-gated firing recorded in its build-lane run.",
+    "Classification is derived: cross-proven (in-matrix) requires at least two distinct independent applications; fewer is experimental (out-of-matrix).",
+    "Where the frozen adapter-freeze.json editorial already classifies a capability this map adopts it unchanged, except ngrx-effects-migration, reclassified cross-proven on the second application (super-productivity) admitted after the freeze.",
+    "Where an application set cannot be determined from records the capability is marked unproven coverage and defaults to experimental."
+  ],
+  "independentApplications": {
+    "react": [
+      "react-boilerplate",
+      "papercups",
+      "react-hospitalrun",
+      "react-memos",
+      "next-killedbygoogle",
+      "react-linkfree",
+      "react-avataaars"
+    ],
+    "angular": [
+      "angular-factoriolab",
+      "angular-jira-clone",
+      "angular-tiny-translator",
+      "angular-super-productivity",
+      "angular-fuxa"
+    ]
+  },
+  "summary": {
+    "total": 48,
+    "crossProven": 8,
+    "experimental": 40,
+    "react": {
+      "total": 7,
+      "crossProven": 1,
+      "experimental": 6
+    },
+    "angular": {
+      "total": 41,
+      "crossProven": 7,
+      "experimental": 34
+    }
+  },
+  "capabilities": [
+    {
+      "name": "react-cra-vite-adapter",
+      "lineage": "react",
+      "package": "@versionless/react",
+      "entryPoints": [
+        "craEntryDocument",
+        "createCraGlobalIdentifierPlugin",
+        "resolveCraNodeCoreModule",
+        "createCraNonUtf8ModuleSourcePlugin"
+      ],
+      "provenApps": [
+        "papercups",
+        "react-hospitalrun",
+        "react-linkfree"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/react-papercups-v1-0-0-vite8.ts",
+        "packages/cli/src/fixture/react-hospitalrun-vite8-run.ts",
+        "packages/cli/src/fixture/react-linkfree-v0-72-0-vite8-run.ts"
+      ],
+      "note": "create-react-app to Vite 8 adapter; fired on three independent create-react-app applications. Cross-proven in adapter-freeze.",
+      "proofCount": 3,
+      "classification": "cross-proven"
+    },
+    {
+      "name": "react-next-static-adapter",
+      "lineage": "react",
+      "package": "@versionless/react",
+      "entryPoints": [
+        "scanNextStaticSurface",
+        "liftNextStaticModule",
+        "nextStaticFrameworkLift"
+      ],
+      "provenApps": [
+        "next-killedbygoogle"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/next-killedbygoogle-v3-0-0-static-run.ts"
+      ],
+      "note": "Next.js static-export to Vite client-build adapter; only the killedbygoogle legacy-Next application exercises it.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "react-vite-origin-adapter",
+      "lineage": "react",
+      "package": "@versionless/react",
+      "entryPoints": [
+        "analyzeViteOriginConfig",
+        "planViteOriginConfig",
+        "viteOriginBuildTarget"
+      ],
+      "provenApps": [
+        "react-memos"
+      ],
+      "attribution": "narrative",
+      "coverage": "proven",
+      "evidence": [
+        "evidence/trust/current/corpus-conformance.json",
+        "packages/cli/src/fixture/react-memos-aggregate-append.ts"
+      ],
+      "note": "Old-Vite-origin (Vite 2 to Vite 8) adapter; only the memos application, whose origin bundler is Vite rather than webpack, exercises it.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "react-connect-to-hooks",
+      "lineage": "react",
+      "package": "@versionless/react",
+      "entryPoints": [
+        "transformReactConnectToHooks"
+      ],
+      "provenApps": [
+        "react-boilerplate"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/react-boilerplate-v4-data-flow-run.ts"
+      ],
+      "note": "react-redux connect to hooks migration; single application. Experimental in adapter-freeze.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "react-data-flow-connect-to-hooks",
+      "lineage": "react",
+      "package": "@versionless/react",
+      "entryPoints": [
+        "transformHomePageConnectToHooks",
+        "transformRepoListItemConnectToHooks"
+      ],
+      "provenApps": [
+        "react-boilerplate"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/react-boilerplate-v4-data-flow-run.ts"
+      ],
+      "note": "Data-flow connect to hooks over the exact HomePage and RepoListItem shapes; single application. Experimental in adapter-freeze.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "react-composed-migration",
+      "lineage": "react",
+      "package": "@versionless/react",
+      "entryPoints": [
+        "planReactComposedMigration"
+      ],
+      "provenApps": [
+        "react-boilerplate"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/react-boilerplate-v4-composed-run.ts"
+      ],
+      "note": "Atomic composed connect-to-hooks migration; single application. Experimental in adapter-freeze.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "react-class-lifecycle-to-hooks",
+      "lineage": "react",
+      "package": "@versionless/react",
+      "entryPoints": [
+        "transformReactClassLifecycleToHooks"
+      ],
+      "provenApps": [
+        "react-avataaars"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/react-avataaars-run.ts"
+      ],
+      "note": "Class-lifecycle to hooks; only the avataaars compatibility probe exercises it. Experimental in adapter-freeze.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "template-analysis",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "analyzeAngularTemplate",
+        "analyzeAngularTemplates"
+      ],
+      "provenApps": [
+        "angular-fuxa"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-fuxa-template-compiler-run.ts"
+      ],
+      "note": "Angular template lexical analysis; exercised only by the fuxa holdout probe.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "semantic-module",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "parseModule",
+        "readModuleImports",
+        "applySourceEdits"
+      ],
+      "provenApps": [
+        "angular-super-productivity"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-super-productivity-u18c-run.ts"
+      ],
+      "note": "Shared source-parsing infrastructure; not claimed general as a standalone user-facing capability.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "undeclared-runtime-dependency",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "declareUndeclaredRuntimeDependencies",
+        "undeclaredRuntimeDependencies"
+      ],
+      "provenApps": [],
+      "attribution": "unproven",
+      "coverage": "unproven",
+      "evidence": [
+        "evidence/trust/current/adapter-freeze.json"
+      ],
+      "note": "Invoked unconditionally by the era orchestrator, but per-application firing is not separately recorded; adapter-freeze records single-application basis. Defaulted experimental.",
+      "proofCount": 0,
+      "classification": "experimental"
+    },
+    {
+      "name": "package-exports-style-imports",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "migratePackageStyleImports",
+        "resolvePackageExport"
+      ],
+      "provenApps": [],
+      "attribution": "unproven",
+      "coverage": "unproven",
+      "evidence": [
+        "evidence/trust/current/adapter-freeze.json"
+      ],
+      "note": "Package-exports style-import resolution; per-application firing not determinable from records; adapter-freeze records single-application basis. Defaulted experimental.",
+      "proofCount": 0,
+      "classification": "experimental"
+    },
+    {
+      "name": "modal-content-params-migration",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "migrateModalContentParams"
+      ],
+      "provenApps": [
+        "angular-jira-clone"
+      ],
+      "attribution": "orchestrated-construct-gated",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-jira-clone-apply-run.ts"
+      ],
+      "note": "ng-zorro modal componentParams migration; only the jira-clone application carries the construct. Experimental in adapter-freeze.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "angular-target-cell",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "alignAngularPackageManifest",
+        "verifyForkLineage",
+        "AngularTargetCell"
+      ],
+      "provenApps": [
+        "angular-factoriolab",
+        "angular-jira-clone",
+        "angular-super-productivity",
+        "angular-tiny-translator"
+      ],
+      "attribution": "orchestrated-unconditional",
+      "coverage": "proven",
+      "evidence": [
+        "packages/frameworks/angular/src/angular-cli-era-migration.ts",
+        "packages/cli/src/fixture/angular-factoriolab-migration-run.ts",
+        "packages/cli/src/fixture/angular-super-productivity-lanes-run.ts",
+        "packages/cli/src/fixture/angular-tiny-translator-lanes-run.ts"
+      ],
+      "note": "Target-cell manifest alignment; invoked unconditionally by the era orchestrator across all four Angular applications. Cross-proven in adapter-freeze.",
+      "proofCount": 4,
+      "classification": "cross-proven"
+    },
+    {
+      "name": "custom-webpack-absorption",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "analyzeCustomWebpackFragment"
+      ],
+      "provenApps": [
+        "angular-jira-clone"
+      ],
+      "attribution": "orchestrated-construct-gated",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-jira-clone-apply-run.ts"
+      ],
+      "note": "Custom-webpack builder absorption; only the jira-clone application uses the custom-webpack builder. Experimental in adapter-freeze.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "tslint-toolchain-removal",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "tslintTargetRemoval",
+        "tslintConfigRemovals"
+      ],
+      "provenApps": [
+        "angular-jira-clone"
+      ],
+      "attribution": "orchestrated-construct-gated",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-jira-clone-migration-run.ts"
+      ],
+      "note": "TSLint toolchain removal; recorded firing on the jira-clone application. Experimental in adapter-freeze.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "font-inlining-disable",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "fontInliningDifference",
+        "fontInliningDisabled"
+      ],
+      "provenApps": [
+        "angular-tiny-translator"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-tiny-translator-u22-font-run.ts"
+      ],
+      "note": "Font-inlining disable difference; single application.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "angular-workspace-migration",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "migrateAngularWorkspace",
+        "migrateAngularTsConfig"
+      ],
+      "provenApps": [
+        "angular-factoriolab",
+        "angular-jira-clone",
+        "angular-super-productivity",
+        "angular-tiny-translator"
+      ],
+      "attribution": "orchestrated-unconditional",
+      "coverage": "proven",
+      "evidence": [
+        "packages/frameworks/angular/src/angular-cli-era-migration.ts",
+        "packages/cli/src/fixture/angular-factoriolab-migration-run.ts",
+        "packages/cli/src/fixture/angular-jira-clone-apply-run.ts",
+        "packages/cli/src/fixture/angular-super-productivity-lanes-run.ts",
+        "packages/cli/src/fixture/angular-tiny-translator-lanes-run.ts"
+      ],
+      "note": "Workspace and tsconfig migration; invoked unconditionally by the era orchestrator across all four Angular applications. Cross-proven in adapter-freeze.",
+      "proofCount": 4,
+      "classification": "cross-proven"
+    },
+    {
+      "name": "angular-cli-json-workspace-synthesis",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "synthesizeAngularWorkspace",
+        "isAngularCliOneWorkspace"
+      ],
+      "provenApps": [
+        "angular-tiny-translator"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-tiny-translator-lanes-run.ts"
+      ],
+      "note": "Angular CLI 1.x angular-cli.json to angular.json synthesis; only tiny-translator predates angular.json.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "builder-package-declaration",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "declareBuilderPackages",
+        "workspaceBuilderPackages"
+      ],
+      "provenApps": [],
+      "attribution": "unproven",
+      "coverage": "unproven",
+      "evidence": [
+        "packages/frameworks/angular/src/angular-cli-era-migration.ts"
+      ],
+      "note": "Declared unconditionally by the era orchestrator, but per-application builder-declaration deltas are not separately recorded. Defaulted experimental.",
+      "proofCount": 0,
+      "classification": "experimental"
+    },
+    {
+      "name": "angular-source-migration",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "migrateAngularSourceModule"
+      ],
+      "provenApps": [
+        "angular-factoriolab",
+        "angular-jira-clone",
+        "angular-super-productivity",
+        "angular-tiny-translator"
+      ],
+      "attribution": "orchestrated-unconditional",
+      "coverage": "proven",
+      "evidence": [
+        "packages/frameworks/angular/src/angular-cli-era-migration.ts",
+        "packages/cli/src/fixture/angular-factoriolab-migration-run.ts",
+        "packages/cli/src/fixture/angular-super-productivity-lanes-run.ts",
+        "packages/cli/src/fixture/angular-tiny-translator-lanes-run.ts"
+      ],
+      "note": "Source-module specifier migration (zone.js, rxjs, renamed exports); invoked per module for every application the era orchestrator migrates. Cross-proven in adapter-freeze.",
+      "proofCount": 4,
+      "classification": "cross-proven"
+    },
+    {
+      "name": "ngrx-effects-migration",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "migrateNgrxEffectDecorators"
+      ],
+      "provenApps": [
+        "angular-factoriolab",
+        "angular-super-productivity"
+      ],
+      "attribution": "orchestrated-construct-gated",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-factoriolab-build-lanes-run.ts",
+        "packages/cli/src/fixture/angular-factoriolab-migration-run.ts",
+        "packages/cli/src/fixture/angular-super-productivity-u18h-run.ts",
+        "packages/cli/src/fixture/angular-super-productivity-migrated-lane-run.ts"
+      ],
+      "note": "createEffect decorator-removal migration. Reclassified cross-proven: written for factoriolab, it ran unprompted over super-productivity twenty effect files as a second independent application admitted after the adapter-freeze editorial (which still records it single-application).",
+      "proofCount": 2,
+      "classification": "cross-proven"
+    },
+    {
+      "name": "node-core-binding-migration",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "migrateNodeCoreBindings",
+        "readFormatDirectives"
+      ],
+      "provenApps": [
+        "angular-tiny-translator"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-tiny-translator-green-run.ts"
+      ],
+      "note": "Node core-module format-binding migration; single application.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "node-core-runtime-globals",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "supplyNodeCoreRuntimeGlobals",
+        "declarePolyfillEntryPoint"
+      ],
+      "provenApps": [
+        "angular-tiny-translator"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-tiny-translator-globals-run.ts"
+      ],
+      "note": "Node core runtime-globals supply; single application.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "template-i18n-runtime",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "declareTemplateI18nRuntime",
+        "readTemplateI18nMarkers"
+      ],
+      "provenApps": [
+        "angular-tiny-translator"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-tiny-translator-localize-run.ts"
+      ],
+      "note": "Template i18n localize runtime declaration; only the tiny-translator localization application exercises it.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "rxjs-prototype-patch-migration",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "migrateRxjsPrototypePatches"
+      ],
+      "provenApps": [
+        "angular-tiny-translator"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-tiny-translator-green-run.ts"
+      ],
+      "note": "rxjs add/operator prototype-patch migration; single application.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "deep-import-redirection",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "redirectUnreachableImports"
+      ],
+      "provenApps": [
+        "angular-tiny-translator"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-tiny-translator-final-run.ts"
+      ],
+      "note": "Deep-import redirection for unreachable specifiers; single application.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "entry-components-removal",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "removeEntryComponents"
+      ],
+      "provenApps": [
+        "angular-tiny-translator"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-tiny-translator-final-run.ts"
+      ],
+      "note": "NgModule entryComponents removal; single application.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "module-with-providers-type-argument",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "addModuleWithProvidersTypeArgument"
+      ],
+      "provenApps": [
+        "angular-tiny-translator"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-tiny-translator-final-run.ts"
+      ],
+      "note": "ModuleWithProviders type-argument insertion; single application.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "widened-union-narrowing",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "narrowWidenedAssignments"
+      ],
+      "provenApps": [
+        "angular-tiny-translator"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-tiny-translator-final-run.ts"
+      ],
+      "note": "Widened-union assignment narrowing; single application.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "webpack-tilde-style-specifier",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "dropWebpackTildeSpecifiers",
+        "renamePackageInSpecifier"
+      ],
+      "provenApps": [
+        "angular-super-productivity",
+        "angular-tiny-translator"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-super-productivity-u18c-run.ts",
+        "packages/cli/src/fixture/angular-tiny-translator-final-run.ts"
+      ],
+      "note": "Webpack tilde style-specifier removal; fired on two independent applications. Admitted cross-proven by this map (absent from the coarse adapter-freeze editorial).",
+      "proofCount": 2,
+      "classification": "cross-proven"
+    },
+    {
+      "name": "forms-legacy-disabled-state",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "declareLegacyCallSetDisabledState",
+        "readControlValueAccessors"
+      ],
+      "provenApps": [
+        "angular-tiny-translator"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-tiny-translator-cva-run.ts"
+      ],
+      "note": "Legacy callSetDisabledState forms config; single application.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "template-binding-reorder",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "reorderTemplateBindings",
+        "readDirectiveBindingDependencies"
+      ],
+      "provenApps": [
+        "angular-super-productivity"
+      ],
+      "attribution": "orchestrated-construct-gated",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-super-productivity-u20c2e-record.ts"
+      ],
+      "note": "Setter-input template-binding reorder; only the super-productivity application carries the construct.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "barrel-entry-point-split",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "splitBarrelImports",
+        "readEntryPointSurface",
+        "resolveBarrelSymbol"
+      ],
+      "provenApps": [
+        "angular-super-productivity",
+        "angular-tiny-translator"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-super-productivity-u18c-run.ts",
+        "packages/cli/src/fixture/angular-tiny-translator-green-run.ts"
+      ],
+      "note": "@angular/material root-barrel entry-point split; the same root-barrel demand measured on two independent applications. Admitted cross-proven by this map (absent from the coarse adapter-freeze editorial).",
+      "proofCount": 2,
+      "classification": "cross-proven"
+    },
+    {
+      "name": "declared-type-member-rename",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "renameDeclaredTypeMembers",
+        "readMissingMembers"
+      ],
+      "provenApps": [
+        "angular-super-productivity"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-super-productivity-u18e-run.ts"
+      ],
+      "note": "Documented type-member rename (ngrx entity setAll); single application.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "json-module-named-import",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "rewriteJsonNamedImports",
+        "readNamedBindings"
+      ],
+      "provenApps": [
+        "angular-super-productivity"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-super-productivity-u18i-run.ts"
+      ],
+      "note": "JSON-module named-import rewrite; single application.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "promise-executor-void-parameter",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "parameteriseVoidPromiseExecutors"
+      ],
+      "provenApps": [
+        "angular-super-productivity"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-super-productivity-u18g-run.ts"
+      ],
+      "note": "Void Promise-executor parameterisation; single application.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "removed-entry-point-symbol-successor",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "succeedRemovedEntryPointSymbols"
+      ],
+      "provenApps": [
+        "angular-super-productivity"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-super-productivity-u18f-run.ts"
+      ],
+      "note": "Removed entry-point symbol successor; single application.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "sass-mixin-hyphenation-successor",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "renameHyphenatedSassMixins",
+        "readSassMixinDeclarations"
+      ],
+      "provenApps": [
+        "angular-super-productivity"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-super-productivity-u18i-run.ts"
+      ],
+      "note": "Sass mixin hyphenation successor; single application.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "split-element-successor",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "resolveSplitElementSuccessors",
+        "checkElementSplit"
+      ],
+      "provenApps": [
+        "angular-super-productivity"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-super-productivity-u18f-run.ts"
+      ],
+      "note": "Split-element template successor; single application.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "stylesheet-url-rebase",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "rebaseStylesheetUrls"
+      ],
+      "provenApps": [
+        "angular-super-productivity"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-super-productivity-u18i-run.ts"
+      ],
+      "note": "Tree-relative stylesheet URL rebase; single application.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "subject-void-type-argument",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "parameteriseVoidSubjects"
+      ],
+      "provenApps": [
+        "angular-super-productivity"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-super-productivity-u18h-run.ts"
+      ],
+      "note": "Void rxjs Subject type-argument parameterisation; single application.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "successor-fork-package",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "migrateSuccessorForkImports"
+      ],
+      "provenApps": [
+        "angular-super-productivity"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-super-productivity-u18c-run.ts"
+      ],
+      "note": "Successor-fork package import migration; single application.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "suggested-export-rename",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "applySuggestedExportRenames",
+        "readSuggestedExportRenames"
+      ],
+      "provenApps": [
+        "angular-super-productivity"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-super-productivity-u18d-run.ts"
+      ],
+      "note": "Compiler-suggested export rename; single application.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "unparameterised-base-class",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "parameteriseBaseClasses",
+        "readUnparameterisedBaseClasses"
+      ],
+      "provenApps": [
+        "angular-super-productivity"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-super-productivity-u18e-run.ts"
+      ],
+      "note": "Unparameterised generic base-class migration; single application.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "web-worker-url-specifier",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "rewriteWorkerUrlSpecifiers"
+      ],
+      "provenApps": [
+        "angular-super-productivity"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-super-productivity-u18j-run.ts"
+      ],
+      "note": "Web-worker new URL specifier rewrite; single application.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "synthetic-default-import-interop",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "enableSyntheticDefaultImports",
+        "readModuleInterop"
+      ],
+      "provenApps": [
+        "angular-super-productivity"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-super-productivity-u18g-run.ts"
+      ],
+      "note": "Synthetic default-import interop; single application.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "sentry-v8-migration",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "migrateSentryV8Tracing"
+      ],
+      "provenApps": [
+        "angular-jira-clone"
+      ],
+      "attribution": "orchestrated-construct-gated",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-jira-clone-apply-run.ts"
+      ],
+      "note": "Sentry v8 tracing migration; only the jira-clone application carries the construct. Experimental in adapter-freeze.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "angular-cli-era-migration",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "migrateAngularCliEraWorkspace"
+      ],
+      "provenApps": [
+        "angular-factoriolab",
+        "angular-jira-clone",
+        "angular-super-productivity",
+        "angular-tiny-translator"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-factoriolab-migration-run.ts",
+        "packages/cli/src/fixture/angular-jira-clone-apply-run.ts",
+        "packages/cli/src/fixture/angular-super-productivity-lanes-run.ts",
+        "packages/cli/src/fixture/angular-tiny-translator-lanes-run.ts"
+      ],
+      "note": "The CLI-era migration orchestrator; run directly by all four independent Angular applications. Cross-proven in adapter-freeze.",
+      "proofCount": 4,
+      "classification": "cross-proven"
+    }
+  ]
+}

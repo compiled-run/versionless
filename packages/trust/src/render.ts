@@ -5,6 +5,7 @@ import type {
 } from '../../core/src/corpus/conformance.ts';
 import type { ScriptSurface } from '../../core/src/enterprise/script-surface.ts';
 import type { RuntimeScriptObservation } from '../../core/src/enterprise/runtime-script-observation.ts';
+import type { CapabilityCoverage } from '../../core/src/receipts/capability-coverage.ts';
 
 interface RenderInputs {
 	manifest: TrustManifest;
@@ -17,6 +18,39 @@ interface RenderInputs {
 	scriptSurface: ScriptSurface;
 	runtimeScriptObservation: RuntimeScriptObservation;
 	transaction: CorpusTransactionState;
+	capabilityCoverage: CapabilityCoverage;
+}
+
+/**
+ * Renders the capability-coverage map: every exported migration capability, the
+ * independent applications that prove it, and the generality classification
+ * derived from that proof count. The section is the honest boundary — a
+ * capability is claimed general (in-matrix) only once at least two independent
+ * applications prove it, and single-application capabilities are named as
+ * experimental rather than silently claimed general.
+ */
+function capabilityCoverageLines(coverage: CapabilityCoverage): string {
+	const row = (classification: 'cross-proven' | 'experimental'): string =>
+		coverage.capabilities
+			.filter((capability) => capability.classification === classification)
+			.map(
+				(capability) =>
+					`- ${capability.lineage}: \`${capability.name}\` — ${capability.proofCount} application(s)${capability.provenApps.length ? ` (${capability.provenApps.join(', ')})` : ' (unproven coverage)'}`,
+			)
+			.join('\n');
+	return `The map is the machine-readable evidence record [capability-coverage.json](capability-coverage.json); classification is derived from the count of distinct independent applications and is never hand-set. A capability is claimed **general** only once at least ${coverage.crossProvenThreshold} independent applications prove it.
+
+- React lineage: ${coverage.summary.react.crossProven}/${coverage.summary.react.total} capabilities cross-proven.
+- Angular lineage: ${coverage.summary.angular.crossProven}/${coverage.summary.angular.total} capabilities cross-proven.
+- Total: **${coverage.summary.crossProven} cross-proven (in-matrix)**, **${coverage.summary.experimental} experimental (out-of-matrix)** across ${coverage.summary.total} enumerated capabilities.
+
+Cross-proven on at least two independent applications, and therefore in the matrix:
+
+${row('cross-proven')}
+
+Proven on fewer than two independent applications — single-application or unproven coverage — and therefore **experimental / out-of-matrix**:
+
+${row('experimental')}`;
 }
 
 /**
@@ -149,6 +183,7 @@ export function renderTrustReport(inputs: RenderInputs): string {
 - [Vulnerability and KEV report](vulnerabilities.json) — cached OSV batch and CISA KEV observations only.
 - [SLSA/in-toto-shaped provenance](provenance.json) — shape only; no SLSA level or signer authenticity is claimed.
 - [Supported corpus/runtime/bundler matrix](matrix.json) — unsupported and untested cells remain visible.
+- [Capability-coverage map](capability-coverage.json) — every exported migration capability with its proving applications and derived generality classification; single-application capabilities are named experimental, not claimed general.
 - [Adapter freeze record](adapter-freeze.json) — the migration engine adapter surface is frozen at commit \`${freeze.commit}\` with composite SHA-256 \`${freeze.composite}\`; the receipts, corpus, and witness registries are deliberately **outside** the freeze so holdout evidence can still be published additively.
 - [Corpus conformance](corpus-conformance.json) — \`${inputs.conformance.integrity.canonicalDigest}\`; ${inputs.conformance.summary.verticals} verified verticals grouped into exactly ${inputs.conformance.summary.sourceApplications} source applications; zero designated pilots are verified.
 ${
@@ -201,6 +236,10 @@ Proven on exactly one application and therefore **experimental / out-of-matrix**
 ${freezeCapabilities.experimental.entries.map((entry) => `- ${entry.lineage}: \`${entry.capability}\``).join('\n')}
 
 Angular holdout ingestion is **deferred post-T006**, and no candidate is admitted without a mandatory license-text-at-pin pre-screen.
+
+## Capability-coverage map
+
+${capabilityCoverageLines(inputs.capabilityCoverage)}
 
 ## Known gaps
 

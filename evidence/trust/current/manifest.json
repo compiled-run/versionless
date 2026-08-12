@@ -1,6 +1,6 @@
 {
   "schemaVersion": "versionless.trust.v1",
-  "canonicalDigest": "4d0c912417f4de824438e5343707361dcfb98aabb1dceb388aa1b28ac0e2bbfb",
+  "canonicalDigest": "45955055e02583b02af713388a34438fa8c8ca579aee9e1e3339fcdfda59908a",
   "integrity": {
     "algorithm": "sha256",
     "authenticity": "not-established",
@@ -8,7 +8,7 @@
   },
   "deterministicCore": {
     "algorithm": "sha256",
-    "digest": "1ff7581b972fa36e75004353f7d764472839c0c48a4c45a74103f68799bade89",
+    "digest": "8ab35ddbb13e9c2cdcf7f6d40c80a1eeafe73f74099d6f430ebbac5dc445c221",
     "artifacts": [
       {
         "path": "adapter-freeze.json",
@@ -28,7 +28,7 @@
       },
       {
         "path": "provenance.json",
-        "sha256": "7b5105f0ecf515064b817956c388dfc57814d7b2409c15b0447af4abf796c238"
+        "sha256": "616ed620a9b3b36d9fd1f0852702f5c3864939f98656b77da4c5bf5242ed6ebf"
       },
       {
         "path": "matrix.json",
@@ -53,6 +53,10 @@
       {
         "path": "runtime-script-observation.json",
         "sha256": "086e0c84d48c7f53a814f67a51b7c25239b6f413306361fde1cfdfc3a0f1afc2"
+      },
+      {
+        "path": "capability-coverage.json",
+        "sha256": "05c003b0335b1ccf55e7f40eb086f7e0f2d1efc125607adf687e82b464c3e998"
       }
     ]
   },
@@ -221,7 +225,7 @@
     }
   ],
   "observation": {
-    "generatedAt": "2026-08-12T20:56:39.325Z",
+    "generatedAt": "2026-08-12T21:28:24.448Z",
     "vulnerabilityFreshness": "verified"
   },
   "derivedReport": "report.md"

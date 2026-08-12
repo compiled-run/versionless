@@ -721,7 +721,7 @@ snapshots:
 			) as typeof first;
 			expect(first.deterministicCore.digest).toBe(second.deterministicCore.digest);
 			expect(first.canonicalDigest).not.toBe(second.canonicalDigest);
-			expect(first.deterministicCore.artifacts).toHaveLength(11);
+			expect(first.deterministicCore.artifacts).toHaveLength(12);
 			expect(first.receipts).toHaveLength(transaction.receipts);
 			expect(
 				first.receipts.filter(

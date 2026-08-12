@@ -11,6 +11,10 @@ import {
 import { compareUtf16CodeUnits } from '../../core/src/bundlers/vite8-adapter.ts';
 import { assertSyntheticEvidence } from '../../core/src/policy/payment-signals.ts';
 import { canonicalize, sha256 } from '../../core/src/receipts/canonicalize.ts';
+import {
+	buildCapabilityCoverage,
+	verifyCapabilityCoverage,
+} from '../../core/src/receipts/capability-coverage.ts';
 import { ANGULAR_REALWORLD_V15_TO_V16_RECEIPT } from '../../core/src/receipts/angular-realworld-v15-to-v16.ts';
 import { WITNESS_ANGULAR_REALWORLD_RECEIPT_PATH } from '../../core/src/receipts/witness-angular-realworld.ts';
 import { REACT_PAPERCUPS_FIXTURE } from '../../core/src/receipts/witness-react-papercups.ts';
@@ -164,6 +168,7 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 	}
 	const expectedArtifacts = [
 		'adapter-freeze.json',
+		'capability-coverage.json',
 		'controls.json',
 		'corpus-conformance.json',
 		'dependency-graph.cdx.json',
@@ -179,7 +184,13 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 		canonicalize(manifest.deterministicCore.artifacts.map((item) => item.path).sort()) !==
 		canonicalize(expectedArtifacts)
 	)
-		throw new Error('Trust deterministic core must contain exactly eleven required artifacts');
+		throw new Error('Trust deterministic core must contain exactly twelve required artifacts');
+	verifyCapabilityCoverage(await readJson(path.join(output, 'capability-coverage.json')));
+	if (
+		canonicalize(await readJson(path.join(output, 'capability-coverage.json'))) !==
+		canonicalize(buildCapabilityCoverage())
+	)
+		throw new Error('Capability-coverage map does not match independent re-derivation');
 	const emittedFreeze = verifyAdapterFreezeRecord(
 		await readJson(path.join(output, 'adapter-freeze.json')),
 	);

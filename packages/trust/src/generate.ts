@@ -12,6 +12,7 @@ import { compareUtf16CodeUnits } from '../../core/src/bundlers/vite8-adapter.ts'
 import { assertSyntheticEvidence } from '../../core/src/policy/payment-signals.ts';
 import { canonicalize, sha256 } from '../../core/src/receipts/canonicalize.ts';
 import { verifyReceipt } from '../../core/src/receipts/verify.ts';
+import { buildCapabilityCoverage } from '../../core/src/receipts/capability-coverage.ts';
 import {
 	ANGULAR_REALWORLD_V15_TO_V16_RECEIPT,
 	verifyAngularRealworldV15ToV16Evidence,
@@ -2019,6 +2020,7 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 	};
 	await mkdir(output, { recursive: true });
 	const freeze = adapterFreezeRecord();
+	const capabilityCoverage = buildCapabilityCoverage();
 	const deterministic: Array<[string, unknown]> = [
 		['adapter-freeze.json', freeze],
 		['dependency-graph.cdx.json', graph],
@@ -2031,6 +2033,7 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 		['corpus-conformance.json', conformance],
 		['script-surface.json', scriptSurface],
 		['runtime-script-observation.json', runtimeScriptObservation],
+		['capability-coverage.json', capabilityCoverage],
 	];
 	for (const [name, value] of deterministic) await writeJson(path.join(output, name), value);
 	const artifacts: ManifestArtifact[] = await Promise.all(
@@ -2066,6 +2069,7 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 		scriptSurface,
 		runtimeScriptObservation,
 		transaction,
+		capabilityCoverage,
 	});
 	await writeFile(path.join(output, 'report.md'), report);
 	return trustManifest;
