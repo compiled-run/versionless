@@ -23,3 +23,5 @@ export * from './widened-union-narrowing.ts';
 export * from './webpack-tilde-style-specifier.ts';
 export * from './successor-fork-package.ts';
 export * from './suggested-export-rename.ts';
+export * from './unparameterised-base-class.ts';
+export * from './declared-type-member-rename.ts';

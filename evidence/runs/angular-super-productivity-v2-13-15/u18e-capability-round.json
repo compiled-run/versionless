@@ -1,0 +1,213 @@
+{
+	"schemaVersion": "versionless.angular-super-productivity-capability-round.v1",
+	"unit": "lrapr-t006/u18e-super-productivity-convergence",
+	"consentId": "VL-LEGACY-CORPUS-2026-08-10",
+	"result": "capabilities-fired-build-red-smaller-remainder",
+	"meaning": "Two more of the demands u18d itemised were answerable by reading the installed tree harder, and both readings were taken. The larger of the two is the one the census had been standing on since u18b: two components extend a base class that acquired a type parameter, and every member they inherited was unresolvable behind the bare extends clause. Filling that clause from the installed declaration cleared twenty-one diagnostics in two files. The production build was run again on the result and is still red, at 33 diagnostics against u18d's 57. This record states what fired, what each capability refused and why, and what the remaining eight families are.",
+	"previous": "u18d-capability-round.json",
+	"changeset": "u18-composed-changeset.json",
+	"tree": {
+		"stage": ".versionless/stage/angular-super-productivity-v2-13-15-u18b",
+		"applied": ".versionless/stage/angular-super-productivity-v2-13-15-u18b/app",
+		"from": ".versionless/cache/angular-super-productivity-v2-13-15-source/verify/extracted/super-productivity-2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+		"commit": "2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+		"reuse": "The stage tree u18b staged was reused and this unit's two capability rounds were run over the tree u18d left, not over a freshly composed one. That is a statement about what the diagnostic counts compare: build-4.log is the same tree as build-3.log plus five files. The u18c capabilities were re-run first, as u18d re-ran them, and changed nothing — which is the round saying it is repeatable rather than answering anything new."
+	},
+	"cell": {
+		"node": "v16.20.2",
+		"nodeSource": ".versionless/cache/angular-jira-clone-runtime/node-v16.20.2-darwin-arm64",
+		"architecture": "darwin-arm64, native — no translation layer",
+		"builder": "@angular-devkit/build-angular:browser (Angular 16.2)",
+		"environment": { "NG_CLI_ANALYTICS": "false" }
+	},
+	"acquisition": {
+		"purpose": "None. No package was installed, no manifest was changed and no network was reached in this unit; the closure u18c resolved was read, not altered.",
+		"networkMode": "none"
+	},
+	"adapterChanges": [
+		{
+			"file": "packages/frameworks/angular/src/unparameterised-base-class.ts",
+			"capability": "unparameterised-base-class",
+			"appNameBranches": 0,
+			"reading": "TS2314 names a generic type written with no argument list and prints the type with its parameters — `Generic type 'FieldType<F>' requires 1 type argument(s)`. The capability writes an argument only when four independent readings of the installed declaration agree: the class really declares the parameters the compiler named, the one to be filled declares no default, it carries a constraint, and the tree publishes a companion type for the class — the interface named for it — that extends that same constraint and declares members of its own. A companion that restates the constraint rather than narrowing it is refused, as is one that extends something else. The rewrite is binding-resolved: the identifier at the compiler's position has to resolve to an import, the import has to name the package the reading was taken from, and the companion's name has to be free in the module's root scope."
+		},
+		{
+			"file": "packages/frameworks/angular/src/declared-type-member-rename.ts",
+			"capability": "declared-type-member-rename",
+			"appNameBranches": 0,
+			"reading": "TS2339 carries no successor, so the successor here is a written-down claim rather than a compiler resolution — this is the one capability in the round that is not derived end to end from the tree, and the record says so plainly. What the diagnostic does supply is the receiver: the message names the declared type the compiler resolved the expression to, which is the binding resolution a textual rename would have had to guess. The claim is then checked two-sidedly against the installed type's member surface, followed through the interfaces it extends: the successor has to be declared and the replaced name has to be absent, or the site is refused by name."
+		}
+	],
+	"capabilityOutcomes": [
+		{
+			"capability": "unparameterised-base-class",
+			"firedOn": "2 components — src/app/ui/duration/input-duration-formly/input-duration-formly.component.ts:11 and src/app/features/config/keyboard-input/keyboard-input.component.ts:11 — each gaining `<FieldTypeConfig>` on its extends clause and one import declaration beside the one that brought in the base class.",
+			"filesChanged": 2,
+			"refused": 0,
+			"reading": "@ngx-formly/material@7.1.0 declares `abstract class FieldType<F extends FormlyFieldConfig<FormlyFieldProps>>` in form-field/field.type.d.ts, with one parameter and no default — which is why TS2314 fires at all, since the core package's own FieldType does default its parameter. The constraint head, FormlyFieldConfig, is imported in that file from @ngx-formly/core, and @ngx-formly/core@7.1.0 publishes `interface FieldTypeConfig<T = FormlyFieldConfig['props']> extends FormlyFieldConfig<T>` declaring two members of its own, formControl and props. Those four facts are the whole warrant: the companion extends the parameter's own constraint, so substituting it satisfies the parameter by the declaration's arithmetic, and it narrows formControl to UntypedFormControl, which is what the templates' [formControl] binding needs.",
+			"notRenamed": "`to` → `props` was not written, and the reason is a reading rather than a budget. @ngx-formly/core@7.1.0 still declares `get to()` on FieldType, marked `@deprecated Use props instead`. Every `to` in these two components and their templates therefore resolves against the installed surface once the extends clause does, and the ten TS2339 that named `to`, `formControl`, `field`, `id` and `errorStateMatcher` were not ten separate demands — they were one, reported ten times. A rename written here would have been a change this tree does not require.",
+			"clearedDiagnostics": "TS2314 2 → 0, TS2740 2 → 0, TS2339 17 → 0, TS2322 7 → 4. Twenty-one diagnostics, of which the two the capability addressed directly were the TS2314; the other nineteen were the same absence reported from the templates, from the two NgModules that declare the components, and from the entryComponents arrays that name them."
+		},
+		{
+			"capability": "declared-type-member-rename",
+			"firedOn": "3 reducers — github-issue.reducer.ts:155, jira-issue.reducer.ts:153 and project.reducer.ts:248 — each `adapter.addAll(entities, state)` becoming `adapter.setAll(entities, state)`.",
+			"filesChanged": 3,
+			"refused": 2,
+			"reading": "@ngrx/entity@16.3.0's EntityAdapter<T> was measured by following its extends chain within the package's own declaration files: 18 members, complete, setAll among them and addAll not. The two refusals are the two TS2339 the compiler raised against templates, where the declared type is the component class rather than a type an installed package declares; those receivers are the application's own and no rename claims them.",
+			"clearedDiagnostics": "3 of the TS2339, counted inside the 17 → 0 above. The three sites are indistinguishable from the templates' TS2339 by code alone, which is why the capability keys on the declared type in the message and not on the code."
+		},
+		{
+			"capability": "successor-fork-package, barrel-entry-point-split, webpack-tilde-style-specifier",
+			"firedOn": "Re-run over the applied tree and found their u18c and u18d work already in place.",
+			"filesChanged": 0,
+			"refused": 0,
+			"clearedDiagnostics": "None new. These are the earlier capabilities, re-run to establish that the round is repeatable rather than to answer anything."
+		}
+	],
+	"readingsTakenWithoutWriting": [
+		{
+			"family": "rxjs/internal-compatibility",
+			"question": "Whether the deep-specifier collapse could be ridden onto the package root, as it is for the RxJS type modules.",
+			"reading": "rxjs@7.8.2's root declaration surface (node_modules/rxjs/dist/types/index.d.ts) does not carry `fromPromise` at all — the name occurs zero times. The specifier `rxjs/internal-compatibility` is gone and the symbol the module imports through it did not move to the root; it was replaced by a differently-named creation function. A collapse onto the root would therefore write an import of a name rxjs does not publish, which is exactly the failure the collapse exists to avoid.",
+			"outcome": "Refused. Itemised below as an unanswered demand."
+		},
+		{
+			"family": "mat-chip-list",
+			"question": "Whether @angular/material@16.2.14 publishes a successor selector the analyzer can prove `mat-chip-list` maps to.",
+			"reading": "The installed chips entry point declares six components with element selectors: MatChip (mat-chip, mat-basic-chip), MatChipGrid (mat-chip-grid), MatChipListbox (mat-chip-listbox), MatChipOption (mat-chip-option), MatChipRow (mat-chip-row) and MatChipSet (mat-chip-set). There is no `mat-chip-list` and there is no single successor: MatChipSet, MatChipListbox and MatChipGrid are three different components, and which one a given `<mat-chip-list>` became depends on whether that list is selectable and whether it hosts a matChipInput — a property of the application's template, not of the installed package.",
+			"outcome": "Refused. A rename capability that picked one of three would be deciding what the surface does not establish. Itemised below."
+		}
+	],
+	"applicationFilesChanged": {
+		"differingFromPristine": 61,
+		"pristineFilesUnderSrc": 796,
+		"newInThisUnit": 5,
+		"newFiles": [
+			"src/app/features/config/keyboard-input/keyboard-input.component.ts",
+			"src/app/features/issue/github/github-issue/store/github-issue.reducer.ts",
+			"src/app/features/issue/jira/jira-issue/store/jira-issue.reducer.ts",
+			"src/app/features/project/store/project.reducer.ts",
+			"src/app/ui/duration/input-duration-formly/input-duration-formly.component.ts"
+		],
+		"filesAddedUnderSrc": 0,
+		"meaning": "61 application files under src/ differ byte-for-byte from the pristine extracted tree at commit 2943c5c, against u18d's 56. The five named above are the five this unit wrote and are the whole of the difference; no file was added and none removed. The count is a diff against the source tree, not a sum of what the capabilities reported."
+	},
+	"build": {
+		"command": "node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng.js build --configuration production",
+		"log": ".versionless/stage/angular-super-productivity-v2-13-15-u18b/build-4.log",
+		"exitStatus": 1,
+		"artifactsEmitted": 0,
+		"diagnosticCountsBefore": {
+			"NG6002": 15,
+			"NG6003": 1,
+			"NG8001": 2,
+			"TS1259": 1,
+			"TS2305": 3,
+			"TS2307": 1,
+			"TS2314": 2,
+			"TS2322": 7,
+			"TS2339": 17,
+			"TS2345": 1,
+			"TS2554": 2,
+			"TS2740": 2,
+			"TS2769": 1,
+			"TS2794": 2
+		},
+		"diagnosticCounts": {
+			"NG6002": 15,
+			"NG6003": 1,
+			"NG8001": 2,
+			"TS1259": 1,
+			"TS2305": 3,
+			"TS2307": 1,
+			"TS2322": 4,
+			"TS2345": 1,
+			"TS2554": 2,
+			"TS2769": 1,
+			"TS2794": 2
+		},
+		"diagnosticTotalBefore": 57,
+		"diagnosticTotal": 33,
+		"countingMethod": "Every `error TS####` / `error NG####` occurrence in the build log, counted the same way in both columns. The before column is u18d's recorded after-state and is build-3.log.",
+		"cleared": {
+			"TS2314": "2 → 0 (unparameterised base class)",
+			"TS2740": "2 → 0",
+			"TS2339": "17 → 0",
+			"TS2322": "7 → 4"
+		},
+		"unmoved": "NG6002 15, TS2322 4, TS2305 3, TS2554 2, TS2794 2, NG8001 2, NG6003 1, TS1259 1, TS2307 1, TS2345 1, TS2769 1. Every one of them is a demand u18d itemised; two of them (rxjs/internal-compatibility and mat-chip-list) were read in this unit and refused on the reading, and the rest were not attempted."
+	},
+	"remainingDemands": [
+		{
+			"family": "ng2-charts symbols with no successor",
+			"file": "src/app/features/metric/metric.model.ts:2, src/app/features/metric/metric.component.ts:4",
+			"symbol": "Label, SingleDataSet, Color",
+			"library": "ng2-charts 2.3 → 5.0.4",
+			"observed": "3 TS2305.",
+			"neededTransform": "Unchanged from u18d. The compiler offers no successor for any of the three, which is why the rename capability never sees them: it reads TS2724 and these are TS2305. ng2-charts 5.0.4 publishes five root exports and none of them is a type alias for a chart label or a colour; chart.js 4 carries the replacements under different names and a different shape. This is a source answer, not a rename."
+		},
+		{
+			"family": "chart.js 2 options literals",
+			"file": "src/app/features/metric/metric.component.ts:24, src/app/core/theme/global-theme.service.ts:163",
+			"symbol": "{ responsive, legend: { position } } and { legend: { labels: { fontColor } }, scales: { xAxes: [...], yAxes: [...] } }",
+			"library": "chart.js 2.8 → 4.5.1",
+			"observed": "1 TS2322 and 1 TS2345 against _DeepPartialObject<CoreChartOptions & …>.",
+			"neededTransform": "Unchanged and unattempted. chart.js 4 restructured the options schema: `legend` moved under `plugins`, and the `xAxes`/`yAxes` arrays became a keyed `scales` object with `grid` in place of `gridLines` and `ticks.color` in place of `ticks.fontColor`. A literal reshaping is a different kind of edit from anything this adapter performs, and whether it is one the installed type surface can drive is the question nobody has asked yet."
+		},
+		{
+			"family": "@ngrx/effects createEffect result typing",
+			"file": "src/app/features/google/store/google-drive-sync.effects.ts:84, :116, :223",
+			"symbol": "createEffect(() => …, { dispatch: false })",
+			"library": "@ngrx/effects 8.3 → 16.3",
+			"observed": "3 TS2322: Type 'Observable<unknown>' is not assignable to type 'EffectResult<Action>'.",
+			"neededTransform": "Unchanged from u18c and u18d, and now the whole of the remaining TS2322. The wrapper the createEffect migration wrote is correct and the effect body's inferred type is not. Whether the cause is the body or a module around it is still not established, and the fourth TS2322 that used to sit beside these was the formly one and is gone."
+		},
+		{
+			"family": "mat-chip-list",
+			"file": "src/app/ui/chip-list-input/chip-list-input.component.html:2, src/app/ui/datetime-input/datetime-input.component.html:23",
+			"symbol": "<mat-chip-list>",
+			"library": "@angular/material 8 → 16.2.14",
+			"observed": "2 NG8001: 'mat-chip-list' is not a known element.",
+			"neededTransform": "Read in this unit and refused on the reading. The installed chips entry point publishes mat-chip-set, mat-chip-listbox and mat-chip-grid where Material 8 published one mat-chip-list, and the three are not interchangeable: a grid is the input-hosting form control, a listbox is the selectable one, a set is neither. Both call sites here host a matChipInput, which points at mat-chip-grid — but that is a reading of the application's template and of Material's documentation, not of a mapping the package declares. Answering it needs a template-analysis capability that resolves the successor from the directives the element actually carries, and a decision about whether that resolution is proof."
+		},
+		{
+			"family": "rxjs/internal-compatibility",
+			"file": "src/app/features/issue/jira/jira-api.service.ts:22",
+			"symbol": "import { fromPromise } from 'rxjs/internal-compatibility'",
+			"library": "rxjs 6.5 → 7.8.2",
+			"observed": "1 TS2307: Cannot find module 'rxjs/internal-compatibility'.",
+			"neededTransform": "Read in this unit and refused on the reading. The deep-specifier collapse cannot be ridden: rxjs@7.8.2's root surface does not publish `fromPromise` under that name at all, so collapsing the specifier onto the root would import a name the package does not have and move the failure from TS2307 to TS2305. The successor is `from`, which is a different function name and therefore a rename this adapter has no evidence for — the compiler offers no suggestion because the module does not resolve."
+		},
+		{
+			"family": "three unrelated call sites and NgxElectronModule",
+			"file": "src/app/app.module.ts:41, src/app/features/config/global-config.service.ts:88, src/app/features/issue/jira/jira.module.ts:16, src/app/features/tasks/store/task-internal.effects.ts:113",
+			"symbol": "a three-argument call the module now declares as taking none; a zero-argument call that now takes one; NgxElectronModule; one unmatched overload",
+			"library": "Angular 8 → 16 across four unrelated declarations",
+			"observed": "2 TS2554, 1 TS2769, 1 NG6002: 'NgxElectronModule' does not appear to be an NgModule class.",
+			"neededTransform": "Unattempted. The NgxElectronModule one is still a reading nobody has taken: whether ngx-electron 2.2.0 publishes an Ivy-compatible module is a measurement of the installed package, not a guess."
+		},
+		{
+			"family": "TypeScript 3.5 → 5.1 call sites",
+			"file": "src/app/features/worklog/worklog-export/worklog-export.component.ts:15, src/app/features/google/google-api.service.ts:143 and :150",
+			"symbol": "import Clipboard from 'clipboard'; new Promise<…>(resolve => resolve())",
+			"library": "TypeScript 3.5 → 5.1",
+			"observed": "1 TS1259, 2 TS2794.",
+			"neededTransform": "Unchanged and unattempted: a tsconfig decision the workspace capability has to make explicitly, and a two-line call-site edit."
+		},
+		{
+			"family": "downstream module errors",
+			"file": "src/app/app.module.ts and eight other NgModules",
+			"symbol": "NG6002 / NG6003",
+			"library": "Angular 16.2",
+			"observed": "15 NG6002 and 1 NG6003, unmoved from u18d.",
+			"neededTransform": "None of its own. Every one of these says an imported or exported module contains errors, and the errors are the families above. The count did not move in this unit because the two modules the formly components sit in — ui.module.ts and config.module.ts — were reported through TS2740/TS2322 rather than NG6002, and those cleared. This family is the census's own accounting of the others and should be expected to collapse when they do, not attacked directly."
+		}
+	],
+	"notEstablished": [
+		"Whether the application runs. Nothing in this unit reached a runtime; the build emits no artifacts and 33 diagnostics remain.",
+		"Whether the sass at-rules u18d re-specified resolve. The TypeScript program still fails before the stylesheet pipeline is reached, in this build as in the last two.",
+		"Whether the formly components behave as they did on Material 8. The type argument makes the two classes compile against the installed declaration; that the templates bind the same controls to the same form field is a claim no diagnostic in this unit tests.",
+		"Whether `FieldTypeConfig` is the argument the application's author would have chosen. It is the argument the installed declaration proves satisfies the parameter and narrows it; a subclass wanting narrower props would want a parameterised companion, and nothing here would have refused that if the author had written it.",
+		"Whether the unparameterised-base-class capability generalises beyond the class/companion pairing it looks for. It refuses everything it cannot prove, so its failure mode is silence rather than damage — but a library that names its companion anything other than `<class>Config` is a library this capability will decline, and how common that is has not been measured."
+	]
+}
