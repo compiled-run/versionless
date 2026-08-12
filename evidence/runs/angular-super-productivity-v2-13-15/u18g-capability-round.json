@@ -1,0 +1,190 @@
+{
+	"schemaVersion": "versionless.angular-super-productivity-capability-round.v1",
+	"unit": "lrapr-t006/u18g-super-productivity-close",
+	"consentId": "VL-LEGACY-CORPUS-2026-08-10",
+	"result": "capabilities-fired-build-red-smaller-remainder",
+	"meaning": "u18f named the cheapest remaining family and this unit took it. Both of its members turned out to be the same kind of thing and neither is a library migration: TS1259 and TS2794 are the compiler objecting to lines the application never touched, because the language and the packaging around them moved. The clipboard package gained typings between the two eras — an `export =` declaration where there had been none — and a default import that was untyped became illegal without a flag. The promise executor's resolve parameter stopped being optional in TypeScript 4.1 unless the promise's type argument admits an absent value. So one answer is a compiler flag and the other is a type argument the diagnostic text itself names, and the interesting question in both cases was not what to write but what the tree can refuse it with. The production build was run again and is still red, at 27 diagnostics against u18f's 30.",
+	"previous": "u18f-capability-round.json",
+	"changeset": "u18-composed-changeset.json",
+	"tree": {
+		"stage": ".versionless/stage/angular-super-productivity-v2-13-15-u18b",
+		"applied": ".versionless/stage/angular-super-productivity-v2-13-15-u18b/app",
+		"from": ".versionless/cache/angular-super-productivity-v2-13-15-source/verify/extracted/super-productivity-2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+		"commit": "2943c5c4f13c3ce4dece0abf4f9c39739dde4192",
+		"reuse": "The stage tree u18b staged was reused and this unit's capability round was run over the tree u18f left, not over a freshly composed one. build-6.log is the same tree as build-5.log plus two files. The u18c capabilities were re-run first, as u18d, u18e and u18f re-ran them, and changed nothing."
+	},
+	"cell": {
+		"node": "v16.20.2",
+		"nodeSource": ".versionless/cache/angular-jira-clone-runtime/node-v16.20.2-darwin-arm64",
+		"architecture": "darwin-arm64, native — no translation layer",
+		"builder": "@angular-devkit/build-angular:browser (Angular 16.2)",
+		"environment": { "NG_CLI_ANALYTICS": "false" }
+	},
+	"acquisition": {
+		"purpose": "None. No package was installed, no manifest was changed and no network was reached in this unit; the closure u18c resolved was read, not altered.",
+		"networkMode": "none"
+	},
+	"adapterChanges": [
+		{
+			"file": "packages/frameworks/angular/src/synthetic-default-import-interop.ts",
+			"capability": "synthetic-default-import-interop",
+			"appNameBranches": 0,
+			"reading": "A compiler flag is the widest edit an adapter can make: it applies to every module in the program at once, and unlike a rewrite it leaves no trace at the site it was written for. So this capability is built around proving a demand rather than around performing an edit, and it proves it on both sides. The application side: a bare-specifier default import, read off the resolved binding rather than off the text, in some module of the tree. The package side: the declaration entry the installed package actually points `types`/`typings`/`exports` at, and whether that entry's own text ends in an export assignment or names an ES default export. Only `export =` with no ES default is the shape TS1259 describes; a package that publishes no typings at all is an untyped import the compiler has no opinion about, and a package that does declare a default export is one where the import was already legal. Each of those is refused by name rather than passed over. The configuration side is refused three more ways: an absent compilerOptions object is not synthesised, an `allowSyntheticDefaultImports` already declared true means the diagnostic is about something else, and one declared false is an explicit decision this capability does not overturn — it fills a gap, it does not argue. `esModuleInterop: true` already implies the flag and is treated the same way. The choice between the two flags TypeScript offers is the substance of the file and it is made by measurement, not preference. `esModuleInterop` changes emit and makes a namespace object uncallable; the capability counts the namespace imports in the tree that are used as callees and records the count as its refusal of that flag. `allowSyntheticDefaultImports` changes type checking only, which is exactly the scope of the complaint."
+		},
+		{
+			"file": "packages/frameworks/angular/src/promise-executor-void-parameter.ts",
+			"capability": "promise-executor-void-parameter",
+			"appNameBranches": 0,
+			"reading": "TS2794 is the only diagnostic in this cell's census that names its own successor: 'Did you forget to include void in your type argument to Promise?'. The successor is therefore not a written-down claim of the kind the rxjs one was — the compiler states it — and what has to be established is not what to write but that this executor is one the claim is true of. `void` is a statement about the promise's whole settled type, and the evidence for it is entirely local to the executor, so the capability reads the executor and nothing else. Every reference to the first parameter, resolved by binding and not by name, has to be the callee of a call: a resolve handed to `.then`, stored in a field or returned escapes the executor, and what it will eventually be called with cannot be read from here. Every one of those calls has to pass no argument: one `resolve(value)` anywhere in the body means the promise settles with something and `void` is simply the wrong answer, so the whole executor is left alone rather than half-answered. An explicit type argument already present is the application's own decision and is passed over in silence, as is an executor that never settles with nothing — silence there is the capability not having business rather than refusing. `Promise` has to be free in the module's root scope, or `new Promise` does not name the global the diagnostic is written about. The rewrite inserts six characters after the constructor name and touches neither the executor, nor the parameter list, nor the call. The alternative — writing `resolve(undefined)` — was considered and is recorded in the file as rejected: it changes the same number of characters and leaves the promise typed `Promise<unknown>`, which is the era's accident rather than the application's intent."
+		}
+	],
+	"capabilityOutcomes": [
+		{
+			"capability": "synthetic-default-import-interop",
+			"firedOn": "1 configuration — tsconfig.json — gaining `compilerOptions.allowSyntheticDefaultImports: true`, demanded by one site.",
+			"filesChanged": 1,
+			"refused": 13,
+			"reading": "558 modules under src/ were read. They carry 13 bare-specifier default imports reaching two packages. clipboard@2.0.11 declares `export =` in src/clipboard.d.ts and names no ES default export, which is exactly the shape TS1259 describes, and src/app/features/worklog/worklog-export/worklog-export.component.ts line 15 default-imports it. That one site is the whole of the demand. The other twelve reach shortid@2.2.17, which publishes no typings at all; those imports are untyped, the compiler has no export shape to object to, and each of the twelve is refused by name rather than counted as support for the flag. The thirteenth refusal is the one that matters most: 12 namespace imports in this tree — all of them `moment` — are used as the callee of a call, and `esModuleInterop` makes a namespace object uncallable. That flag would have answered the same diagnostic and broken twelve call sites doing it. It was refused on the count, not on taste.",
+			"clearedDiagnostics": "TS1259 1 → 0.",
+			"whyTheFlagAndNotTheLine": "The application's line is the line it always was. clipboard@2.0.4, the release the era lane resolves, ships no declaration file; clipboard@2.0.11 ships one. Rewriting `import Clipboard from 'clipboard'` into `import * as Clipboard from 'clipboard'` would compile and would then be wrong at runtime under a bundler that supplies interop, and rewriting it into `import Clipboard = require('clipboard')` is not legal in an ES module. The flag is the edit TypeScript documents for this shape."
+		},
+		{
+			"capability": "promise-executor-void-parameter",
+			"firedOn": "1 module — src/app/features/google/google-api.service.ts, at lines 142 and 149 — each `new Promise((resolve) => { resolve(); })` becoming `new Promise<void>(…)`.",
+			"filesChanged": 1,
+			"refused": 0,
+			"reading": "The compiler named one module and the capability read every `new Promise` in it, not only the two it was sent for. There are five. Line 85 settles with `resolve(true)` and is not the shape — passed over in silence, and it is the site that would have been quietly mistyped by a capability keying on the constructor rather than on the body. Lines 89 and 333 carry no zero-argument settle. Lines 142 and 149 settle with nothing and with nothing else, from a resolve parameter that never escapes its executor, and both were written.",
+			"clearedDiagnostics": "TS2794 2 → 0."
+		},
+		{
+			"capability": "successor-fork-package, barrel-entry-point-split, webpack-tilde-style-specifier",
+			"firedOn": "Re-run over the applied tree and found their u18c and u18d work already in place.",
+			"filesChanged": 0,
+			"refused": 0,
+			"clearedDiagnostics": "None new. These are the earlier capabilities, re-run to establish that the round is repeatable."
+		}
+	],
+	"readingsTakenWithoutWriting": [
+		{
+			"family": "ngx-electron NgxElectronModule",
+			"question": "u18f recorded this as the one of its four unrelated demands that a capability rather than a source answer could reach, on the grounds that whether ngx-electron 2.2.0 publishes an Ivy-compatible module is a measurement of the installed package. The measurement was taken in this unit.",
+			"reading": "It does not, and the reason forecloses the capability rather than enabling one. ngx-electron@2.2.0 in the applied closure ships bundles/ngx-electron.umd.js as `main`, fesm5 and fesm2015 bundles, `ngx-electron.d.ts` as `typings`, and — the decisive artifact — `ngx-electron.metadata.json`. That file is the View Engine metadata format. Nothing in the package contains `ɵmod`, `ɵɵngDeclareNgModule` or `ngModuleDef`: there is no Ivy definition anywhere in it, and no partial-compilation declaration either. A View Engine library compiled to Ivy by ngcc is how Angular 9 through 15 consumed such a package; Angular 16 removed ngcc, so there is no longer anything in the toolchain that would produce the definition the compiler is looking for when it says 'NgxElectronModule does not appear to be an NgModule class'.",
+			"outcome": "Not written, and this reading is the reason. The demand is not a rewrite the adapter refused to attempt — it is a package that cannot be consumed by this cell at all. The three answers available are a successor package, a replacement of the two call sites with the application's own thin service over the electron global, or a vendored recompilation, and every one of them is a source decision rather than a capability. Recorded so the family stops being carried forward as reachable."
+		}
+	],
+	"applicationFilesChanged": {
+		"countingMethod": "Whole-tree, per the standing ruling: every file under the application root except node_modules/, dist/, .angular/, coverage/ and .git/, compared by SHA-256 against the pristine extracted tree at commit 2943c5c. Files present in only one of the two trees are counted as differences, not skipped. u18f and its predecessors counted only files under src/ that exist in both trees, so the whole-tree total below is not comparable to their number by subtraction; the src/-scoped figures are carried alongside it so the series stays readable.",
+		"wholeTree": {
+			"pristineFiles": 967,
+			"appliedFiles": 965,
+			"differingInBoth": 68,
+			"filesAdded": 1,
+			"addedFiles": ["package-lock.json"],
+			"filesRemoved": 3,
+			"removedFiles": ["src/tslint.json", "tslint.json", "yarn.lock"],
+			"totalDifferences": 72,
+			"differingOutsideSrc": ["angular.json", "package.json", "tsconfig.json"]
+		},
+		"differingFromPristine": 65,
+		"pristineFilesUnderSrc": 796,
+		"newInThisUnit": 1,
+		"newFiles": ["src/app/features/google/google-api.service.ts"],
+		"filesAddedUnderSrc": 0,
+		"filesRemovedUnderSrc": 1,
+		"removedFilesUnderSrc": ["src/tslint.json"],
+		"meaning": "This unit wrote two files. One is under src/ and is new to the differing set, taking the src/-scoped count from u18f's 64 to 65. The other is tsconfig.json, which is outside src/ and was already differing — the workspace migration rewrote its target, module and useDefineForClassFields in the composed changeset — so it changes the tree without changing any count. That is exactly the case the src/-only method hides, and it is why the whole-tree figures are stated first here. The three lock and lint files in the whole-tree column are not this unit's: package-lock.json and the absent yarn.lock are the u18c install, and the two tslint.json files are the tslint-toolchain-removal capability's."
+	},
+	"build": {
+		"command": "node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng.js build --configuration production",
+		"log": ".versionless/stage/angular-super-productivity-v2-13-15-u18b/build-6.log",
+		"exitStatus": 1,
+		"artifactsEmitted": 0,
+		"diagnosticCountsBefore": {
+			"NG6002": 15,
+			"NG6003": 1,
+			"TS1259": 1,
+			"TS2305": 3,
+			"TS2322": 4,
+			"TS2345": 1,
+			"TS2554": 2,
+			"TS2769": 1,
+			"TS2794": 2
+		},
+		"diagnosticCounts": {
+			"NG6002": 15,
+			"NG6003": 1,
+			"TS2305": 3,
+			"TS2322": 4,
+			"TS2345": 1,
+			"TS2554": 2,
+			"TS2769": 1
+		},
+		"diagnosticTotalBefore": 30,
+		"diagnosticTotal": 27,
+		"countingMethod": "Every `error TS####` / `error NG####` occurrence in the build log, counted the same way in both columns. The before column is u18f's recorded after-state and is build-5.log.",
+		"cleared": {
+			"TS1259": "1 → 0 (synthetic-default-import-interop)",
+			"TS2794": "2 → 0 (promise-executor-void-parameter)"
+		},
+		"unmoved": "NG6002 15, TS2322 4, TS2305 3, TS2554 2, NG6003 1, TS2345 1, TS2769 1. Every one is a demand u18d, u18e and u18f itemised. The flag this unit wrote applies to every module in the program and introduced nothing: no diagnostic code appears in the after census that did not appear in the before census, and no count rose.",
+		"convergence": "269 → 110 → 57 → 33 → 30 → 27 across u18c, u18d, u18e, u18f and u18g."
+	},
+	"remainingDemands": [
+		{
+			"family": "chart.js 2 options literals",
+			"file": "src/app/features/metric/metric.component.ts:24, src/app/core/theme/global-theme.service.ts:163",
+			"symbol": "{ responsive, legend: { position } } and { legend: { labels: { fontColor } }, scales: { xAxes: [...], yAxes: [...] } }",
+			"library": "chart.js 2.8 → 4.5.1",
+			"observed": "1 TS2322 and 1 TS2345 against _DeepPartialObject<CoreChartOptions & …>.",
+			"neededTransform": "Unchanged from u18f and unattempted here: it was read and left, and this record says why rather than repeating the description. chart.js 4 restructured the options schema — `legend` moved under `plugins`, and the `xAxes`/`yAxes` arrays became a keyed `scales` object with `grid` in place of `gridLines` and `ticks.color` in place of `ticks.fontColor`. Two of those four movements are renames a declaration could carry, and two are reshapings: an array of axis objects becoming a record keyed by axis id has no successor written anywhere in the installed types, because the key is not derivable from the array element. A capability that reshaped the array would have to invent the keys, and inventing them is exactly the kind of claim this adapter refuses elsewhere. This is now the cheapest remaining family and it is still not cheap."
+		},
+		{
+			"family": "@ngrx/effects createEffect result typing",
+			"file": "src/app/features/google/store/google-drive-sync.effects.ts:84, :116, :223",
+			"symbol": "createEffect(() => …, { dispatch: false })",
+			"library": "@ngrx/effects 8.3 → 16.3",
+			"observed": "3 TS2322: Type 'Observable<unknown>' is not assignable to type 'EffectResult<Action>'.",
+			"neededTransform": "Unchanged from u18c through u18f, and three of the remaining four TS2322. The wrapper the createEffect migration wrote is correct and the effect body's inferred type is not. Whether the cause is the body or a module around it is still not established, and this is the family most likely to be a consequence of another rather than a demand of its own."
+		},
+		{
+			"family": "ng2-charts symbols with no successor",
+			"file": "src/app/features/metric/metric.model.ts:2, src/app/features/metric/metric.component.ts:4",
+			"symbol": "Label, SingleDataSet, Color",
+			"library": "ng2-charts 2.3 → 5.0.4",
+			"observed": "3 TS2305, one per symbol: Module '\"ng2-charts\"' has no exported member 'Label' / 'SingleDataSet' / 'Color'.",
+			"neededTransform": "Unchanged from u18e and u18f. The compiler offers no successor for any of the three, which is why the rename capability never sees them: it reads TS2724 and these are TS2305. ng2-charts 5.0.4 publishes five root exports and none of them is a type alias for a chart label or a colour; chart.js 4 carries the replacements under different names and a different shape. A written-down-successor claim of the kind u18f added for rxjs could reach `Color` if someone wrote the mapping down and the root could refuse it, but `SingleDataSet` and `Label` are shapes rather than names and no arity guard makes them safe."
+		},
+		{
+			"family": "three unrelated call sites",
+			"file": "src/app/app.module.ts:41, src/app/features/config/global-config.service.ts:88, src/app/features/tasks/store/task-internal.effects.ts:113",
+			"symbol": "a three-argument call the module now declares as taking none; a zero-argument call that now takes one; one unmatched overload",
+			"library": "Angular 8 → 16 across three unrelated declarations",
+			"observed": "2 TS2554 and 1 TS2769.",
+			"neededTransform": "Unattempted. Each is a single call site whose callee's declared signature moved, and each moved differently: one lost every parameter, one gained a required one, one has a set of overloads none of which the call matches. There is no shared shape between them, so three separate readings of three separate declarations would be needed, and a capability that answered one would answer only one. The fourth member of u18f's version of this family — NgxElectronModule — has been measured and moved out of it; see readingsTakenWithoutWriting."
+		},
+		{
+			"family": "ngx-electron is not consumable by this cell",
+			"file": "src/app/features/issue/jira/jira.module.ts:16",
+			"symbol": "NgxElectronModule",
+			"library": "ngx-electron 2.2.0",
+			"observed": "1 NG6002: 'NgxElectronModule' does not appear to be an NgModule class.",
+			"neededTransform": "None that a capability can perform, and this unit's reading is what establishes that rather than assuming it. The installed package is View Engine only — metadata.json, no Ivy definition, no partial-compilation declaration — and Angular 16 removed ngcc, the tool that used to translate such packages. No rewrite of the application's source makes an NgModule out of a class that has no module definition. The transform this needs is a package decision: a successor library, or the two call sites replaced by the application's own service over the electron global. It is itemised here as a source demand rather than left in the capability queue."
+		},
+		{
+			"family": "downstream module errors",
+			"file": "src/app/app.module.ts and eight other NgModules",
+			"symbol": "NG6002 / NG6003",
+			"library": "Angular 16.2",
+			"observed": "15 NG6002 and 1 NG6003, unmoved from u18d, u18e and u18f.",
+			"neededTransform": "None of its own, and this is now the majority of the census. Every one of these says an imported or exported module contains errors, and the errors are the families above — with the single exception of jira.module.ts:16, which is the ngx-electron reading and is a demand in its own right. This family is the census's own accounting of the others and should be expected to collapse when they do, not attacked directly. Fourteen of the sixteen are downstream of five real demands."
+		}
+	],
+	"notEstablished": [
+		"Whether the application runs. Nothing in this unit reached a runtime; the build emits no artifacts and 27 diagnostics remain.",
+		"Whether `allowSyntheticDefaultImports` is safe at runtime for this application. It is safe by TypeScript's own definition — the flag has no emit effect — but that only moves the question to the bundler, which has to supply the CommonJS interop the flag assumes. The build gets far enough to type-check and not far enough to bundle, so nothing here has watched webpack resolve the clipboard default binding.",
+		"Whether `Promise<void>` is what every consumer of google-api.service.ts's logout() wants. The two executors settle with nothing and the type argument says so, but `Promise<unknown>` was assignable to more things than `Promise<void>` is, and no consumer of the method was type-checked against the narrower type by anything other than this build. The build reported no new diagnostic, which is evidence and not proof: a consumer inside a module that already fails to compile would not have been reached.",
+		"Whether the flag would still be the right answer at a second demand. It was written for one site; a tree with two `export =` default imports would get the same flag and the record would name both, but the capability has never been run against one.",
+		"Whether the sass at-rules u18d re-specified resolve. The TypeScript program still fails before the stylesheet pipeline is reached, in this build as in the last four.",
+		"Whether the remaining 27 will collapse to a small number or a large one. Fourteen of the sixteen NG6002/NG6003 lines are downstream of the other families, so the census overstates the work — but by how much is arithmetic nobody has done, because it depends on which module each downstream error is downstream of."
+	]
+}

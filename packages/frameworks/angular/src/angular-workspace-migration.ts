@@ -54,7 +54,7 @@ export type WorkspaceMigration = Readonly<{
  */
 export type WebpackFragmentSources = Readonly<Record<string, string>>;
 
-type JsonObject = Record<string, unknown>;
+export type JsonObject = Record<string, unknown>;
 
 /**
  * Builder options the modern devkit schema no longer accepts. A build fails
@@ -134,7 +134,7 @@ export function carriesJsonComment(source: string): boolean {
 	return false;
 }
 
-function parseStrictJson(source: string, kind: string): JsonObject {
+export function parseStrictJson(source: string, kind: string): JsonObject {
 	if (carriesJsonComment(source))
 		throw new Error(
 			`Angular ${kind} migration: the configuration appears to carry comments. ` +
@@ -147,11 +147,13 @@ function parseStrictJson(source: string, kind: string): JsonObject {
 	return parsed as JsonObject;
 }
 
-function serialize(value: unknown): string {
+export function serializeJson(value: unknown): string {
 	return `${JSON.stringify(value, null, 2)}\n`;
 }
 
-function objectAt(value: unknown): JsonObject | null {
+const serialize = serializeJson;
+
+export function objectAt(value: unknown): JsonObject | null {
 	return typeof value === 'object' && value !== null && !Array.isArray(value)
 		? (value as JsonObject)
 		: null;

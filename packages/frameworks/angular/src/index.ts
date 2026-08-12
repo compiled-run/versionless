@@ -27,3 +27,5 @@ export * from './unparameterised-base-class.ts';
 export * from './declared-type-member-rename.ts';
 export * from './split-element-successor.ts';
 export * from './removed-entry-point-symbol-successor.ts';
+export * from './synthetic-default-import-interop.ts';
+export * from './promise-executor-void-parameter.ts';
