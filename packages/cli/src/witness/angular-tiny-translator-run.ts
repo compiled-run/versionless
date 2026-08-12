@@ -45,17 +45,20 @@ const fixtureEvidence = join(root, 'evidence/runs/angular-tiny-translator-v0-12-
 const witnessEvidence = join(root, 'evidence/runs/witness-angular-tiny-translator-v0-12-0');
 const stageRoot = join(root, '.versionless/stage/witness-angular-tiny-translator-v0-12-0');
 /**
- * The migrated lane's build tree, and the output root the u19k record pins as
+ * The migrated lane's build tree, and the output root the u22 record pins as
  * canonical. The tree is a working directory rather than committed bytes, so
  * this proof cannot assume it survived: {@link migratedLaneRoot} regenerates it
  * from the committed flow when it is absent and, either way, refuses to serve
  * it until it matches the inventory the record published.
  *
- * The root is `dist-13`, the third the browser phase produced. u17d's `dist-7`
+ * The root is `dist-15`, the fourth the browser phase produced. u17d's `dist-7`
  * is a green, deterministic build whose artifact throws before Angular
  * bootstraps; u19f's `dist-11` mounts and silently discards a typed translation;
- * u19k's `dist-13` mounts and keeps it. Each supersession is by reference and
- * each was forced by a measurement no build lane could make.
+ * u19k's `dist-13` mounts and keeps it, and was built with the Angular 16
+ * builder fetching a font stylesheet mid-build; u22's `dist-15` is that lane
+ * rebuilt with the inliner off, measured to make no non-loopback attempt at all.
+ * Each supersession is by reference and each was forced by a measurement the
+ * previous round could not make.
  */
 const migratedStage = join(root, '.versionless/stage/angular-tiny-translator-v0-12-0-u17b');
 const sourceOutputs = {
@@ -63,9 +66,9 @@ const sourceOutputs = {
 		root,
 		'.versionless/cache/angular-tiny-translator-v0-12-0-baseline/app/dist/rebuild-1',
 	),
-	migrated: join(migratedStage, 'dist-13'),
+	migrated: join(migratedStage, 'dist-15'),
 } as const;
-/** The build the u19k record pins for the canonical output root. */
+/** The build the u22 record pins for the canonical output root. */
 const MIGRATED_BUILD_COMMAND = 'npx ng build --configuration production' as const;
 const laneFileCounts = { baseline: 524, migrated: 524 } as const;
 
@@ -88,7 +91,7 @@ async function files(directory: string): Promise<string[]> {
 	return output.sort();
 }
 
-/** Every file of an emitted artifact, addressed exactly as the u19k record does. */
+/** Every file of an emitted artifact, addressed exactly as the u22 record does. */
 async function inventoryOf(rootDirectory: string): Promise<InventoryEntry[]> {
 	const entries: InventoryEntry[] = [];
 	for (const file of await files(rootDirectory)) {
@@ -126,7 +129,7 @@ async function migratedLaneRecord(): Promise<{
 }
 
 /**
- * The digest the u19k record computed over its own inventory: the pretty-printed
+ * The digest the u22 record computed over its own inventory: the pretty-printed
  * JSON array with a trailing newline, exactly as the recording flow wrote it.
  * Recomputing it here rather than accepting the record's own number is what
  * makes the comparison a check instead of a restatement.
@@ -159,7 +162,7 @@ async function run(command: string, args: readonly string[], cwd: string): Promi
  * The migrated lane's canonical output root, regenerated when it is missing and
  * verified either way.
  *
- * The regeneration is the same offline production build the u19k record pins,
+ * The regeneration is the same offline production build the u22 record pins,
  * run over the same staged application tree that record itemises; nothing is
  * re-migrated here, because the migration is already applied in that tree. The
  * verification is what the proof actually rests on: the emitted inventory has
@@ -324,7 +327,8 @@ export const WITNESS_ANGULAR_TINY_TRANSLATOR_NONCLAIMS: readonly string[] = Obje
 	'There is no backend and nothing was stubbed or seeded by the harness. The project the journey works on is created by the application itself, from a file this proof hands its own file input, and everything it keeps it keeps in browser local storage.',
 	'The translation file handed to the page is synthetic and authored for this proof. It carries no upstream project’s strings and no third party’s translated content, and it is bound by name, length and digest so a journey cannot quietly load a different one.',
 	'The file the page produced is read back by name, byte length and digest, and its content is asserted rather than published: a produced translation file is the application’s data, not this receipt’s.',
-	'Neither lane ends up with the Material Icons glyphs, and the two lanes fail to get them differently. Both degradations are measured and recorded rather than masked, and neither is a regression of the migration: the font seam is answered inside the browser context so that nothing leaves the machine.',
+	'Neither lane ends up with the Material Icons glyphs, and since the migrated lane was rebuilt without the builder’s font inliner they fail to get them the same way: both request the stylesheet the application links, both are answered inside the browser context so that nothing leaves the machine, and neither receives a `@font-face` rule. The degradation is measured per lane and recorded rather than masked, and it is not a regression of the migration.',
+	'The migrated lane is built with `optimization.fonts.inline: false`, and the two builds behind the served root were measured making no non-loopback connection attempt at all. That is a fact about those build processes, established by an in-process guard; it is not a claim that the machine was offline, and it establishes nothing about any request this application makes that the guard did not see.',
 	'Two of the four rendered-appearance probes are declared to differ across the eleven-major lift and are checked in both directions — a probe outside the declaration that differs fails the run, and a declared difference that stopped being real fails it too.',
 	'Byte parity across the lanes is not claimed and is recorded separately by the bound build receipts; eleven majors of bundler produce different file names and different byte counts by construction.',
 	'Neither build ships a service worker, and BOTH attempt to register one. The application registers at the literal `%BASE_HREF%ngsw-worker.js` — a placeholder upstream substitutes in a separate npm script that `ng build` never runs — and the request is answered 400 in both lanes. It is an era defect that survives the migration: the migration did not introduce it and no capability here repaired it, and it is recorded rather than suppressed.',

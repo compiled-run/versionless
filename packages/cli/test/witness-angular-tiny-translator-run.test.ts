@@ -106,13 +106,14 @@ describe('the TinyTranslator journey wiring', () => {
 	});
 
 	it('binds the build record that pins the migrated root it serves', () => {
-		// `dist-13` is u19k's root, the end of a three-record chain. u17d's
-		// `dist-7` never bootstraps and u19f's `dist-11` mounts and silently drops
-		// a typed translation, so binding either here would bind the proof to a
-		// record that does not describe what is served.
-		expect(spec.canonicalReceipt).toContain('u19k-cva-legacy-disabled-state-lane.json');
+		// `dist-15` is u22's root, the end of a four-record chain. u17d's `dist-7`
+		// never bootstraps, u19f's `dist-11` mounts and silently drops a typed
+		// translation, and u19k's `dist-13` was assembled with a stylesheet the
+		// builder fetched mid-build, so binding any of them here would bind the
+		// proof to a record that does not describe what is served.
+		expect(spec.canonicalReceipt).toContain('u22-offline-font-lane.json');
 		expect(spec.canonicalBinding).toBe('file-sha256');
-		expect(spec.sources.migrated.endsWith('dist-13')).toBe(true);
+		expect(spec.sources.migrated.endsWith('dist-15')).toBe(true);
 		expect(spec.canonicalReceipt).toBe(
 			ANGULAR_TINY_TRANSLATOR_MIGRATED_LANE_CHAIN.at(-1)!.record,
 		);
@@ -126,10 +127,20 @@ describe('the TinyTranslator journey wiring', () => {
 });
 
 describe('the per-lane font seam', () => {
-	it('is the pinned stylesheet in the era lane and a font file in the migrated one', () => {
+	it('is the same pinned stylesheet in both lanes since the migrated lane was rebuilt', () => {
 		expect(spec.mockedNonLoopbackSeams).toBe(WITNESS_ANGULAR_TINY_TRANSLATOR_SEAMS);
 		expect(WITNESS_ANGULAR_TINY_TRANSLATOR_SEAMS.baseline).toEqual(
 			WITNESS_ANGULAR_TINY_TRANSLATOR_BASELINE_SEAMS,
+		);
+		// The migrated lane used to reach a second origin for the font file its
+		// builder's inlined `@font-face` rule pointed at. u22 turned the inliner
+		// off, so the migrated document ships the application's own link and the
+		// browser asks for the same stylesheet the era browser asked for.
+		expect(WITNESS_ANGULAR_TINY_TRANSLATOR_SEAMS.migrated).toEqual(
+			WITNESS_ANGULAR_TINY_TRANSLATOR_SEAMS.baseline,
+		);
+		expect(WITNESS_ANGULAR_TINY_TRANSLATOR_SEAM_ORIGINS.migrated).toBe(
+			WITNESS_ANGULAR_TINY_TRANSLATOR_SEAM_ORIGINS.baseline,
 		);
 		expect(WITNESS_ANGULAR_TINY_TRANSLATOR_SEAMS.migrated.length).toBeGreaterThan(0);
 		for (const seam of WITNESS_ANGULAR_TINY_TRANSLATOR_SEAMS.migrated) {
@@ -137,9 +148,6 @@ describe('the per-lane font seam', () => {
 			expect(
 				seam.path.startsWith(`${WITNESS_ANGULAR_TINY_TRANSLATOR_SEAM_ORIGINS.migrated}/`),
 			).toBe(true);
-			expect(
-				seam.path.startsWith(WITNESS_ANGULAR_TINY_TRANSLATOR_SEAM_ORIGINS.baseline),
-			).toBe(false);
 		}
 	});
 
@@ -149,23 +157,19 @@ describe('the per-lane font seam', () => {
 				expect(seam.path).not.toContain('?');
 	});
 
-	it('answers both of them in context with an empty body, so neither leaves the machine', async () => {
+	it('answers the declared seam in context with an empty body, so nothing leaves the machine', async () => {
 		const stylesheet = await angularTinyTranslatorTransport({
 			method: 'GET',
 			protocol: 'https:',
 			host: 'fonts.googleapis.com',
 			pathname: '/icon',
 		} as Parameters<typeof angularTinyTranslatorTransport>[0]);
-		const font = await angularTinyTranslatorTransport({
-			method: 'GET',
-			protocol: 'https:',
-			host: 'fonts.gstatic.com',
-			pathname: '/s/materialicons/v145/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2',
-		} as Parameters<typeof angularTinyTranslatorTransport>[0]);
 		expect(stylesheet.action).toBe('fulfill');
-		expect(font.action).toBe('fulfill');
 		expect(stylesheet).toMatchObject({ status: 200, contentType: 'text/css' });
-		expect(font).toMatchObject({ status: 200, contentType: 'font/woff2' });
+		// The empty body is what makes the icon degradation observable rather than
+		// asserted: no `@font-face` rule reaches either page, so neither declares
+		// the Material Icons family and both render the ligature text.
+		expect((stylesheet as { body: Buffer }).body.length).toBe(0);
 	});
 });
 

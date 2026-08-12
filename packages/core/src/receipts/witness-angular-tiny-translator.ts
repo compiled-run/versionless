@@ -66,15 +66,17 @@ export const ANGULAR_TINY_TRANSLATOR_SOURCE = Object.freeze({
  * lane, not one arbitrary build of it, and the verifier below re-reads the
  * byte-identity claim out of the bound receipt rather than trusting this list.
  *
- * The migrated entry is `u19k`, and the chain that leads to it is the point.
+ * The migrated entry is `u22`, and the chain that leads to it is the point.
  * u17d built a green, deterministic lane whose artifact throws before Angular
  * bootstraps; u19f repaired the boot and published a root that mounts; a driven
  * browser then found that the mounted application takes a typed translation
- * nowhere. Each record's bytes are unchanged and each remains the record of what
- * it measured — every supersession here is by reference, never by rewrite —
- * because each was contradicted by a measurement the previous round could not
- * make. u19k is the lane whose artifact both mounts and keeps what is typed into
- * it, and it is the only migrated lane this proof is allowed to serve.
+ * nowhere; u19k made it keep what is typed, and a reading of its own emitted
+ * document then found CSS in it that exists in no input. Each record's bytes are
+ * unchanged and each remains the record of what it measured — every supersession
+ * here is by reference, never by rewrite — because each was contradicted by a
+ * measurement the previous round could not make. u22 is the lane that mounts,
+ * keeps what is typed into it, and was built without asking a third party for
+ * anything, and it is the only migrated lane this proof is allowed to serve.
  */
 export const ANGULAR_TINY_TRANSLATOR_CANONICAL_RECEIPTS = Object.freeze([
 	Object.freeze({
@@ -90,12 +92,12 @@ export const ANGULAR_TINY_TRANSLATOR_CANONICAL_RECEIPTS = Object.freeze([
 	}),
 	Object.freeze({
 		lane: 'migrated',
-		path: 'evidence/runs/angular-tiny-translator-v0-12-0/u19k-cva-legacy-disabled-state-lane.json',
-		schemaVersion: 'versionless.angular-tiny-translator-cva-lane.v1',
-		digest: '67ee98601be55f947ffec86cc1e00f3753b4deb2575c821cb3c6d12713c41135',
-		sha256: '98713ed1530d73f1f0801faa318d6b22a5783a1c2d98efeef1206a8cb1dd5771',
-		canonicalRoot: 'dist-13',
-		repeatedRoot: 'dist-14',
+		path: 'evidence/runs/angular-tiny-translator-v0-12-0/u22-offline-font-lane.json',
+		schemaVersion: 'versionless.angular-tiny-translator-offline-font-lane.v1',
+		digest: 'f6cdf12244ea7983af68b7d0483900da9fdaee6afe62aff825b1e9fa7b9a2b6e',
+		sha256: '78a2094d74b2df53b5d2d0dbe52fc4eb928206a5b692a47143308a10ee567917',
+		canonicalRoot: 'dist-15',
+		repeatedRoot: 'dist-16',
 		files: 524,
 		byteIdenticalSibling: true,
 	}),
@@ -132,6 +134,14 @@ export const ANGULAR_TINY_TRANSLATOR_MIGRATED_LANE_CHAIN = Object.freeze([
 		root: 'dist-13',
 		published:
 			'the lane that mounts AND keeps what is typed into it: the discriminator that caught the loss agrees across both lanes',
+		contradictedBy:
+			'a reading of its own emitted document: `dist-13/index.html` carries an `@font-face` rule for Material Icons v145 that appears in no input, because the Angular 16 builder fetched the stylesheet from `fonts.googleapis.com` while the build was running',
+	}),
+	Object.freeze({
+		record: 'evidence/runs/angular-tiny-translator-v0-12-0/u22-offline-font-lane.json',
+		root: 'dist-15',
+		published:
+			'the same lane built without asking a third party for anything: the font inliner off, the era `<link>` back in the document, zero non-loopback attempts observed across two green deterministic builds, and a control build of the previous workspace dying on the fetch it needed',
 		contradictedBy: null,
 	}),
 ]);
@@ -174,9 +184,29 @@ export const WITNESS_ANGULAR_TINY_TRANSLATOR_RECORDED_AMENDMENTS = Object.freeze
 		measured:
 			'`dist-7` throws before Angular bootstraps, and `dist-11` — which mounts — silently discards a typed translation',
 		amendment:
-			'the binding moved twice, each time by reference and each time forced by a browser measurement; `dist-13` is the served root and the chain is published in full',
+			'the binding moved twice, each time by reference and each time forced by a browser measurement; the chain is published in full and its end has moved once more since',
 		record:
 			'evidence/runs/angular-tiny-translator-v0-12-0/u19k-cva-legacy-disabled-state-lane.json',
+	}),
+	Object.freeze({
+		subject: 'the font seam across the migration',
+		claimed:
+			'the migrated lane ships the icon stylesheet inlined by its builder and asks the network only for the font file, which is a behavioural difference across the lift to be declared and lived with',
+		measured:
+			'the inlined stylesheet was FETCHED from `fonts.googleapis.com` during the build — the emitted document carried CSS that appears in no input — so the difference was not a property of the migration but of a builder default nobody configured, and the emitted bytes were a function of what a font host served on the build day',
+		amendment:
+			'the migrated lane was rebuilt with `optimization.fonts.inline: false` by a landed capability and the receipt was republished against it. The migrated document ships the application’s own `<link>` again, exactly as the era build did, so both lanes now request the same stylesheet at runtime and both are answered in-context; the seam difference this schema used to declare is gone, and the two lanes now degrade identically',
+		record: 'evidence/runs/angular-tiny-translator-v0-12-0/u22-offline-font-lane.json',
+	}),
+	Object.freeze({
+		subject: 'the receipt this one replaces',
+		claimed:
+			'the Witness proof digested `0812a96313acbafbf3048cd815a0ad841ac7d8271edadda61266dda2931be5c4`, over a migrated lane served from `dist-13`',
+		measured:
+			'that lane’s document was assembled with help from a third party, which no journey in that proof could see: a browser proof measures what an artifact does, not what building it required',
+		amendment:
+			'the proof was re-run end to end against the rebuilt lane and republished at the same path. The superseded digest is named here rather than kept as a second file, because a receipt is a claim about a lane and this one now describes a different lane',
+		record: 'evidence/runs/angular-tiny-translator-v0-12-0/u22-offline-font-lane.json',
 	}),
 ]);
 
@@ -216,6 +246,17 @@ export const WITNESS_ANGULAR_TINY_TRANSLATOR_MIGRATION_FINDINGS = Object.freeze(
 			"the forms-legacy-call-set-disabled-state capability, which declares the vendor's own `callSetDisabledState: 'whenDisabledForLegacyCode'` switch on the modules that attach accessors and leaves the defective accessor exactly as its authors wrote it",
 		record: 'evidence/runs/angular-tiny-translator-v0-12-0/u19i-data-loss-cause.json',
 	}),
+	Object.freeze({
+		finding:
+			'the migrated production build reached `fonts.googleapis.com` while it ran and pasted what it got into the emitted document, so the lane’s bytes depended on what a font host served on the build day and the lane could not be built at all where that host was unreachable',
+		invisibleTo:
+			'every build lane and every browser proof in this vertical — the build is green, the artifact mounts, and the page behaves; the request happens before any of them are looking',
+		foundBy:
+			'a reading of the emitted document against the application’s own source: an `@font-face` rule in the output that appears in no input is the body of a stylesheet the builder fetched',
+		cause: 'the modern browser builder’s `optimization` defaults to on and its `fonts.inline` member defaults to on inside it; the devkit’s own schema documents the option as requiring internet access, and the era Angular CLI 1.5 builder had no such capability',
+		repair: 'the font-inlining-disable capability, generic over builder and declared value, which restores the era behaviour — the document ships the application’s own link and the browser fetches the stylesheet at runtime',
+		record: 'evidence/runs/angular-tiny-translator-v0-12-0/u22-offline-font-lane.json',
+	}),
 ]);
 
 /**
@@ -232,61 +273,73 @@ export const WITNESS_ANGULAR_TINY_TRANSLATOR_BASELINE_SEAMS = Object.freeze([
 ]) as readonly WitnessMockedNonLoopbackSeamEntry[];
 
 /**
- * The migrated lane's seams are pinned by ORIGIN rather than by full path, and
- * the reason is worth stating plainly rather than hiding in a looser check.
+ * The origin each lane's seams have to sit on. Both lanes name the same one,
+ * and the fact that they do is a measurement rather than a simplification.
  *
- * The Angular 16 builder inlines the Google Fonts stylesheet into the document
- * at build time, so the migrated build never asks `fonts.googleapis.com` for
- * anything at run time; what it asks for instead is the font file the inlined
- * `@font-face` rule points at, on `fonts.gstatic.com`, under a path the font
- * provider itself mints and versions. That path is a fact about the provider's
- * CDN on the day the build ran, not a fact about this migration, and inventing
- * one here would be a pin nobody measured. So the schema pins what the
- * migration decides — that every migrated seam is a `fonts.gstatic.com` GET and
- * that no migrated seam is on `fonts.googleapis.com` at all — and the published
- * receipt pins the exact member, identically across all four runs.
+ * The schema used to pin the migrated lane to `fonts.gstatic.com`, because the
+ * Angular 16 builder had inlined the stylesheet into the document at build time
+ * and the only thing left for the browser to ask for was the font file the
+ * inlined rule pointed at. u21 then read the emitted document and found that
+ * the inlined rule had been FETCHED during the build, and u22 rebuilt the lane
+ * with the inliner off. The migrated document now ships the application's own
+ * `<link>` exactly as the era build did, so the run-time request is the one the
+ * era browser made, on the stylesheet origin, in both lanes.
  */
 export const WITNESS_ANGULAR_TINY_TRANSLATOR_SEAM_ORIGINS = Object.freeze({
 	baseline: 'https://fonts.googleapis.com',
-	migrated: 'https://fonts.gstatic.com',
+	migrated: 'https://fonts.googleapis.com',
 });
 
 /**
- * The divergence between the two lanes' seams, recorded as a declared
- * difference rather than normalized away.
+ * The font seam across the lane pair, as it stands after the offline-faithful
+ * rebuild: there is no difference left, and saying so is the record.
  *
- * It is a genuine, observable change across the migration: the era build asks
- * the network for a stylesheet at run time, and the migrated build already has
- * that stylesheet in its document and asks only for the font. Both are answered
- * in-context, neither leaves the machine, and neither lane ends up with the
- * glyphs — which is what the two icon degradations below record.
+ * This field used to declare a real divergence — the era build asked the
+ * network for a stylesheet at run time, and the migrated build already had that
+ * stylesheet in its document and asked only for the font. u21 established where
+ * the migrated lane's copy had come from: the builder fetched it mid-build. u22
+ * turned that off and rebuilt, so the migrated document ships the application's
+ * own link again and both lanes ask the same host for the same stylesheet at
+ * run time. Both are answered in-context, neither leaves the machine, and
+ * neither lane ends up with the glyphs — and now they fail to get them the same
+ * way, which is what the icon degradations below record.
  */
 export const WITNESS_ANGULAR_TINY_TRANSLATOR_FONT_SEAM_DIFFERENCE = Object.freeze({
-	state: 'recorded-behavioral-migration-difference',
+	state: 'measured-era-font-seam-restored-no-difference-remains',
 	baseline: 'requests-the-icon-stylesheet-from-fonts-googleapis-com-at-runtime',
-	migrated:
-		'ships-the-stylesheet-inlined-by-the-builder-and-requests-only-the-font-from-fonts-gstatic-com',
-	cause: 'the Angular 16 builder inlines Google Fonts into the document at build time and emits a preconnect for the font host; the era Angular CLI 1.5 builder emitted the stylesheet link untouched',
+	migrated: 'requests-the-icon-stylesheet-from-fonts-googleapis-com-at-runtime',
+	cause: 'the Angular 16 builder inlines Google Fonts into the document at build time by default, which moved the era browser’s run-time request into the build; the migrated cell disables that with `optimization.fonts.inline: false`, so the emitted document carries the same link the era build emitted and the browser makes the same request',
 	answeredInContext: true,
 	successfulNonLoopbackInEitherLane: 0,
+	supersededDifference:
+		'evidence/runs/angular-tiny-translator-v0-12-0/u22-offline-font-lane.json',
 	masked: false,
 });
 
 /**
- * The two distinct ways `mat-icon` degrades with the font seam answered
- * in-context, one per lane. Both lanes render ligature text instead of glyphs,
- * and they arrive there differently:
+ * How `mat-icon` degrades with the font seam answered in-context, per lane.
+ * Both lanes render ligature text instead of glyphs, and after the
+ * offline-faithful rebuild they arrive there the same way: neither build's
+ * document carries a `Material Icons` rule of its own, the stylesheet that
+ * would declare one is answered in-context with an empty body, and the family
+ * therefore never reaches the page in either lane.
  *
- * - the era build never receives the stylesheet, so no `@font-face` rule and no
- *   `Material Icons` family ever reach the page at all;
- * - the migrated build already carries the inlined rule, so the family IS
- *   declared and applied — and the font file behind it is the thing that never
- *   arrives.
+ * This used to be two distinct degradations, and the difference was real while
+ * it lasted: the migrated build carried the rule its own builder had inlined,
+ * so the family WAS declared and applied and only the font file behind it went
+ * missing. u21 found that the builder had fetched that rule from the font host
+ * during the build, and u22 rebuilt without it. The degradations are still
+ * recorded per lane rather than merged, because they are measurements of two
+ * lanes and a future divergence should surface as a difference rather than
+ * disappear into a shared constant. The measured resolved family is carried in
+ * the run and has to agree with the lane's `iconFontFamilyDeclared` flag.
  *
- * Recording them as one degradation would erase a real difference between the
- * lanes, so each is asserted separately and the difference between them is
- * declared. The measured resolved family is carried in the run, and it has to
- * agree with the lane's `iconFontFamilyDeclared` flag.
+ * The two lanes still fall back to different families — measured, the era icon
+ * lands on the application's own Roboto ramp and the 16.2 icon on the browser
+ * default — and that is Angular Material styling its own icon differently
+ * across eleven majors rather than anything the font seam decides. It is
+ * carried as a declared rendered-appearance difference below, where the
+ * measurement can be checked in both directions.
  */
 export const WITNESS_ANGULAR_TINY_TRANSLATOR_MAT_ICON_DEGRADATIONS = Object.freeze({
 	baseline: Object.freeze({
@@ -298,8 +351,8 @@ export const WITNESS_ANGULAR_TINY_TRANSLATOR_MAT_ICON_DEGRADATIONS = Object.free
 	}),
 	migrated: Object.freeze({
 		state: 'measured-icon-degradation',
-		cause: 'stylesheet-inlined-at-build-time-and-its-font-file-answered-in-context',
-		iconFontFamilyDeclared: true,
+		cause: 'icon-stylesheet-answered-in-context-so-no-font-face-rule-reaches-the-page',
+		iconFontFamilyDeclared: false,
 		rendersLigatureText: true,
 		masked: false,
 	}),
@@ -384,7 +437,7 @@ export const WITNESS_ANGULAR_TINY_TRANSLATOR_STYLE_PROBES = Object.freeze([
 export const WITNESS_ANGULAR_TINY_TRANSLATOR_STYLE_DIFFERENCES = Object.freeze([
 	Object.freeze({
 		label: 'material-icon',
-		why: 'the two lanes degrade differently: the era lane never receives a Material Icons rule, and the migrated lane applies the inlined one whose font never arrives',
+		why: 'Angular Material styles its own icon differently across the eleven majors, and with no Material Icons rule reaching either page that styling is all that is left to measure: the era icon inherits the application’s type ramp at 14px and the 16.2 icon sets its own 24px, and the family each falls back to is the one its own stylesheet leaves in place. This difference used to be attributed to the font seam — the era lane receiving no rule while the migrated lane applied the one its builder had inlined — and that attribution was retired when the lane was rebuilt without the inliner: both lanes now receive no rule, and the probe still differs',
 	}),
 	Object.freeze({
 		label: 'raised-button',
@@ -469,11 +522,10 @@ export const WITNESS_ANGULAR_TINY_TRANSLATOR_DOWNLOAD_SURFACE = Object.freeze({
 export const WITNESS_ANGULAR_TINY_TRANSLATOR_ACCOMMODATIONS = Object.freeze({
 	manualMigrationSteps: 0,
 	inventory: Object.freeze({
-		record:
-			'evidence/runs/angular-tiny-translator-v0-12-0/u19k-cva-legacy-disabled-state-lane.json',
+		record: 'evidence/runs/angular-tiny-translator-v0-12-0/u22-offline-font-lane.json',
 		applicationFilesChanged: 10,
-		capabilities: 8,
-		note: 'Every edit was made by a generic capability reading the installed closure, the compiler, the application\u2019s own templates or its own value accessors. Nine application files and five capabilities are itemised in u17d, which u19f supersedes by reference and u19k supersedes in turn; the tenth file is the runtime-globals shim u19e generated. The three capabilities added after u17d are the ones the browser phase forced \u2014 node-core-runtime-globals and template-i18n-runtime made the artifact evaluate at all, and forms-legacy-call-set-disabled-state made it keep what a translator types. The third changed no new file: it added an import and two configured module factories to the module that bootstraps, which is already one of the nine. The first two also changed two configuration files, the workspace and the manifest, which are not application source and are itemised in u19e and u19f.',
+		capabilities: 9,
+		note: 'Every edit was made by a generic capability reading the installed closure, the compiler, the application\u2019s own templates, its own value accessors or its own workspace. Nine application files and five capabilities are itemised in u17d, which u19f supersedes by reference, u19k supersedes in turn and u22 supersedes finally; the tenth file is the runtime-globals shim u19e generated. The three capabilities added after u17d are the ones the browser phase forced \u2014 node-core-runtime-globals and template-i18n-runtime made the artifact evaluate at all, and forms-legacy-call-set-disabled-state made it keep what a translator types. The ninth is font-inlining-disable, which u22 applied: it changed no application file at all, only the workspace, and it is the reason this lane can be built where the font host cannot be reached. The two boot capabilities also changed two configuration files, the workspace and the manifest, which are not application source and are itemised in u19e and u19f.',
 	}),
 	journeyObligations: Object.freeze([
 		'FileReader-service parity: the migrated lane inserted a `typeof` guard where `FileReader.result` is typed `string | ArrayBuffer`, and the build lane recorded as a declared difference that nothing it ran observed the guarded statements. The browser proof must load a translation file through the application own file input in BOTH lanes and assert the parse is identical, which is what turns that declared difference into an observed one.',
@@ -857,12 +909,14 @@ function assertFailedRequestInventory(
 }
 
 /**
- * The per-lane seam membership, checked against what the migration decides
- * rather than against a path the font provider mints: the baseline is the
- * pinned member exactly, and every migrated member is a GET on the declared
- * font-file origin with none left on the stylesheet origin. Every declared
- * member is accounted for as observed or absent, and nothing may sit outside
- * the declaration.
+ * The per-lane seam membership. Every member is a GET on the origin the lane
+ * declares, every declared member is accounted for as observed or absent, and
+ * nothing may sit outside the declaration.
+ *
+ * The baseline is additionally pinned to its exact member, and since the
+ * offline-faithful rebuild the migrated lane is held to the same one by the
+ * lane-pair check in the parser: both lanes ship the same `<link>` and both
+ * request the same stylesheet.
  */
 function assertMockedSeams(
 	inventory: WitnessMockedNonLoopbackSeamInventory | undefined,
@@ -1246,7 +1300,14 @@ export function parseWitnessAngularTinyTranslatorReceipt(
 		expectedRuns.size !== 0 ||
 		behaviors.size !== 1 ||
 		!exact(receipt.mockedSeams?.baseline, WITNESS_ANGULAR_TINY_TRANSLATOR_BASELINE_SEAMS) ||
-		exact(receipt.mockedSeams.baseline, receipt.mockedSeams.migrated) ||
+		// The lanes' seams have to AGREE, and this check was the opposite one until
+		// the migrated lane was rebuilt without the builder's font inliner. While
+		// the inliner was on, the migrated lane asked for a font file on a second
+		// origin and a receipt that reported the same seam in both lanes would have
+		// been describing a lane that did not exist. It is now the other way round:
+		// both lanes ship the application's own stylesheet link, so a migrated seam
+		// that differed from the baseline's would mean the rebuild did not hold.
+		!exact(receipt.mockedSeams.baseline, receipt.mockedSeams.migrated) ||
 		!exact(receipt.fontSeamDifference, WITNESS_ANGULAR_TINY_TRANSLATOR_FONT_SEAM_DIFFERENCE) ||
 		!exact(
 			receipt.serviceWorkerAttempt,

@@ -2427,15 +2427,19 @@ const TT_UNIT_PROBE: WitnessGroupedTextProbe = {
 const TT_PROJECT_KEY_PREFIX = 'tinytranslator.project.' as const;
 const TT_PROJECT_KEY_PLACEHOLDER = `${TT_PROJECT_KEY_PREFIX}{generated-project-id}` as const;
 /**
- * The seam the migrated build reaches for: the font file the builder's inlined
- * `@font-face` rule points at, pinned query-free exactly as the document
- * declares it. The baseline's seam is the stylesheet, pinned by the schema.
+ * The seam the migrated build reaches for, which since the offline-faithful
+ * rebuild is the era one: the icon stylesheet the application's own
+ * `src/index.html` links, emitted untouched into the document.
+ *
+ * It used to be the font file that the builder's inlined `@font-face` rule
+ * pointed at, on a second origin, under a path the font provider mints and
+ * versions. That rule was fetched from the stylesheet host during the build;
+ * u22 turned the inliner off and rebuilt, so the migrated document ships the
+ * link and the browser makes the request, exactly as the era browser did. The
+ * two lanes therefore declare the same seam, and the schema requires them to.
  */
-const TINY_TRANSLATOR_MIGRATED_FONT =
-	'https://fonts.gstatic.com/s/materialicons/v145/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2' as const;
-const WITNESS_ANGULAR_TINY_TRANSLATOR_MIGRATED_SEAMS = Object.freeze([
-	Object.freeze({ method: 'GET', path: TINY_TRANSLATOR_MIGRATED_FONT }),
-]) as readonly WitnessMockedNonLoopbackSeamEntry[];
+const WITNESS_ANGULAR_TINY_TRANSLATOR_MIGRATED_SEAMS =
+	WITNESS_ANGULAR_TINY_TRANSLATOR_BASELINE_SEAMS;
 /**
  * The measured per-lane console-error inventories.
  *
@@ -2507,19 +2511,20 @@ export const WITNESS_ANGULAR_TINY_TRANSLATOR_SEAMS: Record<
 };
 
 /**
- * Both declared seams are answered inside the browser context with an empty
- * body, which is what makes the two icon degradations observable rather than
- * asserted: the era lane never receives a `@font-face` rule at all, and the
- * migrated lane receives the rule inlined by its own builder and never receives
- * the font behind it. Nothing leaves the machine either way.
+ * The one declared seam — the icon stylesheet, requested by both lanes since
+ * the migrated lane stopped shipping a builder-inlined copy of it — is answered
+ * inside the browser context with an empty body. That is what makes the icon
+ * degradation observable rather than asserted: neither lane ever receives a
+ * `@font-face` rule, so neither declares the `Material Icons` family and both
+ * render the ligature text. Nothing leaves the machine either way.
  */
 export async function angularTinyTranslatorTransport(
-	request: WitnessTransportRequest,
+	_request: WitnessTransportRequest,
 ): Promise<WitnessTransportDecision> {
 	return {
 		action: 'fulfill',
 		status: 200,
-		contentType: request.pathname.endsWith('.woff2') ? 'font/woff2' : 'text/css',
+		contentType: 'text/css',
 		body: Buffer.alloc(0),
 	};
 }
@@ -4707,18 +4712,19 @@ const angularTinyTranslatorSpec: AppSpec = {
 	 * content rather than an `integrity.canonicalDigest`, so binding it by file
 	 * bytes is the honest binding rather than a looser one.
 	 *
-	 * It is u19k, the end of a chain of three: u17d's `dist-7` is the green
+	 * It is u22, the end of a chain of four: u17d's `dist-7` is the green
 	 * deterministic build whose artifact never bootstraps, u19f's `dist-11` is the
-	 * one that mounts and silently discards a typed translation, and `dist-13` is
-	 * the one that mounts and keeps it.
+	 * one that mounts and silently discards a typed translation, u19k's `dist-13`
+	 * is the one that mounts and keeps it, and `dist-15` is that same lane rebuilt
+	 * with the builder's font inliner off, so that building it asks nothing of
+	 * anybody.
 	 */
-	canonicalReceipt:
-		'evidence/runs/angular-tiny-translator-v0-12-0/u19k-cva-legacy-disabled-state-lane.json',
-	canonicalDigest: '98713ed1530d73f1f0801faa318d6b22a5783a1c2d98efeef1206a8cb1dd5771',
+	canonicalReceipt: 'evidence/runs/angular-tiny-translator-v0-12-0/u22-offline-font-lane.json',
+	canonicalDigest: '78a2094d74b2df53b5d2d0dbe52fc4eb928206a5b692a47143308a10ee567917',
 	canonicalBinding: 'file-sha256',
 	sources: {
 		baseline: '.versionless/cache/angular-tiny-translator-v0-12-0-baseline/app/dist/rebuild-1',
-		migrated: '.versionless/stage/angular-tiny-translator-v0-12-0-u17b/dist-13',
+		migrated: '.versionless/stage/angular-tiny-translator-v0-12-0-u17b/dist-15',
 	},
 	initialRoute: TINY_TRANSLATOR_INITIAL_ROUTE,
 	viewport: TINY_TRANSLATOR_VIEWPORT,

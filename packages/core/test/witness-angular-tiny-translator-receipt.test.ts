@@ -39,12 +39,15 @@ import {
 const root = path.resolve(import.meta.dirname, '../../..');
 
 /**
- * A synthetic member of the migrated lane's seam category, in the shape the
- * font provider's own versioned CDN path has. No such file is fetched by this
- * test and none of these bytes exist; what is under test is that the schema
- * holds the migrated lane to the font-file origin and off the stylesheet one.
+ * A synthetic seam in the shape the font provider's own versioned CDN path has,
+ * used to drive the rejection the schema owes since the migrated lane was
+ * rebuilt without the builder's font inliner. No such file is fetched by this
+ * test and none of these bytes exist; what is under test is that a migrated
+ * lane asking the FONT-FILE origin — which is what a lane built with the
+ * inliner on does — is refused, because both lanes now ship the application's
+ * own stylesheet link and must declare the same seam.
  */
-const MIGRATED_SEAM = {
+const INLINED_FONT_SEAM = {
 	method: 'GET',
 	path: 'https://fonts.gstatic.com/s/materialicons/v0/synthetic-not-a-real-font.woff2',
 };
@@ -94,8 +97,10 @@ function styleProbes(lane: 'baseline' | 'migrated') {
 
 function run(lane: 'baseline' | 'migrated', pass: 1 | 2): WitnessAngularTinyTranslatorRun {
 	const degradation = WITNESS_ANGULAR_TINY_TRANSLATOR_MAT_ICON_DEGRADATIONS[lane];
-	const seams =
-		lane === 'baseline' ? [...WITNESS_ANGULAR_TINY_TRANSLATOR_BASELINE_SEAMS] : [MIGRATED_SEAM];
+	// Both lanes declare the same seam: the era build emitted the application's
+	// own stylesheet link and, since the migrated lane was rebuilt with the
+	// builder's font inliner disabled, so does that one.
+	const seams = [...WITNESS_ANGULAR_TINY_TRANSLATOR_BASELINE_SEAMS];
 	const draft = {
 		app: 'angular-tiny-translator',
 		framework: 'angular',
@@ -294,7 +299,7 @@ function fixture(): WitnessAngularTinyTranslatorReceipt {
 		failedRequests: { baseline: [], migrated: [] },
 		mockedSeams: {
 			baseline: [...WITNESS_ANGULAR_TINY_TRANSLATOR_BASELINE_SEAMS],
-			migrated: [MIGRATED_SEAM],
+			migrated: [...WITNESS_ANGULAR_TINY_TRANSLATOR_BASELINE_SEAMS],
 		},
 		fontSeamDifference: WITNESS_ANGULAR_TINY_TRANSLATOR_FONT_SEAM_DIFFERENCE,
 		serviceWorkerAttempt: WITNESS_ANGULAR_TINY_TRANSLATOR_SERVICE_WORKER_ATTEMPT,
@@ -414,7 +419,7 @@ describe('Angular TinyTranslator direct Witness receipt schema', () => {
 			]),
 		).toEqual([
 			['baseline', 'dist/rebuild-1', 'dist/rebuild-2', true],
-			['migrated', 'dist-13', 'dist-14', true],
+			['migrated', 'dist-15', 'dist-16', true],
 		]);
 	});
 
@@ -517,7 +522,7 @@ describe('Angular TinyTranslator direct Witness receipt schema', () => {
 		);
 		expect(
 			receipt.migratedLaneChain.filter((entry) => entry.contradictedBy !== null),
-		).toHaveLength(2);
+		).toHaveLength(3);
 		const rendered = renderWitnessAngularTinyTranslatorReceipt(receipt);
 		expect(rendered).toContain('Recorded schema amendments');
 		expect(rendered).toContain('silently discarded a typed translation');
@@ -528,7 +533,7 @@ describe('Angular TinyTranslator direct Witness receipt schema', () => {
 		const copy = fixture();
 		copy.migratedLaneChain = ANGULAR_TINY_TRANSLATOR_MIGRATED_LANE_CHAIN.slice(
 			0,
-			2,
+			-1,
 		) as unknown as typeof ANGULAR_TINY_TRANSLATOR_MIGRATED_LANE_CHAIN;
 		expect(() => parseWitnessAngularTinyTranslatorReceipt(resealedDeep(copy))).toThrow(
 			/integrity differs/,
@@ -563,18 +568,36 @@ describe('Angular TinyTranslator direct Witness receipt schema', () => {
 });
 
 describe('Angular TinyTranslator per-lane font seam and icon degradation', () => {
-	it('rejects a migrated lane still asking the stylesheet origin, which is the divergence', () => {
+	it('rejects a migrated lane asking the font-file origin, which is the inliner still on', () => {
 		const copy = fixture();
-		const stylesheet = { method: 'GET', path: 'https://fonts.googleapis.com/icon' };
-		copy.mockedSeams.migrated = [stylesheet];
+		copy.mockedSeams.migrated = [INLINED_FONT_SEAM];
 		for (const published of copy.runs.filter((entry) => entry.lane === 'migrated')) {
-			published.mockedNonLoopbackSeams.category = [stylesheet];
+			published.mockedNonLoopbackSeams.category = [INLINED_FONT_SEAM];
 			published.mockedNonLoopbackSeams.observed = [
-				{ ...stylesheet, requests: 2, statuses: [200] },
+				{ ...INLINED_FONT_SEAM, requests: 2, statuses: [200] },
 			];
 		}
 		expect(() => parseWitnessAngularTinyTranslatorReceipt(resealedDeep(copy))).toThrow(
 			/mocked seam inventory differs/,
+		);
+	});
+
+	it('rejects a lane pair whose seams disagree, which is what the rebuild removed', () => {
+		const copy = fixture();
+		const second = { method: 'GET', path: 'https://fonts.googleapis.com/css2' };
+		copy.mockedSeams.migrated = [...copy.mockedSeams.migrated, second];
+		for (const published of copy.runs.filter((entry) => entry.lane === 'migrated')) {
+			published.mockedNonLoopbackSeams.category = [
+				...published.mockedNonLoopbackSeams.category,
+				second,
+			];
+			published.mockedNonLoopbackSeams.absent = [
+				...published.mockedNonLoopbackSeams.absent,
+				second,
+			];
+		}
+		expect(() => parseWitnessAngularTinyTranslatorReceipt(resealedDeep(copy))).toThrow(
+			/integrity differs/,
 		);
 	});
 
@@ -588,12 +611,17 @@ describe('Angular TinyTranslator per-lane font seam and icon degradation', () =>
 		);
 	});
 
-	it('rejects a migrated lane recorded as the baseline degradation', () => {
+	it('rejects a migrated lane recorded as the superseded inlined degradation', () => {
 		const copy = fixture();
-		for (const published of copy.runs.filter((entry) => entry.lane === 'migrated'))
-			published.applicationJourney.matIcon = structuredClone(
-				copy.runs[0]!.applicationJourney.matIcon,
-			);
+		// What the lane looked like while its builder inlined the stylesheet: the
+		// family declared and applied, and only the font file missing. The rebuild
+		// retired that reading, so a receipt still publishing it is refused.
+		for (const published of copy.runs.filter((entry) => entry.lane === 'migrated')) {
+			published.applicationJourney.matIcon.iconFontFamilyDeclared = true;
+			published.applicationJourney.matIcon.resolvedFontFamily = '"Material Icons"';
+			published.applicationJourney.matIcon.cause =
+				'stylesheet-inlined-at-build-time-and-its-font-file-answered-in-context';
+		}
 		copy.matIconDegradations.migrated = copy.runs[2]!.applicationJourney.matIcon;
 		expect(() => parseWitnessAngularTinyTranslatorReceipt(resealedDeep(copy))).toThrow(
 			/mat-icon degradation differs/,
@@ -756,7 +784,7 @@ describe('Angular TinyTranslator route shape, persistence and accommodations', (
 		const receipt = parseWitnessAngularTinyTranslatorReceipt(fixture());
 		expect(receipt.accommodations.manualMigrationSteps).toBe(0);
 		expect(receipt.accommodations.inventory.applicationFilesChanged).toBe(10);
-		expect(receipt.accommodations.inventory.capabilities).toBe(8);
+		expect(receipt.accommodations.inventory.capabilities).toBe(9);
 		expect(receipt.accommodations.inventory.record).toBe(
 			ANGULAR_TINY_TRANSLATOR_CANONICAL_RECEIPTS[1]!.path,
 		);
