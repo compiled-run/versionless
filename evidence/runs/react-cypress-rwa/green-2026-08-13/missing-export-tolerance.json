@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "versionless.react-cypress-rwa-missing-export-tolerance.v1",
+  "unit": "lrapr-t017b/g1-missing-export-tolerance",
+  "capability": "missing-export tolerance for a self-inconsistent dependency ES module",
+  "question": "What did webpack 4 do with a dependency ES module that imports a named binding a sibling module never exports, and how is that reproduced generically without suppressing real errors?",
+  "webpackSemantics": "webpack 4's ESM linker resolved an import of an export the target module does not provide to undefined rather than refusing the build; on the create-react-app 4 line it warned at most. The baseline lane (webpack 4.44.2) built green with the dangling binding present as undefined.",
+  "rolldownSemantics": "Rolldown (the bundler Vite 8 builds with) implements the specification's binding resolution strictly: a named import of an absent export is a hard MISSING_EXPORT at the chunk-rendering stage, and the build stops.",
+  "scopeOfTheShape": {
+    "package": "react-virtualized@9.22.3",
+    "build": "dist/es",
+    "generator": "babel-plugin-flow-react-proptypes",
+    "pattern": "The generator emits `import { bpfrpt_proptype_<Type> } from \"<sibling>\"` for flow proptype markers. Where the sibling module carries no runtime marker for that type, the import dangles.",
+    "filesCarryingABpfrptImport": 28,
+    "genuinelyDanglingImports": 1,
+    "analyzerProof": "Across all 28 files that import a bpfrpt_proptype_* marker, each named relative import was resolved to its target and the target's actual export surface read (following named re-export chains). Exactly one import is genuinely absent from its target; the other 27 resolve through their types.js definitions or re-export chains and are left untouched."
+  },
+  "theOneDanglingImport": {
+    "importer": "node_modules/react-virtualized/dist/es/WindowScroller/utils/onScroll.js",
+    "line": 74,
+    "construct": "import { bpfrpt_proptype_WindowScroller } from \"../WindowScroller.js\";",
+    "symbol": "bpfrpt_proptype_WindowScroller",
+    "target": "node_modules/react-virtualized/dist/es/WindowScroller/WindowScroller.js",
+    "targetExports": ["IS_SCROLLING_TIMEOUT", "default"],
+    "targetHasSymbol": false,
+    "localReferenceCount": 0,
+    "safeUnderUndefined": "yes — a dead import (zero references), so module evaluation never reads the binding",
+    "reachedFrom": "src/components/TransactionInfiniteList.tsx (production application code imports react-virtualized)"
+  },
+  "rewrite": {
+    "form": "The declaration is rewritten to keep the target module in the graph as a side-effect import and to bind each neutralized name to undefined.",
+    "before": "import { bpfrpt_proptype_WindowScroller } from \"../WindowScroller.js\";",
+    "after": "import \"../WindowScroller.js\"; const bpfrpt_proptype_WindowScroller = void 0;",
+    "moduleEvaluationOrderPreserved": true
+  },
+  "genericityGuards": {
+    "dependencyModulesOnly": "Only modules under a dependency directory are considered; an application-source dangling import is a real first-party defect and is left for the bundler to report.",
+    "analyzerProvenAbsence": "The target module is resolved and its export surface read; a name the target does export (directly, by named re-export, or behind an unresolved export *) is left exactly as written. An unresolvable or bare-package target is never rewritten.",
+    "provablySafeUnderUndefined": "The binding is neutralized only when every reference to it is one the module's own evaluation does not dereference: a use inside a function body (deferred), an export/import alias that forwards the binding by name, a type-only position, or no use at all. A value read at module-evaluation scope is refused, so a genuine missing-export error still surfaces.",
+    "noApplicationBranch": "No capability path branches on the application's name, revision, or exact source; nothing in the capability names react-virtualized or the bpfrpt marker."
+  },
+  "verification": {
+    "positive": "A dependency ES module whose dangling proptype import is dead, or read only inside a function body, is rewritten to undefined and the build links.",
+    "negativeAppSource": "An application-source dangling import is refused (the plugin does not act outside node_modules).",
+    "negativeValuePosition": "A dangling import dereferenced in a value position at module-evaluation scope is refused and left for the bundler to error on.",
+    "negativePresentExport": "A present export is left byte-identical.",
+    "buildProbe": "Under a minimal fixture, an unadapted build rejects with the MISSING_EXPORT rolldown cannot link; the adapted build links and the neutralized binding is undefined at runtime."
+  },
+  "result": "The migrated holdout build advances from the RED at onScroll.js:74 to GREEN: 10182 modules transformed, chunks rendered, 18 files emitted, deterministic across two builds (output digest 7051b8489abcaea1bd18ae99a082acf0c8d88596f1dfd82d6b4bac222e37dc18). No strictly-later gap remains at build time."
+}

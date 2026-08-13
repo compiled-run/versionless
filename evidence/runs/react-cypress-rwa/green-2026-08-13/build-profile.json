@@ -1,0 +1,112 @@
+{
+  "schemaVersion": "versionless.react-cypress-rwa-green-build-profile.v1",
+  "role": "holdout",
+  "fixture": "react-cypress-rwa",
+  "unit": "lrapr-t017b/g1-missing-export-tolerance",
+  "result": "migrated-green",
+  "advances": {
+    "unit": "lrapr-t017/h1-cypress-rwa-holdout-rerun",
+    "priorResult": "migrated-red",
+    "priorGap": "missing-export tolerance for a self-inconsistent dependency ES module",
+    "priorDemand": {
+      "code": "MISSING_EXPORT",
+      "module": "node_modules/react-virtualized/dist/es/WindowScroller/WindowScroller.js",
+      "importer": "node_modules/react-virtualized/dist/es/WindowScroller/utils/onScroll.js",
+      "line": 74,
+      "column": 10,
+      "symbol": "bpfrpt_proptype_WindowScroller"
+    },
+    "note": "This is an authorized adapter-reopen hardening loop (owner-directed 2026-08-13). The 5de7df56 adapter freeze was lifted for this unit; the fingerprint fence is not enforced. Prior RED records stay immutable and are advanced by reference."
+  },
+  "adapterReopen": {
+    "authorized": true,
+    "authority": "owner-directed 2026-08-13",
+    "subtreeChanged": "packages/frameworks/react",
+    "capabilityAdded": "missing-export tolerance for a self-inconsistent dependency ES module",
+    "fingerprintFenceEnforced": false
+  },
+  "source": {
+    "repository": "https://github.com/cypress-io/cypress-realworld-app",
+    "ref": "refs/tags/v1.0.18",
+    "revision": "f6b5cf3a1799998dab71181eeed59460f8ada5f4",
+    "archiveSha256": "bd9319272dabc1e7263a0186e0aaae011f6219e6e106363d2c89426f9357b315",
+    "frontendRoot": ".",
+    "license": "MIT",
+    "react": "17.0.2",
+    "reactScripts": "4.0.3",
+    "webpack": "4.44.2",
+    "typescript": "4.3.4"
+  },
+  "migratedLane": {
+    "result": "green",
+    "bundler": "rolldown 1.0.3 under vite 8.0.16",
+    "adapter": "createCraViteAdapter applied through fixtures/react-cypress-rwa/vite.config.ts, nothing holdout-specific in the config",
+    "attempts": 2,
+    "deterministic": true,
+    "modulesTransformed": 10182,
+    "transformPhase": "complete",
+    "renderChunks": "complete",
+    "emit": "complete",
+    "outputDigest": {
+      "scheme": "sha256(sha256(sorted(relpath sha256)) over build-vite)",
+      "value": "7051b8489abcaea1bd18ae99a082acf0c8d88596f1dfd82d6b4bac222e37dc18",
+      "stableAcrossAttempts": true
+    },
+    "outputFiles": 18,
+    "outputInventory": [
+      "assets/core-js-DSYDOQMP.js",
+      "assets/core-js-DSYDOQMP.js.map",
+      "assets/css-shim-3b0ed064-DLqqkXmS.js",
+      "assets/css-shim-3b0ed064-DLqqkXmS.js.map",
+      "assets/dom-CC_hZazZ.js",
+      "assets/dom-CC_hZazZ.js.map",
+      "assets/index-DMUS1oIR.js",
+      "assets/index-DMUS1oIR.js.map",
+      "assets/index-DQFHSTHs.css",
+      "assets/shadow-css-360bb6da-CLjHZAjT.js",
+      "assets/shadow-css-360bb6da-CLjHZAjT.js.map",
+      "favicon.ico",
+      "img/rwa-readme-screenshot.png",
+      "index.html",
+      "logo192.png",
+      "logo512.png",
+      "manifest.json",
+      "robots.txt"
+    ],
+    "entryChunkBytes": 4503844
+  },
+  "observedButNotFatal": [
+    {
+      "code": "INVALID_ANNOTATION",
+      "module": "node_modules/@aws-amplify/ui-components/dist/esm-es5/index-83f2275b.js",
+      "line": 1778,
+      "detail": "A '/*@__PURE__*/' comment sits in a position rolldown cannot interpret; the annotation is ignored, not an error.",
+      "severity": "warning"
+    },
+    {
+      "code": "EVAL",
+      "module": "node_modules/vm-browserify/index.js",
+      "line": 110,
+      "detail": "Direct eval() in the vm shim; a warning, unchanged from what webpack shipped.",
+      "severity": "warning"
+    },
+    {
+      "code": "chunk-size",
+      "detail": "The single application chunk exceeds 500 kB after minification; a size advisory, not a failure.",
+      "severity": "warning"
+    }
+  ],
+  "applicationFilesChanged": {
+    "count": 0,
+    "handEditedSourceFiles": []
+  },
+  "parity": {
+    "comparable": false,
+    "nonClaims": [
+      "Build-level parity across both lanes is not claimed here; this record establishes that the migrated lane builds green, transform through emit.",
+      "No runtime, boot, or behavioural parity is claimed. Witness journeys are a follow-up unit.",
+      "No browser evidence exists for either lane in this record.",
+      "Nothing is claimed about the four external auth provider modes."
+    ]
+  }
+}

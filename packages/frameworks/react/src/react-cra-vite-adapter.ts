@@ -1,4 +1,5 @@
 import { Buffer, isUtf8 } from 'node:buffer';
+import { readFileSync, statSync } from 'node:fs';
 import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import {
@@ -12,7 +13,7 @@ import {
 	wordChar,
 } from 'magic-regexp';
 import * as path from 'pathe';
-import { analyze } from 'yuku-analyzer';
+import { analyze, type NodeOfType, type Reference } from 'yuku-analyzer';
 
 /**
  * Reusable create-react-app compatibility capabilities for a Vite build.
@@ -938,17 +939,305 @@ export function createCraPublicDirectoryPlugin(
 	};
 }
 
+/**
+ * webpack 4 resolved an `import { x } from "m"` whose target module never
+ * exported `x` to `undefined` rather than refusing the build. Its ESM linker
+ * (`webpack/lib/dependencies/HarmonyImportSpecifierDependency`) emitted a
+ * runtime access that produced `undefined` for an unknown export and, on the
+ * webpack 4 line create-react-app 4 pins, only warned. Rolldown — the bundler
+ * Vite 8 builds with — implements the specification's binding resolution
+ * strictly: a named import of an export the target module does not provide is a
+ * hard `MISSING_EXPORT` at the chunk-rendering stage, and the build stops.
+ *
+ * The shape this closes is a *self-inconsistent dependency ES module*: a
+ * published `dist` build whose own files import a named binding that a sibling
+ * module in the same package never exports. Codegen that emits import
+ * statements ahead of the exports it assumes — `babel-plugin-flow-react-proptypes`
+ * is one such generator — produces this routinely: it inserts
+ * `import { <marker> } from "./sibling"` for a type whose module happens to
+ * carry no runtime marker, so the binding dangles. webpack shipped those files
+ * with the binding `undefined` and the application ran; rolldown will not link
+ * them.
+ *
+ * The capability below reproduces webpack's resolution — the dangling binding
+ * becomes `undefined` — but only where that is provably the same outcome
+ * webpack shipped, and never as a blanket suppression of missing exports:
+ *
+ * - **Dependency modules only.** A dangling import in the application's own
+ *   source is a real defect in first-party code, and webpack would have warned
+ *   on it too; it is left to fail. Only modules under a dependency directory —
+ *   the frozen `dist` artifacts the migration cannot edit — are considered.
+ * - **Analyzer-proven absence.** The target module is resolved and its actual
+ *   export surface read; the binding is neutralized only when the name is
+ *   genuinely absent from it. A name the target does export (directly, by
+ *   named re-export, or — conservatively — behind an unresolved `export *`) is
+ *   left exactly as written, so a binding that really does link is untouched.
+ * - **Provably safe under `undefined`.** The dangling binding is neutralized
+ *   only when every reference to it is one the module's own evaluation does not
+ *   dereference: a use nested inside a function body (deferred until the
+ *   function is called), an `export {…}` / `export default` alias that forwards
+ *   the binding by name, a type-only position, or no use at all. A binding read
+ *   in a value position at module-evaluation scope would make `undefined`
+ *   observable where webpack's `undefined` was too — that is the real-error
+ *   case, and it is refused so rolldown still reports it.
+ *
+ * The rewrite keeps the target module in the graph: when every named specifier
+ * of a declaration is neutralized, the declaration is rewritten to a
+ * side-effect import (`import "m";`) so the module still evaluates in the same
+ * order webpack evaluated it, and one `const <local> = void 0;` is emitted for
+ * each neutralized binding. A module with no dangling import is returned
+ * untouched, so a dependency closure that links cleanly emits byte-identical
+ * output.
+ */
+
+/**
+ * The export surface of a dependency module: every name it exports, and whether
+ * it carries an `export *` this surface did not resolve (a nameless re-export,
+ * whose contributed names are unknown). `hasStar` forces the conservative
+ * outcome — a name is never treated as absent from a module that might supply
+ * it through a star it did not follow.
+ */
+export type CraModuleExportSurface = Readonly<{ names: ReadonlySet<string>; hasStar: boolean }>;
+
+/**
+ * Read a module's export surface from its source. Returns `null` when the
+ * source does not analyse as an ECMAScript module, because an unparseable
+ * target proves nothing about what it exports.
+ */
+export function craModuleExportSurface(
+	code: string,
+	id = 'dependency.js',
+): CraModuleExportSurface | null {
+	const module = analyze(code, { path: id, lang: 'js', sourceType: 'module' });
+	if (module.diagnostics.some((entry) => entry.severity === 'error')) return null;
+	const names = new Set<string>();
+	let hasStar = false;
+	for (const record of module.exports) {
+		if (record.name !== null) names.add(record.name);
+		else hasStar = true;
+	}
+	return Object.freeze({ names, hasStar });
+}
+
+/** The extensions a relative dependency specifier resolves through, in order. */
+const relativeModuleExtensions: readonly string[] = ['.js', '.mjs', '.cjs', '.jsx', '.ts', '.tsx'];
+
+function isExistingFile(candidate: string): boolean {
+	try {
+		return statSync(candidate).isFile();
+	} catch {
+		return false;
+	}
+}
+
+/**
+ * Resolve a relative specifier to a file the way a bundler's node resolution
+ * would: the exact path, then each module extension, then an `index` file in a
+ * directory of that name. A bare (non-relative) specifier returns `null` — it
+ * names another package, not a sibling of a self-inconsistent module.
+ */
+export function craResolveRelativeModule(fromFile: string, specifier: string): string | null {
+	if (!specifier.startsWith('.')) return null;
+	const base = path.resolve(path.dirname(fromFile), specifier);
+	const candidates = [
+		base,
+		...relativeModuleExtensions.map((extension) => `${base}${extension}`),
+		...relativeModuleExtensions.map((extension) => path.join(base, `index${extension}`)),
+	];
+	for (const candidate of candidates) if (isExistingFile(candidate)) return candidate;
+	return null;
+}
+
+/** Read a target module's export surface from disk, or `null` when unreadable. */
+export function craReadModuleExportSurface(file: string): CraModuleExportSurface | null {
+	let code: string;
+	try {
+		code = readFileSync(file, 'utf8');
+	} catch {
+		return null;
+	}
+	return craModuleExportSurface(code, file);
+}
+
+/**
+ * True when the module's own evaluation never dereferences this reference, so
+ * substituting `undefined` for the binding cannot throw at module-evaluation
+ * time. A reference inside a function body is deferred until the function runs;
+ * an `export`/`import` alias (space `"any"`) forwards the binding by name
+ * without reading its value; a type-only position is erased. Anything else is a
+ * value read at evaluation scope, where `undefined` would be observable.
+ */
+function craReferenceSafeUnderUndefined(reference: Reference): boolean {
+	if (reference.inTypePosition) return true;
+	if (reference.space === 'any') return true;
+	for (const scope of reference.scope.ancestors())
+		if (scope.kind === 'function' || scope.kind === 'functionBody') return true;
+	return false;
+}
+
+type CraImportDeclarationNode = NodeOfType<'ImportDeclaration'>;
+type CraImportDeclarationSpecifier = CraImportDeclarationNode['specifiers'][number];
+
+/** The literal `undefined` value a neutralized dangling binding resolves to. */
+const craDanglingBindingValue = 'void 0';
+
+/** Reconstruct an import clause from the specifiers a declaration keeps. */
+function craImportClause(specifiers: readonly CraImportDeclarationSpecifier[]): string {
+	let defaultName: string | null = null;
+	let namespaceName: string | null = null;
+	const named: string[] = [];
+	for (const specifier of specifiers) {
+		if (specifier.type === 'ImportDefaultSpecifier') defaultName = specifier.local.name;
+		else if (specifier.type === 'ImportNamespaceSpecifier')
+			namespaceName = specifier.local.name;
+		else {
+			const imported =
+				'name' in specifier.imported
+					? specifier.imported.name
+					: JSON.stringify(specifier.imported.value);
+			named.push(
+				imported === specifier.local.name
+					? specifier.local.name
+					: `${imported} as ${specifier.local.name}`,
+			);
+		}
+	}
+	const parts: string[] = [];
+	if (defaultName !== null) parts.push(defaultName);
+	if (namespaceName !== null) parts.push(`* as ${namespaceName}`);
+	if (named.length > 0) parts.push(`{ ${named.join(', ')} }`);
+	return parts.join(', ');
+}
+
+/** One dangling named import the capability neutralized. */
+export type CraDanglingImportRecord = Readonly<{ id: string; specifier: string; name: string }>;
+
+/** How to read the export surface a relative specifier resolves to. */
+export type CraModuleExportSurfaceResolver = (specifier: string) => CraModuleExportSurface | null;
+
+export type CraDanglingImportNeutralization = Readonly<{
+	code: string;
+	neutralized: readonly Readonly<{ specifier: string; name: string }>[];
+}>;
+
+/**
+ * Neutralize the dangling named imports of a dependency ES module: the pure
+ * core of the capability, given `resolve` to read each relative target's export
+ * surface. Returns `null` when the module does not analyse as an ES module, has
+ * no imports, or carries no dangling-and-safe import — in every one of those
+ * cases the source is left exactly as it was.
+ */
+export function craNeutralizeDanglingImports(
+	code: string,
+	id: string,
+	resolve: CraModuleExportSurfaceResolver,
+): CraDanglingImportNeutralization | null {
+	const module = analyze(code, { path: id, lang: 'js', sourceType: 'module' });
+	if (module.diagnostics.some((entry) => entry.severity === 'error')) return null;
+	if (module.imports.length === 0) return null;
+
+	const surfaces = new Map<string, CraModuleExportSurface | null>();
+	const declarations = new Map<CraImportDeclarationNode, CraImportDeclarationSpecifier[]>();
+	const neutralized: { specifier: string; name: string }[] = [];
+
+	for (const record of module.imports) {
+		if (record.isNamespace || record.isSideEffect || record.typeOnly) continue;
+		if (record.name === null || record.name === 'default') continue;
+		if (record.local === null) continue;
+		if (!record.specifier.startsWith('.')) continue;
+		if (!surfaces.has(record.specifier)) surfaces.set(record.specifier, resolve(record.specifier));
+		const surface = surfaces.get(record.specifier) ?? null;
+		if (surface === null || surface.hasStar) continue;
+		if (surface.names.has(record.name)) continue;
+		if (!record.local.references.every(craReferenceSafeUnderUndefined)) continue;
+		const declaration = module.parentOf(record.node);
+		if (declaration === null || declaration.type !== 'ImportDeclaration') continue;
+		const specifier = declaration.specifiers.find((entry) => entry === record.node);
+		if (specifier === undefined) continue;
+		const group = declarations.get(declaration) ?? [];
+		group.push(specifier);
+		declarations.set(declaration, group);
+		neutralized.push({ specifier: record.specifier, name: record.name });
+	}
+
+	if (declarations.size === 0) return null;
+
+	const edits: { start: number; end: number; text: string }[] = [];
+	for (const [declaration, neutralizedSpecifiers] of declarations) {
+		const dropped = new Set<CraImportDeclarationSpecifier>(neutralizedSpecifiers);
+		const kept = declaration.specifiers.filter((specifier) => !dropped.has(specifier));
+		const source = code.slice(declaration.source.start, declaration.source.end);
+		const importText =
+			kept.length > 0 ? `import ${craImportClause(kept)} from ${source};` : `import ${source};`;
+		const bindings = neutralizedSpecifiers
+			.map((specifier) => `const ${specifier.local.name} = ${craDanglingBindingValue};`)
+			.join(' ');
+		edits.push({ start: declaration.start, end: declaration.end, text: `${importText} ${bindings}` });
+	}
+
+	edits.sort((left, right) => right.start - left.start);
+	let output = code;
+	for (const edit of edits) output = `${output.slice(0, edit.start)}${edit.text}${output.slice(edit.end)}`;
+	return Object.freeze({ code: output, neutralized });
+}
+
+export type CraMissingExportToleranceOptions = Readonly<{
+	observe?: (record: CraDanglingImportRecord) => void;
+}>;
+
+/**
+ * Reproduce webpack 4's `undefined` resolution of a dangling named import for a
+ * self-inconsistent dependency ES module. The plugin scopes itself to
+ * dependency modules, reads each dangling import's target export surface from
+ * disk (cached, so a shared target is analysed once), and rewrites only the
+ * imports it can prove are both genuinely absent and safe under `undefined`. A
+ * module that links cleanly is returned untouched.
+ */
+export function createCraMissingExportTolerancePlugin(
+	options: CraMissingExportToleranceOptions = {},
+): CraTransformPlugin {
+	const cache = new Map<string, CraModuleExportSurface | null>();
+	const surfaceOf = (file: string): CraModuleExportSurface | null => {
+		const cached = cache.get(file);
+		if (cached !== undefined || cache.has(file)) return cached ?? null;
+		const surface = craReadModuleExportSurface(file);
+		cache.set(file, surface);
+		return surface;
+	};
+	return {
+		name: 'versionless-cra-missing-export-tolerance',
+		enforce: 'pre',
+		transform(code, id) {
+			if (id.startsWith('\0')) return null;
+			const file = pathWithoutQuery(id);
+			if (!craIsDependencyModule(file)) return null;
+			if (!decodableModuleExtensions.has(path.extname(file))) return null;
+			if (!code.includes('import')) return null;
+			const result = craNeutralizeDanglingImports(code, file, (specifier) => {
+				const target = craResolveRelativeModule(file, specifier);
+				return target === null ? null : surfaceOf(target);
+			});
+			if (result === null) return null;
+			for (const record of result.neutralized)
+				options.observe?.({ id: file, specifier: record.specifier, name: record.name });
+			return { code: result.code, map: null };
+		},
+	};
+}
+
 export type CraViteAdapterOptions = Readonly<{
 	publicDirectory: string;
 	templateFile?: string;
 	applicationRoot?: string;
 	observeImplicitGlobals?: (record: CraImplicitGlobalRecord) => void;
 	observeDecodedModules?: (record: CraDecodedModuleRecord) => void;
+	observeDanglingImports?: (record: CraDanglingImportRecord) => void;
 }>;
 
 export type CraViteAdapterPlugins = readonly [
 	CraLoadPlugin,
 	CraModuleTypePlugin,
+	CraTransformPlugin,
 	CraTransformPlugin,
 	CraTransformPlugin,
 	CraNodeCoreModulePlugin,
@@ -960,8 +1249,10 @@ export type CraViteAdapterPlugins = readonly [
  * The create-react-app compatibility plugin set: webpack's lenient module-source
  * decoding, JSX in application-source JavaScript, tilde CSS specifier
  * rewriting, webpack's sloppy-mode CommonJS wrapper for dependency modules,
- * webpack's automatic Node core module polyfills, the ambient `global`
- * identifier, plus public directory replication.
+ * webpack's `undefined` resolution of a dangling named import in a
+ * self-inconsistent dependency ES module, webpack's automatic Node core module
+ * polyfills, the ambient `global` identifier, plus public directory
+ * replication.
  *
  * Decoding leads, because it is the only capability here that acts on bytes: a
  * module has to become text before any transform above can read it. The JSX
@@ -981,6 +1272,11 @@ export function createCraViteAdapter(options: CraViteAdapterOptions): CraViteAda
 			options.observeImplicitGlobals === undefined
 				? {}
 				: { observe: options.observeImplicitGlobals },
+		),
+		createCraMissingExportTolerancePlugin(
+			options.observeDanglingImports === undefined
+				? {}
+				: { observe: options.observeDanglingImports },
 		),
 		createCraNodeCoreModulePlugin(
 			options.applicationRoot === undefined
