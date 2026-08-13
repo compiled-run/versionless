@@ -32,6 +32,7 @@ import {
 	type WitnessFailedRequestInventory,
 	type WitnessFailedRequestInventoryEntry,
 	type WitnessMeasuredScrollAbsence,
+	type WitnessJourneyPlaceholderDeclaration,
 	type WitnessMockedNonLoopbackSeamEntry,
 	type WitnessMockedNonLoopbackSeamInventory,
 	type WitnessMockedNonLoopbackSeamObservation,
@@ -199,6 +200,7 @@ import {
 	type WitnessTransportRequest,
 	type WitnessViewportScroll,
 } from './playwright-host.ts';
+import { type LiveBackendHandle, type LiveBackendSpec, startLiveBackend } from './live-backend.ts';
 import { verifyLinkedWitnessProvenance } from './provenance.ts';
 import type {
 	WitnessSocketLedgerDetail,
@@ -236,7 +238,14 @@ type App =
 	| 'react-linkfree'
 	| 'react-memos'
 	| 'angular-tiny-translator'
-	| 'angular-super-productivity';
+	| 'angular-super-productivity'
+	/**
+	 * The first live-backend stateful vertical. It is not a member of the frozen
+	 * static corpus `WITNESS_REAL_APP_NAMES` and never joins the master real-app
+	 * receipt; its identity is admitted here so the generic serving path can type
+	 * a stateful spec, and its evidence is carried by its own idiom schema.
+	 */
+	| 'cypress-realworld-app';
 type Lane = 'baseline' | 'migrated';
 type JourneyEvidence = {
 	assertions: string[];
@@ -447,6 +456,25 @@ type JourneyLifecycle = {
 	 * keeps the name, the byte length and the digest.
 	 */
 	capturedDownloadTexts(): Promise<string[]>;
+	/**
+	 * The second bounded loopback origin the application's own live backend is
+	 * bound to, for a stateful vertical that declared one. Absent for every
+	 * static vertical, so a journey whose application declared no backend has no
+	 * origin to reach and cannot invent one.
+	 */
+	backendOrigin?: string;
+	/**
+	 * The static SPA origin, paired with {@link backendOrigin} so a stateful
+	 * journey can tell its two bounded loopback origins apart when it builds the
+	 * loopback-backend inventory. Absent unless the application declared a backend.
+	 */
+	staticOrigin?: string;
+	/**
+	 * Every request outcome the page reported this run, for a stateful journey
+	 * that builds its own loopback-backend inventory from them. Absent unless the
+	 * application declared a backend, for the same reason.
+	 */
+	requestOutcomes?(): WitnessObservedRequestOutcome[];
 };
 export type AppSpec = {
 	app: App;
@@ -536,6 +564,22 @@ export type AppSpec = {
 	 * the application navigated it.
 	 */
 	normalizeRoute?(path: string): string;
+	/**
+	 * A live first-party backend this application serves. Declaring it is the only
+	 * thing that spawns the application's own server on a second bounded loopback
+	 * origin and re-seeds it from its frozen snapshot before the pass. An
+	 * application that omits it is served by exactly the static-only path it was
+	 * served by before this mechanism existed — the generic serving path branches
+	 * on the declaration, never on the application's identity.
+	 */
+	backend?: LiveBackendSpec;
+	/**
+	 * The minted, server-decided and seed-derived values this application's
+	 * journey normalizes to stable placeholder tokens, so a mutating store still
+	 * produces one semantic digest across passes. Carried for the journey to read;
+	 * the journey captures the runtime values and applies the tokens itself.
+	 */
+	placeholders?: readonly WitnessJourneyPlaceholderDeclaration[];
 	journey(
 		context: BoxContext,
 		page: PageHandle,
@@ -6010,6 +6054,15 @@ async function executeRun(
 			? ('canonical-t060' as const)
 			: ('current-witness' as const);
 	const loopback = app.loopback?.();
+	// The live-backend serving path is a per-application opt-in taken only where
+	// the application declared a backend. `startLiveBackend` re-seeds from the
+	// frozen snapshot and spawns the application's own server on a second bounded
+	// loopback origin before the journey begins; because `executeRun` runs once
+	// per (lane, pass), the fresh spawn is exactly the per-pass re-seed the
+	// determinism proof requires. An application that declares none never reaches
+	// here, so its serving is byte-identical to what it always was.
+	const backend: LiveBackendHandle | null =
+		app.backend === undefined ? null : await startLiveBackend(laneRoot, app.backend);
 	const staticServer = await startStaticServer(laneRoot, {
 		profile: contextProfile,
 		api: loopback?.api,
@@ -6092,6 +6145,13 @@ async function executeRun(
 			loadFileInput: host.loadFileInput,
 			capturedDownloads: host.capturedDownloads,
 			capturedDownloadTexts: host.capturedDownloadTexts,
+			...(backend === null
+				? {}
+				: {
+						backendOrigin: backend.origin,
+						staticOrigin: staticServer.origin,
+						requestOutcomes: host.requestOutcomes,
+					}),
 		});
 		await context.receipt.capture('journey-complete');
 	});
@@ -6115,6 +6175,7 @@ async function executeRun(
 		});
 	} finally {
 		await staticServer.close();
+		if (backend !== null) await backend.close();
 	}
 	staticServer.assertClean();
 	const afterInventory = await staticInventory(laneRoot);

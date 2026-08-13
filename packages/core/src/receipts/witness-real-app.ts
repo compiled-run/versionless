@@ -534,8 +534,131 @@ export const WITNESS_REAL_SERVICE_WORKER_PHASES = [
 	'after-online-reload',
 ] as const;
 
+/**
+ * The closed list of stateful applications whose proof serves a live first-party
+ * backend rather than a byte-frozen static tree alone. These are deliberately
+ * kept OUT of {@link WITNESS_REAL_APP_NAMES}: the master real-app receipt's
+ * cardinality (`length * 4`) and its per-app/lane/pass expectation set are bound
+ * to the static corpus, and a live-backend vertical carries its own idiom
+ * receipt with its own binding. Widening the name union below is additive — it
+ * lets the generic harness type a stateful run's identity — and changes nothing
+ * the master parser measures, which continues to reject any run whose app is not
+ * one of the frozen static names.
+ */
+export const WITNESS_REAL_APP_STATEFUL_NAMES = ['cypress-realworld-app'] as const;
+export type WitnessRealAppName =
+	| (typeof WITNESS_REAL_APP_NAMES)[number]
+	| (typeof WITNESS_REAL_APP_STATEFUL_NAMES)[number];
+
+/**
+ * The exact locality rule for a live first-party backend served on a second
+ * bounded loopback origin, carried in the receipt so a reader checks the rule
+ * rather than trusting the label.
+ *
+ * A stateful application's own server (here Express over lowdb) is spawned by
+ * the harness and bound to a second `127.0.0.1:<backend-port>` origin alongside
+ * the static SPA origin. Requests the page makes to that origin are loopback —
+ * they never leave the machine — and are counted in their own category so the
+ * evidence distinguishes "the app talked to its own backend" from "the app
+ * fetched a static asset". It is the application's REAL backend, never an
+ * in-context stub, and it changes nothing about the non-loopback discipline:
+ * `successfulNonLoopback` stays zero and any request outside either loopback
+ * origin still fails the run.
+ */
+export const WITNESS_LOOPBACK_BACKEND_RULE =
+	'A live first-party backend is the application\'s own server, spawned by the harness and bound to a second 127.0.0.1 loopback origin beside the static SPA origin. Requests to the backend origin are loopback and are counted in their own category; they are never successful non-loopback egress. Requests outside both loopback origins fail the run, and successfulNonLoopback stays 0.' as const;
+
+/** One method+path the page reached on the live backend origin, recorded origin-relative. */
+export type WitnessLoopbackBackendCategoryEntry = { method: string; path: string };
+
+/**
+ * One backend endpoint as this run observed it. `requests` is recorded rather
+ * than pinned — how many times a peer-to-peer app polls its own notifications
+ * route is journey timing — and `statuses` are the answers the app's own server
+ * gave, ascending.
+ */
+export type WitnessLoopbackBackendObservation = WitnessLoopbackBackendCategoryEntry & {
+	requests: number;
+	statuses: number[];
+};
+
+/**
+ * Accounting for requests to the live backend origin, held to the same
+ * non-masking discipline as the other inventories: `outsideCategory` must stay
+ * empty, `successfulNonLoopback` is fixed at 0, and `backend: 'live-loopback'`
+ * records that these requests were answered by the application's own spawned
+ * server on a bounded loopback origin.
+ */
+export type WitnessLoopbackBackendInventory = {
+	policy: 'live-first-party-loopback-backend';
+	backend: 'live-loopback';
+	rule: typeof WITNESS_LOOPBACK_BACKEND_RULE;
+	category: WitnessLoopbackBackendCategoryEntry[];
+	observed: WitnessLoopbackBackendObservation[];
+	absent: WitnessLoopbackBackendCategoryEntry[];
+	outsideCategory: [];
+	/** Backend requests admitted this run, summed. */
+	admitted: number;
+	successfulNonLoopback: 0;
+};
+
+/**
+ * The exact rule that scopes the served-static byte inventory to the frontend
+ * SPA tree when a live backend is present.
+ *
+ * The byte-identical invariant is a statement about production frontend bytes:
+ * the SPA dist is inventoried before and after the journey and must not change.
+ * A live backend mutates its own document store on purpose — that is what makes
+ * the journey meaningful — so backend state is explicitly OUTSIDE the byte
+ * inventory. The frozen static tree is the SPA; the backend is live.
+ */
+export const WITNESS_LIVE_BACKEND_SERVED_RULE =
+	'When a live backend is present the byte-identical served-static invariant is scoped to the frontend SPA dist tree only. The SPA tree is inventoried before and after the journey and must be byte-identical; the live backend\'s own state is mutated by the journey and is explicitly outside the byte inventory.' as const;
+
+/**
+ * The served-static scope marker a live-backend run records in place of the
+ * static corpus's whole-machine byte claim. `backend: 'live-loopback'` names the
+ * serving model; `byteInventoryScope: 'frontend-spa-dist'` names exactly what
+ * the byte-identical assertion covers, so a reader cannot mistake the SPA byte
+ * proof for a claim about backend state.
+ */
+export type WitnessLiveBackendServed = {
+	backend: 'live-loopback';
+	byteInventoryScope: 'frontend-spa-dist';
+	rule: typeof WITNESS_LIVE_BACKEND_SERVED_RULE;
+};
+
+/**
+ * The exact rule that governs replacing minted, nondeterministic values in a
+ * journey's recorded evidence with stable placeholders, carried in the receipt
+ * so a reader checks the rule rather than trusting the label.
+ *
+ * This is the generic extension of the HospitalRun `{created-patient-id}` idiom.
+ * A stateful journey mints identifiers and timestamps its server decides — a
+ * created transaction id, a session-scoped account handle — and those values
+ * differ run to run by construction. So the journey DECLARES which captured
+ * values are minted, each by a stable placeholder token, and every occurrence of
+ * a declared value in the recorded evidence is replaced by its token. The
+ * placeholder is the only thing normalized; the shape of the evidence around it
+ * is untouched, so a dropped step or a re-pointed route still fails the run.
+ */
+export const WITNESS_JOURNEY_PLACEHOLDER_RULE =
+	'A stateful journey declares which captured values are minted or nondeterministic, each by a stable placeholder token. Every occurrence of a declared value in the recorded journey evidence is replaced by its token, and only the value is normalized. A value the journey did not capture is never placeholdered, so nothing outside the declared minted set can be hidden.' as const;
+
+/**
+ * One minted value a journey declares for placeholdering: the stable token that
+ * replaces it in the evidence, and a non-empty note of where the value comes
+ * from so a reader can see why it could not be pinned. The value itself is
+ * supplied at run time (captured from the page); the declaration carries only
+ * the token and its provenance, never a literal secret or seed identity.
+ */
+export type WitnessJourneyPlaceholderDeclaration = {
+	token: string;
+	origin: string;
+};
+
 export type WitnessRealAppRun = {
-	app: (typeof WITNESS_REAL_APP_NAMES)[number];
+	app: WitnessRealAppName;
 	framework: 'react' | 'angularjs' | 'next' | 'angular';
 	lane: 'baseline' | 'migrated';
 	pass: 1 | 2;
