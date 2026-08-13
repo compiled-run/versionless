@@ -41,6 +41,28 @@ export type LiveBackendSpec = {
 	 */
 	port: number;
 	/**
+	 * The loopback host name the built SPA addresses — both the host the browser
+	 * must be served the document from and the host baked into the SPA's absolute
+	 * backend URL. A production build may hard-code `http://localhost:<port>` for
+	 * its API and enforce a CORS allow-origin pinned to `localhost`, so serving the
+	 * document from `127.0.0.1` would make every credentialed request cross-origin
+	 * and CORS-rejected. Declaring `localhost` here binds the backend origin and
+	 * the served document under that name. Omitted, the host is `127.0.0.1` —
+	 * exactly the origin every origin-agnostic loopback backend already used, so a
+	 * backend that omits it is served exactly as it was before this field existed.
+	 */
+	host?: string;
+	/**
+	 * The environment variable name(s) the application's server reads to learn the
+	 * served SPA port when it builds its CORS allow-origin. The static SPA port is
+	 * ephemeral, so the harness injects the actual served port into each named
+	 * variable before spawning the backend; a credentialed request from the served
+	 * origin is then on the backend's allow-list rather than CORS-rejected. Omitted,
+	 * no port is injected and the backend's own environment decides its origin
+	 * policy, unchanged.
+	 */
+	corsOriginPortEnv?: readonly string[];
+	/**
 	 * The deterministic re-seed mechanism: the frozen seed snapshot and the
 	 * mutable store it is copied over before every pass. Both are lane-relative,
 	 * so the evidence names files rather than the machine.
@@ -65,7 +87,13 @@ export type LiveBackendSpec = {
 
 /** A running live backend bound to a second bounded loopback origin. */
 export type LiveBackendHandle = {
-	/** The `http://127.0.0.1:<port>` origin the application's server is bound to. */
+	/**
+	 * The loopback origin the application's SPA addresses its server at —
+	 * `http://<host>:<port>`, where the host is the declared {@link
+	 * LiveBackendSpec.host} (`127.0.0.1` by default). It is the origin the page's
+	 * backend requests are bucketed against, so it must be the exact origin the
+	 * built SPA calls, not merely the interface the server binds.
+	 */
 	origin: string;
 	/**
 	 * Restore the frozen seed and restart the server, so the next pass starts from
@@ -81,8 +109,43 @@ export type LiveBackendHandle = {
 const DEFAULT_READY_TIMEOUT_MS = 30_000;
 const HEALTH_POLL_INTERVAL_MS = 250;
 
-function backendOrigin(port: number): string {
-	return stringifyParsedURL({ protocol: 'http:', host: `127.0.0.1:${port}` });
+function loopbackOrigin(host: string, port: number): string {
+	return stringifyParsedURL({ protocol: 'http:', host: `${host}:${port}` });
+}
+
+/**
+ * The origin the SPA addresses the backend at: the declared loopback host and
+ * the bound port. `localhost`, `127.0.0.1` and `[::1]` are all loopback names,
+ * and which one a built SPA hard-codes is the application's own fact, so the
+ * host is read from the declaration rather than fixed here. It defaults to
+ * `127.0.0.1`, the origin every origin-agnostic backend already used. Exported
+ * so the coordination between this origin and the loopback-backend bucketing can
+ * be checked without spawning a server.
+ */
+export function liveBackendOrigin(spec: LiveBackendSpec): string {
+	return loopbackOrigin(spec.host ?? '127.0.0.1', spec.port);
+}
+
+/**
+ * The environment the harness injects for the served SPA port. A backend that
+ * declares no CORS-origin port variable gets nothing injected; one that does
+ * gets the actual ephemeral served port in each named variable, so its own CORS
+ * allow-origin resolves to the origin the browser is really served from. It is
+ * an error to declare the variables without supplying a served port, because
+ * the whole point of the declaration is to carry that port. Exported so the
+ * injection can be unit-tested without spawning a server.
+ */
+export function liveBackendCorsEnv(
+	spec: LiveBackendSpec,
+	served: { spaPort: number } | null,
+): Record<string, string> {
+	const names = spec.corsOriginPortEnv ?? [];
+	if (names.length === 0) return {};
+	if (served === null)
+		throw new Error(
+			'live backend declares a CORS-origin port variable but no served SPA port was supplied',
+		);
+	return Object.fromEntries(names.map((name) => [name, String(served.spaPort)]));
 }
 
 async function probeHealth(origin: string, path: string): Promise<number | null> {
@@ -115,10 +178,14 @@ async function applySeed(laneRoot: string, spec: LiveBackendSpec): Promise<void>
 	}
 }
 
-function spawnBackend(laneRoot: string, spec: LiveBackendSpec): ChildProcess {
+function spawnBackend(
+	laneRoot: string,
+	spec: LiveBackendSpec,
+	injectedEnv: Readonly<Record<string, string>>,
+): ChildProcess {
 	return spawn(spec.command, [...spec.args], {
 		cwd: resolve(laneRoot, spec.cwd ?? '.'),
-		env: { ...process.env, ...spec.env, PORT: String(spec.port) },
+		env: { ...process.env, ...spec.env, ...injectedEnv, PORT: String(spec.port) },
 		stdio: 'ignore',
 	});
 }
@@ -150,18 +217,29 @@ async function stopProcess(child: ChildProcess): Promise<void> {
  * having first restored its frozen seed. Generic: every value comes from the
  * declared {@link LiveBackendSpec}, so a stateful application is served by
  * declaring one, not by teaching the harness its name.
+ *
+ * `served` carries the ephemeral SPA port the harness bound the static server
+ * to. A backend that declares {@link LiveBackendSpec.corsOriginPortEnv} needs it
+ * — the served origin's port is not known until the static server is up — while
+ * an origin-agnostic backend ignores it. The health probe always targets
+ * `127.0.0.1` (the loopback interface is reachable there whatever host the SPA
+ * addresses), while the returned origin is the declared-host origin the SPA
+ * actually calls.
  */
 export async function startLiveBackend(
 	laneRoot: string,
 	spec: LiveBackendSpec,
+	served: { spaPort: number } | null = null,
 ): Promise<LiveBackendHandle> {
-	const origin = backendOrigin(spec.port);
+	const origin = liveBackendOrigin(spec);
+	const healthOrigin = loopbackOrigin('127.0.0.1', spec.port);
+	const injectedEnv = liveBackendCorsEnv(spec, served);
 	let child: ChildProcess | null = null;
 	const bringUp = async (): Promise<void> => {
 		if (child !== null) await stopProcess(child);
 		await applySeed(laneRoot, spec);
-		child = spawnBackend(laneRoot, spec);
-		await waitForHealth(origin, spec);
+		child = spawnBackend(laneRoot, spec, injectedEnv);
+		await waitForHealth(healthOrigin, spec);
 	};
 	await bringUp();
 	return {

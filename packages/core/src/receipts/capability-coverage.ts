@@ -162,6 +162,21 @@ const CAPABILITY_INPUTS: readonly CapabilityRecordInput[] = [
 		note: 'create-react-app to Vite 8 adapter; fired on three independent create-react-app applications. Cross-proven in adapter-freeze.',
 	},
 	{
+		name: 'react-cra-process-global',
+		lineage: 'react',
+		package: '@versionless/react',
+		entryPoints: [
+			'readProcessGlobalUsage',
+			'craProcessGlobalShim',
+			'createCraProcessGlobalPlugin',
+		],
+		provenApps: ['cypress-realworld-app'],
+		attribution: 'direct-invocation',
+		coverage: 'proven',
+		evidence: ['packages/cli/src/fixture/react-cypress-rwa-calibrate-run.ts'],
+		note: 'webpack 4 / process-browser functional process global parity, analyzer-driven from the bundle\'s own process.<member> usage. Proven on one create-react-app application whose migrated Vite bundle threw `process is not defined` at module evaluation and now boots; experimental until a second create-react-app application proves it.',
+	},
+	{
 		name: 'react-next-static-adapter',
 		lineage: 'react',
 		package: '@versionless/react',

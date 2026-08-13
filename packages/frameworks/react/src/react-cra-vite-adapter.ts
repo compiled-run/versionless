@@ -14,6 +14,11 @@ import {
 } from 'magic-regexp';
 import * as path from 'pathe';
 import { analyze, type NodeOfType, type Reference } from 'yuku-analyzer';
+import {
+	createCraProcessGlobalPlugin,
+	type CraProcessGlobalPlugin,
+	type CraProcessGlobalRecord,
+} from './react-cra-process-global.ts';
 
 /**
  * Reusable create-react-app compatibility capabilities for a Vite build.
@@ -1232,6 +1237,7 @@ export type CraViteAdapterOptions = Readonly<{
 	observeImplicitGlobals?: (record: CraImplicitGlobalRecord) => void;
 	observeDecodedModules?: (record: CraDecodedModuleRecord) => void;
 	observeDanglingImports?: (record: CraDanglingImportRecord) => void;
+	observeProcessGlobal?: (record: CraProcessGlobalRecord) => void;
 }>;
 
 export type CraViteAdapterPlugins = readonly [
@@ -1243,6 +1249,7 @@ export type CraViteAdapterPlugins = readonly [
 	CraNodeCoreModulePlugin,
 	CraDefinePlugin,
 	CraOutputPlugin,
+	CraProcessGlobalPlugin,
 ];
 
 /**
@@ -1251,13 +1258,15 @@ export type CraViteAdapterPlugins = readonly [
  * rewriting, webpack's sloppy-mode CommonJS wrapper for dependency modules,
  * webpack's `undefined` resolution of a dangling named import in a
  * self-inconsistent dependency ES module, webpack's automatic Node core module
- * polyfills, the ambient `global` identifier, plus public directory
- * replication.
+ * polyfills, the ambient `global` identifier, webpack 4's functional `process`
+ * global, plus public directory replication.
  *
  * Decoding leads, because it is the only capability here that acts on bytes: a
  * module has to become text before any transform above can read it. The JSX
  * module type follows immediately, because a module has to be parseable before
- * any later transform's output is meaningful.
+ * any later transform's output is meaningful. The process global trails: it
+ * reads the modules the earlier transforms produce and writes the entry
+ * document only after the bundle is complete.
  */
 export function createCraViteAdapter(options: CraViteAdapterOptions): CraViteAdapterPlugins {
 	return [
@@ -1288,5 +1297,10 @@ export function createCraViteAdapter(options: CraViteAdapterOptions): CraViteAda
 			directory: options.publicDirectory,
 			exclude: [options.templateFile ?? 'index.html'],
 		}),
+		createCraProcessGlobalPlugin(
+			options.observeProcessGlobal === undefined
+				? {}
+				: { observe: options.observeProcessGlobal },
+		),
 	];
 }

@@ -7,6 +7,7 @@ import {
 	WITNESS_REACT_CYPRESS_RWA_ACTOR,
 	WITNESS_REACT_CYPRESS_RWA_BACKEND_CATEGORY,
 	WITNESS_REACT_CYPRESS_RWA_FORBIDDEN_MARKERS,
+	WITNESS_REACT_CYPRESS_RWA_MOCKED_SEAMS,
 	WITNESS_REACT_CYPRESS_RWA_PLACEHOLDERS,
 	WITNESS_REACT_CYPRESS_RWA_ROUTES,
 	WITNESS_REACT_CYPRESS_RWA_SCHEMA,
@@ -218,5 +219,69 @@ describe('witness-react-cypress-rwa schema', () => {
 	it('carries the real pinned source identity, never the seed', () => {
 		expect(REACT_CYPRESS_RWA_SOURCE.revision).toBe('f6b5cf3a1799998dab71181eeed59460f8ada5f4');
 		expect(WITNESS_REACT_CYPRESS_RWA_ACTOR.username).not.toContain('s3cret');
+	});
+});
+
+// These lock the pins to what the live DOM+backend actually surfaced, so a future
+// edit that reverts a pin to the spec-derived guess fails the node gate. Every
+// value below was read off the running application, not the Cypress specs.
+describe('witness-react-cypress-rwa live-surface calibration', () => {
+	const categoryKey = (entry: { method: string; path: string }): string =>
+		`${entry.method} ${entry.path}`;
+	const category = WITNESS_REACT_CYPRESS_RWA_BACKEND_CATEGORY.map(categoryKey);
+
+	it('pins bank-account onboarding as POST /graphql, not the REST endpoints', () => {
+		expect(category).toContain('POST /graphql');
+		expect(category).not.toContain('POST /bankAccounts');
+		expect(category).not.toContain('GET /bankAccounts');
+	});
+
+	it('pins peer search as GET /users and drops the never-reached endpoints', () => {
+		expect(category).toContain('GET /users');
+		expect(category).not.toContain('GET /users/search');
+		// The journey never opens a transaction-detail route or signs out.
+		expect(category).not.toContain('GET /transactions/{created-transaction-id}');
+		expect(category).not.toContain('POST /logout');
+	});
+
+	it('pins the personal feed as GET /transactions and the settings write as a minted PATCH', () => {
+		expect(category).toContain('GET /transactions');
+		expect(category).toContain('PATCH /users/{created-user-id}');
+		// The only minted id in the whole category is the settings-write user id.
+		const withMint = category.filter((key) => key.includes('{'));
+		expect(withMint).toEqual(['PATCH /users/{created-user-id}']);
+	});
+
+	it('records literal routes with no minted id (payment settles on /transaction/new)', () => {
+		expect([...WITNESS_REACT_CYPRESS_RWA_ROUTES]).toEqual([
+			'/signin',
+			'/',
+			'/user/settings',
+			'/transaction/new',
+			'/',
+			'/personal',
+			'/',
+			'/contacts',
+			'/personal',
+			'/notifications',
+		]);
+		expect(WITNESS_REACT_CYPRESS_RWA_ROUTES.some((route) => route.includes('{'))).toBe(false);
+	});
+
+	it('declares the full deterministic seed-avatar seam, all query-free on the S3 host', () => {
+		expect(WITNESS_REACT_CYPRESS_RWA_MOCKED_SEAMS).toHaveLength(5);
+		for (const seam of WITNESS_REACT_CYPRESS_RWA_MOCKED_SEAMS) {
+			expect(seam.method).toBe('GET');
+			// The query-free absolute-endpoint rule the seam inventory enforces.
+			expect(seam.path.startsWith('/')).toBe(false);
+			expect(seam.path).not.toContain('?');
+			expect(seam.path).toMatch(
+				/^https:\/\/cypress-realworld-app-svgs\.s3\.amazonaws\.com\/[^/]+\.svg$/,
+			);
+			// A freshly minted actor has no avatar, so no per-run value appears here.
+			expect(seam.path).not.toContain('{');
+		}
+		const distinct = new Set(WITNESS_REACT_CYPRESS_RWA_MOCKED_SEAMS.map((seam) => seam.path));
+		expect(distinct.size).toBe(5);
 	});
 });

@@ -16,7 +16,7 @@ import type { Duplex } from 'node:stream';
 import { dirname, extname, isAbsolute, join, normalize, relative, resolve } from 'pathe';
 import { box, runBoxes, type BoxContext, type PageHandle, type PageRecord } from '@async/witness';
 import { charIn, createRegExp, exactly, global } from 'magic-regexp';
-import { joinURL, parseURL, stringifyParsedURL } from 'ufo';
+import { joinURL, parseHost, parseURL, stringifyParsedURL } from 'ufo';
 import {
 	canonicalize,
 	compareUtf16CodeUnits,
@@ -6054,21 +6054,44 @@ async function executeRun(
 			? ('canonical-t060' as const)
 			: ('current-witness' as const);
 	const loopback = app.loopback?.();
-	// The live-backend serving path is a per-application opt-in taken only where
-	// the application declared a backend. `startLiveBackend` re-seeds from the
-	// frozen snapshot and spawns the application's own server on a second bounded
-	// loopback origin before the journey begins; because `executeRun` runs once
-	// per (lane, pass), the fresh spawn is exactly the per-pass re-seed the
-	// determinism proof requires. An application that declares none never reaches
-	// here, so its serving is byte-identical to what it always was.
-	const backend: LiveBackendHandle | null =
-		app.backend === undefined ? null : await startLiveBackend(laneRoot, app.backend);
 	const staticServer = await startStaticServer(laneRoot, {
 		profile: contextProfile,
 		api: loopback?.api,
 		upgrade: loopback?.upgrade,
 	});
-	const productionUrl = joinURL(staticServer.origin, app.initialRoute ?? '/');
+	// The origin the browser is actually addressed at. The static server binds
+	// 127.0.0.1, but a live-backend application whose production build pins its
+	// backend's CORS allow-list to a specific loopback host (for example
+	// `localhost`) must be served the document under that same host, or every
+	// credentialed request from the page is cross-origin and rejected. The host is
+	// the application's own declared fact — never a branch on its identity — and an
+	// application that declares no such host (every static vertical, and any
+	// origin-agnostic backend) is served at exactly the 127.0.0.1 origin it always
+	// was, so `servedOrigin === staticServer.origin` and nothing downstream shifts.
+	const servedHost = app.backend?.host;
+	const servedOrigin =
+		servedHost === undefined
+			? staticServer.origin
+			: stringifyParsedURL({
+					protocol: 'http:',
+					host: `${servedHost}:${parseHost(parseURL(staticServer.origin).host ?? '').port ?? ''}`,
+				});
+	// The live-backend serving path is a per-application opt-in taken only where
+	// the application declared a backend. `startLiveBackend` re-seeds from the
+	// frozen snapshot and spawns the application's own server on a second bounded
+	// loopback origin before the journey begins; because `executeRun` runs once
+	// per (lane, pass), the fresh spawn is exactly the per-pass re-seed the
+	// determinism proof requires. The served SPA port is handed to it so a backend
+	// that declares a CORS-origin port variable resolves its allow-list to the
+	// exact origin the browser is served from. An application that declares no
+	// backend never reaches here, so its serving is byte-identical to what it was.
+	const backend: LiveBackendHandle | null =
+		app.backend === undefined
+			? null
+			: await startLiveBackend(laneRoot, app.backend, {
+					spaPort: Number(parseHost(parseURL(servedOrigin).host ?? '').port ?? ''),
+				});
+	const productionUrl = joinURL(servedOrigin, app.initialRoute ?? '/');
 	const transportEvidence: JourneyTransportEvidence = { apiUsernames: [] };
 	const expectedServiceWorker =
 		app.app === 'react-boilerplate' && options.serviceWorkerPolicy !== 'zero'
@@ -6114,7 +6137,7 @@ async function executeRun(
 	const cancelledDuplicateFetchInventory = (): WitnessCancelledDuplicateFetchInventory =>
 		buildCancelledDuplicateFetchInventory(
 			host.requestOutcomes(),
-			staticServer.origin,
+			servedOrigin,
 			cancelledDuplicateCategory,
 		);
 	let journeyEvidence: JourneyEvidence | undefined;
@@ -6149,7 +6172,7 @@ async function executeRun(
 				? {}
 				: {
 						backendOrigin: backend.origin,
-						staticOrigin: staticServer.origin,
+						staticOrigin: servedOrigin,
 						requestOutcomes: host.requestOutcomes,
 					}),
 		});
@@ -6252,7 +6275,7 @@ async function executeRun(
 		pageRecord,
 		app.normalizeRoute,
 		admittedCancelledKeys,
-		staticServer.origin,
+		servedOrigin,
 	);
 	const interactions = witnessRecord.interactions;
 	const trackedEvents = Object.entries(witnessRecord.trackedEventCounts)
@@ -6402,7 +6425,7 @@ async function executeRun(
 			: {
 					consoleErrorInventory: buildConsoleErrorInventory(
 						pageRecord,
-						staticServer.origin,
+						servedOrigin,
 						app.consoleErrorInventory[lane],
 					),
 				}),
@@ -6411,7 +6434,7 @@ async function executeRun(
 			: {
 					failedRequestInventory: buildFailedRequestInventory(
 						pageRecord,
-						staticServer.origin,
+						servedOrigin,
 						app.failedRequestInventory[lane],
 						admittedCancelledKeys,
 					),
@@ -6424,7 +6447,7 @@ async function executeRun(
 			: {
 					mockedNonLoopbackSeams: buildMockedNonLoopbackSeamInventory(
 						host.requestOutcomes(),
-						staticServer.origin,
+						servedOrigin,
 						app.mockedNonLoopbackSeams[lane],
 					),
 				}),

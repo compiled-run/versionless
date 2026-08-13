@@ -1,0 +1,2169 @@
+{
+	"measuredAt": "2026-08-13",
+	"parity": {
+		"result": "parity",
+		"behaviorDigest": "963785426eb0c56e8d2f929b5462d35e9a7a8d123fa9d8d01a765c6cb35ebe26",
+		"lanes": {
+			"baseline": {
+				"lane": "baseline",
+				"semanticDigest": "5c3285f1c402920f358bed9cacedaac07d3ed4800251ed264f20a3f0030d49cf",
+				"behaviorDigest": "963785426eb0c56e8d2f929b5462d35e9a7a8d123fa9d8d01a765c6cb35ebe26",
+				"legs": {
+					"ok": 51,
+					"total": 51
+				},
+				"deterministic": true
+			},
+			"migrated": {
+				"lane": "migrated",
+				"semanticDigest": "54313316fef5eac37d098a207bd1f140805f68b126291e62a69f99a75981e6ed",
+				"behaviorDigest": "963785426eb0c56e8d2f929b5462d35e9a7a8d123fa9d8d01a765c6cb35ebe26",
+				"legs": {
+					"ok": 51,
+					"total": 51
+				},
+				"deterministic": true
+			}
+		},
+		"behaviorParity": true,
+		"lanesAreDistinctBuilds": true
+	},
+	"passes": [
+		{
+			"lane": "baseline",
+			"pass": 1,
+			"semanticDigest": "5c3285f1c402920f358bed9cacedaac07d3ed4800251ed264f20a3f0030d49cf",
+			"behaviorDigest": "963785426eb0c56e8d2f929b5462d35e9a7a8d123fa9d8d01a765c6cb35ebe26",
+			"measured": {
+				"lane": "baseline",
+				"pass": 1,
+				"status": "passed",
+				"behavior": {
+					"legs": {
+						"ok": 51,
+						"total": 51
+					},
+					"navigations": [
+						"/signin",
+						"/",
+						"/user/settings",
+						"/transaction/new",
+						"/",
+						"/personal",
+						"/",
+						"/contacts",
+						"/personal",
+						"/notifications"
+					],
+					"trackedEventCounts": {
+						"click": 16,
+						"input": 232,
+						"change": 15,
+						"keydown": 232,
+						"mouseover": 27
+					},
+					"consoleErrors": 0,
+					"pageErrors": 0,
+					"failedRequests": 0,
+					"successfulNonLoopback": 0,
+					"mockedNonLoopback": 17,
+					"backend": [
+						{
+							"method": "GET",
+							"path": "/checkAuth",
+							"requests": 2,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "GET",
+							"path": "/notifications",
+							"requests": 2,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "GET",
+							"path": "/transactions",
+							"requests": 2,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "GET",
+							"path": "/transactions/contacts",
+							"requests": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "GET",
+							"path": "/transactions/public",
+							"requests": 3,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "GET",
+							"path": "/users",
+							"requests": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "PATCH",
+							"path": "/users/{created-user-id}",
+							"requests": 1,
+							"statuses": [
+								204
+							]
+						},
+						{
+							"method": "POST",
+							"path": "/graphql",
+							"requests": 3,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "POST",
+							"path": "/login",
+							"requests": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "POST",
+							"path": "/transactions",
+							"requests": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "POST",
+							"path": "/users",
+							"requests": 1,
+							"statuses": [
+								201
+							]
+						}
+					]
+				},
+				"presentation": {
+					"laneStaticFiles": 84,
+					"laneStaticDigest": "57cea24966c61963914da814e8348c970f11468127228c070def6c6472980028"
+				},
+				"placeholders": [
+					{
+						"token": "{created-user-id}",
+						"origin": "the id the backend mints for the freshly signed-up account"
+					},
+					{
+						"token": "{created-account-id}",
+						"origin": "the id the backend mints for the account onboarding creates"
+					},
+					{
+						"token": "{created-transaction-id}",
+						"origin": "the id the backend mints for the payment the journey sends"
+					},
+					{
+						"token": "{recipient-handle}",
+						"origin": "a seed user the payment is sent to, captured from search and normalized so no seed identity reaches the evidence"
+					}
+				]
+			},
+			"raw": {
+				"staticOrigin": "http://localhost:56022",
+				"backendOrigin": "http://localhost:3001",
+				"status": "passed",
+				"failure": "",
+				"steps": [
+					{
+						"name": "anchor signup-form",
+						"outcome": "ok"
+					},
+					{
+						"name": "type signup-first",
+						"outcome": "ok"
+					},
+					{
+						"name": "type signup-last",
+						"outcome": "ok"
+					},
+					{
+						"name": "type signup-username",
+						"outcome": "ok"
+					},
+					{
+						"name": "type signup-password",
+						"outcome": "ok"
+					},
+					{
+						"name": "type signup-confirm",
+						"outcome": "ok"
+					},
+					{
+						"name": "click signup-submit",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor back-to-signin",
+						"outcome": "ok"
+					},
+					{
+						"name": "type signin-username",
+						"outcome": "ok"
+					},
+					{
+						"name": "type signin-password",
+						"outcome": "ok"
+					},
+					{
+						"name": "click signin-submit",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor onboarding-dialog",
+						"outcome": "ok"
+					},
+					{
+						"name": "click onboarding-next-1",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor bank-form",
+						"outcome": "ok"
+					},
+					{
+						"name": "type bank-name",
+						"outcome": "ok"
+					},
+					{
+						"name": "type bank-routing",
+						"outcome": "ok"
+					},
+					{
+						"name": "type bank-account",
+						"outcome": "ok"
+					},
+					{
+						"name": "click bank-submit",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor onboarding-done",
+						"outcome": "ok"
+					},
+					{
+						"name": "click onboarding-next-2",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor home",
+						"outcome": "ok"
+					},
+					{
+						"name": "click nav-settings",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor settings-form",
+						"outcome": "ok"
+					},
+					{
+						"name": "type settings-email",
+						"outcome": "ok"
+					},
+					{
+						"name": "type settings-phone",
+						"outcome": "ok"
+					},
+					{
+						"name": "click settings-submit",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor after-settings",
+						"outcome": "ok"
+					},
+					{
+						"name": "click new-transaction",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor peer-search",
+						"outcome": "ok"
+					},
+					{
+						"name": "type search-peer",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor peer-results",
+						"outcome": "ok"
+					},
+					{
+						"name": "click pick-peer",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor amount-form",
+						"outcome": "ok"
+					},
+					{
+						"name": "type amount",
+						"outcome": "ok"
+					},
+					{
+						"name": "type description",
+						"outcome": "ok"
+					},
+					{
+						"name": "click submit-payment",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor payment-settled",
+						"outcome": "ok"
+					},
+					{
+						"name": "click home",
+						"outcome": "ok"
+					},
+					{
+						"name": "click personal-tab",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor personal-feed",
+						"outcome": "ok"
+					},
+					{
+						"name": "minted-tx-in-feed",
+						"outcome": "ok"
+					},
+					{
+						"name": "balance-settled",
+						"outcome": "ok"
+					},
+					{
+						"name": "click public-tab",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor public-feed",
+						"outcome": "ok"
+					},
+					{
+						"name": "click contacts-tab",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor contacts-feed",
+						"outcome": "ok"
+					},
+					{
+						"name": "click personal-tab-2",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor personal-feed-2",
+						"outcome": "ok"
+					},
+					{
+						"name": "click nav-notifications",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor notifications-settled",
+						"outcome": "ok"
+					},
+					{
+						"name": "tracked-events",
+						"outcome": "ok"
+					}
+				],
+				"requests": {
+					"staticCount": 4,
+					"backend": [
+						{
+							"endpoint": "GET /checkAuth",
+							"count": 2,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "GET /notifications",
+							"count": 2,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "GET /transactions",
+							"count": 2,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "GET /transactions/contacts",
+							"count": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "GET /transactions/public",
+							"count": 3,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "GET /users",
+							"count": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "PATCH /users/pkDrPI0d4",
+							"count": 1,
+							"statuses": [
+								204
+							]
+						},
+						{
+							"endpoint": "POST /graphql",
+							"count": 3,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "POST /login",
+							"count": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "POST /transactions",
+							"count": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "POST /users",
+							"count": 1,
+							"statuses": [
+								201
+							]
+						}
+					],
+					"other": [
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/qywYp6hS0U.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/bDjUb4ir5O.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/tsHF6_D5oQ.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/qywYp6hS0U.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/bDjUb4ir5O.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/tsHF6_D5oQ.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/24VniajY1y.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/qywYp6hS0U.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/bDjUb4ir5O.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/tsHF6_D5oQ.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
+							"status": 200
+						}
+					]
+				}
+			}
+		},
+		{
+			"lane": "baseline",
+			"pass": 2,
+			"semanticDigest": "5c3285f1c402920f358bed9cacedaac07d3ed4800251ed264f20a3f0030d49cf",
+			"behaviorDigest": "963785426eb0c56e8d2f929b5462d35e9a7a8d123fa9d8d01a765c6cb35ebe26",
+			"measured": {
+				"lane": "baseline",
+				"pass": 2,
+				"status": "passed",
+				"behavior": {
+					"legs": {
+						"ok": 51,
+						"total": 51
+					},
+					"navigations": [
+						"/signin",
+						"/",
+						"/user/settings",
+						"/transaction/new",
+						"/",
+						"/personal",
+						"/",
+						"/contacts",
+						"/personal",
+						"/notifications"
+					],
+					"trackedEventCounts": {
+						"click": 16,
+						"input": 232,
+						"change": 15,
+						"keydown": 232,
+						"mouseover": 27
+					},
+					"consoleErrors": 0,
+					"pageErrors": 0,
+					"failedRequests": 0,
+					"successfulNonLoopback": 0,
+					"mockedNonLoopback": 17,
+					"backend": [
+						{
+							"method": "GET",
+							"path": "/checkAuth",
+							"requests": 2,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "GET",
+							"path": "/notifications",
+							"requests": 2,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "GET",
+							"path": "/transactions",
+							"requests": 2,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "GET",
+							"path": "/transactions/contacts",
+							"requests": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "GET",
+							"path": "/transactions/public",
+							"requests": 3,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "GET",
+							"path": "/users",
+							"requests": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "PATCH",
+							"path": "/users/{created-user-id}",
+							"requests": 1,
+							"statuses": [
+								204
+							]
+						},
+						{
+							"method": "POST",
+							"path": "/graphql",
+							"requests": 3,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "POST",
+							"path": "/login",
+							"requests": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "POST",
+							"path": "/transactions",
+							"requests": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "POST",
+							"path": "/users",
+							"requests": 1,
+							"statuses": [
+								201
+							]
+						}
+					]
+				},
+				"presentation": {
+					"laneStaticFiles": 84,
+					"laneStaticDigest": "57cea24966c61963914da814e8348c970f11468127228c070def6c6472980028"
+				},
+				"placeholders": [
+					{
+						"token": "{created-user-id}",
+						"origin": "the id the backend mints for the freshly signed-up account"
+					},
+					{
+						"token": "{created-account-id}",
+						"origin": "the id the backend mints for the account onboarding creates"
+					},
+					{
+						"token": "{created-transaction-id}",
+						"origin": "the id the backend mints for the payment the journey sends"
+					},
+					{
+						"token": "{recipient-handle}",
+						"origin": "a seed user the payment is sent to, captured from search and normalized so no seed identity reaches the evidence"
+					}
+				]
+			},
+			"raw": {
+				"staticOrigin": "http://localhost:56105",
+				"backendOrigin": "http://localhost:3001",
+				"status": "passed",
+				"failure": "",
+				"steps": [
+					{
+						"name": "anchor signup-form",
+						"outcome": "ok"
+					},
+					{
+						"name": "type signup-first",
+						"outcome": "ok"
+					},
+					{
+						"name": "type signup-last",
+						"outcome": "ok"
+					},
+					{
+						"name": "type signup-username",
+						"outcome": "ok"
+					},
+					{
+						"name": "type signup-password",
+						"outcome": "ok"
+					},
+					{
+						"name": "type signup-confirm",
+						"outcome": "ok"
+					},
+					{
+						"name": "click signup-submit",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor back-to-signin",
+						"outcome": "ok"
+					},
+					{
+						"name": "type signin-username",
+						"outcome": "ok"
+					},
+					{
+						"name": "type signin-password",
+						"outcome": "ok"
+					},
+					{
+						"name": "click signin-submit",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor onboarding-dialog",
+						"outcome": "ok"
+					},
+					{
+						"name": "click onboarding-next-1",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor bank-form",
+						"outcome": "ok"
+					},
+					{
+						"name": "type bank-name",
+						"outcome": "ok"
+					},
+					{
+						"name": "type bank-routing",
+						"outcome": "ok"
+					},
+					{
+						"name": "type bank-account",
+						"outcome": "ok"
+					},
+					{
+						"name": "click bank-submit",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor onboarding-done",
+						"outcome": "ok"
+					},
+					{
+						"name": "click onboarding-next-2",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor home",
+						"outcome": "ok"
+					},
+					{
+						"name": "click nav-settings",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor settings-form",
+						"outcome": "ok"
+					},
+					{
+						"name": "type settings-email",
+						"outcome": "ok"
+					},
+					{
+						"name": "type settings-phone",
+						"outcome": "ok"
+					},
+					{
+						"name": "click settings-submit",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor after-settings",
+						"outcome": "ok"
+					},
+					{
+						"name": "click new-transaction",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor peer-search",
+						"outcome": "ok"
+					},
+					{
+						"name": "type search-peer",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor peer-results",
+						"outcome": "ok"
+					},
+					{
+						"name": "click pick-peer",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor amount-form",
+						"outcome": "ok"
+					},
+					{
+						"name": "type amount",
+						"outcome": "ok"
+					},
+					{
+						"name": "type description",
+						"outcome": "ok"
+					},
+					{
+						"name": "click submit-payment",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor payment-settled",
+						"outcome": "ok"
+					},
+					{
+						"name": "click home",
+						"outcome": "ok"
+					},
+					{
+						"name": "click personal-tab",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor personal-feed",
+						"outcome": "ok"
+					},
+					{
+						"name": "minted-tx-in-feed",
+						"outcome": "ok"
+					},
+					{
+						"name": "balance-settled",
+						"outcome": "ok"
+					},
+					{
+						"name": "click public-tab",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor public-feed",
+						"outcome": "ok"
+					},
+					{
+						"name": "click contacts-tab",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor contacts-feed",
+						"outcome": "ok"
+					},
+					{
+						"name": "click personal-tab-2",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor personal-feed-2",
+						"outcome": "ok"
+					},
+					{
+						"name": "click nav-notifications",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor notifications-settled",
+						"outcome": "ok"
+					},
+					{
+						"name": "tracked-events",
+						"outcome": "ok"
+					}
+				],
+				"requests": {
+					"staticCount": 4,
+					"backend": [
+						{
+							"endpoint": "GET /checkAuth",
+							"count": 2,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "GET /notifications",
+							"count": 2,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "GET /transactions",
+							"count": 2,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "GET /transactions/contacts",
+							"count": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "GET /transactions/public",
+							"count": 3,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "GET /users",
+							"count": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "PATCH /users/qdmtk0KJr",
+							"count": 1,
+							"statuses": [
+								204
+							]
+						},
+						{
+							"endpoint": "POST /graphql",
+							"count": 3,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "POST /login",
+							"count": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "POST /transactions",
+							"count": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "POST /users",
+							"count": 1,
+							"statuses": [
+								201
+							]
+						}
+					],
+					"other": [
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/qywYp6hS0U.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/bDjUb4ir5O.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/tsHF6_D5oQ.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/qywYp6hS0U.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/bDjUb4ir5O.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/tsHF6_D5oQ.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/24VniajY1y.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/qywYp6hS0U.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/bDjUb4ir5O.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/tsHF6_D5oQ.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
+							"status": 200
+						}
+					]
+				}
+			}
+		},
+		{
+			"lane": "migrated",
+			"pass": 1,
+			"semanticDigest": "54313316fef5eac37d098a207bd1f140805f68b126291e62a69f99a75981e6ed",
+			"behaviorDigest": "963785426eb0c56e8d2f929b5462d35e9a7a8d123fa9d8d01a765c6cb35ebe26",
+			"measured": {
+				"lane": "migrated",
+				"pass": 1,
+				"status": "passed",
+				"behavior": {
+					"legs": {
+						"ok": 51,
+						"total": 51
+					},
+					"navigations": [
+						"/signin",
+						"/",
+						"/user/settings",
+						"/transaction/new",
+						"/",
+						"/personal",
+						"/",
+						"/contacts",
+						"/personal",
+						"/notifications"
+					],
+					"trackedEventCounts": {
+						"click": 16,
+						"input": 232,
+						"change": 15,
+						"keydown": 232,
+						"mouseover": 27
+					},
+					"consoleErrors": 0,
+					"pageErrors": 0,
+					"failedRequests": 0,
+					"successfulNonLoopback": 0,
+					"mockedNonLoopback": 17,
+					"backend": [
+						{
+							"method": "GET",
+							"path": "/checkAuth",
+							"requests": 2,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "GET",
+							"path": "/notifications",
+							"requests": 2,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "GET",
+							"path": "/transactions",
+							"requests": 2,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "GET",
+							"path": "/transactions/contacts",
+							"requests": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "GET",
+							"path": "/transactions/public",
+							"requests": 3,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "GET",
+							"path": "/users",
+							"requests": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "PATCH",
+							"path": "/users/{created-user-id}",
+							"requests": 1,
+							"statuses": [
+								204
+							]
+						},
+						{
+							"method": "POST",
+							"path": "/graphql",
+							"requests": 3,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "POST",
+							"path": "/login",
+							"requests": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "POST",
+							"path": "/transactions",
+							"requests": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "POST",
+							"path": "/users",
+							"requests": 1,
+							"statuses": [
+								201
+							]
+						}
+					]
+				},
+				"presentation": {
+					"laneStaticFiles": 18,
+					"laneStaticDigest": "13f71830eb0fc79b37c546c59f5437d3c3b381c7e87ed8ebd844f8d1f6a95897"
+				},
+				"placeholders": [
+					{
+						"token": "{created-user-id}",
+						"origin": "the id the backend mints for the freshly signed-up account"
+					},
+					{
+						"token": "{created-account-id}",
+						"origin": "the id the backend mints for the account onboarding creates"
+					},
+					{
+						"token": "{created-transaction-id}",
+						"origin": "the id the backend mints for the payment the journey sends"
+					},
+					{
+						"token": "{recipient-handle}",
+						"origin": "a seed user the payment is sent to, captured from search and normalized so no seed identity reaches the evidence"
+					}
+				]
+			},
+			"raw": {
+				"staticOrigin": "http://localhost:56182",
+				"backendOrigin": "http://localhost:3001",
+				"status": "passed",
+				"failure": "",
+				"steps": [
+					{
+						"name": "anchor signup-form",
+						"outcome": "ok"
+					},
+					{
+						"name": "type signup-first",
+						"outcome": "ok"
+					},
+					{
+						"name": "type signup-last",
+						"outcome": "ok"
+					},
+					{
+						"name": "type signup-username",
+						"outcome": "ok"
+					},
+					{
+						"name": "type signup-password",
+						"outcome": "ok"
+					},
+					{
+						"name": "type signup-confirm",
+						"outcome": "ok"
+					},
+					{
+						"name": "click signup-submit",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor back-to-signin",
+						"outcome": "ok"
+					},
+					{
+						"name": "type signin-username",
+						"outcome": "ok"
+					},
+					{
+						"name": "type signin-password",
+						"outcome": "ok"
+					},
+					{
+						"name": "click signin-submit",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor onboarding-dialog",
+						"outcome": "ok"
+					},
+					{
+						"name": "click onboarding-next-1",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor bank-form",
+						"outcome": "ok"
+					},
+					{
+						"name": "type bank-name",
+						"outcome": "ok"
+					},
+					{
+						"name": "type bank-routing",
+						"outcome": "ok"
+					},
+					{
+						"name": "type bank-account",
+						"outcome": "ok"
+					},
+					{
+						"name": "click bank-submit",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor onboarding-done",
+						"outcome": "ok"
+					},
+					{
+						"name": "click onboarding-next-2",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor home",
+						"outcome": "ok"
+					},
+					{
+						"name": "click nav-settings",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor settings-form",
+						"outcome": "ok"
+					},
+					{
+						"name": "type settings-email",
+						"outcome": "ok"
+					},
+					{
+						"name": "type settings-phone",
+						"outcome": "ok"
+					},
+					{
+						"name": "click settings-submit",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor after-settings",
+						"outcome": "ok"
+					},
+					{
+						"name": "click new-transaction",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor peer-search",
+						"outcome": "ok"
+					},
+					{
+						"name": "type search-peer",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor peer-results",
+						"outcome": "ok"
+					},
+					{
+						"name": "click pick-peer",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor amount-form",
+						"outcome": "ok"
+					},
+					{
+						"name": "type amount",
+						"outcome": "ok"
+					},
+					{
+						"name": "type description",
+						"outcome": "ok"
+					},
+					{
+						"name": "click submit-payment",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor payment-settled",
+						"outcome": "ok"
+					},
+					{
+						"name": "click home",
+						"outcome": "ok"
+					},
+					{
+						"name": "click personal-tab",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor personal-feed",
+						"outcome": "ok"
+					},
+					{
+						"name": "minted-tx-in-feed",
+						"outcome": "ok"
+					},
+					{
+						"name": "balance-settled",
+						"outcome": "ok"
+					},
+					{
+						"name": "click public-tab",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor public-feed",
+						"outcome": "ok"
+					},
+					{
+						"name": "click contacts-tab",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor contacts-feed",
+						"outcome": "ok"
+					},
+					{
+						"name": "click personal-tab-2",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor personal-feed-2",
+						"outcome": "ok"
+					},
+					{
+						"name": "click nav-notifications",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor notifications-settled",
+						"outcome": "ok"
+					},
+					{
+						"name": "tracked-events",
+						"outcome": "ok"
+					}
+				],
+				"requests": {
+					"staticCount": 3,
+					"backend": [
+						{
+							"endpoint": "GET /checkAuth",
+							"count": 2,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "GET /notifications",
+							"count": 2,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "GET /transactions",
+							"count": 2,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "GET /transactions/contacts",
+							"count": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "GET /transactions/public",
+							"count": 3,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "GET /users",
+							"count": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "PATCH /users/M0ThhHGXX",
+							"count": 1,
+							"statuses": [
+								204
+							]
+						},
+						{
+							"endpoint": "POST /graphql",
+							"count": 3,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "POST /login",
+							"count": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "POST /transactions",
+							"count": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "POST /users",
+							"count": 1,
+							"statuses": [
+								201
+							]
+						}
+					],
+					"other": [
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/qywYp6hS0U.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/bDjUb4ir5O.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/tsHF6_D5oQ.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/qywYp6hS0U.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/bDjUb4ir5O.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/tsHF6_D5oQ.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/24VniajY1y.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/qywYp6hS0U.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/bDjUb4ir5O.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/tsHF6_D5oQ.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
+							"status": 200
+						}
+					]
+				}
+			}
+		},
+		{
+			"lane": "migrated",
+			"pass": 2,
+			"semanticDigest": "54313316fef5eac37d098a207bd1f140805f68b126291e62a69f99a75981e6ed",
+			"behaviorDigest": "963785426eb0c56e8d2f929b5462d35e9a7a8d123fa9d8d01a765c6cb35ebe26",
+			"measured": {
+				"lane": "migrated",
+				"pass": 2,
+				"status": "passed",
+				"behavior": {
+					"legs": {
+						"ok": 51,
+						"total": 51
+					},
+					"navigations": [
+						"/signin",
+						"/",
+						"/user/settings",
+						"/transaction/new",
+						"/",
+						"/personal",
+						"/",
+						"/contacts",
+						"/personal",
+						"/notifications"
+					],
+					"trackedEventCounts": {
+						"click": 16,
+						"input": 232,
+						"change": 15,
+						"keydown": 232,
+						"mouseover": 27
+					},
+					"consoleErrors": 0,
+					"pageErrors": 0,
+					"failedRequests": 0,
+					"successfulNonLoopback": 0,
+					"mockedNonLoopback": 17,
+					"backend": [
+						{
+							"method": "GET",
+							"path": "/checkAuth",
+							"requests": 2,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "GET",
+							"path": "/notifications",
+							"requests": 2,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "GET",
+							"path": "/transactions",
+							"requests": 2,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "GET",
+							"path": "/transactions/contacts",
+							"requests": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "GET",
+							"path": "/transactions/public",
+							"requests": 3,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "GET",
+							"path": "/users",
+							"requests": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "PATCH",
+							"path": "/users/{created-user-id}",
+							"requests": 1,
+							"statuses": [
+								204
+							]
+						},
+						{
+							"method": "POST",
+							"path": "/graphql",
+							"requests": 3,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "POST",
+							"path": "/login",
+							"requests": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "POST",
+							"path": "/transactions",
+							"requests": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"method": "POST",
+							"path": "/users",
+							"requests": 1,
+							"statuses": [
+								201
+							]
+						}
+					]
+				},
+				"presentation": {
+					"laneStaticFiles": 18,
+					"laneStaticDigest": "13f71830eb0fc79b37c546c59f5437d3c3b381c7e87ed8ebd844f8d1f6a95897"
+				},
+				"placeholders": [
+					{
+						"token": "{created-user-id}",
+						"origin": "the id the backend mints for the freshly signed-up account"
+					},
+					{
+						"token": "{created-account-id}",
+						"origin": "the id the backend mints for the account onboarding creates"
+					},
+					{
+						"token": "{created-transaction-id}",
+						"origin": "the id the backend mints for the payment the journey sends"
+					},
+					{
+						"token": "{recipient-handle}",
+						"origin": "a seed user the payment is sent to, captured from search and normalized so no seed identity reaches the evidence"
+					}
+				]
+			},
+			"raw": {
+				"staticOrigin": "http://localhost:56258",
+				"backendOrigin": "http://localhost:3001",
+				"status": "passed",
+				"failure": "",
+				"steps": [
+					{
+						"name": "anchor signup-form",
+						"outcome": "ok"
+					},
+					{
+						"name": "type signup-first",
+						"outcome": "ok"
+					},
+					{
+						"name": "type signup-last",
+						"outcome": "ok"
+					},
+					{
+						"name": "type signup-username",
+						"outcome": "ok"
+					},
+					{
+						"name": "type signup-password",
+						"outcome": "ok"
+					},
+					{
+						"name": "type signup-confirm",
+						"outcome": "ok"
+					},
+					{
+						"name": "click signup-submit",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor back-to-signin",
+						"outcome": "ok"
+					},
+					{
+						"name": "type signin-username",
+						"outcome": "ok"
+					},
+					{
+						"name": "type signin-password",
+						"outcome": "ok"
+					},
+					{
+						"name": "click signin-submit",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor onboarding-dialog",
+						"outcome": "ok"
+					},
+					{
+						"name": "click onboarding-next-1",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor bank-form",
+						"outcome": "ok"
+					},
+					{
+						"name": "type bank-name",
+						"outcome": "ok"
+					},
+					{
+						"name": "type bank-routing",
+						"outcome": "ok"
+					},
+					{
+						"name": "type bank-account",
+						"outcome": "ok"
+					},
+					{
+						"name": "click bank-submit",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor onboarding-done",
+						"outcome": "ok"
+					},
+					{
+						"name": "click onboarding-next-2",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor home",
+						"outcome": "ok"
+					},
+					{
+						"name": "click nav-settings",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor settings-form",
+						"outcome": "ok"
+					},
+					{
+						"name": "type settings-email",
+						"outcome": "ok"
+					},
+					{
+						"name": "type settings-phone",
+						"outcome": "ok"
+					},
+					{
+						"name": "click settings-submit",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor after-settings",
+						"outcome": "ok"
+					},
+					{
+						"name": "click new-transaction",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor peer-search",
+						"outcome": "ok"
+					},
+					{
+						"name": "type search-peer",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor peer-results",
+						"outcome": "ok"
+					},
+					{
+						"name": "click pick-peer",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor amount-form",
+						"outcome": "ok"
+					},
+					{
+						"name": "type amount",
+						"outcome": "ok"
+					},
+					{
+						"name": "type description",
+						"outcome": "ok"
+					},
+					{
+						"name": "click submit-payment",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor payment-settled",
+						"outcome": "ok"
+					},
+					{
+						"name": "click home",
+						"outcome": "ok"
+					},
+					{
+						"name": "click personal-tab",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor personal-feed",
+						"outcome": "ok"
+					},
+					{
+						"name": "minted-tx-in-feed",
+						"outcome": "ok"
+					},
+					{
+						"name": "balance-settled",
+						"outcome": "ok"
+					},
+					{
+						"name": "click public-tab",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor public-feed",
+						"outcome": "ok"
+					},
+					{
+						"name": "click contacts-tab",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor contacts-feed",
+						"outcome": "ok"
+					},
+					{
+						"name": "click personal-tab-2",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor personal-feed-2",
+						"outcome": "ok"
+					},
+					{
+						"name": "click nav-notifications",
+						"outcome": "ok"
+					},
+					{
+						"name": "anchor notifications-settled",
+						"outcome": "ok"
+					},
+					{
+						"name": "tracked-events",
+						"outcome": "ok"
+					}
+				],
+				"requests": {
+					"staticCount": 3,
+					"backend": [
+						{
+							"endpoint": "GET /checkAuth",
+							"count": 2,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "GET /notifications",
+							"count": 2,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "GET /transactions",
+							"count": 2,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "GET /transactions/contacts",
+							"count": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "GET /transactions/public",
+							"count": 3,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "GET /users",
+							"count": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "PATCH /users/WFvui3Zy7",
+							"count": 1,
+							"statuses": [
+								204
+							]
+						},
+						{
+							"endpoint": "POST /graphql",
+							"count": 3,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "POST /login",
+							"count": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "POST /transactions",
+							"count": 1,
+							"statuses": [
+								200
+							]
+						},
+						{
+							"endpoint": "POST /users",
+							"count": 1,
+							"statuses": [
+								201
+							]
+						}
+					],
+					"other": [
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/qywYp6hS0U.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/bDjUb4ir5O.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/tsHF6_D5oQ.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/qywYp6hS0U.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/bDjUb4ir5O.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/tsHF6_D5oQ.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/24VniajY1y.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/qywYp6hS0U.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/bDjUb4ir5O.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/tsHF6_D5oQ.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
+							"status": 200
+						},
+						{
+							"method": "GET",
+							"url": "https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg",
+							"status": 200
+						}
+					]
+				}
+			}
+		}
+	]
+}

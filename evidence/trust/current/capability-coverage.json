@@ -28,13 +28,13 @@
     ]
   },
   "summary": {
-    "total": 48,
+    "total": 49,
     "crossProven": 8,
-    "experimental": 40,
+    "experimental": 41,
     "react": {
-      "total": 7,
+      "total": 8,
       "crossProven": 1,
-      "experimental": 6
+      "experimental": 7
     },
     "angular": {
       "total": 41,
@@ -68,6 +68,27 @@
       "note": "create-react-app to Vite 8 adapter; fired on three independent create-react-app applications. Cross-proven in adapter-freeze.",
       "proofCount": 3,
       "classification": "cross-proven"
+    },
+    {
+      "name": "react-cra-process-global",
+      "lineage": "react",
+      "package": "@versionless/react",
+      "entryPoints": [
+        "readProcessGlobalUsage",
+        "craProcessGlobalShim",
+        "createCraProcessGlobalPlugin"
+      ],
+      "provenApps": [
+        "cypress-realworld-app"
+      ],
+      "attribution": "direct-invocation",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/react-cypress-rwa-calibrate-run.ts"
+      ],
+      "note": "webpack 4 / process-browser functional process global parity, analyzer-driven from the bundle's own process.<member> usage. Proven on one create-react-app application whose migrated Vite bundle threw `process is not defined` at module evaluation and now boots; experimental until a second create-react-app application proves it.",
+      "proofCount": 1,
+      "classification": "experimental"
     },
     {
       "name": "react-next-static-adapter",

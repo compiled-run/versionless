@@ -7,6 +7,7 @@ import {
 	type WitnessJourneyPlaceholderDeclaration,
 	type WitnessLiveBackendServed,
 	type WitnessLoopbackBackendInventory,
+	type WitnessMockedNonLoopbackSeamEntry,
 } from './witness-real-app.ts';
 
 /**
@@ -112,52 +113,101 @@ export const WITNESS_REACT_CYPRESS_RWA_FORBIDDEN_MARKERS = Object.freeze([
 ]);
 
 /**
- * The exact route sequence the journey drives, in order, after the initial
- * document load. Server-minted identifiers are normalized to their declared
- * placeholder tokens; every other segment is the literal path the application
- * navigated to. Pinning the whole sequence is what makes a dropped step or a
- * silently redirected route fail the run.
+ * The exact route sequence the journey drives, in order, as the browser records
+ * navigations AFTER the initial document load. The journey's initial load is a
+ * real navigation to `/signup` (the signin page's signup link does not
+ * SPA-navigate under automation), which the runtime does not record because the
+ * navigation listener is attached once the first load has settled; the first
+ * recorded entry is therefore the redirect to `/signin` the signup submit
+ * triggers. Every segment is the literal path the live application navigated to —
+ * measured, not declared: the payment does NOT redirect to a transaction-detail
+ * route (it settles in place on `/transaction/new`), the public feed is the home
+ * route `/`, and no server-minted identifier appears in any recorded route, so
+ * the whole sequence is stable across passes without normalization. Pinning it is
+ * what makes a dropped step or a silently redirected route fail the run.
  */
 export const WITNESS_REACT_CYPRESS_RWA_ROUTES = Object.freeze([
-	'/signup',
 	'/signin',
 	'/',
 	'/user/settings',
-	'/',
 	'/transaction/new',
-	'/transaction/{created-transaction-id}',
 	'/',
-	'/public',
+	'/personal',
+	'/',
 	'/contacts',
 	'/personal',
 	'/notifications',
-	'/',
 ]);
 
 /**
- * The declared loopback-backend category: every REST endpoint the journey
- * reaches on the application's own server, by method and origin-relative path.
- * A request to an endpoint outside this list fails the run. Paths that carry a
- * server-minted id use the placeholder token, so the category is comparable
- * across runs the same way the routes are.
+ * The measured loopback-backend category: every endpoint the journey reaches on
+ * the application's own server, by method and origin-relative path, read off the
+ * live request ledger rather than declared from the Cypress specs. A request to
+ * an endpoint outside this list fails the run. Paths that carry a server-minted
+ * id use the placeholder token, so the category is comparable across runs the
+ * same way the routes are.
+ *
+ * Three facts here are the live surface contradicting the spec-derived guess and
+ * are the point of measuring: bank-account onboarding is a `POST /graphql`
+ * mutation, not a `POST /bankAccounts` REST call, so `/graphql` is in and both
+ * `/bankAccounts` reads are out; peer search is `GET /users` (with a query the
+ * category drops), not `GET /users/search`; and the personal feed is
+ * `GET /transactions`, while the journey never opens a transaction-detail route,
+ * so neither `GET /transactions/{id}` nor `POST /logout` is ever reached. The
+ * only minted id in the category is the settings write's `PATCH
+ * /users/{created-user-id}`.
  */
 export const WITNESS_REACT_CYPRESS_RWA_BACKEND_CATEGORY = Object.freeze([
 	Object.freeze({ method: 'GET', path: '/checkAuth' }),
-	Object.freeze({ method: 'POST', path: '/users' }),
-	Object.freeze({ method: 'POST', path: '/login' }),
-	Object.freeze({ method: 'POST', path: '/logout' }),
+	Object.freeze({ method: 'GET', path: '/notifications' }),
+	Object.freeze({ method: 'GET', path: '/transactions' }),
+	Object.freeze({ method: 'GET', path: '/transactions/contacts' }),
+	Object.freeze({ method: 'GET', path: '/transactions/public' }),
 	Object.freeze({ method: 'GET', path: '/users' }),
 	Object.freeze({ method: 'PATCH', path: '/users/{created-user-id}' }),
-	Object.freeze({ method: 'GET', path: '/users/search' }),
-	Object.freeze({ method: 'POST', path: '/bankAccounts' }),
-	Object.freeze({ method: 'GET', path: '/bankAccounts' }),
+	Object.freeze({ method: 'POST', path: '/graphql' }),
+	Object.freeze({ method: 'POST', path: '/login' }),
 	Object.freeze({ method: 'POST', path: '/transactions' }),
-	Object.freeze({ method: 'GET', path: '/transactions' }),
-	Object.freeze({ method: 'GET', path: '/transactions/public' }),
-	Object.freeze({ method: 'GET', path: '/transactions/contacts' }),
-	Object.freeze({ method: 'GET', path: '/transactions/{created-transaction-id}' }),
-	Object.freeze({ method: 'GET', path: '/notifications' }),
+	Object.freeze({ method: 'POST', path: '/users' }),
 ]);
+
+/**
+ * The application's one non-loopback seam: it renders every user's avatar from an
+ * `<img src>` pointing at its own S3 SVG bucket. The witness host answers each in
+ * context — none leaves the machine, so `successfulNonLoopback` stays zero — and
+ * this is the exact, app-scoped declaration of which endpoints it is allowed to
+ * reach: a request outside this set fails the seam inventory.
+ *
+ * The membership is the FULL set of seed-user avatar URLs, which is deterministic
+ * because the seed is frozen. Pinning the complete set rather than the subset a
+ * given run happens to render is what keeps the inventory stable: whichever seed
+ * users a pass lays out, every avatar it fetches is a declared member and the
+ * rest are recorded as explicitly absent. The freshly signed-up actor has no
+ * avatar (signup sets none), so no per-run minted URL is ever fetched — the seam
+ * set carries no minted value and needs no placeholder.
+ */
+export const WITNESS_REACT_CYPRESS_RWA_MOCKED_SEAMS = Object.freeze([
+	Object.freeze({
+		method: 'GET',
+		path: 'https://cypress-realworld-app-svgs.s3.amazonaws.com/24VniajY1y.svg',
+	}),
+	Object.freeze({
+		method: 'GET',
+		path: 'https://cypress-realworld-app-svgs.s3.amazonaws.com/bDjUb4ir5O.svg',
+	}),
+	Object.freeze({
+		method: 'GET',
+		path: 'https://cypress-realworld-app-svgs.s3.amazonaws.com/qywYp6hS0U.svg',
+	}),
+	Object.freeze({
+		method: 'GET',
+		path: 'https://cypress-realworld-app-svgs.s3.amazonaws.com/t45AiwidW.svg',
+	}),
+	Object.freeze({
+		method: 'GET',
+		path: 'https://cypress-realworld-app-svgs.s3.amazonaws.com/tsHF6_D5oQ.svg',
+	}),
+]) as readonly WitnessMockedNonLoopbackSeamEntry[];
 
 export type WitnessReactCypressRwaSource = typeof REACT_CYPRESS_RWA_SOURCE;
 
@@ -471,5 +521,212 @@ export function witnessReactCypressRwaAggregateMember(digestValue: string) {
 		result: 'pass',
 		receipt: WITNESS_REACT_CYPRESS_RWA_RECEIPT_PATH,
 		digest: digestValue,
+	};
+}
+
+/* ======================================================================
+ * Calibration-phase two-lane parity + pass-twice determinism model.
+ *
+ * This is the browser-measured falsification proof the in-contract calibrate
+ * driver emits, and it is deliberately DISTINCT from the published-receipt run
+ * model above. It asserts only what the running browser measured — the journey
+ * legs, the recorded navigations, the tracked-event outcomes, the clean-page
+ * counters, and the live-backend request category — and claims NO frozen SPA
+ * byte inventory, because building that inventory is the follow-up receipt
+ * phase, not the calibration phase.
+ *
+ * The two digests carry the two guarantees:
+ *
+ *   - behaviorDigest is the LANE-INDEPENDENT projection. It is what both lanes
+ *     must share: routing, state round-trip, errors, console, failed requests,
+ *     backend category, and tracked-event outcomes. Baseline and migrated
+ *     reaching one behaviorDigest is the two-lane parity claim.
+ *
+ *   - semanticDigest is behaviorDigest PLUS the one legitimately per-lane fact —
+ *     the lane's own production-bundle byte identity — and it is pass-INDEPENDENT
+ *     within a lane. pass-1 semanticDigest == pass-2 semanticDigest on each lane
+ *     is the determinism claim, and because the byte identity is folded in, the
+ *     two lanes' semanticDigests DIFFER, which is what makes the parity of their
+ *     behaviorDigests non-trivial: two genuinely different builds, one behavior.
+ *
+ * The per-lane byte identity is the only declared per-lane difference, and it is
+ * kept OUT of behaviorDigest by construction. Nothing else is per-lane: the
+ * measured DOM behaves identically across the two lanes.
+ * ==================================================================== */
+
+/** One live-backend endpoint the journey reached, with its origin-relative path
+ *  already normalized (server-minted id segments replaced by placeholder tokens). */
+export type WitnessReactCypressRwaBackendObservation = {
+	method: string;
+	path: string;
+	requests: number;
+	statuses: number[];
+};
+
+/** The lane-independent behavior one journey pass measured. Every field here is
+ *  shared across both lanes and both passes when parity and determinism hold. */
+export type WitnessReactCypressRwaMeasuredBehavior = {
+	legs: { ok: number; total: number };
+	navigations: string[];
+	trackedEventCounts: Record<string, number>;
+	consoleErrors: number;
+	pageErrors: number;
+	failedRequests: number;
+	successfulNonLoopback: 0;
+	mockedNonLoopback: number;
+	backend: WitnessReactCypressRwaBackendObservation[];
+};
+
+/** One calibration-measured pass of the full journey on one lane. The minted
+ *  values are already placeholdered, so two passes of a lane that differed only
+ *  in server-minted ids carry identical `behavior`. */
+export type WitnessReactCypressRwaMeasuredPass = {
+	lane: 'baseline' | 'migrated';
+	pass: 1 | 2;
+	status: 'passed';
+	behavior: WitnessReactCypressRwaMeasuredBehavior;
+	/** The declared, legitimately per-lane presentation fact kept OUT of the
+	 *  shared behavior digest: the lane's own production-bundle byte identity. */
+	presentation: { laneStaticFiles: number; laneStaticDigest: string };
+	placeholders: readonly WitnessJourneyPlaceholderDeclaration[];
+};
+
+/** The lane-independent behavior digest — the shared-parity projection. Two lanes
+ *  reaching this same value is the parity guarantee. The per-lane byte identity is
+ *  excluded by construction, so a different bundler cannot break parity, but a
+ *  dropped leg, a re-pointed route, a console error, or a changed backend category
+ *  will. */
+export function witnessReactCypressRwaMeasuredBehaviorDigest(
+	pass: WitnessReactCypressRwaMeasuredPass,
+): string {
+	return sha256(canonicalize(pass.behavior));
+}
+
+/** The per-lane, pass-independent semantic digest — behavior folded together with
+ *  the lane's own byte identity. Equal across a lane's two passes is the
+ *  determinism guarantee; unequal across the two lanes is what proves the two
+ *  behaviorDigests were reached by two genuinely distinct builds. */
+export function witnessReactCypressRwaMeasuredSemanticDigest(
+	pass: WitnessReactCypressRwaMeasuredPass,
+): string {
+	return sha256(canonicalize({ behavior: pass.behavior, presentation: pass.presentation }));
+}
+
+export type WitnessReactCypressRwaLaneParity = {
+	lane: 'baseline' | 'migrated';
+	semanticDigest: string;
+	behaviorDigest: string;
+	legs: { ok: number; total: number };
+	deterministic: true;
+};
+
+/** The full two-lane parity + pass-twice determinism verdict over the four
+ *  measured passes (baseline×2, migrated×2). */
+export type WitnessReactCypressRwaTwoLaneParity = {
+	result: 'parity';
+	behaviorDigest: string;
+	lanes: { baseline: WitnessReactCypressRwaLaneParity; migrated: WitnessReactCypressRwaLaneParity };
+	behaviorParity: true;
+	lanesAreDistinctBuilds: true;
+};
+
+function assertMeasuredPassClean(pass: WitnessReactCypressRwaMeasuredPass, label: string): void {
+	const b = pass.behavior;
+	if (
+		pass.status !== 'passed' ||
+		b.legs.total < 1 ||
+		b.legs.ok !== b.legs.total ||
+		b.consoleErrors !== 0 ||
+		b.pageErrors !== 0 ||
+		b.failedRequests !== 0 ||
+		b.successfulNonLoopback !== 0 ||
+		!Array.isArray(b.navigations) ||
+		b.navigations.length === 0 ||
+		!Array.isArray(b.backend) ||
+		b.backend.length === 0 ||
+		!Number.isInteger(pass.presentation.laneStaticFiles) ||
+		pass.presentation.laneStaticFiles < 1 ||
+		!sha256Digest(pass.presentation.laneStaticDigest) ||
+		!exact(pass.placeholders, WITNESS_REACT_CYPRESS_RWA_PLACEHOLDERS)
+	)
+		throw new Error(`Cypress RWA calibration pass is not clean: ${label}`);
+	const declared = new Set(
+		WITNESS_REACT_CYPRESS_RWA_BACKEND_CATEGORY.map((entry) => `${entry.method} ${entry.path}`),
+	);
+	for (const observation of b.backend)
+		if (!declared.has(`${observation.method} ${observation.path}`))
+			throw new Error(`Cypress RWA calibration backend observation is undeclared: ${label}`);
+	const strings: string[] = [];
+	collectStrings(pass, strings);
+	for (const text of strings)
+		for (const marker of WITNESS_REACT_CYPRESS_RWA_FORBIDDEN_MARKERS)
+			if (text.includes(marker))
+				throw new Error(`Cypress RWA calibration redaction leaked a seed marker: ${label}`);
+}
+
+/**
+ * The gate: given the four measured passes, prove two-lane parity and pass-twice
+ * determinism, or throw with the specific violation. Enforced facts:
+ *
+ *   - exactly the four passes baseline:1, baseline:2, migrated:1, migrated:2;
+ *   - each pass clean (all legs ok, 0 console/page/failed, successfulNonLoopback
+ *     0, backend inside the declared category, no seed marker);
+ *   - pass-1 semanticDigest == pass-2 semanticDigest on EACH lane (determinism);
+ *   - a single behaviorDigest across all four passes (two-lane parity);
+ *   - the two lanes' semanticDigests DIFFER (parity is over distinct builds).
+ */
+export function summarizeWitnessReactCypressRwaTwoLaneParity(
+	passes: readonly WitnessReactCypressRwaMeasuredPass[],
+): WitnessReactCypressRwaTwoLaneParity {
+	const expected = new Set(['baseline:1', 'baseline:2', 'migrated:1', 'migrated:2']);
+	const semanticByLane = new Map<'baseline' | 'migrated', Map<1 | 2, string>>([
+		['baseline', new Map()],
+		['migrated', new Map()],
+	]);
+	const behaviors = new Set<string>();
+	for (const pass of passes) {
+		const key = `${pass.lane}:${pass.pass}`;
+		if (!expected.delete(key))
+			throw new Error(`Cypress RWA calibration pass is unexpected or duplicated: ${key}`);
+		assertMeasuredPassClean(pass, key);
+		semanticByLane.get(pass.lane)!.set(pass.pass, witnessReactCypressRwaMeasuredSemanticDigest(pass));
+		behaviors.add(witnessReactCypressRwaMeasuredBehaviorDigest(pass));
+	}
+	if (expected.size !== 0)
+		throw new Error(`Cypress RWA calibration is missing passes: ${[...expected].join(', ')}`);
+	// Pass-twice determinism is checked per lane FIRST, so a within-lane drift
+	// surfaces as the determinism failure it is rather than as a parity break.
+	const lane = (name: 'baseline' | 'migrated'): WitnessReactCypressRwaLaneParity => {
+		const byPass = semanticByLane.get(name)!;
+		const one = byPass.get(1);
+		const two = byPass.get(2);
+		if (one === undefined || two === undefined)
+			throw new Error(`Cypress RWA calibration lane is missing a pass: ${name}`);
+		if (one !== two)
+			throw new Error(`Cypress RWA calibration pass-twice semantic digest drifted: ${name}`);
+		const first = passes.find((pass) => pass.lane === name && pass.pass === 1)!;
+		return {
+			lane: name,
+			semanticDigest: one,
+			behaviorDigest: witnessReactCypressRwaMeasuredBehaviorDigest(first),
+			legs: first.behavior.legs,
+			deterministic: true,
+		};
+	};
+	const baseline = lane('baseline');
+	const migrated = lane('migrated');
+	// Two-lane behavior parity: after each lane is internally deterministic, the
+	// two lanes must share the one behavior digest.
+	if (behaviors.size !== 1)
+		throw new Error('Cypress RWA calibration lanes did not reach one behavior digest (parity)');
+	const [behaviorDigest] = [...behaviors];
+	if (baseline.semanticDigest === migrated.semanticDigest)
+		throw new Error('Cypress RWA calibration lanes are byte-identical, so parity is trivial');
+	return {
+		result: 'parity',
+		behaviorDigest: behaviorDigest!,
+		lanes: { baseline, migrated },
+		behaviorParity: true,
+		lanesAreDistinctBuilds: true,
 	};
 }

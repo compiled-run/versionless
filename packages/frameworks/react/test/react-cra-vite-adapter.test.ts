@@ -1229,7 +1229,7 @@ describe('create-react-app public directory', () => {
 		await expect(plugin.closeBundle.handler()).rejects.toThrow('outDir is unresolved');
 	});
 	test('the composed adapter excludes the template by default', () => {
-		const [decode, jsx, transform, sloppy, missingExport, nodeCore, define, output] =
+		const [decode, jsx, transform, sloppy, missingExport, nodeCore, define, output, processGlobal] =
 			createCraViteAdapter({
 				publicDirectory: tmpdir(),
 			});
@@ -1248,6 +1248,11 @@ describe('create-react-app public directory', () => {
 		expect(define.config()).toEqual({ define: { global: 'globalThis' } });
 		expect(output.name).toBe('versionless-cra-public-directory');
 		expect(output.closeBundle.order).toBe('post');
+		// The process global trails the set: it reads the modules the earlier
+		// transforms produce and writes the entry document once the bundle is done.
+		expect(processGlobal.name).toBe('versionless-cra-process-global');
+		expect(processGlobal.enforce).toBe('pre');
+		expect(processGlobal.closeBundle.order).toBe('post');
 	});
 });
 
