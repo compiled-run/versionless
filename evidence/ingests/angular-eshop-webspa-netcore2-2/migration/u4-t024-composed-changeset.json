@@ -1,0 +1,878 @@
+{
+  "schemaVersion": "versionless.angular-eshop-webspa-composed-changeset.v1",
+  "unit": "lrapr-t023/u5-frozen-adapter-migration",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "cell": "angular-16-browser-builder",
+  "appliedTo": "The pinned revision a387f21029f0b2d49614d165d5384717d2398f8e as materialised, read-only, at .versionless/cache/angular-eshop-webspa-netcore2-2-source/corpus — the same corpus the era baseline lane was cut from, narrowed to src/Web/WebSPA, which is the npm and Angular workspace root.",
+  "holdoutPosition": "The replacement Angular holdout. This application was never ingested, fixtured, adapted, witnessed or receipted in this repository before T023, and the adapter subtree was frozen before this unit began. No capability was written for it and none was changed for it; the changeset is what the existing inventory produced when it was pointed at a tree it had never seen.",
+  "eraWorkspaceFacts": [
+    "`angular.json` `\"version\": 1` — the first workspace generation the Angular CLI ever wrote (CLI 6). No counted Angular vertical in this repository covers it; the pigallery2 holdout was a CLI 8 workspace and the `angular.json` v1 shape is a generation older.",
+    "`sourceRoot: \"Client\"` with `root: \"\"` and an `outputPath` of `wwwroot` — this workspace is not `src/`-rooted, and its build output directory is the ASP.NET Core host's static file root inside the same subpath.",
+    "`extractCss: true` on the production configuration — a valid key for the Angular 6 browser builder, and one the Angular 13 line removed.",
+    "`@angular/http@6.1.4` declared and imported at six sites, beside `HttpClientModule` in the root NgModule and two services already on `HttpClient`. The application is half-migrated off the package at the pin.",
+    "`typescript@2.9.2` and `rxjs@6.2.2` — the TypeScript line before `unknown` in catch clauses and the first RxJS 6 minor, two lines below what the target cell writes.",
+    "`webpack@^4.17.1` declared as a *runtime* dependency (`dependencies`, not `devDependencies`) although no application module imports it — a build tool in the runtime closure.",
+    "`preboot@6.0.0-beta.5` declared and never imported; there is no `main.server.ts` and no server module anywhere in the tree, so the server-side-render toolchain it belongs to was never wired up.",
+    "A second workspace project, `WebSPA-e2e`, whose only targets are the protractor e2e runner and a TSLint lint target, plus a TSLint lint target on `WebSPA` itself.",
+    "The production build is driven by the application's own npm script `build:prod`, whose string is `ng build --prod --aot --extract-css` — CLI 6 flag spellings, two of which the modern CLI no longer accepts.",
+    "`ts-helpers@1.1.2`, `@types/protractor@4.0.0` and `@types/core-js@2.5.0` — three era type/helper packages whose upstreams stopped publishing."
+  ],
+  "applicationSourceDirectories": [
+    "Client"
+  ],
+  "applicationFilesScanned": 84,
+  "applicationFilesChanged": 17,
+  "workspaceFilesChanged": 3,
+  "files": [
+    {
+      "path": "package.json",
+      "kind": "workspace",
+      "changed": true,
+      "sha256Before": "566b095ac1b5933657737d13214eadfd5303010b34f76d45618bd1215c8ecf6f",
+      "sha256After": "6a33834df819cdd3ef734584cc937d3dda50263927a0e95b10bc2ac52ffb9d7b",
+      "changes": [
+        "dependencies.@angular/animations: ^6.1.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "dependencies.@angular/common: 6.1.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "dependencies.@angular/compiler: 6.1.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "dependencies.@angular/core: 6.1.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "dependencies.@angular/forms: 6.1.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "removed dependencies.@angular/http (was 6.1.4) — no successor line for angular-16-browser-builder: @angular/http stops at 7.2.16 and is deprecated on the registry with \"Package no longer supported. Use @angular/common instead\". Angular removed the package after the 7 line; there is no 8.x and no 16.x, so the `@angular/` family range this cell writes for its own packages names a version that was never published. The HTTP client that succeeded it is `@angular/common/http`, an entry point of a package this cell already carries, so the dependency is dropped rather than pinned to a v7 line beside a v16 framework.",
+        "dependencies.@angular/platform-browser: 6.1.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "dependencies.@angular/platform-browser-dynamic: 6.1.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "dependencies.@angular/router: 6.1.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "dependencies.@ng-bootstrap/ng-bootstrap: 3.1.0 -> ^15.1.2 — aligned to the community layer angular-16-browser-builder declares: @ng-bootstrap/ng-bootstrap versions one major *behind* the Angular major it supports, which is the whole hazard of reading this package by its name: the 16.x line is the Angular 17 line. Its peers discriminate exactly and they are what selects the line — every 15.x release (15.0.0 through 15.1.2) declares peer @angular/core, @angular/common, @angular/forms and @angular/localize \"^16.0.0\" with rxjs \"^6.5.3 || ^7.4.0\" and @popperjs/core \"^2.11.6\", where 14.2.0 and the rest of the 14.x line declare \"^15.0.0\" and 16.0.0 moves to \"^17.0.0\". 15.1.2 is therefore the newest line this cell accepts and the newest 15.x published; it declares dependency tslib ^2.3.0, exactly this cell's range, and no engines.node. The `latest` dist-tag points at 21.0.0, which declares peer @angular/core \"^22.0.0\" — a package this table read by its dist-tag alone would write a range six majors past this cell's linker. The compiled-with stamp was read anyway, because a peer is a hand-maintained claim: 15.1.2 carries version \"16.0.6\" in all 433 of its ɵɵngDeclare* partial declarations and ships the fesm2022 layout, where 16.0.0 carries \"17.0.0\" in 421 of them. Two further readings, because a peer this workspace does not itself declare is still a peer: @angular/localize ^16.0.0 is inside the ^16.2.0 family range this cell writes, and @popperjs/core ^2.11.6 is a different package name from the `popper.js` an era Bootstrap 4 workspace declares — npm supplies both as auto-installed peers, and nothing here rewrites a `popper.js` import into a @popperjs/core one. Read from https://registry.npmjs.org/@ng-bootstrap/ng-bootstrap, https://unpkg.com/@ng-bootstrap/ng-bootstrap@15.1.2/fesm2022/ng-bootstrap.mjs and https://unpkg.com/@ng-bootstrap/ng-bootstrap@16.0.0/fesm2022/ng-bootstrap.mjs under consent VL-LEGACY-CORPUS-2026-08-10 on 2026-08-14. The reading is a version fact and not a source claim: the 3.x line an Angular 6-era workspace pins published NgbModule with a `forRoot()` static and component selectors this line has since renamed, and nothing here rewrites a call site that names one.",
+        "dependencies.ngx-toastr: ^9.0.2 -> ^17.0.2 — aligned to the community layer angular-16-browser-builder declares: ngx-toastr is the second entry the peer-strictness refinement decides, and its peers fail to discriminate in the plainer of the two ways: they are identical across four consecutive majors. 20.0.5, the newest release and the `latest` dist-tag, declares peer @angular/common and @angular/core \"^21.0.0\" and rxjs \"^7.8.2\"; the ^16.2.0 this cell writes excludes it. Every release from 17.0.0 through 19.1.0 declares exactly {\"@angular/core\": \">=16.0.0-0\", \"@angular/common\": \">=16.0.0-0\", \"@angular/platform-browser\": \">=16.0.0-0\"}, no rxjs peer and no engines.node, so on the peer rule alone the newest satisfying line is 19.1.0 — and nothing in those declarations separates a release built for Angular 16 from one built for Angular 18. The compiled-with stamps separate them: 19.1.0 and 19.0.0 carry Angular \"18.0.0\" in their partial declarations, 18.0.0 carries \"17.0.3\", and 17.0.2, 17.0.1 and 17.0.0 all carry \"16.0.1\". 17.0.2 is therefore the newest line this cell links, and it is the newest 17.x published. Its only dependency is tslib ^2.3.0, exactly the range this cell writes. One further reading, because a workspace configuration can name a package's files directly rather than importing them: 17.0.2 still publishes toastr.css at the package root (https://unpkg.com/ngx-toastr@17.0.2/toastr.css), the same path the Angular 8-era 10.0.4 published, so an `angular.json` styles entry naming ./node_modules/ngx-toastr/toastr.css keeps resolving across this hop. Read from https://registry.npmjs.org/ngx-toastr and https://unpkg.com/ngx-toastr@17.0.2/fesm2022/ngx-toastr.mjs under consent VL-LEGACY-CORPUS-2026-08-10 on 2026-08-14. The era 10.0.4 line declares peer @angular/core, @angular/common and @angular/platform-browser \">=6.0.0 <9.0.0\" and rxjs \"^6.1.0\" — two independent collisions with this cell, either of them fatal to the tree, and both answered by the same move.",
+        "removed dependencies.preboot (was 6.0.0-beta.5) — no successor line for angular-16-browser-builder: preboot published ninety-four versions and the newest of them is 8.0.0, published 2021-01-18; it is the `latest` dist-tag and the only tag the package carries. Its declared peer does not exclude it — 8.0.0 declares @angular/common and @angular/core \">=11.0.0\" and dependency tslib ^2.0.0, both satisfied by this cell — so a reading that stopped at the resolver would align the package and be wrong, for the same reason jw-bootstrap-switch-ng2 was wrong: what 8.0.0 published is a pre-Ivy ViewEngine library. Its tarball ships preboot.metadata.json beside bundles/preboot.umd.js, esm2015/ and fesm2015/; the fesm bundle declares its module the ViewEngine way (`PrebootModule.decorators = [{ type: NgModule, args: [...] }]`) and carries no ɵɵngDeclare* partial declaration and no ɵɵdefineNgModule at all, and module.d.ts publishes `export declare class PrebootModule` with no ɵmod, ɵfac or ɵinj. The converter that used to make such a library consumable is gone: @angular/compiler-cli 16.2.12 ships `ngcc` only as a stub whose own message reads \"As of Angular 16, 'ngcc' is no longer required and not invoked during CLI builds\". The registry also marks every version of the package deprecated with \"This package is no longer maintained and is unnecessary with the recent versions of Angular.\" There is therefore no line to align to: not a newer one, because none exists, and not the newest one, because this cell's linker does not consume what it publishes. The package is dropped as a declared difference. Doing so turns any `PrebootModule` or `EventReplayer` import into a source demand the compiler states by name; an application that declares preboot and never imports it loses a declaration and nothing else, and choosing a replacement server-side-render replay library is a source decision this table does not make. Read from https://registry.npmjs.org/preboot and from the published tarball https://registry.npmjs.org/preboot/-/preboot-8.0.0.tgz under consent VL-LEGACY-CORPUS-2026-08-10 on 2026-08-14.",
+        "dependencies.rxjs: 6.2.2 -> ~7.8.0 — aligned to angular-16-browser-builder",
+        "dependencies.zone.js: ^0.8.26 -> ~0.13.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@angular-devkit/build-angular: ~0.7.0 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@angular/cli: ^6.1.5 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@angular/compiler-cli: 6.1.4 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@types/jasmine: 2.8.8 -> ~4.3.0 — aligned to the test toolchain angular-16-browser-builder generates",
+        "removed devDependencies.codelyzer (was ~4.4.4) — released by a builder target the workspace migration removed",
+        "removed devDependencies.tslint (was ~5.11.0) — released by a builder target the workspace migration removed",
+        "devDependencies.typescript: 2.9.2 -> ~5.1.3 — aligned to angular-16-browser-builder",
+        "scripts.build:prod: --prod -> --configuration production — `--prod` was a shorthand for `--configuration production` and was removed from the Angular CLI after the 11 line; a 12-or-later CLI reports it as an unknown argument and exits before the builder runs. The replacement selects the same configuration by name, which is why the retarget is refused where the migrated workspace does not declare one.",
+        "removed --extract-css from scripts.build:prod — --extract-css sets a builder option this migration removed from the workspace at projects.WebSPA.architect.build.configurations.production.extractCss; the @angular-devkit/build-angular:browser of angular-16-browser-builder rejects the option, so the script that passes it would be refused by the builder schema before the build began."
+      ]
+    },
+    {
+      "path": "angular.json",
+      "kind": "workspace",
+      "changed": true,
+      "sha256Before": "d11545ee6e8bc194c5986e2b3c8554a12e76b20223096053aea240e78c7e2648",
+      "sha256After": "2278fdddc6d5e4afa39540458cffe3f5f35bc5da26106d9c2b78120f1b821d3f",
+      "changes": [
+        "removed defaultProject (was \"WebSPA\")",
+        "projects.WebSPA.architect.build.options.polyfills: \"Client/polyfills.ts\" -> [\"Client/polyfills.ts\"]",
+        "added projects.WebSPA.architect.build.options.optimization = {\"scripts\":true,\"styles\":true,\"fonts\":{\"inline\":false}}",
+        "projects.WebSPA.architect.build.configurations.production.optimization: true -> {\"scripts\":true,\"styles\":true,\"fonts\":{\"inline\":false}}",
+        "removed projects.WebSPA.architect.build.configurations.production.extractCss (was true)",
+        "projects.WebSPA.architect.test.options.polyfills: \"Client/polyfills.ts\" -> [\"Client/polyfills.ts\"]",
+        "removed projects.WebSPA.architect.lint (was @angular-devkit/build-angular:tslint)",
+        "removed projects.WebSPA-e2e.architect.e2e (was @angular-devkit/build-angular:protractor)",
+        "removed projects.WebSPA-e2e.architect.lint (was @angular-devkit/build-angular:tslint)"
+      ]
+    },
+    {
+      "path": "tsconfig.json",
+      "kind": "workspace",
+      "changed": true,
+      "sha256Before": "bf2ab353c3cdc83a1d21e5edd944aa76ca34f0fdd81b1d0c36f9578e4f208654",
+      "sha256After": "15703e0f06d1453809d8c2d92f2be86087bd315ea392f8c17b8c2a6acdcba97e",
+      "changes": [
+        "compilerOptions.target: \"es5\" -> \"ES2022\"",
+        "compilerOptions.module: \"es2015\" -> \"ES2022\"",
+        "added compilerOptions.useDefineForClassFields = false"
+      ]
+    },
+    {
+      "path": "Client/environments/environment.prod.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "365e9914fc285641a8c9152fa331c83164325564451bd2b05c73859ceaf54a3c",
+      "sha256After": "365e9914fc285641a8c9152fa331c83164325564451bd2b05c73859ceaf54a3c",
+      "changes": []
+    },
+    {
+      "path": "Client/environments/environment.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "7c2530b6e1e9ab63b5703cf74a53f9374977e193c00748f9de5a037ed9ff753d",
+      "sha256After": "7c2530b6e1e9ab63b5703cf74a53f9374977e193c00748f9de5a037ed9ff753d",
+      "changes": []
+    },
+    {
+      "path": "Client/guid.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "798443c5aadc46973e8d8cf24c68320ae68826711d0b18e49b43cec117791992",
+      "sha256After": "798443c5aadc46973e8d8cf24c68320ae68826711d0b18e49b43cec117791992",
+      "changes": []
+    },
+    {
+      "path": "Client/main.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "3f4b1c027a6687f3cc38e9cd7eed7ac4710a560b8a1ec1e1f946e18ebdd43be2",
+      "sha256After": "3f4b1c027a6687f3cc38e9cd7eed7ac4710a560b8a1ec1e1f946e18ebdd43be2",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/app.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "2d00b65ffc8f73a6a5c79316f246675f3ba0d80a15b437f9a69b4f131e60241b",
+      "sha256After": "2d00b65ffc8f73a6a5c79316f246675f3ba0d80a15b437f9a69b4f131e60241b",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/app.module.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "98b94f6a9913f3058333f13d9c2d2235de0918c41b83218c8badc91792b95dfd",
+      "sha256After": "98b94f6a9913f3058333f13d9c2d2235de0918c41b83218c8badc91792b95dfd",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/app.routes.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "aef5325532b1bc1059eef6ebf131f2488d0bd5db4f9c7738384d37f7269a8745",
+      "sha256After": "aef5325532b1bc1059eef6ebf131f2488d0bd5db4f9c7738384d37f7269a8745",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/app.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "626f3e1aa26aaccfd7affa43974b1584fda68072a5b15320454199e30dee860a",
+      "sha256After": "626f3e1aa26aaccfd7affa43974b1584fda68072a5b15320454199e30dee860a",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/basket/basket-status/basket-status.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "57911c5d1691a46139647e75b2e1e7f8833836d47c9bdf0da0fa25423791b5de",
+      "sha256After": "57911c5d1691a46139647e75b2e1e7f8833836d47c9bdf0da0fa25423791b5de",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/basket/basket.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "81111faff7ad945d7dc6d26e586a05b6429924b2841f6caf0f80efab90c6a34d",
+      "sha256After": "81111faff7ad945d7dc6d26e586a05b6429924b2841f6caf0f80efab90c6a34d",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/basket/basket.module.ts",
+      "kind": "application",
+      "changed": true,
+      "sha256Before": "010b72ceacdc8c08375f3fdba48340d4cde32225ffc74c4a70806a1d119cffd5",
+      "sha256After": "32f7deb77101f952cc79c47e0d94c57c495c09e80a9c74b35b9bf27da1989436",
+      "changes": [
+        "line 17: module-with-providers-type-argument <BasketModule> read from enclosing-class"
+      ]
+    },
+    {
+      "path": "Client/modules/basket/basket.service.ts",
+      "kind": "application",
+      "changed": true,
+      "sha256Before": "b8995f83fbf4e783c83539f0c6f557279f1e8e0f8213051646bc316e3caef28f",
+      "sha256After": "96d2d10b1c066fe4179634f52ff5ba6606685589ea37a0b354938a34e37f6607",
+      "changes": [
+        "line 65: http-response-annotation Response -> any — the era Response.json() returned any, and the successor emits that body in place of the response",
+        "line 72: http-response-annotation Response -> any — the era Response.json() returned any, and the successor emits that body in place of the response",
+        "line 80: http-response-annotation Response -> any — the era Response.json() returned any, and the successor emits that body in place of the response",
+        "line 26: subject-void-type-argument <void> on basketDropedSource, proved by 1 zero-argument next call(s)"
+      ]
+    },
+    {
+      "path": "Client/modules/campaigns/campaigns-detail/campaigns-detail.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "61d14268f77f4850c2ef47119a894697f1933cd3854f3cc554f9408d0120264a",
+      "sha256After": "61d14268f77f4850c2ef47119a894697f1933cd3854f3cc554f9408d0120264a",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/campaigns/campaigns.component.ts",
+      "kind": "application",
+      "changed": true,
+      "sha256Before": "b0f27905fc6986088198c9ba1fee1fd0d64538dd3c1b163308249bb3d0a8478d",
+      "sha256After": "d96588cc1993e6494f7b1bdb7b52ed93d2592fcecd18e208bddf98f760cbdbba",
+      "changes": [
+        "line 64: creation-function Observable.throw -> throwError"
+      ]
+    },
+    {
+      "path": "Client/modules/campaigns/campaigns.module.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "46bd0add9dcb166ceb52b2172d61f95115dd034d36b4e54ddcb29296bba12f0b",
+      "sha256After": "46bd0add9dcb166ceb52b2172d61f95115dd034d36b4e54ddcb29296bba12f0b",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/campaigns/campaigns.service.ts",
+      "kind": "application",
+      "changed": true,
+      "sha256Before": "23938851ae539c5bedf8fedb4a23515e085a685c115bbc0323a73f6cf8e16e98",
+      "sha256After": "a96356826787020d5de18c87c3f45648c8d2c8a84fa62877c7a99d70692bcc99",
+      "changes": [
+        "line 35: http-response-annotation Response -> any — the era Response.json() returned any, and the successor emits that body in place of the response",
+        "line 43: http-response-annotation Response -> any — the era Response.json() returned any, and the successor emits that body in place of the response"
+      ]
+    },
+    {
+      "path": "Client/modules/catalog/catalog.component.ts",
+      "kind": "application",
+      "changed": true,
+      "sha256Before": "a2943cdb50c44bcc00cfa8c672ad3f2066f1299ec5c0c273d023d6849cc19dd6",
+      "sha256After": "4ca1c28dfc39869f48c27e9ad4d63ef407791d96e4b96b3fae2cbda034dea9a5",
+      "changes": [
+        "line 117: creation-function Observable.throw -> throwError"
+      ]
+    },
+    {
+      "path": "Client/modules/catalog/catalog.module.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "8d151b6babc770013881e03936c130d1752e084a068441e4c37d0fdeb69da128",
+      "sha256After": "8d151b6babc770013881e03936c130d1752e084a068441e4c37d0fdeb69da128",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/catalog/catalog.service.ts",
+      "kind": "application",
+      "changed": true,
+      "sha256Before": "0460e9ad54b0e3c3b40f6c051c572f8483de584b9b1a2a7019af8c78bed642d7",
+      "sha256After": "96b1cb5357b99ace15accdeaef2f7d6dedf890894f2fe4e6c6b46db54c10e583",
+      "changes": [
+        "line 41: http-response-annotation Response -> any — the era Response.json() returned any, and the successor emits that body in place of the response",
+        "line 50: http-response-annotation Response -> any — the era Response.json() returned any, and the successor emits that body in place of the response",
+        "line 59: http-response-annotation Response -> any — the era Response.json() returned any, and the successor emits that body in place of the response"
+      ]
+    },
+    {
+      "path": "Client/modules/orders/orders-detail/orders-detail.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "c0a0903470bbfe6cc6738b6b0e1c693ab1d176a7998c860872255eec62e60451",
+      "sha256After": "c0a0903470bbfe6cc6738b6b0e1c693ab1d176a7998c860872255eec62e60451",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/orders/orders-new/orders-new.component.ts",
+      "kind": "application",
+      "changed": true,
+      "sha256Before": "eb5b0ca0c3579304186cf1f30480559d13782b8e1a51cf4436f05ea96e9cd359",
+      "sha256After": "053c21207467785ccbc34572e73fa16bdf840c3b64022d782719b777a5bda1fd",
+      "changes": [
+        "line 57: creation-function Observable.throw -> throwError"
+      ]
+    },
+    {
+      "path": "Client/modules/orders/orders.component.ts",
+      "kind": "application",
+      "changed": true,
+      "sha256Before": "e27aee15f80cf9f251e7b7e55f9e0d07ac3adb17d2a6299fe0ce6a640b1d7948",
+      "sha256After": "403302835b791b43be464ae23f4c1caa083bfa7bbaee209ce40d5191d9822c46",
+      "changes": [
+        "line 49: creation-function Observable.throw -> throwError"
+      ]
+    },
+    {
+      "path": "Client/modules/orders/orders.module.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "2a0da4be884b548e8cdf65f0d7117fdd84e2b7abae95ad2470ad81835d94788e",
+      "sha256After": "2a0da4be884b548e8cdf65f0d7117fdd84e2b7abae95ad2470ad81835d94788e",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/orders/orders.service.ts",
+      "kind": "application",
+      "changed": true,
+      "sha256Before": "d11906da07b107eba9bcc7d8047acaa08096f1c9821a402a7fa5374872290ec9",
+      "sha256After": "d2cb4b3ae33f361359f6a628c8b67147be0d3e0eb1e692aa47c708530234eae1",
+      "changes": [
+        "line 30: http-response-annotation Response -> any — the era Response.json() returned any, and the successor emits that body in place of the response",
+        "line 38: http-response-annotation Response -> any — the era Response.json() returned any, and the successor emits that body in place of the response"
+      ]
+    },
+    {
+      "path": "Client/modules/shared/components/header/header.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "4942207a1089d0f7ee0d5672d67fbc9e76d6a45456f36714103fc2b2c749e735",
+      "sha256After": "4942207a1089d0f7ee0d5672d67fbc9e76d6a45456f36714103fc2b2c749e735",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/components/identity/identity.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "6dd8e25f7818be337fc9abf0c87c0e6d415cc6deefbce5f095a6507c561392d9",
+      "sha256After": "6dd8e25f7818be337fc9abf0c87c0e6d415cc6deefbce5f095a6507c561392d9",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/components/page-not-found/page-not-found.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "f256faf5973af2a238b01d16079d0a2f88c97ba72c272bb1ad192e3bd6ff5498",
+      "sha256After": "f256faf5973af2a238b01d16079d0a2f88c97ba72c272bb1ad192e3bd6ff5498",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/components/pager/pager.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "44ff968c6603f8f0dfd63e6c99d0db8299cf16712d54506c1d21d76407c83ab7",
+      "sha256After": "44ff968c6603f8f0dfd63e6c99d0db8299cf16712d54506c1d21d76407c83ab7",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/models/basket.model.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "e411441ab47fb80c105a764db91b75386572cf821427f17c36e8abc9a80dc801",
+      "sha256After": "e411441ab47fb80c105a764db91b75386572cf821427f17c36e8abc9a80dc801",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/models/basketCheckout.model.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "7b7e6ff37b01c3fdebd443d8011593e6ed36af81c32a864d1a5cef7840eb2dfb",
+      "sha256After": "7b7e6ff37b01c3fdebd443d8011593e6ed36af81c32a864d1a5cef7840eb2dfb",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/models/basketItem.model.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "6e7dec9d1dd5ae33f6faf9a66cd20744ccb0dbc60c491296474c15491da086c2",
+      "sha256After": "6e7dec9d1dd5ae33f6faf9a66cd20744ccb0dbc60c491296474c15491da086c2",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/models/campaign.model.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "906d4b2ef72e08db8089e7eb8cde541f24734150255a40ea19004a9b0e0fc874",
+      "sha256After": "906d4b2ef72e08db8089e7eb8cde541f24734150255a40ea19004a9b0e0fc874",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/models/campaignItem.model.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "d3480deb7ab7a0a6a678cc0c13a997d5942c1c74fc83364eb1afc31cb09441b4",
+      "sha256After": "d3480deb7ab7a0a6a678cc0c13a997d5942c1c74fc83364eb1afc31cb09441b4",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/models/catalog.model.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "0770b7030d7329640d86f4956563bd151fedd028b47f45e475986ac436e6eb52",
+      "sha256After": "0770b7030d7329640d86f4956563bd151fedd028b47f45e475986ac436e6eb52",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/models/catalogBrand.model.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "82b5a9204d511946db90cfa1bdd85f5dcdfd1f1c9620a604f703f8b95a76b71e",
+      "sha256After": "82b5a9204d511946db90cfa1bdd85f5dcdfd1f1c9620a604f703f8b95a76b71e",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/models/catalogItem.model.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "5dec91fb0c2dcb4e2e9c5e7bb5ec658b743d871ee85c95e52cb2395dddc35343",
+      "sha256After": "5dec91fb0c2dcb4e2e9c5e7bb5ec658b743d871ee85c95e52cb2395dddc35343",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/models/catalogType.model.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "fe4237e053ed923cfad1d928037bea1091cd3cf0e85208487a1774c2d5cefc35",
+      "sha256After": "fe4237e053ed923cfad1d928037bea1091cd3cf0e85208487a1774c2d5cefc35",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/models/configuration.model.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "9a321d54a248a9d1ae89bd837a9ec2faa48b65e65ade4d0de270c043eb221cb9",
+      "sha256After": "9a321d54a248a9d1ae89bd837a9ec2faa48b65e65ade4d0de270c043eb221cb9",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/models/identity.model.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "99564c025fd714f346af79ece5ff5dec8cd9b61c6906fd79333f93c038ef5b57",
+      "sha256After": "99564c025fd714f346af79ece5ff5dec8cd9b61c6906fd79333f93c038ef5b57",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/models/order-detail.model.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "3fd6bab3e8ce2b2fb640e0e23a0f3fd3afff964606145e84325fc71f4a5536be",
+      "sha256After": "3fd6bab3e8ce2b2fb640e0e23a0f3fd3afff964606145e84325fc71f4a5536be",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/models/order.model.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "d7b8669b9201b2e9c63835a2fbe4e2d378154a68c71c761f63e0825b076797ef",
+      "sha256After": "d7b8669b9201b2e9c63835a2fbe4e2d378154a68c71c761f63e0825b076797ef",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/models/orderItem.model.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "aefa29d501a65aa28f6b571ea5096babc27bb68d31fa55c1540712f2050161ea",
+      "sha256After": "aefa29d501a65aa28f6b571ea5096babc27bb68d31fa55c1540712f2050161ea",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/models/pager.model.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "203e39606c016f9bc36006f8bd5c71f87b8fc0ca785bb2c4b41855791b8e48b5",
+      "sha256After": "203e39606c016f9bc36006f8bd5c71f87b8fc0ca785bb2c4b41855791b8e48b5",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/pipes/uppercase.pipe.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "d51ac57a44686959da76a13bf4e8d1e470f1739577406e0f24143930397f78ad",
+      "sha256After": "d51ac57a44686959da76a13bf4e8d1e470f1739577406e0f24143930397f78ad",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/services/basket.wrapper.service.ts",
+      "kind": "application",
+      "changed": true,
+      "sha256Before": "c48241669f46ae0eedf7de90cd6d713809beed55dcadc940297fa8e688ed74a7",
+      "sha256After": "d60be44fd6fd628eb276943fbb28f16c3dc5bd9c72843ab35d40ad50181b7088",
+      "changes": [
+        "line 20: subject-void-type-argument <void> on orderCreatedSource, proved by 1 zero-argument next call(s)"
+      ]
+    },
+    {
+      "path": "Client/modules/shared/services/configuration.service.ts",
+      "kind": "application",
+      "changed": true,
+      "sha256Before": "47aa9b3b9b6c8787fb7066f6a279e103bd8e7c1332bb1e084d53997b56f39322",
+      "sha256After": "660fb02a3aca20f0d09e45090e6e906cf4c3a4f616ee010c7e8f6c37e4cc619c",
+      "changes": [
+        "line 12: subject-void-type-argument <void> on settingsLoadedSource, proved by 1 zero-argument next call(s)"
+      ]
+    },
+    {
+      "path": "Client/modules/shared/services/data.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "72e7fe949912448001cfb1b22a6263e439d5cfdf2fd2b46d9b0ae6385e447429",
+      "sha256After": "72e7fe949912448001cfb1b22a6263e439d5cfdf2fd2b46d9b0ae6385e447429",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/services/notification.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "a7eb146980e64fd51700bf1fd1ad003351e2a833056c38ba7a653ca7e9a514f4",
+      "sha256After": "a7eb146980e64fd51700bf1fd1ad003351e2a833056c38ba7a653ca7e9a514f4",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/services/security.service.ts",
+      "kind": "application",
+      "changed": true,
+      "sha256Before": "3b871bf62d774455f298b2622084daf0e452e7f82b09236378b78ef55a1958d5",
+      "sha256After": "5d941fbd5ea69e9e81c1b8a2b4f2c239e3fa081a103477d1e1860c7fc5a0c7eb",
+      "changes": [
+        "line 20: http-client-injection Http -> HttpClient — the injected _http is declared HttpClient",
+        "line 22: http-headers-immutable-mutation this.headers.append(…) -> this.headers = this.headers.append(…) — HttpHeaders.append returns HttpHeaders in '@angular/common/http'@16.2.12",
+        "line 23: http-headers-immutable-mutation this.headers.append(…) -> this.headers = this.headers.append(…) — HttpHeaders.append returns HttpHeaders in '@angular/common/http'@16.2.12",
+        "line 234: http-headers-immutable-mutation this.headers.append(…) -> this.headers = this.headers.append(…) — HttpHeaders.append returns HttpHeaders in '@angular/common/http'@16.2.12",
+        "line 235: http-headers-immutable-mutation this.headers.append(…) -> this.headers = this.headers.append(…) — HttpHeaders.append returns HttpHeaders in '@angular/common/http'@16.2.12",
+        "line 240: http-headers-immutable-mutation this.headers.append(…) -> this.headers = this.headers.append(…) — HttpHeaders.append returns HttpHeaders in '@angular/common/http'@16.2.12",
+        "line 226: http-client-request-relocation Http.get(url, { body }) -> HttpClient.request('GET', url, …) — '@angular/common/http'@16.2.12 publishes body on request and not on get",
+        "line 229: http-client-body-accessor-removal .json() -> (removed) — HttpClient emits the parsed body, so the accessor has nothing to parse",
+        "line 226: http-client-element-type Http.get(…) -> HttpClient.get<string[]>(…) — the emitted type is the application's own declared return type for the flow, read from the function the call is returned from"
+      ]
+    },
+    {
+      "path": "Client/modules/shared/services/signalr.service.ts",
+      "kind": "application",
+      "changed": true,
+      "sha256Before": "d69fac87b5ed7af92825b706f36e86557f94d5bdc98516d969376f078ef3667d",
+      "sha256After": "5dd78ca610790922478e045c24c6f5d53aaa0a8e5ac444a34dcb8a464fb6a8c7",
+      "changes": [
+        "line 12: subject-void-type-argument <void> on msgSignalrSource, proved by 1 zero-argument next call(s)"
+      ]
+    },
+    {
+      "path": "Client/modules/shared/services/storage.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "403d0efb116d05d2a04f1272ef1336d0fabe4fdf9ab0bfa44db57182b7051dbe",
+      "sha256After": "403d0efb116d05d2a04f1272ef1336d0fabe4fdf9ab0bfa44db57182b7051dbe",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/shared.module.ts",
+      "kind": "application",
+      "changed": true,
+      "sha256Before": "5e202282f1ad0edc5ef1d9ec3fd6c713a112d83f6cd999043e6e9356397a1c54",
+      "sha256After": "ffce2ea730d5588821d95cdd7f2cf9de752cf8013e50ce31cbc859e255b78dd1",
+      "changes": [
+        "line 5: use-position-symbol-successor HttpModule -> HttpClientModule from @angular/common/http at ng-module-imports-member (1 use site(s))",
+        "line 5: use-position-symbol-removal JsonpModule dropped from @angular/http at ng-module-imports-member (1 use site(s))",
+        "line 32: removed-static-module-method NgbModule.forRoot() -> NgbModule — @ng-bootstrap/ng-bootstrap no longer declares NgbModule.forRoot",
+        "line 59: module-with-providers-type-argument <SharedModule> read from enclosing-class"
+      ]
+    },
+    {
+      "path": "Client/polyfills.ts",
+      "kind": "application",
+      "changed": true,
+      "sha256Before": "9567e56413c45b530315e2d3d43a9b10927f658abbfac252dfa0fd1da0971a71",
+      "sha256After": "4d2b52b763684146c98966177defbb452127fd434c50e637850827228048e0e2",
+      "changes": [
+        "line 56: module-specifier zone.js/dist/zone -> zone.js"
+      ]
+    },
+    {
+      "path": "Client/test.ts",
+      "kind": "application",
+      "changed": true,
+      "sha256Before": "14fad867d6553fd5e59f4f39fb1b8007df1a5f2e63830f47edba0f0383470f95",
+      "sha256After": "b400020022812a7490a14879be151eb19335c856af0841beee634819f7c5ccb9",
+      "changes": [
+        "line 3: module-specifier zone.js/dist/long-stack-trace-zone -> zone.js/plugins/long-stack-trace-zone"
+      ]
+    },
+    {
+      "path": "Client/typings.d.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "500f1012c6d4e5a70d590055fd9b74599f4e4b246b09db80d2fe8a8a5556d3c4",
+      "sha256After": "500f1012c6d4e5a70d590055fd9b74599f4e4b246b09db80d2fe8a8a5556d3c4",
+      "changes": []
+    },
+    {
+      "path": "Client/index.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "5900d7874901758e5411764b4300b462d0b8fd4225510c10119e55a15d0590fd",
+      "sha256After": "5900d7874901758e5411764b4300b462d0b8fd4225510c10119e55a15d0590fd",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/app.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "11406f06c1eacabf404cd216b2210e3ef9cb4f53ae717a927e8855a40fb9fc09",
+      "sha256After": "11406f06c1eacabf404cd216b2210e3ef9cb4f53ae717a927e8855a40fb9fc09",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/basket/basket-status/basket-status.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "a28c35ddd4d985ae5e22f6413d170105ce20b1b01a1ac6a944aaec70647c2414",
+      "sha256After": "a28c35ddd4d985ae5e22f6413d170105ce20b1b01a1ac6a944aaec70647c2414",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/basket/basket.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "188048e4bdb3fa8817fa5c98e2c23ac1697f620fd013efac5d10a008565cfccb",
+      "sha256After": "188048e4bdb3fa8817fa5c98e2c23ac1697f620fd013efac5d10a008565cfccb",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/campaigns/campaigns-detail/campaigns-detail.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "b80b403f6a3bb6c0305ad04399f26112d37cb8a771919f33c8a0bb16dab85b78",
+      "sha256After": "b80b403f6a3bb6c0305ad04399f26112d37cb8a771919f33c8a0bb16dab85b78",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/campaigns/campaigns.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "55b0bdcc06370e3a80c8b1afbc3ce009245566baa8e5466d9456d928ecef037b",
+      "sha256After": "55b0bdcc06370e3a80c8b1afbc3ce009245566baa8e5466d9456d928ecef037b",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/catalog/catalog.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "3e93159ab9fd5aa5215d23c00fb4b04e3daaeb8779f8b697eb5a43512cdbd2bf",
+      "sha256After": "3e93159ab9fd5aa5215d23c00fb4b04e3daaeb8779f8b697eb5a43512cdbd2bf",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/orders/orders-detail/orders-detail.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "f0a8059a67fb55b1f9a2a18149eed897f2ef5bd366ffa7ad983b890286dfc881",
+      "sha256After": "f0a8059a67fb55b1f9a2a18149eed897f2ef5bd366ffa7ad983b890286dfc881",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/orders/orders-new/orders-new.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "be05bf5ba7cd1a3ed4fe62e2cdc3d1f31a543a952d4b443c8c7ba32f05c0c1b4",
+      "sha256After": "be05bf5ba7cd1a3ed4fe62e2cdc3d1f31a543a952d4b443c8c7ba32f05c0c1b4",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/orders/orders.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "44d938ef6384c3d751d82b0232eb12b0eefea9694c9afe372012e3f459b533a0",
+      "sha256After": "44d938ef6384c3d751d82b0232eb12b0eefea9694c9afe372012e3f459b533a0",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/components/header/header.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "c514acd76b52bc19cda6938dabf957b37a6d13455f8d1e9ba736c131f12ab114",
+      "sha256After": "c514acd76b52bc19cda6938dabf957b37a6d13455f8d1e9ba736c131f12ab114",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/components/identity/identity.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "611af6a7a7910c3411eec584b8e46af322356e5120c7a97124a351754bd87c64",
+      "sha256After": "611af6a7a7910c3411eec584b8e46af322356e5120c7a97124a351754bd87c64",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/components/page-not-found/page-not-found.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "08fc6e30ba335500d7bef3f48ddf18ebe1de073255d6d70cd4b90022ce6a265e",
+      "sha256After": "08fc6e30ba335500d7bef3f48ddf18ebe1de073255d6d70cd4b90022ce6a265e",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/components/pager/pager.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "4fea9a2ffca4280ee5bb73ad4045225260ebfaa4bd720ca0a6bafcc4949d4fb1",
+      "sha256After": "4fea9a2ffca4280ee5bb73ad4045225260ebfaa4bd720ca0a6bafcc4949d4fb1",
+      "changes": []
+    },
+    {
+      "path": "Client/globals.scss",
+      "kind": "application",
+      "changed": true,
+      "sha256Before": "b3fb5b137384b28038894bf0225fe6f008cbf719162c0f1832b289dbea000b3c",
+      "sha256After": "cf4dfccecc455459ad69aaa6d95a2b951527cda06fab952f37f852bdbe04a5ed",
+      "changes": [
+        "line 3: style-import-republished ~ngx-toastr/toastr-bs4-alert.scss -> ngx-toastr/toastr-bs4-alert",
+        "line 2: webpack-tilde-specifier ~bootstrap/scss/bootstrap -> bootstrap/scss/bootstrap (bootstrap/scss/bootstrap.scss)"
+      ]
+    },
+    {
+      "path": "Client/modules/_variables.scss",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "c70ae9eb4416641fd22d226ac2ebf412a1d79c717a0db1c28c6d7b051aa64a87",
+      "sha256After": "c70ae9eb4416641fd22d226ac2ebf412a1d79c717a0db1c28c6d7b051aa64a87",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/app.component.scss",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "49cfd52b3ebd52920cba350a0d165e2db0d5a9641b55acea50aa357e11c15c07",
+      "sha256After": "49cfd52b3ebd52920cba350a0d165e2db0d5a9641b55acea50aa357e11c15c07",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/basket/basket-status/basket-status.component.scss",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "efbefe9dedff96bf69eacfb020167de5192acb50f8d8f9af43e7d5c4d1e8b749",
+      "sha256After": "efbefe9dedff96bf69eacfb020167de5192acb50f8d8f9af43e7d5c4d1e8b749",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/basket/basket.component.scss",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "7e7fb3865d47724fa4817a39a9affae8f7ea3356eb76d431a92bdadf21086531",
+      "sha256After": "7e7fb3865d47724fa4817a39a9affae8f7ea3356eb76d431a92bdadf21086531",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/campaigns/campaigns-detail/campaigns-detail.component.scss",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "ad96114aed0c3dc72c191324ace1755b1bea176675ce0720dc11ab828f8c0812",
+      "sha256After": "ad96114aed0c3dc72c191324ace1755b1bea176675ce0720dc11ab828f8c0812",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/campaigns/campaigns.component.scss",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "2150b3c8e029c83da8260fd95cfd9c52615665a428d540d6bcc046a3bf93b3e2",
+      "sha256After": "2150b3c8e029c83da8260fd95cfd9c52615665a428d540d6bcc046a3bf93b3e2",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/catalog/catalog.component.scss",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "574598ba1768a9e7cc40f1bc39147db2f061cd326e59f92709028192a1fcfc4a",
+      "sha256After": "574598ba1768a9e7cc40f1bc39147db2f061cd326e59f92709028192a1fcfc4a",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/orders/orders-detail/orders-detail.component.scss",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "673fff74fe395f645883635f125e696f9a84743501b79ee16f1942357807e9ee",
+      "sha256After": "673fff74fe395f645883635f125e696f9a84743501b79ee16f1942357807e9ee",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/orders/orders-new/orders-new.component.scss",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "8c40921451dc34fb8fde04ee91421e367a0a40941859af7caf127a9c587d6a09",
+      "sha256After": "8c40921451dc34fb8fde04ee91421e367a0a40941859af7caf127a9c587d6a09",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/orders/orders.component.scss",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "cf659ef1fe5d94c59acc1aa38a8e354b026bad52a1adc468bef2e724b0a4bc4b",
+      "sha256After": "cf659ef1fe5d94c59acc1aa38a8e354b026bad52a1adc468bef2e724b0a4bc4b",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/components/header/header.scss",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "85ac292c14588c61cb272aa54bbd75e0dd47cfa83d431cd42c347fdc8e5e18a2",
+      "sha256After": "85ac292c14588c61cb272aa54bbd75e0dd47cfa83d431cd42c347fdc8e5e18a2",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/components/identity/identity.scss",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "798eecbc4cebd3225e264255317a5f9e48f12c1a2e454a6ab55da2675b7d0c08",
+      "sha256After": "798eecbc4cebd3225e264255317a5f9e48f12c1a2e454a6ab55da2675b7d0c08",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/components/page-not-found/page-not-found.component.scss",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "changes": []
+    },
+    {
+      "path": "Client/modules/shared/components/pager/pager.scss",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "cb39b6e0aabc6c5398110a2915e54299046211b728b1f87b6339aadf91402cfd",
+      "sha256After": "cb39b6e0aabc6c5398110a2915e54299046211b728b1f87b6339aadf91402cfd",
+      "changes": []
+    }
+  ],
+  "removedFiles": [
+    "tslint.json",
+    "package-lock.json"
+  ],
+  "declaredDifferences": [
+    "projects.WebSPA.architect.build.options.optimization builds with font inlining disabled (`optimization.fonts.inline: false`). On the 16.2 line that option defaults to on, and it makes the build itself fetch every Google Fonts and Adobe Fonts stylesheet the application links and paste the answer into the emitted index.html. The era build did no such thing: it emitted the application's own link element and the browser fetched the stylesheet at runtime. This cell keeps that behaviour — the migrated document ships the same link and the same runtime fetch — rather than moving a third-party request into the build, where it would make the emitted bytes depend on what a font host served on the build day and on whether the build host could reach it at all. Inlining would not have removed the runtime request in any case: the inlined stylesheet still points at the font host for the font files themselves.",
+    "projects.WebSPA.architect.build.configurations.production.optimization builds with font inlining disabled (`optimization.fonts.inline: false`). On the 16.2 line that option defaults to on, and it makes the build itself fetch every Google Fonts and Adobe Fonts stylesheet the application links and paste the answer into the emitted index.html. The era build did no such thing: it emitted the application's own link element and the browser fetched the stylesheet at runtime. This cell keeps that behaviour — the migrated document ships the same link and the same runtime fetch — rather than moving a third-party request into the build, where it would make the emitted bytes depend on what a font host served on the build day and on whether the build host could reach it at all. Inlining would not have removed the runtime request in any case: the inlined stylesheet still points at the font host for the font files themselves.",
+    "projects.WebSPA.architect.lint ran @angular-devkit/build-angular:tslint, and angular-16-browser-builder carries no TSLint line. The target was removed as a declared migration difference: the era workspace lints with TSLint and the migrated workspace does not, and no replacement lint capability was chosen here.",
+    "projects.WebSPA-e2e.architect.lint ran @angular-devkit/build-angular:tslint, and angular-16-browser-builder carries no TSLint line. The target was removed as a declared migration difference: the era workspace lints with TSLint and the migrated workspace does not, and no replacement lint capability was chosen here.",
+    "tslint.json configures TSLint, and angular-16-browser-builder carries no TSLint line for it to configure. The file was removed with the targets that read it; no rule in it was translated to another linter.",
+    "dependencies.@angular/http was removed: the migrated workspace no longer carries it. @angular/http stops at 7.2.16 and is deprecated on the registry with \"Package no longer supported. Use @angular/common instead\". Angular removed the package after the 7 line; there is no 8.x and no 16.x, so the `@angular/` family range this cell writes for its own packages names a version that was never published. The HTTP client that succeeded it is `@angular/common/http`, an entry point of a package this cell already carries, so the dependency is dropped rather than pinned to a v7 line beside a v16 framework.",
+    "dependencies.preboot was removed: the migrated workspace no longer carries it. preboot published ninety-four versions and the newest of them is 8.0.0, published 2021-01-18; it is the `latest` dist-tag and the only tag the package carries. Its declared peer does not exclude it — 8.0.0 declares @angular/common and @angular/core \">=11.0.0\" and dependency tslib ^2.0.0, both satisfied by this cell — so a reading that stopped at the resolver would align the package and be wrong, for the same reason jw-bootstrap-switch-ng2 was wrong: what 8.0.0 published is a pre-Ivy ViewEngine library. Its tarball ships preboot.metadata.json beside bundles/preboot.umd.js, esm2015/ and fesm2015/; the fesm bundle declares its module the ViewEngine way (`PrebootModule.decorators = [{ type: NgModule, args: [...] }]`) and carries no ɵɵngDeclare* partial declaration and no ɵɵdefineNgModule at all, and module.d.ts publishes `export declare class PrebootModule` with no ɵmod, ɵfac or ɵinj. The converter that used to make such a library consumable is gone: @angular/compiler-cli 16.2.12 ships `ngcc` only as a stub whose own message reads \"As of Angular 16, 'ngcc' is no longer required and not invoked during CLI builds\". The registry also marks every version of the package deprecated with \"This package is no longer maintained and is unnecessary with the recent versions of Angular.\" There is therefore no line to align to: not a newer one, because none exists, and not the newest one, because this cell's linker does not consume what it publishes. The package is dropped as a declared difference. Doing so turns any `PrebootModule` or `EventReplayer` import into a source demand the compiler states by name; an application that declares preboot and never imports it loses a declaration and nothing else, and choosing a replacement server-side-render replay library is a source decision this table does not make. Read from https://registry.npmjs.org/preboot and from the published tarball https://registry.npmjs.org/preboot/-/preboot-8.0.0.tgz under consent VL-LEGACY-CORPUS-2026-08-10 on 2026-08-14.",
+    "devDependencies.codelyzer was removed: the migrated workspace no longer carries it. codelyzer stops at 6.0.2, a TSLint rule set for Angular 9-era workspaces. Nothing succeeds it on the TSLint line and its ESLint replacement is @angular-eslint, which this cell already aligns as a family.",
+    "devDependencies.tslint was removed: the migrated workspace no longer carries it. TSLint stops at 6.1.3 and was deprecated by its own maintainers in favour of ESLint before Angular 13 shipped. There is no TSLint release for any Angular line at or beyond this cell, so the whole TSLint toolchain is dropped rather than carried.",
+    "package-lock.json was removed: it is the era closure's own resolution, and the migrated manifest no longer asks for that closure. @angular-devkit/build-angular is locked at 0.7.5 and now declared ^16.2.0; @angular/animations is locked at 6.1.4 and now declared ^16.2.0; @angular/cli is locked at 6.1.5 and now declared ^16.2.0 and 13 further declaration(s). A lockfile is read before a manifest, so leaving it in the tree makes the package manager resolve the era pins it names and refuse the install over versions the migrated manifest never declared. The migrated manifest is to be installed lock-free and re-locked by that install; the era resolution is a fact about the era workspace and is not carried into this one, so the reproducibility it provided is a declared loss rather than a preserved property.",
+    "Client/modules/basket/basket.service.ts line 2: Response annotated a value the successor does not emit — it emits the parsed body. The annotation was carried to any, which is what the era Response.json() returned, so the flow keeps exactly the checking strength the era gave it and no more. A member of Response read through one of these parameters is no longer checked against that class, because the value never was one.",
+    "Client/modules/campaigns/campaigns.service.ts line 2: Response annotated a value the successor does not emit — it emits the parsed body. The annotation was carried to any, which is what the era Response.json() returned, so the flow keeps exactly the checking strength the era gave it and no more. A member of Response read through one of these parameters is no longer checked against that class, because the value never was one.",
+    "Client/modules/catalog/catalog.service.ts line 2: Response annotated a value the successor does not emit — it emits the parsed body. The annotation was carried to any, which is what the era Response.json() returned, so the flow keeps exactly the checking strength the era gave it and no more. A member of Response read through one of these parameters is no longer checked against that class, because the value never was one.",
+    "Client/modules/orders/orders.service.ts line 2: Response annotated a value the successor does not emit — it emits the parsed body. The annotation was carried to any, which is what the era Response.json() returned, so the flow keeps exactly the checking strength the era gave it and no more. A member of Response read through one of these parameters is no longer checked against that class, because the value never was one.",
+    "Client/modules/shared/services/security.service.ts line 2: Headers mutated the receiver and HttpHeaders does not. Every discarded mutator call is now an assignment back to the receiver, so the header set the era application built is the header set the successor sends.",
+    "Client/modules/shared/services/security.service.ts line 2: the era Http.get at line 226 carried body, which HttpClient publishes only on request. The call was moved rather than the option dropped, so the request the era application sent is the request the successor sends.",
+    "Client/modules/shared/shared.module.ts line 5: JsonpModule was dropped from @angular/http without a successor — `JsonpModule` has no successor by rename. Angular's JSONP support moved to `HttpClientJsonpModule`, which requires `HttpClientModule` beside it and changes how a JSONP request is written at the call site, so it is a different module and not a new spelling of this one. Where the only thing an application does with `JsonpModule` is name it in an NgModule `imports` array, and it imports none of the services the module registered, the member registers providers nothing can ask for: it is dropped and the loss of JSONP support is declared. An application that injects `Jsonp` is refused."
+  ],
+  "unhandled": [
+    "projects.WebSPA-e2e.architect.e2e used @angular-devkit/build-angular:protractor, which the 16.2 devkit does not ship; the target was removed and no replacement capability was chosen for it",
+    "dependencies.@aspnet/signalr is declared at 1.0.3 and angular-16-browser-builder has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+    "dependencies.bootstrap is declared at 4.1.3 and angular-16-browser-builder has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+    "dependencies.core-js is declared at ^2.5.7 and angular-16-browser-builder has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+    "dependencies.file-loader is declared at 2.0.0 and angular-16-browser-builder has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+    "dependencies.font-awesome is declared at 4.7.0 and angular-16-browser-builder has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+    "dependencies.isomorphic-fetch is declared at 2.2.1 and angular-16-browser-builder has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+    "dependencies.jquery is declared at ^3.3.1 and angular-16-browser-builder has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+    "dependencies.normalize.css is declared at 8.0.0 and angular-16-browser-builder has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+    "dependencies.popper.js is declared at ^1.14.4 and angular-16-browser-builder has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+    "dependencies.webpack is declared at ^4.17.1 and angular-16-browser-builder has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+    "devDependencies.@types/core-js is declared at 2.5.0 and angular-16-browser-builder has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+    "devDependencies.@types/hammerjs is declared at 2.0.35 and angular-16-browser-builder has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+    "devDependencies.@types/node is declared at ~10.9.2 and angular-16-browser-builder has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+    "devDependencies.@types/protractor is declared at 4.0.0 and angular-16-browser-builder has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+    "devDependencies.@types/selenium-webdriver is declared at 3.0.10 and angular-16-browser-builder has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+    "devDependencies.npm-watch is declared at 0.5.0 and angular-16-browser-builder has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+    "devDependencies.sass-lint is declared at 1.12.1 and angular-16-browser-builder has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+    "devDependencies.ts-helpers is declared at 1.1.2 and angular-16-browser-builder has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+    "devDependencies.ts-node is declared at ~7.0.1 and angular-16-browser-builder has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+    "devDependencies.typedoc is declared at 0.12.0 and angular-16-browser-builder has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+    "devDependencies.url-loader is declared at 1.1.1 and angular-16-browser-builder has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+    "@angular/http is named by this application's own source — Client/modules/basket/basket.service.ts:2 (module-import `@angular/http`), Client/modules/campaigns/campaigns.service.ts:2 (module-import `@angular/http`), Client/modules/catalog/catalog.service.ts:2 (module-import `@angular/http`), Client/modules/orders/orders.service.ts:2 (module-import `@angular/http`), Client/modules/shared/services/security.service.ts:2 (module-import `@angular/http`), Client/modules/shared/services/security.service.ts:2 (module-import `@angular/http`), Client/modules/shared/services/security.service.ts:2 (module-import `@angular/http`), Client/modules/shared/shared.module.ts:5 (module-import `@angular/http`), Client/modules/shared/shared.module.ts:5 (module-import `@angular/http`) — and is not declared by the migrated manifest, because angular-16-browser-builder read the package and found no line of it to declare: @angular/http stops at 7.2.16 and is deprecated on the registry with \"Package no longer supported. Use @angular/common instead\". Angular removed the package after the 7 line; there is no 8.x and no 16.x, so the `@angular/` family range this cell writes for its own packages names a version that was never published. The HTTP client that succeeded it is `@angular/common/http`, an entry point of a package this cell already carries, so the dependency is dropped rather than pinned to a v7 line beside a v16 framework. The import site is the application's, so nothing here can close it: the source asks for a package this cell has no successor for.",
+    "compilerOptions.lib was left as declared; the 16.2 line does not require a specific lib set and narrowing one could remove a type surface the application relies on",
+    "Client/modules/basket/basket.service.ts line 2: @angular/http is unreachable and Response is used at line 65 as a type-reference, and HttpResponse is not written down as its successor at that position: `HttpResponse` is the class `Response` was replaced by, and it is not a substitution at the position era applications actually write `Response` in — a type annotation on what an HTTP observable emits. Two independent reasons, and the second is the one that decides it. `Response` is not generic and `HttpResponse<T>` is with no default, so the bare name is not a type at all and any argument written for it is one nobody read. And the value being annotated is no longer a response: `Http` emitted a `Response` to call `.json()` on, `HttpClient` emits the parsed body unless the caller asks for `observe: 'response'`, so an annotation naming the successor class states something about the value that is false. This was measured rather than reasoned: writing `HttpResponse<any>` into the four type-position sites of the eShopOnContainers WebSPA holdout compiled the declaration and produced eighteen new `TS2322`/`TS2345` diagnostics where the annotation met the observable its own `DataService` declares (T024 u2, evidence/ingests/angular-eshop-webspa-netcore2-2/migration/u2a-t024-target-build.log). The type positions are therefore left for the same caller who has to answer the call surface, and the specifier stays unresolved rather than resolving onto a lie.. The whole declaration was left as it is: rewriting the symbols that do resolve would leave the ones that do not pointing at a module this tree does not answer.",
+    "Client/modules/campaigns/campaigns.service.ts line 2: @angular/http is unreachable and Response is used at line 35 as a type-reference, and HttpResponse is not written down as its successor at that position: `HttpResponse` is the class `Response` was replaced by, and it is not a substitution at the position era applications actually write `Response` in — a type annotation on what an HTTP observable emits. Two independent reasons, and the second is the one that decides it. `Response` is not generic and `HttpResponse<T>` is with no default, so the bare name is not a type at all and any argument written for it is one nobody read. And the value being annotated is no longer a response: `Http` emitted a `Response` to call `.json()` on, `HttpClient` emits the parsed body unless the caller asks for `observe: 'response'`, so an annotation naming the successor class states something about the value that is false. This was measured rather than reasoned: writing `HttpResponse<any>` into the four type-position sites of the eShopOnContainers WebSPA holdout compiled the declaration and produced eighteen new `TS2322`/`TS2345` diagnostics where the annotation met the observable its own `DataService` declares (T024 u2, evidence/ingests/angular-eshop-webspa-netcore2-2/migration/u2a-t024-target-build.log). The type positions are therefore left for the same caller who has to answer the call surface, and the specifier stays unresolved rather than resolving onto a lie.. The whole declaration was left as it is: rewriting the symbols that do resolve would leave the ones that do not pointing at a module this tree does not answer.",
+    "Client/modules/catalog/catalog.service.ts line 2: @angular/http is unreachable and Response is used at line 41 as a type-reference, and HttpResponse is not written down as its successor at that position: `HttpResponse` is the class `Response` was replaced by, and it is not a substitution at the position era applications actually write `Response` in — a type annotation on what an HTTP observable emits. Two independent reasons, and the second is the one that decides it. `Response` is not generic and `HttpResponse<T>` is with no default, so the bare name is not a type at all and any argument written for it is one nobody read. And the value being annotated is no longer a response: `Http` emitted a `Response` to call `.json()` on, `HttpClient` emits the parsed body unless the caller asks for `observe: 'response'`, so an annotation naming the successor class states something about the value that is false. This was measured rather than reasoned: writing `HttpResponse<any>` into the four type-position sites of the eShopOnContainers WebSPA holdout compiled the declaration and produced eighteen new `TS2322`/`TS2345` diagnostics where the annotation met the observable its own `DataService` declares (T024 u2, evidence/ingests/angular-eshop-webspa-netcore2-2/migration/u2a-t024-target-build.log). The type positions are therefore left for the same caller who has to answer the call surface, and the specifier stays unresolved rather than resolving onto a lie.. The whole declaration was left as it is: rewriting the symbols that do resolve would leave the ones that do not pointing at a module this tree does not answer.",
+    "Client/modules/orders/orders.service.ts line 2: @angular/http is unreachable and Response is used at line 30 as a type-reference, and HttpResponse is not written down as its successor at that position: `HttpResponse` is the class `Response` was replaced by, and it is not a substitution at the position era applications actually write `Response` in — a type annotation on what an HTTP observable emits. Two independent reasons, and the second is the one that decides it. `Response` is not generic and `HttpResponse<T>` is with no default, so the bare name is not a type at all and any argument written for it is one nobody read. And the value being annotated is no longer a response: `Http` emitted a `Response` to call `.json()` on, `HttpClient` emits the parsed body unless the caller asks for `observe: 'response'`, so an annotation naming the successor class states something about the value that is false. This was measured rather than reasoned: writing `HttpResponse<any>` into the four type-position sites of the eShopOnContainers WebSPA holdout compiled the declaration and produced eighteen new `TS2322`/`TS2345` diagnostics where the annotation met the observable its own `DataService` declares (T024 u2, evidence/ingests/angular-eshop-webspa-netcore2-2/migration/u2a-t024-target-build.log). The type positions are therefore left for the same caller who has to answer the call surface, and the specifier stays unresolved rather than resolving onto a lie.. The whole declaration was left as it is: rewriting the symbols that do resolve would leave the ones that do not pointing at a module this tree does not answer.",
+    "Client/modules/shared/services/security.service.ts line 2: @angular/http is unreachable and Headers is used at line 14 as a type-reference, and HttpHeaders is not written down as its successor at that position: `HttpHeaders` is immutable where `Headers` was not: `Headers.append` mutated the receiver and `HttpHeaders.append` returns a new instance and leaves the receiver as it was. A renamed declaration and a renamed `new` target both compile and both silently stop sending whatever the application appended, so no position is claimed.. The whole declaration was left as it is: rewriting the symbols that do resolve would leave the ones that do not pointing at a module this tree does not answer.",
+    "Client/modules/shared/services/security.service.ts line 2: @angular/http is unreachable and Http is used at line 20 as a constructor-parameter-type, and HttpClient is not written down as its successor at that position: `HttpClient` is the service `Http` was replaced by and it is not a rename at any position. `Http` handed its caller a `Response` to call `.json()` on and accepted a `body` on every request including `GET`; `HttpClient` hands over the parsed body and publishes no `body` option on `GET`. Substituting the type leaves every call site of the injected binding compiling against a shape the successor will not produce, so no position is claimed and the call sites are left for a caller to answer.. The whole declaration was left as it is: rewriting the symbols that do resolve would leave the ones that do not pointing at a module this tree does not answer.",
+    "Client/modules/shared/services/security.service.ts line 2: @angular/http is unreachable and Response is imported and never used, and this capability rewrites uses; removing an unused binding is a different capability's decision. The whole declaration was left as it is: rewriting the symbols that do resolve would leave the ones that do not pointing at a module this tree does not answer."
+  ],
+  "notEstablished": [
+    "A composed changeset is a set of edits, not a build. Nothing here establishes that the migrated tree installs, compiles or emits anything.",
+    "`applicationFilesChanged` counts application source a transform rewrote. A file the adapter scanned and left alone is counted as scanned and not as changed.",
+    "A cell disposition is a reading of a registry, not an installation. A range written here has not been resolved against a lockfile by this record.",
+    "No compiler-positioned reading was supplied, so the two diagnostic-gated capabilities stood down. That is a statement about this composition and not about the application."
+  ],
+  "digest": "653cd3c60e00a7f0626bc3c232403ebf20bd1768bd816d765b3ab958d62b4a71"
+}

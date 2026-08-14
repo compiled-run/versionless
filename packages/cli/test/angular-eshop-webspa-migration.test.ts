@@ -1,14 +1,19 @@
-import { readFile } from 'node:fs/promises';
+import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import * as path from 'pathe';
 import { describe, expect, it } from 'vitest';
 import {
 	ANGULAR_HTTP_SUCCESSORS,
 	APPLICATION_SOURCE_DIRECTORIES,
 	APPLICATION_SUBPATH,
+	EMPTY_LANE_READINGS,
 	ERA_WORKSPACE_FACTS,
 	SURFACE_PROBE_TREE,
 	driveAngularHttpSeam,
 	buildSeamProbeRecord,
+	readPackageExports,
 } from '../src/fixture/angular-eshop-webspa-migration-run.ts';
+import { compareInventories } from '../src/fixture/angular-eshop-webspa-build-inventory.ts';
 import {
 	ATTEMPT_FILE,
 	CAPABILITY_COMPOSITION,
@@ -16,9 +21,13 @@ import {
 	GAPS,
 	GAP_DISPOSITIONS,
 	HOP_CLASS_FINDINGS,
+	INGEST_DIRECTORY,
 	LANE_INSTALL,
+	OUTPUT_INVENTORY,
 	RERUN,
 	SEAM_ANSWER,
+	buildExportsMapBlock,
+	buildExportsMapRecord,
 	buildMigrationBlock,
 	buildMigrationRecord,
 	buildRerunBlock,
@@ -309,5 +318,193 @@ describe('the published attempt record', () => {
 		const claims = block['notEstablished'] as readonly string[];
 		expect(claims.length).toBeGreaterThan(4);
 		expect(claims.join(' ')).toContain('No compiler read this application on the target line');
+	});
+});
+
+describe('the T024 u4 wiring: where the exports reading is taken, and why there', () => {
+	it('takes it driver-side, on the ground that it needs the lane’s installed closure', () => {
+		const block = buildExportsMapBlock();
+		const wiring = block['wiringDecision'] as Record<string, string>;
+		expect(wiring['answer']).toBe('driver');
+		expect(wiring['reasoning']).toContain('T021-u1');
+		expect(wiring['reasoning']).toContain('needs the closure');
+		expect(wiring['genericity']).toContain('names no package');
+	});
+
+	it('stands the capability down when the lane has no closure to read', () => {
+		expect(EMPTY_LANE_READINGS.packageExports).toEqual([]);
+	});
+
+	it('reads every dependency that publishes an exports map, and no other', async () => {
+		const tree = await mkdtemp(path.join(tmpdir(), 'eshop-exports-'));
+		try {
+			await writeFile(
+				path.join(tree, 'package.json'),
+				JSON.stringify({ dependencies: { alpha: '^1.0.0', beta: '^2.0.0', gamma: '^3.0.0' } }),
+			);
+			const install = async (
+				name: string,
+				manifest: Record<string, unknown>,
+				stylesheet?: string,
+			): Promise<void> => {
+				const at = path.join(tree, 'node_modules', name);
+				await mkdir(at, { recursive: true });
+				await writeFile(path.join(at, 'package.json'), JSON.stringify(manifest));
+				if (stylesheet !== undefined) await writeFile(path.join(at, 'theme.scss'), stylesheet);
+			};
+			await install(
+				'alpha',
+				{ version: '1.2.3', exports: { './theme': { default: './theme.scss' } } },
+				'.a { color: red; }',
+			);
+			await install('beta', { version: '2.0.0', main: './index.js' });
+			const readings = await readPackageExports(tree);
+			expect(readings.map((reading) => reading.name)).toEqual(['alpha']);
+			expect(readings[0]?.version).toBe('1.2.3');
+			expect(readings[0]?.fileSizes?.['theme.scss']).toBe(18);
+		} finally {
+			await rm(tree, { recursive: true, force: true });
+		}
+	});
+
+	it('reads nothing at all from a tree with no manifest, rather than throwing', async () => {
+		const tree = await mkdtemp(path.join(tmpdir(), 'eshop-exports-empty-'));
+		try {
+			expect(await readPackageExports(tree)).toEqual([]);
+		} finally {
+			await rm(tree, { recursive: true, force: true });
+		}
+	});
+});
+
+describe('the T024 u4 green', () => {
+	it('records a build that completed, and no remaining diagnostic', () => {
+		const block = buildExportsMapBlock();
+		expect(block['outcome']).toBe('green-build-twice-byte-identical');
+		const build = block['targetBuild'] as Record<string, unknown>;
+		expect(build['exitStatus']).toBe(0);
+		expect(build['produced']).toBe(true);
+		expect(build['remainingDiagnostics']).toEqual([]);
+		expect((build['g7DiagnosticsClosed'] as readonly string[]).length).toBe(2);
+	});
+
+	it('claims determinism from two runs compared, not from one run repeated in words', () => {
+		const build = buildExportsMapBlock()['targetBuild'] as Record<string, unknown>;
+		expect(build['runs']).toBe(2);
+		expect(build['byteIdenticalAcrossRuns']).toBe(true);
+		expect(String(build['runsNote'])).toContain('hashed filenames are the same in both runs');
+		expect(build['secondRunLog']).toBe('migration/u4-t024-target-build-run2.log');
+	});
+
+	it('says the wiring alone would not have closed G7, and what else was needed', () => {
+		const capability = buildExportsMapBlock()['capabilityExtended'] as Record<string, string>;
+		expect(capability['whyExtensionAndNotWiringAlone']).toContain('did refuse it');
+		expect(capability['rule']).toBe('republished subpath — the exact successor');
+		expect(capability['whyItDeclaresNothing']).toContain('same file');
+		expect(capability['whyAllOrNothing']).toContain('twice');
+	});
+
+	it('proves the repaired import was compiled rather than resolved to nothing', () => {
+		const build = buildExportsMapBlock()['targetBuild'] as Record<string, unknown>;
+		expect(String(build['emittedProof'])).toContain('.toast-*');
+	});
+
+	it('records the inventory with no file appearing in one lane and not the other', () => {
+		expect(OUTPUT_INVENTORY.files).toBe(OUTPUT_INVENTORY.baselineFiles);
+		expect(OUTPUT_INVENTORY.onlyInEra).toEqual([]);
+		expect(OUTPUT_INVENTORY.onlyInMigrated).toEqual([]);
+		expect(OUTPUT_INVENTORY.carriedByteIdentical.length).toBe(19);
+		expect(OUTPUT_INVENTORY.differingFromBaseline.length).toBe(6);
+		expect(
+			OUTPUT_INVENTORY.carriedByteIdentical.length + OUTPUT_INVENTORY.differingFromBaseline.length,
+		).toBe(OUTPUT_INVENTORY.files);
+	});
+
+	it('states what a green build still does not establish', () => {
+		const claims = buildExportsMapBlock()['notEstablished'] as readonly string[];
+		expect(claims.length).toBeGreaterThan(4);
+		expect(claims.join(' ')).toContain('no witness has run');
+		expect(claims.join(' ')).toContain('one cell on one machine');
+	});
+
+	it('carries the u4 block into the attempt record, sealed, beside every red', async () => {
+		const attempt = await readAttempt();
+		const block = attempt['t024U4Rerun'] as Record<string, unknown> | undefined;
+		expect(block).toBeDefined();
+		expect(block?.['outcome']).toBe('green-build-twice-byte-identical');
+		expect(block?.['digest']).toBe(buildExportsMapRecord()['digest']);
+		for (const prior of ['migration', 't024Rerun', 't024U2Rerun', 't024U3Rerun'])
+			expect(attempt[prior]).toBeDefined();
+		expect((attempt['t024U3Rerun'] as Record<string, unknown>)['outcome']).toBe(
+			'install-green-build-red-one-remaining-class-beyond-g6',
+		);
+	});
+});
+
+describe('the twice-build comparison', () => {
+	const entry = (at: string, bytes: number, digest: string): Record<string, unknown> => ({
+		path: at,
+		bytes,
+		sha256: digest,
+	});
+	const inventory = (
+		dirLabel: string,
+		entries: readonly Record<string, unknown>[],
+	): Parameters<typeof compareInventories>[0] =>
+		({
+			dirLabel,
+			files: entries.length,
+			totalBytes: entries.reduce((total, item) => total + Number(item['bytes']), 0),
+			entries,
+		}) as unknown as Parameters<typeof compareInventories>[0];
+
+	it('calls two runs identical only when every path and every digest matches', () => {
+		const runA = inventory('run1', [entry('main.aaa.js', 10, 'd1'), entry('index.html', 5, 'd2')]);
+		expect(compareInventories(runA, inventory('run2', [...runA.entries]))).toEqual({
+			byteIdentical: true,
+			onlyInRunA: [],
+			onlyInRunB: [],
+			differingContent: [],
+		});
+	});
+
+	it('names a hashed filename that moved between runs rather than counting it', () => {
+		const runA = inventory('run1', [entry('main.aaa.js', 10, 'd1')]);
+		const runB = inventory('run2', [entry('main.bbb.js', 10, 'd1')]);
+		const comparison = compareInventories(runA, runB);
+		expect(comparison.byteIdentical).toBe(false);
+		expect(comparison.onlyInRunA).toEqual(['main.aaa.js']);
+		expect(comparison.onlyInRunB).toEqual(['main.bbb.js']);
+	});
+
+	it('names a file whose content changed under an unchanged name', () => {
+		const runA = inventory('run1', [entry('index.html', 5, 'd1')]);
+		const runB = inventory('run2', [entry('index.html', 5, 'd9')]);
+		const comparison = compareInventories(runA, runB);
+		expect(comparison.byteIdentical).toBe(false);
+		expect(comparison.differingContent).toEqual(['index.html']);
+	});
+
+	it('agrees with the record this unit published for the two runs it ran', async () => {
+		const record = JSON.parse(
+			await readFile(
+				path.join(
+					INGEST_DIRECTORY,
+					'migration/u4-t024-build-inventory-run1-vs-run2.json',
+				),
+				'utf8',
+			),
+		) as Record<string, unknown>;
+		const runA = record['runA'] as Record<string, unknown>;
+		const runB = record['runB'] as Record<string, unknown>;
+		expect(record['comparison']).toEqual({
+			byteIdentical: true,
+			onlyInRunA: [],
+			onlyInRunB: [],
+			differingContent: [],
+		});
+		expect(runA['files']).toBe(OUTPUT_INVENTORY.files);
+		expect(runA['totalBytes']).toBe(OUTPUT_INVENTORY.totalBytes);
+		expect(runB['totalBytes']).toBe(runA['totalBytes']);
 	});
 });

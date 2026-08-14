@@ -1,0 +1,272 @@
+{
+  "runA": {
+    "dirLabel": "u4-build-run1",
+    "files": 25,
+    "totalBytes": 1524958,
+    "entries": [
+      {
+        "path": "3rdpartylicenses.txt",
+        "bytes": 16786,
+        "sha256": "cba7e588b5124544788ae91392515969dae091439fa7adf1a64f06f7f1c63479"
+      },
+      {
+        "path": "assets/images/arrow-down.png",
+        "bytes": 1045,
+        "sha256": "a7d94eed23765a30b03758bdf142aa3f192524884e1291ef0fd6d1680e678f5a"
+      },
+      {
+        "path": "assets/images/arrow-right.svg",
+        "bytes": 693,
+        "sha256": "d1ea1114921ae85bb5ad2300373a26df601c2e6b6e8f8bb6ecb86537aab2d691"
+      },
+      {
+        "path": "assets/images/brand_dark.png",
+        "bytes": 4363,
+        "sha256": "9c9737f9a59ca08accf8842e3faac8d5d27873b1e4d70ddee69db7460e76c35e"
+      },
+      {
+        "path": "assets/images/brand.png",
+        "bytes": 4849,
+        "sha256": "7cb58e81bb408c41782f3a35d7ba1442ae4d30a71746cea0ba9ffb00ac0cae32"
+      },
+      {
+        "path": "assets/images/cart.png",
+        "bytes": 1532,
+        "sha256": "d2588ecb8ca1ca678cf7300bc917fdfa16018652eeba4f2aaa08f7be9620398c"
+      },
+      {
+        "path": "assets/images/logout.png",
+        "bytes": 429,
+        "sha256": "56d7efeefdf08d1a70c803673630788d1dcb142b77b500224bb1ef420e231584"
+      },
+      {
+        "path": "assets/images/main_banner_text.png",
+        "bytes": 8828,
+        "sha256": "e6c6abe5604cc990308e99d1578b8c49193bcd985bdede6efffb49d34d91e7ac"
+      },
+      {
+        "path": "assets/images/main_banner.png",
+        "bytes": 394114,
+        "sha256": "4f51f67001c01d2bb57044d5e957500f2f35a1965e100efe0f949fdcdacd0050"
+      },
+      {
+        "path": "assets/images/main_footer_text.png",
+        "bytes": 4685,
+        "sha256": "f32cc520c8de0159cc06f0bb8f743a7f08f19c00987ef581fff6d6596cb827ec"
+      },
+      {
+        "path": "assets/images/my_orders.png",
+        "bytes": 221,
+        "sha256": "d641e9c0f0485523a24b6983fa06b2965aee0bcaccbf93fa53cd165ea9b5f3ee"
+      },
+      {
+        "path": "favicon.ico",
+        "bytes": 15086,
+        "sha256": "b608106fd8a17e5d17651af7ba85891bc7fa7bfcf6794080e2d457d0891f375c"
+      },
+      {
+        "path": "index.html",
+        "bytes": 3073,
+        "sha256": "b530399416bc831a4f05822a3e4edd2c62aa986b7ec1adc5209604084269b4f7"
+      },
+      {
+        "path": "main.f02d2dbc7ec47246.js",
+        "bytes": 503114,
+        "sha256": "d8338270edad07a2f37828def4369e9325f761c787b992c68dd03177a7f710bf"
+      },
+      {
+        "path": "Montserrat-Bold.840b60949e349cff.eot",
+        "bytes": 29744,
+        "sha256": "64c4febd551454ba2b82e10dac1e18e5d5253f9c4d152f6c7e56186a5c823e4a"
+      },
+      {
+        "path": "Montserrat-Bold.b18ccfe88cb29fde.svg",
+        "bytes": 114057,
+        "sha256": "3a7231bbe26ed6974cf47b7f9108eedb82a826ca8aad9ba9dd3daf52ffdd94da"
+      },
+      {
+        "path": "Montserrat-Bold.c49a01083f332371.woff",
+        "bytes": 17348,
+        "sha256": "5255d2f4d329cfee05df22b40dd86e01e48c9d9ed97e8920c42af1d5134e1616"
+      },
+      {
+        "path": "Montserrat-Bold.d111aa005522985b.ttf",
+        "bytes": 29560,
+        "sha256": "9cb7dc18ee6175ab86bea008eb7aff1992ea7b06933964d5e2e864090206c20a"
+      },
+      {
+        "path": "Montserrat-Regular.1bd8c92954e474be.eot",
+        "bytes": 29212,
+        "sha256": "54ced02990e72e2680b2129765d0f305305c6e22a294e1953dce334355c1e2fd"
+      },
+      {
+        "path": "Montserrat-Regular.64cde79fa256f6dc.ttf",
+        "bytes": 29016,
+        "sha256": "32f9bdc73ecf308a19c0e918b407e12da12b6cd9a667decdc2ddcb74f457839a"
+      },
+      {
+        "path": "Montserrat-Regular.c68047fc63ae000e.svg",
+        "bytes": 106493,
+        "sha256": "1de5b3c62c1474f625dd6c854855b72625ea345d9be21153fe97257ca0271e6c"
+      },
+      {
+        "path": "Montserrat-Regular.e6b0de614d95dc08.woff",
+        "bytes": 17284,
+        "sha256": "82811fd8be03af80e5b07776680f9bfab7c2ece40517251b737b7657856e1159"
+      },
+      {
+        "path": "polyfills.46cd199e5068d7cc.js",
+        "bytes": 58970,
+        "sha256": "0a1989658d1c5c6d035b0c6e90342ea7e81a79ea89776518bf659f6e4322dd76"
+      },
+      {
+        "path": "runtime.2052d09c162b27e0.js",
+        "bytes": 1062,
+        "sha256": "a7bfed2ce4df76a603fc54225d93b1fe1ab7595894a7c17a00a9e724bf778c2d"
+      },
+      {
+        "path": "styles.68c49f0e625b4bab.css",
+        "bytes": 133394,
+        "sha256": "f8ede31eea57b43632560b48c7330872f6d6a9e8bcac0949c56b64f005bd1950"
+      }
+    ]
+  },
+  "runB": {
+    "dirLabel": "u4-build-run2",
+    "files": 25,
+    "totalBytes": 1524958,
+    "entries": [
+      {
+        "path": "3rdpartylicenses.txt",
+        "bytes": 16786,
+        "sha256": "cba7e588b5124544788ae91392515969dae091439fa7adf1a64f06f7f1c63479"
+      },
+      {
+        "path": "assets/images/arrow-down.png",
+        "bytes": 1045,
+        "sha256": "a7d94eed23765a30b03758bdf142aa3f192524884e1291ef0fd6d1680e678f5a"
+      },
+      {
+        "path": "assets/images/arrow-right.svg",
+        "bytes": 693,
+        "sha256": "d1ea1114921ae85bb5ad2300373a26df601c2e6b6e8f8bb6ecb86537aab2d691"
+      },
+      {
+        "path": "assets/images/brand_dark.png",
+        "bytes": 4363,
+        "sha256": "9c9737f9a59ca08accf8842e3faac8d5d27873b1e4d70ddee69db7460e76c35e"
+      },
+      {
+        "path": "assets/images/brand.png",
+        "bytes": 4849,
+        "sha256": "7cb58e81bb408c41782f3a35d7ba1442ae4d30a71746cea0ba9ffb00ac0cae32"
+      },
+      {
+        "path": "assets/images/cart.png",
+        "bytes": 1532,
+        "sha256": "d2588ecb8ca1ca678cf7300bc917fdfa16018652eeba4f2aaa08f7be9620398c"
+      },
+      {
+        "path": "assets/images/logout.png",
+        "bytes": 429,
+        "sha256": "56d7efeefdf08d1a70c803673630788d1dcb142b77b500224bb1ef420e231584"
+      },
+      {
+        "path": "assets/images/main_banner_text.png",
+        "bytes": 8828,
+        "sha256": "e6c6abe5604cc990308e99d1578b8c49193bcd985bdede6efffb49d34d91e7ac"
+      },
+      {
+        "path": "assets/images/main_banner.png",
+        "bytes": 394114,
+        "sha256": "4f51f67001c01d2bb57044d5e957500f2f35a1965e100efe0f949fdcdacd0050"
+      },
+      {
+        "path": "assets/images/main_footer_text.png",
+        "bytes": 4685,
+        "sha256": "f32cc520c8de0159cc06f0bb8f743a7f08f19c00987ef581fff6d6596cb827ec"
+      },
+      {
+        "path": "assets/images/my_orders.png",
+        "bytes": 221,
+        "sha256": "d641e9c0f0485523a24b6983fa06b2965aee0bcaccbf93fa53cd165ea9b5f3ee"
+      },
+      {
+        "path": "favicon.ico",
+        "bytes": 15086,
+        "sha256": "b608106fd8a17e5d17651af7ba85891bc7fa7bfcf6794080e2d457d0891f375c"
+      },
+      {
+        "path": "index.html",
+        "bytes": 3073,
+        "sha256": "b530399416bc831a4f05822a3e4edd2c62aa986b7ec1adc5209604084269b4f7"
+      },
+      {
+        "path": "main.f02d2dbc7ec47246.js",
+        "bytes": 503114,
+        "sha256": "d8338270edad07a2f37828def4369e9325f761c787b992c68dd03177a7f710bf"
+      },
+      {
+        "path": "Montserrat-Bold.840b60949e349cff.eot",
+        "bytes": 29744,
+        "sha256": "64c4febd551454ba2b82e10dac1e18e5d5253f9c4d152f6c7e56186a5c823e4a"
+      },
+      {
+        "path": "Montserrat-Bold.b18ccfe88cb29fde.svg",
+        "bytes": 114057,
+        "sha256": "3a7231bbe26ed6974cf47b7f9108eedb82a826ca8aad9ba9dd3daf52ffdd94da"
+      },
+      {
+        "path": "Montserrat-Bold.c49a01083f332371.woff",
+        "bytes": 17348,
+        "sha256": "5255d2f4d329cfee05df22b40dd86e01e48c9d9ed97e8920c42af1d5134e1616"
+      },
+      {
+        "path": "Montserrat-Bold.d111aa005522985b.ttf",
+        "bytes": 29560,
+        "sha256": "9cb7dc18ee6175ab86bea008eb7aff1992ea7b06933964d5e2e864090206c20a"
+      },
+      {
+        "path": "Montserrat-Regular.1bd8c92954e474be.eot",
+        "bytes": 29212,
+        "sha256": "54ced02990e72e2680b2129765d0f305305c6e22a294e1953dce334355c1e2fd"
+      },
+      {
+        "path": "Montserrat-Regular.64cde79fa256f6dc.ttf",
+        "bytes": 29016,
+        "sha256": "32f9bdc73ecf308a19c0e918b407e12da12b6cd9a667decdc2ddcb74f457839a"
+      },
+      {
+        "path": "Montserrat-Regular.c68047fc63ae000e.svg",
+        "bytes": 106493,
+        "sha256": "1de5b3c62c1474f625dd6c854855b72625ea345d9be21153fe97257ca0271e6c"
+      },
+      {
+        "path": "Montserrat-Regular.e6b0de614d95dc08.woff",
+        "bytes": 17284,
+        "sha256": "82811fd8be03af80e5b07776680f9bfab7c2ece40517251b737b7657856e1159"
+      },
+      {
+        "path": "polyfills.46cd199e5068d7cc.js",
+        "bytes": 58970,
+        "sha256": "0a1989658d1c5c6d035b0c6e90342ea7e81a79ea89776518bf659f6e4322dd76"
+      },
+      {
+        "path": "runtime.2052d09c162b27e0.js",
+        "bytes": 1062,
+        "sha256": "a7bfed2ce4df76a603fc54225d93b1fe1ab7595894a7c17a00a9e724bf778c2d"
+      },
+      {
+        "path": "styles.68c49f0e625b4bab.css",
+        "bytes": 133394,
+        "sha256": "f8ede31eea57b43632560b48c7330872f6d6a9e8bcac0949c56b64f005bd1950"
+      }
+    ]
+  },
+  "comparison": {
+    "byteIdentical": true,
+    "onlyInRunA": [],
+    "onlyInRunB": [],
+    "differingContent": []
+  }
+}

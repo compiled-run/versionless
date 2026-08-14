@@ -1,0 +1,59 @@
+
+> eshopaspnetnetcoredockerspa@0.0.0 build:prod
+> ng build --configuration production --aot
+
+- Generating browser application bundles (phase: setup)...
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+- Copying assets...
+✔ Copying assets complete.
+- Generating index html...
+- Generating index html...
+1 rules skipped due to selector errors:
+  .custom-file-input:lang(en)~.custom-file-label -> Unknown pseudo-class :lang
+✔ Index html generation complete.
+
+Initial Chunk Files           | Names         |  Raw Size | Estimated Transfer Size
+main.f02d2dbc7ec47246.js      | main          | 491.32 kB |               119.02 kB
+styles.68c49f0e625b4bab.css   | styles        | 130.27 kB |                16.22 kB
+polyfills.46cd199e5068d7cc.js | polyfills     |  57.59 kB |                18.58 kB
+runtime.2052d09c162b27e0.js   | runtime       |   1.04 kB |               597 bytes
+
+| Initial Total | 680.21 kB |               154.39 kB
+
+Build at: 2026-08-14T07:12:51.564Z - Hash: 1c910012a3295ba2 - Time: 6075ms
+
+./Client/modules/campaigns/campaigns.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($banner-height, 3.5) or calc($banner-height / 3.5)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+Client/modules/campaigns/campaigns.component.scss 8:14  root stylesheet
+
+
+./Client/modules/catalog/catalog.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($banner-height, 3.5) or calc($banner-height / 3.5)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+Client/modules/catalog/catalog.component.scss 15:14  root stylesheet
+
+
+./Client/modules/shared/components/pager/pager.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($margin, 2) or calc($margin / 2)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+Client/modules/shared/components/pager/pager.scss 33:23  root stylesheet
+
+
+Warning: /Users/jacksm5pro/dev/open-source/versionless/.versionless/work/angular-eshop-webspa/target/app/Client/modules/shared/services/notification.service.ts is part of the TypeScript compilation but it's unused.
+Add only entry points to the 'files' or 'include' properties in your tsconfig.
+
+

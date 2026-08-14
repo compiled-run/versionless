@@ -33,7 +33,7 @@
  */
 
 import { existsSync } from 'node:fs';
-import { readdir, readFile, mkdir, writeFile } from 'node:fs/promises';
+import { readdir, readFile, mkdir, stat, writeFile } from 'node:fs/promises';
 import * as path from 'pathe';
 import {
 	migrateAngularCliEraWorkspace,
@@ -43,6 +43,7 @@ import {
 	type ClosureFileReading,
 	type DocumentedSymbolSuccessor,
 	type ModuleClassSurfaceReading,
+	type PackageExportsReading,
 	type PatchedCallDiagnostic,
 	type RootSurfaceReading,
 	type RxjsPatchDiagnosticReading,
@@ -204,6 +205,7 @@ export type LaneReadings = Readonly<{
 	moduleClassSurfaces: readonly ModuleClassSurfaceReading[];
 	successorClassSurfaces: readonly SuccessorClassSurfaceReading[];
 	rxjsPatchDiagnostics: readonly RxjsPatchDiagnosticReading[];
+	packageExports: readonly PackageExportsReading[];
 	rxjsSurface?: RxjsSurfaceReading;
 	styleClosure?: ClosureFileReading;
 }>;
@@ -214,6 +216,7 @@ export const EMPTY_LANE_READINGS: LaneReadings = Object.freeze({
 	moduleClassSurfaces: Object.freeze([]),
 	successorClassSurfaces: Object.freeze([]),
 	rxjsPatchDiagnostics: Object.freeze([]),
+	packageExports: Object.freeze([]),
 });
 
 /**
@@ -493,6 +496,94 @@ export function styleClosureOf(tree: string): ClosureFileReading {
 	});
 }
 
+/** The stylesheet extensions a stylesheet-payload measurement is taken over. */
+const STYLESHEET_EXTENSIONS: readonly string[] = Object.freeze(['.css', '.scss', '.sass', '.less']);
+
+/**
+ * Byte size per package-relative stylesheet path, for one installed package.
+ *
+ * It is what lets a payload change be stated in bytes rather than in words. A
+ * directory that cannot be walked contributes nothing and costs the numbers, not
+ * the reading.
+ */
+async function stylesheetSizes(directory: string): Promise<Record<string, number>> {
+	const sizes: Record<string, number> = {};
+	const walk = async (current: string): Promise<void> => {
+		let entries;
+		try {
+			entries = await readdir(current, { withFileTypes: true });
+		} catch {
+			return;
+		}
+		for (const entry of entries.sort((left, right) => (left.name < right.name ? -1 : 1))) {
+			if (entry.name === 'node_modules') continue;
+			const item = path.join(current, entry.name);
+			if (entry.isDirectory()) {
+				await walk(item);
+				continue;
+			}
+			if (!entry.isFile() || !STYLESHEET_EXTENSIONS.includes(path.extname(entry.name))) continue;
+			sizes[path.relative(directory, item)] = (await stat(item)).size;
+		}
+	};
+	await walk(directory);
+	return sizes;
+}
+
+/**
+ * What each package the lane installed publishes as its `exports` field.
+ *
+ * This is the reading the exports-map stylesheet capability is gated on, and it
+ * is a reading of the lane's *installed closure* rather than of any table: the
+ * set of packages read is the runtime dependencies the lane's own manifest
+ * declares, because a build resolves those and only those as its own direct
+ * edges and they are therefore the packages whose published surface this
+ * application's stylesheets are exposed to. A package that publishes no
+ * `exports` field is not a package that can block a subpath, so it contributes
+ * no reading — which is a different thing from being skipped by name. Nothing
+ * here names a package, a version or an application.
+ */
+export async function readPackageExports(tree: string): Promise<readonly PackageExportsReading[]> {
+	const modules = path.join(tree, 'node_modules');
+	let declared: unknown;
+	try {
+		declared = JSON.parse(await readFile(path.join(tree, 'package.json'), 'utf8'));
+	} catch {
+		return Object.freeze([]);
+	}
+	const dependencies =
+		typeof declared === 'object' && declared !== null
+			? (declared as Record<string, unknown>)['dependencies']
+			: undefined;
+	const names =
+		typeof dependencies === 'object' && dependencies !== null
+			? Object.keys(dependencies as Record<string, unknown>).sort()
+			: [];
+	const readings: PackageExportsReading[] = [];
+	for (const name of names) {
+		const directory = path.join(modules, name);
+		let published: unknown;
+		try {
+			published = JSON.parse(await readFile(path.join(directory, 'package.json'), 'utf8'));
+		} catch {
+			continue;
+		}
+		if (typeof published !== 'object' || published === null) continue;
+		const record = published as Record<string, unknown>;
+		const surface = record['exports'];
+		if (surface === undefined) continue;
+		readings.push(
+			Object.freeze({
+				name,
+				version: typeof record['version'] === 'string' ? record['version'] : 'unknown',
+				exports: surface,
+				fileSizes: Object.freeze(await stylesheetSizes(directory)),
+			}),
+		);
+	}
+	return Object.freeze(readings);
+}
+
 /**
  * Every reading of the installed lane, taken together, or the empty set when the
  * lane has no closure to read.
@@ -522,6 +613,7 @@ export async function readLaneReadings(
 		]),
 		rxjsPatchDiagnostics:
 			buildLog === null ? Object.freeze([]) : readRxjsPatchDiagnostics(buildLog),
+		packageExports: await readPackageExports(tree),
 		...(rxjsSurface === undefined ? {} : { rxjsSurface }),
 		styleClosure: styleClosureOf(tree),
 	});
@@ -562,6 +654,14 @@ export async function composeMigration(
 			moduleClassSurfaces: readings.moduleClassSurfaces,
 			successorClassSurfaces: readings.successorClassSurfaces,
 			rxjsPatchDiagnostics: readings.rxjsPatchDiagnostics,
+			/**
+			 * The fifth such reading, and the one G7 stood open on. A package that
+			 * publishes an `exports` map decides which of its own files a specifier can
+			 * reach, and the only honest place to read that decision is the closure the
+			 * lane installed. A lane with no closure supplies none, which stands the
+			 * stylesheet capability down rather than having it guess.
+			 */
+			packageExports: readings.packageExports,
 			...(readings.rxjsSurface === undefined ? {} : { rxjsSurface: readings.rxjsSurface }),
 			...(readings.styleClosure === undefined ? {} : { styleClosure: readings.styleClosure }),
 			eraClosureTypePackages: await readEraClosureTypePackages(ERA_CLOSURE_TREE),

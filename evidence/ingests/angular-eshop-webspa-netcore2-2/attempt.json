@@ -1079,5 +1079,147 @@
       "That the compiler states no new diagnostic is a statement about this compilation. It is not a statement that the migrated services behave as the era ones did: no test and no journey has run against either."
     ],
     "digest": "970d114e461811d7a7927dba27b057e0982de91d7aff6a372221ebb30a72b439"
+  },
+  "t024U4Rerun": {
+    "schemaVersion": "versionless.angular-eshop-webspa-t024-rerun.v1",
+    "unit": "lrapr-t024/u4-exports-map-wiring-green-attempt",
+    "boardTask": "T024",
+    "stage": "stage-4 — close G7 and attempt the holdout build",
+    "outcome": "green-build-twice-byte-identical",
+    "result": "G7 is closed and the migrated lane builds. `npm run build:prod` exits 0, emits twenty-five files into `wwwroot`, and a second run of the same command into a separate output is byte-identical to the first — same file names, same digests, no exceptions. The emitted stylesheet carries the toastr rules the blocked import was for, so the repair is a repair and not a silently dropped import. This is the first production build of the eShopOnContainers WebSPA on Angular 16.2 in this repository, and it was reached without one hand edit to application source, one application-name branch, or one weakened check.",
+    "authorization": "An authorized reopen of the frozen adapter subtrees for this unit only. The React subtree is untouched at 972ca80155bbc2a6eb3779943cd481b71d35e803.",
+    "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+    "commit": "a387f21029f0b2d49614d165d5384717d2398f8e",
+    "subpath": "src/Web/WebSPA",
+    "networkAccess": "none. The lane install reported `up to date` against the closure u3 already installed, every reading this unit took is a reading of that closure or of a previous pass's own build log, and no packument and no tarball was fetched.",
+    "wiringDecision": {
+      "question": "The `packageExports` reading G7 was open on: does it belong in the composition, where every application would get it, or in this lane's driver?",
+      "answer": "driver",
+      "reasoning": "The T021-u1 wiring-repair precedent puts a precondition in the composition when it is supply-complete there — derivable from bytes the composition already holds — and in the driver when it needs the lane's installed closure. This one needs the closure: an `exports` field is a fact about the package version a lane resolved, and the composition is handed application bytes, not a `node_modules`. It is therefore taken driver-side, by `readPackageExports`, exactly where the T024-u2 successor-class surface reading and the u3 call-surface readings are taken — as the fifth member of this driver's `LaneReadings`, from the same tree, under the same gate: a lane with no closure supplies none and the capability stands down.",
+      "genericity": "The reading names no package. It enumerates the runtime dependencies the lane's own migrated manifest declares, reads each installed `package.json`, and keeps the ones that publish an `exports` field at all. A package that publishes none contributes no reading, which is a fact about that package rather than an exception written for it."
+    },
+    "capabilityExtended": {
+      "name": "package-exports-style-imports",
+      "entryPoints": [
+        "migratePackageStyleImports",
+        "republishedSubpath",
+        "readPackageExports (driver-side reading)"
+      ],
+      "whyExtensionAndNotWiringAlone": "The wiring alone would not have closed G7, and saying so is the finding. Once the reading was supplied the capability did reach this stylesheet and did refuse it, by name: ngx-toastr@17.0.2 publishes no root aggregate `./ngx-toastr.scss`, so the one rule the capability had — substitute the package's whole stylesheet for a blocked granular import — had nothing to substitute. The rule it needed is narrower than the one it had, not wider.",
+      "rule": "republished subpath — the exact successor",
+      "shape": "A blocked specifier whose file the exports map still publishes under a different key is rewritten onto that key. The candidate is found by running the map's own resolution backwards over its literal keys and keeping those that resolve to exactly the file the blocked import named; pattern keys are not considered, because a pattern that resolved that file would have resolved the blocked subpath itself and nothing would be blocked. Where several literal keys name the one file the first in sort order is taken — they are the same bytes by construction, and taking a stated one keeps the rewrite deterministic.",
+      "whyItDeclaresNothing": "The new specifier resolves to the same file the old one named, so not one byte of payload changes and there is nothing to declare. That is what distinguishes it from the aggregate substitution beside it, which does change the payload and says so in bytes.",
+      "whyAllOrNothing": "The repair is taken only when every blocked import of the package in that stylesheet has one. A stylesheet where some blocked imports were repaired and the rest replaced by the package aggregate would import the same rules twice, so a stylesheet that cannot be wholly repaired falls through to the aggregate rule unchanged.",
+      "appliedHere": "Client/globals.scss line 3: `~ngx-toastr/toastr-bs4-alert.scss` -> `ngx-toastr/toastr-bs4-alert`. ngx-toastr@17.0.2 publishes `\"./toastr-bs4-alert\": { \"default\": \"./toastr-bs4-alert.scss\" }`, so the file the era application named is exported one key away, extensionless."
+    },
+    "laneInstall": {
+      "command": "npm install --no-audit --no-fund --ignore-scripts",
+      "cell": "node v16.20.2 (official darwin-arm64 build, native), npm 8.19.4, CI=1",
+      "exitStatus": 0,
+      "forcedFlagsUsed": false,
+      "narrowingApplied": false,
+      "log": "migration/u4-t024-lane-install.log",
+      "note": "The manifest this changeset writes is byte-identical to the one u3 wrote, so npm reported the closure up to date. The install was re-run rather than assumed."
+    },
+    "targetBuild": {
+      "command": "npm run build:prod (ng build --configuration production --aot)",
+      "attempted": true,
+      "produced": true,
+      "exitStatus": 0,
+      "runs": 2,
+      "runsNote": "Two full runs from a removed `wwwroot`, each copied out before the next began, then compared file by file by path, size and digest. Every path matches, every digest matches, and the hashed filenames are the same in both runs — which is the part the determinism claim rests on, and it is stated rather than implied.",
+      "byteIdenticalAcrossRuns": true,
+      "log": "migration/u4-t024-target-build.log",
+      "secondRunLog": "migration/u4-t024-target-build-run2.log",
+      "inventory": "migration/u4-t024-build-inventory-run1-vs-run2.json",
+      "g7DiagnosticsClosed": [
+        "./Client/globals.scss - Error: Module build failed (sass-loader): Can't find stylesheet to import. @import \"ngx-toastr/toastr-bs4-alert.scss\" (Client/globals.scss 3:9).",
+        "./Client/globals.scss?ngGlobalStyle - the mini-css-extract sibling of the same failure."
+      ],
+      "remainingDiagnostics": [],
+      "remainingWarnings": [
+        "Four dart-sass deprecation warnings for `/` used as division outside `calc()`, in Client/modules/campaigns/campaigns.component.scss, Client/modules/catalog/catalog.component.scss and Client/modules/shared/components/pager/pager.scss. They are the application's own SCSS as it was written at the pin and no capability was invented to rewrite it.",
+        "One warning that Client/modules/shared/services/notification.service.ts is part of the TypeScript compilation but unused. It is the application's own tsconfig `include` reaching a module nothing imports, and it is left as the application wrote it."
+      ],
+      "emittedProof": "The extracted stylesheet carries eighteen distinct `.toast-*` rule selectors, so the repaired import was read and compiled rather than resolving to nothing."
+    },
+    "outputInventory": {
+      "files": 25,
+      "totalBytes": 1524958,
+      "baselineFiles": 25,
+      "baselineTotalBytes": 1660416,
+      "carriedByteIdentical": [
+        "assets/images/arrow-down.png",
+        "assets/images/arrow-right.svg",
+        "assets/images/brand.png",
+        "assets/images/brand_dark.png",
+        "assets/images/cart.png",
+        "assets/images/logout.png",
+        "assets/images/main_banner.png",
+        "assets/images/main_banner_text.png",
+        "assets/images/main_footer_text.png",
+        "assets/images/my_orders.png",
+        "favicon.ico",
+        "Montserrat-Bold.<hash>.eot",
+        "Montserrat-Bold.<hash>.svg",
+        "Montserrat-Bold.<hash>.ttf",
+        "Montserrat-Bold.<hash>.woff",
+        "Montserrat-Regular.<hash>.eot",
+        "Montserrat-Regular.<hash>.svg",
+        "Montserrat-Regular.<hash>.ttf",
+        "Montserrat-Regular.<hash>.woff"
+      ],
+      "differingFromBaseline": [
+        "main.<hash>.js — 649045 bytes at the era, 503114 here.",
+        "polyfills.<hash>.js — 64314 at the era, 58970 here.",
+        "runtime.<hash>.js — 1440 at the era, 1062 here.",
+        "styles.<hash>.css — 134172 at the era, 133394 here.",
+        "index.html — 707 at the era, 3073 here; the Angular 16 builder inlines critical CSS the CLI 6 builder linked.",
+        "3rdpartylicenses.txt — 2179 at the era, 16786 here; a different closure has different licences in it."
+      ],
+      "onlyInEra": [],
+      "onlyInMigrated": [],
+      "note": "No file appears in one lane and not the other. The four emitted artefacts and the two generated text files differ, and every image, font and icon the application ships is carried across byte for byte."
+    },
+    "classClosed": {
+      "id": "G7",
+      "name": "Exports-map stylesheet subpath spelling",
+      "site": "Client/globals.scss:3",
+      "closedBy": "A `packageExports` reading of the lane's installed closure, taken driver-side, plus the republished-subpath rule the reading then made reachable. Nothing about this application is named in either.",
+      "newClassesFound": "none. No diagnostic remains and no new class was reached."
+    },
+    "greenVerticals": "No counted vertical's changeset shifted. The stylesheet capability is gated on a `packageExports` reading no other Angular driver supplies, and the rule added inside it fires only on a blocked import whose file the map republishes — a case no other lane's stylesheets contain. The full node suite is green.",
+    "artifacts": {
+      "composedChangeset": "migration/u4-t024-composed-changeset.json",
+      "sourceMigration": "migration/u4-t024-source-migration.json",
+      "seamProbe": "migration/u4-t024-angular-http-seam-probe.json",
+      "laneInstallLog": "migration/u4-t024-lane-install.log",
+      "targetBuildLog": "migration/u4-t024-target-build.log",
+      "secondBuildLog": "migration/u4-t024-target-build-run2.log",
+      "buildInventory": "migration/u4-t024-build-inventory-run1-vs-run2.json",
+      "priorRedRecordsNote": "The runner writes its output under the u5 names. Those three files were restored to the bytes T023 sealed after this re-run, byte for byte — digests 9867c18e, c90438ca and 5709ccd9 — and this pass's own are kept beside them under u4-t024 names. Every earlier red record, u1 through u3, is untouched."
+    },
+    "changesetCounts": {
+      "applicationFilesScanned": 84,
+      "applicationFilesChanged": 20,
+      "workspaceFilesChanged": 3,
+      "filesWritten": 20,
+      "filesRemoved": [
+        "tslint.json",
+        "package-lock.json"
+      ],
+      "unhandled": 31,
+      "declaredDifferences": 17,
+      "handEdits": 0,
+      "note": "Exactly one file's bytes differ from u3's changeset: Client/globals.scss, whose line 3 the new rule rewrote. The counts are otherwise u3's, because globals.scss was already counted as changed there — the tilde capability had already dropped the `~` from its sibling bootstrap import. The unhandled and declared-difference totals do not move: this rule declares nothing and refuses nothing."
+    },
+    "notEstablished": [
+      "A build that completes and repeats is not a build that behaves. No test, no journey and no witness has run against this application in either lane, so nothing here establishes parity, rendering or any browser behaviour.",
+      "Determinism is established for two runs in one cell on one machine. It is not a claim about another machine, another Node build, or a cold npm cache.",
+      "The output inventory compares the migrated lane against the era baseline by path with content hashes elided. Two files bearing the same elided name are not thereby claimed to have the same content — the four emitted artefacts are named as differing precisely because they do.",
+      "The capability is proven on one application. The republished-subpath rule fired on one import of one package, and nothing here claims it general.",
+      "Every declared difference u3 recorded still stands. Closing the build did not retire the loss of checking the `Response` annotations were carried with."
+    ],
+    "digest": "5272a7d7266046265c949723e8a0258f51625ad28a75495bf3f778aaf0fd5df7"
   }
 }

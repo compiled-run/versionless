@@ -277,16 +277,20 @@
       "package": "@versionless/angular",
       "entryPoints": [
         "migratePackageStyleImports",
-        "resolvePackageExport"
+        "resolvePackageExport",
+        "republishedSubpath",
+        "rootAggregateStylesheet"
       ],
-      "provenApps": [],
-      "attribution": "unproven",
-      "coverage": "unproven",
+      "provenApps": [
+        "angular-eshop-webspa"
+      ],
+      "attribution": "orchestrated-construct-gated",
+      "coverage": "proven",
       "evidence": [
-        "evidence/trust/current/adapter-freeze.json"
+        "packages/cli/src/fixture/angular-eshop-webspa-migration-run.ts"
       ],
-      "note": "Package-exports style-import resolution; per-application firing not determinable from records; adapter-freeze records single-application basis. Defaulted experimental.",
-      "proofCount": 0,
+      "note": "A stylesheet import of a subpath a package's `exports` map does not answer, resolved against that map as the lane installed it. Two rules in order of narrowness. The first, added by T024 u4, is the exact successor: a blocked specifier whose file the map still publishes under another key — the extensionless spelling packages routinely adopt, `\"./toastr-bs4-alert\"` for the file `./toastr-bs4-alert.scss` — is rewritten onto that key, which is the same bytes and therefore declares no difference and removes nothing. It is taken only when it answers every blocked import of the package in that stylesheet, because repairing some beside an aggregate substitution for the rest would import the same rules twice. The second is the aggregate substitution: where no republished key exists, the package's own root aggregate stylesheet replaces the blocked import and the granular siblings it now contains are removed by name, with the payload change declared in bytes when the closure was measured. A package publishing neither is refused by name and the import is left exactly as it is. Gated on a `packageExports` reading of the installed closure — wired driver-side by T024 u4, because which files a specifier can reach is a fact about the closure the lane installed and not about any table. The eShopOnContainers WebSPA holdout is the application it fired on, and that application's migrated production build completes and emits byte-identical output across two runs.",
+      "proofCount": 1,
       "classification": "experimental"
     },
     {

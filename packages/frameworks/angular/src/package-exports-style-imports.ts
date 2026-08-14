@@ -8,10 +8,28 @@
  * root one, so an application that imported the root entry finds exactly that
  * one import blocked while its neighbours keep resolving.
  *
- * There is no narrow successor for a blocked root entry. The package exports an
- * aggregate — the whole library's stylesheet — or it exports nothing this
- * capability can put in the blocked import's place, and in that second case it
- * refuses and leaves the import exactly as it is.
+ * A blocked import sometimes names a file the package still publishes, only
+ * under a different key. Packages that adopted an `exports` map routinely spell
+ * their stylesheet keys without the extension — `"./toastr-bs4-alert"` for the
+ * file `./toastr-bs4-alert.scss` — so an application that wrote the file name it
+ * saw on disk asks for a subpath the map does not answer while the bytes it
+ * wanted are exported one key away. That case has an exact successor and it is
+ * taken first:
+ *
+ * ```scss
+ * ⁠@import 'pkg/theme.scss';   ->   ⁠@import 'pkg/theme';
+ * ```
+ *
+ * Nothing about the payload changes there — the map resolves the new specifier
+ * to the same file the old one named — so the rewrite declares no difference and
+ * removes nothing. It is taken only when it answers *every* blocked import of
+ * the package in the stylesheet, because a repair of some imports beside an
+ * aggregate substitution for the rest would import the same rules twice.
+ *
+ * For a blocked entry with no such republished key there is no narrow successor.
+ * The package exports an aggregate — the whole library's stylesheet — or it
+ * exports nothing this capability can put in the blocked import's place, and in
+ * that second case it refuses and leaves the import exactly as it is.
  *
  * When an aggregate does exist, the rewrite is a substitution, not a repair:
  *
@@ -59,7 +77,7 @@ export type PackageExportsReading = Readonly<{
 }>;
 
 export type StyleImportChange = Readonly<{
-	kind: 'style-import-aggregate' | 'style-import-redundant';
+	kind: 'style-import-aggregate' | 'style-import-redundant' | 'style-import-republished';
 	line: number;
 	from: string;
 	to: string;
@@ -211,6 +229,36 @@ export function rootAggregateStylesheet(
 	return file === null ? null : Object.freeze({ subpath, file });
 }
 
+/**
+ * The subpath a package's exports map publishes for exactly the file a blocked
+ * import named, or null when it publishes none.
+ *
+ * This is the map's own resolution run backwards, and it is deliberately narrow:
+ * only keys the map spells out literally are considered, because a pattern key
+ * that resolved the blocked subpath's file would have resolved the blocked
+ * subpath itself and there would be nothing blocked. A key that resolves to the
+ * same file is the same bytes under a different spelling, so substituting it
+ * changes what the build reads by not one byte. Where several keys name that one
+ * file the first in sort order is taken — they are interchangeable by
+ * construction, and taking a stated one keeps the rewrite deterministic.
+ */
+export function republishedSubpath(
+	reading: PackageExportsReading,
+	blockedSubpath: string,
+): string | null {
+	const map = asObject(reading.exports);
+	if (map === null) return null;
+	const wanted = packageRelative(blockedSubpath);
+	const candidates: string[] = [];
+	for (const key of Object.keys(map)) {
+		if (!key.startsWith('.') || key.includes('*') || key === blockedSubpath) continue;
+		const file = resolveTarget(map[key], STYLE_EXPORT_CONDITIONS, null);
+		if (file === null || packageRelative(file) !== wanted) continue;
+		candidates.push(key);
+	}
+	return candidates.sort(compareStrings)[0] ?? null;
+}
+
 type Site = Readonly<{
 	start: number;
 	end: number;
@@ -278,6 +326,46 @@ export function migratePackageStyleImports(
 	if (sites.length === 0) return unchanged();
 	const blocked = sites.filter((site) => site.resolved === null);
 	if (blocked.length === 0) return unchanged();
+	/**
+	 * The exact successors first. A blocked import whose file the map still
+	 * publishes under another key is repaired onto that key and nothing else
+	 * happens: same file, same bytes, no aggregate, no removals, no declared
+	 * difference. The repair is taken only when every blocked import of this
+	 * package in this stylesheet has one, because mixing a repair with the
+	 * aggregate substitution below would import the same rules twice.
+	 */
+	const republished = blocked.map((site) => ({ site, key: republishedSubpath(reading, site.subpath) }));
+	if (republished.every((entry) => entry.key !== null)) {
+		const repairs = republished.map((entry) => {
+			const specifier = `${reading.name}/${packageRelative(entry.key as string)}`;
+			return { site: entry.site, specifier };
+		});
+		const repaired = applySourceEdits(
+			source,
+			repairs.map((repair) => ({
+				start: repair.site.specifierStart,
+				end: repair.site.specifierStart + repair.site.specifier.length,
+				text: repair.specifier,
+			})),
+		);
+		return Object.freeze({
+			path,
+			source: repaired,
+			changed: repaired !== source,
+			changes: Object.freeze(
+				repairs.map((repair) =>
+					Object.freeze({
+						kind: 'style-import-republished' as const,
+						line: repair.site.line,
+						from: repair.site.specifier,
+						to: repair.specifier,
+					}),
+				),
+			),
+			declaredDifferences: Object.freeze([]),
+			unhandled: Object.freeze([]),
+		});
+	}
 	const first = blocked[0] as Site;
 	const aggregate = rootAggregateStylesheet(reading, first.subpath);
 	if (aggregate === null)

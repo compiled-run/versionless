@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
 	migratePackageStyleImports,
+	republishedSubpath,
 	resolvePackageExport,
 	rootAggregateStylesheet,
 	type PackageExportsReading,
@@ -51,6 +52,34 @@ const eraStyleSheet = `@import 'ng-zorro-antd/style/index.min.css';
 @tailwind base;
 .board {
   display: flex;
+}
+`;
+
+/**
+ * The other shape an `exports` map blocks a stylesheet with, and the one the
+ * eShopOnContainers WebSPA holdout met: the file the application named is
+ * published, under an extensionless key. Nothing is missing here — the spelling
+ * is.
+ */
+const toastr: PackageExportsReading = Object.freeze({
+	name: 'ngx-toastr',
+	version: '17.0.2',
+	exports: Object.freeze({
+		'./toastr': { default: './toastr.css' },
+		'./toastr-old': { default: './toastr-old.css' },
+		'./toastr-bs4-alert': { default: './toastr-bs4-alert.scss' },
+		'./toastr-bs5-alert': { default: './toastr-bs5-alert.scss' },
+		'./package.json': { default: './package.json' },
+		'.': { types: './index.d.ts', default: './fesm2022/ngx-toastr.mjs' },
+	}),
+});
+
+const eraGlobals = `/* You can add global styles to this file */
+@import "bootstrap/scss/bootstrap";
+@import "ngx-toastr/toastr-bs4-alert.scss";
+
+.alert {
+  padding-left: 0;
 }
 `;
 
@@ -152,6 +181,26 @@ describe('exports-map-blocked style imports', () => {
 		expect(migration.unhandled).toEqual([]);
 	});
 
+	it('refuses a blocked import the map neither republishes nor aggregates, by line', () => {
+		const neither: PackageExportsReading = {
+			name: toastr.name,
+			version: toastr.version,
+			exports: { './toastr': { default: './toastr.css' } },
+		};
+		const migration = migratePackageStyleImports(
+			'Client/globals.scss',
+			eraGlobals,
+			neither,
+		);
+		expect(migration.changed).toBe(false);
+		expect(migration.source).toBe(eraGlobals);
+		expect(migration.unhandled).toEqual([
+			'Client/globals.scss line 3: ngx-toastr@17.0.2 does not expose ./toastr-bs4-alert.scss ' +
+				'through its exports map and publishes no root aggregate stylesheet to put in its ' +
+				'place, so the import was left exactly as it is',
+		]);
+	});
+
 	it('refuses when the package exports no aggregate stylesheet to put in place', () => {
 		const withoutAggregate: PackageExportsReading = {
 			name: library.name,
@@ -176,6 +225,27 @@ describe('exports-map-blocked style imports', () => {
 		]);
 	});
 
+	it('takes the republished key over the aggregate, because it is the same bytes', () => {
+		const alsoRepublished: PackageExportsReading = {
+			...library,
+			exports: { ...(library.exports as object), './style/index': { style: './style/index.min.css' } },
+		};
+		const migration = migratePackageStyleImports(
+			'src/styles.scss',
+			"@import 'ng-zorro-antd/style/index.min.css';\n",
+			alsoRepublished,
+		);
+		expect(migration.changes).toEqual([
+			{
+				kind: 'style-import-republished',
+				line: 1,
+				from: 'ng-zorro-antd/style/index.min.css',
+				to: 'ng-zorro-antd/style/index',
+			},
+		]);
+		expect(migration.declaredDifferences).toEqual([]);
+	});
+
 	it('refuses when the only root aggregate is a themed variant rather than the library’s own', () => {
 		const themedOnly: PackageExportsReading = {
 			name: library.name,
@@ -190,5 +260,110 @@ describe('exports-map-blocked style imports', () => {
 		const migration = migratePackageStyleImports('src/styles.scss', eraStyleSheet, themedOnly);
 		expect(migration.changed).toBe(false);
 		expect(migration.unhandled).toHaveLength(1);
+	});
+});
+
+describe('the republished subpath — a blocked import whose file is exported one key away', () => {
+	it('finds the literal key that resolves to exactly the blocked file', () => {
+		expect(republishedSubpath(toastr, './toastr-bs4-alert.scss')).toBe('./toastr-bs4-alert');
+		expect(republishedSubpath(toastr, './toastr.css')).toBe('./toastr');
+	});
+
+	it('finds none for a file the map does not publish under any key', () => {
+		expect(republishedSubpath(toastr, './toastr-bs3-alert.scss')).toBeNull();
+		expect(republishedSubpath(library, './style/index.min.css')).toBeNull();
+	});
+
+	it('never answers with a pattern key, because a pattern would not have blocked the import', () => {
+		const patterned: PackageExportsReading = {
+			name: 'pkg',
+			version: '1.0.0',
+			exports: { './*': { style: './*' } },
+		};
+		expect(republishedSubpath(patterned, './theme.scss')).toBeNull();
+	});
+
+	it('takes the first key in sort order when several name the one file', () => {
+		const twice: PackageExportsReading = {
+			name: 'pkg',
+			version: '1.0.0',
+			exports: {
+				'./zeta': { style: './theme.scss' },
+				'./alpha': { style: './theme.scss' },
+			},
+		};
+		expect(republishedSubpath(twice, './theme.scss')).toBe('./alpha');
+	});
+
+	it('rewrites the era import onto the published spelling and declares nothing', () => {
+		const migration = migratePackageStyleImports('Client/globals.scss', eraGlobals, toastr);
+		expect(migration.changed).toBe(true);
+		expect(migration.source).toBe(
+			eraGlobals.replace(
+				'"ngx-toastr/toastr-bs4-alert.scss"',
+				'"ngx-toastr/toastr-bs4-alert"',
+			),
+		);
+		expect(migration.changes).toEqual([
+			{
+				kind: 'style-import-republished',
+				line: 3,
+				from: 'ngx-toastr/toastr-bs4-alert.scss',
+				to: 'ngx-toastr/toastr-bs4-alert',
+			},
+		]);
+		expect(migration.declaredDifferences).toEqual([]);
+		expect(migration.unhandled).toEqual([]);
+	});
+
+	it('resolves the specifier it wrote, which is the whole of the repair', () => {
+		const migration = migratePackageStyleImports('Client/globals.scss', eraGlobals, toastr);
+		const written = migration.changes[0]?.to.slice('ngx-toastr'.length + 1);
+		expect(resolvePackageExport(toastr.exports, `./${String(written)}`)).toBe(
+			'./toastr-bs4-alert.scss',
+		);
+	});
+
+	it('carries a webpack tilde import onto the published spelling too', () => {
+		const migration = migratePackageStyleImports(
+			'Client/globals.scss',
+			'@import "~ngx-toastr/toastr-bs4-alert.scss";\n',
+			toastr,
+		);
+		expect(migration.source).toBe('@import "ngx-toastr/toastr-bs4-alert";\n');
+	});
+
+	it('repairs every blocked import of the package or none of them', () => {
+		const both = `@import "ngx-toastr/toastr-bs4-alert.scss";
+@import "ngx-toastr/toastr-bs9-alert.scss";
+`;
+		const migration = migratePackageStyleImports('Client/globals.scss', both, toastr);
+		expect(migration.changed).toBe(false);
+		expect(migration.source).toBe(both);
+		expect(migration.changes).toEqual([]);
+		expect(migration.unhandled).toHaveLength(2);
+		expect(migration.unhandled[0]).toContain('./toastr-bs4-alert.scss');
+	});
+
+	it('repairs several blocked imports at once when the map republishes each', () => {
+		const two = `@import "ngx-toastr/toastr-bs4-alert.scss";
+@import "ngx-toastr/toastr.css";
+`;
+		const migration = migratePackageStyleImports('Client/globals.scss', two, toastr);
+		expect(migration.source).toBe(`@import "ngx-toastr/toastr-bs4-alert";
+@import "ngx-toastr/toastr";
+`);
+		expect(migration.changes.map((change) => change.kind)).toEqual([
+			'style-import-republished',
+			'style-import-republished',
+		]);
+	});
+
+	it('leaves an import the map already resolves exactly as it is', () => {
+		const resolvable = '@import "ngx-toastr/toastr-bs4-alert";\n';
+		const migration = migratePackageStyleImports('Client/globals.scss', resolvable, toastr);
+		expect(migration.changed).toBe(false);
+		expect(migration.source).toBe(resolvable);
+		expect(migration.unhandled).toEqual([]);
 	});
 });
