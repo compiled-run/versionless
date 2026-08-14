@@ -97,6 +97,31 @@ import {
 	type DeepImportChange,
 	type DeepImportReading,
 } from './deep-import-redirection.ts';
+import {
+	ANGULAR_HTTP_USE_POSITION_SUCCESSORS,
+	readRemovedSpecifierImports,
+	succeedRemovedSymbolUses,
+	type DocumentedUsePositionSuccessor,
+	type UsePositionChange,
+} from './use-position-symbol-successor.ts';
+import { type RootSurfaceReading } from './removed-entry-point-symbol-successor.ts';
+import {
+	DOCUMENTED_STATIC_MODULE_METHOD_REMOVALS,
+	removeRemovedStaticModuleMethods,
+	type ModuleClassSurfaceReading,
+	type StaticModuleMethodChange,
+} from './removed-static-module-method.ts';
+import {
+	migrateRxjsPrototypePatches,
+	type PatchedCallDiagnostic,
+	type RxjsPipeChange,
+	type RxjsSurfaceReading,
+} from './rxjs-prototype-patch-migration.ts';
+import {
+	dropWebpackTildeSpecifiers,
+	type ClosureFileReading,
+	type TildeSpecifierChange,
+} from './webpack-tilde-style-specifier.ts';
 
 export type WorkspaceFile = Readonly<{ path: string; source: string }>;
 
@@ -196,6 +221,58 @@ export type AngularMigrationInput = Readonly<{
 	 * inferred from a name.
 	 */
 	eraClosureTypePackages?: readonly string[];
+	/**
+	 * What the successor of a removed *package* publishes, read from the installed
+	 * closure. Supplying it is what makes the use-position successor reachable: the
+	 * capability refuses every site it cannot prove from the reading, and a tree
+	 * that supplies none has no removed symbol carried anywhere — which is a
+	 * different thing from having none to carry.
+	 */
+	removedSymbolSurfaces?: readonly RootSurfaceReading[];
+	/**
+	 * The claims the use-position successor is asked to check. The adapter's own
+	 * documented table is used when none is supplied; a caller that supplies one
+	 * replaces it rather than adding to it, so a claim is never carried in by
+	 * accident.
+	 */
+	removedSymbolSuccessors?: readonly DocumentedUsePositionSuccessor[];
+	/**
+	 * What the installed declaration of a module class publishes, per exported
+	 * class. Supplying it is what makes the removed-static-module-method capability
+	 * reachable: whether a line still declares `forRoot` is a fact about the
+	 * installed `.d.ts` and nothing in the application states it.
+	 */
+	moduleClassSurfaces?: readonly ModuleClassSurfaceReading[];
+	/**
+	 * `TS2339` on an RxJS receiver, as the target line's compiler reported it, per
+	 * application module. Which `.map(` is an observable's is a question only the
+	 * type checker answers, so this seam is the same supply-gated one
+	 * {@link baseClassDiagnostics} uses.
+	 */
+	rxjsPatchDiagnostics?: readonly RxjsPatchDiagnosticReading[];
+	/**
+	 * The installed RxJS surface, read from the closure. Supplied beside
+	 * {@link rxjsPatchDiagnostics}: the diagnostic names the call site and this
+	 * names what the package publishes to move it to.
+	 */
+	rxjsSurface?: RxjsSurfaceReading;
+	/**
+	 * The installed closure, asked the one question the tilde-specifier capability
+	 * has: does this path exist. A tree that supplies no reading has no `~`
+	 * specifier un-prefixed, because dropping the prefix without resolving the
+	 * result moves the failure rather than answering it.
+	 */
+	styleClosure?: ClosureFileReading;
+}>;
+
+/**
+ * The RxJS `TS2339` diagnostics one application module carries, keyed by the
+ * path the workspace writes for it — the compiler's own 1-based positions into
+ * the bytes the caller compiled.
+ */
+export type RxjsPatchDiagnosticReading = Readonly<{
+	path: string;
+	diagnostics: readonly PatchedCallDiagnostic[];
 }>;
 
 /**
@@ -377,6 +454,35 @@ function describeDepartedDomMemberChange(change: DepartedDomMemberChange): strin
 		`line ${change.line}: ${change.kind} ${change.receiver}.${change.member} — ` +
 		`${change.declaredType} no longer declares it, receiver widened to ${change.widenedTo}`
 	);
+}
+
+/**
+ * A use-position change names the positions it was written at, because that is
+ * the whole of what separates it from a rename: a reader who wants to check the
+ * claim needs to know which of the five positions the substitution landed in.
+ */
+function describeUsePositionChange(change: UsePositionChange): string {
+	return change.to === null
+		? `line ${change.line}: ${change.kind} ${change.from} dropped from ${change.specifier} at ` +
+				`${change.positions.join(', ')} (${change.useSites} use site(s))`
+		: `line ${change.line}: ${change.kind} ${change.from} -> ${change.to} from ` +
+				`${String(change.successor)} at ${change.positions.join(', ')} ` +
+				`(${change.useSites} use site(s))`;
+}
+
+function describeStaticModuleMethodChange(change: StaticModuleMethodChange): string {
+	return (
+		`line ${change.line}: ${change.kind} ${change.from} -> ${change.to} — ` +
+		`${change.package} no longer declares ${change.symbol}.${change.method}`
+	);
+}
+
+function describeRxjsPipeChange(change: RxjsPipeChange): string {
+	return `line ${change.line}: ${change.kind} ${change.from} -> ${change.to || '(removed)'}`;
+}
+
+function describeTildeChange(change: TildeSpecifierChange): string {
+	return `line ${change.line}: ${change.kind} ${change.from} -> ${change.to} (${change.resolved})`;
 }
 
 function describeDeepImportChange(change: DeepImportChange): string {
@@ -611,6 +717,26 @@ export function migrateAngularCliEraWorkspace(
 	const missingMembers = new Map(
 		(input.missingMemberDiagnostics ?? []).map((entry) => [entry.path, entry.diagnostics]),
 	);
+	const rxjsDiagnostics = new Map(
+		(input.rxjsPatchDiagnostics ?? []).map((entry) => [entry.path, entry.diagnostics]),
+	);
+	/**
+	 * The use-position successor is the one source capability that decides a
+	 * question about the *application* rather than about the module in front of it:
+	 * whether a module with no successor may be dropped depends on whether anything
+	 * in the application asks for what it provided. The reading is taken once, over
+	 * the era bytes, before any capability rewrites an import — a name imported at
+	 * the pin is a name the application asked for, whatever a later transform does
+	 * to the declaration that carried it.
+	 */
+	const removedSymbolSuccessors =
+		input.removedSymbolSuccessors ?? ANGULAR_HTTP_USE_POSITION_SUCCESSORS;
+	const removedSpecifierImports =
+		(input.removedSymbolSurfaces ?? []).length === 0
+			? []
+			: readRemovedSpecifierImports(input.sourceModules, [
+					...new Set(removedSymbolSuccessors.map((claim) => claim.specifier)),
+				]);
 	for (const module of [...input.sourceModules].sort((left, right) =>
 		compareStrings(left.path, right.path),
 	)) {
@@ -643,7 +769,29 @@ export function migrateAngularCliEraWorkspace(
 			baseClasses.source,
 			missingMembers.get(module.path) ?? [],
 		);
-		const migrated = migrateAngularSourceModule(module.path, departedDomMembers.source);
+		/**
+		 * The third compiler-positioned capability. It runs beside the other two and
+		 * after them, and like them it re-places every diagnostic against the bytes it
+		 * is handed — a position the two above moved is a position it refuses rather
+		 * than mis-edits.
+		 *
+		 * It is offered a module only when the caller named a diagnostic in it. That
+		 * gate is not a convenience: the capability also drops the `rxjs/add/**` side
+		 * effect imports once every named call site has moved, and a module with no
+		 * named call sites is a module where dropping them would remove the patching
+		 * without moving anything that depended on it.
+		 */
+		const rxjsNamed = rxjsDiagnostics.get(module.path);
+		const rxjsPatches =
+			rxjsNamed === undefined || rxjsNamed.length === 0
+				? { source: departedDomMembers.source, changes: [] as readonly RxjsPipeChange[], unhandled: [] as readonly string[] }
+				: migrateRxjsPrototypePatches(
+						module.path,
+						departedDomMembers.source,
+						rxjsNamed,
+						input.rxjsSurface ?? { version: 'unread', rootExports: [], operatorExports: [] },
+					);
+		const migrated = migrateAngularSourceModule(module.path, rxjsPatches.source);
 		const effects = migrateNgrxEffectDecorators(module.path, migrated.source);
 		const sentry = migrateSentryV8Tracing(module.path, effects.source);
 		/**
@@ -662,13 +810,42 @@ export function migrateAngularCliEraWorkspace(
 			deepImportSource = redirected.source;
 		}
 		/**
+		 * A removed package's symbols are carried to their successors after the
+		 * specifier rewrites and the deep-import redirection, and for the same reason
+		 * those two are ordered before it: each of them can change which declaration a
+		 * symbol arrives on, and this capability reads declarations. It is supply-gated
+		 * on a reading of the successor's installed surface, so a tree with no closure
+		 * to read has nothing carried.
+		 */
+		const usePositions = succeedRemovedSymbolUses(
+			module.path,
+			deepImportSource,
+			removedSymbolSuccessors,
+			input.removedSymbolSurfaces ?? [],
+			removedSpecifierImports,
+		);
+		declaredDifferences.push(...usePositions.declaredDifferences);
+		/**
+		 * The static configuration method a module class no longer publishes is
+		 * dropped after the successor carriage, because the carriage can put a new
+		 * module into the same `imports` array this reads — and reading the array as
+		 * the capability before it left it is what keeps the two from disagreeing
+		 * about what the literal contains.
+		 */
+		const staticModuleMethods = removeRemovedStaticModuleMethods(
+			module.path,
+			usePositions.source,
+			DOCUMENTED_STATIC_MODULE_METHOD_REMOVALS,
+			input.moduleClassSurfaces ?? [],
+		);
+		/**
 		 * `entryComponents` is dropped last of the per-module capabilities, and the
 		 * order is not arbitrary: the capability proves, per literal, that every
 		 * component the property names is still reached by `declarations` or
 		 * `bootstrap` of the same literal, and it should see the literal as the
 		 * capabilities before it left it rather than as the era file wrote it.
 		 */
-		const entryComponents = removeEntryComponents(module.path, deepImportSource);
+		const entryComponents = removeEntryComponents(module.path, staticModuleMethods.source);
 		/**
 		 * Three type-position insertions close the sequence. Each one is a claim
 		 * about a type the source itself already states — the module a static factory
@@ -697,6 +874,9 @@ export function migrateAngularCliEraWorkspace(
 		);
 		unhandled.push(
 			...departedDomMembers.unhandled,
+			...rxjsPatches.unhandled,
+			...usePositions.unhandled,
+			...staticModuleMethods.unhandled,
 			...undecorated.unhandled,
 			...baseClasses.unhandled,
 			...migrated.unhandled,
@@ -712,7 +892,10 @@ export function migrateAngularCliEraWorkspace(
 				...(modalFile?.changes ?? []).map(describeSourceChange),
 				...baseClasses.changes.map(describeBaseClassChange),
 				...departedDomMembers.changes.map(describeDepartedDomMemberChange),
+				...rxjsPatches.changes.map(describeRxjsPipeChange),
 				...deepImportChanges.map(describeDeepImportChange),
+				...usePositions.changes.map(describeUsePositionChange),
+				...staticModuleMethods.changes.map(describeStaticModuleMethodChange),
 				...undecorated.changes.map(describeUndecoratedBaseClassChange),
 				...migrated.changes.map(describeSourceChange),
 				...effects.changes.map(describeSourceChange),
@@ -768,6 +951,20 @@ export function migrateAngularCliEraWorkspace(
 			declaredDifferences.push(...styles.declaredDifferences);
 			changes.push(...styles.changes.map(describeSourceChange));
 			source = styles.source;
+		}
+		/**
+		 * The webpack module prefix is dropped last of the stylesheet capabilities and
+		 * only where a reading of the installed closure was supplied. It is ordered
+		 * after the exports-map rewrite because that one can change the specifier this
+		 * one then has to resolve, and the resolution is the whole of the check: a `~`
+		 * import of something the closure does not carry is reported by name, never
+		 * un-prefixed.
+		 */
+		if (input.styleClosure !== undefined) {
+			const tilde = dropWebpackTildeSpecifiers(sheet.path, source, input.styleClosure);
+			unhandled.push(...tilde.unhandled);
+			changes.push(...tilde.changes.map(describeTildeChange));
+			source = tilde.source;
 		}
 		files.push(file(sheet, source, 'application', changes));
 	}

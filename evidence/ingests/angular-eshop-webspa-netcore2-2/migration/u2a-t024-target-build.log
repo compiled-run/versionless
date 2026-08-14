@@ -1,0 +1,235 @@
+
+> eshopaspnetnetcoredockerspa@0.0.0 build:prod
+> ng build --configuration production --aot
+
+- Generating browser application bundles (phase: setup)...
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+
+./Client/modules/campaigns/campaigns.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($banner-height, 3.5) or calc($banner-height / 3.5)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+Client/modules/campaigns/campaigns.component.scss 8:14  root stylesheet
+
+
+./Client/modules/catalog/catalog.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($banner-height, 3.5) or calc($banner-height / 3.5)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+Client/modules/catalog/catalog.component.scss 15:14  root stylesheet
+
+
+./Client/modules/shared/components/pager/pager.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($margin, 2) or calc($margin / 2)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+Client/modules/shared/components/pager/pager.scss 33:23  root stylesheet
+
+
+
+
+./Client/globals.scss - Error: Module build failed (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Can't find stylesheet to import.
+  ╷
+3 │ @import "ngx-toastr/toastr-bs4-alert.scss";
+  │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+  Client/globals.scss 3:9  root stylesheet
+
+./Client/globals.scss?ngGlobalStyle - Error: Module build failed (from ./node_modules/@angular-devkit/build-angular/node_modules/mini-css-extract-plugin/dist/loader.js):
+HookWebpackError: Module build failed (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Can't find stylesheet to import.
+  ╷
+3 │ @import "ngx-toastr/toastr-bs4-alert.scss";
+  │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+  Client/globals.scss 3:9  root stylesheet
+
+./Client/modules/shared/services/security.service.ts:1:0-46 - Error: Module not found: Error: Can't resolve '@angular/http' in '/Users/jacksm5pro/dev/open-source/versionless/.versionless/work/angular-eshop-webspa/target/app/Client/modules/shared/services'
+
+Error: Client/modules/basket/basket.service.ts:65:52 - error TS2345: Argument of type 'OperatorFunction<HttpResponse<any>, boolean>' is not assignable to parameter of type 'OperatorFunction<Response, boolean>'.
+  Type 'HttpResponse<any>' is missing the following properties from type 'Response': redirected, bodyUsed, arrayBuffer, blob, and 3 more.
+
+65         return this.service.post(url, basket).pipe(map((response: HttpResponse<any>) => {
+                                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+66             return true;
+   ~~~~~~~~~~~~~~~~~~~~~~~~
+67         }));
+   ~~~~~~~~~~
+
+
+Error: Client/modules/basket/basket.service.ts:72:66 - error TS2345: Argument of type 'OperatorFunction<HttpResponse<any>, boolean>' is not assignable to parameter of type 'OperatorFunction<Response, boolean>'.
+
+72         return this.service.postWithId(url, basketCheckout).pipe(map((response: HttpResponse<any>) => {
+                                                                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+73             this.basketEvents.orderCreated();
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+74             return true;
+   ~~~~~~~~~~~~~~~~~~~~~~~~
+75         }));
+   ~~~~~~~~~~
+
+
+Error: Client/modules/basket/basket.service.ts:80:9 - error TS2322: Type 'Observable<HttpResponse<any>>' is not assignable to type 'Observable<IBasket>'.
+  Type 'HttpResponse<any>' is missing the following properties from type 'IBasket': items, buyerId
+
+80         return this.service.get(url).pipe(map((response: HttpResponse<any>) => {
+           ~~~~~~
+
+
+Error: Client/modules/basket/basket.service.ts:80:43 - error TS2345: Argument of type 'OperatorFunction<HttpResponse<any>, HttpResponse<any>>' is not assignable to parameter of type 'OperatorFunction<Response, HttpResponse<any>>'.
+  Type 'HttpResponse<any>' is not assignable to type 'Response'.
+
+ 80         return this.service.get(url).pipe(map((response: HttpResponse<any>) => {
+                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 81             if (response.status === 204) {
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+ 84             return response;
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 85         }));
+    ~~~~~~~~~~
+
+
+Error: Client/modules/campaigns/campaigns.service.ts:35:9 - error TS2322: Type 'Observable<HttpResponse<any>>' is not assignable to type 'Observable<ICampaign>'.
+  Type 'HttpResponse<any>' is missing the following properties from type 'ICampaign': data, pageIndex, pageSize, count
+
+35         return this.service.get(url).pipe(map((response: HttpResponse<any>) => {
+           ~~~~~~
+
+
+Error: Client/modules/campaigns/campaigns.service.ts:35:43 - error TS2345: Argument of type 'OperatorFunction<HttpResponse<any>, HttpResponse<any>>' is not assignable to parameter of type 'OperatorFunction<Response, HttpResponse<any>>'.
+
+35         return this.service.get(url).pipe(map((response: HttpResponse<any>) => {
+                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+36             return response;
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+37         }));
+   ~~~~~~~~~~
+
+
+Error: Client/modules/campaigns/campaigns.service.ts:43:9 - error TS2322: Type 'Observable<HttpResponse<any>>' is not assignable to type 'Observable<ICampaignItem>'.
+  Type 'HttpResponse<any>' is missing the following properties from type 'ICampaignItem': id, name, description, from, and 3 more.
+
+43         return this.service.get(url).pipe(map((response: HttpResponse<any>) => {
+           ~~~~~~
+
+
+Error: Client/modules/campaigns/campaigns.service.ts:43:43 - error TS2345: Argument of type 'OperatorFunction<HttpResponse<any>, HttpResponse<any>>' is not assignable to parameter of type 'OperatorFunction<Response, HttpResponse<any>>'.
+
+43         return this.service.get(url).pipe(map((response: HttpResponse<any>) => {
+                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+44             return response;
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+45         }));
+   ~~~~~~~~~~
+
+
+Error: Client/modules/catalog/catalog.service.ts:39:9 - error TS2322: Type 'Observable<HttpResponse<any>>' is not assignable to type 'Observable<ICatalog>'.
+  Type 'HttpResponse<any>' is missing the following properties from type 'ICatalog': pageIndex, data, pageSize, count
+
+39         return this.service.get(url)
+           ~~~~~~
+
+
+Error: Client/modules/catalog/catalog.service.ts:41:17 - error TS2345: Argument of type 'OperatorFunction<HttpResponse<any>, HttpResponse<any>>' is not assignable to parameter of type 'OperatorFunction<Response, HttpResponse<any>>'.
+
+41                 map((response: HttpResponse<any>) => {
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+42                     return response;
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+43                 })
+   ~~~~~~~~~~~~~~~~~~
+
+
+Error: Client/modules/catalog/catalog.service.ts:48:9 - error TS2322: Type 'Observable<HttpResponse<any>>' is not assignable to type 'Observable<ICatalogBrand[]>'.
+  Type 'HttpResponse<any>' is missing the following properties from type 'ICatalogBrand[]': length, pop, push, concat, and 26 more.
+
+48         return this.service.get(this.brandUrl)
+           ~~~~~~
+
+
+Error: Client/modules/catalog/catalog.service.ts:50:17 - error TS2345: Argument of type 'OperatorFunction<HttpResponse<any>, HttpResponse<any>>' is not assignable to parameter of type 'OperatorFunction<Response, HttpResponse<any>>'.
+
+50                 map((response: HttpResponse<any>) => {
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+51                     return response;
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+52                 })
+   ~~~~~~~~~~~~~~~~~~
+
+
+Error: Client/modules/catalog/catalog.service.ts:57:9 - error TS2322: Type 'Observable<HttpResponse<any>>' is not assignable to type 'Observable<ICatalogType[]>'.
+  Type 'HttpResponse<any>' is missing the following properties from type 'ICatalogType[]': length, pop, push, concat, and 26 more.
+
+57         return this.service.get(this.typesUrl)
+           ~~~~~~
+
+
+Error: Client/modules/catalog/catalog.service.ts:59:17 - error TS2345: Argument of type 'OperatorFunction<HttpResponse<any>, HttpResponse<any>>' is not assignable to parameter of type 'OperatorFunction<Response, HttpResponse<any>>'.
+
+59                 map((response: HttpResponse<any>) => {
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+60                     return response;
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+61                 })
+   ~~~~~~~~~~~~~~~~~~
+
+
+Error: Client/modules/orders/orders.service.ts:30:9 - error TS2322: Type 'Observable<HttpResponse<any>>' is not assignable to type 'Observable<IOrder[]>'.
+  Type 'HttpResponse<any>' is missing the following properties from type 'IOrder[]': length, pop, push, concat, and 26 more.
+
+30         return this.service.get(url).pipe(map((response: HttpResponse<any>) => {
+           ~~~~~~
+
+
+Error: Client/modules/orders/orders.service.ts:30:43 - error TS2345: Argument of type 'OperatorFunction<HttpResponse<any>, HttpResponse<any>>' is not assignable to parameter of type 'OperatorFunction<Response, HttpResponse<any>>'.
+
+30         return this.service.get(url).pipe(map((response: HttpResponse<any>) => {
+                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+31             return response;
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+32         }));
+   ~~~~~~~~~~
+
+
+Error: Client/modules/orders/orders.service.ts:38:9 - error TS2322: Type 'Observable<HttpResponse<any>>' is not assignable to type 'Observable<IOrderDetail>'.
+  Type 'HttpResponse<any>' is missing the following properties from type 'IOrderDetail': ordernumber, description, street, date, and 6 more.
+
+38         return this.service.get(url).pipe(map((response: HttpResponse<any>) => {
+           ~~~~~~
+
+
+Error: Client/modules/orders/orders.service.ts:38:43 - error TS2345: Argument of type 'OperatorFunction<HttpResponse<any>, HttpResponse<any>>' is not assignable to parameter of type 'OperatorFunction<Response, HttpResponse<any>>'.
+
+38         return this.service.get(url).pipe(map((response: HttpResponse<any>) => {
+                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+39             return response;
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+40         }));
+   ~~~~~~~~~~
+
+
+Error: Client/modules/shared/services/security.service.ts:2:46 - error TS2307: Cannot find module '@angular/http' or its corresponding type declarations.
+
+2 import { Http, Response, Headers }      from '@angular/http';
+                                               ~~~~~~~~~~~~~~~
+
+
+Error: Client/modules/shared/services/security.service.ts:229:32 - error TS2339: Property 'json' does not exist on type 'unknown'.
+
+229         }).pipe(map(res => res.json()));
+                                   ~~~~
+
+
+

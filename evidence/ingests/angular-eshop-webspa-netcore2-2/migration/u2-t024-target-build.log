@@ -1,0 +1,96 @@
+
+> eshopaspnetnetcoredockerspa@0.0.0 build:prod
+> ng build --configuration production --aot
+
+- Generating browser application bundles (phase: setup)...
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+
+./Client/modules/campaigns/campaigns.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($banner-height, 3.5) or calc($banner-height / 3.5)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+Client/modules/campaigns/campaigns.component.scss 8:14  root stylesheet
+
+
+./Client/modules/catalog/catalog.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($banner-height, 3.5) or calc($banner-height / 3.5)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+Client/modules/catalog/catalog.component.scss 15:14  root stylesheet
+
+
+./Client/modules/shared/components/pager/pager.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($margin, 2) or calc($margin / 2)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+Client/modules/shared/components/pager/pager.scss 33:23  root stylesheet
+
+
+
+
+./Client/globals.scss - Error: Module build failed (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Can't find stylesheet to import.
+  ╷
+3 │ @import "ngx-toastr/toastr-bs4-alert.scss";
+  │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+  Client/globals.scss 3:9  root stylesheet
+
+./Client/globals.scss?ngGlobalStyle - Error: Module build failed (from ./node_modules/@angular-devkit/build-angular/node_modules/mini-css-extract-plugin/dist/loader.js):
+HookWebpackError: Module build failed (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Can't find stylesheet to import.
+  ╷
+3 │ @import "ngx-toastr/toastr-bs4-alert.scss";
+  │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+  Client/globals.scss 3:9  root stylesheet
+
+./Client/modules/shared/services/security.service.ts:1:0-46 - Error: Module not found: Error: Can't resolve '@angular/http' in '/Users/jacksm5pro/dev/open-source/versionless/.versionless/work/angular-eshop-webspa/target/app/Client/modules/shared/services'
+
+Error: Client/modules/basket/basket.service.ts:2:42 - error TS2307: Cannot find module '@angular/http' or its corresponding type declarations.
+
+2 import { Response }                 from '@angular/http';
+                                           ~~~~~~~~~~~~~~~
+
+
+Error: Client/modules/campaigns/campaigns.service.ts:2:26 - error TS2307: Cannot find module '@angular/http' or its corresponding type declarations.
+
+2 import { Response } from '@angular/http';
+                           ~~~~~~~~~~~~~~~
+
+
+Error: Client/modules/catalog/catalog.service.ts:2:26 - error TS2307: Cannot find module '@angular/http' or its corresponding type declarations.
+
+2 import { Response } from '@angular/http';
+                           ~~~~~~~~~~~~~~~
+
+
+Error: Client/modules/orders/orders.service.ts:2:26 - error TS2307: Cannot find module '@angular/http' or its corresponding type declarations.
+
+2 import { Response } from '@angular/http';
+                           ~~~~~~~~~~~~~~~
+
+
+Error: Client/modules/shared/services/security.service.ts:2:46 - error TS2307: Cannot find module '@angular/http' or its corresponding type declarations.
+
+2 import { Http, Response, Headers }      from '@angular/http';
+                                               ~~~~~~~~~~~~~~~
+
+
+Error: Client/modules/shared/services/security.service.ts:229:32 - error TS2339: Property 'json' does not exist on type 'unknown'.
+
+229         }).pipe(map(res => res.json()));
+                                   ~~~~
+
+
+

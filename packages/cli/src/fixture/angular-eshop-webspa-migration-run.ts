@@ -40,8 +40,13 @@ import {
 	succeedRemovedEntryPointSymbols,
 	ANGULAR_16_BROWSER_CELL,
 	type AngularMigration,
+	type ClosureFileReading,
 	type DocumentedSymbolSuccessor,
+	type ModuleClassSurfaceReading,
+	type PatchedCallDiagnostic,
 	type RootSurfaceReading,
+	type RxjsPatchDiagnosticReading,
+	type RxjsSurfaceReading,
 	type SymbolSuccessorMigration,
 	type WorkspaceFile,
 } from '../../../frameworks/angular/src/index.ts';
@@ -188,6 +193,232 @@ async function collect(
 }
 
 /**
+ * The four readings of the installed lane this driver takes, and the one thing
+ * they have in common: not one of them is a reading of the application. Three
+ * are readings of packages the migrated manifest installed, and the fourth is a
+ * reading of what the compiler said when it compiled the lane.
+ */
+export type LaneReadings = Readonly<{
+	removedSymbolSurfaces: readonly RootSurfaceReading[];
+	moduleClassSurfaces: readonly ModuleClassSurfaceReading[];
+	rxjsPatchDiagnostics: readonly RxjsPatchDiagnosticReading[];
+	rxjsSurface?: RxjsSurfaceReading;
+	styleClosure?: ClosureFileReading;
+}>;
+
+/** No lane, no readings: every gated capability stands down. */
+export const EMPTY_LANE_READINGS: LaneReadings = Object.freeze({
+	removedSymbolSurfaces: Object.freeze([]),
+	moduleClassSurfaces: Object.freeze([]),
+	rxjsPatchDiagnostics: Object.freeze([]),
+});
+
+/**
+ * The names an `export { … } from '…'` declaration line publishes, with an
+ * `as` rename resolved to the exported name. Declaration files of this shape —
+ * one re-export per line — are what both packages read here publish, and the
+ * reading is refused as incomplete when it finds none.
+ */
+function reExportedNames(source: string): readonly string[] {
+	const names = new Set<string>();
+	for (const line of source.split('\n')) {
+		const text = line.trim();
+		if (!text.startsWith('export {')) continue;
+		const open = text.indexOf('{');
+		const close = text.indexOf('}', open);
+		if (open < 0 || close < 0) continue;
+		for (const part of text.slice(open + 1, close).split(',')) {
+			const name = part.split(' as ').at(-1)?.trim();
+			if (name !== undefined && name !== '') names.add(name);
+		}
+	}
+	return Object.freeze([...names].sort());
+}
+
+/**
+ * The leading run of `text` that stops before any of `delimiters`. Written as a
+ * scan rather than a split so this file introduces no regular expression.
+ */
+function headToken(text: string, delimiters: string): string {
+	for (let index = 0; index < text.length; index += 1)
+		if (delimiters.includes(text[index] as string)) return text.slice(0, index);
+	return text;
+}
+
+/** The installed version of a package, or `unknown` when it cannot be read. */
+async function installedVersion(modules: string, owner: string): Promise<string> {
+	try {
+		const manifest = JSON.parse(
+			await readFile(path.join(modules, owner, 'package.json'), 'utf8'),
+		) as Readonly<{ version?: unknown }>;
+		return typeof manifest.version === 'string' ? manifest.version : 'unknown';
+	} catch {
+		return 'unknown';
+	}
+}
+
+/**
+ * What the installed declaration publishes as statics on one exported class.
+ *
+ * The reading is of the class body in the package's own `index.d.ts`: the lines
+ * between `declare class X {` and the brace that closes it, reduced to the
+ * `static` members. `complete` is false when the class declaration is not found
+ * at all, because a reading that found no class proves no member absent.
+ */
+export async function readModuleClassSurface(
+	tree: string,
+	packageName: string,
+	symbol: string,
+): Promise<ModuleClassSurfaceReading> {
+	const modules = path.join(tree, 'node_modules');
+	const version = await installedVersion(modules, packageName);
+	const declaration = path.join(modules, packageName, 'index.d.ts');
+	const statics: string[] = [];
+	let complete = false;
+	if (existsSync(declaration)) {
+		const lines = (await readFile(declaration, 'utf8')).split('\n');
+		let inside = false;
+		for (const line of lines) {
+			const text = line.trim();
+			if (!inside) {
+				if (!text.startsWith('export declare class ') && !text.startsWith('declare class '))
+					continue;
+				const named = headToken(
+					text.slice(text.indexOf('class ') + 'class '.length),
+					' <{',
+				);
+				if (named !== symbol) continue;
+				inside = true;
+				complete = true;
+				continue;
+			}
+			if (text.startsWith('}')) break;
+			if (!text.startsWith('static ')) continue;
+			const member = headToken(text.slice('static '.length), ' (:<;=?');
+			if (member !== '') statics.push(member);
+		}
+	}
+	return Object.freeze({
+		package: packageName,
+		version,
+		symbol,
+		statics: Object.freeze([...new Set(statics)].sort()),
+		complete,
+	});
+}
+
+/** What the installed RxJS publishes from its root and from its operator entry point. */
+export async function readRxjsSurface(tree: string): Promise<RxjsSurfaceReading | undefined> {
+	const modules = path.join(tree, 'node_modules');
+	const root = path.join(modules, 'rxjs/dist/types/index.d.ts');
+	const operators = path.join(modules, 'rxjs/dist/types/operators/index.d.ts');
+	if (!existsSync(root) || !existsSync(operators)) return undefined;
+	const rootExports = reExportedNames(await readFile(root, 'utf8'));
+	const operatorExports = reExportedNames(await readFile(operators, 'utf8'));
+	if (rootExports.length === 0 || operatorExports.length === 0) return undefined;
+	return Object.freeze({
+		version: await installedVersion(modules, 'rxjs'),
+		rootExports,
+		operatorExports,
+	});
+}
+
+/** The receiver types this driver reads as RxJS's, as the compiler spells them. */
+export const RXJS_RECEIVER_TYPES: readonly string[] = Object.freeze([
+	'Observable',
+	'Subject',
+	'BehaviorSubject',
+	'ReplaySubject',
+	'AsyncSubject',
+	'ConnectableObservable',
+]);
+
+/**
+ * The `TS2339` diagnostics an Angular build log states, per file, reduced to the
+ * ones whose receiver the compiler named as an RxJS type.
+ *
+ * The filter is the honest part. A `TS2339` on a DOM interface is a different
+ * capability's diagnostic and feeding it here would refuse the whole module for
+ * a reason that is not about RxJS; the receiver type is the compiler's own
+ * words, so the separation is read rather than guessed. Positions are the
+ * compiler's, into the bytes it compiled — which is why the capability that
+ * takes them re-places every one of them before it edits anything.
+ */
+export function readRxjsPatchDiagnostics(log: string): readonly RxjsPatchDiagnosticReading[] {
+	const byPath = new Map<string, PatchedCallDiagnostic[]>();
+	for (const line of log.split('\n')) {
+		const text = line.trim();
+		const marker = ' - error TS2339: Property ';
+		const at = text.indexOf(marker);
+		if (at < 0) continue;
+		const head = text.slice(0, at);
+		const tail = text.slice(at + marker.length);
+		const property = tail.split("'")[1];
+		const receiver = tail.split("on type '")[1]?.split("'")[0];
+		if (property === undefined || receiver === undefined) continue;
+		const bare = receiver.startsWith('typeof ') ? receiver.slice('typeof '.length) : receiver;
+		const head0 = bare.split('<')[0] ?? bare;
+		if (!RXJS_RECEIVER_TYPES.includes(head0)) continue;
+		const parts = head.replace('Error: ', '').split(':');
+		const column = Number(parts.at(-1));
+		const lineNumber = Number(parts.at(-2));
+		const file = parts.slice(0, -2).join(':').trim();
+		if (!Number.isInteger(column) || !Number.isInteger(lineNumber) || file === '') continue;
+		const list = byPath.get(file) ?? [];
+		list.push(
+			Object.freeze({ line: lineNumber, column, property, receiverType: receiver }),
+		);
+		byPath.set(file, list);
+	}
+	return Object.freeze(
+		[...byPath.entries()]
+			.sort((left, right) => (left[0] < right[0] ? -1 : 1))
+			.map((entry) => Object.freeze({ path: entry[0], diagnostics: Object.freeze(entry[1]) })),
+	);
+}
+
+/**
+ * The closure question the tilde-specifier capability asks, answered against the
+ * lane's own installed packages.
+ */
+export function styleClosureOf(tree: string): ClosureFileReading {
+	const modules = path.join(tree, 'node_modules');
+	return Object.freeze({
+		carries: (relativePath: string): boolean => existsSync(path.join(modules, relativePath)),
+	});
+}
+
+/**
+ * Every reading of the installed lane, taken together, or the empty set when the
+ * lane has no closure to read.
+ *
+ * A lane with no `node_modules` is the first pass of a two-pass hop: compose,
+ * apply, install, and only then is there a closure for a reading to be taken
+ * from. That is recorded rather than hidden, because a capability that stood
+ * down for want of a reading is a different outcome from one that had nothing
+ * to do.
+ */
+export async function readLaneReadings(
+	tree: string,
+	buildLog: string | null,
+): Promise<LaneReadings> {
+	if (!existsSync(path.join(tree, 'node_modules'))) return EMPTY_LANE_READINGS;
+	const rxjsSurface = await readRxjsSurface(tree);
+	return Object.freeze({
+		removedSymbolSurfaces: Object.freeze([
+			await readCrossPackageRootSurface(tree, '@angular/common/http', '@angular/http'),
+		]),
+		moduleClassSurfaces: Object.freeze([
+			await readModuleClassSurface(tree, '@ng-bootstrap/ng-bootstrap', 'NgbModule'),
+		]),
+		rxjsPatchDiagnostics:
+			buildLog === null ? Object.freeze([]) : readRxjsPatchDiagnostics(buildLog),
+		...(rxjsSurface === undefined ? {} : { rxjsSurface }),
+		styleClosure: styleClosureOf(tree),
+	});
+}
+
+/**
  * Compose the changeset for the pinned tree.
  *
  * The workspace configuration handed in is an `angular.json` — the first
@@ -202,12 +433,27 @@ async function collect(
  * composed. A tree that supplies none has none transformed, which is a different
  * thing from having none to transform.
  */
-export async function composeMigration(tree: string): Promise<AngularMigration> {
+export async function composeMigration(
+	tree: string,
+	readings: LaneReadings = EMPTY_LANE_READINGS,
+): Promise<AngularMigration> {
 	const sourceModules = (await collect(tree, '.ts', APPLICATION_SOURCE_DIRECTORIES)).filter(
 		(module) => !module.path.endsWith('.spec.ts'),
 	);
 	return migrateAngularCliEraWorkspace(
 		{
+			/**
+			 * Four readings of the *installed* lane, each one the gate on a capability
+			 * that would otherwise be unreachable. They are readings of packages and of
+			 * a compiler, taken from the lane a previous pass installed; nothing about
+			 * the application is read from them, and a lane with no closure supplies
+			 * none, which stands every one of those capabilities down.
+			 */
+			removedSymbolSurfaces: readings.removedSymbolSurfaces,
+			moduleClassSurfaces: readings.moduleClassSurfaces,
+			rxjsPatchDiagnostics: readings.rxjsPatchDiagnostics,
+			...(readings.rxjsSurface === undefined ? {} : { rxjsSurface: readings.rxjsSurface }),
+			...(readings.styleClosure === undefined ? {} : { styleClosure: readings.styleClosure }),
 			eraClosureTypePackages: await readEraClosureTypePackages(ERA_CLOSURE_TREE),
 			packageManifest: {
 				path: 'package.json',
@@ -517,8 +763,21 @@ export function buildSeamProbeRecord(
 	});
 }
 
+/**
+ * The build log a previous pass over this lane left, or null when there is none.
+ *
+ * A compiler-positioned capability needs a compiler, and the only compiler that
+ * has read this application on the target line is the one the previous pass ran.
+ * Reading its log is what makes those positions available to this pass; that
+ * they are positions in bytes a previous composition produced is exactly why the
+ * capability that takes them re-places every one before it edits anything.
+ */
+export const PRIOR_BUILD_LOG = path.join(EVIDENCE_DIRECTORY, 'u1-t024-target-build.log');
+
 export async function main(): Promise<void> {
-	const migration = await composeMigration(SOURCE_TREE);
+	const log = existsSync(PRIOR_BUILD_LOG) ? await readFile(PRIOR_BUILD_LOG, 'utf8') : null;
+	const readings = await readLaneReadings(APPLIED_TREE, log);
+	const migration = await composeMigration(SOURCE_TREE, readings);
 	const changeset = verifySealedRecord(buildChangesetRecord(migration));
 	const applied = await applyMigration(migration, APPLIED_TREE);
 	const record = verifySealedRecord(buildApplicationRecord(migration, applied));

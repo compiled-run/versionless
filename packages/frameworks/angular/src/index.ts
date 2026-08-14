@@ -45,3 +45,5 @@ export * from './departed-dom-lib-member.ts';
 export * from './application-source-dependency.ts';
 export * from './superseded-era-lockfile.ts';
 export * from './workspace-script-flags.ts';
+export * from './use-position-symbol-successor.ts';
+export * from './removed-static-module-method.ts';

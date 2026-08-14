@@ -853,5 +853,128 @@
       "`packagesInstalled: 1689` is a statement about this closure on this host on this date. It is not a claim that the closure is reproducible: the era lockfile was removed by the changeset and no new lockfile digest is recorded here."
     ],
     "digest": "f8561a4a1484dddb20c5bc414df3b7e7a93455927cff542944046ef63d1c50e7"
+  },
+  "t024U2Rerun": {
+    "schemaVersion": "versionless.angular-eshop-webspa-t024-rerun.v1",
+    "unit": "lrapr-t024/u2-value-position-successor-and-compile-wall",
+    "boardTask": "T024",
+    "stage": "stage-2 — close four measured compile classes generically and re-run the holdout lane",
+    "outcome": "install-green-build-red-narrowed",
+    "result": "Four of the compile classes u1 named are closed by capabilities that read the workspace and the installed closure rather than this application, and the fifth — @angular/http's response-shaped symbols — is narrowed to a measured refusal instead of a rewrite. The build is RED and the red is smaller and better named than u1's: six TS2307 sites became five, two webpack module-not-found sites became one, the NgModule cascade (NG6002 x6, NG8002 x3) is gone, NgbModule.forRoot is gone, Observable.throw is gone, and the tilde-sass failure is gone. What remains is one class, stated below and not chased.",
+    "authorization": "An authorized reopen of the frozen adapter subtrees for this unit only. The React subtree is untouched at 972ca80155bbc2a6eb3779943cd481b71d35e803.",
+    "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+    "commit": "a387f21029f0b2d49614d165d5384717d2398f8e",
+    "subpath": "src/Web/WebSPA",
+    "networkAccess": "none. Every reading this unit took is a reading of the lane's own installed closure or of the previous pass's own build log; no packument and no tarball was fetched.",
+    "capabilitiesAdded": [
+      {
+        "name": "use-position-symbol-successor",
+        "entryPoints": [
+          "succeedRemovedSymbolUses",
+          "readRemovedSpecifierImports"
+        ],
+        "shape": "A use-position classifier over every reference to a symbol imported from a removed specifier — type reference, constructor parameter type, `new` target, NgModule `imports` member, call with arity — with one substitution rule per position and a per-declaration, total refusal. Gated on a reading of the successor package's installed surface (the successor published, the replaced name absent, the removed specifier unresolvable), on the alias, and on the module's own root scope.",
+        "composedInto": "migrateAngularCliEraWorkspace, after the specifier rewrites and the deep-import redirection, supply-gated on input.removedSymbolSurfaces",
+        "appliedHere": "Client/modules/shared/shared.module.ts: HttpModule -> HttpClientModule as an `imports` member, and JsonpModule dropped from the same array as a declared difference."
+      },
+      {
+        "name": "removed-static-module-method",
+        "entryPoints": [
+          "removeRemovedStaticModuleMethods"
+        ],
+        "shape": "Deletion of a static module configuration method the installed .d.ts no longer declares, read from the class body of the aligned line's own published bytes. Refused where the reading is absent or incomplete, where the line still declares the method, where the call carries arguments the release documents no replacement for, and where the call is not an NgModule `imports` member.",
+        "composedInto": "migrateAngularCliEraWorkspace, after the use-position carriage, supply-gated on input.moduleClassSurfaces",
+        "appliedHere": "Client/modules/shared/shared.module.ts:32 NgbModule.forRoot() -> NgbModule, on the reading that @ng-bootstrap/ng-bootstrap@15.1.2 declares NgbModule with statics ɵfac, ɵinj and ɵmod and no forRoot."
+      }
+    ],
+    "capabilitiesWired": [
+      {
+        "name": "rxjs-prototype-patch-migration",
+        "shape": "The exported driver seam is now composed, supply-gated on compiler-stated TS2339 positions whose receiver the compiler itself named as an RxJS type, plus a reading of the installed rxjs surface. It is offered a module only where a diagnostic named one, because it also drops the rxjs/add/** side-effect imports and a module with no named call site is one where dropping them would remove the patching without moving anything.",
+        "appliedHere": "Observable.throw -> throwError at four sites (catalog.component.ts:117, campaigns.component.ts:64, orders.component.ts:49, orders-new.component.ts:57), each with `import {throwError} from 'rxjs'` inserted. The board named three; four is what the bytes carry and four is what was migrated."
+      },
+      {
+        "name": "webpack-tilde-style-specifier",
+        "shape": "The exported capability is now composed into the stylesheet pass, detector-gated on a caller-supplied reading of the installed closure and ordered after the exports-map rewrite whose output it has to resolve. A tree that supplies no reading has no prefix dropped.",
+        "appliedHere": "Client/globals.scss:2-3 — `~bootstrap/scss/bootstrap` and `~ngx-toastr/toastr-bs4-alert.scss`, both resolved in the lane closure before the prefix was dropped."
+      }
+    ],
+    "measuredRefusal": {
+      "subject": "@angular/http's response-shaped symbols: Http, Response and Headers",
+      "verdict": "no successor by rename at any position",
+      "howItWasMeasured": "A first pass of this unit did state a type-reference rule for Response -> HttpResponse<any>, on the ground that the successor is generic with no default and the removed type's body was untyped. The lane was rebuilt with it. It compiled the import declaration and produced eighteen new TS2322/TS2345 diagnostics in the four consumer services, because the observables they annotate are declared by the application's own DataService and HttpClient emits the parsed body rather than a response. That build is kept verbatim at migration/u2a-t024-target-build.log. The rule was withdrawn on the measurement: an annotation naming the successor class states something about the value that is false.",
+      "consequence": "The four type-position service modules and the one Http/Headers module keep their unresolved import and their TS2307. The refusal is the honest answer and it is not a smaller red than a rewrite that lied would have produced — it is a different and smaller one.",
+      "sites": [
+        "Client/modules/basket/basket.service.ts:2 — Response, type position",
+        "Client/modules/campaigns/campaigns.service.ts:2 — Response, type position",
+        "Client/modules/catalog/catalog.service.ts:2 — Response, type position",
+        "Client/modules/orders/orders.service.ts:2 — Response, type position",
+        "Client/modules/shared/services/security.service.ts:2 — Http (constructor parameter type), Response (type position), Headers (type position and `new` target)"
+      ]
+    },
+    "laneInstall": {
+      "command": "npm install",
+      "node": "v16.20.2",
+      "npm": "8.19.4",
+      "exitStatus": 0,
+      "forcedFlagsUsed": false,
+      "narrowingApplied": false,
+      "log": "migration/u2-t024-lane-install.log"
+    },
+    "targetBuild": {
+      "command": "npm run build:prod (ng build --configuration production --aot)",
+      "attempted": true,
+      "produced": false,
+      "exitStatus": 1,
+      "runs": 1,
+      "runsNote": "A second run and a byte comparison were not performed and are not claimed: the build does not complete, so there is nothing to compare.",
+      "log": "migration/u2-t024-target-build.log",
+      "remainingDiagnostics": [
+        "./Client/modules/shared/services/security.service.ts:1:0-46 - Error: Module not found: Error: Can't resolve '@angular/http'",
+        "Client/modules/basket/basket.service.ts:2:42 - error TS2307: Cannot find module '@angular/http' or its corresponding type declarations.",
+        "Client/modules/campaigns/campaigns.service.ts:2:26 - error TS2307: Cannot find module '@angular/http' or its corresponding type declarations.",
+        "Client/modules/catalog/catalog.service.ts:2:26 - error TS2307: Cannot find module '@angular/http' or its corresponding type declarations.",
+        "Client/modules/orders/orders.service.ts:2:26 - error TS2307: Cannot find module '@angular/http' or its corresponding type declarations.",
+        "Client/modules/shared/services/security.service.ts:2:46 - error TS2307: Cannot find module '@angular/http' or its corresponding type declarations.",
+        "Client/modules/shared/services/security.service.ts:229:32 - error TS2339: Property 'json' does not exist on type 'unknown'."
+      ],
+      "closedSinceU1": [
+        "Client/modules/shared/shared.module.ts:5 TS2307 and its webpack module-not-found sibling — the declaration now resolves onto @angular/common/http.",
+        "Client/modules/shared/shared.module.ts:32 TS2339 Property 'forRoot' does not exist on type 'typeof NgbModule'.",
+        "Client/modules/shared/shared.module.ts:27 NG1010, and the NG6002 cascade it caused at app.module.ts:18/26/27/28/29, basket.module.ts:11, campaigns.module.ts:11, catalog.module.ts:10 and orders.module.ts:13.",
+        "NG8002 x3 at header.html:3 and pager.html:7/19, which were the same cascade reaching the templates.",
+        "TS2339 Property 'throw' does not exist on type 'typeof Observable' x4.",
+        "./Client/globals.scss — sass 'Can't find stylesheet to import' on the two tilde specifiers, and the mini-css-extract sibling failure."
+      ]
+    },
+    "newGapNamedNotChased": {
+      "id": "G6",
+      "name": "HttpClient call-surface migration",
+      "site": "Client/modules/shared/services/security.service.ts",
+      "statement": "Carrying Http to HttpClient is not a type substitution but a rewrite of the call surface, and it is four distinct transforms this unit did not attempt: `.pipe(map(res => res.json()))` has to lose the .json() because HttpClient already parsed the body; `this._http.get(url, { headers, body: '' })` has to lose the `body`, which HttpClient publishes no option for on GET and whose loss is a behaviour change to declare; `this.headers.append(...)` has to become `this.headers = this.headers.append(...)` because HttpHeaders returns a new instance where Headers mutated; and the emitted element type has to be retyped at both the producer and the consumers, which is what the withdrawn Response rule proved cannot be done one site at a time. It is named here and left; chasing it was outside this unit.",
+      "alsoInThisClass": "Client/modules/shared/services/data.service.ts already declares Observable<Response> against the DOM's Response while using HttpClient — an application-owned typing the hop inherits, and part of the same transform."
+    },
+    "greenVerticals": "No counted vertical's changeset shifted: every capability added or wired in this unit is gated on a reading no other lane supplies, and the full node suite is green.",
+    "artifacts": {
+      "composedChangeset": "migration/u2-t024-composed-changeset.json",
+      "sourceMigration": "migration/u2-t024-source-migration.json",
+      "seamProbe": "migration/u2-t024-angular-http-seam-probe.json",
+      "laneInstallLog": "migration/u2-t024-lane-install.log",
+      "targetBuildLog": "migration/u2-t024-target-build.log",
+      "withdrawnRuleBuildLog": "migration/u2a-t024-target-build.log"
+    },
+    "notEstablished": [
+      "No target build was produced, so nothing here establishes determinism, parity, output inventory or any browser behaviour for this application.",
+      "The two capabilities this unit adds are proven on one application and are recorded experimental in the capability-coverage map. Neither is claimed general.",
+      "A refusal from the use-position successor is a statement about the claim and the site, not a statement that the application cannot be migrated."
+    ],
+    "artifactDigests": {
+      "migration/u2-t024-composed-changeset.json": "140a9eb37b9c5bf3d7db732a3a33793d3f14fa7564caabb8c68ca4c7fa9ce979",
+      "migration/u2-t024-source-migration.json": "6db1a18ff40b494d9eabc18ae86154ad4790d1b8f35778c3ea1d13fb92974634",
+      "migration/u2-t024-angular-http-seam-probe.json": "e4bfd65c7f5fc073495d612b0bb1120100ac094f75ce6d81c4768ab51db79709",
+      "migration/u2-t024-lane-install.log": "1e0ebbd1a38e60f20de49a21a7102bb11d8b944dac5007ee3b63d8f0a86c24a3",
+      "migration/u2-t024-target-build.log": "c31f6b13a6fc0d0092be021a8df99ce7e383f17bcd24e57012b819ab904f38d4",
+      "migration/u2a-t024-target-build.log": "3c9652edcc9ddbe87d06ebc1e1e1b86fd5594763d2a1be33bd2209c6e22d14e8"
+    }
   }
 }
