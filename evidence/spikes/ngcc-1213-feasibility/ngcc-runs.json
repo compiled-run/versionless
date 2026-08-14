@@ -1,0 +1,221 @@
+{
+  "schemaVersion": "versionless.spike.ngcc-1213-feasibility.ngcc-runs.v1",
+  "spike": "SPIKE A - Angular 12/13 ngcc-bearing cell feasibility",
+  "measuredAt": "2026-08-14",
+  "consent": "VL-LEGACY-CORPUS-2026-08-10",
+  "host": {
+    "node": "v16.20.2 (darwin-arm64, native)",
+    "npm": "8.19.4",
+    "provenance": "the Node 16 runtime the Angular verticals already materialised under <REPO>/.versionless/cache; not re-acquired by this spike",
+    "satisfiesDeclaredEngines": "Angular 12 declares node ^12.14.1 || >=14.0.0 and Angular 13 declares ^12.20.0 || ^14.15.0 || >=16.10.0; 16.20.2 satisfies both"
+  },
+  "scratchRoot": "<REPO>/.versionless/work/spike-ngcc-1213 (unversioned scratch; nothing under it is committed)",
+  "method": "three minimal closures, npm install --legacy-peer-deps --ignore-scripts --no-audit --no-fund, then (1) targeted ngcc per library, (2) full ngcc over the closure, (3) an AOT consumption probe: one NgModule importing all three library NgModules plus a component whose template instantiates one element from each library, compiled with ngc -p tsconfig.probe.json under fullTemplateTypeCheck.",
+  "closures": {
+    "a12": {
+      "angular": "12.2.17",
+      "compilerCli": "12.2.17",
+      "typescript": "4.3.5",
+      "rxjs": "6.6.7",
+      "zoneJs": "0.11.8",
+      "typesLeaflet": "1.7.11",
+      "installExitCode": 0
+    },
+    "a13": {
+      "angular": "13.4.0",
+      "compilerCli": "13.4.0",
+      "typescript": "4.6.4",
+      "rxjs": "7.5.7",
+      "zoneJs": "0.11.8",
+      "typesLeaflet": "1.7.11",
+      "installExitCode": 0
+    },
+    "a13rx6": {
+      "angular": "13.4.0",
+      "compilerCli": "13.4.0",
+      "typescript": "4.6.4",
+      "rxjs": "6.6.7",
+      "zoneJs": "0.11.8",
+      "typesLeaflet": "1.7.11",
+      "installExitCode": 0,
+      "rationale": "Angular 13.4.0 peer-declares rxjs ^6.5.3 || ^7.4.0, so rxjs 6 at Angular 13 is a legal closure. This closure isolates whether the a13 failure is an Angular-13 property or an rxjs-7 property."
+    }
+  },
+  "typesPinNote": "@types/leaflet and @types/geojson are floating ranges in @yaga/leaflet-ng2's own dependencies. Left to float they resolve to versions whose syntax TypeScript 4.3/4.6 cannot parse, and the probe drowns in TS1005/TS1109 parse errors from a transitive typing package. Pinning them to the era (1.7.11 / 7946.0.8) removes that noise entirely. This is a real cell hazard, and it is not a pre-Ivy hazard.",
+  "runs": [
+    {
+      "closure": "a12",
+      "library": "@yaga/leaflet-ng2",
+      "command": "node node_modules/@angular/compiler-cli/ngcc/main-ngcc.js -t @yaga/leaflet-ng2 -l debug",
+      "exitCode": 0,
+      "verbatim": "Debug: The target entry-point has already been processed\nDebug: Run ngcc in 0s.\n",
+      "ngccMarker": null,
+      "reading": "ngcc no-ops, and correctly. ngcc decides whether a package is its business with compiledByAngular = entryPointConfig !== undefined || fs.exists(metadataPath) (node_modules/@angular/compiler-cli/ngcc/src/packages/entry_point.js:94). This package ships zero .metadata.json files, so ngcc reports the target as already processed and does nothing. It needs nothing: its own published bytes already carry the Ivy instruction set, and its .d.ts already carries the Ivy declarations."
+    },
+    {
+      "closure": "a12",
+      "library": "jw-bootstrap-switch-ng2",
+      "command": "node node_modules/@angular/compiler-cli/ngcc/main-ngcc.js -t jw-bootstrap-switch-ng2 -l debug",
+      "exitCode": 0,
+      "verbatim": "Debug: The target entry-point has already been processed\nDebug: Run ngcc in 0s.\n",
+      "ngccMarker": {
+        "es2015": "12.2.17",
+        "esm2015": "12.2.17",
+        "esm5": "12.2.17",
+        "fesm2015": "12.2.17",
+        "fesm5": "12.2.17",
+        "main": "12.2.17",
+        "module": "12.2.17",
+        "typings": "12.2.17"
+      },
+      "reading": "full ViewEngine back-compilation. Every format property compiled and the typings were rewritten with Ivy declarations."
+    },
+    {
+      "closure": "a12",
+      "library": "ng2-slim-loading-bar",
+      "variant": "ngcc default property order",
+      "command": "node node_modules/@angular/compiler-cli/ngcc/main-ngcc.js -t ng2-slim-loading-bar -l debug",
+      "exitCode": 0,
+      "verbatim": "Debug: Forking unlocker child-process\nDebug: Attemping to write lock-file at <SCRATCH>/a12/node_modules/@angular/compiler-cli/ngcc/__ngcc_lock_file__ with PID <pid>\nDebug: Written lock-file at <SCRATCH>/a12/node_modules/@angular/compiler-cli/ngcc/__ngcc_lock_file__ with PID <pid>\nDebug: Running ngcc on ClusterExecutor (using 4 worker processes).\nDebug: Analyzing entry-points...\nWarning: Entry point 'ng2-slim-loading-bar' contains deep imports into '<SCRATCH>/a12/node_modules/rxjs/Subject', '<SCRATCH>/a12/node_modules/rxjs/Observable'. This is probably not a problem, but may cause the compilation of entry points to be out of order.\nDebug: Skipping @angular/core : fesm2015 (already compiled).\nDebug: Skipping @angular/core : esm2015 (already compiled).\nDebug: Skipping @angular/core : main (already compiled).\nDebug: Analyzed 2 entry-points in 0.1s. (Total tasks: 2)\nDebug: Processing tasks...\nDebug: Spawning another worker process as there is more work to be done.\nDebug: Starting unlocker at process <pid> on behalf of process <pid>\nDebug: The lock-file path is <SCRATCH>/a12/node_modules/@angular/compiler-cli/ngcc/__ngcc_lock_file__\nDebug: No assignments for 1 idle (out of 2 total) workers. Busy workers: 1\nDebug: [Worker #1] Processing task: {entryPoint: ng2-slim-loading-bar, formatProperty: main, processDts: Yes}\nCompiling ng2-slim-loading-bar : main as umd\nDebug:   Successfully compiled ng2-slim-loading-bar : main\nDebug: No assignments for 1 idle (out of 2 total) workers. Busy workers: 1\nDebug: [Worker #1] Processing task: {entryPoint: ng2-slim-loading-bar, formatProperty: module, processDts: No}\nCompiling ng2-slim-loading-bar : module as esm5\nDebug:   Successfully compiled ng2-slim-loading-bar : module\nDebug: Processed tasks in 0.6s.\nDebug: Stopping 2 workers...\nDebug: Attempting to remove lock-file at <SCRATCH>/a12/node_modules/@angular/compiler-cli/ngcc/__ngcc_lock_file__.\nDebug: PIDs match (<pid>), so removing <SCRATCH>/a12/node_modules/@angular/compiler-cli/ngcc/__ngcc_lock_file__.\nDebug: Run ngcc in 1s.\nDebug: Attempting to remove lock-file at <SCRATCH>/a12/node_modules/@angular/compiler-cli/ngcc/__ngcc_lock_file__.\nDebug: The lock-file at <SCRATCH>/a12/node_modules/@angular/compiler-cli/ngcc/__ngcc_lock_file__ was already removed.\n",
+      "ngccMarker": {
+        "main": "12.2.17",
+        "module": "12.2.17",
+        "typings": "12.2.17"
+      },
+      "reading": "exit 0 but INSUFFICIENT. Under default property order ngcc gives processDts to the main property, which here is bundles/index.umd.js, a webpack bundle rather than a rollup UMD. ngcc reports success and emits a typing that still reads 'static forRoot(): ModuleWithProviders' with no generic argument and no Ivy statics. Exit code 0 is not the verdict."
+    },
+    {
+      "closure": "a12",
+      "library": "ng2-slim-loading-bar",
+      "variant": "properties override",
+      "command": "node node_modules/@angular/compiler-cli/ngcc/main-ngcc.js -t ng2-slim-loading-bar -p module main -l debug",
+      "exitCode": 0,
+      "verbatim": "Debug: Forking unlocker child-process\nDebug: Attemping to write lock-file at <SCRATCH>/a12/node_modules/@angular/compiler-cli/ngcc/__ngcc_lock_file__ with PID <pid>\nDebug: Written lock-file at <SCRATCH>/a12/node_modules/@angular/compiler-cli/ngcc/__ngcc_lock_file__ with PID <pid>\nDebug: Running ngcc on ClusterExecutor (using 4 worker processes).\nDebug: Analyzing entry-points...\nWarning: Entry point 'ng2-slim-loading-bar' contains deep imports into '<SCRATCH>/a12/node_modules/rxjs/Subject', '<SCRATCH>/a12/node_modules/rxjs/Observable'. This is probably not a problem, but may cause the compilation of entry points to be out of order.\nDebug: Skipping @angular/core : module (already compiled).\nDebug: Skipping @angular/core : main (already compiled).\nDebug: Analyzed 2 entry-points in 0.1s. (Total tasks: 2)\nDebug: Processing tasks...\nDebug: Spawning another worker process as there is more work to be done.\nDebug: Starting unlocker at process <pid> on behalf of process <pid>\nDebug: The lock-file path is <SCRATCH>/a12/node_modules/@angular/compiler-cli/ngcc/__ngcc_lock_file__\nDebug: No assignments for 1 idle (out of 2 total) workers. Busy workers: 1\nDebug: [Worker #1] Processing task: {entryPoint: ng2-slim-loading-bar, formatProperty: module, processDts: Yes}\nCompiling ng2-slim-loading-bar : module as esm5\nDebug:   Successfully compiled ng2-slim-loading-bar : module\nDebug: No assignments for 1 idle (out of 2 total) workers. Busy workers: 1\nDebug: [Worker #1] Processing task: {entryPoint: ng2-slim-loading-bar, formatProperty: main, processDts: No}\nCompiling ng2-slim-loading-bar : main as umd\nDebug:   Successfully compiled ng2-slim-loading-bar : main\nDebug: Processed tasks in 0.6s.\nDebug: Stopping 2 workers...\nDebug: Attempting to remove lock-file at <SCRATCH>/a12/node_modules/@angular/compiler-cli/ngcc/__ngcc_lock_file__.\nDebug: PIDs match (<pid>), so removing <SCRATCH>/a12/node_modules/@angular/compiler-cli/ngcc/__ngcc_lock_file__.\nDebug: Run ngcc in 1s.\nDebug: Attempting to remove lock-file at <SCRATCH>/a12/node_modules/@angular/compiler-cli/ngcc/__ngcc_lock_file__.\nDebug: The lock-file at <SCRATCH>/a12/node_modules/@angular/compiler-cli/ngcc/__ngcc_lock_file__ was already removed.\n",
+      "reading": "SUFFICIENT. Naming module (esm5) ahead of main gives processDts to a format ngcc can reflect. ngcc then back-compiles the code and rewrites the typing to 'static forRoot(): ModuleWithProviders<SlimLoadingBarModule>' with the Ivy statics beside it. One flag is the whole difference between a consumable and an unconsumable library.",
+      "emittedTyping": "import { ModuleWithProviders } from \"@angular/core\";\nimport * as ɵngcc0 from '@angular/core';\nimport * as ɵngcc1 from './src/slim-loading-bar.component';\nexport * from './src/slim-loading-bar.component';\nexport * from './src/slim-loading-bar.service';\nexport declare class SlimLoadingBarModule {\n    static forRoot(): ModuleWithProviders<SlimLoadingBarModule>;\n    static ɵfac: ɵngcc0.ɵɵFactoryDeclaration<SlimLoadingBarModule, never>;\n    static ɵmod: ɵngcc0.ɵɵNgModuleDeclaration<SlimLoadingBarModule, [typeof ɵngcc1.SlimLoadingBarComponent], never, [typeof ɵngcc1.SlimLoadingBarComponent]>;\n    static ɵinj: ɵngcc0.ɵɵInjectorDeclaration<SlimLoadingBarModule>;\n}\n\n//# sourceMappingURL=index.d.ts.map"
+    },
+    {
+      "closure": "a12",
+      "library": "(whole closure)",
+      "command": "node node_modules/@angular/compiler-cli/ngcc/main-ngcc.js -l debug",
+      "exitCode": 0,
+      "successfullyCompiledCount": 21,
+      "verbatim": "Debug: Forking unlocker child-process\nDebug: Attemping to write lock-file at <SCRATCH>/a12/node_modules/@angular/compiler-cli/ngcc/__ngcc_lock_file__ with PID <pid>\nDebug: Written lock-file at <SCRATCH>/a12/node_modules/@angular/compiler-cli/ngcc/__ngcc_lock_file__ with PID <pid>\nDebug: Running ngcc on ClusterExecutor (using 4 worker processes).\nDebug: Analyzing entry-points...\nDebug: No manifest found for <SCRATCH>/a12/node_modules so walking the directories for entry-points.\nDebug: Starting unlocker at process <pid> on behalf of process <pid>\nDebug: The lock-file path is <SCRATCH>/a12/node_modules/@angular/compiler-cli/ngcc/__ngcc_lock_file__\nDebug: Walking <SCRATCH>/a12/node_modules for entry-points took 0.2s.\nWarning: Entry point 'ng2-slim-loading-bar' contains deep imports into '<SCRATCH>/a12/node_modules/rxjs/Subject', '<SCRATCH>/a12/node_modules/rxjs/Observable'. This is probably not a problem, but may cause the compilation of entry points to be out of order.\nDebug: Invalid entry-point <SCRATCH>/a12/node_modules/@angular/common/upgrade. It is missing required dependencies:\n - @angular/upgrade/static\n... [116 further lines elided; the full log is scratch-only]",
+      "reading": "21 successful entry-point/format compilations across the closure, including @angular/platform-browser. Angular 12 ships its own packages in ViewEngine-compatible form, so a targeted run leaves them unprocessed and the app compiler then raises NG6002 on BrowserModule. A 12 cell must run ngcc closure-wide, not per-library."
+    },
+    {
+      "closure": "a13",
+      "library": "@yaga/leaflet-ng2",
+      "command": "node node_modules/@angular/compiler-cli/bundles/ngcc/main-ngcc.js -t @yaga/leaflet-ng2 -l debug",
+      "exitCode": 0,
+      "verbatim": "Debug: The target entry-point has already been processed\nDebug: Run ngcc in 0s.\n",
+      "ngccMarker": null,
+      "reading": "identical no-op to Angular 12, for the identical reason."
+    },
+    {
+      "closure": "a13",
+      "library": "jw-bootstrap-switch-ng2",
+      "command": "node node_modules/@angular/compiler-cli/bundles/ngcc/main-ngcc.js -t jw-bootstrap-switch-ng2 -l debug",
+      "exitCode": 0,
+      "verbatim": "Debug: The target entry-point has already been processed\nDebug: Run ngcc in 0s.\n",
+      "ngccMarker": {
+        "es2015": "13.4.0",
+        "esm2015": "13.4.0",
+        "esm5": "13.4.0",
+        "fesm2015": "13.4.0",
+        "fesm5": "13.4.0",
+        "main": "13.4.0",
+        "module": "13.4.0",
+        "typings": "13.4.0"
+      },
+      "reading": "full ViewEngine back-compilation at Angular 13.4.0. ngcc 13 announces the work as 'Processing legacy \"View Engine\" libraries:' and closes with 'Encourage the library authors to publish an Ivy distribution.' ngcc is present and functional at 13; it is only louder about it than 12."
+    },
+    {
+      "closure": "a13",
+      "library": "ng2-slim-loading-bar",
+      "command": "node node_modules/@angular/compiler-cli/bundles/ngcc/main-ngcc.js -t ng2-slim-loading-bar -l debug",
+      "exitCode": 1,
+      "verbatim": "Debug: Forking unlocker child-process\nDebug: Attemping to write lock-file at <SCRATCH>/a13/node_modules/.ngcc_lock_file with PID <pid>\nDebug: Written lock-file at <SCRATCH>/a13/node_modules/.ngcc_lock_file with PID <pid>\nDebug: Running ngcc on ClusterExecutor (using 4 worker processes).\nDebug: Analyzing entry-points...\nDebug: Attempting to remove lock-file at <SCRATCH>/a13/node_modules/.ngcc_lock_file.\nDebug: PIDs match (<pid>), so removing <SCRATCH>/a13/node_modules/.ngcc_lock_file.\nError: The target entry-point \"ng2-slim-loading-bar\" has missing dependencies:\n - rxjs/Subject\n - rxjs/Observable\n\n    at TargetedEntryPointFinder.findEntryPoints (file://<SCRATCH>/a13/node_modules/@angular/compiler-cli/bundles/chunk-NALI3EFD.js:941:13)\n    at file://<SCRATCH>/a13/node_modules/@angular/compiler-cli/bundles/chunk-NALI3EFD.js:1264:33\n    at new ClusterMaster (file://<SCRATCH>/a13/node_modules/@angular/compiler-cli/bundles/chunk-NALI3EFD.js:1366:22)\n    at file://<SCRATCH>/a13/node_modules/@angular/compiler-cli/bundles/chunk-NALI3EFD.js:1559:22\n    at AsyncLocker.lock (file://<SCRATCH>/a13/node_modules/@angular/compiler-cli/bundles/chunk-NALI3EFD.js:1664:20)\nDebug: Starting unlocker at process <pid> on behalf of process <pid>\nDebug: The lock-file path is <SCRATCH>/a13/node_modules/.ngcc_lock_file\n",
+      "ngccMarker": null,
+      "reading": "HARD FAILURE, and the cause is rxjs 7, not Angular 13. The library deep-imports rxjs/Subject and rxjs/Observable, paths rxjs 7 no longer ships, and ngcc's targeted entry-point finder raises them as missing dependencies. The a13rx6 run below is the control."
+    },
+    {
+      "closure": "a13rx6",
+      "library": "ng2-slim-loading-bar",
+      "command": "node node_modules/@angular/compiler-cli/bundles/ngcc/main-ngcc.js -t ng2-slim-loading-bar -l debug",
+      "exitCode": 0,
+      "verbatim": "Debug: The target entry-point has already been processed\nDebug: Run ngcc in 0s.\n",
+      "reading": "CONTROL. Same compiler-cli 13.4.0, rxjs 6.6.7 in place of 7.5.7: the hard error becomes the same benign deep-import warning Angular 12 emits, and both formats compile. The failure is the rxjs major, and it is a closure-composition constraint the cell can satisfy."
+    },
+    {
+      "closure": "a13rx6",
+      "library": "ng2-slim-loading-bar",
+      "variant": "properties override",
+      "command": "node node_modules/@angular/compiler-cli/bundles/ngcc/main-ngcc.js -t ng2-slim-loading-bar -p module main -l debug",
+      "exitCode": 0,
+      "verbatim": "Debug: Forking unlocker child-process\nDebug: Attemping to write lock-file at <SCRATCH>/a13rx6/node_modules/.ngcc_lock_file with PID <pid>\nDebug: Written lock-file at <SCRATCH>/a13rx6/node_modules/.ngcc_lock_file with PID <pid>\nDebug: Running ngcc on ClusterExecutor (using 4 worker processes).\nDebug: Analyzing entry-points...\nWarning: Entry point 'ng2-slim-loading-bar' contains deep imports into '<SCRATCH>/a13rx6/node_modules/rxjs/Subject', '<SCRATCH>/a13rx6/node_modules/rxjs/Observable'. This is probably not a problem, but may cause the compilation of entry points to be out of order.\nDebug: Analyzed 1 entry-points in 0s. (Total tasks: 2)\nProcessing legacy \"View Engine\" libraries:\nDebug: Starting unlocker at process <pid> on behalf of process <pid>\nDebug: The lock-file path is <SCRATCH>/a13rx6/node_modules/.ngcc_lock_file\nDebug: Processing tasks...\nDebug: Spawning another worker process as there is more work to be done.\nDebug: [Worker #1] Processing task: {entryPoint: ng2-slim-loading-bar, formatProperty: module, processDts: Yes}\n- ng2-slim-loading-bar [module/esm5] (https://github.com/akserg/ng2-slim-loading-bar.git)\nDebug: No assignments for 1 idle (out of 2 total) workers. Busy workers: 1\nDebug:   Successfully compiled ng2-slim-loading-bar : module\nDebug: No assignments for 1 idle (out of 2 total) workers. Busy workers: 1\nDebug: [Worker #1] Processing task: {entryPoint: ng2-slim-loading-bar, formatProperty: main, processDts: No}\n- ng2-slim-loading-bar [main/umd] (https://github.com/akserg/ng2-slim-loading-bar.git)\nDebug:   Successfully compiled ng2-slim-loading-bar : main\nDebug: Processed tasks in 0.3s.\nEncourage the library authors to publish an Ivy distribution.\nDebug: Stopping 2 workers...\nDebug: Attempting to remove lock-file at <SCRATCH>/a13rx6/node_modules/.ngcc_lock_file.\nDebug: PIDs match (<pid>), so removing <SCRATCH>/a13rx6/node_modules/.ngcc_lock_file.\nDebug: Run ngcc in 1s.\nDebug: Attempting to remove lock-file at <SCRATCH>/a13rx6/node_modules/.ngcc_lock_file.\nDebug: The lock-file at <SCRATCH>/a13rx6/node_modules/.ngcc_lock_file was already removed.\n",
+      "reading": "same typing rewrite as Angular 12: ModuleWithProviders<SlimLoadingBarModule> plus the Ivy statics."
+    },
+    {
+      "closure": "a13rx6",
+      "library": "(whole closure)",
+      "command": "node node_modules/@angular/compiler-cli/bundles/ngcc/main-ngcc.js -l debug",
+      "exitCode": 0,
+      "successfullyCompiledCount": 0,
+      "verbatim": "Debug: Forking unlocker child-process\nDebug: Attemping to write lock-file at <SCRATCH>/a13rx6/node_modules/.ngcc_lock_file with PID <pid>\nDebug: Written lock-file at <SCRATCH>/a13rx6/node_modules/.ngcc_lock_file with PID <pid>\nDebug: Running ngcc on ClusterExecutor (using 4 worker processes).\nDebug: Analyzing entry-points...\nDebug: No manifest found for <SCRATCH>/a13rx6/node_modules so walking the directories for entry-points.\nDebug: Walking <SCRATCH>/a13rx6/node_modules for entry-points took 0.1s.\nWarning: Entry point 'ng2-slim-loading-bar' contains deep imports into '<SCRATCH>/a13rx6/node_modules/rxjs/Subject', '<SCRATCH>/a13rx6/node_modules/rxjs/Observable'. This is probably not a problem, but may cause the compilation of entry points to be out of order.\nDebug: Skipping jw-bootstrap-switch-ng2 : fesm2015 (already compiled).\nDebug: Skipping jw-bootstrap-switch-ng2 : fesm5 (already compiled).\nDebug: Skipping jw-bootstrap-switch-ng2 : esm2015 (already compiled).\nDebug: Skipping jw-bootstrap-switch-ng2 : esm5 (already compiled).\n... [12 further lines elided; the full log is scratch-only]",
+      "reading": "Angular 13 publishes its own packages Ivy-native, so the closure-wide run has only the ViewEngine libraries left to do."
+    }
+  ],
+  "aotConsumptionProbe": {
+    "description": "the question ngcc exit codes do not answer. src/app.module.ts imports YagaModule, JwBootstrapSwitchNg2Module and SlimLoadingBarModule.forRoot(); src/app.component.ts instantiates <yaga-map [zoom]>, <bSwitch [(ngModel)]> and <ng2-slim-loading-bar color> so each library is exercised at module scope and at template-binding scope.",
+    "results": [
+      {
+        "closure": "a12",
+        "command": "node node_modules/@angular/compiler-cli/src/main.js -p tsconfig.probe.json",
+        "precondition": "closure-wide ngcc, plus -p module main on ng2-slim-loading-bar",
+        "exitCode": 0,
+        "diagnostics": 0,
+        "verbatim": "",
+        "reading": "GREEN. All three libraries consumed; all three elements and their inputs resolved; the compiler emitted."
+      },
+      {
+        "closure": "a13rx6",
+        "command": "node node_modules/@angular/compiler-cli/bundles/src/bin/ngc.js -p tsconfig.probe.json",
+        "precondition": "closure-wide ngcc, plus -p module main on ng2-slim-loading-bar",
+        "exitCode": 0,
+        "diagnostics": 0,
+        "verbatim": "",
+        "reading": "GREEN. Identical outcome at Angular 13.4.0 with rxjs 6."
+      },
+      {
+        "closure": "a12",
+        "variant": "ngcc default property order (the failing reading)",
+        "command": "node node_modules/@angular/compiler-cli/src/main.js -p tsconfig.probe.json",
+        "exitCode": 1,
+        "diagnosticCodes": {
+          "NG6005": 1,
+          "NG8001": 3,
+          "NG8002": 2
+        },
+        "verbatim": "node_modules/ng2-slim-loading-bar/index.d.ts:5:23 - error NG6005: SlimLoadingBarModule.forRoot returns a ModuleWithProviders type without a generic type argument. Please add a generic type argument to the ModuleWithProviders type. If this occurrence is in library code you don't control, please contact the library authors.\n\n5     static forRoot(): ModuleWithProviders;\n                        ~~~~~~~~~~~~~~~~~~~\nsrc/app.component.ts:6:5 - error NG8001: 'ng2-slim-loading-bar' is not a known element:\n1. If 'ng2-slim-loading-bar' is an Angular component, then verify that it is part of this module.\n2. If 'ng2-slim-loading-bar' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.\n\n6     <ng2-slim-loading-bar color=\"blue\"></ng2-slim-loading-bar>\n      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nsrc/app.component.ts:7:5 - error NG8001: 'bSwitch' is not a known element:\n1. If 'bSwitch' is an Angular component, then verify that it is part of this module.\n2. To allow any element add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.\n\n7     <bSwitch [(ngModel)]=\"on\" name=\"sw\"></bSwitch>\n      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\nsrc/app.component.ts:7:14 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'bSwitch'.\n\n7     <bSwitch [(ngModel)]=\"on\" name=\"sw\"></bSwitch>\n               ~~~~~~~~~~~~~~~~\nsrc/app.component.ts:8:5 - error NG8001: 'yaga-map' is not a known element:\n1. If 'yaga-map' is an Angular component, then verify that it is part of this module.\n2. If 'yaga-map' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.\n\n8     <yaga-map [zoom]=\"3\"></yaga-map>\n      ~~~~~~~~~~~~~~~~~~~~~\nsrc/app.component.ts:8:15 - error NG8002: Can't bind to 'zoom' since it isn't a known property of 'yaga-map'.\n1. If 'yaga-map' is an Angular component and it has 'zoom' input, then verify that it is part of this module.\n2. If 'yaga-map' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.\n3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.\n\n8     <yaga-map [zoom]=\"3\"></yaga-map>\n                ~~~~~~~~~~\n\n",
+        "reading": "This is the pigallery2 shape reproduced in miniature. One root diagnostic - NG6005, SlimLoadingBarModule.forRoot returning a bare ModuleWithProviders - leaves the @NgModule literal unanalysable, and five template diagnostics fall out downstream of it, including 'bSwitch is not a known element' for a library that ngcc had in fact back-compiled successfully. Re-running ngcc with -p module main removed the root diagnostic and all five downstream ones at once."
+      },
+      {
+        "closure": "a13",
+        "command": "node node_modules/@angular/compiler-cli/bundles/src/bin/ngc.js -p tsconfig.probe.json",
+        "exitCode": 1,
+        "verbatim": "../../../cache/pnpm-virtual-store/@types+node@24.12.2/node_modules/@types/node/http.d.ts:241:47 - error TS1005: ',' expected.\n\n241         Response extends typeof ServerResponse<InstanceType<Request>> = typeof ServerResponse,\n                                                  ~\n../../../cache/pnpm-virtual-store/@types+node@24.12.2/node_modules/@types/node/http.d.ts:241:71 - error TS1109: Expression expected.\n\n241         Response extends typeof ServerResponse<InstanceType<Request>> = typeof ServerResponse,\n                                                                          ~\n../../../cache/pnpm-virtual-store/@types+node@24.12.2/node_modules/@types/node/http.d.ts:242:5 - error TS1109: Expression expected.\n\n242     > {\n        ~\n../../../cache/pnpm-virtual-store/@types+node@24.12.2/node_modules/@types/node/http.d.ts:246:46 - error TS1005: ',' expected.\n\n... [5692 further lines elided; the full log is scratch-only]",
+        "reading": "NOT A CLEAN READING, recorded because it was run. ngcc had already refused ng2-slim-loading-bar in this closure, and the probe additionally resolved an out-of-closure @types/node from the surrounding repository store whose syntax TypeScript 4.6 cannot parse. No verdict rests on it; the rxjs-7 verdict rests on the ngcc-stage error above."
+      }
+    ]
+  },
+  "nonclaims": [
+    "No application was migrated, built or run. These are compiler readings over minimal synthetic closures, not a pigallery2 build, and they do not weaken the sealed pigallery2 RED, which stands as permanent falsification evidence at the Angular 16 cell.",
+    "The probe compiles one NgModule and one component template. It establishes that these three libraries are consumable by the Angular 12 and Angular 13 compilers; it establishes nothing about pigallery2 as a whole, whose migrated tree carries hundreds of other files and four still-open compile-stage demands.",
+    "Nothing was executed in a browser. No behavioural claim is made about the map, the switch or the loading bar at runtime.",
+    "No Angular 16 package was installed. The stub-ngcc reading at 16 is carried from the sealed record, not re-measured here.",
+    "Only Node 16.20.2 was available on this host. Nothing here establishes what these lines do under Node 12 or 14.",
+    "The Angular 13 green is conditional on rxjs 6. Nothing here establishes that pigallery2's own code runs on rxjs 6 at Angular 13; it establishes only that the closure is legal under Angular 13's declared peer range and that ngcc then succeeds.",
+    "The -p module main override was applied by hand at the command line. Nothing here establishes that the Angular CLI builder can be made to pass it, which is named as the first open question."
+  ]
+}

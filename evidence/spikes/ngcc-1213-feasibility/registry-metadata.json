@@ -1,0 +1,347 @@
+{
+  "schemaVersion": "versionless.spike.ngcc-1213-feasibility.registry-metadata.v1",
+  "spike": "SPIKE A — Angular 12/13 ngcc-bearing cell feasibility",
+  "consent": "VL-LEGACY-CORPUS-2026-08-10",
+  "registryHost": "registry.npmjs.org",
+  "readAt": "2026-08-14",
+  "urlsRead": [
+    "https://registry.npmjs.org/@yaga%2fleaflet-ng2",
+    "https://registry.npmjs.org/jw-bootstrap-switch-ng2",
+    "https://registry.npmjs.org/ng2-slim-loading-bar",
+    "https://registry.npmjs.org/@angular%2fcompiler-cli",
+    "https://registry.npmjs.org/@angular%2fcore",
+    "https://registry.npmjs.org/@angular%2fcommon",
+    "https://registry.npmjs.org/@yaga/leaflet-ng2/-/leaflet-ng2-1.1.0.tgz",
+    "https://registry.npmjs.org/jw-bootstrap-switch-ng2/-/jw-bootstrap-switch-ng2-2.0.5.tgz",
+    "https://registry.npmjs.org/ng2-slim-loading-bar/-/ng2-slim-loading-bar-4.0.0.tgz"
+  ],
+  "libraries": {
+    "@yaga/leaflet-ng2": {
+      "registryUrl": "https://registry.npmjs.org/@yaga%2fleaflet-ng2",
+      "publishedVersions": [
+        "1.0.0-rc2",
+        "1.0.0-rc3",
+        "1.0.0-rc4",
+        "1.0.0-rc5",
+        "1.0.0-rc6",
+        "1.0.0-rc7",
+        "1.0.0-rc8",
+        "1.0.0-rc9",
+        "1.0.0-rc10",
+        "1.0.0-rc11",
+        "1.0.0-rc12",
+        "1.0.0",
+        "1.1.0"
+      ],
+      "versionCount": 13,
+      "distTags": {
+        "latest": "1.1.0"
+      },
+      "lastPublishedVersion": "1.1.0",
+      "lastPublishedAt": "2021-05-22T15:15:19.943Z",
+      "packumentModified": "2022-06-13T01:57:45.805Z",
+      "deprecated": {
+        "anyVersionDeprecated": false,
+        "latestDeprecated": false,
+        "note": "registry carries no deprecation marker on any published version of this package"
+      },
+      "declaredPeerDependencies": {
+        "@angular/core": ">=2.0.0"
+      },
+      "declaredDependencies": {
+        "@types/geojson": "^7946.0.4",
+        "@types/leaflet": "^1.2.8",
+        "leaflet": "^1.3.2"
+      },
+      "declaredEngines": null,
+      "formatProperties": {
+        "main": "lib/index.js",
+        "module": null,
+        "es2015": null,
+        "esm2015": null,
+        "esm5": null,
+        "fesm2015": null,
+        "fesm5": null,
+        "typings": "lib/index.d.ts"
+      },
+      "dist": {
+        "tarball": "https://registry.npmjs.org/@yaga/leaflet-ng2/-/leaflet-ng2-1.1.0.tgz",
+        "shasum": "d0ad5dfe407a00383b8b4c5146b4f030d7b72ec7",
+        "integrity": "sha512-xb8JseWlmdSHxwBeSdDsiKBC8Ju1kGcLowrbk/p7UAVdAxKLo7DWHG+rm4Iohvi8zUZVnjySjH1sZA8FChGAsA=="
+      }
+    },
+    "jw-bootstrap-switch-ng2": {
+      "registryUrl": "https://registry.npmjs.org/jw-bootstrap-switch-ng2",
+      "publishedVersions": [
+        "0.0.2",
+        "0.0.3",
+        "0.0.4",
+        "0.0.5",
+        "0.0.6",
+        "0.0.7",
+        "0.0.8",
+        "0.0.9",
+        "1.0.0",
+        "1.0.1",
+        "1.0.2",
+        "1.0.3",
+        "1.0.4",
+        "1.0.5",
+        "1.0.6",
+        "1.0.7",
+        "1.0.8",
+        "1.0.9",
+        "1.0.10",
+        "2.0.0",
+        "2.0.1",
+        "2.0.2",
+        "2.0.3",
+        "2.0.4",
+        "2.0.5"
+      ],
+      "versionCount": 25,
+      "distTags": {
+        "latest": "2.0.5"
+      },
+      "lastPublishedVersion": "2.0.5",
+      "lastPublishedAt": "2019-01-29T03:31:21.512Z",
+      "packumentModified": "2022-06-19T07:32:09.462Z",
+      "deprecated": {
+        "anyVersionDeprecated": false,
+        "latestDeprecated": false,
+        "note": "registry carries no deprecation marker on any published version of this package"
+      },
+      "declaredPeerDependencies": {
+        "@angular/common": "^6.0.0-rc.0 || ^6.0.0 || >=7.0.0",
+        "@angular/core": "^6.0.0-rc.0 || ^6.0.0 || >=7.0.0",
+        "@angular/forms": "^6.0.0-rc.0 || ^6.0.0  || >=7.0.0"
+      },
+      "declaredDependencies": {
+        "tslib": "^1.9.0"
+      },
+      "declaredEngines": null,
+      "formatProperties": {
+        "main": "bundles/jw-bootstrap-switch-ng2.umd.js",
+        "module": "fesm5/jw-bootstrap-switch-ng2.js",
+        "es2015": "fesm2015/jw-bootstrap-switch-ng2.js",
+        "esm2015": "esm2015/jw-bootstrap-switch-ng2.js",
+        "esm5": "esm5/jw-bootstrap-switch-ng2.js",
+        "fesm2015": "fesm2015/jw-bootstrap-switch-ng2.js",
+        "fesm5": "fesm5/jw-bootstrap-switch-ng2.js",
+        "typings": "jw-bootstrap-switch-ng2.d.ts"
+      },
+      "dist": {
+        "tarball": "https://registry.npmjs.org/jw-bootstrap-switch-ng2/-/jw-bootstrap-switch-ng2-2.0.5.tgz",
+        "shasum": "936879a8c463cd01aad8cda51c1f994221722df4",
+        "integrity": "sha512-uxwME6OCIWzVNmCZ8YFE/4WUnaOQDuZChmvTrNTQdnYa2DQ8plKCBb9pUQlmdu8ujylT3E8z+zbBFpGQLP8ZWQ=="
+      }
+    },
+    "ng2-slim-loading-bar": {
+      "registryUrl": "https://registry.npmjs.org/ng2-slim-loading-bar",
+      "publishedVersions": [
+        "1.0.0",
+        "1.0.1",
+        "1.0.2",
+        "1.0.3",
+        "1.1.0",
+        "1.2.0",
+        "1.2.1",
+        "1.2.2",
+        "1.2.3",
+        "1.2.4",
+        "1.3.0",
+        "1.4.0",
+        "1.4.1",
+        "1.5.0",
+        "1.5.1",
+        "2.0.0",
+        "2.0.1",
+        "2.0.2",
+        "2.0.3",
+        "2.0.4",
+        "2.0.5",
+        "2.0.6",
+        "2.0.7",
+        "2.1.0",
+        "2.2.0",
+        "2.3.0",
+        "2.4.0",
+        "4.0.0"
+      ],
+      "versionCount": 28,
+      "distTags": {
+        "latest": "4.0.0"
+      },
+      "lastPublishedVersion": "4.0.0",
+      "lastPublishedAt": "2017-04-04T11:50:27.828Z",
+      "packumentModified": "2026-03-18T12:14:36.313Z",
+      "deprecated": {
+        "anyVersionDeprecated": false,
+        "latestDeprecated": false,
+        "note": "registry carries no deprecation marker on any published version of this package"
+      },
+      "declaredPeerDependencies": {
+        "@angular/core": "^2.4.7 || ^4.0.0"
+      },
+      "declaredDependencies": null,
+      "declaredEngines": null,
+      "formatProperties": {
+        "main": "bundles/index.umd.js",
+        "module": "index.js",
+        "es2015": null,
+        "esm2015": null,
+        "esm5": null,
+        "fesm2015": null,
+        "fesm5": null,
+        "typings": "index.d.ts"
+      },
+      "dist": {
+        "tarball": "https://registry.npmjs.org/ng2-slim-loading-bar/-/ng2-slim-loading-bar-4.0.0.tgz",
+        "shasum": "7256fdde7c058f14955a3ef2e65afafb5b664603",
+        "integrity": "sha512-nG5/gl6YW9N+07nVfuhXnaKD0FJVjPaptm95bD8iyo5IYWGo6ZBvqOiJ2Ql5MS3qvLc3Xh12Z5G3uagZCRrOsw=="
+      }
+    }
+  },
+  "angularCompilerCli": {
+    "byMajor": {
+      "11": {
+        "finalStableVersion": "11.2.14",
+        "publishedAt": "2021-05-12T21:17:17.930Z",
+        "engines": {
+          "node": ">=10.0"
+        },
+        "ngccBin": "ngcc/main-ngcc.js",
+        "ngcBin": "src/main.js",
+        "typescriptPeer": ">=4.0 <4.2",
+        "stableVersionCount": 28
+      },
+      "12": {
+        "finalStableVersion": "12.2.17",
+        "publishedAt": "2022-11-22T17:35:00.906Z",
+        "engines": {
+          "node": "^12.14.1 || >=14.0.0"
+        },
+        "ngccBin": "ngcc/main-ngcc.js",
+        "ngcBin": "src/main.js",
+        "typescriptPeer": ">=4.2.3 <4.4",
+        "stableVersionCount": 30
+      },
+      "13": {
+        "finalStableVersion": "13.4.0",
+        "publishedAt": "2023-04-06T17:40:55.845Z",
+        "engines": {
+          "node": "^12.20.0 || ^14.15.0 || >=16.10.0"
+        },
+        "ngccBin": "bundles/ngcc/main-ngcc.js",
+        "ngcBin": "bundles/src/bin/ngc.js",
+        "typescriptPeer": ">=4.4.2 <4.7",
+        "stableVersionCount": 30
+      },
+      "14": {
+        "finalStableVersion": "14.3.0",
+        "publishedAt": "2023-03-13T09:57:01.974Z",
+        "engines": {
+          "node": "^14.15.0 || >=16.10.0"
+        },
+        "ngccBin": "bundles/ngcc/main-ngcc.js",
+        "ngcBin": "bundles/src/bin/ngc.js",
+        "typescriptPeer": ">=4.6.2 <4.9",
+        "stableVersionCount": 26
+      },
+      "15": {
+        "finalStableVersion": "15.2.10",
+        "publishedAt": "2023-10-04T20:19:22.694Z",
+        "engines": {
+          "node": "^14.20.0 || ^16.13.0 || >=18.10.0"
+        },
+        "ngccBin": "bundles/ngcc/main-ngcc.js",
+        "ngcBin": "bundles/src/bin/ngc.js",
+        "typescriptPeer": ">=4.8.2 <5.0",
+        "stableVersionCount": 22
+      },
+      "16": {
+        "finalStableVersion": "16.2.12",
+        "publishedAt": "2023-11-02T21:42:27.093Z",
+        "engines": {
+          "node": "^16.14.0 || >=18.10.0"
+        },
+        "ngccBin": "bundles/ngcc/index.js",
+        "ngcBin": "bundles/src/bin/ngc.js",
+        "typescriptPeer": ">=4.9.3 <5.2",
+        "stableVersionCount": 30
+      }
+    },
+    "note": "ngcc bin present in 11-15 as a real entry point; 16.2.12 still declares bins.ngcc but points at bundles/ngcc/index.js, which the sealed pigallery2 record already describes as a stub. No Angular 16 package was installed by this spike."
+  },
+  "angularCore": {
+    "12": {
+      "version": "12.2.17",
+      "engines": {
+        "node": "^12.14.1 || >=14.0.0"
+      },
+      "peerDependencies": {
+        "rxjs": "^6.5.3 || ^7.0.0",
+        "zone.js": "~0.11.4"
+      }
+    },
+    "13": {
+      "version": "13.4.0",
+      "engines": {
+        "node": "^12.20.0 || ^14.15.0 || >=16.10.0"
+      },
+      "peerDependencies": {
+        "rxjs": "^6.5.3 || ^7.4.0",
+        "zone.js": "~0.11.4"
+      }
+    }
+  },
+  "angularCommon": {
+    "12": {
+      "version": "12.2.17",
+      "engines": {
+        "node": "^12.14.1 || >=14.0.0"
+      },
+      "peerDependencies": {
+        "rxjs": "^6.5.3 || ^7.0.0",
+        "@angular/core": "12.2.17"
+      }
+    },
+    "13": {
+      "version": "13.4.0",
+      "engines": {
+        "node": "^12.20.0 || ^14.15.0 || >=16.10.0"
+      },
+      "peerDependencies": {
+        "rxjs": "^6.5.3 || ^7.4.0",
+        "@angular/core": "13.4.0"
+      }
+    }
+  },
+  "tarballInspection": {
+    "@yaga/leaflet-ng2@1.1.0": {
+      "sha256": "3d629fdd53808d9dfe75f880ee4c410e244cb4d946f81a79d08152f3ed9d25c4",
+      "metadataJsonFiles": 0,
+      "shape": "single CommonJS tree under lib/ emitted by ngc against Angular 12 devDependencies; no fesm/umd bundles, no .metadata.json",
+      "ivyMarkersFound": [
+        "ɵɵdefineComponent",
+        "ɵfac",
+        "ɵcmp in lib/*.js and lib/*.d.ts"
+      ],
+      "reading": "already Ivy, full-compilation mode, not ViewEngine"
+    },
+    "jw-bootstrap-switch-ng2@2.0.5": {
+      "sha256": "a447b25eb5540efe472ba228b92394dfce409ec61cc84e503adebcc7c7efc411",
+      "metadataJsonFiles": 1,
+      "shape": "classic ng-packagr ViewEngine layout: bundles/*.umd.js, esm5/, esm2015/, fesm5/, fesm2015/, jw-bootstrap-switch-ng2.metadata.json",
+      "ivyMarkersFound": [],
+      "reading": "pure ViewEngine, ngcc-shaped"
+    },
+    "ng2-slim-loading-bar@4.0.0": {
+      "sha256": "16174423b165926216b6918e214122fe6b8eec6a9db25ce82893d8855d217c97",
+      "metadataJsonFiles": 4,
+      "shape": "esm5 tree at index.js + src/*.js with index.metadata.json; main points at bundles/index.umd.js, which is a webpack bundle rather than a rollup UMD",
+      "ivyMarkersFound": [],
+      "reading": "pure ViewEngine, ngcc-shaped, but with a main entry ngcc cannot reflect"
+    }
+  }
+}

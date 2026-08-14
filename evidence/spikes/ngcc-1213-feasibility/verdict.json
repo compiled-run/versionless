@@ -1,0 +1,119 @@
+{
+  "schemaVersion": "versionless.spike.ngcc-1213-feasibility.verdict.v1",
+  "spike": "SPIKE A - Angular 12/13 ngcc-bearing cell feasibility (T003 Judge package)",
+  "goal": "next-tranche-strategy",
+  "measuredAt": "2026-08-14",
+  "consent": "VL-LEGACY-CORPUS-2026-08-10",
+  "question": "The sealed pigallery2 holdout RED (evidence/runs/holdout-angular-pigallery2/receipt.json, canonical digest 39a133ff97c37622a4a1821f20e7c442c9bc22ed7597a3e73cbd31323ab2bb10) names three no-successor pre-Ivy libraries at six import sites and declares them unsupported at the Angular 16 cell because Angular 16 removed ngcc. Would an ngcc-bearing cell at Angular 12 or 13 actually consume them?",
+  "evidence": {
+    "registryMetadata": "evidence/spikes/ngcc-1213-feasibility/registry-metadata.json",
+    "ngccRuns": "evidence/spikes/ngcc-1213-feasibility/ngcc-runs.json",
+    "scratch": "<REPO>/.versionless/work/spike-ngcc-1213 (unversioned; not committed)"
+  },
+  "perLibrary": {
+    "@yaga/leaflet-ng2@1.1.0": {
+      "lastPublishedVersion": "1.1.0",
+      "publishedAt": "2021-05-22T15:15:19.943Z",
+      "deprecated": false,
+      "shippedFormats": "one CommonJS tree under lib/, emitted by ngc against Angular 12 devDependencies; no fesm, no umd bundles, zero .metadata.json files",
+      "declaredPeer": "@angular/core >=2.0.0",
+      "isViewEngine": false,
+      "consumableAt12": true,
+      "consumableAt13": true,
+      "ngccVerdict": "not an ngcc case at all",
+      "mechanism": "This library is already Ivy. Its published bytes carry the Ivy instruction set and its .d.ts carries the Ivy declarations, so ngcc reports the target as already processed and does nothing at both 12 and 13 - ngcc decides ownership by the presence of a .metadata.json, and this package has none. The Angular 12 and Angular 13 compilers read the Ivy .d.ts directly and resolved yaga-map together with its [zoom] input in the probe template.",
+      "correctionToPriorReading": "The sealed receipt's wording - 'built against Angular 12 in full compilation mode with no partial declarations for a linker to read' - is exactly right and is not weakened here. What the spike adds is that the missing linker path only bites where the consuming compiler is a different major with no ngcc, i.e. at 16. At 12 and 13 there is no linker step to fail: the bytes are read as they are."
+    },
+    "jw-bootstrap-switch-ng2@2.0.5": {
+      "lastPublishedVersion": "2.0.5",
+      "publishedAt": "2019-01-29T03:31:21.512Z",
+      "deprecated": false,
+      "shippedFormats": "classic ng-packagr ViewEngine layout: bundles/*.umd.js, esm5/, esm2015/, fesm5/, fesm2015/, and jw-bootstrap-switch-ng2.metadata.json",
+      "declaredPeer": "@angular/common, @angular/core, @angular/forms all ^6.0.0-rc.0 || ^6.0.0 || >=7.0.0",
+      "isViewEngine": true,
+      "consumableAt12": true,
+      "consumableAt13": true,
+      "ngccVerdict": "clean back-compilation, no flags, at both lines",
+      "mechanism": "ngcc compiled every format property (fesm2015, fesm5, esm2015, esm5, main) and rewrote the typings with the Ivy declarations. Marker written: all eight properties stamped 12.2.17 in the a12 closure and 13.4.0 in the a13 closure. Angular 13's ngcc does the same work and only labels it differently, printing 'Processing legacy \"View Engine\" libraries:'. The declared >=7.0.0 peer already admits 12 and 13 without a force."
+    },
+    "ng2-slim-loading-bar@4.0.0": {
+      "lastPublishedVersion": "4.0.0",
+      "publishedAt": "2017-04-04T11:50:27.828Z",
+      "deprecated": false,
+      "shippedFormats": "esm5 tree at index.js + src/*.js with four .metadata.json files; main points at bundles/index.umd.js, which is a webpack bundle rather than a rollup UMD",
+      "declaredPeer": "@angular/core ^2.4.7 || ^4.0.0",
+      "isViewEngine": true,
+      "consumableAt12": true,
+      "consumableAt13": true,
+      "conditional": true,
+      "ngccVerdict": "consumable at both lines, but only under two named conditions - this is the library that decides the cell's shape",
+      "conditions": [
+        {
+          "id": "ngcc-properties-order",
+          "appliesTo": "both 12 and 13",
+          "statement": "ngcc must be told to process the module property before main. Under its default property order ngcc gives typings processing to main, which here is a webpack bundle it cannot reflect; it then exits 0 while emitting a typing that still reads 'static forRoot(): ModuleWithProviders' with no generic and no Ivy statics. The application compiler rejects that with NG6005 and the module literal becomes unanalysable, which reproduces the sealed pigallery2 downstream shape in miniature: one root NG6005 plus five NG8001/NG8002 template diagnostics, including a 'not a known element' for a library ngcc had in fact back-compiled correctly. Running ngcc -p module main rewrites the typing to 'static forRoot(): ModuleWithProviders<SlimLoadingBarModule>' with the Ivy statics beside it, and all six diagnostics go at once.",
+          "warning": "an ngcc exit code of 0 is not a verdict for this library"
+        },
+        {
+          "id": "rxjs-major",
+          "appliesTo": "13 only",
+          "statement": "The library deep-imports rxjs/Subject and rxjs/Observable. rxjs 7 no longer ships those paths, and ngcc 13 raises them as a hard missing-dependency error and exits 1. With rxjs 6.6.7 - which Angular 13.4.0's own peer range ^6.5.3 || ^7.4.0 admits - the identical compiler-cli 13.4.0 downgrades it to the same benign deep-import warning Angular 12 emits, and both formats compile. The failure is the rxjs major, not the Angular major, and the control closure proves it."
+        }
+      ]
+    }
+  },
+  "overall": {
+    "feasible": true,
+    "verdict": "A pigallery2 retry at an ngcc-bearing cell is winnable on this gap. All three no-successor libraries are consumable at both Angular 12.2.17 and Angular 13.4.0: two of them by ngcc back-compilation, the third because it was never a ViewEngine package to begin with. An AOT probe that imports all three NgModules and binds one element from each library in a template compiles with exit 0 and zero diagnostics at both lines.",
+    "honestCell": "angular-13.4.0",
+    "honestCellReasoning": [
+      "Angular 13 was the open question and it answers green. The worry that 13 'removed ViewEngine support' is half true and does not bite here: 13 stopped producing ViewEngine libraries, but @angular/compiler-cli 13.4.0 still ships a real ngcc bin at bundles/ngcc/main-ngcc.js and still back-compiles legacy libraries, announcing them as such. ngcc survives as a real entry point through 15.2.10; only 16.2.12 degrades it to the stub the sealed record already names.",
+      "13 costs strictly less ngcc than 12. Angular 13 publishes its own packages Ivy-native, so the closure-wide run has only the two ViewEngine libraries to do. Angular 12 does not: a targeted run there leaves @angular/platform-browser unprocessed and the app compiler raises NG6002 on BrowserModule, so a 12 cell must run ngcc across the whole closure every time.",
+      "13 is one hop closer to the existing 16 cell, which matters because the engine's Angular machinery is written against 16 and a 13 cell leaves a shorter second hop if one is ever taken.",
+      "13's declared Node range ^12.20.0 || ^14.15.0 || >=16.10.0 is satisfied by the Node 16.20.2 runtime the Angular verticals have already materialised, so the cell needs no new runtime acquisition.",
+      "The price of choosing 13 is one pin: rxjs must be held at 6.x. pigallery2 1.7.0 is an Angular 8 application already on rxjs 6, so the pin costs it nothing it was not already paying."
+    ],
+    "fallbackCell": {
+      "id": "angular-12.2.17",
+      "whenToTake": "if the rxjs 6 pin turns out to be incompatible with something else in the migrated pigallery2 closure",
+      "cost": "TypeScript drops to 4.3.5 (peer >=4.2.3 <4.4), and ngcc must run closure-wide over Angular's own packages on every install",
+      "status": "also measured green - the same probe compiles with exit 0 and zero diagnostics at 12"
+    },
+    "nodeEra": {
+      "cellNode": "v16.20.2 (darwin-arm64, native), npm 8.19.4",
+      "provenance": "already materialised under .versionless/cache by the Angular 16 verticals; not re-acquired by this spike",
+      "declaredRanges": {
+        "angular12": "^12.14.1 || >=14.0.0",
+        "angular13": "^12.20.0 || ^14.15.0 || >=16.10.0"
+      },
+      "implication": "The ngcc cell implies no new Node era. Both candidate lines admit Node 16, which is the era the engine already provisions for Angular work, so the cell adds a second Angular line without adding a second runtime.",
+      "untested": "no other Node era was available on this host; nothing here establishes behaviour under Node 12 or 14"
+    },
+    "typescriptEra": {
+      "angular12": "peer >=4.2.3 <4.4 (measured at 4.3.5)",
+      "angular13": "peer >=4.4.2 <4.7 (measured at 4.6.4)"
+    },
+    "t001EstimateVerdict": "holds, and tightens at the risk end rather than the unit end",
+    "t001EstimateReasoning": [
+      "T001 priced the cell at ~25-40 units / 2-4 focused days for cell + one proving app + refreeze + claims regen. Nothing measured here moves the unit count outside that band, and the band's shape changes: the dominant unknown it carried - whether the cell could consume these bytes at all, i.e. whether the whole tranche could be a dead end - is now answered green with executed runs. The estimate should be read as ~25-35 units with the tail risk removed from the mechanism and left where it always belonged, in the claims surgery.",
+      "Two costs the estimate did not name are now visible and both are small. First, the ngcc properties override has to be plumbed somewhere a builder will honour rather than typed at a prompt; call it 1-2 units and see the open question below. Second, era-pinning of floating transitive typings is a real cell hazard: @yaga/leaflet-ng2 depends on @types/leaflet ^1.2.8 and @types/geojson ^7946.0.4, both of which float to versions whose syntax TypeScript 4.3 and 4.6 cannot parse, drowning a probe in TS1005/TS1109 noise from a typings package that has nothing to do with Ivy. Pinning them to the era removes it entirely. Call it 1 unit of cell configuration, and note it generalises past pigallery2 to any era app with floating @types.",
+      "One cost the estimate named stays exactly as expensive: the sealed record states that a new cell invalidates every Angular 16 cell reading, so this is a re-freeze epoch and a claims regeneration, not an additive publish. That remains the majority of the 25-40 and this spike does not reduce it by a unit.",
+      "The proving-app half of the estimate is the part this spike does not de-risk. Three of pigallery2's seven gaps are the pre-Ivy libraries; the sealed receipt is explicit that the compile-stage gap set is open, that four demands remain, and that answering gaps lets the compiler reach code it has not yet read. A green on the libraries is a green on the boundary, not a green on the application."
+    ],
+    "whatThisDoesNotChange": [
+      "The pigallery2 RED stands. It is permanent falsification evidence at the Angular 16 cell and this spike neither retries it nor weakens it.",
+      "The declared support boundary angular-16-pre-ivy-only-dependency stands exactly as published: pre-Ivy-only dependencies in active use are unsupported at the Angular 16 target cell, because 16 has no ngcc. This spike measures a different cell, which is precisely what the boundary's own non-claim anticipated when it said an ngcc-bearing 12/13 cell would consume those bytes. That non-claim is now backed by executed runs rather than by expectation.",
+      "The freeze 27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234 is untouched. No packages/** file was read into or written by this spike."
+    ]
+  },
+  "openQuestions": [
+    "Where does the ngcc properties override live in a real cell? The measurement applied -p module main at the command line. The Angular CLI drives ngcc itself during a build, so the cell needs either an ngcc.config.js entry pinning the ignorable/preferred format for ng2-slim-loading-bar, a package-level override, or a pre-build ngcc pass the builder then finds already done. Which of those the frozen builder path can carry is unmeasured.",
+    "Does pigallery2's own source compile at 12 or 13? This spike answers three of the receipt's seven gaps. The other four are untouched, and the receipt is explicit that clearing gaps lets the compiler reach code it has not yet read.",
+    "Is rxjs 6 viable across the whole migrated pigallery2 closure at Angular 13, or does something else in that tree demand rxjs 7? If it demands 7, the cell is Angular 12, which is measured green and costs only TypeScript 4.3 and a closure-wide ngcc.",
+    "Does the ~125-app fleet estimate hold library-by-library? Three libraries were measured. The 5-of-6 prevalence figure is about the condition, not about these three packages, and a second cohort of pre-Ivy libraries could contain shapes ngcc handles worse - the webpack-UMD-main shape found here was already one such surprise, and it was invisible in the exit code."
+  ],
+  "integrity": {
+    "algorithm": "sha256",
+    "digestOf": "the three evidence documents in this directory are self-describing; no canonical digest is claimed for the spike because it publishes no engine claim"
+  }
+}
