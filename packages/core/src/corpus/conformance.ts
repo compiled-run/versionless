@@ -128,6 +128,10 @@ import {
 	holdoutAngularPigallery2CorpusRecord,
 	verifyHoldoutAngularPigallery2Evidence,
 } from '../receipts/holdout-angular-pigallery2.ts';
+import {
+	ANGULAR_PRE_IVY_BOUNDARY_AMENDMENT,
+	assertAngularPreIvyBoundaryAmendment,
+} from '../receipts/angular-pre-ivy-boundary-amendment.ts';
 
 export const CORPUS_CONFORMANCE_SCHEMA = 'versionless.corpus-conformance.v1' as const;
 
@@ -486,6 +490,11 @@ async function supportBoundaryLedger(root: string): Promise<Array<Record<string,
 		boundary.instanceEvidence.importSites !== 6
 	)
 		throw new Error('Declared support boundary differs from its instance evidence');
+	// The amendment is carried beside the declaration, never merged into it: the
+	// receipt above is immutable, so the reading rules, the prevalence and the
+	// population statement the T022 follow-up ruling added are appended here as
+	// their own record and checked before they are published.
+	assertAngularPreIvyBoundaryAmendment(ANGULAR_PRE_IVY_BOUNDARY_AMENDMENT);
 	return [
 		{
 			...ANGULAR_PRE_IVY_SUPPORT_BOUNDARY,
@@ -499,6 +508,9 @@ async function supportBoundaryLedger(root: string): Promise<Array<Record<string,
 				})),
 			},
 			nonclaims: [...ANGULAR_PRE_IVY_SUPPORT_BOUNDARY.nonclaims],
+			amendment: JSON.parse(
+				JSON.stringify(ANGULAR_PRE_IVY_BOUNDARY_AMENDMENT),
+			) as Record<string, unknown>,
 		},
 	];
 }

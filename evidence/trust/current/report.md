@@ -1,8 +1,8 @@
 # Versionless project trust package
 
-- Canonical SHA-256: `7c80e598e1c8724c5806ddf9708dab4adb102fca0e67cf55311f428450963f45`
-- Deterministic core: `c1489ca874cdc47167a84d1778ed2b04ab31fe85bcdbacf3b85e841c77b929e7`
-- Generated observation: `2026-08-14T03:35:56.222Z`
+- Canonical SHA-256: `7707da23762c0ad57046a4741803f1aa8df4bde862b2e574d6815c1e6763880d`
+- Deterministic core: `2e11b61c52fb0c6491bc2234202c58444bbfcc111376033c53ba26a2013db229`
+- Generated observation: `2026-08-14T04:36:34.698Z`
 - Vulnerability input freshness: **stale** (seven-day maximum age)
 - Integrity: **hash-only; authenticity is not established**
 - Assurance: **this package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation**
@@ -16,7 +16,7 @@
 - [Supported corpus/runtime/bundler matrix](matrix.json) — unsupported and untested cells remain visible.
 - [Capability-coverage map](capability-coverage.json) — every exported migration capability with its proving applications and derived generality classification; single-application capabilities are named experimental, not claimed general.
 - [Adapter freeze record](adapter-freeze.json) — the migration engine adapter surface is frozen at commit `852079a1d163617f810dba7e8b3509bc8e25343a` with composite SHA-256 `f1a63359210b87c04408b27cf8c40e88e1b47d44bcc7f5a9be20d9478dc71012`; the receipts, corpus, and witness registries are deliberately **outside** the freeze so holdout evidence can still be published additively.
-- [Corpus conformance](corpus-conformance.json) — `7c70888a8ea55ee68a122790d42ad52d55b9fcf1efd43104893c166131072547`; 20 verified verticals grouped into exactly 12 source applications; zero designated pilots are verified.
+- [Corpus conformance](corpus-conformance.json) — `bffbd1ae491768b7a81943d6bf0a8528abf0adaaa059018d9db658166efa564c`; 20 verified verticals grouped into exactly 12 source applications; zero designated pilots are verified.
 - The immutable Killed by Google Next.js 12 Pages/webpack production vertical is verified only for its exact fixture; synthetic Next.js 12 Pages, 13 transition/App, and 14 App classification lanes remain **not-tested**, and generic Next.js support is not claimed.
 - [Static script/resource surface](script-surface.json) — truthfully remains scoped to the prior nine verticals, two applications, and eighteen exact static deployment entrypoints; T220 is **not included** because its script surface was not separately observed; dynamic script insertion: **not-tested**; payment-page applicability: **not established**; PCI compliance is **not claimed**.
 - [Qualified-journey runtime script observation](runtime-script-observation.json) — truthfully remains scoped to 36 runs across the prior nine verticals, two applications, and eighteen lanes; T220 is **not included** because its runtime scripts were not separately observed; this is **not global dynamic-insertion coverage**.
@@ -40,6 +40,10 @@
   - No claim that every application carrying a pre-Ivy-only dependency is unmigratable in general: the boundary is declared at the Angular 16 target cell, which is the only Angular cell this engine has.
   - No claim that this boundary is unreachable: an ngcc-bearing multi-hop cell (Angular 12 or 13) would consume those bytes. It is a declared tranche-two commitment, not a silent deferral, and it invalidates every Angular 16 cell reading in this record, so it is not taken here.
   - No claim that the boundary excuses the pigallery2 RED. The RED is permanent falsification evidence and is published unchanged alongside this declaration.
+  - Reading rule `successor-across-names` (ecosystem-availability-fact): A successor reading counts across package names: a dependency has a published Ivy successor when registry deprecation metadata names the successor and that named successor ships published Ivy bytes, even where the successor carries a different package name than the dependency it replaces. The rule reads published registry metadata and published bytes only. It says nothing about whether the frozen adapter carries the corresponding migration; that is what a holdout run measures, and a RED there is valid falsification rather than a boundary.
+  - Reading rule `declared-but-never-imported-is-not-active-use` (ecosystem-availability-fact): A dependency that a manifest declares but the application never imports is not in active application use, and therefore cannot fail the boundary. Active use means an import site in the pinned application source on the build path. The rule is settled by reading the pinned source for import sites, never by asking what a migration would have to do with the dependency.
+  - Prevalence (**5-of-6**, lrapr-t022 boundary ruling, follow-up ruling (Judge, 2026-08-14) after the gate-zero screen): The no-successor pre-Ivy condition was observed in 5 of 6 independently selected webpack-era Angular applications: 1 tested-and-failed and 4 screened-and-failed. The sixth, eShopOnContainers, carries a first-party-successor removal, which is a distinct condition and is not counted in the 5. 1 tested-and-failed (pigallery2); 4 screened-and-failed (cyclos4-ui, ngx-starter-kit, tabby, coreui-free-angular-admin-template); eShopOnContainers carries a first-party-successor removal and is **not counted** in the prevalence.
+  - Population: Any application clearing this gate is, by construction, drawn from a narrower and younger-dependency population than the webpack-era enterprise fleet this goal targets: its entire third-party Angular surface must still be maintained or have a published successor. A GREEN holdout therefore speaks for the supported cell only, and is not evidence about the fleet shape the 5-of-6 prevalence describes.
 - [Data-flow and control mappings](controls.json) — review inputs, not audit conclusions.
 - [Retention and purge status](retention.json) — unresolved policy remains unknown/not-tested.
 

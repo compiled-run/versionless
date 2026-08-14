@@ -1,0 +1,183 @@
+{
+  "schemaVersion": "versionless.official-source.v1",
+  "unit": "lrapr-t023/u3-boundary-amend-candidate3-acquire",
+  "boardTask": "T023",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "attemptSha256": "a6f086af5a6ef79aaabb334a86f1efb7b6bc7a857e664b9103bf03860f9411f8",
+  "result": "source-bound",
+  "startedAt": "2026-08-14T04:24:00Z",
+  "completedAt": "2026-08-14T04:33:00Z",
+  "repository": {
+    "id": 70104825,
+    "fullName": "dotnet-architecture/eShopOnContainers",
+    "private": false,
+    "archived": true,
+    "disabled": false,
+    "defaultBranch": "repo_moved",
+    "responseBytes": 7625,
+    "responseSha256": "f85dae2c1508b77950b723c292988d28596a98e1ed63a939f4b539360a42533b",
+    "metadataLicenseField": null,
+    "metadataLicenseNote": "GitHub's repository metadata reports license: null for this archived repository. The gate is the LICENSE blob addressed by the pinned root tree, not the sidebar, and that blob is MIT with a named holder."
+  },
+  "revision": "a387f21029f0b2d49614d165d5384717d2398f8e",
+  "revisionDetail": {
+    "release": "netcore2.2",
+    "ref": "refs/tags/netcore2.2",
+    "tagObjectSha": "27fc007d4f1252eeaf8ec1e90dbf3fce11f83985",
+    "tagDate": "2019-01-03T18:47:57Z",
+    "tagMessage": "net core 2.2",
+    "tagVerification": "unsigned",
+    "commitSha": "a387f21029f0b2d49614d165d5384717d2398f8e",
+    "commitDate": "2019-01-03T17:42:26Z",
+    "commitMessage": "fixed merge",
+    "commitVerification": "unsigned",
+    "rootTreeSha": "debf546f9450273577ac74490cf906564698beab",
+    "treeEntries": 3150,
+    "treeBlobs": 2385,
+    "treeDirectories": 765,
+    "treeSymlinks": 0,
+    "treeGitlinks": 0,
+    "treeTruncated": false
+  },
+  "license": {
+    "gate": "mandatory license-text-at-pin pre-screen",
+    "verdict": "pass",
+    "spdx": "MIT",
+    "path": "LICENSE",
+    "readAtPin": true,
+    "readFrom": "https://api.github.com/repos/dotnet-architecture/eShopOnContainers/git/blobs/94286c941a5f8fd43e591f2d07693e3355175e8e — the blob addressed by the pinned root tree debf546f9450273577ac74490cf906564698beab, never the default branch",
+    "gitBlobSha1": "94286c941a5f8fd43e591f2d07693e3355175e8e",
+    "bytes": 1084,
+    "copyrightLine": "Copyright (c) .NET Foundation and Contributors",
+    "placeholderCopyright": false,
+    "textCopy": "license-at-pin.txt",
+    "confirmedFromArchiveBytes": true,
+    "matchesGateZeroScreen": true,
+    "gateZeroScreenDigest": "baebca0309090f4eca1b7a82c836cc91e48b2b92139c2280fb0ff69af922c2ae"
+  },
+  "licenseSha256": "baebca0309090f4eca1b7a82c836cc91e48b2b92139c2280fb0ff69af922c2ae",
+  "sha256": "e2b1ee45448caafe0e19fd06aba1aaa5c16cddc4d51b7a0ca27f1363689754d2",
+  "archive": {
+    "url": "https://codeload.github.com/dotnet-architecture/eShopOnContainers/tar.gz/a387f21029f0b2d49614d165d5384717d2398f8e",
+    "format": "tar.gz",
+    "bytes": 454750000,
+    "sha256": "e2b1ee45448caafe0e19fd06aba1aaa5c16cddc4d51b7a0ca27f1363689754d2",
+    "streams": 2,
+    "byteIdentical": true,
+    "storedAt": "evidence/ingests/angular-eshop-webspa-netcore2-2/archive/archive-1.tar.gz",
+    "storedTracked": false,
+    "storageNote": "the bytes are held beside this receipt but gitignored, mirroring the repository convention that ingest evidence is tracked JSON while acquired source bytes are not; identity is carried by the sha256 above"
+  },
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/dotnet-architecture/eShopOnContainers",
+      "status": 200,
+      "bytes": 7625,
+      "sha256": "f85dae2c1508b77950b723c292988d28596a98e1ed63a939f4b539360a42533b",
+      "purpose": "repository metadata"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/dotnet-architecture/eShopOnContainers/git/ref/tags/netcore2.2",
+      "status": 200,
+      "bytes": 389,
+      "sha256": "4467735048f3dbe673dc3b7385cfd672206dbb5287e364590810c276d36c69d5",
+      "purpose": "pinned tag ref"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/dotnet-architecture/eShopOnContainers/git/tags/27fc007d4f1252eeaf8ec1e90dbf3fce11f83985",
+      "status": 200,
+      "bytes": 718,
+      "sha256": "fe2349c7e7ae46b796d185ebe1483d9e6e5dfa2f0e4f90ccf3dec90206260b9b",
+      "purpose": "annotated tag object"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/dotnet-architecture/eShopOnContainers/git/commits/a387f21029f0b2d49614d165d5384717d2398f8e",
+      "status": 200,
+      "bytes": 1212,
+      "sha256": "8a0bb865be435e766383c4bf1978ee2f17ec22992ec30c9a489ffc8e104f4b02",
+      "purpose": "pinned commit"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/dotnet-architecture/eShopOnContainers/git/trees/debf546f9450273577ac74490cf906564698beab?recursive=1",
+      "status": 200,
+      "bytes": 919142,
+      "sha256": "8655bb73d39c5cb139d1ae9163d239052755b059789a28a96b76754a462a59c6",
+      "purpose": "recursive root tree at the pin"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/dotnet-architecture/eShopOnContainers/git/blobs/94286c941a5f8fd43e591f2d07693e3355175e8e",
+      "status": 200,
+      "bytes": 1808,
+      "sha256": "def4eb1b802cd75ca6b9657a421cec3f2a48cafd7c2224797aabebf9c2c2da94",
+      "purpose": "LICENSE at the pinned revision"
+    },
+    {
+      "endpoint": "https://codeload.github.com/dotnet-architecture/eShopOnContainers/tar.gz/a387f21029f0b2d49614d165d5384717d2398f8e",
+      "status": 200,
+      "bytes": 454750000,
+      "sha256": "e2b1ee45448caafe0e19fd06aba1aaa5c16cddc4d51b7a0ca27f1363689754d2",
+      "stream": 1
+    },
+    {
+      "endpoint": "https://codeload.github.com/dotnet-architecture/eShopOnContainers/tar.gz/a387f21029f0b2d49614d165d5384717d2398f8e",
+      "status": 200,
+      "bytes": 454750000,
+      "sha256": "e2b1ee45448caafe0e19fd06aba1aaa5c16cddc4d51b7a0ca27f1363689754d2",
+      "stream": 2
+    }
+  ],
+  "archiveParity": {
+    "singleRoot": "eShopOnContainers-a387f21029f0b2d49614d165d5384717d2398f8e",
+    "scope": "full tree — every blob the pinned root tree addresses, not only the application subpath",
+    "safeEntries": 2385,
+    "regularFiles": 2385,
+    "directories": 765,
+    "specialEntries": 0,
+    "gitBlobs": 2385,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "method": "every blob in the pinned recursive tree was re-hashed as a git blob from the extracted archive and compared to its tree sha",
+    "normalizedManifestSha256": "78e63de7722bfeb06d379b431e5b4732d4e171d51ef8ef39f229d705ab1fc659"
+  },
+  "applicationSubpath": {
+    "path": "src/Web/WebSPA",
+    "role": "the migration input for this candidate is this subpath alone",
+    "containmentIsRecordedNotFiltered": "The acquisition and the parity check above cover the whole pinned monorepo. The narrowing to src/Web/WebSPA is stated here as a fact of the record, so that a later unit reading only the subpath is doing something this receipt already declared rather than silently trimming the acquired bytes.",
+    "blobs": 131,
+    "directories": 29,
+    "bytes": 1955860,
+    "shareOfTreeBlobs": "131/2385",
+    "normalizedManifestSha256": "6e5b92201e25103cd5ff6e21cf196d624f02398de9a7289d9b0898021a2d6e07",
+    "everyBlobVerified": true,
+    "outsideTheSubpath": "2254 blobs of .NET services, Kubernetes and Docker deployment assets, and other clients. None of them is a migration input, and none of them was excluded from the parity check."
+  },
+  "transaction": {
+    "attemptedRequests": 8,
+    "acceptedResponses": 8,
+    "rejectedResponses": 0,
+    "acceptedWireBytes": 910180036,
+    "acceptedDecodedBytes": 910180036,
+    "redirectsObserved": 0,
+    "setCookiesUsed": 0,
+    "credentialsUsed": 0,
+    "retries": 0,
+    "archivesByteIdentical": true,
+    "archiveMatchesGitTree": true,
+    "publishedSource": true,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "extraction": {
+    "intoCorpus": false,
+    "intoFixtures": false,
+    "scratchOnly": true,
+    "note": "unpacked only outside the repository for read-only detection; no baseline, no migration and no run happened in this unit"
+  },
+  "nonclaims": [
+    "The unsigned annotated tag and unsigned commit do not establish signer authenticity.",
+    "Beyond the MIT license text present at this exact revision, no retained-asset right, dependency closure, build, browser behavior, migration feasibility, pilot status, production readiness, certification or legal approval is established.",
+    "Acquisition is not selection bias remedied: this candidate was committed under the fixed order of the T023 candidate list after the T022 follow-up ruling overturned its gate-zero verdict, and nothing about how it would behave under migration was measured before commitment.",
+    "No claim that the WebSPA subpath can be built, installed or migrated. The detection facts in attempt.json are read-only readings of the pinned bytes."
+  ]
+}

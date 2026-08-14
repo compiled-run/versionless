@@ -53,6 +53,10 @@ import {
 	adapterFreezeRecord,
 	verifyAdapterFreezeRecord,
 } from '../src/freeze.ts';
+import {
+	ANGULAR_PRE_IVY_BOUNDARY_POPULATION_STATEMENT,
+	ANGULAR_PRE_IVY_BOUNDARY_PREVALENCE,
+} from '../../core/src/receipts/angular-pre-ivy-boundary-amendment.ts';
 import { ingestTrustInputs, lockPackages, osvRequest } from '../src/ingest.ts';
 import { verifyTrustPackage } from '../src/verify.ts';
 
@@ -1158,6 +1162,25 @@ snapshots:
 				state: 'unsupported',
 				cell: 'angular-16-browser-builder',
 			});
+			// The amendment travels with the boundary into the matrix and into the
+			// human report: the prevalence with tested and screened kept apart, and
+			// the population statement that keeps a future GREEN from being read as a
+			// fleet claim.
+			expect(matrixBoundaries[0].amendment).toMatchObject({
+				amends: 'angular-16-pre-ivy-only-dependency',
+				appendOnly: true,
+				populationStatement: ANGULAR_PRE_IVY_BOUNDARY_POPULATION_STATEMENT,
+			});
+			expect(report).toContain(ANGULAR_PRE_IVY_BOUNDARY_PREVALENCE.statement);
+			expect(report).toContain('**5-of-6**');
+			expect(report).not.toContain('6-of-6');
+			expect(report).toContain('1 tested-and-failed (pigallery2)');
+			expect(report).toContain(
+				'4 screened-and-failed (cyclos4-ui, ngx-starter-kit, tabby, coreui-free-angular-admin-template)',
+			);
+			expect(report).toContain(ANGULAR_PRE_IVY_BOUNDARY_POPULATION_STATEMENT);
+			expect(report).toContain('Reading rule `successor-across-names`');
+			expect(report).toContain('Reading rule `declared-but-never-imported-is-not-active-use`');
 			const scriptSurface = JSON.parse(
 				await readFile(path.join(fixture.current, 'script-surface.json'), 'utf8'),
 			) as { summary: Record<string, unknown>; boundaries: Record<string, unknown> };
@@ -1476,6 +1499,70 @@ snapshots:
 					);
 				else await verification.toThrow('independent re-derivation');
 			}
+		} finally {
+			await rm(fixture.directory, { recursive: true, force: true });
+		}
+	}, 30_000);
+
+	it('rejects a stripped boundary prevalence or a dropped population statement', async () => {
+		const fixture = await setup();
+		try {
+			// Removing the sentence from the human report is the cheapest way to
+			// stop saying an inconvenient thing, so it is the first case: the report
+			// is not hash-linked the way the JSON artifacts are, and this is what
+			// closes that gap.
+			for (const [label, replace] of [
+				['prevalence', ANGULAR_PRE_IVY_BOUNDARY_PREVALENCE.statement],
+				['population', ANGULAR_PRE_IVY_BOUNDARY_POPULATION_STATEMENT],
+			] as const) {
+				const output = path.join(fixture.directory, `report-${label}`);
+				await cp(fixture.current, output, { recursive: true });
+				const reportPath = path.join(output, 'report.md');
+				const report = await readFile(reportPath, 'utf8');
+				expect(report).toContain(replace);
+				await writeFile(reportPath, report.replace(replace, ''));
+				await expect(
+					verifyTrustPackage({
+						rootDir: root,
+						outputDir: output,
+						environment: offline,
+						now: observedAt,
+					}),
+				).rejects.toThrow('prevalence or population statement');
+			}
+			// Rounding the prevalence up to six of six in the report is refused for
+			// the same reason, and by name.
+			const inflated = path.join(fixture.directory, 'report-inflated');
+			await cp(fixture.current, inflated, { recursive: true });
+			const inflatedPath = path.join(inflated, 'report.md');
+			await writeFile(
+				inflatedPath,
+				(await readFile(inflatedPath, 'utf8')).replace('**5-of-6**', '**6-of-6**'),
+			);
+			await expect(
+				verifyTrustPackage({
+					rootDir: root,
+					outputDir: inflated,
+					environment: offline,
+					now: observedAt,
+				}),
+			).rejects.toThrow('prevalence or population statement');
+			// And stripping the amendment out of the matrix breaks the matrix's
+			// agreement with the corpus data it is supposed to carry.
+			const stripped = path.join(fixture.directory, 'matrix-stripped');
+			await cp(fixture.current, stripped, { recursive: true });
+			await rewriteArtifact(stripped, 'matrix.json', (value) => {
+				const boundaries = value.boundaries as Array<Record<string, unknown>>;
+				delete boundaries[0].amendment;
+			});
+			await expect(
+				verifyTrustPackage({
+					rootDir: root,
+					outputDir: stripped,
+					environment: offline,
+					now: observedAt,
+				}),
+			).rejects.toThrow('declared support boundaries');
 		} finally {
 			await rm(fixture.directory, { recursive: true, force: true });
 		}

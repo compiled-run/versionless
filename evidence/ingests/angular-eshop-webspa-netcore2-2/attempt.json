@@ -1,0 +1,203 @@
+{
+  "schemaVersion": "versionless.ingest-attempt.v1",
+  "unit": "lrapr-t023/u3-boundary-amend-candidate3-acquire",
+  "boardTask": "T023",
+  "stage": "stage-2 — commit and acquire candidate 3 under the fixed §3 order",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "outcome": "acquired-and-detected",
+  "candidate": {
+    "rank": 3,
+    "repository": "https://github.com/dotnet-architecture/eShopOnContainers",
+    "requestedRelease": "netcore2.2",
+    "applicationSubpath": "src/Web/WebSPA",
+    "selectedUnder": "the fixed candidate order of docs/goals/legacy-react-angular-production-readiness/notes/t023-candidate-selection.md §3",
+    "commitmentBasis": "the T022 follow-up ruling (Judge, 2026-08-14) overturned this candidate's gate-zero boundary verdict; the order forbids substitution, so rank 3 is the candidate",
+    "substitutionConsidered": false
+  },
+  "gateZero": {
+    "licenseAtPin": {
+      "spdx": "MIT",
+      "path": "LICENSE",
+      "blobSha1": "94286c941a5f8fd43e591f2d07693e3355175e8e",
+      "bytes": 1084,
+      "sha256": "baebca0309090f4eca1b7a82c836cc91e48b2b92139c2280fb0ff69af922c2ae",
+      "copyrightLine": "Copyright (c) .NET Foundation and Contributors",
+      "placeholderCopyright": false,
+      "reconfirmedThisUnit": true,
+      "identicalToScreen": true
+    },
+    "unused": {
+      "verdict": "pass",
+      "note": "carried from the gate-zero screen; this unit re-read the pin rather than re-running the unused sweep"
+    },
+    "boundary": {
+      "screenVerdict": "fail (@angular/http)",
+      "ruledVerdict": "pass — overturned by the T022 follow-up ruling under the successor-across-names rule",
+      "overturnRecord": "docs/goals/legacy-react-angular-production-readiness/notes/t023-candidate-selection.md § Appendix A",
+      "originalScreenTextUnchanged": true
+    }
+  },
+  "acquisition": {
+    "method": "codeload tarball at the pinned commit, double-fetched and byte-identical, sha256-pinned, then full-tree git-blob parity against the pinned recursive tree",
+    "matchesT018Method": true,
+    "commit": "a387f21029f0b2d49614d165d5384717d2398f8e",
+    "rootTree": "debf546f9450273577ac74490cf906564698beab",
+    "archiveSha256": "e2b1ee45448caafe0e19fd06aba1aaa5c16cddc4d51b7a0ca27f1363689754d2",
+    "archiveBytes": 454750000,
+    "streamsByteIdentical": true,
+    "parity": {
+      "scope": "full tree",
+      "treeBlobs": 2385,
+      "verifiedBlobs": 2385,
+      "missing": 0,
+      "mismatched": 0,
+      "extra": 0
+    },
+    "subpathContainment": {
+      "path": "src/Web/WebSPA",
+      "blobs": 131,
+      "directories": 29,
+      "bytes": 1955860,
+      "recordedNotFiltered": "the acquisition and the parity are whole-repository; the migration input being this subpath alone is recorded here as a fact so no later unit narrows silently"
+    }
+  },
+  "detect": {
+    "readOnly": true,
+    "extractedTo": "scratch outside the repository",
+    "manifest": {
+      "path": "src/Web/WebSPA/package.json",
+      "blobSha1": "1c2b54af9d1bc57057395fbd600b2c8f9b67bafe",
+      "name": "eshopaspnetnetcoredockerspa",
+      "private": true
+    },
+    "angular": {
+      "framework": "6.1.4",
+      "declaration": "@angular/core, common, compiler, forms, http, platform-browser, platform-browser-dynamic, router pinned exactly at 6.1.4; @angular/animations at ^6.1.4",
+      "compilerCli": "6.1.4",
+      "typescript": "2.9.2",
+      "rxjs": "6.2.2",
+      "zoneJs": "^0.8.26"
+    },
+    "angularCliGeneration": {
+      "cli": "^6.1.5",
+      "buildAngular": "~0.7.0",
+      "workspaceFile": "angular.json",
+      "workspaceVersion": 1,
+      "defaultProject": "WebSPA",
+      "projects": ["WebSPA", "WebSPA-e2e"],
+      "builder": "@angular-devkit/build-angular:browser",
+      "serveBuilder": "@angular-devkit/build-angular:dev-server",
+      "testBuilder": "@angular-devkit/build-angular:karma",
+      "sourceRoot": "Client",
+      "main": "Client/main.ts",
+      "polyfills": "Client/polyfills.ts",
+      "tsConfig": "Client/tsconfig.app.json",
+      "outputPath": "wwwroot",
+      "styles": ["Client/globals.scss"],
+      "productionBuildScript": "ng build --prod --aot --extract-css",
+      "note": "the first angular.json workspace generation (CLI 6), which no counted Angular vertical covers"
+    },
+    "node": {
+      "enginesField": "absent",
+      "nvmrc": "absent",
+      "dockerfileBuildImage": "node:8.11",
+      "dockerfileNote": "src/Web/WebSPA/Dockerfile pins ARG NODE_IMAGE=node:8.11 for the npm install/build stage and builds the SPA inside a microsoft/dotnet:2.2 image chain",
+      "declaredNodeRange": "unknown — the application declares no engines range; node:8.11 is the image the repository's own Dockerfile builds it with, which is a build-image fact rather than a declared engines range"
+    },
+    "packageManager": {
+      "manager": "npm",
+      "lockfile": "src/Web/WebSPA/package-lock.json",
+      "lockfileVersion": 1,
+      "lockedDependencies": 902,
+      "yarnLock": "absent"
+    },
+    "typescriptSurface": {
+      "filesUnderClient": 57,
+      "specFiles": 2,
+      "declarationFiles": ["Client/typings.d.ts"],
+      "measurement": "every *.ts file under src/Web/WebSPA/Client at the pin",
+      "differenceFromScreen": "the gate-zero screen reported a 60-file compilation graph rooted at Client/main.ts. That is a graph traversal; this is a file listing of the same subpath. Both are recorded and neither is reconciled into the other."
+    },
+    "angularHttpUsage": {
+      "package": "@angular/http",
+      "declaredVersion": "6.1.4",
+      "importSites": 6,
+      "files": 6,
+      "sites": [
+        {
+          "site": "Client/modules/shared/shared.module.ts:5",
+          "imported": ["HttpModule", "JsonpModule"],
+          "kind": "NgModule-scope value import"
+        },
+        {
+          "site": "Client/modules/shared/services/security.service.ts:2",
+          "imported": ["Http", "Response", "Headers"],
+          "kind": "value import — Http is injected in the constructor and Headers is constructed"
+        },
+        {
+          "site": "Client/modules/basket/basket.service.ts:2",
+          "imported": ["Response"],
+          "kind": "type-position import only"
+        },
+        {
+          "site": "Client/modules/catalog/catalog.service.ts:2",
+          "imported": ["Response"],
+          "kind": "type-position import only"
+        },
+        {
+          "site": "Client/modules/campaigns/campaigns.service.ts:2",
+          "imported": ["Response"],
+          "kind": "type-position import only"
+        },
+        {
+          "site": "Client/modules/orders/orders.service.ts:2",
+          "imported": ["Response"],
+          "kind": "type-position import only"
+        }
+      ],
+      "coexistingSuccessorUse": {
+        "package": "@angular/common/http",
+        "importSites": 3,
+        "sites": [
+          "Client/modules/app.module.ts:4 — HttpClientModule, imported into the root NgModule",
+          "Client/modules/shared/services/data.service.ts:2 — HttpClient, HttpHeaders, HttpErrorResponse",
+          "Client/modules/shared/services/configuration.service.ts:2 — HttpClient, HttpHeaders, HttpErrorResponse"
+        ],
+        "reading": "the application is already half-migrated at the pin: HttpClientModule is in the root module and two services use HttpClient, while the legacy HttpModule/JsonpModule and one Http-injecting service remain. Recorded as an observed shape only — no claim about what a migration must do with it."
+      },
+      "prebootCheck": {
+        "package": "preboot",
+        "declaredVersion": "6.0.0-beta.5",
+        "importSitesFound": 0,
+        "serverSideRenderEntries": "none — no main.server.ts and no app.server.module.ts anywhere in the pinned tree",
+        "verdict": "declared but never imported — not active use, matching the preboot rule the follow-up ruling codified"
+      }
+    },
+    "backendCoupling": {
+      "shape": "browser SPA served by, and configured at runtime by, its own ASP.NET Core host inside a polyglot .NET microservice solution",
+      "whatTheApplicationItselfDeclares": [
+        "Client/modules/shared/services/configuration.service.ts fetches `${document.baseURI}Home/Configuration` at startup and stores identityUrl, marketingUrl, purchaseUrl, signalrHubUrl and activateCampaignDetailFunction from the response",
+        "Client/environments/environment.ts and environment.prod.ts carry only { production: boolean } — no service URLs are baked into the built bundle",
+        "src/Web/WebSPA/appsettings.json (the .NET host's own settings, not the SPA bundle) declares IdentityUrl http://localhost:5105, MarketingUrl http://localhost:5110, CallBackUrl http://localhost:5104/, PurchaseUrl http://localhost:5200",
+        "Client/modules/shared/services/signalr.service.ts opens a @aspnet/signalr HubConnection against the signalrHubUrl the server settings supply"
+      ],
+      "consequence": "every backend URL the SPA talks to is resolved at runtime from its host, so the compiled bundle carries none of them",
+      "unknowns": [
+        "whether the SPA's own npm build (ng build --prod --aot --extract-css) needs any .NET service running — not measured in this unit",
+        "whether the runtime configuration fetch can be satisfied without the ASP.NET host — not measured",
+        "whether any journey is observable without the microservice solution — not measured"
+      ]
+    },
+    "unknownsPreserved": [
+      "no installability, no build, no migration and no run was attempted",
+      "no dependency closure was resolved; the 902 lockfile entries are a declared count, not a resolved closure",
+      "no Node runtime was selected for a baseline lane; the application declares no engines range",
+      "no claim about whether the frozen adapter carries the @angular/http surface — that is exactly what the stage-4 holdout run measures"
+    ]
+  },
+  "boundaries": [
+    "This record establishes acquisition and read-only detection facts, nothing else.",
+    "The overturn of the gate-zero verdict is the Judge's, recorded in the T022 follow-up ruling and appended to the selection note; this unit did not re-decide it.",
+    "A RED at stage 4 is valid falsification of the frozen adapter and halts the run rather than reopening the freeze."
+  ]
+}

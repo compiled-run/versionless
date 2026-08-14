@@ -15,6 +15,11 @@ import {
 	buildCapabilityCoverage,
 	verifyCapabilityCoverage,
 } from '../../core/src/receipts/capability-coverage.ts';
+import {
+	ANGULAR_PRE_IVY_BOUNDARY_POPULATION_STATEMENT,
+	ANGULAR_PRE_IVY_BOUNDARY_PREVALENCE,
+	assertAngularPreIvyBoundaryAmendment,
+} from '../../core/src/receipts/angular-pre-ivy-boundary-amendment.ts';
 import { ANGULAR_REALWORLD_V15_TO_V16_RECEIPT } from '../../core/src/receipts/angular-realworld-v15-to-v16.ts';
 import { WITNESS_ANGULAR_REALWORLD_RECEIPT_PATH } from '../../core/src/receipts/witness-angular-realworld.ts';
 import { REACT_PAPERCUPS_FIXTURE } from '../../core/src/receipts/witness-react-papercups.ts';
@@ -895,6 +900,12 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 			asString(evidence.receipt, 'support boundary receipt').length === 0
 		)
 			throw new Error('A declared support boundary was upgraded or stripped of its evidence');
+		// The amendment is where the uncomfortable parts live — the observed
+		// prevalence with tested and screened kept apart, and the population a
+		// future GREEN would speak for. Checked here as emitted data rather than
+		// trusted from the generator, because a stripped prevalence and a rounded-up
+		// one both read fine on their own.
+		assertAngularPreIvyBoundaryAmendment(boundary.amendment);
 	}
 	if (
 		!Array.isArray(matrix.boundaries) ||
@@ -1390,6 +1401,18 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 		!report.includes('not certification')
 	)
 		throw new Error('Derived Markdown omits mandatory non-claims');
+	// A boundary whose prevalence or population statement survives in the JSON but
+	// falls out of the human report is the same failure as deleting it: the report
+	// is the artifact an enterprise reader actually reads.
+	if (
+		!report.includes(ANGULAR_PRE_IVY_BOUNDARY_PREVALENCE.statement) ||
+		!report.includes(`**${ANGULAR_PRE_IVY_BOUNDARY_PREVALENCE.published}**`) ||
+		report.includes(ANGULAR_PRE_IVY_BOUNDARY_PREVALENCE.neverPublishedAs) ||
+		!report.includes(ANGULAR_PRE_IVY_BOUNDARY_POPULATION_STATEMENT)
+	)
+		throw new Error(
+			'Derived Markdown omits the support-boundary prevalence or population statement',
+		);
 	if (
 		holdoutMarkers.some((marker) => !report.includes(marker)) ||
 		!report.includes('counted in no lineage numerator')

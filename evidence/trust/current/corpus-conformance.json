@@ -1829,7 +1829,119 @@
           "No claim that every application carrying a pre-Ivy-only dependency is unmigratable in general: the boundary is declared at the Angular 16 target cell, which is the only Angular cell this engine has.",
           "No claim that this boundary is unreachable: an ngcc-bearing multi-hop cell (Angular 12 or 13) would consume those bytes. It is a declared tranche-two commitment, not a silent deferral, and it invalidates every Angular 16 cell reading in this record, so it is not taken here.",
           "No claim that the boundary excuses the pigallery2 RED. The RED is permanent falsification evidence and is published unchanged alongside this declaration."
-        ]
+        ],
+        "amendment": {
+          "schemaVersion": "versionless.angular-pre-ivy-boundary-amendment.v1",
+          "amends": "angular-16-pre-ivy-only-dependency",
+          "appendOnly": true,
+          "declaredBy": "lrapr-t022 boundary ruling, follow-up ruling (Judge, 2026-08-14) after the gate-zero screen",
+          "publishedBy": "lrapr-t023/u3-boundary-amend-candidate3-acquire",
+          "immutabilityNote": "Appended beside the declaration, never merged into it. The pigallery2 receipt that established the boundary is unchanged, its digest is unchanged, and the boundary condition, mechanism, certification language and non-claims are unchanged. This record only adds reading rules, prevalence and the population statement.",
+          "readingRules": [
+            {
+              "id": "successor-across-names",
+              "rule": "A successor reading counts across package names: a dependency has a published Ivy successor when registry deprecation metadata names the successor and that named successor ships published Ivy bytes, even where the successor carries a different package name than the dependency it replaces.",
+              "kind": "ecosystem-availability-fact",
+              "neverAnAdapterCapabilityFact": "The rule reads published registry metadata and published bytes only. It says nothing about whether the frozen adapter carries the corresponding migration; that is what a holdout run measures, and a RED there is valid falsification rather than a boundary.",
+              "evidenceRequired": [
+                "registry deprecation metadata on the dependency that names the successor package",
+                "the named successor's published Ivy bytes at the target cell"
+              ],
+              "precedent": "Successor readings across package names are the boundary mechanism the record already used: the G3 ngx-toastr successor-line table read a successor line rather than a same-name version bump.",
+              "instance": {
+                "package": "@angular/http",
+                "deprecationMessage": "Package no longer supported. Use @angular/common instead, see https://angular.io/guide/deprecations#angularhttp",
+                "successorPackageNamed": "@angular/common",
+                "successorEntryPoint": "@angular/common/http",
+                "nameDifference": "The registry string names the package `@angular/common`; the successor API surface inside it is the `@angular/common/http` entry point. The ruling paraphrased the entry point, the registry names the package, and both point at the same first-party successor.",
+                "newestPublishedVersion": "7.2.16",
+                "distTags": {
+                  "latest": "7.2.16",
+                  "next": "8.0.0-beta.10",
+                  "v4-lts": "4.4.7",
+                  "v5-lts": "5.2.11"
+                },
+                "versionsPublished": 252,
+                "versionsCarryingThisDeprecation": 122,
+                "distinctDeprecationMessages": 1,
+                "packumentModified": "2022-06-12T14:41:58.643Z",
+                "capturedBy": "lrapr-t023/u3-boundary-amend-candidate3-acquire",
+                "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+                "sources": [
+                  {
+                    "url": "https://registry.npmjs.org/@angular/http/7.2.16",
+                    "accept": "application/json",
+                    "status": 200,
+                    "bytes": 3086,
+                    "sha256": "f3eeae03e225e29b6a877313eaedac08ac8eb37d964118ce88697039061faadf"
+                  },
+                  {
+                    "url": "https://registry.npmjs.org/@angular/http",
+                    "accept": "application/vnd.npm.install-v1+json",
+                    "status": 200,
+                    "bytes": 253997,
+                    "sha256": "fd36610eb553adacaa5110f5ebcb269533d3a1cc3e02eda9fbd4e29834d3a76c"
+                  }
+                ]
+              }
+            },
+            {
+              "id": "declared-but-never-imported-is-not-active-use",
+              "rule": "A dependency that a manifest declares but the application never imports is not in active application use, and therefore cannot fail the boundary. Active use means an import site in the pinned application source on the build path.",
+              "kind": "ecosystem-availability-fact",
+              "neverAnAdapterCapabilityFact": "The rule is settled by reading the pinned source for import sites, never by asking what a migration would have to do with the dependency.",
+              "evidenceRequired": [
+                "the pinned compilation graph, rooted at the application entry point",
+                "the absence of any import site for the dependency in that graph"
+              ],
+              "instance": {
+                "package": "preboot",
+                "application": "eShopOnContainers",
+                "declaredVersion": "6.0.0-beta.5",
+                "verdict": "declared but never imported — not active use, so it does not fail the boundary",
+                "evidence": "The WebSPA compilation graph is 60 TypeScript files rooted at Client/main.ts; main.ts, app.module.ts and shared.module.ts carry no preboot import, and the tree has no server-side-rendering entry (main.server.ts / app.server.module.ts are absent), which is the only thing preboot exists for."
+              }
+            }
+          ],
+          "prevalence": {
+            "statement": "The no-successor pre-Ivy condition was observed in 5 of 6 independently selected webpack-era Angular applications: 1 tested-and-failed and 4 screened-and-failed. The sixth, eShopOnContainers, carries a first-party-successor removal, which is a distinct condition and is not counted in the 5.",
+            "applicationsExamined": 6,
+            "applicationsObservedWithTheCondition": 5,
+            "published": "5-of-6",
+            "neverPublishedAs": "6-of-6",
+            "tested": {
+              "count": 1,
+              "applications": [
+                "pigallery2"
+              ],
+              "strength": "tested-and-failed",
+              "method": "ingested at a pin, baseline lane run green in the era toolchain, migrated lane run to a RED with no artifact ever produced",
+              "evidence": "evidence/runs/holdout-angular-pigallery2/receipt.json"
+            },
+            "screened": {
+              "count": 4,
+              "applications": [
+                "cyclos4-ui",
+                "ngx-starter-kit",
+                "tabby",
+                "coreui-free-angular-admin-template"
+              ],
+              "strength": "screened-and-failed",
+              "method": "boundary-only gate-zero screen from pinned manifests, npm registry documents and published bytes, with the import site found in the pinned source; never installed, built, migrated or trialled",
+              "evidence": "docs/goals/legacy-react-angular-production-readiness/notes/t023-candidate-selection.md"
+            },
+            "distinctCondition": {
+              "count": 1,
+              "application": "eShopOnContainers",
+              "condition": "first-party-successor removal",
+              "why": "The failing dependency, @angular/http, was removed from the framework with a first-party successor named in its registry deprecation metadata, whose bytes are Ivy at the target cell. That is not a dead third-party library with no successor to align to, so it is a different — and narrower — condition than the boundary describes.",
+              "countedInPrevalence": false
+            },
+            "distinctionRationale": "A tested failure and a screened failure are different strengths of evidence and are never merged into one number: the tested one measured a build, the screened ones read published metadata. Collapsing them, or counting the distinct sixth condition, would overstate what was measured.",
+            "sourceRecord": "docs/goals/legacy-react-angular-production-readiness/notes/t023-candidate-selection.md"
+          },
+          "populationStatement": "Any application clearing this gate is, by construction, drawn from a narrower and younger-dependency population than the webpack-era enterprise fleet this goal targets: its entire third-party Angular surface must still be maintained or have a published successor. A GREEN holdout therefore speaks for the supported cell only, and is not evidence about the fleet shape the 5-of-6 prevalence describes."
+        }
       }
     ],
     "authenticity": "not-established",
@@ -2019,6 +2131,6 @@
   },
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "7c70888a8ea55ee68a122790d42ad52d55b9fcf1efd43104893c166131072547"
+    "canonicalDigest": "bffbd1ae491768b7a81943d6bf0a8528abf0adaaa059018d9db658166efa564c"
   }
 }

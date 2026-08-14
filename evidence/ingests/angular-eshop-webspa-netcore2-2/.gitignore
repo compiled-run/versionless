@@ -1,0 +1,8 @@
+# Acquired source bytes live beside this receipt but are not tracked, mirroring
+# the repository's ingest convention (.versionless/cache/ is likewise ignored).
+# The archive's identity is pinned by sha256 in source.json and is re-acquirable
+# byte-for-byte from the recorded codeload URL. This archive is large (454.75 MB)
+# because the pinned repository is a polyglot .NET monorepo; the migration input
+# is the src/Web/WebSPA subpath alone, and that containment is recorded in
+# source.json rather than applied by trimming these bytes.
+archive/

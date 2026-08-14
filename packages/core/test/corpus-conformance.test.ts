@@ -60,6 +60,11 @@ import {
 	holdoutAngularPigallery2CorpusRecord,
 	verifyHoldoutAngularPigallery2Evidence,
 } from '../src/receipts/holdout-angular-pigallery2.ts';
+import {
+	ANGULAR_PRE_IVY_BOUNDARY_AMENDMENT,
+	ANGULAR_PRE_IVY_BOUNDARY_POPULATION_STATEMENT,
+	assertAngularPreIvyBoundaryAmendment,
+} from '../src/receipts/angular-pre-ivy-boundary-amendment.ts';
 import { reactHospitalrunAggregateMember } from '../src/corpus/conformance.ts';
 import { receiptDigest, sha256 } from '../src/receipts/canonicalize.ts';
 import { renderReceipt } from '../src/receipts/render.ts';
@@ -1673,6 +1678,136 @@ describe('canonical corpus conformance', () => {
 			'jw-bootstrap-switch-ng2',
 		]);
 		expect(evidence.wall.reduce((total, entry) => total + entry.importSites.length, 0)).toBe(6);
+	});
+
+	it('publishes the boundary amendment: reading rules, 5-of-6 prevalence, population statement', async () => {
+		const result = await analyzeCorpusConformance({ rootDir: root });
+		const boundaries = (result.coverage as Record<string, unknown>)
+			.supportBoundaries as Array<Record<string, unknown>>;
+		const amendment = boundaries[0]?.amendment as Record<string, unknown>;
+		// The amendment is carried beside the declaration and never merged into
+		// it: the boundary's own condition, mechanism and certification are the
+		// immutable receipt's, and the amendment says which boundary it amends.
+		expect(amendment.amends).toBe(ANGULAR_PRE_IVY_SUPPORT_BOUNDARY.id);
+		expect(amendment.appendOnly).toBe(true);
+		expect(boundaries[0]?.condition).toBe(ANGULAR_PRE_IVY_SUPPORT_BOUNDARY.condition);
+		expect(boundaries[0]?.certification).toBe(ANGULAR_PRE_IVY_SUPPORT_BOUNDARY.certification);
+		const rules = amendment.readingRules as Array<Record<string, unknown>>;
+		expect(rules.map((rule) => rule.id)).toEqual([
+			'successor-across-names',
+			'declared-but-never-imported-is-not-active-use',
+		]);
+		// Both rules are ecosystem-availability facts. A boundary read off what the
+		// adapter can be made to do would be a capability claim in disguise, and it
+		// is exactly what the screen was forbidden to select on.
+		for (const rule of rules) expect(rule.kind).toBe('ecosystem-availability-fact');
+		const successor = rules[0] as {
+			instance: { deprecationMessage: string; successorPackageNamed: string };
+		};
+		expect(successor.instance.deprecationMessage).toBe(
+			'Package no longer supported. Use @angular/common instead, see https://angular.io/guide/deprecations#angularhttp',
+		);
+		expect(successor.instance.successorPackageNamed).toBe('@angular/common');
+		// Five of six, never six of six, and the one tested failure is never merged
+		// into the four screened ones.
+		const prevalence = amendment.prevalence as {
+			statement: string;
+			published: string;
+			applicationsExamined: number;
+			applicationsObservedWithTheCondition: number;
+			tested: { count: number; applications: string[]; strength: string };
+			screened: { count: number; applications: string[]; strength: string };
+			distinctCondition: { application: string; countedInPrevalence: boolean };
+		};
+		expect(prevalence.published).toBe('5-of-6');
+		expect(prevalence.applicationsExamined).toBe(6);
+		expect(prevalence.applicationsObservedWithTheCondition).toBe(5);
+		expect(prevalence.tested).toMatchObject({
+			count: 1,
+			applications: ['pigallery2'],
+			strength: 'tested-and-failed',
+		});
+		expect(prevalence.screened).toMatchObject({
+			count: 4,
+			applications: ['cyclos4-ui', 'ngx-starter-kit', 'tabby', 'coreui-free-angular-admin-template'],
+			strength: 'screened-and-failed',
+		});
+		expect(prevalence.distinctCondition).toMatchObject({
+			application: 'eShopOnContainers',
+			condition: 'first-party-successor removal',
+			countedInPrevalence: false,
+		});
+		expect(prevalence.statement).toContain('5 of 6');
+		expect(amendment.populationStatement).toBe(ANGULAR_PRE_IVY_BOUNDARY_POPULATION_STATEMENT);
+		expect(String(amendment.populationStatement)).toContain('supported cell only');
+	});
+
+	it('refuses a boundary amendment whose prevalence or population statement was weakened', () => {
+		expect(() => assertAngularPreIvyBoundaryAmendment(ANGULAR_PRE_IVY_BOUNDARY_AMENDMENT)).not.toThrow();
+		const mutations: Array<[string, (value: Record<string, unknown>) => void]> = [
+			[
+				'six-of-six',
+				(value) => {
+					const prevalence = value.prevalence as Record<string, unknown>;
+					prevalence.applicationsObservedWithTheCondition = 6;
+					prevalence.published = '6-of-6';
+				},
+			],
+			[
+				'tested-and-screened-collapsed',
+				(value) => {
+					const prevalence = value.prevalence as Record<string, unknown>;
+					prevalence.tested = { count: 5, applications: ['pigallery2'], strength: 'tested-and-failed' };
+					prevalence.screened = { count: 0, applications: [], strength: 'screened-and-failed' };
+				},
+			],
+			[
+				'distinct-condition-counted',
+				(value) => {
+					const prevalence = value.prevalence as Record<string, unknown>;
+					(prevalence.distinctCondition as Record<string, unknown>).countedInPrevalence = true;
+				},
+			],
+			[
+				'prevalence-dropped',
+				(value) => {
+					delete value.prevalence;
+				},
+			],
+			[
+				'population-dropped',
+				(value) => {
+					delete value.populationStatement;
+				},
+			],
+			[
+				'population-softened',
+				(value) => {
+					value.populationStatement = 'A GREEN holdout speaks for the webpack-era fleet.';
+				},
+			],
+			[
+				'rule-stripped',
+				(value) => {
+					value.readingRules = (value.readingRules as unknown[]).slice(0, 1);
+				},
+			],
+			[
+				'rule-turned-into-a-capability-claim',
+				(value) => {
+					const rules = value.readingRules as Array<Record<string, unknown>>;
+					rules[0].kind = 'adapter-capability-fact';
+				},
+			],
+		];
+		for (const [label, mutate] of mutations) {
+			const value = JSON.parse(
+				JSON.stringify(ANGULAR_PRE_IVY_BOUNDARY_AMENDMENT),
+			) as Record<string, unknown>;
+			mutate(value);
+			expect(() => assertAngularPreIvyBoundaryAmendment(value), label).toThrow();
+		}
+		expect(() => assertAngularPreIvyBoundaryAmendment(undefined)).toThrow();
 	});
 
 	it('refuses a support boundary whose falsification evidence was edited', async () => {

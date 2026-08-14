@@ -92,6 +92,50 @@ function holdoutLines(conformance: CorpusConformance): string {
  * as a tested-and-passed cell. It is rendered from the corpus data rather than
  * written here, so it cannot quietly stop being said.
  */
+/**
+ * Renders the amendment a boundary carries beside its declaration.
+ *
+ * Three things have to survive into the human report or the report stops being
+ * honest: the rules the boundary is read by, how often the condition was
+ * actually observed with tested and screened kept apart, and what population an
+ * application that clears the gate is drawn from. All three are rendered from
+ * the corpus data, so stripping them from the data is what it takes to stop
+ * saying them — and the verifier refuses that.
+ */
+function boundaryAmendmentLines(boundary: Record<string, unknown>): string {
+	const amendment = boundary.amendment as
+		| {
+				declaredBy: string;
+				readingRules: Array<{
+					id: string;
+					rule: string;
+					kind: string;
+					neverAnAdapterCapabilityFact: string;
+				}>;
+				prevalence: {
+					statement: string;
+					published: string;
+					tested: { count: number; applications: string[]; strength: string };
+					screened: { count: number; applications: string[]; strength: string };
+					distinctCondition: { application: string; condition: string; countedInPrevalence: boolean };
+				};
+				populationStatement: string;
+		  }
+		| undefined;
+	if (amendment === undefined)
+		throw new Error('A declared support boundary is missing its amendment');
+	const rules = amendment.readingRules
+		.map(
+			(rule) =>
+				`  - Reading rule \`${rule.id}\` (${rule.kind}): ${rule.rule} ${rule.neverAnAdapterCapabilityFact}`,
+		)
+		.join('\n');
+	const prevalence = amendment.prevalence;
+	return `${rules}
+  - Prevalence (**${prevalence.published}**, ${amendment.declaredBy}): ${prevalence.statement} ${prevalence.tested.count} ${prevalence.tested.strength} (${prevalence.tested.applications.join(', ')}); ${prevalence.screened.count} ${prevalence.screened.strength} (${prevalence.screened.applications.join(', ')}); ${prevalence.distinctCondition.application} carries a ${prevalence.distinctCondition.condition} and is **not counted** in the prevalence.
+  - Population: ${amendment.populationStatement}`;
+}
+
 function supportBoundaryLines(conformance: CorpusConformance): string {
 	const boundaries = (conformance.coverage as Record<string, unknown>).supportBoundaries;
 	if (!Array.isArray(boundaries) || boundaries.length === 0)
@@ -113,7 +157,7 @@ function supportBoundaryLines(conformance: CorpusConformance): string {
 						`\`${entry.library}\` (last published ${entry.lastPublishedVersion}; ${entry.importSites.map((site) => `\`${site}\``).join(', ')})`,
 				)
 				.join(', ');
-			return `- Boundary \`${String(boundary.id)}\` at cell \`${String(boundary.cell)}\` (${String(boundary.lineage)} lineage): **${String(boundary.state)}** — ${String(boundary.condition)}. ${String(boundary.mechanism)} Declared by ${String(boundary.declaredBy)}; **${String(boundary.certification)}**. Instance evidence: ${evidence.application}, ${evidence.libraries} libraries at ${evidence.importSites} import sites — ${wall} — recorded RED in [${evidence.receipt}](../../../${evidence.receipt}) \`${evidence.digest}\`.\n${(boundary.nonclaims as string[]).map((claim) => `  - ${claim}`).join('\n')}`;
+			return `- Boundary \`${String(boundary.id)}\` at cell \`${String(boundary.cell)}\` (${String(boundary.lineage)} lineage): **${String(boundary.state)}** — ${String(boundary.condition)}. ${String(boundary.mechanism)} Declared by ${String(boundary.declaredBy)}; **${String(boundary.certification)}**. Instance evidence: ${evidence.application}, ${evidence.libraries} libraries at ${evidence.importSites} import sites — ${wall} — recorded RED in [${evidence.receipt}](../../../${evidence.receipt}) \`${evidence.digest}\`.\n${(boundary.nonclaims as string[]).map((claim) => `  - ${claim}`).join('\n')}\n${boundaryAmendmentLines(boundary)}`;
 		})
 		.join('\n');
 }
