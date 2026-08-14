@@ -1,0 +1,268 @@
+{
+	"schemaVersion": "versionless.spike.thin-wrapper-cost.verdict.v1",
+	"spike": "SPIKE C — the real amortized per-application cost after industrialization, measured on a never-completed application",
+	"unit": "nts-t004/spike-c-thin-wrapper-cost",
+	"measuredAt": "2026-08-14",
+	"host": {
+		"node": "v24.15.0",
+		"npm": "12.0.1",
+		"pnpm": "10.33.2",
+		"platform": "darwin-arm64",
+		"nodeEraCellsInstalled": ["v24.15.0"],
+		"concurrency": "one process at a time; no witness pass ran, so nothing was scheduled in parallel"
+	},
+	"candidates": {
+		"primary": "react-shlink-web-client (shlinkio/shlink-web-client v2.3.0, commit 44aca4aedabd3b314a9c4828c37f73392588a6eb)",
+		"fallback": "react-sqlpad-v5-5-0 (sqlpad/sqlpad v5.5.0, commit 5c259dd7d3e6bdc0eb098bd32262263fe0280c6b)",
+		"selectionOutcome": "The primary passed gate zero, so no license fallback was taken. The fallback was read only as a gate-zero and adapter-admission comparator; no install, build or witness pass was attempted on it inside this spike."
+	},
+	"licensePreScreen": {
+		"method": "License text read at the pinned revision out of the consented archive already on disk, after re-verifying that archive against the digest the ingest recorded. No network read was needed for this gate.",
+		"consentId": "VL-LEGACY-CORPUS-2026-08-10",
+		"results": [
+			{
+				"application": "react-shlink-web-client",
+				"pinnedCommit": "44aca4aedabd3b314a9c4828c37f73392588a6eb",
+				"licensePath": "LICENSE",
+				"licenseSha256": "249a81967c48177d9fa4672adbfdecd356aba715101780e05d54fcbd744d699c",
+				"licenseFirstLine": "MIT License",
+				"declaredInPackageJson": "MIT",
+				"gate": "pass"
+			},
+			{
+				"application": "react-sqlpad-v5-5-0",
+				"pinnedCommit": "5c259dd7d3e6bdc0eb098bd32262263fe0280c6b",
+				"licensePath": "LICENSE.md",
+				"licenseSha256": "93dec0b7b1f9775cdcb15603a6c1d8829164ac72fa01a4679845c85ee76421da",
+				"licenseFirstLine": "#The MIT License",
+				"declaredInPackageJson": "not declared in package.json (root and client both omit the field)",
+				"gate": "pass"
+			}
+		]
+	},
+	"ingestCompletion": {
+		"method": "Both archives were re-hashed offline against the digests recorded in each ingest's source.json; the two independently fetched streams were compared to each other.",
+		"reFetched": false,
+		"networkUsedInThisSpike": "one npm registry install of the primary application's own pinned lockfile; no acquisition endpoint was re-read",
+		"results": [
+			{
+				"application": "react-shlink-web-client",
+				"archiveSha256": "4fbece68049a042dda2294606135eab2bd7ef02febfa5609780480f6786e3239",
+				"streamsByteIdentical": true,
+				"matchesRecordedIngest": true,
+				"sourceIngest": "complete (result: source-bound)",
+				"dependencyClosure": "absent — the two closure transactions on record (T712, T714) ended permanent-exclusion, so no offline mirror exists for this application"
+			},
+			{
+				"application": "react-sqlpad-v5-5-0",
+				"archiveSha256": "fccfde1b896529396b877d2ca09fa46bfaf9b171e2ca068fc09f6acb1543705d",
+				"streamsByteIdentical": true,
+				"matchesRecordedIngest": true,
+				"sourceIngest": "complete (result: source-bound)",
+				"dependencyClosure": "present — 1,953 mirrored artifacts, 68 MB, from T664"
+			}
+		]
+	},
+	"stageLedger": {
+		"clockRule": "Machine seconds are wall clock around the awaited command and nothing else. Operator seconds are the human/agent acts between commands — reading a refusal, deciding a remedy — and are reported separately and never folded into machine time.",
+		"stages": [
+			{
+				"stage": "0-license-pre-screen",
+				"application": "both candidates",
+				"machineSeconds": 3,
+				"operatorSeconds": 600,
+				"outcome": "pass",
+				"newTypeScriptLines": 0,
+				"note": "Operator time here is dominated by reading the two ingest records to find the pin and the recorded digests, not by the hashing."
+			},
+			{
+				"stage": "1-ingest-completion",
+				"application": "both candidates",
+				"machineSeconds": 2,
+				"operatorSeconds": 120,
+				"outcome": "source complete for both; dependency closure absent for the primary",
+				"newTypeScriptLines": 0
+			},
+			{
+				"stage": "2-baseline-install",
+				"application": "react-shlink-web-client",
+				"machineSeconds": 20,
+				"operatorSeconds": 180,
+				"attempts": [
+					{
+						"attempt": 1,
+						"command": "npm ci",
+						"machineSeconds": 14,
+						"exit": 1,
+						"refusal": "npm error code EALLOWREMOTE / Fetching packages of type \"remote\" have been disabled / Refusing to fetch \"xdg-basedir@https://registry.yarnpkg.com/xdg-basedir/-/xdg-basedir-3.0.0.tgz\"",
+						"manualAct": "read the refusal, decided the remedy"
+					},
+					{
+						"attempt": 2,
+						"command": "npm ci --allow-remote all --no-audit --no-fund",
+						"machineSeconds": 6,
+						"exit": 0,
+						"result": "added 1985 packages in 6s",
+						"carriedForward": "the modern npm did not run install scripts (node-sass, fsevents, core-js were listed as skipped), so the tree installed without its native build ever being attempted"
+					}
+				],
+				"outcome": "installed on the second attempt after one operator decision",
+				"newTypeScriptLines": 0
+			},
+			{
+				"stage": "3-baseline-production-build",
+				"application": "react-shlink-web-client",
+				"machineSeconds": 10,
+				"operatorSeconds": 240,
+				"attempts": [
+					{
+						"attempt": 1,
+						"command": "npm run build",
+						"machineSeconds": 1,
+						"exit": 1,
+						"refusal": "Error: error:0308010C:digital envelope routines::unsupported (ERR_OSSL_EVP_UNSUPPORTED) from webpack/lib/util/createHash.js",
+						"manualAct": "recognised the webpack-4-on-modern-node hash wall, applied NODE_OPTIONS=--openssl-legacy-provider"
+					},
+					{
+						"attempt": 2,
+						"command": "NODE_OPTIONS=--openssl-legacy-provider npm run build",
+						"machineSeconds": 9,
+						"exit": 1,
+						"refusal": "./src/common/react-tagsinput.scss — Error: Node Sass does not yet support your current environment: OS X Unsupported architecture (arm64) with Unsupported runtime (137)"
+					}
+				],
+				"outcome": "not built — stopped at the era-cell wall",
+				"buildsByteCompared": 0,
+				"newTypeScriptLines": 0
+			},
+			{
+				"stage": "4-migrate-under-frozen-adapter",
+				"application": "react-shlink-web-client",
+				"machineSeconds": 1.04,
+				"operatorSeconds": 120,
+				"commands": [
+					{ "flow": "analyze", "seconds": 0.413, "exit": 0, "reading": "lineage react, frameworkVersionDeclared ^16.10.2, builder unknown, builderSource unknown, 115 dependencies unknown to the engine" },
+					{ "flow": "plan", "seconds": 0.318, "exit": 1, "refusal": "React plan: this tree declares neither react-scripts nor a Vite configuration, so no frozen React adapter claims it. This flow refuses rather than guessing an origin toolchain." },
+					{ "flow": "migrate --out <lane> --materialize", "seconds": 0.305, "exit": 1, "refusal": "React plan: this tree declares neither react-scripts nor a Vite configuration, so no frozen React adapter claims it. This flow refuses rather than guessing an origin toolchain." }
+				],
+				"outcome": "refused by the frozen adapter — named gap, not fixed",
+				"frozenSubtreeEdits": 0,
+				"newTypeScriptLines": 0
+			},
+			{
+				"stage": "4b-migrate-comparator",
+				"application": "react-sqlpad-v5-5-0 (client/)",
+				"machineSeconds": 0.947,
+				"operatorSeconds": 60,
+				"commands": [
+					{ "flow": "analyze", "seconds": 0.309, "exit": 0, "reading": "lineage react, builder react-scripts from package.json, 34 dependencies unknown to the engine" },
+					{ "flow": "plan", "seconds": 0.3, "exit": 0 },
+					{ "flow": "migrate --out <lane> --materialize", "seconds": 0.338, "exit": 0, "reading": "engine @versionless/react craEntryDocument; 1 file written (index.html), 167 copied, 0 removed" }
+				],
+				"outcome": "admitted and materialised; the lane carries a rewritten entry document and the application's own package.json unchanged — it still declares react-scripts and carries no Vite configuration, so the lane as emitted is not an installable Vite tree",
+				"frozenSubtreeEdits": 0,
+				"newTypeScriptLines": 0
+			},
+			{
+				"stage": "5-witness-thin-wrapper",
+				"application": "none",
+				"machineSeconds": 0,
+				"operatorSeconds": 0,
+				"outcome": "not executed — no application reached a built migrated tree to witness, so the per-application wrapper cost was not measured on a live pass",
+				"passesRun": 0,
+				"calibrationRounds": 0,
+				"newTypeScriptLines": 0
+			}
+		],
+		"totals": {
+			"machineSeconds": 37,
+			"operatorSeconds": 1320,
+			"newTypeScriptLines": 0,
+			"buildsCompleted": 0,
+			"witnessPassesRun": 0
+		}
+	},
+	"thinWrapperFloor": {
+		"status": "not measured on a live pass in this spike; the numbers below are line counts read off the existing frozen-era wrappers on disk, which is inventory evidence and not a measurement of this spike's application",
+		"perAppWitnessVerifierLines": [
+			{ "file": "packages/cli/src/witness/react-dejavu-run.ts", "lines": 61 },
+			{ "file": "packages/cli/src/witness/angular-fuxa-run.ts", "lines": 67 },
+			{ "file": "packages/cli/src/witness/react-cypress-rwa-run.ts", "lines": 235 },
+			{ "file": "packages/cli/src/witness/react-papercups-run.ts", "lines": 313 },
+			{ "file": "packages/cli/src/witness/react-hospitalrun-run.ts", "lines": 318 },
+			{ "file": "packages/cli/src/witness/react-linkfree-run.ts", "lines": 358 },
+			{ "file": "packages/cli/src/witness/react-memos-run.ts", "lines": 436 }
+		],
+		"perAppDriverLines": [
+			{ "file": "packages/cli/src/fixture/react-dejavu-production-run.ts", "lines": 122 },
+			{ "file": "packages/cli/src/fixture/angular-fuxa-production-run.ts", "lines": 119 },
+			{ "file": "packages/cli/src/fixture/react-avataaars-vite8.config.ts", "lines": 18 },
+			{ "file": "packages/cli/src/fixture/react-memos-v0-1-3-vite8-run.ts", "lines": 255 },
+			{ "file": "packages/cli/src/fixture/react-hospitalrun-vite8.ts", "lines": 272 },
+			{ "file": "packages/cli/src/fixture/react-linkfree-v0-72-0-vite8.ts", "lines": 318 }
+		],
+		"reading": "The two thinnest wrappers on disk (61 and 67 lines over the 7,453-line generic harness) are the pattern this spike was sent to price. Nothing here shows that a new application reaches that floor, because no new application reached the stage where the wrapper is written."
+	},
+	"perAppReceiptsModule": {
+		"required": "not established",
+		"reason": "The question only arises once a witness pass runs. No pass ran, so no per-application module under packages/core/src/receipts was written, needed, or ruled out. None was created."
+	},
+	"capabilityFirings": {
+		"observed": [],
+		"note": "No capability fired: no migrated build and no witness pass ran. Nothing was regenerated — no coverage, matrix, or enterprise-report artifact was touched."
+	},
+	"findings": [
+		{
+			"id": "C1",
+			"title": "The frozen React adapter refuses an ejected create-react-app tree, and ejected CRA is a mainstream webpack-era React shape",
+			"evidence": "analyze reads builder \"unknown\"; plan and migrate both refuse with: React plan: this tree declares neither react-scripts nor a Vite configuration, so no frozen React adapter claims it. This flow refuses rather than guessing an origin toolchain.",
+			"why": "shlink-web-client v2.3.0 ejected: it carries config/ and scripts/ with its own webpack 4 configuration and does not declare react-scripts. The adapter keys admission on the react-scripts declaration or a Vite configuration.",
+			"status": "named gap — not fixed, no frozen-subtree edit was made",
+			"costImpact": "An application in this shape costs zero migration units because it never enters the pipeline. It also cannot be counted toward any per-application average until admission widens."
+		},
+		{
+			"id": "C2",
+			"title": "The era cell, not the migration, is what stopped the baseline",
+			"evidence": "webpack 4 md4 hashing fails on Node 24 (ERR_OSSL_EVP_UNSUPPORTED, remedied by NODE_OPTIONS=--openssl-legacy-provider), then node-sass 4.12.0 refuses the host outright: OS X Unsupported architecture (arm64) with Unsupported runtime (137).",
+			"why": "This host has exactly one Node era cell installed (v24.15.0). node-sass 4.x publishes no arm64 binding for a modern Node ABI, and the source tree is immutable corpus, so swapping it for dart-sass is not available.",
+			"status": "named gap",
+			"costImpact": "Era-cell provisioning is a per-application, network-bearing, sometimes-impossible act on a single-architecture host. It is the first cost of a new application and it is not bounded by anything measured so far."
+		},
+		{
+			"id": "C3",
+			"title": "Modern npm adds two per-application refusals a fleet runner must answer",
+			"evidence": "EALLOWREMOTE on a 2020 lockfile carrying an https tarball dependency (xdg-basedir from registry.yarnpkg.com), remedied by --allow-remote all; and install scripts skipped by default, which silently produced a tree whose native dependency was never built.",
+			"status": "named gap",
+			"costImpact": "Two operator decisions per application before the first build. Both are mechanisable as policy, and both are today unwritten judgment."
+		},
+		{
+			"id": "C4",
+			"title": "migrate materialises an entry document, not an installable migrated tree",
+			"evidence": "On the admitted comparator (sqlpad client) the materialised lane records 1 file written (index.html), 167 copied, 0 removed, and the lane's package.json still declares react-scripts ^3.4.1 with no Vite configuration.",
+			"why": "The Vite-era configuration and package rewrite for previously completed applications lives in per-application fixture code (react-linkfree-v0-72-0-vite8.ts 318 lines, react-hospitalrun-vite8.ts 272, react-memos-v0-1-3-vite8-run.ts 255, react-avataaars-vite8.config.ts 18), not in the operator flow.",
+			"status": "named gap",
+			"costImpact": "The owner's ruling that install+build of the migrated tree cannot be manual lands here: the CLI does not yet emit a tree that can be installed and built, so this stage is per-application authoring by construction, not by habit."
+		}
+	],
+	"verdict": {
+		"threeUnitsCredible": false,
+		"outcome": "bounded — no application reached a migrated build or a witness pass inside this spike, so the post-industrialization per-application cost is still unmeasured; what was measured is that two of the three stages before it stopped on a never-completed application, one at the frozen adapter's admission gate and one at the era-cell wall",
+		"statement": "~3 units per application is not established. It is not refuted either: the claim was never reached, because the application chosen at random from the never-completed set never got as far as the stage the ~3u estimate describes. On this attempt the cost of the pre-migration stages alone was 37 seconds of machine time against about 22 minutes of operator time across four refusals, and the run ended with zero builds, zero witness passes and zero new TypeScript lines.",
+		"whatRemainsManual": [
+			"Era-cell provisioning — choosing and obtaining a Node/toolchain era that the application's own native dependencies support. Cost here: two failed builds, about 4 minutes of operator time, and no remedy available on this host.",
+			"Install policy decisions — the remote-tarball allowance and the install-script allowance. Cost here: one failed install, about 3 minutes of operator time.",
+			"Adapter admission judgment for trees outside the react-scripts/Vite declaration — today a refusal an operator must read and route. Cost here: about 2 minutes of operator time, and the application leaves the pipeline.",
+			"The Vite-era configuration and package rewrite for an admitted tree — still per-application fixture authoring (18 to 318 lines on the applications already done).",
+			"Witness journey authoring and calibration — untouched by this spike and therefore still carrying T002's reading, in which it is the dominant per-application authorship."
+		],
+		"budgetNote": "The unit's wall-clock budget (60 minutes) bound this run; the 3-round calibration budget was never reached because no witness pass started."
+	},
+	"notEstablished": [
+		"No build ran to completion here, so nothing in this record establishes that either application builds on any era cell.",
+		"No witness pass ran, so nothing here establishes browser behaviour, parity, locality, or a bounded witness outcome for either application.",
+		"The thin-wrapper line counts are an inventory of files already on disk from previously completed applications; they are not a measurement of what a new application costs.",
+		"The operator timings are single-run wall clock on one host, not a distribution; the sibling spike's medians over 12 applications remain the better reading of operator machine time.",
+		"The refusals recorded here are readings of this host and this pin. A different architecture, a different Node era cell, or a later npm would produce different refusals, and none of them was tested.",
+		"Nothing here revises the frozen adapters, the supported matrix, or any capability's status; no coverage or matrix artifact was regenerated."
+	]
+}
