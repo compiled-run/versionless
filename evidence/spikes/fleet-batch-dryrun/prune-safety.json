@@ -1,0 +1,54 @@
+{
+	"schemaVersion": "versionless.spike.fleet-batch-dryrun.prune-safety.v1",
+	"unit": "nts-t004/spike-b-batch-operator-dryrun",
+	"measuredAt": "2026-08-14",
+	"question": "With one receipted application’s .versionless/work directory moved aside, does the offline receipt verification still pass from the published receipts alone?",
+	"application": "react-boilerplate-v4-composed",
+	"receipt": "evidence/runs/react-boilerplate-v4-composed/t060-run.json",
+	"workDirectory": ".versionless/work/react-boilerplate-v4-composed",
+	"method": "verifyReceipt(receipt, { requireAggregate: true }) — the same function `versionless receipt:verify` calls — is run three times: with the work directory in place, with it renamed to a sibling set-aside path inside the same unversioned scratch tree, and again after it is renamed back. The absence of the directory is checked inside the middle window rather than assumed, the restore runs in a finally block, and the restored listing is compared entry by entry against the listing taken before the move. Nothing is deleted.",
+	"workDirectoryBytes": 7571741,
+	"workDirectoryEntriesBefore": [
+		"legacy",
+		"target"
+	],
+	"workDirectoryEntriesAfterRestore": [
+		"legacy",
+		"target"
+	],
+	"restored": true,
+	"verifications": {
+		"before": {
+			"state": "pass",
+			"digest": "52400147929220935a9ebe47a16c8dff50b5c28e9d51c930d000c99c2bdc8a21",
+			"artifacts": 10,
+			"ms": 3.758
+		},
+		"withWorkDirectorySetAside": {
+			"state": "pass",
+			"digest": "52400147929220935a9ebe47a16c8dff50b5c28e9d51c930d000c99c2bdc8a21",
+			"artifacts": 10,
+			"ms": 1.131,
+			"workDirectoryAbsentDuringVerification": true
+		},
+		"afterRestore": {
+			"state": "pass",
+			"digest": "52400147929220935a9ebe47a16c8dff50b5c28e9d51c930d000c99c2bdc8a21",
+			"artifacts": 10,
+			"ms": 1.168
+		}
+	},
+	"verdict": "yes",
+	"verdictStatement": "The offline verification of evidence/runs/react-boilerplate-v4-composed/t060-run.json returned the same receipt digest with .versionless/work/react-boilerplate-v4-composed absent as it did with the directory present. For this receipt the work directory is not an input to verification.",
+	"diskFloorImplication": [
+		"A work directory the receipt verification does not read can be pruned once the receipt is published without losing the offline check. That is what sets the disk floor at fleet scale.",
+		"What the floor then holds is the evidence tree, not the work tree. Re-migrating a pruned application means re-acquiring its sources and its era closure first.",
+		"This is proven on one receipt. A receipt schema that reads a lane out of .versionless/work would behave differently and has to be checked before the policy is applied to it."
+	],
+	"notEstablished": [
+		"A passing receipt verification is a hash-integrity check over published artifacts. It is not a re-run of the migration and it does not establish that the application still builds.",
+		"This proof covers one application’s canonical receipt. It is not a statement about every receipt schema this repository carries.",
+		"Moving the directory aside proves the verification does not read that path. It does not prove that no other tool in this repository reads it.",
+		"The directory moved aside holds 7571741 bytes, while the largest work areas in this checkout hold three orders of magnitude more. What the move establishes is that the verification never resolves a path under the work tree, which does not depend on how much was moved — but it is still one directory rather than a survey."
+	]
+}

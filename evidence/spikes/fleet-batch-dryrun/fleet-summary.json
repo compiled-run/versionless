@@ -1,0 +1,781 @@
+{
+	"schemaVersion": "versionless.spike.fleet-batch-dryrun.fleet-summary.v1",
+	"spike": "SPIKE B — batch operator dry run: measured operator machine time and the prune floor",
+	"unit": "nts-t004/spike-b-batch-operator-dryrun",
+	"measuredAt": "2026-08-14",
+	"host": {
+		"node": "v24.15.0",
+		"platform": "darwin-arm64",
+		"logicalCpus": 18,
+		"totalMemoryGiB": 48,
+		"concurrency": "one process, one application at a time; nothing below ran in parallel"
+	},
+	"scope": {
+		"measured": [
+			"analyze — the operator detection flow, over an application root already on disk",
+			"plan — the operator composition flow, which re-runs detection and then composes the frozen adapter’s changeset",
+			"migrate — the operator apply flow, which re-runs detection and composition and then writes the changeset into an empty scratch lane"
+		],
+		"notMeasured": [
+			"dependency acquisition and install",
+			"the migrated build",
+			"witness journey authoring, calibration, and the browser passes",
+			"receipt schema authoring and publication"
+		],
+		"whyItMatters": "The recorded per-vertical cost of roughly 9–10 units conflates authoring with execution. What is timed here is only the operator surface, which is the part a batch runner repeats unattended; the unmeasured stages above are where the recorded per-vertical cost mostly sits."
+	},
+	"method": "Each stage is `runOperatorCommand` from packages/cli/src/operator/flows.ts, called exactly as a shell operator would call it, timed with process.hrtime.bigint() around the awaited call and nothing else. The read-only stages are timed over three repetitions and reported as a median and a best; the write stage runs once per application, because the apply flow refuses a lane that already carries files. No authoring, editing or waiting happens inside a timed region.",
+	"repetitions": 3,
+	"apps": [
+		{
+			"id": "react-cypress-rwa",
+			"lineage": "react",
+			"appRoot": ".versionless/work/react-cypress-rwa/baseline",
+			"workArea": ".versionless/work/react-cypress-rwa",
+			"note": "create-react-app origin; the React holdout application at its baseline lane",
+			"stages": [
+				{
+					"stage": "analyze",
+					"outcome": "reported",
+					"runs": [
+						1.518,
+						0.508,
+						0.428
+					],
+					"bestMs": 0.428,
+					"medianMs": 0.508,
+					"refusal": null,
+					"detail": "lineage react, builder react-scripts"
+				},
+				{
+					"stage": "plan",
+					"outcome": "composed",
+					"runs": [
+						1.716,
+						0.715,
+						0.624
+					],
+					"bestMs": 0.624,
+					"medianMs": 0.715,
+					"refusal": null,
+					"detail": "1 files changed of 1 scanned, 2 unhandled findings"
+				},
+				{
+					"stage": "migrate",
+					"outcome": "applied",
+					"runs": [
+						1.166
+					],
+					"bestMs": 1.166,
+					"medianMs": 1.166,
+					"refusal": null,
+					"detail": "1 files written into the scratch lane, 0 copied"
+				}
+			],
+			"pipelineBasis": "migrate",
+			"pipelineMedianMs": 1.166,
+			"pipelineBestMs": 1.166,
+			"outcome": "migrated-to-lane",
+			"refusals": [],
+			"lane": "react-cypress-rwa",
+			"laneFilesWritten": 1
+		},
+		{
+			"id": "react-hospitalrun",
+			"lineage": "react",
+			"appRoot": ".versionless/work/react-hospitalrun/baseline",
+			"workArea": ".versionless/work/react-hospitalrun",
+			"note": "create-react-app origin; ingested React corpus application",
+			"stages": [
+				{
+					"stage": "analyze",
+					"outcome": "reported",
+					"runs": [
+						0.839,
+						0.363,
+						0.537
+					],
+					"bestMs": 0.363,
+					"medianMs": 0.537,
+					"refusal": null,
+					"detail": "lineage react, builder react-scripts"
+				},
+				{
+					"stage": "plan",
+					"outcome": "composed",
+					"runs": [
+						0.833,
+						0.593,
+						0.561
+					],
+					"bestMs": 0.561,
+					"medianMs": 0.593,
+					"refusal": null,
+					"detail": "1 files changed of 1 scanned, 2 unhandled findings"
+				},
+				{
+					"stage": "migrate",
+					"outcome": "applied",
+					"runs": [
+						0.873
+					],
+					"bestMs": 0.873,
+					"medianMs": 0.873,
+					"refusal": null,
+					"detail": "1 files written into the scratch lane, 0 copied"
+				}
+			],
+			"pipelineBasis": "migrate",
+			"pipelineMedianMs": 0.873,
+			"pipelineBestMs": 0.873,
+			"outcome": "migrated-to-lane",
+			"refusals": [],
+			"lane": "react-hospitalrun",
+			"laneFilesWritten": 1
+		},
+		{
+			"id": "react-linkfree-v0-72-0",
+			"lineage": "react",
+			"appRoot": ".versionless/work/react-linkfree-v0-72-0/baseline",
+			"workArea": ".versionless/work/react-linkfree-v0-72-0",
+			"note": "create-react-app origin; ingested React corpus application",
+			"stages": [
+				{
+					"stage": "analyze",
+					"outcome": "reported",
+					"runs": [
+						0.539,
+						0.372,
+						0.341
+					],
+					"bestMs": 0.341,
+					"medianMs": 0.372,
+					"refusal": null,
+					"detail": "lineage react, builder react-scripts"
+				},
+				{
+					"stage": "plan",
+					"outcome": "composed",
+					"runs": [
+						0.749,
+						0.669,
+						0.636
+					],
+					"bestMs": 0.636,
+					"medianMs": 0.669,
+					"refusal": null,
+					"detail": "1 files changed of 1 scanned, 2 unhandled findings"
+				},
+				{
+					"stage": "migrate",
+					"outcome": "applied",
+					"runs": [
+						0.791
+					],
+					"bestMs": 0.791,
+					"medianMs": 0.791,
+					"refusal": null,
+					"detail": "1 files written into the scratch lane, 0 copied"
+				}
+			],
+			"pipelineBasis": "migrate",
+			"pipelineMedianMs": 0.791,
+			"pipelineBestMs": 0.791,
+			"outcome": "migrated-to-lane",
+			"refusals": [],
+			"lane": "react-linkfree-v0-72-0",
+			"laneFilesWritten": 1
+		},
+		{
+			"id": "react-papercups-v1-0-0",
+			"lineage": "react",
+			"appRoot": ".versionless/work/react-papercups-v1-0-0/baseline",
+			"workArea": ".versionless/work/react-papercups-v1-0-0",
+			"note": "create-react-app origin; ingested React corpus application",
+			"stages": [
+				{
+					"stage": "analyze",
+					"outcome": "reported",
+					"runs": [
+						0.492,
+						0.316,
+						0.329
+					],
+					"bestMs": 0.316,
+					"medianMs": 0.329,
+					"refusal": null,
+					"detail": "lineage react, builder react-scripts"
+				},
+				{
+					"stage": "plan",
+					"outcome": "composed",
+					"runs": [
+						0.648,
+						0.513,
+						0.543
+					],
+					"bestMs": 0.513,
+					"medianMs": 0.543,
+					"refusal": null,
+					"detail": "1 files changed of 1 scanned, 2 unhandled findings"
+				},
+				{
+					"stage": "migrate",
+					"outcome": "applied",
+					"runs": [
+						0.808
+					],
+					"bestMs": 0.808,
+					"medianMs": 0.808,
+					"refusal": null,
+					"detail": "1 files written into the scratch lane, 0 copied"
+				}
+			],
+			"pipelineBasis": "migrate",
+			"pipelineMedianMs": 0.808,
+			"pipelineBestMs": 0.808,
+			"outcome": "migrated-to-lane",
+			"refusals": [],
+			"lane": "react-papercups-v1-0-0",
+			"laneFilesWritten": 1
+		},
+		{
+			"id": "react-memos-v0-1-3",
+			"lineage": "react",
+			"appRoot": ".versionless/work/react-memos-v0-1-3/baseline",
+			"workArea": ".versionless/work/react-memos-v0-1-3",
+			"note": "Vite origin rather than create-react-app; exercises the other React engine",
+			"stages": [
+				{
+					"stage": "analyze",
+					"outcome": "reported",
+					"runs": [
+						0.494,
+						0.311,
+						0.315
+					],
+					"bestMs": 0.311,
+					"medianMs": 0.315,
+					"refusal": null,
+					"detail": "lineage react, builder vite"
+				},
+				{
+					"stage": "plan",
+					"outcome": "composed",
+					"runs": [
+						2.868,
+						0.542,
+						0.508
+					],
+					"bestMs": 0.508,
+					"medianMs": 0.542,
+					"refusal": null,
+					"detail": "0 files changed of 0 scanned, 1 unhandled findings"
+				},
+				{
+					"stage": "migrate",
+					"outcome": "applied",
+					"runs": [
+						0.587
+					],
+					"bestMs": 0.587,
+					"medianMs": 0.587,
+					"refusal": null,
+					"detail": "0 files written into the scratch lane, 0 copied"
+				}
+			],
+			"pipelineBasis": "migrate",
+			"pipelineMedianMs": 0.587,
+			"pipelineBestMs": 0.587,
+			"outcome": "migrated-to-lane",
+			"refusals": [],
+			"lane": "react-memos-v0-1-3",
+			"laneFilesWritten": 0
+		},
+		{
+			"id": "react-mycrypto",
+			"lineage": "react",
+			"appRoot": ".versionless/work/react-mycrypto/baseline",
+			"workArea": ".versionless/work/react-mycrypto",
+			"note": "React lineage on a bespoke webpack build; no frozen React adapter claims it",
+			"stages": [
+				{
+					"stage": "analyze",
+					"outcome": "reported",
+					"runs": [
+						0.881,
+						0.345,
+						0.339
+					],
+					"bestMs": 0.339,
+					"medianMs": 0.345,
+					"refusal": null,
+					"detail": "lineage react, builder unknown"
+				},
+				{
+					"stage": "plan",
+					"outcome": "refused",
+					"runs": [],
+					"bestMs": 0,
+					"medianMs": 0,
+					"refusal": "React plan: this tree declares neither react-scripts nor a Vite configuration, so no frozen React adapter claims it. This flow refuses rather than guessing an origin toolchain.",
+					"detail": null
+				},
+				{
+					"stage": "migrate",
+					"outcome": "not-attempted",
+					"runs": [],
+					"bestMs": 0,
+					"medianMs": 0,
+					"refusal": null,
+					"detail": null
+				}
+			],
+			"pipelineBasis": "analyze",
+			"pipelineMedianMs": 0.345,
+			"pipelineBestMs": 0.339,
+			"outcome": "refused-at-plan",
+			"refusals": [
+				"plan: React plan: this tree declares neither react-scripts nor a Vite configuration, so no frozen React adapter claims it. This flow refuses rather than guessing an origin toolchain."
+			],
+			"lane": null,
+			"laneFilesWritten": null
+		},
+		{
+			"id": "react-boilerplate-v4",
+			"lineage": "react",
+			"appRoot": ".versionless/work/react-boilerplate-v4/target",
+			"workArea": ".versionless/work/react-boilerplate-v4",
+			"note": "React lineage, already-migrated lane declaring neither react-scripts nor a Vite configuration",
+			"stages": [
+				{
+					"stage": "analyze",
+					"outcome": "reported",
+					"runs": [
+						0.655,
+						0.309,
+						0.327
+					],
+					"bestMs": 0.309,
+					"medianMs": 0.327,
+					"refusal": null,
+					"detail": "lineage react, builder unknown"
+				},
+				{
+					"stage": "plan",
+					"outcome": "refused",
+					"runs": [],
+					"bestMs": 0,
+					"medianMs": 0,
+					"refusal": "React plan: this tree declares neither react-scripts nor a Vite configuration, so no frozen React adapter claims it. This flow refuses rather than guessing an origin toolchain.",
+					"detail": null
+				},
+				{
+					"stage": "migrate",
+					"outcome": "not-attempted",
+					"runs": [],
+					"bestMs": 0,
+					"medianMs": 0,
+					"refusal": null,
+					"detail": null
+				}
+			],
+			"pipelineBasis": "analyze",
+			"pipelineMedianMs": 0.327,
+			"pipelineBestMs": 0.309,
+			"outcome": "refused-at-plan",
+			"refusals": [
+				"plan: React plan: this tree declares neither react-scripts nor a Vite configuration, so no frozen React adapter claims it. This flow refuses rather than guessing an origin toolchain."
+			],
+			"lane": null,
+			"laneFilesWritten": null
+		},
+		{
+			"id": "angular-pigallery2",
+			"lineage": "angular",
+			"appRoot": ".versionless/work/angular-pigallery2/baseline",
+			"workArea": ".versionless/work/angular-pigallery2",
+			"note": "Angular CLI era workspace; the largest composing tree in this fleet",
+			"stages": [
+				{
+					"stage": "analyze",
+					"outcome": "reported",
+					"runs": [
+						0.8,
+						0.362,
+						0.368
+					],
+					"bestMs": 0.362,
+					"medianMs": 0.368,
+					"refusal": null,
+					"detail": "lineage angular, builder @angular-devkit/build-angular:browser"
+				},
+				{
+					"stage": "plan",
+					"outcome": "composed",
+					"runs": [
+						152.929,
+						141.346,
+						124.304
+					],
+					"bestMs": 124.304,
+					"medianMs": 141.346,
+					"refusal": null,
+					"detail": "8 files changed of 175 scanned, 68 unhandled findings"
+				},
+				{
+					"stage": "migrate",
+					"outcome": "applied",
+					"runs": [
+						111.314
+					],
+					"bestMs": 111.314,
+					"medianMs": 111.314,
+					"refusal": null,
+					"detail": "8 files written into the scratch lane, 0 copied"
+				}
+			],
+			"pipelineBasis": "migrate",
+			"pipelineMedianMs": 111.314,
+			"pipelineBestMs": 111.314,
+			"outcome": "migrated-to-lane",
+			"refusals": [],
+			"lane": "angular-pigallery2",
+			"laneFilesWritten": 8
+		},
+		{
+			"id": "angular-eshop-webspa",
+			"lineage": "angular",
+			"appRoot": ".versionless/work/angular-eshop-webspa/baseline",
+			"workArea": ".versionless/work/angular-eshop-webspa",
+			"note": "Angular CLI era workspace; second composing Angular tree",
+			"stages": [
+				{
+					"stage": "analyze",
+					"outcome": "reported",
+					"runs": [
+						0.841,
+						0.451,
+						0.432
+					],
+					"bestMs": 0.432,
+					"medianMs": 0.451,
+					"refusal": null,
+					"detail": "lineage angular, builder @angular-devkit/build-angular:browser"
+				},
+				{
+					"stage": "plan",
+					"outcome": "composed",
+					"runs": [
+						48.656,
+						33.6,
+						39.563
+					],
+					"bestMs": 33.6,
+					"medianMs": 39.563,
+					"refusal": null,
+					"detail": "11 files changed of 69 scanned, 37 unhandled findings"
+				},
+				{
+					"stage": "migrate",
+					"outcome": "applied",
+					"runs": [
+						37.814
+					],
+					"bestMs": 37.814,
+					"medianMs": 37.814,
+					"refusal": null,
+					"detail": "11 files written into the scratch lane, 0 copied"
+				}
+			],
+			"pipelineBasis": "migrate",
+			"pipelineMedianMs": 37.814,
+			"pipelineBestMs": 37.814,
+			"outcome": "migrated-to-lane",
+			"refusals": [],
+			"lane": "angular-eshop-webspa",
+			"laneFilesWritten": 11
+		},
+		{
+			"id": "angular-pigallery2-operator-lane",
+			"lineage": "angular",
+			"appRoot": ".versionless/work/operator-flows/angular-pigallery2-lane",
+			"workArea": ".versionless/work/operator-flows",
+			"note": "Angular lane that already carries the composed changeset; composes to a zero-change plan",
+			"stages": [
+				{
+					"stage": "analyze",
+					"outcome": "reported",
+					"runs": [
+						2.78,
+						0.448,
+						0.436
+					],
+					"bestMs": 0.436,
+					"medianMs": 0.448,
+					"refusal": null,
+					"detail": "lineage angular, builder @angular-devkit/build-angular:browser"
+				},
+				{
+					"stage": "plan",
+					"outcome": "composed",
+					"runs": [
+						7.576,
+						5.757,
+						15.996
+					],
+					"bestMs": 5.757,
+					"medianMs": 7.576,
+					"refusal": null,
+					"detail": "0 files changed of 5 scanned, 63 unhandled findings"
+				},
+				{
+					"stage": "migrate",
+					"outcome": "applied",
+					"runs": [
+						6.454
+					],
+					"bestMs": 6.454,
+					"medianMs": 6.454,
+					"refusal": null,
+					"detail": "0 files written into the scratch lane, 0 copied"
+				}
+			],
+			"pipelineBasis": "migrate",
+			"pipelineMedianMs": 6.454,
+			"pipelineBestMs": 6.454,
+			"outcome": "migrated-to-lane",
+			"refusals": [],
+			"lane": "angular-pigallery2-operator-lane",
+			"laneFilesWritten": 0
+		},
+		{
+			"id": "angular-realworld-v15-to-v16",
+			"lineage": "angular",
+			"appRoot": ".versionless/work/angular-realworld-v15-to-v16/lanes/legacy",
+			"workArea": ".versionless/work/angular-realworld-v15-to-v16",
+			"note": "Angular workspace whose tsconfig carries comments",
+			"stages": [
+				{
+					"stage": "analyze",
+					"outcome": "reported",
+					"runs": [
+						0.762,
+						0.351,
+						0.346
+					],
+					"bestMs": 0.346,
+					"medianMs": 0.351,
+					"refusal": null,
+					"detail": "lineage angular, builder @angular-devkit/build-angular:browser"
+				},
+				{
+					"stage": "plan",
+					"outcome": "refused",
+					"runs": [],
+					"bestMs": 0,
+					"medianMs": 0,
+					"refusal": "Angular tsconfig migration: the configuration appears to carry comments. This capability rewrites strict JSON only; a JSONC configuration would lose its comments silently, so it is refused instead.",
+					"detail": null
+				},
+				{
+					"stage": "migrate",
+					"outcome": "not-attempted",
+					"runs": [],
+					"bestMs": 0,
+					"medianMs": 0,
+					"refusal": null,
+					"detail": null
+				}
+			],
+			"pipelineBasis": "analyze",
+			"pipelineMedianMs": 0.351,
+			"pipelineBestMs": 0.346,
+			"outcome": "refused-at-plan",
+			"refusals": [
+				"plan: Angular tsconfig migration: the configuration appears to carry comments. This capability rewrites strict JSON only; a JSONC configuration would lose its comments silently, so it is refused instead."
+			],
+			"lane": null,
+			"laneFilesWritten": null
+		},
+		{
+			"id": "angular-realworld-production-parity",
+			"lineage": "angular",
+			"appRoot": ".versionless/work/angular-realworld-production-parity/lanes/angular15",
+			"workArea": ".versionless/work/angular-realworld-production-parity",
+			"note": "second Angular workspace whose tsconfig carries comments",
+			"stages": [
+				{
+					"stage": "analyze",
+					"outcome": "reported",
+					"runs": [
+						0.668,
+						0.335,
+						0.351
+					],
+					"bestMs": 0.335,
+					"medianMs": 0.351,
+					"refusal": null,
+					"detail": "lineage angular, builder @angular-devkit/build-angular:browser"
+				},
+				{
+					"stage": "plan",
+					"outcome": "refused",
+					"runs": [],
+					"bestMs": 0,
+					"medianMs": 0,
+					"refusal": "Angular tsconfig migration: the configuration appears to carry comments. This capability rewrites strict JSON only; a JSONC configuration would lose its comments silently, so it is refused instead.",
+					"detail": null
+				},
+				{
+					"stage": "migrate",
+					"outcome": "not-attempted",
+					"runs": [],
+					"bestMs": 0,
+					"medianMs": 0,
+					"refusal": null,
+					"detail": null
+				}
+			],
+			"pipelineBasis": "analyze",
+			"pipelineMedianMs": 0.351,
+			"pipelineBestMs": 0.335,
+			"outcome": "refused-at-plan",
+			"refusals": [
+				"plan: Angular tsconfig migration: the configuration appears to carry comments. This capability rewrites strict JSON only; a JSONC configuration would lose its comments silently, so it is refused instead."
+			],
+			"lane": null,
+			"laneFilesWritten": null
+		}
+	],
+	"totals": {
+		"applications": 12,
+		"react": 7,
+		"angular": 5,
+		"migratedToLane": 8,
+		"refused": 4,
+		"fleetLoopWallClockMs": 812.776,
+		"fleetLoopWallClockSeconds": 0.813,
+		"scratchLaneRoot": "versionless-fleet-batch-mYrVq9",
+		"scratchLaneNote": "The scratch lanes are created under the operating system temporary directory, outside this repository, and are left in place. This driver deletes nothing.",
+		"refusalStrings": [
+			"react-mycrypto — plan: React plan: this tree declares neither react-scripts nor a Vite configuration, so no frozen React adapter claims it. This flow refuses rather than guessing an origin toolchain.",
+			"react-boilerplate-v4 — plan: React plan: this tree declares neither react-scripts nor a Vite configuration, so no frozen React adapter claims it. This flow refuses rather than guessing an origin toolchain.",
+			"angular-realworld-v15-to-v16 — plan: Angular tsconfig migration: the configuration appears to carry comments. This capability rewrites strict JSON only; a JSONC configuration would lose its comments silently, so it is refused instead.",
+			"angular-realworld-production-parity — plan: Angular tsconfig migration: the configuration appears to carry comments. This capability rewrites strict JSON only; a JSONC configuration would lose its comments silently, so it is refused instead."
+		]
+	},
+	"extrapolation": {
+		"fleetSize": 300,
+		"basis": "per-application median of the deepest stage that completed, projected serially on one process on this host",
+		"rows": [
+			{
+				"population": "measured fleet, every outcome",
+				"applications": 12,
+				"perApplicationMedianMs": 0.8,
+				"perApplicationMeanMs": 13.432,
+				"serialSecondsAt300": 4.03,
+				"serialMinutesAt300": 0.067
+			},
+			{
+				"population": "applications whose plan composed and migrated",
+				"applications": 8,
+				"perApplicationMedianMs": 1.019,
+				"perApplicationMeanMs": 19.976,
+				"serialSecondsAt300": 5.993,
+				"serialMinutesAt300": 0.1
+			},
+			{
+				"population": "applications the flows refused",
+				"applications": 4,
+				"perApplicationMedianMs": 0.348,
+				"perApplicationMeanMs": 0.344,
+				"serialSecondsAt300": 0.103,
+				"serialMinutesAt300": 0.002
+			},
+			{
+				"population": "React lineage",
+				"applications": 7,
+				"perApplicationMedianMs": 0.791,
+				"perApplicationMeanMs": 0.7,
+				"serialSecondsAt300": 0.21,
+				"serialMinutesAt300": 0.004
+			},
+			{
+				"population": "Angular lineage",
+				"applications": 5,
+				"perApplicationMedianMs": 6.454,
+				"perApplicationMeanMs": 31.257,
+				"serialSecondsAt300": 9.377,
+				"serialMinutesAt300": 0.156
+			}
+		],
+		"byStage": [
+			{
+				"stage": "analyze",
+				"applicationsMeasured": 12,
+				"perApplicationMedianMs": 0.36,
+				"perApplicationMeanMs": 0.392,
+				"serialSecondsAt300": 0.118
+			},
+			{
+				"stage": "plan",
+				"applicationsMeasured": 8,
+				"perApplicationMedianMs": 0.692,
+				"perApplicationMeanMs": 23.943,
+				"serialSecondsAt300": 7.183
+			},
+			{
+				"stage": "migrate",
+				"applicationsMeasured": 8,
+				"perApplicationMedianMs": 1.019,
+				"perApplicationMeanMs": 19.976,
+				"serialSecondsAt300": 5.993
+			}
+		],
+		"readingRule": "These projections cover the operator surface alone. They are a floor on fleet machine time rather than an estimate of the whole per-application cost, because install, build and the witness passes are not in the timed region."
+	},
+	"parallelism": [
+		{
+			"stage": "analyze",
+			"classification": "parallelizable across processes",
+			"reason": "Detection reads declarations out of the application tree and writes nothing into it. Two detections of two applications share no mutable state."
+		},
+		{
+			"stage": "plan",
+			"classification": "parallelizable across processes",
+			"reason": "Composition reads the tree and returns a changeset; the flow writes nothing into the application it read."
+		},
+		{
+			"stage": "migrate",
+			"classification": "parallelizable across processes, one lane per application",
+			"reason": "The apply flow refuses a lane inside the application and refuses a lane that already carries files, so two concurrent migrations with distinct lanes cannot reach the same bytes."
+		},
+		{
+			"stage": "witness browser passes",
+			"classification": "witness-serialized on one host; not measured by this spike",
+			"reason": "The determinism-under-load finding carried over from the previous goal (T010/T011) is that the gates come back green when the passes run serially and fail when they run in parallel on one host. Multi-host is therefore the only witness throughput lever, and no projection here may assume this stage parallelizes."
+		},
+		{
+			"stage": "install and migrated build",
+			"classification": "not measured by this spike",
+			"reason": "Acquisition and build were outside the timed region. Their behaviour under concurrency is not established here."
+		}
+	],
+	"pruneSafety": {
+		"record": "prune-safety.json",
+		"application": "react-boilerplate-v4-composed",
+		"receipt": "evidence/runs/react-boilerplate-v4-composed/t060-run.json",
+		"verdict": "yes",
+		"statement": "The offline verification of evidence/runs/react-boilerplate-v4-composed/t060-run.json returned the same receipt digest with .versionless/work/react-boilerplate-v4-composed absent as it did with the directory present. For this receipt the work directory is not an input to verification."
+	},
+	"notEstablished": [
+		"A composed changeset is a set of edits, not a build. Nothing here establishes that any lane this spike wrote installs, compiles or emits anything.",
+		"The timings are one host, one process, a warm page cache and one repetition count. They are a reading of this machine rather than a specification.",
+		"The read-only stages ran three times each and the write stage once, and the repetitions were not interleaved across applications. On the two largest Angular trees the single migrate run came in below the plan median for the same tree; across a spread of roughly thirty per cent that is warm-cache variance, not migrate costing less than the composition it re-runs.",
+		"A refusal is an outcome rather than a failure of the run. The refusing roots are counted in the projections at the cost they actually took.",
+		"The fleet here is drawn from applications this checkout had already ingested. It is not a random sample of the target fleet and it carries whatever selection the corpus carries.",
+		"Nothing here measures authoring. The stages that dominate the recorded per-vertical cost — witness journey authoring, calibration and the browser passes — were not run.",
+		"The parallelizability readings for the three operator stages are read off what the flows do to disk, not measured under load. Only the witness serialization is backed by a load measurement, and that one was made by an earlier unit rather than by this spike."
+	]
+}
