@@ -3,7 +3,7 @@
   "purpose": "Map every exported migration capability to the independent applications that prove it, and derive its generality classification from that proof count",
   "crossProvenThreshold": 2,
   "method": [
-    "Enumerated from the @versionless/react and @versionless/angular index barrels: seven React modules and forty-two Angular modules.",
+    "Enumerated from the @versionless/react and @versionless/angular index barrels: seven React modules and forty-five Angular modules.",
     "Proving applications are the independent applications whose recorded migration exercised the capability — a direct invocation in the application migration fixture, or a construct-gated firing recorded in its build-lane run.",
     "angular-pigallery2 appears as a proving application and is deliberately absent from the independent-application matrix below: it is the T018 holdout, whose migrated build is recorded RED. A capability it exercises is recorded on that one application and is therefore experimental, and nothing here claims the application builds.",
     "Classification is derived: cross-proven (in-matrix) requires at least two distinct independent applications; fewer is experimental (out-of-matrix).",
@@ -29,18 +29,18 @@
     ]
   },
   "summary": {
-    "total": 50,
+    "total": 53,
     "crossProven": 8,
-    "experimental": 42,
+    "experimental": 45,
     "react": {
       "total": 8,
       "crossProven": 1,
       "experimental": 7
     },
     "angular": {
-      "total": 42,
+      "total": 45,
       "crossProven": 7,
-      "experimental": 35
+      "experimental": 38
     }
   },
   "capabilities": [
@@ -1038,6 +1038,67 @@
         "packages/cli/src/fixture/angular-pigallery2-migration-run.ts"
       ],
       "note": "Workspace-manifest engines.node retarget; composed into migrateAngularCliEraWorkspace by T021 u3 and gated on the construct — it fires only where the manifest declares an engines.node range that excludes the target cell's own Node line, and stands down on a workspace declaring no engines, on one whose declaration already admits the cell, and on a range shape it cannot read. The range written is derived from the cell (the caret on its declared Node line); no version appears in the capability. Only the pigallery2 holdout carries the construct: its era engines.node \">= 6.9 <11.0\" excluded Node 16.20.2 and every install under the migrated manifest reported EBADENGINE against the workspace itself.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "undecorated-angular-base-class",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "decorateUndecoratedBaseClasses"
+      ],
+      "provenApps": [
+        "angular-pigallery2"
+      ],
+      "attribution": "orchestrated-construct-gated",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-pigallery2-migration-run.ts"
+      ],
+      "note": "NG2007 undecorated-base-class decorator synthesis; composed into migrateAngularCliEraWorkspace by T021 u4 and gated on the module's own resolved bindings — a member decorator resolving to @angular/core's Input/Output/ViewChild/ViewChildren/ContentChild/ContentChildren/HostBinding/HostListener, or an `implements` clause resolving to one of its lifecycle interfaces, on a class carrying no decorator, on a cell whose Angular major is 9 or above. It writes `@Directive()` with no selector, which is the abstract-directive form Angular's own undecorated-classes migration shipped for this hop. It stands down on a pre-Ivy cell, on an already-decorated class, and on a class whose only Angular-looking feature is a constructor — that one is an @Injectable/@Directive question a constructor does not answer, and it is refused rather than guessed. One application carries the construct, whose migrated build is RED; nothing here claims that application builds.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "application-source-dependency",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "readApplicationPackageUses",
+        "declareApplicationSourceDependencies",
+        "inlineLoaderPackages",
+        "typesCompanionOf"
+      ],
+      "provenApps": [
+        "angular-pigallery2"
+      ],
+      "attribution": "orchestrated-construct-gated",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-pigallery2-migration-run.ts"
+      ],
+      "note": "Post-disposition application-source dependency declaration; composed into migrateAngularCliEraWorkspace by T021 u4, after the cell alignment because the hole it reads is one the disposition opens. It reads bare package names out of the application's own parsed source — static imports and re-exports, and webpack inline loader chains inside require, including chains whose module request is a template literal — and declares the ones no field of the migrated manifest supplies, at the cell's range and never at an invented one. A package the cell read and found no successor for is reported with every import site instead, which is what states a wall rather than hiding it. The @types companion is declared only when the era closure actually carried one, read off the era lane. One application carries the construct, whose migrated build is RED.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "departed-dom-lib-member",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "accommodateDepartedDomMembers",
+        "isVendorPrefixedStyleMember"
+      ],
+      "provenApps": [
+        "angular-pigallery2"
+      ],
+      "attribution": "orchestrated-construct-gated",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-pigallery2-migration-run.ts"
+      ],
+      "note": "lib.dom.d.ts drift accommodation; composed into migrateAngularCliEraWorkspace by T021 u4 through the same supply-gated seam unparameterised-base-class uses — a caller that has not compiled the tree supplies no TS2339 positions and gets no transform. It acts only where the compiler resolved the receiver to CSSStyleDeclaration and the member is spelled as a vendor-prefixed CSS property, and it widens that one receiver at that one access to CSSStyleDeclaration & Record<string, string>, leaving the emitted JavaScript unchanged. The capability carries no list of departed properties: the property is the compiler's word. A stale position refuses, which is also what makes a second application a no-op. One application carries the construct, whose migrated build is RED.",
       "proofCount": 1,
       "classification": "experimental"
     },

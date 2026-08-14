@@ -77,6 +77,24 @@ import {
 	type GenericBaseClassReading,
 	type UnparameterisedBaseClassDiagnostic,
 } from './unparameterised-base-class.ts';
+import {
+	decorateUndecoratedBaseClasses,
+	type UndecoratedBaseClassChange,
+} from './undecorated-angular-base-class.ts';
+import {
+	accommodateDepartedDomMembers,
+	type DepartedDomMemberChange,
+} from './departed-dom-lib-member.ts';
+import { type MissingMemberDiagnostic } from './declared-type-member-rename.ts';
+import {
+	declareApplicationSourceDependencies,
+	readApplicationPackageUses,
+} from './application-source-dependency.ts';
+import {
+	redirectUnreachableImports,
+	type DeepImportChange,
+	type DeepImportReading,
+} from './deep-import-redirection.ts';
 
 export type WorkspaceFile = Readonly<{ path: string; source: string }>;
 
@@ -146,6 +164,39 @@ export type AngularMigrationInput = Readonly<{
 	 * refuses every site it cannot prove from both.
 	 */
 	genericBaseClasses?: readonly GenericBaseClassReading[];
+	/**
+	 * `TS2339` as the target line's compiler reported it, per application module.
+	 * A member the current `lib.dom.d.ts` no longer declares is not readable from
+	 * the source — the source is exactly what it always was — so the seam is the
+	 * same supply-gated one {@link baseClassDiagnostics} uses. A tree that supplies
+	 * none has none accommodated.
+	 */
+	missingMemberDiagnostics?: readonly MissingMemberDiagnosticReading[];
+	/**
+	 * What packages whose subpaths the application imports actually publish, read
+	 * from the installed closure. A package not read here has its deep imports left
+	 * exactly as they are: whether a subpath is reachable is a fact about the
+	 * installed package's `exports` map, and nothing in the source states it.
+	 */
+	deepImportReadings?: readonly DeepImportReading[];
+	/**
+	 * The `@types/` packages the *era* closure carried, by name. A package this
+	 * application imports directly and the era manifest never declared may have had
+	 * its type declarations supplied the same accidental way its runtime was; this
+	 * reading is what lets that companion be declared beside it rather than
+	 * inferred from a name.
+	 */
+	eraClosureTypePackages?: readonly string[];
+}>;
+
+/**
+ * The `TS2339` diagnostics one application module carries, keyed by the path the
+ * workspace writes for it — the compiler's own 1-based positions into the bytes
+ * the caller compiled.
+ */
+export type MissingMemberDiagnosticReading = Readonly<{
+	path: string;
+	diagnostics: readonly MissingMemberDiagnostic[];
 }>;
 
 /**
@@ -282,6 +333,35 @@ function describeBaseClassChange(change: BaseClassParameterisationChange): strin
 	);
 }
 
+/**
+ * A synthesized decorator names no predecessor, because there was none. What a
+ * reader needs is which Angular features the class used — the whole of the
+ * evidence that it needed a decorator at all — so the claim can be checked
+ * against the class the compiler will now compile.
+ */
+function describeUndecoratedBaseClassChange(change: UndecoratedBaseClassChange): string {
+	return (
+		`line ${change.line}: ${change.kind} ${change.decorator} on ${change.className}, which uses ` +
+		`${change.features.join(', ')} (${change.importAdded ? 'import added' : 'existing import extended'})`
+	);
+}
+
+/**
+ * A widened receiver names the type the compiler resolved and the type it was
+ * widened to, so the claim can be checked against the declaration that stopped
+ * carrying the member.
+ */
+function describeDepartedDomMemberChange(change: DepartedDomMemberChange): string {
+	return (
+		`line ${change.line}: ${change.kind} ${change.receiver}.${change.member} — ` +
+		`${change.declaredType} no longer declares it, receiver widened to ${change.widenedTo}`
+	);
+}
+
+function describeDeepImportChange(change: DeepImportChange): string {
+	return `line ${change.line}: ${change.kind} ${change.from} -> ${change.to} (${change.symbols.join(', ')})`;
+}
+
 function describeBindingReorderChange(change: BindingReorderChange): string {
 	return (
 		`line ${change.line}: ${change.kind} on <${change.element}> (${change.directive}) — ` +
@@ -376,12 +456,32 @@ export function migrateAngularCliEraWorkspace(
 	unhandled.push(...declared.unhandled);
 	declaredDifferences.push(...declared.declaredDifferences);
 	/**
+	 * The holes the *application's own source* carries are closed after the cell
+	 * alignment for a second reason: the alignment is what drops the packages the
+	 * cell found no successor for, and a package the application imports directly
+	 * that the era closure supplied through one of those is only visible as a hole
+	 * once the wrapper is gone. Reading it before the disposition would report the
+	 * edge as satisfied and leave the migrated tree unable to resolve it.
+	 */
+	const applicationDependencies = declareApplicationSourceDependencies(
+		declared.manifest,
+		readApplicationPackageUses(input.sourceModules),
+		cell,
+		input.eraClosureTypePackages ?? [],
+	);
+	unhandled.push(...applicationDependencies.unhandled);
+	declaredDifferences.push(...applicationDependencies.declaredDifferences);
+	/**
 	 * The packages the migrated workspace's own targets name are declared last,
 	 * after every capability that decides which targets survive: a builder
 	 * declaration for a target the workspace migration removed would install a
 	 * toolchain nothing runs.
 	 */
-	const builders = declareBuilderPackages(declared.manifest, workspace.config, cell);
+	const builders = declareBuilderPackages(
+		applicationDependencies.manifest,
+		workspace.config,
+		cell,
+	);
 	unhandled.push(...builders.unhandled);
 	/**
 	 * The workspace's own runtime declaration is retargeted after every
@@ -404,6 +504,10 @@ export function migrateAngularCliEraWorkspace(
 			[
 				...aligned.changes.map(describeDependencyChange),
 				...declared.declarations.map(
+					(entry) =>
+						`added ${entry.field}.${entry.name} = ${entry.range} — ${entry.reason}`,
+				),
+				...applicationDependencies.declarations.map(
 					(entry) =>
 						`added ${entry.field}.${entry.name} = ${entry.range} — ${entry.reason}`,
 				),
@@ -459,6 +563,9 @@ export function migrateAngularCliEraWorkspace(
 	const baseClassDiagnostics = new Map(
 		(input.baseClassDiagnostics ?? []).map((entry) => [entry.path, entry.diagnostics]),
 	);
+	const missingMembers = new Map(
+		(input.missingMemberDiagnostics ?? []).map((entry) => [entry.path, entry.diagnostics]),
+	);
 	for (const module of [...input.sourceModules].sort((left, right) =>
 		compareStrings(left.path, right.path),
 	)) {
@@ -478,9 +585,37 @@ export function migrateAngularCliEraWorkspace(
 			baseClassDiagnostics.get(module.path) ?? [],
 			input.genericBaseClasses ?? [],
 		);
-		const migrated = migrateAngularSourceModule(module.path, baseClasses.source);
+		/**
+		 * The second compiler-positioned capability runs beside the first and for
+		 * the same reason: a `TS2339` position is a position in the bytes the caller
+		 * compiled, and the base-class parameterisation above only ever writes inside
+		 * an `extends` clause's type arguments — so a position it moved is a position
+		 * on the same line, and this capability re-checks the member is written where
+		 * it was told before it edits anything.
+		 */
+		const departedDomMembers = accommodateDepartedDomMembers(
+			module.path,
+			baseClasses.source,
+			missingMembers.get(module.path) ?? [],
+		);
+		const migrated = migrateAngularSourceModule(module.path, departedDomMembers.source);
 		const effects = migrateNgrxEffectDecorators(module.path, migrated.source);
 		const sentry = migrateSentryV8Tracing(module.path, effects.source);
+		/**
+		 * Deep imports are redirected after the specifier rewrites and before the
+		 * capabilities that read module literals: an unreachable subpath is a
+		 * question about the specifier, and the answer changes which declaration each
+		 * symbol arrives on. Every reading the caller supplied is offered the module
+		 * in turn, because two packages are two exports maps.
+		 */
+		let deepImportSource = sentry.source;
+		const deepImportChanges: DeepImportChange[] = [];
+		for (const reading of input.deepImportReadings ?? []) {
+			const redirected = redirectUnreachableImports(module.path, deepImportSource, reading);
+			unhandled.push(...redirected.unhandled);
+			deepImportChanges.push(...redirected.changes);
+			deepImportSource = redirected.source;
+		}
 		/**
 		 * `entryComponents` is dropped last of the per-module capabilities, and the
 		 * order is not arbitrary: the capability proves, per literal, that every
@@ -488,7 +623,7 @@ export function migrateAngularCliEraWorkspace(
 		 * `bootstrap` of the same literal, and it should see the literal as the
 		 * capabilities before it left it rather than as the era file wrote it.
 		 */
-		const entryComponents = removeEntryComponents(module.path, sentry.source);
+		const entryComponents = removeEntryComponents(module.path, deepImportSource);
 		/**
 		 * Three type-position insertions close the sequence. Each one is a claim
 		 * about a type the source itself already states — the module a static factory
@@ -504,7 +639,20 @@ export function migrateAngularCliEraWorkspace(
 		);
 		const voidSubjects = parameteriseVoidSubjects(module.path, moduleWithProviders.source);
 		const voidExecutors = parameteriseVoidPromiseExecutors(module.path, voidSubjects.source);
+		/**
+		 * The decorator synthesis closes the sequence. It inserts a line above a class
+		 * declaration and a name into an import declaration, which moves every offset
+		 * below both — so it runs after every capability positioned by an offset, and
+		 * it reads its own precondition out of the module the others left.
+		 */
+		const undecorated = decorateUndecoratedBaseClasses(
+			module.path,
+			voidExecutors.source,
+			cell,
+		);
 		unhandled.push(
+			...departedDomMembers.unhandled,
+			...undecorated.unhandled,
 			...baseClasses.unhandled,
 			...migrated.unhandled,
 			...effects.unhandled,
@@ -515,9 +663,12 @@ export function migrateAngularCliEraWorkspace(
 			...voidExecutors.unhandled,
 		);
 		files.push(
-			file(module, voidExecutors.source, 'application', [
+			file(module, undecorated.source, 'application', [
 				...(modalFile?.changes ?? []).map(describeSourceChange),
 				...baseClasses.changes.map(describeBaseClassChange),
+				...departedDomMembers.changes.map(describeDepartedDomMemberChange),
+				...deepImportChanges.map(describeDeepImportChange),
+				...undecorated.changes.map(describeUndecoratedBaseClassChange),
 				...migrated.changes.map(describeSourceChange),
 				...effects.changes.map(describeSourceChange),
 				...sentry.changes.map(describeSourceChange),

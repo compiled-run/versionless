@@ -40,3 +40,6 @@ export * from './stylesheet-url-rebase.ts';
 export * from './web-worker-url-specifier.ts';
 export * from './forms-legacy-disabled-state.ts';
 export * from './template-binding-reorder.ts';
+export * from './undecorated-angular-base-class.ts';
+export * from './departed-dom-lib-member.ts';
+export * from './application-source-dependency.ts';

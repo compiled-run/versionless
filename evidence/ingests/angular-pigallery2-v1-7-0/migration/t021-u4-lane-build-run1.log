@@ -1,0 +1,3113 @@
+- Generating browser application bundles (phase: setup)...
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+
+Warning: /Users/jacksm5pro/dev/open-source/versionless/.versionless/work/angular-pigallery2/target/app/common/config/public/Config.ts depends on 'typeconfig/src/WebConfigLoader'. CommonJS or AMD dependencies can cause optimization bailouts.
+For more info see: https://angular.io/guide/build#configuring-commonjs-dependencies
+
+Warning: /Users/jacksm5pro/dev/open-source/versionless/.versionless/work/angular-pigallery2/target/app/frontend/app/ui/gallery/directories/directory/directory.gallery.component.ts depends on 'ts-exif-parser'. CommonJS or AMD dependencies can cause optimization bailouts.
+For more info see: https://angular.io/guide/build#configuring-commonjs-dependencies
+
+Warning: /Users/jacksm5pro/dev/open-source/versionless/.versionless/work/angular-pigallery2/target/app/frontend/app/ui/gallery/map/lightbox/lightbox.map.gallery.component.ts depends on 'leaflet'. CommonJS or AMD dependencies can cause optimization bailouts.
+For more info see: https://angular.io/guide/build#configuring-commonjs-dependencies
+
+Warning: /Users/jacksm5pro/dev/open-source/versionless/.versionless/work/angular-pigallery2/target/app/frontend/app/ui/language/language.component.ts depends on 'ng2-cookies'. CommonJS or AMD dependencies can cause optimization bailouts.
+For more info see: https://angular.io/guide/build#configuring-commonjs-dependencies
+
+
+
+./frontend/app/app.module.ts:21:0-47 - Error: Module not found: Error: Can't resolve '@yaga/leaflet-ng2' in '/Users/jacksm5pro/dev/open-source/versionless/.versionless/work/angular-pigallery2/target/app/frontend/app'
+
+./frontend/app/app.module.ts:38:0-60 - Error: Module not found: Error: Can't resolve 'ng2-slim-loading-bar' in '/Users/jacksm5pro/dev/open-source/versionless/.versionless/work/angular-pigallery2/target/app/frontend/app'
+
+./frontend/app/app.module.ts:48:0-69 - Error: Module not found: Error: Can't resolve 'jw-bootstrap-switch-ng2' in '/Users/jacksm5pro/dev/open-source/versionless/.versionless/work/angular-pigallery2/target/app/frontend/app'
+
+./frontend/app/model/network/network.service.ts:2:0-61 - Error: Module not found: Error: Can't resolve 'ng2-slim-loading-bar' in '/Users/jacksm5pro/dev/open-source/versionless/.versionless/work/angular-pigallery2/target/app/frontend/app/model/network'
+
+./frontend/app/ui/gallery/map/lightbox/lightbox.map.gallery.component.ts:13:0-49 - Error: Module not found: Error: Can't resolve '@yaga/leaflet-ng2' in '/Users/jacksm5pro/dev/open-source/versionless/.versionless/work/angular-pigallery2/target/app/frontend/app/ui/gallery/map/lightbox'
+
+./frontend/app/ui/gallery/map/map.gallery.component.ts:5:0-49 - Error: Module not found: Error: Can't resolve '@yaga/leaflet-ng2' in '/Users/jacksm5pro/dev/open-source/versionless/.versionless/work/angular-pigallery2/target/app/frontend/app/ui/gallery/map'
+
+Error: frontend/app/app.component.ts:13:14 - error NG8001: 'router-outlet' is not a known element:
+1. If 'router-outlet' is an Angular component, then verify that it is part of this module.
+2. If 'router-outlet' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+13   template: `<router-outlet></router-outlet>`
+                ~~~~~~~~~~~~~~~
+
+
+Error: frontend/app/app.module.ts:14:26 - error TS2307: Cannot find module '@yaga/leaflet-ng2' or its corresponding type declarations.
+
+14 import {YagaModule} from '@yaga/leaflet-ng2';
+                            ~~~~~~~~~~~~~~~~~~~
+
+
+Error: frontend/app/app.module.ts:31:36 - error TS2307: Cannot find module 'ng2-slim-loading-bar' or its corresponding type declarations.
+
+31 import {SlimLoadingBarModule} from 'ng2-slim-loading-bar';
+                                      ~~~~~~~~~~~~~~~~~~~~~~
+
+
+Error: frontend/app/app.module.ts:41:42 - error TS2307: Cannot find module 'jw-bootstrap-switch-ng2' or its corresponding type declarations.
+
+41 import {JwBootstrapSwitchNg2Module} from 'jw-bootstrap-switch-ng2';
+                                            ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+Error: frontend/app/app.module.ts:126:12 - error NG1010: Value
+
+Error: frontend/app/model/network/network.service.ts:4:37 - error TS2307: Cannot find module 'ng2-slim-loading-bar' or its corresponding type declarations.
+
+4 import {SlimLoadingBarService} from 'ng2-slim-loading-bar';
+                                      ~~~~~~~~~~~~~~~~~~~~~~
+
+
+Error: frontend/app/ui/admin/admin.component.html:1:1 - error NG8001: 'app-frame' is not a known element:
+1. If 'app-frame' is an Angular component, then verify that it is part of this module.
+2. If 'app-frame' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+1 <app-frame>
+  ~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:31:11 - error NG8001: 'bSwitch' is not a known element:
+1. If 'bSwitch' is an Angular component, then verify that it is part of this module.
+2. To allow any element add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+ 31           <bSwitch
+              ~~~~~~~~
+ 32             id="simplifiedMode"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+ 41             [switch-label-width]="20"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 42             [(ngModel)]="simplifiedMode">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:35:13 - error NG8002: Can't bind to 'switch-off-color' since it isn't a known property of 'bSwitch'.
+
+35             [switch-off-color]="'warning'"
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:36:13 - error NG8002: Can't bind to 'switch-on-color' since it isn't a known property of 'bSwitch'.
+
+36             [switch-on-color]="'primary'"
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:37:13 - error NG8002: Can't bind to 'switch-inverse' since it isn't a known property of 'bSwitch'.
+
+37             [switch-inverse]="true"
+               ~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:38:13 - error NG8002: Can't bind to 'switch-off-text' since it isn't a known property of 'bSwitch'.
+
+38             [switch-off-text]="text.Advanced"
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:39:13 - error NG8002: Can't bind to 'switch-on-text' since it isn't a known property of 'bSwitch'.
+
+39             [switch-on-text]="text.Simplified"
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:40:13 - error NG8002: Can't bind to 'switch-handle-width' since it isn't a known property of 'bSwitch'.
+
+40             [switch-handle-width]="100"
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:41:13 - error NG8002: Can't bind to 'switch-label-width' since it isn't a known property of 'bSwitch'.
+
+41             [switch-label-width]="20"
+               ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:42:13 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'bSwitch'.
+
+42             [(ngModel)]="simplifiedMode">
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:47:5 - error NG8001: 'app-settings-basic' is not a known element:
+1. If 'app-settings-basic' is an Angular component, then verify that it is part of this module.
+2. If 'app-settings-basic' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+47     <app-settings-basic [simplifiedMode]="simplifiedMode"></app-settings-basic>
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:47:25 - error NG8002: Can't bind to 'simplifiedMode' since it isn't a known property of 'app-settings-basic'.
+1. If 'app-settings-basic' is an Angular component and it has 'simplifiedMode' input, then verify that it is part of this module.
+2. If 'app-settings-basic' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+47     <app-settings-basic [simplifiedMode]="simplifiedMode"></app-settings-basic>
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:48:5 - error NG8001: 'app-settings-usermanager' is not a known element:
+1. If 'app-settings-usermanager' is an Angular component, then verify that it is part of this module.
+2. If 'app-settings-usermanager' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+48     <app-settings-usermanager></app-settings-usermanager>
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:49:5 - error NG8001: 'app-settings-database' is not a known element:
+1. If 'app-settings-database' is an Angular component, then verify that it is part of this module.
+2. If 'app-settings-database' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+49     <app-settings-database [simplifiedMode]="simplifiedMode"></app-settings-database>
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:49:28 - error NG8002: Can't bind to 'simplifiedMode' since it isn't a known property of 'app-settings-database'.
+1. If 'app-settings-database' is an Angular component and it has 'simplifiedMode' input, then verify that it is part of this module.
+2. If 'app-settings-database' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+49     <app-settings-database [simplifiedMode]="simplifiedMode"></app-settings-database>
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:50:5 - error NG8001: 'app-settings-thumbnail' is not a known element:
+1. If 'app-settings-thumbnail' is an Angular component, then verify that it is part of this module.
+2. If 'app-settings-thumbnail' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+50     <app-settings-thumbnail #thumbnail [hidden]="!thumbnail.hasAvailableSettings"
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+51                             [simplifiedMode]="simplifiedMode"></app-settings-thumbnail>
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:51:29 - error NG8002: Can't bind to 'simplifiedMode' since it isn't a known property of 'app-settings-thumbnail'.
+1. If 'app-settings-thumbnail' is an Angular component and it has 'simplifiedMode' input, then verify that it is part of this module.
+2. If 'app-settings-thumbnail' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+51                             [simplifiedMode]="simplifiedMode"></app-settings-thumbnail>
+                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:52:5 - error NG8001: 'app-settings-video' is not a known element:
+1. If 'app-settings-video' is an Angular component, then verify that it is part of this module.
+2. If 'app-settings-video' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+52     <app-settings-video #video [hidden]="!video.hasAvailableSettings"
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+53                         [simplifiedMode]="simplifiedMode"></app-settings-video>
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:53:25 - error NG8002: Can't bind to 'simplifiedMode' since it isn't a known property of 'app-settings-video'.
+1. If 'app-settings-video' is an Angular component and it has 'simplifiedMode' input, then verify that it is part of this module.
+2. If 'app-settings-video' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+53                         [simplifiedMode]="simplifiedMode"></app-settings-video>
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:54:5 - error NG8001: 'app-settings-search' is not a known element:
+1. If 'app-settings-search' is an Angular component, then verify that it is part of this module.
+2. If 'app-settings-search' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+54     <app-settings-search #search [hidden]="!search.hasAvailableSettings"
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+55                          [simplifiedMode]="simplifiedMode"></app-settings-search>
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:55:26 - error NG8002: Can't bind to 'simplifiedMode' since it isn't a known property of 'app-settings-search'.
+1. If 'app-settings-search' is an Angular component and it has 'simplifiedMode' input, then verify that it is part of this module.
+2. If 'app-settings-search' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+55                          [simplifiedMode]="simplifiedMode"></app-settings-search>
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:56:5 - error NG8001: 'app-settings-share' is not a known element:
+1. If 'app-settings-share' is an Angular component, then verify that it is part of this module.
+2. If 'app-settings-share' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+56     <app-settings-share #share [hidden]="!share.hasAvailableSettings"
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+57                         [simplifiedMode]="simplifiedMode"></app-settings-share>
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:57:25 - error NG8002: Can't bind to 'simplifiedMode' since it isn't a known property of 'app-settings-share'.
+1. If 'app-settings-share' is an Angular component and it has 'simplifiedMode' input, then verify that it is part of this module.
+2. If 'app-settings-share' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+57                         [simplifiedMode]="simplifiedMode"></app-settings-share>
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:58:5 - error NG8001: 'app-settings-map' is not a known element:
+1. If 'app-settings-map' is an Angular component, then verify that it is part of this module.
+2. If 'app-settings-map' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+58     <app-settings-map #map [hidden]="!map.hasAvailableSettings" [simplifiedMode]="simplifiedMode"></app-settings-map>
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:58:65 - error NG8002: Can't bind to 'simplifiedMode' since it isn't a known property of 'app-settings-map'.
+1. If 'app-settings-map' is an Angular component and it has 'simplifiedMode' input, then verify that it is part of this module.
+2. If 'app-settings-map' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+58     <app-settings-map #map [hidden]="!map.hasAvailableSettings" [simplifiedMode]="simplifiedMode"></app-settings-map>
+                                                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:59:5 - error NG8001: 'app-settings-meta-file' is not a known element:
+1. If 'app-settings-meta-file' is an Angular component, then verify that it is part of this module.
+2. If 'app-settings-meta-file' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+59     <app-settings-meta-file #metaFile [hidden]="!metaFile.hasAvailableSettings"
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+60                             [simplifiedMode]="simplifiedMode"></app-settings-meta-file>
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:60:29 - error NG8002: Can't bind to 'simplifiedMode' since it isn't a known property of 'app-settings-meta-file'.
+1. If 'app-settings-meta-file' is an Angular component and it has 'simplifiedMode' input, then verify that it is part of this module.
+2. If 'app-settings-meta-file' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+60                             [simplifiedMode]="simplifiedMode"></app-settings-meta-file>
+                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:61:5 - error NG8001: 'app-settings-other' is not a known element:
+1. If 'app-settings-other' is an Angular component, then verify that it is part of this module.
+2. If 'app-settings-other' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+61     <app-settings-other #other [hidden]="!other.hasAvailableSettings"
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+62                         [simplifiedMode]="simplifiedMode"></app-settings-other>
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:62:25 - error NG8002: Can't bind to 'simplifiedMode' since it isn't a known property of 'app-settings-other'.
+1. If 'app-settings-other' is an Angular component and it has 'simplifiedMode' input, then verify that it is part of this module.
+2. If 'app-settings-other' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+62                         [simplifiedMode]="simplifiedMode"></app-settings-other>
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:63:5 - error NG8001: 'app-settings-random-photo' is not a known element:
+1. If 'app-settings-random-photo' is an Angular component, then verify that it is part of this module.
+2. If 'app-settings-random-photo' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+63     <app-settings-random-photo #random [hidden]="!random.hasAvailableSettings"
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+64                                [simplifiedMode]="simplifiedMode"></app-settings-random-photo>
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:64:32 - error NG8002: Can't bind to 'simplifiedMode' since it isn't a known property of 'app-settings-random-photo'.
+1. If 'app-settings-random-photo' is an Angular component and it has 'simplifiedMode' input, then verify that it is part of this module.
+2. If 'app-settings-random-photo' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+64                                [simplifiedMode]="simplifiedMode"></app-settings-random-photo>
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:65:5 - error NG8001: 'app-settings-faces' is not a known element:
+1. If 'app-settings-faces' is an Angular component, then verify that it is part of this module.
+2. If 'app-settings-faces' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+65     <app-settings-faces #random [hidden]="!random.hasAvailableSettings"
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+66                                [simplifiedMode]="simplifiedMode"></app-settings-faces>
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:66:32 - error NG8002: Can't bind to 'simplifiedMode' since it isn't a known property of 'app-settings-faces'.
+1. If 'app-settings-faces' is an Angular component and it has 'simplifiedMode' input, then verify that it is part of this module.
+2. If 'app-settings-faces' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+66                                [simplifiedMode]="simplifiedMode"></app-settings-faces>
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:67:5 - error NG8001: 'app-settings-indexing' is not a known element:
+1. If 'app-settings-indexing' is an Angular component, then verify that it is part of this module.
+2. If 'app-settings-indexing' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+67     <app-settings-indexing #indexing [hidden]="!indexing.hasAvailableSettings"
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+68                            [simplifiedMode]="simplifiedMode"></app-settings-indexing>
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/admin/admin.component.html:68:28 - error NG8002: Can't bind to 'simplifiedMode' since it isn't a known property of 'app-settings-indexing'.
+1. If 'app-settings-indexing' is an Angular component and it has 'simplifiedMode' input, then verify that it is part of this module.
+2. If 'app-settings-indexing' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+68                            [simplifiedMode]="simplifiedMode"></app-settings-indexing>
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/admin/admin.component.ts:12:16
+    12   templateUrl: './admin.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component AdminComponent.
+
+
+Error: frontend/app/ui/duplicates/duplicates.component.html:1:1 - error NG8001: 'app-frame' is not a known element:
+1. If 'app-frame' is an Angular component, then verify that it is part of this module.
+2. If 'app-frame' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+1 <app-frame>
+  ~~~~~~~~~~~
+
+  frontend/app/ui/duplicates/duplicates.component.ts:18:16
+    18   templateUrl: './duplicates.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DuplicateComponent.
+
+
+Error: frontend/app/ui/faces/face/face.component.html:1:4 - error NG8002: Can't bind to 'routerLink' since it isn't a known property of 'a'.
+
+1 <a [routerLink]="['/search', person.name, {type: SearchTypes[SearchTypes.person]}]"
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/faces/face/face.component.ts:13:16
+    13   templateUrl: './face.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component FaceComponent.
+
+
+Error: frontend/app/ui/faces/face/face.component.html:23:13 - error NG8002: Can't bind to 'ngClass' since it isn't a known property of 'span'.
+
+23             [ngClass]="{'favourite':person.isFavourite, 'clickable':CanUpdate}"></span>
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/faces/face/face.component.ts:13:16
+    13   templateUrl: './face.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component FaceComponent.
+
+
+Error: frontend/app/ui/faces/faces.component.html:1:1 - error NG8001: 'app-frame' is not a known element:
+1. If 'app-frame' is an Angular component, then verify that it is part of this module.
+2. If 'app-frame' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+1 <app-frame>
+  ~~~~~~~~~~~
+
+  frontend/app/ui/faces/faces.component.ts:10:16
+    10   templateUrl: './faces.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component FacesComponent.
+
+
+Error: frontend/app/ui/frame/frame.component.html:1:1 - error NG8001: 'ng2-slim-loading-bar' is not a known element:
+1. If 'ng2-slim-loading-bar' is an Angular component, then verify that it is part of this module.
+2. If 'ng2-slim-loading-bar' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+1 <ng2-slim-loading-bar [color]="'#337ab7'" [height]="'3px'"></ng2-slim-loading-bar>
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/frame/frame.component.ts:12:16
+    12   templateUrl: './frame.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component FrameComponent.
+
+
+Error: frontend/app/ui/frame/frame.component.html:1:23 - error NG8002: Can't bind to 'color' since it isn't a known property of 'ng2-slim-loading-bar'.
+1. If 'ng2-slim-loading-bar' is an Angular component and it has 'color' input, then verify that it is part of this module.
+2. If 'ng2-slim-loading-bar' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+1 <ng2-slim-loading-bar [color]="'#337ab7'" [height]="'3px'"></ng2-slim-loading-bar>
+                        ~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/frame/frame.component.ts:12:16
+    12   templateUrl: './frame.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component FrameComponent.
+
+
+Error: frontend/app/ui/frame/frame.component.html:1:43 - error NG8002: Can't bind to 'height' since it isn't a known property of 'ng2-slim-loading-bar'.
+1. If 'ng2-slim-loading-bar' is an Angular component and it has 'height' input, then verify that it is part of this module.
+2. If 'ng2-slim-loading-bar' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+1 <ng2-slim-loading-bar [color]="'#337ab7'" [height]="'3px'"></ng2-slim-loading-bar>
+                                            ~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/frame/frame.component.ts:12:16
+    12   templateUrl: './frame.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component FrameComponent.
+
+
+Error: frontend/app/ui/frame/frame.component.html:3:27 - error NG8002: Can't bind to 'routerLink' since it isn't a known property of 'a'.
+
+3   <a class="navbar-brand" [routerLink]="['/gallery','/']"
+                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/frame/frame.component.ts:12:16
+    12   templateUrl: './frame.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component FrameComponent.
+
+
+Error: frontend/app/ui/frame/frame.component.html:4:6 - error NG8002: Can't bind to 'queryParams' since it isn't a known property of 'a'.
+
+4      [queryParams]="queryService.getParams()">
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/frame/frame.component.ts:12:16
+    12   templateUrl: './frame.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component FrameComponent.
+
+
+Error: frontend/app/ui/frame/frame.component.html:13:56 - error NG8002: Can't bind to 'collapse' since it isn't a known property of 'div'.
+
+13   <div class="collapse navbar-collapse" id="navbarNav" [collapse]="collapsed">
+                                                          ~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/frame/frame.component.ts:12:16
+    12   templateUrl: './frame.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component FrameComponent.
+
+
+Error: frontend/app/ui/frame/frame.component.html:15:28 - error NG8002: Can't bind to 'routerLinkActive' since it isn't a known property of 'li'.
+
+15       <li class="nav-item" [routerLinkActive]="['active']">
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/frame/frame.component.ts:12:16
+    12   templateUrl: './frame.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component FrameComponent.
+
+
+Error: frontend/app/ui/frame/frame.component.html:17:12 - error NG8002: Can't bind to 'routerLink' since it isn't a known property of 'a'.
+
+17            [routerLink]="['/gallery']"
+              ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/frame/frame.component.ts:12:16
+    12   templateUrl: './frame.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component FrameComponent.
+
+
+Error: frontend/app/ui/frame/frame.component.html:18:12 - error NG8002: Can't bind to 'queryParams' since it isn't a known property of 'a'.
+
+18            [queryParams]="queryService.getParams()" i18n>Gallery</a>
+              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/frame/frame.component.ts:12:16
+    12   templateUrl: './frame.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component FrameComponent.
+
+
+Error: frontend/app/ui/frame/frame.component.html:33:9 - error NG8001: 'app-language' is not a known element:
+1. If 'app-language' is an Angular component, then verify that it is part of this module.
+2. If 'app-language' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+33         <app-language class="navbar-btn" isDark="true"></app-language>
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/frame/frame.component.ts:12:16
+    12   templateUrl: './frame.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component FrameComponent.
+
+
+Error: frontend/app/ui/gallery/directories/directory/directory.gallery.component.html:2:4 - error NG8002: Can't bind to 'routerLink' since it isn't a known property of 'a'.
+
+2    [routerLink]="['/gallery', getDirectoryPath()]"
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/gallery/directories/directory/directory.gallery.component.ts:15:16
+    15   templateUrl: './directory.gallery.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component GalleryDirectoryComponent.
+
+
+Error: frontend/app/ui/gallery/directories/directory/directory.gallery.component.html:3:4 - error NG8002: Can't bind to 'queryParams' since it isn't a known property of 'a'.
+
+3    [queryParams]="queryService.getParams()"
+     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/gallery/directories/directory/directory.gallery.component.ts:15:16
+    15   templateUrl: './directory.gallery.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component GalleryDirectoryComponent.
+
+
+Error: frontend/app/ui/gallery/gallery.component.html:1:1 - error NG8001: 'app-gallery-lightbox' is not a known element:
+1. If 'app-gallery-lightbox' is an Angular component, then verify that it is part of this module.
+2. If 'app-gallery-lightbox' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+1 <app-gallery-lightbox #lightbox></app-gallery-lightbox>
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/gallery/gallery.component.ts:23:16
+    23   templateUrl: './gallery.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component GalleryComponent.
+
+
+Error: frontend/app/ui/gallery/gallery.component.html:2:1 - error NG8001: 'app-frame' is not a known element:
+1. If 'app-frame' is an Angular component, then verify that it is part of this module.
+2. If 'app-frame' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+2 <app-frame>
+  ~~~~~~~~~~~
+
+  frontend/app/ui/gallery/gallery.component.ts:23:16
+    23   templateUrl: './gallery.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component GalleryComponent.
+
+
+Error: frontend/app/ui/gallery/lightbox/controls/controls.lightbox.gallery.component.html:2:6 - error NG8002: Can't bind to 'ngClass' since it isn't a known property of 'div'.
+
+2      [ngClass]="(controllersDimmed && !controllersAlwaysOn) ? (activePhoto && activePhoto.gridMedia.isVideo() ? 'dim-controls-video' :'dim-controls'):  ''"
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/gallery/lightbox/controls/controls.lightbox.gallery.component.ts:21:16
+    21   templateUrl: './controls.lightbox.gallery.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ControlsLightboxComponent.
+
+
+Error: frontend/app/ui/gallery/lightbox/infopanel/info-panel.lightbox.gallery.component.html:14:12 - error NG8002: Can't bind to 'routerLink' since it isn't a known property of 'div'.
+
+14            [routerLink]="['/gallery', DirectoryPath]"
+              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/gallery/lightbox/infopanel/info-panel.lightbox.gallery.component.ts:13:16
+    13   templateUrl: './info-panel.lightbox.gallery.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component InfoPanelLightboxComponent.
+
+
+Error: frontend/app/ui/gallery/lightbox/infopanel/info-panel.lightbox.gallery.component.html:15:12 - error NG8002: Can't bind to 'queryParams' since it isn't a known property of 'div'.
+
+15            [queryParams]="queryService.getParams()">
+              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/gallery/lightbox/infopanel/info-panel.lightbox.gallery.component.ts:13:16
+    13   templateUrl: './info-panel.lightbox.gallery.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component InfoPanelLightboxComponent.
+
+
+Error: frontend/app/ui/gallery/lightbox/lightbox.gallery.component.html:8:5 - error NG8001: 'app-gallery-lightbox-media' is not a known element:
+1. If 'app-gallery-lightbox-media' is an Angular component, then verify that it is part of this module.
+2. If 'app-gallery-lightbox-media' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+  8     <app-gallery-lightbox-media [gridMedia]="activePhoto ? activePhoto.gridMedia : null"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  9                                 [loadMedia]="!animating"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+ 12                                 [windowAspect]="photoFrameDim.aspect"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 13                                 #photo>
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/gallery/lightbox/lightbox.gallery.component.ts:27:16
+    27   templateUrl: './lightbox.gallery.component.html'
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component GalleryLightboxComponent.
+
+
+Error: frontend/app/ui/gallery/lightbox/lightbox.gallery.component.html:8:33 - error NG8002: Can't bind to 'gridMedia' since it isn't a known property of 'app-gallery-lightbox-media'.
+1. If 'app-gallery-lightbox-media' is an Angular component and it has 'gridMedia' input, then verify that it is part of this module.
+2. If 'app-gallery-lightbox-media' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+8     <app-gallery-lightbox-media [gridMedia]="activePhoto ? activePhoto.gridMedia : null"
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/gallery/lightbox/lightbox.gallery.component.ts:27:16
+    27   templateUrl: './lightbox.gallery.component.html'
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component GalleryLightboxComponent.
+
+
+Error: frontend/app/ui/gallery/lightbox/lightbox.gallery.component.html:9:33 - error NG8002: Can't bind to 'loadMedia' since it isn't a known property of 'app-gallery-lightbox-media'.
+1. If 'app-gallery-lightbox-media' is an Angular component and it has 'loadMedia' input, then verify that it is part of this module.
+2. If 'app-gallery-lightbox-media' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+9                                 [loadMedia]="!animating"
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/gallery/lightbox/lightbox.gallery.component.ts:27:16
+    27   templateUrl: './lightbox.gallery.component.html'
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component GalleryLightboxComponent.
+
+
+Error: frontend/app/ui/gallery/lightbox/lightbox.gallery.component.html:10:33 - error NG8002: Can't bind to 'zoom' since it isn't a known property of 'app-gallery-lightbox-media'.
+1. If 'app-gallery-lightbox-media' is an Angular component and it has 'zoom' input, then verify that it is part of this module.
+2. If 'app-gallery-lightbox-media' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+10                                 [zoom]="controls ? controls.Zoom : 1"
+                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/gallery/lightbox/lightbox.gallery.component.ts:27:16
+    27   templateUrl: './lightbox.gallery.component.html'
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component GalleryLightboxComponent.
+
+
+Error: frontend/app/ui/gallery/lightbox/lightbox.gallery.component.html:11:33 - error NG8002: Can't bind to 'drag' since it isn't a known property of 'app-gallery-lightbox-media'.
+1. If 'app-gallery-lightbox-media' is an Angular component and it has 'drag' input, then verify that it is part of this module.
+2. If 'app-gallery-lightbox-media' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+11                                 [drag]="controls ? controls.drag : {x:0,y:0}"
+                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/gallery/lightbox/lightbox.gallery.component.ts:27:16
+    27   templateUrl: './lightbox.gallery.component.html'
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component GalleryLightboxComponent.
+
+
+Error: frontend/app/ui/gallery/lightbox/lightbox.gallery.component.html:12:33 - error NG8002: Can't bind to 'windowAspect' since it isn't a known property of 'app-gallery-lightbox-media'.
+1. If 'app-gallery-lightbox-media' is an Angular component and it has 'windowAspect' input, then verify that it is part of this module.
+2. If 'app-gallery-lightbox-media' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+12                                 [windowAspect]="photoFrameDim.aspect"
+                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/gallery/lightbox/lightbox.gallery.component.ts:27:16
+    27   templateUrl: './lightbox.gallery.component.html'
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component GalleryLightboxComponent.
+
+
+Error: frontend/app/ui/gallery/map/lightbox/lightbox.map.gallery.component.html:10:5 - error NG8001: 'yaga-map' is not a known element:
+1. If 'yaga-map' is an Angular component, then verify that it is part of this module.
+2. If 'yaga-map' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+10     <yaga-map #yagaMap
+       ~~~~~~~~~~~~~~~~~~
+11               [style.width.px]="mapDimension.width"
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+12               [style.height.px]="mapDimension.height">
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/gallery/map/lightbox/lightbox.map.gallery.component.ts:22:16
+    22   templateUrl: './lightbox.map.gallery.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component GalleryMapLightboxComponent.
+
+
+Error: frontend/app/ui/gallery/map/lightbox/lightbox.map.gallery.component.html:14:7 - error NG8001: 'yaga-layers-control' is not a known element:
+1. If 'yaga-layers-control' is an Angular component, then verify that it is part of this module.
+2. If 'yaga-layers-control' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+14       <yaga-layers-control
+         ~~~~~~~~~~~~~~~~~~~~
+15         position="bottomright">
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/gallery/map/lightbox/lightbox.map.gallery.component.ts:22:16
+    22   templateUrl: './lightbox.map.gallery.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component GalleryMapLightboxComponent.
+
+
+Error: frontend/app/ui/gallery/map/lightbox/lightbox.map.gallery.component.html:31:9 - error NG8001: 'yaga-feature-group' is not a known element:
+1. If 'yaga-feature-group' is an Angular component, then verify that it is part of this module.
+2. If 'yaga-feature-group' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+31         <yaga-feature-group
+           ~~~~~~~~~~~~~~~~~~~
+32           [caption]="'photos'"
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+33           yaga-overlay-layer="'photos'">
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/gallery/map/lightbox/lightbox.map.gallery.component.ts:22:16
+    22   templateUrl: './lightbox.map.gallery.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component GalleryMapLightboxComponent.
+
+
+Error: frontend/app/ui/gallery/map/lightbox/lightbox.map.gallery.component.html:32:11 - error NG8002: Can't bind to 'caption' since it isn't a known property of 'yaga-feature-group'.
+1. If 'yaga-feature-group' is an Angular component and it has 'caption' input, then verify that it is part of this module.
+2. If 'yaga-feature-group' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+32           [caption]="'photos'"
+             ~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/gallery/map/lightbox/lightbox.map.gallery.component.ts:22:16
+    22   templateUrl: './lightbox.map.gallery.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component GalleryMapLightboxComponent.
+
+
+Error: frontend/app/ui/gallery/map/lightbox/lightbox.map.gallery.component.html:70:7 - error NG8001: 'yaga-zoom-control' is not a known element:
+1. If 'yaga-zoom-control' is an Angular component, then verify that it is part of this module.
+2. If 'yaga-zoom-control' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+70       <yaga-zoom-control position="bottomright">
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/gallery/map/lightbox/lightbox.map.gallery.component.ts:22:16
+    22   templateUrl: './lightbox.map.gallery.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component GalleryMapLightboxComponent.
+
+
+Error: frontend/app/ui/gallery/map/lightbox/lightbox.map.gallery.component.html:73:7 - error NG8001: 'yaga-attribution-control' is not a known element:
+1. If 'yaga-attribution-control' is an Angular component, then verify that it is part of this module.
+2. If 'yaga-attribution-control' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+73       <yaga-attribution-control
+         ~~~~~~~~~~~~~~~~~~~~~~~~~
+74         prefix=""
+   ~~~~~~~~~~~~~~~~~
+75         [attributions]="mapService.Attributions">
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/gallery/map/lightbox/lightbox.map.gallery.component.ts:22:16
+    22   templateUrl: './lightbox.map.gallery.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component GalleryMapLightboxComponent.
+
+
+Error: frontend/app/ui/gallery/map/lightbox/lightbox.map.gallery.component.html:75:9 - error NG8002: Can't bind to 'attributions' since it isn't a known property of 'yaga-attribution-control'.
+1. If 'yaga-attribution-control' is an Angular component and it has 'attributions' input, then verify that it is part of this module.
+2. If 'yaga-attribution-control' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+3. To allow any property add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+75         [attributions]="mapService.Attributions">
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/gallery/map/lightbox/lightbox.map.gallery.component.ts:22:16
+    22   templateUrl: './lightbox.map.gallery.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component GalleryMapLightboxComponent.
+
+
+Error: frontend/app/ui/gallery/map/lightbox/lightbox.map.gallery.component.ts:16:28 - error TS2307: Cannot find module '@yaga/leaflet-ng2' or its corresponding type declarations.
+
+16 import {MapComponent} from '@yaga/leaflet-ng2';
+                              ~~~~~~~~~~~~~~~~~~~
+
+
+Error: frontend/app/ui/gallery/map/lightbox/lightbox.map.gallery.component.ts:60:28 - error TS7006: Parameter 'l' implicitly has an 'any' type.
+
+60     this.yagaMap.eachLayer(l => {
+                              ~
+
+
+Error: frontend/app/ui/gallery/map/map.gallery.component.ts:7:28 - error TS2307: Cannot find module '@yaga/leaflet-ng2' or its corresponding type declarations.
+
+7 import {MapComponent} from '@yaga/leaflet-ng2';
+                             ~~~~~~~~~~~~~~~~~~~
+
+
+Error: frontend/app/ui/gallery/navigator/navigator.gallery.component.html:33:15 - error NG8002: Can't bind to 'ngClass' since it isn't a known property of 'button'.
+
+33               [ngClass]="{'btn-secondary':galleryService.sorting.value !== DefaultSorting}"
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/gallery/navigator/navigator.gallery.component.ts:18:16
+    18   templateUrl: './navigator.gallery.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component GalleryNavigatorComponent.
+
+
+Error: frontend/app/ui/gallery/navigator/navigator.gallery.component.html:35:58 - error NG8004: No pipe found with name 'iconizeSorting'.
+
+35               [innerHTML]="galleryService.sorting.value| iconizeSorting">
+                                                            ~~~~~~~~~~~~~~
+
+  frontend/app/ui/gallery/navigator/navigator.gallery.component.ts:18:16
+    18   templateUrl: './navigator.gallery.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component GalleryNavigatorComponent.
+
+
+Error: frontend/app/ui/gallery/search/search.gallery.component.html:1:54 - error NG8003: No directive found with exportAs 'ngForm'.
+
+1 <form class="navbar-form" role="search" #SearchForm="ngForm">
+                                                       ~~~~~~
+
+  frontend/app/ui/gallery/search/search.gallery.component.ts:13:16
+    13   templateUrl: './search.gallery.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component GallerySearchComponent.
+
+
+Error: frontend/app/ui/gallery/search/search.gallery.component.html:10:12 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'input'.
+
+10            [(ngModel)]="searchText"
+              ~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/gallery/search/search.gallery.component.ts:13:16
+    13   templateUrl: './search.gallery.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component GallerySearchComponent.
+
+
+Error: frontend/app/ui/gallery/search/search.gallery.component.html:11:19 - error NG8003: No directive found with exportAs 'ngModel'.
+
+11            #name="ngModel"
+                     ~~~~~~~
+
+  frontend/app/ui/gallery/search/search.gallery.component.ts:13:16
+    13   templateUrl: './search.gallery.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component GallerySearchComponent.
+
+
+Error: frontend/app/ui/gallery/search/search.gallery.component.html:38:15 - error NG8002: Can't bind to 'routerLink' since it isn't a known property of 'button'.
+
+38               [routerLink]="['/search', searchText]">
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/gallery/search/search.gallery.component.ts:13:16
+    13   templateUrl: './search.gallery.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component GallerySearchComponent.
+
+
+Error: frontend/app/ui/language/language.component.html:9:11 - error NG8002: Can't bind to 'ngClass' since it isn't a known property of 'button'.
+
+9           [ngClass]="isDark?'dark':''">
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/language/language.component.ts:8:16
+    8   templateUrl: './language.component.html',
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component LanguageComponent.
+
+
+Error: frontend/app/ui/login/login.component.html:3:5 - error NG8001: 'app-language' is not a known element:
+1. If 'app-language' is an Angular component, then verify that it is part of this module.
+2. If 'app-language' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+3     <app-language></app-language>
+      ~~~~~~~~~~~~~~
+
+  frontend/app/ui/login/login.component.ts:10:16
+    10   templateUrl: './login.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component LoginComponent.
+
+
+Error: frontend/app/ui/login/login.component.html:11:47 - error NG8003: No directive found with exportAs 'ngForm'.
+
+11       <form name="form" id="form" #LoginForm="ngForm" (submit)="onLogin()">
+                                                 ~~~~~~
+
+  frontend/app/ui/login/login.component.ts:10:16
+    10   templateUrl: './login.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component LoginComponent.
+
+
+Error: frontend/app/ui/login/login.component.html:28:20 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'input'.
+
+28                    [(ngModel)]="loginCredential.username"
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/login/login.component.ts:10:16
+    10   templateUrl: './login.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component LoginComponent.
+
+
+Error: frontend/app/ui/login/login.component.html:47:20 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'input'.
+
+47                    [(ngModel)]="loginCredential.password"
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/login/login.component.ts:10:16
+    10   templateUrl: './login.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component LoginComponent.
+
+
+Error: frontend/app/ui/login/login.component.html:55:20 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'input'.
+
+55                    [(ngModel)]="loginCredential.rememberMe">
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/login/login.component.ts:10:16
+    10   templateUrl: './login.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component LoginComponent.
+
+
+Error: frontend/app/ui/settings/basic/basic.settings.component.html:1:22 - error NG8003: No directive found with exportAs 'ngForm'.
+
+1 <form #settingsForm="ngForm" class="form-horizontal">
+                       ~~~~~~
+
+  frontend/app/ui/settings/basic/basic.settings.component.ts:12:16
+    12   templateUrl: './basic.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component BasicSettingsComponent.
+
+
+Error: frontend/app/ui/settings/basic/basic.settings.component.html:15:18 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'input'.
+
+15                  [(ngModel)]="settings.applicationTitle"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/basic/basic.settings.component.ts:12:16
+    12   templateUrl: './basic.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component BasicSettingsComponent.
+
+
+Error: frontend/app/ui/settings/basic/basic.settings.component.html:25:18 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'input'.
+
+25                  [(ngModel)]="settings.host"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/basic/basic.settings.component.ts:12:16
+    12   templateUrl: './basic.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component BasicSettingsComponent.
+
+
+Error: frontend/app/ui/settings/basic/basic.settings.component.html:39:18 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'input'.
+
+39                  [(ngModel)]="settings.port"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/basic/basic.settings.component.ts:12:16
+    12   templateUrl: './basic.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component BasicSettingsComponent.
+
+
+Error: frontend/app/ui/settings/basic/basic.settings.component.html:50:18 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'input'.
+
+50                  [(ngModel)]="settings.imagesFolder"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/basic/basic.settings.component.ts:12:16
+    12   templateUrl: './basic.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component BasicSettingsComponent.
+
+
+Error: frontend/app/ui/settings/basic/basic.settings.component.html:61:18 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'input'.
+
+61                  [(ngModel)]="settings.publicUrl"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/basic/basic.settings.component.ts:12:16
+    12   templateUrl: './basic.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component BasicSettingsComponent.
+
+
+Error: frontend/app/ui/settings/basic/basic.settings.component.html:75:18 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'input'.
+
+75                  [(ngModel)]="settings.urlBase"
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/basic/basic.settings.component.ts:12:16
+    12   templateUrl: './basic.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component BasicSettingsComponent.
+
+
+Error: frontend/app/ui/settings/database/database.settings.component.html:7:26 - error NG8003: No directive found with exportAs 'ngForm'.
+
+7     <form #settingsForm="ngForm">
+                           ~~~~~~
+
+  frontend/app/ui/settings/database/database.settings.component.ts:13:16
+    13   templateUrl: './database.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DatabaseSettingsComponent.
+
+
+Error: frontend/app/ui/settings/database/database.settings.component.html:9:36 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'select'.
+
+9       <select class="form-control" [(ngModel)]="settings.type" name="type" required>
+                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/database/database.settings.component.ts:13:16
+    13   templateUrl: './database.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component DatabaseSettingsComponent.
+
+
+Error: frontend/app/ui/settings/faces/faces.settings.component.html:1:22 - error NG8003: No directive found with exportAs 'ngForm'.
+
+1 <form #settingsForm="ngForm">
+                       ~~~~~~
+
+  frontend/app/ui/settings/faces/faces.settings.component.ts:14:16
+    14   templateUrl: './faces.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component FacesSettingsComponent.
+
+
+Error: frontend/app/ui/settings/faces/faces.settings.component.html:3:8 - error NG8002: Can't bind to 'ngClass' since it isn't a known property of 'div'.
+
+3        [ngClass]="settings.enabled && !_settingsService.isSupported()?'panel-warning':''">
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/faces/faces.settings.component.ts:14:16
+    14   templateUrl: './faces.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component FacesSettingsComponent.
+
+
+Error: frontend/app/ui/settings/faces/faces.settings.component.html:7:9 - error NG8001: 'bSwitch' is not a known element:
+1. If 'bSwitch' is an Angular component, then verify that it is part of this module.
+2. To allow any element add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+  7         <bSwitch
+            ~~~~~~~~
+  8           class="switch"
+    ~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+ 16           [switch-label-width]="20"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 17           [(ngModel)]="settings.enabled">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/faces/faces.settings.component.ts:14:16
+    14   templateUrl: './faces.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component FacesSettingsComponent.
+
+
+Error: frontend/app/ui/settings/faces/faces.settings.component.html:10:11 - error NG8002: Can't bind to 'switch-on-color' since it isn't a known property of 'bSwitch'.
+
+10           [switch-on-color]="'success'"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/faces/faces.settings.component.ts:14:16
+    14   templateUrl: './faces.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component FacesSettingsComponent.
+
+
+Error: frontend/app/ui/settings/faces/faces.settings.component.html:11:11 - error NG8002: Can't bind to 'switch-inverse' since it isn't a known property of 'bSwitch'.
+
+11           [switch-inverse]="true"
+             ~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/faces/faces.settings.component.ts:14:16
+    14   templateUrl: './faces.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component FacesSettingsComponent.
+
+
+Error: frontend/app/ui/settings/faces/faces.settings.component.html:12:11 - error NG8002: Can't bind to 'switch-off-text' since it isn't a known property of 'bSwitch'.
+
+12           [switch-off-text]="text.Disabled"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/faces/faces.settings.component.ts:14:16
+    14   templateUrl: './faces.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component FacesSettingsComponent.
+
+
+Error: frontend/app/ui/settings/faces/faces.settings.component.html:13:11 - error NG8002: Can't bind to 'switch-on-text' since it isn't a known property of 'bSwitch'.
+
+13           [switch-on-text]="text.Enabled"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/faces/faces.settings.component.ts:14:16
+    14   templateUrl: './faces.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component FacesSettingsComponent.
+
+
+Error: frontend/app/ui/settings/faces/faces.settings.component.html:14:11 - error NG8002: Can't bind to 'switch-disabled' since it isn't a known property of 'bSwitch'.
+
+14           [switch-disabled]="inProgress || (!settings.enabled && !_settingsService.isSupported())"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/faces/faces.settings.component.ts:14:16
+    14   templateUrl: './faces.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component FacesSettingsComponent.
+
+
+Error: frontend/app/ui/settings/faces/faces.settings.component.html:15:11 - error NG8002: Can't bind to 'switch-handle-width' since it isn't a known property of 'bSwitch'.
+
+15           [switch-handle-width]="100"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/faces/faces.settings.component.ts:14:16
+    14   templateUrl: './faces.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component FacesSettingsComponent.
+
+
+Error: frontend/app/ui/settings/faces/faces.settings.component.html:16:11 - error NG8002: Can't bind to 'switch-label-width' since it isn't a known property of 'bSwitch'.
+
+16           [switch-label-width]="20"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/faces/faces.settings.component.ts:14:16
+    14   templateUrl: './faces.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component FacesSettingsComponent.
+
+
+Error: frontend/app/ui/settings/faces/faces.settings.component.html:17:11 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'bSwitch'.
+
+17           [(ngModel)]="settings.enabled">
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/faces/faces.settings.component.ts:14:16
+    14   templateUrl: './faces.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component FacesSettingsComponent.
+
+
+Error: frontend/app/ui/settings/indexing/indexing.settings.component.html:1:22 - error NG8003: No directive found with exportAs 'ngForm'.
+
+1 <form #settingsForm="ngForm" class="form-horizontal">
+                       ~~~~~~
+
+  frontend/app/ui/settings/indexing/indexing.settings.component.ts:16:16
+    16   templateUrl: './indexing.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component IndexingSettingsComponent.
+
+
+Error: frontend/app/ui/settings/indexing/indexing.settings.component.html:135:48 - error NG8004: No pipe found with name 'fileSize'.
+
+135           {{statistic ? (statistic.diskUsage | fileSize) : '...'}}
+                                                   ~~~~~~~~
+
+  frontend/app/ui/settings/indexing/indexing.settings.component.ts:16:16
+    16   templateUrl: './indexing.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component IndexingSettingsComponent.
+
+
+Error: frontend/app/ui/settings/map/map.settings.component.html:1:22 - error NG8003: No directive found with exportAs 'ngForm'.
+
+1 <form #settingsForm="ngForm" class="form-horizontal">
+                       ~~~~~~
+
+  frontend/app/ui/settings/map/map.settings.component.ts:14:16
+    14   templateUrl: './map.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component MapSettingsComponent.
+
+
+Error: frontend/app/ui/settings/map/map.settings.component.html:6:9 - error NG8001: 'bSwitch' is not a known element:
+1. If 'bSwitch' is an Angular component, then verify that it is part of this module.
+2. To allow any element add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+  6         <bSwitch
+            ~~~~~~~~
+  7           class="switch"
+    ~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+ 15           [switch-label-width]="20"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 16           [(ngModel)]="settings.enabled">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/map/map.settings.component.ts:14:16
+    14   templateUrl: './map.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component MapSettingsComponent.
+
+
+Error: frontend/app/ui/settings/map/map.settings.component.html:9:11 - error NG8002: Can't bind to 'switch-on-color' since it isn't a known property of 'bSwitch'.
+
+9           [switch-on-color]="'success'"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/map/map.settings.component.ts:14:16
+    14   templateUrl: './map.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component MapSettingsComponent.
+
+
+Error: frontend/app/ui/settings/map/map.settings.component.html:10:11 - error NG8002: Can't bind to 'switch-inverse' since it isn't a known property of 'bSwitch'.
+
+10           [switch-inverse]="true"
+             ~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/map/map.settings.component.ts:14:16
+    14   templateUrl: './map.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component MapSettingsComponent.
+
+
+Error: frontend/app/ui/settings/map/map.settings.component.html:11:11 - error NG8002: Can't bind to 'switch-off-text' since it isn't a known property of 'bSwitch'.
+
+11           [switch-off-text]="text.Disabled"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/map/map.settings.component.ts:14:16
+    14   templateUrl: './map.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component MapSettingsComponent.
+
+
+Error: frontend/app/ui/settings/map/map.settings.component.html:12:11 - error NG8002: Can't bind to 'switch-on-text' since it isn't a known property of 'bSwitch'.
+
+12           [switch-on-text]="text.Enabled"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/map/map.settings.component.ts:14:16
+    14   templateUrl: './map.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component MapSettingsComponent.
+
+
+Error: frontend/app/ui/settings/map/map.settings.component.html:13:11 - error NG8002: Can't bind to 'switch-disabled' since it isn't a known property of 'bSwitch'.
+
+13           [switch-disabled]="inProgress"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/map/map.settings.component.ts:14:16
+    14   templateUrl: './map.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component MapSettingsComponent.
+
+
+Error: frontend/app/ui/settings/map/map.settings.component.html:14:11 - error NG8002: Can't bind to 'switch-handle-width' since it isn't a known property of 'bSwitch'.
+
+14           [switch-handle-width]="100"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/map/map.settings.component.ts:14:16
+    14   templateUrl: './map.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component MapSettingsComponent.
+
+
+Error: frontend/app/ui/settings/map/map.settings.component.html:15:11 - error NG8002: Can't bind to 'switch-label-width' since it isn't a known property of 'bSwitch'.
+
+15           [switch-label-width]="20"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/map/map.settings.component.ts:14:16
+    14   templateUrl: './map.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component MapSettingsComponent.
+
+
+Error: frontend/app/ui/settings/map/map.settings.component.html:16:11 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'bSwitch'.
+
+16           [(ngModel)]="settings.enabled">
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/map/map.settings.component.ts:14:16
+    14   templateUrl: './map.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component MapSettingsComponent.
+
+
+Error: frontend/app/ui/settings/metafiles/metafile.settings.component.html:1:22 - error NG8003: No directive found with exportAs 'ngForm'.
+
+1 <form #settingsForm="ngForm" class="form-horizontal">
+                       ~~~~~~
+
+  frontend/app/ui/settings/metafiles/metafile.settings.component.ts:13:16
+    13   templateUrl: './metafile.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component MetaFileSettingsComponent.
+
+
+Error: frontend/app/ui/settings/metafiles/metafile.settings.component.html:6:9 - error NG8001: 'bSwitch' is not a known element:
+1. If 'bSwitch' is an Angular component, then verify that it is part of this module.
+2. To allow any element add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+  6         <bSwitch
+            ~~~~~~~~
+  7           class="switch"
+    ~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+ 15           [switch-label-width]="20"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 16           [(ngModel)]="settings.enabled">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/metafiles/metafile.settings.component.ts:13:16
+    13   templateUrl: './metafile.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component MetaFileSettingsComponent.
+
+
+Error: frontend/app/ui/settings/metafiles/metafile.settings.component.html:9:11 - error NG8002: Can't bind to 'switch-on-color' since it isn't a known property of 'bSwitch'.
+
+9           [switch-on-color]="'success'"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/metafiles/metafile.settings.component.ts:13:16
+    13   templateUrl: './metafile.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component MetaFileSettingsComponent.
+
+
+Error: frontend/app/ui/settings/metafiles/metafile.settings.component.html:10:11 - error NG8002: Can't bind to 'switch-inverse' since it isn't a known property of 'bSwitch'.
+
+10           [switch-inverse]="true"
+             ~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/metafiles/metafile.settings.component.ts:13:16
+    13   templateUrl: './metafile.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component MetaFileSettingsComponent.
+
+
+Error: frontend/app/ui/settings/metafiles/metafile.settings.component.html:11:11 - error NG8002: Can't bind to 'switch-off-text' since it isn't a known property of 'bSwitch'.
+
+11           [switch-off-text]="text.Disabled"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/metafiles/metafile.settings.component.ts:13:16
+    13   templateUrl: './metafile.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component MetaFileSettingsComponent.
+
+
+Error: frontend/app/ui/settings/metafiles/metafile.settings.component.html:12:11 - error NG8002: Can't bind to 'switch-on-text' since it isn't a known property of 'bSwitch'.
+
+12           [switch-on-text]="text.Enabled"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/metafiles/metafile.settings.component.ts:13:16
+    13   templateUrl: './metafile.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component MetaFileSettingsComponent.
+
+
+Error: frontend/app/ui/settings/metafiles/metafile.settings.component.html:13:11 - error NG8002: Can't bind to 'switch-disabled' since it isn't a known property of 'bSwitch'.
+
+13           [switch-disabled]="inProgress"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/metafiles/metafile.settings.component.ts:13:16
+    13   templateUrl: './metafile.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component MetaFileSettingsComponent.
+
+
+Error: frontend/app/ui/settings/metafiles/metafile.settings.component.html:14:11 - error NG8002: Can't bind to 'switch-handle-width' since it isn't a known property of 'bSwitch'.
+
+14           [switch-handle-width]="100"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/metafiles/metafile.settings.component.ts:13:16
+    13   templateUrl: './metafile.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component MetaFileSettingsComponent.
+
+
+Error: frontend/app/ui/settings/metafiles/metafile.settings.component.html:15:11 - error NG8002: Can't bind to 'switch-label-width' since it isn't a known property of 'bSwitch'.
+
+15           [switch-label-width]="20"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/metafiles/metafile.settings.component.ts:13:16
+    13   templateUrl: './metafile.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component MetaFileSettingsComponent.
+
+
+Error: frontend/app/ui/settings/metafiles/metafile.settings.component.html:16:11 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'bSwitch'.
+
+16           [(ngModel)]="settings.enabled">
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/metafiles/metafile.settings.component.ts:13:16
+    13   templateUrl: './metafile.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component MetaFileSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:1:22 - error NG8003: No directive found with exportAs 'ngForm'.
+
+1 <form #settingsForm="ngForm" class="form-horizontal" >
+                       ~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:14:11 - error NG8001: 'bSwitch' is not a known element:
+1. If 'bSwitch' is an Angular component, then verify that it is part of this module.
+2. To allow any element add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+ 14           <bSwitch
+              ~~~~~~~~
+ 15             id="enableThreading"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+ 23             [switch-label-width]="20"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 24             [(ngModel)]="settings.Server.enable">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:18:13 - error NG8002: Can't bind to 'switch-on-color' since it isn't a known property of 'bSwitch'.
+
+18             [switch-on-color]="'primary'"
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:19:13 - error NG8002: Can't bind to 'switch-inverse' since it isn't a known property of 'bSwitch'.
+
+19             [switch-inverse]="true"
+               ~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:20:13 - error NG8002: Can't bind to 'switch-off-text' since it isn't a known property of 'bSwitch'.
+
+20             [switch-off-text]="text.Disabled"
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:21:13 - error NG8002: Can't bind to 'switch-on-text' since it isn't a known property of 'bSwitch'.
+
+21             [switch-on-text]="text.Enabled"
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:22:13 - error NG8002: Can't bind to 'switch-handle-width' since it isn't a known property of 'bSwitch'.
+
+22             [switch-handle-width]="100"
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:23:13 - error NG8002: Can't bind to 'switch-label-width' since it isn't a known property of 'bSwitch'.
+
+23             [switch-label-width]="20"
+               ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:24:13 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'bSwitch'.
+
+24             [(ngModel)]="settings.Server.enable">
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:35:62 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'select'.
+
+35           <select id="thumbnailThreads" class="form-control" [(ngModel)]="settings.Server.thumbnailThreads"
+                                                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:37:21 - error NG8002: Can't bind to 'ngValue' since it isn't a known property of 'option'.
+
+37             <option [ngValue]="0">auto</option>
+                       ~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:50:11 - error NG8001: 'bSwitch' is not a known element:
+1. If 'bSwitch' is an Angular component, then verify that it is part of this module.
+2. To allow any element add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+ 50           <bSwitch
+              ~~~~~~~~
+ 51             id="enableOnScrollThumbnailPrioritising"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+ 59             [switch-label-width]="20"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 60             [(ngModel)]="settings.Client.enableOnScrollThumbnailPrioritising">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:54:13 - error NG8002: Can't bind to 'switch-on-color' since it isn't a known property of 'bSwitch'.
+
+54             [switch-on-color]="'primary'"
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:55:13 - error NG8002: Can't bind to 'switch-inverse' since it isn't a known property of 'bSwitch'.
+
+55             [switch-inverse]="true"
+               ~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:56:13 - error NG8002: Can't bind to 'switch-off-text' since it isn't a known property of 'bSwitch'.
+
+56             [switch-off-text]="text.Disabled"
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:57:13 - error NG8002: Can't bind to 'switch-on-text' since it isn't a known property of 'bSwitch'.
+
+57             [switch-on-text]="text.Enabled"
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:58:13 - error NG8002: Can't bind to 'switch-handle-width' since it isn't a known property of 'bSwitch'.
+
+58             [switch-handle-width]="100"
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:59:13 - error NG8002: Can't bind to 'switch-label-width' since it isn't a known property of 'bSwitch'.
+
+59             [switch-label-width]="20"
+               ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:60:13 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'bSwitch'.
+
+60             [(ngModel)]="settings.Client.enableOnScrollThumbnailPrioritising">
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:70:11 - error NG8001: 'bSwitch' is not a known element:
+1. If 'bSwitch' is an Angular component, then verify that it is part of this module.
+2. To allow any element add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+ 70           <bSwitch
+              ~~~~~~~~
+ 71             id="enableOnScrollRendering"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+ 79             [switch-label-width]="20"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 80             [(ngModel)]="settings.Client.enableOnScrollRendering">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:74:13 - error NG8002: Can't bind to 'switch-on-color' since it isn't a known property of 'bSwitch'.
+
+74             [switch-on-color]="'primary'"
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:75:13 - error NG8002: Can't bind to 'switch-inverse' since it isn't a known property of 'bSwitch'.
+
+75             [switch-inverse]="true"
+               ~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:76:13 - error NG8002: Can't bind to 'switch-off-text' since it isn't a known property of 'bSwitch'.
+
+76             [switch-off-text]="text.Disabled"
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:77:13 - error NG8002: Can't bind to 'switch-on-text' since it isn't a known property of 'bSwitch'.
+
+77             [switch-on-text]="text.Enabled"
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:78:13 - error NG8002: Can't bind to 'switch-handle-width' since it isn't a known property of 'bSwitch'.
+
+78             [switch-handle-width]="100"
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:79:13 - error NG8002: Can't bind to 'switch-label-width' since it isn't a known property of 'bSwitch'.
+
+79             [switch-label-width]="20"
+               ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:80:13 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'bSwitch'.
+
+80             [(ngModel)]="settings.Client.enableOnScrollRendering">
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:92:11 - error NG8001: 'bSwitch' is not a known element:
+1. If 'bSwitch' is an Angular component, then verify that it is part of this module.
+2. To allow any element add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+ 92           <bSwitch
+              ~~~~~~~~
+ 93             id="enableCache"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+101             [switch-label-width]="20"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+102             [(ngModel)]="settings.Client.enableCache">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:96:13 - error NG8002: Can't bind to 'switch-on-color' since it isn't a known property of 'bSwitch'.
+
+96             [switch-on-color]="'primary'"
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:97:13 - error NG8002: Can't bind to 'switch-inverse' since it isn't a known property of 'bSwitch'.
+
+97             [switch-inverse]="true"
+               ~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:98:13 - error NG8002: Can't bind to 'switch-off-text' since it isn't a known property of 'bSwitch'.
+
+98             [switch-off-text]="text.Disabled"
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:99:13 - error NG8002: Can't bind to 'switch-on-text' since it isn't a known property of 'bSwitch'.
+
+99             [switch-on-text]="text.Enabled"
+               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:100:13 - error NG8002: Can't bind to 'switch-handle-width' since it isn't a known property of 'bSwitch'.
+
+100             [switch-handle-width]="100"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:101:13 - error NG8002: Can't bind to 'switch-label-width' since it isn't a known property of 'bSwitch'.
+
+101             [switch-label-width]="20"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:102:13 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'bSwitch'.
+
+102             [(ngModel)]="settings.Client.enableCache">
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:113:11 - error NG8001: 'bSwitch' is not a known element:
+1. If 'bSwitch' is an Angular component, then verify that it is part of this module.
+2. To allow any element add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+113           <bSwitch
+              ~~~~~~~~
+114             id="captionFirstNaming"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+122             [switch-label-width]="20"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+123             [(ngModel)]="settings.Client.captionFirstNaming">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:117:13 - error NG8002: Can't bind to 'switch-on-color' since it isn't a known property of 'bSwitch'.
+
+117             [switch-on-color]="'primary'"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:118:13 - error NG8002: Can't bind to 'switch-inverse' since it isn't a known property of 'bSwitch'.
+
+118             [switch-inverse]="true"
+                ~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:119:13 - error NG8002: Can't bind to 'switch-off-text' since it isn't a known property of 'bSwitch'.
+
+119             [switch-off-text]="text.Disabled"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:120:13 - error NG8002: Can't bind to 'switch-on-text' since it isn't a known property of 'bSwitch'.
+
+120             [switch-on-text]="text.Enabled"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:121:13 - error NG8002: Can't bind to 'switch-handle-width' since it isn't a known property of 'bSwitch'.
+
+121             [switch-handle-width]="100"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:122:13 - error NG8002: Can't bind to 'switch-label-width' since it isn't a known property of 'bSwitch'.
+
+122             [switch-label-width]="20"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:123:13 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'bSwitch'.
+
+123             [(ngModel)]="settings.Client.captionFirstNaming">
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:135:11 - error NG8001: 'bSwitch' is not a known element:
+1. If 'bSwitch' is an Angular component, then verify that it is part of this module.
+2. To allow any element add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+135           <bSwitch
+              ~~~~~~~~
+136             id="showItemCount"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+144             [switch-label-width]="20"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+145             [(ngModel)]="settings.Client.NavBar.showItemCount">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:139:13 - error NG8002: Can't bind to 'switch-on-color' since it isn't a known property of 'bSwitch'.
+
+139             [switch-on-color]="'primary'"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:140:13 - error NG8002: Can't bind to 'switch-inverse' since it isn't a known property of 'bSwitch'.
+
+140             [switch-inverse]="true"
+                ~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:141:13 - error NG8002: Can't bind to 'switch-off-text' since it isn't a known property of 'bSwitch'.
+
+141             [switch-off-text]="text.Disabled"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:142:13 - error NG8002: Can't bind to 'switch-on-text' since it isn't a known property of 'bSwitch'.
+
+142             [switch-on-text]="text.Enabled"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:143:13 - error NG8002: Can't bind to 'switch-handle-width' since it isn't a known property of 'bSwitch'.
+
+143             [switch-handle-width]="100"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:144:13 - error NG8002: Can't bind to 'switch-label-width' since it isn't a known property of 'bSwitch'.
+
+144             [switch-label-width]="20"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:145:13 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'bSwitch'.
+
+145             [(ngModel)]="settings.Client.NavBar.showItemCount">
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/other/other.settings.component.html:157:71 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'select'.
+
+157           <select id="defaultPhotoSortingMethod" class="form-control" [(ngModel)]="settings.Client.defaultPhotoSortingMethod"
+                                                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/other/other.settings.component.ts:14:16
+    14   templateUrl: './other.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component OtherSettingsComponent.
+
+
+Error: frontend/app/ui/settings/random-photo/random-photo.settings.component.html:1:22 - error NG8003: No directive found with exportAs 'ngForm'.
+
+1 <form #settingsForm="ngForm">
+                       ~~~~~~
+
+  frontend/app/ui/settings/random-photo/random-photo.settings.component.ts:12:16
+    12   templateUrl: './random-photo.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RandomPhotoSettingsComponent.
+
+
+Error: frontend/app/ui/settings/random-photo/random-photo.settings.component.html:3:8 - error NG8002: Can't bind to 'ngClass' since it isn't a known property of 'div'.
+
+3        [ngClass]="settings.enabled && !_settingsService.isSupported()?'panel-warning':''">
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/random-photo/random-photo.settings.component.ts:12:16
+    12   templateUrl: './random-photo.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RandomPhotoSettingsComponent.
+
+
+Error: frontend/app/ui/settings/random-photo/random-photo.settings.component.html:7:9 - error NG8001: 'bSwitch' is not a known element:
+1. If 'bSwitch' is an Angular component, then verify that it is part of this module.
+2. To allow any element add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+  7         <bSwitch
+            ~~~~~~~~
+  8           class="switch"
+    ~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+ 16           [switch-label-width]="20"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 17           [(ngModel)]="settings.enabled">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/random-photo/random-photo.settings.component.ts:12:16
+    12   templateUrl: './random-photo.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RandomPhotoSettingsComponent.
+
+
+Error: frontend/app/ui/settings/random-photo/random-photo.settings.component.html:10:11 - error NG8002: Can't bind to 'switch-on-color' since it isn't a known property of 'bSwitch'.
+
+10           [switch-on-color]="'success'"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/random-photo/random-photo.settings.component.ts:12:16
+    12   templateUrl: './random-photo.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RandomPhotoSettingsComponent.
+
+
+Error: frontend/app/ui/settings/random-photo/random-photo.settings.component.html:11:11 - error NG8002: Can't bind to 'switch-inverse' since it isn't a known property of 'bSwitch'.
+
+11           [switch-inverse]="true"
+             ~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/random-photo/random-photo.settings.component.ts:12:16
+    12   templateUrl: './random-photo.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RandomPhotoSettingsComponent.
+
+
+Error: frontend/app/ui/settings/random-photo/random-photo.settings.component.html:12:11 - error NG8002: Can't bind to 'switch-off-text' since it isn't a known property of 'bSwitch'.
+
+12           [switch-off-text]="text.Disabled"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/random-photo/random-photo.settings.component.ts:12:16
+    12   templateUrl: './random-photo.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RandomPhotoSettingsComponent.
+
+
+Error: frontend/app/ui/settings/random-photo/random-photo.settings.component.html:13:11 - error NG8002: Can't bind to 'switch-on-text' since it isn't a known property of 'bSwitch'.
+
+13           [switch-on-text]="text.Enabled"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/random-photo/random-photo.settings.component.ts:12:16
+    12   templateUrl: './random-photo.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RandomPhotoSettingsComponent.
+
+
+Error: frontend/app/ui/settings/random-photo/random-photo.settings.component.html:14:11 - error NG8002: Can't bind to 'switch-disabled' since it isn't a known property of 'bSwitch'.
+
+14           [switch-disabled]="inProgress || (!settings.enabled && !_settingsService.isSupported())"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/random-photo/random-photo.settings.component.ts:12:16
+    12   templateUrl: './random-photo.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RandomPhotoSettingsComponent.
+
+
+Error: frontend/app/ui/settings/random-photo/random-photo.settings.component.html:15:11 - error NG8002: Can't bind to 'switch-handle-width' since it isn't a known property of 'bSwitch'.
+
+15           [switch-handle-width]="100"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/random-photo/random-photo.settings.component.ts:12:16
+    12   templateUrl: './random-photo.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RandomPhotoSettingsComponent.
+
+
+Error: frontend/app/ui/settings/random-photo/random-photo.settings.component.html:16:11 - error NG8002: Can't bind to 'switch-label-width' since it isn't a known property of 'bSwitch'.
+
+16           [switch-label-width]="20"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/random-photo/random-photo.settings.component.ts:12:16
+    12   templateUrl: './random-photo.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RandomPhotoSettingsComponent.
+
+
+Error: frontend/app/ui/settings/random-photo/random-photo.settings.component.html:17:11 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'bSwitch'.
+
+17           [(ngModel)]="settings.enabled">
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/random-photo/random-photo.settings.component.ts:12:16
+    12   templateUrl: './random-photo.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component RandomPhotoSettingsComponent.
+
+
+Error: frontend/app/ui/settings/search/search.settings.component.html:1:22 - error NG8003: No directive found with exportAs 'ngForm'.
+
+1 <form #settingsForm="ngForm">
+                       ~~~~~~
+
+  frontend/app/ui/settings/search/search.settings.component.ts:12:16
+    12   templateUrl: './search.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component SearchSettingsComponent.
+
+
+Error: frontend/app/ui/settings/search/search.settings.component.html:3:8 - error NG8002: Can't bind to 'ngClass' since it isn't a known property of 'div'.
+
+3        [ngClass]="settings.enabled && !_settingsService.isSupported()?'panel-warning':''">
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/search/search.settings.component.ts:12:16
+    12   templateUrl: './search.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component SearchSettingsComponent.
+
+
+Error: frontend/app/ui/settings/search/search.settings.component.html:7:9 - error NG8001: 'bSwitch' is not a known element:
+1. If 'bSwitch' is an Angular component, then verify that it is part of this module.
+2. To allow any element add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+  7         <bSwitch
+            ~~~~~~~~
+  8           class="switch"
+    ~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+ 16           [switch-label-width]="20"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 17           [(ngModel)]="settings.enabled">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/search/search.settings.component.ts:12:16
+    12   templateUrl: './search.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component SearchSettingsComponent.
+
+
+Error: frontend/app/ui/settings/search/search.settings.component.html:10:11 - error NG8002: Can't bind to 'switch-on-color' since it isn't a known property of 'bSwitch'.
+
+10           [switch-on-color]="'success'"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/search/search.settings.component.ts:12:16
+    12   templateUrl: './search.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component SearchSettingsComponent.
+
+
+Error: frontend/app/ui/settings/search/search.settings.component.html:11:11 - error NG8002: Can't bind to 'switch-inverse' since it isn't a known property of 'bSwitch'.
+
+11           [switch-inverse]="true"
+             ~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/search/search.settings.component.ts:12:16
+    12   templateUrl: './search.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component SearchSettingsComponent.
+
+
+Error: frontend/app/ui/settings/search/search.settings.component.html:12:11 - error NG8002: Can't bind to 'switch-off-text' since it isn't a known property of 'bSwitch'.
+
+12           [switch-off-text]="text.Disabled"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/search/search.settings.component.ts:12:16
+    12   templateUrl: './search.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component SearchSettingsComponent.
+
+
+Error: frontend/app/ui/settings/search/search.settings.component.html:13:11 - error NG8002: Can't bind to 'switch-on-text' since it isn't a known property of 'bSwitch'.
+
+13           [switch-on-text]="text.Enabled"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/search/search.settings.component.ts:12:16
+    12   templateUrl: './search.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component SearchSettingsComponent.
+
+
+Error: frontend/app/ui/settings/search/search.settings.component.html:14:11 - error NG8002: Can't bind to 'switch-disabled' since it isn't a known property of 'bSwitch'.
+
+14           [switch-disabled]="inProgress || (!settings.enabled && !_settingsService.isSupported())"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/search/search.settings.component.ts:12:16
+    12   templateUrl: './search.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component SearchSettingsComponent.
+
+
+Error: frontend/app/ui/settings/search/search.settings.component.html:15:11 - error NG8002: Can't bind to 'switch-handle-width' since it isn't a known property of 'bSwitch'.
+
+15           [switch-handle-width]="100"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/search/search.settings.component.ts:12:16
+    12   templateUrl: './search.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component SearchSettingsComponent.
+
+
+Error: frontend/app/ui/settings/search/search.settings.component.html:16:11 - error NG8002: Can't bind to 'switch-label-width' since it isn't a known property of 'bSwitch'.
+
+16           [switch-label-width]="20"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/search/search.settings.component.ts:12:16
+    12   templateUrl: './search.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component SearchSettingsComponent.
+
+
+Error: frontend/app/ui/settings/search/search.settings.component.html:17:11 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'bSwitch'.
+
+17           [(ngModel)]="settings.enabled">
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/search/search.settings.component.ts:12:16
+    12   templateUrl: './search.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component SearchSettingsComponent.
+
+
+Error: frontend/app/ui/settings/share/share.settings.component.html:1:22 - error NG8003: No directive found with exportAs 'ngForm'.
+
+1 <form #settingsForm="ngForm">
+                       ~~~~~~
+
+  frontend/app/ui/settings/share/share.settings.component.ts:12:16
+    12   templateUrl: './share.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ShareSettingsComponent.
+
+
+Error: frontend/app/ui/settings/share/share.settings.component.html:3:8 - error NG8002: Can't bind to 'ngClass' since it isn't a known property of 'div'.
+
+3        [ngClass]="settings.enabled && !_settingsService.isSupported()?'panel-warning':''">
+         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/share/share.settings.component.ts:12:16
+    12   templateUrl: './share.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ShareSettingsComponent.
+
+
+Error: frontend/app/ui/settings/share/share.settings.component.html:7:9 - error NG8001: 'bSwitch' is not a known element:
+1. If 'bSwitch' is an Angular component, then verify that it is part of this module.
+2. To allow any element add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+  7         <bSwitch
+            ~~~~~~~~
+  8           class="switch"
+    ~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+ 16           [switch-label-width]="20"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 17           [(ngModel)]="settings.enabled">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/share/share.settings.component.ts:12:16
+    12   templateUrl: './share.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ShareSettingsComponent.
+
+
+Error: frontend/app/ui/settings/share/share.settings.component.html:10:11 - error NG8002: Can't bind to 'switch-on-color' since it isn't a known property of 'bSwitch'.
+
+10           [switch-on-color]="'success'"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/share/share.settings.component.ts:12:16
+    12   templateUrl: './share.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ShareSettingsComponent.
+
+
+Error: frontend/app/ui/settings/share/share.settings.component.html:11:11 - error NG8002: Can't bind to 'switch-inverse' since it isn't a known property of 'bSwitch'.
+
+11           [switch-inverse]="true"
+             ~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/share/share.settings.component.ts:12:16
+    12   templateUrl: './share.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ShareSettingsComponent.
+
+
+Error: frontend/app/ui/settings/share/share.settings.component.html:12:11 - error NG8002: Can't bind to 'switch-off-text' since it isn't a known property of 'bSwitch'.
+
+12           [switch-off-text]="text.Disabled"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/share/share.settings.component.ts:12:16
+    12   templateUrl: './share.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ShareSettingsComponent.
+
+
+Error: frontend/app/ui/settings/share/share.settings.component.html:13:11 - error NG8002: Can't bind to 'switch-on-text' since it isn't a known property of 'bSwitch'.
+
+13           [switch-on-text]="text.Enabled"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/share/share.settings.component.ts:12:16
+    12   templateUrl: './share.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ShareSettingsComponent.
+
+
+Error: frontend/app/ui/settings/share/share.settings.component.html:14:11 - error NG8002: Can't bind to 'switch-disabled' since it isn't a known property of 'bSwitch'.
+
+14           [switch-disabled]="inProgress || (!settings.enabled && !_settingsService.isSupported())"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/share/share.settings.component.ts:12:16
+    12   templateUrl: './share.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ShareSettingsComponent.
+
+
+Error: frontend/app/ui/settings/share/share.settings.component.html:15:11 - error NG8002: Can't bind to 'switch-handle-width' since it isn't a known property of 'bSwitch'.
+
+15           [switch-handle-width]="100"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/share/share.settings.component.ts:12:16
+    12   templateUrl: './share.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ShareSettingsComponent.
+
+
+Error: frontend/app/ui/settings/share/share.settings.component.html:16:11 - error NG8002: Can't bind to 'switch-label-width' since it isn't a known property of 'bSwitch'.
+
+16           [switch-label-width]="20"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/share/share.settings.component.ts:12:16
+    12   templateUrl: './share.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ShareSettingsComponent.
+
+
+Error: frontend/app/ui/settings/share/share.settings.component.html:17:11 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'bSwitch'.
+
+17           [(ngModel)]="settings.enabled">
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/share/share.settings.component.ts:12:16
+    12   templateUrl: './share.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ShareSettingsComponent.
+
+
+Error: frontend/app/ui/settings/thumbnail/thumbanil.settings.component.html:1:22 - error NG8003: No directive found with exportAs 'ngForm'.
+
+1 <form #settingsForm="ngForm" class="form-horizontal">
+                       ~~~~~~
+
+  frontend/app/ui/settings/thumbnail/thumbanil.settings.component.ts:14:16
+    14   templateUrl: './thumbanil.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ThumbnailSettingsComponent.
+
+
+Error: frontend/app/ui/settings/thumbnail/thumbanil.settings.component.html:18:51 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'select'.
+
+18             <select id="lib" class="form-control" [(ngModel)]="settings.server.processingLibrary"
+                                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/thumbnail/thumbanil.settings.component.ts:14:16
+    14   templateUrl: './thumbanil.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ThumbnailSettingsComponent.
+
+
+Error: frontend/app/ui/settings/thumbnail/thumbanil.settings.component.html:42:20 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'input'.
+
+42                    [(ngModel)]="settings.server.folder"
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/thumbnail/thumbanil.settings.component.ts:14:16
+    14   templateUrl: './thumbanil.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ThumbnailSettingsComponent.
+
+
+Error: frontend/app/ui/settings/thumbnail/thumbanil.settings.component.html:52:13 - error NG8001: 'bSwitch' is not a known element:
+1. If 'bSwitch' is an Angular component, then verify that it is part of this module.
+2. To allow any element add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+ 52             <bSwitch
+                ~~~~~~~~
+ 53               id="quality"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+ 61               [switch-label-width]="20"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 62               [(ngModel)]="settings.server.qualityPriority">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/thumbnail/thumbanil.settings.component.ts:14:16
+    14   templateUrl: './thumbanil.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ThumbnailSettingsComponent.
+
+
+Error: frontend/app/ui/settings/thumbnail/thumbanil.settings.component.html:56:15 - error NG8002: Can't bind to 'switch-on-color' since it isn't a known property of 'bSwitch'.
+
+56               [switch-on-color]="'primary'"
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/thumbnail/thumbanil.settings.component.ts:14:16
+    14   templateUrl: './thumbanil.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ThumbnailSettingsComponent.
+
+
+Error: frontend/app/ui/settings/thumbnail/thumbanil.settings.component.html:57:15 - error NG8002: Can't bind to 'switch-inverse' since it isn't a known property of 'bSwitch'.
+
+57               [switch-inverse]="true"
+                 ~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/thumbnail/thumbanil.settings.component.ts:14:16
+    14   templateUrl: './thumbanil.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ThumbnailSettingsComponent.
+
+
+Error: frontend/app/ui/settings/thumbnail/thumbanil.settings.component.html:58:15 - error NG8002: Can't bind to 'switch-off-text' since it isn't a known property of 'bSwitch'.
+
+58               [switch-off-text]="text.Low"
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/thumbnail/thumbanil.settings.component.ts:14:16
+    14   templateUrl: './thumbanil.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ThumbnailSettingsComponent.
+
+
+Error: frontend/app/ui/settings/thumbnail/thumbanil.settings.component.html:59:15 - error NG8002: Can't bind to 'switch-on-text' since it isn't a known property of 'bSwitch'.
+
+59               [switch-on-text]="text.High"
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/thumbnail/thumbanil.settings.component.ts:14:16
+    14   templateUrl: './thumbanil.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ThumbnailSettingsComponent.
+
+
+Error: frontend/app/ui/settings/thumbnail/thumbanil.settings.component.html:60:15 - error NG8002: Can't bind to 'switch-handle-width' since it isn't a known property of 'bSwitch'.
+
+60               [switch-handle-width]="100"
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/thumbnail/thumbanil.settings.component.ts:14:16
+    14   templateUrl: './thumbanil.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ThumbnailSettingsComponent.
+
+
+Error: frontend/app/ui/settings/thumbnail/thumbanil.settings.component.html:61:15 - error NG8002: Can't bind to 'switch-label-width' since it isn't a known property of 'bSwitch'.
+
+61               [switch-label-width]="20"
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/thumbnail/thumbanil.settings.component.ts:14:16
+    14   templateUrl: './thumbanil.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ThumbnailSettingsComponent.
+
+
+Error: frontend/app/ui/settings/thumbnail/thumbanil.settings.component.html:62:15 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'bSwitch'.
+
+62               [(ngModel)]="settings.server.qualityPriority">
+                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/thumbnail/thumbanil.settings.component.ts:14:16
+    14   templateUrl: './thumbanil.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ThumbnailSettingsComponent.
+
+
+Error: frontend/app/ui/settings/thumbnail/thumbanil.settings.component.html:74:20 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'input'.
+
+74                    [(ngModel)]="settings.client.iconSize"
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/thumbnail/thumbanil.settings.component.ts:14:16
+    14   templateUrl: './thumbanil.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ThumbnailSettingsComponent.
+
+
+Error: frontend/app/ui/settings/thumbnail/thumbanil.settings.component.html:89:20 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'input'.
+
+89                    [(ngModel)]="ThumbnailSizes"
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/thumbnail/thumbanil.settings.component.ts:14:16
+    14   templateUrl: './thumbanil.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ThumbnailSettingsComponent.
+
+
+Error: frontend/app/ui/settings/usermanager/usermanager.settings.component.html:5:7 - error NG8001: 'bSwitch' is not a known element:
+1. If 'bSwitch' is an Angular component, then verify that it is part of this module.
+2. To allow any element add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+  5       <bSwitch
+          ~~~~~~~~
+  6         class="switch"
+    ~~~~~~~~~~~~~~~~~~~~~~
+... 
+ 15         [(ngModel)]="enabled"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 16         (changeState)="switched($event)">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/usermanager/usermanager.settings.component.ts:14:16
+    14   templateUrl: './usermanager.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component UserMangerSettingsComponent.
+
+
+Error: frontend/app/ui/settings/usermanager/usermanager.settings.component.html:8:9 - error NG8002: Can't bind to 'switch-on-color' since it isn't a known property of 'bSwitch'.
+
+8         [switch-on-color]="'success'"
+          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/usermanager/usermanager.settings.component.ts:14:16
+    14   templateUrl: './usermanager.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component UserMangerSettingsComponent.
+
+
+Error: frontend/app/ui/settings/usermanager/usermanager.settings.component.html:9:9 - error NG8002: Can't bind to 'switch-inverse' since it isn't a known property of 'bSwitch'.
+
+9         [switch-inverse]="true"
+          ~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/usermanager/usermanager.settings.component.ts:14:16
+    14   templateUrl: './usermanager.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component UserMangerSettingsComponent.
+
+
+Error: frontend/app/ui/settings/usermanager/usermanager.settings.component.html:10:9 - error NG8002: Can't bind to 'switch-off-text' since it isn't a known property of 'bSwitch'.
+
+10         [switch-off-text]="text.Disabled"
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/usermanager/usermanager.settings.component.ts:14:16
+    14   templateUrl: './usermanager.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component UserMangerSettingsComponent.
+
+
+Error: frontend/app/ui/settings/usermanager/usermanager.settings.component.html:11:9 - error NG8002: Can't bind to 'switch-on-text' since it isn't a known property of 'bSwitch'.
+
+11         [switch-on-text]="text.Enabled"
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/usermanager/usermanager.settings.component.ts:14:16
+    14   templateUrl: './usermanager.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component UserMangerSettingsComponent.
+
+
+Error: frontend/app/ui/settings/usermanager/usermanager.settings.component.html:12:9 - error NG8002: Can't bind to 'switch-handle-width' since it isn't a known property of 'bSwitch'.
+
+12         [switch-handle-width]="100"
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/usermanager/usermanager.settings.component.ts:14:16
+    14   templateUrl: './usermanager.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component UserMangerSettingsComponent.
+
+
+Error: frontend/app/ui/settings/usermanager/usermanager.settings.component.html:13:9 - error NG8002: Can't bind to 'switch-label-width' since it isn't a known property of 'bSwitch'.
+
+13         [switch-label-width]="20"
+           ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/usermanager/usermanager.settings.component.ts:14:16
+    14   templateUrl: './usermanager.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component UserMangerSettingsComponent.
+
+
+Error: frontend/app/ui/settings/usermanager/usermanager.settings.component.html:14:9 - error NG8002: Can't bind to 'switch-disabled' since it isn't a known property of 'bSwitch'.
+
+14         [switch-disabled]="inProgress"
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/usermanager/usermanager.settings.component.ts:14:16
+    14   templateUrl: './usermanager.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component UserMangerSettingsComponent.
+
+
+Error: frontend/app/ui/settings/usermanager/usermanager.settings.component.html:15:9 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'bSwitch'.
+
+15         [(ngModel)]="enabled"
+           ~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/usermanager/usermanager.settings.component.ts:14:16
+    14   templateUrl: './usermanager.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component UserMangerSettingsComponent.
+
+
+Error: frontend/app/ui/settings/usermanager/usermanager.settings.component.html:65:26 - error NG8003: No directive found with exportAs 'bs-modal'.
+
+65 <div bsModal #userModal="bs-modal" class="modal fade" id="userModal" tabindex="-1" role="dialog"
+                            ~~~~~~~~
+
+  frontend/app/ui/settings/usermanager/usermanager.settings.component.ts:14:16
+    14   templateUrl: './usermanager.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component UserMangerSettingsComponent.
+
+
+Error: frontend/app/ui/settings/usermanager/usermanager.settings.component.html:75:27 - error NG8003: No directive found with exportAs 'ngForm'.
+
+75       <form #NewUserForm="ngForm">
+                             ~~~~~~
+
+  frontend/app/ui/settings/usermanager/usermanager.settings.component.ts:14:16
+    14   templateUrl: './usermanager.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component UserMangerSettingsComponent.
+
+
+Error: frontend/app/ui/settings/usermanager/usermanager.settings.component.html:78:18 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'input'.
+
+78                  [(ngModel)]="newUser.name" name="name" required>
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/usermanager/usermanager.settings.component.ts:14:16
+    14   templateUrl: './usermanager.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component UserMangerSettingsComponent.
+
+
+Error: frontend/app/ui/settings/usermanager/usermanager.settings.component.html:80:18 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'input'.
+
+80                  [(ngModel)]="newUser.password" name="password" autocomplete="off"   required>
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/usermanager/usermanager.settings.component.ts:14:16
+    14   templateUrl: './usermanager.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component UserMangerSettingsComponent.
+
+
+Error: frontend/app/ui/settings/usermanager/usermanager.settings.component.html:81:40 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'select'.
+
+81           <select class="form-control" [(ngModel)]="newUser.role" name="role" required>
+                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/usermanager/usermanager.settings.component.ts:14:16
+    14   templateUrl: './usermanager.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component UserMangerSettingsComponent.
+
+
+Error: frontend/app/ui/settings/video/video.settings.component.html:1:22 - error NG8003: No directive found with exportAs 'ngForm'.
+
+1 <form #settingsForm="ngForm" class="form-horizontal">
+                       ~~~~~~
+
+  frontend/app/ui/settings/video/video.settings.component.ts:13:16
+    13   templateUrl: './video.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component VideoSettingsComponent.
+
+
+Error: frontend/app/ui/settings/video/video.settings.component.html:6:9 - error NG8001: 'bSwitch' is not a known element:
+1. If 'bSwitch' is an Angular component, then verify that it is part of this module.
+2. To allow any element add 'NO_ERRORS_SCHEMA' to the '@NgModule.schemas' of this component.
+
+  6         <bSwitch
+            ~~~~~~~~
+  7           class="switch"
+    ~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+ 15           [switch-label-width]="20"
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ 16           [(ngModel)]="settings.enabled">
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/video/video.settings.component.ts:13:16
+    13   templateUrl: './video.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component VideoSettingsComponent.
+
+
+Error: frontend/app/ui/settings/video/video.settings.component.html:9:11 - error NG8002: Can't bind to 'switch-on-color' since it isn't a known property of 'bSwitch'.
+
+9           [switch-on-color]="'success'"
+            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/video/video.settings.component.ts:13:16
+    13   templateUrl: './video.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component VideoSettingsComponent.
+
+
+Error: frontend/app/ui/settings/video/video.settings.component.html:10:11 - error NG8002: Can't bind to 'switch-inverse' since it isn't a known property of 'bSwitch'.
+
+10           [switch-inverse]="true"
+             ~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/video/video.settings.component.ts:13:16
+    13   templateUrl: './video.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component VideoSettingsComponent.
+
+
+Error: frontend/app/ui/settings/video/video.settings.component.html:11:11 - error NG8002: Can't bind to 'switch-off-text' since it isn't a known property of 'bSwitch'.
+
+11           [switch-off-text]="text.Disabled"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/video/video.settings.component.ts:13:16
+    13   templateUrl: './video.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component VideoSettingsComponent.
+
+
+Error: frontend/app/ui/settings/video/video.settings.component.html:12:11 - error NG8002: Can't bind to 'switch-on-text' since it isn't a known property of 'bSwitch'.
+
+12           [switch-on-text]="text.Enabled"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/video/video.settings.component.ts:13:16
+    13   templateUrl: './video.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component VideoSettingsComponent.
+
+
+Error: frontend/app/ui/settings/video/video.settings.component.html:13:11 - error NG8002: Can't bind to 'switch-disabled' since it isn't a known property of 'bSwitch'.
+
+13           [switch-disabled]="inProgress"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/video/video.settings.component.ts:13:16
+    13   templateUrl: './video.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component VideoSettingsComponent.
+
+
+Error: frontend/app/ui/settings/video/video.settings.component.html:14:11 - error NG8002: Can't bind to 'switch-handle-width' since it isn't a known property of 'bSwitch'.
+
+14           [switch-handle-width]="100"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/video/video.settings.component.ts:13:16
+    13   templateUrl: './video.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component VideoSettingsComponent.
+
+
+Error: frontend/app/ui/settings/video/video.settings.component.html:15:11 - error NG8002: Can't bind to 'switch-label-width' since it isn't a known property of 'bSwitch'.
+
+15           [switch-label-width]="20"
+             ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/video/video.settings.component.ts:13:16
+    13   templateUrl: './video.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component VideoSettingsComponent.
+
+
+Error: frontend/app/ui/settings/video/video.settings.component.html:16:11 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'bSwitch'.
+
+16           [(ngModel)]="settings.enabled">
+             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/settings/video/video.settings.component.ts:13:16
+    13   templateUrl: './video.settings.component.html',
+                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component VideoSettingsComponent.
+
+
+Error: frontend/app/ui/sharelogin/share-login.component.html:3:5 - error NG8001: 'app-language' is not a known element:
+1. If 'app-language' is an Angular component, then verify that it is part of this module.
+2. If 'app-language' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
+
+3     <app-language></app-language>
+      ~~~~~~~~~~~~~~
+
+  frontend/app/ui/sharelogin/share-login.component.ts:9:16
+    9   templateUrl: './share-login.component.html',
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ShareLoginComponent.
+
+
+Error: frontend/app/ui/sharelogin/share-login.component.html:10:71 - error NG8003: No directive found with exportAs 'ngForm'.
+
+10       <form name="form" id="form" class="form-horizontal" #LoginForm="ngForm" (submit)="onLogin()">
+                                                                         ~~~~~~
+
+  frontend/app/ui/sharelogin/share-login.component.ts:9:16
+    9   templateUrl: './share-login.component.html',
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ShareLoginComponent.
+
+
+Error: frontend/app/ui/sharelogin/share-login.component.html:29:20 - error NG8002: Can't bind to 'ngModel' since it isn't a known property of 'input'.
+
+29                    [(ngModel)]="password"
+                      ~~~~~~~~~~~~~~~~~~~~~~
+
+  frontend/app/ui/sharelogin/share-login.component.ts:9:16
+    9   templateUrl: './share-login.component.html',
+                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Error occurs in the template of component ShareLoginComponent.
+
+
+

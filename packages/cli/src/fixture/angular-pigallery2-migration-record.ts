@@ -175,6 +175,8 @@ export const GAPS: readonly MigrationGap[] = Object.freeze([
 			'This one is not a missing capability, and that is what makes it the sharpest finding here. `@versionless/angular` carries `module-with-providers-type-argument.ts` and `unparameterised-base-class.ts` — both are exported from packages/frameworks/angular/src/index.ts, and both are imported by nothing inside the package. `migrateAngularCliEraWorkspace` imports thirteen capability modules and neither of these is among them, so the composed changeset can never run them however many applications it is pointed at. The demand is a wiring demand, not a transform demand: the answer is already written and is not called.',
 		neededTransform:
 			'Compose the two existing capabilities into the era migration pipeline and let each refuse per site where its own proof fails, exactly as `entry-components-removal` was composed after the super-productivity lane recorded the identical defect against it — that capability is in the era migration\'s import list today and these two are not, which is the same finding recurring on two more capabilities rather than a new one. Nothing about either capability has to be designed for this application; it has to be reached.',
+		closedBy:
+			'lrapr-t021/u1 for the `ModuleWithProviders` half and lrapr-t021/u4 for the decorator half, and the two halves did not turn out to be the same demand. Composing `module-with-providers-type-argument` answered app.routing.ts:71 exactly as the gap predicted: the capability was written, tested and unreachable, and reaching it was the whole repair. The `NG2007` half was not a wiring defect at all — no capability in the adapter synthesized a class decorator, and `unparameterised-base-class`, which the gap named, fills type arguments in an `extends` clause and would never have touched it. u4 wrote `undecorated-angular-base-class`, whose transform is the one Angular shipped for its own users on this hop: a class that uses Angular features and carries no decorator gets `@Directive()` with no selector, which marks it as an abstract directive the compiler compiles for its metadata and nothing can instantiate from a template. The precondition is the module\'s own resolved bindings and never a name — a member decorator that resolves to `@angular/core`\'s `Input`, `Output`, `ViewChild`, `HostListener` or their siblings, or an `implements` clause resolving to one of its lifecycle interfaces — so a class with a constructor that merely looks injectable is left alone and reported by the compiler for somebody who knows whether it wants `@Injectable()`. The capability stands down entirely on a pre-Ivy cell, because there the inheritance is exactly what the compiler still performs. abstract.settings.component.ts:14 is decorated, the import was extended rather than added, and the `NG2007` is gone from the build.',
 	}),
 	Object.freeze({
 		id: 'G6',
@@ -190,6 +192,8 @@ export const GAPS: readonly MigrationGap[] = Object.freeze([
 			'The adapter carries exactly one capability for this class of hole, `undeclared-runtime-dependency`, and it is wired into the era migration. Its detection domain is the wrong side of the boundary: undeclaredRuntimeDependencies reads *installed packages* — what each package in the closure declares, and what its shipped bundles import — and closes holes in the application manifest on their behalf. An inline loader chain written in the application\'s own source, inside a `require()` whose argument is a template literal, is seen by nothing: it is not a package import, no source transform in the adapter parses loader syntax, and the specifier is not even statically complete. @angular-devkit/build-angular 16.2 does not depend on raw-loader, so the accidental hoist is gone and the chain has no resolver.',
 		neededTransform:
 			'Two separable things, and conflating them is how this would get answered wrongly. The first is a declaration demand: raw-loader is an edge this application relies on and does not declare, and closing it needs a reading of application source for inline loader specifiers — a domain the existing capability does not cover and would have to be extended into, since a loader is a build-time package and not a runtime import. The second is that the construct itself is a webpack idiom the Angular 16 builder still supports but that the application uses to load an xlf translation catalogue at module scope, which is the ViewEngine i18n path recorded in `eraFactsTheMigratedWorkspaceDoesNotCarry` below; answering the declaration without answering the i18n path produces a build that resolves the loader and still does not do what the era build did.',
+		closedBy:
+			'lrapr-t021/u4 answered the declaration half exactly as the gap separated it, and deliberately did not answer the other half. `application-source-dependency` reads the *application\'s own* source for package names — static imports and re-exports, and webpack inline loader chains inside `require` — and closes the ones the migrated manifest does not declare. The loader half is read as webpack reads it: every `!`-separated segment before the module request names a loader, `!`, `!!` and `-!` are rule-disabling markers rather than segments, a `?options` tail is stripped, and a relative loader path names no package. A template literal is still read, because the loader segments live in the literal\'s static prefix even when the request they precede is computed — which is what makes `require(`raw-loader!../translate/messages.${locale}.xlf`)` visible at all. The version is the cell\'s: raw-loader ^4.0.2, the newest published line, whose peer webpack "^4.0.0 || ^5.0.0" is satisfied by the webpack the @angular-devkit/build-angular ^16.2.0 this cell writes builds with, declared in `devDependencies` because a loader is a build-time edge. The module-not-found is gone and the chain resolves. What is *not* claimed: the i18n path. The era build passed `--i18n-locale/--i18n-format/--i18n-file` to a ViewEngine compiler that substituted translations into the factories it emitted, and `translationsFactory` fed that compiler its catalogue at module scope. On Angular 16 that pipeline does not exist — the markers compile to `$localize` tagged templates, which `template-i18n-runtime` declares a runtime for and which loads no locale. The two are not composable into one transform: one is a resolver question about a loader package, the other is a question about which of the application\'s locales the migrated build should produce and by what mechanism, which is a decision about the application. So the loader-chain half is generic and landed; the i18n half stays in `eraFactsTheMigratedWorkspaceDoesNotCarry` as a stated difference rather than being simulated.',
 	}),
 	Object.freeze({
 		id: 'G7',
@@ -205,8 +209,90 @@ export const GAPS: readonly MigrationGap[] = Object.freeze([
 			'A compiler-line demand at one call site, on a member access rather than a specifier. The adapter\'s source transforms rewrite module specifiers and named imports; nothing in it rewrites a property access against a lib declaration that stopped declaring it, and nothing should invent a cast on the application\'s behalf.',
 		neededTransform:
 			'This is a source decision that has to be made explicitly rather than mechanically, and the honest options differ in what they claim. A cast preserves the emitted behaviour and asserts nothing about the type; deleting the line changes behaviour on a platform nobody here tested. It is recorded as a demand, at one line, in one file, with the era reason the author wrote beside it.',
+		closedBy:
+			'lrapr-t021/u4, by the option this gap said preserves the emitted behaviour, made mechanical without being made blind. `departed-dom-lib-member` is positioned by the compiler\'s own `TS2339` — the same supply-gated seam `unparameterised-base-class` uses, read here out of the previous migrated build\'s log — and it acts only where two conditions hold together: the compiler resolved the receiver to `CSSStyleDeclaration`, whose entire published surface is string-valued CSS properties, and the member is spelled as a vendor-prefixed CSS property (`ms`, `webkit`, `moz` or `o` followed by a capital), which is the shape of the surface that departed. Where both hold, the receiver — and only the receiver, at that one access — is widened to `CSSStyleDeclaration & Record<string, string>`: the declared type stays in the intersection so every member that is still declared keeps its own type, and the emitted JavaScript is byte for byte what it was. There is no list of departed properties in the capability and no place to put one; the property is the compiler\'s word. Everything else refuses by name, including a stale position, which is also what makes a second application of the same diagnostics a no-op. overlay.service.ts:27 now reads `(outer.style as CSSStyleDeclaration & Record<string, string>).msOverflowStyle = \'scrollbar\';` and the TS2339 is gone. What it does not claim: that the property exists in any browser the application runs in. The type now admits the assignment the era type admitted; whether `-ms-overflow-style` does anything is a platform question this repository has not tested, and the application\'s own comment — "needed for WinJS apps" — is the only claim on record about it.',
 	}),
 ]);
+
+/**
+ * The four generic capabilities `lrapr-t021/u4` added or reached, and what each
+ * one is gated on.
+ *
+ * They are listed by what they read rather than by what they fixed, because that
+ * is the property that decides whether a capability generalises: a transform
+ * gated on a reading fires wherever the reading holds and stands down everywhere
+ * else, and none of these four can be reached by naming this application.
+ */
+export const U4_CAPABILITIES: readonly Readonly<{
+	capability: string;
+	gate: string;
+	answeredHere: string;
+}>[] = Object.freeze([
+	Object.freeze({
+		capability: 'undecorated-angular-base-class (new)',
+		gate: 'The module\'s own resolved bindings: a member decorator resolving to `@angular/core`\'s Input/Output/ViewChild/ViewChildren/ContentChild/ContentChildren/HostBinding/HostListener, or an `implements` clause resolving to one of its lifecycle interfaces — on a class carrying no decorator, on a cell whose Angular major is 9 or above. A class with only constructor parameters is left alone: that one wants `@Injectable()` or `@Directive()` depending on what it is, and the constructor does not say which.',
+		answeredHere:
+			'frontend/app/ui/settings/_abstract/abstract.settings.component.ts:14 — NG2007, one site, `@Directive()` synthesized and the existing `@angular/core` import extended.',
+	}),
+	Object.freeze({
+		capability: 'application-source-dependency (new)',
+		gate: 'A bare package name written in application source — a static import or re-export, or a webpack inline loader chain inside `require` — that the migrated manifest declares nowhere. The range is the cell\'s; a package the cell read and found no successor for is reported with every site that needs it and nothing is written. The `@types/` companion is declared only when the *era closure* actually carried one, read off the era lane rather than inferred from a name.',
+		answeredHere:
+			'raw-loader (app.module.ts:146, inline loader chain, devDependencies ^4.0.2) and leaflet (lightbox.map.gallery.component.ts:15, direct import, dependencies ^1.9.4, with @types/leaflet 1.9.20 beside it). Both module-not-found and both TS2307 are gone. The same reading is what states the wall: the three no-successor libraries are reported by name with their import sites.',
+	}),
+	Object.freeze({
+		capability: 'departed-dom-lib-member (new)',
+		gate: 'A `TS2339` from the target line\'s own compiler whose receiver resolved to `CSSStyleDeclaration` and whose member is spelled as a vendor-prefixed CSS property. Supply-gated: a caller that has not compiled the tree supplies no diagnostics and gets no transform.',
+		answeredHere:
+			'frontend/app/ui/gallery/overlay.service.ts:27 — one receiver widened at one access; the emitted JavaScript is unchanged.',
+	}),
+	Object.freeze({
+		capability: 'deep-import-redirection (existing, composed)',
+		gate: 'A reading of what an installed package publishes — its `exports` map and the names its declaration files export. Composed through the same supply-gated seam, one reading per package.',
+		answeredHere:
+			'Nothing, and being reached is the point. The capability now runs against ngx-bootstrap@11.0.2 for both `ngx-bootstrap/modal/bs-modal-ref.service` sites and refuses both by name: the surface reading resolves no entry point that exports `BsModalRef`, and redirecting the symbols that do resolve would delete the one that does not. That is a refusal with a reading behind it, which is a different state from the unreachable capability G5 named — and it is now visible in `unhandled` where before it was invisible everywhere.',
+	}),
+]);
+
+/**
+ * What the migrated lane still refuses after `lrapr-t021/u4`, and the three ways
+ * out of it — none of which is this unit's to take.
+ *
+ * The number that matters is not 257. It is 8: the three libraries the cell read
+ * and found no successor for, at six import sites in four application files, plus
+ * the two diagnostics that are consequences of those imports inside the same
+ * files. Everything else in the log is `app.module.ts` failing to compile and
+ * every template that module scopes failing with it, which `downstreamReading`
+ * establishes rather than assumes.
+ */
+export const U4_WALL = Object.freeze({
+	unit: 'lrapr-t021/u4-app-source-transform-wall',
+	diagnostics: 257,
+	before: 260,
+	movement:
+		'260 -> 257. NG2007 1 -> 0 (decorator synthesized), TS2339 1 -> 0 (receiver widened), TS2307 7 -> 6 and module-not-found 8 -> 6 (raw-loader and leaflet declared and resolving). Nothing regressed and no diagnostic class appeared. The three that left are the three the generic capabilities could reach; the 257 that remain are one cause and its consequences.',
+	wall: Object.freeze([
+		'@yaga/leaflet-ng2 — imported at frontend/app/app.module.ts:14, frontend/app/ui/gallery/map/map.gallery.component.ts:7 and frontend/app/ui/gallery/map/lightbox/lightbox.map.gallery.component.ts:16. Three TS2307 and three module-not-found. The cell read it: it stops at 1.1.0, built against Angular 12 in full compilation mode with no partial declarations for a linker to read.',
+		'ng2-slim-loading-bar — imported at frontend/app/app.module.ts:31 and frontend/app/model/network/network.service.ts:4. Two TS2307 and two module-not-found. The cell read it: it stops at 4.0.0, whose declared peer is @angular/core "^2.4.7 || ^4.0.0".',
+		'jw-bootstrap-switch-ng2 — imported at frontend/app/app.module.ts:41. One TS2307 and one module-not-found. The cell read it: it stops at 2.0.5, a pre-Ivy ViewEngine package, on a cell whose ngcc is a stub.',
+		'frontend/app/ui/gallery/map/lightbox/lightbox.map.gallery.component.ts:60 — TS7006, `Parameter \'l\' implicitly has an \'any\' type`. A consequence of the @yaga import above, not an independent gap: the parameter is contextually typed by a symbol that module cannot resolve.',
+		'frontend/app/app.module.ts:126 — NG1010, the @NgModule literal is unanalysable because three of the symbols it names do not resolve. The 249 NG8001/NG8002/NG8003/NG8004 are downstream of exactly this, which `downstreamReading` proves from which bindings fail rather than asserting.',
+	]),
+	options: Object.freeze([
+		'A cell-policy decision: declare a target cell that keeps ngcc, and take the era ViewEngine packages with it. Angular 16 ships ngcc as a stub, so this is not a flag — it is a different cell, on the last line that could still consume pre-Ivy bytes (Angular 12 or 13), which changes what every other reading in this record was taken against. It would answer all three libraries at once and it would answer them by not making this hop.',
+		'An application-change decision: replace the three wrappers at their six import sites — @yaga/leaflet-ng2 with direct leaflet (now declared, and the two symbols the lightbox already imports from it are typed), ng2-slim-loading-bar and jw-bootstrap-switch-ng2 with maintained equivalents or with the application\'s own components. That is outside holdout discipline by construction: this lane exists to measure what a frozen adapter does to source it has never seen, and hand-editing the source is the one move that would destroy the measurement.',
+		'Honest RED for full parity: record the lane as refusing, with the wall named to the byte and the three libraries named as the reason. This is the state the record is in, and it is the only one of the three that costs nothing and claims nothing.',
+	]),
+	notEstablished: Object.freeze([
+		'No stub, shim, module declaration or type alias was written for any of the three libraries, and no application source was edited by hand in this lane. Every byte that differs from the corpus was written by a capability, and each is itemised in the changeset record by file and by change.',
+		'The build was run once. Nothing here establishes reproducibility across runs for this lane; the two-run byte comparison this record owes is still not one that has been taken at this state.',
+		'A gap the compiler no longer reports is not a behaviour that has been witnessed. Three refusals left the log; nothing in this record says the application renders, and nothing could until a build emits something.',
+	]),
+	logs: Object.freeze([
+		'migration/t021-u4-lane-install.log',
+		'migration/t021-u4-lane-build-run1.log',
+	]),
+});
 
 /**
  * The diagnostics the probe build reported, counted by code, identical across two
@@ -617,21 +703,23 @@ export function buildMigrationBlock(): Readonly<Record<string, unknown>> {
 			record: 'migration/u3-composed-changeset.json',
 			appliedRecord: 'migration/u3-source-migration.json',
 			applicationFilesScanned: 214,
-			applicationFilesChanged: 4,
+			applicationFilesChanged: 6,
 			workspaceFilesChanged: 3,
 			filesRemoved: ['tslint.json'],
-			unhandled: 7,
-			declaredDifferences: 13,
+			unhandled: 12,
+			declaredDifferences: 16,
 			declaredDifferencesNote:
 				'Eight at T018, ten after the install-stage readings, thirteen now. The two the install stage added are the removals of @angular-devkit/build-optimizer and ng2-slim-loading-bar. The three the compile-stage readings added are the removals of @yaga/leaflet-ng2 and jw-bootstrap-switch-ng2, and the engines.node retarget from ">= 6.9 <11.0" to "^16.20.2". ngx-bootstrap, ngx-toastr and xlf-google-translate added none between them: an aligned range is a change with a reason, not a difference the migrated workspace has to declare.',
 			applicationSourceChanges: [
 				'frontend/app/app.routing.ts:71 — module-with-providers-type-argument <RouterModule> read from static-call-receiver',
 				'frontend/app/ui/faces/faces.component.ts:6 — module-specifier rxjs/Observable -> rxjs',
+				'frontend/app/ui/gallery/overlay.service.ts:27 — departed-dom-lib-member outer.style.msOverflowStyle, receiver widened to CSSStyleDeclaration & Record<string, string>',
+				'frontend/app/ui/settings/_abstract/abstract.settings.component.ts:14 — undecorated-base-class @Directive() on SettingsComponent, which uses @Input on simplifiedMode, @Output on hasAvailableSettings, @ViewChild on form, implements OnChanges, OnDestroy, OnInit (existing import extended)',
 				'frontend/polyfills.ts:45 — module-specifier zone.js/dist/zone -> zone.js',
 				'frontend/test.ts:3 — module-specifier zone.js/dist/long-stack-trace-zone -> zone.js/plugins/long-stack-trace-zone',
 			],
 			applicationSourceNote:
-				'Four application files changed out of 214 scanned, all made by frozen transforms. Three are module-specifier rewrites and were made by the adapter as T018 froze it. The fourth is the T021 G5 wiring repair: `module-with-providers-type-argument` is now composed into `migrateAngularCliEraWorkspace`, so the annotation at frontend/app/app.routing.ts:71 is answered where the frozen composition could not reach the capability at all. Nothing about that capability changed; it was reached. No application file was edited by hand in either lane.',
+				'Six application files changed out of 214 scanned, every one of them by a capability and none of them by hand. Three are module-specifier rewrites the adapter made as T018 froze it. The fourth is the T021 u1 wiring repair — `module-with-providers-type-argument` composed, so app.routing.ts:71 is answered where the frozen composition could not reach the capability at all. The last two are u4: `departed-dom-lib-member` widening one receiver at one access, and `undecorated-angular-base-class` synthesizing `@Directive()` on the one class that uses Angular features without carrying a decorator. Two further capabilities changed the manifest rather than a source file — `application-source-dependency` declaring raw-loader, leaflet and @types/leaflet — and one more, `deep-import-redirection`, ran and refused both of its sites by name. No application file was edited by hand in any lane.',
 			g5WiringRepair: G5_WIRING_REPAIR,
 			compilationUnitNote:
 				'This workspace is not src/-rooted: angular.json declares `sourceRoot: "frontend"`, and the frontend modules import across into the sibling common/ directory that the backend also compiles. Both directories were handed to the migration, because both are inside what the browser build\'s TypeScript program reads. Supplying only the declared sourceRoot would have scanned a strict subset of the compilation unit.',
@@ -649,12 +737,16 @@ export function buildMigrationBlock(): Readonly<Record<string, unknown>> {
 		},
 		installStageClosure: INSTALL_STAGE_CLOSURE,
 		compileStageDependencyClosure: COMPILE_STAGE_DEPENDENCY_CLOSURE,
+		u4Capabilities: U4_CAPABILITIES,
+		u4Wall: U4_WALL,
 		targetBuild: {
 			produced: false,
 			reasonAtT018:
 				'A target build requires an installed closure, and the migrated closure did not install. The two-run byte comparison T018 owed is therefore not deferred or estimated — it does not exist, and no substitute for it is offered. The probe build below is a diagnostic and is not that comparison.',
 			t021Attempt:
 				'The closure installs now and the build was attempted once against the migrated lane itself. It refused: exit 1, 261 diagnostics, three module-not-found, no dist directory. `produced` stays false because nothing was emitted, and there is still no artifact to compare, inventory or serve — what changed is that the refusal is now the compiler\'s and not the resolver\'s. `installStageClosure.laneBuild` records it.',
+			t021ThirdAttempt:
+				'Attempted once more after the four app-source-facing capabilities of u4, against the same lane re-composed from the corpus and re-installed from the authored manifest. It refused again: exit 1, 257 diagnostics, six module-not-found, no dist directory. `produced` stays false. `u4Wall` records what is left and the three ways out of it; the movement is 260 -> 257 with NG2007, TS2339 and two of the resolution failures gone and nothing regressed.',
 			t021SecondAttempt:
 				'Attempted once more after the compile-stage dependency readings, against a lane re-cut from the corpus and installed from the authored manifest with no narrowing. It refused again: exit 1, 260 diagnostics, eight module-not-found, no dist directory. `produced` stays false. `compileStageDependencyClosure.laneBuild` records it, and the diagnostic movement is itemised there rather than summarised here.',
 		},

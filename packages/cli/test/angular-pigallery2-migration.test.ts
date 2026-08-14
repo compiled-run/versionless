@@ -18,6 +18,8 @@ import {
 	INSTALL_STAGE_CLOSURE,
 	PROBE,
 	PROBE_DIAGNOSTIC_COUNTS,
+	U4_CAPABILITIES,
+	U4_WALL,
 	buildMigrationBlock,
 	buildMigrationRecord,
 } from '../src/fixture/angular-pigallery2-migration-record.ts';
@@ -91,17 +93,43 @@ describe('pigallery2 Angular holdout migration record', () => {
 		}
 		/**
 		 * G4 is the dependency half of the compile stage and is closed by the unit
-		 * that read the three libraries. G5, G6 and G7 are source demands and are
-		 * still open; a gap that is open says nothing about being closed.
+		 * that read the three libraries; G5, G6 and G7 are the source demands, closed
+		 * by the unit that composed and wrote the four app-source capabilities. Each
+		 * answer names its unit and none of them rewrites the demand it answers: the
+		 * `observed` diagnostic of every closed gap is still the red one.
 		 */
 		const g4 = GAPS.find((gap) => gap.id === 'G4');
 		expect(g4?.stage).toBe('compile');
 		expect(g4?.closedBy).toContain('lrapr-t021/u3');
 		expect(g4?.observed).toContain('TS2314');
-		for (const gap of GAPS.filter(
-			(entry) => entry.stage === 'compile' && entry.id !== 'G4',
-		))
-			expect(gap.closedBy).toBeUndefined();
+		for (const id of ['G5', 'G6', 'G7']) {
+			const gap = GAPS.find((entry) => entry.id === id);
+			expect(gap?.stage).toBe('compile');
+			expect(gap?.closedBy).toContain('lrapr-t021/u4');
+			expect((gap?.closedBy ?? '').length).toBeGreaterThan(200);
+		}
+		expect(GAPS.find((gap) => gap.id === 'G5')?.observed).toContain('NG2007');
+		expect(GAPS.find((gap) => gap.id === 'G6')?.observed).toContain("Can't resolve 'raw-loader'");
+		expect(GAPS.find((gap) => gap.id === 'G7')?.observed).toContain('TS2339');
+	});
+
+	/**
+	 * The wall is the point of the holdout, so it is held to being *stated* rather
+	 * than counted: every library it names is one the cell read and refused, and
+	 * every way out of it is recorded as a decision somebody has to take rather
+	 * than as something this lane did.
+	 */
+	it('states the remaining wall as the three no-successor libraries, with the options open', () => {
+		expect(U4_WALL.diagnostics).toBeLessThan(U4_WALL.before);
+		expect(U4_WALL.wall.length).toBeGreaterThan(3);
+		for (const name of ['@yaga/leaflet-ng2', 'ng2-slim-loading-bar', 'jw-bootstrap-switch-ng2']) {
+			expect(U4_WALL.wall.some((entry) => entry.includes(name))).toBe(true);
+			expect(ecosystemDispositionOf(name, ANGULAR_16_BROWSER_CELL)?.kind).toBe('no-successor');
+		}
+		expect(U4_WALL.options).toHaveLength(3);
+		expect(U4_WALL.notEstablished.join(' ')).toContain('No stub, shim, module declaration');
+		expect(U4_CAPABILITIES).toHaveLength(4);
+		for (const entry of U4_CAPABILITIES) expect(entry.gate.length).toBeGreaterThan(120);
 	});
 
 	it('names the four compile-stage dependency readings, and holds each to the cell', () => {

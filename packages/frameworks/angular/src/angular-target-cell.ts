@@ -375,6 +375,21 @@ export const ANGULAR_16_ECOSYSTEM_PACKAGES: EcosystemPackages = Object.freeze({
 		kind: 'no-successor',
 		fact: 'ng2-slim-loading-bar published twenty-eight versions and the newest of them is 4.0.0, published 2017-04-04; it is the `latest` dist-tag, it is the only tag the package carries, and it is the exact version an Angular 8-era workspace pins. It declares peer @angular/core "^2.4.7 || ^4.0.0", which the ^16.2.0 this cell writes does not satisfy, and no later line exists to read: the package is dead rather than behind. The reading does not stop at the peer, because a peer is only a resolver fact. This library was published for the pre-Ivy ViewEngine and the converter that used to make such a library consumable is gone: @angular/compiler-cli 16.2.12 ships `ngcc` only as a stub whose own message reads "As of Angular 16, \'ngcc\' is no longer required and not invoked during CLI builds", so nothing on this cell converts a ViewEngine library\'s metadata for the Ivy linker. A resolver told to ignore the declared peer would therefore install bytes this cell\'s compiler cannot consume, which is why the disposition is to drop the package rather than to relax the install. Read from https://registry.npmjs.org/ng2-slim-loading-bar under consent VL-LEGACY-CORPUS-2026-08-10 on 2026-08-14, and from the installed @angular/compiler-cli 16.2.12 in an Angular 16 closure. Dropping it turns the imports it served into source demands the compiler states by name; choosing a replacement loading-bar library is a source decision this table does not make.',
 	}),
+	leaflet: Object.freeze({
+		kind: 'aligned',
+		range: '^1.9.4',
+		fact: 'leaflet 1.9.4 is the newest released line and the `latest` dist-tag (published 2023-05-18); the only newer versions on the registry are 2.0.0-alpha and 2.0.0-alpha.1 on the `alpha` tag, which this cell does not select because a pre-release is not a published line. 1.9.4 declares no peerDependencies, no dependencies and no engines, so nothing in this cell excludes it — the map library is framework-independent, and the Angular wrapper an era application put in front of it is a separate reading. It publishes no type declarations of its own; `@types/leaflet` is the companion, and DefinitelyTyped is what publishes it. Read from https://registry.npmjs.org/leaflet under consent VL-LEGACY-CORPUS-2026-08-10 on 2026-08-13.',
+	}),
+	'@types/leaflet': Object.freeze({
+		kind: 'aligned',
+		range: '1.9.20',
+		fact: "@types/leaflet is a DefinitelyTyped package, and the declaration that discriminates its lines is not a peer range: it is the minimum TypeScript version DefinitelyTyped publishes as a `tsX.Y` dist-tag. This cell writes typescript ~5.1.3, and the registry's `ts5.1` tag points at 1.9.20 while `latest` is 1.9.22 — so the newest line this cell's compiler can read is 1.9.20, and it is written as an exact version rather than a caret range because a caret would resolve to 1.9.22 and reintroduce exactly the incompatibility the tag exists to state. 1.9.20 declares one dependency, @types/geojson, and no peers. Read from https://registry.npmjs.org/@types/leaflet under consent VL-LEGACY-CORPUS-2026-08-10 on 2026-08-13.",
+	}),
+	'raw-loader': Object.freeze({
+		kind: 'aligned',
+		range: '^4.0.2',
+		fact: 'raw-loader 4.0.2 is the newest version published and the `latest` dist-tag (2020-10-09); the package is no longer developed because webpack 5 absorbed what it does into the `asset/source` module type, but it is not deprecated on the registry and it is the line that still answers an inline `raw-loader!` request. 4.0.2 declares peer webpack "^4.0.0 || ^5.0.0" — satisfied by the webpack 5 the @angular-devkit/build-angular ^16.2.0 this cell writes builds with — and engines.node ">= 10.13.0", satisfied by this cell\'s Node 16.20.2. The 3.x line before it declares peer webpack "^4.3.0" and is excluded by the target builder\'s webpack major. Read from https://registry.npmjs.org/raw-loader under consent VL-LEGACY-CORPUS-2026-08-10 on 2026-08-13.',
+	}),
 	'ngx-bootstrap': Object.freeze({
 		kind: 'aligned',
 		range: '^11.0.2',

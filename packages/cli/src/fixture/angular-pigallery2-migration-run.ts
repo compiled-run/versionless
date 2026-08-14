@@ -23,10 +23,14 @@ import { readdir, readFile, mkdir, writeFile } from 'node:fs/promises';
 import * as path from 'pathe';
 import {
 	migrateAngularCliEraWorkspace,
+	readMissingMembers,
 	ANGULAR_16_BROWSER_CELL,
 	type AngularMigration,
+	type DeepImportReading,
+	type MissingMemberDiagnosticReading,
 	type WorkspaceFile,
 } from '../../../frameworks/angular/src/index.ts';
+import { readDeepImportReading } from './angular-tiny-translator-final-run.ts';
 import { canonical, sha256 } from './angular-factoriolab-migration-run.ts';
 import { sealRecord, verifySealedRecord, type SealedRecord } from './angular-factoriolab-build-lanes-run.ts';
 import { applyMigration, type Application } from './angular-tiny-translator-apply-run.ts';
@@ -42,6 +46,12 @@ export const SOURCE_TREE = path.join(
 	repositoryRoot,
 	'.versionless/cache/angular-pigallery2-v1-7-0-source/corpus',
 	`pigallery2-${COMMIT}`,
+);
+
+/** The era lane: the pinned revision with the era closure installed into it. */
+export const ERA_CLOSURE_TREE = path.join(
+	repositoryRoot,
+	'.versionless/work/angular-pigallery2/baseline',
 );
 
 /** The migrated lane, beside the baseline lane the previous unit built. */
@@ -69,6 +79,65 @@ export const MIGRATION_RECORD_FILE = 'u3-source-migration.json';
  * compiler reads.
  */
 export const APPLICATION_SOURCE_DIRECTORIES: readonly string[] = Object.freeze(['frontend', 'common']);
+
+/**
+ * The build log the previous migrated run wrote, and which this one reads.
+ *
+ * Two capabilities in the adapter are positioned by the compiler's own
+ * coordinates rather than by a shape in the source, because what they answer is
+ * not visible in the source: a member the target line's `lib.dom.d.ts` stopped
+ * declaring reads exactly as it always did. A caller that has never compiled the
+ * tree supplies no such reading and gets no such transform, which is the seam
+ * `unparameterised-base-class` already had. This driver has compiled the tree —
+ * the log is in this application's own evidence directory — so it reads it.
+ */
+export const PREVIOUS_BUILD_LOG = 't021-u3-lane-build-run1.log';
+
+/** The package this application reaches past the published surface of. */
+export const DEEP_IMPORT_PACKAGES: readonly string[] = Object.freeze(['ngx-bootstrap']);
+
+/**
+ * The `@types/` packages the era closure carried, by name.
+ *
+ * An era application can import a package directly and declare neither it nor
+ * its type companion, because something else in the closure installed both. The
+ * migrated closure has neither, and which companions the era one had is a fact
+ * about that installation rather than about any package name — so it is read off
+ * the era lane rather than inferred.
+ */
+export async function readEraClosureTypePackages(tree: string): Promise<readonly string[]> {
+	const directory = path.join(tree, 'node_modules', '@types');
+	try {
+		const entries = await readdir(directory, { withFileTypes: true });
+		return Object.freeze(
+			entries
+				.filter((entry) => entry.isDirectory() || entry.isSymbolicLink())
+				.map((entry) => `@types/${entry.name}`)
+				.sort(),
+		);
+	} catch {
+		return Object.freeze([]);
+	}
+}
+
+/** The `TS2339` positions the previous migrated build reported, per module. */
+export async function readMissingMemberDiagnostics(
+	log: string,
+): Promise<readonly MissingMemberDiagnosticReading[]> {
+	const source = await readFile(path.join(EVIDENCE_DIRECTORY, log), 'utf8');
+	return Object.freeze(
+		[...readMissingMembers(source)]
+			.map(([modulePath, diagnostics]) => Object.freeze({ path: modulePath, diagnostics }))
+			.sort((left, right) => (left.path < right.path ? -1 : 1)),
+	);
+}
+
+/** What the packages this application deep-imports actually publish. */
+export async function readDeepImportReadings(tree: string): Promise<readonly DeepImportReading[]> {
+	const readings: DeepImportReading[] = [];
+	for (const name of DEEP_IMPORT_PACKAGES) readings.push(await readDeepImportReading(tree, name));
+	return Object.freeze(readings);
+}
 
 async function filesBelow(
 	directory: string,
@@ -131,6 +200,9 @@ export async function composeMigration(tree: string): Promise<AngularMigration> 
 	);
 	return migrateAngularCliEraWorkspace(
 		{
+			missingMemberDiagnostics: await readMissingMemberDiagnostics(PREVIOUS_BUILD_LOG),
+			deepImportReadings: await readDeepImportReadings(APPLIED_TREE),
+			eraClosureTypePackages: await readEraClosureTypePackages(ERA_CLOSURE_TREE),
 			packageManifest: {
 				path: 'package.json',
 				source: await readFile(path.join(tree, 'package.json'), 'utf8'),
