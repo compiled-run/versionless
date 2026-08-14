@@ -43,3 +43,5 @@ export * from './template-binding-reorder.ts';
 export * from './undecorated-angular-base-class.ts';
 export * from './departed-dom-lib-member.ts';
 export * from './application-source-dependency.ts';
+export * from './superseded-era-lockfile.ts';
+export * from './workspace-script-flags.ts';

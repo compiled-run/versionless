@@ -234,6 +234,27 @@ export const ANGULAR_16_ECOSYSTEM_PACKAGES: EcosystemPackages = Object.freeze({
 		range: '^16.2.2',
 		fact: 'ng-zorro-antd versions in lockstep with the Angular major: 16.2.2 is the last 16.x release and declares peer @angular/core ^16.0.0 across the six @angular packages it uses. It depends on @ant-design/icons-angular ^16.0.0 and @angular/cdk ^16.0.0, both of which this cell also carries. 17.0.0 declares ^17.0.0.',
 	}),
+	'@ng-bootstrap/ng-bootstrap': Object.freeze({
+		kind: 'aligned',
+		range: '^15.1.2',
+		fact: '@ng-bootstrap/ng-bootstrap versions one major *behind* the Angular major it supports, which is the whole hazard of reading this package by its name: the 16.x line is the Angular 17 line. Its peers discriminate exactly and they are what selects the line — every 15.x release (15.0.0 through 15.1.2) declares peer @angular/core, @angular/common, @angular/forms and @angular/localize "^16.0.0" with rxjs "^6.5.3 || ^7.4.0" and @popperjs/core "^2.11.6", where 14.2.0 and the rest of the 14.x line declare "^15.0.0" and 16.0.0 moves to "^17.0.0". 15.1.2 is therefore the newest line this cell accepts and the newest 15.x published; it declares dependency tslib ^2.3.0, exactly this cell\'s range, and no engines.node. The `latest` dist-tag points at 21.0.0, which declares peer @angular/core "^22.0.0" — a package this table read by its dist-tag alone would write a range six majors past this cell\'s linker. The compiled-with stamp was read anyway, because a peer is a hand-maintained claim: 15.1.2 carries version "16.0.6" in all 433 of its ɵɵngDeclare* partial declarations and ships the fesm2022 layout, where 16.0.0 carries "17.0.0" in 421 of them. Two further readings, because a peer this workspace does not itself declare is still a peer: @angular/localize ^16.0.0 is inside the ^16.2.0 family range this cell writes, and @popperjs/core ^2.11.6 is a different package name from the `popper.js` an era Bootstrap 4 workspace declares — npm supplies both as auto-installed peers, and nothing here rewrites a `popper.js` import into a @popperjs/core one. Read from https://registry.npmjs.org/@ng-bootstrap/ng-bootstrap, https://unpkg.com/@ng-bootstrap/ng-bootstrap@15.1.2/fesm2022/ng-bootstrap.mjs and https://unpkg.com/@ng-bootstrap/ng-bootstrap@16.0.0/fesm2022/ng-bootstrap.mjs under consent VL-LEGACY-CORPUS-2026-08-10 on 2026-08-14. The reading is a version fact and not a source claim: the 3.x line an Angular 6-era workspace pins published NgbModule with a `forRoot()` static and component selectors this line has since renamed, and nothing here rewrites a call site that names one.',
+		buildStamp: Object.freeze({
+			libraryVersion: '15.1.2',
+			compiledWith: '16.0.6',
+			readFrom: 'https://unpkg.com/@ng-bootstrap/ng-bootstrap@15.1.2/fesm2022/ng-bootstrap.mjs',
+		}),
+		excludedByBuildStamp: Object.freeze([
+			Object.freeze({
+				libraryVersion: '16.0.0',
+				compiledWith: '17.0.0',
+				readFrom: 'https://unpkg.com/@ng-bootstrap/ng-bootstrap@16.0.0/fesm2022/ng-bootstrap.mjs',
+			}),
+		]),
+	}),
+	preboot: Object.freeze({
+		kind: 'no-successor',
+		fact: 'preboot published ninety-four versions and the newest of them is 8.0.0, published 2021-01-18; it is the `latest` dist-tag and the only tag the package carries. Its declared peer does not exclude it — 8.0.0 declares @angular/common and @angular/core ">=11.0.0" and dependency tslib ^2.0.0, both satisfied by this cell — so a reading that stopped at the resolver would align the package and be wrong, for the same reason jw-bootstrap-switch-ng2 was wrong: what 8.0.0 published is a pre-Ivy ViewEngine library. Its tarball ships preboot.metadata.json beside bundles/preboot.umd.js, esm2015/ and fesm2015/; the fesm bundle declares its module the ViewEngine way (`PrebootModule.decorators = [{ type: NgModule, args: [...] }]`) and carries no ɵɵngDeclare* partial declaration and no ɵɵdefineNgModule at all, and module.d.ts publishes `export declare class PrebootModule` with no ɵmod, ɵfac or ɵinj. The converter that used to make such a library consumable is gone: @angular/compiler-cli 16.2.12 ships `ngcc` only as a stub whose own message reads "As of Angular 16, \'ngcc\' is no longer required and not invoked during CLI builds". The registry also marks every version of the package deprecated with "This package is no longer maintained and is unnecessary with the recent versions of Angular." There is therefore no line to align to: not a newer one, because none exists, and not the newest one, because this cell\'s linker does not consume what it publishes. The package is dropped as a declared difference. Doing so turns any `PrebootModule` or `EventReplayer` import into a source demand the compiler states by name; an application that declares preboot and never imports it loses a declaration and nothing else, and choosing a replacement server-side-render replay library is a source decision this table does not make. Read from https://registry.npmjs.org/preboot and from the published tarball https://registry.npmjs.org/preboot/-/preboot-8.0.0.tgz under consent VL-LEGACY-CORPUS-2026-08-10 on 2026-08-14.',
+	}),
 	'@angular/http': Object.freeze({
 		kind: 'no-successor',
 		fact: '@angular/http stops at 7.2.16 and is deprecated on the registry with "Package no longer supported. Use @angular/common instead". Angular removed the package after the 7 line; there is no 8.x and no 16.x, so the `@angular/` family range this cell writes for its own packages names a version that was never published. The HTTP client that succeeded it is `@angular/common/http`, an entry point of a package this cell already carries, so the dependency is dropped rather than pinned to a v7 line beside a v16 framework.',
@@ -989,11 +1010,7 @@ export function alignAngularPackageManifest(
 			const range = alignedVersionRange(name, cell);
 			if (range === null) {
 				updated[name] = from;
-				if (TEST_TOOLCHAIN_PREFIXES.some((prefix) => name.startsWith(prefix)))
-					unhandled.push(
-						`${field}.${name} is coupled to the Angular test cell but is not part of the ` +
-							`toolchain ${cell.id} generates, so it was left at its era range`,
-					);
+				unhandled.push(unreadDeclarationReason(field, name, from, cell));
 				continue;
 			}
 			updated[name] = range;
@@ -1024,6 +1041,53 @@ export function alignAngularPackageManifest(
 		unhandled: Object.freeze(unhandled.sort(compareStrings)),
 		declaredDifferences: Object.freeze(declaredDifferences.sort(compareStrings)),
 	});
+}
+
+/**
+ * Why an era-pinned declaration the cell has read no line for is reported rather
+ * than carried in silence.
+ *
+ * Silence was the failure mode this closes. A package outside every one of the
+ * cell's four tables reaches {@link alignedVersionRange} as `null`, and the
+ * alignment then writes the era range back — which is the right *edit*, because
+ * choosing a version for a package nobody read would be an invention. It was the
+ * wrong *report*: the package appeared in neither `changes`, nor
+ * `declaredDifferences`, nor `unhandled`, so a manifest carrying an era pin whose
+ * declared peers name a framework major the cell no longer writes looked exactly
+ * like a manifest that was fully aligned. The first anyone learned of it was the
+ * package manager refusing the whole tree.
+ *
+ * The line therefore names three things and not two: the package, the era pin
+ * that was carried, and the fact that no reading exists for it. What it does not
+ * do is guess — an unread declaration is not claimed to be a defect, because a
+ * package the cell has never read may be perfectly installable. It is claimed to
+ * be *unread*, which is a fact this function can establish.
+ *
+ * A test-toolchain package keeps the more specific line it already had. That
+ * sentence says the same thing about silence and adds why the cell declines to
+ * choose for this particular class of package, so replacing it would trade a
+ * reading for a generality that is already present.
+ */
+function unreadDeclarationReason(
+	field: string,
+	name: string,
+	from: string,
+	cell: AngularTargetCell,
+): string {
+	if (TEST_TOOLCHAIN_PREFIXES.some((prefix) => name.startsWith(prefix)))
+		return (
+			`${field}.${name} is coupled to the Angular test cell but is not part of the ` +
+			`toolchain ${cell.id} generates, so it was left at its era range`
+		);
+	return (
+		`${field}.${name} is declared at ${from} and ${cell.id} has read no line for it: it is named ` +
+		'by none of the cell\'s exact ranges, its generated test toolchain or its community layer, ' +
+		'and no family prefix it writes matches the name. The era declaration was carried into the ' +
+		'migrated manifest unchanged, which is the only honest edit for a package nobody read — and ' +
+		'it is reported here rather than left silent, because an era pin standing beside an aligned ' +
+		'framework is where a dependency-resolution refusal comes from, and a lane is owed that ' +
+		'before the package manager tells it.'
+	);
 }
 
 function alignmentReason(name: string, cell: AngularTargetCell): string {

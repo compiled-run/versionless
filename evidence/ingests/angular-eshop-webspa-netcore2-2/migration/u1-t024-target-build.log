@@ -1,0 +1,255 @@
+
+> eshopaspnetnetcoredockerspa@0.0.0 build:prod
+> ng build --configuration production --aot
+
+- Generating browser application bundles (phase: setup)...
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+
+./Client/modules/campaigns/campaigns.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($banner-height, 3.5) or calc($banner-height / 3.5)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+Client/modules/campaigns/campaigns.component.scss 8:14  root stylesheet
+
+
+./Client/modules/catalog/catalog.component.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($banner-height, 3.5) or calc($banner-height / 3.5)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+Client/modules/catalog/catalog.component.scss 15:14  root stylesheet
+
+
+./Client/modules/shared/components/pager/pager.scss?ngResource - Warning: Module Warning (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($margin, 2) or calc($margin / 2)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+Client/modules/shared/components/pager/pager.scss 33:23  root stylesheet
+
+
+
+
+./Client/globals.scss - Error: Module build failed (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Can't find stylesheet to import.
+  ╷
+2 │ @import "~bootstrap/scss/bootstrap";
+  │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+  Client/globals.scss 2:9  root stylesheet
+
+./Client/globals.scss?ngGlobalStyle - Error: Module build failed (from ./node_modules/@angular-devkit/build-angular/node_modules/mini-css-extract-plugin/dist/loader.js):
+HookWebpackError: Module build failed (from ./node_modules/@angular-devkit/build-angular/node_modules/sass-loader/dist/cjs.js):
+Can't find stylesheet to import.
+  ╷
+2 │ @import "~bootstrap/scss/bootstrap";
+  │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ╵
+  Client/globals.scss 2:9  root stylesheet
+
+./Client/modules/shared/services/security.service.ts:1:0-46 - Error: Module not found: Error: Can't resolve '@angular/http' in '/Users/jacksm5pro/dev/open-source/versionless/.versionless/work/angular-eshop-webspa/target/app/Client/modules/shared/services'
+
+./Client/modules/shared/shared.module.ts:13:0-56 - Error: Module not found: Error: Can't resolve '@angular/http' in '/Users/jacksm5pro/dev/open-source/versionless/.versionless/work/angular-eshop-webspa/target/app/Client/modules/shared'
+
+Error: Client/modules/app.module.ts:18:14 - error NG6002: 'SharedModule' does not appear to be an NgModule class.
+
+ 18     imports: [
+                 ~
+ 19         BrowserAnimationsModule,
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+... 
+ 29         CampaignsModule
+    ~~~~~~~~~~~~~~~~~~~~~~~
+ 30     ],
+    ~~~~~
+
+  Client/modules/shared/shared.module.ts:59:14
+    59 export class SharedModule {
+                    ~~~~~~~~~~~~
+    Is it missing an @NgModule annotation?
+
+
+Error: Client/modules/app.module.ts:26:9 - error NG6002: This import contains errors, which may affect components that depend on this NgModule.
+
+26         CatalogModule,
+           ~~~~~~~~~~~~~
+
+
+Error: Client/modules/app.module.ts:27:9 - error NG6002: This import contains errors, which may affect components that depend on this NgModule.
+
+27         OrdersModule,
+           ~~~~~~~~~~~~
+
+
+Error: Client/modules/app.module.ts:28:9 - error NG6002: This import contains errors, which may affect components that depend on this NgModule.
+
+28         BasketModule,
+           ~~~~~~~~~~~~
+
+
+Error: Client/modules/app.module.ts:29:9 - error NG6002: This import contains errors, which may affect components that depend on this NgModule.
+
+29         CampaignsModule
+           ~~~~~~~~~~~~~~~
+
+
+Error: Client/modules/basket/basket.module.ts:11:15 - error NG6002: 'SharedModule' does not appear to be an NgModule class.
+
+11     imports: [SharedModule],
+                 ~~~~~~~~~~~~
+
+  Client/modules/shared/shared.module.ts:59:14
+    59 export class SharedModule {
+                    ~~~~~~~~~~~~
+    Is it missing an @NgModule annotation?
+
+
+Error: Client/modules/basket/basket.service.ts:2:42 - error TS2307: Cannot find module '@angular/http' or its corresponding type declarations.
+
+2 import { Response }                 from '@angular/http';
+                                           ~~~~~~~~~~~~~~~
+
+
+Error: Client/modules/campaigns/campaigns.component.ts:64:27 - error TS2339: Property 'throw' does not exist on type 'typeof Observable'.
+
+64         return Observable.throw(error);
+                             ~~~~~
+
+
+Error: Client/modules/campaigns/campaigns.module.ts:11:30 - error NG6002: 'SharedModule' does not appear to be an NgModule class.
+
+11     imports: [BrowserModule, SharedModule],
+                                ~~~~~~~~~~~~
+
+  Client/modules/shared/shared.module.ts:59:14
+    59 export class SharedModule {
+                    ~~~~~~~~~~~~
+    Is it missing an @NgModule annotation?
+
+
+Error: Client/modules/campaigns/campaigns.service.ts:2:26 - error TS2307: Cannot find module '@angular/http' or its corresponding type declarations.
+
+2 import { Response } from '@angular/http';
+                           ~~~~~~~~~~~~~~~
+
+
+Error: Client/modules/catalog/catalog.component.ts:117:27 - error TS2339: Property 'throw' does not exist on type 'typeof Observable'.
+
+117         return Observable.throw(error);
+                              ~~~~~
+
+
+Error: Client/modules/catalog/catalog.module.ts:10:30 - error NG6002: 'SharedModule' does not appear to be an NgModule class.
+
+10     imports: [BrowserModule, SharedModule],
+                                ~~~~~~~~~~~~
+
+  Client/modules/shared/shared.module.ts:59:14
+    59 export class SharedModule {
+                    ~~~~~~~~~~~~
+    Is it missing an @NgModule annotation?
+
+
+Error: Client/modules/catalog/catalog.service.ts:2:26 - error TS2307: Cannot find module '@angular/http' or its corresponding type declarations.
+
+2 import { Response } from '@angular/http';
+                           ~~~~~~~~~~~~~~~
+
+
+Error: Client/modules/orders/orders-new/orders-new.component.ts:57:35 - error TS2339: Property 'throw' does not exist on type 'typeof Observable'.
+
+57                 return Observable.throw(errMessage);
+                                     ~~~~~
+
+
+Error: Client/modules/orders/orders.component.ts:49:27 - error TS2339: Property 'throw' does not exist on type 'typeof Observable'.
+
+49         return Observable.throw(error);
+                             ~~~~~
+
+
+Error: Client/modules/orders/orders.module.ts:13:30 - error NG6002: 'SharedModule' does not appear to be an NgModule class.
+
+13     imports: [BrowserModule, SharedModule],
+                                ~~~~~~~~~~~~
+
+  Client/modules/shared/shared.module.ts:59:14
+    59 export class SharedModule {
+                    ~~~~~~~~~~~~
+    Is it missing an @NgModule annotation?
+
+
+Error: Client/modules/orders/orders.service.ts:2:26 - error TS2307: Cannot find module '@angular/http' or its corresponding type declarations.
+
+2 import { Response } from '@angular/http';
+                           ~~~~~~~~~~~~~~~
+
+
+Error: Client/modules/shared/components/header/header.html:3:36 - error NG8002: Can't bind to 'routerLink' since it isn't a known property of 'a'.
+
+3         <a class="esh-header-back" routerLink="{{url}}">
+                                     ~~~~~~~~~~~~~~~~~~~~
+
+  Client/modules/shared/components/header/header.ts:5:18
+    5     templateUrl: './header.html',
+                       ~~~~~~~~~~~~~~~
+    Error occurs in the template of component Header.
+
+
+Error: Client/modules/shared/components/pager/pager.html:7:23 - error NG8002: Can't bind to 'ngClass' since it isn't a known property of 'span'.
+
+7                       [ngClass]="{'is-disabled': buttonStates?.previousDisabled}"
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Client/modules/shared/components/pager/pager.ts:7:18
+    7     templateUrl: './pager.html',
+                       ~~~~~~~~~~~~~~
+    Error occurs in the template of component Pager.
+
+
+Error: Client/modules/shared/components/pager/pager.html:19:23 - error NG8002: Can't bind to 'ngClass' since it isn't a known property of 'span'.
+
+19                       [ngClass]="{'is-disabled': buttonStates?.nextDisabled}"
+                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Client/modules/shared/components/pager/pager.ts:7:18
+    7     templateUrl: './pager.html',
+                       ~~~~~~~~~~~~~~
+    Error occurs in the template of component Pager.
+
+
+Error: Client/modules/shared/services/security.service.ts:2:46 - error TS2307: Cannot find module '@angular/http' or its corresponding type declarations.
+
+2 import { Http, Response, Headers }      from '@angular/http';
+                                               ~~~~~~~~~~~~~~~
+
+
+Error: Client/modules/shared/services/security.service.ts:229:32 - error TS2339: Property 'json' does not exist on type 'unknown'.
+
+229         }).pipe(map(res => res.json()));
+                                   ~~~~
+
+
+Error: Client/modules/shared/shared.module.ts:5:41 - error TS2307: Cannot find module '@angular/http' or its corresponding type declarations.
+
+5 import { HttpModule, JsonpModule } from '@angular/http';
+                                          ~~~~~~~~~~~~~~~
+
+
+Error: Client/modules/shared/shared.module.ts:27:14 - error NG1010: Value
+
+Error: Client/modules/shared/shared.module.ts:32:19 - error TS2339: Property 'forRoot' does not exist on type 'typeof NgbModule'.
+
+32         NgbModule.forRoot(),
+                     ~~~~~~~
+
+
+

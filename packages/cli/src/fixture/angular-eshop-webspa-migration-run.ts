@@ -158,6 +158,24 @@ async function workspacePathsBelow(directory: string, root: string): Promise<str
 	return paths;
 }
 
+/**
+ * The lockfiles at the workspace root, read as bytes.
+ *
+ * This application carries one: a `lockfileVersion` 1 `package-lock.json` with
+ * 902 top-level entries, npm 5's own resolution of the Angular 6.1.4 closure.
+ * The driver reads it and hands it over; what it means is the adapter's reading,
+ * not this file's.
+ */
+async function collectLockfiles(tree: string): Promise<WorkspaceFile[]> {
+	const files: WorkspaceFile[] = [];
+	for (const name of ['package-lock.json', 'npm-shrinkwrap.json', 'yarn.lock']) {
+		const at = path.join(tree, name);
+		if (!existsSync(at)) continue;
+		files.push({ path: name, source: await readFile(at, 'utf8') });
+	}
+	return files;
+}
+
 async function collect(
 	tree: string,
 	extension: string,
@@ -204,6 +222,13 @@ export async function composeMigration(tree: string): Promise<AngularMigration> 
 				source: await readFile(path.join(tree, 'tsconfig.json'), 'utf8'),
 			},
 			sourceModules,
+			/**
+			 * The era resolution, handed over as bytes rather than as a name. Whether
+			 * it still describes the manifest the alignment rewrote is a reading of
+			 * this file's own contents, and the capability that takes it removes
+			 * nothing it could not read.
+			 */
+			lockfiles: await collectLockfiles(tree),
 			templates: await collect(tree, '.html', APPLICATION_SOURCE_DIRECTORIES),
 			styleSheets: await collect(tree, '.scss', APPLICATION_SOURCE_DIRECTORIES),
 			workspaceFiles: await workspacePathsBelow(tree, tree),

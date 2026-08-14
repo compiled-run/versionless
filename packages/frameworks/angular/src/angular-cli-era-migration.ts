@@ -57,6 +57,8 @@ import {
 	type SynthesizedWorkspace,
 } from './angular-cli-json-workspace-synthesis.ts';
 import { tslintConfigRemovals } from './tslint-toolchain-removal.ts';
+import { supersedeEraLockfiles } from './superseded-era-lockfile.ts';
+import { retargetWorkspaceScripts, type ScriptFlagChange } from './workspace-script-flags.ts';
 import { declareBuilderPackages } from './builder-package-declaration.ts';
 import { retargetWorkspaceEngines } from './workspace-engines-retarget.ts';
 import {
@@ -180,6 +182,13 @@ export type AngularMigrationInput = Readonly<{
 	 */
 	deepImportReadings?: readonly DeepImportReading[];
 	/**
+	 * The lockfiles the workspace carries, read rather than named. A tree that
+	 * supplies none has none declared superseded: whether a resolution still
+	 * describes the manifest the migration just rewrote is a reading of the
+	 * lockfile's own bytes, and a path is not those bytes.
+	 */
+	lockfiles?: readonly WorkspaceFile[];
+	/**
 	 * The `@types/` packages the *era* closure carried, by name. A package this
 	 * application imports directly and the era manifest never declared may have had
 	 * its type declarations supplied the same accidental way its runtime was; this
@@ -270,6 +279,18 @@ function describeDependencyChange(change: DependencyChange): string {
 	const target = `${change.field}.${change.name}`;
 	return change.to === null
 		? `removed ${target} (was ${change.from}) — ${change.reason}`
+		: `${target}: ${change.from} -> ${change.to} — ${change.reason}`;
+}
+
+/**
+ * A script-flag change names the script it edited, because a manifest carries
+ * many and the reader has to be able to check the command line rather than the
+ * flag.
+ */
+function describeScriptFlagChange(change: ScriptFlagChange): string {
+	const target = `scripts.${change.script}`;
+	return change.to === null
+		? `removed ${change.from} from ${target} — ${change.reason}`
 		: `${target}: ${change.from} -> ${change.to} — ${change.reason}`;
 }
 
@@ -494,15 +515,39 @@ export function migrateAngularCliEraWorkspace(
 	const engines = retargetWorkspaceEngines(builders.manifest, cell);
 	unhandled.push(...engines.unhandled);
 	declaredDifferences.push(...engines.declaredDifferences);
+	/**
+	 * The command lines that invoke the workspace are retargeted after the
+	 * workspace document itself: which builder options survive is the workspace
+	 * migration's decision, and this carries what that decision means for the
+	 * scripts that pass them. It is handed that migration's own changes rather
+	 * than a list of flags, so a workspace that declared none of them has none
+	 * dropped.
+	 */
+	const scripts = retargetWorkspaceScripts(
+		engines.manifest,
+		workspace.changes,
+		cell,
+		workspace.config,
+	);
+	unhandled.push(...scripts.unhandled);
+	/**
+	 * The era lockfile is decided last, because the question is whether the tree's
+	 * own resolution still describes the manifest — and the manifest is only
+	 * finished once every capability above it has written what it writes.
+	 */
+	const lockfiles = supersedeEraLockfiles(input.lockfiles ?? [], scripts.manifest);
+	unhandled.push(...lockfiles.unhandled);
+	declaredDifferences.push(...lockfiles.superseded.map((entry) => entry.reason));
 	const tsConfig = migrateAngularTsConfig(input.tsConfig.source, cell);
 	unhandled.push(...tsConfig.unhandled);
 	const files: MigratedFile[] = [
 		file(
 			input.packageManifest,
-			`${JSON.stringify(engines.manifest, null, 2)}\n`,
+			`${JSON.stringify(scripts.manifest, null, 2)}\n`,
 			'workspace',
 			[
 				...aligned.changes.map(describeDependencyChange),
+				...scripts.changes.map(describeScriptFlagChange),
 				...declared.declarations.map(
 					(entry) =>
 						`added ${entry.field}.${entry.name} = ${entry.range} — ${entry.reason}`,
@@ -738,6 +783,7 @@ export function migrateAngularCliEraWorkspace(
 		declaredDifferences: Object.freeze([...new Set(declaredDifferences)]),
 		removedFiles: Object.freeze([
 			...configRemovals.map((removal) => removal.at),
+			...lockfiles.superseded.map((entry) => entry.at),
 			...(synthesis === null ? [] : [synthesis.replacedPath]),
 		]),
 	});

@@ -14,15 +14,19 @@ import {
 	CAPABILITY_COMPOSITION,
 	ERA_FACTS_NOT_CARRIED,
 	GAPS,
+	GAP_DISPOSITIONS,
 	HOP_CLASS_FINDINGS,
 	LANE_INSTALL,
+	RERUN,
 	SEAM_ANSWER,
 	buildMigrationBlock,
 	buildMigrationRecord,
+	buildRerunBlock,
 } from '../src/fixture/angular-eshop-webspa-migration-record.ts';
 import {
 	ANGULAR_16_BROWSER_CELL,
 	DOCUMENTED_SYMBOL_SUCCESSORS,
+	alignAngularPackageManifest,
 	alignedVersionRange,
 	ecosystemDispositionOf,
 	succeedRemovedEntryPointSymbols,
@@ -96,11 +100,35 @@ describe('eShopOnContainers WebSPA Angular holdout migration record', () => {
 });
 
 describe('the install refusal is a reading of the frozen cell, not an accident', () => {
-	it('confirms the cell has read no line for the two packages that refused', () => {
-		for (const name of ['@ng-bootstrap/ng-bootstrap', 'preboot']) {
-			expect(ecosystemDispositionOf(name, ANGULAR_16_BROWSER_CELL)).toBeNull();
-			expect(alignedVersionRange(name, ANGULAR_16_BROWSER_CELL)).toBeNull();
-		}
+	/**
+	 * T023 recorded that the cell had read no line for either package, which is
+	 * what made the refusal silent. T024 read them. The test that pinned the
+	 * absence is kept as the test that pins the readings, because the record it
+	 * belongs to is the one that says the absence was the defect.
+	 */
+	it('carries a reading for each package that refused, of the kind the bytes support', () => {
+		const bootstrap = ecosystemDispositionOf('@ng-bootstrap/ng-bootstrap', ANGULAR_16_BROWSER_CELL);
+		expect(bootstrap?.kind).toBe('aligned');
+		expect(alignedVersionRange('@ng-bootstrap/ng-bootstrap', ANGULAR_16_BROWSER_CELL)).toBe('^15.1.2');
+		expect(bootstrap?.fact).toContain('^16.0.0');
+		const preboot = ecosystemDispositionOf('preboot', ANGULAR_16_BROWSER_CELL);
+		expect(preboot?.kind).toBe('no-successor');
+		expect(preboot?.fact).toContain('ngcc');
+		expect(alignedVersionRange('preboot', ANGULAR_16_BROWSER_CELL)).toBeNull();
+	});
+
+	it('refuses silence for a declaration it has read no line for', () => {
+		const alignment = alignAngularPackageManifest(
+			{ dependencies: { '@angular/core': '6.1.4', 'ts-helpers': '1.1.2' } },
+			ANGULAR_16_BROWSER_CELL,
+		);
+		expect((alignment.manifest['dependencies'] as Record<string, string>)['ts-helpers']).toBe(
+			'1.1.2',
+		);
+		const surfaced = alignment.unhandled.filter((line) => line.startsWith('dependencies.ts-helpers'));
+		expect(surfaced).toHaveLength(1);
+		expect(surfaced[0]).toContain('declared at 1.1.2');
+		expect(surfaced[0]).toContain('has read no line for it');
 	});
 
 	it('confirms @angular/http is dropped by a reading the cell states out loud', () => {
@@ -218,6 +246,43 @@ describe('the capability composition and the hop-class readings', () => {
 	it('declares every era fact the hop dropped', () => {
 		expect(ERA_FACTS_NOT_CARRIED.length).toBeGreaterThan(4);
 		expect(ERA_FACTS_NOT_CARRIED.join(' ')).toContain('@angular/http');
+	});
+});
+
+describe('the T024 re-run', () => {
+	it('records an install that cleared and a build that did not', () => {
+		const block = buildRerunBlock();
+		expect(block['outcome']).toBe('install-green-build-red-itemised');
+		expect(RERUN.install.exitStatus).toBe(0);
+		expect(RERUN.install.forcedFlagsUsed).toBe(false);
+		expect(RERUN.install.narrowingApplied).toBe(false);
+		expect(RERUN.build.exitStatus).toBe(1);
+		expect(RERUN.build.attempts).toBe(1);
+		expect(RERUN.build.artifactsEmitted).toBe(0);
+		expect(block['parity']).toBeUndefined();
+		expect(block['determinism']).toBeUndefined();
+	});
+
+	it('leaves G3 open and says so, with every other gap closed by a named transform', () => {
+		expect(GAP_DISPOSITIONS.map((gap) => gap.id)).toEqual(GAPS.map((gap) => gap.id));
+		const open = GAP_DISPOSITIONS.filter((gap) => gap.state === 'open');
+		expect(open.map((gap) => gap.id)).toEqual(['G3']);
+		for (const gap of GAP_DISPOSITIONS.filter((entry) => entry.state === 'closed'))
+			expect(gap.by.length).toBeGreaterThan(10);
+	});
+
+	it('names the construct classes the build reached rather than counting them', () => {
+		expect(RERUN.build.constructClassesBehindTheWall.length).toBeGreaterThan(3);
+		const named = RERUN.build.constructClassesBehindTheWall.join(' ');
+		expect(named).toContain('NgbModule');
+		expect(named).toContain("Property 'throw' does not exist");
+		expect(named).toContain('~bootstrap/scss/bootstrap');
+		expect(RERUN.build.notEstablished.join(' ')).toContain('no determinism');
+	});
+
+	it('states that no counted vertical changeset shifted, and what did', () => {
+		expect(RERUN.greenVerticalSurfacing).toContain('No counted vertical');
+		expect(RERUN.greenVerticalSurfacing).toContain('pako');
 	});
 });
 

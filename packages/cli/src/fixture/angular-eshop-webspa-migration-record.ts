@@ -358,6 +358,160 @@ export function buildMigrationBlock(): Record<string, unknown> {
 	};
 }
 
+/** The unit that answered G1, G2, G4 and G5 and re-ran the lane. */
+export const RERUN_UNIT = 'lrapr-t024/u1-silence-defect-and-declarations';
+
+/**
+ * What each T023 gap looks like after the transforms this re-run added.
+ *
+ * A gap is `closed` only where a capability now states the thing the gap said
+ * nobody stated, and `open` where it does not — G3 is untouched by design and is
+ * recorded as open, at the same six sites, because a unit that renamed its own
+ * scope would be the paper this record exists to refuse.
+ */
+export const GAP_DISPOSITIONS = Object.freeze([
+	Object.freeze({
+		id: 'G1',
+		state: 'closed' as const,
+		by: 'the general transform, and then the reading',
+		what: 'alignAngularPackageManifest now reports every era-pinned declaration the cell has read no line for, naming the field, the package, the era pin and why silence is refused. The eShop manifest surfaces 21 such declarations where it previously surfaced none. Beside it the cell read @ng-bootstrap/ng-bootstrap and aligned it to ^15.1.2, so the package that stopped the lane is no longer merely reported — it is carried.',
+	}),
+	Object.freeze({
+		id: 'G2',
+		state: 'closed' as const,
+		by: 'a community-layer reading of the published bytes',
+		what: 'preboot is read as no-successor. Its peers do not exclude it — 8.0.0 declares @angular/common and @angular/core ">=11.0.0" — but its published tarball is a pre-Ivy ViewEngine library (preboot.metadata.json, PrebootModule.decorators, no ɵɵngDeclare* anywhere) and Angular 16 ships ngcc only as a stub, so this cell has no line to link. The declaration is dropped as a declared difference; this application imported it at zero sites, so nothing in its source changes.',
+	}),
+	Object.freeze({
+		id: 'G3',
+		state: 'open' as const,
+		by: 'nothing — deliberately out of this unit\'s scope',
+		what: 'The value-position successor capability is not written. The migrated build now reaches the compiler and states the gap in its own words: six TS2307 "Cannot find module \'@angular/http\'" and two webpack "Can\'t resolve \'@angular/http\'", at exactly the six sites the T023 seam probe named. The gap is unchanged and is now evidenced by a compiler rather than by a seam probe.',
+	}),
+	Object.freeze({
+		id: 'G4',
+		state: 'closed' as const,
+		by: 'a detector-gated script-surface capability',
+		what: 'retargetWorkspaceScripts rewrote scripts.build:prod from "ng build --prod --aot --extract-css" to "ng build --configuration production --aot". `--extract-css` was dropped because this workspace migration removed the matching builder option at projects.WebSPA.architect.build.configurations.production.extractCss, and `--prod` was retargeted because the cell is past the CLI line that removed it and the migrated workspace declares a production configuration. `--aot` is still a flag the 16.2 CLI parses and was left alone. The build script ran, which is how the build below was reached at all.',
+	}),
+	Object.freeze({
+		id: 'G5',
+		state: 'closed' as const,
+		by: 'a changeset declaration, not a lane convention',
+		what: 'supersedeEraLockfiles read the era package-lock.json and found declarations it contradicts — @angular-devkit/build-angular locked at 0.7.5 and now declared ^16.2.0, @angular/animations locked at 6.1.4, and further ones — and removed it. `removedFiles` is now ["tslint.json", "package-lock.json"] and the reason is a declared difference. The lane moved no file by hand: the changeset took it out.',
+	}),
+]);
+
+/**
+ * The re-run: the same frozen-except-for-this-unit engine, pointed at the same
+ * pinned tree, with the four transforms above in it.
+ */
+export const RERUN = Object.freeze({
+	changeset: Object.freeze({
+		record: 'migration/u1-t024-composed-changeset.json',
+		applied: 'migration/u1-t024-source-migration.json',
+		recordNote:
+			'The runner writes its output under the u5 names; those two files were restored to the bytes T023 sealed and the re-run\'s own are kept beside them under u1-t024 names, so the red record still points at the red changeset it describes.',
+		filesWritten: 11,
+		applicationFilesChanged: 8,
+		applicationFilesScanned: 84,
+		workspaceFilesChanged: 3,
+		filesRemoved: Object.freeze(['tslint.json', 'package-lock.json']),
+		unhandled: 24,
+		declaredDifferences: 10,
+		handEdits: 0,
+		note: 'T023 recorded 3 unhandled and 8 declared differences on this tree. The unhandled count is 24 because 21 previously silent declarations now speak; the declared differences are 10 because preboot and the era lockfile are now declarations the changeset makes.',
+	}),
+	install: Object.freeze({
+		cell: 'node v16.20.2 (official darwin-arm64 build, native), npm 8.19.4, CI=1, lane npm cache at .versionless/cache/angular-eshop-webspa-netcore2-2-target/npm-cache',
+		command: 'npm install --no-audit --no-fund --ignore-scripts',
+		exitStatus: 0,
+		packagesInstalled: 1689,
+		forcedFlagsUsed: false,
+		narrowingApplied: false,
+		eraLockfileHandling:
+			'none — the era lockfile was restored into the lane before the run precisely so the changeset would be the thing that removed it, and it was. No file was moved by the lane.',
+		log: 'migration/u1-t024-lane-install.log',
+		reading:
+			'The install wall is cleared. G1 and G5 are what cleared it: the ERESOLVE that stopped T023 was @ng-bootstrap/ng-bootstrap@3.1.0\'s ^6.1.0 peer, and the attempt before it was the era lockfile. The closure npm resolved agrees with the readings that chose it — @ng-bootstrap/ng-bootstrap 15.1.2, @angular/common 16.2.12, typescript 5.1.6 — and npm auto-installed the two peers the reading said it would supply, @angular/localize 16.2.12 and @popperjs/core 2.11.8, the latter beside the era popper.js 1.16.1 the workspace still declares under its old name.',
+	}),
+	build: Object.freeze({
+		command: 'npm run build:prod',
+		attempts: 1,
+		exitStatus: 1,
+		artifactsEmitted: 0,
+		log: 'migration/u1-t024-target-build.log',
+		diagnostics: Object.freeze({
+			'error NG6002': 9,
+			'error TS2339': 6,
+			'error TS2307': 6,
+			'error NG8002': 3,
+			'error NG1010': 1,
+			'webpack Module not found': 2,
+			'sass Can\'t find stylesheet to import': 2,
+		}),
+		constructClassesBehindTheWall: Object.freeze([
+			'G3 itself, stated by the compiler for the first time: TS2307 "Cannot find module \'@angular/http\' or its corresponding type declarations" at shared.module.ts:5, security.service.ts:2, basket.service.ts:2, catalog.service.ts:2, campaigns.service.ts:2 and orders.service.ts:2, plus two webpack "Can\'t resolve \'@angular/http\'" module-not-found errors. Every NG6002 and NG8002 below is downstream of the one NG1010 this produces on SharedModule.',
+			'A community-library *surface* class the version reading cannot answer: "Property \'forRoot\' does not exist on type \'typeof NgbModule\'" at shared.module.ts:32. @ng-bootstrap/ng-bootstrap dropped the NgbModule.forRoot() static after the era 3.x line, so aligning the package — which is what makes the tree installable — turns a call site into a source demand. This is a new construct class for this application and it is named rather than fixed here.',
+			'An RxJS 5-shaped static this hop removes: "Property \'throw\' does not exist on type \'typeof Observable\'" at orders.component.ts:49, orders-new.component.ts:57 and catalog.component.ts:117. The source-migration capability rewrites patch *imports*; a static call on the Observable namespace is a different construct and no capability reads it.',
+			'A webpack tilde stylesheet specifier the composition never offered to the capability that exists for it: Client/globals.scss:2 `@import "~bootstrap/scss/bootstrap"` fails with "Can\'t find stylesheet to import". migrateWebpackTildeStyleSpecifiers is exported from the adapter and is not wired into migrateAngularCliEraWorkspace, and it is closure-gated, so the composition would have to hand it a reading of the installed tree. That is a wiring gap rather than a missing capability, and it is recorded as one.',
+			'One TS2339 that is a consequence rather than a class: "Property \'json\' does not exist on type \'unknown\'" at security.service.ts:229, which is what the era @angular/http Response type used to answer.',
+		]),
+		notEstablished: Object.freeze([
+			'One build was attempted and one is recorded. There is no second run, so no determinism or byte-stability claim is made.',
+			'No artifact was emitted, so there is no output inventory, no parity claim and no witness journey. The gate-zero unknown about whether this SPA boots without its ASP.NET host is exactly as open as it was.',
+			'The diagnostic counts are counts of what this one build printed. A build that stops does not enumerate what a later stage would have refused, so nothing here says these are all the demands this application carries.',
+		]),
+	}),
+	greenVerticalSurfacing:
+		'No counted vertical\'s changeset shifted. The silence fix adds `unhandled` lines and changes no edit, and the two new capabilities are supply-gated: a driver that hands over no lockfile bytes has no lockfile removed, and a workspace migration that removed no builder option has no script flag dropped. The full node suite is green before and after (2336 tests before, 2358 after, the difference being this unit\'s own tests), and the one recorded expectation that moved is the adapter unit test for an unread `pako` declaration, which now asserts the surfacing instead of the silence.',
+});
+
+export function buildRerunBlock(): Record<string, unknown> {
+	return {
+		unit: RERUN_UNIT,
+		boardTask: 'T024',
+		stage: 'stage-1 — close G1/G2/G4/G5 generically and re-run the holdout lane',
+		outcome: 'install-green-build-red-itemised',
+		result:
+			'The install wall is cleared without a forced flag, a relaxed peer or a narrowed manifest: 1689 packages, exit 0. The first build this application has ever been given on the target line was attempted once and is RED, and its diagnostics are itemised below. G1, G2, G4 and G5 are closed by transforms that read the workspace rather than this application; G3 is untouched and is now stated by a compiler instead of by a probe.',
+		authorization:
+			'An authorized reopen of the frozen adapter subtrees for this unit only. The React subtree is untouched at 972ca80155bbc2a6eb3779943cd481b71d35e803.',
+		consentId: CONSENT,
+		commit: COMMIT,
+		subpath: APPLICATION_SUBPATH,
+		registryReadings: [
+			'https://registry.npmjs.org/@ng-bootstrap/ng-bootstrap — 161 versions; the 15.x line declares peer @angular/core, @angular/common, @angular/forms and @angular/localize "^16.0.0", 14.2.0 declares "^15.0.0" and 16.0.0 declares "^17.0.0". 15.1.2 is the newest 15.x. The `latest` dist-tag is 21.0.0, which declares "^22.0.0".',
+			'https://unpkg.com/@ng-bootstrap/ng-bootstrap@15.1.2/fesm2022/ng-bootstrap.mjs — 433 ɵɵngDeclare* calls, every one carrying version "16.0.6".',
+			'https://unpkg.com/@ng-bootstrap/ng-bootstrap@16.0.0/fesm2022/ng-bootstrap.mjs — 421 partial declarations carrying version "17.0.0", which this cell\'s linker refuses.',
+			'https://registry.npmjs.org/preboot — 94 versions; 8.0.0 (2021-01-18) is `latest` and the only tag, declares peer @angular/common and @angular/core ">=11.0.0" and dependency tslib ^2.0.0, and every version carries the deprecation "This package is no longer maintained and is unnecessary with the recent versions of Angular."',
+			'https://registry.npmjs.org/preboot/-/preboot-8.0.0.tgz — ships preboot.metadata.json beside bundles/, esm2015/ and fesm2015/; fesm2015/preboot.js declares its module as `PrebootModule.decorators = [{ type: NgModule, ... }]`; no ɵɵngDeclare* and no ɵɵdefineNgModule anywhere in the tarball; module.d.ts publishes `export declare class PrebootModule` with no ɵmod, ɵfac or ɵinj.',
+		],
+		gapDispositions: GAP_DISPOSITIONS,
+		rerun: RERUN,
+		logs: [
+			'migration/u1-t024-lane-install.log',
+			'migration/u1-t024-target-build.log',
+			'migration/u1-t024-composed-changeset.json',
+			'migration/u1-t024-source-migration.json',
+		],
+		notEstablished: [
+			'Closing four gaps is not a green migration. This application does not build, and the record above says so with the compiler\'s own words.',
+			'A registry reading is a reading of published bytes, not a behavioural claim. Nothing establishes that @ng-bootstrap/ng-bootstrap 15.1.2 renders what 3.1.0 rendered, and the NgbModule.forRoot() refusal is direct evidence that its surface moved.',
+			'Dropping preboot is a declared difference, not a repair. An application that imported it would meet the drop as a source demand; this one does not import it.',
+			'The two new capabilities are proven by one application each. They are recorded experimental in the capability-coverage map for exactly that reason.',
+			'`packagesInstalled: 1689` is a statement about this closure on this host on this date. It is not a claim that the closure is reproducible: the era lockfile was removed by the changeset and no new lockfile digest is recorded here.',
+		],
+	};
+}
+
+export function buildRerunRecord(): SealedRecord {
+	return sealRecord({
+		schemaVersion: 'versionless.angular-eshop-webspa-t024-rerun.v1',
+		...buildRerunBlock(),
+	});
+}
+
 export function buildMigrationRecord(): SealedRecord {
 	return sealRecord({
 		schemaVersion: 'versionless.angular-eshop-webspa-migration.v1',
@@ -370,9 +524,23 @@ export function buildMigrationRecord(): SealedRecord {
 
 export async function main(): Promise<void> {
 	const record = verifySealedRecord(buildMigrationRecord());
+	const rerun = verifySealedRecord(buildRerunRecord());
 	const attempt = JSON.parse(await readFile(ATTEMPT_FILE, 'utf8')) as Record<string, unknown>;
 	attempt['migration'] = record;
+	/**
+	 * The T023 red is left exactly where it was. The re-run is a second block
+	 * beside it, because a record that overwrote the red would delete the only
+	 * evidence of what the silence cost.
+	 */
+	attempt['t024Rerun'] = rerun;
 	await writeFile(ATTEMPT_FILE, `${JSON.stringify(attempt, null, 2)}\n`);
+	process.stdout.write(
+		`re-run recorded ${String(rerun['outcome'])}: ` +
+			`${String(GAP_DISPOSITIONS.filter((gap) => gap.state === 'closed').length)}/` +
+			`${String(GAP_DISPOSITIONS.length)} gaps closed, install exit ` +
+			`${String(RERUN.install.exitStatus)} (${String(RERUN.install.packagesInstalled)} packages), ` +
+			`build exit ${String(RERUN.build.exitStatus)}\n`,
+	);
 	process.stdout.write(
 		`migration recorded ${String(record['outcome'])}: ${String(GAPS.length)} gaps itemised (` +
 			`${String(GAPS.filter((gap) => gap.stage === 'install').length)} install, ` +

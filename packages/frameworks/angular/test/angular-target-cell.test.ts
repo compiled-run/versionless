@@ -53,7 +53,20 @@ describe('Angular target cell', () => {
 				reason: 'released by a builder target the workspace migration removed',
 			},
 		]);
+		/**
+		 * `pako` is the unread declaration, and it is reported rather than carried
+		 * in silence: the manifest still holds it at its era range, and the lane is
+		 * told so before a package manager tells it.
+		 */
 		expect(alignment.unhandled).toEqual([
+			'dependencies.pako is declared at ^1.0.11 and angular-16-browser-builder has read no ' +
+				"line for it: it is named by none of the cell's exact ranges, its generated test " +
+				'toolchain or its community layer, and no family prefix it writes matches the name. ' +
+				'The era declaration was carried into the migrated manifest unchanged, which is the ' +
+				'only honest edit for a package nobody read — and it is reported here rather than ' +
+				'left silent, because an era pin standing beside an aligned framework is where a ' +
+				'dependency-resolution refusal comes from, and a lane is owed that before the ' +
+				'package manager tells it.',
 			'devDependencies.karma-junit-reporter is coupled to the Angular test cell but is not ' +
 				'part of the toolchain angular-16-browser-builder generates, so it was left at its ' +
 				'era range',
