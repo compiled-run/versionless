@@ -79,18 +79,23 @@ function holdoutLines(conformance: CorpusConformance): string {
 		.map((value) => {
 			const holdout = value as Record<string, unknown>;
 			/**
-			 * A holdout whose migrated build went green is rendered by its own
-			 * sentence rather than squeezed into the failure one. The failure
-			 * sentence says "recorded missing capability" and "migrated lane red
-			 * identically across N attempts", and neither is true of a green build;
-			 * writing it anyway would be the report describing a state it did not
-			 * measure. The green sentence carries the same six fields the verifier
-			 * requires, and carries in addition the two facts that keep the entry
-			 * from reading as a pass: the earlier RED under the composite it was
-			 * frozen against, and that no witness journey has run.
+			 * A holdout that is not a failure is rendered by its own sentence rather
+			 * than squeezed into the failure one. The failure sentence says "recorded
+			 * missing capability" and "migrated lane red identically across N
+			 * attempts", and neither is true of a green build; writing it anyway
+			 * would be the report describing a state it did not measure.
+			 *
+			 * The other half of the same rule applies to the pass. This holdout's
+			 * Witness is green on one named surface, so the report states the pass
+			 * and its boundary in one breath — the surface proven, the legs and runs
+			 * behind it, and the surfaces nobody drove — and never contracts it to a
+			 * generic "passed". The earlier RED under the composite this application
+			 * was first frozen against is carried in the same sentence, because a
+			 * report that published only the later state would be hiding the one that
+			 * falsified the frozen adapter.
 			 */
 			if (holdout.outcome !== 'failed')
-				return `- Holdout \`${String(holdout.id)}\` (${String(holdout.application)}, ${String(holdout.lineage)} lineage): **attempted; outcome ${String(holdout.outcome)}**. Baseline lane ${String(holdout.baselineLane)}; migrated lane ${String(holdout.migratedLaneUnderFreeze)} at install against frozen adapter composite \`${String(holdout.frozenAdapterFingerprint)}\` with ${String(holdout.adapterBytesChanged)} adapter bytes changed, and ${String(holdout.migratedLane)} across ${String(holdout.attempts)} byte-identical production builds after the authorized ${String((holdout.authorizedReopen as Record<string, unknown>).task)} Angular-subtree reopen re-frozen at \`${String((holdout.authorizedReopen as Record<string, unknown>).refreezeComposite)}\`. Witness journeys: **${String(holdout.witness)}**; browser proof **${String(holdout.browserProof)}**. Still unproven: **${String(holdout.reason)}**. This is **not a passed holdout**, it is **counted in no lineage numerator**, and the earlier RED is published rather than retracted: [${String(holdout.receipt)}](../../../${String(holdout.receipt)}) \`${String(holdout.digest)}\`.`;
+				return `- Holdout \`${String(holdout.id)}\` (${String(holdout.application)}, ${String(holdout.lineage)} lineage): **attempted; outcome ${String(holdout.outcome)}**. Baseline lane ${String(holdout.baselineLane)}; migrated lane ${String(holdout.migratedLaneUnderFreeze)} at install against frozen adapter composite \`${String(holdout.frozenAdapterFingerprint)}\` with ${String(holdout.adapterBytesChanged)} adapter bytes changed, and ${String(holdout.migratedLane)} across ${String(holdout.attempts)} byte-identical production builds after the authorized ${String((holdout.authorizedReopen as Record<string, unknown>).task)} Angular-subtree reopen re-frozen at \`${String((holdout.authorizedReopen as Record<string, unknown>).refreezeComposite)}\`. Witness (\`${String(holdout.witnessUnit)}\`): **${String(holdout.witness)}** — ${String(holdout.witnessRuns)} runs over ${String(holdout.witnessLegs)} recorded legs, behaviour parity digest \`${String(holdout.witnessParityDigest)}\`; browser proof **${String(holdout.browserProof)}** on the **${String(holdout.witnessSurface)}** surface only. Still unproven: **${String(holdout.reason)}**. This is a **pass on a bounded surface and not a generic pass**, it is **counted in no lineage numerator**, and the earlier RED is published rather than retracted: [${String(holdout.receipt)}](../../../${String(holdout.receipt)}) \`${String(holdout.digest)}\`.`;
 			return `- Holdout \`${String(holdout.id)}\` (${String(holdout.application)}, ${String(holdout.lineage)} lineage): **attempted; outcome ${String(holdout.outcome)}**. Baseline lane ${String(holdout.baselineLane)}, migrated lane ${String(holdout.migratedLane)} identically across ${String(holdout.attempts)} attempts against frozen adapter composite \`${String(holdout.frozenAdapterFingerprint)}\` with ${String(holdout.adapterBytesChanged)} adapter bytes changed. Recorded missing capability for the follow-on tranche: **${String(holdout.reason)}**. It is **counted in no lineage numerator** and published rather than dropped: [${String(holdout.receipt)}](../../../${String(holdout.receipt)}) \`${String(holdout.digest)}\`.`;
 		})
 		.join('\n');
@@ -329,7 +334,7 @@ Proven on exactly one application and therefore **experimental / out-of-matrix**
 
 ${freezeCapabilities.experimental.entries.map((entry) => `- ${entry.lineage}: \`${entry.capability}\``).join('\n')}
 
-Both Angular holdouts were ingested under the mandatory license-text-at-pin pre-screen and run. pigallery2 1.7.0 is **RED**, at the declared pre-Ivy-only-dependency support boundary above. The eShopOnContainers WebSPA was **RED at install** under the superseded \`f1a63359\` composite and, after the authorized T024 reopen, its migrated production build completes twice byte-identically — with **no witness journey run in either lane**, so it is published as a measured state and **not as a passed holdout**. Both Angular-subtree reopens are recorded in the freeze's supersession record, and every capability either of them produced is in the experimental list above.
+Both Angular holdouts were ingested under the mandatory license-text-at-pin pre-screen and run. pigallery2 1.7.0 is **RED**, at the declared pre-Ivy-only-dependency support boundary above. The eShopOnContainers WebSPA was **RED at install** under the superseded \`f1a63359\` composite; after the authorized T024 reopen its migrated production build completes twice byte-identically, and the T024 u6 Witness — run after the re-freeze, against the bytes that build emitted — is green across two lanes observed twice each on one behaviour parity digest, with a mutation-red and byte-restore proof and zero successful non-loopback requests. That Witness covers the **anonymous catalog surface only**: identity, basket, orders and campaigns are out of surface, the SignalR hub was never reached, and text entry and drag were not tested, so the entry is published as a **pass on a bounded surface** and never as a generic pass. Both Angular-subtree reopens are recorded in the freeze's supersession record, and every capability either of them produced is in the experimental list above.
 
 ## Capability-coverage map
 

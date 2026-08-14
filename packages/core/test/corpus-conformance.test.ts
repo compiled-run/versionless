@@ -61,10 +61,15 @@ import {
 	verifyHoldoutAngularPigallery2Evidence,
 } from '../src/receipts/holdout-angular-pigallery2.ts';
 import {
+	HOLDOUT_ANGULAR_ESHOP_WEBSPA_BROWSER_PROOF,
 	HOLDOUT_ANGULAR_ESHOP_WEBSPA_OUTCOME,
+	HOLDOUT_ANGULAR_ESHOP_WEBSPA_PROVEN_SURFACE,
 	HOLDOUT_ANGULAR_ESHOP_WEBSPA_RUN_EVIDENCE,
+	HOLDOUT_ANGULAR_ESHOP_WEBSPA_WITNESS_STATE,
 	holdoutAngularEshopWebspaCorpusRecord,
+	holdoutAngularEshopWebspaDigest,
 	verifyHoldoutAngularEshopWebspaEvidence,
+	type HoldoutAngularEshopWebspaReceipt,
 } from '../src/receipts/holdout-angular-eshop-webspa.ts';
 import {
 	ANGULAR_PRE_IVY_BOUNDARY_AMENDMENT,
@@ -1645,16 +1650,31 @@ describe('canonical corpus conformance', () => {
 			await readFile(path.join(root, 'evidence/runs/aggregate.json'), 'utf8'),
 		) as { fixtures: Array<Record<string, unknown>>; holdouts: unknown[] };
 		expect(aggregate.holdouts).toEqual([expected, pigalleryExpected, eshopExpected]);
-		// The eShop holdout is the one entry in this ledger whose migrated build is
-		// green, which makes it the one entry that could be read as a pass. It is
-		// not one: no journey ran, it is counted nowhere, and the install RED it
-		// took under the frozen composite is still in the record beside the green.
+		// The eShop holdout is the one entry in this ledger that passed anything,
+		// which makes it the one entry that could be read as a whole pass. It is
+		// not one: the Witness covers the anonymous catalog surface and names the
+		// seven surfaces it does not cover, it is counted nowhere, and the install
+		// RED it took under the frozen composite is still in the record beside it.
 		expect(eshopExpected.outcome).toBe(HOLDOUT_ANGULAR_ESHOP_WEBSPA_OUTCOME);
+		expect(eshopExpected.outcome).not.toBe('passed');
 		expect(eshopExpected.migratedLane).toBe('green');
 		expect(eshopExpected.migratedLaneUnderFreeze).toBe('red');
-		expect(eshopExpected.witness).toBe('not-run');
-		expect(eshopExpected.browserProof).toBe('not-tested');
+		expect(eshopExpected.witness).toBe(HOLDOUT_ANGULAR_ESHOP_WEBSPA_WITNESS_STATE);
+		expect(eshopExpected.browserProof).toBe(HOLDOUT_ANGULAR_ESHOP_WEBSPA_BROWSER_PROOF);
+		expect(eshopExpected.witnessSurface).toBe(HOLDOUT_ANGULAR_ESHOP_WEBSPA_PROVEN_SURFACE);
+		expect(eshopExpected.witnessRuns).toBe(4);
+		expect(eshopExpected.witnessLegs).toBe(7);
+		expect(eshopExpected.witnessSurfaceNotCovered.map((limit) => limit.surface)).toEqual([
+			'identity',
+			'basket',
+			'orders',
+			'campaigns',
+			'signalr',
+			'text-entry',
+			'drag',
+		]);
 		expect(eshopExpected.countedInLineageNumerator).toBe(false);
+		expect(eshopExpected.countingNote).toContain("Judge's decision");
 		expect(
 			aggregate.fixtures.some((fixture) => fixture.receipt === eshopExpected.receipt),
 		).toBe(false);
@@ -1857,21 +1877,16 @@ describe('canonical corpus conformance', () => {
 		}
 	});
 
-	it('refuses an eShop holdout entry edited into a pass or a browser proof', async () => {
+	it('refuses an eShop holdout entry edited into a whole pass or a wider surface', async () => {
+		// Every mutation below is re-sealed: the canonical digest is recomputed over
+		// the edited entry, so the receipt is internally consistent and only the
+		// explicit claim checks can catch it. An edit that merely broke the digest
+		// would prove nothing about the guards.
 		const mutations: Array<[string, (value: Record<string, unknown>) => void]> = [
 			[
-				'outcome-upgraded',
+				'outcome-upgraded-to-a-generic-pass',
 				(value) => {
 					value.holdoutOutcome = 'passed';
-				},
-			],
-			[
-				'witness-claimed',
-				(value) => {
-					const witness = value.witness as Record<string, unknown>;
-					witness.state = 'verified';
-					witness.journeysRun = 3;
-					witness.browserProof = 'verified';
 				},
 			],
 			[
@@ -1879,6 +1894,44 @@ describe('canonical corpus conformance', () => {
 				(value) => {
 					const lanes = value.lanes as Record<string, Record<string, unknown>>;
 					lanes.migratedUnderFreeze.outcome = 'green';
+					lanes.migratedUnderFreeze.artifactProduced = true;
+				},
+			],
+			[
+				'scope-inflated-by-dropping-a-limit',
+				(value) => {
+					const witness = value.witness as Record<string, unknown>;
+					const surface = witness.surface as Record<string, unknown>;
+					const limits = surface.limits as Array<Record<string, unknown>>;
+					surface.limits = limits.filter((limit) => limit.surface !== 'identity');
+					surface.outOfSurface = 3;
+				},
+			],
+			[
+				'scope-inflated-by-softening-a-limit',
+				(value) => {
+					const witness = value.witness as Record<string, unknown>;
+					const surface = witness.surface as Record<string, unknown>;
+					const limits = surface.limits as Array<Record<string, unknown>>;
+					limits[0]!.state = 'verified';
+					limits[0]!.reason = 'identity was exercised end to end.';
+				},
+			],
+			[
+				'witness-overclaimed-beyond-the-recorded-legs',
+				(value) => {
+					const witness = value.witness as Record<string, unknown>;
+					(witness.legs as string[]).push('basket accepts an item and settles');
+					witness.legsRecorded = 8;
+					witness.runsRecorded = 8;
+				},
+			],
+			[
+				'witness-overclaimed-in-its-browser-proof',
+				(value) => {
+					const witness = value.witness as Record<string, unknown>;
+					witness.browserProof = 'verified';
+					witness.state = 'passed';
 				},
 			],
 			[
@@ -1888,6 +1941,13 @@ describe('canonical corpus conformance', () => {
 					adapter.authorizedReopen.capabilitiesExtracted = 0;
 				},
 			],
+			[
+				'counting-flipped-here-rather-than-by-the-judge',
+				(value) => {
+					const counting = value.counting as Record<string, unknown>;
+					counting.countedInLineageNumerator = true;
+				},
+			],
 		];
 		for (const [label, mutate] of mutations) {
 			const directory = await corpusCopy(`eshop-${label}`);
@@ -1895,7 +1955,11 @@ describe('canonical corpus conformance', () => {
 				await mutateJson(
 					directory,
 					'evidence/runs/holdout-angular-eshop-webspa/receipt.json',
-					mutate,
+					(value) => {
+						mutate(value);
+						const receipt = value as unknown as HoldoutAngularEshopWebspaReceipt;
+						receipt.integrity.canonicalDigest = holdoutAngularEshopWebspaDigest(receipt);
+					},
 				);
 				await expect(
 					analyzeCorpusConformance({ rootDir: directory }),
@@ -1904,6 +1968,22 @@ describe('canonical corpus conformance', () => {
 			} finally {
 				await rm(directory, { recursive: true, force: true });
 			}
+		}
+	});
+
+	it('refuses an eShop holdout entry unbound from its sealed Witness evidence', async () => {
+		// The Witness claims are derived from sealed bytes rather than authored, so
+		// an edit to the Witness receipt itself has to fail the ledger too — the
+		// binding is what stops a bounded pass from being widened one file away.
+		const directory = await corpusCopy('eshop-witness-evidence');
+		try {
+			await mutateJson(directory, 'evidence/runs/angular-eshop-webspa/receipt.json', (value) => {
+				const journey = value.journey as Record<string, unknown>;
+				journey.surfaceLimits = (journey.surfaceLimits as unknown[]).slice(0, 3);
+			});
+			await expect(analyzeCorpusConformance({ rootDir: directory })).rejects.toThrow();
+		} finally {
+			await rm(directory, { recursive: true, force: true });
 		}
 	});
 

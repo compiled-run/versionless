@@ -62,7 +62,7 @@ export const ADAPTER_FREEZE_SUPERSEDES = {
 	commit: '852079a1d163617f810dba7e8b3509bc8e25343a',
 	state: 'superseded' as const,
 	reopenReason:
-		'Authorized Angular-subtree reopen for the eShopOnContainers WebSPA holdout chase (T024, board-authorized 2026-08-14): nine generic capabilities and composition repairs were extracted from the falsification across commits 82f48ab, 7543e0e, 8c6a8da and 0ecd410, and the adapter was re-frozen at composite 27741d9c. Only the Angular subtree moved (1f63f32c -> 4b6e2f44); React stayed byte-identical at 972ca801, as did migrations, bundlers and analysis. What the chase bought is stated exactly: the holdout is no longer refused at install and its migrated production build now completes twice byte-identically, and no witness journey has run against it, so it is published as a measured state and not as a passed holdout. The pigallery2 RED and the declared pre-Ivy-only-dependency support boundary are untouched by this reopen. f1a63359 had itself superseded 4df7bc96 (commit c695a586), which superseded 5de7df56 (commit cce34175), which superseded the tranche-one d9f75ef6 freeze (commit 57b308a).',
+		'Authorized Angular-subtree reopen for the eShopOnContainers WebSPA holdout chase (T024, board-authorized 2026-08-14): nine generic capabilities and composition repairs were extracted from the falsification across commits 82f48ab, 7543e0e, 8c6a8da and 0ecd410, and the adapter was re-frozen at composite 27741d9c. Only the Angular subtree moved (1f63f32c -> 4b6e2f44); React stayed byte-identical at 972ca801, as did migrations, bundlers and analysis. What the chase bought is stated exactly: the holdout is no longer refused at install, its migrated production build now completes twice byte-identically, and the T024 u6 Witness — run after this re-freeze, against the bytes that build emitted — is green on the anonymous catalog surface, so it is published as a pass on that bounded surface and not as a pass on the application, with identity, basket, orders, campaigns and the SignalR hub never exercised. The pigallery2 RED and the declared pre-Ivy-only-dependency support boundary are untouched by this reopen. f1a63359 had itself superseded 4df7bc96 (commit c695a586), which superseded 5de7df56 (commit cce34175), which superseded the tranche-one d9f75ef6 freeze (commit 57b308a).',
 	chain: [
 		'd9f75ef677cb850f664cc188abf77b8ebfd24e84cb58d147b74e9bbaa143eb77',
 		'5de7df565fb8e445a45f9f8f43eac27b80b71189d59e4df243e93471406a260c',
@@ -272,7 +272,7 @@ export function adapterFreezeRecord(): Record<string, unknown> {
 				capabilitiesExtracted: ADAPTER_FREEZE_T024_EXPERIMENTAL_CAPABILITIES.length,
 				entries: ADAPTER_FREEZE_T024_EXPERIMENTAL_CAPABILITIES.map((entry) => ({ ...entry })),
 				state: 'all-single-application-experimental',
-				outcome: 'The chased application is no longer refused at install and its migrated production build now completes twice with byte-identical output. No witness journey has run against it, so the reopen bought nine generic capabilities and a repeatable build, not a passed holdout.',
+				outcome: 'The chased application is no longer refused at install, its migrated production build now completes twice with byte-identical output, and the T024 u6 Witness run after this re-freeze is green on its anonymous catalog surface. The reopen bought nine generic capabilities, a repeatable build, and a browser proof bounded to that one surface — not a pass on the application, and not a second application for any capability.',
 				reactSubtreeUnchanged: true,
 			},
 		],
@@ -289,9 +289,9 @@ export function adapterFreezeRecord(): Record<string, unknown> {
 			{
 				state: 'attempted',
 				application: 'eShopOnContainers WebSPA (netcore2.2, src/Web/WebSPA)',
-				outcome: 'migrated-build-green-witness-pending',
+				outcome: 'witness-passed-on-bounded-anonymous-catalog-surface',
 				preScreen: 'mandatory license-text-at-pin pre-screen; the pre-Ivy screen verdict on this candidate was overturned by the T022 follow-up ruling under the successor-across-names rule',
-				reason: 'The replacement Angular holdout was refused at install by the frozen f1a63359 adapter, and that RED stands as history. After the authorized T024 reopen its migrated production build completes and repeats byte-identically. No witness journey has run in either lane, so nothing about its behavior is established, it is counted in no numerator, and it is published as a measured state rather than as a passed holdout.',
+				reason: 'The replacement Angular holdout was refused at install by the frozen f1a63359 adapter, and that RED stands as history. After the authorized T024 reopen its migrated production build completes and repeats byte-identically, and the T024 u6 Witness — run after this re-freeze, on two lanes observed twice each — measures one behaviour parity digest with a mutation-red and byte-restore proof under it. The Witness covers the anonymous catalog surface only: identity, basket, orders and campaigns are out of surface, the SignalR hub was never reached, and text entry and drag were not tested. It is counted in no numerator, and it is published as a pass on that bounded surface rather than as a pass on the application.',
 				boundary: 'none declared by this holdout',
 			},
 		],

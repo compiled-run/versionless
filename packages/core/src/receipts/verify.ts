@@ -29,6 +29,10 @@ import {
 	HOLDOUT_REACT_CYPRESS_RWA_WITNESS_SCHEMA,
 	verifyHoldoutReactCypressRwaWitnessEvidence,
 } from './holdout-react-cypress-rwa-witness.ts';
+import {
+	HOLDOUT_ANGULAR_ESHOP_WEBSPA_SCHEMA,
+	verifyHoldoutAngularEshopWebspaEvidence,
+} from './holdout-angular-eshop-webspa.ts';
 
 function markdownPath(jsonPath: string): string {
 	return jsonPath.endsWith('.json')
@@ -110,6 +114,18 @@ export async function verifyReceipt(
 		// so the repository root is four segments up from its directory.
 		const root = explicitRoot ?? path.resolve(path.dirname(absolute), '../../../..');
 		const verified = await verifyHoldoutReactCypressRwaWitnessEvidence(root);
+		return { valid: true, digest: verified.digest, artifacts: verified.artifacts };
+	}
+	if (raw.schemaVersion === HOLDOUT_ANGULAR_ESHOP_WEBSPA_SCHEMA) {
+		// A holdout ledger entry is not a migration receipt: it has no runId, no
+		// artifact list and no aggregate fixture row, because it is evidence about
+		// the frozen adapter rather than a migrated vertical. Verifying it means
+		// re-deriving it from the sealed run and Witness evidence and re-rendering
+		// its Markdown, which is what its own verifier does — so an independent
+		// `receipt:verify` on this path checks the published bytes against the
+		// measurements rather than against a schema it was never written to.
+		const root = explicitRoot ?? path.resolve(path.dirname(absolute), '../../..');
+		const verified = await verifyHoldoutAngularEshopWebspaEvidence(root);
 		return { valid: true, digest: verified.digest, artifacts: verified.artifacts };
 	}
 	const receipt = parseMigrationReceipt(raw);

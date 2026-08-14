@@ -1145,9 +1145,10 @@ snapshots:
 			expect(holdouts[2]).toMatchObject({
 				id: 'holdout-angular-eshop-webspa',
 				attempted: true,
-				outcome: 'migrated-build-green-witness-pending',
-				witness: 'not-run',
-				browserProof: 'not-tested',
+				outcome: 'witness-passed-on-bounded-anonymous-catalog-surface',
+				witness: 'passed-on-bounded-surface',
+				browserProof: 'verified-on-bounded-anonymous-catalog-surface',
+				witnessSurface: 'anonymous-catalog',
 				countedInLineageNumerator: false,
 			});
 			expect(report).toContain('holdout-react-cypress-rwa');
@@ -1155,8 +1156,14 @@ snapshots:
 			expect(report).toContain('counted in no lineage numerator');
 			expect(report).toContain('holdout-angular-pigallery2');
 			expect(report).toContain('holdout-angular-eshop-webspa');
-			expect(report).toContain('This is **not a passed holdout**');
-			expect(report).toContain('Witness journeys: **not-run**');
+			// The one holdout that passed anything is rendered by its own honest
+			// sentence: the pass, the surface it covers, and the surfaces it does
+			// not. A generic "passed" here would carry four surfaces nobody drove.
+			expect(report).toContain('pass on a bounded surface and not a generic pass');
+			expect(report).toContain('Witness (`lrapr-t024/u6-eshop-witness-journeys`)');
+			expect(report).toContain('on the **anonymous-catalog** surface only');
+			expect(report).toContain('the SignalR hub was never reached');
+			expect(report).not.toContain('outcome passed**');
 			// The declared support boundary is carried by the report and by the
 			// matrix, with its non-certification language intact.
 			expect(report).toContain(
@@ -1899,9 +1906,16 @@ snapshots:
 		});
 		expect(angularHoldouts[1]).toMatchObject({
 			state: 'attempted',
-			outcome: 'migrated-build-green-witness-pending',
+			outcome: 'witness-passed-on-bounded-anonymous-catalog-surface',
 		});
-		expect(String(angularHoldouts[1]?.reason)).toContain('No witness journey has run');
+		// The freeze record states the Witness AND its boundary. Recording the
+		// green without the surface it covers would be the single most flattering
+		// edit available here.
+		expect(String(angularHoldouts[1]?.reason)).toContain(
+			'the anonymous catalog surface only',
+		);
+		expect(String(angularHoldouts[1]?.reason)).toContain('refused at install');
+		expect(String(angularHoldouts[1]?.reason)).toContain('counted in no numerator');
 		expect(verifyAdapterFreezeRecord(record)).toEqual(record);
 	});
 

@@ -1,11 +1,17 @@
 {
   "schemaVersion": "versionless.holdout-angular-eshop-webspa.v1",
   "role": "holdout",
-  "holdoutOutcome": "migrated-build-green-witness-pending",
-  "reason": "browser behaviour: no witness journey has run in either lane, so the migrated production build is proven to exist and repeat and is proven to do nothing else",
+  "holdoutOutcome": "witness-passed-on-bounded-anonymous-catalog-surface",
+  "reason": "every surface outside the anonymous catalog: identity is out of surface and basket, orders and campaigns are out of surface behind it, the SignalR hub was never reached, and text entry and drag were not tested — those surfaces are unproven rather than proven absent",
+  "supersedes": {
+    "outcome": "migrated-build-green-witness-pending",
+    "digest": "a1c43326cb9b0f756e269d0e8339abe64df85a4ce9b709d7c612d37f8e7f0712",
+    "note": "This publication supersedes the witness-pending entry by reference. The three states that entry recorded are unchanged here, field for field; what is added is the Witness that entry said had not run, and the Witness itself was measured while that entry was the published one."
+  },
   "ingestUnit": "lrapr-t023/u3-boundary-amend-candidate3-acquire",
   "measuringUnit": "lrapr-t024/u4-exports-map-wiring-green-attempt",
-  "publishedBy": "lrapr-t024/u5-refreeze-and-holdout-ledger",
+  "witnessUnit": "lrapr-t024/u6-eshop-witness-journeys",
+  "publishedBy": "lrapr-t024/u7-canonical-holdout-publish",
   "fixture": "angular-eshop-webspa-netcore2-2",
   "application": "eShopOnContainers WebSPA",
   "framework": "angular",
@@ -54,6 +60,28 @@
     {
       "path": "evidence/ingests/angular-eshop-webspa-netcore2-2/migration/u4-t024-build-inventory-run1-vs-run2.json",
       "sha256": "1a0cb82feff57b567739542bd674d472fdbd1cffdf4414dc5d7772e78f5bc7c9"
+    }
+  ],
+  "witnessEvidence": [
+    {
+      "path": "evidence/runs/angular-eshop-webspa/receipt.json",
+      "sha256": "e6835d8af995c197d24ebd2ea7fd22ae4ca3e5b04cbab0430b5c6bc3a3bf2d7b"
+    },
+    {
+      "path": "evidence/runs/angular-eshop-webspa/receipt.md",
+      "sha256": "cf16a78c4867033792fe4a6fe5a048f7f791bea6dad97cf2af189110ec14d354"
+    },
+    {
+      "path": "evidence/runs/angular-eshop-webspa/witness-journeys.json",
+      "sha256": "2e4700e1a05b3f6884162c8999c2a0969957469b34e6c5b4d20908975f8718c0"
+    },
+    {
+      "path": "evidence/runs/angular-eshop-webspa/witness-mutation.json",
+      "sha256": "a7a63482e4ff72e895b3ea775464d2c0e8a1f29f699e8e2aeec7bab445c519b1"
+    },
+    {
+      "path": "evidence/runs/angular-eshop-webspa/witness-projection-ledger.json",
+      "sha256": "581508622ee998afeac570652329528d65d207225a8df64ab294a238b66731eb"
     }
   ],
   "frozenAdapter": {
@@ -142,7 +170,7 @@
           ]
         }
       ],
-      "statement": "T023 u5 ran this application against the frozen f1a63359 composition with zero adapter bytes changed, and it was refused at install. T024 then reopened the Angular subtree under board authorization and extracted nine generic capabilities and composition repairs across four units; the build below ran against Angular subtree oid 4b6e2f44, which is the tree the 27741d9c re-freeze publishes. The React subtree is byte-identical at 972ca801 throughout. No capability branches on this application, and no application source file was hand-edited in any unit."
+      "statement": "T023 u5 ran this application against the frozen f1a63359 composition with zero adapter bytes changed, and it was refused at install. T024 then reopened the Angular subtree under board authorization and extracted nine generic capabilities and composition repairs across four units; the build below ran against Angular subtree oid 4b6e2f44, which is the tree the 27741d9c re-freeze publishes, and the Witness ran after that re-freeze against the bytes that build emitted. The React subtree is byte-identical at 972ca801 throughout. No capability branches on this application, and no application source file was hand-edited in any unit."
     },
     "holdoutSpecificConfiguration": "none",
     "applicationFilesHandEdited": 0
@@ -189,32 +217,156 @@
     }
   },
   "witness": {
-    "state": "not-run",
-    "journeysRun": 0,
-    "browserProof": "not-tested",
-    "statement": "No witness journey has been run against this application in either lane. A build that completes and repeats is not a build that behaves: nothing here establishes rendering, parity, or any browser behaviour, and the witness gates this ledger applies to counted verticals have not been applied to it."
+    "state": "passed-on-bounded-surface",
+    "unit": "lrapr-t024/u6-eshop-witness-journeys",
+    "evidenceDirectory": "evidence/runs/angular-eshop-webspa",
+    "witnessReceiptDigest": "92fa51439620c5801ad9c14edd6883fa3b387f08f9de56f7acdebca50b214449",
+    "adapterComposite": "27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234",
+    "ranAfterRefreeze": true,
+    "servedMigratedBytes": {
+      "state": "byte-identical-to-the-published-green-build",
+      "laneInventorySha256": "3b859e5b508c1e3fada6dea2addc0d42120861a2364cb0cd13fa79187fc5ecad",
+      "recomputedFromBuildInventory": true,
+      "files": 25
+    },
+    "lanesObserved": 2,
+    "passesPerLane": 2,
+    "runsRecorded": 4,
+    "parityBehaviorDigest": "585ae9ecdf637ace7031624b00750a3c03c7f8f900e60017c55b8ee4f973a363",
+    "semanticDigestsPerLane": {
+      "baseline": "6dc103f894d5675893cc3b7d21f8c9fd573c10c35e1313d00cda8979c98cfc0c",
+      "migrated": "ed7ee72271f55ea09cebf4b1ed0240faa40312a0e4488d404553980db4a9cec7"
+    },
+    "perLanePassTwiceIdentical": true,
+    "legs": [
+      "catalog renders the configured first page",
+      "anonymous identity offers only Login and no basket",
+      "genuine viewport scroll on an overflowing catalog",
+      "server-paged navigation forward and back",
+      "type filter narrows by keyboard selection",
+      "brand filter narrows on top of the type filter",
+      "clean page"
+    ],
+    "legsRecorded": 7,
+    "interactionsRecorded": 7,
+    "consoleErrors": 0,
+    "failedRequests": 0,
+    "projection": {
+      "label": "synthetic-fixture-evidence-data",
+      "transport": "same-origin-bounded-loopback-api",
+      "identicalAcrossLanes": true,
+      "behaviorDigest": "747dc5258b30703c9b29f3c0087e1728e93fc160f1cbf3c53f9589ee09aad849",
+      "seedFixture": "fixtures/angular-eshop-webspa/witness-projection-seed.json",
+      "seedSha256": "0331b52060f5d9e3cba94108536ed5e854f98c3e4652dffcb7c78aceacdeac08",
+      "served": 8,
+      "refusedUnknown": 0,
+      "refusedUnprojected": 0,
+      "declinedNonApi": 18
+    },
+    "mutation": {
+      "seam": " products - Page ",
+      "path": "main.f02d2dbc7ec47246.js",
+      "offset": 391975,
+      "beforeSha256": "d8338270edad07a2f37828def4369e9325f761c787b992c68dd03177a7f710bf",
+      "mutatedSha256": "65f40188b0b7641632ecbdde6e29147c468a23c029695213bd6733459bbf4588",
+      "afterRestoreSha256": "d8338270edad07a2f37828def4369e9325f761c787b992c68dd03177a7f710bf",
+      "restoredByteIdentically": true,
+      "restoredRun": "pass",
+      "restoredBehaviorDigest": "585ae9ecdf637ace7031624b00750a3c03c7f8f900e60017c55b8ee4f973a363"
+    },
+    "locality": {
+      "mode": "offline",
+      "successfulNonLoopback": 0,
+      "osWideIsolation": false
+    },
+    "surface": {
+      "proven": "anonymous-catalog",
+      "provenStatement": "the surface an unauthenticated visitor is offered: the rendered catalog page, a genuine wheel scroll on a document that really overflows the measured viewport, server-paged navigation forward and back, and the type and brand filters selected by keyboard and applied by the application’s own control",
+      "outOfSurface": 4,
+      "notReached": 1,
+      "notTested": 2,
+      "limits": [
+        {
+          "surface": "identity",
+          "state": "out-of-surface",
+          "reason": "SecurityService.Authorize() navigates the document to an IdentityServer '/connect/authorize' endpoint; no identity provider is projected, so Login is never exercised and nothing behind it is claimed."
+        },
+        {
+          "surface": "basket",
+          "state": "out-of-surface",
+          "reason": "the add-to-cart control renders disabled for an anonymous visitor and esh-basket-status is not rendered at all, so no basket behavior is exercised or claimed."
+        },
+        {
+          "surface": "orders",
+          "state": "out-of-surface",
+          "reason": "the orders routes are reachable only from the authenticated identity menu."
+        },
+        {
+          "surface": "campaigns",
+          "state": "out-of-surface",
+          "reason": "campaigns are gated behind both identity and the configuration switch, which the declared payload leaves off."
+        },
+        {
+          "surface": "signalr",
+          "state": "not-reached",
+          "reason": "SignalrService.init() returns before building a hub connection unless the visitor is authorized, so the anonymous run opens no socket."
+        },
+        {
+          "surface": "text-entry",
+          "state": "not-tested",
+          "reason": "the anonymous catalog surface has no text input; the journey drives clicks, keyboard selection and a genuine wheel scroll, and claims no typing coverage."
+        },
+        {
+          "surface": "drag",
+          "state": "not-tested",
+          "reason": "the anonymous catalog surface has no drag affordance."
+        }
+      ]
+    },
+    "browserProof": "verified-on-bounded-anonymous-catalog-surface",
+    "statement": "The migrated build the re-frozen 27741d9c adapter produced and the era baseline build were served as production static bytes on a bounded loopback origin, behind one declared same-origin projection that is identical for both lanes, and each was driven twice through the same anonymous catalog journey. All four runs normalize to one behaviour digest; each lane’s two passes agree exactly; overwriting one equal-length seam in the migrated bundle turns the run red, and restoring those bytes reproduces the parity digest. No non-loopback request succeeded, and no console error or failed request was observed. This is a proof about the surface the journey drove and about nothing else: the surfaces listed below were never exercised, and they are unproven rather than proven absent."
+  },
+  "buildEraNotEstablished": {
+    "asRecordedBy": "lrapr-t024/u4-exports-map-wiring-green-attempt",
+    "answeredSince": "Only the first of these — that no test, journey or witness had run — has been answered, and only on the anonymous catalog surface the Witness above drove. The remaining four still stand exactly as the build run wrote them, and the sealed build record itself is unedited.",
+    "entries": [
+      "A build that completes and repeats is not a build that behaves. No test, no journey and no witness has run against this application in either lane, so nothing here establishes parity, rendering or any browser behaviour.",
+      "Determinism is established for two runs in one cell on one machine. It is not a claim about another machine, another Node build, or a cold npm cache.",
+      "The output inventory compares the migrated lane against the era baseline by path with content hashes elided. Two files bearing the same elided name are not thereby claimed to have the same content — the four emitted artefacts are named as differing precisely because they do.",
+      "The capability is proven on one application. The republished-subpath rule fired on one import of one package, and nothing here claims it general.",
+      "Every declared difference u3 recorded still stands. Closing the build did not retire the loss of checking the `Response` annotations were carried with."
+    ]
   },
   "finding": {
-    "pending": "browser behaviour: no witness journey has run in either lane, so the migrated production build is proven to exist and repeat and is proven to do nothing else",
-    "verdict": "the reopened Angular adapter carries this application as far as a repeatable production build and no further; the entry is published as a measured state, not as a passed holdout",
-    "statement": "Three states are recorded rather than reconciled. Gate zero passed on an overturn ruling. The frozen adapter was refused at install and that RED stands as history. The reopened adapter composed a changeset for an application it had never seen, installed the closure unforced and unnarrowed, and produced a production build twice with byte-identical output and no diagnostics. What has not happened is a journey, so the one thing a holdout exists to prove — that the migrated application is still the application — is not proven here.",
+    "stillUnproven": "every surface outside the anonymous catalog: identity is out of surface and basket, orders and campaigns are out of surface behind it, the SignalR hub was never reached, and text entry and drag were not tested — those surfaces are unproven rather than proven absent",
+    "verdict": "the reopened and re-frozen Angular adapter carries this application to a repeatable production build and to a browser journey whose behaviour is indistinguishable from the era baseline on the anonymous catalog surface; everything behind identity is out of surface and stays unproven",
+    "statement": "Four states are recorded rather than reconciled. Gate zero passed on an overturn ruling. The frozen adapter was refused at install and that RED stands as history. The reopened adapter composed a changeset for an application it had never seen, installed the closure unforced and unnarrowed, and produced a production build twice with byte-identical output and no diagnostics. The re-frozen adapter’s output was then served to a browser beside the era baseline and behaved identically on the anonymous catalog surface, twice per lane, with a mutation-red and byte-restore proof under it. What a holdout exists to prove — that the migrated application is still the application — is proven here for that surface and is not proven for identity, basket, orders, campaigns or the SignalR hub, which the journey never entered.",
     "capabilitiesExtracted": 9,
     "applicationFilesChanged": 20,
     "handEdits": 0
   },
+  "counting": {
+    "countedInLineageNumerator": false,
+    "decidedBy": "judge",
+    "note": "Counting is a separate layer from measuring, and this receipt is a measurement. The entry is counted in no lineage numerator; whether a holdout proven on a bounded surface should ever reach one is the Judge’s decision, made against the Judge’s ledger, and it is deliberately not taken here."
+  },
   "nonclaims": [
-    "A build that completes and repeats is not a build that behaves. No test, no journey and no witness has run against this application in either lane, so nothing here establishes parity, rendering or any browser behaviour.",
-    "Determinism is established for two runs in one cell on one machine. It is not a claim about another machine, another Node build, or a cold npm cache.",
-    "The output inventory compares the migrated lane against the era baseline by path with content hashes elided. Two files bearing the same elided name are not thereby claimed to have the same content — the four emitted artefacts are named as differing precisely because they do.",
-    "The capability is proven on one application. The republished-subpath rule fired on one import of one package, and nothing here claims it general.",
-    "Every declared difference u3 recorded still stands. Closing the build did not retire the loss of checking the `Response` annotations were carried with.",
-    "This is not a passed holdout. A holdout passes when a migrated application is proven to still be the application; no journey has run here, so that proof does not exist and is not claimed.",
-    "The install RED under the frozen f1a63359 composite is not retracted by the later green. It is what the frozen adapter did, it is published unchanged, and the green build ran against a reopened adapter and says so.",
+    "This is one Angular holdout under direct Witness. It does not establish generic Angular support, a designated pilot, or readiness beyond this exact lineage cell, and it is not counted in any lineage numerator.",
+    "The API this journey talks to is a frozen synthetic same-origin loopback projection authored for this fixture, NOT the eShopOnContainers .NET microservices. No captured production payload, no real catalogue, no real account and no real user data are involved, and nothing here is evidence about those services.",
+    "The synthetic catalogue deliberately does not reproduce the upstream seed data, so nothing here should be read as evidence about the real catalog service or its contents.",
+    "Identity is out of surface. No IdentityServer is projected, Login is never exercised, and every surface behind it — basket, orders, campaigns, the SignalR hub — is unproven rather than proven absent.",
+    "Text entry and drag are not tested, because the anonymous catalog surface offers neither.",
+    "The application's own test suites were not run; this is a browser proof of the journeys named above, not a substitute for the upstream suite.",
+    "Locality is process-scoped and does not establish operating-system-wide isolation.",
+    "Receipts prove reproducibility and hash integrity, not certification, authenticity, signer identity, compliance, or an earned SLSA level.",
+    "This holdout passed on a bounded surface, and the boundary is part of the claim. The anonymous catalog surface is what the journey drove and what parity was measured over; identity, basket, orders and campaigns are out of surface, the SignalR hub was never reached, and text entry and drag were not tested. Nothing here may be restated as a generic pass.",
+    "The install RED under the frozen f1a63359 composite is not retracted by anything that followed it. It is what the frozen adapter did, it is published unchanged, and both the green build and the Witness ran against a reopened and re-frozen adapter and say so.",
     "No claim that the nine capabilities the reopen extracted are proven. Every one of them was written against this single application, and all nine stay experimental and out of the supported matrix until a second, independent Angular application carries them.",
-    "This entry is counted in no lineage numerator. A build is not a vertical, and nothing here moves the Angular score."
+    "This entry is counted in no lineage numerator, and this receipt does not decide whether it ever should be. Counting is the Judge's layer: `countedInLineageNumerator` stays false here, and any flip is made there, with its own reasoning, on evidence this receipt only supplies.",
+    "A behaviour digest that matches across the two lanes is a statement that the migrated build did what the era baseline did on the legs recorded here. It is not a statement that either build is correct, and the application’s own test suites were not run."
   ],
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "a1c43326cb9b0f756e269d0e8339abe64df85a4ce9b709d7c612d37f8e7f0712"
+    "canonicalDigest": "fb921b46925f03947781629dce85b03fb51ad3a0969197098181d10486563fb9"
   }
 }

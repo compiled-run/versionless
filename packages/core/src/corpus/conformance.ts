@@ -130,7 +130,10 @@ import {
 } from '../receipts/holdout-angular-pigallery2.ts';
 import {
 	HOLDOUT_ANGULAR_ESHOP_WEBSPA_APPLICATION,
+	HOLDOUT_ANGULAR_ESHOP_WEBSPA_BROWSER_PROOF,
 	HOLDOUT_ANGULAR_ESHOP_WEBSPA_OUTCOME,
+	HOLDOUT_ANGULAR_ESHOP_WEBSPA_PROVEN_SURFACE,
+	HOLDOUT_ANGULAR_ESHOP_WEBSPA_WITNESS_STATE,
 	holdoutAngularEshopWebspaCorpusRecord,
 	verifyHoldoutAngularEshopWebspaEvidence,
 } from '../receipts/holdout-angular-eshop-webspa.ts';
@@ -436,11 +439,14 @@ async function holdoutLedger(
 	// so it is bound here rather than described beside the boundary.
 	const pigalleryVerified = await verifyHoldoutAngularPigallery2Evidence(root);
 	const pigalleryDerived = holdoutAngularPigallery2CorpusRecord(pigalleryVerified.receipt);
-	// The third holdout is the first whose migrated build is green, and it is
-	// therefore the first that could be overstated. It is bound exactly like the
-	// two failures — derived from its own verified receipt, cross-checked against
-	// the aggregate, counted nowhere — and the two facts that keep it honest are
-	// asserted here rather than left to prose: no witness journey has run, and
+	// The third holdout is the first whose migrated build is green and the first
+	// carried through a browser, which makes it the one entry that could be
+	// overstated. It is bound exactly like the two failures — derived from its
+	// own verified receipt, cross-checked against the aggregate, counted nowhere
+	// — and the facts that keep a bounded pass from reading as a whole one are
+	// asserted here rather than left to prose: the Witness state is the bounded
+	// one, the browser proof names its surface, the proven surface is the
+	// anonymous catalog, the seven recorded surface limits are still carried, and
 	// the install RED it took under the frozen composite is still in the record.
 	const eshopVerified = await verifyHoldoutAngularEshopWebspaEvidence(root);
 	const eshopDerived = holdoutAngularEshopWebspaCorpusRecord(eshopVerified.receipt);
@@ -470,11 +476,17 @@ async function holdoutLedger(
 	if (
 		eshopDerived.countedInLineageNumerator !== false ||
 		eshopDerived.outcome !== HOLDOUT_ANGULAR_ESHOP_WEBSPA_OUTCOME ||
-		eshopDerived.witness !== 'not-run' ||
-		eshopDerived.browserProof !== 'not-tested' ||
+		eshopDerived.witness !== HOLDOUT_ANGULAR_ESHOP_WEBSPA_WITNESS_STATE ||
+		eshopDerived.browserProof !== HOLDOUT_ANGULAR_ESHOP_WEBSPA_BROWSER_PROOF ||
+		eshopDerived.witnessSurface !== HOLDOUT_ANGULAR_ESHOP_WEBSPA_PROVEN_SURFACE ||
+		eshopDerived.witnessSurfaceNotCovered.length !== 7 ||
+		eshopDerived.witnessSurfaceNotCovered.filter(
+			(limit) => limit.state === 'out-of-surface',
+		).length !== 4 ||
+		eshopDerived.witnessRuns !== 4 ||
 		eshopDerived.migratedLaneUnderFreeze !== 'red'
 	)
-		throw new Error('Corpus holdout record misstates its counting or outcome');
+		throw new Error('Corpus holdout record misstates its counting, outcome or proven surface');
 	// The T017 re-run supersedes the tranche-one FAIL by reference. The published
 	// holdout membership above stays the immutable tranche-one record; the re-run
 	// is bound here as a superseding verification so the corpus ledger reflects

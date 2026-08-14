@@ -2120,9 +2120,9 @@
           "lineage": "angular",
           "role": "holdout",
           "attempted": true,
-          "outcome": "migrated-build-green-witness-pending",
-          "reason": "browser behaviour: no witness journey has run in either lane, so the migrated production build is proven to exist and repeat and is proven to do nothing else",
-          "verdict": "the reopened Angular adapter carries this application as far as a repeatable production build and no further; the entry is published as a measured state, not as a passed holdout",
+          "outcome": "witness-passed-on-bounded-anonymous-catalog-surface",
+          "reason": "every surface outside the anonymous catalog: identity is out of surface and basket, orders and campaigns are out of surface behind it, the SignalR hub was never reached, and text entry and drag were not tested — those surfaces are unproven rather than proven absent",
+          "verdict": "the reopened and re-frozen Angular adapter carries this application to a repeatable production build and to a browser journey whose behaviour is indistinguishable from the era baseline on the anonymous catalog surface; everything behind identity is out of surface and stays unproven",
           "frozenAdapterFingerprint": "f1a63359210b87c04408b27cf8c40e88e1b47d44bcc7f5a9be20d9478dc71012",
           "adapterBytesChanged": 0,
           "authorizedReopen": {
@@ -2131,18 +2131,53 @@
             "capabilitiesExtracted": 9,
             "angularSubtreeOidAtGreen": "4b6e2f4494d98582e4fe9b420c2b412059dc0720",
             "refreezeComposite": "27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234",
-            "outcomeAfterReopen": "migrated-build-green-witness-pending"
+            "outcomeAfterReopen": "witness-passed-on-bounded-anonymous-catalog-surface"
           },
           "baselineLane": "green",
           "migratedLaneUnderFreeze": "red",
           "migratedLane": "green",
           "attempts": 2,
-          "witness": "not-run",
+          "witness": "passed-on-bounded-surface",
+          "witnessUnit": "lrapr-t024/u6-eshop-witness-journeys",
+          "witnessParityDigest": "585ae9ecdf637ace7031624b00750a3c03c7f8f900e60017c55b8ee4f973a363",
+          "witnessRuns": 4,
+          "witnessLegs": 7,
+          "witnessSurface": "anonymous-catalog",
+          "witnessSurfaceNotCovered": [
+            {
+              "surface": "identity",
+              "state": "out-of-surface"
+            },
+            {
+              "surface": "basket",
+              "state": "out-of-surface"
+            },
+            {
+              "surface": "orders",
+              "state": "out-of-surface"
+            },
+            {
+              "surface": "campaigns",
+              "state": "out-of-surface"
+            },
+            {
+              "surface": "signalr",
+              "state": "not-reached"
+            },
+            {
+              "surface": "text-entry",
+              "state": "not-tested"
+            },
+            {
+              "surface": "drag",
+              "state": "not-tested"
+            }
+          ],
           "receipt": "evidence/runs/holdout-angular-eshop-webspa/receipt.json",
-          "digest": "a1c43326cb9b0f756e269d0e8339abe64df85a4ce9b709d7c612d37f8e7f0712",
+          "digest": "fb921b46925f03947781629dce85b03fb51ad3a0969197098181d10486563fb9",
           "countedInLineageNumerator": false,
-          "countingNote": "Never counted in any lineage numerator. The migrated production build is green and repeatable, but no witness journey has run, so no application is proven migrated: this entry is a measured state published in full, not a vertical and not a pass. The install RED under the frozen f1a63359 composite is retained beside it as the record of what the frozen adapter did.",
-          "browserProof": "not-tested"
+          "countingNote": "Never counted in any lineage numerator by this record. The migrated production build is green and repeatable, and the Witness is green on the anonymous catalog surface — twice per lane, one parity digest, with a mutation-red and byte-restore proof under it. What that leaves unproven is stated beside it: every surface outside the anonymous catalog: identity is out of surface and basket, orders and campaigns are out of surface behind it, the SignalR hub was never reached, and text entry and drag were not tested — those surfaces are unproven rather than proven absent. Whether a holdout proven on a bounded surface should ever reach a numerator is the Judge's decision, taken on the Judge's ledger and not here. The install RED under the frozen f1a63359 composite is retained beside all of it as the record of what the frozen adapter did.",
+          "browserProof": "verified-on-bounded-anonymous-catalog-surface"
         }
       ],
       "olderNext": {
@@ -2162,6 +2197,6 @@
   },
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "34dfd66341ac544e8b7ab99024d0fecef9ff3a1d10e03ff385d822d93f0bba4f"
+    "canonicalDigest": "e6c9068a196f78bd767caa3718686d68d6ed4a83554dd6f17ea2bd556cddd01d"
   }
 }
