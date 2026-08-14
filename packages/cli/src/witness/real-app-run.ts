@@ -179,6 +179,7 @@ import {
 	type MemosProjectionDecision,
 	type MemosProjectionLedgerRecord,
 } from './memos-projection.ts';
+import { angularEshopWebspaWitnessSpec } from './angular-eshop-webspa-spec.ts';
 import { createPhoenixSocketUpgrade } from './phoenix-socket.ts';
 import {
 	createPlaywrightWitnessHost,
@@ -245,7 +246,15 @@ type App =
 	 * receipt; its identity is admitted here so the generic serving path can type
 	 * a stateful spec, and its evidence is carried by its own idiom schema.
 	 */
-	| 'cypress-realworld-app';
+	| 'cypress-realworld-app'
+	/**
+	 * The eShop WebSPA holdout. Like the stateful vertical above it is not a
+	 * member of the frozen static corpus and never joins the master real-app
+	 * receipt; its identity is admitted here so the generic serving path can type
+	 * a declared-projection holdout spec, and its evidence is carried by its own
+	 * idiom schema.
+	 */
+	| 'angular-eshop-webspa';
 type Lane = 'baseline' | 'migrated';
 type JourneyEvidence = {
 	assertions: string[];
@@ -6743,6 +6752,23 @@ export async function executeAngularJiraCloneWitnessRun(options: {
 		...options,
 		serviceWorkerPolicy: 'zero',
 	});
+}
+
+/**
+ * The eShop WebSPA holdout. Its spec is authored in its own module rather than
+ * in the `apps` table, because `apps` is what the master real-app receipt
+ * iterates and this holdout carries its own idiom receipt instead of joining
+ * that one. The application ships no service worker in either lane and never
+ * calls `register()`, so it is run under the default policy and records no
+ * service-worker shape at all.
+ */
+export async function executeAngularEshopWebspaWitnessRun(options: {
+	lane: Lane;
+	pass: 1 | 2;
+	laneRoot: string;
+	receiptRoot: string;
+}): Promise<WitnessRealAppRun> {
+	return await executeRun(angularEshopWebspaWitnessSpec(), options.lane, options.pass, options);
 }
 
 /**

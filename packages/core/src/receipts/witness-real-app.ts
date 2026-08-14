@@ -546,9 +546,21 @@ export const WITNESS_REAL_SERVICE_WORKER_PHASES = [
  * one of the frozen static names.
  */
 export const WITNESS_REAL_APP_STATEFUL_NAMES = ['cypress-realworld-app'] as const;
+/**
+ * Holdout verticals served as production static bytes against a declared
+ * same-origin loopback API projection.
+ *
+ * Like the stateful list above, these are deliberately NOT members of
+ * {@link WITNESS_REAL_APP_NAMES}: they never join the master real-app receipt,
+ * so its `length * 4` cardinality is untouched, and their evidence is carried by
+ * their own idiom schema. Their identity is admitted here only so the generic
+ * serving path can type them.
+ */
+export const WITNESS_REAL_APP_PROJECTED_HOLDOUT_NAMES = ['angular-eshop-webspa'] as const;
 export type WitnessRealAppName =
 	| (typeof WITNESS_REAL_APP_NAMES)[number]
-	| (typeof WITNESS_REAL_APP_STATEFUL_NAMES)[number];
+	| (typeof WITNESS_REAL_APP_STATEFUL_NAMES)[number]
+	| (typeof WITNESS_REAL_APP_PROJECTED_HOLDOUT_NAMES)[number];
 
 /**
  * The exact locality rule for a live first-party backend served on a second
