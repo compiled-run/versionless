@@ -106,6 +106,13 @@ import {
 } from './use-position-symbol-successor.ts';
 import { type RootSurfaceReading } from './removed-entry-point-symbol-successor.ts';
 import {
+	ANGULAR_HTTP_CALL_SURFACE,
+	migrateHttpClientCallSurface,
+	type HttpCallSurfaceChange,
+	type HttpCallSurfaceClaim,
+	type SuccessorClassSurfaceReading,
+} from './http-client-call-surface.ts';
+import {
 	DOCUMENTED_STATIC_MODULE_METHOD_REMOVALS,
 	removeRemovedStaticModuleMethods,
 	type ModuleClassSurfaceReading,
@@ -243,6 +250,20 @@ export type AngularMigrationInput = Readonly<{
 	 * installed `.d.ts` and nothing in the application states it.
 	 */
 	moduleClassSurfaces?: readonly ModuleClassSurfaceReading[];
+	/**
+	 * What the installed *successor* classes publish, member by member: the type
+	 * each member returns and the option keys it takes. Supplying it is what makes
+	 * the call-surface migration reachable, because every one of its rules is a
+	 * claim about behaviour — whether a mutator clones, whether a member still
+	 * publishes the option an era call carried — and nothing in the application
+	 * states either.
+	 */
+	successorClassSurfaces?: readonly SuccessorClassSurfaceReading[];
+	/**
+	 * The call-surface claim the migration is asked to check. The adapter's own
+	 * documented `@angular/http` claim is used when none is supplied.
+	 */
+	httpCallSurface?: HttpCallSurfaceClaim;
 	/**
 	 * `TS2339` on an RxJS receiver, as the target line's compiler reported it, per
 	 * application module. Which `.map(` is an observable's is a question only the
@@ -468,6 +489,13 @@ function describeUsePositionChange(change: UsePositionChange): string {
 		: `line ${change.line}: ${change.kind} ${change.from} -> ${change.to} from ` +
 				`${String(change.successor)} at ${change.positions.join(', ')} ` +
 				`(${change.useSites} use site(s))`;
+}
+
+function describeHttpCallSurfaceChange(change: HttpCallSurfaceChange): string {
+	return (
+		`line ${change.line}: ${change.kind} ${change.from} -> ${change.to === '' ? '(removed)' : change.to}` +
+		` — ${change.detail}`
+	);
 }
 
 function describeStaticModuleMethodChange(change: StaticModuleMethodChange): string {
@@ -826,6 +854,23 @@ export function migrateAngularCliEraWorkspace(
 		);
 		declaredDifferences.push(...usePositions.declaredDifferences);
 		/**
+		 * The call surface of a removed HTTP client is carried after the per-position
+		 * carriage and never before it: the two read the same declaration, and the
+		 * position table is the one that decides which names it can answer by rename
+		 * alone. What it refuses — a service, a header collection and a response type
+		 * whose successors behave differently — is exactly what this one is written
+		 * for, and it is supply-gated twice over: on the successor package's surface
+		 * and on the installed declaration of the successor classes themselves.
+		 */
+		const callSurface = migrateHttpClientCallSurface(
+			module.path,
+			usePositions.source,
+			input.httpCallSurface ?? ANGULAR_HTTP_CALL_SURFACE,
+			input.removedSymbolSurfaces ?? [],
+			input.successorClassSurfaces ?? [],
+		);
+		declaredDifferences.push(...callSurface.declaredDifferences);
+		/**
 		 * The static configuration method a module class no longer publishes is
 		 * dropped after the successor carriage, because the carriage can put a new
 		 * module into the same `imports` array this reads — and reading the array as
@@ -834,7 +879,7 @@ export function migrateAngularCliEraWorkspace(
 		 */
 		const staticModuleMethods = removeRemovedStaticModuleMethods(
 			module.path,
-			usePositions.source,
+			callSurface.source,
 			DOCUMENTED_STATIC_MODULE_METHOD_REMOVALS,
 			input.moduleClassSurfaces ?? [],
 		);
@@ -876,6 +921,7 @@ export function migrateAngularCliEraWorkspace(
 			...departedDomMembers.unhandled,
 			...rxjsPatches.unhandled,
 			...usePositions.unhandled,
+			...callSurface.unhandled,
 			...staticModuleMethods.unhandled,
 			...undecorated.unhandled,
 			...baseClasses.unhandled,
@@ -895,6 +941,7 @@ export function migrateAngularCliEraWorkspace(
 				...rxjsPatches.changes.map(describeRxjsPipeChange),
 				...deepImportChanges.map(describeDeepImportChange),
 				...usePositions.changes.map(describeUsePositionChange),
+				...callSurface.changes.map(describeHttpCallSurfaceChange),
 				...staticModuleMethods.changes.map(describeStaticModuleMethodChange),
 				...undecorated.changes.map(describeUndecoratedBaseClassChange),
 				...migrated.changes.map(describeSourceChange),

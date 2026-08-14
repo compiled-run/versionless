@@ -976,5 +976,108 @@
       "migration/u2-t024-target-build.log": "c31f6b13a6fc0d0092be021a8df99ce7e383f17bcd24e57012b819ab904f38d4",
       "migration/u2a-t024-target-build.log": "3c9652edcc9ddbe87d06ebc1e1e1b86fd5594763d2a1be33bd2209c6e22d14e8"
     }
+  },
+  "t024U3Rerun": {
+    "schemaVersion": "versionless.angular-eshop-webspa-t024-rerun.v1",
+    "unit": "lrapr-t024/u3-httpclient-call-surface",
+    "boardTask": "T024",
+    "stage": "stage-3 — close G6, the HttpClient call surface, and re-run the holdout lane",
+    "outcome": "install-green-build-red-one-remaining-class-beyond-g6",
+    "result": "G6 is closed by one capability that carries a removed HTTP client’s call surface as a whole flow: every one of the seven diagnostics u2 recorded — five TS2307, one webpack module-not-found and the TS2339 on `.json` — is gone, and the compiler states no new one. `@angular/http` is no longer named anywhere in the migrated tree. The build is still RED, on one class that is not G6 and was already in u2’s own build log: a stylesheet subpath an exports map no longer publishes under the spelling the era application imported. It is named below and was not chased.",
+    "authorization": "An authorized reopen of the frozen adapter subtrees for this unit only. The React subtree is untouched at 972ca80155bbc2a6eb3779943cd481b71d35e803.",
+    "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+    "commit": "a387f21029f0b2d49614d165d5384717d2398f8e",
+    "subpath": "src/Web/WebSPA",
+    "networkAccess": "none. Every reading this unit took is a reading of the lane’s own installed closure or of a previous pass’s own build log; no packument and no tarball was fetched.",
+    "capabilityAdded": {
+      "name": "http-client-call-surface",
+      "entryPoints": [
+        "migrateHttpClientCallSurface",
+        "readSuccessorClassSurface (driver-side reading)"
+      ],
+      "shape": "A whole-flow carriage of a removed HTTP client, composed into migrateAngularCliEraWorkspace after the use-position carriage whose refusals it answers, and supply-gated twice over: on the successor package’s installed root surface, and on the installed declarations of the successor classes themselves — read member by member for the type each returns and the option keys each takes. Refusal is per declaration and total.",
+      "subRules": [
+        "The injected service. `Http` is carried to `HttpClient` only where every reference to it is the declared type of an injected parameter, and the binding it declares is what the call rules below then ride.",
+        "The body accessor and the emitted type, as one edit. `.json()` is removed because the successor emits the parsed body, and the type the flow emits is restated in the same changeset from the application’s own declared `Observable<T>` return type, read from the function the call is returned from. A flow the application never typed is refused, not typed `any` by the capability’s own choice.",
+        "The `body` an era `GET` carried. The call is moved to `request(method, url, options)` — the member the installed declaration says publishes `body` — rather than having the option dropped. An option no member of the successor publishes refuses the module instead.",
+        "Header mutation. Every discarded `Headers.append` becomes an assignment back to its receiver, gated on reading from the installed successor that the mutator returns the class. A mutator call whose value the era code did not discard is refused, because the era member returned nothing and the successor returns a value.",
+        "The response annotation. A `Response` annotating an operator callback parameter in a pipe is carried to `any` — the type the era `Response.json()` returned — and the loss of checking is declared. Any other position refuses the module."
+      ],
+      "appliedHere": "Client/modules/shared/services/security.service.ts: Http -> HttpClient, Headers -> HttpHeaders, five discarded appends reassigned, `get(url, { headers, body: '' })` -> `request<string[]>('GET', url, { headers, body: '' })`, `.json()` removed. Client/modules/{basket,campaigns,catalog,orders}.service.ts: ten `Response` annotations carried to `any` and four now-empty declarations removed."
+    },
+    "whyAnyAndNotAType": {
+      "question": "The four consumer services declare `Observable<ICatalog>`, `Observable<IBasket>` and so on. Why is the annotation on what they receive carried to `any` rather than to the type they declare?",
+      "measured": "Three answers were considered against what the compiler accepts, with no strictness weakened anywhere: (1) let `Response` resolve to the DOM global — reproduces the withdrawn u2a experiment exactly, because `Observable<Response>` is not assignable to `Observable<ICatalog>`; (2) carry the annotation to the enclosing declared element type — type-checks for the seven identity callbacks and is impossible for the three in basket.service.ts, where one callback reads `response.status` (a member `IBasket` does not have) and two return a `boolean` the parameter is not; (3) carry it to `any`, which is what the era `@angular/http` `Response.json()` returned and therefore the strength the era flow actually had. (3) is what is written, uniformly, because a rule that spelled two different types into one syntactic position would be two claims and the second of them would refuse basket.service.ts and leave its declaration unresolved.",
+      "whatIsNotClaimed": "This is a loss of checking and it is declared as one. What it is not is a behaviour change: this application’s own DataService was already on HttpClient at the pin, so the value these parameters received was already the parsed body and `response.status` was already undefined at the era. The producer’s own `Observable<Response>` annotation in data.service.ts — against the DOM `Response`, on a body-observing HttpClient call — is the application’s own stale typing, it is not an import of the removed package, and it is left exactly as the application wrote it. It is consistent with the retyped consumers rather than contradicting them, which is why the flow reconciles; naming it is not the same as having rewritten it."
+    },
+    "laneInstall": {
+      "command": "npm install --no-audit --no-fund --ignore-scripts",
+      "cell": "node v16.20.2 (official darwin-arm64 build, native), npm 8.19.4, CI=1",
+      "exitStatus": 0,
+      "forcedFlagsUsed": false,
+      "narrowingApplied": false,
+      "log": "migration/u3-t024-lane-install.log"
+    },
+    "targetBuild": {
+      "command": "npm run build:prod (ng build --configuration production --aot)",
+      "attempted": true,
+      "produced": false,
+      "exitStatus": 1,
+      "runs": 1,
+      "runsNote": "A second run and a byte comparison were not performed and are not claimed: the build does not complete, so there is nothing to compare.",
+      "log": "migration/u3-t024-target-build.log",
+      "g6DiagnosticsClosed": [
+        "Client/modules/basket/basket.service.ts:2 TS2307 Cannot find module '@angular/http'.",
+        "Client/modules/campaigns/campaigns.service.ts:2 TS2307.",
+        "Client/modules/catalog/catalog.service.ts:2 TS2307.",
+        "Client/modules/orders/orders.service.ts:2 TS2307.",
+        "Client/modules/shared/services/security.service.ts:2 TS2307.",
+        "./Client/modules/shared/services/security.service.ts:1:0-46 webpack Module not found: Can't resolve '@angular/http'.",
+        "Client/modules/shared/services/security.service.ts:229 TS2339 Property 'json' does not exist on type 'unknown'."
+      ],
+      "newTypeDiagnostics": "none. The compiler stated no diagnostic in any file this capability edited.",
+      "remainingDiagnostics": [
+        "./Client/globals.scss - Error: Module build failed (sass-loader): Can't find stylesheet to import. @import \"ngx-toastr/toastr-bs4-alert.scss\" (Client/globals.scss 3:9).",
+        "./Client/globals.scss?ngGlobalStyle - the mini-css-extract sibling of the same failure."
+      ]
+    },
+    "classNamedNotChased": {
+      "id": "G7",
+      "name": "Exports-map stylesheet subpath spelling",
+      "site": "Client/globals.scss:3",
+      "statement": "ngx-toastr@17.0.2 publishes an `exports` map whose keys are extensionless — `\"./toastr-bs4-alert\": { \"default\": \"./toastr-bs4-alert.scss\" }` — so the file exists on disk at node_modules/ngx-toastr/toastr-bs4-alert.scss and the specifier the era application wrote, with its `.scss` extension, is not a subpath the map answers. The sibling `@import \"bootstrap/scss/bootstrap\"` resolves because bootstrap 4.1.3 publishes no exports map at all. The adapter already carries the capability for this — migratePackageStyleImports, which rewrites a style specifier onto a subpath a package’s exports map does publish — and this driver supplies it no `packageExports` reading, so it stands down. That is a wiring gap in the driver rather than a missing capability, and it is not G6: it was already present in u2’s own build log at lines 41-56, where u2’s remaining-diagnostics list did not record it.",
+      "notChasedBecause": "The unit was scoped to the call surface. Naming a class in the compiler’s words and leaving it is what keeps the next unit’s question honest."
+    },
+    "greenVerticals": "No counted vertical’s changeset shifted. The capability is supply-gated on readings no other lane supplies — a successor-class surface reading no other driver takes — and it edits nothing in a module that never imported the removed specifier.",
+    "artifacts": {
+      "composedChangeset": "migration/u3-t024-composed-changeset.json",
+      "sourceMigration": "migration/u3-t024-source-migration.json",
+      "seamProbe": "migration/u3-t024-angular-http-seam-probe.json",
+      "laneInstallLog": "migration/u3-t024-lane-install.log",
+      "targetBuildLog": "migration/u3-t024-target-build.log",
+      "withdrawnRuleBuildLog": "migration/u2a-t024-target-build.log",
+      "priorRedRecordsNote": "The runner writes its output under the u5 names. Those three files were restored to the bytes T023 sealed after this re-run, byte for byte, and this pass’s own are kept beside them under u3-t024 names."
+    },
+    "changesetCounts": {
+      "applicationFilesScanned": 84,
+      "applicationFilesChanged": 17,
+      "workspaceFilesChanged": 3,
+      "filesWritten": 20,
+      "filesRemoved": [
+        "tslint.json",
+        "package-lock.json"
+      ],
+      "unhandled": 31,
+      "declaredDifferences": 17,
+      "handEdits": 0,
+      "note": "u2 recorded 12 application files changed, 24 unhandled and 13 declared differences on this tree. The five service modules this unit carries are the difference in the first count; the seam probe is now offered zero modules because no migrated file names @angular/http."
+    },
+    "notEstablished": [
+      "The build does not complete, so nothing here establishes determinism, byte stability, an output inventory, parity or any browser behaviour for this application.",
+      "The capability is proven on one application and is recorded experimental in the capability-coverage map. It is not claimed general.",
+      "Carrying a `Response` annotation to `any` keeps the era’s checking strength; it does not add any. A member read through one of those parameters is unchecked, and the record above says so.",
+      "That the compiler states no new diagnostic is a statement about this compilation. It is not a statement that the migrated services behave as the era ones did: no test and no journey has run against either."
+    ],
+    "digest": "970d114e461811d7a7927dba27b057e0982de91d7aff6a372221ebb30a72b439"
   }
 }

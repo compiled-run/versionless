@@ -47,6 +47,7 @@ import {
 	type RootSurfaceReading,
 	type RxjsPatchDiagnosticReading,
 	type RxjsSurfaceReading,
+	type SuccessorClassSurfaceReading,
 	type SymbolSuccessorMigration,
 	type WorkspaceFile,
 } from '../../../frameworks/angular/src/index.ts';
@@ -201,6 +202,7 @@ async function collect(
 export type LaneReadings = Readonly<{
 	removedSymbolSurfaces: readonly RootSurfaceReading[];
 	moduleClassSurfaces: readonly ModuleClassSurfaceReading[];
+	successorClassSurfaces: readonly SuccessorClassSurfaceReading[];
 	rxjsPatchDiagnostics: readonly RxjsPatchDiagnosticReading[];
 	rxjsSurface?: RxjsSurfaceReading;
 	styleClosure?: ClosureFileReading;
@@ -210,6 +212,7 @@ export type LaneReadings = Readonly<{
 export const EMPTY_LANE_READINGS: LaneReadings = Object.freeze({
 	removedSymbolSurfaces: Object.freeze([]),
 	moduleClassSurfaces: Object.freeze([]),
+	successorClassSurfaces: Object.freeze([]),
 	rxjsPatchDiagnostics: Object.freeze([]),
 });
 
@@ -303,6 +306,108 @@ export async function readModuleClassSurface(
 		version,
 		symbol,
 		statics: Object.freeze([...new Set(statics)].sort()),
+		complete,
+	});
+}
+
+/**
+ * What one installed *successor* class publishes, member by member: the type
+ * each member returns and every option key its option-object parameter takes.
+ *
+ * The reading is of the class body in the package's own `index.d.ts`, scanned by
+ * brace depth: a member is a declaration at the body's own depth, an option key
+ * is a property one level inside its parameter list, and the return type is what
+ * the signature states after its closing parenthesis. Overloads of one member
+ * are merged, because an option any overload publishes is an option the member
+ * takes.
+ *
+ * It exists because the call-surface migration's rules are claims about
+ * behaviour rather than about spelling — whether `HttpHeaders.append` returns a
+ * new instance instead of mutating, whether `HttpClient.get` still takes the
+ * `body` an era `Http.get` carried — and the only honest place to read either is
+ * the declaration the lane actually installed.
+ */
+export async function readSuccessorClassSurface(
+	tree: string,
+	packageName: string,
+	symbol: string,
+): Promise<SuccessorClassSurfaceReading> {
+	const modules = path.join(tree, 'node_modules');
+	const owner = packageName.startsWith('@')
+		? packageName.split('/').slice(0, 2).join('/')
+		: (packageName.split('/')[0] ?? packageName);
+	const version = await installedVersion(modules, owner);
+	const declaration = path.join(modules, packageName, 'index.d.ts');
+	const members = new Map<string, { returns: string; keys: Set<string> }>();
+	let complete = false;
+	if (existsSync(declaration)) {
+		const lines = (await readFile(declaration, 'utf8')).split('\n');
+		let depth = 0;
+		let inside = false;
+		let open: string | null = null;
+		for (const raw of lines) {
+			const text = raw.trim();
+			if (!inside) {
+				if (!text.startsWith('export declare class ') && !text.startsWith('declare class '))
+					continue;
+				if (headToken(text.slice(text.indexOf('class ') + 'class '.length), ' <{') !== symbol)
+					continue;
+				inside = true;
+				complete = true;
+				depth = 1;
+				continue;
+			}
+			const before = depth;
+			for (const character of text) {
+				if (character === '{' || character === '(') depth += 1;
+				if (character === '}' || character === ')') depth -= 1;
+			}
+			if (depth <= 0) break;
+			if (open === null && before === 1) {
+				const name = headToken(text, ' (<:;=?');
+				if (name !== '' && !name.startsWith('/') && !name.startsWith('*') && text.includes('('))
+					open = name;
+			}
+			if (
+				open !== null &&
+				before >= 2 &&
+				!text.startsWith('[') &&
+				!text.startsWith('/') &&
+				!text.startsWith('}') &&
+				!text.startsWith(')')
+			) {
+				const key = headToken(text, ' (<:;=?');
+				if (key !== '' && text.includes(':')) {
+					const entry = members.get(open) ?? { returns: '', keys: new Set<string>() };
+					entry.keys.add(key);
+					members.set(open, entry);
+				}
+			}
+			if (open !== null && depth === 1 && text.endsWith(';')) {
+				const marker = text.lastIndexOf('): ');
+				const returns = marker < 0 ? '' : text.slice(marker + 3, text.length - 1).trim();
+				const entry = members.get(open) ?? { returns: '', keys: new Set<string>() };
+				if (entry.returns === '') entry.returns = returns;
+				members.set(open, entry);
+				open = null;
+			}
+		}
+	}
+	return Object.freeze({
+		package: packageName,
+		version,
+		symbol,
+		members: Object.freeze(
+			[...members.entries()]
+				.sort((left, right) => (left[0] < right[0] ? -1 : 1))
+				.map((entry) =>
+					Object.freeze({
+						member: entry[0],
+						returns: entry[1].returns,
+						optionKeys: Object.freeze([...entry[1].keys].sort()),
+					}),
+				),
+		),
 		complete,
 	});
 }
@@ -411,6 +516,10 @@ export async function readLaneReadings(
 		moduleClassSurfaces: Object.freeze([
 			await readModuleClassSurface(tree, '@ng-bootstrap/ng-bootstrap', 'NgbModule'),
 		]),
+		successorClassSurfaces: Object.freeze([
+			await readSuccessorClassSurface(tree, '@angular/common/http', 'HttpClient'),
+			await readSuccessorClassSurface(tree, '@angular/common/http', 'HttpHeaders'),
+		]),
 		rxjsPatchDiagnostics:
 			buildLog === null ? Object.freeze([]) : readRxjsPatchDiagnostics(buildLog),
 		...(rxjsSurface === undefined ? {} : { rxjsSurface }),
@@ -451,6 +560,7 @@ export async function composeMigration(
 			 */
 			removedSymbolSurfaces: readings.removedSymbolSurfaces,
 			moduleClassSurfaces: readings.moduleClassSurfaces,
+			successorClassSurfaces: readings.successorClassSurfaces,
 			rxjsPatchDiagnostics: readings.rxjsPatchDiagnostics,
 			...(readings.rxjsSurface === undefined ? {} : { rxjsSurface: readings.rxjsSurface }),
 			...(readings.styleClosure === undefined ? {} : { styleClosure: readings.styleClosure }),

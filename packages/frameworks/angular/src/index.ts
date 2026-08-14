@@ -47,3 +47,4 @@ export * from './superseded-era-lockfile.ts';
 export * from './workspace-script-flags.ts';
 export * from './use-position-symbol-successor.ts';
 export * from './removed-static-module-method.ts';
+export * from './http-client-call-surface.ts';
