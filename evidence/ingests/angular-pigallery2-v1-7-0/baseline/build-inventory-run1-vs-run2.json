@@ -1,0 +1,150 @@
+{
+  "runA": {
+    "dir": "build-run1",
+    "files": 13,
+    "totalBytes": 2806878
+  },
+  "runB": {
+    "dir": "build-run2",
+    "files": 13,
+    "totalBytes": 2806878
+  },
+  "byteIdentical": true,
+  "onlyInA": [],
+  "onlyInB": [],
+  "differingContent": [],
+  "inventoryA": [
+    {
+      "path": "assets/icon_inv.png",
+      "bytes": 2798,
+      "sha256": "036185d685003e3ae40db545d676cbab60c8036d219303365875ea5d919a9ba5"
+    },
+    {
+      "path": "assets/icon.png",
+      "bytes": 2798,
+      "sha256": "253d37d8114655dac88147a792be3a6dfdad228d58df7241c4c9a70a25ef1b82"
+    },
+    {
+      "path": "index.html",
+      "bytes": 1446,
+      "sha256": "a4775f3acd3fec8a0cc7857a58ad697e26955944edd49a40e8c4be7c2d72e8d0"
+    },
+    {
+      "path": "main.8d7a6399e761b63341dc.js",
+      "bytes": 2296602,
+      "sha256": "09648f2b63d55471863637544dca96ef44a69d747a2fb7f5d77a9821cbaa4244"
+    },
+    {
+      "path": "open-iconic.3cf97837524dd7445e9d.woff",
+      "bytes": 14984,
+      "sha256": "7193ea5654497d2356d0a690e3e50f39767fbff4335e57a3443c1435d648a1f2"
+    },
+    {
+      "path": "open-iconic.47151e87c5a8666791a9.eot",
+      "bytes": 28196,
+      "sha256": "38ade9a063e0cca2363733603f4ed731b25adc3cfa512a1487f7214a44af4297"
+    },
+    {
+      "path": "open-iconic.527eff645d8ead16666a.otf",
+      "bytes": 20996,
+      "sha256": "b0352db99004cd6672bff535c65ffd0f77a1c94ebd244f85bc072ee4743efdad"
+    },
+    {
+      "path": "open-iconic.93cc7aa654ae36b08287.ttf",
+      "bytes": 28028,
+      "sha256": "a7e44ff02577bd12b561b224373ab7acfa358f21133e7474ed42dbf875582fcc"
+    },
+    {
+      "path": "open-iconic.eca2c26759a009a4a936.svg",
+      "bytes": 54789,
+      "sha256": "a14a4b752f92a0b245c1fe1bcc0de2283ed30a6ebaa0b913a40425549dacd707"
+    },
+    {
+      "path": "polyfills-es5.2f461ca8b99523f633b4.js",
+      "bytes": 71535,
+      "sha256": "aa7340769785c4bf67ebe970cad5843a5788ab3a3e498e71dd15c63dc4d50d6c"
+    },
+    {
+      "path": "polyfills.6ce7c8613dd7f1c39c89.js",
+      "bytes": 100754,
+      "sha256": "0fe87dc28a7dd78eaa410d805f0a5e12b4bcf0f3322038bc745cb7d2dc78c2b1"
+    },
+    {
+      "path": "runtime.465c2333d355155ec5f3.js",
+      "bytes": 1440,
+      "sha256": "eb3d5f2600910179bef8b0709214b7c721ea66e92ebb35bc282264beb2631eaf"
+    },
+    {
+      "path": "styles.7af5efa7635d003dad98.css",
+      "bytes": 182512,
+      "sha256": "ba1b1f6505542c1916853b684f85a143b3868a70941fefcee6cbf7bad1e8a000"
+    }
+  ],
+  "inventoryB": [
+    {
+      "path": "assets/icon_inv.png",
+      "bytes": 2798,
+      "sha256": "036185d685003e3ae40db545d676cbab60c8036d219303365875ea5d919a9ba5"
+    },
+    {
+      "path": "assets/icon.png",
+      "bytes": 2798,
+      "sha256": "253d37d8114655dac88147a792be3a6dfdad228d58df7241c4c9a70a25ef1b82"
+    },
+    {
+      "path": "index.html",
+      "bytes": 1446,
+      "sha256": "a4775f3acd3fec8a0cc7857a58ad697e26955944edd49a40e8c4be7c2d72e8d0"
+    },
+    {
+      "path": "main.8d7a6399e761b63341dc.js",
+      "bytes": 2296602,
+      "sha256": "09648f2b63d55471863637544dca96ef44a69d747a2fb7f5d77a9821cbaa4244"
+    },
+    {
+      "path": "open-iconic.3cf97837524dd7445e9d.woff",
+      "bytes": 14984,
+      "sha256": "7193ea5654497d2356d0a690e3e50f39767fbff4335e57a3443c1435d648a1f2"
+    },
+    {
+      "path": "open-iconic.47151e87c5a8666791a9.eot",
+      "bytes": 28196,
+      "sha256": "38ade9a063e0cca2363733603f4ed731b25adc3cfa512a1487f7214a44af4297"
+    },
+    {
+      "path": "open-iconic.527eff645d8ead16666a.otf",
+      "bytes": 20996,
+      "sha256": "b0352db99004cd6672bff535c65ffd0f77a1c94ebd244f85bc072ee4743efdad"
+    },
+    {
+      "path": "open-iconic.93cc7aa654ae36b08287.ttf",
+      "bytes": 28028,
+      "sha256": "a7e44ff02577bd12b561b224373ab7acfa358f21133e7474ed42dbf875582fcc"
+    },
+    {
+      "path": "open-iconic.eca2c26759a009a4a936.svg",
+      "bytes": 54789,
+      "sha256": "a14a4b752f92a0b245c1fe1bcc0de2283ed30a6ebaa0b913a40425549dacd707"
+    },
+    {
+      "path": "polyfills-es5.2f461ca8b99523f633b4.js",
+      "bytes": 71535,
+      "sha256": "aa7340769785c4bf67ebe970cad5843a5788ab3a3e498e71dd15c63dc4d50d6c"
+    },
+    {
+      "path": "polyfills.6ce7c8613dd7f1c39c89.js",
+      "bytes": 100754,
+      "sha256": "0fe87dc28a7dd78eaa410d805f0a5e12b4bcf0f3322038bc745cb7d2dc78c2b1"
+    },
+    {
+      "path": "runtime.465c2333d355155ec5f3.js",
+      "bytes": 1440,
+      "sha256": "eb3d5f2600910179bef8b0709214b7c721ea66e92ebb35bc282264beb2631eaf"
+    },
+    {
+      "path": "styles.7af5efa7635d003dad98.css",
+      "bytes": 182512,
+      "sha256": "ba1b1f6505542c1916853b684f85a143b3868a70941fefcee6cbf7bad1e8a000"
+    }
+  ]
+}

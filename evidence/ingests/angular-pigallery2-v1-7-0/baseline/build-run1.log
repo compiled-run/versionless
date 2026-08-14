@@ -1,0 +1,16 @@
+[20:03:17] Using gulpfile <repo>/.versionless/work/angular-pigallery2/baseline/gulpfile.js
+[20:03:17] Starting 'build-prod'...
+[20:03:17] Starting 'build-frontend default'...
+
+chunk {0} runtime.465c2333d355155ec5f3.js (runtime) 1.41 kB [entry] [rendered]
+chunk {1} main.8d7a6399e761b63341dc.js (main) 2.19 MB [initial] [rendered]
+chunk {2} polyfills.6ce7c8613dd7f1c39c89.js (polyfills) 98.4 kB [initial] [rendered]
+chunk {3} polyfills-es5.2f461ca8b99523f633b4.js (polyfills-es5) 69.9 kB [initial] [rendered]
+chunk {4} styles.7af5efa7635d003dad98.css (styles) 178 kB [initial] [rendered]
+Date: 2026-08-14T01:03:44.168Z - Hash: 3275e929dd6c45d007ea - Time: 23197ms
+
+Browserslist: caniuse-lite is outdated. Please run next command `npm update`
+
+[20:03:44] Finished 'build-frontend default' after 27 s
+[20:03:44] Finished 'build-prod' after 27 s
+EXIT=0

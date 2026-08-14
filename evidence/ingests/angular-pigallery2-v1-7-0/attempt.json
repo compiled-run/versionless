@@ -1,0 +1,411 @@
+{
+  "schemaVersion": "versionless.official-source-attempt.v1",
+  "unit": "lrapr-t018/u1-license-prescreen-ingest",
+  "boardTask": "T018",
+  "cohort": "Angular HOLDOUT (unused application, never adapter-designing)",
+  "candidate": {
+    "repository": "bpatrik/pigallery2",
+    "requestedRelease": "1.7.0",
+    "requestedTag": "1.7.0",
+    "tagNamingNote": "The release tag in this repository is unprefixed. The board card names it 'v1.7.0'; https://api.github.com/repos/bpatrik/pigallery2/git/ref/tags/v1.7.0 returned 404 and https://api.github.com/repos/bpatrik/pigallery2/git/ref/tags/1.7.0 returned 200. The prefixed form does not exist; the release is 1.7.0.",
+    "expectedCommitSha": "unknown-before-this-unit",
+    "expectationSource": "none. This unit resolved the pin from the wire; no prior scout supplied a commit expectation for pigallery2.",
+    "substitutionForbidden": "This unit may ingest this candidate or nothing. A failing gate is a blocked receipt with the evidence, never a substitute application."
+  },
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "result": "gates-passed",
+  "startedAt": "2026-08-14T00:35:00Z",
+  "completedAt": "2026-08-14T00:53:00Z",
+  "gateZero": {
+    "unusedCheck": {
+      "verdict": "pass",
+      "method": "case-insensitive grep for 'pigallery' across the whole working tree excluding node_modules/ and .git/, run offline before any network access",
+      "hitsOutsideHarnessState": [
+        {
+          "path": "docs/goals/legacy-react-angular-production-readiness/state.yaml",
+          "kind": "board-card",
+          "nature": "T016 objective names pigallery2 1.7.0 as the reserved Angular holdout pick; T016 open risk records its license-at-pin + unused status as unverified; T018 objective names it as the primary holdout target and gate-zero subject."
+        },
+        {
+          "path": "docs/goals/legacy-react-angular-production-readiness/notes/t006-unit-log.md",
+          "kind": "board-card",
+          "nature": "u14 cohort-two scout log records the PM ruling 'pigallery2 1.7.0 = un-ingested holdout reserve'."
+        },
+        {
+          "path": "evidence/ingests/angular-super-productivity-v2-13-15/attempt.json",
+          "kind": "non-use-assertion",
+          "nature": "'pigallery2 1.7.0 is a PM-ruled fallback but stays un-ingested unless the PM re-rules.' — a statement that it was NOT used."
+        },
+        {
+          "path": "evidence/ingests/angular-super-productivity-v2-13-15/admission.json",
+          "kind": "non-use-assertion",
+          "nature": "'No candidate substitution occurred. pigallery2 1.7.0 remains the PM-ruled fallback and remains un-ingested.' — a statement that it was NOT used."
+        }
+      ],
+      "hitsInsideHarnessState": ".fable-opus/ run state, prompts, ledgers and transcripts for this run and for lrapr-t006 mention the name; harness state is dispatch bookkeeping, not adapter evidence.",
+      "worktreeMirror": ".claude/worktrees/agent-abd62332569298fb7/ mirrors the super-productivity evidence files above; same non-use assertion, not an additional use.",
+      "zeroHitsIn": [
+        "packages/**",
+        "fixtures/**",
+        "evidence/ingests/angular-pigallery2-v1-7-0 (did not exist before this unit)",
+        "every adapter, capability, witness, journey, schema, receipt and calibration artefact in the repository"
+      ],
+      "conclusion": "pigallery2 has never been ingested, fixtured, adapted, witnessed or receipted in this repository. Every non-harness mention is either the board naming it as a reserved target or an explicit assertion that it stayed un-ingested. The application is unused and therefore admissible as a holdout."
+    },
+    "exclusionCheck": {
+      "verdict": "pass",
+      "excludedNames": [
+        "factoriolab",
+        "jira-clone",
+        "tiny-translator",
+        "super-productivity",
+        "realworld",
+        "graveyard"
+      ],
+      "conclusion": "pigallery2 is none of the excluded names."
+    },
+    "licenseAtPin": {
+      "verdict": "pass",
+      "readAt": "the pinned revision, via the git blob addressed by the pinned root tree — not the default branch",
+      "path": "LICENSE",
+      "spdx": "MIT",
+      "firstLine": "The MIT License (MIT)",
+      "copyrightLine": "Copyright (c) 2016 bpatrik",
+      "placeholderCopyright": false,
+      "bytes": 1074,
+      "gitBlobSha1": "a2785cd65035d4026ede95dc671cb350bcd8b687",
+      "sha256": "a6a1ced1297392e5d8d39c72b023df7b12f44943d7f83748231bc92c99fd3bb7",
+      "textCopy": "license-at-pin.txt",
+      "independentConfirmation": "the LICENSE file extracted from the pinned tarball hashes to the same sha256, so the license text travelled with the acquired bytes",
+      "note": "The named copyright holder is concrete, not the unfilled [year]/[fullname] placeholder that caused the altair refusal in T006."
+    }
+  },
+  "network": {
+    "authorization": "consent VL-LEGACY-CORPUS-2026-08-10, acquisition only; every other step of this unit ran offline",
+    "method": "GET",
+    "credentials": "none",
+    "requestEncoding": "identity",
+    "redirectsObserved": 0,
+    "retries": 0,
+    "hosts": [
+      "api.github.com",
+      "codeload.github.com"
+    ],
+    "scope": "the repository bpatrik/pigallery2 at the single revision 6d44c22df13b8f9416715e86e160707d0c3f973a, plus the tag/ref lookups needed to resolve that revision"
+  },
+  "detect": {
+    "policy": "read-only facts as declared at the pin, unpacked to a scratch location outside the repository. Nothing is strengthened: what the source does not state is recorded as unknown.",
+    "declaredIdentity": {
+      "name": "pigallery2",
+      "version": "1.7.0",
+      "license": "MIT",
+      "main": "./backend/index.js"
+    },
+    "angular": {
+      "framework": "8.1.2",
+      "packages": "@angular/{animations,common,compiler,compiler-cli,core,forms,language-service,platform-browser,platform-browser-dynamic,router} all pinned exactly at 8.1.2, all in devDependencies",
+      "skew": "@angular/http@7.2.15 is still declared, a package removed from Angular 8; recorded as found, not repaired",
+      "ivy": "unknown as declared. Angular 8 defaults to ViewEngine; no enableIvy flag was read by this unit.",
+      "typescript": "3.4.5",
+      "rxjs": "6.5.2",
+      "zoneJs": "0.9.1"
+    },
+    "angularCliGeneration": {
+      "cli": "@angular/cli@8.1.2",
+      "devkit": "@angular-devkit/build-angular@0.801.2, @angular-devkit/build-optimizer@0.801.2",
+      "workspaceFile": "angular.json",
+      "workspaceSchemaVersion": 1,
+      "defaultProject": "pigallery2",
+      "builders": {
+        "pigallery2:build": "@angular-devkit/build-angular:browser",
+        "pigallery2:serve": "@angular-devkit/build-angular:dev-server",
+        "pigallery2:extract-i18n": "@angular-devkit/build-angular:extract-i18n",
+        "pigallery2:test": "@angular-devkit/build-angular:karma",
+        "pigallery2:lint": "@angular-devkit/build-angular:tslint",
+        "pigallery2-e2e:e2e": "@angular-devkit/build-angular:protractor",
+        "pigallery2-e2e:lint": "@angular-devkit/build-angular:tslint"
+      },
+      "generation": "Architect/angular.json era (post-.angular-cli.json), framework-supported browser builder",
+      "buildEntry": {
+        "index": "frontend/index.html",
+        "main": "frontend/main.ts",
+        "polyfills": "frontend/polyfills.ts",
+        "tsConfig": "frontend/tsconfig.app.json",
+        "outputPath": "dist",
+        "assets": ["frontend/assets"],
+        "globalStyles": [
+          "node_modules/bootstrap/dist/css/bootstrap.min.css",
+          "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
+          "node_modules/open-iconic/font/css/open-iconic-bootstrap.css",
+          "node_modules/ngx-toastr/toastr.css",
+          "frontend/styles.css"
+        ]
+      },
+      "i18nNote": "the repository's own build scripts drive the browser builder with --i18n-locale en --i18n-file frontend/translate/messages.en.xlf --i18n-missing-translation warning; the angular.json build options themselves declare no i18n"
+    },
+    "nodeExpectations": {
+      "nvmrc": "absent",
+      "packageJsonEngines": ">= 6.9 <11.0",
+      "ciMatrix": ".travis.yml tests node 10 and node 11",
+      "dockerBase": "node:10-stretch (docker/debian/stretch), arm32v7/node:10-stretch (docker/arm32v7/debian)",
+      "conflict": "engines excludes node 11 while CI tests node 11. Recorded as found; the intended runtime is unknown beyond 'node 10 is the only version all three sources agree on'."
+    },
+    "packageManager": {
+      "declared": "none in package.json (no packageManager field)",
+      "lockfilesPresent": ["package-lock.json"],
+      "lockfilesAbsent": ["yarn.lock", "pnpm-lock.yaml"],
+      "inference": "npm",
+      "lockfileVersion": 1,
+      "lockedDependencyEntries": 1237,
+      "lockDrift": "package-lock.json declares version 1.6.5 while package.json declares 1.7.0. Recorded as found, not repaired."
+    },
+    "repositoryShape": {
+      "monorepo": false,
+      "workspaces": "none declared",
+      "packageJsonCount": 1,
+      "layout": {
+        "frontend": "Angular application source, sourceRoot of the pigallery2 project (97 .ts, 39 .html, 186 files)",
+        "backend": "Express + TypeORM server, TypeScript compiled by tsc to ./release via the build-backend/gulp pipeline (76 .ts, 78 files)",
+        "common": "code shared by frontend and backend (39 .ts)",
+        "test": "mocha backend/common unit + integration suites and protractor e2e (15 .ts, 24 files)",
+        "benchmark": "2 .ts",
+        "demo": "26 files, ~24 MB — the bulk of the archive is demo media, not code",
+        "docker": "node:10-stretch images for debian and arm32v7"
+      },
+      "backendStack": {
+        "server": "express@4.17.1",
+        "orm": "typeorm@0.2.18",
+        "database": "sqlite3@4.0.9 (required), mysql@2.17.1 (optional)",
+        "sessionAuth": "cookie-session@2.0.0-beta.3, cookie-parser@1.4.4, bcryptjs@2.4.3 (bcrypt@3.0.6 optional)",
+        "templating": "ejs@2.6.2",
+        "logging": "winston@2.4.4"
+      },
+      "buildPipeline": "npm install runs 'tsc && gulp build-prod'; the backend is built by tsc/gulp and the frontend by the Angular CLI browser builder. Whether the frontend build can be driven independently of the gulp pipeline is unknown until the baseline stage."
+    },
+    "nativeDependenciesAsDeclared": {
+      "required": [
+        "sqlite3@4.0.9 — native, node-gyp/prebuilt binding"
+      ],
+      "optional": [
+        "sharp@0.22.1 — native image processing",
+        "bcrypt@3.0.6 — native",
+        "gm@1.23.1 — wrapper requiring a GraphicsMagick/ImageMagick binary",
+        "mysql@2.17.1 — pure JS",
+        "@ffmpeg-installer/ffmpeg@1.0.19",
+        "@ffprobe-installer/ffprobe@1.0.12"
+      ],
+      "pureJsImageFallbacks": ["jimp@0.6.4", "image-size@0.7.4", "exifreader@2.8.2", "ts-exif-parser@0.1.4"],
+      "installRisk": "unknown. Whether sqlite3 4.0.9 and the optional native modules can be installed on a modern toolchain is not established by this unit and must be measured, not assumed, at the baseline stage."
+    },
+    "unknowns": [
+      "whether npm install succeeds at all on a current Node/toolchain",
+      "whether the Angular 8 browser build completes",
+      "whether the app boots and serves any journey",
+      "Ivy vs ViewEngine as actually configured",
+      "which Node version the project truly requires"
+    ]
+  },
+  "scope": {
+    "extractedIntoCorpus": false,
+    "extractedIntoFixtures": false,
+    "note": "The archive was unpacked only to a scratch directory outside the repository for read-only detection. Baseline install/build is the next unit."
+  },
+  "baseline": {
+    "unit": "lrapr-t018/u2-baseline-stage",
+    "result": "frontend production baseline GREEN in the app's own era toolchain, with one registry-closure break recorded",
+    "startedAt": "2026-08-14T00:55:00Z",
+    "completedAt": "2026-08-14T01:05:00Z",
+    "scope": "corpus + work lanes, era runtime cell, baseline install, production frontend build run twice and byte-compared. No migration, no adapter work, no witness journey, no application-source edits.",
+    "identityCheck": {
+      "archive": "evidence/ingests/angular-pigallery2-v1-7-0/archive/archive-1.tar.gz",
+      "expectedSha256": "ca55f92081bbe85860071ccb8e5b17b6941450a0a4f6c9a667c06ef185260b2f",
+      "measuredSha256": "ca55f92081bbe85860071ccb8e5b17b6941450a0a4f6c9a667c06ef185260b2f",
+      "verdict": "match — re-verified before any extraction, and again on the copy placed in the corpus cache"
+    },
+    "lanes": {
+      "convention": "mirrors the established layout used by react-cypress-rwa and the Angular verticals: an immutable <app>-source corpus plus an <app>-runtime cell and an <app>-baseline cache under .versionless/cache/, and a mutable lane under .versionless/work/<app>/baseline. .versionless/ is gitignored, so none of these paths are tracked.",
+      "corpusArchive": ".versionless/cache/angular-pigallery2-v1-7-0-source/archive/archive-1.tar.gz",
+      "corpus": ".versionless/cache/angular-pigallery2-v1-7-0-source/corpus/pigallery2-6d44c22df13b8f9416715e86e160707d0c3f973a",
+      "corpusImmutability": "the whole corpus tree was made read-only (chmod -R a-w) immediately after extraction and was never written to; it is the reference the work lane is diffed against",
+      "workLane": ".versionless/work/angular-pigallery2/baseline",
+      "workLaneLogs": ".versionless/work/angular-pigallery2/logs",
+      "runtimeCell": ".versionless/cache/angular-pigallery2-v1-7-0-runtime/node-v10.24.1-darwin-x64",
+      "npmCache": ".versionless/cache/angular-pigallery2-v1-7-0-baseline/npm-cache (npm_config_cache, so the host user cache was not mutated)"
+    },
+    "eraCell": {
+      "selected": "node v10.24.1 (official darwin-x64 build), bundled npm 6.14.12",
+      "policyForSelection": "the Node 10 line is the only version the application's own three statements agree on: engines '>= 6.9 <11.0', the Docker base node:10-stretch (debian and arm32v7), and the lower of the two Travis entries. 10.24.1 is the final release of that line. Node 11 was excluded because the app's engines ceiling '<11.0' is hard; no modern Node was substituted.",
+      "acquisition": "https://nodejs.org/dist/v10.24.1/node-v10.24.1-darwin-x64.tar.gz",
+      "sha256": "8088968a896e17c21b98187f8083291df9c88d0baa100a6cb9553e53c4fb17f8",
+      "sha256Source": "https://nodejs.org/dist/v10.24.1/SHASUMS256.txt — the published line and the measured digest of the downloaded bytes agree",
+      "hostFact": "the host is arm64 macOS 26.5.1. There is no darwin-arm64 build of Node 10 (the line predates Apple silicon support), so the darwin-x64 binary executes through Rosetta 2 translation, which is present and active on this host. This is recorded as a host fact, not hidden: inside the cell process.platform/process.arch report darwin/x64, and that is what made npm resolve darwin-x64 native artefacts below.",
+      "fallbackUsed": false,
+      "fallbackNote": "no fallback was needed; the Node 10 cell executed normally under translation for the whole install and both builds"
+    },
+    "install": {
+      "attempt1": {
+        "command": "npm install --no-audit",
+        "cwd": "the work lane",
+        "env": "PATH prefixed with the era cell bin, npm_config_cache pointed at the lane cache, CI=1",
+        "exit": 1,
+        "outcome": "failed during dependency resolution, before any package was linked; npm rolled node_modules back to empty",
+        "failure": "npm ERR! code E404 — GET https://registry.npmjs.org/@k3rn31p4nic/google-translate-api/-/google-translate-api-1.0.6.tgz returned 404, '@k3rn31p4nic/google-translate-api@1.0.6' is not in the npm registry",
+        "log": "baseline/install-attempt-1-failed.log"
+      },
+      "closureBreak": {
+        "finding": "the era dependency closure recorded in the app's own package-lock.json is no longer fully resolvable from the public npm registry",
+        "missingPackage": "@k3rn31p4nic/google-translate-api@1.0.6",
+        "registryState": "GET https://registry.npmjs.org/@k3rn31p4nic%2fgoogle-translate-api returns 404 {\"error\":\"Not found\"} — the whole package is gone from the registry, not merely that version; the lock pins it with integrity sha512-84tHqaQsfHvBR8jejRCv/xEedoYs6Evxrl/KFRiI4ikrYus0+pq8g1d6j16UCHXaT5c+MjTAlPz++TwX+tEarQ==",
+        "reachedVia": "the single devDependency xlf-google-translate@1.0.0-beta.15, whose declared dependencies are {xml2js 0.4.19, typeconfig 1.0.7, @k3rn31p4nic/google-translate-api 1.0.6}; nothing else in the lock depends on it",
+        "whatItGates": "xlf-google-translate provides the xlf-google-translate CLI used only by the gulp translation-authoring tasks (update-translation, merge-new-translation, add-translation). It is not referenced by build-prod, build-frontend, build-backend or the Angular builder.",
+        "consequence": "a verbatim `npm install` of this pin can no longer succeed from the public registry on any host or Node version. This is a property of the registry in 2026, not of this host.",
+        "notRepaired": "no substitute package was invented, vendored or fabricated"
+      },
+      "attempt2": {
+        "transform": "to get past the unresolvable branch without altering the application as authored, the two manifest files were temporarily narrowed for the duration of the install only: xlf-google-translate removed from package.json devDependencies, and the xlf-google-translate and @k3rn31p4nic/google-translate-api entries removed from package-lock.json dependencies. Nothing else was touched — no version was changed, added or relaxed.",
+        "manifestDigests": {
+          "authoredPackageJsonSha256": "32dab8144180098fb037760c2e37edb7b28451cb47c7a2e860355fecd67ae49c",
+          "authoredPackageLockSha256": "c23f860dcc7e2b395d68c0fc5393e0a5656a93f0d0fdf495d107b597fed3e253",
+          "installTimePackageJsonSha256": "983450f405377504628c12afe1f44d23b942faf2d014c637e49a1d9fd3dc9fb4",
+          "installTimePackageLockSha256": "9b57aa53af7a421a72645eb6535d3111fb8f74289dd9b2f7d8ca962c2a1a8910",
+          "restoredPackageJsonSha256": "32dab8144180098fb037760c2e37edb7b28451cb47c7a2e860355fecd67ae49c",
+          "restoredPackageLockSha256": "c23f860dcc7e2b395d68c0fc5393e0a5656a93f0d0fdf495d107b597fed3e253",
+          "restoreProof": "both restored digests equal the authored digests and equal the corpus copies; the narrowed manifests existed only while npm was resolving, and both production builds below ran against the authored manifests"
+        },
+        "command": "npm install --no-audit",
+        "env": "PATH prefixed with the era cell bin, npm_config_cache pointed at the lane cache, CI=1",
+        "exit": 0,
+        "installed": "added 2241 packages from 2228 contributors in 128.828s",
+        "rootLifecycleScript": "the app's own install script ran to completion at the end of npm install: `tsc && gulp build-prod`. tsc compiled the backend/common/test TypeScript in place, and gulp build-prod drove the first production frontend build (kept as build-install and compared below).",
+        "ciEnvEffect": "CI=1 was exported. The app's own gulpfile branches on process.env.CI and, when set, builds only the default en locale instead of also building fr, hu and ru. This is the application's own conditional, not an override: the same ng invocation runs, once instead of four times.",
+        "log": "baseline/install-attempt-2-keylines.log (key lines only; the full log's remainder is native-compiler warning noise)"
+      },
+      "laneSourceIntegrity": {
+        "method": "recursive diff of the work lane against the read-only corpus, excluding node_modules and the build output directories",
+        "filesDifferingInContent": 0,
+        "filesMissingFromLane": 0,
+        "filesAddedToLane": 456,
+        "addedFilesNature": "all 456 are tsc emissions (.js and .js.map beside their .ts sources, e.g. gulpfile.js, backend/**, common/**, test/**) produced by the app's own install script; the root tsconfig.json sets no outDir, so tsc emits in place",
+        "conclusion": "every authored file in the work lane is byte-identical to the corpus; the lane holds build artefacts only"
+      }
+    },
+    "nativeDependencies": {
+      "sqlite3@4.0.9": "OBTAINED. node-pre-gyp fetched a remote prebuilt binding for this exact cell: node_modules/sqlite3/lib/binding/node-v64-darwin-x64/node_sqlite3.node ('[sqlite3] Success: ... is installed via remote'). No source build was needed, and no Python 2 dependency was hit. The x64 ABI selection is a direct consequence of the Rosetta host fact above.",
+      "bcrypt@3.0.6": "OBTAINED, optional. node-pre-gyp found no prebuilt for node-v64-darwin-x64 and fell back to a source build with node-gyp, which succeeded: node_modules/bcrypt/lib/binding/bcrypt_lib.node",
+      "sharp@0.22.1": "OBTAINED, optional. Compiled from source against its bundled libvips: node_modules/sharp/build/Release/sharp.node",
+      "fsevents@1.2.9": "OBTAINED, transitive/optional. Its S3 prebuilt bucket 404s for node-v64-darwin-x64, so all five copies fell back to a successful node-gyp source build",
+      "@ffmpeg-installer/ffmpeg@1.0.19 and @ffprobe-installer/ffprobe@1.0.12": "OBTAINED, optional. The darwin-x64 platform packages installed and their binaries were chmod'd u+x by their own postinstall; the linux-arm variants were skipped by npm as unsupported for this platform",
+      "gm@1.23.1": "UNTESTED. gm is a wrapper around an external GraphicsMagick binary, and `gm` is not on this host's PATH ('gm not found'); an ImageMagick `convert` is present. The wrapper package installed; whether it can shell out was neither needed nor measured by this unit.",
+      "frontendNeed": "none of the above is needed by the frontend build. sqlite3, bcrypt, sharp, gm and the ffmpeg/ffprobe installers are backend/optional dependencies; the Angular browser build reads only frontend/**, common/** and the devDependency toolchain. The question 'can the frontend baseline be built without backend natives' did not have to be answered as a fallback here, because every required native was in fact obtained.",
+      "summary": "the required native (sqlite3) and every optional native except the external-binary wrapper gm were obtained for the era cell on this host. No native-dependency failure was recorded."
+    },
+    "frontendBuild": {
+      "builder": "@angular-devkit/build-angular:browser at 0.801.2, driven by the app's own @angular/cli 8.1.2 — the builder declared in the app's angular.json for target pigallery2:build. No builder was substituted.",
+      "driver": "the app's own gulp task build-prod, invoked as `npx gulp build-prod` in the work lane with the era cell on PATH and CI=1",
+      "commandGulpEmits": "ng build --aot --prod --no-extract-licenses --output-path=./dist --no-progress --no-progress --i18n-locale en --i18n-format=xlf --i18n-file=frontend/translate/messages.en.xlf --i18n-missing-translation warning",
+      "commandVerbatimNote": "the doubled --no-progress is the app's own gulpfile string, reproduced as authored",
+      "productionConfigurationApplied": "the --prod flag applies angular.json's production configuration: optimization, outputHashing all, sourceMap false, extractCss, namedChunks false, aot, vendorChunk false, buildOptimizer, and the environment.ts -> environment.prod.ts file replacement. extractLicenses is true in angular.json but the app's own gulp command passes --no-extract-licenses, which wins; no 3rdpartylicenses.txt is emitted.",
+      "runs": [
+        {
+          "run": "build-install",
+          "trigger": "the root package's own install lifecycle script during npm install",
+          "outputDir": ".versionless/work/angular-pigallery2/baseline/build-install (moved from ./dist after the run, because the app hardcodes ./dist)",
+          "exit": 0
+        },
+        {
+          "run": "build-run1",
+          "trigger": "explicit `npx gulp build-prod`",
+          "outputDir": ".versionless/work/angular-pigallery2/baseline/build-run1",
+          "webpackHash": "3275e929dd6c45d007ea",
+          "webpackTimeMs": 23197,
+          "gulpWallClock": "27 s",
+          "exit": 0,
+          "log": "baseline/build-run1.log"
+        },
+        {
+          "run": "build-run2",
+          "trigger": "explicit `npx gulp build-prod`",
+          "outputDir": ".versionless/work/angular-pigallery2/baseline/build-run2",
+          "webpackHash": "3275e929dd6c45d007ea",
+          "webpackTimeMs": 22476,
+          "gulpWallClock": "25 s",
+          "exit": 0,
+          "log": "baseline/build-run2.log"
+        }
+      ],
+      "buildWarnings": [
+        "Browserslist: caniuse-lite is outdated. Please run next command `npm update` — emitted by both runs; recorded, not acted on"
+      ],
+      "errors": "none. Neither run emitted an Angular, TypeScript or webpack error."
+    },
+    "determinism": {
+      "method": "every regular file under each output directory was hashed with sha256 and the two inventories compared by relative path, byte length and digest",
+      "run1VsRun2": {
+        "byteIdentical": true,
+        "files": 13,
+        "totalBytes": 2806878,
+        "onlyInRun1": [],
+        "onlyInRun2": [],
+        "differingContent": []
+      },
+      "installBuildVsRun1": {
+        "byteIdentical": true,
+        "note": "the build produced during npm install is byte-identical to the two explicit runs as well, so three independent production builds agree"
+      },
+      "hashedFilenames": "outputHashing 'all' puts content hashes in filenames (main.8d7a6399e761b63341dc.js etc). Those hashes were stable across all three runs, which is why the inventories match by name as well as by content — there is no timestamp or build-id artefact in this output.",
+      "verdict": "the Angular 8 production frontend build of this pin is byte-reproducible in this era cell",
+      "reproductionArtefacts": [
+        "baseline/build-inventory-run1-vs-run2.json — full per-file inventory of both runs plus the comparison",
+        "baseline/build-inventory-install-vs-run1.json — the same for the install-time build against run1"
+      ]
+    },
+    "outputInventory": {
+      "outputPath": "./dist as configured (relocated per run to build-install / build-run1 / build-run2)",
+      "files": 13,
+      "totalBytes": 2806878,
+      "entries": [
+        {"path": "index.html", "bytes": 1446, "sha256": "a4775f3acd3fec8a0cc7857a58ad697e26955944edd49a40e8c4be7c2d72e8d0"},
+        {"path": "main.8d7a6399e761b63341dc.js", "bytes": 2296602, "sha256": "09648f2b63d55471863637544dca96ef44a69d747a2fb7f5d77a9821cbaa4244"},
+        {"path": "polyfills.6ce7c8613dd7f1c39c89.js", "bytes": 100754, "sha256": "0fe87dc28a7dd78eaa410d805f0a5e12b4bcf0f3322038bc745cb7d2dc78c2b1"},
+        {"path": "polyfills-es5.2f461ca8b99523f633b4.js", "bytes": 71535, "sha256": "aa7340769785c4bf67ebe970cad5843a5788ab3a3e498e71dd15c63dc4d50d6c"},
+        {"path": "runtime.465c2333d355155ec5f3.js", "bytes": 1440, "sha256": "eb3d5f2600910179bef8b0709214b7c721ea66e92ebb35bc282264beb2631eaf"},
+        {"path": "styles.7af5efa7635d003dad98.css", "bytes": 182512, "sha256": "ba1b1f6505542c1916853b684f85a143b3868a70941fefcee6cbf7bad1e8a000"},
+        {"path": "assets/icon.png", "bytes": 2798, "sha256": "253d37d8114655dac88147a792be3a6dfdad228d58df7241c4c9a70a25ef1b82"},
+        {"path": "assets/icon_inv.png", "bytes": 2798, "sha256": "036185d685003e3ae40db545d676cbab60c8036d219303365875ea5d919a9ba5"},
+        {"path": "open-iconic.3cf97837524dd7445e9d.woff", "bytes": 14984, "sha256": "7193ea5654497d2356d0a690e3e50f39767fbff4335e57a3443c1435d648a1f2"},
+        {"path": "open-iconic.47151e87c5a8666791a9.eot", "bytes": 28196, "sha256": "38ade9a063e0cca2363733603f4ed731b25adc3cfa512a1487f7214a44af4297"},
+        {"path": "open-iconic.527eff645d8ead16666a.otf", "bytes": 20996, "sha256": "b0352db99004cd6672bff535c65ffd0f77a1c94ebd244f85bc072ee4743efdad"},
+        {"path": "open-iconic.93cc7aa654ae36b08287.ttf", "bytes": 28028, "sha256": "a7e44ff02577bd12b561b224373ab7acfa358f21133e7474ed42dbf875582fcc"},
+        {"path": "open-iconic.eca2c26759a009a4a936.svg", "bytes": 54789, "sha256": "a14a4b752f92a0b245c1fe1bcc0de2283ed30a6ebaa0b913a40425549dacd707"}
+      ],
+      "chunks": "runtime 1.41 kB, main 2.19 MB, polyfills 98.4 kB, polyfills-es5 69.9 kB, styles 178 kB — a single initial main chunk, no lazy chunks and no vendor chunk (vendorChunk false)",
+      "es5AndDifferentialLoading": "both polyfills.*.js and polyfills-es5.*.js are emitted and index.html loads the es5 bundle with the nomodule attribute — Angular 8 differential loading is active for polyfills"
+    },
+    "observationsForLaterUnits": [
+      "index.html is not a static page: it is an EJS template containing <%= clientConfig.urlBase %> and a ServerInject script block filled by the backend at request time. Serving dist/ as plain static files will not produce a booting app; a witness path has to render it through the backend or supply the injected globals.",
+      "index.html also links two external stylesheets from CDNs (cdnjs bootstrap-switch 3.3.4 and unpkg leaflet 1.3.4). Any offline witness run will lose those styles.",
+      "the built output is en only, because CI=1 selected the app's own single-locale branch. fr, hu and ru locale builds exist in the app's gulpfile and were not run.",
+      "@angular/http@7.2.15 is still declared while Angular is 8.1.2; the production build completed anyway, so whatever imports it resolve at this pin.",
+      "sqlite3 arrived as a darwin-x64 prebuilt selected because of Rosetta; a native arm64 host or a Node 11+ ABI would not necessarily find one."
+    ],
+    "resolvedFromU1Unknowns": {
+      "whether npm install succeeds at all": "not verbatim — the registry no longer serves one devDependency's transitive package; with that single branch excluded, the install completes and produces the full 2241-package tree",
+      "whether the Angular 8 browser build completes": "yes — three times, exit 0, no errors",
+      "which Node version the project truly requires": "Node 10 works end to end (install + production build). Nothing here tests the 6.9 floor or the excluded 11 line.",
+      "Ivy vs ViewEngine": "still unmeasured by this unit; no enableIvy flag was read and no output was inspected for Ivy signatures",
+      "whether the app boots and serves any journey": "still unmeasured — no server was started and no browser was opened by this unit"
+    },
+    "notEstablished": [
+      "no runtime behaviour: the backend was not started, no page was loaded, no journey was exercised",
+      "no test suite was run (ng test, mocha and protractor were all left alone)",
+      "no migration, adapter or frozen-subtree work was attempted or implied",
+      "byte-reproducibility was measured on this host, in this cell, three runs within one session; it is not a claim about other hosts, other Node builds, or a cold npm cache",
+      "the closure break above means a future re-install of this pin depends on the same narrowing being applied; nothing was vendored to make it permanent"
+    ]
+  },
+  "nonclaims": [
+    "Passing gate zero establishes no dependency closure, build, browser behavior, migration feasibility, pilot status or production readiness.",
+    "The unsigned tag and unsigned commit do not establish signer authenticity.",
+    "This evidence is reproducibility evidence, not certification or legal approval."
+  ]
+}

@@ -1,0 +1,17 @@
+v10.24.1
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.9 (node_modules/@angular/compiler-cli/node_modules/fsevents):
+npm WARN enoent SKIPPING OPTIONAL DEPENDENCY: ENOENT: no such file or directory, rename '<repo>/.versionless/work/angular-pigallery2/baseline/node_modules/.staging/fsevents-62f631e4/node_modules/ansi-regex' -> '<repo>/.versionless/work/angular-pigallery2/baseline/node_modules/.staging/ansi-regex-943fe895'
+
+npm ERR! code E404
+npm ERR! 404 Not Found - GET https://registry.npmjs.org/@k3rn31p4nic/google-translate-api/-/google-translate-api-1.0.6.tgz
+npm ERR! 404 
+npm ERR! 404  '@k3rn31p4nic/google-translate-api@1.0.6' is not in the npm registry.
+npm ERR! 404 You should bug the author to publish it (or use the name yourself!)
+npm ERR! 404 It was specified as a dependency of 'baseline'
+npm ERR! 404 
+npm ERR! 404 Note that you can also install from a
+npm ERR! 404 tarball, folder, http url, or git url.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     <repo>/.versionless/cache/angular-pigallery2-v1-7-0-baseline/npm-cache/_logs/2026-08-14T00_58_24_772Z-debug.log
+EXIT=1

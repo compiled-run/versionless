@@ -1,0 +1,5 @@
+# Acquired source bytes live beside this receipt but are not tracked, mirroring
+# the repository's ingest convention (.versionless/cache/ is likewise ignored).
+# The archive's identity is pinned by sha256 in source.json and is re-acquirable
+# byte-for-byte from the recorded codeload URL.
+archive/

@@ -1,0 +1,164 @@
+{
+  "schemaVersion": "versionless.official-source.v1",
+  "unit": "lrapr-t018/u1-license-prescreen-ingest",
+  "boardTask": "T018",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "attemptSha256": "01aa43059fc76879ec566e338302b8e27ccfd4db64a3db20d8234b106e8e324c",
+  "result": "source-bound",
+  "startedAt": "2026-08-14T00:35:00Z",
+  "completedAt": "2026-08-14T00:53:00Z",
+  "repository": {
+    "id": 53728755,
+    "fullName": "bpatrik/pigallery2",
+    "private": false,
+    "archived": false,
+    "disabled": false,
+    "defaultBranch": "master",
+    "responseBytes": 6005,
+    "responseSha256": "b42a6714241aad1c3105371f7b17ece5e24e7d8115a1bc6ddc4bce304829b4fa"
+  },
+  "revision": "6d44c22df13b8f9416715e86e160707d0c3f973a",
+  "revisionDetail": {
+    "release": "1.7.0",
+    "ref": "refs/tags/1.7.0",
+    "refNamingNote": "the tag is unprefixed; refs/tags/v1.7.0 returned 404",
+    "tagObjectSha": "1d4fd566a52078881831d4c490fa5d22952b96f6",
+    "tagDate": "2019-07-21T15:49:35Z",
+    "tagVerification": "unsigned",
+    "commitSha": "6d44c22df13b8f9416715e86e160707d0c3f973a",
+    "commitDate": "2019-07-21T15:26:23Z",
+    "commitVerification": "unsigned",
+    "rootTreeSha": "cd61e613a9c3703e6775b43823b11fe9bf450bb0",
+    "treeEntries": 489,
+    "treeBlobs": 390,
+    "treeDirectories": 99,
+    "treeSymlinks": 0,
+    "treeGitlinks": 0,
+    "treeTruncated": false
+  },
+  "license": {
+    "gate": "mandatory license-text-at-pin pre-screen",
+    "verdict": "pass",
+    "spdx": "MIT",
+    "path": "LICENSE",
+    "readAtPin": true,
+    "readFrom": "https://api.github.com/repos/bpatrik/pigallery2/git/blobs/a2785cd65035d4026ede95dc671cb350bcd8b687 — the blob addressed by the pinned root tree cd61e613a9c3703e6775b43823b11fe9bf450bb0, never the default branch",
+    "gitBlobSha1": "a2785cd65035d4026ede95dc671cb350bcd8b687",
+    "bytes": 1074,
+    "copyrightLine": "Copyright (c) 2016 bpatrik",
+    "placeholderCopyright": false,
+    "textCopy": "license-at-pin.txt",
+    "confirmedFromArchiveBytes": true
+  },
+  "licenseSha256": "a6a1ced1297392e5d8d39c72b023df7b12f44943d7f83748231bc92c99fd3bb7",
+  "sha256": "ca55f92081bbe85860071ccb8e5b17b6941450a0a4f6c9a667c06ef185260b2f",
+  "archive": {
+    "url": "https://codeload.github.com/bpatrik/pigallery2/tar.gz/6d44c22df13b8f9416715e86e160707d0c3f973a",
+    "format": "tar.gz",
+    "bytes": 27248171,
+    "sha256": "ca55f92081bbe85860071ccb8e5b17b6941450a0a4f6c9a667c06ef185260b2f",
+    "streams": 2,
+    "byteIdentical": true,
+    "storedAt": "evidence/ingests/angular-pigallery2-v1-7-0/archive/archive-1.tar.gz",
+    "storedTracked": false,
+    "storageNote": "the bytes are held beside this receipt but gitignored, mirroring the repository convention that ingest evidence is tracked JSON while acquired source bytes are not; identity is carried by the sha256 above"
+  },
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/bpatrik/pigallery2",
+      "status": 200,
+      "bytes": 6005,
+      "sha256": "b42a6714241aad1c3105371f7b17ece5e24e7d8115a1bc6ddc4bce304829b4fa"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/bpatrik/pigallery2/git/ref/tags/v1.7.0",
+      "status": 404,
+      "bytes": 128,
+      "note": "recorded because it was touched: the v-prefixed tag does not exist"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/bpatrik/pigallery2/git/ref/tags/1.7.0",
+      "status": 200,
+      "bytes": 372,
+      "sha256": "8597b18865e09739ec1961875c95cd6a3101a51d14bcfe59a475d208ac330a94"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/bpatrik/pigallery2/git/tags/1d4fd566a52078881831d4c490fa5d22952b96f6",
+      "status": 200,
+      "bytes": 768,
+      "sha256": "202c524fd3c4aee15369e573d5f5832f33621d63e02f568e39709e9ddc6b6a4f"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/bpatrik/pigallery2/git/commits/6d44c22df13b8f9416715e86e160707d0c3f973a",
+      "status": 200,
+      "bytes": 1291,
+      "sha256": "838ac5db1bee8c626677ab80ce65bc2e9cd995554a6c73a6271d2c9f325d03cf"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/bpatrik/pigallery2/git/trees/cd61e613a9c3703e6775b43823b11fe9bf450bb0?recursive=1",
+      "status": 200,
+      "bytes": 148443,
+      "sha256": "4233c890200c4a6235fb9c10247f91b8dbd9c69f80c464b0173b12396ef838e0"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/bpatrik/pigallery2/git/blobs/a2785cd65035d4026ede95dc671cb350bcd8b687",
+      "status": 200,
+      "bytes": 1797,
+      "sha256": "4147a3964178c833c4cb16e918e895d1a1ccf8520b9ecea01ea21396d746c74b",
+      "purpose": "LICENSE at the pinned revision"
+    },
+    {
+      "endpoint": "https://codeload.github.com/bpatrik/pigallery2/tar.gz/6d44c22df13b8f9416715e86e160707d0c3f973a",
+      "status": 200,
+      "bytes": 27248171,
+      "sha256": "ca55f92081bbe85860071ccb8e5b17b6941450a0a4f6c9a667c06ef185260b2f",
+      "stream": 1
+    },
+    {
+      "endpoint": "https://codeload.github.com/bpatrik/pigallery2/tar.gz/6d44c22df13b8f9416715e86e160707d0c3f973a",
+      "status": 200,
+      "bytes": 27248171,
+      "sha256": "ca55f92081bbe85860071ccb8e5b17b6941450a0a4f6c9a667c06ef185260b2f",
+      "stream": 2
+    }
+  ],
+  "archiveParity": {
+    "singleRoot": "pigallery2-6d44c22df13b8f9416715e86e160707d0c3f973a",
+    "safeEntries": 490,
+    "regularFiles": 390,
+    "directories": 100,
+    "specialEntries": 0,
+    "gitBlobs": 390,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "method": "every blob in the pinned recursive tree was re-hashed as a git blob from the extracted archive and compared to its tree sha",
+    "normalizedManifestSha256": "8b25c64d371f4535f8440854948c2a57f9e2d767b071633d5dbb99ecca59003e"
+  },
+  "transaction": {
+    "attemptedRequests": 9,
+    "acceptedResponses": 8,
+    "rejectedResponses": 1,
+    "acceptedWireBytes": 54655018,
+    "acceptedDecodedBytes": 54655018,
+    "redirectsObserved": 0,
+    "setCookiesUsed": 0,
+    "credentialsUsed": 0,
+    "retries": 0,
+    "archivesByteIdentical": true,
+    "archiveMatchesGitTree": true,
+    "publishedSource": true,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "extraction": {
+    "intoCorpus": false,
+    "intoFixtures": false,
+    "scratchOnly": true,
+    "note": "unpacked only outside the repository for read-only detection; the baseline stage is the next unit"
+  },
+  "nonclaims": [
+    "The unsigned tag and unsigned commit do not establish signer authenticity.",
+    "Beyond the MIT license text present at this exact revision, no retained-asset right, dependency closure, build, browser behavior, migration feasibility, pilot status, production readiness, certification or legal approval is established."
+  ]
+}
