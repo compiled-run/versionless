@@ -8,8 +8,8 @@
     "slsaLevel": "not-claimed"
   },
   "derivedFrom": {
-    "trustManifestCanonicalDigest": "213b43e88b51d2bb998c53923b31a24d0bbf49a5af74cddd89f23bf97e1497af",
-    "deterministicCoreDigest": "656e861a54c4a06bda94e324dbee756f241b11d4a1128d48b9b8fa307b459b45",
+    "trustManifestCanonicalDigest": "572a0f061c731e57460c9c21644632fe43646d34a780dc47e739dc09e838768a",
+    "deterministicCoreDigest": "ded201fbeefddf6f4beb284975b27afe480e35602a1fa515a5efd363fa054800",
     "corpusConformanceDigest": "e6c9068a196f78bd767caa3718686d68d6ed4a83554dd6f17ea2bd556cddd01d",
     "adapterFreezeComposite": "27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234",
     "adapterFreezeCommit": "0ecd410691df10fbc68c9ddcd012dafa86aba536"
@@ -346,7 +346,7 @@
       },
       {
         "path": "provenance.json",
-        "sha256": "873511f73b4ed1b63f84ebe9d6531ba591b4cc4438f20d361729c80494f99b1d"
+        "sha256": "68442659a906d939cefc414ff6eda9372cc1f0fc43a46868c57147aa3ef142df"
       },
       {
         "path": "matrix.json",

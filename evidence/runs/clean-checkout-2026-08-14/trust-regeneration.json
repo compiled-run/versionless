@@ -1,0 +1,154 @@
+{
+	"record": "PM-authorized trust regeneration at HEAD — resolves the u2 packProvenanceFinding",
+	"unit": "lrapr-t010/u3-trust-regen-at-head",
+	"measuredAt": "2026-08-14T11:02Z",
+	"head": "298348e0b4409af29ad6bd8eb557a83ea5585c68",
+	"freeze": {
+		"composite": "27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234",
+		"reactTreeOid": "972ca80155bbc2a6eb3779943cd481b71d35e803",
+		"angularTreeOid": "4b6e2f4494d98582e4fe9b420c2b412059dc0720",
+		"checkedBefore": true,
+		"checkedAfter": true,
+		"intact": true
+	},
+	"environment": {
+		"node": "v24.15.0",
+		"pnpm": "10.33.2",
+		"platform": "darwin arm64",
+		"networkMode": "offline",
+		"nonLoopbackNetwork": 0
+	},
+	"whatWasRun": [
+		"pnpm exec vp pack (twice)",
+		"VERSIONLESS_NETWORK_MODE=offline node --experimental-strip-types packages/cli/src/cli.ts trust:generate --offline --policy trust/policy.json --output evidence/trust/current"
+	],
+	"packDeterminism": {
+		"result": "byte-stable",
+		"method": "all 11 distribution files hashed after run 1 and again after run 2; the two hash lists are identical",
+		"distInventory": {
+			"packages/cli/dist/cli.js": "48040241d7736c01d5a79b533074be582a574b11a633e8d977b29c160a597c94",
+			"packages/cli/dist/index.js": "8e5feacb782e2f2fc45510846ce96a92cf53629b8aa5d731eb9ed9f4574a67c2",
+			"packages/cli/dist/verify-B7NXJ3SC.js": "ec0b61bb378fb974e484120ca34cedfa0c2ff654b40ac9e8b1dacea628935403",
+			"packages/core/dist/index.js": "2ca9afd3305a92ac9e367484d84bd110c503564cf05b7e70ece9e12f815995fd",
+			"packages/experiments/dist/index.js": "d8010f506021916daca5893223078a3a4ca767cdd0a091dfc71db31ea46f3440",
+			"packages/frameworks/angular/dist/index.js": "f1a8b65391df4b36a88651400e16750a4b5b709d614f98754645fbd114fb10fc",
+			"packages/frameworks/angularjs/dist/index.js": "32a156567e0e193c851cfbf12b9a3ba2346145bf624a68e422b1ef12e2120f6b",
+			"packages/frameworks/nextjs/dist/index.js": "5bf951cec5b59c987d1778f69ba8ed08cb6343c889fd3ea412dc2413fec937b5",
+			"packages/frameworks/react/dist/index.js": "5515304e7b4de4e1cb017f5c7d87cc6d4e11fb2f1d920049b96fb548200f0116",
+			"packages/node-guard/dist/index.cjs": "712511b49d6118cc33dff524dd2ea7aa9061eb80a8df0fb2c0ee4a3bc50ed8b6",
+			"packages/trust/dist/index.js": "4878de2e6617e3bdc3523473b5a2daa52af39d109b69e6adf80619ffad79fbde"
+		},
+		"note": "These are the bytes HEAD actually produces, and the bytes provenance.json now attests. The u2 receipt recorded the same six spot digests for the same build."
+	},
+	"digestsBeforeAndAfter": {
+		"manifest.canonicalDigest": {
+			"before": "213b43e88b51d2bb998c53923b31a24d0bbf49a5af74cddd89f23bf97e1497af",
+			"after": "572a0f061c731e57460c9c21644632fe43646d34a780dc47e739dc09e838768a",
+			"expected": true
+		},
+		"manifest.deterministicCore.digest": {
+			"before": "656e861a54c4a06bda94e324dbee756f241b11d4a1128d48b9b8fa307b459b45",
+			"after": "ded201fbeefddf6f4beb284975b27afe480e35602a1fa515a5efd363fa054800",
+			"expected": false,
+			"status": "MOVED — the packet's stop condition. Reported to the PM for ratification; not concealed and not worked around."
+		}
+	},
+	"deterministicCoreMove": {
+		"headline": "The deterministic core moved because provenance.json is a member of it. The move is structural, not drift.",
+		"mechanism": "packages/trust/src/generate.ts:2058 computes coreDigest = sha256(canonicalize({ artifacts, receipts })) where `artifacts` is the {path, sha256} list of the 12 deterministic artifacts, and provenance.json is entry 5 of that list (generate.ts:2044). Re-attesting a different distribution inventory necessarily changes provenance.json's bytes, therefore its sha256, therefore the core digest. No regeneration that changes the attested dist can leave 656e861a in place.",
+		"scopeOfTheChange": {
+			"coreArtifactsChanged": 1,
+			"coreArtifactsByteIdentical": 11,
+			"changedArtifact": {
+				"path": "provenance.json",
+				"before": "873511f73b4ed1b63f84ebe9d6531ba591b4cc4438f20d361729c80494f99b1d",
+				"after": "68442659a906d939cefc414ff6eda9372cc1f0fc43a46868c57147aa3ef142df"
+			},
+			"unchangedArtifacts": [
+				"adapter-freeze.json c5d7273e",
+				"dependency-graph.cdx.json 3d0d791f",
+				"licenses.json 0927c71b",
+				"vulnerabilities.json 6a9ec422",
+				"matrix.json cf6b94e0",
+				"controls.json a5e61dca",
+				"retention.json f1a7f916",
+				"corpus-conformance.json 3748d308",
+				"script-surface.json e10f554b",
+				"runtime-script-observation.json 086e0c84",
+				"capability-coverage.json d4a40ba7"
+			],
+			"receipts": "27 verified receipts, every path and digest identical to the pre-regeneration manifest — including receipt 52400147 and the two holdout chains.",
+			"interpretation": "Nothing the core asserts about evidence moved. The single moved member is exactly the attestation the PM ordered brought up to HEAD. This is the strongest available evidence that the regeneration changed the attestation and nothing else."
+		},
+		"whyItHeldAcrossEarlierRegenerations": "At 6d6c779 and cac8b07 the canonicalDigest moved (364f3ad6 -> 213b43e8) while the core stayed 656e861a, because those regenerations did not change the dist being attested. Only observation.generatedAt moved, and generatedAt is in the manifest but not in the core preimage."
+	},
+	"provenanceSubjectComparison": {
+		"subjects": 11,
+		"changed": 7,
+		"byteIdenticalToThePreviousAttestation": 4,
+		"identical": [
+			"packages/experiments/dist/index.js",
+			"packages/frameworks/angularjs/dist/index.js",
+			"packages/frameworks/nextjs/dist/index.js",
+			"packages/node-guard/dist/index.cjs"
+		],
+		"renamedChunk": "the previously attested packages/cli/dist/verify-CaJ2OPHR.js does not exist at HEAD; HEAD emits packages/cli/dist/verify-B7NXJ3SC.js",
+		"cause": "commit ed39ccd changed packages/cli/src/** after the previous trust package was generated, exactly as the u2 packProvenanceFinding diagnosed."
+	},
+	"filesRewrittenByTheGenerator": {
+		"count": 5,
+		"files": {
+			"provenance.json": {
+				"before": "873511f73b4ed1b63f84ebe9d6531ba591b4cc4438f20d361729c80494f99b1d",
+				"after": "68442659a906d939cefc414ff6eda9372cc1f0fc43a46868c57147aa3ef142df"
+			},
+			"manifest.json": {
+				"before": "30a0ba1245d6b53b7c3e8e02f52b9d3bdf9c42b152771341e6244d4d443cb692",
+				"after": "ebe5e26c8d237b5dcd03f9ddacf537ffe90ee559abe00a45b9f6f3e81944dd5e"
+			},
+			"report.md": {
+				"before": "9517adf1dd800013805e3a0f2a58e3a1ae2d045adb64ee510af31ea5828f5a2e",
+				"after": "68a313999d6936f4cca2d62d90c442ce008656f0701b23404c58f83a90efad1e"
+			},
+			"enterprise-report.json": {
+				"before": "3ab15b7d41172f137c9c0c42cc5d2f2a76df36dee4757572253ad3efd15c1563",
+				"after": "704ef479e4c5cd8bd7d1d5d5396a140d7160a434efbca80b79837b58be3ee1d5"
+			},
+			"enterprise-report.md": {
+				"before": "2db26ee84e132c54567d15904ba861646754cce0cbd06cac6de3189bc83f3800",
+				"after": "1b3dfd0973497aeb11aa3be81b8c256d41f8f3cf06dcc9a269548cfb65fc4a8d"
+			}
+		},
+		"handEdits": 0,
+		"note": "All five files are generator output. Nothing under evidence/trust/current was hand-edited by this unit; the other 11 files in the directory are byte-identical to their committed bytes."
+	},
+	"gatesAfterRegeneration": {
+		"trustVerifyOffline": "{\"valid\":true,\"digest\":\"572a0f06...\",\"deterministicCore\":\"ded201fb...\",\"artifacts\":12}",
+		"reportEnterpriseVerifyOnly": "pass, mode verified — re-derived machineArtifact 704ef479 and humanDocument 1b3dfd09, both equal to the bytes on disk",
+		"operatorFlowsTests": "packages/cli/test/operator-flows.test.ts 25/25 pass — the 3 tests u2 recorded red (operator verify > summarises the offline checks and recomputes the frozen subtrees, and both operator supported-matrix cases) are green",
+		"supportedMatrixRegeneration": {
+			"result": "byte-stable across repeated runs",
+			"jsonRender": "3e59d8c14084b1945501e697f930a520d0b833af9527d4fac1514f04c50c64c4",
+			"textRender": "220e84bd9caaae5b69696519b3882230dd12c621f4eda5da6656144710973922",
+			"movedFrom": "u2 measured 380a2136 (json) and d41d54f0 (text); both renders embed the trust digest, so they move with it by construction. Counts are unchanged.",
+			"derivedTrustDigest": "572a0f061c731e57460c9c21644632fe43646d34a780dc47e739dc09e838768a"
+		}
+	},
+	"staleBindingsLeftForThePM": {
+		"note": "Two records outside this unit's file contract still quote the pre-regeneration trust digest. They were NOT edited.",
+		"files": [
+			"evidence/runs/operator-flows/supported-matrix.json — trustDigest 213b43e8",
+			"evidence/runs/operator-flows/verify.json — detail \"digest 213b43e8, 12 artifacts\""
+		],
+		"impact": "No gate reads them as an expectation: the operator-flows suite passes 25/25 against the regenerated package. They are stale published transcripts, not a red gate.",
+		"recommendation": "Re-record them in the same change that ratifies the new digest."
+	},
+	"orderingRuleAdopted": "The trust package must be generated after the build it attests, and regenerated whenever packages/*/src changes. This unit followed that order: vp pack, then trust:generate, then the verifies.",
+	"hygiene": {
+		"productCodeChanges": 0,
+		"sealedRecordsModified": 0,
+		"reformattedFiles": 0,
+		"committedOrStaged": false,
+		"processesLeftRunning": 0
+	}
+}

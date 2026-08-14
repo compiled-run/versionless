@@ -1,0 +1,66 @@
+{
+	"record": "declared deviation — the fmt gate is NOT green at HEAD and is recorded, not hidden",
+	"unit": "lrapr-t010/u3-trust-regen-at-head",
+	"measuredAt": "2026-08-14T11:07Z",
+	"freeze": "27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234",
+	"head": "298348e0b4409af29ad6bd8eb557a83ea5585c68",
+	"environment": {
+		"node": "v24.15.0",
+		"pnpm": "10.33.2",
+		"platform": "darwin arm64",
+		"networkMode": "offline"
+	},
+	"gateStatus": "declared-deviation — NOT green. `pnpm exec vp fmt` does not pass at HEAD and this unit did not make it pass. Nothing was reformatted.",
+	"whatWasRun": {
+		"command": "pnpm exec vp fmt --list-different",
+		"writes": "none — verified with `git status --porcelain` immediately afterwards: the only modified tracked files in the tree were this unit's five regenerated trust artifacts. No source byte was rewritten by this measurement.",
+		"exitCode": 2,
+		"reproducesU2": "yes — the inventory below is byte-for-byte the same set and the same per-directory counts the u2 receipt recorded, measured again independently at HEAD."
+	},
+	"inventory": {
+		"filesNotInCanonicalForm": 249,
+		"allTracked": true,
+		"perDirectory": {
+			"packages/cli/src": 89,
+			"packages/frameworks/angular": 74,
+			"packages/cli/test": 36,
+			"packages/core/src": 18,
+			"packages/core/test": 17,
+			"packages/frameworks/react": 8,
+			"packages/trust/src": 5,
+			"packages/trust/test": 2
+		},
+		"insideFrozenSubtrees": {
+			"count": 82,
+			"packages/frameworks/angular": 74,
+			"packages/frameworks/react": 8
+		},
+		"outsideFrozenSubtrees": 167
+	},
+	"exitCodeTwoCause": {
+		"cause": "13 untracked YAML files under .claude/worktrees/*/docs/goals/react-angular-migration-spine/state.yaml fail to parse (SyntaxError: Invalid escape sequence \\]).",
+		"nature": "These are other agent sessions' git worktrees living inside this host tree. They are not repository content and do not exist in a clean checkout — which is why u1 recorded fmt green from a clean checkout. This exit code is a host-tree artifact, not a repository defect.",
+		"separateFromTheInventory": "The 249-file inventory is measured independently of these parse errors and is a real repository-state fact.",
+		"alsoUnformattedButNotRepositoryContent": "9 untracked .fable-opus/** harness state files were additionally listed by this run and are excluded from the 249; the harness's own state is not repository source."
+	},
+	"ruling": {
+		"decision": "declared deviation — do not reformat under freeze 27741d9c; defer the format epoch to tranche-two",
+		"reasons": [
+			"82 of the 249 files are inside the frozen adapter subtrees (74 under packages/frameworks/angular, 8 under packages/frameworks/react). Reformatting them changes those tree oids, and therefore breaks the freeze composite 27741d9c and the sealed byte-identity chains that were measured against it.",
+			"The difference is cosmetic only. No behavior, no emitted artifact and no digest depends on the formatting of these files: tsc, vp lint, the 2476-test node suite, receipt/corpus/script-surface/trust verifies and the enterprise re-derivation are all green at HEAD with the files exactly as they are.",
+			"Correcting formatting is a whole-repository mechanical epoch. Doing it inside a frozen release candidate would mix a cosmetic sweep into the evidence chain the freeze exists to protect."
+		],
+		"deferredTo": "tranche-two format epoch: reformat the whole repository in one commit after the freeze is lifted, and change the gate form at the same time."
+	},
+	"gateFormFinding": {
+		"observed": "`vp fmt` defaults to --write. It silently rewrites files and still exits 0, so a historically green fmt gate never asserted canonical formatting — it performed it.",
+		"consequence": "Every prior 'fmt: pass' in this goal's evidence means 'the formatter ran', not 'the tree is canonically formatted'. That is why 249 unformatted files could accumulate under a green gate.",
+		"recommendedGateForm": "`pnpm exec vp fmt --list-different` (assert, never write), with .claude/** and .fable-opus/** excluded so host-tree artifacts cannot set the exit code."
+	},
+	"honestStatement": "vp fmt is not green at HEAD. 249 committed source files are not in the formatter's canonical form and 82 of them cannot be corrected under freeze 27741d9c. This is published as a declared deviation with its full inventory rather than being reformatted away, hidden behind the gate's --write default, or reported as a pass.",
+	"whatThisUnitDidNotDo": [
+		"No file was reformatted. No source byte was changed.",
+		"No gate was weakened, skipped or redefined to make fmt pass.",
+		"No frozen-subtree byte was touched; the freeze composite is unchanged."
+	]
+}

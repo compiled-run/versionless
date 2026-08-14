@@ -40,6 +40,33 @@
 			"trustDigestReconciliation": "The T025 Judge recorded trust digest 364f3ad6; the verify now reports 213b43e8. Not a drift: commit cac8b07 (T009 claims surfaces) regenerated the committed trust bundle. The manifest canonicalDigest is 364f3ad6 at 6d6c779 and 213b43e8 at cac8b07 and at HEAD, while the deterministicCore is 656e861a at all three.",
 			"fmt": "RED IN THIS TREE and named rather than patched — see portfolio.json fmtFinding. `vp fmt` exits 2 on 13 untracked .claude/worktrees YAML files (other sessions, not repository content) and, defaulting to --write, rewrites 249 committed source files, 82 of them inside the frozen adapter subtrees. All 249 writes were reverted; the tracked tree is clean. Under freeze 27741d9c the formatting cannot be corrected, so this is a stop-class finding for the release candidate.",
 			"packProvenance": "STOP CONDITION. The committed trust package was generated at 04:23; commit ed39ccd at 05:01 then changed packages/cli/src/** and is an ancestor of HEAD. provenance.json therefore attests dist bytes that HEAD cannot produce. Running the packet-listed `vp pack` gate rebuilt dist deterministically (verified twice) and 7 of 11 provenance subjects no longer match; the attested chunk verify-CaJ2OPHR.js is gone. trust:verify and 3 node tests are red at the close of this unit. Until 05:44 they passed only because pre-ed39ccd build output was still sitting in the gitignored dist directories. Not patched: regenerating the trust package changes digest 213b43e8 and the enterprise/matrix bindings, which is a Judge decision."
+		},
+		"finalState": {
+			"unit": "lrapr-t010/u3-trust-regen-at-head",
+			"measuredAt": "2026-08-14T11:08Z",
+			"head": "298348e0b4409af29ad6bd8eb557a83ea5585c68",
+			"tree": "main working tree with the portfolio lane corpus materialized; offline throughout; each gate run serialized and alone",
+			"tsc": "green — pnpm exec tsc --noEmit, exit 0",
+			"lint": "green — pnpm exec vp lint, exit 0, 590 files, 93 rules, 29 warnings, 0 errors",
+			"pack": "green — pnpm exec vp pack, exit 0, run twice, byte-identical distribution output both times (detail: trust-regeneration.json)",
+			"testNode": "green — pnpm exec vp test --project node, 243 files, 2476/2476 passed. The 3 operator-flows tests u2 recorded red are green; packages/cli/test/operator-flows.test.ts is 25/25.",
+			"receiptVerifyOffline": "green — valid true, digest 52400147929220935a9ebe47a16c8dff50b5c28e9d51c930d000c99c2bdc8a21, 10 artifacts (unchanged from the Judge-recorded value)",
+			"corpusVerifyOffline": "green — pass, digest e6c9068a196f78bd767caa3718686d68d6ed4a83554dd6f17ea2bd556cddd01d, 20 verticals, 12 source applications (unchanged)",
+			"scriptSurfaceVerify": "green — pass, 9 verticals, 2 source applications, 18 lanes, 0 external scripts introduced (unchanged)",
+			"trustVerifyOffline": "green — valid true, digest 572a0f061c731e57460c9c21644632fe43646d34a780dc47e739dc09e838768a, deterministicCore ded201fbeefddf6f4beb284975b27afe480e35602a1fa515a5efd363fa054800, 12 artifacts",
+			"reportEnterpriseVerifyOnly": "green — pass, mode verified, re-derived machineArtifact 704ef479e4c5cd8bd7d1d5d5396a140d7160a434efbca80b79837b58be3ee1d5 and humanDocument 1b3dfd0973497aeb11aa3be81b8c256d41f8f3cf06dcc9a269548cfb65fc4a8d, both equal to the bytes on disk",
+			"supportedMatrix": "green — byte-stable across repeated runs, json 3e59d8c14084b1945501e697f930a520d0b833af9527d4fac1514f04c50c64c4, text 220e84bd9caaae5b69696519b3882230dd12c621f4eda5da6656144710973922, derived from trust digest 572a0f06; counts unchanged (React 6/6, Angular 4/4)",
+			"fmt": "declared-deviation — NOT green and not hidden. 249 committed source files are not in the formatter's canonical form (89 packages/cli/src, 74 packages/frameworks/angular, 36 packages/cli/test, 18 packages/core/src, 17 packages/core/test, 8 packages/frameworks/react, 5 packages/trust/src, 2 packages/trust/test); 82 of them are inside the frozen adapter subtrees, so reformatting would break freeze composite 27741d9c and the sealed byte-identity chains. Cosmetic-only; format epoch deferred to tranche-two. Nothing was reformatted. Detail: evidence/runs/clean-checkout-2026-08-14/fmt-deviation.json",
+			"packProvenanceFindingResolved": "yes — the u2 STOP CONDITION is closed by PM-authorized regeneration at HEAD: vp pack first, then trust:generate --offline. provenance.json now attests the distribution HEAD actually produces, and every gate that reads the distribution inventory is green. Detail: evidence/runs/clean-checkout-2026-08-14/trust-regeneration.json",
+			"deterministicCoreMoved": {
+				"before": "656e861a54c4a06bda94e324dbee756f241b11d4a1128d48b9b8fa307b459b45",
+				"after": "ded201fbeefddf6f4beb284975b27afe480e35602a1fa515a5efd363fa054800",
+				"status": "AWAITING PM RATIFICATION — the u3 packet expected this value to hold and reserved a stop if it moved.",
+				"why": "provenance.json is member 5 of the deterministic core artifact list, and the core digest is sha256(canonicalize({artifacts, receipts})) over that list (packages/trust/src/generate.ts:2044, :2058). Re-attesting a different dist necessarily moves the core. It is structurally impossible to bring provenance.json to HEAD and keep 656e861a.",
+				"scope": "1 of the 12 core artifacts changed (provenance.json 873511f7 -> 68442659); the other 11 are byte-identical and all 27 verified receipts are unchanged. Nothing the core asserts about evidence moved."
+			},
+			"freeze": "intact — react tree oid 972ca80155bbc2a6eb3779943cd481b71d35e803 and angular tree oid 4b6e2f4494d98582e4fe9b420c2b412059dc0720 checked before and after; composite 27741d9c unchanged",
+			"honestStatement": "At HEAD, after the authorized regeneration, every repository gate is green except fmt, which is published as a declared deviation with its full 249-file inventory rather than reformatted or reported as a pass. One item is not a gate result and is not resolved by this unit: the deterministic core digest moved, which the u3 packet reserved for the PM."
 		}
 	},
 	"holdouts": {
@@ -102,6 +129,12 @@
 			"unit": "lrapr-t010/u2-portfolio-rerun-and-gates",
 			"delivered": "the three unknown gates closed green, the ten-application portfolio verification, the full serialized gate suite, and this release-candidate record",
 			"detail": "evidence/runs/clean-checkout-2026-08-14/portfolio.json"
+		},
+		{
+			"unit": "lrapr-t010/u3-trust-regen-at-head",
+			"delivered": "the two PM rulings on the u2 findings: trust regeneration at HEAD (vp pack, then trust:generate --offline) which closes the packProvenanceFinding and returns every distribution-reading gate to green, the fmt declared-deviation record, and the final gates state below",
+			"left": "the deterministic core digest moved 656e861a -> ded201fb (structurally forced by re-attesting a new dist) and is referred to the PM for ratification; evidence/runs/operator-flows/{verify,supported-matrix}.json still quote the pre-regeneration trust digest and are outside this unit's file contract",
+			"detail": "evidence/runs/clean-checkout-2026-08-14/trust-regeneration.json and evidence/runs/clean-checkout-2026-08-14/fmt-deviation.json"
 		}
 	],
 	"portfolio": {
@@ -124,8 +157,23 @@
 		"liveBrowserRerunOfTheTenCountedCells": "NOT performed in this unit and NOT claimed — the ten cells were re-derived offline from sealed evidence and re-measured on disk. The fresh live browser re-execution under this freeze covers the two holdouts only and was done by u1.",
 		"unknownsPreserved": true
 	},
+	"releaseCandidateAfterU3": {
+		"state": "CLEAN-WITH-ONE-DECLARED-DEVIATION and one open ratification — supersedes the u2 verdict below, which is left exactly as u2 wrote it",
+		"measuredAt": "2026-08-14T11:08Z",
+		"unit": "lrapr-t010/u3-trust-regen-at-head",
+		"stopConditionsFromU2": {
+			"packProvenanceFinding": "RESOLVED — the PM authorized regeneration at HEAD. vp pack ran first (byte-stable across two runs), then trust:generate --offline re-attested the distribution HEAD actually produces. trust:verify --offline is valid, report:enterprise --verify-only re-derives both published artifacts, and the 3 previously-red operator-flows tests are green (25/25 in that file, 2476/2476 across the node suite).",
+			"fmtFinding": "DECLARED DEVIATION, not resolved and not hidden. The 249-file inventory is re-measured at HEAD and published in fmt-deviation.json with per-directory counts; 82 files sit inside the frozen adapter subtrees so reformatting would break the freeze composite and the sealed byte-identity chains. Cosmetic-only; format epoch deferred to tranche-two."
+		},
+		"openForThePM": "The deterministic core digest moved from 656e861a to ded201fb. The u3 packet expected it to hold and reserved a stop if it moved, so this unit stopped and referred it rather than ratifying it. The move is structural: provenance.json is a member of the core, so re-attesting a different dist necessarily changes the core digest. 11 of the 12 core artifacts and all 27 receipts are byte-identical.",
+		"gates": "see gates.finalState above — every gate green except fmt (declared deviation)",
+		"portfolioItself": "green (u2, unchanged)",
+		"freezeIntact": true,
+		"productCodeChanges": 0,
+		"sealedRecordsModified": 0
+	},
 	"releaseCandidate": {
-		"state": "NOT-CLEAN — two stop-class findings open",
+		"state": "NOT-CLEAN — two stop-class findings open (u2's verdict, superseded by releaseCandidateAfterU3)",
 		"green": "The three previously-unknown gates (all three re-ran green), the ten counted cells with zero stale/skipped/ambiguous/red cells, both holdouts, the retained REDs, corpus e6c9068a, script-surface, tsc, lint, byte-stable supported-matrix and enterprise report re-derivation, freeze 27741d9c intact.",
 		"stopConditions": [
 			"packProvenanceFinding — the trust package attests a distribution inventory HEAD does not reproduce; vp pack invalidates trust:verify and 3 node tests.",
