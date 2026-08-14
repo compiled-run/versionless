@@ -58,6 +58,7 @@ import {
 } from './angular-cli-json-workspace-synthesis.ts';
 import { tslintConfigRemovals } from './tslint-toolchain-removal.ts';
 import { declareBuilderPackages } from './builder-package-declaration.ts';
+import { retargetWorkspaceEngines } from './workspace-engines-retarget.ts';
 import {
 	addModuleWithProvidersTypeArgument,
 	type ModuleWithProvidersChange,
@@ -382,12 +383,23 @@ export function migrateAngularCliEraWorkspace(
 	 */
 	const builders = declareBuilderPackages(declared.manifest, workspace.config, cell);
 	unhandled.push(...builders.unhandled);
+	/**
+	 * The workspace's own runtime declaration is retargeted after every
+	 * capability that decides what the closure is: `engines.node` is a statement
+	 * about the cell the manifest now installs for, so it is written once the
+	 * manifest has finished becoming that cell's manifest. It stands down on a
+	 * workspace that declares no engines, and on one whose declaration already
+	 * admits the cell's Node line.
+	 */
+	const engines = retargetWorkspaceEngines(builders.manifest, cell);
+	unhandled.push(...engines.unhandled);
+	declaredDifferences.push(...engines.declaredDifferences);
 	const tsConfig = migrateAngularTsConfig(input.tsConfig.source, cell);
 	unhandled.push(...tsConfig.unhandled);
 	const files: MigratedFile[] = [
 		file(
 			input.packageManifest,
-			`${JSON.stringify(builders.manifest, null, 2)}\n`,
+			`${JSON.stringify(engines.manifest, null, 2)}\n`,
 			'workspace',
 			[
 				...aligned.changes.map(describeDependencyChange),
@@ -399,6 +411,12 @@ export function migrateAngularCliEraWorkspace(
 					(entry) =>
 						`added ${entry.field}.${entry.name} = ${entry.range} — ${entry.reason}`,
 				),
+				...(engines.retarget === null
+					? []
+					: [
+							`retargeted ${engines.retarget.field} from ${engines.retarget.from} to ` +
+								`${engines.retarget.to} — ${engines.retarget.reason}`,
+						]),
 			],
 		),
 		file(

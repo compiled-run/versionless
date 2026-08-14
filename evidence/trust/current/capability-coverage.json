@@ -3,8 +3,9 @@
   "purpose": "Map every exported migration capability to the independent applications that prove it, and derive its generality classification from that proof count",
   "crossProvenThreshold": 2,
   "method": [
-    "Enumerated from the @versionless/react and @versionless/angular index barrels: seven React modules and forty-one Angular modules.",
+    "Enumerated from the @versionless/react and @versionless/angular index barrels: seven React modules and forty-two Angular modules.",
     "Proving applications are the independent applications whose recorded migration exercised the capability — a direct invocation in the application migration fixture, or a construct-gated firing recorded in its build-lane run.",
+    "angular-pigallery2 appears as a proving application and is deliberately absent from the independent-application matrix below: it is the T018 holdout, whose migrated build is recorded RED. A capability it exercises is recorded on that one application and is therefore experimental, and nothing here claims the application builds.",
     "Classification is derived: cross-proven (in-matrix) requires at least two distinct independent applications; fewer is experimental (out-of-matrix).",
     "Where the frozen adapter-freeze.json editorial already classifies a capability this map adopts it unchanged, except ngrx-effects-migration, reclassified cross-proven on the second application (super-productivity) admitted after the freeze.",
     "Where an application set cannot be determined from records the capability is marked unproven coverage and defaults to experimental."
@@ -28,18 +29,18 @@
     ]
   },
   "summary": {
-    "total": 49,
+    "total": 50,
     "crossProven": 8,
-    "experimental": 41,
+    "experimental": 42,
     "react": {
       "total": 8,
       "crossProven": 1,
       "experimental": 7
     },
     "angular": {
-      "total": 41,
+      "total": 42,
       "crossProven": 7,
-      "experimental": 34
+      "experimental": 35
     }
   },
   "capabilities": [
@@ -329,7 +330,7 @@
         "packages/cli/src/fixture/angular-super-productivity-lanes-run.ts",
         "packages/cli/src/fixture/angular-tiny-translator-lanes-run.ts"
       ],
-      "note": "Target-cell manifest alignment; invoked unconditionally by the era orchestrator across all four Angular applications. Cross-proven in adapter-freeze. Extended by T021 u2 with three readings the Angular holdout demanded — @angular-devkit/build-optimizer and ng2-slim-loading-bar as no-successor, ngx-toastr aligned to ^17.0.2 by its compiled-with stamp — and with `familyPrefixedEcosystemReadings`, which enumerates the packages whose per-package reading overrides their family prefix. A family prefix infers a range from a name; the ecosystem table reads the package, and `alignedVersionRange` consults it first, which is what stops the rule writing a version nobody published. First measured end to end on 2026-08-14: the pigallery2 migrated closure resolves and installs 2278 packages under this alignment.",
+      "note": "Target-cell manifest alignment; invoked unconditionally by the era orchestrator across all four Angular applications. Cross-proven in adapter-freeze. Extended by T021 u2 with three readings the Angular holdout demanded — @angular-devkit/build-optimizer and ng2-slim-loading-bar as no-successor, ngx-toastr aligned to ^17.0.2 by its compiled-with stamp — and with `familyPrefixedEcosystemReadings`, which enumerates the packages whose per-package reading overrides their family prefix. A family prefix infers a range from a name; the ecosystem table reads the package, and `alignedVersionRange` consults it first, which is what stops the rule writing a version nobody published. First measured end to end on 2026-08-14: the pigallery2 migrated closure resolves and installs 2278 packages under this alignment. Extended again by T021 u3 with the compile-stage readings — the class an install-stage reading hides, where an open-ended peer range lets a library through the resolver and its published .d.ts refuse at the compiler: ngx-bootstrap aligned to ^11.0.2 (its peers do discriminate; the compiled-with stamp 16.1.4 confirms them), @yaga/leaflet-ng2 and jw-bootstrap-switch-ng2 as no-successor, and xlf-google-translate aligned to ^1.0.4 to leave behind an era line whose own dependency the registry deleted.",
       "proofCount": 4,
       "classification": "cross-proven"
     },
@@ -1015,6 +1016,28 @@
         "packages/cli/src/fixture/angular-jira-clone-apply-run.ts"
       ],
       "note": "Sentry v8 tracing migration; only the jira-clone application carries the construct. Experimental in adapter-freeze.",
+      "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "workspace-engines-retarget",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "retargetWorkspaceEngines",
+        "nodeRangeReading",
+        "cellNodeEngineRange",
+        "parseNodeVersion"
+      ],
+      "provenApps": [
+        "angular-pigallery2"
+      ],
+      "attribution": "orchestrated-construct-gated",
+      "coverage": "proven",
+      "evidence": [
+        "packages/cli/src/fixture/angular-pigallery2-migration-run.ts"
+      ],
+      "note": "Workspace-manifest engines.node retarget; composed into migrateAngularCliEraWorkspace by T021 u3 and gated on the construct — it fires only where the manifest declares an engines.node range that excludes the target cell's own Node line, and stands down on a workspace declaring no engines, on one whose declaration already admits the cell, and on a range shape it cannot read. The range written is derived from the cell (the caret on its declared Node line); no version appears in the capability. Only the pigallery2 holdout carries the construct: its era engines.node \">= 6.9 <11.0\" excluded Node 16.20.2 and every install under the migrated manifest reported EBADENGINE against the workspace itself.",
       "proofCount": 1,
       "classification": "experimental"
     },

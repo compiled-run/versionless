@@ -10,6 +10,7 @@ export * from './font-inlining-disable.ts';
 export * from './angular-workspace-migration.ts';
 export * from './angular-cli-json-workspace-synthesis.ts';
 export * from './builder-package-declaration.ts';
+export * from './workspace-engines-retarget.ts';
 export * from './angular-source-migration.ts';
 export * from './ngrx-effects-migration.ts';
 export * from './sentry-v8-migration.ts';

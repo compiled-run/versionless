@@ -14,13 +14,22 @@ import {
 	DOWNSTREAM_READING,
 	ERA_FACTS_NOT_CARRIED,
 	GAPS,
+	COMPILE_STAGE_DEPENDENCY_CLOSURE,
 	INSTALL_STAGE_CLOSURE,
 	PROBE,
 	PROBE_DIAGNOSTIC_COUNTS,
 	buildMigrationBlock,
 	buildMigrationRecord,
 } from '../src/fixture/angular-pigallery2-migration-record.ts';
-import { ANGULAR_16_ECOSYSTEM_PACKAGES } from '../../frameworks/angular/src/index.ts';
+import {
+	ANGULAR_16_BROWSER_CELL,
+	ANGULAR_16_ECOSYSTEM_PACKAGES,
+	alignedVersionRange,
+	cellAcceptsBuildStamp,
+	cellNodeEngineRange,
+	ecosystemDispositionOf,
+	nodeRangeReading,
+} from '../../frameworks/angular/src/index.ts';
 
 async function readAttempt(): Promise<Record<string, unknown>> {
 	return JSON.parse(await readFile(ATTEMPT_FILE, 'utf8')) as Record<string, unknown>;
@@ -80,9 +89,108 @@ describe('pigallery2 Angular holdout migration record', () => {
 			/** The demand is not rewritten by the answer: the red diagnostic stays. */
 			expect(gap.observed).toContain('npm ERR!');
 		}
-		/** A compile-stage gap is still open, and says nothing about being closed. */
-		for (const gap of GAPS.filter((entry) => entry.stage === 'compile'))
+		/**
+		 * G4 is the dependency half of the compile stage and is closed by the unit
+		 * that read the three libraries. G5, G6 and G7 are source demands and are
+		 * still open; a gap that is open says nothing about being closed.
+		 */
+		const g4 = GAPS.find((gap) => gap.id === 'G4');
+		expect(g4?.stage).toBe('compile');
+		expect(g4?.closedBy).toContain('lrapr-t021/u3');
+		expect(g4?.observed).toContain('TS2314');
+		for (const gap of GAPS.filter(
+			(entry) => entry.stage === 'compile' && entry.id !== 'G4',
+		))
 			expect(gap.closedBy).toBeUndefined();
+	});
+
+	it('names the four compile-stage dependency readings, and holds each to the cell', () => {
+		const readings = COMPILE_STAGE_DEPENDENCY_CLOSURE.readings;
+		expect(Object.keys(readings).sort()).toEqual([
+			'@yaga/leaflet-ng2',
+			'jw-bootstrap-switch-ng2',
+			'ngx-bootstrap',
+			'xlf-google-translate',
+		]);
+		/** Every package the record names is a package the cell actually reads. */
+		for (const name of Object.keys(readings))
+			expect(Object.keys(ANGULAR_16_ECOSYSTEM_PACKAGES)).toContain(name);
+		/** And the verdict the record states is the verdict the cell carries. */
+		expect(alignedVersionRange('ngx-bootstrap', ANGULAR_16_BROWSER_CELL)).toBe('^11.0.2');
+		expect(alignedVersionRange('xlf-google-translate', ANGULAR_16_BROWSER_CELL)).toBe('^1.0.4');
+		for (const dropped of ['@yaga/leaflet-ng2', 'jw-bootstrap-switch-ng2']) {
+			expect(ecosystemDispositionOf(dropped, ANGULAR_16_BROWSER_CELL)?.kind).toBe('no-successor');
+			expect(alignedVersionRange(dropped, ANGULAR_16_BROWSER_CELL)).toBeNull();
+		}
+		const bootstrap = ecosystemDispositionOf('ngx-bootstrap', ANGULAR_16_BROWSER_CELL);
+		expect(bootstrap?.kind).toBe('aligned');
+		if (bootstrap?.kind !== 'aligned' || bootstrap.buildStamp === undefined) return;
+		expect(bootstrap.buildStamp.compiledWith).toBe('16.1.4');
+		expect(cellAcceptsBuildStamp(ANGULAR_16_BROWSER_CELL.angularLine, bootstrap.buildStamp)).toBe(
+			true,
+		);
+	});
+
+	it('records the engines retarget as the capability the era declaration demanded', () => {
+		const capability = COMPILE_STAGE_DEPENDENCY_CLOSURE.engineRetargetCapability;
+		expect(capability.module).toBe(
+			'packages/frameworks/angular/src/workspace-engines-retarget.ts',
+		);
+		/** The era declaration excluded the cell; the cell's own range admits it. */
+		expect(nodeRangeReading('>= 6.9 <11.0', ANGULAR_16_BROWSER_CELL.nodeLine)).toBe('excludes');
+		const written = cellNodeEngineRange(ANGULAR_16_BROWSER_CELL);
+		expect(written).toBe('^16.20.2');
+		expect(nodeRangeReading(written, ANGULAR_16_BROWSER_CELL.nodeLine)).toBe('admits');
+		expect(capability.observedEffect).toContain('EBADENGINE');
+		expect(capability.observedEffect).toContain('^16.20.2');
+		/** A retarget is a declaration, and the record refuses to read it as more. */
+		expect(capability.notEstablished).toContain('not a runtime claim');
+	});
+
+	it('states the second migrated build honestly: two classes closed, five differences speaking', () => {
+		const build = COMPILE_STAGE_DEPENDENCY_CLOSURE.laneBuild;
+		expect(build.exitStatus).toBe(1);
+		expect(build.artifactsEmitted).toBe(0);
+		expect(build.runs).toBe(1);
+		/** The two classes G4 was measured by are gone. */
+		expect(build.diagnosticCounts.TS2314).toBe(0);
+		expect(build.diagnosticCounts.TS2416).toBe(0);
+		/** The classes the drops produced grew, and are not hidden by the total. */
+		expect(build.diagnosticCounts.TS2307).toBeGreaterThan(
+			INSTALL_STAGE_CLOSURE.laneBuild.diagnosticCounts.TS2307,
+		);
+		/** The gaps this unit did not touch did not move. */
+		expect(build.diagnosticCounts.NG2007).toBe(
+			INSTALL_STAGE_CLOSURE.laneBuild.diagnosticCounts.NG2007,
+		);
+		expect(build.diagnosticCounts.TS2339).toBe(
+			INSTALL_STAGE_CLOSURE.laneBuild.diagnosticCounts.TS2339,
+		);
+		for (const code of ['NG8001', 'NG8002', 'NG8003', 'NG8004'] as const)
+			expect(build.diagnosticCounts[code]).toBe(
+				INSTALL_STAGE_CLOSURE.laneBuild.diagnosticCounts[code],
+			);
+		/** New findings are named rather than folded into a count. */
+		expect(build.newFindingsThisUnitProduced.length).toBeGreaterThanOrEqual(4);
+		expect(build.newFindingsThisUnitProduced.some((entry) => entry.includes('leaflet'))).toBe(true);
+		expect(
+			build.newFindingsThisUnitProduced.some((entry) => entry.includes('undeclared-runtime-dependency')),
+		).toBe(true);
+	});
+
+	it('installs the authored manifest with nothing narrowed away', () => {
+		const install = COMPILE_STAGE_DEPENDENCY_CLOSURE.laneInstall;
+		expect(install.attempt.exitStatus).toBe(0);
+		expect(install.attempt.noNarrowing).toContain('No package was removed');
+		expect(install.installedVersions['ngx-bootstrap']).toBe('11.0.2');
+		expect(install.installedVersions['xlf-google-translate']).toBe('1.0.4');
+		/** The two dropped packages are absent from the closure, not held back. */
+		for (const dropped of ['@yaga/leaflet-ng2', 'jw-bootstrap-switch-ng2'])
+			expect(install.absentFromTheClosure.some((entry) => entry.startsWith(dropped))).toBe(true);
+		/** The lockfile attempts that measured nothing are recorded as measuring nothing. */
+		expect(install.attemptsBeforeTheLockfileWasMovedOut.reading).toContain(
+			'not counted as one',
+		);
 	});
 
 	it('records the install the readings made possible, and the one refusal that is not a gap', () => {

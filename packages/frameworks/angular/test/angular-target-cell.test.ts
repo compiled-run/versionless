@@ -403,3 +403,135 @@ describe('the community readings behind a resolvable Angular 16 closure', () => 
 		expect(alignment.unhandled).toEqual([]);
 	});
 });
+
+/**
+ * The compile-stage readings: three libraries whose declared peer ranges have an
+ * open upper bound, so the resolver admits every one of them against this cell
+ * and the refusal arrives one stage later, out of the TypeScript program reading
+ * their published declarations.
+ *
+ * What separates the three is not how they failed but what the registry says
+ * about them, and the assertions below are written to keep that distinction
+ * visible: one has a published line built for this cell, and two have no line at
+ * all. An open peer range is not evidence of compatibility in either direction —
+ * it is the absence of evidence, and each package had to be read.
+ */
+describe('the compile-stage readings behind an open-ended peer range', () => {
+	it('aligns a library whose peers do discriminate, and confirms them with the stamp', () => {
+		const disposition = ecosystemDispositionOf('ngx-bootstrap', ANGULAR_16_BROWSER_CELL);
+		expect(disposition?.kind).toBe('aligned');
+		if (disposition?.kind !== 'aligned') return;
+		expect(disposition.range).toBe('^11.0.2');
+		expect(disposition.buildStamp?.compiledWith).toBe('16.1.4');
+		expect(cellAcceptsBuildStamp(ANGULAR_16_BROWSER_CELL.angularLine, disposition.buildStamp!)).toBe(
+			true,
+		);
+		/**
+		 * The peers are what chose the line here, so the reading has to state them:
+		 * the 11.x line declares ^16.0.0 where 12.0.0 declares ^17.0.0. Nothing is
+		 * recorded as excluded *by the stamp*, because nothing was.
+		 */
+		expect(disposition.fact).toContain('^16.0.0');
+		expect(disposition.fact).toContain('^17.0.0');
+		expect(disposition.excludedByBuildStamp).toBeUndefined();
+		/** The file a workspace can name rather than import, checked as toastr was. */
+		expect(disposition.fact).toContain('bs-datepicker.css');
+		/** And the narrowing the move brings with it, stated rather than hidden. */
+		expect(disposition.fact).toContain('exports');
+	});
+
+	it('drops a library whose newest line neither fixes its declarations nor links here', () => {
+		const disposition = ecosystemDispositionOf('@yaga/leaflet-ng2', ANGULAR_16_BROWSER_CELL);
+		expect(disposition?.kind).toBe('no-successor');
+		/**
+		 * Two independent readings had to hold before a drop was honest: that the
+		 * newest published line still declares the member the compiler refused, and
+		 * that it is published in a form this cell has no linker for.
+		 */
+		expect(disposition?.fact).toContain('1.1.0');
+		expect(disposition?.fact).toContain('addData');
+		expect(disposition?.fact).toContain('full');
+		expect(alignedVersionRange('@yaga/leaflet-ng2', ANGULAR_16_BROWSER_CELL)).toBeNull();
+	});
+
+	it('drops a ViewEngine library the resolver let through on an unbounded alternative', () => {
+		const disposition = ecosystemDispositionOf(
+			'jw-bootstrap-switch-ng2',
+			ANGULAR_16_BROWSER_CELL,
+		);
+		expect(disposition?.kind).toBe('no-successor');
+		expect(disposition?.fact).toContain('2.0.5');
+		expect(disposition?.fact).toContain('>=7.0.0');
+		expect(disposition?.fact).toContain('ngcc');
+	});
+
+	it('removes both dead libraries from a manifest and names each as a difference', () => {
+		const alignment = alignAngularPackageManifest(
+			{
+				devDependencies: {
+					'@yaga/leaflet-ng2': '1.0.0',
+					'jw-bootstrap-switch-ng2': '2.0.5',
+					'ngx-bootstrap': '5.1.0',
+				},
+			},
+			ANGULAR_16_BROWSER_CELL,
+		);
+		expect(alignment.manifest['devDependencies']).toEqual({ 'ngx-bootstrap': '^11.0.2' });
+		expect(alignment.declaredDifferences).toHaveLength(2);
+		expect(alignment.declaredDifferences[0]).toContain(
+			'devDependencies.@yaga/leaflet-ng2 was removed',
+		);
+		expect(alignment.declaredDifferences[1]).toContain(
+			'devDependencies.jw-bootstrap-switch-ng2 was removed',
+		);
+		expect(alignment.unhandled).toEqual([]);
+	});
+
+	it('aligns a package whose era line names a dependency the registry deleted', () => {
+		const disposition = ecosystemDispositionOf('xlf-google-translate', ANGULAR_16_BROWSER_CELL);
+		expect(disposition?.kind).toBe('aligned');
+		if (disposition?.kind !== 'aligned') return;
+		expect(disposition.range).toBe('^1.0.4');
+		/** The reading is a dependency reading, not an Angular one. */
+		expect(disposition.fact).toContain('@k3rn31p4nic/google-translate-api');
+		expect(disposition.fact).toContain('1.0.0-beta.22');
+		expect(disposition.fact).toContain('jira2md');
+		/** The executable a script names, checked the way a styles path is. */
+		expect(disposition.fact).toContain('cli.js');
+		const alignment = alignAngularPackageManifest(
+			{ devDependencies: { 'xlf-google-translate': '1.0.0-beta.15' } },
+			ANGULAR_16_BROWSER_CELL,
+		);
+		expect(alignment.manifest['devDependencies']).toEqual({
+			'xlf-google-translate': '^1.0.4',
+		});
+		expect(alignment.declaredDifferences).toEqual([]);
+	});
+
+	it('leaves no era pin of the compile-stage set behind in one pass', () => {
+		const alignment = alignAngularPackageManifest(
+			{
+				devDependencies: {
+					'@angular/core': '8.1.2',
+					'@yaga/leaflet-ng2': '1.0.0',
+					'jw-bootstrap-switch-ng2': '2.0.5',
+					'ngx-bootstrap': '5.1.0',
+					'xlf-google-translate': '1.0.0-beta.15',
+				},
+			},
+			ANGULAR_16_BROWSER_CELL,
+		);
+		expect(alignment.manifest['devDependencies']).toEqual({
+			'@angular/core': '^16.2.0',
+			'ngx-bootstrap': '^11.0.2',
+			'xlf-google-translate': '^1.0.4',
+		});
+		expect(alignment.declaredDifferences).toHaveLength(2);
+		expect(alignment.unhandled).toEqual([]);
+		/** Every surviving range is one the cell read, not one an era pin left. */
+		for (const [name, range] of Object.entries(
+			alignment.manifest['devDependencies'] as Record<string, string>,
+		))
+			expect(alignedVersionRange(name, ANGULAR_16_BROWSER_CELL)).toBe(range);
+	});
+});
