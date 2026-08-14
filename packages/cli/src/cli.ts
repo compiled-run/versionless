@@ -41,6 +41,7 @@ import {
 	verifyWitnessAngularRealworld,
 } from './witness/angular-realworld-run.ts';
 import { verifyLinkedWitnessProvenance } from './witness/provenance.ts';
+import { isOperatorCommand, runOperatorCommand } from './operator/flows.ts';
 
 const [command, ...rawArgs] = process.argv.slice(2);
 const args = rawArgs.filter((arg) => arg !== '--');
@@ -49,7 +50,14 @@ const valueAfter = (flag: string): string | undefined => {
 	return index >= 0 ? args[index + 1] : undefined;
 };
 try {
-	if (command === 'fixture:ingest') {
+	if (isOperatorCommand(command)) {
+		// The framework-neutral operator surface. These flows compose the same
+		// frozen public APIs the fixture drivers compose; they add argument
+		// validation, a JSON mode and refusals, and no migration decision.
+		const outcome = await runOperatorCommand(command, rawArgs);
+		process.stdout.write(outcome.text);
+		if (outcome.exitCode !== 0) process.exitCode = outcome.exitCode;
+	} else if (command === 'fixture:ingest') {
 		const fixture = valueAfter('--fixture');
 		const ingest = isLegacyCandidateId(fixture)
 			? (options: { allowNetwork: boolean; consentId?: string }) =>
@@ -363,8 +371,7 @@ try {
 		// human document from the same canonical receipts. `--verify-only` refuses
 		// to write, so a reviewer can check the published pair without touching it.
 		const outputDir = valueAfter('--output') ?? 'evidence/trust/current';
-		if (!args.includes('--offline'))
-			throw new Error('report:enterprise requires --offline');
+		if (!args.includes('--offline')) throw new Error('report:enterprise requires --offline');
 		const verifyOnly = args.includes('--verify-only');
 		const result = await runEnterpriseReport({
 			outputDir,

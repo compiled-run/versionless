@@ -22,6 +22,28 @@ VERSIONLESS_NETWORK_MODE=offline node --experimental-strip-types packages/cli/sr
 
 Both files are **derived, never authored**. Every green cell is filtered out of the Judge counting ledger the corpus derived and cross-checked against that corpus numerator and denominator, so a cell edited into either file fails verification instead of changing a claim. The two published holdouts are quoted with the exact outcome strings their receipts carry and are counted in no lineage numerator, the recorded REDs are retained as permanent falsification history, and the declared Angular 16 pre-Ivy support boundary is published with its prevalence and population statement beside the successes.
 
+## Operator flows
+
+Five framework-neutral commands are the operator surface over the same frozen migration engines the fixture drivers use. They are local, offline, and they never write into the application they are pointed at. Full reference: [`docs/operator-flows.md`](docs/operator-flows.md).
+
+```sh
+node --experimental-strip-types packages/cli/src/cli.ts analyze <app-root>
+node --experimental-strip-types packages/cli/src/cli.ts plan <app-root> [--source-dir <dir>]...
+node --experimental-strip-types packages/cli/src/cli.ts migrate <app-root> --out <lane>
+node --experimental-strip-types packages/cli/src/cli.ts verify
+node --experimental-strip-types packages/cli/src/cli.ts supported-matrix
+```
+
+Every flow takes `--help` and `--json`, and every one of them refuses rather than guesses: an unknown flag, a lineage no frozen adapter claims, an Angular workspace whose source directories cannot be read, an output lane inside the application, or a lane that already carries files each stop the flow by name.
+
+- `analyze` reports lineage, declared framework version, builder, Node era, package manager, and the target cell's verdict on every declared dependency. A dependency the cell has no reading for is reported `unknown`; the React lineage publishes no cell registry at all and is reported as having none. Unknown is never reported as supported.
+- `plan` composes the changeset without writing it, and names which supply-gated readings it handed the engine — capabilities gated on a compiler diagnostic or an installed closure stand down when a reading is absent, and the plan says so rather than reporting a clean tree.
+- `migrate` applies into a separate lane. Default mode writes only the files the changeset rewrites; `--materialize` copies the application in first.
+- `verify` runs the offline checks in one summary: the frozen adapter subtrees recomputed from the checkout, the trust package, corpus conformance, and a receipt. A failing check is reported beside the passing ones.
+- `supported-matrix` verifies the trust package and prints the derived matrix — counted cells, demotions, holdouts with their exact outcome strings, the permanent falsification history, and the declared boundary with its prevalence. The rendered text is checked by the enterprise surface's own honesty guard before it is printed.
+
+These flows add no migration decision. Pointed at the same tree with the same readings, `plan` composes the byte-identical changeset the fixture-driven driver composes — measured on one application per lineage and recorded in [`evidence/runs/operator-flows/byte-identity.json`](evidence/runs/operator-flows/byte-identity.json). What these commands establish is what the engine composed, not that the result installs, compiles, or behaves as the original did; the counted cells in the matrix are the only support claim.
+
 ## React Boilerplate v4 proof
 
 The first slice migrates the active `LocaleToggle` at React Boilerplate v4 commit

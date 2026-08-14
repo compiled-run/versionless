@@ -1,0 +1,30 @@
+{
+	"flow": "verify",
+	"result": "pass",
+	"checks": [
+		{
+			"name": "freeze:subtrees",
+			"state": "pass",
+			"detail": "5 frozen subtrees match the checkout, composite recomputed from its own subtree list"
+		},
+		{
+			"name": "trust:verify",
+			"state": "pass",
+			"detail": "digest 213b43e88b51d2bb998c53923b31a24d0bbf49a5af74cddd89f23bf97e1497af, 12 artifacts"
+		},
+		{
+			"name": "corpus:verify",
+			"state": "pass",
+			"detail": "digest e6c9068a196f78bd767caa3718686d68d6ed4a83554dd6f17ea2bd556cddd01d, 20 verticals over 12 source applications"
+		},
+		{
+			"name": "receipt:verify evidence/runs/react-boilerplate-v4-composed/t060-run.json",
+			"state": "pass",
+			"detail": "{\"valid\":true,\"digest\":\"52400147929220935a9ebe47a16c8dff50b5c28e9d51c930d000c99c2bdc8a21\",\"artifacts\":10}"
+		}
+	],
+	"notEstablished": [
+		"These checks establish reproducibility and hash integrity. They are not certification, legal compliance, signer authenticity, or an SLSA level.",
+		"A pass here says the published evidence re-derives from its own inputs. It says nothing about an application this repository never ingested."
+	]
+}

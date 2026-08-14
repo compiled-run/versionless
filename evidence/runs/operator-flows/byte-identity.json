@@ -1,0 +1,46 @@
+{
+	"schemaVersion": "versionless.operator-flow-byte-identity.v1",
+	"unit": "lrapr-t009/u2-operator-cli-flows",
+	"purpose": "The operator flows compose the frozen public APIs rather than re-implementing them. This record measures that claim on the overlap between the operator path and the fixture-driven path, one application per lineage.",
+	"adapterFreezeComposite": "27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234",
+	"angular": {
+		"application": "pigallery2 1.7.0 (Angular holdout corpus, at its pinned revision)",
+		"operatorPath": "packages/cli/src/operator/plan.ts composeAngularPlan",
+		"driverPath": "packages/cli/src/fixture/angular-pigallery2-migration-run.ts composeMigration",
+		"comparison": "sha256(canonicalize(AngularMigration)) — every file, every digest, every declared difference and every unhandled finding",
+		"inputsHeldEqual": [
+			"sourceDirectories = the driver's own APPLICATION_SOURCE_DIRECTORIES (frontend, common)",
+			"templates and stylesheets = frontend",
+			"missingMemberDiagnostics = the driver's reading of the previous migrated build log",
+			"deepImportReadings = the driver's reading of the applied lane's installed closure",
+			"eraClosureTypePackages = the driver's reading of the era lane's installed closure"
+		],
+		"operatorDigest": "2b85d619387263e1974ec5ee3c13ac3429548405a988b504a650b575a780d6e3",
+		"driverDigest": "2b85d619387263e1974ec5ee3c13ac3429548405a988b504a650b575a780d6e3",
+		"identical": true,
+		"applicationFilesScanned": 214,
+		"applicationFilesChanged": 6,
+		"workspaceFilesChanged": 3,
+		"removedFiles": 1
+	},
+	"react": {
+		"application": "cypress-realworld-app (React holdout, migrated lane)",
+		"operatorPath": "packages/cli/src/operator/plan.ts composeReactPlan",
+		"driverPath": "packages/cli/src/fixture/react-cypress-rwa-migration-run.ts writeCypressRwaEntryDocument",
+		"comparison": "sha256 of the Vite entry document the create-react-app adapter derives from the application's own public/index.html",
+		"inputsHeldEqual": [
+			"template = the application's own public/index.html",
+			"entryModule = /src/index.tsx, detected by the flow rather than named by it",
+			"environment = NODE_ENV, PUBLIC_URL and the application's own REACT_APP_ keys"
+		],
+		"operatorDigest": "96c4b57713901459094aca9a4a26c93479b48766d7b518fba320a3ed4c383c14",
+		"driverDigest": "96c4b57713901459094aca9a4a26c93479b48766d7b518fba320a3ed4c383c14",
+		"identical": true,
+		"bytes": 1642
+	},
+	"notEstablished": [
+		"A byte-identical changeset is not a build. Nothing here establishes that either application installs, compiles or emits anything.",
+		"The identity is measured on one application per lineage, over the overlap between the two paths. It is not a claim about every application either path could be pointed at.",
+		"The React overlap is the entry document, because that is the only file the create-react-app hop writes. The rest of that hop is a build-time composition and has no changeset to compare."
+	]
+}

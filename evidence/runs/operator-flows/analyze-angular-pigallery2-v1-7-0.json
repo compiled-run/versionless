@@ -1,0 +1,702 @@
+{
+	"flow": "analyze",
+	"application": ".versionless/cache/angular-pigallery2-v1-7-0-source/corpus/pigallery2-6d44c22df13b8f9416715e86e160707d0c3f973a",
+	"lineage": "angular",
+	"frameworkVersionDeclared": "8.1.2",
+	"detectedFrom": "@angular/core",
+	"builder": "@angular-devkit/build-angular:browser",
+	"builderSource": "angular.json",
+	"nodeEra": {
+		"declared": ">= 6.9 <11.0",
+		"source": "package.json#engines.node"
+	},
+	"packageManager": {
+		"manager": "npm",
+		"lockfiles": [
+			"package-lock.json"
+		],
+		"declared": "unknown"
+	},
+	"cellReadings": {
+		"cell": "angular-16-browser-builder",
+		"reason": null,
+		"verdicts": [
+			{
+				"package": "@angular-devkit/build-angular",
+				"declaredRange": "0.801.2",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@angular-devkit/build-optimizer",
+				"declaredRange": "0.801.2",
+				"verdict": "no-successor",
+				"fact": "The `@angular-devkit/` family range this cell writes names a version of this package that was never published. @angular-devkit/build-optimizer stops at 0.1302.1, published 2022-07-21 and the `latest` dist-tag; no 16.x exists on any tag, and none of the nine dist-tags the package carries points above the 13 line. The registry marks the package deprecated with \"This package has been folded in @angular-devkit/build-angular and should no longer be needed. This package has always been experimental and never hit 1.0.0, meaning it should not be used directly outside of Angular.\" The optimizer it once published separately is inside the @angular-devkit/build-angular ^16.2.0 this cell already writes, so the direct declaration is dropped rather than pinned to a 0.13 line beside a 16 builder. Read from https://registry.npmjs.org/@angular-devkit/build-optimizer under consent VL-LEGACY-CORPUS-2026-08-10 on 2026-08-14. An application that declares this package is declaring a build-time detail of the builder rather than a library it imports; nothing in application source names it, and dropping it is a declared difference rather than a source demand.",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@angular/animations",
+				"declaredRange": "8.1.2",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@angular/cli",
+				"declaredRange": "8.1.2",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@angular/common",
+				"declaredRange": "8.1.2",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@angular/compiler",
+				"declaredRange": "8.1.2",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@angular/compiler-cli",
+				"declaredRange": "8.1.2",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@angular/core",
+				"declaredRange": "8.1.2",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@angular/forms",
+				"declaredRange": "8.1.2",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@angular/http",
+				"declaredRange": "7.2.15",
+				"verdict": "no-successor",
+				"fact": "@angular/http stops at 7.2.16 and is deprecated on the registry with \"Package no longer supported. Use @angular/common instead\". Angular removed the package after the 7 line; there is no 8.x and no 16.x, so the `@angular/` family range this cell writes for its own packages names a version that was never published. The HTTP client that succeeded it is `@angular/common/http`, an entry point of a package this cell already carries, so the dependency is dropped rather than pinned to a v7 line beside a v16 framework.",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@angular/language-service",
+				"declaredRange": "8.1.2",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@angular/platform-browser",
+				"declaredRange": "8.1.2",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@angular/platform-browser-dynamic",
+				"declaredRange": "8.1.2",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@angular/router",
+				"declaredRange": "8.1.2",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@ngx-translate/i18n-polyfill",
+				"declaredRange": "1.0.0",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@types/bcryptjs",
+				"declaredRange": "2.4.2",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@types/chai",
+				"declaredRange": "4.1.7",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@types/cookie-parser",
+				"declaredRange": "1.4.1",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@types/cookie-session",
+				"declaredRange": "2.0.37",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@types/ejs",
+				"declaredRange": "2.6.3",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@types/express",
+				"declaredRange": "4.17.0",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@types/fluent-ffmpeg",
+				"declaredRange": "2.1.10",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@types/gm",
+				"declaredRange": "1.18.3",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@types/gulp",
+				"declaredRange": "4.0.6",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@types/gulp-zip",
+				"declaredRange": "4.0.0",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@types/image-size",
+				"declaredRange": "0.7.0",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@types/jasmine",
+				"declaredRange": "3.3.13",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@types/node",
+				"declaredRange": "12.6.8",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@types/sharp",
+				"declaredRange": "0.22.2",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@types/winston",
+				"declaredRange": "2.4.4",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "@yaga/leaflet-ng2",
+				"declaredRange": "1.0.0",
+				"verdict": "no-successor",
+				"fact": "@yaga/leaflet-ng2 published thirteen versions and the newest of them is 1.1.0, published 2021-05-22; it is the `latest` dist-tag and no line exists after it. Every one of those versions declares peer @angular/core \">=2.0.0\" — an unbounded range written before Angular 5 shipped — so the resolver admits the package against Angular 16 and says nothing, and the refusal arrives from the compiler instead: `Property 'addData' in type 'GeoJSONDirective<T>' is not assignable to the same property in base type 'GeoJSON<any, Geometry>'` in lib/geojson.directive.d.ts. Moving to the newest line does not answer it. 1.1.0 declares that member as `addData(data: GeoJSONFeature<GeometryObject, T>): Layer` exactly as 1.0.0 does, narrowing the base signature of the @types/leaflet it still depends on at ^1.2.8, so the TS2416 the era pin produces is present on the newest published version too. The second reading is the one that closes the question rather than merely failing to open it: 1.1.0 was built against Angular 12 (its devDependencies pin @angular/* ^12.0.0) in *full* compilation mode — lib/geojson.directive.js emits `ɵɵdefineDirective` and `ɵɵProvidersFeature` calls directly, and the package ships no `ɵɵngDeclare*` partial declarations and no ViewEngine metadata.json. Those instruction calls are the private, version-locked API of the @angular/core the library was compiled with; the Angular Package Format requires partial declarations precisely so that a *consuming* linker can re-emit them for its own version, and there is nothing here for this cell's linker to link. So there is no line to align to: not a newer one, because none exists, and not the newest one, because it neither fixes the declaration nor is published in a form this cell consumes. The package is dropped as a declared difference. Doing so turns `YagaModule` in frontend/app/app.module.ts and `MapComponent` in the two map components into source demands the compiler states by name; choosing a replacement Angular Leaflet library is a source decision this table does not make, and no verified fork of yagajs/leaflet-ng2 was found to make it under the successor-fork rule. Read from https://registry.npmjs.org/@yaga/leaflet-ng2 and from the published tarballs of 1.0.0 and 1.1.0 under consent VL-LEGACY-CORPUS-2026-08-10 on 2026-08-14.",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "bcryptjs",
+				"declaredRange": "2.4.3",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "body-parser",
+				"declaredRange": "1.19.0",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "bootstrap",
+				"declaredRange": "4.3.1",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "chai",
+				"declaredRange": "4.2.0",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "codelyzer",
+				"declaredRange": "5.1.0",
+				"verdict": "no-successor",
+				"fact": "codelyzer stops at 6.0.2, a TSLint rule set for Angular 9-era workspaces. Nothing succeeds it on the TSLint line and its ESLint replacement is @angular-eslint, which this cell already aligns as a family.",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "cookie-parser",
+				"declaredRange": "1.4.4",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "cookie-session",
+				"declaredRange": "2.0.0-beta.3",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "core-js",
+				"declaredRange": "3.1.4",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "ejs",
+				"declaredRange": "2.6.2",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "ejs-loader",
+				"declaredRange": "0.3.3",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "exifreader",
+				"declaredRange": "2.8.2",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "express",
+				"declaredRange": "4.17.1",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "fluent-ffmpeg",
+				"declaredRange": "2.1.2",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "gulp",
+				"declaredRange": "4.0.2",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "gulp-json-modify",
+				"declaredRange": "1.0.2",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "gulp-typescript",
+				"declaredRange": "5.0.1",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "gulp-zip",
+				"declaredRange": "5.0.0",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "hammerjs",
+				"declaredRange": "2.0.8",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "image-size",
+				"declaredRange": "0.7.4",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "intl",
+				"declaredRange": "1.2.5",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "jasmine-core",
+				"declaredRange": "3.4.0",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "jasmine-spec-reporter",
+				"declaredRange": "4.2.1",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "jdataview",
+				"declaredRange": "2.5.0",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "jimp",
+				"declaredRange": "0.6.4",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "jw-bootstrap-switch-ng2",
+				"declaredRange": "2.0.5",
+				"verdict": "no-successor",
+				"fact": "jw-bootstrap-switch-ng2 published twenty-five versions and the newest of them is 2.0.5, published 2019-01-29; it is the `latest` dist-tag, it is the only tag the package carries, and it is the exact version an Angular 8-era workspace pins — the package is dead rather than behind, which is the same reading that decided ng2-slim-loading-bar. Its declared peer is the reason it was never caught at the resolver: 2.0.5 declares @angular/common, @angular/core and @angular/forms \"^6.0.0-rc.0 || ^6.0.0 || >=7.0.0\", whose last alternative has no upper bound, so npm installs it against Angular 16 without complaint. What it published is a pre-Ivy ViewEngine library in Angular Package Format v6: jw-bootstrap-switch-ng2.metadata.json beside bundles/*.umd.js, esm5/ and fesm5/, and declarations carrying no ɵmod, ɵfac or ɵcmp at all — `export declare class JwBootstrapSwitchNg2Module {}` is the whole of its module declaration. The converter that used to make such a library consumable is gone: @angular/compiler-cli 16.2.12 ships `ngcc` only as a stub whose own message reads \"As of Angular 16, 'ngcc' is no longer required and not invoked during CLI builds\". It also declares dependency tslib ^1.9.0 beside the ^2.3.0 this cell writes. The package is dropped as a declared difference, which turns `JwBootstrapSwitchNg2Module` in frontend/app/app.module.ts into a source demand the compiler states by name; choosing a replacement switch component is a source decision this table does not make. Read from https://registry.npmjs.org/jw-bootstrap-switch-ng2 and from the published tarball of 2.0.5 under consent VL-LEGACY-CORPUS-2026-08-10 on 2026-08-14.",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "karma",
+				"declaredRange": "4.2.0",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "karma-chrome-launcher",
+				"declaredRange": "3.0.0",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "karma-cli",
+				"declaredRange": "2.0.0",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "karma-coverage-istanbul-reporter",
+				"declaredRange": "2.0.5",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "karma-jasmine",
+				"declaredRange": "2.0.1",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "karma-jasmine-html-reporter",
+				"declaredRange": "1.4.2",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "karma-remap-istanbul",
+				"declaredRange": "0.6.0",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "karma-systemjs",
+				"declaredRange": "0.16.0",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "locale",
+				"declaredRange": "0.1.0",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "merge2",
+				"declaredRange": "1.2.3",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "mocha",
+				"declaredRange": "6.1.4",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "ng2-cookies",
+				"declaredRange": "1.0.12",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "ng2-slim-loading-bar",
+				"declaredRange": "4.0.0",
+				"verdict": "no-successor",
+				"fact": "ng2-slim-loading-bar published twenty-eight versions and the newest of them is 4.0.0, published 2017-04-04; it is the `latest` dist-tag, it is the only tag the package carries, and it is the exact version an Angular 8-era workspace pins. It declares peer @angular/core \"^2.4.7 || ^4.0.0\", which the ^16.2.0 this cell writes does not satisfy, and no later line exists to read: the package is dead rather than behind. The reading does not stop at the peer, because a peer is only a resolver fact. This library was published for the pre-Ivy ViewEngine and the converter that used to make such a library consumable is gone: @angular/compiler-cli 16.2.12 ships `ngcc` only as a stub whose own message reads \"As of Angular 16, 'ngcc' is no longer required and not invoked during CLI builds\", so nothing on this cell converts a ViewEngine library's metadata for the Ivy linker. A resolver told to ignore the declared peer would therefore install bytes this cell's compiler cannot consume, which is why the disposition is to drop the package rather than to relax the install. Read from https://registry.npmjs.org/ng2-slim-loading-bar under consent VL-LEGACY-CORPUS-2026-08-10 on 2026-08-14, and from the installed @angular/compiler-cli 16.2.12 in an Angular 16 closure. Dropping it turns the imports it served into source demands the compiler states by name; choosing a replacement loading-bar library is a source decision this table does not make.",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "ngx-bootstrap",
+				"declaredRange": "5.1.0",
+				"verdict": "aligned",
+				"fact": "ngx-bootstrap is the first entry in this table selected against a *compile-stage* reading rather than an install-stage one, and the distinction is the whole reason it is here. The era 5.1.0 declares peer @angular/core and @angular/common \">=7.0.0\" — an open lower bound with no upper bound — so npm resolves it against Angular 16 without a word and the closure looks healthy; the refusal arrives from the TypeScript program, which reads the package's own published declarations: seven of the eight TS2314 in a first migrated build are `Generic type 'ModuleWithProviders<T>' requires 1 type argument(s)` inside ngx-bootstrap's {collapse,datepicker,dropdown,modal,popover,tooltip}/*.module.d.ts, which were correct before Angular 10 made the parameter required. Unlike the peers this table usually has to refine, this package's peers do discriminate exactly: 10.3.0 and the rest of the 10.x line declare @angular/core, @angular/common, @angular/forms and @angular/animations \"^15.0.0\", 11.0.0 through 11.0.2 declare \"^16.0.0\", and 12.0.0 moves to \"^17.0.0\". 11.0.2 is therefore the newest line this cell accepts and the newest 11.x published; it also declares peer rxjs \"^6.5.3 || ^7.6.0\", satisfied by the ~7.8.0 this cell writes, dependency tslib ^2.3.0, exactly this cell's range, and no engines.node. The compiled-with stamp was read anyway, because a peer is a hand-maintained claim and this one is load-bearing: 11.0.2's secondary entry points carry `version: \"16.1.4\"` in every ɵɵngDeclare* call and pin peer @angular/core at that exact version, so the declaration the linker reads agrees with the declaration the resolver reads. 11.0.2 publishes `ModuleWithProviders<CollapseModule>` with its argument, so the seven TS2314 are answered by the line rather than by a source edit. Two further readings, because a workspace can name a package's files rather than import them: 11.0.2 still publishes datepicker/bs-datepicker.css at that path and names it in its `exports` map, so an `angular.json` styles entry naming ./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css keeps resolving across this hop; and that same `exports` map is a narrowing this reading does not hide — 5.1.0 published no exports map and every file on disk was addressable, where 11.0.2 answers only its documented entry points, so an application importing a subpath such as `ngx-bootstrap/modal/bs-modal-ref.service` reaches a specifier the installed package no longer publishes. The symbol is on the public surface (modal/public_api.d.ts re-exports BsModalRef), which is a source demand for a redirection and not a reason to hold the package on a line the compiler refuses. Read from https://registry.npmjs.org/ngx-bootstrap and from the published tarballs of 11.0.2 under consent VL-LEGACY-CORPUS-2026-08-10 on 2026-08-14.",
+				"alignedRange": "^11.0.2"
+			},
+			{
+				"package": "ngx-clipboard",
+				"declaredRange": "12.2.0",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "ngx-toastr",
+				"declaredRange": "10.0.4",
+				"verdict": "aligned",
+				"fact": "ngx-toastr is the second entry the peer-strictness refinement decides, and its peers fail to discriminate in the plainer of the two ways: they are identical across four consecutive majors. 20.0.5, the newest release and the `latest` dist-tag, declares peer @angular/common and @angular/core \"^21.0.0\" and rxjs \"^7.8.2\"; the ^16.2.0 this cell writes excludes it. Every release from 17.0.0 through 19.1.0 declares exactly {\"@angular/core\": \">=16.0.0-0\", \"@angular/common\": \">=16.0.0-0\", \"@angular/platform-browser\": \">=16.0.0-0\"}, no rxjs peer and no engines.node, so on the peer rule alone the newest satisfying line is 19.1.0 — and nothing in those declarations separates a release built for Angular 16 from one built for Angular 18. The compiled-with stamps separate them: 19.1.0 and 19.0.0 carry Angular \"18.0.0\" in their partial declarations, 18.0.0 carries \"17.0.3\", and 17.0.2, 17.0.1 and 17.0.0 all carry \"16.0.1\". 17.0.2 is therefore the newest line this cell links, and it is the newest 17.x published. Its only dependency is tslib ^2.3.0, exactly the range this cell writes. One further reading, because a workspace configuration can name a package's files directly rather than importing them: 17.0.2 still publishes toastr.css at the package root (https://unpkg.com/ngx-toastr@17.0.2/toastr.css), the same path the Angular 8-era 10.0.4 published, so an `angular.json` styles entry naming ./node_modules/ngx-toastr/toastr.css keeps resolving across this hop. Read from https://registry.npmjs.org/ngx-toastr and https://unpkg.com/ngx-toastr@17.0.2/fesm2022/ngx-toastr.mjs under consent VL-LEGACY-CORPUS-2026-08-10 on 2026-08-14. The era 10.0.4 line declares peer @angular/core, @angular/common and @angular/platform-browser \">=6.0.0 <9.0.0\" and rxjs \"^6.1.0\" — two independent collisions with this cell, either of them fatal to the tree, and both answered by the same move.",
+				"alignedRange": "^17.0.2"
+			},
+			{
+				"package": "npm-check-updates",
+				"declaredRange": "^3.1.20",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "open-iconic",
+				"declaredRange": "1.1.1",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "protractor",
+				"declaredRange": "5.4.2",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "reflect-metadata",
+				"declaredRange": "0.1.13",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "remap-istanbul",
+				"declaredRange": "0.13.0",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "rimraf",
+				"declaredRange": "2.6.3",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "run-sequence",
+				"declaredRange": "2.2.1",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "rxjs",
+				"declaredRange": "6.5.2",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "rxjs-compat",
+				"declaredRange": "6.5.2",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "sqlite3",
+				"declaredRange": "4.0.9",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "terser",
+				"declaredRange": "4.1.2",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "ts-exif-parser",
+				"declaredRange": "0.1.4",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "ts-helpers",
+				"declaredRange": "1.1.2",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "ts-node",
+				"declaredRange": "8.3.0",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "ts-node-iptc",
+				"declaredRange": "1.0.11",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "tslint",
+				"declaredRange": "5.18.0",
+				"verdict": "no-successor",
+				"fact": "TSLint stops at 6.1.3 and was deprecated by its own maintainers in favour of ESLint before Angular 13 shipped. There is no TSLint release for any Angular line at or beyond this cell, so the whole TSLint toolchain is dropped rather than carried.",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "typeconfig",
+				"declaredRange": "1.0.7",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "typeorm",
+				"declaredRange": "0.2.18",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "typescript",
+				"declaredRange": "3.4.5",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "winston",
+				"declaredRange": "2.4.4",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "xlf-google-translate",
+				"declaredRange": "1.0.0-beta.15",
+				"verdict": "aligned",
+				"fact": "xlf-google-translate is Angular-major independent: 1.0.4, the newest release and the `latest` dist-tag, declares no peerDependencies at all and no engines.node, so neither axis of this cell excludes it, and the newest-satisfying-line rule selects it without a refinement. It is in this table because an era range of it makes the closure unresolvable for a reason no version of Angular caused: the 1.0.0-beta.13 through 1.0.0-beta.21 lines declare a dependency on @k3rn31p4nic/google-translate-api, which was deleted from the public registry, so a manifest naming one of them reaches E404 before any peer is read. The dependency was dropped by the package itself at 1.0.0-beta.22, and 1.0.1 and later declare {xml2js 0.6.2, typeconfig 2.3.1, reflect-metadata 0.2.2} — all resolvable. That an unresolvable declaration is not a closure is the jira2md precedent: a workspace may declare a package by a specifier this cell cannot install, and aligning it onto a resolvable registry range is what carries it into the migrated closure rather than a narrowing performed around it. One further reading, because a workspace can name a package's executable rather than import it: 1.0.4 declares the same bin entry the era line did, `{\"xlf-google-translate\": \"./cli.js\"}`, so a script invoking that command keeps resolving across this hop. Read from https://registry.npmjs.org/xlf-google-translate and from the published tarball of 1.0.4 under consent VL-LEGACY-CORPUS-2026-08-10 on 2026-08-14. The reading is a version fact and not a behavioural one: the 1.x line translates through a different provider surface than the beta line did, and nothing here establishes that a translation task run under it produces what the era task produced.",
+				"alignedRange": "^1.0.4"
+			},
+			{
+				"package": "xmldom",
+				"declaredRange": "0.1.27",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			},
+			{
+				"package": "zone.js",
+				"declaredRange": "0.9.1",
+				"verdict": "unknown",
+				"fact": "unknown",
+				"alignedRange": "unknown"
+			}
+		],
+		"counts": {
+			"aligned": 3,
+			"no-successor": 7,
+			"successor-fork": 0,
+			"unknown": 85
+		}
+	},
+	"notEstablished": [
+		"Detection reads declarations. Nothing here establishes that this application installs, compiles, builds, or behaves as it did on its era toolchain.",
+		"A cell verdict is a reading of a published registry, not an installation: a range written here has not been resolved against any lockfile by this record.",
+		"A dependency the cell has no reading for is reported `unknown`. `unknown` is not `supported` and it is not `unsupported`."
+	]
+}

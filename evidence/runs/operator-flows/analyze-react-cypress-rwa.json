@@ -1,0 +1,33 @@
+{
+	"flow": "analyze",
+	"application": ".versionless/work/react-cypress-rwa/target",
+	"lineage": "react",
+	"frameworkVersionDeclared": "17.0.2",
+	"detectedFrom": "react",
+	"builder": "react-scripts",
+	"builderSource": "package.json",
+	"nodeEra": {
+		"declared": "14.16.1",
+		"source": ".nvmrc"
+	},
+	"packageManager": {
+		"manager": "yarn",
+		"lockfiles": [
+			"yarn.lock"
+		],
+		"declared": "unknown"
+	},
+	"cellReadings": {
+		"cell": null,
+		"reason": "The frozen React and Next.js adapters publish no target-cell package registry, so no per-package verdict exists for this lineage. Every declared dependency is unknown to the engine rather than accepted by it.",
+		"verdicts": [],
+		"counts": {
+			"unknown": 98
+		}
+	},
+	"notEstablished": [
+		"Detection reads declarations. Nothing here establishes that this application installs, compiles, builds, or behaves as it did on its era toolchain.",
+		"A cell verdict is a reading of a published registry, not an installation: a range written here has not been resolved against any lockfile by this record.",
+		"A dependency the cell has no reading for is reported `unknown`. `unknown` is not `supported` and it is not `unsupported`."
+	]
+}

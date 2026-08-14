@@ -1,0 +1,73 @@
+{
+	"flow": "plan",
+	"application": ".versionless/work/react-cypress-rwa/target",
+	"detected": {
+		"lineage": "react",
+		"frameworkVersionDeclared": "17.0.2",
+		"detectedFrom": "react",
+		"builder": "react-scripts",
+		"builderSource": "package.json",
+		"nodeEra": {
+			"declared": "14.16.1",
+			"source": ".nvmrc"
+		},
+		"packageManager": {
+			"manager": "yarn",
+			"lockfiles": [
+				"yarn.lock"
+			],
+			"declared": "unknown"
+		},
+		"cellReadings": {
+			"cell": null,
+			"reason": "The frozen React and Next.js adapters publish no target-cell package registry, so no per-package verdict exists for this lineage. Every declared dependency is unknown to the engine rather than accepted by it.",
+			"verdicts": [],
+			"counts": {
+				"unknown": 98
+			}
+		},
+		"notEstablished": [
+			"Detection reads declarations. Nothing here establishes that this application installs, compiles, builds, or behaves as it did on its era toolchain.",
+			"A cell verdict is a reading of a published registry, not an installation: a range written here has not been resolved against any lockfile by this record.",
+			"A dependency the cell has no reading for is reported `unknown`. `unknown` is not `supported` and it is not `unsupported`."
+		]
+	},
+	"plan": {
+		"lineage": "react",
+		"engine": "@versionless/react craEntryDocument (create-react-app adapter)",
+		"cell": null,
+		"inputsSupplied": [
+			"packageManifest",
+			"entryTemplate",
+			"environment"
+		],
+		"applicationFilesScanned": 1,
+		"files": [
+			{
+				"path": "index.html",
+				"kind": "workspace",
+				"changed": false,
+				"sha256Before": "96c4b57713901459094aca9a4a26c93479b48766d7b518fba320a3ed4c383c14",
+				"sha256After": "96c4b57713901459094aca9a4a26c93479b48766d7b518fba320a3ed4c383c14",
+				"changes": [
+					"entry document derived from public/index.html with entry module /src/index.tsx",
+					"create-react-app template placeholders substituted for NODE_ENV, PUBLIC_URL, REACT_APP_BACKEND_PORT, REACT_APP_PORT"
+				]
+			}
+		],
+		"removedFiles": [],
+		"unhandled": [
+			"The pinned source-level React transforms (connect-to-hooks, class-lifecycle-to-hooks) are gated on exact source digests and on a maintained package/lock pair supplied out of band. This flow supplies neither, so no application module is rewritten by it.",
+			"Node core specifiers webpack resolved to an empty module are externalized by the adapter and reported by the build rather than shimmed. Which ones this application reaches is a reading of a build, and this flow performs no build."
+		],
+		"declaredDifferences": [
+			"The build is driven by the frozen create-react-app Vite adapter composition rather than by react-scripts. Node core specifiers the adapter's own shim table carries: _stream_duplex, _stream_passthrough, _stream_readable, _stream_transform, _stream_writable, assert, buffer, console, constants, crypto, domain, events, http, https, os, path, process, punycode, querystring, stream, string_decoder, sys, timers, tty, url, util, vm, zlib.",
+			"The generated entry document is written beside the application rather than replacing public/index.html: the template stays the application’s own file."
+		],
+		"notEstablished": [
+			"A composed changeset is a set of edits, not a build. Nothing here establishes that the migrated tree installs, compiles, or emits anything.",
+			"`applicationFilesScanned` counts files the engine read. A file it scanned and left alone is counted as scanned and not as changed.",
+			"A capability gated on a reading this tree did not supply stood down. That is not evidence that the tree has nothing for it to do."
+		]
+	}
+}

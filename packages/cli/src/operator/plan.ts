@@ -1,0 +1,436 @@
+/**
+ * The framework-neutral `plan` flow: compose a changeset for an application
+ * tree and report it without writing anything into that tree.
+ *
+ * Composition is not implemented here. Every decision about *what to change*
+ * comes from the frozen adapters — `migrateAngularCliEraWorkspace` for the
+ * Angular lineage, the create-react-app and Vite-origin adapters for the React
+ * lineage — and this module only reads the tree, hands the readings over, and
+ * reports what came back. Given the same inputs it therefore produces the same
+ * changeset the fixture-driven drivers produce, byte for byte; that identity is
+ * proven in `packages/cli/test/operator-flows.test.ts` on one application per
+ * lineage rather than asserted here.
+ *
+ * A reading the tree cannot supply is not invented. The Angular capabilities
+ * that are gated on a compiler diagnostic or on an installed closure stand down
+ * when no reading is supplied, and the plan says which readings were supplied
+ * rather than leaving a reader to assume all of them were.
+ */
+
+import { createHash } from 'node:crypto';
+import { readdir, readFile } from 'node:fs/promises';
+import * as path from 'pathe';
+import {
+	ANGULAR_16_BROWSER_CELL,
+	migrateAngularCliEraWorkspace,
+	type AngularMigration,
+	type AngularMigrationInput,
+	type AngularTargetCell,
+	type WorkspaceFile,
+} from '../../../frameworks/angular/src/index.ts';
+import {
+	craEntryDocument,
+	craWebpackNodeCoreShimSpecifiers,
+	planViteOriginConfigSource,
+	type CraEnvironment,
+} from '../../../frameworks/react/src/index.ts';
+import {
+	analyzeApplication,
+	angularSourceRoots,
+	fileExists,
+	readJsonFile,
+	workspacePathsBelow,
+	type ApplicationAnalysis,
+} from './analyze.ts';
+
+const sha256 = (value: string): string => createHash('sha256').update(value).digest('hex');
+
+export type PlannedFile = Readonly<{
+	path: string;
+	kind: 'application' | 'workspace';
+	changed: boolean;
+	sha256Before: string;
+	sha256After: string;
+	source: string;
+	changes: readonly string[];
+}>;
+
+export type OperatorPlan = Readonly<{
+	lineage: string;
+	/** The frozen entry point that composed this changeset. */
+	engine: string;
+	/** The target cell, when the lineage publishes one. */
+	cell: string | null;
+	/** Which supply-gated readings this plan handed the engine. */
+	inputsSupplied: readonly string[];
+	/** Application files the engine read, whether or not it changed them. */
+	applicationFilesScanned: number;
+	files: readonly PlannedFile[];
+	removedFiles: readonly string[];
+	unhandled: readonly string[];
+	declaredDifferences: readonly string[];
+	notEstablished: readonly string[];
+}>;
+
+const PLAN_NOT_ESTABLISHED: readonly string[] = Object.freeze([
+	'A composed changeset is a set of edits, not a build. Nothing here establishes that the migrated tree installs, compiles, or emits anything.',
+	'`applicationFilesScanned` counts files the engine read. A file it scanned and left alone is counted as scanned and not as changed.',
+	'A capability gated on a reading this tree did not supply stood down. That is not evidence that the tree has nothing for it to do.',
+]);
+
+/**
+ * Files below `directory` with the given extension, in the order a depth-first
+ * walk that sorts each directory's own entries by name produces — the same
+ * order the fixture-driven drivers collect in, so the composed changeset does
+ * not depend on which caller assembled the input. Installed packages and Git
+ * metadata are never walked.
+ */
+export async function filesBelow(
+	directory: string,
+	root: string,
+	extension: string,
+): Promise<WorkspaceFile[]> {
+	const files: WorkspaceFile[] = [];
+	for (const entry of (await readdir(directory, { withFileTypes: true })).sort((left, right) =>
+		left.name < right.name ? -1 : 1,
+	)) {
+		if (entry.name === 'node_modules' || entry.name === '.git') continue;
+		const item = path.join(directory, entry.name);
+		if (entry.isDirectory()) {
+			files.push(...(await filesBelow(item, root, extension)));
+			continue;
+		}
+		if (!entry.isFile() || path.extname(entry.name) !== extension) continue;
+		files.push({ path: path.relative(root, item), source: await readFile(item, 'utf8') });
+	}
+	return files;
+}
+
+async function collect(
+	tree: string,
+	extension: string,
+	directories: readonly string[],
+): Promise<WorkspaceFile[]> {
+	const files: WorkspaceFile[] = [];
+	for (const directory of directories)
+		files.push(...(await filesBelow(path.join(tree, directory), tree, extension)));
+	return files;
+}
+
+export type AngularPlanOptions = Readonly<{
+	appRoot: string;
+	/** Directories whose `.ts` modules are the application's compilation unit. */
+	sourceDirectories?: readonly string[];
+	/** Directories whose `.html` files are component templates. */
+	templateDirectories?: readonly string[];
+	/** Directories whose `.css` files the application owns. */
+	styleSheetDirectories?: readonly string[];
+	/** Module suffixes excluded from the source modules. */
+	excludedSuffixes?: readonly string[];
+	/**
+	 * Readings only a caller that has compiled or installed the tree can supply
+	 * — compiler diagnostics, the installed closure, the era closure. They are
+	 * merged over the readings this module derives from the tree, so an operator
+	 * that has them gets exactly the changeset a driver that has them gets.
+	 */
+	readings?: Partial<AngularMigrationInput>;
+	cell?: AngularTargetCell;
+}>;
+
+const DEFAULT_EXCLUDED_SUFFIXES: readonly string[] = Object.freeze(['.spec.ts']);
+
+/**
+ * Compose the Angular changeset for a tree, through the frozen adapter.
+ *
+ * The source directories default to the `sourceRoot` the workspace declares for
+ * its own build target. A workspace that declares none is refused rather than
+ * guessed at: scanning the wrong directory would report a clean changeset for a
+ * tree nothing was read from.
+ */
+export async function composeAngularPlan(
+	options: AngularPlanOptions,
+): Promise<{ migration: AngularMigration; inputsSupplied: readonly string[] }> {
+	const tree = options.appRoot;
+	const workspaceConfigPath = (await fileExists(path.join(tree, 'angular.json')))
+		? 'angular.json'
+		: (await fileExists(path.join(tree, '.angular-cli.json')))
+			? '.angular-cli.json'
+			: null;
+	if (workspaceConfigPath === null)
+		throw new Error(
+			'Angular plan: the application root carries neither angular.json nor .angular-cli.json, so there is no workspace document to migrate.',
+		);
+	const declaredRoots = angularSourceRoots(
+		await readJsonFile(path.join(tree, workspaceConfigPath)),
+	);
+	const sourceDirectories = options.sourceDirectories ?? declaredRoots;
+	if (sourceDirectories.length === 0)
+		throw new Error(
+			`Angular plan: ${workspaceConfigPath} declares no sourceRoot for a build target, so the application source directories are unknown. Supply --source-dir <dir> (repeatable) rather than have this flow guess.`,
+		);
+	for (const directory of [
+		...sourceDirectories,
+		...(options.templateDirectories ?? []),
+		...(options.styleSheetDirectories ?? []),
+	])
+		if (path.isAbsolute(directory) || directory.startsWith('..'))
+			throw new Error(
+				`Angular plan: source directory escapes the application root: ${directory}`,
+			);
+	const excluded = options.excludedSuffixes ?? DEFAULT_EXCLUDED_SUFFIXES;
+	const tsConfigPath = (await fileExists(path.join(tree, 'tsconfig.json')))
+		? 'tsconfig.json'
+		: null;
+	if (tsConfigPath === null)
+		throw new Error('Angular plan: the application root carries no tsconfig.json.');
+	const derived: AngularMigrationInput = {
+		packageManifest: {
+			path: 'package.json',
+			source: await readFile(path.join(tree, 'package.json'), 'utf8'),
+		},
+		workspaceConfig: {
+			path: workspaceConfigPath,
+			source: await readFile(path.join(tree, workspaceConfigPath), 'utf8'),
+		},
+		tsConfig: {
+			path: tsConfigPath,
+			source: await readFile(path.join(tree, tsConfigPath), 'utf8'),
+		},
+		sourceModules: (await collect(tree, '.ts', sourceDirectories)).filter(
+			(module) => !excluded.some((suffix) => module.path.endsWith(suffix)),
+		),
+		templates: await collect(tree, '.html', options.templateDirectories ?? sourceDirectories),
+		styleSheets: await collect(
+			tree,
+			'.css',
+			options.styleSheetDirectories ?? sourceDirectories,
+		),
+		workspaceFiles: await workspacePathsBelow(tree, tree),
+	};
+	const input: AngularMigrationInput = { ...derived, ...options.readings };
+	return {
+		migration: migrateAngularCliEraWorkspace(input, options.cell ?? ANGULAR_16_BROWSER_CELL),
+		inputsSupplied: Object.freeze(Object.keys(input).sort()),
+	};
+}
+
+/**
+ * create-react-app's environment prefix rule: of everything a `.env` declares,
+ * only `REACT_APP_`-prefixed keys reach the browser bundle.
+ */
+export const CRA_ENVIRONMENT_PREFIX = 'REACT_APP_';
+
+/** Parse the `KEY=value` subset of a dotenv document, prefixed keys only. */
+export function craPrefixedEnvironment(document: string): Readonly<Record<string, string>> {
+	const entries: [string, string][] = [];
+	for (const line of document.split('\n')) {
+		const trimmed = line.trim();
+		if (trimmed === '' || trimmed.startsWith('#')) continue;
+		const separator = trimmed.indexOf('=');
+		if (separator <= 0) continue;
+		const key = trimmed.slice(0, separator).trim();
+		if (!key.startsWith(CRA_ENVIRONMENT_PREFIX)) continue;
+		const raw = trimmed.slice(separator + 1).trim();
+		const quoted =
+			(raw.startsWith('"') && raw.endsWith('"') && raw.length > 1) ||
+			(raw.startsWith("'") && raw.endsWith("'") && raw.length > 1);
+		entries.push([key, quoted ? raw.slice(1, -1) : raw]);
+	}
+	entries.sort(([left], [right]) => (left === right ? 0 : left < right ? -1 : 1));
+	return Object.freeze(Object.fromEntries(entries));
+}
+
+/** The two keys create-react-app always defines for a production build. */
+export const CRA_BUILD_ENVIRONMENT: CraEnvironment = Object.freeze({
+	NODE_ENV: 'production',
+	PUBLIC_URL: '',
+});
+
+/** The environment a create-react-app build inlines, for a tree at `root`. */
+export async function craBuildEnvironment(root: string): Promise<CraEnvironment> {
+	const file = path.join(root, '.env');
+	const document = (await fileExists(file)) ? await readFile(file, 'utf8') : '';
+	return Object.freeze({ ...CRA_BUILD_ENVIRONMENT, ...craPrefixedEnvironment(document) });
+}
+
+/** The create-react-app entry modules, in the order the adapter fixtures use. */
+export const CRA_ENTRY_MODULES: readonly string[] = Object.freeze([
+	'src/index.tsx',
+	'src/index.jsx',
+	'src/index.ts',
+	'src/index.js',
+]);
+
+export type ReactPlanOptions = Readonly<{
+	appRoot: string;
+	environment?: CraEnvironment;
+	entryModule?: string;
+}>;
+
+/**
+ * Compose the React changeset for a tree, through the frozen adapters.
+ *
+ * The create-react-app hop rewrites exactly one file — the Vite entry document
+ * the adapter derives from the application's own `public/index.html` — because
+ * everything else the hop does is a build-time composition rather than an edit.
+ * Saying so is the honest reading; reporting a large changeset for a hop that
+ * writes one file would not be.
+ */
+export async function composeReactPlan(options: ReactPlanOptions): Promise<{
+	files: readonly PlannedFile[];
+	unhandled: readonly string[];
+	declaredDifferences: readonly string[];
+	engine: string;
+}> {
+	const tree = options.appRoot;
+	const manifest = await readJsonFile(path.join(tree, 'package.json'));
+	const dependencies = {
+		...(manifest?.dependencies as Record<string, unknown> | undefined),
+		...(manifest?.devDependencies as Record<string, unknown> | undefined),
+	};
+	if (Object.hasOwn(dependencies, 'react-scripts')) {
+		const template = path.join(tree, 'public/index.html');
+		if (!(await fileExists(template)))
+			throw new Error(
+				'React plan: this create-react-app tree carries no public/index.html, so the adapter has no entry-document template to derive from.',
+			);
+		let entryModule = options.entryModule ?? null;
+		if (entryModule === null)
+			for (const candidate of CRA_ENTRY_MODULES)
+				if (entryModule === null && (await fileExists(path.join(tree, candidate))))
+					entryModule = `/${candidate}`;
+		if (entryModule === null)
+			throw new Error(
+				`React plan: none of ${CRA_ENTRY_MODULES.join(', ')} exists, so the application entry module is unknown. Supply --entry <module> rather than have this flow guess.`,
+			);
+		const environment = options.environment ?? (await craBuildEnvironment(tree));
+		const document = craEntryDocument({
+			template: await readFile(template, 'utf8'),
+			entryModule,
+			environment,
+		});
+		const existing = (await fileExists(path.join(tree, 'index.html')))
+			? await readFile(path.join(tree, 'index.html'), 'utf8')
+			: '';
+		return {
+			engine: '@versionless/react craEntryDocument (create-react-app adapter)',
+			files: Object.freeze([
+				Object.freeze({
+					path: 'index.html',
+					kind: 'workspace' as const,
+					changed: existing !== document,
+					sha256Before: existing === '' ? '' : sha256(existing),
+					sha256After: sha256(document),
+					source: document,
+					changes: Object.freeze([
+						`entry document derived from public/index.html with entry module ${entryModule}`,
+						`create-react-app template placeholders substituted for ${Object.keys(environment).sort().join(', ')}`,
+					]),
+				}),
+			]),
+			unhandled: Object.freeze([
+				'The pinned source-level React transforms (connect-to-hooks, class-lifecycle-to-hooks) are gated on exact source digests and on a maintained package/lock pair supplied out of band. This flow supplies neither, so no application module is rewritten by it.',
+				'Node core specifiers webpack resolved to an empty module are externalized by the adapter and reported by the build rather than shimmed. Which ones this application reaches is a reading of a build, and this flow performs no build.',
+			]),
+			declaredDifferences: Object.freeze([
+				`The build is driven by the frozen create-react-app Vite adapter composition rather than by react-scripts. Node core specifiers the adapter's own shim table carries: ${Object.keys(craWebpackNodeCoreShimSpecifiers).sort().join(', ')}.`,
+				'The generated entry document is written beside the application rather than replacing public/index.html: the template stays the application’s own file.',
+			]),
+		};
+	}
+	for (const name of ['vite.config.ts', 'vite.config.js', 'vite.config.mjs']) {
+		const file = path.join(tree, name);
+		if (!(await fileExists(file))) continue;
+		const plan = planViteOriginConfigSource(await readFile(file, 'utf8'), name);
+		return {
+			engine: '@versionless/react planViteOriginConfigSource (Vite-origin adapter)',
+			files: Object.freeze([]),
+			unhandled: Object.freeze([
+				`The Vite-origin hop is a build-time configuration translation and rewrites no application file. ${String(plan.plugins.length)} plugin(s) and ${String(plan.options.length)} option(s) were read from ${name}.`,
+			]),
+			declaredDifferences: Object.freeze([
+				...plan.options.map(
+					(option) => `${option.option}: ${option.disposition} — ${option.note}`,
+				),
+				...plan.plugins.map(
+					(entry) =>
+						`${entry.package} -> ${entry.target ?? 'no successor'} — ${entry.role}`,
+				),
+				`build target: ${plan.buildTarget.join(', ')}`,
+			]),
+		};
+	}
+	throw new Error(
+		'React plan: this tree declares neither react-scripts nor a Vite configuration, so no frozen React adapter claims it. This flow refuses rather than guessing an origin toolchain.',
+	);
+}
+
+export type PlanOptions = Readonly<{
+	appRoot: string;
+	angular?: Omit<AngularPlanOptions, 'appRoot'>;
+	react?: Omit<ReactPlanOptions, 'appRoot'>;
+}>;
+
+/** Compose the changeset for an application tree, whatever its lineage. */
+export async function planApplication(
+	options: PlanOptions,
+): Promise<{ analysis: ApplicationAnalysis; plan: OperatorPlan }> {
+	const analysis = await analyzeApplication(options.appRoot);
+	if (analysis.lineage === 'angular') {
+		const { migration, inputsSupplied } = await composeAngularPlan({
+			appRoot: options.appRoot,
+			...options.angular,
+		});
+		return {
+			analysis,
+			plan: Object.freeze({
+				lineage: 'angular',
+				engine: '@versionless/angular migrateAngularCliEraWorkspace',
+				cell: migration.cell,
+				inputsSupplied,
+				applicationFilesScanned: migration.applicationFilesScanned,
+				files: Object.freeze(
+					migration.files.map((entry) =>
+						Object.freeze({
+							path: entry.path,
+							kind: entry.kind,
+							changed: entry.changed,
+							sha256Before: entry.sha256Before,
+							sha256After: entry.sha256After,
+							source: entry.source,
+							changes: entry.changes,
+						}),
+					),
+				),
+				removedFiles: migration.removedFiles,
+				unhandled: migration.unhandled,
+				declaredDifferences: migration.declaredDifferences,
+				notEstablished: PLAN_NOT_ESTABLISHED,
+			}),
+		};
+	}
+	if (analysis.lineage === 'react') {
+		const composed = await composeReactPlan({
+			appRoot: options.appRoot,
+			...options.react,
+		});
+		return {
+			analysis,
+			plan: Object.freeze({
+				lineage: 'react',
+				engine: composed.engine,
+				cell: null,
+				inputsSupplied: Object.freeze(['packageManifest', 'entryTemplate', 'environment']),
+				applicationFilesScanned: composed.files.length,
+				files: composed.files,
+				removedFiles: Object.freeze([]),
+				unhandled: composed.unhandled,
+				declaredDifferences: composed.declaredDifferences,
+				notEstablished: PLAN_NOT_ESTABLISHED,
+			}),
+		};
+	}
+	throw new Error(
+		`Plan: no frozen adapter claims the ${analysis.lineage} lineage detected at this root. React (create-react-app or Vite origin) and Angular are the lineages this repository publishes a migration engine for.`,
+	);
+}
