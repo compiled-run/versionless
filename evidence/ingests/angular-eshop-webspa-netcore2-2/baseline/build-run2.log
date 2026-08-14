@@ -1,0 +1,12 @@
+
+> eshopaspnetnetcoredockerspa@0.0.0 build:prod <LANE>
+> ng build --prod --aot --extract-css
+
+
+Date: 2026-08-14T04:54:50.417Z
+Hash: 1d7f792a005e80ac75bc
+Time: 9127ms
+chunk {0} runtime.06daa30a2963fa413676.js (runtime) 1.44 kB [entry] [rendered]
+chunk {1} main.8806b64b40dd575952be.js (main) 649 kB [initial] [rendered]
+chunk {2} polyfills.9c13d4b8715c4c91719d.js (polyfills) 64.3 kB [initial] [rendered]
+chunk {3} styles.46f5cd1d7bb315d9bfa5.css (styles) 134 kB [initial] [rendered]

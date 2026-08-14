@@ -195,6 +195,200 @@
       "no claim about whether the frozen adapter carries the @angular/http surface — that is exactly what the stage-4 holdout run measures"
     ]
   },
+  "baseline": {
+    "unit": "lrapr-t023/u4-eshop-webspa-baseline",
+    "boardTask": "T023",
+    "stage": "stage-3 — era BASELINE for the committed Angular holdout",
+    "result": "WebSPA production baseline GREEN in the application's own era toolchain, byte-reproducible across two runs, with the era registry closure fully resolvable and one npm-side lockfile-rewrite finding recorded",
+    "startedAt": "2026-08-14T04:40:00Z",
+    "completedAt": "2026-08-14T04:56:00Z",
+    "scope": "archive identity re-check, immutable corpus extraction, mutable WebSPA work lane, era runtime cell, baseline install, production build run twice and byte-compared. No migration, no adapter work, no witness journey, no application-source edits, no .NET host, no service started.",
+    "answersFromU3Unknowns": "this block answers three of the u3 unknownsPreserved entries (installability, closure resolution, Node cell selection). The u3 statements are left exactly as written; nothing there was edited.",
+    "identityCheck": {
+      "archive": "evidence/ingests/angular-eshop-webspa-netcore2-2/archive/archive-1.tar.gz",
+      "expectedSha256": "e2b1ee45448caafe0e19fd06aba1aaa5c16cddc4d51b7a0ca27f1363689754d2",
+      "measuredSha256": "e2b1ee45448caafe0e19fd06aba1aaa5c16cddc4d51b7a0ca27f1363689754d2",
+      "verdict": "match — re-verified before any extraction happened in this unit"
+    },
+    "lanes": {
+      "convention": "mirrors the pigallery2 T018-u2 layout and the earlier Angular/React verticals: an immutable <app>-source corpus plus <app>-runtime and <app>-baseline caches under .versionless/cache/, and a mutable lane under .versionless/work/<app>/baseline. .versionless/ is gitignored, so none of these paths are tracked; only this receipt and the logs under baseline/ are.",
+      "corpus": ".versionless/cache/angular-eshop-webspa-netcore2-2-source/corpus/eShopOnContainers-a387f21029f0b2d49614d165d5384717d2398f8e",
+      "corpusExtraction": "the whole pinned monorepo was extracted from the verified archive — 2385 regular files in 766 directories, matching the 2385 blobs and 765 directories plus root that source.json records. The subpath was not carved out of the tarball; it was copied out of the fully extracted tree.",
+      "corpusImmutability": "the whole corpus tree was made read-only (chmod -R a-w) immediately after extraction and was never written to; it is the reference the work lane is diffed against",
+      "workLane": ".versionless/work/angular-eshop-webspa/baseline",
+      "workLaneLogs": ".versionless/work/angular-eshop-webspa/logs (sanitised copies are tracked under evidence/ingests/angular-eshop-webspa-netcore2-2/baseline/)",
+      "runtimeCell": ".versionless/cache/angular-eshop-webspa-netcore2-2-runtime/node-v8.11.4-darwin-x64",
+      "npmCache": ".versionless/cache/angular-eshop-webspa-netcore2-2-baseline/npm-cache (npm_config_cache, so the host user cache was not mutated)"
+    },
+    "containment": {
+      "laneIsTheSubpath": "src/Web/WebSPA",
+      "why": "src/Web/WebSPA is the directory that carries the package.json, package-lock.json and angular.json; it is the npm and Angular workspace root, and the repository's own Dockerfile does exactly this (`COPY src/Web/WebSPA .` then `npm install` && `npm run build:prod` with that directory as the build context root)",
+      "laneFiles": 131,
+      "laneDirectories": 28,
+      "laneBytes": 1955860,
+      "matchesU3Containment": "identical to the u3 subpathContainment record (131 blobs, 1955860 bytes; u3 counted 29 directories including the WebSPA directory itself, this unit counted 28 below it)",
+      "packageJsonBlobSha1": "1c2b54af9d1bc57057395fbd600b2c8f9b67bafe",
+      "recordedNotSilent": "the acquisition and its parity remain whole-repository; this unit builds only the subpath, which is the narrowing u3 already declared. The other 2254 blobs were extracted and left untouched, not discarded."
+    },
+    "eraCell": {
+      "selected": "node v8.11.4 (official darwin-x64 build), bundled npm 5.6.0",
+      "policyForSelection": "the application declares no engines range and carries no .nvmrc. The strongest era statement it makes about its own Node is its own Dockerfile: `ARG NODE_IMAGE=node:8.11`, and that image is the stage that runs `npm install` and `npm run build:prod`. The 8.11 line was therefore taken as the era cell. 8.11.4 (2018-08-15) is the final release of that line and the release the `node:8.11` tag resolved to at the January 2019 pin. No modern Node was substituted and no fallback was needed.",
+      "evidenceQuality": "a build-image fact, not a declared engines range — recorded as such, exactly as u3 stated it",
+      "acquisition": "https://nodejs.org/dist/v8.11.4/node-v8.11.4-darwin-x64.tar.gz",
+      "sha256": "aa1de83b388581d0d9ec3276f4526ee67e17e0f1bc0deb5133f960ce5dc9f1ef",
+      "sha256Source": "https://nodejs.org/dist/v8.11.4/SHASUMS256.txt — the published line and the measured digest of the downloaded bytes agree",
+      "hostFact": "the host is arm64 macOS 26.5.1 (Darwin 25.5.0). There is no darwin-arm64 build of Node 8 — the line predates Apple silicon support — so the darwin-x64 binary executes through Rosetta 2 translation, which is present and active on this host (oahd running). Inside the cell process.version/platform/arch report v8.11.4/darwin/x64, and that x64 identity is what made node-sass resolve a darwin-x64 prebuilt binding below.",
+      "fallbackUsed": false,
+      "toolchainInCell": {
+        "angularCli": "6.1.5",
+        "buildAngular": "0.7.5",
+        "angularPackages": "6.1.4 (animations, common, compiler, compiler-cli, core, forms, http, platform-browser, platform-browser-dynamic, router)",
+        "typescript": "2.9.2",
+        "rxjs": "6.2.2",
+        "webpack": "4.17.1",
+        "measuredBy": "`ng version` run from the lane with the era cell on PATH; the manifest's `@angular/cli ^6.1.5` and `@angular-devkit/build-angular ~0.7.0` resolved to the versions the lockfile pins"
+      }
+    },
+    "install": {
+      "command": "npm install",
+      "cwd": "the work lane (the WebSPA subpath copy)",
+      "env": "PATH prefixed with the era cell bin, npm_config_cache pointed at the lane cache, CI=1",
+      "exit": 0,
+      "attempts": 1,
+      "installed": "added 1271 packages in 14.529s",
+      "lockfile": "package-lock.json, lockfileVersion 1, 902 top-level dependency entries — the declared count u3 recorded, now resolved",
+      "installedTree": "853 top-level entries under node_modules; 912 package.json files within the first three levels",
+      "rootLifecycleScript": "none — the application's package.json declares no install, preinstall or postinstall script, so npm install performed dependency resolution and linking only and produced no build",
+      "log": "baseline/install.log (full npm output, host paths redacted)",
+      "registryClosure": {
+        "verdict": "intact — every package the era lockfile pins is still resolvable from the public npm registry in 2026",
+        "failedResolutions": 0,
+        "unpublishedOrDeletedPackages": "none encountered",
+        "narrowingApplied": false,
+        "narrowingNote": "the digest-bounded narrowing precedent established for pigallery2 was not needed and was not used; no manifest was altered for the install",
+        "deprecationWarnings": 0,
+        "securityAdvisoryNotices": "npm 5.6.0 printed its end-of-run [SECURITY] notice block for a number of transitive packages (node-sass, ansi-html, brace-expansion, bn.js, chownr, cookie, css-what and others). These are 2026 advisory notices about 2018 packages, recorded and not acted on — no version was changed."
+      },
+      "nativeDependencies": {
+        "node-sass@4.9.3": "OBTAINED. Its installer downloaded the published prebuilt binding for this exact cell — https://github.com/sass/node-sass/releases/download/v4.9.3/darwin-x64-57_binding.node — saved to node_modules/node-sass/vendor/darwin-x64-57/binding.node and cached in the lane npm cache. No source build and no Python 2 dependency was hit. The darwin-x64/ABI-57 selection is a direct consequence of the Rosetta host fact above. node-sass is required by the build: angular.json's styles entry is Client/globals.scss.",
+        "fsevents@1.2.9": "OBTAINED, transitive/optional. Its prebuilt lib/binding/Release/node-v57-darwin-x64/fse.node was reported already installed.",
+        "failures": "none — no native dependency failed to install, and npm skipped no optional dependency as unsupported on this platform"
+      },
+      "laneSourceIntegrity": {
+        "method": "recursive diff of the work lane against the read-only corpus subpath, excluding node_modules and the build output directory",
+        "duringInstall": "npm 5.6.0 rewrote package-lock.json in place. 3866 lines changed across 5246 diff lines, and every one of them is a `\"name\": \"spec\"` pair inside a `requires` block, rewritten from the authored semver range to the already-resolved version (for example `\"rxjs\": \"^6.0.0\"` became `\"rxjs\": \"6.2.2\"`). Zero `version`, `resolved`, `integrity`, `dev`, `optional` or `bundled` lines differ, so the installed closure is exactly the closure the authored lock pins; the rewrite is a npm 5 lockfile-serialisation difference, not a resolution difference.",
+        "rewriteArtefact": "baseline/package-lock-npm-rewrite.diff — the complete diff, kept rather than summarised",
+        "authoredPackageLockSha256": "fafdef05d482aba0427d7f1036cbf3b17101783fca0194b61f6d1cbc140816e0",
+        "npmRewrittenPackageLockSha256": "b37e4c42c10b2bcad55ee9e41f96a20d349ce848082fa2bcb20d64cdd4b33d0f",
+        "restoredPackageLockSha256": "fafdef05d482aba0427d7f1036cbf3b17101783fca0194b61f6d1cbc140816e0",
+        "restoreProof": "the authored lock was copied back from the read-only corpus after the install and before either build, so both production builds ran against a lane whose every authored file is byte-identical to the corpus. node_modules was not re-resolved after the restore.",
+        "authoredPackageJsonSha256": "566b095ac1b5933657737d13214eadfd5303010b34f76d45618bd1215c8ecf6f",
+        "packageJsonTouched": false,
+        "angularJsonSha256": "d11545ee6e8bc194c5986e2b3c8554a12e76b20223096053aea240e78c7e2648",
+        "postRestoreDiff": {
+          "filesDifferingInContent": 0,
+          "filesMissingFromLane": 0,
+          "filesAddedToLane": 0,
+          "conclusion": "every one of the 131 authored files in the work lane is byte-identical to the corpus; the lane holds node_modules and build output only"
+        }
+      }
+    },
+    "productionBuild": {
+      "builder": "@angular-devkit/build-angular:browser at 0.7.5, driven by the app's own @angular/cli 6.1.5 — the builder declared in the app's own angular.json for target WebSPA:build. No builder was substituted.",
+      "driver": "the application's own npm script, invoked verbatim as `npm run build:prod` in the work lane with the era cell on PATH and CI=1",
+      "commandTheScriptEmits": "ng build --prod --aot --extract-css",
+      "commandVerbatimNote": "--aot and --extract-css are already implied by the production configuration in angular.json; they are in the app's own script string and were reproduced as authored rather than trimmed",
+      "workspaceVersion": 1,
+      "productionConfigurationApplied": "the --prod flag applies angular.json's production configuration: optimization, outputHashing all, sourceMap false, extractCss, namedChunks false, aot, extractLicenses, vendorChunk false, buildOptimizer, and the Client/environments/environment.ts -> environment.prod.ts file replacement. extractLicenses is true and nothing overrides it, so 3rdpartylicenses.txt is emitted.",
+      "outputPathAsConfigured": "wwwroot (relocated after each run, because the app hardcodes it)",
+      "runs": [
+        {
+          "run": "build-run1",
+          "outputDir": ".versionless/work/angular-eshop-webspa/build-run1",
+          "webpackHash": "1d7f792a005e80ac75bc",
+          "webpackTimeMs": 15108,
+          "exit": 0,
+          "log": "baseline/build-run1.log"
+        },
+        {
+          "run": "build-run2",
+          "outputDir": ".versionless/work/angular-eshop-webspa/build-run2",
+          "webpackHash": "1d7f792a005e80ac75bc",
+          "webpackTimeMs": 9127,
+          "exit": 0,
+          "log": "baseline/build-run2.log"
+        }
+      ],
+      "chunks": [
+        "runtime.06daa30a2963fa413676.js (runtime) 1.44 kB",
+        "main.8806b64b40dd575952be.js (main) 649 kB",
+        "polyfills.9c13d4b8715c4c91719d.js (polyfills) 64.3 kB",
+        "styles.46f5cd1d7bb315d9bfa5.css (styles) 134 kB"
+      ],
+      "buildWarnings": "none — neither run emitted a warning line",
+      "errors": "none — neither run emitted an Angular, TypeScript, sass or webpack error",
+      "backendIndependence": "the production build needed no .NET service, no database and no network listener. Nothing was started and nothing was left listening. This measures only the build; whether the SPA's runtime configuration fetch (`${document.baseURI}Home/Configuration`) can be satisfied without the ASP.NET host remains the unmeasured u3 unknown and is a witness question, not a baseline one."
+    },
+    "determinism": {
+      "method": "every regular file under each output directory was hashed with sha256 and the two inventories compared by relative path, byte length and digest",
+      "run1VsRun2": {
+        "byteIdentical": true,
+        "files": 25,
+        "totalBytes": 1660416,
+        "onlyInRun1": [],
+        "onlyInRun2": [],
+        "differingContent": []
+      },
+      "hashedFilenames": "outputHashing 'all' puts content hashes in filenames (main.8806b64b40dd575952be.js, the Montserrat font emissions, etc). Those hashes were stable across both runs, which is why the inventories match by name as well as by content. The webpack build hash 1d7f792a005e80ac75bc was also identical across runs. No timestamped, build-id or otherwise per-run-varying file appeared in the output — there is nothing in the differing-files list to name.",
+      "verdict": "the Angular 6 production build of this pin is byte-reproducible in this era cell",
+      "reproductionArtefact": "baseline/build-inventory-run1-vs-run2.json — the full per-file inventory of both runs plus the comparison"
+    },
+    "outputInventory": {
+      "files": 25,
+      "totalBytes": 1660416,
+      "entries": [
+        { "path": "3rdpartylicenses.txt", "bytes": 2179, "sha256": "24af14599b47bdd380bbc069e7b57cc80521194f780e582f0486e21d82df3592" },
+        { "path": "assets/images/arrow-down.png", "bytes": 1045, "sha256": "a7d94eed23765a30b03758bdf142aa3f192524884e1291ef0fd6d1680e678f5a" },
+        { "path": "assets/images/arrow-right.svg", "bytes": 693, "sha256": "d1ea1114921ae85bb5ad2300373a26df601c2e6b6e8f8bb6ecb86537aab2d691" },
+        { "path": "assets/images/brand_dark.png", "bytes": 4363, "sha256": "9c9737f9a59ca08accf8842e3faac8d5d27873b1e4d70ddee69db7460e76c35e" },
+        { "path": "assets/images/brand.png", "bytes": 4849, "sha256": "7cb58e81bb408c41782f3a35d7ba1442ae4d30a71746cea0ba9ffb00ac0cae32" },
+        { "path": "assets/images/cart.png", "bytes": 1532, "sha256": "d2588ecb8ca1ca678cf7300bc917fdfa16018652eeba4f2aaa08f7be9620398c" },
+        { "path": "assets/images/logout.png", "bytes": 429, "sha256": "56d7efeefdf08d1a70c803673630788d1dcb142b77b500224bb1ef420e231584" },
+        { "path": "assets/images/main_banner_text.png", "bytes": 8828, "sha256": "e6c6abe5604cc990308e99d1578b8c49193bcd985bdede6efffb49d34d91e7ac" },
+        { "path": "assets/images/main_banner.png", "bytes": 394114, "sha256": "4f51f67001c01d2bb57044d5e957500f2f35a1965e100efe0f949fdcdacd0050" },
+        { "path": "assets/images/main_footer_text.png", "bytes": 4685, "sha256": "f32cc520c8de0159cc06f0bb8f743a7f08f19c00987ef581fff6d6596cb827ec" },
+        { "path": "assets/images/my_orders.png", "bytes": 221, "sha256": "d641e9c0f0485523a24b6983fa06b2965aee0bcaccbf93fa53cd165ea9b5f3ee" },
+        { "path": "favicon.ico", "bytes": 15086, "sha256": "b608106fd8a17e5d17651af7ba85891bc7fa7bfcf6794080e2d457d0891f375c" },
+        { "path": "index.html", "bytes": 707, "sha256": "9171df09f970c085392ebbae8646fb6eac765ea72609463dfd2eb4b5d4b45b80" },
+        { "path": "main.8806b64b40dd575952be.js", "bytes": 649045, "sha256": "34d9c8209ea807d5f31b50320aa076bce61a3de362dfde31e9419b7dbf048f6f" },
+        { "path": "Montserrat-Bold.57f17c74bfbb64a9df24.woff", "bytes": 17348, "sha256": "5255d2f4d329cfee05df22b40dd86e01e48c9d9ed97e8920c42af1d5134e1616" },
+        { "path": "Montserrat-Bold.65e03151914e45095806.eot", "bytes": 29744, "sha256": "64c4febd551454ba2b82e10dac1e18e5d5253f9c4d152f6c7e56186a5c823e4a" },
+        { "path": "Montserrat-Bold.c20dd39cba8ec82ff472.svg", "bytes": 114057, "sha256": "3a7231bbe26ed6974cf47b7f9108eedb82a826ca8aad9ba9dd3daf52ffdd94da" },
+        { "path": "Montserrat-Bold.d3085f686df272f9e1a2.ttf", "bytes": 29560, "sha256": "9cb7dc18ee6175ab86bea008eb7aff1992ea7b06933964d5e2e864090206c20a" },
+        { "path": "Montserrat-Regular.07689d4eaaa3d530d588.ttf", "bytes": 29016, "sha256": "32f9bdc73ecf308a19c0e918b407e12da12b6cd9a667decdc2ddcb74f457839a" },
+        { "path": "Montserrat-Regular.221f7e911ca70126a458.svg", "bytes": 106493, "sha256": "1de5b3c62c1474f625dd6c854855b72625ea345d9be21153fe97257ca0271e6c" },
+        { "path": "Montserrat-Regular.4889ec5f0aca42530472.woff", "bytes": 17284, "sha256": "82811fd8be03af80e5b07776680f9bfab7c2ece40517251b737b7657856e1159" },
+        { "path": "Montserrat-Regular.c330043b3f9ace258d44.eot", "bytes": 29212, "sha256": "54ced02990e72e2680b2129765d0f305305c6e22a294e1953dce334355c1e2fd" },
+        { "path": "polyfills.9c13d4b8715c4c91719d.js", "bytes": 64314, "sha256": "76cf79907f3c6de10fdb5c2c96436b188b2a0c276fcd0fae44bae9522f8f20d8" },
+        { "path": "runtime.06daa30a2963fa413676.js", "bytes": 1440, "sha256": "eb3d5f2600910179bef8b0709214b7c721ea66e92ebb35bc282264beb2631eaf" },
+        { "path": "styles.46f5cd1d7bb315d9bfa5.css", "bytes": 134172, "sha256": "2c9c1f5f68ad88cb2a95b340549df9c83abfefba8930bd06ec7ebfaf999d6126" }
+      ],
+      "note": "no vendor chunk is emitted (vendorChunk false) and no lazy chunk appeared, so the whole application ships as one main bundle plus runtime, polyfills and the extracted stylesheet"
+    },
+    "freeze": {
+      "checked": "f1a63359 intact",
+      "reactAdapterTree": "972ca80155bbc2a6eb3779943cd481b71d35e803",
+      "angularAdapterTree": "1f63f32c9f4eb327e2c85f63e69544f1eeb99428",
+      "verdict": "both match at HEAD; nothing under packages/frameworks/** was read into the lane, edited, or otherwise touched by this unit"
+    },
+    "boundaries": [
+      "This block establishes an era baseline only: the pinned WebSPA subpath installs and builds for production in its own Node 8.11 / Angular CLI 6.1.5 toolchain, and that build is byte-reproducible. Nothing else.",
+      "No migration, no adapter run, no witness journey and no browser observation happened in this unit, and none is claimed.",
+      "GREEN here says nothing about whether the frozen adapter carries the @angular/http surface this application still uses at six import sites. That is the stage-4 measurement.",
+      "The baseline was produced under Rosetta 2 translation on arm64 macOS. The bytes are reproducible on this host across runs; no claim is made that they are identical to bytes a native x64 or Linux node:8.11 container would produce.",
+      "The npm 5.6.0 lockfile rewrite is a finding about npm's serialisation, not evidence that the resolved closure drifted — the diff shows no version, resolved or integrity change."
+    ]
+  },
   "boundaries": [
     "This record establishes acquisition and read-only detection facts, nothing else.",
     "The overturn of the gate-zero verdict is the Judge's, recorded in the T022 follow-up ruling and appended to the selection note; this unit did not re-decide it.",
