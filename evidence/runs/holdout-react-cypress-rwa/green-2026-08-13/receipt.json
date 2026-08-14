@@ -1,0 +1,162 @@
+{
+  "schemaVersion": "versionless.holdout-react-cypress-rwa-witness.v1",
+  "role": "holdout",
+  "holdoutOutcome": "passed",
+  "kind": "witness-journey-under-frozen-adapter",
+  "unit": "lrapr-t019/u1-refreeze-rerun-publish",
+  "fixture": "react-cypress-rwa",
+  "application": "cypress-realworld-app",
+  "framework": "react",
+  "supersedes": {
+    "receipt": "evidence/runs/holdout-react-cypress-rwa/rerun-2026-08-12/receipt.json",
+    "note": "Advances the T017 RED re-run by reference; the tranche-one and T017 FAIL records stay immutable and published."
+  },
+  "source": {
+    "repository": "https://github.com/cypress-io/cypress-realworld-app",
+    "ref": "refs/tags/v1.0.18",
+    "revision": "f6b5cf3a1799998dab71181eeed59460f8ada5f4",
+    "archiveSha256": "bd9319272dabc1e7263a0186e0aaae011f6219e6e106363d2c89426f9357b315",
+    "frontendRoot": ".",
+    "license": "MIT",
+    "react": "17.0.2",
+    "reactScripts": "4.0.3",
+    "webpack": "4.44.2",
+    "typescript": "4.3.4"
+  },
+  "runEvidence": [
+    {
+      "path": "evidence/runs/react-cypress-rwa/two-lane-parity.json",
+      "sha256": "689952c7216b562bf3df52516683aa2e15aff3beb393a2c1654d03d967b50288"
+    },
+    {
+      "path": "evidence/runs/react-cypress-rwa/green-2026-08-13/build-profile.json",
+      "sha256": "f831eba3f19d1e401aa14f6c64dbfe93aa08fd1fa55a363d6c062d9cc79762f5"
+    }
+  ],
+  "frozenAdapter": {
+    "composition": "createCraViteAdapter applied through fixtures/react-cypress-rwa/vite.config.ts, nothing holdout-specific in the config",
+    "compositeFingerprint": "4df7bc961033fc5856b4d58e0bca9f11ad2aa9d43aaaee726956f34d209b37e7",
+    "subtrees": [
+      {
+        "path": "packages/frameworks/react",
+        "treeOid": "972ca80155bbc2a6eb3779943cd481b71d35e803"
+      },
+      {
+        "path": "packages/frameworks/angular",
+        "treeOid": "ca3824d0595d1fa88d37feda6b1785dfd79e72c4"
+      },
+      {
+        "path": "packages/core/src/migrations",
+        "treeOid": "5237ce5990af3623206bcd2301047a59c80731cf"
+      },
+      {
+        "path": "packages/core/src/bundlers",
+        "treeOid": "cec2f0b56fbb7897f38d579be805e19982380ca6"
+      },
+      {
+        "path": "packages/core/src/analysis",
+        "treeOid": "262dc8b7528c92883c2300914eb7d42579fb856b"
+      }
+    ],
+    "recomputedByThisUnit": true,
+    "bytesChanged": 0,
+    "changesProposedAndExecuted": 0,
+    "reopenInThisUnit": false,
+    "redBuildPatchedAround": false,
+    "genericCapabilitiesOnly": true,
+    "holdoutSpecificConfiguration": "none"
+  },
+  "migratedBuild": {
+    "result": "green",
+    "bundler": "rolldown 1.0.3 under vite 8.0.16",
+    "attempts": 2,
+    "deterministic": true,
+    "modulesTransformed": 10182,
+    "transformPhase": "complete",
+    "emit": "complete",
+    "outputFiles": 18,
+    "outputDigest": "7051b8489abcaea1bd18ae99a082acf0c8d88596f1dfd82d6b4bac222e37dc18"
+  },
+  "journey": {
+    "behaviorDigest": "963785426eb0c56e8d2f929b5462d35e9a7a8d123fa9d8d01a765c6cb35ebe26",
+    "behaviorParity": true,
+    "lanesAreDistinctBuilds": true,
+    "passesPerLane": 2,
+    "lanes": {
+      "baseline": {
+        "lane": "baseline",
+        "legs": {
+          "ok": 51,
+          "total": 51
+        },
+        "semanticDigest": "5c3285f1c402920f358bed9cacedaac07d3ed4800251ed264f20a3f0030d49cf",
+        "behaviorDigest": "963785426eb0c56e8d2f929b5462d35e9a7a8d123fa9d8d01a765c6cb35ebe26",
+        "deterministic": true,
+        "laneStaticFiles": 84,
+        "laneStaticDigest": "57cea24966c61963914da814e8348c970f11468127228c070def6c6472980028"
+      },
+      "migrated": {
+        "lane": "migrated",
+        "legs": {
+          "ok": 51,
+          "total": 51
+        },
+        "semanticDigest": "54313316fef5eac37d098a207bd1f140805f68b126291e62a69f99a75981e6ed",
+        "behaviorDigest": "963785426eb0c56e8d2f929b5462d35e9a7a8d123fa9d8d01a765c6cb35ebe26",
+        "deterministic": true,
+        "laneStaticFiles": 18,
+        "laneStaticDigest": "13f71830eb0fc79b37c546c59f5437d3c3b381c7e87ed8ebd844f8d1f6a95897"
+      }
+    },
+    "navigations": [
+      "/signin",
+      "/",
+      "/user/settings",
+      "/transaction/new",
+      "/",
+      "/personal",
+      "/",
+      "/contacts",
+      "/personal",
+      "/notifications"
+    ],
+    "trackedEventCounts": {
+      "click": 16,
+      "input": 232,
+      "change": 15,
+      "keydown": 232,
+      "mouseover": 27
+    },
+    "successfulNonLoopback": 0,
+    "mockedNonLoopback": 17,
+    "backendCategorySize": 11
+  },
+  "determinism": {
+    "reseededFromSnapshotBeforeEachPass": true,
+    "mintedValuesPlaceholdered": true,
+    "passTwiceSemanticDigestStable": true
+  },
+  "locality": {
+    "mode": "live-loopback-backend",
+    "successfulNonLoopback": 0,
+    "osWideIsolation": false
+  },
+  "counting": {
+    "legsPerLane": 51,
+    "lanesMeasured": 2,
+    "passesPerLane": 2,
+    "countedInLineageNumerator": false,
+    "countingNote": "This holdout passed, and it is still counted in no lineage numerator: a passing holdout shows the frozen adapter carrying one further application, not a migrated-application product count. It is published rather than folded into any numerator."
+  },
+  "nonclaims": [
+    "This is a holdout, not a certification: it shows the frozen adapter carrying one further application end to end, not generic support.",
+    "It is counted in no lineage numerator. A holdout that passes is still evidence about the adapter, not a migrated-application count.",
+    "Build-level byte parity across the two lanes is not claimed: the two production bundles are genuinely distinct builds, which is exactly what makes the behaviour parity non-trivial. The only per-lane fact is each lane’s own bundle byte identity, kept out of the shared behaviour digest by construction.",
+    "Nothing is claimed about the four external auth provider modes; only the local passport-local mode is exercisable offline and only it was exercised.",
+    "The live loopback backend is the application’s own Express-over-lowdb server, re-seeded from its frozen snapshot before every pass and held out of the byte inventory; the frontend SPA dist is byte-identical before and after each pass."
+  ],
+  "integrity": {
+    "algorithm": "sha256",
+    "canonicalDigest": "76f0b5bd0d8a3fa0596d3c5d190c764ee7402f4e5c27870d36bdb3fa5f04a73e"
+  }
+}

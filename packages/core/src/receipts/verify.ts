@@ -25,6 +25,10 @@ import {
 	REACT_ACTUAL_BUDGET_SCHEMA,
 	verifyReactActualBudgetEvidence,
 } from './react-actual-budget-v22-12-9.ts';
+import {
+	HOLDOUT_REACT_CYPRESS_RWA_WITNESS_SCHEMA,
+	verifyHoldoutReactCypressRwaWitnessEvidence,
+} from './holdout-react-cypress-rwa-witness.ts';
 
 function markdownPath(jsonPath: string): string {
 	return jsonPath.endsWith('.json')
@@ -98,6 +102,14 @@ export async function verifyReceipt(
 	if (raw.schemaVersion === REACT_ACTUAL_BUDGET_SCHEMA) {
 		const root = explicitRoot ?? path.resolve(path.dirname(absolute), '../../..');
 		const verified = await verifyReactActualBudgetEvidence(root);
+		return { valid: true, digest: verified.digest, artifacts: verified.artifacts };
+	}
+	if (raw.schemaVersion === HOLDOUT_REACT_CYPRESS_RWA_WITNESS_SCHEMA) {
+		// The receipt lives one directory deeper than the common two-lane runs
+		// (evidence/runs/holdout-react-cypress-rwa/green-2026-08-13/receipt.json),
+		// so the repository root is four segments up from its directory.
+		const root = explicitRoot ?? path.resolve(path.dirname(absolute), '../../../..');
+		const verified = await verifyHoldoutReactCypressRwaWitnessEvidence(root);
 		return { valid: true, digest: verified.digest, artifacts: verified.artifacts };
 	}
 	const receipt = parseMigrationReceipt(raw);

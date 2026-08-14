@@ -1,6 +1,6 @@
 {
   "schemaVersion": "versionless.trust.v1",
-  "canonicalDigest": "45955055e02583b02af713388a34438fa8c8ca579aee9e1e3339fcdfda59908a",
+  "canonicalDigest": "85539a164179e91f24e573137d5e8240c7c845f969163faee82d393654d591fe",
   "integrity": {
     "algorithm": "sha256",
     "authenticity": "not-established",
@@ -8,11 +8,11 @@
   },
   "deterministicCore": {
     "algorithm": "sha256",
-    "digest": "8ab35ddbb13e9c2cdcf7f6d40c80a1eeafe73f74099d6f430ebbac5dc445c221",
+    "digest": "0de7e22856debb11a8766f77818d0a9518eeeb6e024a5989c394196afe647ff1",
     "artifacts": [
       {
         "path": "adapter-freeze.json",
-        "sha256": "b493b777cdc12908442038d181fa82a0982380d8d18556b337c49aeaf804c634"
+        "sha256": "b7dc84b440e99acb47193db212a19e18d1742864a0f01f3b4c4ed88348db5ff6"
       },
       {
         "path": "dependency-graph.cdx.json",
@@ -24,7 +24,7 @@
       },
       {
         "path": "vulnerabilities.json",
-        "sha256": "41df8f77d3406dd7942e9453233a63fbacac86a97eb8c48ddbfe1ab98114d007"
+        "sha256": "6a9ec422e9ada79e49d0d2c557fa876140891b3b8abd4bb5d30de06991dadad6"
       },
       {
         "path": "provenance.json",
@@ -56,7 +56,7 @@
       },
       {
         "path": "capability-coverage.json",
-        "sha256": "05c003b0335b1ccf55e7f40eb086f7e0f2d1efc125607adf687e82b464c3e998"
+        "sha256": "1db745dcb3b32d3d8640577c3c3a83d6c3d29fbe7ea6ec802a0c00b1e7fd30d8"
       }
     ]
   },
@@ -225,8 +225,8 @@
     }
   ],
   "observation": {
-    "generatedAt": "2026-08-12T21:28:24.448Z",
-    "vulnerabilityFreshness": "verified"
+    "generatedAt": "2026-08-14T00:36:08.453Z",
+    "vulnerabilityFreshness": "stale"
   },
   "derivedReport": "report.md"
 }

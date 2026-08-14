@@ -1,9 +1,9 @@
 # Versionless project trust package
 
-- Canonical SHA-256: `45955055e02583b02af713388a34438fa8c8ca579aee9e1e3339fcdfda59908a`
-- Deterministic core: `8ab35ddbb13e9c2cdcf7f6d40c80a1eeafe73f74099d6f430ebbac5dc445c221`
-- Generated observation: `2026-08-12T21:28:24.448Z`
-- Vulnerability input freshness: **verified** (seven-day maximum age)
+- Canonical SHA-256: `85539a164179e91f24e573137d5e8240c7c845f969163faee82d393654d591fe`
+- Deterministic core: `0de7e22856debb11a8766f77818d0a9518eeeb6e024a5989c394196afe647ff1`
+- Generated observation: `2026-08-14T00:36:08.453Z`
+- Vulnerability input freshness: **stale** (seven-day maximum age)
 - Integrity: **hash-only; authenticity is not established**
 - Assurance: **this package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation**
 
@@ -15,7 +15,7 @@
 - [SLSA/in-toto-shaped provenance](provenance.json) — shape only; no SLSA level or signer authenticity is claimed.
 - [Supported corpus/runtime/bundler matrix](matrix.json) — unsupported and untested cells remain visible.
 - [Capability-coverage map](capability-coverage.json) — every exported migration capability with its proving applications and derived generality classification; single-application capabilities are named experimental, not claimed general.
-- [Adapter freeze record](adapter-freeze.json) — the migration engine adapter surface is frozen at commit `cce34175340273919c0b70341dfada5533f0307c` with composite SHA-256 `5de7df565fb8e445a45f9f8f43eac27b80b71189d59e4df243e93471406a260c`; the receipts, corpus, and witness registries are deliberately **outside** the freeze so holdout evidence can still be published additively.
+- [Adapter freeze record](adapter-freeze.json) — the migration engine adapter surface is frozen at commit `c695a586d5e58f5abda9f3684f60cc803b1ebf22` with composite SHA-256 `4df7bc961033fc5856b4d58e0bca9f11ad2aa9d43aaaee726956f34d209b37e7`; the receipts, corpus, and witness registries are deliberately **outside** the freeze so holdout evidence can still be published additively.
 - [Corpus conformance](corpus-conformance.json) — `55f0fdbbee42b02058e109d8d10d64081b803be3e1c5d5863b06acb279693fa5`; 20 verified verticals grouped into exactly 12 source applications; zero designated pilots are verified.
 - The immutable Killed by Google Next.js 12 Pages/webpack production vertical is verified only for its exact fixture; synthetic Next.js 12 Pages, 13 transition/App, and 14 App classification lanes remain **not-tested**, and generic Next.js support is not claimed.
 - [Static script/resource surface](script-surface.json) — truthfully remains scoped to the prior nine verticals, two applications, and eighteen exact static deployment entrypoints; T220 is **not included** because its script surface was not separately observed; dynamic script insertion: **not-tested**; payment-page applicability: **not established**; PCI compliance is **not claimed**.
@@ -72,9 +72,9 @@ The dependency graph is a rooted complete inventory. Exact transitive dependency
 
 ## Adapter freeze and capability status
 
-Frozen at commit `cce34175340273919c0b70341dfada5533f0307c`; composite SHA-256 `5de7df565fb8e445a45f9f8f43eac27b80b71189d59e4df243e93471406a260c` over the newline-terminated `<path> <tree-oid>` lines below, in order.
+Frozen at commit `c695a586d5e58f5abda9f3684f60cc803b1ebf22`; composite SHA-256 `4df7bc961033fc5856b4d58e0bca9f11ad2aa9d43aaaee726956f34d209b37e7` over the newline-terminated `<path> <tree-oid>` lines below, in order.
 
-- `packages/frameworks/react` `9b2af393179749a4093f46e587e7f4fd9ce09b47`
+- `packages/frameworks/react` `972ca80155bbc2a6eb3779943cd481b71d35e803`
 - `packages/frameworks/angular` `ca3824d0595d1fa88d37feda6b1785dfd79e72c4`
 - `packages/core/src/migrations` `5237ce5990af3623206bcd2301047a59c80731cf`
 - `packages/core/src/bundlers` `cec2f0b56fbb7897f38d579be805e19982380ca6`
@@ -94,6 +94,7 @@ Proven on exactly one application and therefore **experimental / out-of-matrix**
 - react: `class-lifecycle-to-hooks`
 - react: `data-flow-connect-to-hooks`
 - react: `composed-migration`
+- react: `react-cra-process-global`
 - angular: `custom-webpack-absorption`
 - angular: `sentry-v8-migration`
 - angular: `package-exports-style-imports`
@@ -108,9 +109,9 @@ Angular holdout ingestion is **deferred post-T006**, and no candidate is admitte
 
 The map is the machine-readable evidence record [capability-coverage.json](capability-coverage.json); classification is derived from the count of distinct independent applications and is never hand-set. A capability is claimed **general** only once at least 2 independent applications prove it.
 
-- React lineage: 1/7 capabilities cross-proven.
+- React lineage: 1/8 capabilities cross-proven.
 - Angular lineage: 7/41 capabilities cross-proven.
-- Total: **8 cross-proven (in-matrix)**, **40 experimental (out-of-matrix)** across 48 enumerated capabilities.
+- Total: **8 cross-proven (in-matrix)**, **41 experimental (out-of-matrix)** across 49 enumerated capabilities.
 
 Cross-proven on at least two independent applications, and therefore in the matrix:
 
@@ -125,6 +126,7 @@ Cross-proven on at least two independent applications, and therefore in the matr
 
 Proven on fewer than two independent applications — single-application or unproven coverage — and therefore **experimental / out-of-matrix**:
 
+- react: `react-cra-process-global` — 1 application(s) (cypress-realworld-app)
 - react: `react-next-static-adapter` — 1 application(s) (next-killedbygoogle)
 - react: `react-vite-origin-adapter` — 1 application(s) (react-memos)
 - react: `react-connect-to-hooks` — 1 application(s) (react-boilerplate)

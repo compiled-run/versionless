@@ -1,7 +1,7 @@
 {
   "schemaVersion": "versionless.trust.v1",
   "freshness": {
-    "state": "verified",
+    "state": "stale",
     "observedAt": "2026-08-05T21:57:19.722Z",
     "maximumAgeDays": 7,
     "freshUntil": "2026-08-12T21:57:19.722Z"
@@ -10,1075 +10,1075 @@
     {
       "name": "@angular/compiler",
       "version": "22.1.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@emnapi/core",
       "version": "1.10.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@emnapi/runtime",
       "version": "1.10.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@emnapi/wasi-threads",
       "version": "1.2.1",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@jridgewell/gen-mapping",
       "version": "0.3.13",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@jridgewell/remapping",
       "version": "2.3.5",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@jridgewell/resolve-uri",
       "version": "3.1.2",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@jridgewell/sourcemap-codec",
       "version": "1.5.5",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@jridgewell/trace-mapping",
       "version": "0.3.31",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@napi-rs/wasm-runtime",
       "version": "1.2.2",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxc-project/runtime",
       "version": "0.127.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxc-project/types",
       "version": "0.127.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxc-project/types",
       "version": "0.133.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxfmt/binding-android-arm-eabi",
       "version": "0.46.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxfmt/binding-android-arm64",
       "version": "0.46.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxfmt/binding-darwin-arm64",
       "version": "0.46.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxfmt/binding-darwin-x64",
       "version": "0.46.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxfmt/binding-freebsd-x64",
       "version": "0.46.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxfmt/binding-linux-arm-gnueabihf",
       "version": "0.46.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxfmt/binding-linux-arm-musleabihf",
       "version": "0.46.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxfmt/binding-linux-arm64-gnu",
       "version": "0.46.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxfmt/binding-linux-arm64-musl",
       "version": "0.46.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxfmt/binding-linux-ppc64-gnu",
       "version": "0.46.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxfmt/binding-linux-riscv64-gnu",
       "version": "0.46.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxfmt/binding-linux-riscv64-musl",
       "version": "0.46.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxfmt/binding-linux-s390x-gnu",
       "version": "0.46.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxfmt/binding-linux-x64-gnu",
       "version": "0.46.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxfmt/binding-linux-x64-musl",
       "version": "0.46.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxfmt/binding-openharmony-arm64",
       "version": "0.46.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxfmt/binding-win32-arm64-msvc",
       "version": "0.46.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxfmt/binding-win32-ia32-msvc",
       "version": "0.46.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxfmt/binding-win32-x64-msvc",
       "version": "0.46.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxlint-tsgolint/darwin-arm64",
       "version": "0.22.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxlint-tsgolint/darwin-x64",
       "version": "0.22.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxlint-tsgolint/linux-arm64",
       "version": "0.22.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxlint-tsgolint/linux-x64",
       "version": "0.22.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxlint-tsgolint/win32-arm64",
       "version": "0.22.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxlint-tsgolint/win32-x64",
       "version": "0.22.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxlint/binding-android-arm-eabi",
       "version": "1.61.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxlint/binding-android-arm64",
       "version": "1.61.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxlint/binding-darwin-arm64",
       "version": "1.61.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxlint/binding-darwin-x64",
       "version": "1.61.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxlint/binding-freebsd-x64",
       "version": "1.61.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxlint/binding-linux-arm-gnueabihf",
       "version": "1.61.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxlint/binding-linux-arm-musleabihf",
       "version": "1.61.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxlint/binding-linux-arm64-gnu",
       "version": "1.61.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxlint/binding-linux-arm64-musl",
       "version": "1.61.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxlint/binding-linux-ppc64-gnu",
       "version": "1.61.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxlint/binding-linux-riscv64-gnu",
       "version": "1.61.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxlint/binding-linux-riscv64-musl",
       "version": "1.61.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxlint/binding-linux-s390x-gnu",
       "version": "1.61.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxlint/binding-linux-x64-gnu",
       "version": "1.61.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxlint/binding-linux-x64-musl",
       "version": "1.61.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxlint/binding-openharmony-arm64",
       "version": "1.61.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxlint/binding-win32-arm64-msvc",
       "version": "1.61.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxlint/binding-win32-ia32-msvc",
       "version": "1.61.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@oxlint/binding-win32-x64-msvc",
       "version": "1.61.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@polka/url",
       "version": "1.0.0-next.29",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@rolldown/binding-android-arm64",
       "version": "1.0.3",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@rolldown/binding-darwin-arm64",
       "version": "1.0.3",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@rolldown/binding-darwin-x64",
       "version": "1.0.3",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@rolldown/binding-freebsd-x64",
       "version": "1.0.3",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@rolldown/binding-linux-arm-gnueabihf",
       "version": "1.0.3",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@rolldown/binding-linux-arm64-gnu",
       "version": "1.0.3",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@rolldown/binding-linux-arm64-musl",
       "version": "1.0.3",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@rolldown/binding-linux-ppc64-gnu",
       "version": "1.0.3",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@rolldown/binding-linux-s390x-gnu",
       "version": "1.0.3",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@rolldown/binding-linux-x64-gnu",
       "version": "1.0.3",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@rolldown/binding-linux-x64-musl",
       "version": "1.0.3",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@rolldown/binding-openharmony-arm64",
       "version": "1.0.3",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@rolldown/binding-wasm32-wasi",
       "version": "1.0.3",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@rolldown/binding-win32-arm64-msvc",
       "version": "1.0.3",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@rolldown/binding-win32-x64-msvc",
       "version": "1.0.3",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@rolldown/pluginutils",
       "version": "1.0.1",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@standard-schema/spec",
       "version": "1.1.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@tybys/wasm-util",
       "version": "0.10.3",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@types/chai",
       "version": "5.2.3",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@types/deep-eql",
       "version": "4.0.2",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@types/estree",
       "version": "1.0.9",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@types/node",
       "version": "24.12.2",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@vitest/expect",
       "version": "4.1.5",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@vitest/mocker",
       "version": "4.1.5",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@vitest/pretty-format",
       "version": "4.1.5",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@vitest/runner",
       "version": "4.1.5",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@vitest/snapshot",
       "version": "4.1.5",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@vitest/spy",
       "version": "4.1.5",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@vitest/utils",
       "version": "4.1.5",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@voidzero-dev/vite-plus-core",
       "version": "0.1.20",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@voidzero-dev/vite-plus-darwin-arm64",
       "version": "0.1.20",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@voidzero-dev/vite-plus-darwin-x64",
       "version": "0.1.20",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@voidzero-dev/vite-plus-linux-arm64-gnu",
       "version": "0.1.20",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@voidzero-dev/vite-plus-linux-arm64-musl",
       "version": "0.1.20",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@voidzero-dev/vite-plus-linux-x64-gnu",
       "version": "0.1.20",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@voidzero-dev/vite-plus-linux-x64-musl",
       "version": "0.1.20",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@voidzero-dev/vite-plus-test",
       "version": "0.1.20",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@voidzero-dev/vite-plus-win32-arm64-msvc",
       "version": "0.1.20",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@voidzero-dev/vite-plus-win32-x64-msvc",
       "version": "0.1.20",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@yuku-analyzer/binding-darwin-arm64",
       "version": "0.7.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@yuku-analyzer/binding-darwin-x64",
       "version": "0.7.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@yuku-analyzer/binding-freebsd-x64",
       "version": "0.7.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@yuku-analyzer/binding-linux-arm-gnu",
       "version": "0.7.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@yuku-analyzer/binding-linux-arm-musl",
       "version": "0.7.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@yuku-analyzer/binding-linux-arm64-gnu",
       "version": "0.7.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@yuku-analyzer/binding-linux-arm64-musl",
       "version": "0.7.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@yuku-analyzer/binding-linux-x64-gnu",
       "version": "0.7.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@yuku-analyzer/binding-linux-x64-musl",
       "version": "0.7.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@yuku-analyzer/binding-win32-arm64",
       "version": "0.7.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@yuku-analyzer/binding-win32-x64",
       "version": "0.7.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@yuku-parser/binding-darwin-arm64",
       "version": "0.7.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@yuku-parser/binding-darwin-x64",
       "version": "0.7.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@yuku-parser/binding-freebsd-x64",
       "version": "0.7.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@yuku-parser/binding-linux-arm-gnu",
       "version": "0.7.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@yuku-parser/binding-linux-arm-musl",
       "version": "0.7.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@yuku-parser/binding-linux-arm64-gnu",
       "version": "0.7.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@yuku-parser/binding-linux-arm64-musl",
       "version": "0.7.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@yuku-parser/binding-linux-x64-gnu",
       "version": "0.7.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@yuku-parser/binding-linux-x64-musl",
       "version": "0.7.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@yuku-parser/binding-win32-arm64",
       "version": "0.7.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@yuku-parser/binding-win32-x64",
       "version": "0.7.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "@yuku-toolchain/types",
       "version": "0.7.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "assertion-error",
       "version": "2.0.1",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "chai",
       "version": "6.2.2",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "convert-source-map",
       "version": "2.0.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "detect-libc",
       "version": "2.1.2",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "es-module-lexer",
       "version": "1.7.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "es-module-lexer",
       "version": "2.3.1",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "estree-walker",
       "version": "3.0.3",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "expect-type",
       "version": "1.4.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "fdir",
       "version": "6.5.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "fsevents",
       "version": "2.3.2",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "fsevents",
       "version": "2.3.3",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "lightningcss-android-arm64",
       "version": "1.33.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "lightningcss-darwin-arm64",
       "version": "1.33.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "lightningcss-darwin-x64",
       "version": "1.33.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "lightningcss-freebsd-x64",
       "version": "1.33.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "lightningcss-linux-arm-gnueabihf",
       "version": "1.33.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "lightningcss-linux-arm64-gnu",
       "version": "1.33.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "lightningcss-linux-arm64-musl",
       "version": "1.33.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "lightningcss-linux-x64-gnu",
       "version": "1.33.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "lightningcss-linux-x64-musl",
       "version": "1.33.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "lightningcss-win32-arm64-msvc",
       "version": "1.33.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "lightningcss-win32-x64-msvc",
       "version": "1.33.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "lightningcss",
       "version": "1.33.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "magic-regexp",
       "version": "0.11.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "magic-string",
       "version": "0.30.21",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "mrmime",
       "version": "2.0.1",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "nanoid",
       "version": "3.3.17",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "obug",
       "version": "2.1.4",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "oxfmt",
       "version": "0.46.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "oxlint-tsgolint",
       "version": "0.22.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "oxlint",
       "version": "1.61.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "pathe",
       "version": "2.0.3",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "picocolors",
       "version": "1.1.1",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "picomatch",
       "version": "4.0.5",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "pixelmatch",
       "version": "7.2.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "playwright-core",
       "version": "1.58.2",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "playwright",
       "version": "1.58.2",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "pngjs",
       "version": "7.0.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "postcss",
       "version": "8.5.25",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "regexp-tree",
       "version": "0.1.27",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "rolldown",
       "version": "1.0.3",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "siginfo",
       "version": "2.0.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "sirv",
       "version": "3.0.2",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "source-map-js",
       "version": "1.2.1",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "stackback",
       "version": "0.0.2",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "std-env",
       "version": "4.2.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "tinybench",
       "version": "2.9.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "tinyexec",
       "version": "1.3.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "tinyglobby",
       "version": "0.2.17",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "tinypool",
       "version": "2.1.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "tinyrainbow",
       "version": "3.1.1",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "totalist",
       "version": "3.0.1",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "tslib",
       "version": "2.8.1",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "type-level-regexp",
       "version": "0.1.17",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "typescript",
       "version": "5.9.3",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "ufo",
       "version": "1.6.4",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "undici-types",
       "version": "7.16.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "unplugin",
       "version": "3.3.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "vite-plus",
       "version": "0.1.20",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": [
         {
           "id": "GHSA-fx2h-pf6j-xcff",
@@ -1115,49 +1115,49 @@
     {
       "name": "vite",
       "version": "8.0.16",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "vitest",
       "version": "4.1.5",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "webpack-virtual-modules",
       "version": "0.6.2",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "why-is-node-running",
       "version": "2.3.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "ws",
       "version": "8.21.2",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "yuku-analyzer",
       "version": "0.7.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "yuku-ast",
       "version": "0.7.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     },
     {
       "name": "yuku-parser",
       "version": "0.7.0",
-      "state": "verified",
+      "state": "stale",
       "vulnerabilities": []
     }
   ],

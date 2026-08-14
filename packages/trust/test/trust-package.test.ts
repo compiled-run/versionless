@@ -1742,7 +1742,7 @@ snapshots:
 			};
 			crossProven: { entries: Array<{ lineage: string; capability: string }> };
 		};
-		expect(capabilities.experimental.entries).toHaveLength(11);
+		expect(capabilities.experimental.entries).toHaveLength(12);
 		expect(capabilities.experimental.pendingEvidence).toContain('T006');
 		expect(capabilities.crossProven.entries.map((entry) => entry.capability)).toContain(
 			'react-cra-vite-adapter',

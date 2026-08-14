@@ -1,14 +1,14 @@
 {
   "schemaVersion": "versionless.trust.v1",
   "freeze": {
-    "commit": "cce34175340273919c0b70341dfada5533f0307c",
+    "commit": "c695a586d5e58f5abda9f3684f60cc803b1ebf22",
     "algorithm": "sha256",
-    "composite": "5de7df565fb8e445a45f9f8f43eac27b80b71189d59e4df243e93471406a260c",
+    "composite": "4df7bc961033fc5856b4d58e0bca9f11ad2aa9d43aaaee726956f34d209b37e7",
     "preimage": "newline-terminated `<path> <tree-oid>` lines in the listed subtree order",
     "subtrees": [
       {
         "path": "packages/frameworks/react",
-        "treeOid": "9b2af393179749a4093f46e587e7f4fd9ce09b47"
+        "treeOid": "972ca80155bbc2a6eb3779943cd481b71d35e803"
       },
       {
         "path": "packages/frameworks/angular",
@@ -30,10 +30,10 @@
     "state": "frozen",
     "claim": "The migration engine adapter surface is byte-stable at this commit.",
     "supersedes": {
-      "composite": "d9f75ef677cb850f664cc188abf77b8ebfd24e84cb58d147b74e9bbaa143eb77",
-      "commit": "57b308a573dd582c844ce401fb1161cd70e9bc66",
+      "composite": "5de7df565fb8e445a45f9f8f43eac27b80b71189d59e4df243e93471406a260c",
+      "commit": "cce34175340273919c0b70341dfada5533f0307c",
       "state": "superseded",
-      "reopenReason": "T999 audit: the tranche-one d9f75ef6 freeze was falsified for cypress-realworld-app holdout carriage (missing non-UTF-8 module source decoding). The adapter surface was reopened behind a new Judge freeze boundary and re-frozen at composite 5de7df56 once the follow-on tranche landed."
+      "reopenReason": "Authorized react-cra-process-global capability reopen for cypress-realworld-app holdout carriage (owner-directed 2026-08-13): under the 5de7df56 freeze the migrated Vite bundle threw `process is not defined`, so a generic analyzer-driven process/browser-parity shim was added to packages/frameworks/react and the adapter was re-frozen at composite 4df7bc96. Only the React subtree moved; Angular, migrations, bundlers, and analysis stayed byte-identical. 5de7df56 had itself superseded the tranche-one d9f75ef6 freeze (commit 57b308a)."
     }
   },
   "holdoutPublishing": {
@@ -66,6 +66,10 @@
         {
           "lineage": "react",
           "capability": "composed-migration"
+        },
+        {
+          "lineage": "react",
+          "capability": "react-cra-process-global"
         },
         {
           "lineage": "angular",
