@@ -58,6 +58,24 @@ import {
 } from './angular-cli-json-workspace-synthesis.ts';
 import { tslintConfigRemovals } from './tslint-toolchain-removal.ts';
 import { declareBuilderPackages } from './builder-package-declaration.ts';
+import {
+	addModuleWithProvidersTypeArgument,
+	type ModuleWithProvidersChange,
+} from './module-with-providers-type-argument.ts';
+import {
+	parameteriseVoidSubjects,
+	type VoidSubjectChange,
+} from './subject-void-type-argument.ts';
+import {
+	parameteriseVoidPromiseExecutors,
+	type VoidExecutorChange,
+} from './promise-executor-void-parameter.ts';
+import {
+	parameteriseBaseClasses,
+	type BaseClassParameterisationChange,
+	type GenericBaseClassReading,
+	type UnparameterisedBaseClassDiagnostic,
+} from './unparameterised-base-class.ts';
 
 export type WorkspaceFile = Readonly<{ path: string; source: string }>;
 
@@ -110,6 +128,35 @@ export type AngularMigrationInput = Readonly<{
 	installedPackages?: readonly InstalledPackage[];
 	/** How the workspace resolves module specifiers written in its own source. */
 	moduleResolution?: ModuleResolution;
+	/**
+	 * `TS2314` as the target line's compiler reported it, per application module.
+	 * A generic base class the application extends bare cannot be parameterised
+	 * from the source alone — the argument is a fact about the installed
+	 * declaration, and which clause is wrong is a fact the compiler states — so
+	 * this capability is reachable only for a caller that has compiled the tree. A
+	 * tree that supplies no diagnostics has no `extends` clause parameterised,
+	 * which is a different thing from having none to parameterise.
+	 */
+	baseClassDiagnostics?: readonly BaseClassDiagnosticReading[];
+	/**
+	 * The generic base classes the application extends, read from the installed
+	 * closure. Supplied beside {@link baseClassDiagnostics}: a diagnostic names the
+	 * clause and this names what the declaration publishes, and the capability
+	 * refuses every site it cannot prove from both.
+	 */
+	genericBaseClasses?: readonly GenericBaseClassReading[];
+}>;
+
+/**
+ * The `TS2314` diagnostics one application module carries, keyed by the path the
+ * workspace writes for it. `line` and `column` are the compiler's own 1-based
+ * pair, and they are positions in the bytes the caller compiled: the capability
+ * checks that the name it was told to fill is written where it was told, and
+ * refuses by name rather than editing when it is not.
+ */
+export type BaseClassDiagnosticReading = Readonly<{
+	path: string;
+	diagnostics: readonly UnparameterisedBaseClassDiagnostic[];
 }>;
 
 export type MigratedFile = Readonly<{
@@ -194,6 +241,46 @@ function describeEntryComponentsChange(change: EntryComponentsChange): string {
 	return `line ${change.line}: ${change.kind} of ${change.symbols.join(', ')}`;
 }
 
+/**
+ * A type-position insertion names no predecessor, because there was none: what a
+ * reader needs is the argument that was written and where the capability read it,
+ * so the claim can be checked against the same two places the source states it.
+ */
+function describeModuleWithProvidersChange(change: ModuleWithProvidersChange): string {
+	return `line ${change.line}: ${change.kind} <${change.argument}> read from ${change.readFrom}`;
+}
+
+/**
+ * `void` is a claim about every value a subject or a promise will ever carry, and
+ * the evidence for it is the count of zero-argument settlements the capability
+ * read. The count is reported so the claim can be checked against the binding.
+ */
+function describeVoidSubjectChange(change: VoidSubjectChange): string {
+	return (
+		`line ${change.line}: ${change.kind} <void> on ${change.binding}, proved by ` +
+		`${String(change.callSites)} zero-argument next call(s)`
+	);
+}
+
+function describeVoidExecutorChange(change: VoidExecutorChange): string {
+	return (
+		`line ${change.line}: ${change.kind} <void>, proved by ${String(change.callSites)} ` +
+		`zero-argument ${change.parameter} call(s)`
+	);
+}
+
+/**
+ * A base-class parameterisation carries two facts a reader is owed beyond the
+ * argument: the package the argument was imported from, and whether importing it
+ * meant a new declaration in the module.
+ */
+function describeBaseClassChange(change: BaseClassParameterisationChange): string {
+	return (
+		`line ${change.line}: ${change.kind} ${change.base}<${change.argument}> from ` +
+		`${change.specifier} (${change.importAdded ? 'import added' : 'existing import extended'})`
+	);
+}
+
 function describeBindingReorderChange(change: BindingReorderChange): string {
 	return (
 		`line ${change.line}: ${change.kind} on <${change.element}> (${change.directive}) — ` +
@@ -221,10 +308,13 @@ function file(
 /**
  * Apply every capability of the adapter to one workspace.
  *
- * Order matters in exactly one place: the workspace migration decides which
- * builder targets cannot be carried, and the packages those targets released
- * are what the manifest alignment then removes. Nothing else is ordered, and no
- * capability reads a file it was not handed.
+ * Order matters in three places, and each is named where it happens: the
+ * workspace migration decides which builder targets cannot be carried, and the
+ * packages those targets released are what the manifest alignment then removes;
+ * `entryComponents` is dropped after the capabilities that rewrite the literal it
+ * reads; and the one capability positioned by compiler coordinates runs before
+ * the capabilities that move them. Nothing else is ordered, and no capability
+ * reads a file it was not handed.
  */
 export function migrateAngularCliEraWorkspace(
 	input: AngularMigrationInput,
@@ -348,12 +438,29 @@ export function migrateAngularCliEraWorkspace(
 	const modal = migrateModalContentParams(input.sourceModules, input.moduleResolution ?? {});
 	unhandled.push(...modal.unhandled);
 	const modalByPath = new Map(modal.files.map((entry) => [entry.path, entry]));
+	const baseClassDiagnostics = new Map(
+		(input.baseClassDiagnostics ?? []).map((entry) => [entry.path, entry.diagnostics]),
+	);
 	for (const module of [...input.sourceModules].sort((left, right) =>
 		compareStrings(left.path, right.path),
 	)) {
 		const modalFile = modalByPath.get(module.path);
 		const entrySource = modalFile?.source ?? module.source;
-		const migrated = migrateAngularSourceModule(module.path, entrySource);
+		/**
+		 * The compiler-positioned capability runs first of the per-module
+		 * capabilities, because its input is a pair of coordinates into bytes the
+		 * caller compiled and every capability that edits the module moves them. It
+		 * is safe wherever it is placed — it refuses a position where the name it was
+		 * told to fill is not written — but placed first it is refused least often
+		 * for a reason that is about ordering rather than about the application.
+		 */
+		const baseClasses = parameteriseBaseClasses(
+			module.path,
+			entrySource,
+			baseClassDiagnostics.get(module.path) ?? [],
+			input.genericBaseClasses ?? [],
+		);
+		const migrated = migrateAngularSourceModule(module.path, baseClasses.source);
 		const effects = migrateNgrxEffectDecorators(module.path, migrated.source);
 		const sentry = migrateSentryV8Tracing(module.path, effects.source);
 		/**
@@ -364,19 +471,42 @@ export function migrateAngularCliEraWorkspace(
 		 * capabilities before it left it rather than as the era file wrote it.
 		 */
 		const entryComponents = removeEntryComponents(module.path, sentry.source);
+		/**
+		 * Three type-position insertions close the sequence. Each one is a claim
+		 * about a type the source itself already states — the module a static factory
+		 * is declared on, and the `void` a subject or a promise executor proves by
+		 * settling with nothing — so each gates on its own construct and inserts
+		 * nothing where it cannot read one. They are placed after the specifier
+		 * rewrites because the bindings they resolve are the bindings those rewrites
+		 * left, and before nothing: no later capability reads a module.
+		 */
+		const moduleWithProviders = addModuleWithProvidersTypeArgument(
+			module.path,
+			entryComponents.source,
+		);
+		const voidSubjects = parameteriseVoidSubjects(module.path, moduleWithProviders.source);
+		const voidExecutors = parameteriseVoidPromiseExecutors(module.path, voidSubjects.source);
 		unhandled.push(
+			...baseClasses.unhandled,
 			...migrated.unhandled,
 			...effects.unhandled,
 			...sentry.unhandled,
 			...entryComponents.unhandled,
+			...moduleWithProviders.unhandled,
+			...voidSubjects.unhandled,
+			...voidExecutors.unhandled,
 		);
 		files.push(
-			file(module, entryComponents.source, 'application', [
+			file(module, voidExecutors.source, 'application', [
 				...(modalFile?.changes ?? []).map(describeSourceChange),
+				...baseClasses.changes.map(describeBaseClassChange),
 				...migrated.changes.map(describeSourceChange),
 				...effects.changes.map(describeSourceChange),
 				...sentry.changes.map(describeSourceChange),
 				...entryComponents.changes.map(describeEntryComponentsChange),
+				...moduleWithProviders.changes.map(describeModuleWithProvidersChange),
+				...voidSubjects.changes.map(describeVoidSubjectChange),
+				...voidExecutors.changes.map(describeVoidExecutorChange),
 			]),
 		);
 	}

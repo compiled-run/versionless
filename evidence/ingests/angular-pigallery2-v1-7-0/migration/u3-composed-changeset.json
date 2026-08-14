@@ -19,7 +19,7 @@
     "common"
   ],
   "applicationFilesScanned": 214,
-  "applicationFilesChanged": 3,
+  "applicationFilesChanged": 4,
   "workspaceFilesChanged": 3,
   "files": [
     {
@@ -419,10 +419,12 @@
     {
       "path": "frontend/app/app.routing.ts",
       "kind": "application",
-      "changed": false,
+      "changed": true,
       "sha256Before": "fcf93b83a794ac9999c259cfb7e0c54cb442794710c8b04860304af03f5b88a2",
-      "sha256After": "fcf93b83a794ac9999c259cfb7e0c54cb442794710c8b04860304af03f5b88a2",
-      "changes": []
+      "sha256After": "590a767e8c9b5cdc5286b4a9b08ee660253b3d91e600a5d478929d4d21e8dc10",
+      "changes": [
+        "line 71: module-with-providers-type-argument <RouterModule> read from static-call-receiver"
+      ]
     },
     {
       "path": "frontend/app/model/IRenderable.ts",
@@ -1826,12 +1828,13 @@
     "devDependencies.karma-coverage-istanbul-reporter is coupled to the Angular test cell but is not part of the toolchain angular-16-browser-builder generates, so it was left at its era range",
     "devDependencies.karma-remap-istanbul is coupled to the Angular test cell but is not part of the toolchain angular-16-browser-builder generates, so it was left at its era range",
     "devDependencies.karma-systemjs is coupled to the Angular test cell but is not part of the toolchain angular-16-browser-builder generates, so it was left at its era range",
-    "compilerOptions.lib was left as declared; the 16.2 line does not require a specific lib set and narrowing one could remove a type surface the application relies on"
+    "compilerOptions.lib was left as declared; the 16.2 line does not require a specific lib set and narrowing one could remove a type surface the application relies on",
+    "frontend/app/ui/gallery/share.service.ts line 24: resolve is referenced at line 28 other than as the callee of a call, so it escapes this executor and what the promise eventually settles with cannot be read here. The executor was left exactly as it is."
   ],
   "notEstablished": [
     "A composed changeset is a set of edits, not a build. Nothing here establishes that the migrated tree installs, compiles or emits anything.",
     "`applicationFilesChanged` counts application source a transform rewrote. A file the adapter scanned and left alone is counted as scanned and not as changed.",
     "A cell disposition is a reading of a registry, not an installation. A range written here has not been resolved against a lockfile by this record."
   ],
-  "digest": "b78d0a9ecdd1ee4a6ef6b5763fc76d11d9557f343efe08fba762238bbb334206"
+  "digest": "dd8eefce44ed262ee494eea76bbce03713671379fb0ba16435fc18d903053075"
 }

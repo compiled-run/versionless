@@ -204,6 +204,70 @@ export const PROBE_DIAGNOSTIC_COUNTS: Readonly<Record<string, number>> = Object.
 export const DOWNSTREAM_READING =
 	'249 of the 264 diagnostics — every NG8001, NG8002, NG8003 and NG8004 — are downstream of frontend/app/app.module.ts failing to compile, and that is checkable rather than asserted. The two TS2307 in that file leave its @NgModule literal unanalysable, so every component it declares loses its module scope at once. The proof is in which bindings fail: the compiler reports `Can\'t bind to \'ngClass\' since it isn\'t a known property of \'span\'`, `Can\'t bind to \'routerLink\' since it isn\'t a known property of \'a\'`, `\'router-outlet\' is not a known element` and `No directive found with exportAs \'ngForm\'` — CommonModule, RouterModule and FormsModule directives, all three of which app.module.ts imports and all three of which the closure installed correctly. Builtin directives cannot go missing for a dependency reason; they can only go missing for a scope reason. The fifteen diagnostics left are the ones the gaps above name.';
 
+/**
+ * The T021 repair of G5, and the audit that decided its shape.
+ *
+ * G5 was named by T018 as a wiring defect: two capabilities exported from the
+ * package index and imported by nothing. The audit that opened T021 asked the
+ * larger question the finding implies — how many exported modules the era
+ * composition never reaches — and the answer is twenty-four of forty-one, which
+ * is why the classification below is by *kind* rather than by name. What
+ * separates a capability that belongs in the composition from one that does not
+ * is what it needs to decide: a transform whose precondition is readable from the
+ * module the composition already holds belongs there; one whose precondition is a
+ * reading of an installed closure, a registry or a compiler run is reachable only
+ * for a caller that has taken that reading, and its seam is an input to the
+ * composition rather than a call inside it.
+ */
+export const G5_WIRING_REPAIR = Object.freeze({
+	unit: 'lrapr-t021/u1-g5-wiring-repair',
+	finding:
+		'T018 named two never-imported capabilities. The audit found twenty-four of the forty-one modules exported from packages/frameworks/angular/src/index.ts are unreachable from `migrateAngularCliEraWorkspace`, directly or transitively. Most of that is not a defect — it is the difference between a transform the composition can gate on its own and a transform that needs a reading the composition never takes.',
+	auditMethod:
+		'The import graph of packages/frameworks/angular/src was walked transitively from angular-cli-era-migration.ts. Seventeen modules are reached. The twenty-four that are not were classified by the signature of their transform: what the capability has to be handed before it can decide anything.',
+	classes: Object.freeze({
+		'a-composed':
+			'Precondition readable from the module alone — signature (path, source) — so the composition can gate it on the application\'s own bytes. Three modules: module-with-providers-type-argument, subject-void-type-argument, promise-executor-void-parameter. All three are now called from the per-module sequence.',
+		'a-supply-gated':
+			'Precondition is a compiler reading the composition cannot take for itself. One module composed here: unparameterised-base-class, which needs the TS2314 positions and the installed declaration reading. It is now reachable through two optional inputs, `baseClassDiagnostics` and `genericBaseClasses`, on the same idiom `installedPackages` and `packageExports` already use: a tree that supplies none has none migrated, which is a different thing from having none to migrate.',
+		'b-driver-seam':
+			'Sixteen modules whose transform takes a closure reading, a registry reading, a documented successor claim or a build log as an argument — barrel-entry-point-split, declared-type-member-rename, deep-import-redirection, json-module-named-import, node-core-binding-migration, removed-entry-point-symbol-successor, rxjs-prototype-patch-migration, sass-mixin-hyphenation-successor, split-element-successor, stylesheet-url-rebase, successor-fork-package, suggested-export-rename, web-worker-url-specifier, webpack-tilde-style-specifier, widened-union-narrowing, and the closure half of forms-legacy-disabled-state. Each is a deliberate driver-facing API today: the reading is the capability\'s whole evidence, and a composition that invented one would be guessing. They are candidates for the same supply-gated seam unparameterised-base-class just got, one reading at a time, and none of them was given it here.',
+		'b-workspace-declaration':
+			'Three modules that return a manifest or a configuration rather than a migrated file — node-core-runtime-globals, synthetic-default-import-interop, template-i18n-runtime. Their seam is the workspace half of the composition, not the per-module loop.',
+		'b-reading-api':
+			'template-analysis, a pure template reading with no transform. It is reached transitively by template-i18n-runtime and is not a capability the composition would call.',
+	}),
+	templateI18nRuntime:
+		'Called out separately because T018 flagged it and because this application\'s era build is a ViewEngine i18n gulp build. It is class (a) by precondition — `declareTemplateI18nRuntime` needs a manifest, the templates and the cell, and the composition already holds all three — and it was NOT composed in this unit, deliberately. Declaring the package is only half of what it does: it hands back a polyfill entry point that has to be declared into the builder target through `declarePolyfillEntryPoint`, which is a second seam in the workspace half of the composition. That seam collides with a green vertical: angular-tiny-translator carries i18n markers and declares its localize runtime through a hand-composed lane (angular-tiny-translator-localize-run.ts), so composing this into the era migration would change what that lane produces. That is a real decision about which of the two paths owns the declaration, and it is left open rather than made by a wiring unit.',
+	notAWiringGap:
+		'T018 named two compile sites under G5 and attributed both to the wiring defect. The audit finds that only one of them is. frontend/app/app.routing.ts:71 is TS2314 on `ModuleWithProviders` and is exactly what module-with-providers-type-argument answers — it is answered now, and the changeset above records the edit. frontend/app/ui/settings/_abstract/abstract.settings.component.ts:14 is NG2007, `Class is using Angular features but is not decorated`, and `unparameterised-base-class` does not answer it: that capability fills a missing *type argument* on a generic base class the compiler reported as TS2314, and nothing in packages/frameworks/angular/src mentions NG2007 or writes an Angular decorator onto an undecorated class. The second half of G5 is therefore a missing capability after all, not a wiring gap, and it is still open.',
+	measuredBeforeAndAfter: Object.freeze({
+		applicationFilesScannedBefore: 214,
+		applicationFilesScannedAfter: 214,
+		applicationFilesChangedBefore: 3,
+		applicationFilesChangedAfter: 4,
+		workspaceFilesChangedBefore: 3,
+		workspaceFilesChangedAfter: 3,
+		unhandledBefore: 6,
+		unhandledAfter: 7,
+		declaredDifferencesBefore: 8,
+		declaredDifferencesAfter: 8,
+		newApplicationChange:
+			'frontend/app/app.routing.ts:71 — module-with-providers-type-argument <RouterModule> read from static-call-receiver. The argument was read from the receiver of the static call the annotation is initialised by, which is the only place this source states it.',
+		newRefusal:
+			'frontend/app/ui/gallery/share.service.ts line 24: the newly composed promise-executor capability refused the executor because `resolve` is referenced at line 28 other than as the callee of a call, so it escapes and what the promise settles with cannot be read there. A named refusal at a named line is the composition behaving as designed: the count of unhandled entries went up because a capability is now looking, not because something broke.',
+		otherCapabilitiesComposed:
+			'subject-void-type-argument, promise-executor-void-parameter and unparameterised-base-class are now reachable from the composition and each stood down on this application: no `new Subject()` here proves a void settlement, the one promise executor found was refused by name, and no TS2314 base-class diagnostics were supplied to this lane.',
+	}),
+	gapsWhoseDiagnosticsChange:
+		'G5 only, and only its first site. G1, G2 and G3 are install-stage knowledge gaps in the cell and are untouched by a wiring repair — the lane still refuses at the resolver, and the probe still had to narrow the same four packages. G4, G6 and G7 are unchanged: they name a library declaration reading, an inline webpack loader specifier and a lib.dom member, none of which any composed capability reads. The probe build was not re-run in this unit: with the install-stage gaps still open the probe tree is reached the same narrow way, and re-running it would re-measure the same 264 diagnostics minus the one TS2314 the repair now answers before the compiler ever sees it.',
+	notEstablished: Object.freeze([
+		'Composing a capability is not building an application. Nothing here establishes that pigallery2 compiles, and the six gaps other than G5 are all still open.',
+		'The one changed line is a changeset edit, not a compile. That TS2314 is answered is a claim about what the transform wrote and what the diagnostic asked for; no migrated build has read it.',
+		'The audit classifies twenty-four modules by the shape of their transform. That a class (b) module is correctly a driver seam today is a reading of its signature and its documentation, not a proof that it should never be composed.',
+	]),
+});
+
 export const PROBE = Object.freeze({
 	purpose:
 		'The lane stops at the resolver, which reports one conflict per run and therefore cannot say how many there are. The probe exists to close the install set and to reach the compiler, so that the gaps behind the first one are named in this unit instead of being discovered one unit at a time.',
@@ -297,18 +361,20 @@ export function buildMigrationBlock(): Readonly<Record<string, unknown>> {
 			record: 'migration/u3-composed-changeset.json',
 			appliedRecord: 'migration/u3-source-migration.json',
 			applicationFilesScanned: 214,
-			applicationFilesChanged: 3,
+			applicationFilesChanged: 4,
 			workspaceFilesChanged: 3,
 			filesRemoved: ['tslint.json'],
-			unhandled: 6,
+			unhandled: 7,
 			declaredDifferences: 8,
 			applicationSourceChanges: [
+				'frontend/app/app.routing.ts:71 — module-with-providers-type-argument <RouterModule> read from static-call-receiver',
 				'frontend/app/ui/faces/faces.component.ts:6 — module-specifier rxjs/Observable -> rxjs',
 				'frontend/polyfills.ts:45 — module-specifier zone.js/dist/zone -> zone.js',
 				'frontend/test.ts:3 — module-specifier zone.js/dist/long-stack-trace-zone -> zone.js/plugins/long-stack-trace-zone',
 			],
 			applicationSourceNote:
-				'Three application files changed out of 214 scanned, all module-specifier rewrites, all made by frozen transforms. No application file was edited by hand in either lane.',
+				'Four application files changed out of 214 scanned, all made by frozen transforms. Three are module-specifier rewrites and were made by the adapter as T018 froze it. The fourth is the T021 G5 wiring repair: `module-with-providers-type-argument` is now composed into `migrateAngularCliEraWorkspace`, so the annotation at frontend/app/app.routing.ts:71 is answered where the frozen composition could not reach the capability at all. Nothing about that capability changed; it was reached. No application file was edited by hand in either lane.',
+			g5WiringRepair: G5_WIRING_REPAIR,
 			compilationUnitNote:
 				'This workspace is not src/-rooted: angular.json declares `sourceRoot: "frontend"`, and the frontend modules import across into the sibling common/ directory that the backend also compiles. Both directories were handed to the migration, because both are inside what the browser build\'s TypeScript program reads. Supplying only the declared sourceRoot would have scanned a strict subset of the compilation unit.',
 		},

@@ -14,7 +14,7 @@
     "excludedReason": "The corpus carries neither: it is the extracted release tarball, verified blob for blob against the pinned git tree by the ingest unit."
   },
   "applicationFilesScanned": 214,
-  "applicationFilesChanged": 3,
+  "applicationFilesChanged": 4,
   "workspaceFilesChanged": 3,
   "filesWritten": [
     {
@@ -78,6 +78,14 @@
       ]
     },
     {
+      "path": "frontend/app/app.routing.ts",
+      "kind": "application",
+      "sha256After": "590a767e8c9b5cdc5286b4a9b08ee660253b3d91e600a5d478929d4d21e8dc10",
+      "changes": [
+        "line 71: module-with-providers-type-argument <RouterModule> read from static-call-receiver"
+      ]
+    },
+    {
       "path": "frontend/app/ui/faces/faces.component.ts",
       "kind": "application",
       "sha256After": "447edcfdb088b5cb62328809019802c62f30c9af4b0ce1b69730570c2f33a97f",
@@ -121,11 +129,12 @@
     "devDependencies.karma-coverage-istanbul-reporter is coupled to the Angular test cell but is not part of the toolchain angular-16-browser-builder generates, so it was left at its era range",
     "devDependencies.karma-remap-istanbul is coupled to the Angular test cell but is not part of the toolchain angular-16-browser-builder generates, so it was left at its era range",
     "devDependencies.karma-systemjs is coupled to the Angular test cell but is not part of the toolchain angular-16-browser-builder generates, so it was left at its era range",
-    "compilerOptions.lib was left as declared; the 16.2 line does not require a specific lib set and narrowing one could remove a type surface the application relies on"
+    "compilerOptions.lib was left as declared; the 16.2 line does not require a specific lib set and narrowing one could remove a type surface the application relies on",
+    "frontend/app/ui/gallery/share.service.ts line 24: resolve is referenced at line 28 other than as the callee of a call, so it escapes this executor and what the promise eventually settles with cannot be read here. The executor was left exactly as it is."
   ],
   "notEstablished": [
     "Writing a changeset into a tree is not a build. Nothing here establishes that the applied tree installs, compiles or emits anything; the lane record beside this one states what happened when that was attempted.",
     "No application source was edited by hand in this lane. Every byte that differs from the corpus was written by a frozen adapter transform, and each is itemised in the changeset record by file and by change."
   ],
-  "digest": "634de29837b0d59fcf30bc4a3b9afb610f69db3d8626564a51ca8cbf5cdb86ea"
+  "digest": "fb1f599dee2844c02dd2cea9da36ec4b49a97768f7b9be11a55e824e0d5f2ada"
 }

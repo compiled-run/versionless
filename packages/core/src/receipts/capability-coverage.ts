@@ -468,7 +468,7 @@ const CAPABILITY_INPUTS: readonly CapabilityRecordInput[] = [
 		attribution: 'direct-invocation',
 		coverage: 'proven',
 		evidence: ['packages/cli/src/fixture/angular-tiny-translator-localize-run.ts'],
-		note: 'Template i18n localize runtime declaration; only the tiny-translator localization application exercises it.',
+		note: 'Template i18n localize runtime declaration; only the tiny-translator localization application exercises it. Audited class (a) by the T021 G5 wiring repair — the era composition already holds the manifest, the templates and the cell it needs — and deliberately not composed there: it also hands back a polyfill entry point that has to be declared into the builder target, and that seam collides with the hand-composed tiny-translator localize lane. Which of the two owns the declaration is an open decision.',
 	},
 	{
 		name: 'rxjs-prototype-patch-migration',
@@ -512,7 +512,7 @@ const CAPABILITY_INPUTS: readonly CapabilityRecordInput[] = [
 		attribution: 'direct-invocation',
 		coverage: 'proven',
 		evidence: ['packages/cli/src/fixture/angular-tiny-translator-final-run.ts'],
-		note: 'ModuleWithProviders type-argument insertion; single application.',
+		note: 'ModuleWithProviders type-argument insertion; single application. Composed into migrateAngularCliEraWorkspace by the T021 G5 wiring repair, so every application the era migration is pointed at now reaches it.',
 	},
 	{
 		name: 'widened-union-narrowing',
@@ -606,7 +606,7 @@ const CAPABILITY_INPUTS: readonly CapabilityRecordInput[] = [
 		attribution: 'direct-invocation',
 		coverage: 'proven',
 		evidence: ['packages/cli/src/fixture/angular-super-productivity-u18g-run.ts'],
-		note: 'Void Promise-executor parameterisation; single application.',
+		note: 'Void Promise-executor parameterisation; single application. Composed into migrateAngularCliEraWorkspace by the T021 G5 wiring repair.',
 	},
 	{
 		name: 'removed-entry-point-symbol-successor',
@@ -661,7 +661,7 @@ const CAPABILITY_INPUTS: readonly CapabilityRecordInput[] = [
 		attribution: 'direct-invocation',
 		coverage: 'proven',
 		evidence: ['packages/cli/src/fixture/angular-super-productivity-u18h-run.ts'],
-		note: 'Void rxjs Subject type-argument parameterisation; single application.',
+		note: 'Void rxjs Subject type-argument parameterisation; single application. Composed into migrateAngularCliEraWorkspace by the T021 G5 wiring repair.',
 	},
 	{
 		name: 'successor-fork-package',
@@ -694,7 +694,7 @@ const CAPABILITY_INPUTS: readonly CapabilityRecordInput[] = [
 		attribution: 'direct-invocation',
 		coverage: 'proven',
 		evidence: ['packages/cli/src/fixture/angular-super-productivity-u18e-run.ts'],
-		note: 'Unparameterised generic base-class migration; single application.',
+		note: 'Unparameterised generic base-class migration; single application. Reachable from migrateAngularCliEraWorkspace since the T021 G5 wiring repair, through the optional baseClassDiagnostics and genericBaseClasses inputs: the capability is positioned by compiler coordinates, so a caller that has not compiled the tree supplies none and none is applied.',
 	},
 	{
 		name: 'web-worker-url-specifier',
