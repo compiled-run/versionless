@@ -1,0 +1,21 @@
+npm ERR! code ERESOLVE
+npm ERR! ERESOLVE unable to resolve dependency tree
+npm ERR! 
+npm ERR! While resolving: pigallery2@1.7.0
+npm ERR! Found: @angular/core@16.2.12
+npm ERR! node_modules/@angular/core
+npm ERR!   dev @angular/core@"^16.2.0" from the root project
+npm ERR! 
+npm ERR! Could not resolve dependency:
+npm ERR! peer @angular/core@"^2.4.7 || ^4.0.0" from ng2-slim-loading-bar@4.0.0
+npm ERR! node_modules/ng2-slim-loading-bar
+npm ERR!   dev ng2-slim-loading-bar@"4.0.0" from the root project
+npm ERR! 
+npm ERR! Fix the upstream dependency conflict, or retry
+npm ERR! this command with --force, or --legacy-peer-deps
+npm ERR! to accept an incorrect (and potentially broken) dependency resolution.
+npm ERR! 
+npm ERR! See /Users/jacksm5pro/dev/open-source/versionless/.versionless/cache/angular-pigallery2-v1-7-0-baseline/npm-cache-target/eresolve-report.txt for a full report.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /Users/jacksm5pro/dev/open-source/versionless/.versionless/cache/angular-pigallery2-v1-7-0-baseline/npm-cache-target/_logs/2026-08-14T01_13_14_334Z-debug-0.log

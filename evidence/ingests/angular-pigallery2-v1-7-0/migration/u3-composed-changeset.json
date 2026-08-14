@@ -1,0 +1,1837 @@
+{
+  "schemaVersion": "versionless.angular-pigallery2-composed-changeset.v1",
+  "unit": "lrapr-t018/u3-frozen-adapter-migration",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "cell": "angular-16-browser-builder",
+  "appliedTo": "The pinned revision 6d44c22df13b8f9416715e86e160707d0c3f973a as materialised, read-only, at .versionless/cache/angular-pigallery2-v1-7-0-source/corpus — the same corpus the era baseline lane was cut from.",
+  "holdoutPosition": "The Angular holdout. This application was never ingested, fixtured, adapted, witnessed or receipted in this repository before T018, and the adapter subtree was frozen before this unit began. No capability was written for it and none was changed for it; the changeset is what the existing inventory produced when it was pointed at a tree it had never seen.",
+  "eraWorkspaceFacts": [
+    "`sourceRoot: \"frontend\"` and an `outputPath` of `dist` at the workspace root — this workspace is not `src/`-rooted, and its build output directory is the same one the backend release pipeline writes into.",
+    "`extractCss: true` on the production configuration — a valid key for the Angular 8 browser builder, and one the Angular 13 line removed.",
+    "The build is driven by the repository's own gulp task rather than by `ng` directly, and that task passes `--i18n-locale en --i18n-format=xlf --i18n-file=frontend/translate/messages.en.xlf --i18n-missing-translation warning`. Those are ViewEngine i18n flags of the Angular 8 CLI; the workspace file itself declares no i18n at all.",
+    "A second workspace project, pigallery2-e2e, whose only targets are the protractor e2e runner and a TSLint lint target.",
+    "The pigallery2 lint target names `src/tsconfig.app.json` and `src/tsconfig.spec.json` — paths that do not exist in this tree, because the workspace was renamed to `frontend/` without updating them. The era lint target was already broken at the pin.",
+    "`@angular/http@7.2.15` declared beside Angular 8.1.2 — a package Angular removed after the 7 line.",
+    "`rxjs-compat@6.5.2`, the RxJS 5-compatibility shim, declared beside rxjs 6.5.2."
+  ],
+  "applicationSourceDirectories": [
+    "frontend",
+    "common"
+  ],
+  "applicationFilesScanned": 214,
+  "applicationFilesChanged": 3,
+  "workspaceFilesChanged": 3,
+  "files": [
+    {
+      "path": "package.json",
+      "kind": "workspace",
+      "changed": true,
+      "sha256Before": "32dab8144180098fb037760c2e37edb7b28451cb47c7a2e860355fecd67ae49c",
+      "sha256After": "8c1189e28b81d937517368635acc7917aac146aa9f76e2c2274f9c0d3d31db4a",
+      "changes": [
+        "devDependencies.@angular-devkit/build-angular: 0.801.2 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@angular-devkit/build-optimizer: 0.801.2 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@angular/animations: 8.1.2 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@angular/cli: 8.1.2 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@angular/common: 8.1.2 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@angular/compiler: 8.1.2 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@angular/compiler-cli: 8.1.2 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@angular/core: 8.1.2 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@angular/forms: 8.1.2 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "removed devDependencies.@angular/http (was 7.2.15) — no successor line for angular-16-browser-builder: @angular/http stops at 7.2.16 and is deprecated on the registry with \"Package no longer supported. Use @angular/common instead\". Angular removed the package after the 7 line; there is no 8.x and no 16.x, so the `@angular/` family range this cell writes for its own packages names a version that was never published. The HTTP client that succeeded it is `@angular/common/http`, an entry point of a package this cell already carries, so the dependency is dropped rather than pinned to a v7 line beside a v16 framework.",
+        "devDependencies.@angular/language-service: 8.1.2 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@angular/platform-browser: 8.1.2 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@angular/platform-browser-dynamic: 8.1.2 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@angular/router: 8.1.2 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@types/jasmine: 3.3.13 -> ~4.3.0 — aligned to the test toolchain angular-16-browser-builder generates",
+        "removed devDependencies.codelyzer (was 5.1.0) — released by a builder target the workspace migration removed",
+        "devDependencies.jasmine-core: 3.4.0 -> ~4.6.0 — aligned to the test toolchain angular-16-browser-builder generates",
+        "removed devDependencies.jasmine-spec-reporter (was 4.2.1) — released by a builder target the workspace migration removed",
+        "devDependencies.karma: 4.2.0 -> ~6.4.0 — aligned to the test toolchain angular-16-browser-builder generates",
+        "devDependencies.karma-chrome-launcher: 3.0.0 -> ~3.2.0 — aligned to the test toolchain angular-16-browser-builder generates",
+        "devDependencies.karma-jasmine: 2.0.1 -> ~5.1.0 — aligned to the test toolchain angular-16-browser-builder generates",
+        "devDependencies.karma-jasmine-html-reporter: 1.4.2 -> ~2.1.0 — aligned to the test toolchain angular-16-browser-builder generates",
+        "removed devDependencies.protractor (was 5.4.2) — released by a builder target the workspace migration removed",
+        "devDependencies.rxjs: 6.5.2 -> ~7.8.0 — aligned to angular-16-browser-builder",
+        "removed devDependencies.tslint (was 5.18.0) — released by a builder target the workspace migration removed",
+        "devDependencies.typescript: 3.4.5 -> ~5.1.3 — aligned to angular-16-browser-builder",
+        "devDependencies.zone.js: 0.9.1 -> ~0.13.0 — aligned to angular-16-browser-builder"
+      ]
+    },
+    {
+      "path": "angular.json",
+      "kind": "workspace",
+      "changed": true,
+      "sha256Before": "02510dcff5d8f8787f14559b0a4f750a40a03f31b6b3d3e0f622712cefcc1042",
+      "sha256After": "60a12ceb99ab8d6280ae5da8919ec8a0835a370f39d46e003917d24dd3910e2c",
+      "changes": [
+        "removed defaultProject (was \"pigallery2\")",
+        "projects.pigallery2.architect.build.options.polyfills: \"frontend/polyfills.ts\" -> [\"frontend/polyfills.ts\"]",
+        "added projects.pigallery2.architect.build.options.optimization = {\"scripts\":true,\"styles\":true,\"fonts\":{\"inline\":false}}",
+        "projects.pigallery2.architect.build.configurations.production.optimization: true -> {\"scripts\":true,\"styles\":true,\"fonts\":{\"inline\":false}}",
+        "removed projects.pigallery2.architect.build.configurations.production.extractCss (was true)",
+        "projects.pigallery2.architect.test.options.polyfills: \"frontend/polyfills.ts\" -> [\"frontend/polyfills.ts\"]",
+        "removed projects.pigallery2.architect.lint (was @angular-devkit/build-angular:tslint)",
+        "removed projects.pigallery2-e2e.architect.e2e (was @angular-devkit/build-angular:protractor)",
+        "removed projects.pigallery2-e2e.architect.lint (was @angular-devkit/build-angular:tslint)"
+      ]
+    },
+    {
+      "path": "tsconfig.json",
+      "kind": "workspace",
+      "changed": true,
+      "sha256Before": "17ce69f47e3047c3293587c1b796edd1ca4752b5bfbcaf8a968e1e36c9e17b01",
+      "sha256After": "a6c05cb56cf3112cd9cbcec58f68235666c66afedf829a58d16a7e1cb7bf3966",
+      "changes": [
+        "compilerOptions.target: \"es5\" -> \"ES2022\"",
+        "added compilerOptions.module = \"ES2022\"",
+        "added compilerOptions.useDefineForClassFields = false"
+      ]
+    },
+    {
+      "path": "common/CookieNames.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "0660b67e3669900103c3c9c0b0cc4d4a79e81505c387315f65ea60bfa9f858fe",
+      "sha256After": "0660b67e3669900103c3c9c0b0cc4d4a79e81505c387315f65ea60bfa9f858fe",
+      "changes": []
+    },
+    {
+      "path": "common/CostumHeaders.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "348e0085fec74f31148fbbd884972a16ee1d22825d8a502e903ed5a73e93886b",
+      "sha256After": "348e0085fec74f31148fbbd884972a16ee1d22825d8a502e903ed5a73e93886b",
+      "changes": []
+    },
+    {
+      "path": "common/DataStructureVersion.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "5ff84d084e631e3d4e1848c301b3be17df25134de40a347c0a6fad24305fae1f",
+      "sha256After": "5ff84d084e631e3d4e1848c301b3be17df25134de40a347c0a6fad24305fae1f",
+      "changes": []
+    },
+    {
+      "path": "common/QueryParams.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "81bca8582b59f37c4c297b03609624ad06de622c8d32adb35577ac2f299f53b8",
+      "sha256After": "81bca8582b59f37c4c297b03609624ad06de622c8d32adb35577ac2f299f53b8",
+      "changes": []
+    },
+    {
+      "path": "common/Utils.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "61e2799dd09e16d8bcac40acac7ab50e7f64d7c108690a4f39df30264ef73eac",
+      "sha256After": "61e2799dd09e16d8bcac40acac7ab50e7f64d7c108690a4f39df30264ef73eac",
+      "changes": []
+    },
+    {
+      "path": "common/config/private/Config.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "4919c3149f4aa660165df4afbee8d086d0282c084a0da6e92c6bd67488d2780a",
+      "sha256After": "4919c3149f4aa660165df4afbee8d086d0282c084a0da6e92c6bd67488d2780a",
+      "changes": []
+    },
+    {
+      "path": "common/config/private/IPrivateConfig.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "b9dc2ffdf56052945568a1c85847fe60f99d6e0ed63e5ab07e242e58981c402f",
+      "sha256After": "b9dc2ffdf56052945568a1c85847fe60f99d6e0ed63e5ab07e242e58981c402f",
+      "changes": []
+    },
+    {
+      "path": "common/config/private/PrivateConfigClass.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "0fa65931e09d7985827bae7b50b3a731172f0502fac09132419d6c9736a47801",
+      "sha256After": "0fa65931e09d7985827bae7b50b3a731172f0502fac09132419d6c9736a47801",
+      "changes": []
+    },
+    {
+      "path": "common/config/public/Config.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "170a1be83e0ec785ece807dc8a9446cbce659359dc798dc78b5e313f6f8eb16a",
+      "sha256After": "170a1be83e0ec785ece807dc8a9446cbce659359dc798dc78b5e313f6f8eb16a",
+      "changes": []
+    },
+    {
+      "path": "common/config/public/ConfigClass.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "c4a6e1d710b19aaf4eef525827f5d9ad00badab953c7e642482f748be65fde13",
+      "sha256After": "c4a6e1d710b19aaf4eef525827f5d9ad00badab953c7e642482f748be65fde13",
+      "changes": []
+    },
+    {
+      "path": "common/entities/AutoCompleteItem.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "ad3c7d16a04ab0be201447dda9bff0e68224b810d4df5eddcdcacd1561ca658d",
+      "sha256After": "ad3c7d16a04ab0be201447dda9bff0e68224b810d4df5eddcdcacd1561ca658d",
+      "changes": []
+    },
+    {
+      "path": "common/entities/ConentWrapper.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "73aaf531be888b56caca070072690168423ca609d5efab132c1dd7e672416f0e",
+      "sha256After": "73aaf531be888b56caca070072690168423ca609d5efab132c1dd7e672416f0e",
+      "changes": []
+    },
+    {
+      "path": "common/entities/DirectoryDTO.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "4452ece1435556e1dbd98113f31419af88cfb502819ca0e5fce28017fe82402b",
+      "sha256After": "4452ece1435556e1dbd98113f31419af88cfb502819ca0e5fce28017fe82402b",
+      "changes": []
+    },
+    {
+      "path": "common/entities/DuplicatesDTO.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "c46ce8b32b1e0e2107fa007957f50df86caa1c9ceee693f1dd47a23a9f94da0f",
+      "sha256After": "c46ce8b32b1e0e2107fa007957f50df86caa1c9ceee693f1dd47a23a9f94da0f",
+      "changes": []
+    },
+    {
+      "path": "common/entities/Error.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "aab57e0eb5c7dbce693615f9b69bf4af3b0eab6a7c901f627a0e5ecc92b0901d",
+      "sha256After": "aab57e0eb5c7dbce693615f9b69bf4af3b0eab6a7c901f627a0e5ecc92b0901d",
+      "changes": []
+    },
+    {
+      "path": "common/entities/FileDTO.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "a003127c7cbbf0963fd3c7f5c0837dcaa8ed43919d606d0e98fa6445b0314f4a",
+      "sha256After": "a003127c7cbbf0963fd3c7f5c0837dcaa8ed43919d606d0e98fa6445b0314f4a",
+      "changes": []
+    },
+    {
+      "path": "common/entities/LoginCredential.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "323da1458d37952aa2b4d44a43cdd53b672bd0f1f39ee188b413a124cdab66d3",
+      "sha256After": "323da1458d37952aa2b4d44a43cdd53b672bd0f1f39ee188b413a124cdab66d3",
+      "changes": []
+    },
+    {
+      "path": "common/entities/MediaDTO.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "1c92060fa11a4b9b5195e4f2e97fa7b95cb75ccb57b7359e61bcf7152edca9e7",
+      "sha256After": "1c92060fa11a4b9b5195e4f2e97fa7b95cb75ccb57b7359e61bcf7152edca9e7",
+      "changes": []
+    },
+    {
+      "path": "common/entities/Message.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "a1e2eaa056d6fe50bc4c6997b1c09d58fc97c36093ee2b214c9bab2efad07551",
+      "sha256After": "a1e2eaa056d6fe50bc4c6997b1c09d58fc97c36093ee2b214c9bab2efad07551",
+      "changes": []
+    },
+    {
+      "path": "common/entities/NotificationDTO.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "6237b6f02ca14e02a77e9550ba5e74aef403cce38d205400b83003f0058a7629",
+      "sha256After": "6237b6f02ca14e02a77e9550ba5e74aef403cce38d205400b83003f0058a7629",
+      "changes": []
+    },
+    {
+      "path": "common/entities/PasswordChangeRequest.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "71bf6fb516aeb4c8675bd65ee1b0fdb174f22f970d588072a77934ba0a6aa706",
+      "sha256After": "71bf6fb516aeb4c8675bd65ee1b0fdb174f22f970d588072a77934ba0a6aa706",
+      "changes": []
+    },
+    {
+      "path": "common/entities/PersonDTO.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "097a3361f2e7cf4c09e43fe3b0e9412e6642cb4b4ed9a191c98e34da84fec3f2",
+      "sha256After": "097a3361f2e7cf4c09e43fe3b0e9412e6642cb4b4ed9a191c98e34da84fec3f2",
+      "changes": []
+    },
+    {
+      "path": "common/entities/PhotoDTO.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "3594096ba42d0fdea353c131d8a346cda46358056cb92b4be5723f0efcfb2f06",
+      "sha256After": "3594096ba42d0fdea353c131d8a346cda46358056cb92b4be5723f0efcfb2f06",
+      "changes": []
+    },
+    {
+      "path": "common/entities/RandomQueryDTO.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "d94221d72ba338577da14516bee2e863c4af97fa4e97eccbf2ae9442493103eb",
+      "sha256After": "d94221d72ba338577da14516bee2e863c4af97fa4e97eccbf2ae9442493103eb",
+      "changes": []
+    },
+    {
+      "path": "common/entities/SearchResultDTO.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "1266f486b6cf7c781a2b0b67343d6c38fefd65de6553c467d078547745fe99fc",
+      "sha256After": "1266f486b6cf7c781a2b0b67343d6c38fefd65de6553c467d078547745fe99fc",
+      "changes": []
+    },
+    {
+      "path": "common/entities/SharingDTO.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "e60c618bd09db932ff7eb879d0bcff6c3c61a025d733ccd4442c4bc066812f21",
+      "sha256After": "e60c618bd09db932ff7eb879d0bcff6c3c61a025d733ccd4442c4bc066812f21",
+      "changes": []
+    },
+    {
+      "path": "common/entities/SortingMethods.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "c77f1182e6cc8bfa9e150eb09fdf9bc6554cb592fb962f2f392d092cd118d77d",
+      "sha256After": "c77f1182e6cc8bfa9e150eb09fdf9bc6554cb592fb962f2f392d092cd118d77d",
+      "changes": []
+    },
+    {
+      "path": "common/entities/TaskDTO.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "20b49b6a41e4c051f41a7e2e04173f78aff02831642d740aed4879c6d57c4fac",
+      "sha256After": "20b49b6a41e4c051f41a7e2e04173f78aff02831642d740aed4879c6d57c4fac",
+      "changes": []
+    },
+    {
+      "path": "common/entities/UserDTO.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "bb6cd3c471f83b7821a680c5e685a932c691b82d61aed6798e121e2978d97827",
+      "sha256After": "bb6cd3c471f83b7821a680c5e685a932c691b82d61aed6798e121e2978d97827",
+      "changes": []
+    },
+    {
+      "path": "common/entities/UserModificationRequest.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "b1ed30a3fd17809b1e60eb499f343fd0668529baedf8675eec87ab92f00ff594",
+      "sha256After": "b1ed30a3fd17809b1e60eb499f343fd0668529baedf8675eec87ab92f00ff594",
+      "changes": []
+    },
+    {
+      "path": "common/entities/VideoDTO.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "11474db889628d4dc4d22c2e218568617a8592ff706b0eea9b9be65e106f2589",
+      "sha256After": "11474db889628d4dc4d22c2e218568617a8592ff706b0eea9b9be65e106f2589",
+      "changes": []
+    },
+    {
+      "path": "common/entities/settings/BasicConfigDTO.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "05620b7c1a4a1856d94a08866ac8a0fa52f0c0b07647ad76f8b42a1e414a3e90",
+      "sha256After": "05620b7c1a4a1856d94a08866ac8a0fa52f0c0b07647ad76f8b42a1e414a3e90",
+      "changes": []
+    },
+    {
+      "path": "common/entities/settings/IndexingDTO.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "ee8d7e9765f8782c89f235abe6380ce5bd79ca88fa3f6b2482ceaee0434303b5",
+      "sha256After": "ee8d7e9765f8782c89f235abe6380ce5bd79ca88fa3f6b2482ceaee0434303b5",
+      "changes": []
+    },
+    {
+      "path": "common/entities/settings/IndexingProgressDTO.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "5df6c3ffc661ce8332d86b9506e11e1992f5286ddbd29bc51025670a6b25a1b4",
+      "sha256After": "5df6c3ffc661ce8332d86b9506e11e1992f5286ddbd29bc51025670a6b25a1b4",
+      "changes": []
+    },
+    {
+      "path": "common/entities/settings/OtherConfigDTO.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "ef7b970a24c8d8d3c51ea296bcfd727ddcaae0ad49c207692061c041f4521bfe",
+      "sha256After": "ef7b970a24c8d8d3c51ea296bcfd727ddcaae0ad49c207692061c041f4521bfe",
+      "changes": []
+    },
+    {
+      "path": "common/entities/settings/StatisticDTO.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "f74b43b0e7291bd2b1d92f4b262a1fd1c0f8368393dc1ec164bcf211383f8b4a",
+      "sha256After": "f74b43b0e7291bd2b1d92f4b262a1fd1c0f8368393dc1ec164bcf211383f8b4a",
+      "changes": []
+    },
+    {
+      "path": "common/event/Event.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "18fa639b38388bcf0e798bd1c4d873c2959285a5076297325e06e9fcf1fc3110",
+      "sha256After": "18fa639b38388bcf0e798bd1c4d873c2959285a5076297325e06e9fcf1fc3110",
+      "changes": []
+    },
+    {
+      "path": "common/event/Event2Args.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "39fdf968b7ae410ad1581230bbef2fa3bece8d318427679eb868cc7a7c4475b5",
+      "sha256After": "39fdf968b7ae410ad1581230bbef2fa3bece8d318427679eb868cc7a7c4475b5",
+      "changes": []
+    },
+    {
+      "path": "common/event/EventLimit.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "116fce3ab890746d1353d62f8091f73344f1062c3c6a209a6bf3ee76f3e25f0b",
+      "sha256After": "116fce3ab890746d1353d62f8091f73344f1062c3c6a209a6bf3ee76f3e25f0b",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/app.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "2b9e7efe596e9329a900bb77497d0ee79d68607f43c5f98cce71ffcb2dea9c56",
+      "sha256After": "2b9e7efe596e9329a900bb77497d0ee79d68607f43c5f98cce71ffcb2dea9c56",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/app.module.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "16fa79c615b1f024dafbf08bfbff8788263d72fe5c2075640861879805bb4e81",
+      "sha256After": "16fa79c615b1f024dafbf08bfbff8788263d72fe5c2075640861879805bb4e81",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/app.routing.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "fcf93b83a794ac9999c259cfb7e0c54cb442794710c8b04860304af03f5b88a2",
+      "sha256After": "fcf93b83a794ac9999c259cfb7e0c54cb442794710c8b04860304af03f5b88a2",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/model/IRenderable.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "a324927fd59d8a089513d553958b77c49095926b96377f5fde266b56f931bee8",
+      "sha256After": "a324927fd59d8a089513d553958b77c49095926b96377f5fde266b56f931bee8",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/model/navigation.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "d8bcbeafd917c03c3b227c5861ab53a95ed415c94e71f6c037c0583a217d6322",
+      "sha256After": "d8bcbeafd917c03c3b227c5861ab53a95ed415c94e71f6c037c0583a217d6322",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/model/network/authentication.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "0f1efb53eb016640e32c9a0f769576196dd81e925dbe86238948a36e970c5375",
+      "sha256After": "0f1efb53eb016640e32c9a0f769576196dd81e925dbe86238948a36e970c5375",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/model/network/network.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "ac55aa1f1dacfd28507bf2bc27a3cf3af606054bda6d26aeb3af3852657d4626",
+      "sha256After": "ac55aa1f1dacfd28507bf2bc27a3cf3af606054bda6d26aeb3af3852657d4626",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/model/network/user.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "71c236d4473448c35a6a4226c48d4112fa75f2a18e54dc3fe535daae3728069b",
+      "sha256After": "71c236d4473448c35a6a4226c48d4112fa75f2a18e54dc3fe535daae3728069b",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/model/notification.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "1bf1ab134a42bb4131eb5f5d6bdbfeed2f1d3d74d82cf49bd00e4a40dfb4b00f",
+      "sha256After": "1bf1ab134a42bb4131eb5f5d6bdbfeed2f1d3d74d82cf49bd00e4a40dfb4b00f",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/model/page.helper.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "9dd73831516cbdfb01698623323e2c41cc459c6506c87a8ad1715b5436ca3d65",
+      "sha256After": "9dd73831516cbdfb01698623323e2c41cc459c6506c87a8ad1715b5436ca3d65",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/model/query.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "4b3850bb3edec8890ce742f5e365157ac3fd07d6f9821b302401f22ef81ee91b",
+      "sha256After": "4b3850bb3edec8890ce742f5e365157ac3fd07d6f9821b302401f22ef81ee91b",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/model/seededRandom.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "80d05b19cc2eb178024fe6e7553e94a522c8a1516835fe61099da673a517b389",
+      "sha256After": "80d05b19cc2eb178024fe6e7553e94a522c8a1516835fe61099da673a517b389",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/model/version.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "db0762d205cfc6c5640b42b1620c0ad85e87d1736596afd2d99d97b795ac9292",
+      "sha256After": "db0762d205cfc6c5640b42b1620c0ad85e87d1736596afd2d99d97b795ac9292",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/pipes/DurationPipe.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "87d68dd92ec49bfc96d2030ba8c37161909b3e2550edcdee576cf1feb7a0bac8",
+      "sha256After": "87d68dd92ec49bfc96d2030ba8c37161909b3e2550edcdee576cf1feb7a0bac8",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/pipes/FileSizePipe.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "6d065ddaa755df3db0a6f27f66a9730f09eaa407eff51898294500e2b7914063",
+      "sha256After": "6d065ddaa755df3db0a6f27f66a9730f09eaa407eff51898294500e2b7914063",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/pipes/FixOrientationPipe.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "d94dfe3eabd36feb34e22033f3207968ae32e87598b7a6f7584d2b0a0c4762b9",
+      "sha256After": "d94dfe3eabd36feb34e22033f3207968ae32e87598b7a6f7584d2b0a0c4762b9",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/pipes/IconizeSortingMethod.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "ab4ca257d87ed065af3c55da39c469d0cc2d3abd9251d5b24f43f3b587eadd45",
+      "sha256After": "ab4ca257d87ed065af3c55da39c469d0cc2d3abd9251d5b24f43f3b587eadd45",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/pipes/StringifyRolePipe.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "76f063fb98bbf9c98b6fc8f04f1f3518dd5fc51bd06f05600b7a8ccb600da7a1",
+      "sha256After": "76f063fb98bbf9c98b6fc8f04f1f3518dd5fc51bd06f05600b7a8ccb600da7a1",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/pipes/StringifySortingMethod.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "b4100a4132863b27f478f736f5a95e4771e294503bd92d6949e098b240cad3fb",
+      "sha256After": "b4100a4132863b27f478f736f5a95e4771e294503bd92d6949e098b240cad3fb",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/admin/admin.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "fb0b74d5b89def4e96e5098eb6fb87cf923804e5da01eb2b8a2826f4fbfbfb0a",
+      "sha256After": "fb0b74d5b89def4e96e5098eb6fb87cf923804e5da01eb2b8a2826f4fbfbfb0a",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/duplicates/duplicates.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "073fff03d86170462b9cb1b518f16a4a7d80db50c9f85a66b5ab35849e690d08",
+      "sha256After": "073fff03d86170462b9cb1b518f16a4a7d80db50c9f85a66b5ab35849e690d08",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/duplicates/duplicates.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "d11263ba9538d44b71e79de91ee4a08cdc19929553773cb5a710160ffa077022",
+      "sha256After": "d11263ba9538d44b71e79de91ee4a08cdc19929553773cb5a710160ffa077022",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/duplicates/photo/photo.duplicates.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "c4c421a2db0a28db3b183bad68663dd87d23a276ed644b660e4f009c555971b0",
+      "sha256After": "c4c421a2db0a28db3b183bad68663dd87d23a276ed644b660e4f009c555971b0",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/faces/face/face.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "381249a48d6f8519023961fe93599d8434cd1611ae977de23aabf8daa6ce296a",
+      "sha256After": "381249a48d6f8519023961fe93599d8434cd1611ae977de23aabf8daa6ce296a",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/faces/faces.component.ts",
+      "kind": "application",
+      "changed": true,
+      "sha256Before": "a18912c110bf1a6c0f2c7437c48b217c17adc234e4983066c98a54ac6bd8de17",
+      "sha256After": "447edcfdb088b5cb62328809019802c62f30c9af4b0ce1b69730570c2f33a97f",
+      "changes": [
+        "line 6: module-specifier rxjs/Observable -> rxjs"
+      ]
+    },
+    {
+      "path": "frontend/app/ui/faces/faces.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "55f95f1a171f813fac13223003fc505921fa0a70bb7c7525f454297c6e1da8a0",
+      "sha256After": "55f95f1a171f813fac13223003fc505921fa0a70bb7c7525f454297c6e1da8a0",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/frame/frame.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "8fa213f8a3babc8e20986737bee3144ada4afd138984b0ca040dc47d57630bb4",
+      "sha256After": "8fa213f8a3babc8e20986737bee3144ada4afd138984b0ca040dc47d57630bb4",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/Media.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "040934bd77510169425c29a334b62552ee96935eacca9a3f87f2714acef7d6b7",
+      "sha256After": "040934bd77510169425c29a334b62552ee96935eacca9a3f87f2714acef7d6b7",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/MediaIcon.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "a7b61640ab982227bad37567605f1356f9193bb0a3211356b98da5e297a81e7c",
+      "sha256After": "a7b61640ab982227bad37567605f1356f9193bb0a3211356b98da5e297a81e7c",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/cache.gallery.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "326b670cec297b7c8deb6151c95d4651eb11156e57b19439f2938a8ca060de50",
+      "sha256After": "326b670cec297b7c8deb6151c95d4651eb11156e57b19439f2938a8ca060de50",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/directories/directories.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "da4bd3dd71b1f4f9e719c14e7baaac34aa0c1659739b5b1ee60ecb78eda9cacd",
+      "sha256After": "da4bd3dd71b1f4f9e719c14e7baaac34aa0c1659739b5b1ee60ecb78eda9cacd",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/directories/directory/directory.gallery.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "be854e5bf9e866cb82d2b91e2efe248a21d8e0dadc9b72a35e33bde265f7c853",
+      "sha256After": "be854e5bf9e866cb82d2b91e2efe248a21d8e0dadc9b72a35e33bde265f7c853",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/fullscreen.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "c5e8a7b08db25f4086d5937cabae5da242d6226cd6cf196b742a7ac940e3e6b6",
+      "sha256After": "c5e8a7b08db25f4086d5937cabae5da242d6226cd6cf196b742a7ac940e3e6b6",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/gallery.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "75bcaba3ed5db515a292ce5eebdf17c4313c583928994f524b7f96789b279870",
+      "sha256After": "75bcaba3ed5db515a292ce5eebdf17c4313c583928994f524b7f96789b279870",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/gallery.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "3eabf427aacdd13e31336a90ec539b6619ae826ed7afdd7a5eead0663b9d3103",
+      "sha256After": "3eabf427aacdd13e31336a90ec539b6619ae826ed7afdd7a5eead0663b9d3103",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/grid/GridMedia.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "bf5f5ff670770741e452d3865ad3431608cde7b25ce97b76b81522b27ce95be8",
+      "sha256After": "bf5f5ff670770741e452d3865ad3431608cde7b25ce97b76b81522b27ce95be8",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/grid/GridRowBuilder.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "3be4db946f9251967f736ffd61ceb42fe879a99e52dc55d7823ee834b5a1c35e",
+      "sha256After": "3be4db946f9251967f736ffd61ceb42fe879a99e52dc55d7823ee834b5a1c35e",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/grid/grid.gallery.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "62d6785e47fe49080ab34141a6f5137260f4a76e1b711f9366d37fe239676b3a",
+      "sha256After": "62d6785e47fe49080ab34141a6f5137260f4a76e1b711f9366d37fe239676b3a",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/grid/photo/loading/loading.photo.grid.gallery.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "a7f5a3e5f43a166d54062bb80058f5b4c73b4ec478f26d3505d3e36a9bd03eca",
+      "sha256After": "a7f5a3e5f43a166d54062bb80058f5b4c73b4ec478f26d3505d3e36a9bd03eca",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/grid/photo/photo.grid.gallery.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "c4b51a9b5dd4ea8785c0e48c0bbd6f496f1661870839e60e0c77a2439e467702",
+      "sha256After": "c4b51a9b5dd4ea8785c0e48c0bbd6f496f1661870839e60e0c77a2439e467702",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/lightbox/controls/controls.lightbox.gallery.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "d9a39e75f68f73167be42f391133820813b357b4272f257479d443f9bfd8b38a",
+      "sha256After": "d9a39e75f68f73167be42f391133820813b357b4272f257479d443f9bfd8b38a",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/lightbox/infopanel/info-panel.lightbox.gallery.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "e0219a391e2a56708a621ed42469415a2ad9c0b728bbf3dbf8a52eebf4c6a26c",
+      "sha256After": "e0219a391e2a56708a621ed42469415a2ad9c0b728bbf3dbf8a52eebf4c6a26c",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/lightbox/lightbox.gallery.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "135c863a69477bbcd1096cc8c2aba4c79e2fe73db881f4ad6f8a89b04604cdd5",
+      "sha256After": "135c863a69477bbcd1096cc8c2aba4c79e2fe73db881f4ad6f8a89b04604cdd5",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/lightbox/media/media.lightbox.gallery.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "e90d63585a3904c7cb3963f88f816d9c699247e7c2790f9156324a3542a42a4b",
+      "sha256After": "e90d63585a3904c7cb3963f88f816d9c699247e7c2790f9156324a3542a42a4b",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/map/lightbox/lightbox.map.gallery.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "79426cc805eade864af1e768ccb7181ee4631e2dbdb7b5fed8f31ab60c3506fc",
+      "sha256After": "79426cc805eade864af1e768ccb7181ee4631e2dbdb7b5fed8f31ab60c3506fc",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/map/map.gallery.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "353eab2456093ccf0743e45a052abd4d1e2a4668cfe5da7d9966ab37389aca95",
+      "sha256After": "353eab2456093ccf0743e45a052abd4d1e2a4668cfe5da7d9966ab37389aca95",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/map/map.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "f974aa9057c8148b56ca3376b5c15a080f0b8f0c72fb9638b9bf6cb1bcb702f0",
+      "sha256After": "f974aa9057c8148b56ca3376b5c15a080f0b8f0c72fb9638b9bf6cb1bcb702f0",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/navigator/navigator.gallery.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "b92df9805165eb1aa3ed46c1b4bc64d5bd525960030de63423c68fb93363e1d9",
+      "sha256After": "b92df9805165eb1aa3ed46c1b4bc64d5bd525960030de63423c68fb93363e1d9",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/overlay.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "5587fe22e9ac224e1dd5c53351ff78333a6168d2d272b74cb389b64d3cdd83f5",
+      "sha256After": "5587fe22e9ac224e1dd5c53351ff78333a6168d2d272b74cb389b64d3cdd83f5",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/random-query-builder/random-query-builder.gallery.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "c7a2ba60eead0617508381310e582ea40fbb98c8ef3d5cf095036c21ed21f9cc",
+      "sha256After": "c7a2ba60eead0617508381310e582ea40fbb98c8ef3d5cf095036c21ed21f9cc",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/search/autocomplete.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "b928971920095d350e6a4e3b56908ae574857260006d882f47138d22f905c8a5",
+      "sha256After": "b928971920095d350e6a4e3b56908ae574857260006d882f47138d22f905c8a5",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/search/search.gallery.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "f5c20511a062fcef34faa67b1cb587efae900d0ced75e7a74a104375b93f8f03",
+      "sha256After": "f5c20511a062fcef34faa67b1cb587efae900d0ced75e7a74a104375b93f8f03",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/share.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "6b39a95f954b7742d69329ec9d1c174dc6d50d349ad2b9b74277bc6bc07e52dc",
+      "sha256After": "6b39a95f954b7742d69329ec9d1c174dc6d50d349ad2b9b74277bc6bc07e52dc",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/share/share.gallery.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "9304d00f6fa24b27df22bf5b7e070159c413677dedec250c1c12385037c1192e",
+      "sha256After": "9304d00f6fa24b27df22bf5b7e070159c413677dedec250c1c12385037c1192e",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/thumbnailLoader.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "0adb500d2e18268810c77a07a5316e15a25a075ed3c6f5f42eee385211fca98b",
+      "sha256After": "0adb500d2e18268810c77a07a5316e15a25a075ed3c6f5f42eee385211fca98b",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/thumbnailManager.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "ba8d6b20879775a4d693c38996e0ba8721c124accff116ace281dabe80f2cb90",
+      "sha256After": "ba8d6b20879775a4d693c38996e0ba8721c124accff116ace281dabe80f2cb90",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/language/language.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "0171217ec30437851bea3831a581bb83aadf547eed40cbefc79c70974f9fbbfc",
+      "sha256After": "0171217ec30437851bea3831a581bb83aadf547eed40cbefc79c70974f9fbbfc",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/login/login.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "d40013aaa21b90d8226a010c775199be565cb026c84a24d1508f107e112678df",
+      "sha256After": "d40013aaa21b90d8226a010c775199be565cb026c84a24d1508f107e112678df",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/_abstract/abstract.settings.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "b359a684ee657ca5d137946b8218889c9b7f349b5589b796920d4ec8ece56c9e",
+      "sha256After": "b359a684ee657ca5d137946b8218889c9b7f349b5589b796920d4ec8ece56c9e",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/_abstract/abstract.settings.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "e281b54423bde8c72079ddda9682bcb396c0302cfe4bbb70ad38844a032dde32",
+      "sha256After": "e281b54423bde8c72079ddda9682bcb396c0302cfe4bbb70ad38844a032dde32",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/basic/basic.settings.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "b91ea9e5965b6ac7f1831c9745a16b12ef94129c6d5b24f6f0512236afc07107",
+      "sha256After": "b91ea9e5965b6ac7f1831c9745a16b12ef94129c6d5b24f6f0512236afc07107",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/basic/basic.settings.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "6c6ad91724da43b6b57dc61a47c3864dbc5a26f1450582c537cecabf2123fb69",
+      "sha256After": "6c6ad91724da43b6b57dc61a47c3864dbc5a26f1450582c537cecabf2123fb69",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/database/database.settings.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "78b205d545ee5265364a9b6cbb806ce431668a8b5a958bfa46d2a8c5ebbb7846",
+      "sha256After": "78b205d545ee5265364a9b6cbb806ce431668a8b5a958bfa46d2a8c5ebbb7846",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/database/database.settings.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "f4287063f22ba1ba2e3721bb12d3a211a6048df2d59641affd54274f8af680a9",
+      "sha256After": "f4287063f22ba1ba2e3721bb12d3a211a6048df2d59641affd54274f8af680a9",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/faces/faces.settings.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "4b6ae66313a13a171848809f82ec2922c5eb4a39ccd4c6e4a3fafc5aa51f815f",
+      "sha256After": "4b6ae66313a13a171848809f82ec2922c5eb4a39ccd4c6e4a3fafc5aa51f815f",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/faces/faces.settings.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "66da9755163dd2e97b2a0c5f0f4b892d578c6af8f283ba4594cf2f9fd2b306ae",
+      "sha256After": "66da9755163dd2e97b2a0c5f0f4b892d578c6af8f283ba4594cf2f9fd2b306ae",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/indexing/indexing.settings.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "01acc12e5453d91b7c5bf6c8a75a87e36e6d690ff4ad6ec92bd4fa4f0f39fad5",
+      "sha256After": "01acc12e5453d91b7c5bf6c8a75a87e36e6d690ff4ad6ec92bd4fa4f0f39fad5",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/indexing/indexing.settings.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "85e820b2be2a196040fa6e3e0f5ec94cb2b6d1ce527b5cee34f0901c0b4406e2",
+      "sha256After": "85e820b2be2a196040fa6e3e0f5ec94cb2b6d1ce527b5cee34f0901c0b4406e2",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/map/map.settings.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "3bf3166af395739619d7c2a1b74b2aa31c636e822e0e3b3d47eff96d81ef0f70",
+      "sha256After": "3bf3166af395739619d7c2a1b74b2aa31c636e822e0e3b3d47eff96d81ef0f70",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/map/map.settings.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "f20ffc4d4391f49388eda038afe7da256cee507a041e8cb7453457bfc8095750",
+      "sha256After": "f20ffc4d4391f49388eda038afe7da256cee507a041e8cb7453457bfc8095750",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/metafiles/metafile.settings.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "3d13feaf167669835f194f4635a8303ea9c787e9b846ead60822b6cad2c1e6b0",
+      "sha256After": "3d13feaf167669835f194f4635a8303ea9c787e9b846ead60822b6cad2c1e6b0",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/metafiles/metafile.settings.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "ca7df8268123e3c39824ea5bef5348882a199464c3c33970d26244b1eecc50c0",
+      "sha256After": "ca7df8268123e3c39824ea5bef5348882a199464c3c33970d26244b1eecc50c0",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/other/other.settings.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "8fa0eddc26318309dc193619239f0dbfff1e4969bee0a6f32f002f16735fa72c",
+      "sha256After": "8fa0eddc26318309dc193619239f0dbfff1e4969bee0a6f32f002f16735fa72c",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/other/other.settings.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "ccbb26e048b0aa9740053d11b3e38cb8e46698ffb623d755c65721e92bbfa7f3",
+      "sha256After": "ccbb26e048b0aa9740053d11b3e38cb8e46698ffb623d755c65721e92bbfa7f3",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/random-photo/random-photo.settings.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "76679d6e0fcaf68cf77686eebac5380cf516b9cf367d75106411d917b76a9e89",
+      "sha256After": "76679d6e0fcaf68cf77686eebac5380cf516b9cf367d75106411d917b76a9e89",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/random-photo/random-photo.settings.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "088bd90036efdc0e78a812759b95f03e5d656b9df4cd0595d4c9c3c43cf3df40",
+      "sha256After": "088bd90036efdc0e78a812759b95f03e5d656b9df4cd0595d4c9c3c43cf3df40",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/search/search.settings.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "3ba76b741ac2416176a6326048b75aa8e64e9b596ac085f3b946e62f148071b5",
+      "sha256After": "3ba76b741ac2416176a6326048b75aa8e64e9b596ac085f3b946e62f148071b5",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/search/search.settings.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "72ff82408edfadba36837f0ba0b450746fd64e46f2160b882ae020a3c8fa1a96",
+      "sha256After": "72ff82408edfadba36837f0ba0b450746fd64e46f2160b882ae020a3c8fa1a96",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/settings.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "6385bc504fa517d7fafa1242bb7f1314ab2906c719564606dc41634cdf5e08b1",
+      "sha256After": "6385bc504fa517d7fafa1242bb7f1314ab2906c719564606dc41634cdf5e08b1",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/share/share.settings.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "6da6d417bd4427f84812bafdff9b03a189925dec9566ba58df12235f6c5af8cd",
+      "sha256After": "6da6d417bd4427f84812bafdff9b03a189925dec9566ba58df12235f6c5af8cd",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/share/share.settings.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "0cbf37acefc92e8c3043799154a3fc8d80e7f8a7c0295880b1244617080eb8bd",
+      "sha256After": "0cbf37acefc92e8c3043799154a3fc8d80e7f8a7c0295880b1244617080eb8bd",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/thumbnail/thumbanil.settings.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "70d3aef7ba8e167c1d4fc26ce902f63a957582fd0cc38696c62d3ef050d712eb",
+      "sha256After": "70d3aef7ba8e167c1d4fc26ce902f63a957582fd0cc38696c62d3ef050d712eb",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/thumbnail/thumbanil.settings.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "66fd639acd5762a1761a626bad17c22d5a384eab6c614c05c6d7abc2880f93b8",
+      "sha256After": "66fd639acd5762a1761a626bad17c22d5a384eab6c614c05c6d7abc2880f93b8",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/usermanager/usermanager.settings.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "2a83fffaa47bdbeec6308932c73296adca6384be35fb3e2d91287b1355fcefeb",
+      "sha256After": "2a83fffaa47bdbeec6308932c73296adca6384be35fb3e2d91287b1355fcefeb",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/usermanager/usermanager.settings.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "1e423e1f7b5e38533a4f582a19b6e20aa0583aa4f3d53aa8e6bff0dfd2fc584d",
+      "sha256After": "1e423e1f7b5e38533a4f582a19b6e20aa0583aa4f3d53aa8e6bff0dfd2fc584d",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/video/video.settings.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "495a0c014ccc11df36ccc3f9f12522c7a47ce9b0e966a0dfb786b62865842642",
+      "sha256After": "495a0c014ccc11df36ccc3f9f12522c7a47ce9b0e966a0dfb786b62865842642",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/video/video.settings.service.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "fbd66ffb867025218f209bd22c796e0faf34263682b83d6d0ee608c0b7b893fb",
+      "sha256After": "fbd66ffb867025218f209bd22c796e0faf34263682b83d6d0ee608c0b7b893fb",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/sharelogin/share-login.component.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "e23b40211fda8f2602af6c0547180c93baa592fa798b0fae9a8724e1c5329108",
+      "sha256After": "e23b40211fda8f2602af6c0547180c93baa592fa798b0fae9a8724e1c5329108",
+      "changes": []
+    },
+    {
+      "path": "frontend/environments/environment.prod.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "365e9914fc285641a8c9152fa331c83164325564451bd2b05c73859ceaf54a3c",
+      "sha256After": "365e9914fc285641a8c9152fa331c83164325564451bd2b05c73859ceaf54a3c",
+      "changes": []
+    },
+    {
+      "path": "frontend/environments/environment.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "7c2530b6e1e9ab63b5703cf74a53f9374977e193c00748f9de5a037ed9ff753d",
+      "sha256After": "7c2530b6e1e9ab63b5703cf74a53f9374977e193c00748f9de5a037ed9ff753d",
+      "changes": []
+    },
+    {
+      "path": "frontend/main.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "4ac85bd9f58d182c9feb38289d750192c9ab72050642ac658dce2c471aa9dc96",
+      "sha256After": "4ac85bd9f58d182c9feb38289d750192c9ab72050642ac658dce2c471aa9dc96",
+      "changes": []
+    },
+    {
+      "path": "frontend/polyfills.ts",
+      "kind": "application",
+      "changed": true,
+      "sha256Before": "a4c11cc4b46f62601404e4653bbdf59d8b10e245d041e6da761a6a449d480980",
+      "sha256After": "adb9d69e40226930b418f7ec364bb9526623eaf507752aa94c4a930d2d9de813",
+      "changes": [
+        "line 45: module-specifier zone.js/dist/zone -> zone.js"
+      ]
+    },
+    {
+      "path": "frontend/test.ts",
+      "kind": "application",
+      "changed": true,
+      "sha256Before": "dc6264e81b5475f13ef5c941e334d385ffc8602923208d675442c5c713d49139",
+      "sha256After": "4eb52953e96882f946bb6bab95858996e01ebfe8b1839cb568025604772db403",
+      "changes": [
+        "line 3: module-specifier zone.js/dist/long-stack-trace-zone -> zone.js/plugins/long-stack-trace-zone"
+      ]
+    },
+    {
+      "path": "frontend/typings.d.ts",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "500f1012c6d4e5a70d590055fd9b74599f4e4b246b09db80d2fe8a8a5556d3c4",
+      "sha256After": "500f1012c6d4e5a70d590055fd9b74599f4e4b246b09db80d2fe8a8a5556d3c4",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/admin/admin.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "7164187c19bcd9ac3d66d4efc8c3e9b142993834d405317800708ed5cd69d7a4",
+      "sha256After": "7164187c19bcd9ac3d66d4efc8c3e9b142993834d405317800708ed5cd69d7a4",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/duplicates/duplicates.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "2ba86b8c2f8d6055e7100929bfdf7217fbce2287aea84f06dc6eaf583e585459",
+      "sha256After": "2ba86b8c2f8d6055e7100929bfdf7217fbce2287aea84f06dc6eaf583e585459",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/duplicates/photo/photo.duplicates.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "4f0f1ca2026c70d8dd9487a4725ecabd494bc3ca1f6175887f25267fa6149837",
+      "sha256After": "4f0f1ca2026c70d8dd9487a4725ecabd494bc3ca1f6175887f25267fa6149837",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/faces/face/face.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "42db7046665110c2b17497916b592251c34660f215b50779a9428f1e4115cfdd",
+      "sha256After": "42db7046665110c2b17497916b592251c34660f215b50779a9428f1e4115cfdd",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/faces/faces.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "c372b1c236db600c7fb32dd01b590b3e8bd153a655da338e7a059c7bf0049eca",
+      "sha256After": "c372b1c236db600c7fb32dd01b590b3e8bd153a655da338e7a059c7bf0049eca",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/frame/frame.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "91d19635847bb437ec177d7730e8f4ba1feb24566feffdc3954c44d1b5e0b286",
+      "sha256After": "91d19635847bb437ec177d7730e8f4ba1feb24566feffdc3954c44d1b5e0b286",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/directories/directories.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "44315b01acefcf7add454c3ee20c490684bcc4b735faf14c91308833ee618853",
+      "sha256After": "44315b01acefcf7add454c3ee20c490684bcc4b735faf14c91308833ee618853",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/directories/directory/directory.gallery.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "22735adf55743b3189cb1611e804e1f7ddf5b9ed5f9fbf7e2885f2a9b755ec10",
+      "sha256After": "22735adf55743b3189cb1611e804e1f7ddf5b9ed5f9fbf7e2885f2a9b755ec10",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/gallery.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "136e5e4da617a9a90ec9a059388bbda83be3169bde4c18c9177a238a26eadd86",
+      "sha256After": "136e5e4da617a9a90ec9a059388bbda83be3169bde4c18c9177a238a26eadd86",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/grid/grid.gallery.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "68626bc2046c70602c7e6a01cb86f905ccc4d0f8c9e940d300a58bdaf45a1d48",
+      "sha256After": "68626bc2046c70602c7e6a01cb86f905ccc4d0f8c9e940d300a58bdaf45a1d48",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/grid/photo/loading/loading.photo.grid.gallery.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "233d2cf6d885bcaa69f49fa996739735f4a8640dc5c8d0210bb65fde1c42ce0c",
+      "sha256After": "233d2cf6d885bcaa69f49fa996739735f4a8640dc5c8d0210bb65fde1c42ce0c",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/grid/photo/photo.grid.gallery.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "724b190385edafc0d7f9d3fd0e98f85d08e3ab4902d2007e6208468e57080a72",
+      "sha256After": "724b190385edafc0d7f9d3fd0e98f85d08e3ab4902d2007e6208468e57080a72",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/lightbox/controls/controls.lightbox.gallery.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "36a7b4fdb7c31849b030c156a763ab5918b95c00de6dd01291d74539ae29c006",
+      "sha256After": "36a7b4fdb7c31849b030c156a763ab5918b95c00de6dd01291d74539ae29c006",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/lightbox/infopanel/info-panel.lightbox.gallery.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "dfbd97344991515e33893cb8ca844b6165547ba80537ed26ac2fac347098f515",
+      "sha256After": "dfbd97344991515e33893cb8ca844b6165547ba80537ed26ac2fac347098f515",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/lightbox/lightbox.gallery.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "962ebd7db0600867cbb296e80b580508969aa06efd4dc35b5553dcf0e3168873",
+      "sha256After": "962ebd7db0600867cbb296e80b580508969aa06efd4dc35b5553dcf0e3168873",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/lightbox/media/media.lightbox.gallery.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "d394ce1b779b39b89fe2807f69686a252d49cd38942e5c5d30e0f0573b5c8f98",
+      "sha256After": "d394ce1b779b39b89fe2807f69686a252d49cd38942e5c5d30e0f0573b5c8f98",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/map/lightbox/lightbox.map.gallery.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "d77041066cd320853cbe392a5332f0cbe022339ee8a96489d5d2aa9e06b2bac9",
+      "sha256After": "d77041066cd320853cbe392a5332f0cbe022339ee8a96489d5d2aa9e06b2bac9",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/map/map.gallery.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "bd76c22085f0dd23979207b1e7367f9f55fb4328f06f3df93ca74f3c8b0cc981",
+      "sha256After": "bd76c22085f0dd23979207b1e7367f9f55fb4328f06f3df93ca74f3c8b0cc981",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/navigator/navigator.gallery.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "afc114c8be29c54dfb81f3f540eb085a969bd64765438c2171373f058e966640",
+      "sha256After": "afc114c8be29c54dfb81f3f540eb085a969bd64765438c2171373f058e966640",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/random-query-builder/random-query-builder.gallery.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "2862907006f22ffb76e4a9567a04f47d71eb4af5c69be0385374f1c0a9e6dbb3",
+      "sha256After": "2862907006f22ffb76e4a9567a04f47d71eb4af5c69be0385374f1c0a9e6dbb3",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/search/search.gallery.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "6eef4397b0ddb44d3883743602fcc6f10ee713e186d3745936924c21ccb3b34b",
+      "sha256After": "6eef4397b0ddb44d3883743602fcc6f10ee713e186d3745936924c21ccb3b34b",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/share/share.gallery.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "ac00a6b2ea5aa8b4e60e379cfad0e53070308d83f6e2f9503efce202cbd98ffc",
+      "sha256After": "ac00a6b2ea5aa8b4e60e379cfad0e53070308d83f6e2f9503efce202cbd98ffc",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/language/language.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "6b4ce5ae36931015803d1ca52af2897b929371a57cce00ae49441828a0aafca0",
+      "sha256After": "6b4ce5ae36931015803d1ca52af2897b929371a57cce00ae49441828a0aafca0",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/login/login.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "5d7c994cc34954e4db2e935ff2104c0154c74751776225a62073061226c997d9",
+      "sha256After": "5d7c994cc34954e4db2e935ff2104c0154c74751776225a62073061226c997d9",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/basic/basic.settings.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "75e3faef48f86f9ae9750b0adb72b17b3e0d297e68a3559a9376f3d673701874",
+      "sha256After": "75e3faef48f86f9ae9750b0adb72b17b3e0d297e68a3559a9376f3d673701874",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/database/database.settings.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "9b6f8af48e25001d28a5376a8fd75f248b81ecfe9baf25cd6e58847ab1ba0df7",
+      "sha256After": "9b6f8af48e25001d28a5376a8fd75f248b81ecfe9baf25cd6e58847ab1ba0df7",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/faces/faces.settings.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "bc6df31436099f840d4a16b6aa4725d65ff4e56b57b82c54597ddcc32fc3510f",
+      "sha256After": "bc6df31436099f840d4a16b6aa4725d65ff4e56b57b82c54597ddcc32fc3510f",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/indexing/indexing.settings.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "733c968ff55c615bd73dc6c8b0f5f54504e2fd1eaf7e1a4cb019aa6d8a3af977",
+      "sha256After": "733c968ff55c615bd73dc6c8b0f5f54504e2fd1eaf7e1a4cb019aa6d8a3af977",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/map/map.settings.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "86f60268c0867e1e184738f7151e3dbbc27bb1cfe2424b2d1e1374f9fb0b84d5",
+      "sha256After": "86f60268c0867e1e184738f7151e3dbbc27bb1cfe2424b2d1e1374f9fb0b84d5",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/metafiles/metafile.settings.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "e637d43e952d74751ea8637cd21666d136c86ddfb241d35069bf1def887d658b",
+      "sha256After": "e637d43e952d74751ea8637cd21666d136c86ddfb241d35069bf1def887d658b",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/other/other.settings.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "634eaad74fb6e9b09915e663767e7619257146c5b82eda1802f9b435dbef49af",
+      "sha256After": "634eaad74fb6e9b09915e663767e7619257146c5b82eda1802f9b435dbef49af",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/random-photo/random-photo.settings.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "c669a2230676c5ba29e9603c3fd68639b4d7250be4f94abc58ea60b40d628cfd",
+      "sha256After": "c669a2230676c5ba29e9603c3fd68639b4d7250be4f94abc58ea60b40d628cfd",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/search/search.settings.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "0adb3d3fd6f6361d68b8fc1494695443cee781054fa6146be916b22b7c2fa543",
+      "sha256After": "0adb3d3fd6f6361d68b8fc1494695443cee781054fa6146be916b22b7c2fa543",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/share/share.settings.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "22bf7130111a61d18ce936b4869b7649a44222e8c04221a80180086e4b8a6d8b",
+      "sha256After": "22bf7130111a61d18ce936b4869b7649a44222e8c04221a80180086e4b8a6d8b",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/thumbnail/thumbanil.settings.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "333499523c7f755a26192c401709fecb3f854d3cb994c247a20d979596380b65",
+      "sha256After": "333499523c7f755a26192c401709fecb3f854d3cb994c247a20d979596380b65",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/usermanager/usermanager.settings.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "593c6f58174fb87b27ba6162ae410dddd7fa759b10f15179e1cbf1a6edba1c4d",
+      "sha256After": "593c6f58174fb87b27ba6162ae410dddd7fa759b10f15179e1cbf1a6edba1c4d",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/video/video.settings.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "de9546da6464efa3ab76504655cc69dd72eca4e44886a614de51769ec2f26189",
+      "sha256After": "de9546da6464efa3ab76504655cc69dd72eca4e44886a614de51769ec2f26189",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/sharelogin/share-login.component.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "893d879ffd9ed9d7057201c1a3c060e34bada356e6d0924cefc658195d6c6018",
+      "sha256After": "893d879ffd9ed9d7057201c1a3c060e34bada356e6d0924cefc658195d6c6018",
+      "changes": []
+    },
+    {
+      "path": "frontend/index.html",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "55555fc58fd0fb5cb12609192a44bf34fddecaf093d1ef9f24fa762789332ae1",
+      "sha256After": "55555fc58fd0fb5cb12609192a44bf34fddecaf093d1ef9f24fa762789332ae1",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/style.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "1215e4fa146b09ee2b4dc4cc3cb79d62551f0323d2d9ed205a521115bafca058",
+      "sha256After": "1215e4fa146b09ee2b4dc4cc3cb79d62551f0323d2d9ed205a521115bafca058",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/admin/admin.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "565aa3356c29eeb89952a3e76c44ec346ccb518119845b6bd03d6f9bf2144c54",
+      "sha256After": "565aa3356c29eeb89952a3e76c44ec346ccb518119845b6bd03d6f9bf2144c54",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/duplicates/duplicates.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "0ba1be28428dcbe37ed22cd7b0272e9676e904617ddbacc1d3e82310ff22b0e0",
+      "sha256After": "0ba1be28428dcbe37ed22cd7b0272e9676e904617ddbacc1d3e82310ff22b0e0",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/duplicates/photo/photo.duplicates.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "41e0affcea370e42a1d30235b1e6176e3565228b8dce6329bad342b3a15fd045",
+      "sha256After": "41e0affcea370e42a1d30235b1e6176e3565228b8dce6329bad342b3a15fd045",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/faces/face/face.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "21413fa26c47797f2787cb6b5792744d3544cccb80ffc4ee17e265cb5bf0ae28",
+      "sha256After": "21413fa26c47797f2787cb6b5792744d3544cccb80ffc4ee17e265cb5bf0ae28",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/faces/faces.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "85972940ee92558e520684c4dc027cc7c6224e88b56250c078cb96b377c89dd0",
+      "sha256After": "85972940ee92558e520684c4dc027cc7c6224e88b56250c078cb96b377c89dd0",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/frame/frame.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "a5a865a8dae9396d45906777011fa07483e85e70d72aeceb7a904c60b2a27986",
+      "sha256After": "a5a865a8dae9396d45906777011fa07483e85e70d72aeceb7a904c60b2a27986",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/directories/directories.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "e9cf2a787920758234e07dc9ae19e759efe9f39f35b4b45047f27ebbf0c4e561",
+      "sha256After": "e9cf2a787920758234e07dc9ae19e759efe9f39f35b4b45047f27ebbf0c4e561",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/directories/directory/directory.gallery.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "bffbc0741cc95d8ece6b1eae31bf89145df3bc626e660545cea00973c28a9e38",
+      "sha256After": "bffbc0741cc95d8ece6b1eae31bf89145df3bc626e660545cea00973c28a9e38",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/gallery.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "4e1fbe1cad68c96a69510472d7de3890ddd89dc4d35b707107345a8f16502028",
+      "sha256After": "4e1fbe1cad68c96a69510472d7de3890ddd89dc4d35b707107345a8f16502028",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/grid/grid.gallery.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "6b53b1f65ab58d0e1a8a090d3c49cb1f7e97058ea2b7975690435e5875951d62",
+      "sha256After": "6b53b1f65ab58d0e1a8a090d3c49cb1f7e97058ea2b7975690435e5875951d62",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/grid/photo/loading/loading.photo.grid.gallery.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "50462907697385360e990fd7755aef17c5b5ee9ce1a0b7f0715dd3b4bce3de31",
+      "sha256After": "50462907697385360e990fd7755aef17c5b5ee9ce1a0b7f0715dd3b4bce3de31",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/grid/photo/photo.grid.gallery.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "5f0b9098eebb63a65652806e549b86bf201bc684965e8b06c893e3f82eaa713e",
+      "sha256After": "5f0b9098eebb63a65652806e549b86bf201bc684965e8b06c893e3f82eaa713e",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/lightbox/controls/controls.lightbox.gallery.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "9d9be106c430578eea790809acb69ac5942e83c226817f60af8bb107179c0c98",
+      "sha256After": "9d9be106c430578eea790809acb69ac5942e83c226817f60af8bb107179c0c98",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/lightbox/controls/inputrange.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "e1584d75757e87c9314f0b7233ffa3e1c2244427e1f9cb8e508628046ee74453",
+      "sha256After": "e1584d75757e87c9314f0b7233ffa3e1c2244427e1f9cb8e508628046ee74453",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/lightbox/infopanel/info-panel.lightbox.gallery.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "3d716d086a4b126222a6cfabd0dd602939c819f60dbec06c53f252b3ed53f68b",
+      "sha256After": "3d716d086a4b126222a6cfabd0dd602939c819f60dbec06c53f252b3ed53f68b",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/lightbox/lightbox.gallery.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "50ad79f79cff47861be1ec72a0c0f5807af8eca59adbfac6a327f2fbcc4e5ed2",
+      "sha256After": "50ad79f79cff47861be1ec72a0c0f5807af8eca59adbfac6a327f2fbcc4e5ed2",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/lightbox/media/media.lightbox.gallery.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "7031280e3f44861c5c99c2360a11a037a3f6413d625391a7e56d58784f864d2a",
+      "sha256After": "7031280e3f44861c5c99c2360a11a037a3f6413d625391a7e56d58784f864d2a",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/map/lightbox/lightbox.map.gallery.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "49fcfd6efafe5a47d3c28afd188aa10ddbf55032f6ebb7e767c163f47b0c39b2",
+      "sha256After": "49fcfd6efafe5a47d3c28afd188aa10ddbf55032f6ebb7e767c163f47b0c39b2",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/map/map.gallery.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "c525abefdfc2e191271c47c93d0149be410b3595ed274066deceaf80fc312141",
+      "sha256After": "c525abefdfc2e191271c47c93d0149be410b3595ed274066deceaf80fc312141",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/navigator/navigator.gallery.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "20dfe71625b3e78ee801c82a0ce0583ba6090c23eeac363d141fb5c5602666b7",
+      "sha256After": "20dfe71625b3e78ee801c82a0ce0583ba6090c23eeac363d141fb5c5602666b7",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/random-query-builder/random-query-builder.gallery.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "02bcd410ff76b41ec0d7cb227b9edcd833107842e92329b71994396fc039bfa3",
+      "sha256After": "02bcd410ff76b41ec0d7cb227b9edcd833107842e92329b71994396fc039bfa3",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/search/search.gallery.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "7d363f492e3465c0782ec3a6726720239bd555def46aabe6a633326e66ba90d8",
+      "sha256After": "7d363f492e3465c0782ec3a6726720239bd555def46aabe6a633326e66ba90d8",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/gallery/share/share.gallery.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "88a0e2ce446b14acf5633fadbcc12e2d1533c92e973a3a76281b156b56768af0",
+      "sha256After": "88a0e2ce446b14acf5633fadbcc12e2d1533c92e973a3a76281b156b56768af0",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/language/language.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "3b9500bbc7e16ca8811858f8f8a5261421c46b82dbb7b365debff629e83afc38",
+      "sha256After": "3b9500bbc7e16ca8811858f8f8a5261421c46b82dbb7b365debff629e83afc38",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/login/login.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "7f1c02ef0eb17534f5e410adcdc35ffacb0a037f5479f5e2fb594b3d7d51b58e",
+      "sha256After": "7f1c02ef0eb17534f5e410adcdc35ffacb0a037f5479f5e2fb594b3d7d51b58e",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/_abstract/abstract.settings.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "30dc6d2023be593e020b8356ec297aec73aaeb084d4e583a815079d0b7109410",
+      "sha256After": "30dc6d2023be593e020b8356ec297aec73aaeb084d4e583a815079d0b7109410",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/basic/basic.settings.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/database/database.settings.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/faces/faces.settings.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "16808ed3ad4f047c5b5288d3018603c2dad2c56c9b5a2fd0a12a8b770b7e4279",
+      "sha256After": "16808ed3ad4f047c5b5288d3018603c2dad2c56c9b5a2fd0a12a8b770b7e4279",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/indexing/indexing.settings.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "5bb1e5d38123bbb285ced070f963b5eb9b4c61fd133b597d211ba18cc0f89273",
+      "sha256After": "5bb1e5d38123bbb285ced070f963b5eb9b4c61fd133b597d211ba18cc0f89273",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/map/map.settings.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "356da532f66480b238c9c38aae00e8e3196f7e586a075cc3a18859ac5e1070ff",
+      "sha256After": "356da532f66480b238c9c38aae00e8e3196f7e586a075cc3a18859ac5e1070ff",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/metafiles/metafile.settings.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/other/other.settings.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/random-photo/random-photo.settings.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "16808ed3ad4f047c5b5288d3018603c2dad2c56c9b5a2fd0a12a8b770b7e4279",
+      "sha256After": "16808ed3ad4f047c5b5288d3018603c2dad2c56c9b5a2fd0a12a8b770b7e4279",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/search/search.settings.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "16808ed3ad4f047c5b5288d3018603c2dad2c56c9b5a2fd0a12a8b770b7e4279",
+      "sha256After": "16808ed3ad4f047c5b5288d3018603c2dad2c56c9b5a2fd0a12a8b770b7e4279",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/share/share.settings.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "16808ed3ad4f047c5b5288d3018603c2dad2c56c9b5a2fd0a12a8b770b7e4279",
+      "sha256After": "16808ed3ad4f047c5b5288d3018603c2dad2c56c9b5a2fd0a12a8b770b7e4279",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/thumbnail/thumbanil.settings.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/usermanager/usermanager.settings.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "ef5005f38caf4cc91e0897bae149f1cc14a02f38c38dbec204b03d2c7d8b52f5",
+      "sha256After": "ef5005f38caf4cc91e0897bae149f1cc14a02f38c38dbec204b03d2c7d8b52f5",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/settings/video/video.settings.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256After": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "changes": []
+    },
+    {
+      "path": "frontend/app/ui/sharelogin/share-login.component.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "4b90e0e01e356083737aa442fe47692cb1d171f08380103501363cd9ab645de2",
+      "sha256After": "4b90e0e01e356083737aa442fe47692cb1d171f08380103501363cd9ab645de2",
+      "changes": []
+    },
+    {
+      "path": "frontend/styles.css",
+      "kind": "application",
+      "changed": false,
+      "sha256Before": "2bc690df739b700c8fe176ec41c6ddf92331be210325f16c2ab8a16f9b722305",
+      "sha256After": "2bc690df739b700c8fe176ec41c6ddf92331be210325f16c2ab8a16f9b722305",
+      "changes": []
+    }
+  ],
+  "removedFiles": [
+    "tslint.json"
+  ],
+  "declaredDifferences": [
+    "projects.pigallery2.architect.build.options.optimization builds with font inlining disabled (`optimization.fonts.inline: false`). On the 16.2 line that option defaults to on, and it makes the build itself fetch every Google Fonts and Adobe Fonts stylesheet the application links and paste the answer into the emitted index.html. The era build did no such thing: it emitted the application's own link element and the browser fetched the stylesheet at runtime. This cell keeps that behaviour — the migrated document ships the same link and the same runtime fetch — rather than moving a third-party request into the build, where it would make the emitted bytes depend on what a font host served on the build day and on whether the build host could reach it at all. Inlining would not have removed the runtime request in any case: the inlined stylesheet still points at the font host for the font files themselves.",
+    "projects.pigallery2.architect.build.configurations.production.optimization builds with font inlining disabled (`optimization.fonts.inline: false`). On the 16.2 line that option defaults to on, and it makes the build itself fetch every Google Fonts and Adobe Fonts stylesheet the application links and paste the answer into the emitted index.html. The era build did no such thing: it emitted the application's own link element and the browser fetched the stylesheet at runtime. This cell keeps that behaviour — the migrated document ships the same link and the same runtime fetch — rather than moving a third-party request into the build, where it would make the emitted bytes depend on what a font host served on the build day and on whether the build host could reach it at all. Inlining would not have removed the runtime request in any case: the inlined stylesheet still points at the font host for the font files themselves.",
+    "projects.pigallery2.architect.lint ran @angular-devkit/build-angular:tslint, and angular-16-browser-builder carries no TSLint line. The target was removed as a declared migration difference: the era workspace lints with TSLint and the migrated workspace does not, and no replacement lint capability was chosen here.",
+    "projects.pigallery2-e2e.architect.lint ran @angular-devkit/build-angular:tslint, and angular-16-browser-builder carries no TSLint line. The target was removed as a declared migration difference: the era workspace lints with TSLint and the migrated workspace does not, and no replacement lint capability was chosen here.",
+    "tslint.json configures TSLint, and angular-16-browser-builder carries no TSLint line for it to configure. The file was removed with the targets that read it; no rule in it was translated to another linter.",
+    "devDependencies.@angular/http was removed: the migrated workspace no longer carries it. @angular/http stops at 7.2.16 and is deprecated on the registry with \"Package no longer supported. Use @angular/common instead\". Angular removed the package after the 7 line; there is no 8.x and no 16.x, so the `@angular/` family range this cell writes for its own packages names a version that was never published. The HTTP client that succeeded it is `@angular/common/http`, an entry point of a package this cell already carries, so the dependency is dropped rather than pinned to a v7 line beside a v16 framework.",
+    "devDependencies.codelyzer was removed: the migrated workspace no longer carries it. codelyzer stops at 6.0.2, a TSLint rule set for Angular 9-era workspaces. Nothing succeeds it on the TSLint line and its ESLint replacement is @angular-eslint, which this cell already aligns as a family.",
+    "devDependencies.tslint was removed: the migrated workspace no longer carries it. TSLint stops at 6.1.3 and was deprecated by its own maintainers in favour of ESLint before Angular 13 shipped. There is no TSLint release for any Angular line at or beyond this cell, so the whole TSLint toolchain is dropped rather than carried."
+  ],
+  "unhandled": [
+    "projects.pigallery2-e2e.architect.e2e used @angular-devkit/build-angular:protractor, which the 16.2 devkit does not ship; the target was removed and no replacement capability was chosen for it",
+    "devDependencies.karma-cli is coupled to the Angular test cell but is not part of the toolchain angular-16-browser-builder generates, so it was left at its era range",
+    "devDependencies.karma-coverage-istanbul-reporter is coupled to the Angular test cell but is not part of the toolchain angular-16-browser-builder generates, so it was left at its era range",
+    "devDependencies.karma-remap-istanbul is coupled to the Angular test cell but is not part of the toolchain angular-16-browser-builder generates, so it was left at its era range",
+    "devDependencies.karma-systemjs is coupled to the Angular test cell but is not part of the toolchain angular-16-browser-builder generates, so it was left at its era range",
+    "compilerOptions.lib was left as declared; the 16.2 line does not require a specific lib set and narrowing one could remove a type surface the application relies on"
+  ],
+  "notEstablished": [
+    "A composed changeset is a set of edits, not a build. Nothing here establishes that the migrated tree installs, compiles or emits anything.",
+    "`applicationFilesChanged` counts application source a transform rewrote. A file the adapter scanned and left alone is counted as scanned and not as changed.",
+    "A cell disposition is a reading of a registry, not an installation. A range written here has not been resolved against a lockfile by this record."
+  ],
+  "digest": "b78d0a9ecdd1ee4a6ef6b5763fc76d11d9557f343efe08fba762238bbb334206"
+}

@@ -1,0 +1,131 @@
+{
+  "schemaVersion": "versionless.angular-pigallery2-source-migration.v1",
+  "unit": "lrapr-t018/u3-frozen-adapter-migration",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "cell": "angular-16-browser-builder",
+  "appliedTo": {
+    "tree": ".versionless/work/angular-pigallery2/target/app",
+    "from": ".versionless/cache/angular-pigallery2-v1-7-0-source/corpus/pigallery2-6d44c22df13b8f9416715e86e160707d0c3f973a",
+    "commit": "6d44c22df13b8f9416715e86e160707d0c3f973a",
+    "excludedFromStage": [
+      "node_modules",
+      ".git"
+    ],
+    "excludedReason": "The corpus carries neither: it is the extracted release tarball, verified blob for blob against the pinned git tree by the ingest unit."
+  },
+  "applicationFilesScanned": 214,
+  "applicationFilesChanged": 3,
+  "workspaceFilesChanged": 3,
+  "filesWritten": [
+    {
+      "path": "package.json",
+      "kind": "workspace",
+      "sha256After": "8c1189e28b81d937517368635acc7917aac146aa9f76e2c2274f9c0d3d31db4a",
+      "changes": [
+        "devDependencies.@angular-devkit/build-angular: 0.801.2 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@angular-devkit/build-optimizer: 0.801.2 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@angular/animations: 8.1.2 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@angular/cli: 8.1.2 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@angular/common: 8.1.2 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@angular/compiler: 8.1.2 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@angular/compiler-cli: 8.1.2 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@angular/core: 8.1.2 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@angular/forms: 8.1.2 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "removed devDependencies.@angular/http (was 7.2.15) — no successor line for angular-16-browser-builder: @angular/http stops at 7.2.16 and is deprecated on the registry with \"Package no longer supported. Use @angular/common instead\". Angular removed the package after the 7 line; there is no 8.x and no 16.x, so the `@angular/` family range this cell writes for its own packages names a version that was never published. The HTTP client that succeeded it is `@angular/common/http`, an entry point of a package this cell already carries, so the dependency is dropped rather than pinned to a v7 line beside a v16 framework.",
+        "devDependencies.@angular/language-service: 8.1.2 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@angular/platform-browser: 8.1.2 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@angular/platform-browser-dynamic: 8.1.2 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@angular/router: 8.1.2 -> ^16.2.0 — aligned to angular-16-browser-builder",
+        "devDependencies.@types/jasmine: 3.3.13 -> ~4.3.0 — aligned to the test toolchain angular-16-browser-builder generates",
+        "removed devDependencies.codelyzer (was 5.1.0) — released by a builder target the workspace migration removed",
+        "devDependencies.jasmine-core: 3.4.0 -> ~4.6.0 — aligned to the test toolchain angular-16-browser-builder generates",
+        "removed devDependencies.jasmine-spec-reporter (was 4.2.1) — released by a builder target the workspace migration removed",
+        "devDependencies.karma: 4.2.0 -> ~6.4.0 — aligned to the test toolchain angular-16-browser-builder generates",
+        "devDependencies.karma-chrome-launcher: 3.0.0 -> ~3.2.0 — aligned to the test toolchain angular-16-browser-builder generates",
+        "devDependencies.karma-jasmine: 2.0.1 -> ~5.1.0 — aligned to the test toolchain angular-16-browser-builder generates",
+        "devDependencies.karma-jasmine-html-reporter: 1.4.2 -> ~2.1.0 — aligned to the test toolchain angular-16-browser-builder generates",
+        "removed devDependencies.protractor (was 5.4.2) — released by a builder target the workspace migration removed",
+        "devDependencies.rxjs: 6.5.2 -> ~7.8.0 — aligned to angular-16-browser-builder",
+        "removed devDependencies.tslint (was 5.18.0) — released by a builder target the workspace migration removed",
+        "devDependencies.typescript: 3.4.5 -> ~5.1.3 — aligned to angular-16-browser-builder",
+        "devDependencies.zone.js: 0.9.1 -> ~0.13.0 — aligned to angular-16-browser-builder"
+      ]
+    },
+    {
+      "path": "angular.json",
+      "kind": "workspace",
+      "sha256After": "60a12ceb99ab8d6280ae5da8919ec8a0835a370f39d46e003917d24dd3910e2c",
+      "changes": [
+        "removed defaultProject (was \"pigallery2\")",
+        "projects.pigallery2.architect.build.options.polyfills: \"frontend/polyfills.ts\" -> [\"frontend/polyfills.ts\"]",
+        "added projects.pigallery2.architect.build.options.optimization = {\"scripts\":true,\"styles\":true,\"fonts\":{\"inline\":false}}",
+        "projects.pigallery2.architect.build.configurations.production.optimization: true -> {\"scripts\":true,\"styles\":true,\"fonts\":{\"inline\":false}}",
+        "removed projects.pigallery2.architect.build.configurations.production.extractCss (was true)",
+        "projects.pigallery2.architect.test.options.polyfills: \"frontend/polyfills.ts\" -> [\"frontend/polyfills.ts\"]",
+        "removed projects.pigallery2.architect.lint (was @angular-devkit/build-angular:tslint)",
+        "removed projects.pigallery2-e2e.architect.e2e (was @angular-devkit/build-angular:protractor)",
+        "removed projects.pigallery2-e2e.architect.lint (was @angular-devkit/build-angular:tslint)"
+      ]
+    },
+    {
+      "path": "tsconfig.json",
+      "kind": "workspace",
+      "sha256After": "a6c05cb56cf3112cd9cbcec58f68235666c66afedf829a58d16a7e1cb7bf3966",
+      "changes": [
+        "compilerOptions.target: \"es5\" -> \"ES2022\"",
+        "added compilerOptions.module = \"ES2022\"",
+        "added compilerOptions.useDefineForClassFields = false"
+      ]
+    },
+    {
+      "path": "frontend/app/ui/faces/faces.component.ts",
+      "kind": "application",
+      "sha256After": "447edcfdb088b5cb62328809019802c62f30c9af4b0ce1b69730570c2f33a97f",
+      "changes": [
+        "line 6: module-specifier rxjs/Observable -> rxjs"
+      ]
+    },
+    {
+      "path": "frontend/polyfills.ts",
+      "kind": "application",
+      "sha256After": "adb9d69e40226930b418f7ec364bb9526623eaf507752aa94c4a930d2d9de813",
+      "changes": [
+        "line 45: module-specifier zone.js/dist/zone -> zone.js"
+      ]
+    },
+    {
+      "path": "frontend/test.ts",
+      "kind": "application",
+      "sha256After": "4eb52953e96882f946bb6bab95858996e01ebfe8b1839cb568025604772db403",
+      "changes": [
+        "line 3: module-specifier zone.js/dist/long-stack-trace-zone -> zone.js/plugins/long-stack-trace-zone"
+      ]
+    }
+  ],
+  "filesRemoved": [
+    "tslint.json"
+  ],
+  "declaredDifferences": [
+    "projects.pigallery2.architect.build.options.optimization builds with font inlining disabled (`optimization.fonts.inline: false`). On the 16.2 line that option defaults to on, and it makes the build itself fetch every Google Fonts and Adobe Fonts stylesheet the application links and paste the answer into the emitted index.html. The era build did no such thing: it emitted the application's own link element and the browser fetched the stylesheet at runtime. This cell keeps that behaviour — the migrated document ships the same link and the same runtime fetch — rather than moving a third-party request into the build, where it would make the emitted bytes depend on what a font host served on the build day and on whether the build host could reach it at all. Inlining would not have removed the runtime request in any case: the inlined stylesheet still points at the font host for the font files themselves.",
+    "projects.pigallery2.architect.build.configurations.production.optimization builds with font inlining disabled (`optimization.fonts.inline: false`). On the 16.2 line that option defaults to on, and it makes the build itself fetch every Google Fonts and Adobe Fonts stylesheet the application links and paste the answer into the emitted index.html. The era build did no such thing: it emitted the application's own link element and the browser fetched the stylesheet at runtime. This cell keeps that behaviour — the migrated document ships the same link and the same runtime fetch — rather than moving a third-party request into the build, where it would make the emitted bytes depend on what a font host served on the build day and on whether the build host could reach it at all. Inlining would not have removed the runtime request in any case: the inlined stylesheet still points at the font host for the font files themselves.",
+    "projects.pigallery2.architect.lint ran @angular-devkit/build-angular:tslint, and angular-16-browser-builder carries no TSLint line. The target was removed as a declared migration difference: the era workspace lints with TSLint and the migrated workspace does not, and no replacement lint capability was chosen here.",
+    "projects.pigallery2-e2e.architect.lint ran @angular-devkit/build-angular:tslint, and angular-16-browser-builder carries no TSLint line. The target was removed as a declared migration difference: the era workspace lints with TSLint and the migrated workspace does not, and no replacement lint capability was chosen here.",
+    "tslint.json configures TSLint, and angular-16-browser-builder carries no TSLint line for it to configure. The file was removed with the targets that read it; no rule in it was translated to another linter.",
+    "devDependencies.@angular/http was removed: the migrated workspace no longer carries it. @angular/http stops at 7.2.16 and is deprecated on the registry with \"Package no longer supported. Use @angular/common instead\". Angular removed the package after the 7 line; there is no 8.x and no 16.x, so the `@angular/` family range this cell writes for its own packages names a version that was never published. The HTTP client that succeeded it is `@angular/common/http`, an entry point of a package this cell already carries, so the dependency is dropped rather than pinned to a v7 line beside a v16 framework.",
+    "devDependencies.codelyzer was removed: the migrated workspace no longer carries it. codelyzer stops at 6.0.2, a TSLint rule set for Angular 9-era workspaces. Nothing succeeds it on the TSLint line and its ESLint replacement is @angular-eslint, which this cell already aligns as a family.",
+    "devDependencies.tslint was removed: the migrated workspace no longer carries it. TSLint stops at 6.1.3 and was deprecated by its own maintainers in favour of ESLint before Angular 13 shipped. There is no TSLint release for any Angular line at or beyond this cell, so the whole TSLint toolchain is dropped rather than carried."
+  ],
+  "unhandled": [
+    "projects.pigallery2-e2e.architect.e2e used @angular-devkit/build-angular:protractor, which the 16.2 devkit does not ship; the target was removed and no replacement capability was chosen for it",
+    "devDependencies.karma-cli is coupled to the Angular test cell but is not part of the toolchain angular-16-browser-builder generates, so it was left at its era range",
+    "devDependencies.karma-coverage-istanbul-reporter is coupled to the Angular test cell but is not part of the toolchain angular-16-browser-builder generates, so it was left at its era range",
+    "devDependencies.karma-remap-istanbul is coupled to the Angular test cell but is not part of the toolchain angular-16-browser-builder generates, so it was left at its era range",
+    "devDependencies.karma-systemjs is coupled to the Angular test cell but is not part of the toolchain angular-16-browser-builder generates, so it was left at its era range",
+    "compilerOptions.lib was left as declared; the 16.2 line does not require a specific lib set and narrowing one could remove a type surface the application relies on"
+  ],
+  "notEstablished": [
+    "Writing a changeset into a tree is not a build. Nothing here establishes that the applied tree installs, compiles or emits anything; the lane record beside this one states what happened when that was attempted.",
+    "No application source was edited by hand in this lane. Every byte that differs from the corpus was written by a frozen adapter transform, and each is itemised in the changeset record by file and by change."
+  ],
+  "digest": "634de29837b0d59fcf30bc4a3b9afb610f69db3d8626564a51ca8cbf5cdb86ea"
+}
