@@ -1,0 +1,31 @@
+npm WARN old lockfile 
+npm WARN old lockfile The package-lock.json file was created with an old version of npm,
+npm WARN old lockfile so supplemental metadata must be fetched from the registry.
+npm WARN old lockfile 
+npm WARN old lockfile This is a one-time fix-up, please be patient...
+npm WARN old lockfile 
+npm ERR! code ERESOLVE
+npm ERR! ERESOLVE could not resolve
+npm ERR! 
+npm ERR! While resolving: eshopaspnetnetcoredockerspa@0.0.0
+npm ERR! Found: @angular-devkit/build-angular@0.7.5
+npm ERR! node_modules/@angular-devkit/build-angular
+npm ERR!   dev @angular-devkit/build-angular@"^16.2.0" from the root project
+npm ERR! 
+npm ERR! Could not resolve dependency:
+npm ERR! dev @angular-devkit/build-angular@"^16.2.0" from the root project
+npm ERR! 
+npm ERR! Conflicting peer dependency: typescript@5.1.6
+npm ERR! node_modules/typescript
+npm ERR!   peer typescript@">=4.9.3 <5.2" from @angular-devkit/build-angular@16.2.16
+npm ERR!   node_modules/@angular-devkit/build-angular
+npm ERR!     dev @angular-devkit/build-angular@"^16.2.0" from the root project
+npm ERR! 
+npm ERR! Fix the upstream dependency conflict, or retry
+npm ERR! this command with --force, or --legacy-peer-deps
+npm ERR! to accept an incorrect (and potentially broken) dependency resolution.
+npm ERR! 
+npm ERR! See <repo>/.versionless/cache/angular-eshop-webspa-netcore2-2-target/npm-cache/eresolve-report.txt for a full report.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     <repo>/.versionless/cache/angular-eshop-webspa-netcore2-2-target/npm-cache/_logs/2026-08-14T05_05_24_186Z-debug-0.log

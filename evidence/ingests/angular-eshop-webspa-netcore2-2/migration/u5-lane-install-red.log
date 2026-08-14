@@ -1,0 +1,21 @@
+npm ERR! code ERESOLVE
+npm ERR! ERESOLVE unable to resolve dependency tree
+npm ERR! 
+npm ERR! While resolving: eshopaspnetnetcoredockerspa@0.0.0
+npm ERR! Found: @angular/common@16.2.12
+npm ERR! node_modules/@angular/common
+npm ERR!   @angular/common@"^16.2.0" from the root project
+npm ERR! 
+npm ERR! Could not resolve dependency:
+npm ERR! peer @angular/common@"^6.1.0" from @ng-bootstrap/ng-bootstrap@3.1.0
+npm ERR! node_modules/@ng-bootstrap/ng-bootstrap
+npm ERR!   @ng-bootstrap/ng-bootstrap@"3.1.0" from the root project
+npm ERR! 
+npm ERR! Fix the upstream dependency conflict, or retry
+npm ERR! this command with --force, or --legacy-peer-deps
+npm ERR! to accept an incorrect (and potentially broken) dependency resolution.
+npm ERR! 
+npm ERR! See <repo>/.versionless/cache/angular-eshop-webspa-netcore2-2-target/npm-cache/eresolve-report.txt for a full report.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     <repo>/.versionless/cache/angular-eshop-webspa-netcore2-2-target/npm-cache/_logs/2026-08-14T05_05_50_195Z-debug-0.log
