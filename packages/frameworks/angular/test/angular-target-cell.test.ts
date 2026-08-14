@@ -6,6 +6,8 @@ import {
 	buildStampContradictions,
 	cellAcceptsBuildStamp,
 	ecosystemDispositionOf,
+	familyPrefixOf,
+	familyPrefixedEcosystemReadings,
 	majorOf,
 	type AngularBuildStamp,
 	type AngularTargetCell,
@@ -121,16 +123,18 @@ describe('Angular target cell ecosystem table', () => {
 
 	it('leaves a package the table does not name exactly as the manifest declared it', () => {
 		const alignment = alignAngularPackageManifest(
-			{ dependencies: { 'ngx-toastr': '^14.0.0', lodash: '4.17.21', 'ng-zorro-antd': '^13.1.0' } },
+			{
+				dependencies: { 'ngx-clipboard': '^12.2.0', lodash: '4.17.21', 'ng-zorro-antd': '^13.1.0' },
+			},
 			ANGULAR_16_BROWSER_CELL,
 		);
 		expect(alignment.manifest['dependencies']).toEqual({
-			'ngx-toastr': '^14.0.0',
+			'ngx-clipboard': '^12.2.0',
 			lodash: '4.17.21',
 			'ng-zorro-antd': '^16.2.2',
 		});
 		expect(alignment.changes.map((change) => change.name)).toEqual(['ng-zorro-antd']);
-		expect(alignedVersionRange('ngx-toastr', ANGULAR_16_BROWSER_CELL)).toBeNull();
+		expect(alignedVersionRange('ngx-clipboard', ANGULAR_16_BROWSER_CELL)).toBeNull();
 	});
 
 	it('drops a no-successor package and records the disposition that dropped it', () => {
@@ -216,6 +220,27 @@ describe('the peer-strictness refinement', () => {
 		]);
 	});
 
+	it('carries the ngx-toastr correction as a stamp reading, not a peer reading', () => {
+		const toastr = ANGULAR_16_BROWSER_CELL.ecosystemPackages['ngx-toastr'];
+		expect(toastr?.kind).toBe('aligned');
+		if (toastr?.kind !== 'aligned') return;
+		expect(toastr.range).toBe('^17.0.2');
+		expect(toastr.buildStamp?.compiledWith).toBe('16.0.1');
+		expect(toastr.excludedByBuildStamp?.map((stamp) => stamp.libraryVersion)).toEqual([
+			'19.1.0',
+			'19.0.0',
+			'18.0.0',
+		]);
+		/**
+		 * The excluded lines are excluded by the stamp and not by the peers: all
+		 * four declare the same `>=16.0.0-0`, which is what made the refinement
+		 * necessary here, so each excluded stamp has to be one this cell refuses.
+		 */
+		for (const excluded of toastr.excludedByBuildStamp ?? [])
+			expect(cellAcceptsBuildStamp(ANGULAR_16_BROWSER_CELL.angularLine, excluded)).toBe(false);
+		expect(toastr.fact).toContain('>=16.0.0-0');
+	});
+
 	it('carries the @ngx-formly correction as a reading, not an assertion', () => {
 		const core = ANGULAR_16_BROWSER_CELL.ecosystemPackages['@ngx-formly/core'];
 		const material = ANGULAR_16_BROWSER_CELL.ecosystemPackages['@ngx-formly/material'];
@@ -230,5 +255,151 @@ describe('the peer-strictness refinement', () => {
 			'7.0.1',
 			'7.0.0',
 		]);
+	});
+});
+
+/**
+ * A family prefix is a naming convention, not a release train.
+ *
+ * The rule the assertions below hold to is one sentence: a package the cell has
+ * *read* is never given a range by its name. Everything else in this block is
+ * that sentence applied — to a package whose family kept publishing it, to two
+ * packages whose family left them behind, and to the set of overrides as a set,
+ * so that a later edit to either table has to keep them agreeing.
+ */
+describe('the family prefix and the per-package reading that overrides it', () => {
+	it('keeps writing the family range for a package its family still publishes', () => {
+		expect(alignedVersionRange('@angular-devkit/build-angular', ANGULAR_16_BROWSER_CELL)).toBe(
+			'^16.2.0',
+		);
+		expect(alignedVersionRange('@angular-devkit/core', ANGULAR_16_BROWSER_CELL)).toBe('^16.2.0');
+		expect(familyPrefixOf('@angular-devkit/build-optimizer', ANGULAR_16_BROWSER_CELL)).toBe(
+			'@angular-devkit/',
+		);
+		expect(familyPrefixOf('lodash', ANGULAR_16_BROWSER_CELL)).toBeNull();
+	});
+
+	it('stands down for a package that left the version train, rather than naming a version nobody published', () => {
+		for (const departed of ['@angular-devkit/build-optimizer', '@angular/http']) {
+			expect(ecosystemDispositionOf(departed, ANGULAR_16_BROWSER_CELL)?.kind).toBe('no-successor');
+			expect(alignedVersionRange(departed, ANGULAR_16_BROWSER_CELL)).toBeNull();
+		}
+	});
+
+	it('drops a folded-in build package as a declared difference naming what carries it now', () => {
+		const alignment = alignAngularPackageManifest(
+			{
+				devDependencies: {
+					'@angular-devkit/build-angular': '0.801.2',
+					'@angular-devkit/build-optimizer': '0.801.2',
+				},
+			},
+			ANGULAR_16_BROWSER_CELL,
+		);
+		expect(alignment.manifest['devDependencies']).toEqual({
+			'@angular-devkit/build-angular': '^16.2.0',
+		});
+		const removal = alignment.changes.find(
+			(change) => change.name === '@angular-devkit/build-optimizer',
+		);
+		expect(removal?.to).toBeNull();
+		expect(removal?.reason).toContain('no successor line for angular-16-browser-builder');
+		expect(alignment.declaredDifferences).toHaveLength(1);
+		expect(alignment.declaredDifferences[0]).toContain(
+			'devDependencies.@angular-devkit/build-optimizer was removed',
+		);
+		expect(alignment.declaredDifferences[0]).toContain('@angular-devkit/build-angular');
+		expect(alignment.unhandled).toEqual([]);
+	});
+
+	it('lists every override the ecosystem table makes over a family range, and writes each one', () => {
+		const overrides = familyPrefixedEcosystemReadings(ANGULAR_16_BROWSER_CELL);
+		expect(overrides.map((override) => override.name)).toContain(
+			'@angular-devkit/build-optimizer',
+		);
+		expect(overrides.map((override) => override.name)).toContain('@angular/http');
+		for (const override of overrides) {
+			expect(override.writes).not.toBe(override.familyRange);
+			expect(alignedVersionRange(override.name, ANGULAR_16_BROWSER_CELL)).toBe(override.writes);
+			expect(override.name.startsWith(override.prefix)).toBe(true);
+		}
+	});
+
+	it('counts an entry that agrees with its family range as no override at all', () => {
+		const agreeing: AngularTargetCell = Object.freeze({
+			...ANGULAR_16_BROWSER_CELL,
+			ecosystemPackages: Object.freeze({
+				'@angular/agrees': Object.freeze({
+					kind: 'aligned',
+					range: '^16.2.0',
+					fact: 'the same range the family rule would have written, read per package',
+				}),
+			}),
+		});
+		expect(familyPrefixedEcosystemReadings(agreeing)).toEqual([]);
+	});
+});
+
+/**
+ * The three community readings the Angular holdout demanded, stated against an
+ * arbitrary manifest. Nothing here mentions the application that demanded them:
+ * each is a fact about a package, applied to whatever manifest declares it.
+ */
+describe('the community readings behind a resolvable Angular 16 closure', () => {
+	it('drops a package whose newest published line still peers a pre-Ivy Angular', () => {
+		const disposition = ecosystemDispositionOf('ng2-slim-loading-bar', ANGULAR_16_BROWSER_CELL);
+		expect(disposition?.kind).toBe('no-successor');
+		/**
+		 * The peer alone would only say the resolver refuses it. The reading that
+		 * decides against relaxing the resolver instead is that Angular 16 no longer
+		 * runs ngcc, so a ViewEngine library has no consumer here either way.
+		 */
+		expect(disposition?.fact).toContain('ngcc');
+		expect(disposition?.fact).toContain('4.0.0');
+		const alignment = alignAngularPackageManifest(
+			{ devDependencies: { 'ng2-slim-loading-bar': '4.0.0', '@angular/core': '8.1.2' } },
+			ANGULAR_16_BROWSER_CELL,
+		);
+		expect(alignment.manifest['devDependencies']).toEqual({ '@angular/core': '^16.2.0' });
+		expect(alignment.declaredDifferences[0]).toContain(
+			'devDependencies.ng2-slim-loading-bar was removed',
+		);
+	});
+
+	it('moves a package whose maintained line does admit the cell, and says which line and why', () => {
+		const alignment = alignAngularPackageManifest(
+			{ devDependencies: { 'ngx-toastr': '10.0.4' } },
+			ANGULAR_16_BROWSER_CELL,
+		);
+		expect(alignment.manifest['devDependencies']).toEqual({ 'ngx-toastr': '^17.0.2' });
+		const change = alignment.changes.find((entry) => entry.name === 'ngx-toastr');
+		expect(change?.from).toBe('10.0.4');
+		expect(change?.to).toBe('^17.0.2');
+		expect(change?.reason).toContain('aligned to the community layer angular-16-browser-builder');
+		expect(alignment.declaredDifferences).toEqual([]);
+	});
+
+	it('reaches all three readings from one era-shaped manifest without an era pin surviving', () => {
+		const alignment = alignAngularPackageManifest(
+			{
+				devDependencies: {
+					'@angular-devkit/build-angular': '0.801.2',
+					'@angular-devkit/build-optimizer': '0.801.2',
+					'@angular/core': '8.1.2',
+					'ng2-slim-loading-bar': '4.0.0',
+					'ngx-toastr': '10.0.4',
+					rxjs: '6.5.2',
+				},
+			},
+			ANGULAR_16_BROWSER_CELL,
+		);
+		expect(alignment.manifest['devDependencies']).toEqual({
+			'@angular-devkit/build-angular': '^16.2.0',
+			'@angular/core': '^16.2.0',
+			'ngx-toastr': '^17.0.2',
+			rxjs: '~7.8.0',
+		});
+		expect(alignment.declaredDifferences).toHaveLength(2);
+		expect(alignment.unhandled).toEqual([]);
 	});
 });

@@ -129,7 +129,22 @@ export type AngularTargetCell = Readonly<{
 	typescriptRange: string;
 	/** Version range per exact package name. Wins over {@link families}. */
 	packages: AngularVersionRanges;
-	/** Version range per package name prefix, longest prefix wins. */
+	/**
+	 * Version range per package name prefix, longest prefix wins.
+	 *
+	 * A family prefix is a naming convention, not a release train, and the
+	 * difference is not cosmetic: `@angular/http` stops at 7.2.16 and
+	 * `@angular-devkit/build-optimizer` stops at 0.1302.1, so a prefix rule applied
+	 * to either of them writes a range naming a version nobody ever published and
+	 * the package manager refuses the whole tree with ETARGET before a single peer
+	 * is read. Nothing in a package name says whether its family kept publishing
+	 * it, and this module observes no registry, so the correction cannot be
+	 * computed here — it is a per-package reading, and {@link ecosystemPackages} is
+	 * where such a reading lives. {@link alignedVersionRange} consults that table
+	 * before it reaches this one for exactly that reason, so a package the cell has
+	 * read is never given a range by its name; {@link familyPrefixedEcosystemReadings}
+	 * makes the overriding set checkable rather than implied.
+	 */
 	families: AngularVersionRanges;
 	/**
 	 * The unit-test toolchain the Angular line's own schematics generate, keyed
@@ -219,6 +234,10 @@ export const ANGULAR_16_ECOSYSTEM_PACKAGES: EcosystemPackages = Object.freeze({
 	'@angular/http': Object.freeze({
 		kind: 'no-successor',
 		fact: '@angular/http stops at 7.2.16 and is deprecated on the registry with "Package no longer supported. Use @angular/common instead". Angular removed the package after the 7 line; there is no 8.x and no 16.x, so the `@angular/` family range this cell writes for its own packages names a version that was never published. The HTTP client that succeeded it is `@angular/common/http`, an entry point of a package this cell already carries, so the dependency is dropped rather than pinned to a v7 line beside a v16 framework.',
+	}),
+	'@angular-devkit/build-optimizer': Object.freeze({
+		kind: 'no-successor',
+		fact: 'The `@angular-devkit/` family range this cell writes names a version of this package that was never published. @angular-devkit/build-optimizer stops at 0.1302.1, published 2022-07-21 and the `latest` dist-tag; no 16.x exists on any tag, and none of the nine dist-tags the package carries points above the 13 line. The registry marks the package deprecated with "This package has been folded in @angular-devkit/build-angular and should no longer be needed. This package has always been experimental and never hit 1.0.0, meaning it should not be used directly outside of Angular." The optimizer it once published separately is inside the @angular-devkit/build-angular ^16.2.0 this cell already writes, so the direct declaration is dropped rather than pinned to a 0.13 line beside a 16 builder. Read from https://registry.npmjs.org/@angular-devkit/build-optimizer under consent VL-LEGACY-CORPUS-2026-08-10 on 2026-08-14. An application that declares this package is declaring a build-time detail of the builder rather than a library it imports; nothing in application source names it, and dropping it is a declared difference rather than a source demand.',
 	}),
 	'@angular/flex-layout': Object.freeze({
 		kind: 'aligned',
@@ -349,6 +368,10 @@ export const ANGULAR_16_ECOSYSTEM_PACKAGES: EcosystemPackages = Object.freeze({
 		range: '^7.0.0',
 		fact: 'The `latest` dist-tag points at 6.0.0, but 7.0.0 is the newest version published and declares peer @angular/core, @angular/common and @angular/animations ">=16.0.0 <21.0.0" and rxjs ">=6.0.0 <8.0.0", all satisfied by this cell. Its peers dragula ^3.7.2 and @types/dragula ^2.1.34 are supplied by the package itself as dependencies of the installation, not by the workspace.',
 	}),
+	'ng2-slim-loading-bar': Object.freeze({
+		kind: 'no-successor',
+		fact: 'ng2-slim-loading-bar published twenty-eight versions and the newest of them is 4.0.0, published 2017-04-04; it is the `latest` dist-tag, it is the only tag the package carries, and it is the exact version an Angular 8-era workspace pins. It declares peer @angular/core "^2.4.7 || ^4.0.0", which the ^16.2.0 this cell writes does not satisfy, and no later line exists to read: the package is dead rather than behind. The reading does not stop at the peer, because a peer is only a resolver fact. This library was published for the pre-Ivy ViewEngine and the converter that used to make such a library consumable is gone: @angular/compiler-cli 16.2.12 ships `ngcc` only as a stub whose own message reads "As of Angular 16, \'ngcc\' is no longer required and not invoked during CLI builds", so nothing on this cell converts a ViewEngine library\'s metadata for the Ivy linker. A resolver told to ignore the declared peer would therefore install bytes this cell\'s compiler cannot consume, which is why the disposition is to drop the package rather than to relax the install. Read from https://registry.npmjs.org/ng2-slim-loading-bar under consent VL-LEGACY-CORPUS-2026-08-10 on 2026-08-14, and from the installed @angular/compiler-cli 16.2.12 in an Angular 16 closure. Dropping it turns the imports it served into source demands the compiler states by name; choosing a replacement loading-bar library is a source decision this table does not make.',
+	}),
 	'ngx-markdown': Object.freeze({
 		kind: 'aligned',
 		range: '^16.0.0',
@@ -394,6 +417,33 @@ export const ANGULAR_16_ECOSYSTEM_PACKAGES: EcosystemPackages = Object.freeze({
 		kind: 'aligned',
 		range: '^23.0.3',
 		fact: 'ngx-quill versions in lockstep with the Angular major: 23.0.3 is the last release declaring peer @angular/core ^16.0.0, and 24.0.0 moves to ^17.0.0. 23.0.3 also declares peer quill ^1.3.7, which the era workspace already carries, and engines.node "^16.14.0 || >=18.10.0", satisfied by this cell.',
+	}),
+	'ngx-toastr': Object.freeze({
+		kind: 'aligned',
+		range: '^17.0.2',
+		fact: 'ngx-toastr is the second entry the peer-strictness refinement decides, and its peers fail to discriminate in the plainer of the two ways: they are identical across four consecutive majors. 20.0.5, the newest release and the `latest` dist-tag, declares peer @angular/common and @angular/core "^21.0.0" and rxjs "^7.8.2"; the ^16.2.0 this cell writes excludes it. Every release from 17.0.0 through 19.1.0 declares exactly {"@angular/core": ">=16.0.0-0", "@angular/common": ">=16.0.0-0", "@angular/platform-browser": ">=16.0.0-0"}, no rxjs peer and no engines.node, so on the peer rule alone the newest satisfying line is 19.1.0 — and nothing in those declarations separates a release built for Angular 16 from one built for Angular 18. The compiled-with stamps separate them: 19.1.0 and 19.0.0 carry Angular "18.0.0" in their partial declarations, 18.0.0 carries "17.0.3", and 17.0.2, 17.0.1 and 17.0.0 all carry "16.0.1". 17.0.2 is therefore the newest line this cell links, and it is the newest 17.x published. Its only dependency is tslib ^2.3.0, exactly the range this cell writes. One further reading, because a workspace configuration can name a package\'s files directly rather than importing them: 17.0.2 still publishes toastr.css at the package root (https://unpkg.com/ngx-toastr@17.0.2/toastr.css), the same path the Angular 8-era 10.0.4 published, so an `angular.json` styles entry naming ./node_modules/ngx-toastr/toastr.css keeps resolving across this hop. Read from https://registry.npmjs.org/ngx-toastr and https://unpkg.com/ngx-toastr@17.0.2/fesm2022/ngx-toastr.mjs under consent VL-LEGACY-CORPUS-2026-08-10 on 2026-08-14. The era 10.0.4 line declares peer @angular/core, @angular/common and @angular/platform-browser ">=6.0.0 <9.0.0" and rxjs "^6.1.0" — two independent collisions with this cell, either of them fatal to the tree, and both answered by the same move.',
+		buildStamp: Object.freeze({
+			libraryVersion: '17.0.2',
+			compiledWith: '16.0.1',
+			readFrom: 'https://unpkg.com/ngx-toastr@17.0.2/fesm2022/ngx-toastr.mjs',
+		}),
+		excludedByBuildStamp: Object.freeze([
+			Object.freeze({
+				libraryVersion: '19.1.0',
+				compiledWith: '18.0.0',
+				readFrom: 'https://unpkg.com/ngx-toastr@19.1.0/fesm2022/ngx-toastr.mjs',
+			}),
+			Object.freeze({
+				libraryVersion: '19.0.0',
+				compiledWith: '18.0.0',
+				readFrom: 'https://unpkg.com/ngx-toastr@19.0.0/fesm2022/ngx-toastr.mjs',
+			}),
+			Object.freeze({
+				libraryVersion: '18.0.0',
+				compiledWith: '17.0.3',
+				readFrom: 'https://unpkg.com/ngx-toastr@18.0.0/fesm2022/ngx-toastr.mjs',
+			}),
+		]),
 	}),
 	'@storybook/angular': Object.freeze({
 		kind: 'aligned',
@@ -708,7 +758,55 @@ export function successorForkRenames(cell: AngularTargetCell): Readonly<Record<s
 	return Object.freeze(renames);
 }
 
-/** The range the cell asks for, or null when the cell says nothing about it. */
+/** The longest family prefix of the cell's that this name carries, or null. */
+export function familyPrefixOf(name: string, cell: AngularTargetCell): string | null {
+	let matched: string | null = null;
+	for (const prefix of Object.keys(cell.families))
+		if (name.startsWith(prefix) && prefix.length > (matched?.length ?? 0)) matched = prefix;
+	return matched;
+}
+
+/**
+ * The packages whose family prefix the cell's own reading overrides, and what it
+ * writes instead of the family range.
+ *
+ * This is the family-prefix hazard made visible. Every entry here is a package
+ * the prefix rule would have given the family's range and the table gives
+ * something else — a different range, or no range at all because the package left
+ * the version train and nothing succeeds it. Reading the set is how a change to
+ * either table can be checked against the other: an entry that agrees with its
+ * family range is not an override and does not appear.
+ */
+export function familyPrefixedEcosystemReadings(
+	cell: AngularTargetCell,
+): readonly Readonly<{ name: string; prefix: string; familyRange: string; writes: string | null }>[] {
+	const overrides: Readonly<{
+		name: string;
+		prefix: string;
+		familyRange: string;
+		writes: string | null;
+	}>[] = [];
+	for (const name of Object.keys(cell.ecosystemPackages).sort(compareStrings)) {
+		const prefix = familyPrefixOf(name, cell);
+		if (prefix === null) continue;
+		const familyRange = cell.families[prefix] as string;
+		const disposition = cell.ecosystemPackages[name] as EcosystemPackage;
+		const writes = disposition.kind === 'aligned' ? disposition.range : null;
+		if (writes === familyRange) continue;
+		overrides.push(Object.freeze({ name, prefix, familyRange, writes }));
+	}
+	return Object.freeze(overrides);
+}
+
+/**
+ * The range the cell asks for, or null when the cell says nothing about it.
+ *
+ * The order is the whole of the rule and it is not arbitrary: an exact reading
+ * beats a generated toolchain default, which beats a community-layer reading,
+ * which beats a family prefix. The family prefix is last because it is the only
+ * one of the four that is not a reading of the package — it is an inference from
+ * the package's name — and a name is the weakest evidence available here.
+ */
 export function alignedVersionRange(name: string, cell: AngularTargetCell): string | null {
 	const exact = cell.packages[name];
 	if (exact !== undefined) return exact;

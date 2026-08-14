@@ -2,12 +2,21 @@
  * The Angular holdout result: what the frozen `@versionless/angular` adapter did
  * when it was pointed at `pigallery2 1.7.0`, an application it had never seen.
  *
- * The result is RED, and this record is the red one. The migrated lane's closure
- * does not install, so no target build exists and none is claimed. Every gap the
- * lane hit is itemised below by package, by declaration, by file and by line —
- * not counted, not summarised, not softened — together with what the era
- * toolchain did instead and why. That list is the falsification evidence this
- * unit was run to produce; a green lane invented here would have destroyed it.
+ * The result is RED, and this record is the red one. Every gap the lane hit is
+ * itemised below by package, by declaration, by file and by line — not counted,
+ * not summarised, not softened — together with what the era toolchain did
+ * instead and why. That list is the falsification evidence T018 was run to
+ * produce; a green lane invented there would have destroyed it.
+ *
+ * The record is amended in place as gaps are answered, and an amendment never
+ * edits the demand it answers: a closed gap keeps its `observed` diagnostic and
+ * its `neededTransform` exactly as the red run wrote them, and gains a
+ * `closedBy` naming the unit, the disposition and the evidence. Two units have
+ * amended it. `lrapr-t021/u1` composed the capabilities G5 found unreachable.
+ * `lrapr-t021/u2` closed the three install-stage gaps with three cell readings,
+ * after which the migrated closure installs and the first migrated build this
+ * application has ever had was attempted — it refuses at the compiler, with the
+ * four compile-stage gaps still where T018 named them.
  *
  * Nothing under `packages/frameworks/**`, `packages/core/src/migrations/**`,
  * `packages/core/src/bundlers/**` or `packages/core/src/analysis/**` was edited
@@ -59,6 +68,15 @@ export type MigrationGap = Readonly<{
 	whyTheEngineCannotCarryIt: string;
 	/** What would have to change, stated as a transform rather than a fix. */
 	neededTransform: string;
+	/**
+	 * What answered the gap, and where the evidence that it did is — present only
+	 * on a gap a later unit closed, absent while it is still open.
+	 *
+	 * The field exists so that a closed gap stays legible as the gap it was: the
+	 * demand above is not rewritten when it is met, and the answer is not written
+	 * as though it had always been there.
+	 */
+	closedBy?: string;
 }>;
 
 /**
@@ -87,6 +105,8 @@ export const GAPS: readonly MigrationGap[] = Object.freeze([
 			'ANGULAR_16_BROWSER_CELL.families writes `"@angular-devkit/": "^16.2.0"` as a blanket prefix rule, and alignAngularPackageManifest applies a family range to every declared package whose name carries the prefix. The rule is a naming assumption, not a reading: it presumes that every package in a family is published on the family\'s own version line. @angular-devkit/build-optimizer stops at 0.1302.1, its `latest` dist-tag, and is deprecated on the registry with "This package has been folded in @angular-devkit/build-angular and should no longer be needed." No 16.x of it was ever published, so the family rule writes a range naming a version that does not exist, and npm refuses the whole tree before any peer is even considered.',
 		neededTransform:
 			'The adapter already carries the shape that answers this: ANGULAR_16_ECOSYSTEM_PACKAGES holds `@angular/http` as `kind: "no-successor"` for exactly this reason — a package inside a family prefix that the family\'s own version line never published. What is missing is the entry, not the mechanism, and the entry is a registry reading rather than an invention: the package is deprecated in favour of @angular-devkit/build-angular, which this cell already writes at ^16.2.0, so the declaration is dropped rather than pinned. The general form of the demand is larger than one entry, and it is the one worth stating: a family prefix rule needs a per-package published-line check, because a family is a naming convention and not a release train.',
+		closedBy:
+			'lrapr-t021/u2. `ANGULAR_16_ECOSYSTEM_PACKAGES` now carries @angular-devkit/build-optimizer as `kind: "no-successor"`, so alignAngularPackageManifest drops the declaration and records a declared difference naming @angular-devkit/build-angular ^16.2.0 as what carries the optimizer now. The general demand was answered where it can be answered: the cell observes no registry, so a per-package published-line check *is* the ecosystem table, and `alignedVersionRange` consulting that table before the family prefix is what makes a reading beat a name. `familyPrefixedEcosystemReadings` makes the overriding set enumerable, and the test suite holds every override to writing something other than its family range. The installed closure confirms the reading rather than merely asserting it: @angular-devkit/build-angular 16.2.16 resolved 2278 packages and @angular-devkit/build-optimizer is in none of them, directly or transitively.',
 	}),
 	Object.freeze({
 		id: 'G2',
@@ -102,6 +122,8 @@ export const GAPS: readonly MigrationGap[] = Object.freeze([
 			'The package is absent from ANGULAR_16_ECOSYSTEM_PACKAGES, so ecosystemDispositionOf returns nothing and alignAngularPackageManifest leaves the era pin 4.0.0 in place beside @angular/core ^16.2.0. npm 8 treats an unsatisfiable peer as an error, so the tree is refused. The adapter is not wrong about the package — it has read nothing about it at all, and leaving an era pin is the only thing it can do without inventing a version.',
 		neededTransform:
 			'A `no-successor` cell disposition, of the kind the table already carries for @angular/http, tslint and codelyzer. The registry reading is unambiguous and closes the question: the full published list ends at 4.0.0, that version is the `latest` dist-tag, and it is the exact version the era workspace pinned — the package is dead, not behind. Dropping it makes the closure resolvable and turns the two application imports it serves into source demands the compiler then states by name: `SlimLoadingBarModule` at frontend/app/app.module.ts:31 and `SlimLoadingBarService` at frontend/app/model/network/network.service.ts:4, plus the `<ng2-slim-loading-bar>` element and its `color` and `height` bindings in frontend/app/ui/frame/frame.component.html. Choosing a replacement loading-bar library is a source decision and is demanded here rather than made.',
+		closedBy:
+			'lrapr-t021/u2, as a `no-successor` disposition — and the alternative was weighed rather than skipped. An era-parity install policy was the candidate: npm 6 warned where npm 8 errors, so a migrated closure could be told to resolve the way the era resolver did. It was refused, and one reading refuses it. Angular 16 no longer runs ngcc — the @angular/compiler-cli 16.2.12 in this very closure ships it as a stub whose own message reads "As of Angular 16, \'ngcc\' is no longer required and not invoked during CLI builds" — so nothing on this cell converts a ViewEngine library\'s metadata for the Ivy linker. Forcing the peer would install bytes the compiler cannot consume, and would do it for every unsatisfiable peer in the manifest rather than for the one that was read. The drop is what the migrated build then reports by name, exactly as this gap predicted it would: `Can\'t resolve \'ng2-slim-loading-bar\'` at frontend/app/app.module.ts:38 and frontend/app/model/network/network.service.ts:2, TS2307 at app.module.ts:31:36 and network.service.ts:4:37. Those four are the declared difference speaking, not a new defect, and the source decision they demand is still open.',
 	}),
 	Object.freeze({
 		id: 'G3',
@@ -117,6 +139,8 @@ export const GAPS: readonly MigrationGap[] = Object.freeze([
 			'The package is absent from ANGULAR_16_ECOSYSTEM_PACKAGES, so its era pin survives the alignment and its bounded upper edge `<9.0.0` collides with the ^16.2.0 the cell writes for @angular/common, @angular/core and @angular/platform-browser. Its fourth peer, `rxjs "^6.1.0"`, collides independently with the ~7.8.0 the same cell writes — one package, two unrelated conflicts, either of which is fatal to the tree.',
 		neededTransform:
 			'An `aligned` cell disposition, chosen by the same newest-satisfying-line rule every other entry in the table was chosen by. The reading is available and discriminating: 20.0.5, the newest release and the `latest` dist-tag, declares peer @angular/core and @angular/common "^21.0.0" and is excluded; 17.0.0 through 19.1.0 all declare @angular/core, @angular/common and @angular/platform-browser ">=16.0.0-0", which this cell satisfies, so 19.1.0 is the newest line it can accept. The disposition has a second consequence the workspace has to carry with it, and it is why this gap is not purely a manifest edit: angular.json names `./node_modules/ngx-toastr/toastr.css` in its `styles` array, so the build refuses with `Can\'t resolve \'./node_modules/ngx-toastr/toastr.css\'` as soon as the package is absent, and a disposition that moves the package has to be checked against the stylesheet path the new line publishes.',
+		closedBy:
+			'lrapr-t021/u2, as an `aligned` disposition — at ^17.0.2, and not at the ^19.1.0 this gap named. The correction is the interesting half. This gap read the declared peers, and on the peers alone 19.1.0 is the newest satisfying line; what the peers cannot say is which Angular built it, because 17.0.0 through 19.1.0 declare exactly the same `>=16.0.0-0` across four majors of the library. That is the condition the table\'s own peer-strictness refinement exists for, so the compiled-with stamps were read: 19.1.0 and 19.0.0 carry Angular "18.0.0", 18.0.0 carries "17.0.3", and 17.0.2 carries "16.0.1". Angular 16 does not link a library stamped 17 or 18, so ^19.1.0 would have installed and then refused at the linker — a resolvable closure that is not a compatible one, which is the exact failure mode G4 names one gap below. The second consequence this gap demanded be checked was checked: 17.0.2 still publishes toastr.css at the package root, angular.json\'s `./node_modules/ngx-toastr/toastr.css` styles entry resolves, and the migrated build no longer says the word toastr anywhere — the two TS2307, the two module-not-found and the one stylesheet refusal the probe recorded are all gone.',
 	}),
 	Object.freeze({
 		id: 'G4',
@@ -268,6 +292,113 @@ export const G5_WIRING_REPAIR = Object.freeze({
 	]),
 });
 
+/**
+ * The T021 closure of the install stage, and the first build of the migrated
+ * lane itself.
+ *
+ * Three cell readings answered G1, G2 and G3, and the thing worth saying about
+ * them is what kind of thing they are: none of them mentions this application.
+ * Each is a fact about a package — what it published, what it declared, what
+ * Angular compiled it — written into the table every other reading is written
+ * into, and applied to whatever manifest declares that package. What this unit
+ * measured is the consequence: a lane whose closure resolves, and a build that
+ * refuses for reasons that are now all named.
+ */
+export const INSTALL_STAGE_CLOSURE = Object.freeze({
+	unit: 'lrapr-t021/u2-install-stage-successors',
+	readings: Object.freeze({
+		'@angular-devkit/build-optimizer':
+			'no-successor. Stops at 0.1302.1 (2022-07-21), the `latest` dist-tag; none of its nine dist-tags points above the 13 line and no 16.x exists. Deprecated on the registry with "This package has been folded in @angular-devkit/build-angular and should no longer be needed." Dropped rather than pinned, and the drop is recorded as a declared difference.',
+		'ng2-slim-loading-bar':
+			'no-successor. Twenty-eight published versions ending at 4.0.0 (2017-04-04), which is the `latest` dist-tag, the only tag, and the exact version the era workspace pins; it declares peer @angular/core "^2.4.7 || ^4.0.0". Dropped, with the ngcc reading recorded as the reason an era-parity install policy was refused rather than adopted.',
+		'ngx-toastr':
+			'aligned to ^17.0.2, decided by the compiled-with stamp rather than by the peers, which are identical (">=16.0.0-0") across 17.0.0 to 19.1.0. 17.0.2 is stamped Angular "16.0.1"; 18.0.0 is stamped "17.0.3" and 19.0.0/19.1.0 "18.0.0", all above this cell. 20.0.5, the `latest` dist-tag, declares peer ^21.0.0 and is excluded on the peers alone.',
+	}),
+	whyNotAnEraParityInstallPolicy:
+		'The era ran npm 6, which warns where npm 8 errors, so "install the migrated closure the way the era resolver would have" was a real candidate and it was refused on evidence rather than on taste. Three things are wrong with it here. It is a property of a resolver, not a reading of a package: it would admit every unsatisfiable peer in the manifest, including ones nobody has read, which is the opposite of what this table is for. It would claim compatibility the publisher never declared — a peer range is the author saying which framework the library was built for, and overriding it silently asserts they were wrong. And on this cell it would not even work: Angular 16 removed the ngcc step, so a pre-Ivy library installed past its peer has no path to the Ivy linker at all. A policy that produced an installed tree the compiler cannot read would have converted an honest install refusal into a compile-time surprise, which is precisely the trade G4 was named to warn against.',
+	familyPrefixGenerality:
+		'G1 asked for something larger than an entry: a per-package published-line check behind the family prefix rule. The honest form of that check in a module which observes no registry is the ecosystem table itself, and the ordering in `alignedVersionRange` is what makes it a check rather than a coincidence — exact package, then generated test toolchain, then community reading, then family prefix, with the prefix last because it is the only one of the four that infers from a name instead of reading a package. `familyPrefixedEcosystemReadings` enumerates the packages whose reading overrides their family range, so the two tables can be checked against each other instead of trusted, and the test suite holds every member of that set to writing something other than the family range.',
+	laneInstall: Object.freeze({
+		command: 'npm install --no-audit --no-fund --ignore-scripts',
+		runtime: 'Node v16.20.2 (darwin-arm64, native), npm 8.19.4, CI=1, lane npm cache',
+		firstAttempt: Object.freeze({
+			exitStatus: 1,
+			refusal:
+				'npm ERR! code E404 / 404 Not Found - GET https://registry.npmjs.org/@k3rn31p4nic%2fgoogle-translate-api / "@k3rn31p4nic/google-translate-api@1.0.6" is not in this registry.',
+			reading:
+				'No ETARGET and no ERESOLVE: the three refusals this unit set out to close did not occur, and what the resolver reached instead is the pre-existing registry break the era baseline recorded on the *unmigrated* manifest in the previous unit. It is not a migration gap and it is not counted as one.',
+			log: 'migration/t021-lane-install-e404.log',
+		}),
+		secondAttempt: Object.freeze({
+			exitStatus: 0,
+			installed: 'added 2278 packages in 12s',
+			log: 'migration/t021-lane-install.log',
+		}),
+		registryClosureBreak: Object.freeze({
+			package: 'xlf-google-translate@1.0.0-beta.15',
+			whatIsGone:
+				'its declared dependency @k3rn31p4nic/google-translate-api@1.0.6; GET https://registry.npmjs.org/@k3rn31p4nic%2fgoogle-translate-api returns 404 for the whole package, re-checked on 2026-08-14 and unchanged since the era baseline unit recorded it',
+			whatItGates:
+				'the xlf-google-translate CLI, used only by this workspace\'s gulp translation-authoring tasks; it is named by no build target and imported by no module',
+			handling:
+				'The same narrowing the era baseline lane performed for the same package, for the duration of the install only: the single devDependency line was removed, npm ran, and the authored manifest was written back. It is not a cell disposition and no version was chosen for the package — the migrated manifest in the lane declares xlf-google-translate@1.0.0-beta.15 exactly as the changeset wrote it.',
+			manifestDigests: Object.freeze({
+				authoredSha256: '0bf131b8bf934ee468824c7b9c9acd44442fcccd4a2fdbb926c134612dd855f6',
+				installTimeSha256: '34475a7b171d4f7dd56c0683eaf0f795d9107cb91d6634d6b1b9059cc4a4da2d',
+				restoredSha256: '0bf131b8bf934ee468824c7b9c9acd44442fcccd4a2fdbb926c134612dd855f6',
+				restoreProof:
+					'the restored digest equals the authored digest, so the build below ran against the manifest the changeset produced and not against the narrowed one',
+			}),
+			openDecision:
+				'Whether the cell should read this package at all is left open rather than decided here. The reading exists — 1.0.0-beta.23 and everything after it drop the deleted dependency, and 1.0.4 is the newest published line, declaring no peers and no engines — and under the table\'s own rule that is the line it would select, in the same way `jira2md` is in the table because an unresolvable declaration is not a closure. It was not written, because it is a fourth disposition on a package outside the three gaps this unit was cut to close, and a table entry is a claim that should be made deliberately.',
+		}),
+		lockfile:
+			'npm wrote package-lock.json v2 into the lane, 2312 entries, pinning @angular/core 16.2.12, @angular-devkit/build-angular 16.2.16 and ngx-toastr 17.0.2. It is the lockfile of the closure npm actually resolved, which is the narrowed one: it carries no xlf-google-translate entry, and that is the one respect in which it differs from the manifest beside it.',
+		engineWarning:
+			'npm reported EBADENGINE for the root package: pigallery2 declares `engines.node ">= 6.9 <11.0"` and the cell runs Node 16.20.2. It is a warning under npm 8 and nothing was overridden to silence it, but it is a real finding for a later unit — the era manifest\'s own engines range excludes the Node line the target cell is declared against, and nothing in the migration rewrites it.',
+	}),
+	laneBuild: Object.freeze({
+		firstMigratedBuild:
+			'This is the first build of the migrated lane that has ever existed for this application. T018 could not attempt one — its closure did not install — and everything it measured about the compiler came from a separate narrowed probe tree.',
+		command:
+			'node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng.js build --configuration production',
+		runs: 1,
+		runsNote:
+			'Run once, deliberately. A two-run byte comparison is a determinism claim about emitted artifacts, and this build emits none; running it twice would have compared two failure logs, which the probe already did in the previous unit.',
+		exitStatus: 1,
+		artifactsEmitted: 0,
+		artifactsNote: 'No dist directory exists after the run.',
+		log: 'migration/t021-lane-build-run1.log',
+		diagnosticCounts: Object.freeze({
+			NG2007: 1,
+			NG8001: 45,
+			NG8002: 184,
+			NG8003: 18,
+			NG8004: 2,
+			TS2307: 2,
+			TS2314: 7,
+			TS2339: 1,
+			TS2416: 1,
+		}),
+		moduleNotFound: Object.freeze([
+			"./frontend/app/app.module.ts:38 — Can't resolve 'ng2-slim-loading-bar' (the G2 declared difference)",
+			"./frontend/app/model/network/network.service.ts:2 — Can't resolve 'ng2-slim-loading-bar' (the G2 declared difference)",
+			"./frontend/app/app.module.ts:146 — Can't resolve 'raw-loader' (G6, unchanged)",
+		]),
+		comparedToTheProbe:
+			'The probe\'s 264 diagnostics and this build\'s 261 are counts of two different trees, and the comparison is worth making only where the difference is attributable. Three diagnostic classes moved and each moves for a named reason. TS2314 fell from 8 to 7: the one at frontend/app/app.routing.ts:71 is answered by the capability the previous unit composed, and the seven that remain are all inside ngx-bootstrap\'s own published declarations, which is G4 and nobody else. TS2307 fell from 4 to 2: the two naming ngx-toastr are gone because the package is installed at 17.0.2 rather than narrowed away, and the two naming ng2-slim-loading-bar remain because the cell dropped it. Module-not-found fell from 6 to 3 for the same reason, including the `./node_modules/ngx-toastr/toastr.css` stylesheet refusal G3 warned a disposition would have to be checked against. Nothing else moved: NG8001, NG8002, NG8003, NG8004, TS2339, TS2416 and the single NG2007 are identical in both.',
+		whatRemains:
+			'Four compile-stage gaps, all of them where T018 left them. G4 is seven TS2314 inside ngx-bootstrap 5.1.0\'s declarations and one TS2416 inside @yaga/leaflet-ng2 1.0.0 — three era libraries an open-ended peer range let through the resolver, which is the failure mode that makes a resolvable closure look like a compatible one. G5\'s remaining half is the single NG2007 at frontend/app/ui/settings/_abstract/abstract.settings.component.ts:14, a genuinely missing capability rather than a wiring gap. G6 is the inline `raw-loader!` specifier at frontend/app/app.module.ts:146. G7 is `msOverflowStyle` at frontend/app/ui/gallery/overlay.service.ts:27:19. The 249 template diagnostics are unchanged and are still downstream of app.module.ts failing to compile — the reading below holds, with the two surviving TS2307 in that file now being the ng2-slim-loading-bar imports the declared difference produced.',
+	}),
+	notEstablished: Object.freeze([
+		'An installed closure is not a compatible one. Nothing here establishes that any package this cell aligned behaves as its era version did; it establishes that npm resolved a tree and that the compiler read it.',
+		'The migrated build refuses. No artifact was emitted, no parity was measured, no browser opened anything, and no journey was exercised.',
+		'The install ran with lifecycle scripts disabled, so nothing here says what a scripted install of this manifest does — this application\'s own `install` script is `tsc && gulp build-prod`.',
+		'The three readings were made against registry.npmjs.org and unpkg.com on 2026-08-14 under consent VL-LEGACY-CORPUS-2026-08-10. A registry reading is a reading of published metadata at a moment; the closure that resolved from it is the check that it was current.',
+		'Dropping ng2-slim-loading-bar removes a loading bar from this application. The declared difference says so; choosing a replacement is a source decision no table makes.',
+	]),
+});
+
 export const PROBE = Object.freeze({
 	purpose:
 		'The lane stops at the resolver, which reports one conflict per run and therefore cannot say how many there are. The probe exists to close the install set and to reach the compiler, so that the gaps behind the first one are named in this unit instead of being discovered one unit at a time.',
@@ -323,10 +454,13 @@ export const ERA_FACTS_NOT_CARRIED: readonly string[] = Object.freeze([
 export function buildMigrationBlock(): Readonly<Record<string, unknown>> {
 	return {
 		unit: UNIT,
-		result: 'RED — the frozen adapter composes a changeset for this application and the migrated closure does not install; no target build exists',
+		result:
+			'RED — the migrated closure now installs and the migrated build refuses at the compiler. T018 measured this application against a frozen adapter and it stopped at the resolver with three install-stage gaps and four compile-stage ones. The three install gaps are closed by three cell readings (T021 u2) and the first migrated build that has ever existed for this application ran: 261 diagnostics, no artifact, four compile-stage gaps still open and each still where T018 named it.',
 		outcome: 'red-migration-gaps-itemised',
 		startedAt: '2026-08-14T01:06:00Z',
 		completedAt: '2026-08-14T01:30:00Z',
+		completedAtNote:
+			'The timestamps above are T018\'s. This record is amended in place by the units that answer its gaps — lrapr-t021/u1 for the composition wiring, lrapr-t021/u2 for the install stage — and each amendment carries its own unit and its own evidence rather than rewriting the run that found the gap.',
 		scope:
 			'Compose the frozen `@versionless/angular` changeset over the pinned corpus, write it into a migrated lane, install the migrated closure and build it. No adapter edit, no application-source hand edit, no app-name or revision branch anywhere in the engine. The freeze fingerprint 4df7bc961033fc5856b4d58e0bca9f11ad2aa9d43aaaee726956f34d209b37e7 is unchanged, and the Angular subtree oid ca3824d0595d1fa88d37feda6b1785dfd79e72c4 did not move.',
 		holdoutMeaning:
@@ -365,7 +499,9 @@ export function buildMigrationBlock(): Readonly<Record<string, unknown>> {
 			workspaceFilesChanged: 3,
 			filesRemoved: ['tslint.json'],
 			unhandled: 7,
-			declaredDifferences: 8,
+			declaredDifferences: 10,
+			declaredDifferencesNote:
+				'Eight at T018, ten now. The two the T021 install-stage readings added are the removals of @angular-devkit/build-optimizer and ng2-slim-loading-bar, each carrying the registry reading that dropped it. ngx-toastr added none: an aligned range is a change with a reason, not a difference the migrated workspace has to declare.',
 			applicationSourceChanges: [
 				'frontend/app/app.routing.ts:71 — module-with-providers-type-argument <RouterModule> read from static-call-receiver',
 				'frontend/app/ui/faces/faces.component.ts:6 — module-specifier rxjs/Observable -> rxjs',
@@ -386,11 +522,16 @@ export function buildMigrationBlock(): Readonly<Record<string, unknown>> {
 			eraLockfileHandling:
 				'The era package-lock.json was moved out of the lane before the install and retained at .versionless/work/angular-pigallery2/target/logs/era-package-lock.json. It pins the complete 2019 Angular 8 closure; leaving a v1 lockfile of that closure beside an Angular 16 manifest would have described a tree that does not exist. This mirrors what the super-productivity migrated lane did with that application\'s era yarn.lock.',
 			log: 'migration/lane-install-red.log',
+			supersededBy:
+				'This is the T018 measurement and it is kept as one. The same lane, installed again after the three cell readings T021 u2 landed, resolves and links 2278 packages; `installStageClosure.laneInstall` records that run, its two attempts and the manifest digests that bound them.',
 		},
+		installStageClosure: INSTALL_STAGE_CLOSURE,
 		targetBuild: {
 			produced: false,
-			reason:
-				'A target build requires an installed closure, and the migrated closure does not install. The two-run byte comparison this unit owed is therefore not deferred or estimated — it does not exist, and no substitute for it is offered. The probe build below is a diagnostic and is not that comparison.',
+			reasonAtT018:
+				'A target build requires an installed closure, and the migrated closure did not install. The two-run byte comparison T018 owed is therefore not deferred or estimated — it does not exist, and no substitute for it is offered. The probe build below is a diagnostic and is not that comparison.',
+			t021Attempt:
+				'The closure installs now and the build was attempted once against the migrated lane itself. It refused: exit 1, 261 diagnostics, three module-not-found, no dist directory. `produced` stays false because nothing was emitted, and there is still no artifact to compare, inventory or serve — what changed is that the refusal is now the compiler\'s and not the resolver\'s. `installStageClosure.laneBuild` records it.',
 		},
 		gaps: GAPS,
 		gapCount: GAPS.length,
@@ -403,14 +544,16 @@ export function buildMigrationBlock(): Readonly<Record<string, unknown>> {
 			'The workspace migration read this application\'s unusual shape correctly — a non-src sourceRoot, a second e2e project, an already-broken lint target — and reported what it could not carry as unhandled entries and declared differences rather than dropping them silently.',
 			'The three application-source rewrites it made are all correct for the hop: rxjs/Observable collapses onto the package root in RxJS 7, and both zone.js deep specifiers moved in 0.11.',
 			'Every one of the seven gaps was reported by a toolchain as a named diagnostic at a named line. None of them is a silent wrong answer, which is the failure mode that would have mattered more.',
+			'Each install-stage gap was answerable by a reading rather than by an exception: three entries in the table every other community reading lives in, none of them naming this application, and the closure resolved on the first attempt afterwards. The gap list was accurate enough to be closed from — including where it was wrong, since G3 named a line the compiled-with reading then corrected.',
 		],
 		notEstablished: [
-			'No migrated build exists. Nothing here establishes that this application can be carried to Angular 16 at all, and nothing establishes that it cannot: the gaps are demands, and none of them was answered.',
+			'The migrated build emits nothing. Nothing here establishes that this application can be carried to Angular 16 at all, and nothing establishes that it cannot: three gaps are answered, four are open demands, and no artifact exists.',
 			'No browser opened anything, no server was started, and no journey was exercised, in either lane.',
 			'The probe measures a tree that is not the migrated lane. Its 264 diagnostics are a census of what the compiler said about one narrowed tree in one configuration; they are not an estimate of remaining work, because answering a module-level demand removes many template-level ones at once.',
 			'The gap list is closed at the install stage and open at the compile stage. The install set was closed by narrowing until the tree resolved; the compile set is what one build of one narrowed tree reported, and answering the seven gaps would let the compiler reach code it has not yet read.',
 			'`packagesInstalled` counts what npm reported with lifecycle scripts disabled. Nothing here establishes what a scripted install of either manifest does.',
-			'The registry readings quoted for G1, G2 and G3 were made under consent VL-LEGACY-CORPUS-2026-08-10 against registry.npmjs.org on 2026-08-14. They are readings of published metadata, not installations, and no line named in a `neededTransform` was installed or built by this unit.',
+			'The registry readings quoted for G1, G2 and G3 were made under consent VL-LEGACY-CORPUS-2026-08-10 against registry.npmjs.org on 2026-08-14. They are readings of published metadata, not installations, and no line named in a `neededTransform` was installed or built by T018.',
+			'The closure that installed is the migrated manifest minus one devDependency, xlf-google-translate, whose own declared dependency was deleted from the registry before either lane ran. The narrowing is the era baseline\'s, digest-bounded and restored, and it is not a claim that the authored migrated manifest installs — that manifest reaches E404 and `installStageClosure.laneInstall.firstAttempt` records it.',
 		],
 	};
 }

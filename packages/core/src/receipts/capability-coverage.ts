@@ -321,7 +321,7 @@ const CAPABILITY_INPUTS: readonly CapabilityRecordInput[] = [
 			'packages/cli/src/fixture/angular-super-productivity-lanes-run.ts',
 			'packages/cli/src/fixture/angular-tiny-translator-lanes-run.ts',
 		],
-		note: 'Target-cell manifest alignment; invoked unconditionally by the era orchestrator across all four Angular applications. Cross-proven in adapter-freeze.',
+		note: 'Target-cell manifest alignment; invoked unconditionally by the era orchestrator across all four Angular applications. Cross-proven in adapter-freeze. Extended by T021 u2 with three readings the Angular holdout demanded — @angular-devkit/build-optimizer and ng2-slim-loading-bar as no-successor, ngx-toastr aligned to ^17.0.2 by its compiled-with stamp — and with `familyPrefixedEcosystemReadings`, which enumerates the packages whose per-package reading overrides their family prefix. A family prefix infers a range from a name; the ecosystem table reads the package, and `alignedVersionRange` consults it first, which is what stops the rule writing a version nobody published. First measured end to end on 2026-08-14: the pigallery2 migrated closure resolves and installs 2278 packages under this alignment.',
 	},
 	{
 		name: 'custom-webpack-absorption',

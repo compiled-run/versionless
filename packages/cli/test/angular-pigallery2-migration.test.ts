@@ -14,6 +14,7 @@ import {
 	DOWNSTREAM_READING,
 	ERA_FACTS_NOT_CARRIED,
 	GAPS,
+	INSTALL_STAGE_CLOSURE,
 	PROBE,
 	PROBE_DIAGNOSTIC_COUNTS,
 	buildMigrationBlock,
@@ -62,13 +63,65 @@ describe('pigallery2 Angular holdout migration record', () => {
 		expect(GAPS.some((gap) => gap.stage === 'compile')).toBe(true);
 	});
 
-	it('names the three install gaps against packages the frozen cell carries no reading for', () => {
-		const installSites = GAPS.filter((gap) => gap.stage === 'install').map((gap) => gap.site);
-		expect(installSites).toHaveLength(3);
+	it('names the three install gaps by package, and each is now a reading the cell carries', () => {
+		const install = GAPS.filter((gap) => gap.stage === 'install');
+		expect(install).toHaveLength(3);
 		for (const name of ['@angular-devkit/build-optimizer', 'ng2-slim-loading-bar', 'ngx-toastr']) {
-			expect(installSites.some((site) => site.includes(name))).toBe(true);
-			expect(Object.keys(ANGULAR_16_ECOSYSTEM_PACKAGES)).not.toContain(name);
+			expect(install.some((gap) => gap.site.includes(name))).toBe(true);
+			expect(Object.keys(ANGULAR_16_ECOSYSTEM_PACKAGES)).toContain(name);
 		}
+	});
+
+	it('keeps a closed gap stated as the demand it was, and says what answered it', () => {
+		for (const gap of GAPS.filter((entry) => entry.stage === 'install')) {
+			expect(gap.closedBy).toBeDefined();
+			expect(gap.closedBy).toContain('lrapr-t021/u2');
+			expect((gap.closedBy ?? '').length).toBeGreaterThan(200);
+			/** The demand is not rewritten by the answer: the red diagnostic stays. */
+			expect(gap.observed).toContain('npm ERR!');
+		}
+		/** A compile-stage gap is still open, and says nothing about being closed. */
+		for (const gap of GAPS.filter((entry) => entry.stage === 'compile'))
+			expect(gap.closedBy).toBeUndefined();
+	});
+
+	it('records the install the readings made possible, and the one refusal that is not a gap', () => {
+		expect(INSTALL_STAGE_CLOSURE.laneInstall.firstAttempt.exitStatus).toBe(1);
+		expect(INSTALL_STAGE_CLOSURE.laneInstall.firstAttempt.refusal).toContain('E404');
+		expect(INSTALL_STAGE_CLOSURE.laneInstall.firstAttempt.reading).toContain('ETARGET');
+		expect(INSTALL_STAGE_CLOSURE.laneInstall.secondAttempt.exitStatus).toBe(0);
+		const digests = INSTALL_STAGE_CLOSURE.laneInstall.registryClosureBreak.manifestDigests;
+		expect(digests.restoredSha256).toBe(digests.authoredSha256);
+		expect(digests.installTimeSha256).not.toBe(digests.authoredSha256);
+	});
+
+	it('states the migrated build as attempted, refused and emitting nothing', () => {
+		expect(INSTALL_STAGE_CLOSURE.laneBuild.exitStatus).toBe(1);
+		expect(INSTALL_STAGE_CLOSURE.laneBuild.artifactsEmitted).toBe(0);
+		expect(INSTALL_STAGE_CLOSURE.laneBuild.runs).toBe(1);
+		const counts = INSTALL_STAGE_CLOSURE.laneBuild.diagnosticCounts;
+		/**
+		 * The three classes that moved, each for a reason the record names, and one
+		 * that did not: the template mass is unchanged because nothing this unit did
+		 * reaches it.
+		 */
+		expect(counts['TS2307']).toBe(2);
+		expect(counts['TS2314']).toBe(7);
+		expect(counts['NG2007']).toBe(PROBE_DIAGNOSTIC_COUNTS['NG2007']);
+		expect(counts['NG8002']).toBe(PROBE_DIAGNOSTIC_COUNTS['NG8002']);
+		expect(PROBE_DIAGNOSTIC_COUNTS['TS2307']).toBe(4);
+		expect(INSTALL_STAGE_CLOSURE.laneBuild.moduleNotFound).toHaveLength(3);
+		expect(
+			INSTALL_STAGE_CLOSURE.laneBuild.moduleNotFound.some((entry) => entry.includes('toastr')),
+		).toBe(false);
+	});
+
+	it('refuses the era-parity install policy on a reading rather than on taste', () => {
+		expect(INSTALL_STAGE_CLOSURE.whyNotAnEraParityInstallPolicy).toContain('ngcc');
+		expect(INSTALL_STAGE_CLOSURE.whyNotAnEraParityInstallPolicy.length).toBeGreaterThan(400);
+		const block = buildMigrationBlock();
+		expect(JSON.stringify(block)).not.toContain('--legacy-peer-deps');
+		expect(JSON.stringify(block)).not.toContain('--force');
 	});
 
 	it('keeps the probe separate from the lane and says so', () => {
