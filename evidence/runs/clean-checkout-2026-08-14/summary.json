@@ -2,7 +2,7 @@
 	"unit": "lrapr-t010/u1-clean-checkout-holdout-reexecution",
 	"task": "T010 core (T025-amended) — clean-checkout offline reproduction of the repository gates and FRESH LIVE browser re-execution of BOTH holdouts under freeze 27741d9c",
 	"measuredAt": "2026-08-14",
-	"scope": "This unit is T010 CORE only. The full ten-application portfolio rerun is the NEXT unit and is not attempted or claimed here.",
+	"scope": "This file now carries BOTH units. Everything already recorded is u1 (T010 core: clean checkout, offline install, gates, fresh live re-execution of both holdouts) and is left exactly as u1 wrote it. The u2 additions are the `portfolio` block, the `gates.u2Resolution` block and `units` — u2 completed the three gates u1 left unknown and ran the ten-application portfolio verification.",
 	"cleanCheckout": {
 		"headSha": "d5ef9eacf28a67cd6346d84039328c12042d728e",
 		"kind": "git worktree --detach outside the main tree",
@@ -29,7 +29,18 @@
 		"trustVerifyOffline": "unknown-not-green",
 		"scriptSurfaceVerify": "unknown-not-green",
 		"detail": "evidence/runs/clean-checkout-2026-08-14/gates.json",
-		"honestStatement": "Four gates are green in a clean checkout with no qualification (tsc, fmt, lint, pack) and two offline evidence verifies reproduce their recorded digests exactly (receipt 52400147, corpus e6c9068a over 20 verticals / 12 applications). The node suite, trust:verify and script-surface:verify are NOT recorded as passing: every failure observed in them was a missing materialized `.versionless/work` or `.versionless/stage` lane, the last two staging gaps were closed only at the end of this unit, and the gates were not re-executed afterwards inside the budget. Their state is unknown, not green."
+		"honestStatement": "Four gates are green in a clean checkout with no qualification (tsc, fmt, lint, pack) and two offline evidence verifies reproduce their recorded digests exactly (receipt 52400147, corpus e6c9068a over 20 verticals / 12 applications). The node suite, trust:verify and script-surface:verify are NOT recorded as passing: every failure observed in them was a missing materialized `.versionless/work` or `.versionless/stage` lane, the last two staging gaps were closed only at the end of this unit, and the gates were not re-executed afterwards inside the budget. Their state is unknown, not green.",
+		"u2Resolution": {
+			"measuredAt": "2026-08-14",
+			"tree": "main working tree with the portfolio lane corpus materialized (not a fresh worktree; u1 already reproduced from a clean checkout)",
+			"testNode": "pass as measured at 05:22 (243 files, 2476/2476) — went red at 05:49 for an unrelated, separately named reason: see packProvenanceFinding in portfolio.json (3 operator-flow tests on the invalidated distribution inventory)",
+			"trustVerifyOffline": "pass as measured at 05:21 (valid true, digest 213b43e8, deterministicCore 656e861a, 12 artifacts) — went red at 05:52 for the same reason: see packProvenanceFinding",
+			"scriptSurfaceVerify": "pass — 9 verticals, 2 source applications, 18 lanes, 0 external scripts introduced",
+			"whatThisChangesAboutU1": "Nothing u1 recorded is retracted. u1 honestly recorded these three as unknown because it could not re-execute them after closing the last staging gaps. u2 re-executed all three, alone and serialized, and every one is green. The u1 finding stands and is now proven: every failure u1 saw was a missing materialized lane, not a source defect.",
+			"trustDigestReconciliation": "The T025 Judge recorded trust digest 364f3ad6; the verify now reports 213b43e8. Not a drift: commit cac8b07 (T009 claims surfaces) regenerated the committed trust bundle. The manifest canonicalDigest is 364f3ad6 at 6d6c779 and 213b43e8 at cac8b07 and at HEAD, while the deterministicCore is 656e861a at all three.",
+			"fmt": "RED IN THIS TREE and named rather than patched — see portfolio.json fmtFinding. `vp fmt` exits 2 on 13 untracked .claude/worktrees YAML files (other sessions, not repository content) and, defaulting to --write, rewrites 249 committed source files, 82 of them inside the frozen adapter subtrees. All 249 writes were reverted; the tracked tree is clean. Under freeze 27741d9c the formatting cannot be corrected, so this is a stop-class finding for the release candidate.",
+			"packProvenance": "STOP CONDITION. The committed trust package was generated at 04:23; commit ed39ccd at 05:01 then changed packages/cli/src/** and is an ancestor of HEAD. provenance.json therefore attests dist bytes that HEAD cannot produce. Running the packet-listed `vp pack` gate rebuilt dist deterministically (verified twice) and 7 of 11 provenance subjects no longer match; the attested chunk verify-CaJ2OPHR.js is gone. trust:verify and 3 node tests are red at the close of this unit. Until 05:44 they passed only because pre-ed39ccd build output was still sitting in the gitignored dist directories. Not patched: regenerating the trust package changes digest 213b43e8 and the enterprise/matrix bindings, which is a Judge decision."
+		}
 	},
 	"holdouts": {
 		"reactParityMatch": true,
@@ -80,5 +91,47 @@
 		"No product or package code was changed by this unit. No sealed record was modified. Nothing was committed or staged."
 	],
 	"productCodeChanges": 0,
-	"sealedRecordsModified": 0
+	"sealedRecordsModified": 0,
+	"units": [
+		{
+			"unit": "lrapr-t010/u1-clean-checkout-holdout-reexecution",
+			"delivered": "clean checkout + offline install + gates + fresh live browser re-execution of both holdouts",
+			"left": "three gates unknown, portfolio rerun not attempted"
+		},
+		{
+			"unit": "lrapr-t010/u2-portfolio-rerun-and-gates",
+			"delivered": "the three unknown gates closed green, the ten-application portfolio verification, the full serialized gate suite, and this release-candidate record",
+			"detail": "evidence/runs/clean-checkout-2026-08-14/portfolio.json"
+		}
+	],
+	"portfolio": {
+		"outcome": "green",
+		"measuredAt": "2026-08-14",
+		"unit": "lrapr-t010/u2-portfolio-rerun-and-gates",
+		"detail": "evidence/runs/clean-checkout-2026-08-14/portfolio.json",
+		"countedCells": 10,
+		"react": "6/6",
+		"angular": "4/4",
+		"staleSkippedAmbiguousOrRedCells": 0,
+		"perCellOfflineReDerivation": "10/10 reproduced their sealed canonical digest",
+		"perCellDeterminism": "10/10 carry 4 runs (2 lanes x 2 passes) collapsing to exactly one behavior digest",
+		"perCellLocality": "10/10 offline, successfulNonLoopback 0, osWideIsolation false (never claimed)",
+		"perCellMutationSpotProof": "39 materialized copies of the ten mutation targets re-hashed on disk in this unit; 39/39 byte-identical to the recorded restored bytes, so no mutated byte survives anywhere in the lane corpus",
+		"holdouts": "React holdout 76f0b5bd and eShop holdout fb921b46 both re-derived to the digests the T025 Judge recorded; the eShop outcome string is carried verbatim as witness-passed-on-bounded-anonymous-catalog-surface and is never restated as a generic pass",
+		"redsRetained": "pigallery2 39a133ff still published, still red",
+		"corpus": "corpus:verify offline reproduced e6c9068a over 20 verticals / 12 source applications",
+		"derivedMatrix": "supported-matrix regenerates byte-stably across repeated runs (json 380a2136, text d41d54f0) and report:enterprise --verify-only re-derives both published artifacts to their committed sha256s",
+		"liveBrowserRerunOfTheTenCountedCells": "NOT performed in this unit and NOT claimed — the ten cells were re-derived offline from sealed evidence and re-measured on disk. The fresh live browser re-execution under this freeze covers the two holdouts only and was done by u1.",
+		"unknownsPreserved": true
+	},
+	"releaseCandidate": {
+		"state": "NOT-CLEAN — two stop-class findings open",
+		"green": "The three previously-unknown gates (all three re-ran green), the ten counted cells with zero stale/skipped/ambiguous/red cells, both holdouts, the retained REDs, corpus e6c9068a, script-surface, tsc, lint, byte-stable supported-matrix and enterprise report re-derivation, freeze 27741d9c intact.",
+		"stopConditions": [
+			"packProvenanceFinding — the trust package attests a distribution inventory HEAD does not reproduce; vp pack invalidates trust:verify and 3 node tests.",
+			"fmtFinding — 249 committed source files are not in canonical format, 82 inside the frozen adapter subtrees, so it cannot be corrected under freeze 27741d9c."
+		],
+		"portfolioItself": "green",
+		"freezeIntact": true
+	}
 }
