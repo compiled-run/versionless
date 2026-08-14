@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "versionless.official-source.v1",
+  "consentId": "T658-official-source-sqlpad-v5-5-0",
+  "attemptSha256": "09b94896a75f0856b28546a85b163fd4893ec987639cbee5801b52e3410e2cf7",
+  "result": "source-bound",
+  "startedAt": "2026-08-10T07:08:53Z",
+  "completedAt": "2026-08-10T07:09:59Z",
+  "repository": {
+    "id": 20280681,
+    "fullName": "sqlpad/sqlpad",
+    "private": false,
+    "archived": true,
+    "disabled": false,
+    "responseBytes": 5960,
+    "responseSha256": "addd114c3cfbc87d9ffac3f3b537f3e18e3bfb6d5a7fa27a50e6caca7d5c36b4"
+  },
+  "revision": {
+    "ref": "refs/tags/v5.5.0",
+    "tagObjectSha": "51c7f249d7f173d0c4fdc132db87949578bb8e43",
+    "tagDate": "2020-08-07T20:45:16Z",
+    "tagVerification": "unsigned",
+    "commitSha": "5c259dd7d3e6bdc0eb098bd32262263fe0280c6b",
+    "commitDate": "2020-08-07T20:45:13Z",
+    "commitVerification": "unsigned",
+    "rootTreeSha": "f46239e3bec8098268a5e5a24a916b35a3aae3d5",
+    "treeEntries": 564,
+    "treeBlobs": 483,
+    "treeDirectories": 81,
+    "treeSymlinks": 0,
+    "treeGitlinks": 0,
+    "treeTruncated": false
+  },
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/sqlpad/sqlpad",
+      "status": 200,
+      "bytes": 5960,
+      "sha256": "addd114c3cfbc87d9ffac3f3b537f3e18e3bfb6d5a7fa27a50e6caca7d5c36b4"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/sqlpad/sqlpad/git/ref/tags/v5.5.0",
+      "status": 200,
+      "bytes": 329,
+      "sha256": "4ec6db2afc58117b13bdf1487d71a91feec97ea4e504c008c0e3dc27920ee74b"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/sqlpad/sqlpad/git/tags/51c7f249d7f173d0c4fdc132db87949578bb8e43",
+      "status": 200,
+      "bytes": 659,
+      "sha256": "b4247fbf952c983d014e5dcacc1c67eae9be74110d055fcaf4d219377f14cbd2"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/sqlpad/sqlpad/git/commits/5c259dd7d3e6bdc0eb098bd32262263fe0280c6b",
+      "status": 200,
+      "bytes": 1085,
+      "sha256": "360b7c7f8c6047430400bd8564fa6e270afcb033a2d90eb884237c73c6354832"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/sqlpad/sqlpad/git/trees/f46239e3bec8098268a5e5a24a916b35a3aae3d5?recursive=1",
+      "status": 200,
+      "bytes": 132938,
+      "sha256": "7bafbf5bdd49465d7143c35f5092e7306f1eaf8afdd607e16c4dbca62fe31b7f"
+    },
+    {
+      "endpoint": "https://codeload.github.com/sqlpad/sqlpad/tar.gz/5c259dd7d3e6bdc0eb098bd32262263fe0280c6b",
+      "status": 200,
+      "bytes": 2849903,
+      "sha256": "fccfde1b896529396b877d2ca09fa46bfaf9b171e2ca068fc09f6acb1543705d",
+      "stream": 1
+    },
+    {
+      "endpoint": "https://codeload.github.com/sqlpad/sqlpad/tar.gz/5c259dd7d3e6bdc0eb098bd32262263fe0280c6b",
+      "status": 200,
+      "bytes": 2849903,
+      "sha256": "fccfde1b896529396b877d2ca09fa46bfaf9b171e2ca068fc09f6acb1543705d",
+      "stream": 2
+    }
+  ],
+  "archiveParity": {
+    "singleRoot": "sqlpad-5c259dd7d3e6bdc0eb098bd32262263fe0280c6b",
+    "safeEntries": 565,
+    "regularFiles": 483,
+    "directories": 82,
+    "specialEntries": 0,
+    "gitBlobs": 483,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "normalizedManifestSha256": "a6022e99630a17baba482ecce1f4d2775b1d465c9479c7dcba67167a103b78ea"
+  },
+  "transaction": {
+    "attemptedRequests": 7,
+    "acceptedResponses": 7,
+    "acceptedWireBytes": 5840777,
+    "acceptedDecodedBytes": 5840777,
+    "redirectsObserved": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "archivesByteIdentical": true,
+    "archiveMatchesGitTree": true,
+    "publishedSource": true,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "cache": {
+    "root": ".versionless/cache/react-sqlpad-v5-5-0-source",
+    "archive1": ".versionless/cache/react-sqlpad-v5-5-0-source/archive/archive-1.tar.gz",
+    "archive2": ".versionless/cache/react-sqlpad-v5-5-0-source/archive/archive-2.tar.gz",
+    "verifiedSource": ".versionless/cache/react-sqlpad-v5-5-0-source/verify/extracted",
+    "rawMetadataPortable": false
+  },
+  "nonclaims": [
+    "The unsigned tag and commit do not establish signer authenticity.",
+    "No license, retained-asset right, dependency closure, framework version, build, browser behavior, service-worker state, migration feasibility, pilot status, production readiness, certification, or legal approval is established."
+  ]
+}

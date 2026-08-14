@@ -1,0 +1,70 @@
+{
+  "schemaVersion": "versionless.official-source-terminal.v1",
+  "candidate": {
+    "repository": "JordanKnott/taskcafe",
+    "requestedRevision": "v0.3.2"
+  },
+  "consentId": "T649-official-source-taskcafe-v032-revision",
+  "result": "terminal",
+  "reason": "required-release-and-ref-not-found",
+  "startedAt": "2026-08-10T06:39:28Z",
+  "completedAt": "2026-08-10T06:39:28Z",
+  "policy": {
+    "credentialMode": "none",
+    "requestMethod": "GET",
+    "requestEncoding": "identity",
+    "redirectsAllowed": false,
+    "retriesAllowed": false,
+    "maximumAcceptedResponses": 8,
+    "maximumApiResponseBytes": 16777216,
+    "maximumArchiveBytes": 134217728,
+    "maximumAggregateBytes": 314572800
+  },
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/JordanKnott/taskcafe",
+      "status": 200,
+      "contentType": "application/json; charset=utf-8",
+      "contentLength": 5436,
+      "accepted": true,
+      "bodySha256": "6949df8bd18bfa90ca632e2b02e15beba609f378e65f3a564e738d6f94c102ac"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/JordanKnott/taskcafe/releases/tags/v0.3.2",
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "contentLength": 133,
+      "accepted": false,
+      "bodyRetained": false
+    },
+    {
+      "endpoint": "https://api.github.com/repos/JordanKnott/taskcafe/git/ref/tags/v0.3.2",
+      "status": 404,
+      "contentType": "application/json; charset=utf-8",
+      "contentLength": 114,
+      "accepted": false,
+      "bodyRetained": false
+    }
+  ],
+  "transaction": {
+    "attemptedRequests": 3,
+    "acceptedResponses": 1,
+    "archiveRequests": 0,
+    "redirectsObserved": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "publishedSource": false,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "preservation": {
+    "terminalEvidence": "evidence/ingests/react-taskcafe-v032/terminal.json",
+    "rawAttemptResidue": ".versionless/stage/react-taskcafe-v032-source/t649",
+    "rawAttemptResidueIsCanonical": false
+  },
+  "nonclaims": [
+    "The repository response does not establish the requested revision.",
+    "No release, tag, commit, tree, archive, license, dependency closure, build, browser behavior, service-worker state, migration feasibility, pilot status, or production readiness is established.",
+    "This terminal acquisition record is reproducibility evidence, not certification or legal approval."
+  ]
+}

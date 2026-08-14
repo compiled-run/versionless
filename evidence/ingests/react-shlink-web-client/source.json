@@ -1,0 +1,127 @@
+{
+  "schemaVersion": "versionless.official-source.v1",
+  "consentId": "T653-official-source-shlink-web-client-2020-2021",
+  "attemptSha256": "dce05be8a74987323f9bf374b1dce33a9c8b5f2836cfc3135add0e60adb51b96",
+  "result": "source-bound",
+  "startedAt": "2026-08-10T06:50:45Z",
+  "completedAt": "2026-08-10T06:52:06Z",
+  "repository": {
+    "id": 133213463,
+    "fullName": "shlinkio/shlink-web-client",
+    "private": false,
+    "archived": false,
+    "disabled": false,
+    "responseBytes": 6694,
+    "responseSha256": "0417952058305447833ed2b6fabeb786318ec65fa2aa158bc285503f75c57bff"
+  },
+  "releaseInventory": {
+    "endpoint": "https://api.github.com/repos/shlinkio/shlink-web-client/releases?per_page=100&page=1",
+    "status": 200,
+    "records": 74,
+    "complete": true,
+    "paginationAdvertised": false,
+    "responseBytes": 325901,
+    "responseSha256": "883bc4c9065097803ba8e097ed486051f3ed775ef6d9d40713d726ce3ea1d19f"
+  },
+  "selection": {
+    "rule": "earliest-stable-release-in-2020-2021",
+    "tieBreak": "ascending-numeric-release-id",
+    "eligibleReleases": 21,
+    "releaseId": 22959631,
+    "tag": "v2.3.0",
+    "publishedAt": "2020-01-19T20:42:10Z",
+    "draft": false,
+    "prerelease": false,
+    "fallbackUsed": false
+  },
+  "revision": {
+    "ref": "refs/tags/v2.3.0",
+    "tagObjectSha": "eb5d2e430356d752e5c6964cd9016bb23d919133",
+    "tagObjectVerification": "unsigned",
+    "commitSha": "44aca4aedabd3b314a9c4828c37f73392588a6eb",
+    "commitDate": "2020-01-19T20:37:56Z",
+    "commitVerification": "valid",
+    "rootTreeSha": "0a8be6f3a753a6f2077d148233ab74e3cb05cdce",
+    "treeEntries": 303,
+    "treeBlobs": 251,
+    "treeDirectories": 52,
+    "treeGitlinks": 0,
+    "treeTruncated": false
+  },
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/shlinkio/shlink-web-client",
+      "status": 200,
+      "bytes": 6694,
+      "sha256": "0417952058305447833ed2b6fabeb786318ec65fa2aa158bc285503f75c57bff"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/shlinkio/shlink-web-client/releases?per_page=100&page=1",
+      "status": 200,
+      "bytes": 325901,
+      "sha256": "883bc4c9065097803ba8e097ed486051f3ed775ef6d9d40713d726ce3ea1d19f"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/shlinkio/shlink-web-client/git/ref/tags/v2.3.0",
+      "status": 200,
+      "bytes": 355,
+      "sha256": "6e976a6f9eb709dcc2beb6e080edcbfb7c2c9fda0e901a0f6ec0dafe3f49b2b6"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/shlinkio/shlink-web-client/git/tags/eb5d2e430356d752e5c6964cd9016bb23d919133",
+      "status": 200,
+      "bytes": 704,
+      "sha256": "3479ace28a6fd91dae0699d907dd5bb9406d6dedf0eda42a65dc0e65f14adc13"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/shlinkio/shlink-web-client/git/commits/44aca4aedabd3b314a9c4828c37f73392588a6eb",
+      "status": 200,
+      "bytes": 2370,
+      "sha256": "54495e6c652ac130bfabd11c4b8ebce79cf846253d176e5fcc68ebe645268860"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/shlinkio/shlink-web-client/git/trees/0a8be6f3a753a6f2077d148233ab74e3cb05cdce?recursive=1",
+      "status": 200,
+      "bytes": 74013,
+      "sha256": "f27438c01723f7cda93b647634521152bcd42f11ed0ff8e790b5515b3cd39ba9"
+    },
+    {
+      "endpoint": "https://codeload.github.com/shlinkio/shlink-web-client/tar.gz/44aca4aedabd3b314a9c4828c37f73392588a6eb",
+      "status": 200,
+      "bytes": 331328,
+      "sha256": "4fbece68049a042dda2294606135eab2bd7ef02febfa5609780480f6786e3239",
+      "stream": 1
+    },
+    {
+      "endpoint": "https://codeload.github.com/shlinkio/shlink-web-client/tar.gz/44aca4aedabd3b314a9c4828c37f73392588a6eb",
+      "status": 200,
+      "bytes": 331328,
+      "sha256": "4fbece68049a042dda2294606135eab2bd7ef02febfa5609780480f6786e3239",
+      "stream": 2
+    }
+  ],
+  "transaction": {
+    "attemptedRequests": 8,
+    "acceptedResponses": 8,
+    "acceptedWireBytes": 1072693,
+    "acceptedDecodedBytes": 1072693,
+    "redirectsObserved": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "archivesByteIdentical": true,
+    "publishedSource": true,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "cache": {
+    "root": ".versionless/cache/react-shlink-web-client-source",
+    "archive1": ".versionless/cache/react-shlink-web-client-source/archive/archive-1.tar.gz",
+    "archive2": ".versionless/cache/react-shlink-web-client-source/archive/archive-2.tar.gz",
+    "rawMetadataPortable": false
+  },
+  "nonclaims": [
+    "Immutable source binding does not establish archive-to-tree parity until the local Scout independently verifies every entry.",
+    "The unsigned annotated tag and valid commit verification do not establish signer authenticity.",
+    "No license, retained-asset right, dependency closure, build, browser behavior, service-worker state, migration feasibility, pilot status, production readiness, certification, or legal approval is established."
+  ]
+}

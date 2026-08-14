@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "versionless.react-sqlpad-v5-5-0-closure-attempt.v1",
+  "consentId": "T664-sqlpad-production-closure",
+  "result": "started",
+  "artifacts": 1950,
+  "placements": 2720,
+  "caps": {
+    "responseLimit": 4200,
+    "responseByteLimit": 33554432,
+    "aggregateByteLimit": 2147483648
+  }
+}

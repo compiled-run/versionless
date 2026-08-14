@@ -1,0 +1,98 @@
+{
+  "schemaVersion": "versionless.official-source-terminal.v1",
+  "candidate": {
+    "repository": "parse-community/parse-dashboard",
+    "requestedReleaseWindow": {
+      "from": "2020-01-01T00:00:00Z",
+      "through": "2021-12-31T23:59:59Z"
+    }
+  },
+  "consentId": "T651-official-source-parse-dashboard-2020-2021",
+  "attemptSha256": "604b76941ed3697fedc46e6cc729e02e1c4da579b0dc9ebea5dfe86db80c0b70",
+  "result": "terminal",
+  "reason": "release-window-not-reached-within-four-page-cap",
+  "startedAt": "2026-08-10T06:44:30Z",
+  "completedAt": "2026-08-10T06:45:20Z",
+  "repository": {
+    "id": 50623416,
+    "fullName": "parse-community/parse-dashboard",
+    "private": false,
+    "responseBytes": 7026,
+    "responseSha256": "5e1491b09c194c70073e9c3a37ebd4b9bbb705629c5c456c077955a42eb04eb2"
+  },
+  "releasePages": [
+    {
+      "page": 1,
+      "endpoint": "https://api.github.com/repos/parse-community/parse-dashboard/releases?per_page=100&page=1",
+      "status": 200,
+      "records": 100,
+      "responseBytes": 260641,
+      "responseSha256": "bddfc31c6d3851c777daa6c0e372bafda5c5edf51d0e340aaf52268ae66d94c4"
+    },
+    {
+      "page": 2,
+      "endpoint": "https://api.github.com/repos/parse-community/parse-dashboard/releases?per_page=100&page=2",
+      "status": 200,
+      "records": 100,
+      "responseBytes": 256062,
+      "responseSha256": "dbac5aa4e8fdd0e97abcce40dc4fa9e983ce223498a1d2ceb6955e38f687e49d"
+    },
+    {
+      "page": 3,
+      "endpoint": "https://api.github.com/repos/parse-community/parse-dashboard/releases?per_page=100&page=3",
+      "status": 200,
+      "records": 100,
+      "responseBytes": 271875,
+      "responseSha256": "fa7e58a61c12ba574120e606ecca47f266c7ee7d43698dc378a0f6136285d9df"
+    },
+    {
+      "page": 4,
+      "endpoint": "https://api.github.com/repos/parse-community/parse-dashboard/releases?per_page=100&page=4",
+      "status": 200,
+      "records": 100,
+      "responseBytes": 266498,
+      "responseSha256": "57760c6439ad373f0487488ffce7c8628cf13557635fc2ac9904a0f114865bae"
+    }
+  ],
+  "selection": {
+    "inspectedReleaseRecords": 400,
+    "eligibleStableReleasesInWindow": 0,
+    "oldestInspectedRelease": {
+      "id": 60910408,
+      "tag": "4.0.1",
+      "publishedAt": "2022-03-03T16:42:50Z",
+      "draft": false,
+      "prerelease": false
+    },
+    "additionalPageAdvertised": true,
+    "selectedRelease": null,
+    "fallbackUsed": false
+  },
+  "transaction": {
+    "attemptedRequests": 5,
+    "acceptedResponses": 5,
+    "releasePagesAccepted": 4,
+    "tagRefRequests": 0,
+    "commitRequests": 0,
+    "treeRequests": 0,
+    "archiveRequests": 0,
+    "redirectsObserved": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "acceptedDecodedBytes": 1062102,
+    "publishedSource": false,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "preservation": {
+    "attemptEvidence": "evidence/ingests/react-parse-dashboard/attempt.json",
+    "terminalEvidence": "evidence/ingests/react-parse-dashboard/terminal.json",
+    "rawAttemptResidue": ".versionless/stage/react-parse-dashboard-source/t651",
+    "rawAttemptResidueIsCanonical": false
+  },
+  "nonclaims": [
+    "The four-page cap does not establish that no eligible release exists outside the inspected pages.",
+    "No tag, commit, tree, archive, license, dependency closure, build, browser behavior, service-worker state, migration feasibility, pilot status, or production readiness is established.",
+    "This terminal acquisition record is reproducibility evidence, not certification or legal approval."
+  ]
+}

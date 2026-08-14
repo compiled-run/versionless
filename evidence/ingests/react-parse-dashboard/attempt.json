@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "versionless.official-source-attempt.v1",
+  "candidate": {
+    "repository": "parse-community/parse-dashboard",
+    "releaseWindow": {
+      "from": "2020-01-01T00:00:00Z",
+      "through": "2021-12-31T23:59:59Z"
+    }
+  },
+  "consentId": "T651-official-source-parse-dashboard-2020-2021",
+  "result": "started",
+  "selectionRule": "Chronologically earliest official release in the window with draft=false, prerelease=false, and a stable semantic-version tag; equal published_at values sort by ascending numeric release ID.",
+  "network": {
+    "method": "GET",
+    "credentials": "none",
+    "requestEncoding": "identity",
+    "redirectsAllowed": false,
+    "retriesAllowed": false,
+    "alternateHostsAllowed": false
+  },
+  "allowlist": [
+    "https://api.github.com/repos/parse-community/parse-dashboard",
+    "https://api.github.com/repos/parse-community/parse-dashboard/releases?per_page=100&page=1",
+    "https://api.github.com/repos/parse-community/parse-dashboard/releases?per_page=100&page=2",
+    "https://api.github.com/repos/parse-community/parse-dashboard/releases?per_page=100&page=3",
+    "https://api.github.com/repos/parse-community/parse-dashboard/releases?per_page=100&page=4",
+    "https://api.github.com/repos/parse-community/parse-dashboard/git/ref/tags/<selected-tag>",
+    "https://api.github.com/repos/parse-community/parse-dashboard/git/tags/<validated-tag-object-sha>",
+    "https://api.github.com/repos/parse-community/parse-dashboard/git/commits/<validated-commit-sha>",
+    "https://api.github.com/repos/parse-community/parse-dashboard/git/trees/<validated-tree-sha>?recursive=1",
+    "https://codeload.github.com/parse-community/parse-dashboard/tar.gz/<validated-commit-sha>"
+  ],
+  "caps": {
+    "maximumReleasePages": 4,
+    "maximumAcceptedResponses": 12,
+    "maximumApiResponseBytes": 16777216,
+    "maximumArchiveBytes": 134217728,
+    "maximumAggregateWireBytes": 314572800,
+    "maximumAggregateDecodedBytes": 314572800,
+    "requiredArchiveStreams": 2
+  },
+  "publication": {
+    "evidenceRoot": "evidence/ingests/react-parse-dashboard",
+    "cacheRoot": ".versionless/cache/react-parse-dashboard-source",
+    "transactional": true,
+    "readinessCredit": false
+  },
+  "nonclaims": [
+    "Starting this transaction establishes no release identity, license, source integrity, dependency closure, build, browser behavior, service-worker state, migration feasibility, pilot status, or production readiness.",
+    "The resulting evidence is reproducibility evidence, not certification or legal approval."
+  ]
+}

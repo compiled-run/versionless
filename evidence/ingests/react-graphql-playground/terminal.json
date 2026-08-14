@@ -1,0 +1,76 @@
+{
+  "schemaVersion": "versionless.official-source-terminal.v1",
+  "candidate": {
+    "repository": "graphql/graphql-playground",
+    "requestedReleaseWindow": {
+      "from": "2020-01-01T00:00:00Z",
+      "through": "2021-12-31T23:59:59Z"
+    }
+  },
+  "consentId": "T656-official-source-graphql-playground-2020-2021",
+  "attemptSha256": "3a19e2ac7b64ed360ee02ba5a249d4ea5c4261e60b65a2ac741a277404d48c72",
+  "result": "terminal",
+  "reason": "no-stable-release-in-required-window",
+  "startedAt": "2026-08-10T07:02:23Z",
+  "completedAt": "2026-08-10T07:02:23Z",
+  "repository": {
+    "id": 80016159,
+    "fullName": "graphql/graphql-playground",
+    "private": false,
+    "archived": true,
+    "disabled": false,
+    "responseBytes": 6677,
+    "responseSha256": "ef3339db1f5b096bb54f1f1ee419284dcc1dbde345afca360b2ad8d8ba037f99"
+  },
+  "releaseInventory": {
+    "endpoint": "https://api.github.com/repos/graphql/graphql-playground/releases?per_page=100&page=1",
+    "status": 200,
+    "records": 65,
+    "complete": true,
+    "paginationAdvertised": false,
+    "responseBytes": 1100046,
+    "responseSha256": "59a2de460ed9b6177b4435c176ceca7cb3c25b0f9d4238994e949bd9f1ac3a71",
+    "earliestRelease": {
+      "id": 7898518,
+      "tag": "v1.0.0",
+      "publishedAt": "2017-09-27T09:56:34Z"
+    },
+    "latestRelease": {
+      "id": 15733883,
+      "tag": "v1.8.10",
+      "publishedAt": "2019-02-23T13:55:00Z"
+    }
+  },
+  "selection": {
+    "eligibleStableReleasesInWindow": 0,
+    "selectedRelease": null,
+    "fallbackUsed": false
+  },
+  "transaction": {
+    "attemptedRequests": 2,
+    "acceptedResponses": 2,
+    "acceptedWireBytes": 1106723,
+    "acceptedDecodedBytes": 1106723,
+    "tagRefRequests": 0,
+    "commitRequests": 0,
+    "treeRequests": 0,
+    "archiveRequests": 0,
+    "redirectsObserved": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "publishedSource": false,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "preservation": {
+    "attemptEvidence": "evidence/ingests/react-graphql-playground/attempt.json",
+    "terminalEvidence": "evidence/ingests/react-graphql-playground/terminal.json",
+    "rawAttemptResidue": ".versionless/stage/react-graphql-playground-source/t656",
+    "rawAttemptResidueIsCanonical": false
+  },
+  "nonclaims": [
+    "No alternate tag, branch, commit, or release outside the precommitted window was selected.",
+    "No source archive, license, dependency closure, build, browser behavior, service-worker state, migration feasibility, pilot status, or production readiness is established.",
+    "This terminal acquisition record is reproducibility evidence, not certification or legal approval."
+  ]
+}

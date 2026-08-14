@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "versionless.official-source-attempt.v1",
+  "candidate": {
+    "repository": "sqlpad/sqlpad",
+    "requestedTag": "v5.5.0"
+  },
+  "consentId": "T658-official-source-sqlpad-v5-5-0",
+  "result": "started",
+  "network": {
+    "method": "GET",
+    "credentials": "none",
+    "requestEncoding": "identity",
+    "redirectsAllowed": false,
+    "retriesAllowed": false,
+    "alternateHostsAllowed": false
+  },
+  "allowlist": [
+    "https://api.github.com/repos/sqlpad/sqlpad",
+    "https://api.github.com/repos/sqlpad/sqlpad/git/ref/tags/v5.5.0",
+    "https://api.github.com/repos/sqlpad/sqlpad/git/tags/<validated-tag-object-sha>",
+    "https://api.github.com/repos/sqlpad/sqlpad/git/commits/<validated-commit-sha>",
+    "https://api.github.com/repos/sqlpad/sqlpad/git/trees/<validated-tree-sha>?recursive=1",
+    "https://codeload.github.com/sqlpad/sqlpad/tar.gz/<validated-commit-sha>"
+  ],
+  "caps": {
+    "maximumAcceptedResponses": 7,
+    "maximumApiResponseBytes": 16777216,
+    "maximumArchiveBytes": 134217728,
+    "maximumAggregateWireBytes": 314572800,
+    "maximumAggregateDecodedBytes": 314572800,
+    "requiredArchiveStreams": 2
+  },
+  "requiredRevisionWindow": {
+    "from": "2019-01-01T00:00:00Z",
+    "through": "2021-12-31T23:59:59Z"
+  },
+  "publication": {
+    "evidenceRoot": "evidence/ingests/react-sqlpad-v5-5-0",
+    "cacheRoot": ".versionless/cache/react-sqlpad-v5-5-0-source",
+    "transactional": true,
+    "readinessCredit": false
+  },
+  "nonclaims": [
+    "Starting this transaction establishes no tag identity, license, source integrity, dependency closure, framework, build, browser behavior, service-worker state, migration feasibility, pilot status, or production readiness.",
+    "The resulting evidence is reproducibility evidence, not certification or legal approval."
+  ]
+}

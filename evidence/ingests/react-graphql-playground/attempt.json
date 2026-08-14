@@ -1,0 +1,50 @@
+{
+  "schemaVersion": "versionless.official-source-attempt.v1",
+  "candidate": {
+    "repository": "graphql/graphql-playground",
+    "releaseWindow": {
+      "from": "2020-01-01T00:00:00Z",
+      "through": "2021-12-31T23:59:59Z"
+    }
+  },
+  "consentId": "T656-official-source-graphql-playground-2020-2021",
+  "result": "started",
+  "selectionRule": "From exactly one complete page, select the chronologically earliest official release in the window with draft=false, prerelease=false, and a stable semantic-version tag; equal published_at values sort by ascending numeric release ID.",
+  "network": {
+    "method": "GET",
+    "credentials": "none",
+    "requestEncoding": "identity",
+    "redirectsAllowed": false,
+    "retriesAllowed": false,
+    "alternateHostsAllowed": false
+  },
+  "allowlist": [
+    "https://api.github.com/repos/graphql/graphql-playground",
+    "https://api.github.com/repos/graphql/graphql-playground/releases?per_page=100&page=1",
+    "https://api.github.com/repos/graphql/graphql-playground/git/ref/tags/<selected-tag>",
+    "https://api.github.com/repos/graphql/graphql-playground/git/tags/<validated-tag-object-sha>",
+    "https://api.github.com/repos/graphql/graphql-playground/git/commits/<validated-commit-sha>",
+    "https://api.github.com/repos/graphql/graphql-playground/git/trees/<validated-tree-sha>?recursive=1",
+    "https://codeload.github.com/graphql/graphql-playground/tar.gz/<validated-commit-sha>"
+  ],
+  "caps": {
+    "maximumReleasePages": 1,
+    "maximumReleaseRecords": 100,
+    "maximumAcceptedResponses": 8,
+    "maximumApiResponseBytes": 16777216,
+    "maximumArchiveBytes": 134217728,
+    "maximumAggregateWireBytes": 314572800,
+    "maximumAggregateDecodedBytes": 314572800,
+    "requiredArchiveStreams": 2
+  },
+  "publication": {
+    "evidenceRoot": "evidence/ingests/react-graphql-playground",
+    "cacheRoot": ".versionless/cache/react-graphql-playground-source",
+    "transactional": true,
+    "readinessCredit": false
+  },
+  "nonclaims": [
+    "Starting this transaction establishes no release identity, license, source integrity, dependency closure, build, browser behavior, service-worker state, migration feasibility, pilot status, or production readiness.",
+    "The resulting evidence is reproducibility evidence, not certification or legal approval."
+  ]
+}
