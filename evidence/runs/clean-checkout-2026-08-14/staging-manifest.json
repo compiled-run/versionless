@@ -1,0 +1,105 @@
+{
+	"unit": "lrapr-t010/u1-clean-checkout-holdout-reexecution",
+	"measuredAt": "2026-08-14",
+	"cleanCheckout": {
+		"kind": "git-worktree-detached",
+		"headSha": "d5ef9eacf28a67cd6346d84039328c12042d728e",
+		"worktreeCleanAtCreation": true,
+		"note": "Created outside the main tree with `git worktree add --detach`. The main tree's .versionless is NOT the worktree's .versionless; every path below was staged explicitly and is recorded here."
+	},
+	"freezeRecompute": {
+		"method": "plain shell — `git rev-parse HEAD:<path>` per subtree, newline-terminated `<path> <tree-oid>` lines, piped to `shasum -a 256`, recomputed inside the clean worktree without loading any repository package",
+		"subtrees": [
+			{ "path": "packages/frameworks/react", "treeOid": "972ca80155bbc2a6eb3779943cd481b71d35e803" },
+			{
+				"path": "packages/frameworks/angular",
+				"treeOid": "4b6e2f4494d98582e4fe9b420c2b412059dc0720"
+			},
+			{
+				"path": "packages/core/src/migrations",
+				"treeOid": "5237ce5990af3623206bcd2301047a59c80731cf"
+			},
+			{ "path": "packages/core/src/bundlers", "treeOid": "cec2f0b56fbb7897f38d579be805e19982380ca6" },
+			{ "path": "packages/core/src/analysis", "treeOid": "262dc8b7528c92883c2300914eb7d42579fb856b" }
+		],
+		"recomputedComposite": "27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234",
+		"recordedComposite": "27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234",
+		"match": true
+	},
+	"offlineInstall": {
+		"command": "pnpm install --offline --frozen-lockfile --virtual-store-dir=<worktree>/.versionless/wt-virtual-store",
+		"exitCode": 0,
+		"durationMs": 369,
+		"resolved": 90,
+		"reused": 90,
+		"downloaded": 0,
+		"registryRequests": 0,
+		"storeDir": ".versionless/cache/pnpm-store (repo .npmrc, resolved through the staged cache symlink)",
+		"virtualStoreDeviation": "The repo .npmrc pins virtual-store-dir=.versionless/cache/pnpm-virtual-store, which the staged cache symlink would have pointed at the MAIN tree's shared virtual store. The clean run overrode it with a worktree-local --virtual-store-dir flag so the reproduction could not mutate the main tree's environment. No product file was edited; the store the packages came from is still the shared read-only content-addressed store.",
+		"whatTheInstallNeeded": "Nothing beyond the local content-addressed store: all 90 packages resolved as `reused`, 0 downloaded. No registry network was contacted."
+	},
+	"stagedInputs": {
+		"policy": "Immutable ingest/cache bytes and previously materialized lane outputs were staged into the clean worktree rather than re-downloaded. Every staged lane below was re-hashed in the clean worktree and compared against the digest the sealed evidence records.",
+		"cache": {
+			"path": ".versionless/cache",
+			"how": "symlink to the host's consented ingest cache (era Node runtimes, era npm/yarn globals, playwright chromium, pnpm store)",
+			"writable": false
+		},
+		"holdoutWorkLanes": {
+			"how": "APFS clone (`cp -Rc`) of the two holdout work trees, so the fresh runs write into the worktree's own copy and cannot mutate the main tree",
+			"react-cypress-rwa": { "bytesOnDisk": "3.1G" },
+			"angular-eshop-webspa": { "bytesOnDisk": "1.0G" }
+		},
+		"otherWorkLanes": {
+			"how": "symlinks to the main tree's 26 remaining .versionless/work lanes",
+			"why": "the repository gates (vp test --project node, trust:verify --offline) read materialized lane outputs for the whole portfolio; without them 40 tests and the trust gate fail on ENOENT rather than on any repository defect",
+			"recordedAs": "a staging requirement of this reproduction, not a passing result on its own"
+		}
+	},
+	"laneIdentityChecks": [
+		{
+			"lane": "react-cypress-rwa/baseline",
+			"stagedRoot": ".versionless/work/react-cypress-rwa/baseline/build-run1",
+			"files": 84,
+			"bytes": 17153967,
+			"recomputedInventoryDigest": "57cea24966c61963914da814e8348c970f11468127228c070def6c6472980028",
+			"sealedDigest": "57cea24966c61963914da814e8348c970f11468127228c070def6c6472980028",
+			"sealedIn": "evidence/runs/holdout-react-cypress-rwa/green-2026-08-13/receipt.md (baseline lane bundle digest, 84 SPA files)",
+			"match": true
+		},
+		{
+			"lane": "react-cypress-rwa/migrated",
+			"stagedRoot": ".versionless/work/react-cypress-rwa/target/build-vite",
+			"files": 18,
+			"bytes": 18376982,
+			"recomputedInventoryDigest": "13f71830eb0fc79b37c546c59f5437d3c3b381c7e87ed8ebd844f8d1f6a95897",
+			"sealedDigest": "13f71830eb0fc79b37c546c59f5437d3c3b381c7e87ed8ebd844f8d1f6a95897",
+			"sealedIn": "evidence/runs/holdout-react-cypress-rwa/green-2026-08-13/receipt.md (migrated lane bundle digest, 18 SPA files)",
+			"match": true
+		},
+		{
+			"lane": "angular-eshop-webspa/baseline",
+			"stagedRoot": ".versionless/work/angular-eshop-webspa/build-run1",
+			"files": 25,
+			"bytes": 1660416,
+			"recomputedInventoryDigest": "73e265d981f0a1cca5c339ecb331c28dd41572d43855bc392f28532290325158",
+			"sealedDigest": "unknown — the sealed eShop receipt records a served inventory digest for the MIGRATED lane only",
+			"match": "not-checkable-against-a-sealed-value",
+			"note": "Preserved as unknown rather than asserted. The era baseline lane's own byte identity is not published in the holdout receipt, so this digest is recorded here for future comparison and proves nothing on its own."
+		},
+		{
+			"lane": "angular-eshop-webspa/migrated",
+			"stagedRoot": ".versionless/work/angular-eshop-webspa/target/app/wwwroot",
+			"files": 25,
+			"bytes": 1524958,
+			"recomputedInventoryDigest": "3b859e5b508c1e3fada6dea2addc0d42120861a2364cb0cd13fa79187fc5ecad",
+			"sealedDigest": "3b859e5b508c1e3fada6dea2addc0d42120861a2364cb0cd13fa79187fc5ecad",
+			"sealedIn": "evidence/runs/holdout-angular-eshop-webspa/receipt.md (Witness served lane inventory over 25 files; the u4 build record's 25 files / 1524958 bytes also matches)",
+			"match": true
+		}
+	],
+	"whatThisEstablishesAndWhatItDoesNot": {
+		"establishes": "The bytes the fresh browser runs were driven against are the same bytes the sealed evidence records, recomputed in a clean checkout by an independent walk of the staged directories.",
+		"doesNotEstablish": "That those lane outputs were rebuilt from source in this unit. They were staged from this host's existing materialized lanes, not re-produced by re-running the era and migrated builds. A from-source rebuild of both lanes is a separate, larger reproduction step and is NOT claimed here."
+	}
+}

@@ -1,0 +1,94 @@
+{
+	"unit": "lrapr-t010/u1-clean-checkout-holdout-reexecution",
+	"holdout": "react-cypress-rwa",
+	"kind": "fresh-live-browser-re-execution-in-a-clean-checkout",
+	"whatThisCloses": "The T019 fidelity caveat, which recorded that the frozen-adapter re-run re-verified committed byte-identical measurements through the canonical parity gate rather than re-executing a live browser run. This unit re-executed the live run.",
+	"freeze": {
+		"compositeRecomputedInCleanCheckout": "27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234",
+		"reactSubtreeOid": "972ca80155bbc2a6eb3779943cd481b71d35e803",
+		"angularSubtreeOid": "4b6e2f4494d98582e4fe9b420c2b412059dc0720",
+		"adapterBytesChangedByThisUnit": 0
+	},
+	"driver": {
+		"command": "VERSIONLESS_NETWORK_MODE=offline node --experimental-strip-types packages/cli/src/fixture/react-cypress-rwa-calibrate-run.ts parity",
+		"whatItDoes": "drives the FULL 51-leg journey on both lanes twice each (baseline×2, migrated×2) through a real headless Chromium against the application's own live Express-over-lowdb backend on loopback, re-seeded from the frozen snapshot before every pass, and computes the verdict through the shared core gate that throws on any divergence",
+		"runFrom": "the clean worktree, against the staged lanes whose bytes re-hash to the sealed digests (see staging-manifest.json)"
+	},
+	"freshlyMeasured": {
+		"result": "parity",
+		"behaviorDigest": "963785426eb0c56e8d2f929b5462d35e9a7a8d123fa9d8d01a765c6cb35ebe26",
+		"behaviorParity": true,
+		"lanesAreDistinctBuilds": true,
+		"lanes": {
+			"baseline": {
+				"semanticDigest": "5c3285f1c402920f358bed9cacedaac07d3ed4800251ed264f20a3f0030d49cf",
+				"legs": { "ok": 51, "total": 51 },
+				"deterministic": true
+			},
+			"migrated": {
+				"semanticDigest": "54313316fef5eac37d098a207bd1f140805f68b126291e62a69f99a75981e6ed",
+				"legs": { "ok": 51, "total": 51 },
+				"deterministic": true
+			}
+		},
+		"perPassDigests": [
+			{
+				"lane": "baseline",
+				"pass": 1,
+				"semanticDigest": "5c3285f1c402920f358bed9cacedaac07d3ed4800251ed264f20a3f0030d49cf",
+				"behaviorDigest": "963785426eb0c56e8d2f929b5462d35e9a7a8d123fa9d8d01a765c6cb35ebe26"
+			},
+			{
+				"lane": "baseline",
+				"pass": 2,
+				"semanticDigest": "5c3285f1c402920f358bed9cacedaac07d3ed4800251ed264f20a3f0030d49cf",
+				"behaviorDigest": "963785426eb0c56e8d2f929b5462d35e9a7a8d123fa9d8d01a765c6cb35ebe26"
+			},
+			{
+				"lane": "migrated",
+				"pass": 1,
+				"semanticDigest": "54313316fef5eac37d098a207bd1f140805f68b126291e62a69f99a75981e6ed",
+				"behaviorDigest": "963785426eb0c56e8d2f929b5462d35e9a7a8d123fa9d8d01a765c6cb35ebe26"
+			},
+			{
+				"lane": "migrated",
+				"pass": 2,
+				"semanticDigest": "54313316fef5eac37d098a207bd1f140805f68b126291e62a69f99a75981e6ed",
+				"behaviorDigest": "963785426eb0c56e8d2f929b5462d35e9a7a8d123fa9d8d01a765c6cb35ebe26"
+			}
+		]
+	},
+	"sealed": {
+		"source": "evidence/runs/holdout-react-cypress-rwa/green-2026-08-13/receipt.md (canonical receipt 76f0b5bd…)",
+		"behaviorDigest": "963785426eb0c56e8d2f929b5462d35e9a7a8d123fa9d8d01a765c6cb35ebe26",
+		"baselineSemanticDigest": "5c3285f1c402920f358bed9cacedaac07d3ed4800251ed264f20a3f0030d49cf",
+		"migratedSemanticDigest": "54313316fef5eac37d098a207bd1f140805f68b126291e62a69f99a75981e6ed",
+		"legsPerLane": 51
+	},
+	"comparison": {
+		"behaviorDigestMatch": true,
+		"baselineSemanticDigestMatch": true,
+		"migratedSemanticDigestMatch": true,
+		"legsMatch": true,
+		"verdict": "reproduced — every digest the sealed receipt publishes was re-measured, not re-verified, and came back identical"
+	},
+	"deviationsAndFindings": [
+		{
+			"kind": "load-sensitivity",
+			"severity": "recorded-finding-not-a-reproduction-failure",
+			"whatHappened": "The FIRST fresh parity attempt in this unit was launched while the full `vp test --project node` suite was saturating the machine. It aborted with `Cypress RWA calibration pass-twice semantic digest drifted: migrated` — the migrated lane's two passes did not agree, so the core gate threw and wrote no evidence.",
+			"whatFollowed": "Re-executed alone on an otherwise idle machine, all four passes agree exactly and reproduce every sealed digest.",
+			"honestReading": "This is NOT evidence that the sealed digests are wrong, and it is NOT evidence that the migrated lane is nondeterministic in the sealed conditions. It IS evidence that this journey's pass-twice determinism is sensitive to machine contention, and that the gate correctly refused rather than papering over the divergence. The exact drifting field was not captured, because the gate throws before any measurement is written — so the diff surface of that first attempt is unknown and is recorded as unknown.",
+			"followUpForTheNextUnit": "If the 10-app portfolio rerun runs holdouts concurrently with other load, expect this class of refusal. Capturing the per-pass measurement on the throwing path would turn a bare refusal into a diagnosable one."
+		},
+		{
+			"kind": "staging",
+			"detail": "The lanes were staged from this host's already-materialized work trees, not rebuilt from source. Their bytes were re-hashed in the clean checkout and match the sealed lane digests exactly (57cea249… baseline / 13f71830… migrated), so the browser drove the recorded bytes. A from-source rebuild of both lanes is not claimed."
+		}
+	],
+	"nonClaims": [
+		"This reproduces the sealed measurement. It does not re-derive the holdout receipt, and no canonical receipt was republished by this unit.",
+		"The holdout remains counted in no lineage numerator.",
+		"Locality is process-scoped; nothing here establishes operating-system-wide isolation."
+	]
+}

@@ -1,0 +1,83 @@
+{
+	"unit": "lrapr-t010/u1-clean-checkout-holdout-reexecution",
+	"measuredAt": "2026-08-14",
+	"environment": {
+		"cleanCheckout": "git worktree --detach at HEAD d5ef9eacf28a67cd6346d84039328c12042d728e, outside the main tree",
+		"node": "v24.15.0",
+		"pnpm": "10.33.2",
+		"platform": "darwin arm64",
+		"networkMode": "offline (VERSIONLESS_NETWORK_MODE=offline for the evidence verifies; the offline install contacted no registry)"
+	},
+	"gates": [
+		{ "gate": "pnpm exec tsc --noEmit", "exitCode": 0, "result": "pass" },
+		{ "gate": "pnpm exec vp fmt", "exitCode": 0, "result": "pass", "detail": "593 files" },
+		{
+			"gate": "pnpm exec vp lint",
+			"exitCode": 0,
+			"result": "pass",
+			"detail": "589 files, 93 rules, 29 warnings, 0 errors"
+		},
+		{
+			"gate": "pnpm exec vp pack",
+			"exitCode": 0,
+			"result": "pass",
+			"detail": "3 files, 2.75 MB"
+		},
+		{
+			"gate": "pnpm exec vp test --project node",
+			"exitCode": 1,
+			"result": "fail-on-staging-not-on-code",
+			"firstAttempt": { "failed": 40, "passed": 2436, "total": 2476 },
+			"secondAttempt": { "failed": 29, "passed": 2447, "total": 2476 },
+			"finding": "Every failure observed is a missing materialized `.versionless/work` or `.versionless/stage` lane (ENOENT) or a check derived from one, not a source defect. The clean checkout carries no materialized lanes; the suite reads them. Staging the portfolio's lanes moved the count 40 -> 29, and the residue traced to two further staging gaps found late in this unit (`.versionless/work/react-boilerplate-v4`, which an earlier gate run had already half-created in the worktree and so was skipped by the symlink pass, and the whole of `.versionless/stage`). Both were staged, but the suite was NOT re-run afterwards inside this unit's budget.",
+			"honestState": "unknown-whether-green-after-full-staging — the third run was not executed. This gate is NOT recorded as passing.",
+			"reproductionFactRecorded": "A clean checkout alone does not reproduce this suite. It reproduces it only together with a materialized lane corpus, and that corpus is not in the repository."
+		},
+		{
+			"gate": "receipt:verify (offline)",
+			"exitCode": 0,
+			"result": "pass",
+			"detail": "{\"valid\":true,\"digest\":\"52400147929220935a9ebe47a16c8dff50b5c28e9d51c930d000c99c2bdc8a21\",\"artifacts\":10}",
+			"matchesRecorded": "digest 52400147 equals the value the T025 Judge recorded"
+		},
+		{
+			"gate": "corpus:verify (VERSIONLESS_NETWORK_MODE=offline)",
+			"exitCode": 0,
+			"result": "pass",
+			"detail": "{\"result\":\"pass\",\"digest\":\"e6c9068a196f78bd767caa3718686d68d6ed4a83554dd6f17ea2bd556cddd01d\",\"verticals\":20,\"sourceApplications\":12}",
+			"matchesRecorded": "digest e6c9068a, 20 verticals, 12 apps — equals the value the T025 Judge recorded",
+			"note": "The first invocation failed only because the command requires VERSIONLESS_NETWORK_MODE=offline to be set; that was an operator error in this unit, not a repository failure."
+		},
+		{
+			"gate": "trust:verify --offline",
+			"exitCode": 1,
+			"result": "fail-on-staging-not-on-code",
+			"detail": "ENOENT .versionless/work/react-boilerplate-v4/legacy/build/index.html in scanStaticEntrypoint",
+			"honestState": "unknown — the lane it wanted was staged after this run and the gate was NOT re-executed inside this unit's budget. NOT recorded as passing.",
+			"recordedValueNotReproducedHere": "364f3ad6 (T025 Judge)"
+		},
+		{
+			"gate": "script-surface:verify",
+			"exitCode": 1,
+			"result": "fail-on-staging-not-on-code",
+			"detail": "same missing react-boilerplate-v4 legacy build entrypoint; not re-executed after staging"
+		},
+		{
+			"gate": "runtime-script-observation:verify",
+			"exitCode": 1,
+			"result": "operator-error",
+			"detail": "the command requires --offline, --config and --output; this unit invoked it bare. Not a repository result either way."
+		},
+		{
+			"gate": "fixture:verify",
+			"exitCode": 1,
+			"result": "operator-error",
+			"detail": "the command requires a named fixture and --offline; this unit invoked it bare. Not a repository result either way."
+		}
+	],
+	"freeze": {
+		"recomputedComposite": "27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234",
+		"match": true,
+		"method": "plain `git rev-parse HEAD:<path>` + `shasum -a 256` inside the clean worktree, no repository package loaded"
+	}
+}

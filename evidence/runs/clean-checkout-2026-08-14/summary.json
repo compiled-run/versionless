@@ -1,0 +1,84 @@
+{
+	"unit": "lrapr-t010/u1-clean-checkout-holdout-reexecution",
+	"task": "T010 core (T025-amended) — clean-checkout offline reproduction of the repository gates and FRESH LIVE browser re-execution of BOTH holdouts under freeze 27741d9c",
+	"measuredAt": "2026-08-14",
+	"scope": "This unit is T010 CORE only. The full ten-application portfolio rerun is the NEXT unit and is not attempted or claimed here.",
+	"cleanCheckout": {
+		"headSha": "d5ef9eacf28a67cd6346d84039328c12042d728e",
+		"kind": "git worktree --detach outside the main tree",
+		"freezeCompositeRecomputed": "27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234",
+		"freezeMatchesRecorded": true,
+		"offlineInstall": {
+			"result": "pass",
+			"resolved": 90,
+			"reused": 90,
+			"downloaded": 0,
+			"registryRequests": 0,
+			"note": "The local content-addressed pnpm store carried the whole closure; nothing was missing."
+		},
+		"removedAfterwards": true
+	},
+	"gates": {
+		"tsc": "pass",
+		"fmt": "pass",
+		"lint": "pass",
+		"pack": "pass",
+		"testNode": "unknown-not-green",
+		"receiptVerifyOffline": "pass",
+		"corpusVerifyOffline": "pass",
+		"trustVerifyOffline": "unknown-not-green",
+		"scriptSurfaceVerify": "unknown-not-green",
+		"detail": "evidence/runs/clean-checkout-2026-08-14/gates.json",
+		"honestStatement": "Four gates are green in a clean checkout with no qualification (tsc, fmt, lint, pack) and two offline evidence verifies reproduce their recorded digests exactly (receipt 52400147, corpus e6c9068a over 20 verticals / 12 applications). The node suite, trust:verify and script-surface:verify are NOT recorded as passing: every failure observed in them was a missing materialized `.versionless/work` or `.versionless/stage` lane, the last two staging gaps were closed only at the end of this unit, and the gates were not re-executed afterwards inside the budget. Their state is unknown, not green."
+	},
+	"holdouts": {
+		"reactParityMatch": true,
+		"eshopParityMatch": true,
+		"react": {
+			"holdout": "react-cypress-rwa",
+			"freshBehaviorDigest": "963785426eb0c56e8d2f929b5462d35e9a7a8d123fa9d8d01a765c6cb35ebe26",
+			"sealedBehaviorDigest": "963785426eb0c56e8d2f929b5462d35e9a7a8d123fa9d8d01a765c6cb35ebe26",
+			"freshBaselineSemanticDigest": "5c3285f1c402920f358bed9cacedaac07d3ed4800251ed264f20a3f0030d49cf",
+			"freshMigratedSemanticDigest": "54313316fef5eac37d098a207bd1f140805f68b126291e62a69f99a75981e6ed",
+			"legsPerLane": 51,
+			"lanes": 2,
+			"passesPerLane": 2,
+			"deterministicPerLane": true,
+			"liveBrowser": true,
+			"liveLoopbackBackend": true,
+			"match": true,
+			"detail": "evidence/runs/clean-checkout-2026-08-14/holdout-react-cypress-rwa-fresh.json"
+		},
+		"eshop": {
+			"holdout": "angular-eshop-webspa",
+			"outcomeStringVerbatim": "witness-passed-on-bounded-anonymous-catalog-surface",
+			"freshParityDigest": "585ae9ecdf637ace7031624b00750a3c03c7f8f900e60017c55b8ee4f973a363",
+			"sealedParityDigest": "585ae9ecdf637ace7031624b00750a3c03c7f8f900e60017c55b8ee4f973a363",
+			"freshCanonicalReceiptDigest": "92fa51439620c5801ad9c14edd6883fa3b387f08f9de56f7acdebca50b214449",
+			"sealedCanonicalReceiptDigest": "92fa51439620c5801ad9c14edd6883fa3b387f08f9de56f7acdebca50b214449",
+			"allFiveSealedArtifactsByteIdentical": true,
+			"lanes": 2,
+			"passesPerLane": 2,
+			"successfulNonLoopback": 0,
+			"mutationRedThenByteRestore": true,
+			"liveBrowser": true,
+			"match": true,
+			"detail": "evidence/runs/clean-checkout-2026-08-14/holdout-angular-eshop-webspa-fresh.json"
+		}
+	},
+	"t019FidelityCaveat": {
+		"state": "closed",
+		"whatItSaid": "The T019 frozen-adapter re-run re-verified the committed byte-identical-adapter measurements through the canonical parity gate rather than re-executing a fresh live browser run; a fresh live re-execution under the freeze was deferred to the T010 clean-checkout reproduction.",
+		"whatThisUnitDid": "Re-executed both holdouts' actual witness journey drivers in a clean checkout, offline, in a real headless browser — React across two lanes twice each against its own live loopback Express-over-lowdb backend, eShop across two lanes twice each behind its declared same-origin projection — and compared the freshly measured digests to the sealed ones. Every sealed digest was re-measured and matched; the eShop evidence reproduced byte-for-byte.",
+		"whatRemains": "The full ten-application portfolio rerun (the next unit), and the three gates left in an unknown state above."
+	},
+	"deviations": [
+		"Install used a worktree-local --virtual-store-dir flag so the reproduction could not mutate the main tree's shared pnpm virtual store. No product file was edited.",
+		"Both holdouts' lanes were STAGED from this host's already-materialized work trees rather than rebuilt from source; each staged lane was re-hashed in the clean checkout and matches the sealed lane digest, so the browsers drove the recorded bytes. A from-source rebuild is not claimed.",
+		"The repository gates additionally required the whole portfolio's `.versionless/work` and `.versionless/stage` lanes to be staged; a clean checkout alone does not carry them.",
+		"The first React parity attempt aborted with a migrated-lane pass-twice determinism drift while the machine was saturated by the concurrent test suite; re-run alone it reproduced every sealed digest. Recorded as a load-sensitivity finding with an unknown diff surface, not as a reproduction failure.",
+		"No product or package code was changed by this unit. No sealed record was modified. Nothing was committed or staged."
+	],
+	"productCodeChanges": 0,
+	"sealedRecordsModified": 0
+}

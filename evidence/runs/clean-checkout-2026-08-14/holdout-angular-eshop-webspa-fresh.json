@@ -1,0 +1,90 @@
+{
+	"unit": "lrapr-t010/u1-clean-checkout-holdout-reexecution",
+	"holdout": "angular-eshop-webspa",
+	"kind": "fresh-live-browser-re-execution-in-a-clean-checkout",
+	"sealedOutcomeStringCarriedVerbatim": "witness-passed-on-bounded-anonymous-catalog-surface",
+	"boundaryIsPartOfTheClaim": "This reproduction is a reproduction of a pass on the anonymous catalog surface. It is not a pass on the application, and it may not be restated as a generic pass. Identity, basket, orders and campaigns are out of surface; the SignalR hub was never reached; text entry and drag were not tested.",
+	"freeze": {
+		"compositeRecomputedInCleanCheckout": "27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234",
+		"angularSubtreeOid": "4b6e2f4494d98582e4fe9b420c2b412059dc0720",
+		"reactSubtreeOid": "972ca80155bbc2a6eb3779943cd481b71d35e803",
+		"adapterBytesChangedByThisUnit": 0
+	},
+	"driver": {
+		"command": "VERSIONLESS_NETWORK_MODE=offline NPM_CONFIG_OFFLINE=true node --experimental-strip-types packages/cli/src/witness/angular-eshop-webspa-run.ts --run-twice",
+		"whatItDoes": "serves both lanes' production static bytes on a bounded loopback origin behind one declared same-origin projection identical for both lanes, drives the anonymous catalog journey twice per lane through a real headless Chromium, performs the seam mutation and byte-restore proof, and writes the Witness receipt",
+		"runFrom": "the clean worktree, against the staged migrated lane whose 25 files / 1524958 bytes re-hash to the sealed served-inventory digest 3b859e5b… (see staging-manifest.json)"
+	},
+	"freshlyMeasured": {
+		"result": "pass",
+		"parity": {
+			"behaviorDigest": "585ae9ecdf637ace7031624b00750a3c03c7f8f900e60017c55b8ee4f973a363",
+			"lanes": 2,
+			"passesPerLane": 2,
+			"semanticDigestsPerLane": {
+				"baseline": "6dc103f894d5675893cc3b7d21f8c9fd573c10c35e1313d00cda8979c98cfc0c",
+				"migrated": "ed7ee72271f55ea09cebf4b1ed0240faa40312a0e4488d404553980db4a9cec7"
+			},
+			"state": "measured-two-lane-normalized-behavior-parity"
+		},
+		"locality": { "mode": "offline", "successfulNonLoopback": 0, "osWideIsolation": false },
+		"mutation": { "seam": " products - Page ", "redThenByteIdenticalRestore": true },
+		"canonicalDigest": "92fa51439620c5801ad9c14edd6883fa3b387f08f9de56f7acdebca50b214449"
+	},
+	"sealed": {
+		"source": "evidence/runs/angular-eshop-webspa/ (Witness evidence sealed by lrapr-t024/u6, published under holdout ledger fb921b46…)",
+		"parityBehaviorDigest": "585ae9ecdf637ace7031624b00750a3c03c7f8f900e60017c55b8ee4f973a363",
+		"canonicalDigest": "92fa51439620c5801ad9c14edd6883fa3b387f08f9de56f7acdebca50b214449"
+	},
+	"comparison": {
+		"parityBehaviorDigestMatch": true,
+		"baselineSemanticDigestMatch": true,
+		"migratedSemanticDigestMatch": true,
+		"canonicalReceiptDigestMatch": true,
+		"artifactBytesIdentical": [
+			{
+				"file": "receipt.json",
+				"sha256": "e6835d8af995c197d24ebd2ea7fd22ae4ca3e5b04cbab0430b5c6bc3a3bf2d7b",
+				"identical": true
+			},
+			{
+				"file": "receipt.md",
+				"sha256": "cf16a78c4867033792fe4a6fe5a048f7f791bea6dad97cf2af189110ec14d354",
+				"identical": true
+			},
+			{
+				"file": "witness-journeys.json",
+				"sha256": "2e4700e1a05b3f6884162c8999c2a0969957469b34e6c5b4d20908975f8718c0",
+				"identical": true
+			},
+			{
+				"file": "witness-mutation.json",
+				"sha256": "a7a63482e4ff72e895b3ea775464d2c0e8a1f29f699e8e2aeec7bab445c519b1",
+				"identical": true
+			},
+			{
+				"file": "witness-projection-ledger.json",
+				"sha256": "581508622ee998afeac570652329528d65d207225a8df64ab294a238b66731eb",
+				"identical": true
+			}
+		],
+		"verdict": "reproduced byte-for-byte — the freshly measured Witness receipt and all four sibling evidence artifacts are byte-identical to the sealed ones, and their hashes equal the values the published holdout ledger entry names",
+		"strengthOfThisResult": "Stronger than a digest match: the whole receipt, including every per-leg record, re-serializes to the same bytes from a clean checkout on a fresh browser run."
+	},
+	"deviationsAndFindings": [
+		{
+			"kind": "operator-error-not-a-repository-finding",
+			"detail": "The first invocation refused with `eShop WebSPA Witness requires dual offline controls` because only VERSIONLESS_NETWORK_MODE=offline was set; the driver also requires NPM_CONFIG_OFFLINE=true. The refusal is the driver working as designed. Re-invoked with both controls, it ran."
+		},
+		{
+			"kind": "staging",
+			"detail": "The two lanes were staged from this host's already-materialized work trees, not rebuilt from source. The migrated lane's bytes re-hash to the sealed served-inventory digest, so the browser drove the recorded bytes. The era baseline lane's own byte identity is not published in the sealed receipt, so it is recorded in the staging manifest as unknown rather than asserted."
+		}
+	],
+	"nonClaims": [
+		"A pass on a named surface is not a pass on an application.",
+		"The API is a frozen synthetic same-origin loopback projection authored for this fixture, not the eShopOnContainers .NET microservices.",
+		"Counted in no lineage numerator.",
+		"Locality is process-scoped and does not establish operating-system-wide isolation."
+	]
+}
