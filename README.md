@@ -2,11 +2,25 @@
 
 Behavior-preserving legacy migration toolkit — frees apps from framework-version lock-in.
 
-Versionless migrates legacy frontend estates (React, Angular, and beyond) to modern stacks with **proven behavioral parity**: semantic analysis for ingestion, deterministic transforms where possible, and a characterization oracle that verifies the migrated app behaves identically to the original.
+Versionless migrates pinned legacy React- and Angular-lineage applications to modern stacks under a characterization oracle: semantic analysis for ingestion, deterministic transforms where possible, and a direct-Witness browser proof that the migrated application behaves the same as the original **on the cells this repository has actually counted green**.
 
 Part of the same family as [frameless](https://github.com/jacksm5pro) and markless.
 
-> **Status: active evidence program.** The current workflow supports two pinned real-source fixtures and refuses all unproved shapes. These fixtures are not the full React-and-Angular corpus outcome.
+> **Status: active evidence program.** Support is exactly the set of counted green cells derived in the generated matrix — nothing wider. Cells outside it are unsupported, not-tested, or unknown, and they are named as such in the same documents as the successes. This is evidence, not certification: no cell is warranted, no SLSA level is claimed, signer authenticity is not established, and locality is process-scoped rather than OS-wide isolation.
+
+## Enterprise evidence report
+
+One machine artifact and one human document are generated from the canonical receipts and carry the whole picture — sources and rights, tool and target versions, hashes, commands, locality, journeys, results, deviations, unsupported and unknown states, the supported/unsupported matrix, and the claims-and-non-claims one-pager:
+
+- [`evidence/trust/current/enterprise-report.json`](evidence/trust/current/enterprise-report.json) — the machine artifact
+- [`evidence/trust/current/enterprise-report.md`](evidence/trust/current/enterprise-report.md) — the human document
+
+```sh
+VERSIONLESS_NETWORK_MODE=offline node --experimental-strip-types packages/cli/src/cli.ts report:enterprise --offline
+VERSIONLESS_NETWORK_MODE=offline node --experimental-strip-types packages/cli/src/cli.ts report:enterprise --offline --verify-only
+```
+
+Both files are **derived, never authored**. Every green cell is filtered out of the Judge counting ledger the corpus derived and cross-checked against that corpus numerator and denominator, so a cell edited into either file fails verification instead of changing a claim. The two published holdouts are quoted with the exact outcome strings their receipts carry and are counted in no lineage numerator, the recorded REDs are retained as permanent falsification history, and the declared Angular 16 pre-Ivy support boundary is published with its prevalence and population statement beside the successes.
 
 ## React Boilerplate v4 proof
 
@@ -150,9 +164,11 @@ and rejects altered projections, classifications, browser errors, detector
 truth, assurance boundaries, or normalized-run results—even if enclosing trust
 hashes have been recomputed.
 
-The read-only corpus verifier independently checks all nine canonical receipts,
-their linked artifacts, and exact aggregate membership before grouping those
-verticals into two immutable source applications:
+The read-only corpus verifier independently checks every canonical receipt,
+its linked artifacts, and exact aggregate membership before grouping the
+verified verticals into their immutable source applications. The vertical and
+application counts are derived by that verifier and published in
+`evidence/trust/current/corpus-conformance.json` rather than restated here:
 
 ```sh
 VERSIONLESS_NETWORK_MODE=offline NPM_CONFIG_OFFLINE=true pnpm run corpus:verify

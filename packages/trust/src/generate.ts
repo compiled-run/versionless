@@ -102,6 +102,13 @@ import {
 	type RuntimeScriptObservation,
 	verifyRuntimeScriptObservationEvidence,
 } from '../../core/src/enterprise/runtime-script-observation.ts';
+import {
+	assertEnterpriseSurfaceHonesty,
+	deriveEnterpriseSurfaces,
+	ENTERPRISE_REPORT_JSON,
+	ENTERPRISE_REPORT_MARKDOWN,
+	type EnterpriseSurfaceInputs,
+} from './enterprise.ts';
 import { adapterFreezeRecord } from './freeze.ts';
 import { lockPackages, osvRequest } from './ingest.ts';
 import { renderTrustReport } from './render.ts';
@@ -2078,5 +2085,38 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 		capabilityCoverage,
 	});
 	await writeFile(path.join(output, 'report.md'), report);
+	assertEnterpriseSurfaceHonesty(report, 'report.md');
+	await writeEnterpriseSurfaces({
+		root,
+		output,
+		manifest: trustManifest,
+		conformance,
+		capabilityCoverage,
+		matrix: corpus,
+		controls,
+		licenses,
+		freeze,
+		scriptSurface: scriptSurface as unknown as Record<string, unknown>,
+		runtimeScriptObservation: runtimeScriptObservation as unknown as Record<string, unknown>,
+	});
 	return trustManifest;
+}
+
+/**
+ * Emits the two enterprise surfaces beside the trust package.
+ *
+ * They are deliberately derived *after* the manifest rather than folded into
+ * the deterministic core: the report quotes the manifest's own digests, which a
+ * core member cannot do without hashing itself. The binding is stronger than a
+ * hash anyway — verification re-derives both files from the same canonical
+ * receipts and compares them byte for byte, so a hand-edited cell fails even if
+ * every enclosing hash were recomputed to match it.
+ */
+export async function writeEnterpriseSurfaces(
+	inputs: EnterpriseSurfaceInputs,
+): Promise<{ json: unknown; markdown: string }> {
+	const { report, markdown } = await deriveEnterpriseSurfaces(inputs);
+	await writeJson(path.join(inputs.output, ENTERPRISE_REPORT_JSON), report);
+	await writeFile(path.join(inputs.output, ENTERPRISE_REPORT_MARKDOWN), markdown);
+	return { json: report, markdown };
 }

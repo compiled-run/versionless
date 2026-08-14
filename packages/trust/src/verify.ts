@@ -8,6 +8,10 @@ import {
 	type CorpusConformance,
 	verifyCorpusConformanceDigest,
 } from '../../core/src/corpus/conformance.ts';
+import {
+	assertEnterpriseSurfaceHonesty,
+	verifyEnterpriseSurfaces,
+} from './enterprise.ts';
 import { compareUtf16CodeUnits } from '../../core/src/bundlers/vite8-adapter.ts';
 import { assertSyntheticEvidence } from '../../core/src/policy/payment-signals.ts';
 import { canonicalize, sha256 } from '../../core/src/receipts/canonicalize.ts';
@@ -1493,6 +1497,24 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 				))
 	)
 		throw new Error('Derived Markdown does not match canonical transaction state');
+	// The human trust report is held to the same claim vocabulary as the
+	// enterprise surfaces: blanket-support language, a generically restated
+	// bounded holdout, a rounded prevalence or a dropped population statement
+	// are refused here rather than left to a reviewer to notice.
+	assertEnterpriseSurfaceHonesty(report, 'report.md');
+	await verifyEnterpriseSurfaces({
+		root,
+		output,
+		manifest,
+		conformance: emittedConformance,
+		capabilityCoverage: buildCapabilityCoverage(),
+		matrix,
+		controls,
+		licenses,
+		freeze: asRecord(emittedFreeze, 'adapter freeze record'),
+		scriptSurface: emittedScriptSurface,
+		runtimeScriptObservation: runtimeObservation as unknown as Record<string, unknown>,
+	});
 	if (options.compareDir) {
 		const comparison = parseManifest(
 			await readJson(path.join(path.resolve(root, options.compareDir), 'manifest.json')),

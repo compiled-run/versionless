@@ -1,8 +1,8 @@
 # Versionless project trust package
 
-- Canonical SHA-256: `364f3ad6f18f689d0ead67f13756b680ed3d273af3496cf33859812290912b0b`
+- Canonical SHA-256: `213b43e88b51d2bb998c53923b31a24d0bbf49a5af74cddd89f23bf97e1497af`
 - Deterministic core: `656e861a54c4a06bda94e324dbee756f241b11d4a1128d48b9b8fa307b459b45`
-- Generated observation: `2026-08-14T08:48:02.055Z`
+- Generated observation: `2026-08-14T09:23:46.262Z`
 - Vulnerability input freshness: **stale** (seven-day maximum age)
 - Integrity: **hash-only; authenticity is not established**
 - Assurance: **this package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation**
@@ -134,7 +134,7 @@ Proven on exactly one application and therefore **experimental / out-of-matrix**
 - angular: `http-client-call-surface`
 - angular: `package-exports-republished-subpath`
 
-Both Angular holdouts were ingested under the mandatory license-text-at-pin pre-screen and run. pigallery2 1.7.0 is **RED**, at the declared pre-Ivy-only-dependency support boundary above. The eShopOnContainers WebSPA was **RED at install** under the superseded `f1a63359` composite; after the authorized T024 reopen its migrated production build completes twice byte-identically, and the T024 u6 Witness — run after the re-freeze, against the bytes that build emitted — is green across two lanes observed twice each on one behaviour parity digest, with a mutation-red and byte-restore proof and zero successful non-loopback requests. That Witness covers the **anonymous catalog surface only**: identity, basket, orders and campaigns are out of surface, the SignalR hub was never reached, and text entry and drag were not tested, so the entry is published as a **pass on a bounded surface** and never as a generic pass. Both Angular-subtree reopens are recorded in the freeze's supersession record, and every capability either of them produced is in the experimental list above.
+Both Angular holdouts were ingested under the mandatory license-text-at-pin pre-screen and run. pigallery2 1.7.0 is **RED**, at the declared pre-Ivy-only-dependency support boundary above. The eShopOnContainers WebSPA was **RED at install** under the superseded `f1a63359` composite; after the authorized T024 reopen its migrated production build completes twice byte-identically, and the T024 u6 Witness — run after the re-freeze, against the bytes that build emitted — is green across two lanes observed twice each on one behaviour parity digest, with a mutation-red and byte-restore proof and zero successful non-loopback requests. That Witness covers the **anonymous catalog surface only**: identity, basket, orders and campaigns are out of surface, the SignalR hub was never reached, and text entry and drag were not tested, so the entry is published under its exact receipt outcome `witness-passed-on-bounded-anonymous-catalog-surface` — a **pass on a bounded surface** — and never as a generic pass. Both Angular-subtree reopens are recorded in the freeze's supersession record, and every capability either of them produced is in the experimental list above.
 
 ## Capability-coverage map
 

@@ -3,6 +3,7 @@ import { verifyReceipt } from '../../core/src/receipts/verify.ts';
 import { analyzeCorpusConformance } from '../../core/src/corpus/conformance.ts';
 import { verifyScriptSurface } from '../../core/src/enterprise/script-surface.ts';
 import { verifyRuntimeScriptObservation } from './enterprise/runtime-script-observation-run.ts';
+import { runEnterpriseReport } from './enterprise/enterprise-report-run.ts';
 import { generateTrustPackage } from '../../trust/src/generate.ts';
 import { ingestTrustInputs } from '../../trust/src/ingest.ts';
 import { verifyTrustPackage } from '../../trust/src/verify.ts';
@@ -356,6 +357,21 @@ try {
 				}),
 			),
 		);
+	} else if (command === 'report:enterprise') {
+		// The operator-facing flow an enterprise reviewer is handed: it verifies the
+		// trust package first, then re-derives the one machine artifact and the one
+		// human document from the same canonical receipts. `--verify-only` refuses
+		// to write, so a reviewer can check the published pair without touching it.
+		const outputDir = valueAfter('--output') ?? 'evidence/trust/current';
+		if (!args.includes('--offline'))
+			throw new Error('report:enterprise requires --offline');
+		const verifyOnly = args.includes('--verify-only');
+		const result = await runEnterpriseReport({
+			outputDir,
+			verifyOnly,
+			environment: { ...process.env, VERSIONLESS_NETWORK_MODE: 'offline' },
+		});
+		console.log(JSON.stringify(result));
 	} else if (command === 'trust:verify') {
 		const outputDir = args.find((arg) => !arg.startsWith('--'));
 		console.log(

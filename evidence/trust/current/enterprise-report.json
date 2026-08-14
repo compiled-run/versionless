@@ -1,0 +1,1952 @@
+{
+  "schemaVersion": "versionless.enterprise-report.v1",
+  "purpose": "One machine artifact for an enterprise reviewer, derived entirely from canonical receipts the trust package already verified. It states what was proven, on which sources, with which tools, under which commands, and — in the same document — what is unsupported, unknown, or deliberately not claimed.",
+  "certification": {
+    "state": "not-certified",
+    "assurance": "This package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation.",
+    "integrity": "hash-only; authenticity is not established",
+    "slsaLevel": "not-claimed"
+  },
+  "derivedFrom": {
+    "trustManifestCanonicalDigest": "213b43e88b51d2bb998c53923b31a24d0bbf49a5af74cddd89f23bf97e1497af",
+    "deterministicCoreDigest": "656e861a54c4a06bda94e324dbee756f241b11d4a1128d48b9b8fa307b459b45",
+    "corpusConformanceDigest": "e6c9068a196f78bd767caa3718686d68d6ed4a83554dd6f17ea2bd556cddd01d",
+    "adapterFreezeComposite": "27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234",
+    "adapterFreezeCommit": "0ecd410691df10fbc68c9ddcd012dafa86aba536"
+  },
+  "sourcesAndRights": [
+    {
+      "application": "react-boilerplate",
+      "repository": "https://github.com/react-boilerplate/react-boilerplate",
+      "revisionRecordedIn": {
+        "path": "corpus-conformance.json",
+        "field": "applications[].source.revision for react-boilerplate"
+      },
+      "archiveSha256": "d6ca60a3c8881ae2be26a8d04e00da4d922a6653f8512f2b12ac55d48f2ce2d5",
+      "license": "MIT",
+      "licenseSha256": "e773e6b91c13f55310668e15ce178a2fcf779ff39dbcc0b910b4b5f1ecb17acb",
+      "verticals": [
+        "react-boilerplate-v4",
+        "react-boilerplate-v4-node24",
+        "react-boilerplate-v4-vite8",
+        "react-boilerplate-v4-data-flow",
+        "react-boilerplate-v4-composed"
+      ],
+      "rights": "Ingested at a pin under recorded consent, with the license text hashed at that pin. No redistribution right beyond the upstream license is claimed."
+    },
+    {
+      "application": "angular-phonecat",
+      "repository": "https://github.com/angular/angular-phonecat",
+      "revisionRecordedIn": {
+        "path": "corpus-conformance.json",
+        "field": "applications[].source.revision for angular-phonecat"
+      },
+      "archiveSha256": "c7624a333ddfaa31f51385e72b8966162171e798ec63a1b991ec4bde26339eb1",
+      "license": "MIT",
+      "licenseSha256": "bab10b0aa126d9fdb81380141fc8845a74024d7c9977e5636afd06fe5edce455",
+      "verticals": [
+        "angular-phonecat",
+        "angular-phonecat-route-resolve",
+        "angular-phonecat-composed",
+        "angular-phonecat-vite8"
+      ],
+      "rights": "Ingested at a pin under recorded consent, with the license text hashed at that pin. No redistribution right beyond the upstream license is claimed."
+    },
+    {
+      "application": "angular-realworld",
+      "repository": "https://github.com/realworld-apps/angular-realworld-example-app",
+      "revisionRecordedIn": {
+        "path": "corpus-conformance.json",
+        "field": "applications[].source.revision for angular-realworld"
+      },
+      "archiveSha256": "b834410ded0baae07950ba680d2ee82a5d7b797ee01bd86d9a901d3e696544a2",
+      "license": "MIT",
+      "licenseSha256": "dd241fc76d00987f9a025558ec977a2df69875320ab0379bd8f5865ad1033c7b",
+      "verticals": [
+        "angular-realworld-v15-to-v16"
+      ],
+      "rights": "Ingested at a pin under recorded consent, with the license text hashed at that pin. No redistribution right beyond the upstream license is claimed."
+    },
+    {
+      "application": "killedbygoogle",
+      "repository": "https://github.com/codyogden/killedbygoogle",
+      "revisionRecordedIn": {
+        "path": "corpus-conformance.json",
+        "field": "applications[].source.revision for killedbygoogle"
+      },
+      "archiveSha256": "c28878d0f65b56aa595763c852477fb0c1e3533e5c7f7ea9daa2be16f102368d",
+      "license": "MIT",
+      "licenseSha256": "not-recorded-in-the-corpus-record",
+      "verticals": [
+        "next-killedbygoogle-derived-state-to-memo",
+        "next-killedbygoogle-v3-0-0"
+      ],
+      "rights": "Ingested at a pin under recorded consent, with the license text hashed at that pin. No redistribution right beyond the upstream license is claimed."
+    },
+    {
+      "application": "papercups",
+      "repository": "https://github.com/papercups-io/papercups",
+      "revisionRecordedIn": {
+        "path": "corpus-conformance.json",
+        "field": "applications[].source.revision for papercups"
+      },
+      "archiveSha256": "f8a6576c0399e1eca5e1936a9e5e5b311798cccf3cb7c6fcce0cecbf8b46ea8f",
+      "license": "MIT",
+      "licenseSha256": "cd94b1bf29eec689bd048f0f202c038d2d3033d80102a7ff47ddf65d2890291c",
+      "verticals": [
+        "react-papercups-v1-0-0"
+      ],
+      "rights": "Ingested at a pin under recorded consent, with the license text hashed at that pin. No redistribution right beyond the upstream license is claimed."
+    },
+    {
+      "application": "react-hospitalrun",
+      "repository": "https://github.com/HospitalRun/hospitalrun-frontend",
+      "revisionRecordedIn": {
+        "path": "corpus-conformance.json",
+        "field": "applications[].source.revision for react-hospitalrun"
+      },
+      "archiveSha256": "c9d07e8ee7ffaa174dff597dcecbd00c8eb0b6d525bb7a3f9a7d48e6a46ec306",
+      "license": "MIT",
+      "licenseSha256": "460148c79f31dd2a352b401068e0ae512a807cf643edac512eb22cf3342027a3",
+      "verticals": [
+        "react-hospitalrun"
+      ],
+      "rights": "Ingested at a pin under recorded consent, with the license text hashed at that pin. No redistribution right beyond the upstream license is claimed."
+    },
+    {
+      "application": "angular-factoriolab",
+      "repository": "https://github.com/factoriolab/factoriolab",
+      "revisionRecordedIn": {
+        "path": "corpus-conformance.json",
+        "field": "applications[].source.revision for angular-factoriolab"
+      },
+      "archiveSha256": "11f2ce939f4be04b11e77b7f12e13d7449bf944b9bfefbeca237c46dea12f7ed",
+      "license": "MIT",
+      "licenseSha256": "d2556dbacc2d52cdda0e8b3ebd15b0492d34028074768b3683815540d17e71af",
+      "verticals": [
+        "angular-factoriolab"
+      ],
+      "rights": "Ingested at a pin under recorded consent, with the license text hashed at that pin. No redistribution right beyond the upstream license is claimed."
+    },
+    {
+      "application": "angular-jira-clone",
+      "repository": "https://github.com/trungvose/jira-clone-angular",
+      "revisionRecordedIn": {
+        "path": "corpus-conformance.json",
+        "field": "applications[].source.revision for angular-jira-clone"
+      },
+      "archiveSha256": "d913ad5d4686b6a236799166c7c781f624b3901a1826304e00c36eca82896bc5",
+      "license": "MIT",
+      "licenseSha256": "c45956b16a34a9e0c74a93163f497174e373623333e47ce3251b4d0107120b09",
+      "verticals": [
+        "angular-jira-clone"
+      ],
+      "rights": "Ingested at a pin under recorded consent, with the license text hashed at that pin. No redistribution right beyond the upstream license is claimed."
+    },
+    {
+      "application": "react-memos",
+      "repository": "https://github.com/usememos/memos",
+      "revisionRecordedIn": {
+        "path": "corpus-conformance.json",
+        "field": "applications[].source.revision for react-memos"
+      },
+      "archiveSha256": "184834df7e2ea0272d21b4b0bfd7366986bc0aded740442aac91ca58d270f391",
+      "license": "MIT",
+      "licenseSha256": "not-recorded-in-the-corpus-record",
+      "verticals": [
+        "react-memos-v0-1-3"
+      ],
+      "rights": "Ingested at a pin under recorded consent, with the license text hashed at that pin. No redistribution right beyond the upstream license is claimed."
+    },
+    {
+      "application": "react-linkfree",
+      "repository": "https://github.com/EddieHubCommunity/BioDrop",
+      "revisionRecordedIn": {
+        "path": "corpus-conformance.json",
+        "field": "applications[].source.revision for react-linkfree"
+      },
+      "archiveSha256": "7cef1a1c2ae251e3738d8b8a6c5fe94b118bf13d3a5bae7b522b8db9c1c334ef",
+      "license": "MIT",
+      "licenseSha256": "3b5b430ae7e6151220591e69a8a056482a13d36518357c025619cf0d60be50bf",
+      "verticals": [
+        "react-linkfree-v0-72-0"
+      ],
+      "rights": "Ingested at a pin under recorded consent, with the license text hashed at that pin. No redistribution right beyond the upstream license is claimed."
+    },
+    {
+      "application": "angular-tiny-translator",
+      "repository": "https://github.com/martinroob/tiny-translator",
+      "revisionRecordedIn": {
+        "path": "corpus-conformance.json",
+        "field": "applications[].source.revision for angular-tiny-translator"
+      },
+      "archiveSha256": "424209463bcccca1714d520e2f68c55d54b204c69367bbeefcdf930d01d3ac18",
+      "license": "MIT",
+      "licenseSha256": "b33e2f180e3d22c42c1511895a448e9aafb848a51a43a9cfae163f19f7288fb9",
+      "verticals": [
+        "angular-tiny-translator-v0-12-0"
+      ],
+      "rights": "Ingested at a pin under recorded consent, with the license text hashed at that pin. No redistribution right beyond the upstream license is claimed."
+    },
+    {
+      "application": "angular-super-productivity",
+      "repository": "https://github.com/super-productivity/super-productivity",
+      "revisionRecordedIn": {
+        "path": "corpus-conformance.json",
+        "field": "applications[].source.revision for angular-super-productivity"
+      },
+      "archiveSha256": "dead2f5334350459f930f5d5235322e5af38e577c79557d3370e497bf15f24eb",
+      "license": "MIT",
+      "licenseSha256": "2e279de19632b5694d24b0ac06fd5b837ec487bf821302d9ce195379850a5fcb",
+      "verticals": [
+        "angular-super-productivity-v2-13-15"
+      ],
+      "rights": "Ingested at a pin under recorded consent, with the license text hashed at that pin. No redistribution right beyond the upstream license is claimed."
+    }
+  ],
+  "toolAndTargetVersions": {
+    "tool": {
+      "generator": "versionless-local-trust-generator",
+      "adapterFreezeCommit": "0ecd410691df10fbc68c9ddcd012dafa86aba536",
+      "adapterFreezeComposite": "27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234",
+      "networkMode": "offline"
+    },
+    "cells": [
+      {
+        "cell": "react-boilerplate",
+        "vertical": "react-boilerplate-v4",
+        "lineage": "react",
+        "runtime": "Node 16.20.2 EOL compatibility sandbox",
+        "bundler": "webpack 4.30.0",
+        "migrationTrack": "not-recorded-in-the-corpus-record"
+      },
+      {
+        "cell": "react-boilerplate",
+        "vertical": "react-boilerplate-v4-node24",
+        "lineage": "react",
+        "runtime": "Node 24.15.0 darwin-arm64",
+        "bundler": "webpack 4.47.0",
+        "migrationTrack": "not-recorded-in-the-corpus-record"
+      },
+      {
+        "cell": "react-boilerplate",
+        "vertical": "react-boilerplate-v4-vite8",
+        "lineage": "react",
+        "runtime": "Node 24.15.0 darwin-arm64",
+        "bundler": "Vite 8.0.16",
+        "migrationTrack": "not-recorded-in-the-corpus-record"
+      },
+      {
+        "cell": "react-boilerplate",
+        "vertical": "react-boilerplate-v4-data-flow",
+        "lineage": "react",
+        "runtime": "Node 24.15.0 darwin-arm64",
+        "bundler": "Vite 8.0.16",
+        "migrationTrack": "not-recorded-in-the-corpus-record"
+      },
+      {
+        "cell": "react-boilerplate",
+        "vertical": "react-boilerplate-v4-composed",
+        "lineage": "react",
+        "runtime": "Node 16.20.2 legacy / Node 24.15.0 target",
+        "bundler": "webpack 4.30.0 / Vite 8.0.16",
+        "migrationTrack": "not-recorded-in-the-corpus-record"
+      },
+      {
+        "cell": "react-papercups-v1-0-0",
+        "vertical": "react-papercups-v1-0-0",
+        "lineage": "react",
+        "runtime": "node-16.20.2-to-node-24.15.0",
+        "bundler": "webpack-4.42.0-to-vite-8.0.16",
+        "migrationTrack": "create-react-app-3.4.1-to-vite8-build"
+      },
+      {
+        "cell": "react-hospitalrun",
+        "vertical": "react-hospitalrun",
+        "lineage": "react",
+        "runtime": "node-12.14.1-to-node-24.15.0",
+        "bundler": "webpack-4.42.0-to-vite-8.0.16",
+        "migrationTrack": "create-react-app-3.4.4-to-vite8-build-and-boot"
+      },
+      {
+        "cell": "react-memos-v0-1-3",
+        "vertical": "react-memos-v0-1-3",
+        "lineage": "react",
+        "runtime": "node-16.20.2-to-node-24.15.0",
+        "bundler": "vite-2.9.5-to-vite-8.0.16",
+        "migrationTrack": "production-readiness-direct-witness-old-vite-origin-to-vite8"
+      },
+      {
+        "cell": "next-killedbygoogle-v3-0-0",
+        "vertical": "next-killedbygoogle-v3-0-0",
+        "lineage": "react",
+        "runtime": "node-16.20.2",
+        "bundler": "next-12.0.10-vendored-webpack-5-to-vite-8.0.16-rolldown",
+        "migrationTrack": "production-readiness-direct-witness-next12-static-export-to-vite8-client-build"
+      },
+      {
+        "cell": "react-linkfree-v0-72-0",
+        "vertical": "react-linkfree-v0-72-0",
+        "lineage": "react",
+        "runtime": "node-16.20.2-to-node-24.15.0",
+        "bundler": "webpack-5.73.0-to-vite-8.0.16",
+        "migrationTrack": "production-readiness-direct-witness-create-react-app-5-to-vite8"
+      },
+      {
+        "cell": "angular-factoriolab",
+        "vertical": "angular-factoriolab",
+        "lineage": "angular",
+        "runtime": "node-12.14.1-to-node-16.20.2",
+        "bundler": "angular-cli-10.1-browser-builder-to-angular-16.2-browser-builder",
+        "migrationTrack": "production-readiness-direct-witness-angular10-to-angular16-browser-builder"
+      },
+      {
+        "cell": "angular-jira-clone",
+        "vertical": "angular-jira-clone",
+        "lineage": "angular",
+        "runtime": "node-16.20.2",
+        "bundler": "angular-cli-13.2-custom-webpack-browser-builder-to-angular-16.2-browser-builder",
+        "migrationTrack": "production-readiness-direct-witness-angular13-to-angular16-browser-builder"
+      },
+      {
+        "cell": "angular-tiny-translator-v0-12-0",
+        "vertical": "angular-tiny-translator-v0-12-0",
+        "lineage": "angular",
+        "runtime": "node-8.9.3-to-node-16.20.2",
+        "bundler": "angular-cli-1.5.4-webpack-3.8.1-to-angular-16.2-browser-builder",
+        "migrationTrack": "production-readiness-direct-witness-angular5-to-angular16-browser-builder"
+      },
+      {
+        "cell": "angular-super-productivity-v2-13-15",
+        "vertical": "angular-super-productivity-v2-13-15",
+        "lineage": "angular",
+        "runtime": "node-12.14.1-to-node-16.20.2",
+        "bundler": "angular-cli-8.3.4-webpack-4-to-angular-16.2-browser-builder",
+        "migrationTrack": "production-readiness-direct-witness-angular8-viewengine-to-angular16-browser-builder"
+      }
+    ]
+  },
+  "hashes": {
+    "artifacts": [
+      {
+        "path": "adapter-freeze.json",
+        "sha256": "c5d7273e47fecef77d81a908d723c5231951e27f6866175d184c5bbeac1e24a0"
+      },
+      {
+        "path": "dependency-graph.cdx.json",
+        "sha256": "3d0d791fea5ad168ae47dcdc44639fbecaf232b469767c4366c3e5cae2986480"
+      },
+      {
+        "path": "licenses.json",
+        "sha256": "0927c71b02957358e0b5c228e6d73906aaed98734b44b7acc65f7fe3d1b39859"
+      },
+      {
+        "path": "vulnerabilities.json",
+        "sha256": "6a9ec422e9ada79e49d0d2c557fa876140891b3b8abd4bb5d30de06991dadad6"
+      },
+      {
+        "path": "provenance.json",
+        "sha256": "873511f73b4ed1b63f84ebe9d6531ba591b4cc4438f20d361729c80494f99b1d"
+      },
+      {
+        "path": "matrix.json",
+        "sha256": "cf6b94e0db1d4a1d53e6ec44d5c0ebeb524e7f96c3cd3a81e170ff43fa50fce9"
+      },
+      {
+        "path": "controls.json",
+        "sha256": "a5e61dcace162ce814347f931b6f4e4f59934ea1312df79d9c817c19e0e9bef4"
+      },
+      {
+        "path": "retention.json",
+        "sha256": "f1a7f91607bca1de4cc15e2523a3d0791116acc9cfdf853c68b9b35aa2c07568"
+      },
+      {
+        "path": "corpus-conformance.json",
+        "sha256": "3748d308be0cdddefb4558870637628eb3d5b68c4c5d515d8f7c597a78451e5a"
+      },
+      {
+        "path": "script-surface.json",
+        "sha256": "e10f554b46ddb275a94da16b89c3c265789724ad67aba3e5e5dddc8f0fa6b502"
+      },
+      {
+        "path": "runtime-script-observation.json",
+        "sha256": "086e0c84d48c7f53a814f67a51b7c25239b6f413306361fde1cfdfc3a0f1afc2"
+      },
+      {
+        "path": "capability-coverage.json",
+        "sha256": "d4a40ba7e520e5c104cbe0346e8b5eb38cedf60a46b9370a7bedfc5d09a02db1"
+      }
+    ],
+    "receipts": [
+      {
+        "path": "evidence/runs/react-boilerplate-v4/t008-run.json",
+        "digest": "4d32ae0a46041e5ec2ac68aa31a9b8f86bd9d294d312ce41968ddd99dc5ee758",
+        "state": "verified"
+      },
+      {
+        "path": "evidence/runs/angular-phonecat/t014-run.json",
+        "digest": "a6798081c0b005c76534b5acd4dc647d77d497b0b649748c685b779451035f51",
+        "state": "verified"
+      },
+      {
+        "path": "evidence/runs/react-boilerplate-v4-node24/t022-run.json",
+        "digest": "815a5416b90c0a0c0a2f0adb779308c0ba0447d67c965003f15d343940d9b593",
+        "state": "verified"
+      },
+      {
+        "path": "evidence/runs/react-boilerplate-v4-vite8/t028-run.json",
+        "digest": "1caf9dfa24b14b83ac63ceab9ca90829346045aac690c7b95a952ae4d9e72849",
+        "state": "verified"
+      },
+      {
+        "path": "evidence/runs/angular-phonecat-route-resolve/t032-run.json",
+        "digest": "aa8b2923a38aa5f1adc870b48cdd938b739e107c927aac71b8c2890705f6beef",
+        "state": "verified"
+      },
+      {
+        "path": "evidence/runs/angular-phonecat-composed/t048-run.json",
+        "digest": "a7e8a9dc864085d77338f1615e3434a8a842fa5f4156a13bd2f5560bd2f8dc12",
+        "state": "verified"
+      },
+      {
+        "path": "evidence/runs/react-boilerplate-v4-data-flow/t054-run.json",
+        "digest": "2bd6e145d611fb0bb5fb89c9d6ed164a3b30e9c0b1b2a290032f56908e5035da",
+        "state": "verified"
+      },
+      {
+        "path": "evidence/runs/react-boilerplate-v4-composed/t060-run.json",
+        "digest": "52400147929220935a9ebe47a16c8dff50b5c28e9d51c930d000c99c2bdc8a21",
+        "state": "verified"
+      },
+      {
+        "path": "evidence/runs/angular-phonecat-vite8/t069-run.json",
+        "digest": "033fc40237975e28df36117cc309625632610a399b5c0f88735079ed21fcad0d",
+        "state": "verified"
+      },
+      {
+        "path": "evidence/runs/angular-realworld-v15-to-v16/receipt.json",
+        "digest": "bba54bc67cf5686445b207c530e04c5f9d56cf87f495250e97329e1eed8c6ad1",
+        "state": "verified"
+      },
+      {
+        "path": "evidence/runs/next-killedbygoogle-derived-state-to-memo/receipt.json",
+        "digest": "a018c6490cd559fab74ea402ff93660f053503dbed1a52ba9b68ed7fdc086b7c",
+        "state": "verified"
+      },
+      {
+        "path": "evidence/runs/witness-angular-realworld/receipt.json",
+        "digest": "122496b1ccb5c1da57945868cdea5bb93fab90164534efa5867025d25c01df34",
+        "state": "verified"
+      },
+      {
+        "path": "evidence/runs/witness-react-boilerplate/receipt.json",
+        "digest": "bfa48f718ee86566f120cb0bc42645b22c989a27d87c102b9c2f256d15661ed7",
+        "state": "verified"
+      },
+      {
+        "path": "evidence/runs/witness-next-killedbygoogle/receipt.json",
+        "digest": "da376ad77386a9f48c9be076fbe2131ebc249338df8f38f415e5830659a3f2ef",
+        "state": "verified"
+      },
+      {
+        "path": "evidence/runs/react-boilerplate-v4-zero-sw/t693-run.json",
+        "digest": "386620d0dadad7d201d62965d72d79f37ee6aad69447669e4691787b3e2ef6e6",
+        "state": "verified"
+      },
+      {
+        "path": "evidence/runs/witness-react-boilerplate-zero-sw/receipt.json",
+        "digest": "dcdc57f078d9d7bdfdfd290a7f6b1abe78924581796ff3aaefa6c7e4ba38b527",
+        "state": "verified"
+      },
+      {
+        "path": "evidence/runs/react-papercups-v1-0-0/t004-run.json",
+        "digest": "b433f214727389676b308332f7689d773ad28dde0984b9bf245f3f780f87d35a",
+        "state": "verified"
+      },
+      {
+        "path": "evidence/runs/witness-react-papercups/receipt.json",
+        "digest": "abd33d566ecef3ce4b24470c3105320520a712db19351f74b6c887b63227f267",
+        "state": "verified"
+      },
+      {
+        "path": "evidence/runs/react-hospitalrun/t004-run.json",
+        "digest": "1fa0278923101efe6af370a44d0ef90e3309ac4c7a823fad448eb196cca37cd8",
+        "state": "verified"
+      },
+      {
+        "path": "evidence/runs/witness-react-hospitalrun/receipt.json",
+        "digest": "275e435c8518f8978782e6c555ad8c4dd0d6e5401e2ef1acef8856f596648aaa",
+        "state": "verified"
+      },
+      {
+        "path": "evidence/runs/witness-angular-factoriolab/receipt.json",
+        "digest": "2e7da3056e489958d868917155b6ded61f014b046ee2b020c20ad71a31d86cdd",
+        "state": "verified"
+      },
+      {
+        "path": "evidence/runs/witness-angular-jira-clone/receipt.json",
+        "digest": "4642564e7ee1ff46668cce76c5db0dc832cce41afe1ceda5611fa2eaf78dfc99",
+        "state": "verified"
+      },
+      {
+        "path": "evidence/runs/witness-react-memos-v0-1-3/receipt.json",
+        "digest": "71964ddaba63710462e1c6faa6322598a4afb0800f3c4826c7ef4e5a6ca01cfa",
+        "state": "verified"
+      },
+      {
+        "path": "evidence/runs/witness-next-killedbygoogle-v3-0-0/receipt.json",
+        "digest": "660cb5027139735a5174a5bb8e89fceb9fa6b0327f4a479e174137e789d52a79",
+        "state": "verified"
+      },
+      {
+        "path": "evidence/runs/witness-react-linkfree-v0-72-0/receipt.json",
+        "digest": "2277ad1947280d898f577f418f8b4a34ca775b91156bc1e1de488bde28eae4ba",
+        "state": "verified"
+      },
+      {
+        "path": "evidence/runs/witness-angular-tiny-translator-v0-12-0/receipt.json",
+        "digest": "65b0a976823010e224ee76058e14d4dfee4ac643c8a32826128968a754c083ca",
+        "state": "verified"
+      },
+      {
+        "path": "evidence/runs/witness-angular-super-productivity-v2-13-15/receipt.json",
+        "digest": "5d8ed797897b7ad05bda5daf2a15c1634aec5252bd3addbe3b31b5a3f327e365",
+        "state": "verified"
+      }
+    ]
+  },
+  "commands": {
+    "note": "Every command below is the workspace script as committed; the receipt list is the manifest receipt inventory. All acceptance work runs offline under dual offline controls.",
+    "generation": [
+      {
+        "name": "fixture:ingest",
+        "command": "node --experimental-strip-types packages/cli/src/cli.ts fixture:ingest"
+      },
+      {
+        "name": "trust:generate",
+        "command": "node --experimental-strip-types packages/cli/src/cli.ts trust:generate"
+      },
+      {
+        "name": "trust:ingest",
+        "command": "node --experimental-strip-types packages/cli/src/cli.ts trust:ingest"
+      }
+    ],
+    "verification": [
+      {
+        "name": "corpus:verify",
+        "command": "node --experimental-strip-types packages/cli/src/cli.ts corpus:verify"
+      },
+      {
+        "name": "fixture:verify",
+        "command": "node --experimental-strip-types packages/cli/src/cli.ts fixture:verify"
+      },
+      {
+        "name": "receipt:verify",
+        "command": "node --experimental-strip-types packages/cli/src/cli.ts receipt:verify"
+      },
+      {
+        "name": "runtime-script-observation:verify",
+        "command": "node --experimental-strip-types packages/cli/src/cli.ts runtime-script-observation:verify"
+      },
+      {
+        "name": "script-surface:verify",
+        "command": "node --experimental-strip-types packages/cli/src/cli.ts script-surface:verify"
+      },
+      {
+        "name": "trust:verify",
+        "command": "node --experimental-strip-types packages/cli/src/cli.ts trust:verify"
+      }
+    ],
+    "receiptVerification": [
+      {
+        "receipt": "evidence/runs/react-boilerplate-v4/t008-run.json",
+        "command": "VERSIONLESS_NETWORK_MODE=offline NPM_CONFIG_OFFLINE=true pnpm run receipt:verify -- evidence/runs/react-boilerplate-v4/t008-run.json"
+      },
+      {
+        "receipt": "evidence/runs/angular-phonecat/t014-run.json",
+        "command": "VERSIONLESS_NETWORK_MODE=offline NPM_CONFIG_OFFLINE=true pnpm run receipt:verify -- evidence/runs/angular-phonecat/t014-run.json"
+      },
+      {
+        "receipt": "evidence/runs/react-boilerplate-v4-node24/t022-run.json",
+        "command": "VERSIONLESS_NETWORK_MODE=offline NPM_CONFIG_OFFLINE=true pnpm run receipt:verify -- evidence/runs/react-boilerplate-v4-node24/t022-run.json"
+      },
+      {
+        "receipt": "evidence/runs/react-boilerplate-v4-vite8/t028-run.json",
+        "command": "VERSIONLESS_NETWORK_MODE=offline NPM_CONFIG_OFFLINE=true pnpm run receipt:verify -- evidence/runs/react-boilerplate-v4-vite8/t028-run.json"
+      },
+      {
+        "receipt": "evidence/runs/angular-phonecat-route-resolve/t032-run.json",
+        "command": "VERSIONLESS_NETWORK_MODE=offline NPM_CONFIG_OFFLINE=true pnpm run receipt:verify -- evidence/runs/angular-phonecat-route-resolve/t032-run.json"
+      },
+      {
+        "receipt": "evidence/runs/angular-phonecat-composed/t048-run.json",
+        "command": "VERSIONLESS_NETWORK_MODE=offline NPM_CONFIG_OFFLINE=true pnpm run receipt:verify -- evidence/runs/angular-phonecat-composed/t048-run.json"
+      },
+      {
+        "receipt": "evidence/runs/react-boilerplate-v4-data-flow/t054-run.json",
+        "command": "VERSIONLESS_NETWORK_MODE=offline NPM_CONFIG_OFFLINE=true pnpm run receipt:verify -- evidence/runs/react-boilerplate-v4-data-flow/t054-run.json"
+      },
+      {
+        "receipt": "evidence/runs/react-boilerplate-v4-composed/t060-run.json",
+        "command": "VERSIONLESS_NETWORK_MODE=offline NPM_CONFIG_OFFLINE=true pnpm run receipt:verify -- evidence/runs/react-boilerplate-v4-composed/t060-run.json"
+      },
+      {
+        "receipt": "evidence/runs/angular-phonecat-vite8/t069-run.json",
+        "command": "VERSIONLESS_NETWORK_MODE=offline NPM_CONFIG_OFFLINE=true pnpm run receipt:verify -- evidence/runs/angular-phonecat-vite8/t069-run.json"
+      },
+      {
+        "receipt": "evidence/runs/angular-realworld-v15-to-v16/receipt.json",
+        "command": "VERSIONLESS_NETWORK_MODE=offline NPM_CONFIG_OFFLINE=true pnpm run receipt:verify -- evidence/runs/angular-realworld-v15-to-v16/receipt.json"
+      },
+      {
+        "receipt": "evidence/runs/next-killedbygoogle-derived-state-to-memo/receipt.json",
+        "command": "VERSIONLESS_NETWORK_MODE=offline NPM_CONFIG_OFFLINE=true pnpm run receipt:verify -- evidence/runs/next-killedbygoogle-derived-state-to-memo/receipt.json"
+      },
+      {
+        "receipt": "evidence/runs/witness-angular-realworld/receipt.json",
+        "command": "VERSIONLESS_NETWORK_MODE=offline NPM_CONFIG_OFFLINE=true pnpm run receipt:verify -- evidence/runs/witness-angular-realworld/receipt.json"
+      },
+      {
+        "receipt": "evidence/runs/witness-react-boilerplate/receipt.json",
+        "command": "VERSIONLESS_NETWORK_MODE=offline NPM_CONFIG_OFFLINE=true pnpm run receipt:verify -- evidence/runs/witness-react-boilerplate/receipt.json"
+      },
+      {
+        "receipt": "evidence/runs/witness-next-killedbygoogle/receipt.json",
+        "command": "VERSIONLESS_NETWORK_MODE=offline NPM_CONFIG_OFFLINE=true pnpm run receipt:verify -- evidence/runs/witness-next-killedbygoogle/receipt.json"
+      },
+      {
+        "receipt": "evidence/runs/react-boilerplate-v4-zero-sw/t693-run.json",
+        "command": "VERSIONLESS_NETWORK_MODE=offline NPM_CONFIG_OFFLINE=true pnpm run receipt:verify -- evidence/runs/react-boilerplate-v4-zero-sw/t693-run.json"
+      },
+      {
+        "receipt": "evidence/runs/witness-react-boilerplate-zero-sw/receipt.json",
+        "command": "VERSIONLESS_NETWORK_MODE=offline NPM_CONFIG_OFFLINE=true pnpm run receipt:verify -- evidence/runs/witness-react-boilerplate-zero-sw/receipt.json"
+      },
+      {
+        "receipt": "evidence/runs/react-papercups-v1-0-0/t004-run.json",
+        "command": "VERSIONLESS_NETWORK_MODE=offline NPM_CONFIG_OFFLINE=true pnpm run receipt:verify -- evidence/runs/react-papercups-v1-0-0/t004-run.json"
+      },
+      {
+        "receipt": "evidence/runs/witness-react-papercups/receipt.json",
+        "command": "VERSIONLESS_NETWORK_MODE=offline NPM_CONFIG_OFFLINE=true pnpm run receipt:verify -- evidence/runs/witness-react-papercups/receipt.json"
+      },
+      {
+        "receipt": "evidence/runs/react-hospitalrun/t004-run.json",
+        "command": "VERSIONLESS_NETWORK_MODE=offline NPM_CONFIG_OFFLINE=true pnpm run receipt:verify -- evidence/runs/react-hospitalrun/t004-run.json"
+      },
+      {
+        "receipt": "evidence/runs/witness-react-hospitalrun/receipt.json",
+        "command": "VERSIONLESS_NETWORK_MODE=offline NPM_CONFIG_OFFLINE=true pnpm run receipt:verify -- evidence/runs/witness-react-hospitalrun/receipt.json"
+      },
+      {
+        "receipt": "evidence/runs/witness-angular-factoriolab/receipt.json",
+        "command": "VERSIONLESS_NETWORK_MODE=offline NPM_CONFIG_OFFLINE=true pnpm run receipt:verify -- evidence/runs/witness-angular-factoriolab/receipt.json"
+      },
+      {
+        "receipt": "evidence/runs/witness-angular-jira-clone/receipt.json",
+        "command": "VERSIONLESS_NETWORK_MODE=offline NPM_CONFIG_OFFLINE=true pnpm run receipt:verify -- evidence/runs/witness-angular-jira-clone/receipt.json"
+      },
+      {
+        "receipt": "evidence/runs/witness-react-memos-v0-1-3/receipt.json",
+        "command": "VERSIONLESS_NETWORK_MODE=offline NPM_CONFIG_OFFLINE=true pnpm run receipt:verify -- evidence/runs/witness-react-memos-v0-1-3/receipt.json"
+      },
+      {
+        "receipt": "evidence/runs/witness-next-killedbygoogle-v3-0-0/receipt.json",
+        "command": "VERSIONLESS_NETWORK_MODE=offline NPM_CONFIG_OFFLINE=true pnpm run receipt:verify -- evidence/runs/witness-next-killedbygoogle-v3-0-0/receipt.json"
+      },
+      {
+        "receipt": "evidence/runs/witness-react-linkfree-v0-72-0/receipt.json",
+        "command": "VERSIONLESS_NETWORK_MODE=offline NPM_CONFIG_OFFLINE=true pnpm run receipt:verify -- evidence/runs/witness-react-linkfree-v0-72-0/receipt.json"
+      },
+      {
+        "receipt": "evidence/runs/witness-angular-tiny-translator-v0-12-0/receipt.json",
+        "command": "VERSIONLESS_NETWORK_MODE=offline NPM_CONFIG_OFFLINE=true pnpm run receipt:verify -- evidence/runs/witness-angular-tiny-translator-v0-12-0/receipt.json"
+      },
+      {
+        "receipt": "evidence/runs/witness-angular-super-productivity-v2-13-15/receipt.json",
+        "command": "VERSIONLESS_NETWORK_MODE=offline NPM_CONFIG_OFFLINE=true pnpm run receipt:verify -- evidence/runs/witness-angular-super-productivity-v2-13-15/receipt.json"
+      }
+    ]
+  },
+  "locality": {
+    "mode": "offline",
+    "scope": "Versionless-spawned processes and browser routing",
+    "osWideIsolation": false,
+    "perCell": [
+      {
+        "cell": "react-boilerplate",
+        "vertical": "react-boilerplate-v4",
+        "locality": {
+          "mode": "offline",
+          "scope": "Versionless-spawned Node/npm/webpack child processes and Playwright browser requests",
+          "osWideIsolation": false,
+          "successfulNonLoopback": 0,
+          "browserBlockedRequests": 4
+        }
+      },
+      {
+        "cell": "react-boilerplate",
+        "vertical": "react-boilerplate-v4-node24",
+        "locality": {
+          "mode": "offline",
+          "scope": "Versionless-spawned Node/npm/webpack child processes and Playwright browser requests",
+          "osWideIsolation": false,
+          "successfulNonLoopback": 0,
+          "browserBlockedRequests": 2
+        }
+      },
+      {
+        "cell": "react-boilerplate",
+        "vertical": "react-boilerplate-v4-vite8",
+        "locality": {
+          "mode": "offline",
+          "scope": "Versionless-spawned Node/Vite build and Playwright browser requests",
+          "osWideIsolation": false,
+          "successfulNonLoopback": 0,
+          "browserBlockedRequests": 0
+        }
+      },
+      {
+        "cell": "react-boilerplate",
+        "vertical": "react-boilerplate-v4-data-flow",
+        "locality": {
+          "mode": "offline",
+          "scope": "Versionless-spawned Node/Vite build and Playwright browser requests",
+          "osWideIsolation": false,
+          "successfulNonLoopback": 0,
+          "browserBlockedRequests": 0
+        }
+      },
+      {
+        "cell": "react-boilerplate",
+        "vertical": "react-boilerplate-v4-composed",
+        "locality": {
+          "mode": "offline",
+          "scope": "Versionless-spawned Node/npm/webpack/Vite child processes and Playwright browser requests",
+          "osWideIsolation": false,
+          "successfulNonLoopback": 0,
+          "browserBlockedRequests": 2
+        }
+      },
+      {
+        "cell": "react-papercups-v1-0-0",
+        "vertical": "react-papercups-v1-0-0",
+        "locality": {
+          "mode": "offline",
+          "scope": "process-scoped",
+          "osWideIsolation": false,
+          "successfulNonLoopback": 0
+        }
+      },
+      {
+        "cell": "react-hospitalrun",
+        "vertical": "react-hospitalrun",
+        "locality": {
+          "mode": "offline",
+          "scope": "process-scoped",
+          "osWideIsolation": false,
+          "successfulNonLoopback": 0
+        }
+      },
+      {
+        "cell": "react-memos-v0-1-3",
+        "vertical": "react-memos-v0-1-3",
+        "locality": {
+          "mode": "offline",
+          "scope": "process-scoped",
+          "osWideIsolation": false,
+          "successfulNonLoopback": 0
+        }
+      },
+      {
+        "cell": "next-killedbygoogle-v3-0-0",
+        "vertical": "next-killedbygoogle-v3-0-0",
+        "locality": {
+          "mode": "offline",
+          "scope": "process-scoped",
+          "osWideIsolation": false,
+          "successfulNonLoopback": 0,
+          "mockedNonLoopbackSeams": 3
+        }
+      },
+      {
+        "cell": "react-linkfree-v0-72-0",
+        "vertical": "react-linkfree-v0-72-0",
+        "locality": {
+          "mode": "offline",
+          "scope": "process-scoped",
+          "osWideIsolation": false,
+          "successfulNonLoopback": 0
+        }
+      },
+      {
+        "cell": "angular-factoriolab",
+        "vertical": "angular-factoriolab",
+        "locality": {
+          "mode": "offline",
+          "scope": "process-scoped",
+          "osWideIsolation": false,
+          "successfulNonLoopback": 0
+        }
+      },
+      {
+        "cell": "angular-jira-clone",
+        "vertical": "angular-jira-clone",
+        "locality": {
+          "mode": "offline",
+          "scope": "process-scoped",
+          "osWideIsolation": false,
+          "successfulNonLoopback": 0,
+          "mockedNonLoopbackSeams": 10
+        }
+      },
+      {
+        "cell": "angular-tiny-translator-v0-12-0",
+        "vertical": "angular-tiny-translator-v0-12-0",
+        "locality": {
+          "mode": "offline",
+          "scope": "process-scoped",
+          "osWideIsolation": false,
+          "successfulNonLoopback": 0,
+          "mockedNonLoopbackSeams": 1
+        }
+      },
+      {
+        "cell": "angular-super-productivity-v2-13-15",
+        "vertical": "angular-super-productivity-v2-13-15",
+        "locality": {
+          "mode": "offline",
+          "scope": "process-scoped",
+          "osWideIsolation": false,
+          "successfulNonLoopback": 0,
+          "mockedNonLoopbackSeams": 1
+        }
+      }
+    ]
+  },
+  "journeys": [
+    {
+      "cell": "react-boilerplate",
+      "vertical": "react-boilerplate-v4",
+      "browserProof": "not-recorded-in-the-corpus-record",
+      "browserRuns": "not-recorded-in-the-corpus-record",
+      "behaviorDigest": "not-recorded-in-the-corpus-record"
+    },
+    {
+      "cell": "react-boilerplate",
+      "vertical": "react-boilerplate-v4-node24",
+      "browserProof": "not-recorded-in-the-corpus-record",
+      "browserRuns": "not-recorded-in-the-corpus-record",
+      "behaviorDigest": "not-recorded-in-the-corpus-record"
+    },
+    {
+      "cell": "react-boilerplate",
+      "vertical": "react-boilerplate-v4-vite8",
+      "browserProof": "not-recorded-in-the-corpus-record",
+      "browserRuns": "not-recorded-in-the-corpus-record",
+      "behaviorDigest": "not-recorded-in-the-corpus-record"
+    },
+    {
+      "cell": "react-boilerplate",
+      "vertical": "react-boilerplate-v4-data-flow",
+      "browserProof": "not-recorded-in-the-corpus-record",
+      "browserRuns": "not-recorded-in-the-corpus-record",
+      "behaviorDigest": "not-recorded-in-the-corpus-record"
+    },
+    {
+      "cell": "react-boilerplate",
+      "vertical": "react-boilerplate-v4-composed",
+      "browserProof": "not-recorded-in-the-corpus-record",
+      "browserRuns": "not-recorded-in-the-corpus-record",
+      "behaviorDigest": "not-recorded-in-the-corpus-record"
+    },
+    {
+      "cell": "react-papercups-v1-0-0",
+      "vertical": "react-papercups-v1-0-0",
+      "browserProof": "verified-direct-witness",
+      "browserRuns": 4,
+      "behaviorDigest": "a2d4dbb6f844dfb8ee2d78cfc64e9981b6a91186030f345a7e6ffb9975eb9917"
+    },
+    {
+      "cell": "react-hospitalrun",
+      "vertical": "react-hospitalrun",
+      "browserProof": "verified-direct-witness",
+      "browserRuns": 4,
+      "behaviorDigest": "bb87c861e83fe5cdce99ba3c2ea6ef0523a66f4c1a75d8d8be0f10411c7b6fed"
+    },
+    {
+      "cell": "react-memos-v0-1-3",
+      "vertical": "react-memos-v0-1-3",
+      "browserProof": "verified-direct-witness",
+      "browserRuns": 4,
+      "behaviorDigest": "d5e08daffeb7765ba6722700587762a702fe74b5357f32fa4d069512014ad934"
+    },
+    {
+      "cell": "next-killedbygoogle-v3-0-0",
+      "vertical": "next-killedbygoogle-v3-0-0",
+      "browserProof": "verified-direct-witness",
+      "browserRuns": 4,
+      "behaviorDigest": "240554452bac31af556f6888c0fdb3a5523ff6cc6e839a5a345d64d8204a480f"
+    },
+    {
+      "cell": "react-linkfree-v0-72-0",
+      "vertical": "react-linkfree-v0-72-0",
+      "browserProof": "verified-direct-witness",
+      "browserRuns": 4,
+      "behaviorDigest": "09432cbf2578c35c1d04e74219e8411c075505943914fbe91b197c2da46929a1"
+    },
+    {
+      "cell": "angular-factoriolab",
+      "vertical": "angular-factoriolab",
+      "browserProof": "verified-direct-witness",
+      "browserRuns": 4,
+      "behaviorDigest": "77d9bf5fe4d72a7db2ca5dc760fd1ce3bd13a936b765b85bfa6cb0621022ae42"
+    },
+    {
+      "cell": "angular-jira-clone",
+      "vertical": "angular-jira-clone",
+      "browserProof": "verified-direct-witness",
+      "browserRuns": 4,
+      "behaviorDigest": "18e281d93e0f50a632ed0a4c9bc613e9b5601ca0a5ec68a36c578e6ed6620308"
+    },
+    {
+      "cell": "angular-tiny-translator-v0-12-0",
+      "vertical": "angular-tiny-translator-v0-12-0",
+      "browserProof": "verified-direct-witness",
+      "browserRuns": 4,
+      "behaviorDigest": "890ddd697619de1273c1bddf5cb504d7cad9eeb54c4503d8a458f3c72bd6405f"
+    },
+    {
+      "cell": "angular-super-productivity-v2-13-15",
+      "vertical": "angular-super-productivity-v2-13-15",
+      "browserProof": "verified-direct-witness",
+      "browserRuns": 4,
+      "behaviorDigest": "d90ec2ca7e8ea609845518300d0b1e7d9f4908100bdabcc15b44879931dd380a"
+    }
+  ],
+  "results": {
+    "supportMatrix": {
+      "derivation": "Every green cell below is filtered out of the Judge counting ledger the corpus derived and cross-checked against that corpus numerator and denominator. No cell is listed by hand, and a cell edited into this record fails re-derivation.",
+      "counted": {
+        "react": {
+          "ready": 6,
+          "total": 6,
+          "cells": [
+            {
+              "cell": "react-boilerplate",
+              "application": "react-boilerplate",
+              "lineage": "react",
+              "witnessReceipt": "evidence/runs/witness-react-boilerplate/receipt.json",
+              "verticals": [
+                {
+                  "vertical": "react-boilerplate-v4",
+                  "runtime": "Node 16.20.2 EOL compatibility sandbox",
+                  "bundler": "webpack 4.30.0",
+                  "migrationTrack": "not-recorded-in-the-corpus-record",
+                  "browserProof": "not-recorded-in-the-corpus-record",
+                  "browserRuns": "not-recorded-in-the-corpus-record",
+                  "behaviorDigest": "not-recorded-in-the-corpus-record",
+                  "locality": {
+                    "mode": "offline",
+                    "scope": "Versionless-spawned Node/npm/webpack child processes and Playwright browser requests",
+                    "osWideIsolation": false,
+                    "successfulNonLoopback": 0,
+                    "browserBlockedRequests": 4
+                  }
+                },
+                {
+                  "vertical": "react-boilerplate-v4-node24",
+                  "runtime": "Node 24.15.0 darwin-arm64",
+                  "bundler": "webpack 4.47.0",
+                  "migrationTrack": "not-recorded-in-the-corpus-record",
+                  "browserProof": "not-recorded-in-the-corpus-record",
+                  "browserRuns": "not-recorded-in-the-corpus-record",
+                  "behaviorDigest": "not-recorded-in-the-corpus-record",
+                  "locality": {
+                    "mode": "offline",
+                    "scope": "Versionless-spawned Node/npm/webpack child processes and Playwright browser requests",
+                    "osWideIsolation": false,
+                    "successfulNonLoopback": 0,
+                    "browserBlockedRequests": 2
+                  }
+                },
+                {
+                  "vertical": "react-boilerplate-v4-vite8",
+                  "runtime": "Node 24.15.0 darwin-arm64",
+                  "bundler": "Vite 8.0.16",
+                  "migrationTrack": "not-recorded-in-the-corpus-record",
+                  "browserProof": "not-recorded-in-the-corpus-record",
+                  "browserRuns": "not-recorded-in-the-corpus-record",
+                  "behaviorDigest": "not-recorded-in-the-corpus-record",
+                  "locality": {
+                    "mode": "offline",
+                    "scope": "Versionless-spawned Node/Vite build and Playwright browser requests",
+                    "osWideIsolation": false,
+                    "successfulNonLoopback": 0,
+                    "browserBlockedRequests": 0
+                  }
+                },
+                {
+                  "vertical": "react-boilerplate-v4-data-flow",
+                  "runtime": "Node 24.15.0 darwin-arm64",
+                  "bundler": "Vite 8.0.16",
+                  "migrationTrack": "not-recorded-in-the-corpus-record",
+                  "browserProof": "not-recorded-in-the-corpus-record",
+                  "browserRuns": "not-recorded-in-the-corpus-record",
+                  "behaviorDigest": "not-recorded-in-the-corpus-record",
+                  "locality": {
+                    "mode": "offline",
+                    "scope": "Versionless-spawned Node/Vite build and Playwright browser requests",
+                    "osWideIsolation": false,
+                    "successfulNonLoopback": 0,
+                    "browserBlockedRequests": 0
+                  }
+                },
+                {
+                  "vertical": "react-boilerplate-v4-composed",
+                  "runtime": "Node 16.20.2 legacy / Node 24.15.0 target",
+                  "bundler": "webpack 4.30.0 / Vite 8.0.16",
+                  "migrationTrack": "not-recorded-in-the-corpus-record",
+                  "browserProof": "not-recorded-in-the-corpus-record",
+                  "browserRuns": "not-recorded-in-the-corpus-record",
+                  "behaviorDigest": "not-recorded-in-the-corpus-record",
+                  "locality": {
+                    "mode": "offline",
+                    "scope": "Versionless-spawned Node/npm/webpack/Vite child processes and Playwright browser requests",
+                    "osWideIsolation": false,
+                    "successfulNonLoopback": 0,
+                    "browserBlockedRequests": 2
+                  }
+                }
+              ],
+              "acceptance": "Judge-accepted: webpack 4.30.0 to Vite 8.0.16 across Node 16 to Node 24 with a direct-Witness browser proof, byte-identical mutation restoration, and a current zero-service-worker policy reconciliation on the same immutable source."
+            },
+            {
+              "cell": "react-papercups-v1-0-0",
+              "application": "papercups",
+              "lineage": "react",
+              "witnessReceipt": "evidence/runs/witness-react-papercups/receipt.json",
+              "verticals": [
+                {
+                  "vertical": "react-papercups-v1-0-0",
+                  "runtime": "node-16.20.2-to-node-24.15.0",
+                  "bundler": "webpack-4.42.0-to-vite-8.0.16",
+                  "migrationTrack": "create-react-app-3.4.1-to-vite8-build",
+                  "browserProof": "verified-direct-witness",
+                  "browserRuns": 4,
+                  "behaviorDigest": "a2d4dbb6f844dfb8ee2d78cfc64e9981b6a91186030f345a7e6ffb9975eb9917",
+                  "locality": {
+                    "mode": "offline",
+                    "scope": "process-scoped",
+                    "osWideIsolation": false,
+                    "successfulNonLoopback": 0
+                  }
+                }
+              ],
+              "acceptance": "Judge-accepted: a create-react-app 3.4.1 production application really moved to a Vite 8 build, with behavioral parity and mutation restoration proven in the browser rather than inferred from the build."
+            },
+            {
+              "cell": "react-hospitalrun",
+              "application": "react-hospitalrun",
+              "lineage": "react",
+              "witnessReceipt": "evidence/runs/witness-react-hospitalrun/receipt.json",
+              "verticals": [
+                {
+                  "vertical": "react-hospitalrun",
+                  "runtime": "node-12.14.1-to-node-24.15.0",
+                  "bundler": "webpack-4.42.0-to-vite-8.0.16",
+                  "migrationTrack": "create-react-app-3.4.4-to-vite8-build-and-boot",
+                  "browserProof": "verified-direct-witness",
+                  "browserRuns": 4,
+                  "behaviorDigest": "bb87c861e83fe5cdce99ba3c2ea6ef0523a66f4c1a75d8d8be0f10411c7b6fed",
+                  "locality": {
+                    "mode": "offline",
+                    "scope": "process-scoped",
+                    "osWideIsolation": false,
+                    "successfulNonLoopback": 0
+                  }
+                }
+              ],
+              "acceptance": "Judge-accepted: a create-react-app 3.4.4 application on Node 12 reached a booting Vite 8 build on Node 24, and its baseline/migrated service-worker difference is recorded rather than masked, so the cell is counted with its difference visible."
+            },
+            {
+              "cell": "react-memos-v0-1-3",
+              "application": "react-memos",
+              "lineage": "react",
+              "witnessReceipt": "evidence/runs/witness-react-memos-v0-1-3/receipt.json",
+              "verticals": [
+                {
+                  "vertical": "react-memos-v0-1-3",
+                  "runtime": "node-16.20.2-to-node-24.15.0",
+                  "bundler": "vite-2.9.5-to-vite-8.0.16",
+                  "migrationTrack": "production-readiness-direct-witness-old-vite-origin-to-vite8",
+                  "browserProof": "verified-direct-witness",
+                  "browserRuns": 4,
+                  "behaviorDigest": "d5e08daffeb7765ba6722700587762a702fe74b5357f32fa4d069512014ad934",
+                  "locality": {
+                    "mode": "offline",
+                    "scope": "process-scoped",
+                    "osWideIsolation": false,
+                    "successfulNonLoopback": 0
+                  }
+                }
+              ],
+              "acceptance": "Judge-accepted (T016 re-freeze audit): a substantive old-Vite-origin React application (Vite 2.9.5 to Vite 8) really migrated with a direct-Witness browser proof and byte-identical mutation restoration. React-lineage is measured by the charter oracle regardless of origin bundler, so it counts toward the React numerator; the receipt keeps its own per-vertical scoreboard recorded rather than masked."
+            },
+            {
+              "cell": "next-killedbygoogle-v3-0-0",
+              "application": "next-killedbygoogle-v3-0-0",
+              "lineage": "react",
+              "witnessReceipt": "evidence/runs/witness-next-killedbygoogle-v3-0-0/receipt.json",
+              "verticals": [
+                {
+                  "vertical": "next-killedbygoogle-v3-0-0",
+                  "runtime": "node-16.20.2",
+                  "bundler": "next-12.0.10-vendored-webpack-5-to-vite-8.0.16-rolldown",
+                  "migrationTrack": "production-readiness-direct-witness-next12-static-export-to-vite8-client-build",
+                  "browserProof": "verified-direct-witness",
+                  "browserRuns": 4,
+                  "behaviorDigest": "240554452bac31af556f6888c0fdb3a5523ff6cc6e839a5a345d64d8204a480f",
+                  "locality": {
+                    "mode": "offline",
+                    "scope": "process-scoped",
+                    "osWideIsolation": false,
+                    "successfulNonLoopback": 0,
+                    "mockedNonLoopbackSeams": 3
+                  }
+                }
+              ],
+              "acceptance": "Judge-accepted (T016 charter ruling): Next.js-on-React is React-lineage per the charter completion target (\"six React-lineage applications ... at least one legacy Next.js app\"), so this legacy-Next v3.0.0 vertical is the legacy-Next member of the six and counts toward the React numerator. It carries the informational legacy-next sub-tag; its baseline/migrated document-delivery difference stays recorded rather than masked, and the retired olderNext separate numerator folds into React here.",
+              "reactSubTag": "legacy-next"
+            },
+            {
+              "cell": "react-linkfree-v0-72-0",
+              "application": "react-linkfree",
+              "lineage": "react",
+              "witnessReceipt": "evidence/runs/witness-react-linkfree-v0-72-0/receipt.json",
+              "verticals": [
+                {
+                  "vertical": "react-linkfree-v0-72-0",
+                  "runtime": "node-16.20.2-to-node-24.15.0",
+                  "bundler": "webpack-5.73.0-to-vite-8.0.16",
+                  "migrationTrack": "production-readiness-direct-witness-create-react-app-5-to-vite8",
+                  "browserProof": "verified-direct-witness",
+                  "browserRuns": 4,
+                  "behaviorDigest": "09432cbf2578c35c1d04e74219e8411c075505943914fbe91b197c2da46929a1",
+                  "locality": {
+                    "mode": "offline",
+                    "scope": "process-scoped",
+                    "osWideIsolation": false,
+                    "successfulNonLoopback": 0
+                  }
+                }
+              ],
+              "acceptance": "Judge-accepted (T016 re-freeze audit): a create-react-app 5 application really migrated to a Vite 8 build with a direct-Witness browser proof and byte-identical mutation restoration. Its synthetic profile corpus is the recorded boundary of the claim, published rather than hidden, and does not disqualify the migration from the React numerator; the receipt keeps its own per-vertical scoreboard recorded rather than masked."
+            }
+          ]
+        },
+        "angular": {
+          "ready": 4,
+          "total": 4,
+          "cells": [
+            {
+              "cell": "angular-factoriolab",
+              "application": "angular-factoriolab",
+              "lineage": "angular",
+              "witnessReceipt": "evidence/runs/witness-angular-factoriolab/receipt.json",
+              "verticals": [
+                {
+                  "vertical": "angular-factoriolab",
+                  "runtime": "node-12.14.1-to-node-16.20.2",
+                  "bundler": "angular-cli-10.1-browser-builder-to-angular-16.2-browser-builder",
+                  "migrationTrack": "production-readiness-direct-witness-angular10-to-angular16-browser-builder",
+                  "browserProof": "verified-direct-witness",
+                  "browserRuns": 4,
+                  "behaviorDigest": "77d9bf5fe4d72a7db2ca5dc760fd1ce3bd13a936b765b85bfa6cb0621022ae42",
+                  "locality": {
+                    "mode": "offline",
+                    "scope": "process-scoped",
+                    "osWideIsolation": false,
+                    "successfulNonLoopback": 0
+                  }
+                }
+              ],
+              "acceptance": "Judge-accepted: Angular CLI 10.1 to 16.2 browser-builder across six majors with application source really rewritten, proven in the browser with byte-identical mutation restoration."
+            },
+            {
+              "cell": "angular-jira-clone",
+              "application": "angular-jira-clone",
+              "lineage": "angular",
+              "witnessReceipt": "evidence/runs/witness-angular-jira-clone/receipt.json",
+              "verticals": [
+                {
+                  "vertical": "angular-jira-clone",
+                  "runtime": "node-16.20.2",
+                  "bundler": "angular-cli-13.2-custom-webpack-browser-builder-to-angular-16.2-browser-builder",
+                  "migrationTrack": "production-readiness-direct-witness-angular13-to-angular16-browser-builder",
+                  "browserProof": "verified-direct-witness",
+                  "browserRuns": 4,
+                  "behaviorDigest": "18e281d93e0f50a632ed0a4c9bc613e9b5601ca0a5ec68a36c578e6ed6620308",
+                  "locality": {
+                    "mode": "offline",
+                    "scope": "process-scoped",
+                    "osWideIsolation": false,
+                    "successfulNonLoopback": 0,
+                    "mockedNonLoopbackSeams": 10
+                  }
+                }
+              ],
+              "acceptance": "Judge-accepted: Angular CLI 13.2 custom-webpack to 16.2 browser-builder, absorbing a non-default builder and rewriting application source, proven in the browser on a second independent Angular application."
+            },
+            {
+              "cell": "angular-tiny-translator-v0-12-0",
+              "application": "angular-tiny-translator",
+              "lineage": "angular",
+              "witnessReceipt": "evidence/runs/witness-angular-tiny-translator-v0-12-0/receipt.json",
+              "verticals": [
+                {
+                  "vertical": "angular-tiny-translator-v0-12-0",
+                  "runtime": "node-8.9.3-to-node-16.20.2",
+                  "bundler": "angular-cli-1.5.4-webpack-3.8.1-to-angular-16.2-browser-builder",
+                  "migrationTrack": "production-readiness-direct-witness-angular5-to-angular16-browser-builder",
+                  "browserProof": "verified-direct-witness",
+                  "browserRuns": 4,
+                  "behaviorDigest": "890ddd697619de1273c1bddf5cb504d7cad9eeb54c4503d8a458f3c72bd6405f",
+                  "locality": {
+                    "mode": "offline",
+                    "scope": "process-scoped",
+                    "osWideIsolation": false,
+                    "successfulNonLoopback": 0,
+                    "mockedNonLoopbackSeams": 1
+                  }
+                }
+              ],
+              "acceptance": "Judge-accepted (T016 re-freeze audit): an eleven-major Angular CLI 1.5.4 to 16.2 browser-builder lift with application source really rewritten, proven in the browser with byte-identical mutation restoration. Its era-defect service-worker registration stays recorded rather than masked and does not disqualify the migration from the Angular numerator; the receipt keeps its own per-vertical scoreboard recorded rather than masked."
+            },
+            {
+              "cell": "angular-super-productivity-v2-13-15",
+              "application": "angular-super-productivity",
+              "lineage": "angular",
+              "witnessReceipt": "evidence/runs/witness-angular-super-productivity-v2-13-15/receipt.json",
+              "verticals": [
+                {
+                  "vertical": "angular-super-productivity-v2-13-15",
+                  "runtime": "node-12.14.1-to-node-16.20.2",
+                  "bundler": "angular-cli-8.3.4-webpack-4-to-angular-16.2-browser-builder",
+                  "migrationTrack": "production-readiness-direct-witness-angular8-viewengine-to-angular16-browser-builder",
+                  "browserProof": "verified-direct-witness",
+                  "browserRuns": 4,
+                  "behaviorDigest": "d90ec2ca7e8ea609845518300d0b1e7d9f4908100bdabcc15b44879931dd380a",
+                  "locality": {
+                    "mode": "offline",
+                    "scope": "process-scoped",
+                    "osWideIsolation": false,
+                    "successfulNonLoopback": 0,
+                    "mockedNonLoopbackSeams": 1
+                  }
+                }
+              ],
+              "acceptance": "Judge-accepted (T016 re-freeze audit): an eight-major Angular CLI 8.3.4 to 16.2 browser-builder lift with application source really rewritten, proven in the browser. Its declared cross-lane appearance differences and unseeded Sass random() build instability across the supersede boundary stay recorded rather than masked and do not disqualify the migration from the Angular numerator; the receipt keeps its own per-vertical scoreboard recorded rather than masked."
+            }
+          ]
+        }
+      },
+      "demoted": [
+        {
+          "cell": "angular-realworld-v15-to-v16",
+          "lineage": "angular",
+          "reason": "Judge-declined and demoted from the denominator: the migration changed applicationFilesChanged=0 application files, so it is an Angular 15-to-16 dependency version bump rebuilt under AOT rather than a proven application migration. Its browser-proof receipt stays verified and retained; it is excluded from the Angular denominator rather than counted, which is why the Angular total is four non-demoted cells and not five."
+        }
+      ],
+      "holdouts": [
+        {
+          "id": "holdout-react-cypress-rwa",
+          "application": "cypress-realworld-app",
+          "lineage": "react",
+          "outcome": "passed",
+          "receipt": "evidence/runs/holdout-react-cypress-rwa/green-2026-08-13/receipt.json",
+          "digest": "76f0b5bd0d8a3fa0596d3c5d190c764ee7402f4e5c27870d36bdb3fa5f04a73e",
+          "countedInLineageNumerator": false,
+          "countingNote": "This holdout passed, and it is still counted in no lineage numerator: a passing holdout shows the frozen adapter carrying one further application, not a migrated-application product count. It is published rather than folded into any numerator.",
+          "reason": "This is a holdout, not a certification: it shows the frozen adapter carrying one further application end to end, not generic support."
+        },
+        {
+          "id": "holdout-angular-eshop-webspa",
+          "application": "eShopOnContainers WebSPA",
+          "lineage": "angular",
+          "outcome": "witness-passed-on-bounded-anonymous-catalog-surface",
+          "receipt": "evidence/runs/holdout-angular-eshop-webspa/receipt.json",
+          "digest": "fb921b46925f03947781629dce85b03fb51ad3a0969197098181d10486563fb9",
+          "countedInLineageNumerator": false,
+          "countingNote": "Never counted in any lineage numerator by this record. The migrated production build is green and repeatable, and the Witness is green on the anonymous catalog surface — twice per lane, one parity digest, with a mutation-red and byte-restore proof under it. What that leaves unproven is stated beside it: every surface outside the anonymous catalog: identity is out of surface and basket, orders and campaigns are out of surface behind it, the SignalR hub was never reached, and text entry and drag were not tested — those surfaces are unproven rather than proven absent. Whether a holdout proven on a bounded surface should ever reach a numerator is the Judge's decision, taken on the Judge's ledger and not here. The install RED under the frozen f1a63359 composite is retained beside all of it as the record of what the frozen adapter did.",
+          "reason": "every surface outside the anonymous catalog: identity is out of surface and basket, orders and campaigns are out of surface behind it, the SignalR hub was never reached, and text entry and drag were not tested — those surfaces are unproven rather than proven absent",
+          "provenSurface": "anonymous-catalog",
+          "surfacesNotCovered": [
+            {
+              "surface": "identity",
+              "state": "out-of-surface"
+            },
+            {
+              "surface": "basket",
+              "state": "out-of-surface"
+            },
+            {
+              "surface": "orders",
+              "state": "out-of-surface"
+            },
+            {
+              "surface": "campaigns",
+              "state": "out-of-surface"
+            },
+            {
+              "surface": "signalr",
+              "state": "not-reached"
+            },
+            {
+              "surface": "text-entry",
+              "state": "not-tested"
+            },
+            {
+              "surface": "drag",
+              "state": "not-tested"
+            }
+          ]
+        }
+      ],
+      "falsificationHistory": [
+        {
+          "id": "holdout-angular-pigallery2",
+          "application": "pigallery2",
+          "lane": "migrated",
+          "state": "red",
+          "frozenAdapterFingerprint": "4df7bc961033fc5856b4d58e0bca9f11ad2aa9d43aaaee726956f34d209b37e7",
+          "receipt": "evidence/runs/holdout-angular-pigallery2/receipt.json",
+          "digest": "39a133ff97c37622a4a1821f20e7c442c9bc22ed7597a3e73cbd31323ab2bb10",
+          "retention": "Permanent falsification evidence. The declared pre-Ivy support boundary rests on this RED, and the RED is published unchanged rather than retracted or excused by it."
+        },
+        {
+          "id": "holdout-angular-eshop-webspa",
+          "application": "eShopOnContainers WebSPA",
+          "lane": "migrated-at-install-under-frozen-composite",
+          "state": "red",
+          "frozenAdapterFingerprint": "f1a63359210b87c04408b27cf8c40e88e1b47d44bcc7f5a9be20d9478dc71012",
+          "receipt": "evidence/runs/holdout-angular-eshop-webspa/receipt.json",
+          "digest": "fb921b46925f03947781629dce85b03fb51ad3a0969197098181d10486563fb9",
+          "retention": "Permanent falsification evidence. The install RED this application took under the frozen composite is retained beside its later bounded-surface result, not replaced by it."
+        },
+        {
+          "id": "holdout-react-cypress-rwa",
+          "application": "cypress-realworld-app",
+          "lane": "migrated",
+          "state": "red",
+          "frozenAdapterFingerprint": "d9f75ef677cb850f664cc188abf77b8ebfd24e84cb58d147b74e9bbaa143eb77",
+          "receipt": "evidence/runs/holdout-react-cypress-rwa/receipt.json",
+          "digest": "7ec6f18b27d2967cd533ba89505e8a76590c1866aec8bd7a8d8543cd87743aae",
+          "retention": "Permanent falsification evidence. The tranche-one RED is superseded by reference and stays published; it is not deleted by the later passing record."
+        }
+      ],
+      "declaredBoundaries": [
+        {
+          "id": "angular-16-pre-ivy-only-dependency",
+          "lineage": "angular",
+          "cell": "angular-16-browser-builder",
+          "state": "unsupported",
+          "declaredBy": "lrapr-t022 boundary ruling (Judge, 2026-08-14)",
+          "publishedBy": "lrapr-t023/u1-boundary-publish-refreeze",
+          "condition": "pre-Ivy-only dependencies (no published Ivy successor) in active application use => unsupported at the Angular 16 target cell",
+          "mechanism": "Angular 16 removed ngcc, so ViewEngine bytes cannot be consumed at this cell, and a library whose last published version is pre-Ivy has no successor to align to. Carrying such an application would require editing its source at the import sites, which is an application change rather than a migration the engine can perform.",
+          "certification": "not-certified: this cell is declared unsupported, not tested-and-failed-once",
+          "instanceEvidence": {
+            "application": "pigallery2",
+            "receipt": "evidence/runs/holdout-angular-pigallery2/receipt.json",
+            "libraries": 3,
+            "importSites": 6,
+            "digest": "39a133ff97c37622a4a1821f20e7c442c9bc22ed7597a3e73cbd31323ab2bb10",
+            "wall": [
+              {
+                "library": "@yaga/leaflet-ng2",
+                "lastPublishedVersion": "1.1.0",
+                "importSites": [
+                  "frontend/app/app.module.ts:14",
+                  "frontend/app/ui/gallery/map/map.gallery.component.ts:7",
+                  "frontend/app/ui/gallery/map/lightbox/lightbox.map.gallery.component.ts:16"
+                ]
+              },
+              {
+                "library": "ng2-slim-loading-bar",
+                "lastPublishedVersion": "4.0.0",
+                "importSites": [
+                  "frontend/app/app.module.ts:31",
+                  "frontend/app/model/network/network.service.ts:4"
+                ]
+              },
+              {
+                "library": "jw-bootstrap-switch-ng2",
+                "lastPublishedVersion": "2.0.5",
+                "importSites": [
+                  "frontend/app/app.module.ts:41"
+                ]
+              }
+            ]
+          },
+          "nonclaims": [
+            "No claim that every application carrying a pre-Ivy-only dependency is unmigratable in general: the boundary is declared at the Angular 16 target cell, which is the only Angular cell this engine has.",
+            "No claim that this boundary is unreachable: an ngcc-bearing multi-hop cell (Angular 12 or 13) would consume those bytes. It is a declared tranche-two commitment, not a silent deferral, and it invalidates every Angular 16 cell reading in this record, so it is not taken here.",
+            "No claim that the boundary excuses the pigallery2 RED. The RED is permanent falsification evidence and is published unchanged alongside this declaration."
+          ],
+          "amendment": {
+            "schemaVersion": "versionless.angular-pre-ivy-boundary-amendment.v1",
+            "amends": "angular-16-pre-ivy-only-dependency",
+            "appendOnly": true,
+            "declaredBy": "lrapr-t022 boundary ruling, follow-up ruling (Judge, 2026-08-14) after the gate-zero screen",
+            "publishedBy": "lrapr-t023/u3-boundary-amend-candidate3-acquire",
+            "immutabilityNote": "Appended beside the declaration, never merged into it. The pigallery2 receipt that established the boundary is unchanged, its digest is unchanged, and the boundary condition, mechanism, certification language and non-claims are unchanged. This record only adds reading rules, prevalence and the population statement.",
+            "readingRules": [
+              {
+                "id": "successor-across-names",
+                "rule": "A successor reading counts across package names: a dependency has a published Ivy successor when registry deprecation metadata names the successor and that named successor ships published Ivy bytes, even where the successor carries a different package name than the dependency it replaces.",
+                "kind": "ecosystem-availability-fact",
+                "neverAnAdapterCapabilityFact": "The rule reads published registry metadata and published bytes only. It says nothing about whether the frozen adapter carries the corresponding migration; that is what a holdout run measures, and a RED there is valid falsification rather than a boundary.",
+                "evidenceRequired": [
+                  "registry deprecation metadata on the dependency that names the successor package",
+                  "the named successor's published Ivy bytes at the target cell"
+                ],
+                "precedent": "Successor readings across package names are the boundary mechanism the record already used: the G3 ngx-toastr successor-line table read a successor line rather than a same-name version bump.",
+                "instance": {
+                  "package": "@angular/http",
+                  "deprecationMessage": "Package no longer supported. Use @angular/common instead, see https://angular.io/guide/deprecations#angularhttp",
+                  "successorPackageNamed": "@angular/common",
+                  "successorEntryPoint": "@angular/common/http",
+                  "nameDifference": "The registry string names the package `@angular/common`; the successor API surface inside it is the `@angular/common/http` entry point. The ruling paraphrased the entry point, the registry names the package, and both point at the same first-party successor.",
+                  "newestPublishedVersion": "7.2.16",
+                  "distTags": {
+                    "latest": "7.2.16",
+                    "next": "8.0.0-beta.10",
+                    "v4-lts": "4.4.7",
+                    "v5-lts": "5.2.11"
+                  },
+                  "versionsPublished": 252,
+                  "versionsCarryingThisDeprecation": 122,
+                  "distinctDeprecationMessages": 1,
+                  "packumentModified": "2022-06-12T14:41:58.643Z",
+                  "capturedBy": "lrapr-t023/u3-boundary-amend-candidate3-acquire",
+                  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+                  "sources": [
+                    {
+                      "url": "https://registry.npmjs.org/@angular/http/7.2.16",
+                      "accept": "application/json",
+                      "status": 200,
+                      "bytes": 3086,
+                      "sha256": "f3eeae03e225e29b6a877313eaedac08ac8eb37d964118ce88697039061faadf"
+                    },
+                    {
+                      "url": "https://registry.npmjs.org/@angular/http",
+                      "accept": "application/vnd.npm.install-v1+json",
+                      "status": 200,
+                      "bytes": 253997,
+                      "sha256": "fd36610eb553adacaa5110f5ebcb269533d3a1cc3e02eda9fbd4e29834d3a76c"
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "declared-but-never-imported-is-not-active-use",
+                "rule": "A dependency that a manifest declares but the application never imports is not in active application use, and therefore cannot fail the boundary. Active use means an import site in the pinned application source on the build path.",
+                "kind": "ecosystem-availability-fact",
+                "neverAnAdapterCapabilityFact": "The rule is settled by reading the pinned source for import sites, never by asking what a migration would have to do with the dependency.",
+                "evidenceRequired": [
+                  "the pinned compilation graph, rooted at the application entry point",
+                  "the absence of any import site for the dependency in that graph"
+                ],
+                "instance": {
+                  "package": "preboot",
+                  "application": "eShopOnContainers",
+                  "declaredVersion": "6.0.0-beta.5",
+                  "verdict": "declared but never imported — not active use, so it does not fail the boundary",
+                  "evidence": "The WebSPA compilation graph is 60 TypeScript files rooted at Client/main.ts; main.ts, app.module.ts and shared.module.ts carry no preboot import, and the tree has no server-side-rendering entry (main.server.ts / app.server.module.ts are absent), which is the only thing preboot exists for."
+                }
+              }
+            ],
+            "prevalence": {
+              "statement": "The no-successor pre-Ivy condition was observed in 5 of 6 independently selected webpack-era Angular applications: 1 tested-and-failed and 4 screened-and-failed. The sixth, eShopOnContainers, carries a first-party-successor removal, which is a distinct condition and is not counted in the 5.",
+              "applicationsExamined": 6,
+              "applicationsObservedWithTheCondition": 5,
+              "published": "5-of-6",
+              "neverPublishedAs": "6-of-6",
+              "tested": {
+                "count": 1,
+                "applications": [
+                  "pigallery2"
+                ],
+                "strength": "tested-and-failed",
+                "method": "ingested at a pin, baseline lane run green in the era toolchain, migrated lane run to a RED with no artifact ever produced",
+                "evidence": "evidence/runs/holdout-angular-pigallery2/receipt.json"
+              },
+              "screened": {
+                "count": 4,
+                "applications": [
+                  "cyclos4-ui",
+                  "ngx-starter-kit",
+                  "tabby",
+                  "coreui-free-angular-admin-template"
+                ],
+                "strength": "screened-and-failed",
+                "method": "boundary-only gate-zero screen from pinned manifests, npm registry documents and published bytes, with the import site found in the pinned source; never installed, built, migrated or trialled",
+                "evidence": "docs/goals/legacy-react-angular-production-readiness/notes/t023-candidate-selection.md"
+              },
+              "distinctCondition": {
+                "count": 1,
+                "application": "eShopOnContainers",
+                "condition": "first-party-successor removal",
+                "why": "The failing dependency, @angular/http, was removed from the framework with a first-party successor named in its registry deprecation metadata, whose bytes are Ivy at the target cell. That is not a dead third-party library with no successor to align to, so it is a different — and narrower — condition than the boundary describes.",
+                "countedInPrevalence": false
+              },
+              "distinctionRationale": "A tested failure and a screened failure are different strengths of evidence and are never merged into one number: the tested one measured a build, the screened ones read published metadata. Collapsing them, or counting the distinct sixth condition, would overstate what was measured.",
+              "sourceRecord": "docs/goals/legacy-react-angular-production-readiness/notes/t023-candidate-selection.md"
+            },
+            "populationStatement": "Any application clearing this gate is, by construction, drawn from a narrower and younger-dependency population than the webpack-era enterprise fleet this goal targets: its entire third-party Angular surface must still be maintained or have a published successor. A GREEN holdout therefore speaks for the supported cell only, and is not evidence about the fleet shape the 5-of-6 prevalence describes."
+          }
+        }
+      ],
+      "boundaryPrevalence": {
+        "published": "5-of-6",
+        "neverPublishedAs": "6-of-6",
+        "statement": "The no-successor pre-Ivy condition was observed in 5 of 6 independently selected webpack-era Angular applications: 1 tested-and-failed and 4 screened-and-failed. The sixth, eShopOnContainers, carries a first-party-successor removal, which is a distinct condition and is not counted in the 5.",
+        "populationStatement": "Any application clearing this gate is, by construction, drawn from a narrower and younger-dependency population than the webpack-era enterprise fleet this goal targets: its entire third-party Angular surface must still be maintained or have a published successor. A GREEN holdout therefore speaks for the supported cell only, and is not evidence about the fleet shape the 5-of-6 prevalence describes."
+      },
+      "trancheTwoCommitment": "No claim that this boundary is unreachable: an ngcc-bearing multi-hop cell (Angular 12 or 13) would consume those bytes. It is a declared tranche-two commitment, not a silent deferral, and it invalidates every Angular 16 cell reading in this record, so it is not taken here.",
+      "outOfMatrixCapabilities": {
+        "total": 58,
+        "crossProven": 8,
+        "experimental": 50,
+        "note": "A capability is claimed general, and therefore in the matrix, only once at least 2 independent applications prove it. The capabilities below are proven on fewer than that and are out of the matrix; they are named rather than silently claimed.",
+        "entries": [
+          {
+            "lineage": "react",
+            "capability": "react-cra-process-global"
+          },
+          {
+            "lineage": "react",
+            "capability": "react-next-static-adapter"
+          },
+          {
+            "lineage": "react",
+            "capability": "react-vite-origin-adapter"
+          },
+          {
+            "lineage": "react",
+            "capability": "react-connect-to-hooks"
+          },
+          {
+            "lineage": "react",
+            "capability": "react-data-flow-connect-to-hooks"
+          },
+          {
+            "lineage": "react",
+            "capability": "react-composed-migration"
+          },
+          {
+            "lineage": "react",
+            "capability": "react-class-lifecycle-to-hooks"
+          },
+          {
+            "lineage": "angular",
+            "capability": "template-analysis"
+          },
+          {
+            "lineage": "angular",
+            "capability": "semantic-module"
+          },
+          {
+            "lineage": "angular",
+            "capability": "undeclared-runtime-dependency"
+          },
+          {
+            "lineage": "angular",
+            "capability": "package-exports-style-imports"
+          },
+          {
+            "lineage": "angular",
+            "capability": "modal-content-params-migration"
+          },
+          {
+            "lineage": "angular",
+            "capability": "custom-webpack-absorption"
+          },
+          {
+            "lineage": "angular",
+            "capability": "tslint-toolchain-removal"
+          },
+          {
+            "lineage": "angular",
+            "capability": "font-inlining-disable"
+          },
+          {
+            "lineage": "angular",
+            "capability": "angular-cli-json-workspace-synthesis"
+          },
+          {
+            "lineage": "angular",
+            "capability": "builder-package-declaration"
+          },
+          {
+            "lineage": "angular",
+            "capability": "node-core-binding-migration"
+          },
+          {
+            "lineage": "angular",
+            "capability": "node-core-runtime-globals"
+          },
+          {
+            "lineage": "angular",
+            "capability": "template-i18n-runtime"
+          },
+          {
+            "lineage": "angular",
+            "capability": "rxjs-prototype-patch-migration"
+          },
+          {
+            "lineage": "angular",
+            "capability": "deep-import-redirection"
+          },
+          {
+            "lineage": "angular",
+            "capability": "entry-components-removal"
+          },
+          {
+            "lineage": "angular",
+            "capability": "module-with-providers-type-argument"
+          },
+          {
+            "lineage": "angular",
+            "capability": "widened-union-narrowing"
+          },
+          {
+            "lineage": "angular",
+            "capability": "forms-legacy-disabled-state"
+          },
+          {
+            "lineage": "angular",
+            "capability": "template-binding-reorder"
+          },
+          {
+            "lineage": "angular",
+            "capability": "declared-type-member-rename"
+          },
+          {
+            "lineage": "angular",
+            "capability": "json-module-named-import"
+          },
+          {
+            "lineage": "angular",
+            "capability": "promise-executor-void-parameter"
+          },
+          {
+            "lineage": "angular",
+            "capability": "removed-entry-point-symbol-successor"
+          },
+          {
+            "lineage": "angular",
+            "capability": "sass-mixin-hyphenation-successor"
+          },
+          {
+            "lineage": "angular",
+            "capability": "split-element-successor"
+          },
+          {
+            "lineage": "angular",
+            "capability": "stylesheet-url-rebase"
+          },
+          {
+            "lineage": "angular",
+            "capability": "subject-void-type-argument"
+          },
+          {
+            "lineage": "angular",
+            "capability": "successor-fork-package"
+          },
+          {
+            "lineage": "angular",
+            "capability": "suggested-export-rename"
+          },
+          {
+            "lineage": "angular",
+            "capability": "unparameterised-base-class"
+          },
+          {
+            "lineage": "angular",
+            "capability": "web-worker-url-specifier"
+          },
+          {
+            "lineage": "angular",
+            "capability": "synthetic-default-import-interop"
+          },
+          {
+            "lineage": "angular",
+            "capability": "sentry-v8-migration"
+          },
+          {
+            "lineage": "angular",
+            "capability": "workspace-engines-retarget"
+          },
+          {
+            "lineage": "angular",
+            "capability": "undecorated-angular-base-class"
+          },
+          {
+            "lineage": "angular",
+            "capability": "application-source-dependency"
+          },
+          {
+            "lineage": "angular",
+            "capability": "use-position-symbol-successor"
+          },
+          {
+            "lineage": "angular",
+            "capability": "removed-static-module-method"
+          },
+          {
+            "lineage": "angular",
+            "capability": "http-client-call-surface"
+          },
+          {
+            "lineage": "angular",
+            "capability": "superseded-era-lockfile"
+          },
+          {
+            "lineage": "angular",
+            "capability": "workspace-script-flags"
+          },
+          {
+            "lineage": "angular",
+            "capability": "departed-dom-lib-member"
+          }
+        ]
+      }
+    }
+  },
+  "deviations": [
+    {
+      "cell": "angular-phonecat-vite8",
+      "kind": "service-worker",
+      "state": "out-of-scope-not-emitted",
+      "disposition": "recorded, not masked"
+    },
+    {
+      "cell": "react-papercups-v1-0-0",
+      "kind": "service-worker",
+      "state": "application-unregister",
+      "disposition": "recorded, not masked"
+    },
+    {
+      "cell": "react-papercups-v1-0-0",
+      "kind": "scroll-surface",
+      "state": "omitted-not-meaningful",
+      "disposition": "recorded, not masked"
+    },
+    {
+      "cell": "react-hospitalrun",
+      "kind": "service-worker",
+      "state": "application-register-refused-by-context",
+      "disposition": "recorded, not masked"
+    },
+    {
+      "cell": "react-hospitalrun",
+      "kind": "scroll-surface",
+      "state": "measured-genuine-viewport-scroll",
+      "disposition": "recorded, not masked"
+    },
+    {
+      "cell": "angular-factoriolab",
+      "kind": "service-worker",
+      "state": "no-service-worker-in-either-lane",
+      "disposition": "recorded, not masked"
+    },
+    {
+      "cell": "angular-factoriolab",
+      "kind": "scroll-surface",
+      "state": "measured-no-overflowing-document",
+      "disposition": "recorded, not masked"
+    },
+    {
+      "cell": "angular-jira-clone",
+      "kind": "service-worker",
+      "state": "no-service-worker-in-either-lane",
+      "disposition": "recorded, not masked"
+    },
+    {
+      "cell": "angular-jira-clone",
+      "kind": "scroll-surface",
+      "state": "measured-no-overflowing-document",
+      "disposition": "recorded, not masked"
+    },
+    {
+      "cell": "react-memos-v0-1-3",
+      "kind": "scroll-surface",
+      "state": "measured-no-overflowing-document",
+      "disposition": "recorded, not masked"
+    },
+    {
+      "cell": "next-killedbygoogle-v3-0-0",
+      "kind": "service-worker",
+      "state": "no-service-worker-in-either-lane",
+      "disposition": "recorded, not masked"
+    },
+    {
+      "cell": "next-killedbygoogle-v3-0-0",
+      "kind": "scroll-surface",
+      "state": "measured-genuine-viewport-scroll",
+      "disposition": "recorded, not masked"
+    },
+    {
+      "cell": "react-linkfree-v0-72-0",
+      "kind": "scroll-surface",
+      "state": "measured-genuine-viewport-scroll",
+      "disposition": "recorded, not masked"
+    },
+    {
+      "cell": "angular-tiny-translator-v0-12-0",
+      "kind": "scroll-surface",
+      "state": "measured-no-overflowing-document",
+      "disposition": "recorded, not masked"
+    },
+    {
+      "cell": "angular-super-productivity-v2-13-15",
+      "kind": "service-worker",
+      "state": "declared-real-ngsw-in-both-lanes-settled-state-measured-at-witness-time",
+      "disposition": "recorded, not masked"
+    },
+    {
+      "cell": "angular-super-productivity-v2-13-15",
+      "kind": "scroll-surface",
+      "state": "measured-no-overflowing-document",
+      "disposition": "recorded, not masked"
+    },
+    {
+      "cell": "holdout-angular-eshop-webspa",
+      "kind": "witness-surface-limit",
+      "state": "identity: out-of-surface",
+      "disposition": "unproven rather than proven absent"
+    },
+    {
+      "cell": "holdout-angular-eshop-webspa",
+      "kind": "witness-surface-limit",
+      "state": "basket: out-of-surface",
+      "disposition": "unproven rather than proven absent"
+    },
+    {
+      "cell": "holdout-angular-eshop-webspa",
+      "kind": "witness-surface-limit",
+      "state": "orders: out-of-surface",
+      "disposition": "unproven rather than proven absent"
+    },
+    {
+      "cell": "holdout-angular-eshop-webspa",
+      "kind": "witness-surface-limit",
+      "state": "campaigns: out-of-surface",
+      "disposition": "unproven rather than proven absent"
+    },
+    {
+      "cell": "holdout-angular-eshop-webspa",
+      "kind": "witness-surface-limit",
+      "state": "signalr: not-reached",
+      "disposition": "unproven rather than proven absent"
+    },
+    {
+      "cell": "holdout-angular-eshop-webspa",
+      "kind": "witness-surface-limit",
+      "state": "text-entry: not-tested",
+      "disposition": "unproven rather than proven absent"
+    },
+    {
+      "cell": "holdout-angular-eshop-webspa",
+      "kind": "witness-surface-limit",
+      "state": "drag: not-tested",
+      "disposition": "unproven rather than proven absent"
+    },
+    {
+      "cell": "angular-realworld-v15-to-v16",
+      "kind": "demoted-from-denominator",
+      "state": "Judge-declined and demoted from the denominator: the migration changed applicationFilesChanged=0 application files, so it is an Angular 15-to-16 dependency version bump rebuilt under AOT rather than a proven application migration. Its browser-proof receipt stays verified and retained; it is excluded from the Angular denominator rather than counted, which is why the Angular total is four non-demoted cells and not five.",
+      "disposition": "recorded, not masked"
+    }
+  ],
+  "unsupportedAndUnknown": {
+    "unsupportedCells": [
+      {
+        "cell": "angular-16-browser-builder",
+        "state": "unsupported",
+        "certification": "not-certified: this cell is declared unsupported, not tested-and-failed-once",
+        "condition": "pre-Ivy-only dependencies (no published Ivy successor) in active application use => unsupported at the Angular 16 target cell"
+      }
+    ],
+    "notTested": {
+      "takenote": "not-tested",
+      "angular2Hn": "not-tested",
+      "oldVite": "not-tested",
+      "genericAdapter": "not-tested",
+      "unplugin": "not-tested",
+      "nextjs": "fixture-specific-next12-pages-verified"
+    },
+    "unknown": {
+      "securityPolicy": {
+        "state": "unknown",
+        "reason": "SECURITY.md is absent."
+      },
+      "gitProvenance": {
+        "state": "unknown",
+        "reason": "Git metadata is absent."
+      },
+      "signingIdentity": {
+        "state": "unknown",
+        "reason": "No project signing identity is designated."
+      },
+      "rootLicenseText": {
+        "state": "unknown",
+        "reason": "No root LICENSE file exists."
+      },
+      "licenseCoverage": {
+        "spdxExpression": {
+          "verified": 89,
+          "unknown": 108,
+          "ambiguous": 0
+        },
+        "licenseText": {
+          "verified": 77,
+          "unknown": 120,
+          "ambiguous": 0
+        }
+      }
+    }
+  },
+  "claims": {
+    "derivation": "Every claim restates a score or digest the corpus derived; every non-claim is carried verbatim from the record that already publishes it. Neither list is authored beside the evidence.",
+    "claims": [
+      "6 of 6 React-lineage cells and 4 of 4 Angular-lineage cells carry a Judge-accepted direct-Witness browser proof against the frozen adapter, each on its own immutable source application.",
+      "Every number above is derived from the Judge counting ledger inside `corpus-conformance.json` (`e6c9068a196f78bd767caa3718686d68d6ed4a83554dd6f17ea2bd556cddd01d`); the cells are enumerated in this record and each names the receipt it was counted off.",
+      "8 of 58 enumerated migration capabilities are cross-proven on at least two independent applications and are therefore in the matrix.",
+      "Every artifact in this package is bound by SHA-256 to the trust manifest, and the derived documents are re-derived from the same canonical receipts at verification time.",
+      "The two published holdouts that did not end RED are reported with the exact outcome string their receipts carry, and both are counted in no lineage numerator."
+    ],
+    "nonClaims": [
+      "This package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation. No cell in it carries a certification of any kind.",
+      "Integrity is hash-only: authenticity is **not-established** and certification is **not-claimed**. Signer authenticity is not established.",
+      "No SLSA level is claimed. The provenance record is in-toto/SLSA-shaped only, and Git provenance and official CI identity remain unknown.",
+      "Locality is Versionless-spawned processes and browser routing and process-scoped: OS-wide isolation is **false** and is not claimed.",
+      "Neither holdout is counted in any lineage numerator. This holdout passed, and it is still counted in no lineage numerator: a passing holdout shows the frozen adapter carrying one further application, not a migrated-application product count. It is published rather than folded into any numerator. Never counted in any lineage numerator by this record. The migrated production build is green and repeatable, and the Witness is green on the anonymous catalog surface — twice per lane, one parity digest, with a mutation-red and byte-restore proof under it. What that leaves unproven is stated beside it: every surface outside the anonymous catalog: identity is out of surface and basket, orders and campaigns are out of surface behind it, the SignalR hub was never reached, and text entry and drag were not tested — those surfaces are unproven rather than proven absent. Whether a holdout proven on a bounded surface should ever reach a numerator is the Judge's decision, taken on the Judge's ledger and not here. The install RED under the frozen f1a63359 composite is retained beside all of it as the record of what the frozen adapter did.",
+      "The eShopOnContainers WebSPA holdout is published as `witness-passed-on-bounded-anonymous-catalog-surface` and is never restated in any shorter or more general form. The surfaces it does not cover are named: identity (out-of-surface), basket (out-of-surface), orders (out-of-surface), campaigns (out-of-surface), signalr (not-reached), text-entry (not-tested), drag (not-tested).",
+      "50 of 58 enumerated capabilities are proven on fewer than two independent applications and are **out of the matrix**; nothing general is claimed for them.",
+      "Static script-surface evidence claims no payment-page applicability (**not-established**), no dynamic script insertion coverage (**not-tested**), and no PCI compliance (**not-claimed**).",
+      "Runtime script observation is scoped to the exact qualified journeys: global dynamic-insertion coverage is **not-established** and PCI compliance is **not-claimed**.",
+      "The Angular 16 pre-Ivy-only-dependency cell is declared **unsupported**. Prevalence is published as **5-of-6** and is never rounded up to include the sixth application, whose condition is a different one: The no-successor pre-Ivy condition was observed in 5 of 6 independently selected webpack-era Angular applications: 1 tested-and-failed and 4 screened-and-failed. The sixth, eShopOnContainers, carries a first-party-successor removal, which is a distinct condition and is not counted in the 5.",
+      "Any application clearing this gate is, by construction, drawn from a narrower and younger-dependency population than the webpack-era enterprise fleet this goal targets: its entire third-party Angular surface must still be maintained or have a published successor. A GREEN holdout therefore speaks for the supported cell only, and is not evidence about the fleet shape the 5-of-6 prevalence describes.",
+      "No claim that every application carrying a pre-Ivy-only dependency is unmigratable in general: the boundary is declared at the Angular 16 target cell, which is the only Angular cell this engine has.",
+      "No claim that this boundary is unreachable: an ngcc-bearing multi-hop cell (Angular 12 or 13) would consume those bytes. It is a declared tranche-two commitment, not a silent deferral, and it invalidates every Angular 16 cell reading in this record, so it is not taken here.",
+      "No claim that the boundary excuses the pigallery2 RED. The RED is permanent falsification evidence and is published unchanged alongside this declaration.",
+      "No claim that this boundary is unreachable: an ngcc-bearing multi-hop cell (Angular 12 or 13) would consume those bytes. It is a declared tranche-two commitment, not a silent deferral, and it invalidates every Angular 16 cell reading in this record, so it is not taken here.",
+      "pigallery2: Permanent falsification evidence. The declared pre-Ivy support boundary rests on this RED, and the RED is published unchanged rather than retracted or excused by it.",
+      "eShopOnContainers WebSPA: Permanent falsification evidence. The install RED this application took under the frozen composite is retained beside its later bounded-surface result, not replaced by it.",
+      "cypress-realworld-app: Permanent falsification evidence. The tranche-one RED is superseded by reference and stays published; it is not deleted by the later passing record."
+    ]
+  }
+}
