@@ -1,4 +1,4 @@
-import { cp, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { cp, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import * as path from 'pathe';
 import { describe, expect, it } from 'vitest';
@@ -54,6 +54,12 @@ import {
 	holdoutReactCypressRwaCorpusRecord,
 	verifyHoldoutReactCypressRwaEvidence,
 } from '../src/receipts/holdout-react-cypress-rwa.ts';
+import {
+	ANGULAR_PRE_IVY_SUPPORT_BOUNDARY,
+	HOLDOUT_ANGULAR_PIGALLERY2_RUN_EVIDENCE,
+	holdoutAngularPigallery2CorpusRecord,
+	verifyHoldoutAngularPigallery2Evidence,
+} from '../src/receipts/holdout-angular-pigallery2.ts';
 import { reactHospitalrunAggregateMember } from '../src/corpus/conformance.ts';
 import { receiptDigest, sha256 } from '../src/receipts/canonicalize.ts';
 import { renderReceipt } from '../src/receipts/render.ts';
@@ -120,6 +126,14 @@ async function corpusCopy(label: string): Promise<string> {
 		path.join(directory, 'fixtures/angular-realworld-v15-to-v16'),
 		{ recursive: true },
 	);
+	// The Angular holdout's run evidence, copied file by file rather than as a
+	// directory: the ingest also holds the source archive, and a corpus copy per
+	// test does not need to carry a tarball to check a ledger.
+	await mkdir(path.join(directory, 'evidence/ingests/angular-pigallery2-v1-7-0/migration'), {
+		recursive: true,
+	});
+	for (const evidence of HOLDOUT_ANGULAR_PIGALLERY2_RUN_EVIDENCE)
+		await cp(path.join(root, evidence.path), path.join(directory, evidence.path));
 	return directory;
 }
 
@@ -1600,13 +1614,24 @@ describe('canonical corpus conformance', () => {
 		const result = await analyzeCorpusConformance({ rootDir: root });
 		const verified = await verifyHoldoutReactCypressRwaEvidence(root);
 		const expected = holdoutReactCypressRwaCorpusRecord(verified.receipt);
+		const pigalleryVerified = await verifyHoldoutAngularPigallery2Evidence(root);
+		const pigalleryExpected = holdoutAngularPigallery2CorpusRecord(pigalleryVerified.receipt);
 		const readiness = (result.coverage as Record<string, unknown>)
 			.productionReadiness as Record<string, unknown>;
-		expect(readiness.holdouts).toEqual([expected]);
+		expect(readiness.holdouts).toEqual([expected, pigalleryExpected]);
 		const aggregate = JSON.parse(
 			await readFile(path.join(root, 'evidence/runs/aggregate.json'), 'utf8'),
 		) as { fixtures: Array<Record<string, unknown>>; holdouts: unknown[] };
-		expect(aggregate.holdouts).toEqual([expected]);
+		expect(aggregate.holdouts).toEqual([expected, pigalleryExpected]);
+		// The Angular holdout failed and stays failed: it is the falsification
+		// evidence the declared support boundary rests on, and a boundary that
+		// reclassified its own evidence would be a gate change wearing a
+		// limitation's clothes.
+		expect(pigalleryExpected.outcome).toBe('failed');
+		expect(pigalleryExpected.countedInLineageNumerator).toBe(false);
+		expect(
+			aggregate.fixtures.some((fixture) => fixture.receipt === pigalleryExpected.receipt),
+		).toBe(false);
 		// The holdout is evidence about the frozen adapter, not a migrated
 		// application, so it is neither an aggregate fixture row nor a Judge
 		// counting cell.
@@ -1616,6 +1641,55 @@ describe('canonical corpus conformance', () => {
 		const ledger = readiness.judgeCounting as Array<Record<string, unknown>>;
 		expect(ledger.some((cell) => cell.application === expected.application)).toBe(false);
 		expect(ledger.some((cell) => cell.cell === expected.id)).toBe(false);
+	});
+
+	it('declares the pre-Ivy support boundary as data, with its instance evidence', async () => {
+		const result = await analyzeCorpusConformance({ rootDir: root });
+		const boundaries = (result.coverage as Record<string, unknown>)
+			.supportBoundaries as Array<Record<string, unknown>>;
+		expect(boundaries).toHaveLength(1);
+		const boundary = boundaries[0] as Record<string, unknown>;
+		expect(boundary.id).toBe(ANGULAR_PRE_IVY_SUPPORT_BOUNDARY.id);
+		expect(boundary.state).toBe('unsupported');
+		expect(boundary.cell).toBe('angular-16-browser-builder');
+		expect(boundary.condition).toBe(
+			'pre-Ivy-only dependencies (no published Ivy successor) in active application use => unsupported at the Angular 16 target cell',
+		);
+		expect(String(boundary.certification)).toContain('not-certified');
+		const evidence = boundary.instanceEvidence as {
+			application: string;
+			libraries: number;
+			importSites: number;
+			wall: Array<{ library: string; importSites: string[] }>;
+		};
+		// Three libraries at six sites, and the sites are the application's own:
+		// a boundary stated without the instances that prove it is an opinion.
+		expect(evidence.application).toBe('pigallery2');
+		expect(evidence.libraries).toBe(3);
+		expect(evidence.importSites).toBe(6);
+		expect(evidence.wall.map((entry) => entry.library)).toEqual([
+			'@yaga/leaflet-ng2',
+			'ng2-slim-loading-bar',
+			'jw-bootstrap-switch-ng2',
+		]);
+		expect(evidence.wall.reduce((total, entry) => total + entry.importSites.length, 0)).toBe(6);
+	});
+
+	it('refuses a support boundary whose falsification evidence was edited', async () => {
+		const directory = await corpusCopy('boundary-evidence');
+		try {
+			await mutateJson(
+				directory,
+				'evidence/runs/holdout-angular-pigallery2/receipt.json',
+				(value) => {
+					const lanes = value.lanes as Record<string, Record<string, unknown>>;
+					lanes.migrated.outcome = 'green';
+				},
+			);
+			await expect(analyzeCorpusConformance({ rootDir: directory })).rejects.toThrow();
+		} finally {
+			await rm(directory, { recursive: true, force: true });
+		}
 	});
 
 	it('leaves both lineage numerators exactly where the Judge ledger puts them', async () => {

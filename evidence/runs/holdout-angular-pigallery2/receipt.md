@@ -1,0 +1,58 @@
+# pigallery2 1.7.0 — Angular holdout falsification receipt
+
+- Outcome: **failed** — the frozen Angular adapter does not carry this application at this revision
+- Recorded reason: **consumption of pre-Ivy-only dependencies with no published Ivy successor at the Angular 16 target cell**
+- Canonical SHA-256: 39a133ff97c37622a4a1821f20e7c442c9bc22ed7597a3e73cbd31323ab2bb10
+- Ingested by `lrapr-t018/u1-license-prescreen-ingest`, measured at the wall by `lrapr-t021/u4-app-source-transform-wall`, published by `lrapr-t023/u1-boundary-publish-refreeze`
+- Source: bpatrik/pigallery2 at release `1.7.0` (`6d44c22df13b8f9416715e86e160707d0c3f973a`, MIT, license text sha256 `a6a1ced1297392e5d8d39c72b023df7b12f44943d7f83748231bc92c99fd3bb7`), Angular 8.1.2 under @angular/cli@8.1.2, TypeScript 3.4.5
+- Target cell: `angular-16-browser-builder` — Angular 16.2, `@angular-devkit/build-angular:browser`
+- Adapter at ingestion: frozen composite `4df7bc961033fc5856b4d58e0bca9f11ad2aa9d43aaaee726956f34d209b37e7`, 0 bytes changed; 0 application files hand-edited
+- Authorized reopen: T018 ran this application against the frozen 4df7bc96 composition with zero adapter bytes changed. T021 then reopened the Angular subtree under board authorization and extracted twelve generic capabilities from the falsification; the final build below ran against Angular subtree oid 1f63f32c, which is the tree the f1a63359 re-freeze publishes. No capability branches on this application, and no application source file was hand-edited in any unit.
+- Derived from committed run evidence: `evidence/ingests/angular-pigallery2-v1-7-0/attempt.json` (`222fd0ab7e4fa2c6b462d306534eeb82c88b47c37bd102093ecbce12d4e25fbb`), `evidence/ingests/angular-pigallery2-v1-7-0/migration/t021-u4-lane-install.log` (`af3cac2a3c9803958f2927e83832c5f741aa08c44b7e787e1224bb5ca7fb467b`), `evidence/ingests/angular-pigallery2-v1-7-0/migration/t021-u4-lane-build-run1.log` (`47231a5f3b39ae05f9d36a9c9a0baf579633478383b207bd1d4b6ea48370226e`)
+
+## Both lanes
+
+- Baseline (the application's own era toolchain (Node 10.24.1, npm 6.14.12)): **green** — frontend production baseline GREEN in the app's own era toolchain, with one registry-closure break recorded
+- Migrated: **red** — closure installs, 3 builds attempted, 260 diagnostics before the last capability pass and 257 at the wall, no artifact produced. The migrated closure installs from the manifest as authored and the compiler reads the application. Three successive migrated builds refused at the compiler and emitted nothing; the movement across them is itemised in the sealed attempt record.
+
+## The wall
+
+**consumption of pre-Ivy-only dependencies with no published Ivy successor at the Angular 16 target cell.**
+
+Three libraries this application imports stop at pre-Ivy bytes and have no published Ivy successor. Angular 16 removed ngcc, so those bytes cannot be consumed at the target cell, and there is no version to align to. Every transform that would clear them edits the application at its six import sites, which is an application change and not a migration. The engine has no capability positioned there, and adding one would be adding an application edit.
+
+- `@yaga/leaflet-ng2` — stops at 1.1.0, built against Angular 12 in full compilation mode with no partial declarations for a linker to read. Import sites: `frontend/app/app.module.ts:14`, `frontend/app/ui/gallery/map/map.gallery.component.ts:7`, `frontend/app/ui/gallery/map/lightbox/lightbox.map.gallery.component.ts:16`.
+- `ng2-slim-loading-bar` — stops at 4.0.0, whose declared peer is @angular/core "^2.4.7 || ^4.0.0". Import sites: `frontend/app/app.module.ts:31`, `frontend/app/model/network/network.service.ts:4`.
+- `jw-bootstrap-switch-ng2` — stops at 2.0.5, a pre-Ivy ViewEngine package, on a cell whose ngcc is a stub. Import sites: `frontend/app/app.module.ts:41`.
+
+3 libraries at 6 import sites. 249 of the 264 diagnostics — every NG8001, NG8002, NG8003 and NG8004 — are downstream of frontend/app/app.module.ts failing to compile, and that is checkable rather than asserted. The two TS2307 in that file leave its @NgModule literal unanalysable, so every component it declares loses its module scope at once. The proof is in which bindings fail: the compiler reports `Can't bind to 'ngClass' since it isn't a known property of 'span'`, `Can't bind to 'routerLink' since it isn't a known property of 'a'`, `'router-outlet' is not a known element` and `No directive found with exportAs 'ngForm'` — CommonModule, RouterModule and FormsModule directives, all three of which app.module.ts imports and all three of which the closure installed correctly. Builtin directives cannot go missing for a dependency reason; they can only go missing for a scope reason. The fifteen diagnostics left are the ones the gaps above name.
+
+Action taken: none against the application. The RED is recorded, the boundary is declared, and the twelve capabilities the chase produced stay experimental.
+
+## Declared support boundary
+
+**pre-Ivy-only dependencies (no published Ivy successor) in active application use => unsupported at the Angular 16 target cell**
+
+- State: **unsupported** at cell `angular-16-browser-builder` (angular lineage)
+- Declared by lrapr-t022 boundary ruling (Judge, 2026-08-14); published by `lrapr-t023/u1-boundary-publish-refreeze`
+- Mechanism: Angular 16 removed ngcc, so ViewEngine bytes cannot be consumed at this cell, and a library whose last published version is pre-Ivy has no successor to align to. Carrying such an application would require editing its source at the import sites, which is an application change rather than a migration the engine can perform.
+- Certification: not-certified: this cell is declared unsupported, not tested-and-failed-once
+
+- No claim that every application carrying a pre-Ivy-only dependency is unmigratable in general: the boundary is declared at the Angular 16 target cell, which is the only Angular cell this engine has.
+- No claim that this boundary is unreachable: an ngcc-bearing multi-hop cell (Angular 12 or 13) would consume those bytes. It is a declared tranche-two commitment, not a silent deferral, and it invalidates every Angular 16 cell reading in this record, so it is not taken here.
+- No claim that the boundary excuses the pigallery2 RED. The RED is permanent falsification evidence and is published unchanged alongside this declaration.
+
+## Non-claims
+
+- The migrated build emits nothing. Nothing here establishes that this application can be carried to Angular 16 at all, and nothing establishes that it cannot: three gaps are answered, four are open demands, and no artifact exists.
+- No browser opened anything, no server was started, and no journey was exercised, in either lane.
+- The probe measures a tree that is not the migrated lane. Its 264 diagnostics are a census of what the compiler said about one narrowed tree in one configuration; they are not an estimate of remaining work, because answering a module-level demand removes many template-level ones at once.
+- The gap list is closed at the install stage and open at the compile stage. The install set was closed by narrowing until the tree resolved; the compile set is what one build of one narrowed tree reported, and answering the seven gaps would let the compiler reach code it has not yet read.
+- `packagesInstalled` counts what npm reported with lifecycle scripts disabled. Nothing here establishes what a scripted install of either manifest does.
+- The registry readings quoted for G1, G2 and G3 were made under consent VL-LEGACY-CORPUS-2026-08-10 against registry.npmjs.org on 2026-08-14. They are readings of published metadata, not installations, and no line named in a `neededTransform` was installed or built by T018.
+- The closure that installed for the install-stage measurement is the migrated manifest minus one devDependency, xlf-google-translate, whose own declared dependency was deleted from the registry before either lane ran. That narrowing is the era baseline's, digest-bounded and restored, and it was not a claim that the authored migrated manifest installs. It is superseded rather than repeated: the compile-stage unit reads xlf-google-translate at ^1.0.4, and `compileStageDependencyClosure.laneInstall` records an install of the authored manifest with no package removed and no flag forced.
+- Two of this application's libraries are now dropped rather than migrated, and the map and the switch control they served are gone from the migrated workspace. Nothing here establishes that the application is still the application after those removals; the declared differences state them so that a reader is not asked to assume otherwise.
+- The engines.node retarget is a manifest declaration. No process was run under any Node line other than the 16.20.2 this cell declares, so nothing here establishes what this workspace requires at runtime.
+- No browser evidence exists for either lane. No journey ran, no page was loaded, and nothing is claimed about behavior.
+- No claim that the twelve capabilities the chase extracted are proven: every one of them was written against this single application, whose migrated build is RED, and all twelve stay experimental and out of the supported matrix.
+- No claim that a green holdout would have proven generic Angular support. The caveat is carried here in the failing direction too.

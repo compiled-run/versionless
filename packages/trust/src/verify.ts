@@ -876,6 +876,31 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 			: nextKilledByGoogle !== undefined)
 	)
 		throw new Error('Required unsupported/not-tested corpus states were upgraded');
+	// The declared support boundaries and the failed holdouts are the two places
+	// the report says what did not work. Both are checked for presence and for
+	// state here, because the failure mode that matters is not a wrong number —
+	// it is a section that quietly stops being emitted.
+	const boundaries = asRecord(emittedConformance.coverage, 'corpus coverage').supportBoundaries;
+	if (!Array.isArray(boundaries) || boundaries.length === 0)
+		throw new Error('Corpus conformance omits the declared support boundaries');
+	for (const value of boundaries) {
+		const boundary = asRecord(value, 'declared support boundary');
+		const evidence = asRecord(boundary.instanceEvidence, 'support boundary instance evidence');
+		if (
+			boundary.state !== 'unsupported' ||
+			asString(boundary.condition, 'support boundary condition').length === 0 ||
+			asString(boundary.certification, 'support boundary certification').startsWith(
+				'certified',
+			) ||
+			asString(evidence.receipt, 'support boundary receipt').length === 0
+		)
+			throw new Error('A declared support boundary was upgraded or stripped of its evidence');
+	}
+	if (
+		!Array.isArray(matrix.boundaries) ||
+		canonicalize(matrix.boundaries) !== canonicalize(boundaries)
+	)
+		throw new Error('The trust matrix does not carry the declared support boundaries');
 	const papercupsCell = cells.get(REACT_PAPERCUPS_FIXTURE);
 	const papercupsVertical = emittedConformance.verticals.find(
 		(value) => asRecord(value, 'corpus vertical').id === REACT_PAPERCUPS_FIXTURE,

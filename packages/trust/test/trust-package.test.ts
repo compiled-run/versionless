@@ -1116,14 +1116,14 @@ snapshots:
 				'The Vite adapter is **fixture-specific**; generic adapter: **not-tested**; unplugin portability: **not-tested**',
 			);
 			expect(report).toContain('T220 is **not included**');
-			// The one failed holdout in the corpus is stated in the report with its
-			// recorded reason, and stated to be counted in no numerator, so the
+			// Both failed holdouts in the corpus are stated in the report with their
+			// recorded reasons, and stated to be counted in no numerator, so the
 			// unchanged lineage scores cannot be read as an absence of contrary
 			// evidence.
 			const holdouts = (
 				conformance.coverage.productionReadiness as Record<string, unknown>
 			).holdouts as Array<Record<string, unknown>>;
-			expect(holdouts).toHaveLength(1);
+			expect(holdouts).toHaveLength(2);
 			expect(holdouts[0]).toMatchObject({
 				id: 'holdout-react-cypress-rwa',
 				attempted: true,
@@ -1131,9 +1131,33 @@ snapshots:
 				reason: 'non-UTF-8 module source decoding',
 				countedInLineageNumerator: false,
 			});
+			expect(holdouts[1]).toMatchObject({
+				id: 'holdout-angular-pigallery2',
+				attempted: true,
+				outcome: 'failed',
+				countedInLineageNumerator: false,
+			});
 			expect(report).toContain('holdout-react-cypress-rwa');
 			expect(report).toContain('non-UTF-8 module source decoding');
 			expect(report).toContain('counted in no lineage numerator');
+			expect(report).toContain('holdout-angular-pigallery2');
+			// The declared support boundary is carried by the report and by the
+			// matrix, with its non-certification language intact.
+			expect(report).toContain(
+				'pre-Ivy-only dependencies (no published Ivy successor) in active application use => unsupported at the Angular 16 target cell',
+			);
+			expect(report).toContain('not-certified');
+			const matrixBoundaries = (
+				JSON.parse(await readFile(path.join(fixture.current, 'matrix.json'), 'utf8')) as {
+					boundaries: Array<Record<string, unknown>>;
+				}
+			).boundaries;
+			expect(matrixBoundaries).toHaveLength(1);
+			expect(matrixBoundaries[0]).toMatchObject({
+				id: 'angular-16-pre-ivy-only-dependency',
+				state: 'unsupported',
+				cell: 'angular-16-browser-builder',
+			});
 			const scriptSurface = JSON.parse(
 				await readFile(path.join(fixture.current, 'script-surface.json'), 'utf8'),
 			) as { summary: Record<string, unknown>; boundaries: Record<string, unknown> };
@@ -1742,14 +1766,20 @@ snapshots:
 			};
 			crossProven: { entries: Array<{ lineage: string; capability: string }> };
 		};
-		expect(capabilities.experimental.entries).toHaveLength(12);
+		// Twelve from the first two tranches, twelve more from the authorized T021
+		// Angular reopen. The reopen bought capabilities, not coverage: every one
+		// of them is still single-application and still out of the matrix.
+		expect(capabilities.experimental.entries).toHaveLength(24);
 		expect(capabilities.experimental.pendingEvidence).toContain('T006');
 		expect(capabilities.crossProven.entries.map((entry) => entry.capability)).toContain(
 			'react-cra-vite-adapter',
 		);
+		const reopen = record.reopen as { capabilitiesExtracted: number; entries: unknown[] };
+		expect(reopen.capabilitiesExtracted).toBe(12);
+		expect(reopen.entries).toHaveLength(12);
 		expect(record.angularHoldout).toMatchObject({
-			state: 'deferred',
-			deferredUntil: 'post-T006',
+			state: 'attempted',
+			outcome: 'failed',
 			preScreen: 'mandatory license-text-at-pin pre-screen',
 		});
 		expect(verifyAdapterFreezeRecord(record)).toEqual(record);

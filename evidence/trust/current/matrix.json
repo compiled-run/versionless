@@ -2,8 +2,59 @@
   "schemaVersion": "versionless.trust.v1",
   "derivedFrom": {
     "path": "corpus-conformance.json",
-    "sha256": "55f0fdbbee42b02058e109d8d10d64081b803be3e1c5d5863b06acb279693fa5"
+    "sha256": "7c70888a8ea55ee68a122790d42ad52d55b9fcf1efd43104893c166131072547"
   },
+  "boundaries": [
+    {
+      "id": "angular-16-pre-ivy-only-dependency",
+      "lineage": "angular",
+      "cell": "angular-16-browser-builder",
+      "state": "unsupported",
+      "declaredBy": "lrapr-t022 boundary ruling (Judge, 2026-08-14)",
+      "publishedBy": "lrapr-t023/u1-boundary-publish-refreeze",
+      "condition": "pre-Ivy-only dependencies (no published Ivy successor) in active application use => unsupported at the Angular 16 target cell",
+      "mechanism": "Angular 16 removed ngcc, so ViewEngine bytes cannot be consumed at this cell, and a library whose last published version is pre-Ivy has no successor to align to. Carrying such an application would require editing its source at the import sites, which is an application change rather than a migration the engine can perform.",
+      "certification": "not-certified: this cell is declared unsupported, not tested-and-failed-once",
+      "instanceEvidence": {
+        "application": "pigallery2",
+        "receipt": "evidence/runs/holdout-angular-pigallery2/receipt.json",
+        "libraries": 3,
+        "importSites": 6,
+        "digest": "39a133ff97c37622a4a1821f20e7c442c9bc22ed7597a3e73cbd31323ab2bb10",
+        "wall": [
+          {
+            "library": "@yaga/leaflet-ng2",
+            "lastPublishedVersion": "1.1.0",
+            "importSites": [
+              "frontend/app/app.module.ts:14",
+              "frontend/app/ui/gallery/map/map.gallery.component.ts:7",
+              "frontend/app/ui/gallery/map/lightbox/lightbox.map.gallery.component.ts:16"
+            ]
+          },
+          {
+            "library": "ng2-slim-loading-bar",
+            "lastPublishedVersion": "4.0.0",
+            "importSites": [
+              "frontend/app/app.module.ts:31",
+              "frontend/app/model/network/network.service.ts:4"
+            ]
+          },
+          {
+            "library": "jw-bootstrap-switch-ng2",
+            "lastPublishedVersion": "2.0.5",
+            "importSites": [
+              "frontend/app/app.module.ts:41"
+            ]
+          }
+        ]
+      },
+      "nonclaims": [
+        "No claim that every application carrying a pre-Ivy-only dependency is unmigratable in general: the boundary is declared at the Angular 16 target cell, which is the only Angular cell this engine has.",
+        "No claim that this boundary is unreachable: an ngcc-bearing multi-hop cell (Angular 12 or 13) would consume those bytes. It is a declared tranche-two commitment, not a silent deferral, and it invalidates every Angular 16 cell reading in this record, so it is not taken here.",
+        "No claim that the boundary excuses the pigallery2 RED. The RED is permanent falsification evidence and is published unchanged alongside this declaration."
+      ]
+    }
+  ],
   "cells": [
     {
       "id": "react-boilerplate-v4",

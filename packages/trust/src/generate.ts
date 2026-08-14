@@ -1081,6 +1081,12 @@ function matrix(conformance: CorpusConformance): Record<string, unknown> {
 			path: 'corpus-conformance.json',
 			sha256: conformance.integrity.canonicalDigest,
 		},
+		/**
+		 * Cells the engine declares unsupported, carried beside the verified
+		 * ones. The matrix would otherwise be a list of successes, which is the
+		 * shape a reader most easily mistakes for coverage.
+		 */
+		boundaries: (conformance.coverage as Record<string, unknown>).supportBoundaries,
 		cells: [
 			{
 				id: 'react-boilerplate-v4',

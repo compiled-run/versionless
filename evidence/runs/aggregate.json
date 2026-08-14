@@ -284,6 +284,35 @@
       "countedInLineageNumerator": false,
       "countingNote": "Never counted in any lineage numerator: no application was migrated. The record is published rather than dropped so a failed falsification attempt cannot be hidden.",
       "browserProof": "not-tested"
+    },
+    {
+      "id": "holdout-angular-pigallery2",
+      "application": "pigallery2",
+      "framework": "angular",
+      "lineage": "angular",
+      "role": "holdout",
+      "attempted": true,
+      "outcome": "failed",
+      "reason": "consumption of pre-Ivy-only dependencies with no published Ivy successor at the Angular 16 target cell",
+      "verdict": "the frozen Angular adapter does not carry this application, and the reason is a declared support boundary rather than a missing transform",
+      "frozenAdapterFingerprint": "4df7bc961033fc5856b4d58e0bca9f11ad2aa9d43aaaee726956f34d209b37e7",
+      "adapterBytesChanged": 0,
+      "authorizedReopen": {
+        "task": "T021",
+        "subtree": "packages/frameworks/angular",
+        "capabilitiesExtracted": 12,
+        "angularSubtreeOidAtWall": "1f63f32c9f4eb327e2c85f63e69544f1eeb99428",
+        "outcomeAfterReopen": "failed"
+      },
+      "baselineLane": "green",
+      "migratedLane": "red",
+      "attempts": 3,
+      "receipt": "evidence/runs/holdout-angular-pigallery2/receipt.json",
+      "digest": "39a133ff97c37622a4a1821f20e7c442c9bc22ed7597a3e73cbd31323ab2bb10",
+      "countedInLineageNumerator": false,
+      "countingNote": "Never counted in any lineage numerator: no application was migrated. The record is published rather than dropped so a failed falsification attempt cannot be hidden, and it is not reclassified by the support boundary it established.",
+      "supportBoundary": "angular-16-pre-ivy-only-dependency",
+      "browserProof": "not-tested"
     }
   ],
   "unsupported": []

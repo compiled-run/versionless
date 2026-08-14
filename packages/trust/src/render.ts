@@ -83,6 +83,41 @@ function holdoutLines(conformance: CorpusConformance): string {
 		.join('\n');
 }
 
+/**
+ * Renders the declared support boundaries the corpus derived.
+ *
+ * A boundary is the report stating, in the same document as its successes, a
+ * cell this engine does not support — with the falsification evidence that
+ * established it and the certification language that keeps it from being read
+ * as a tested-and-passed cell. It is rendered from the corpus data rather than
+ * written here, so it cannot quietly stop being said.
+ */
+function supportBoundaryLines(conformance: CorpusConformance): string {
+	const boundaries = (conformance.coverage as Record<string, unknown>).supportBoundaries;
+	if (!Array.isArray(boundaries) || boundaries.length === 0)
+		throw new Error('Corpus conformance omits the declared support boundaries');
+	return boundaries
+		.map((value) => {
+			const boundary = value as Record<string, unknown>;
+			const evidence = boundary.instanceEvidence as {
+				application: string;
+				receipt: string;
+				libraries: number;
+				importSites: number;
+				digest: string;
+				wall: Array<{ library: string; lastPublishedVersion: string; importSites: string[] }>;
+			};
+			const wall = evidence.wall
+				.map(
+					(entry) =>
+						`\`${entry.library}\` (last published ${entry.lastPublishedVersion}; ${entry.importSites.map((site) => `\`${site}\``).join(', ')})`,
+				)
+				.join(', ');
+			return `- Boundary \`${String(boundary.id)}\` at cell \`${String(boundary.cell)}\` (${String(boundary.lineage)} lineage): **${String(boundary.state)}** — ${String(boundary.condition)}. ${String(boundary.mechanism)} Declared by ${String(boundary.declaredBy)}; **${String(boundary.certification)}**. Instance evidence: ${evidence.application}, ${evidence.libraries} libraries at ${evidence.importSites} import sites — ${wall} — recorded RED in [${evidence.receipt}](../../../${evidence.receipt}) \`${evidence.digest}\`.\n${(boundary.nonclaims as string[]).map((claim) => `  - ${claim}`).join('\n')}`;
+		})
+		.join('\n');
+}
+
 function lineageScore(conformance: CorpusConformance, lineage: string): string {
 	const readiness = (conformance.coverage as Record<string, unknown>).productionReadiness as
 		| Record<string, unknown>
@@ -95,6 +130,7 @@ function lineageScore(conformance: CorpusConformance, lineage: string): string {
 export function renderTrustReport(inputs: RenderInputs): string {
 	const freshness = inputs.manifest.observation.vulnerabilityFreshness;
 	const holdouts = holdoutLines(inputs.conformance);
+	const supportBoundaries = supportBoundaryLines(inputs.conformance);
 	const reactLineage = lineageScore(inputs.conformance, 'reactLineage');
 	const angularLineage = lineageScore(inputs.conformance, 'angularLineage');
 	const freeze = inputs.freeze.freeze as { commit: string; composite: string };
@@ -212,6 +248,7 @@ ${angularTinyTranslatorWitnessVerified ? `- tiny-translator Angular CLI 1.5.4→
 ${angularSuperProductivityWitnessVerified ? `- super-productivity Angular CLI 8.3.4→Angular 16.2 browser-builder direct-Witness browser proof: **verified for this exact fixture**; it is a separate immutable source application and a separate vertical, an eight-major lift whose declared cross-lane appearance differences and unseeded Sass random() build instability across the supersede boundary are **recorded, not masked**, and the Judge **counts** it toward the Angular numerator under the T016 charter ruling, so Angular-lineage readiness is **${angularLineage}**.` : '- super-productivity Angular CLI 8.3.4 direct-Witness browser proof: **not-tested**.'}
 ${nextKilledByGoogleWitnessVerified ? '- Older-Next direct-Witness candidate: **verified; the olderNext 0/4 separate numerator is retired to an informational React sub-tag under the T016 charter ruling (Next.js-on-React is React-lineage, not a separate oracle lineage)**.' : '- Older-Next production readiness: **retired to React sub-tag; not-tested**.'}
 ${holdouts}
+${supportBoundaries}
 - [Data-flow and control mappings](controls.json) — review inputs, not audit conclusions.
 - [Retention and purge status](retention.json) — unresolved policy remains unknown/not-tested.
 
@@ -235,7 +272,7 @@ Proven on exactly one application and therefore **experimental / out-of-matrix**
 
 ${freezeCapabilities.experimental.entries.map((entry) => `- ${entry.lineage}: \`${entry.capability}\``).join('\n')}
 
-Angular holdout ingestion is **deferred post-T006**, and no candidate is admitted without a mandatory license-text-at-pin pre-screen.
+The Angular holdout was ingested under the mandatory license-text-at-pin pre-screen and run: pigallery2 1.7.0 is **RED**, at the declared pre-Ivy-only-dependency support boundary above. The T021 Angular-subtree reopen that chased it is recorded in the freeze's supersession record, and every capability it produced is in the experimental list above.
 
 ## Capability-coverage map
 

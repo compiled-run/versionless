@@ -122,6 +122,12 @@ import {
 	verifyHoldoutReactCypressRwaEvidence,
 	verifyHoldoutReactCypressRwaRerunEvidence,
 } from '../receipts/holdout-react-cypress-rwa.ts';
+import {
+	ANGULAR_PRE_IVY_SUPPORT_BOUNDARY,
+	HOLDOUT_ANGULAR_PIGALLERY2_APPLICATION,
+	holdoutAngularPigallery2CorpusRecord,
+	verifyHoldoutAngularPigallery2Evidence,
+} from '../receipts/holdout-angular-pigallery2.ts';
 
 export const CORPUS_CONFORMANCE_SCHEMA = 'versionless.corpus-conformance.v1' as const;
 
@@ -413,12 +419,30 @@ async function holdoutLedger(
 ): Promise<Array<Record<string, unknown>>> {
 	const verified = await verifyHoldoutReactCypressRwaEvidence(root);
 	const derived = holdoutReactCypressRwaCorpusRecord(verified.receipt);
+	// The Angular holdout is the second published falsification attempt and is
+	// treated exactly as the first: derived from its own verified receipt,
+	// cross-checked against the aggregate's own membership, failed, and counted
+	// nowhere. Its RED is what the declared pre-Ivy support boundary rests on,
+	// so it is bound here rather than described beside the boundary.
+	const pigalleryVerified = await verifyHoldoutAngularPigallery2Evidence(root);
+	const pigalleryDerived = holdoutAngularPigallery2CorpusRecord(pigalleryVerified.receipt);
 	const published = aggregate.holdouts;
-	if (!Array.isArray(published) || published.length !== 1)
-		throw new Error('Aggregate holdout membership must carry exactly one record');
+	if (!Array.isArray(published) || published.length !== 2)
+		throw new Error('Aggregate holdout membership must carry exactly two records');
 	if (canonicalize(record(published[0], 'aggregate holdout record')) !== canonicalize(derived))
 		throw new Error('Aggregate holdout record differs from its verified receipt');
+	if (
+		canonicalize(record(published[1], 'aggregate Angular holdout record')) !==
+		canonicalize(pigalleryDerived)
+	)
+		throw new Error('Aggregate holdout record differs from its verified receipt');
 	if (derived.countedInLineageNumerator !== false || derived.outcome !== 'failed')
+		throw new Error('Corpus holdout record misstates its counting or outcome');
+	if (
+		pigalleryDerived.countedInLineageNumerator !== false ||
+		pigalleryDerived.outcome !== 'failed' ||
+		pigalleryDerived.migratedLane !== 'red'
+	)
 		throw new Error('Corpus holdout record misstates its counting or outcome');
 	// The T017 re-run supersedes the tranche-one FAIL by reference. The published
 	// holdout membership above stays the immutable tranche-one record; the re-run
@@ -437,7 +461,46 @@ async function holdoutLedger(
 		throw new Error('Corpus holdout re-run must supersede the tranche-one receipt by reference');
 	if (rerunVerified.receipt.capabilityAdvance.nowHandledByFrozenCapability !== true)
 		throw new Error('Corpus holdout re-run must record the prior gap as handled');
-	return [derived as unknown as Record<string, unknown>];
+	return [
+		derived as unknown as Record<string, unknown>,
+		pigalleryDerived as unknown as Record<string, unknown>,
+	];
+}
+
+/**
+ * Derives the declared support boundaries the corpus publishes.
+ *
+ * A boundary is the opposite of a claim: it states, as data the matrix and the
+ * enterprise reports carry, a cell this engine does not support and why. It is
+ * derived from the holdout receipt that established it rather than authored
+ * beside it, so a boundary can never be softened without the falsification
+ * evidence under it moving first — and that evidence is immutable.
+ */
+async function supportBoundaryLedger(root: string): Promise<Array<Record<string, unknown>>> {
+	const verified = await verifyHoldoutAngularPigallery2Evidence(root);
+	const boundary = verified.receipt.supportBoundary;
+	if (
+		boundary.state !== 'unsupported' ||
+		boundary.condition !== ANGULAR_PRE_IVY_SUPPORT_BOUNDARY.condition ||
+		boundary.instanceEvidence.libraries !== 3 ||
+		boundary.instanceEvidence.importSites !== 6
+	)
+		throw new Error('Declared support boundary differs from its instance evidence');
+	return [
+		{
+			...ANGULAR_PRE_IVY_SUPPORT_BOUNDARY,
+			instanceEvidence: {
+				...ANGULAR_PRE_IVY_SUPPORT_BOUNDARY.instanceEvidence,
+				digest: verified.digest,
+				wall: verified.receipt.finding.wall.map((entry) => ({
+					library: entry.library,
+					lastPublishedVersion: entry.lastPublishedVersion,
+					importSites: [...entry.importSites],
+				})),
+			},
+			nonclaims: [...ANGULAR_PRE_IVY_SUPPORT_BOUNDARY.nonclaims],
+		},
+	];
 }
 
 /**
@@ -455,6 +518,8 @@ function assertHoldoutsAreUncounted(
 	const cells = new Set<unknown>(holdouts.map((holdout) => holdout.id));
 	if (!applications.has(HOLDOUT_REACT_CYPRESS_RWA_APPLICATION))
 		throw new Error('Corpus holdout ledger omits the cypress-realworld-app holdout');
+	if (!applications.has(HOLDOUT_ANGULAR_PIGALLERY2_APPLICATION))
+		throw new Error('Corpus holdout ledger omits the pigallery2 holdout');
 	if (ledger.some((cell) => applications.has(cell.application) || cells.has(cell.cell)))
 		throw new Error('A holdout reached the Judge counting ledger');
 }
@@ -3756,6 +3821,7 @@ export async function analyzeCorpusConformance(
 	const angularLineageTotal = lineageDenominator(judgeCounting, 'angular');
 	const holdouts = await holdoutLedger(root, aggregate);
 	assertHoldoutsAreUncounted(judgeCounting, holdouts);
+	const supportBoundaries = await supportBoundaryLedger(root);
 
 	const result: CorpusConformance = {
 		schemaVersion: CORPUS_CONFORMANCE_SCHEMA,
@@ -3774,6 +3840,13 @@ export async function analyzeCorpusConformance(
 			genericAdapter: 'not-tested',
 			unplugin: 'not-tested',
 			nextjs: nextKilledByGoogle ? 'fixture-specific-next12-pages-verified' : 'not-tested',
+			/**
+			 * Cells this engine declares it does not support, with the
+			 * falsification evidence that established each one. A declared
+			 * boundary is published for the same reason a failed holdout is:
+			 * a matrix that only shows what worked is not a matrix.
+			 */
+			supportBoundaries,
 			authenticity: 'not-established',
 			certification: 'not-claimed',
 			locality: 'process-scoped-not-os-wide',

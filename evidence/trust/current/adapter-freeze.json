@@ -1,9 +1,9 @@
 {
   "schemaVersion": "versionless.trust.v1",
   "freeze": {
-    "commit": "c695a586d5e58f5abda9f3684f60cc803b1ebf22",
+    "commit": "852079a1d163617f810dba7e8b3509bc8e25343a",
     "algorithm": "sha256",
-    "composite": "4df7bc961033fc5856b4d58e0bca9f11ad2aa9d43aaaee726956f34d209b37e7",
+    "composite": "f1a63359210b87c04408b27cf8c40e88e1b47d44bcc7f5a9be20d9478dc71012",
     "preimage": "newline-terminated `<path> <tree-oid>` lines in the listed subtree order",
     "subtrees": [
       {
@@ -12,7 +12,7 @@
       },
       {
         "path": "packages/frameworks/angular",
-        "treeOid": "ca3824d0595d1fa88d37feda6b1785dfd79e72c4"
+        "treeOid": "1f63f32c9f4eb327e2c85f63e69544f1eeb99428"
       },
       {
         "path": "packages/core/src/migrations",
@@ -30,10 +30,16 @@
     "state": "frozen",
     "claim": "The migration engine adapter surface is byte-stable at this commit.",
     "supersedes": {
-      "composite": "5de7df565fb8e445a45f9f8f43eac27b80b71189d59e4df243e93471406a260c",
-      "commit": "cce34175340273919c0b70341dfada5533f0307c",
+      "composite": "4df7bc961033fc5856b4d58e0bca9f11ad2aa9d43aaaee726956f34d209b37e7",
+      "commit": "c695a586d5e58f5abda9f3684f60cc803b1ebf22",
       "state": "superseded",
-      "reopenReason": "Authorized react-cra-process-global capability reopen for cypress-realworld-app holdout carriage (owner-directed 2026-08-13): under the 5de7df56 freeze the migrated Vite bundle threw `process is not defined`, so a generic analyzer-driven process/browser-parity shim was added to packages/frameworks/react and the adapter was re-frozen at composite 4df7bc96. Only the React subtree moved; Angular, migrations, bundlers, and analysis stayed byte-identical. 5de7df56 had itself superseded the tranche-one d9f75ef6 freeze (commit 57b308a)."
+      "reopenReason": "Authorized Angular-subtree reopen for the pigallery2 1.7.0 holdout chase (T021, board-authorized 2026-08-13): twelve generic capabilities and composition repairs were extracted from the falsification across commits 283d27f, 03b34ae, e6a219e and 8126736, and the adapter was re-frozen at composite f1a63359. Only the Angular subtree moved (ca3824d0 -> 1f63f32c); React stayed byte-identical at 972ca801, as did migrations, bundlers and analysis. The chase did not turn the holdout green: it ended at the declared pre-Ivy-only-dependency support boundary, and the pigallery2 RED stands as permanent falsification evidence. 4df7bc96 had itself superseded 5de7df56 (commit cce34175), which superseded the tranche-one d9f75ef6 freeze (commit 57b308a).",
+      "chain": [
+        "d9f75ef677cb850f664cc188abf77b8ebfd24e84cb58d147b74e9bbaa143eb77",
+        "5de7df565fb8e445a45f9f8f43eac27b80b71189d59e4df243e93471406a260c",
+        "4df7bc961033fc5856b4d58e0bca9f11ad2aa9d43aaaee726956f34d209b37e7",
+        "f1a63359210b87c04408b27cf8c40e88e1b47d44bcc7f5a9be20d9478dc71012"
+      ]
     }
   },
   "holdoutPublishing": {
@@ -98,6 +104,54 @@
         {
           "lineage": "angular",
           "capability": "ngrx-effects-migration"
+        },
+        {
+          "lineage": "angular",
+          "capability": "module-with-providers-type-argument"
+        },
+        {
+          "lineage": "angular",
+          "capability": "subject-void-type-argument"
+        },
+        {
+          "lineage": "angular",
+          "capability": "promise-executor-void-parameter"
+        },
+        {
+          "lineage": "angular",
+          "capability": "unparameterised-base-class"
+        },
+        {
+          "lineage": "angular",
+          "capability": "deep-import-redirection"
+        },
+        {
+          "lineage": "angular",
+          "capability": "family-prefixed-ecosystem-readings"
+        },
+        {
+          "lineage": "angular",
+          "capability": "install-stage-successor-readings"
+        },
+        {
+          "lineage": "angular",
+          "capability": "compile-stage-published-bytes-verdicts"
+        },
+        {
+          "lineage": "angular",
+          "capability": "workspace-engines-retarget"
+        },
+        {
+          "lineage": "angular",
+          "capability": "undecorated-angular-base-class"
+        },
+        {
+          "lineage": "angular",
+          "capability": "application-source-dependency"
+        },
+        {
+          "lineage": "angular",
+          "capability": "departed-dom-lib-member"
         }
       ]
     },
@@ -128,10 +182,77 @@
       ]
     }
   },
+  "reopen": {
+    "task": "T021",
+    "subtree": "packages/frameworks/angular",
+    "authorization": "board-authorized Angular-subtree reopen for the pigallery2 1.7.0 holdout chase (2026-08-13)",
+    "commits": [
+      "283d27f",
+      "03b34ae",
+      "e6a219e",
+      "8126736"
+    ],
+    "capabilitiesExtracted": 12,
+    "entries": [
+      {
+        "lineage": "angular",
+        "capability": "module-with-providers-type-argument"
+      },
+      {
+        "lineage": "angular",
+        "capability": "subject-void-type-argument"
+      },
+      {
+        "lineage": "angular",
+        "capability": "promise-executor-void-parameter"
+      },
+      {
+        "lineage": "angular",
+        "capability": "unparameterised-base-class"
+      },
+      {
+        "lineage": "angular",
+        "capability": "deep-import-redirection"
+      },
+      {
+        "lineage": "angular",
+        "capability": "family-prefixed-ecosystem-readings"
+      },
+      {
+        "lineage": "angular",
+        "capability": "install-stage-successor-readings"
+      },
+      {
+        "lineage": "angular",
+        "capability": "compile-stage-published-bytes-verdicts"
+      },
+      {
+        "lineage": "angular",
+        "capability": "workspace-engines-retarget"
+      },
+      {
+        "lineage": "angular",
+        "capability": "undecorated-angular-base-class"
+      },
+      {
+        "lineage": "angular",
+        "capability": "application-source-dependency"
+      },
+      {
+        "lineage": "angular",
+        "capability": "departed-dom-lib-member"
+      }
+    ],
+    "state": "all-single-application-experimental",
+    "outcome": "The chased application stayed RED. The reopen bought twelve generic capabilities and a declared support boundary, not a green holdout.",
+    "reactSubtreeUnchanged": true
+  },
   "angularHoldout": {
-    "state": "deferred",
-    "deferredUntil": "post-T006",
+    "state": "attempted",
+    "application": "pigallery2 1.7.0",
+    "outcome": "failed",
     "preScreen": "mandatory license-text-at-pin pre-screen",
-    "reason": "Angular holdout ingestion is deferred until the second-application evidence lands, and no candidate is admitted without verifying license text at the exact pinned revision first."
+    "reason": "The Angular holdout was ingested under the mandatory license-text-at-pin pre-screen and run against the frozen adapters. Its migrated build is RED at the declared pre-Ivy-only-dependency support boundary; the record is published as permanent falsification evidence and counted in no numerator.",
+    "boundary": "pre-Ivy-only dependencies (no published Ivy successor) in active application use => unsupported at the Angular 16 target cell"
   }
 }

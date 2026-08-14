@@ -1781,6 +1781,57 @@
     "genericAdapter": "not-tested",
     "unplugin": "not-tested",
     "nextjs": "fixture-specific-next12-pages-verified",
+    "supportBoundaries": [
+      {
+        "id": "angular-16-pre-ivy-only-dependency",
+        "lineage": "angular",
+        "cell": "angular-16-browser-builder",
+        "state": "unsupported",
+        "declaredBy": "lrapr-t022 boundary ruling (Judge, 2026-08-14)",
+        "publishedBy": "lrapr-t023/u1-boundary-publish-refreeze",
+        "condition": "pre-Ivy-only dependencies (no published Ivy successor) in active application use => unsupported at the Angular 16 target cell",
+        "mechanism": "Angular 16 removed ngcc, so ViewEngine bytes cannot be consumed at this cell, and a library whose last published version is pre-Ivy has no successor to align to. Carrying such an application would require editing its source at the import sites, which is an application change rather than a migration the engine can perform.",
+        "certification": "not-certified: this cell is declared unsupported, not tested-and-failed-once",
+        "instanceEvidence": {
+          "application": "pigallery2",
+          "receipt": "evidence/runs/holdout-angular-pigallery2/receipt.json",
+          "libraries": 3,
+          "importSites": 6,
+          "digest": "39a133ff97c37622a4a1821f20e7c442c9bc22ed7597a3e73cbd31323ab2bb10",
+          "wall": [
+            {
+              "library": "@yaga/leaflet-ng2",
+              "lastPublishedVersion": "1.1.0",
+              "importSites": [
+                "frontend/app/app.module.ts:14",
+                "frontend/app/ui/gallery/map/map.gallery.component.ts:7",
+                "frontend/app/ui/gallery/map/lightbox/lightbox.map.gallery.component.ts:16"
+              ]
+            },
+            {
+              "library": "ng2-slim-loading-bar",
+              "lastPublishedVersion": "4.0.0",
+              "importSites": [
+                "frontend/app/app.module.ts:31",
+                "frontend/app/model/network/network.service.ts:4"
+              ]
+            },
+            {
+              "library": "jw-bootstrap-switch-ng2",
+              "lastPublishedVersion": "2.0.5",
+              "importSites": [
+                "frontend/app/app.module.ts:41"
+              ]
+            }
+          ]
+        },
+        "nonclaims": [
+          "No claim that every application carrying a pre-Ivy-only dependency is unmigratable in general: the boundary is declared at the Angular 16 target cell, which is the only Angular cell this engine has.",
+          "No claim that this boundary is unreachable: an ngcc-bearing multi-hop cell (Angular 12 or 13) would consume those bytes. It is a declared tranche-two commitment, not a silent deferral, and it invalidates every Angular 16 cell reading in this record, so it is not taken here.",
+          "No claim that the boundary excuses the pigallery2 RED. The RED is permanent falsification evidence and is published unchanged alongside this declaration."
+        ]
+      }
+    ],
     "authenticity": "not-established",
     "certification": "not-claimed",
     "locality": "process-scoped-not-os-wide",
@@ -1920,6 +1971,35 @@
           "countedInLineageNumerator": false,
           "countingNote": "Never counted in any lineage numerator: no application was migrated. The record is published rather than dropped so a failed falsification attempt cannot be hidden.",
           "browserProof": "not-tested"
+        },
+        {
+          "id": "holdout-angular-pigallery2",
+          "application": "pigallery2",
+          "framework": "angular",
+          "lineage": "angular",
+          "role": "holdout",
+          "attempted": true,
+          "outcome": "failed",
+          "reason": "consumption of pre-Ivy-only dependencies with no published Ivy successor at the Angular 16 target cell",
+          "verdict": "the frozen Angular adapter does not carry this application, and the reason is a declared support boundary rather than a missing transform",
+          "frozenAdapterFingerprint": "4df7bc961033fc5856b4d58e0bca9f11ad2aa9d43aaaee726956f34d209b37e7",
+          "adapterBytesChanged": 0,
+          "authorizedReopen": {
+            "task": "T021",
+            "subtree": "packages/frameworks/angular",
+            "capabilitiesExtracted": 12,
+            "angularSubtreeOidAtWall": "1f63f32c9f4eb327e2c85f63e69544f1eeb99428",
+            "outcomeAfterReopen": "failed"
+          },
+          "baselineLane": "green",
+          "migratedLane": "red",
+          "attempts": 3,
+          "receipt": "evidence/runs/holdout-angular-pigallery2/receipt.json",
+          "digest": "39a133ff97c37622a4a1821f20e7c442c9bc22ed7597a3e73cbd31323ab2bb10",
+          "countedInLineageNumerator": false,
+          "countingNote": "Never counted in any lineage numerator: no application was migrated. The record is published rather than dropped so a failed falsification attempt cannot be hidden, and it is not reclassified by the support boundary it established.",
+          "supportBoundary": "angular-16-pre-ivy-only-dependency",
+          "browserProof": "not-tested"
         }
       ],
       "olderNext": {
@@ -1939,6 +2019,6 @@
   },
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "55f0fdbbee42b02058e109d8d10d64081b803be3e1c5d5863b06acb279693fa5"
+    "canonicalDigest": "7c70888a8ea55ee68a122790d42ad52d55b9fcf1efd43104893c166131072547"
   }
 }

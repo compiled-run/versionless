@@ -7,7 +7,7 @@ import { TRUST_SCHEMA, asRecord, asString } from './schema.ts';
  * The freeze is a claim about exact bytes, so it is pinned to an exact commit
  * rather than to a branch name that can move underneath it.
  */
-export const ADAPTER_FREEZE_COMMIT = 'c695a586d5e58f5abda9f3684f60cc803b1ebf22' as const;
+export const ADAPTER_FREEZE_COMMIT = '852079a1d163617f810dba7e8b3509bc8e25343a' as const;
 
 /**
  * The frozen subtrees, in the exact order the composite fingerprint hashes them.
@@ -19,7 +19,7 @@ export const ADAPTER_FREEZE_COMMIT = 'c695a586d5e58f5abda9f3684f60cc803b1ebf22' 
  */
 export const ADAPTER_FREEZE_SUBTREES = [
 	{ path: 'packages/frameworks/react', treeOid: '972ca80155bbc2a6eb3779943cd481b71d35e803' },
-	{ path: 'packages/frameworks/angular', treeOid: 'ca3824d0595d1fa88d37feda6b1785dfd79e72c4' },
+	{ path: 'packages/frameworks/angular', treeOid: '1f63f32c9f4eb327e2c85f63e69544f1eeb99428' },
 	{ path: 'packages/core/src/migrations', treeOid: '5237ce5990af3623206bcd2301047a59c80731cf' },
 	{ path: 'packages/core/src/bundlers', treeOid: 'cec2f0b56fbb7897f38d579be805e19982380ca6' },
 	{ path: 'packages/core/src/analysis', treeOid: '262dc8b7528c92883c2300914eb7d42579fb856b' },
@@ -34,33 +34,39 @@ export const ADAPTER_FREEZE_SUBTREES = [
  * recompute it from a checkout without this package.
  */
 export const ADAPTER_FREEZE_COMPOSITE =
-	'4df7bc961033fc5856b4d58e0bca9f11ad2aa9d43aaaee726956f34d209b37e7' as const;
+	'f1a63359210b87c04408b27cf8c40e88e1b47d44bcc7f5a9be20d9478dc71012' as const;
 
 /**
  * The freeze this record supersedes, retained by reference.
  *
- * The 5de7df56 composite over the five subtrees at commit cce34175 was the
- * prior freeze. It was legitimately reopened (owner-directed 2026-08-13): under
- * 5de7df56 the migrated cypress-realworld-app Vite bundle built and booted but
- * threw `process is not defined` at runtime, so the frozen adapter could not
- * carry the holdout journey. A generic, analyzer-driven process/browser-parity
- * shim (`react-cra-process-global`) was added to `packages/frameworks/react` to
- * close it — nothing branches on the holdout's identity — and the adapter was
- * re-frozen at composite 4df7bc96. Only the React subtree moved
- * (9b2af393 -> 972ca801); the Angular, migrations, bundlers, and analysis
- * subtrees stayed byte-identical. The prior composite is recorded as superseded
- * rather than deleted so the freeze history stays legible and each holdout
- * receipt's frozenAdapterFingerprint still points at the boundary it actually
- * ran against. The 5de7df56 freeze itself superseded the tranche-one d9f75ef6
- * freeze (commit 57b308a), so the full chain d9f75ef6 -> 5de7df56 -> 4df7bc96
- * stays traceable.
+ * The 4df7bc96 composite over the five subtrees at commit c695a586 was the
+ * prior freeze. It was legitimately reopened (T021, board-authorized
+ * 2026-08-13) on the Angular subtree alone, to chase the pigallery2 1.7.0
+ * Angular holdout under falsification pressure: four units extracted twelve
+ * generic capabilities and composition repairs from that chase (commits
+ * 283d27f, 03b34ae, e6a219e, 8126736), none of which branches on the holdout's
+ * identity. Only the Angular subtree moved
+ * (ca3824d0 -> 1f63f32c); the React, migrations, bundlers, and analysis
+ * subtrees stayed byte-identical, and the React subtree is still the
+ * 972ca801 tree the 4df7bc96 freeze published. The prior composite is recorded
+ * as superseded rather than deleted so the freeze history stays legible and
+ * each holdout receipt's frozenAdapterFingerprint still points at the boundary
+ * it actually ran against. The chain d9f75ef6 (commit 57b308a) -> 5de7df56
+ * (commit cce34175) -> 4df7bc96 (commit c695a586) -> f1a63359 stays traceable,
+ * every link recorded at the point the adapters were reopened and why.
  */
 export const ADAPTER_FREEZE_SUPERSEDES = {
-	composite: '5de7df565fb8e445a45f9f8f43eac27b80b71189d59e4df243e93471406a260c',
-	commit: 'cce34175340273919c0b70341dfada5533f0307c',
+	composite: '4df7bc961033fc5856b4d58e0bca9f11ad2aa9d43aaaee726956f34d209b37e7',
+	commit: 'c695a586d5e58f5abda9f3684f60cc803b1ebf22',
 	state: 'superseded' as const,
 	reopenReason:
-		'Authorized react-cra-process-global capability reopen for cypress-realworld-app holdout carriage (owner-directed 2026-08-13): under the 5de7df56 freeze the migrated Vite bundle threw `process is not defined`, so a generic analyzer-driven process/browser-parity shim was added to packages/frameworks/react and the adapter was re-frozen at composite 4df7bc96. Only the React subtree moved; Angular, migrations, bundlers, and analysis stayed byte-identical. 5de7df56 had itself superseded the tranche-one d9f75ef6 freeze (commit 57b308a).',
+		'Authorized Angular-subtree reopen for the pigallery2 1.7.0 holdout chase (T021, board-authorized 2026-08-13): twelve generic capabilities and composition repairs were extracted from the falsification across commits 283d27f, 03b34ae, e6a219e and 8126736, and the adapter was re-frozen at composite f1a63359. Only the Angular subtree moved (ca3824d0 -> 1f63f32c); React stayed byte-identical at 972ca801, as did migrations, bundlers and analysis. The chase did not turn the holdout green: it ended at the declared pre-Ivy-only-dependency support boundary, and the pigallery2 RED stands as permanent falsification evidence. 4df7bc96 had itself superseded 5de7df56 (commit cce34175), which superseded the tranche-one d9f75ef6 freeze (commit 57b308a).',
+	chain: [
+		'd9f75ef677cb850f664cc188abf77b8ebfd24e84cb58d147b74e9bbaa143eb77',
+		'5de7df565fb8e445a45f9f8f43eac27b80b71189d59e4df243e93471406a260c',
+		'4df7bc961033fc5856b4d58e0bca9f11ad2aa9d43aaaee726956f34d209b37e7',
+		'f1a63359210b87c04408b27cf8c40e88e1b47d44bcc7f5a9be20d9478dc71012',
+	],
 } as const;
 
 /**
@@ -115,7 +121,43 @@ export const ADAPTER_FREEZE_EXPERIMENTAL_CAPABILITIES = [
 	{ lineage: 'angular', capability: 'undeclared-runtime-dependency' },
 	{ lineage: 'angular', capability: 'tslint-toolchain-removal' },
 	{ lineage: 'angular', capability: 'ngrx-effects-migration' },
+	/**
+	 * The twelve capabilities and composition repairs the T021 pigallery2 chase
+	 * extracted. Every one of them is generic — none branches on the holdout's
+	 * name, revision, or source text — but every one of them was written against
+	 * the single application that demanded it, and that application's migrated
+	 * build is RED. They are therefore experimental on the strictest reading of
+	 * the rule: not merely unproven on a second application, but proven on no
+	 * application at all in the end-to-end sense, since the one that exercised
+	 * them never produced an artifact. They stay out of the matrix until a
+	 * second, independent Angular application carries them.
+	 */
+	{ lineage: 'angular', capability: 'module-with-providers-type-argument' },
+	{ lineage: 'angular', capability: 'subject-void-type-argument' },
+	{ lineage: 'angular', capability: 'promise-executor-void-parameter' },
+	{ lineage: 'angular', capability: 'unparameterised-base-class' },
+	{ lineage: 'angular', capability: 'deep-import-redirection' },
+	{ lineage: 'angular', capability: 'family-prefixed-ecosystem-readings' },
+	{ lineage: 'angular', capability: 'install-stage-successor-readings' },
+	{ lineage: 'angular', capability: 'compile-stage-published-bytes-verdicts' },
+	{ lineage: 'angular', capability: 'workspace-engines-retarget' },
+	{ lineage: 'angular', capability: 'undecorated-angular-base-class' },
+	{ lineage: 'angular', capability: 'application-source-dependency' },
+	{ lineage: 'angular', capability: 'departed-dom-lib-member' },
 ] as const;
+
+/**
+ * The exact subset of the experimental list the T021 Angular reopen produced.
+ *
+ * It is listed separately as well as inline so the reopen's cost stays
+ * countable: twelve capabilities entered the adapter, none of them left the
+ * experimental column, and the application they were extracted from is still
+ * RED. A reader who wants to know what the reopen bought does not have to diff
+ * two freezes to find out.
+ */
+export const ADAPTER_FREEZE_T021_EXPERIMENTAL_CAPABILITIES = ADAPTER_FREEZE_EXPERIMENTAL_CAPABILITIES.slice(
+	-12,
+);
 
 /**
  * The capabilities that survived a second independent application.
@@ -174,11 +216,25 @@ export function adapterFreezeRecord(): Record<string, unknown> {
 				entries: ADAPTER_FREEZE_CROSS_PROVEN.map((entry) => ({ ...entry })),
 			},
 		},
+		reopen: {
+			task: 'T021',
+			subtree: 'packages/frameworks/angular',
+			authorization: 'board-authorized Angular-subtree reopen for the pigallery2 1.7.0 holdout chase (2026-08-13)',
+			commits: ['283d27f', '03b34ae', 'e6a219e', '8126736'],
+			capabilitiesExtracted: ADAPTER_FREEZE_T021_EXPERIMENTAL_CAPABILITIES.length,
+			entries: ADAPTER_FREEZE_T021_EXPERIMENTAL_CAPABILITIES.map((entry) => ({ ...entry })),
+			state: 'all-single-application-experimental',
+			outcome: 'The chased application stayed RED. The reopen bought twelve generic capabilities and a declared support boundary, not a green holdout.',
+			reactSubtreeUnchanged: true,
+		},
 		angularHoldout: {
-			state: 'deferred',
-			deferredUntil: 'post-T006',
+			state: 'attempted',
+			application: 'pigallery2 1.7.0',
+			outcome: 'failed',
 			preScreen: 'mandatory license-text-at-pin pre-screen',
-			reason: 'Angular holdout ingestion is deferred until the second-application evidence lands, and no candidate is admitted without verifying license text at the exact pinned revision first.',
+			reason: 'The Angular holdout was ingested under the mandatory license-text-at-pin pre-screen and run against the frozen adapters. Its migrated build is RED at the declared pre-Ivy-only-dependency support boundary; the record is published as permanent falsification evidence and counted in no numerator.',
+			boundary:
+				'pre-Ivy-only dependencies (no published Ivy successor) in active application use => unsupported at the Angular 16 target cell',
 		},
 	};
 }
