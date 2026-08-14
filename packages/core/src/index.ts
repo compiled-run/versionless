@@ -18,6 +18,7 @@ export * from './receipts/angular-realworld-v15-to-v16.ts';
 export * from './receipts/next-killedbygoogle.ts';
 export * from './receipts/holdout-react-cypress-rwa.ts';
 export * from './receipts/holdout-angular-pigallery2.ts';
+export * from './receipts/holdout-angular-eshop-webspa.ts';
 export * from './receipts/angular-pre-ivy-boundary-amendment.ts';
 export * from './receipts/witness-real-app.ts';
 export * from './receipts/witness-angular-realworld.ts';

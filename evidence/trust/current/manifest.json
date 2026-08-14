@@ -1,6 +1,6 @@
 {
   "schemaVersion": "versionless.trust.v1",
-  "canonicalDigest": "7707da23762c0ad57046a4741803f1aa8df4bde862b2e574d6815c1e6763880d",
+  "canonicalDigest": "394fea954c022e94fedd10dbe4ae2df42b2b93a8633fa46574ec82866ffcf716",
   "integrity": {
     "algorithm": "sha256",
     "authenticity": "not-established",
@@ -8,11 +8,11 @@
   },
   "deterministicCore": {
     "algorithm": "sha256",
-    "digest": "2e11b61c52fb0c6491bc2234202c58444bbfcc111376033c53ba26a2013db229",
+    "digest": "754eb300940058babf0ace5e66ce3af3face5699f24d9a6828764c03c5134c87",
     "artifacts": [
       {
         "path": "adapter-freeze.json",
-        "sha256": "411c9d70389d4b36f014f7002d555a77a7b16065b9cfa400e29818bd220a987b"
+        "sha256": "974c19d8fa356e78a9ee8ea87710e2af710a440bd8664f788f967c63a72cd331"
       },
       {
         "path": "dependency-graph.cdx.json",
@@ -28,11 +28,11 @@
       },
       {
         "path": "provenance.json",
-        "sha256": "6304ba651d4a37464fe7f8d117d84f572799296663f27883887fb3bf473562c5"
+        "sha256": "3673548f1711322c03d15677d34e27c55792fe65304cf2c20fd92c38149d2bb3"
       },
       {
         "path": "matrix.json",
-        "sha256": "5ed6a885225854c076a3eae8d52c41386f0012ec14734db74145d734c4aad73e"
+        "sha256": "9fc3822f0e1a4453156549ef5384b6019607ee2f475e0c998917ecbf00ed7bc3"
       },
       {
         "path": "controls.json",
@@ -44,7 +44,7 @@
       },
       {
         "path": "corpus-conformance.json",
-        "sha256": "fb742e31aabfca69acd9232de890d35aa9428e00613fbd64232e2083784be9fc"
+        "sha256": "0485327f5a10c3f903be42258aff9af6694218eef66a36b24ba48fc2f4366f5c"
       },
       {
         "path": "script-surface.json",
@@ -56,7 +56,7 @@
       },
       {
         "path": "capability-coverage.json",
-        "sha256": "8e51a510e02196cd51b4491f76bcad2ed0f90b24f453a9d75a056a6ba0296a7e"
+        "sha256": "ce183a0fc539a99c6042320002f31c3f91fdbeaccdaf64f5fc94f6a37768c88f"
       }
     ]
   },
@@ -225,7 +225,7 @@
     }
   ],
   "observation": {
-    "generatedAt": "2026-08-14T04:36:34.698Z",
+    "generatedAt": "2026-08-14T07:57:43.637Z",
     "vulnerabilityFreshness": "stale"
   },
   "derivedReport": "report.md"

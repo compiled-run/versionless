@@ -7,7 +7,7 @@ import { TRUST_SCHEMA, asRecord, asString } from './schema.ts';
  * The freeze is a claim about exact bytes, so it is pinned to an exact commit
  * rather than to a branch name that can move underneath it.
  */
-export const ADAPTER_FREEZE_COMMIT = '852079a1d163617f810dba7e8b3509bc8e25343a' as const;
+export const ADAPTER_FREEZE_COMMIT = '0ecd410691df10fbc68c9ddcd012dafa86aba536' as const;
 
 /**
  * The frozen subtrees, in the exact order the composite fingerprint hashes them.
@@ -19,7 +19,7 @@ export const ADAPTER_FREEZE_COMMIT = '852079a1d163617f810dba7e8b3509bc8e25343a' 
  */
 export const ADAPTER_FREEZE_SUBTREES = [
 	{ path: 'packages/frameworks/react', treeOid: '972ca80155bbc2a6eb3779943cd481b71d35e803' },
-	{ path: 'packages/frameworks/angular', treeOid: '1f63f32c9f4eb327e2c85f63e69544f1eeb99428' },
+	{ path: 'packages/frameworks/angular', treeOid: '4b6e2f4494d98582e4fe9b420c2b412059dc0720' },
 	{ path: 'packages/core/src/migrations', treeOid: '5237ce5990af3623206bcd2301047a59c80731cf' },
 	{ path: 'packages/core/src/bundlers', treeOid: 'cec2f0b56fbb7897f38d579be805e19982380ca6' },
 	{ path: 'packages/core/src/analysis', treeOid: '262dc8b7528c92883c2300914eb7d42579fb856b' },
@@ -34,38 +34,41 @@ export const ADAPTER_FREEZE_SUBTREES = [
  * recompute it from a checkout without this package.
  */
 export const ADAPTER_FREEZE_COMPOSITE =
-	'f1a63359210b87c04408b27cf8c40e88e1b47d44bcc7f5a9be20d9478dc71012' as const;
+	'27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234' as const;
 
 /**
  * The freeze this record supersedes, retained by reference.
  *
- * The 4df7bc96 composite over the five subtrees at commit c695a586 was the
- * prior freeze. It was legitimately reopened (T021, board-authorized
- * 2026-08-13) on the Angular subtree alone, to chase the pigallery2 1.7.0
- * Angular holdout under falsification pressure: four units extracted twelve
- * generic capabilities and composition repairs from that chase (commits
- * 283d27f, 03b34ae, e6a219e, 8126736), none of which branches on the holdout's
- * identity. Only the Angular subtree moved
- * (ca3824d0 -> 1f63f32c); the React, migrations, bundlers, and analysis
+ * The f1a63359 composite over the five subtrees at commit 852079a1 was the
+ * prior freeze. It was legitimately reopened (T024, board-authorized
+ * 2026-08-14) on the Angular subtree alone, to chase the eShopOnContainers
+ * WebSPA Angular holdout after the frozen adapter refused it at install: four
+ * units extracted nine generic capabilities and composition repairs from that
+ * chase (commits 82f48ab, 7543e0e, 8c6a8da, 0ecd410), none of which branches on
+ * the holdout's identity. Only the Angular subtree moved
+ * (1f63f32c -> 4b6e2f44); the React, migrations, bundlers, and analysis
  * subtrees stayed byte-identical, and the React subtree is still the
  * 972ca801 tree the 4df7bc96 freeze published. The prior composite is recorded
  * as superseded rather than deleted so the freeze history stays legible and
  * each holdout receipt's frozenAdapterFingerprint still points at the boundary
- * it actually ran against. The chain d9f75ef6 (commit 57b308a) -> 5de7df56
- * (commit cce34175) -> 4df7bc96 (commit c695a586) -> f1a63359 stays traceable,
- * every link recorded at the point the adapters were reopened and why.
+ * it actually ran against — the pigallery2 record still names f1a63359 and the
+ * eShop record still names it as the composite that refused it. The chain
+ * d9f75ef6 (commit 57b308a) -> 5de7df56 (commit cce34175) -> 4df7bc96 (commit
+ * c695a586) -> f1a63359 (commit 852079a1) -> 27741d9c stays traceable, every
+ * link recorded at the point the adapters were reopened and why.
  */
 export const ADAPTER_FREEZE_SUPERSEDES = {
-	composite: '4df7bc961033fc5856b4d58e0bca9f11ad2aa9d43aaaee726956f34d209b37e7',
-	commit: 'c695a586d5e58f5abda9f3684f60cc803b1ebf22',
+	composite: 'f1a63359210b87c04408b27cf8c40e88e1b47d44bcc7f5a9be20d9478dc71012',
+	commit: '852079a1d163617f810dba7e8b3509bc8e25343a',
 	state: 'superseded' as const,
 	reopenReason:
-		'Authorized Angular-subtree reopen for the pigallery2 1.7.0 holdout chase (T021, board-authorized 2026-08-13): twelve generic capabilities and composition repairs were extracted from the falsification across commits 283d27f, 03b34ae, e6a219e and 8126736, and the adapter was re-frozen at composite f1a63359. Only the Angular subtree moved (ca3824d0 -> 1f63f32c); React stayed byte-identical at 972ca801, as did migrations, bundlers and analysis. The chase did not turn the holdout green: it ended at the declared pre-Ivy-only-dependency support boundary, and the pigallery2 RED stands as permanent falsification evidence. 4df7bc96 had itself superseded 5de7df56 (commit cce34175), which superseded the tranche-one d9f75ef6 freeze (commit 57b308a).',
+		'Authorized Angular-subtree reopen for the eShopOnContainers WebSPA holdout chase (T024, board-authorized 2026-08-14): nine generic capabilities and composition repairs were extracted from the falsification across commits 82f48ab, 7543e0e, 8c6a8da and 0ecd410, and the adapter was re-frozen at composite 27741d9c. Only the Angular subtree moved (1f63f32c -> 4b6e2f44); React stayed byte-identical at 972ca801, as did migrations, bundlers and analysis. What the chase bought is stated exactly: the holdout is no longer refused at install and its migrated production build now completes twice byte-identically, and no witness journey has run against it, so it is published as a measured state and not as a passed holdout. The pigallery2 RED and the declared pre-Ivy-only-dependency support boundary are untouched by this reopen. f1a63359 had itself superseded 4df7bc96 (commit c695a586), which superseded 5de7df56 (commit cce34175), which superseded the tranche-one d9f75ef6 freeze (commit 57b308a).',
 	chain: [
 		'd9f75ef677cb850f664cc188abf77b8ebfd24e84cb58d147b74e9bbaa143eb77',
 		'5de7df565fb8e445a45f9f8f43eac27b80b71189d59e4df243e93471406a260c',
 		'4df7bc961033fc5856b4d58e0bca9f11ad2aa9d43aaaee726956f34d209b37e7',
 		'f1a63359210b87c04408b27cf8c40e88e1b47d44bcc7f5a9be20d9478dc71012',
+		'27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234',
 	],
 } as const;
 
@@ -144,6 +147,25 @@ export const ADAPTER_FREEZE_EXPERIMENTAL_CAPABILITIES = [
 	{ lineage: 'angular', capability: 'undecorated-angular-base-class' },
 	{ lineage: 'angular', capability: 'application-source-dependency' },
 	{ lineage: 'angular', capability: 'departed-dom-lib-member' },
+	/**
+	 * The nine capabilities and composition repairs the T024 eShopOnContainers
+	 * WebSPA chase extracted. Every one of them is generic — none branches on the
+	 * holdout's name, revision, or source text — but every one of them was
+	 * written against the single application that demanded it. That application's
+	 * migrated production build is green and repeats byte-identically, which is
+	 * more than the T021 twelve ever reached, and it is still one application and
+	 * still has no witness journey behind it. They stay out of the matrix until a
+	 * second, independent Angular application carries them.
+	 */
+	{ lineage: 'angular', capability: 'unread-declaration-silence-reporting' },
+	{ lineage: 'angular', capability: 'angular-16-community-layer-readings' },
+	{ lineage: 'angular', capability: 'superseded-era-lockfile' },
+	{ lineage: 'angular', capability: 'workspace-script-flags' },
+	{ lineage: 'angular', capability: 'use-position-symbol-successor' },
+	{ lineage: 'angular', capability: 'removed-static-module-method' },
+	{ lineage: 'angular', capability: 'rxjs-prototype-patch-and-tilde-sass-composition' },
+	{ lineage: 'angular', capability: 'http-client-call-surface' },
+	{ lineage: 'angular', capability: 'package-exports-republished-subpath' },
 ] as const;
 
 /**
@@ -156,7 +178,21 @@ export const ADAPTER_FREEZE_EXPERIMENTAL_CAPABILITIES = [
  * two freezes to find out.
  */
 export const ADAPTER_FREEZE_T021_EXPERIMENTAL_CAPABILITIES = ADAPTER_FREEZE_EXPERIMENTAL_CAPABILITIES.slice(
-	-12,
+	-21,
+	-9,
+);
+
+/**
+ * The exact subset the T024 Angular reopen produced, kept countable the same
+ * way and for the same reason.
+ *
+ * The difference between the two reopens is worth being able to read off the
+ * freeze without prose: T021 bought twelve capabilities and no artifact, T024
+ * bought nine and a repeatable production build. Neither bought a second
+ * application, so both slices are wholly inside the experimental column.
+ */
+export const ADAPTER_FREEZE_T024_EXPERIMENTAL_CAPABILITIES = ADAPTER_FREEZE_EXPERIMENTAL_CAPABILITIES.slice(
+	-9,
 );
 
 /**
@@ -216,26 +252,49 @@ export function adapterFreezeRecord(): Record<string, unknown> {
 				entries: ADAPTER_FREEZE_CROSS_PROVEN.map((entry) => ({ ...entry })),
 			},
 		},
-		reopen: {
-			task: 'T021',
-			subtree: 'packages/frameworks/angular',
-			authorization: 'board-authorized Angular-subtree reopen for the pigallery2 1.7.0 holdout chase (2026-08-13)',
-			commits: ['283d27f', '03b34ae', 'e6a219e', '8126736'],
-			capabilitiesExtracted: ADAPTER_FREEZE_T021_EXPERIMENTAL_CAPABILITIES.length,
-			entries: ADAPTER_FREEZE_T021_EXPERIMENTAL_CAPABILITIES.map((entry) => ({ ...entry })),
-			state: 'all-single-application-experimental',
-			outcome: 'The chased application stayed RED. The reopen bought twelve generic capabilities and a declared support boundary, not a green holdout.',
-			reactSubtreeUnchanged: true,
-		},
-		angularHoldout: {
-			state: 'attempted',
-			application: 'pigallery2 1.7.0',
-			outcome: 'failed',
-			preScreen: 'mandatory license-text-at-pin pre-screen',
-			reason: 'The Angular holdout was ingested under the mandatory license-text-at-pin pre-screen and run against the frozen adapters. Its migrated build is RED at the declared pre-Ivy-only-dependency support boundary; the record is published as permanent falsification evidence and counted in no numerator.',
-			boundary:
-				'pre-Ivy-only dependencies (no published Ivy successor) in active application use => unsupported at the Angular 16 target cell',
-		},
+		reopens: [
+			{
+				task: 'T021',
+				subtree: 'packages/frameworks/angular',
+				authorization: 'board-authorized Angular-subtree reopen for the pigallery2 1.7.0 holdout chase (2026-08-13)',
+				commits: ['283d27f', '03b34ae', 'e6a219e', '8126736'],
+				capabilitiesExtracted: ADAPTER_FREEZE_T021_EXPERIMENTAL_CAPABILITIES.length,
+				entries: ADAPTER_FREEZE_T021_EXPERIMENTAL_CAPABILITIES.map((entry) => ({ ...entry })),
+				state: 'all-single-application-experimental',
+				outcome: 'The chased application stayed RED. The reopen bought twelve generic capabilities and a declared support boundary, not a green holdout.',
+				reactSubtreeUnchanged: true,
+			},
+			{
+				task: 'T024',
+				subtree: 'packages/frameworks/angular',
+				authorization: 'board-authorized Angular-subtree reopen for the eShopOnContainers WebSPA holdout chase (2026-08-14)',
+				commits: ['82f48ab', '7543e0e', '8c6a8da', '0ecd410'],
+				capabilitiesExtracted: ADAPTER_FREEZE_T024_EXPERIMENTAL_CAPABILITIES.length,
+				entries: ADAPTER_FREEZE_T024_EXPERIMENTAL_CAPABILITIES.map((entry) => ({ ...entry })),
+				state: 'all-single-application-experimental',
+				outcome: 'The chased application is no longer refused at install and its migrated production build now completes twice with byte-identical output. No witness journey has run against it, so the reopen bought nine generic capabilities and a repeatable build, not a passed holdout.',
+				reactSubtreeUnchanged: true,
+			},
+		],
+		angularHoldouts: [
+			{
+				state: 'attempted',
+				application: 'pigallery2 1.7.0',
+				outcome: 'failed',
+				preScreen: 'mandatory license-text-at-pin pre-screen',
+				reason: 'The Angular holdout was ingested under the mandatory license-text-at-pin pre-screen and run against the frozen adapters. Its migrated build is RED at the declared pre-Ivy-only-dependency support boundary; the record is published as permanent falsification evidence and counted in no numerator.',
+				boundary:
+					'pre-Ivy-only dependencies (no published Ivy successor) in active application use => unsupported at the Angular 16 target cell',
+			},
+			{
+				state: 'attempted',
+				application: 'eShopOnContainers WebSPA (netcore2.2, src/Web/WebSPA)',
+				outcome: 'migrated-build-green-witness-pending',
+				preScreen: 'mandatory license-text-at-pin pre-screen; the pre-Ivy screen verdict on this candidate was overturned by the T022 follow-up ruling under the successor-across-names rule',
+				reason: 'The replacement Angular holdout was refused at install by the frozen f1a63359 adapter, and that RED stands as history. After the authorized T024 reopen its migrated production build completes and repeats byte-identically. No witness journey has run in either lane, so nothing about its behavior is established, it is counted in no numerator, and it is published as a measured state rather than as a passed holdout.',
+				boundary: 'none declared by this holdout',
+			},
+		],
 	};
 }
 

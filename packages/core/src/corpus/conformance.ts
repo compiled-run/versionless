@@ -129,6 +129,12 @@ import {
 	verifyHoldoutAngularPigallery2Evidence,
 } from '../receipts/holdout-angular-pigallery2.ts';
 import {
+	HOLDOUT_ANGULAR_ESHOP_WEBSPA_APPLICATION,
+	HOLDOUT_ANGULAR_ESHOP_WEBSPA_OUTCOME,
+	holdoutAngularEshopWebspaCorpusRecord,
+	verifyHoldoutAngularEshopWebspaEvidence,
+} from '../receipts/holdout-angular-eshop-webspa.ts';
+import {
 	ANGULAR_PRE_IVY_BOUNDARY_AMENDMENT,
 	assertAngularPreIvyBoundaryAmendment,
 } from '../receipts/angular-pre-ivy-boundary-amendment.ts';
@@ -430,14 +436,27 @@ async function holdoutLedger(
 	// so it is bound here rather than described beside the boundary.
 	const pigalleryVerified = await verifyHoldoutAngularPigallery2Evidence(root);
 	const pigalleryDerived = holdoutAngularPigallery2CorpusRecord(pigalleryVerified.receipt);
+	// The third holdout is the first whose migrated build is green, and it is
+	// therefore the first that could be overstated. It is bound exactly like the
+	// two failures — derived from its own verified receipt, cross-checked against
+	// the aggregate, counted nowhere — and the two facts that keep it honest are
+	// asserted here rather than left to prose: no witness journey has run, and
+	// the install RED it took under the frozen composite is still in the record.
+	const eshopVerified = await verifyHoldoutAngularEshopWebspaEvidence(root);
+	const eshopDerived = holdoutAngularEshopWebspaCorpusRecord(eshopVerified.receipt);
 	const published = aggregate.holdouts;
-	if (!Array.isArray(published) || published.length !== 2)
-		throw new Error('Aggregate holdout membership must carry exactly two records');
+	if (!Array.isArray(published) || published.length !== 3)
+		throw new Error('Aggregate holdout membership must carry exactly three records');
 	if (canonicalize(record(published[0], 'aggregate holdout record')) !== canonicalize(derived))
 		throw new Error('Aggregate holdout record differs from its verified receipt');
 	if (
 		canonicalize(record(published[1], 'aggregate Angular holdout record')) !==
 		canonicalize(pigalleryDerived)
+	)
+		throw new Error('Aggregate holdout record differs from its verified receipt');
+	if (
+		canonicalize(record(published[2], 'aggregate Angular holdout record')) !==
+		canonicalize(eshopDerived)
 	)
 		throw new Error('Aggregate holdout record differs from its verified receipt');
 	if (derived.countedInLineageNumerator !== false || derived.outcome !== 'failed')
@@ -446,6 +465,14 @@ async function holdoutLedger(
 		pigalleryDerived.countedInLineageNumerator !== false ||
 		pigalleryDerived.outcome !== 'failed' ||
 		pigalleryDerived.migratedLane !== 'red'
+	)
+		throw new Error('Corpus holdout record misstates its counting or outcome');
+	if (
+		eshopDerived.countedInLineageNumerator !== false ||
+		eshopDerived.outcome !== HOLDOUT_ANGULAR_ESHOP_WEBSPA_OUTCOME ||
+		eshopDerived.witness !== 'not-run' ||
+		eshopDerived.browserProof !== 'not-tested' ||
+		eshopDerived.migratedLaneUnderFreeze !== 'red'
 	)
 		throw new Error('Corpus holdout record misstates its counting or outcome');
 	// The T017 re-run supersedes the tranche-one FAIL by reference. The published
@@ -468,6 +495,7 @@ async function holdoutLedger(
 	return [
 		derived as unknown as Record<string, unknown>,
 		pigalleryDerived as unknown as Record<string, unknown>,
+		eshopDerived as unknown as Record<string, unknown>,
 	];
 }
 
@@ -532,6 +560,8 @@ function assertHoldoutsAreUncounted(
 		throw new Error('Corpus holdout ledger omits the cypress-realworld-app holdout');
 	if (!applications.has(HOLDOUT_ANGULAR_PIGALLERY2_APPLICATION))
 		throw new Error('Corpus holdout ledger omits the pigallery2 holdout');
+	if (!applications.has(HOLDOUT_ANGULAR_ESHOP_WEBSPA_APPLICATION))
+		throw new Error('Corpus holdout ledger omits the eShopOnContainers WebSPA holdout');
 	if (ledger.some((cell) => applications.has(cell.application) || cells.has(cell.cell)))
 		throw new Error('A holdout reached the Judge counting ledger');
 }

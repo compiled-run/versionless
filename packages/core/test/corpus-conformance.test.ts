@@ -61,6 +61,12 @@ import {
 	verifyHoldoutAngularPigallery2Evidence,
 } from '../src/receipts/holdout-angular-pigallery2.ts';
 import {
+	HOLDOUT_ANGULAR_ESHOP_WEBSPA_OUTCOME,
+	HOLDOUT_ANGULAR_ESHOP_WEBSPA_RUN_EVIDENCE,
+	holdoutAngularEshopWebspaCorpusRecord,
+	verifyHoldoutAngularEshopWebspaEvidence,
+} from '../src/receipts/holdout-angular-eshop-webspa.ts';
+import {
 	ANGULAR_PRE_IVY_BOUNDARY_AMENDMENT,
 	ANGULAR_PRE_IVY_BOUNDARY_POPULATION_STATEMENT,
 	assertAngularPreIvyBoundaryAmendment,
@@ -138,6 +144,15 @@ async function corpusCopy(label: string): Promise<string> {
 		recursive: true,
 	});
 	for (const evidence of HOLDOUT_ANGULAR_PIGALLERY2_RUN_EVIDENCE)
+		await cp(path.join(root, evidence.path), path.join(directory, evidence.path));
+	// The eShop holdout's run evidence, copied the same way and for the same
+	// reason: its ingest carries the pinned monorepo archive, and a ledger check
+	// needs the sealed attempt record and the lane logs, not a tarball.
+	await mkdir(
+		path.join(directory, 'evidence/ingests/angular-eshop-webspa-netcore2-2/migration'),
+		{ recursive: true },
+	);
+	for (const evidence of HOLDOUT_ANGULAR_ESHOP_WEBSPA_RUN_EVIDENCE)
 		await cp(path.join(root, evidence.path), path.join(directory, evidence.path));
 	return directory;
 }
@@ -1621,13 +1636,28 @@ describe('canonical corpus conformance', () => {
 		const expected = holdoutReactCypressRwaCorpusRecord(verified.receipt);
 		const pigalleryVerified = await verifyHoldoutAngularPigallery2Evidence(root);
 		const pigalleryExpected = holdoutAngularPigallery2CorpusRecord(pigalleryVerified.receipt);
+		const eshopVerified = await verifyHoldoutAngularEshopWebspaEvidence(root);
+		const eshopExpected = holdoutAngularEshopWebspaCorpusRecord(eshopVerified.receipt);
 		const readiness = (result.coverage as Record<string, unknown>)
 			.productionReadiness as Record<string, unknown>;
-		expect(readiness.holdouts).toEqual([expected, pigalleryExpected]);
+		expect(readiness.holdouts).toEqual([expected, pigalleryExpected, eshopExpected]);
 		const aggregate = JSON.parse(
 			await readFile(path.join(root, 'evidence/runs/aggregate.json'), 'utf8'),
 		) as { fixtures: Array<Record<string, unknown>>; holdouts: unknown[] };
-		expect(aggregate.holdouts).toEqual([expected, pigalleryExpected]);
+		expect(aggregate.holdouts).toEqual([expected, pigalleryExpected, eshopExpected]);
+		// The eShop holdout is the one entry in this ledger whose migrated build is
+		// green, which makes it the one entry that could be read as a pass. It is
+		// not one: no journey ran, it is counted nowhere, and the install RED it
+		// took under the frozen composite is still in the record beside the green.
+		expect(eshopExpected.outcome).toBe(HOLDOUT_ANGULAR_ESHOP_WEBSPA_OUTCOME);
+		expect(eshopExpected.migratedLane).toBe('green');
+		expect(eshopExpected.migratedLaneUnderFreeze).toBe('red');
+		expect(eshopExpected.witness).toBe('not-run');
+		expect(eshopExpected.browserProof).toBe('not-tested');
+		expect(eshopExpected.countedInLineageNumerator).toBe(false);
+		expect(
+			aggregate.fixtures.some((fixture) => fixture.receipt === eshopExpected.receipt),
+		).toBe(false);
 		// The Angular holdout failed and stays failed: it is the falsification
 		// evidence the declared support boundary rests on, and a boundary that
 		// reclassified its own evidence would be a gate change wearing a
@@ -1824,6 +1854,56 @@ describe('canonical corpus conformance', () => {
 			await expect(analyzeCorpusConformance({ rootDir: directory })).rejects.toThrow();
 		} finally {
 			await rm(directory, { recursive: true, force: true });
+		}
+	});
+
+	it('refuses an eShop holdout entry edited into a pass or a browser proof', async () => {
+		const mutations: Array<[string, (value: Record<string, unknown>) => void]> = [
+			[
+				'outcome-upgraded',
+				(value) => {
+					value.holdoutOutcome = 'passed';
+				},
+			],
+			[
+				'witness-claimed',
+				(value) => {
+					const witness = value.witness as Record<string, unknown>;
+					witness.state = 'verified';
+					witness.journeysRun = 3;
+					witness.browserProof = 'verified';
+				},
+			],
+			[
+				'install-red-erased',
+				(value) => {
+					const lanes = value.lanes as Record<string, Record<string, unknown>>;
+					lanes.migratedUnderFreeze.outcome = 'green';
+				},
+			],
+			[
+				'reopen-hidden',
+				(value) => {
+					const adapter = value.frozenAdapter as Record<string, Record<string, unknown>>;
+					adapter.authorizedReopen.capabilitiesExtracted = 0;
+				},
+			],
+		];
+		for (const [label, mutate] of mutations) {
+			const directory = await corpusCopy(`eshop-${label}`);
+			try {
+				await mutateJson(
+					directory,
+					'evidence/runs/holdout-angular-eshop-webspa/receipt.json',
+					mutate,
+				);
+				await expect(
+					analyzeCorpusConformance({ rootDir: directory }),
+					label,
+				).rejects.toThrow();
+			} finally {
+				await rm(directory, { recursive: true, force: true });
+			}
 		}
 	});
 

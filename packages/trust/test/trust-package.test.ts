@@ -1120,14 +1120,15 @@ snapshots:
 				'The Vite adapter is **fixture-specific**; generic adapter: **not-tested**; unplugin portability: **not-tested**',
 			);
 			expect(report).toContain('T220 is **not included**');
-			// Both failed holdouts in the corpus are stated in the report with their
-			// recorded reasons, and stated to be counted in no numerator, so the
-			// unchanged lineage scores cannot be read as an absence of contrary
-			// evidence.
+			// Every holdout in the corpus is stated in the report with its recorded
+			// reason, and stated to be counted in no numerator, so the unchanged
+			// lineage scores cannot be read as an absence of contrary evidence. The
+			// third one is the first whose migrated build is green, and the report
+			// has to carry what is still missing from it in the same breath.
 			const holdouts = (
 				conformance.coverage.productionReadiness as Record<string, unknown>
 			).holdouts as Array<Record<string, unknown>>;
-			expect(holdouts).toHaveLength(2);
+			expect(holdouts).toHaveLength(3);
 			expect(holdouts[0]).toMatchObject({
 				id: 'holdout-react-cypress-rwa',
 				attempted: true,
@@ -1141,10 +1142,21 @@ snapshots:
 				outcome: 'failed',
 				countedInLineageNumerator: false,
 			});
+			expect(holdouts[2]).toMatchObject({
+				id: 'holdout-angular-eshop-webspa',
+				attempted: true,
+				outcome: 'migrated-build-green-witness-pending',
+				witness: 'not-run',
+				browserProof: 'not-tested',
+				countedInLineageNumerator: false,
+			});
 			expect(report).toContain('holdout-react-cypress-rwa');
 			expect(report).toContain('non-UTF-8 module source decoding');
 			expect(report).toContain('counted in no lineage numerator');
 			expect(report).toContain('holdout-angular-pigallery2');
+			expect(report).toContain('holdout-angular-eshop-webspa');
+			expect(report).toContain('This is **not a passed holdout**');
+			expect(report).toContain('Witness journeys: **not-run**');
 			// The declared support boundary is carried by the report and by the
 			// matrix, with its non-certification language intact.
 			expect(report).toContain(
@@ -1854,21 +1866,42 @@ snapshots:
 			crossProven: { entries: Array<{ lineage: string; capability: string }> };
 		};
 		// Twelve from the first two tranches, twelve more from the authorized T021
-		// Angular reopen. The reopen bought capabilities, not coverage: every one
-		// of them is still single-application and still out of the matrix.
-		expect(capabilities.experimental.entries).toHaveLength(24);
+		// Angular reopen, nine more from the authorized T024 one. Neither reopen
+		// bought coverage: every one of the thirty-three is still
+		// single-application and still out of the matrix.
+		expect(capabilities.experimental.entries).toHaveLength(33);
 		expect(capabilities.experimental.pendingEvidence).toContain('T006');
 		expect(capabilities.crossProven.entries.map((entry) => entry.capability)).toContain(
 			'react-cra-vite-adapter',
 		);
-		const reopen = record.reopen as { capabilitiesExtracted: number; entries: unknown[] };
-		expect(reopen.capabilitiesExtracted).toBe(12);
-		expect(reopen.entries).toHaveLength(12);
-		expect(record.angularHoldout).toMatchObject({
+		const reopens = record.reopens as Array<{
+			task: string;
+			capabilitiesExtracted: number;
+			entries: unknown[];
+			reactSubtreeUnchanged: boolean;
+		}>;
+		expect(reopens.map((reopen) => reopen.task)).toEqual(['T021', 'T024']);
+		expect(reopens[0]?.capabilitiesExtracted).toBe(12);
+		expect(reopens[0]?.entries).toHaveLength(12);
+		expect(reopens[1]?.capabilitiesExtracted).toBe(9);
+		expect(reopens[1]?.entries).toHaveLength(9);
+		expect(reopens.every((reopen) => reopen.reactSubtreeUnchanged)).toBe(true);
+		// Both Angular holdouts are carried, and the second one's outcome is the
+		// measured state rather than a pass: a freeze record that summarised a
+		// green build with no witness behind it as a success would be the single
+		// most flattering edit available here.
+		const angularHoldouts = record.angularHoldouts as Array<Record<string, unknown>>;
+		expect(angularHoldouts).toHaveLength(2);
+		expect(angularHoldouts[0]).toMatchObject({
 			state: 'attempted',
 			outcome: 'failed',
 			preScreen: 'mandatory license-text-at-pin pre-screen',
 		});
+		expect(angularHoldouts[1]).toMatchObject({
+			state: 'attempted',
+			outcome: 'migrated-build-green-witness-pending',
+		});
+		expect(String(angularHoldouts[1]?.reason)).toContain('No witness journey has run');
 		expect(verifyAdapterFreezeRecord(record)).toEqual(record);
 	});
 

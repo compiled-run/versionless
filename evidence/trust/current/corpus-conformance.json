@@ -2112,6 +2112,37 @@
           "countingNote": "Never counted in any lineage numerator: no application was migrated. The record is published rather than dropped so a failed falsification attempt cannot be hidden, and it is not reclassified by the support boundary it established.",
           "supportBoundary": "angular-16-pre-ivy-only-dependency",
           "browserProof": "not-tested"
+        },
+        {
+          "id": "holdout-angular-eshop-webspa",
+          "application": "eShopOnContainers WebSPA",
+          "framework": "angular",
+          "lineage": "angular",
+          "role": "holdout",
+          "attempted": true,
+          "outcome": "migrated-build-green-witness-pending",
+          "reason": "browser behaviour: no witness journey has run in either lane, so the migrated production build is proven to exist and repeat and is proven to do nothing else",
+          "verdict": "the reopened Angular adapter carries this application as far as a repeatable production build and no further; the entry is published as a measured state, not as a passed holdout",
+          "frozenAdapterFingerprint": "f1a63359210b87c04408b27cf8c40e88e1b47d44bcc7f5a9be20d9478dc71012",
+          "adapterBytesChanged": 0,
+          "authorizedReopen": {
+            "task": "T024",
+            "subtree": "packages/frameworks/angular",
+            "capabilitiesExtracted": 9,
+            "angularSubtreeOidAtGreen": "4b6e2f4494d98582e4fe9b420c2b412059dc0720",
+            "refreezeComposite": "27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234",
+            "outcomeAfterReopen": "migrated-build-green-witness-pending"
+          },
+          "baselineLane": "green",
+          "migratedLaneUnderFreeze": "red",
+          "migratedLane": "green",
+          "attempts": 2,
+          "witness": "not-run",
+          "receipt": "evidence/runs/holdout-angular-eshop-webspa/receipt.json",
+          "digest": "a1c43326cb9b0f756e269d0e8339abe64df85a4ce9b709d7c612d37f8e7f0712",
+          "countedInLineageNumerator": false,
+          "countingNote": "Never counted in any lineage numerator. The migrated production build is green and repeatable, but no witness journey has run, so no application is proven migrated: this entry is a measured state published in full, not a vertical and not a pass. The install RED under the frozen f1a63359 composite is retained beside it as the record of what the frozen adapter did.",
+          "browserProof": "not-tested"
         }
       ],
       "olderNext": {
@@ -2131,6 +2162,6 @@
   },
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "bffbd1ae491768b7a81943d6bf0a8528abf0adaaa059018d9db658166efa564c"
+    "canonicalDigest": "34dfd66341ac544e8b7ab99024d0fecef9ff3a1d10e03ff385d822d93f0bba4f"
   }
 }

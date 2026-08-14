@@ -1,8 +1,8 @@
 # Versionless project trust package
 
-- Canonical SHA-256: `7707da23762c0ad57046a4741803f1aa8df4bde862b2e574d6815c1e6763880d`
-- Deterministic core: `2e11b61c52fb0c6491bc2234202c58444bbfcc111376033c53ba26a2013db229`
-- Generated observation: `2026-08-14T04:36:34.698Z`
+- Canonical SHA-256: `394fea954c022e94fedd10dbe4ae2df42b2b93a8633fa46574ec82866ffcf716`
+- Deterministic core: `754eb300940058babf0ace5e66ce3af3face5699f24d9a6828764c03c5134c87`
+- Generated observation: `2026-08-14T07:57:43.637Z`
 - Vulnerability input freshness: **stale** (seven-day maximum age)
 - Integrity: **hash-only; authenticity is not established**
 - Assurance: **this package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation**
@@ -15,8 +15,8 @@
 - [SLSA/in-toto-shaped provenance](provenance.json) — shape only; no SLSA level or signer authenticity is claimed.
 - [Supported corpus/runtime/bundler matrix](matrix.json) — unsupported and untested cells remain visible.
 - [Capability-coverage map](capability-coverage.json) — every exported migration capability with its proving applications and derived generality classification; single-application capabilities are named experimental, not claimed general.
-- [Adapter freeze record](adapter-freeze.json) — the migration engine adapter surface is frozen at commit `852079a1d163617f810dba7e8b3509bc8e25343a` with composite SHA-256 `f1a63359210b87c04408b27cf8c40e88e1b47d44bcc7f5a9be20d9478dc71012`; the receipts, corpus, and witness registries are deliberately **outside** the freeze so holdout evidence can still be published additively.
-- [Corpus conformance](corpus-conformance.json) — `bffbd1ae491768b7a81943d6bf0a8528abf0adaaa059018d9db658166efa564c`; 20 verified verticals grouped into exactly 12 source applications; zero designated pilots are verified.
+- [Adapter freeze record](adapter-freeze.json) — the migration engine adapter surface is frozen at commit `0ecd410691df10fbc68c9ddcd012dafa86aba536` with composite SHA-256 `27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234`; the receipts, corpus, and witness registries are deliberately **outside** the freeze so holdout evidence can still be published additively.
+- [Corpus conformance](corpus-conformance.json) — `34dfd66341ac544e8b7ab99024d0fecef9ff3a1d10e03ff385d822d93f0bba4f`; 20 verified verticals grouped into exactly 12 source applications; zero designated pilots are verified.
 - The immutable Killed by Google Next.js 12 Pages/webpack production vertical is verified only for its exact fixture; synthetic Next.js 12 Pages, 13 transition/App, and 14 App classification lanes remain **not-tested**, and generic Next.js support is not claimed.
 - [Static script/resource surface](script-surface.json) — truthfully remains scoped to the prior nine verticals, two applications, and eighteen exact static deployment entrypoints; T220 is **not included** because its script surface was not separately observed; dynamic script insertion: **not-tested**; payment-page applicability: **not established**; PCI compliance is **not claimed**.
 - [Qualified-journey runtime script observation](runtime-script-observation.json) — truthfully remains scoped to 36 runs across the prior nine verticals, two applications, and eighteen lanes; T220 is **not included** because its runtime scripts were not separately observed; this is **not global dynamic-insertion coverage**.
@@ -36,6 +36,7 @@
 - Older-Next direct-Witness candidate: **verified; the olderNext 0/4 separate numerator is retired to an informational React sub-tag under the T016 charter ruling (Next.js-on-React is React-lineage, not a separate oracle lineage)**.
 - Holdout `holdout-react-cypress-rwa` (cypress-realworld-app, react lineage): **attempted; outcome failed**. Baseline lane green, migrated lane red identically across 2 attempts against frozen adapter composite `d9f75ef677cb850f664cc188abf77b8ebfd24e84cb58d147b74e9bbaa143eb77` with 0 adapter bytes changed. Recorded missing capability for the follow-on tranche: **non-UTF-8 module source decoding**. It is **counted in no lineage numerator** and published rather than dropped: [evidence/runs/holdout-react-cypress-rwa/receipt.json](../../../evidence/runs/holdout-react-cypress-rwa/receipt.json) `7ec6f18b27d2967cd533ba89505e8a76590c1866aec8bd7a8d8543cd87743aae`.
 - Holdout `holdout-angular-pigallery2` (pigallery2, angular lineage): **attempted; outcome failed**. Baseline lane green, migrated lane red identically across 3 attempts against frozen adapter composite `4df7bc961033fc5856b4d58e0bca9f11ad2aa9d43aaaee726956f34d209b37e7` with 0 adapter bytes changed. Recorded missing capability for the follow-on tranche: **consumption of pre-Ivy-only dependencies with no published Ivy successor at the Angular 16 target cell**. It is **counted in no lineage numerator** and published rather than dropped: [evidence/runs/holdout-angular-pigallery2/receipt.json](../../../evidence/runs/holdout-angular-pigallery2/receipt.json) `39a133ff97c37622a4a1821f20e7c442c9bc22ed7597a3e73cbd31323ab2bb10`.
+- Holdout `holdout-angular-eshop-webspa` (eShopOnContainers WebSPA, angular lineage): **attempted; outcome migrated-build-green-witness-pending**. Baseline lane green; migrated lane red at install against frozen adapter composite `f1a63359210b87c04408b27cf8c40e88e1b47d44bcc7f5a9be20d9478dc71012` with 0 adapter bytes changed, and green across 2 byte-identical production builds after the authorized T024 Angular-subtree reopen re-frozen at `27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234`. Witness journeys: **not-run**; browser proof **not-tested**. Still unproven: **browser behaviour: no witness journey has run in either lane, so the migrated production build is proven to exist and repeat and is proven to do nothing else**. This is **not a passed holdout**, it is **counted in no lineage numerator**, and the earlier RED is published rather than retracted: [evidence/runs/holdout-angular-eshop-webspa/receipt.json](../../../evidence/runs/holdout-angular-eshop-webspa/receipt.json) `a1c43326cb9b0f756e269d0e8339abe64df85a4ce9b709d7c612d37f8e7f0712`.
 - Boundary `angular-16-pre-ivy-only-dependency` at cell `angular-16-browser-builder` (angular lineage): **unsupported** — pre-Ivy-only dependencies (no published Ivy successor) in active application use => unsupported at the Angular 16 target cell. Angular 16 removed ngcc, so ViewEngine bytes cannot be consumed at this cell, and a library whose last published version is pre-Ivy has no successor to align to. Carrying such an application would require editing its source at the import sites, which is an application change rather than a migration the engine can perform. Declared by lrapr-t022 boundary ruling (Judge, 2026-08-14); **not-certified: this cell is declared unsupported, not tested-and-failed-once**. Instance evidence: pigallery2, 3 libraries at 6 import sites — `@yaga/leaflet-ng2` (last published 1.1.0; `frontend/app/app.module.ts:14`, `frontend/app/ui/gallery/map/map.gallery.component.ts:7`, `frontend/app/ui/gallery/map/lightbox/lightbox.map.gallery.component.ts:16`), `ng2-slim-loading-bar` (last published 4.0.0; `frontend/app/app.module.ts:31`, `frontend/app/model/network/network.service.ts:4`), `jw-bootstrap-switch-ng2` (last published 2.0.5; `frontend/app/app.module.ts:41`) — recorded RED in [evidence/runs/holdout-angular-pigallery2/receipt.json](../../../evidence/runs/holdout-angular-pigallery2/receipt.json) `39a133ff97c37622a4a1821f20e7c442c9bc22ed7597a3e73cbd31323ab2bb10`.
   - No claim that every application carrying a pre-Ivy-only dependency is unmigratable in general: the boundary is declared at the Angular 16 target cell, which is the only Angular cell this engine has.
   - No claim that this boundary is unreachable: an ngcc-bearing multi-hop cell (Angular 12 or 13) would consume those bytes. It is a declared tranche-two commitment, not a silent deferral, and it invalidates every Angular 16 cell reading in this record, so it is not taken here.
@@ -81,10 +82,10 @@ The dependency graph is a rooted complete inventory. Exact transitive dependency
 
 ## Adapter freeze and capability status
 
-Frozen at commit `852079a1d163617f810dba7e8b3509bc8e25343a`; composite SHA-256 `f1a63359210b87c04408b27cf8c40e88e1b47d44bcc7f5a9be20d9478dc71012` over the newline-terminated `<path> <tree-oid>` lines below, in order.
+Frozen at commit `0ecd410691df10fbc68c9ddcd012dafa86aba536`; composite SHA-256 `27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234` over the newline-terminated `<path> <tree-oid>` lines below, in order.
 
 - `packages/frameworks/react` `972ca80155bbc2a6eb3779943cd481b71d35e803`
-- `packages/frameworks/angular` `1f63f32c9f4eb327e2c85f63e69544f1eeb99428`
+- `packages/frameworks/angular` `4b6e2f4494d98582e4fe9b420c2b412059dc0720`
 - `packages/core/src/migrations` `5237ce5990af3623206bcd2301047a59c80731cf`
 - `packages/core/src/bundlers` `cec2f0b56fbb7897f38d579be805e19982380ca6`
 - `packages/core/src/analysis` `262dc8b7528c92883c2300914eb7d42579fb856b`
@@ -123,16 +124,25 @@ Proven on exactly one application and therefore **experimental / out-of-matrix**
 - angular: `undecorated-angular-base-class`
 - angular: `application-source-dependency`
 - angular: `departed-dom-lib-member`
+- angular: `unread-declaration-silence-reporting`
+- angular: `angular-16-community-layer-readings`
+- angular: `superseded-era-lockfile`
+- angular: `workspace-script-flags`
+- angular: `use-position-symbol-successor`
+- angular: `removed-static-module-method`
+- angular: `rxjs-prototype-patch-and-tilde-sass-composition`
+- angular: `http-client-call-surface`
+- angular: `package-exports-republished-subpath`
 
-The Angular holdout was ingested under the mandatory license-text-at-pin pre-screen and run: pigallery2 1.7.0 is **RED**, at the declared pre-Ivy-only-dependency support boundary above. The T021 Angular-subtree reopen that chased it is recorded in the freeze's supersession record, and every capability it produced is in the experimental list above.
+Both Angular holdouts were ingested under the mandatory license-text-at-pin pre-screen and run. pigallery2 1.7.0 is **RED**, at the declared pre-Ivy-only-dependency support boundary above. The eShopOnContainers WebSPA was **RED at install** under the superseded `f1a63359` composite and, after the authorized T024 reopen, its migrated production build completes twice byte-identically — with **no witness journey run in either lane**, so it is published as a measured state and **not as a passed holdout**. Both Angular-subtree reopens are recorded in the freeze's supersession record, and every capability either of them produced is in the experimental list above.
 
 ## Capability-coverage map
 
 The map is the machine-readable evidence record [capability-coverage.json](capability-coverage.json); classification is derived from the count of distinct independent applications and is never hand-set. A capability is claimed **general** only once at least 2 independent applications prove it.
 
 - React lineage: 1/8 capabilities cross-proven.
-- Angular lineage: 7/45 capabilities cross-proven.
-- Total: **8 cross-proven (in-matrix)**, **45 experimental (out-of-matrix)** across 53 enumerated capabilities.
+- Angular lineage: 7/50 capabilities cross-proven.
+- Total: **8 cross-proven (in-matrix)**, **50 experimental (out-of-matrix)** across 58 enumerated capabilities.
 
 Cross-proven on at least two independent applications, and therefore in the matrix:
 
@@ -157,7 +167,7 @@ Proven on fewer than two independent applications — single-application or unpr
 - angular: `template-analysis` — 1 application(s) (angular-fuxa)
 - angular: `semantic-module` — 1 application(s) (angular-super-productivity)
 - angular: `undeclared-runtime-dependency` — 0 application(s) (unproven coverage)
-- angular: `package-exports-style-imports` — 0 application(s) (unproven coverage)
+- angular: `package-exports-style-imports` — 1 application(s) (angular-eshop-webspa)
 - angular: `modal-content-params-migration` — 1 application(s) (angular-jira-clone)
 - angular: `custom-webpack-absorption` — 1 application(s) (angular-jira-clone)
 - angular: `tslint-toolchain-removal` — 1 application(s) (angular-jira-clone)
@@ -191,6 +201,11 @@ Proven on fewer than two independent applications — single-application or unpr
 - angular: `workspace-engines-retarget` — 1 application(s) (angular-pigallery2)
 - angular: `undecorated-angular-base-class` — 1 application(s) (angular-pigallery2)
 - angular: `application-source-dependency` — 1 application(s) (angular-pigallery2)
+- angular: `use-position-symbol-successor` — 1 application(s) (angular-eshop-webspa)
+- angular: `removed-static-module-method` — 1 application(s) (angular-eshop-webspa)
+- angular: `http-client-call-surface` — 1 application(s) (angular-eshop-webspa)
+- angular: `superseded-era-lockfile` — 1 application(s) (angular-eshop-webspa)
+- angular: `workspace-script-flags` — 1 application(s) (angular-eshop-webspa)
 - angular: `departed-dom-lib-member` — 1 application(s) (angular-pigallery2)
 
 ## Known gaps

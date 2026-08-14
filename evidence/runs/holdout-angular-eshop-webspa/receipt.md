@@ -1,0 +1,61 @@
+# eShopOnContainers WebSPA — Angular holdout ledger entry
+
+- Outcome: **migrated-build-green-witness-pending** — the migrated production build completes and repeats; **no witness journey has run**, so this is not a passed holdout
+- Still unproven: **browser behaviour: no witness journey has run in either lane, so the migrated production build is proven to exist and repeat and is proven to do nothing else**
+- Canonical SHA-256: a1c43326cb9b0f756e269d0e8339abe64df85a4ce9b709d7c612d37f8e7f0712
+- Ingested by `lrapr-t023/u3-boundary-amend-candidate3-acquire`, measured green by `lrapr-t024/u4-exports-map-wiring-green-attempt`, published by `lrapr-t024/u5-refreeze-and-holdout-ledger`
+- Source: https://github.com/dotnet-architecture/eShopOnContainers at release `netcore2.2` (`a387f21029f0b2d49614d165d5384717d2398f8e`, subpath `src/Web/WebSPA`, MIT, license text sha256 `baebca0309090f4eca1b7a82c836cc91e48b2b92139c2280fb0ff69af922c2ae`), Angular 6.1.4 under Angular CLI ^6.1.5, TypeScript 2.9.2
+- Target cell: `angular-16-browser-builder` — Angular 16.2, `@angular-devkit/build-angular:browser`, Node 16.20.2
+- Adapter at ingestion: frozen composite `f1a63359210b87c04408b27cf8c40e88e1b47d44bcc7f5a9be20d9478dc71012`, 0 bytes changed; 0 application files hand-edited
+- Authorized reopen: T023 u5 ran this application against the frozen f1a63359 composition with zero adapter bytes changed, and it was refused at install. T024 then reopened the Angular subtree under board authorization and extracted nine generic capabilities and composition repairs across four units; the build below ran against Angular subtree oid 4b6e2f44, which is the tree the 27741d9c re-freeze publishes. The React subtree is byte-identical at 972ca801 throughout. No capability branches on this application, and no application source file was hand-edited in any unit.
+- Derived from committed run evidence: `evidence/ingests/angular-eshop-webspa-netcore2-2/attempt.json` (`f9ce14109d20634ce7ac679c8dda6be2d2bf3a5f1a13087b47528840045ace86`), `evidence/ingests/angular-eshop-webspa-netcore2-2/migration/u5-lane-install-red.log` (`6666630237c89b3c89f9df0615fdc443c687482e98728cbaca82ad6aca1b1456`), `evidence/ingests/angular-eshop-webspa-netcore2-2/migration/u4-t024-lane-install.log` (`5254287d3fda581b45ef864c53eb6a8fd83cbb7c71cbb823e56760b484e3f920`), `evidence/ingests/angular-eshop-webspa-netcore2-2/migration/u4-t024-target-build.log` (`e1d04fe579de4639e1565bac20e3c55f416fd8cfde68665dcfa10b3327bb7bf1`), `evidence/ingests/angular-eshop-webspa-netcore2-2/migration/u4-t024-target-build-run2.log` (`78eb802f319b32f4a85c8c7269f07a59141b7a8ba9a83b795120993101a79b8b`), `evidence/ingests/angular-eshop-webspa-netcore2-2/migration/u4-t024-build-inventory-run1-vs-run2.json` (`1a0cb82feff57b567739542bd674d472fdbd1cffdf4414dc5d7772e78f5bc7c9`)
+
+## Gate zero
+
+**passed** — screen verdict `fail (@angular/http)`, ruled verdict `pass — overturned by the T022 follow-up ruling under the successor-across-names rule`, overturn recorded at docs/goals/legacy-react-angular-production-readiness/notes/t023-candidate-selection.md § Appendix A. This candidate did not clear the pre-Ivy screen on its own reading. The T022 follow-up ruling overturned that verdict under the successor-across-names rule — @angular/http has a published first-party Ivy successor — and the original screen text was left exactly as written. The pass is a ruling, and it is published as one.
+
+## Three measured states
+
+- Baseline (node v8.11.4 (official darwin-x64 build), bundled npm 5.6.0): **green** — WebSPA production baseline GREEN in the application's own era toolchain, byte-reproducible across two runs, with the era registry closure fully resolvable and one npm-side lockfile-rewrite finding recorded
+- Migrated under the frozen `f1a63359210b87c04408b27cf8c40e88e1b47d44bcc7f5a9be20d9478dc71012` composite (`lrapr-t023/u5-frozen-adapter-migration`): **red** at install — 2 install attempts, 0 packages installed, 5 gaps itemised, no build attempted and no artifact produced. RED. The frozen engine composed a changeset for an application it had never seen and wrote it into a migrated lane; the migrated closure is refused at dependency resolution by an era-pinned community package the cell has never read, and the measured @angular/http question is answered No with the exact gate that refused it. No compiler ran, no bundle was emitted, and nothing was chased.
+- Migrated after the authorized reopen (`lrapr-t024/u4-exports-map-wiring-green-attempt`): **green** — install exit 0 with no forced flag and no narrowing, 2 production build runs, byte-identical output, 25 files and 1524958 bytes emitted, 0 diagnostics remaining. G7 is closed and the migrated lane builds. `npm run build:prod` exits 0, emits twenty-five files into `wwwroot`, and a second run of the same command into a separate output is byte-identical to the first — same file names, same digests, no exceptions. The emitted stylesheet carries the toastr rules the blocked import was for, so the repair is a repair and not a silently dropped import. This is the first production build of the eShopOnContainers WebSPA on Angular 16.2 in this repository, and it was reached without one hand edit to application source, one application-name branch, or one weakened check.
+
+The RED is not retracted by the green. It is what the frozen adapter did, and it is published unchanged.
+
+## Witness
+
+**not-run** — 0 journeys run, browser proof `not-tested`. No witness journey has been run against this application in either lane. A build that completes and repeats is not a build that behaves: nothing here establishes rendering, parity, or any browser behaviour, and the witness gates this ledger applies to counted verticals have not been applied to it.
+
+## What the reopen bought
+
+9 capabilities and composition repairs, **all of them experimental and out of the supported matrix**, extracted against Angular subtree `4b6e2f4494d98582e4fe9b420c2b412059dc0720` and published under composite `27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234` with the React subtree unchanged at `972ca80155bbc2a6eb3779943cd481b71d35e803`:
+
+- `unread-declaration-silence-reporting` (lrapr-t024/u1-silence-defect-and-declarations) — the manifest alignment reports every era-pinned declaration the cell has read no line for, instead of carrying it silently at its era pin
+- `angular-16-community-layer-readings` (lrapr-t024/u1-silence-defect-and-declarations) — community-layer readings of published bytes for the two packages that stopped the lane, taken by the same rule every other entry there was chosen by
+- `superseded-era-lockfile` (lrapr-t024/u1-silence-defect-and-declarations) — era-lockfile supersession as a changeset declaration rather than a lane convention, taken only where the lockfile bytes contradict the migrated manifest bytes
+- `workspace-script-flags` (lrapr-t024/u1-silence-defect-and-declarations) — npm-script flag retargeting driven by the builder options this workspace migration actually removed
+- `use-position-symbol-successor` (lrapr-t024/u2-value-position-successor-and-compile-wall) — cross-package removed-symbol carriage read one use position at a time, with a measured refusal where a rename would compile and lie
+- `removed-static-module-method` (lrapr-t024/u2-value-position-successor-and-compile-wall) — removal of a static module configuration method the aligned line no longer declares, gated on the installed declarations
+- `rxjs-prototype-patch-and-tilde-sass-composition` (lrapr-t024/u2-value-position-successor-and-compile-wall) — two already-exported capabilities composed into the driver behind supply gates: the RxJS prototype-patch seam on compiler-stated positions, and the webpack tilde style specifier after the exports-map rewrite whose output it resolves
+- `http-client-call-surface` (lrapr-t024/u3-httpclient-call-surface) — the call surface of a removed HTTP client carried as one whole flow at a time, supply-gated on the successor classes as the lane installed them
+- `package-exports-republished-subpath` (lrapr-t024/u4-exports-map-wiring-green-attempt) — a blocked stylesheet import whose file the package exports map still publishes under another key is rewritten onto that key, which changes no payload and therefore declares nothing
+
+## Finding
+
+**the reopened Angular adapter carries this application as far as a repeatable production build and no further; the entry is published as a measured state, not as a passed holdout.**
+
+Three states are recorded rather than reconciled. Gate zero passed on an overturn ruling. The frozen adapter was refused at install and that RED stands as history. The reopened adapter composed a changeset for an application it had never seen, installed the closure unforced and unnarrowed, and produced a production build twice with byte-identical output and no diagnostics. What has not happened is a journey, so the one thing a holdout exists to prove — that the migrated application is still the application — is not proven here.
+
+20 application files changed by the changeset; 0 hand edits.
+
+## Non-claims
+
+- A build that completes and repeats is not a build that behaves. No test, no journey and no witness has run against this application in either lane, so nothing here establishes parity, rendering or any browser behaviour.
+- Determinism is established for two runs in one cell on one machine. It is not a claim about another machine, another Node build, or a cold npm cache.
+- The output inventory compares the migrated lane against the era baseline by path with content hashes elided. Two files bearing the same elided name are not thereby claimed to have the same content — the four emitted artefacts are named as differing precisely because they do.
+- The capability is proven on one application. The republished-subpath rule fired on one import of one package, and nothing here claims it general.
+- Every declared difference u3 recorded still stands. Closing the build did not retire the loss of checking the `Response` annotations were carried with.
+- This is not a passed holdout. A holdout passes when a migrated application is proven to still be the application; no journey has run here, so that proof does not exist and is not claimed.
+- The install RED under the frozen f1a63359 composite is not retracted by the later green. It is what the frozen adapter did, it is published unchanged, and the green build ran against a reopened adapter and says so.
+- No claim that the nine capabilities the reopen extracted are proven. Every one of them was written against this single application, and all nine stay experimental and out of the supported matrix until a second, independent Angular application carries them.
+- This entry is counted in no lineage numerator. A build is not a vertical, and nothing here moves the Angular score.
