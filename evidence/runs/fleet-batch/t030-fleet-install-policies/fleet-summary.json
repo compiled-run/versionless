@@ -1,0 +1,171 @@
+{
+	"schemaVersion": "versionless.fleet-batch.v1",
+	"flow": "batch",
+	"name": "t030-fleet-install-policies",
+	"startedAt": "2026-08-17T23:49:22.039Z",
+	"endedAt": "2026-08-17T23:51:04.007Z",
+	"machineTimeMs": 101967,
+	"declared": {
+		"applicationsFrom": [
+			"evidence/runs/fleet-batch/t029-react-fleet.json"
+		],
+		"laneRoot": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t030-p3",
+		"forwarded": [
+			"--allow-install-scripts",
+			"--allow-peer-conflicts",
+			"--allow-remote-tarballs"
+		],
+		"concurrency": "one application at a time, in the order declared; nothing in this batch ran in parallel",
+		"publish": "declared"
+	},
+	"totals": {
+		"applications": 6,
+		"proven": 1,
+		"refused": 3,
+		"refusedByCode": {
+			"install.lockfile-absent": 1,
+			"install.lockfile-foreign": 2
+		},
+		"defects": 2,
+		"interventionCount": 0,
+		"interventionCountNotAsserted": 0
+	},
+	"unattended": {
+		"state": false,
+		"statement": "This batch is not described as unattended: 2 application(s) reached a defect classification."
+	},
+	"applications": [
+		{
+			"id": "react-antd-admin-template-v2-0-0",
+			"framework": "not-recorded",
+			"applicationRoot": ".versionless/work/react-antd-admin-template-v2-0-0/baseline",
+			"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t030-p3/react-antd-admin-template-v2-0-0",
+			"runRecordPath": "evidence/runs/react-antd-admin-template-v2-0-0/run-record.json",
+			"interventionRecordPath": "evidence/runs/react-antd-admin-template-v2-0-0/run-record.json.interventions.json",
+			"terminalClassification": "defect:install",
+			"interventionCount": 0,
+			"exitCode": 1,
+			"refusal": null,
+			"elapsedMs": 91126
+		},
+		{
+			"id": "react-colorme-2019-06-06",
+			"framework": "not-recorded",
+			"applicationRoot": ".versionless/work/react-colorme-2019-06-06/baseline",
+			"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t030-p3/react-colorme-2019-06-06",
+			"runRecordPath": "evidence/runs/react-colorme-2019-06-06/run-record.json",
+			"interventionRecordPath": "evidence/runs/react-colorme-2019-06-06/run-record.json.interventions.json",
+			"terminalClassification": "refused:install.lockfile-absent",
+			"interventionCount": 0,
+			"exitCode": 2,
+			"refusal": {
+				"code": "install.lockfile-absent",
+				"message": "Install: the lane carries none of package-lock.json, npm-shrinkwrap.json, so there is no pinned closure to install. This flow installs a recorded closure rather than resolving a new one.",
+				"stage": "install"
+			},
+			"elapsedMs": 633
+		},
+		{
+			"id": "react-coverview-a1470b01",
+			"framework": "not-recorded",
+			"applicationRoot": ".versionless/work/react-coverview-a1470b01/baseline",
+			"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t030-p3/react-coverview-a1470b01",
+			"runRecordPath": "evidence/runs/react-coverview-a1470b01/run-record.json",
+			"interventionRecordPath": "evidence/runs/react-coverview-a1470b01/run-record.json.interventions.json",
+			"terminalClassification": "defect:install",
+			"interventionCount": 0,
+			"exitCode": 1,
+			"refusal": null,
+			"elapsedMs": 3173
+		},
+		{
+			"id": "react-cra-redux-1a06509b",
+			"framework": "not-recorded",
+			"applicationRoot": ".versionless/work/react-cra-redux-1a06509b/baseline",
+			"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t030-p3/react-cra-redux-1a06509b",
+			"runRecordPath": "evidence/runs/react-cra-redux-1a06509b/run-record.json",
+			"interventionRecordPath": "evidence/runs/react-cra-redux-1a06509b/run-record.json.interventions.json",
+			"terminalClassification": "refused:install.lockfile-foreign",
+			"interventionCount": 0,
+			"exitCode": 2,
+			"refusal": {
+				"code": "install.lockfile-foreign",
+				"message": "Install: the lane carries yarn.lock, and this stage reads package-lock.json, npm-shrinkwrap.json. The closure is pinned — by yarn — and it is pinned in a lockfile this flow does not read, so it is not absent and it is not installable here.",
+				"stage": "install"
+			},
+			"elapsedMs": 597
+		},
+		{
+			"id": "react-flame-v2-4-0",
+			"framework": "not-recorded",
+			"applicationRoot": ".versionless/work/react-flame-v2-4-0/baseline",
+			"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t030-p3/react-flame-v2-4-0",
+			"runRecordPath": "evidence/runs/react-flame-v2-4-0/run-record.json",
+			"interventionRecordPath": "evidence/runs/react-flame-v2-4-0/run-record.json.interventions.json",
+			"terminalClassification": "proven",
+			"interventionCount": 0,
+			"exitCode": 0,
+			"refusal": null,
+			"elapsedMs": 4477
+		},
+		{
+			"id": "react-your-spotify-1-5-0",
+			"framework": "not-recorded",
+			"applicationRoot": ".versionless/work/react-your-spotify-1-5-0/baseline",
+			"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t030-p3/react-your-spotify-1-5-0",
+			"runRecordPath": "evidence/runs/react-your-spotify-1-5-0/run-record.json",
+			"interventionRecordPath": "evidence/runs/react-your-spotify-1-5-0/run-record.json.interventions.json",
+			"terminalClassification": "refused:install.lockfile-foreign",
+			"interventionCount": 0,
+			"exitCode": 2,
+			"refusal": {
+				"code": "install.lockfile-foreign",
+				"message": "Install: the lane carries yarn.lock, and this stage reads package-lock.json, npm-shrinkwrap.json. The closure is pinned — by yarn — and it is pinned in a lockfile this flow does not read, so it is not absent and it is not installable here.",
+				"stage": "install"
+			},
+			"elapsedMs": 844
+		}
+	],
+	"publish": {
+		"declared": true,
+		"steps": [
+			{
+				"step": "pack",
+				"command": "pnpm exec vp pack",
+				"status": "ran",
+				"exitCode": 0,
+				"detail": "packages/cli/dist is older than the sources it is built from"
+			},
+			{
+				"step": "trust:generate",
+				"command": "npm run trust:generate -- --offline --policy trust/policy.json --output evidence/trust/current",
+				"status": "failed",
+				"exitCode": 1,
+				"detail": "    at async file:///Users/jacksm5pro/dev/open-source/versionless/packages/cli/src/cli.ts:431:5"
+			},
+			{
+				"step": "trust:verify",
+				"command": "npm run trust:verify -- --offline",
+				"status": "not-run",
+				"exitCode": null,
+				"detail": "an earlier step in this chain did not exit 0, so this step was not run"
+			},
+			{
+				"step": "report:coverage",
+				"command": "report:coverage --offline --verify-only",
+				"status": "not-run",
+				"exitCode": null,
+				"detail": "an earlier step in this chain did not exit 0, so this step was not run"
+			}
+		]
+	},
+	"notEstablished": [
+		"A count of refusal sites is not a count of refusable applications. What this summary tallies is the outcome each named application reached on this host, in this order, once.",
+		"A refusal is an outcome rather than a failure of the run. The refusing roots are counted at the cost they actually took.",
+		"The fleet here is whatever list this command was handed. It is not a random sample of any target fleet and it carries whatever selection that list carries.",
+		"The timings are one host, one process, a warm page cache and one repetition. They are a reading of this machine rather than a specification.",
+		"An intervention count of zero is the out-of-band harness reporting that no path outside the declared write set changed and that one process was spawned. It is not a statement that any application in this batch produced a working build.",
+		"Applications ran one at a time. Nothing here establishes what any of these outcomes would have been under a loop that fanned out, and the witness surface is the reason this one does not.",
+		"The publish steps below, when declared, report what each command exited with. A regenerated report is a re-derivation of what the evidence on disk already carried; it is not certification, and no authenticity claim rides along with it."
+	]
+}

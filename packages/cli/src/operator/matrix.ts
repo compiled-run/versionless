@@ -22,6 +22,7 @@ import {
 	type EnterpriseSupportMatrix,
 } from '../../../trust/src/enterprise.ts';
 import { verifyTrustPackage } from '../../../trust/src/verify.ts';
+import { refuse } from './refusals.ts';
 
 export type MatrixReading = Readonly<{
 	trustDigest: string;
@@ -48,7 +49,12 @@ export async function readSupportedMatrix(options: MatrixOptions = {}): Promise<
 		},
 	});
 	if (!trust.valid)
-		throw new Error('supported-matrix: the trust package did not verify; nothing is quotable.');
+		refuse({
+			code: 'supported-matrix.trust-package-did-not-verify',
+			message: 'supported-matrix: the trust package did not verify; nothing is quotable.',
+			stage: 'supported-matrix',
+			origin: 'pipeline',
+		});
 	const source = path.join(trustDir, ENTERPRISE_REPORT_JSON);
 	const report = JSON.parse(
 		await readFile(path.join(path.resolve(options.rootDir ?? '.'), source), 'utf8'),

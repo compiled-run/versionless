@@ -1,0 +1,143 @@
+{
+  "schemaVersion": "versionless.official-source.v1",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "attemptSha256": "9ba5c0718ece44d574c94f03b967d02f981032c17a12fca59b58abadc2c4c4b8",
+  "result": "source-bound",
+  "startedAt": "2026-08-17T21:37:42.107Z",
+  "completedAt": "2026-08-17T21:37:50.248Z",
+  "repository": {
+    "id": 78417495,
+    "fullName": "notrab/create-react-app-redux",
+    "private": false,
+    "archived": false,
+    "disabled": false,
+    "responseBytes": 5947,
+    "responseSha256": "9d0aa93af8fc7c0088b14dd4a85d2dfe45a225f4f05fa93227a89570834bee6a"
+  },
+  "revision": {
+    "ref": "1a06509b0c0e5a3440f8c1e1d1cc7b8169d7988f",
+    "tagObjectSha": null,
+    "tagKind": "commit-sha",
+    "tagDate": null,
+    "tagVerification": "unsigned",
+    "commitSha": "1a06509b0c0e5a3440f8c1e1d1cc7b8169d7988f",
+    "commitDate": "2026-07-29T04:42:11Z",
+    "commitVerification": "verified",
+    "rootTreeSha": "43c20bd56ab3d0160d1c4135f12416cb57151d70",
+    "treeEntries": 29,
+    "treeBlobs": 21,
+    "treeDirectories": 8,
+    "treeSymlinks": 0,
+    "treeGitlinks": 0,
+    "treeTruncated": false
+  },
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/notrab/create-react-app-redux",
+      "status": 200,
+      "bytes": 5947,
+      "sha256": "9d0aa93af8fc7c0088b14dd4a85d2dfe45a225f4f05fa93227a89570834bee6a"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/notrab/create-react-app-redux/git/commits/1a06509b0c0e5a3440f8c1e1d1cc7b8169d7988f",
+      "status": 200,
+      "bytes": 2508,
+      "sha256": "22fd996e8776898fbbe5c9bd970eb531a8139d94eda9b6ea2390a43831104d92"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/notrab/create-react-app-redux/git/trees/43c20bd56ab3d0160d1c4135f12416cb57151d70?recursive=1",
+      "status": 200,
+      "bytes": 6921,
+      "sha256": "e0f179551120f39ef1b2df88b267ceee0d231deb338dda486c0984a6afb21467"
+    },
+    {
+      "endpoint": "https://codeload.github.com/notrab/create-react-app-redux/tar.gz/1a06509b0c0e5a3440f8c1e1d1cc7b8169d7988f",
+      "status": 200,
+      "bytes": 98655,
+      "sha256": "ad8a9529c30ee85ccd505a063e1309250b4e73046c48e882d1beeae52f923cef",
+      "stream": 1
+    },
+    {
+      "endpoint": "https://codeload.github.com/notrab/create-react-app-redux/tar.gz/1a06509b0c0e5a3440f8c1e1d1cc7b8169d7988f",
+      "status": 200,
+      "bytes": 98655,
+      "sha256": "ad8a9529c30ee85ccd505a063e1309250b4e73046c48e882d1beeae52f923cef",
+      "stream": 2
+    }
+  ],
+  "archiveParity": {
+    "singleRoot": "create-react-app-redux-1a06509b0c0e5a3440f8c1e1d1cc7b8169d7988f",
+    "safeEntries": 30,
+    "regularFiles": 21,
+    "directories": 9,
+    "specialEntries": 0,
+    "gitBlobs": 21,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "normalizedManifestSha256": "48ca83a446aa9d275e1757e765e82bb900b6ba9cc9ca96a014a81cd74a5183a8"
+  },
+  "transaction": {
+    "attemptedRequests": 5,
+    "acceptedResponses": 5,
+    "acceptedWireBytes": 212686,
+    "acceptedDecodedBytes": 212686,
+    "redirectsObserved": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "archivesByteIdentical": true,
+    "archiveMatchesGitTree": true,
+    "publishedSource": true,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "cache": {
+    "root": ".versionless/cache/react-cra-redux-1a06509b-source",
+    "archive1": ".versionless/cache/react-cra-redux-1a06509b-source/archive/archive-1.tar.gz",
+    "archive2": ".versionless/cache/react-cra-redux-1a06509b-source/archive/archive-2.tar.gz",
+    "verifiedSource": ".versionless/cache/react-cra-redux-1a06509b-source/verify/extracted",
+    "rawMetadataPortable": false
+  },
+  "baseline": ".versionless/work/react-cra-redux-1a06509b/baseline",
+  "licence": {
+    "identifier": "MIT",
+    "identifierSource": "observed",
+    "identifierRefusal": null,
+    "copyrightNotice": "Copyright (c) 2017 Jamie Barton",
+    "filesAtRoot": [
+      "LICENSE"
+    ],
+    "artifacts": [
+      {
+        "path": "LICENSE",
+        "role": "repository-root-licence",
+        "gitBlobSha": "814fa15d83981e8b49d88536940573283397123b",
+        "bytes": 1069,
+        "sha256": "b2675162788a19ede4b69024906455b9032e8dadebb8bbccfb833c216c2c2124",
+        "firstLine": "MIT License",
+        "permissionGrantPresent": true,
+        "noticeRetentionClausePresent": true,
+        "warrantyDisclaimerPresent": true,
+        "licenseField": null
+      },
+      {
+        "path": "package.json",
+        "role": "frontend-manifest",
+        "gitBlobSha": "84e2db9da47c3f91df1dfae0d846ee68df566c89",
+        "bytes": 863,
+        "sha256": "6618cf393a37098147ac8f0741261f7ee4220b2c4d66376e86dc85971aa40c69",
+        "firstLine": null,
+        "permissionGrantPresent": null,
+        "noticeRetentionClausePresent": null,
+        "warrantyDisclaimerPresent": null,
+        "licenseField": null
+      }
+    ]
+  },
+  "nonclaims": [
+    "A lightweight or unsigned tag does not establish signer authenticity.",
+    "This record states that the bytes at the recorded commit reconcile with the Git tree the repository publishes at that commit. It establishes no dependency closure, build, browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "The licence reading is a reading of the file present at the pin. It is not a legal opinion and it evaluates no dependency’s terms.",
+    "Acquiring a source is not admitting one. Whether this tree can be ingested, installed, built or migrated is not read here."
+  ]
+}

@@ -557,10 +557,24 @@ export const WITNESS_REAL_APP_STATEFUL_NAMES = ['cypress-realworld-app'] as cons
  * serving path can type them.
  */
 export const WITNESS_REAL_APP_PROJECTED_HOLDOUT_NAMES = ['angular-eshop-webspa'] as const;
+/**
+ * Identities admitted so the generic serving path can type a run whose journey
+ * was SYNTHESIZED rather than hand-authored.
+ *
+ * Like the two lists above these are deliberately not members of
+ * {@link WITNESS_REAL_APP_NAMES}: the master receipt's `length * 4` cardinality
+ * and its per-app expectation set are bound to the static corpus, and a
+ * synthesized run never joins it. The fixture name exists so a lane pair that is
+ * two static pages on loopback — the smallest thing a crawl-derived journey can
+ * be replayed against — has an identity of its own instead of borrowing an
+ * application's.
+ */
+export const WITNESS_REAL_APP_SYNTHESIZED_NAMES = ['synthesized-witness-fixture'] as const;
 export type WitnessRealAppName =
 	| (typeof WITNESS_REAL_APP_NAMES)[number]
 	| (typeof WITNESS_REAL_APP_STATEFUL_NAMES)[number]
-	| (typeof WITNESS_REAL_APP_PROJECTED_HOLDOUT_NAMES)[number];
+	| (typeof WITNESS_REAL_APP_PROJECTED_HOLDOUT_NAMES)[number]
+	| (typeof WITNESS_REAL_APP_SYNTHESIZED_NAMES)[number];
 
 /**
  * The exact locality rule for a live first-party backend served on a second
@@ -578,7 +592,7 @@ export type WitnessRealAppName =
  * origin still fails the run.
  */
 export const WITNESS_LOOPBACK_BACKEND_RULE =
-	'A live first-party backend is the application\'s own server, spawned by the harness and bound to a second 127.0.0.1 loopback origin beside the static SPA origin. Requests to the backend origin are loopback and are counted in their own category; they are never successful non-loopback egress. Requests outside both loopback origins fail the run, and successfulNonLoopback stays 0.' as const;
+	"A live first-party backend is the application's own server, spawned by the harness and bound to a second 127.0.0.1 loopback origin beside the static SPA origin. Requests to the backend origin are loopback and are counted in their own category; they are never successful non-loopback egress. Requests outside both loopback origins fail the run, and successfulNonLoopback stays 0." as const;
 
 /** One method+path the page reached on the live backend origin, recorded origin-relative. */
 export type WitnessLoopbackBackendCategoryEntry = { method: string; path: string };
@@ -625,7 +639,7 @@ export type WitnessLoopbackBackendInventory = {
  * inventory. The frozen static tree is the SPA; the backend is live.
  */
 export const WITNESS_LIVE_BACKEND_SERVED_RULE =
-	'When a live backend is present the byte-identical served-static invariant is scoped to the frontend SPA dist tree only. The SPA tree is inventoried before and after the journey and must be byte-identical; the live backend\'s own state is mutated by the journey and is explicitly outside the byte inventory.' as const;
+	"When a live backend is present the byte-identical served-static invariant is scoped to the frontend SPA dist tree only. The SPA tree is inventoried before and after the journey and must be byte-identical; the live backend's own state is mutated by the journey and is explicitly outside the byte inventory." as const;
 
 /**
  * The served-static scope marker a live-backend run records in place of the
@@ -843,6 +857,239 @@ export type WitnessRealAppReceipt = {
 	nonclaims: string[];
 	integrity: { algorithm: 'sha256'; canonicalDigest: string };
 };
+
+/**
+ * Where the journeys a witness run replayed came from.
+ *
+ * `hand-authored` is a driver in `packages/cli/src/witness/*-run.ts`, written by
+ * somebody who had opened the application. The two synthesized values are not:
+ * one is read out of the application's own end-to-end suite, the other out of a
+ * bounded loopback crawl of its served lane. They are separate members rather
+ * than one `synthesized` value because a replay of the authors' own suite and a
+ * traversal of whatever the homepage links to are different strengths of
+ * evidence, and a reader must never have to guess which one a run took.
+ */
+export const WITNESS_JOURNEY_SOURCES = [
+	'hand-authored',
+	'synthesized-e2e',
+	'synthesized-crawl',
+] as const;
+export type WitnessJourneySource = (typeof WITNESS_JOURNEY_SOURCES)[number];
+
+/**
+ * Why this run took the path it took, from a closed set.
+ *
+ * Closed because a reason assembled from whatever the selection happened to
+ * notice is a reason nothing can tally, and because the one case that matters
+ * most — a hand-authored driver EXISTS and was deliberately not used — has to be
+ * impossible to confuse with the case where none existed.
+ */
+export const WITNESS_DRIVER_SELECTION_REASONS = [
+	'hand-authored-driver-registered',
+	'no-hand-authored-driver-registered',
+	'hand-authored-driver-overridden-by-declaration',
+] as const;
+export type WitnessDriverSelectionReason = (typeof WITNESS_DRIVER_SELECTION_REASONS)[number];
+
+/**
+ * The selection itself, recorded rather than implied.
+ *
+ * `registeredDriver` is the name of the hand-authored driver this application
+ * has, or `null` when it has none, and it is recorded even when the run did not
+ * use it — that is the whole point of `overridden`: a controlled comparison run
+ * against an application that HAS an author must say so, or it reads as an
+ * application nobody could write a journey for.
+ */
+export type WitnessDriverSelection = {
+	registeredDriver: string | null;
+	journeySource: WitnessJourneySource;
+	overridden: boolean;
+	reason: WitnessDriverSelectionReason;
+};
+
+/**
+ * How many derived journeys survived to be replayed, and how many did not.
+ *
+ * `replayable` over `total` is the ratio the whole synthesis stands or falls on:
+ * a reader who is told "82 journeys were synthesized" and not told that 9 of
+ * them name a route to start from has been told a number that flatters. So the
+ * ratio is a field of this record rather than something a reader computes, it is
+ * required rather than optional, and `ran` is separate again — a journey can be
+ * replayable and still not have been run, and hiding that inside `replayable`
+ * would be the same flattery one level down.
+ */
+export type WitnessSynthesizedJourneyTally = {
+	total: number;
+	replayable: number;
+	ran: number;
+	/** `replayable / total`, rounded to six places; 0 when nothing was derived. */
+	replayabilityRatio: number;
+	/** Constructs the readers declined to express, counted by their stable name. */
+	unhandledByKind: Record<string, number>;
+};
+
+/**
+ * One replayed journey as this run measured it.
+ *
+ * `outcomes` are drawn from the closed vocabulary in
+ * `packages/cli/src/witness/journey-synthesis/vocabulary.ts` and nowhere else,
+ * which is why this record carries no prose field at all: there is no place in
+ * this shape for a sentence somebody wrote.
+ */
+export type WitnessSynthesizedJourneyRecord = {
+	name: string;
+	source: 'cypress' | 'playwright' | 'crawl';
+	specFile: string | null;
+	replayable: boolean;
+	ran: boolean;
+	routesDeclared: number;
+	routesReached: number;
+	selectorsDeclared: number;
+	selectorsPresent: number;
+	routesWithoutOverflow: number;
+	outcomes: string[];
+};
+
+/**
+ * The record a synthesized witness run publishes.
+ *
+ * It is a separate shape from {@link WitnessRealAppReceipt} on purpose. That
+ * receipt's parser measures a frozen corpus by cardinality and would have to be
+ * weakened to admit a run of a journey nobody authored; this one admits exactly
+ * that and states what it is instead. Nothing here joins the master receipt and
+ * nothing here is bound by it.
+ */
+export const WITNESS_SYNTHESIZED_REAL_APP_SCHEMA =
+	'versionless.witness-real-app-synthesized.v1' as const;
+
+export type WitnessSynthesizedRealAppRecord = {
+	schemaVersion: typeof WITNESS_SYNTHESIZED_REAL_APP_SCHEMA;
+	flow: 'witness-real-app-synthesized';
+	application: string;
+	framework: WitnessRealAppRun['framework'];
+	selection: WitnessDriverSelection;
+	journeySource: WitnessJourneySource;
+	synthesized: WitnessSynthesizedJourneyTally;
+	/** One entry per lane actually witnessed, in the order they were run. */
+	lanes: Array<{
+		lane: 'baseline' | 'migrated';
+		journeys: WitnessSynthesizedJourneyRecord[];
+		successfulNonLoopback: 0;
+		semanticDigest: string;
+	}>;
+	/** Serialization is a property of the run, so it is recorded, not assumed. */
+	execution: {
+		mode: 'serialized-one-lane-one-journey';
+		lanesRun: number;
+		journeysRun: number;
+	};
+	locality: { mode: 'offline'; successfulNonLoopback: 0; osWideIsolation: false };
+	notEstablished: string[];
+	integrity: { algorithm: 'sha256'; canonicalDigest: string };
+};
+
+export function witnessSynthesizedRealAppDigest(record: WitnessSynthesizedRealAppRecord): string {
+	const copy = structuredClone(record);
+	copy.integrity.canonicalDigest = '';
+	return sha256(canonicalize(copy));
+}
+
+/** `replayable / total` to six places, and 0 rather than NaN for an empty derivation. */
+export function witnessReplayabilityRatio(replayable: number, total: number): number {
+	if (!Number.isInteger(replayable) || !Number.isInteger(total) || replayable < 0 || total < 0)
+		throw new Error('Witness replayability ratio requires non-negative integer counts');
+	if (replayable > total)
+		throw new Error(
+			'Witness replayability ratio cannot exceed one replayable journey per journey',
+		);
+	if (total === 0) return 0;
+	return Math.round((replayable / total) * 1_000_000) / 1_000_000;
+}
+
+/**
+ * Check a synthesized witness record.
+ *
+ * The ratio is checked rather than trusted, because a ratio a reader is handed
+ * and cannot recompute is a number, not evidence. `successfulNonLoopback` is
+ * checked at both levels for the same reason the master parser checks it: it is
+ * the gate, and a gate checked in one place only is a gate with a way round it.
+ */
+export function parseWitnessSynthesizedRealAppRecord(
+	value: unknown,
+): WitnessSynthesizedRealAppRecord {
+	const parsed = record(value, 'synthesized record') as WitnessSynthesizedRealAppRecord;
+	if (
+		parsed.schemaVersion !== WITNESS_SYNTHESIZED_REAL_APP_SCHEMA ||
+		parsed.flow !== 'witness-real-app-synthesized' ||
+		typeof parsed.application !== 'string' ||
+		parsed.application.length === 0 ||
+		!(WITNESS_JOURNEY_SOURCES as readonly string[]).includes(parsed.journeySource) ||
+		!(WITNESS_DRIVER_SELECTION_REASONS as readonly string[]).includes(
+			parsed.selection?.reason,
+		) ||
+		parsed.selection.journeySource !== parsed.journeySource ||
+		typeof parsed.selection.overridden !== 'boolean' ||
+		(parsed.selection.overridden &&
+			parsed.selection.reason !== 'hand-authored-driver-overridden-by-declaration')
+	)
+		throw new Error('Witness synthesized record identity or driver selection differs');
+	const tally = parsed.synthesized;
+	if (
+		tally === undefined ||
+		!Number.isInteger(tally.total) ||
+		!Number.isInteger(tally.replayable) ||
+		!Number.isInteger(tally.ran) ||
+		tally.replayable > tally.total ||
+		tally.ran > tally.replayable ||
+		typeof tally.replayabilityRatio !== 'number' ||
+		tally.replayabilityRatio !== witnessReplayabilityRatio(tally.replayable, tally.total) ||
+		tally.unhandledByKind === null ||
+		typeof tally.unhandledByKind !== 'object'
+	)
+		throw new Error('Witness synthesized replayability ratio differs from its own counts');
+	if (!Array.isArray(parsed.lanes) || parsed.lanes.length === 0)
+		throw new Error('Witness synthesized record carries no witnessed lane');
+	let journeysRun = 0;
+	for (const lane of parsed.lanes) {
+		if (lane.successfulNonLoopback !== 0)
+			throw new Error('Witness synthesized lane left loopback');
+		if (!Array.isArray(lane.journeys) || !sha256Digest(lane.semanticDigest))
+			throw new Error('Witness synthesized lane differs');
+		for (const journey of lane.journeys) {
+			if (journey.ran) journeysRun += 1;
+			if (
+				!Array.isArray(journey.outcomes) ||
+				journey.outcomes.length === 0 ||
+				journey.routesReached > journey.routesDeclared ||
+				journey.selectorsPresent > journey.selectorsDeclared ||
+				(journey.ran && !journey.replayable)
+			)
+				throw new Error(`Witness synthesized journey differs: ${journey.name}`);
+		}
+	}
+	if (
+		parsed.execution?.mode !== 'serialized-one-lane-one-journey' ||
+		parsed.execution.lanesRun !== parsed.lanes.length ||
+		parsed.execution.journeysRun !== journeysRun ||
+		parsed.locality?.mode !== 'offline' ||
+		parsed.locality.successfulNonLoopback !== 0 ||
+		parsed.locality.osWideIsolation !== false ||
+		!Array.isArray(parsed.notEstablished) ||
+		parsed.notEstablished.length === 0 ||
+		parsed.integrity?.algorithm !== 'sha256' ||
+		parsed.integrity.canonicalDigest !== witnessSynthesizedRealAppDigest(parsed)
+	)
+		throw new Error('Witness synthesized record execution, locality or integrity differs');
+	return parsed;
+}
+
+export const WITNESS_SYNTHESIZED_NOT_ESTABLISHED: readonly string[] = Object.freeze([
+	'A synthesized journey was derived from the application own end-to-end suite or from a bounded loopback crawl of its served lane. Replaying it establishes what this run measured on the routes and selectors the journey declares, and nothing about what the application does elsewhere.',
+	'The replayability ratio is a count of derived journeys that name a route to start from, over derived journeys. It is not a measure of coverage and it is not a measure of quality.',
+	'A journey step this run could not replay is recorded as unhandled. That is a gap in the derivation, not a defect in the application.',
+	'Journeys were replayed one lane at a time and one journey at a time on this host. Nothing here establishes an outcome under concurrent load.',
+	'No journey left the loopback origin. A step that would have is recorded unhandled rather than run.',
+]);
 
 function record(value: unknown, label: string): Record<string, unknown> {
 	if (value === null || typeof value !== 'object' || Array.isArray(value))

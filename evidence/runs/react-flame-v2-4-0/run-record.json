@@ -1,0 +1,811 @@
+{
+	"schema": "versionless.run.v1",
+	"flow": "run",
+	"outcome": "proceeded",
+	"exitCode": 0,
+	"application": ".versionless/work/react-flame-v2-4-0/baseline",
+	"lane": "../../../../../var/folders/pt/xbq_fv915rx9wtnmww8npc0w0000gn/T/tmp.mKAhz9yRYU/lane",
+	"roots": {
+		"source": ".versionless/work/react-flame-v2-4-0/baseline",
+		"frontend": ".versionless/work/react-flame-v2-4-0/baseline/client",
+		"frontendSource": "read",
+		"frontendBasis": ". declares no framework this stage reads; client declares react ^17.0.2 (dependencies.react)"
+	},
+	"dryRun": false,
+	"stagePlan": [
+		{
+			"name": "analyze",
+			"forwards": []
+		},
+		{
+			"name": "ingest",
+			"forwards": []
+		},
+		{
+			"name": "license-at-pin",
+			"forwards": []
+		},
+		{
+			"name": "era-cell",
+			"forwards": []
+		},
+		{
+			"name": "plan",
+			"forwards": []
+		},
+		{
+			"name": "apply",
+			"forwards": [
+				"--out"
+			]
+		},
+		{
+			"name": "install",
+			"forwards": [
+				"--allow-remote-tarballs",
+				"--allow-install-scripts",
+				"--allow-peer-conflicts"
+			]
+		},
+		{
+			"name": "build",
+			"forwards": []
+		},
+		{
+			"name": "witness",
+			"forwards": []
+		}
+	],
+	"stages": [
+		{
+			"name": "analyze",
+			"status": "ran",
+			"record": {
+				"lineage": "react",
+				"frameworkVersionDeclared": "^17.0.2",
+				"detectedFrom": "react",
+				"builder": "react-scripts",
+				"builderSource": "package.json",
+				"nodeEra": {
+					"declared": "unknown",
+					"source": "unknown"
+				},
+				"packageManager": {
+					"manager": "npm",
+					"lockfiles": [
+						"package-lock.json"
+					],
+					"declared": "unknown"
+				},
+				"cellReadings": {
+					"cell": null,
+					"reason": "The frozen React and Next.js adapters publish no target-cell package registry, so no per-package verdict exists for this lineage. Every declared dependency is unknown to the engine rather than accepted by it.",
+					"verdicts": [],
+					"counts": {
+						"unknown": 29
+					}
+				},
+				"notEstablished": [
+					"Detection reads declarations. Nothing here establishes that this application installs, compiles, builds, or behaves as it did on its era toolchain.",
+					"A cell verdict is a reading of a published registry, not an installation: a range written here has not been resolved against any lockfile by this record.",
+					"A dependency the cell has no reading for is reported `unknown`. `unknown` is not `supported` and it is not `unsupported`."
+				]
+			},
+			"startedAt": "2026-08-18T00:04:05.303Z",
+			"endedAt": "2026-08-18T00:04:05.304Z"
+		},
+		{
+			"name": "ingest",
+			"status": "ran",
+			"record": {
+				"stage": "ingest",
+				"schemaVersion": "versionless.operator-ingest.v1",
+				"ran": true,
+				"reason": null,
+				"id": "client",
+				"idSource": "read",
+				"idReadFrom": "client/package.json#name",
+				"frontendRoot": "client",
+				"frontendRootSource": "read",
+				"frontendRootBasis": ". declares no framework this stage reads; client declares react ^17.0.2 (dependencies.react)",
+				"acquisitionRoot": "/Users/jacksm5pro/dev/open-source/versionless/.versionless/work/react-flame-v2-4-0/baseline",
+				"pin": {
+					"repository": "pawelmalak/flame",
+					"repositoryReadFrom": "evidence/ingests/react-flame-v2-4-0/source.json (consent VL-LEGACY-CORPUS-2026-08-10; result source-bound; archive reconciled against the published Git tree and byte-identical across two streams; journalled manifest f17895018611f4d3dfe94411c9f858feb424f036a92537b5611455548fccb2e1 is the digest this stage walked)",
+					"ref": "refs/tags/v2.4.0",
+					"refReadFrom": "evidence/ingests/react-flame-v2-4-0/source.json (consent VL-LEGACY-CORPUS-2026-08-10; result source-bound; archive reconciled against the published Git tree and byte-identical across two streams; journalled manifest f17895018611f4d3dfe94411c9f858feb424f036a92537b5611455548fccb2e1 is the digest this stage walked)",
+					"commitSha": "069b6690d9fa7a24a6e7727386ab85148c89b90e",
+					"commitShaSource": "read",
+					"commitShaReadFrom": "evidence/ingests/react-flame-v2-4-0/source.json (consent VL-LEGACY-CORPUS-2026-08-10; result source-bound; archive reconciled against the published Git tree and byte-identical across two streams; journalled manifest f17895018611f4d3dfe94411c9f858feb424f036a92537b5611455548fccb2e1 is the digest this stage walked)"
+				},
+				"tree": {
+					"files": 328,
+					"bytes": 2703661,
+					"normalizedManifestSha256": "f17895018611f4d3dfe94411c9f858feb424f036a92537b5611455548fccb2e1"
+				},
+				"detected": {
+					"lineage": "react",
+					"frameworkVersionDeclared": "^17.0.2",
+					"detectedFrom": "react",
+					"builder": "react-scripts",
+					"builderSource": "package.json",
+					"nodeEra": {
+						"declared": "unknown",
+						"source": "unknown"
+					},
+					"packageManager": {
+						"manager": "npm",
+						"lockfiles": [
+							"package-lock.json"
+						],
+						"declared": "unknown"
+					},
+					"cellReadings": {
+						"cell": null,
+						"reason": "The frozen React and Next.js adapters publish no target-cell package registry, so no per-package verdict exists for this lineage. Every declared dependency is unknown to the engine rather than accepted by it.",
+						"verdicts": [],
+						"counts": {
+							"unknown": 29
+						}
+					},
+					"notEstablished": [
+						"Detection reads declarations. Nothing here establishes that this application installs, compiles, builds, or behaves as it did on its era toolchain.",
+						"A cell verdict is a reading of a published registry, not an installation: a range written here has not been resolved against any lockfile by this record.",
+						"A dependency the cell has no reading for is reported `unknown`. `unknown` is not `supported` and it is not `unsupported`."
+					]
+				},
+				"licence": {
+					"stage": "license-at-pin",
+					"schemaVersion": "versionless.license-at-pin.v1",
+					"ran": true,
+					"reason": null,
+					"identifier": "MIT",
+					"identifierSource": "observed",
+					"identifierBasis": "verbatim MIT text in the repository root LICENSE.md file at the pinned revision",
+					"copyrightNotice": "Copyright (c) 2021 Paweł Malak",
+					"manifestLicenseField": null,
+					"artifacts": [
+						{
+							"path": "LICENSE.md",
+							"role": "repository-root-licence",
+							"gitBlobSha": "3f30c481e01e031c354cbb5f525dd157e9b3cb81",
+							"bytes": 1068,
+							"sha256": "fbfe10674aef1e0bf084850644879fa4114d8a98debc5fb8e680f295af169d43",
+							"firstLine": "MIT License",
+							"permissionGrantPresent": true,
+							"noticeRetentionClausePresent": true,
+							"warrantyDisclaimerPresent": true,
+							"licenseField": null
+						},
+						{
+							"path": "client/package.json",
+							"role": "frontend-manifest",
+							"gitBlobSha": "ffd61d410c5b11781fc723eae58e8c87c5bde23c",
+							"bytes": 1549,
+							"sha256": "73280363fd95b5afa710b895c8511e7e76fcc80241899480e31ac3c18bdf5343",
+							"firstLine": null,
+							"permissionGrantPresent": null,
+							"noticeRetentionClausePresent": null,
+							"warrantyDisclaimerPresent": null,
+							"licenseField": null
+						}
+					],
+					"licenceFilesAtRoot": [
+						"LICENSE.md"
+					],
+					"notEstablished": [
+						"This is a record of the licence text present at the pinned revision. It is not a legal opinion, a licence-compatibility finding, or legal approval.",
+						"No licence determination is made for the transitive dependency closure. Each dependency carries its own terms and this stage evaluates none of them.",
+						"The identifier is matched against the canonical wording of the licences this stage recognises. A reworded, translated, amended or dual licence is refused rather than matched to the nearest one, so an absent refusal is not evidence that no such amendment exists.",
+						"Only the source root is read for licence files. A licence carried further down the tree, a per-directory notice, and a vendored third-party licence are outside this reading.",
+						"`identifierSource: declared` means an operator supplied the identifier. This stage did not read it and does not corroborate it."
+					]
+				},
+				"closure": {
+					"schemaVersion": "versionless.legacy-dependency-closure.v1",
+					"slug": "client",
+					"frontendRoot": "client",
+					"source": {
+						"verifiedSourceRoot": "client",
+						"packageJsonSha256": "73280363fd95b5afa710b895c8511e7e76fcc80241899480e31ac3c18bdf5343",
+						"packageLockSha256": "b0cf64e909becea8c4dcbaf03e5f32ef281b0d6b88cb447b4e659521b1037d36",
+						"packageLockBytes": 1228546
+					},
+					"lockState": {
+						"file": "package-lock.json",
+						"lockfileVersion": 2,
+						"requiresField": true,
+						"committedWithSource": true,
+						"coversDevDependencies": true,
+						"everyEntryHasResolvedUrl": true,
+						"everyEntryHasIntegrityHash": true,
+						"entriesWithoutResolvedUrl": [],
+						"entriesWithoutIntegrityHash": [],
+						"lockfileIntegrityAlgorithms": [
+							"sha1",
+							"sha512"
+						]
+					},
+					"counts": {
+						"declaredDependencies": 28,
+						"declaredDevDependencies": 1,
+						"lockedPlacements": 1500,
+						"distinctNameVersionPairs": 1239,
+						"devPlacements": 1,
+						"optionalPlacements": 2,
+						"bundledPlacements": 0
+					},
+					"registryHosts": {
+						"registry.npmjs.org": 1500
+					},
+					"closureSha256": "949d88e81c5a750a70979380f48709cf93fad984d20fcd6fda75a22c9ae3535f",
+					"nonclaims": [
+						"Per-artifact byte digests were not independently mirrored in this unit; the recorded integrity hashes are the ones the committed lockfile declares.",
+						"A resolvable closure establishes no build, browser behavior, licence compatibility of transitive dependencies, migration feasibility, or production readiness."
+					]
+				},
+				"closureReason": null,
+				"notEstablished": [
+					"An ingest record states what the source on disk says at the revision it was pinned to. It is not an acquisition: nothing here establishes that these bytes are the bytes the named repository publishes at that revision, and no archive was fetched, reconciled against a Git tree, or double-streamed by this stage.",
+					"`normalizedManifestSha256` digests the files this stage walked. Installed packages and Git metadata are not walked, so the digest is comparable with another walk of the same shape and not with a digest taken over a whole archive.",
+					"The closure reading is the dependency tree the lockfile itself carries. A lockfile that records its closure only in the `packages` map yields no placements here, and a count of zero placements is the absence of a reading rather than an empty closure.",
+					"Nothing here installs, builds, or runs the application. An admitted application is one whose identity, pin, licence and declared closure were read — not one that was shown to work.",
+					"No era cell was chosen or provisioned. Which Node and toolchain era this source needs is not read here and not established by admission.",
+					"A value recorded with source `declared` was supplied by an operator. This stage did not read it and does not corroborate it.",
+					"An identifier read from an acquisition journal is the identifier an operator declared when the source was fetched. The application itself declares none, and nothing here establishes that the two would agree.",
+					"A frontend root read by lineage is the one directory among those considered whose manifest declares a framework this stage reads. The basis names every directory considered and what each of their manifests declared; nothing here establishes that the directory chosen is the one its authors would call the application."
+				]
+			},
+			"startedAt": "2026-08-18T00:04:05.304Z",
+			"endedAt": "2026-08-18T00:04:05.336Z"
+		},
+		{
+			"name": "license-at-pin",
+			"status": "ran",
+			"record": {
+				"stage": "license-at-pin",
+				"schemaVersion": "versionless.license-at-pin.v1",
+				"ran": true,
+				"reason": null,
+				"identifier": "MIT",
+				"identifierSource": "observed",
+				"identifierBasis": "verbatim MIT text in the repository root LICENSE.md file at the pinned revision",
+				"copyrightNotice": "Copyright (c) 2021 Paweł Malak",
+				"manifestLicenseField": null,
+				"artifacts": [
+					{
+						"path": "LICENSE.md",
+						"role": "repository-root-licence",
+						"gitBlobSha": "3f30c481e01e031c354cbb5f525dd157e9b3cb81",
+						"bytes": 1068,
+						"sha256": "fbfe10674aef1e0bf084850644879fa4114d8a98debc5fb8e680f295af169d43",
+						"firstLine": "MIT License",
+						"permissionGrantPresent": true,
+						"noticeRetentionClausePresent": true,
+						"warrantyDisclaimerPresent": true,
+						"licenseField": null
+					},
+					{
+						"path": "client/package.json",
+						"role": "frontend-manifest",
+						"gitBlobSha": "ffd61d410c5b11781fc723eae58e8c87c5bde23c",
+						"bytes": 1549,
+						"sha256": "73280363fd95b5afa710b895c8511e7e76fcc80241899480e31ac3c18bdf5343",
+						"firstLine": null,
+						"permissionGrantPresent": null,
+						"noticeRetentionClausePresent": null,
+						"warrantyDisclaimerPresent": null,
+						"licenseField": null
+					}
+				],
+				"licenceFilesAtRoot": [
+					"LICENSE.md"
+				],
+				"notEstablished": [
+					"This is a record of the licence text present at the pinned revision. It is not a legal opinion, a licence-compatibility finding, or legal approval.",
+					"No licence determination is made for the transitive dependency closure. Each dependency carries its own terms and this stage evaluates none of them.",
+					"The identifier is matched against the canonical wording of the licences this stage recognises. A reworded, translated, amended or dual licence is refused rather than matched to the nearest one, so an absent refusal is not evidence that no such amendment exists.",
+					"Only the source root is read for licence files. A licence carried further down the tree, a per-directory notice, and a vendored third-party licence are outside this reading.",
+					"`identifierSource: declared` means an operator supplied the identifier. This stage did not read it and does not corroborate it."
+				]
+			},
+			"startedAt": "2026-08-18T00:04:05.336Z",
+			"endedAt": "2026-08-18T00:04:05.337Z"
+		},
+		{
+			"name": "era-cell",
+			"status": "ran",
+			"record": {
+				"stage": "era-cell",
+				"schemaVersion": "versionless.era-cell.v1",
+				"ran": true,
+				"reason": null,
+				"outcome": "already-present",
+				"required": {
+					"cell": "react-vite-lane",
+					"cellSource": "inferred",
+					"cellBasis": "the react lineage publishes no target-cell registry, so no cell is read for it. The cell named here is the lane this pipeline composes: the plan and apply stages write a Vite lane, and the install and build stages run it in the runtime recorded below.",
+					"runtime": {
+						"major": 24,
+						"version": "v24.15.0",
+						"source": "inferred",
+						"readFrom": "the process this stage is running in — the runtime the install and build stages will run the lane in",
+						"basis": "evidence/runs/operator-flows/lane-install-build.json records a lane of this composition installing 428 packages and building 11 outputs at node v24.15.0 on darwin-arm64.",
+						"claim": "the migrated lane will be installed and built in this runtime",
+						"declaredRange": null,
+						"declaredRangeSource": null,
+						"satisfiedByDeclaredRange": null
+					},
+					"era": {
+						"outcome": "not-read",
+						"declared": null,
+						"readFrom": null,
+						"consultedSources": [
+							{
+								"source": ".nvmrc",
+								"text": null,
+								"majors": null,
+								"present": false
+							},
+							{
+								"source": ".node-version",
+								"text": null,
+								"majors": null,
+								"present": false
+							},
+							{
+								"source": "package.json#volta.node",
+								"text": null,
+								"majors": null,
+								"present": false
+							},
+							{
+								"source": ".tool-versions#nodejs",
+								"text": null,
+								"majors": null,
+								"present": false
+							},
+							{
+								"source": "Dockerfile*#FROM a node image",
+								"text": null,
+								"majors": null,
+								"present": false
+							},
+							{
+								"source": ".github/workflows/*#node-version",
+								"text": null,
+								"majors": null,
+								"present": false
+							},
+							{
+								"source": "package.json#engines.node",
+								"text": null,
+								"majors": null,
+								"present": false
+							}
+						],
+						"claim": "nothing in this tree names the toolchain era its authors used, and this stage read none"
+					},
+					"nodeMajor": 24,
+					"nodeMajorSource": "inferred",
+					"nodeMajorReadFrom": "the process this stage is running in — the runtime the install and build stages will run the lane in",
+					"nodeMajorSources": [
+						{
+							"source": ".nvmrc",
+							"text": null,
+							"majors": null,
+							"present": false
+						},
+						{
+							"source": ".node-version",
+							"text": null,
+							"majors": null,
+							"present": false
+						},
+						{
+							"source": "package.json#volta.node",
+							"text": null,
+							"majors": null,
+							"present": false
+						},
+						{
+							"source": ".tool-versions#nodejs",
+							"text": null,
+							"majors": null,
+							"present": false
+						},
+						{
+							"source": "Dockerfile*#FROM a node image",
+							"text": null,
+							"majors": null,
+							"present": false
+						},
+						{
+							"source": ".github/workflows/*#node-version",
+							"text": null,
+							"majors": null,
+							"present": false
+						},
+						{
+							"source": "package.json#engines.node",
+							"text": null,
+							"majors": null,
+							"present": false
+						}
+					],
+					"architecture": "arm64",
+					"architectureSource": "inferred",
+					"architectureBasis": "no package in the closure is one this repository measured as publishing no binding for an architecture, so the cell is read at the host architecture arm64",
+					"architectureRequirements": []
+				},
+				"determination": {
+					"inferred": [
+						"architecture",
+						"nodeMajor"
+					],
+					"declared": []
+				},
+				"host": {
+					"platform": "darwin",
+					"architecture": "arm64",
+					"runningNodeVersion": "v24.15.0",
+					"runningNodeMajor": 24,
+					"suppliers": [
+						"running-process",
+						"workspace-runtime-cache",
+						"fnm"
+					],
+					"installed": [
+						{
+							"version": "v8.9.3",
+							"major": 8,
+							"platform": "darwin",
+							"architecture": "x64",
+							"supplier": "workspace-runtime-cache",
+							"location": ".versionless/cache/angular-tiny-translator-v0-12-0-runtime/node-v8.9.3-darwin-x64"
+						},
+						{
+							"version": "v8.11.4",
+							"major": 8,
+							"platform": "darwin",
+							"architecture": "x64",
+							"supplier": "workspace-runtime-cache",
+							"location": ".versionless/cache/angular-eshop-webspa-netcore2-2-runtime/node-v8.11.4-darwin-x64"
+						},
+						{
+							"version": "v16.20.2",
+							"major": 16,
+							"platform": "darwin",
+							"architecture": "arm64",
+							"supplier": "workspace-runtime-cache",
+							"location": ".versionless/cache/angular-eshop-webspa-netcore2-2-target/node-v16.20.2-darwin-arm64"
+						},
+						{
+							"version": "v16.20.2",
+							"major": 16,
+							"platform": "darwin",
+							"architecture": "arm64",
+							"supplier": "workspace-runtime-cache",
+							"location": ".versionless/cache/angular-jira-clone-runtime/node-v16.20.2-darwin-arm64"
+						},
+						{
+							"version": "v14.16.1",
+							"major": 14,
+							"platform": "darwin",
+							"architecture": "x64",
+							"supplier": "workspace-runtime-cache",
+							"location": ".versionless/cache/react-cypress-rwa-runtime/node-v14.16.1-darwin-x64"
+						},
+						{
+							"version": "v12.14.1",
+							"major": 12,
+							"platform": "darwin",
+							"architecture": "x64",
+							"supplier": "workspace-runtime-cache",
+							"location": ".versionless/cache/react-mycrypto-runtime/node-v12.14.1-darwin-x64"
+						},
+						{
+							"version": "v10.24.1",
+							"major": 10,
+							"platform": "darwin",
+							"architecture": "x64",
+							"supplier": "workspace-runtime-cache",
+							"location": ".versionless/cache/angular-pigallery2-v1-7-0-runtime/node-v10.24.1-darwin-x64"
+						},
+						{
+							"version": "v24.15.0",
+							"major": 24,
+							"platform": "darwin",
+							"architecture": "arm64",
+							"supplier": "fnm",
+							"location": "node-versions/v24.15.0"
+						},
+						{
+							"version": "v24.15.0",
+							"major": 24,
+							"platform": "darwin",
+							"architecture": "arm64",
+							"supplier": "running-process",
+							"location": "the process this stage is running in"
+						}
+					]
+				},
+				"provision": {
+					"supplier": "running-process",
+					"version": "v24.15.0",
+					"location": "the process this stage is running in",
+					"translation": null
+				},
+				"refusal": null,
+				"notEstablished": [
+					"This record states which toolchain cell the application needs and whether a Node runtime of that cell is on this host. It is not an installation of the cell: nothing here establishes that the framework packages a cell declares were resolved, downloaded, or built.",
+					"`already-present` and `provisioned` state that a runtime of the required major and architecture was found at a location this stage read. Nothing here establishes that the application installs, compiles, builds, or behaves on it.",
+					"The architecture requirement is read from the closure the lockfile and the manifest declare, against the packages this repository measured a binding reading for. A native dependency nobody measured is not counted, and an absent requirement is not evidence that every dependency in the closure has a binding for this architecture.",
+					"Installed runtimes are the ones discoverable at the locations this stage reads: the running process, the workspace runtime cache, and the installed-version directories of the version managers whose layout it knows. A runtime installed anywhere else is reported as absent rather than searched for.",
+					"A version manager runtime is read as a directory. Its platform and architecture are recorded as the host’s because that is what a version manager installs for; no binary header was read.",
+					"No network was opened and no other program was run. A runtime this host does not already carry is refused, not fetched.",
+					"A value recorded with source `declared` was supplied by an operator. This stage did not read it and does not corroborate it.",
+					"The runtime named here is the runtime the lane this pipeline composes will be installed and built in. It is not the era this application was authored for: nothing here establishes which toolchain its authors used.",
+					"An era recorded as not-read states that no declaration in this tree named exactly one Node major that this stage reads. It is not a statement that the application has no era, and it is not a statement that the runtime below is that era.",
+					"Nothing here establishes that this application installs, compiles, builds, or behaves in the runtime named above. The install and build stages are where that is attempted, and their records are where it is stated.",
+					"A declared compatibility range that admits this runtime is a satisfied constraint. It states that the application claims to work on a set of runtimes that includes this one; it names no era, and no Node major was read out of it.",
+					"Satisfaction of a declared range is not corroborated by anything else this tree says. Where other sources name majors, they are listed above with what each literally says, and this stage picks from none of them."
+				]
+			},
+			"startedAt": "2026-08-18T00:04:05.337Z",
+			"endedAt": "2026-08-18T00:04:05.354Z"
+		},
+		{
+			"name": "plan",
+			"status": "ran",
+			"record": {
+				"analysis": {
+					"lineage": "react",
+					"frameworkVersionDeclared": "^17.0.2",
+					"detectedFrom": "react",
+					"builder": "react-scripts",
+					"builderSource": "package.json",
+					"nodeEra": {
+						"declared": "unknown",
+						"source": "unknown"
+					},
+					"packageManager": {
+						"manager": "npm",
+						"lockfiles": [
+							"package-lock.json"
+						],
+						"declared": "unknown"
+					},
+					"cellReadings": {
+						"cell": null,
+						"reason": "The frozen React and Next.js adapters publish no target-cell package registry, so no per-package verdict exists for this lineage. Every declared dependency is unknown to the engine rather than accepted by it.",
+						"verdicts": [],
+						"counts": {
+							"unknown": 29
+						}
+					},
+					"notEstablished": [
+						"Detection reads declarations. Nothing here establishes that this application installs, compiles, builds, or behaves as it did on its era toolchain.",
+						"A cell verdict is a reading of a published registry, not an installation: a range written here has not been resolved against any lockfile by this record.",
+						"A dependency the cell has no reading for is reported `unknown`. `unknown` is not `supported` and it is not `unsupported`."
+					]
+				},
+				"plan": {
+					"lineage": "react",
+					"engine": "@versionless/react craEntryDocument (create-react-app adapter)",
+					"cell": null,
+					"inputsSupplied": [
+						"packageManifest",
+						"entryTemplate",
+						"environment"
+					],
+					"applicationFilesScanned": 1,
+					"files": [
+						{
+							"path": "index.html",
+							"kind": "workspace",
+							"changed": true,
+							"sha256Before": "",
+							"sha256After": "2290ae423ec42af7520bd956240a673a69afd2f9be6d62e658bffbbabcaf5c33",
+							"source": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <link rel=\"icon\" href=\"/icons/favicon.ico\" />\n    <link\n      rel=\"apple-touch-icon\"\n      href=\"/icons/apple-touch-icon.png\"\n    />\n    <link\n      rel=\"apple-touch-icon\"\n      sizes=\"57x57\"\n      href=\"/icons/apple-touch-icon-57x57.png\"\n    />\n    <link\n      rel=\"apple-touch-icon\"\n      sizes=\"72x72\"\n      href=\"/icons/apple-touch-icon-72x72.png\"\n    />\n    <link\n      rel=\"apple-touch-icon\"\n      sizes=\"76x76\"\n      href=\"/icons/apple-touch-icon-76x76.png\"\n    />\n    <link\n      rel=\"apple-touch-icon\"\n      sizes=\"114x114\"\n      href=\"/icons/apple-touch-icon-114x114.png\"\n    />\n    <link\n      rel=\"apple-touch-icon\"\n      sizes=\"120x120\"\n      href=\"/icons/apple-touch-icon-120x120.png\"\n    />\n    <link\n      rel=\"apple-touch-icon\"\n      sizes=\"144x144\"\n      href=\"/icons/apple-touch-icon-144x144.png\"\n    />\n    <link\n      rel=\"apple-touch-icon\"\n      sizes=\"152x152\"\n      href=\"/icons/apple-touch-icon-152x152.png\"\n    />\n    <link\n      rel=\"apple-touch-icon\"\n      sizes=\"180x180\"\n      href=\"/icons/apple-touch-icon-180x180.png\"\n    />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n    <meta\n      name=\"description\"\n      content=\"Flame - self-hosted startpage for your server\"\n    />\n    <link rel=\"stylesheet\" href=\"/flame.css\" />\n    <title>Flame</title>\n  </head>\n  <body>\n    <noscript>You need to enable JavaScript to run this app.</noscript>\n    <div id=\"root\"></div>\n    <script type=\"module\" src=\"/src/index.tsx\"></script>\n  </body>\n</html>\n",
+							"changes": [
+								"entry document derived from public/index.html with entry module /src/index.tsx",
+								"create-react-app template placeholders substituted for NODE_ENV, PUBLIC_URL, REACT_APP_VERSION"
+							]
+						}
+					],
+					"removedFiles": [],
+					"unhandled": [
+						"The pinned source-level React transforms (connect-to-hooks, class-lifecycle-to-hooks) are gated on exact source digests and on a maintained package/lock pair supplied out of band. This flow supplies neither, so no application module is rewritten by it.",
+						"Node core specifiers webpack resolved to an empty module are externalized by the adapter and reported by the build rather than shimmed. Which ones this application reaches is a reading of a build, and this flow performs no build."
+					],
+					"declaredDifferences": [
+						"The build is driven by the frozen create-react-app Vite adapter composition rather than by react-scripts. Node core specifiers the adapter's own shim table carries: _stream_duplex, _stream_passthrough, _stream_readable, _stream_transform, _stream_writable, assert, buffer, console, constants, crypto, domain, events, http, https, os, path, process, punycode, querystring, stream, string_decoder, sys, timers, tty, url, util, vm, zlib.",
+						"The generated entry document is written beside the application rather than replacing public/index.html: the template stays the application’s own file."
+					],
+					"notEstablished": [
+						"A composed changeset is a set of edits, not a build. Nothing here establishes that the migrated tree installs, compiles, or emits anything.",
+						"`applicationFilesScanned` counts files the engine read. A file it scanned and left alone is counted as scanned and not as changed.",
+						"A capability gated on a reading this tree did not supply stood down. That is not evidence that the tree has nothing for it to do."
+					]
+				}
+			},
+			"startedAt": "2026-08-18T00:04:05.354Z",
+			"endedAt": "2026-08-18T00:04:05.355Z"
+		},
+		{
+			"name": "apply",
+			"status": "ran",
+			"record": {
+				"applied": {
+					"mode": "materialized",
+					"written": [
+						{
+							"path": "index.html",
+							"kind": "workspace",
+							"sha256After": "2290ae423ec42af7520bd956240a673a69afd2f9be6d62e658bffbbabcaf5c33",
+							"changes": [
+								"entry document derived from public/index.html with entry module /src/index.tsx",
+								"create-react-app template placeholders substituted for NODE_ENV, PUBLIC_URL, REACT_APP_VERSION"
+							]
+						}
+					],
+					"removed": [],
+					"copied": 191,
+					"notEstablished": [
+						"Writing a changeset into a lane is not a build. Nothing here establishes that the lane installs, compiles, or emits anything.",
+						"Every byte written differs from the application only where a frozen adapter transform decided it should; each is itemised by file and by change.",
+						"In changeset-lane mode the lane carries only the files the changeset rewrites. `removed` is then what the changeset says the tree should no longer carry, not a deletion this run performed."
+					]
+				},
+				"laneComposition": {
+					"lineage": "react",
+					"composed": true,
+					"reason": null,
+					"files": [
+						{
+							"path": "vite.config.ts",
+							"sha256": "e9f63997d234fbc6fccb11267987a33a64551fec8279daae46cd4216c45206d0",
+							"changes": [
+								"generated from the frozen create-react-app adapter composition with base \"\", template \"index.html\", output build-vite",
+								"environment inlined for NODE_ENV, PUBLIC_URL, REACT_APP_VERSION"
+							]
+						},
+						{
+							"path": "package.json",
+							"sha256": "c1b935aff1296107477e7b3673ca04b4a0a6d0cefb3fea9640a214cd505e7d3f",
+							"changes": [
+								"dependencies.react-scripts ^5.0.1 removed: the lane is built by the frozen create-react-app Vite adapter composition and no longer runs that toolchain",
+								"devDependencies.pathe declared as ^2.0.3: the generated lane configuration imports it, pinned to the range this workspace itself resolves",
+								"devDependencies.ufo declared as ^1.6.4: the generated lane configuration imports it, pinned to the range this workspace itself resolves",
+								"devDependencies.vite declared as 8.0.16: the generated lane configuration imports it, pinned to the range this workspace itself resolves",
+								"scripts.start rewritten from react-scripts start to vite",
+								"scripts.build rewritten from react-scripts build to vite build",
+								"scripts.test removed: react-scripts test",
+								"scripts.eject removed: react-scripts eject"
+							]
+						}
+					],
+					"unhandled": [
+						"The application carries src/setupProxy.js, a create-react-app development-server proxy. The generated lane configuration is a production build composition and carries no proxy.",
+						"scripts.test invoked the removed origin toolchain (react-scripts test). The lane no longer declares react-scripts, and this rewrite carries no successor for that script, so it is dropped rather than left as a command that cannot run.",
+						"scripts.eject invoked the removed origin toolchain (react-scripts eject). The lane no longer declares react-scripts, and this rewrite carries no successor for that script, so it is dropped rather than left as a command that cannot run.",
+						"eslintConfig extends the create-react-app shareable configuration, which react-scripts supplied. The lane no longer declares that package, so the field is preserved verbatim and the configuration it names is not resolvable in the lane.",
+						"The manifest declares a browserslist. create-react-app fed it to Babel and Autoprefixer; the generated lane configuration declares no build target derived from it, so the lane emits whatever the workspace Vite default targets."
+					],
+					"declaredDifferences": [
+						"The fixture configurations for the applications already completed additionally install observation plugins that write implicit-global, decoded-module and capability reports beside the build. Those are measurement instruments for those fixtures rather than application behaviour, and the generated configuration carries none of them.",
+						"The generated configuration composes createCraViteAdapter and craProcessEnvironmentDefines from packages/frameworks/react/src/index.ts and adds no capability of its own."
+					],
+					"notEstablished": [
+						"A composed build configuration is not a build. Nothing here establishes that the lane installs, compiles, or emits anything; the install and build stages report that separately.",
+						"The generated configuration reproduces the generic create-react-app shape over the frozen adapter exports. Every per-application difference it does not carry is listed as an unhandled finding rather than left to be inferred from a failing build.",
+						"The generated configuration resolves the frozen adapter from this workspace by relative path, exactly as the fixture configurations do. The lane is therefore buildable by this pipeline and is not a self-contained package; resolving a published @versionless/react is a separate packaging decision this flow does not take."
+					]
+				}
+			},
+			"startedAt": "2026-08-18T00:04:05.355Z",
+			"endedAt": "2026-08-18T00:04:05.401Z"
+		},
+		{
+			"name": "install",
+			"status": "ran",
+			"record": {
+				"stage": "install",
+				"ran": true,
+				"reason": null,
+				"packageManager": "npm",
+				"lockfile": "package-lock.json",
+				"closure": "resolve",
+				"policy": {
+					"allowRemoteTarballs": true,
+					"allowInstallScripts": true,
+					"skipInstallScripts": false,
+					"allowPeerConflicts": true
+				},
+				"remoteTarballDependencies": [],
+				"installScriptPackages": [
+					"node_modules/core-js",
+					"node_modules/core-js-pure",
+					"node_modules/fsevents"
+				],
+				"command": [
+					"npm",
+					"install",
+					"--no-audit",
+					"--no-fund",
+					"--allow-remote",
+					"all",
+					"--foreground-scripts",
+					"--legacy-peer-deps"
+				],
+				"exitCode": 0,
+				"installedPackages": 117,
+				"notEstablished": [
+					"An install resolves a closure. It is not a build, and it is not evidence that the closure works: nothing here establishes that any package in it compiles or runs.",
+					"The policy findings are read from the lockfile. A lockfile that does not mark an install script, or that resolves through a mirror this reading does not recognise, yields a finding this stage did not make.",
+					"`installScriptPackages` counts packages the lockfile declares an install script for. Whether a given script would have built anything on this host is not established here.",
+					"`closure: resolve` means the lane manifest declares a build toolchain the recorded lockfile predates, so npm resolved rather than replayed. The application’s own pins still come from the lockfile; what was newly resolved is what the manifest rewrite added, and that resolution is not a pin this repository recorded."
+				]
+			},
+			"startedAt": "2026-08-18T00:04:05.401Z",
+			"endedAt": "2026-08-18T00:04:07.773Z"
+		},
+		{
+			"name": "build",
+			"status": "ran",
+			"record": {
+				"stage": "build",
+				"ran": true,
+				"reason": null,
+				"command": [
+					"npm",
+					"run",
+					"build"
+				],
+				"script": "vite build",
+				"configuration": "vite.config.ts",
+				"outDirectory": "build-vite",
+				"exitCode": 0,
+				"outputFiles": 24,
+				"notEstablished": [
+					"A completed build establishes that the lane emitted output. It is not a browser proof, a parity reading, or a witness pass; nothing here establishes that the emitted bundle behaves as the application did on its era toolchain.",
+					"The lane resolves the frozen adapter from this workspace by relative path, so this build is reproducible by this pipeline in this checkout. It does not establish that the lane builds anywhere else.",
+					"`outputFiles` counts files below the build directory. It is a count, not a comparison against any previous build."
+				]
+			},
+			"startedAt": "2026-08-18T00:04:07.773Z",
+			"endedAt": "2026-08-18T00:04:09.101Z"
+		},
+		{
+			"name": "witness",
+			"status": "ran",
+			"record": {
+				"ran": true,
+				"journeySource": "synthesized-crawl",
+				"replayabilityRatio": 1,
+				"journeysRun": 1,
+				"digest": "67299c2e65abe5d2b39255210d189feee6220f0dd660a83d50aea3b159b9d0a1",
+				"notEstablished": [
+					"A witnessed lane is a lane whose declared journeys were replayed once each on this host, serialized. Nothing here establishes an outcome under concurrent load.",
+					"Where the journeys were synthesized, they were derived from the application own end-to-end suite or from a bounded loopback crawl. The replayability ratio in the record is a count of derived journeys that name a route to start from, not a measure of coverage."
+				]
+			},
+			"startedAt": "2026-08-18T00:04:09.101Z",
+			"endedAt": "2026-08-18T00:04:10.219Z"
+		}
+	],
+	"report": {
+		"status": "emitted",
+		"slot": "evidence/trust/current/coverage-report.json",
+		"path": "evidence/trust/current/coverage-report.json",
+		"digest": "65b247d1272c9bfa5b32a276da86fd7543983db5c995c24244b1d0fcc79f6d9a"
+	},
+	"notEstablished": [
+		"A stage recorded `ran` returned its own record. What that record establishes is what that stage states, and no more: this row adds no reading of its own on top of it.",
+		"A stage recorded `not-run` was not reached, because an earlier stage refused or broke. Nothing here establishes what it would have recorded.",
+		"Exit 2 is a refusal and exit 1 is a defect. A crash, a hang, or a tree that will not install is a defect even when it happens inside a stage that can also refuse.",
+		"The stage timestamps bound the wall-clock interval the seam observed around each stage. They are not a measurement of machine time and they are not comparable across hosts.",
+		"The coverage report at evidence/trust/current/coverage-report.json was emitted by the guarded derivation and recomputes to the digest recorded here. This run did not derive it, did not regenerate it, and establishes nothing about whether it is current with respect to this run."
+	]
+}

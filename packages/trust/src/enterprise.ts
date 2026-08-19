@@ -13,15 +13,19 @@ import {
 	HOLDOUT_ANGULAR_ESHOP_WEBSPA_PROVEN_SURFACE,
 	HOLDOUT_ANGULAR_ESHOP_WEBSPA_WITNESS_STATE,
 } from '../../core/src/receipts/holdout-angular-eshop-webspa.ts';
-import {
-	HOLDOUT_ANGULAR_PIGALLERY2_APPLICATION,
-} from '../../core/src/receipts/holdout-angular-pigallery2.ts';
+import { HOLDOUT_ANGULAR_PIGALLERY2_APPLICATION } from '../../core/src/receipts/holdout-angular-pigallery2.ts';
 import {
 	HOLDOUT_REACT_CYPRESS_RWA_WITNESS_APPLICATION,
 	HOLDOUT_REACT_CYPRESS_RWA_WITNESS_RECEIPT_PATH,
 	verifyHoldoutReactCypressRwaWitnessEvidence,
 	type HoldoutReactCypressRwaWitnessReceipt,
 } from '../../core/src/receipts/holdout-react-cypress-rwa-witness.ts';
+import {
+	COVERAGE_REPORT_MARKDOWN,
+	deriveCoverageSurfaces,
+	verifyPublishedCoverageSurfaces,
+	type CoverageReport,
+} from './coverage-report.ts';
 import { asRecord, asString, TRUST_SCHEMA, type TrustManifest } from './schema.ts';
 
 /**
@@ -117,7 +121,10 @@ export interface EnterpriseHoldout {
 	readonly countingNote: string;
 	readonly reason: string;
 	readonly provenSurface?: string;
-	readonly surfacesNotCovered?: ReadonlyArray<{ readonly surface: string; readonly state: string }>;
+	readonly surfacesNotCovered?: ReadonlyArray<{
+		readonly surface: string;
+		readonly state: string;
+	}>;
 }
 
 export interface EnterpriseFalsification {
@@ -248,13 +255,13 @@ const cellVerticals = (
 	application: string,
 ): Array<Record<string, unknown>> => {
 	const records = conformance.verticals.map((value) => asRecord(value, 'corpus vertical'));
-	const byId = records.filter(
-		(vertical) => asString(vertical.id, 'corpus vertical id') === cell,
-	);
+	const byId = records.filter((vertical) => asString(vertical.id, 'corpus vertical id') === cell);
 	if (byId.length > 0) return byId;
 	const byApplication = records.filter((vertical) => vertical.application === application);
 	if (byApplication.length === 0)
-		throw new Error(`Judge-counted cell ${cell} has no corpus vertical to derive versions from`);
+		throw new Error(
+			`Judge-counted cell ${cell} has no corpus vertical to derive versions from`,
+		);
 	return byApplication;
 };
 
@@ -465,7 +472,10 @@ function supportMatrix(inputs: EnterpriseReportInputs): EnterpriseSupportMatrix 
 			note: `A capability is claimed general, and therefore in the matrix, only once at least ${capabilityCoverage.crossProvenThreshold} independent applications prove it. The capabilities below are proven on fewer than that and are out of the matrix; they are named rather than silently claimed.`,
 			entries: capabilityCoverage.capabilities
 				.filter((capability) => capability.classification === 'experimental')
-				.map((capability) => ({ lineage: capability.lineage, capability: capability.name })),
+				.map((capability) => ({
+					lineage: capability.lineage,
+					capability: capability.name,
+				})),
 		},
 	};
 }
@@ -554,8 +564,7 @@ function sourcesAndRights(conformance: CorpusConformance): Array<Record<string, 
 			license: recordedText(source.license),
 			licenseSha256: recordedText(source.licenseSha256),
 			verticals: application.verticals,
-			rights:
-				'Ingested at a pin under recorded consent, with the license text hashed at that pin. No redistribution right beyond the upstream license is claimed.',
+			rights: 'Ingested at a pin under recorded consent, with the license text hashed at that pin. No redistribution right beyond the upstream license is claimed.',
 		};
 	});
 }
@@ -996,9 +1005,20 @@ export interface EnterpriseSurfaceInputs {
 	readonly runtimeScriptObservation: Record<string, unknown>;
 }
 
-export async function deriveEnterpriseSurfaces(
-	inputs: EnterpriseSurfaceInputs,
-): Promise<{ report: EnterpriseReport; markdown: string }> {
+/**
+ * Derives the enterprise surfaces, and the coverage pair beside them.
+ *
+ * The coverage report is derived here rather than in a flow of its own for one
+ * reason: it must read the *same* support matrix this function just built off
+ * the Judge counting ledger. A second derivation could disagree with this one,
+ * and two surfaces that disagree about how many applications were proven is the
+ * failure the whole package exists to make impossible.
+ */
+export async function deriveEnterpriseSurfaces(inputs: EnterpriseSurfaceInputs): Promise<{
+	report: EnterpriseReport;
+	markdown: string;
+	coverage: { report: CoverageReport; markdown: string };
+}> {
 	const cypressWitness = (await verifyHoldoutReactCypressRwaWitnessEvidence(inputs.root)).receipt;
 	const workspaceScripts = asRecord(
 		asRecord(
@@ -1022,7 +1042,13 @@ export async function deriveEnterpriseSurfaces(
 	});
 	const markdown = renderEnterpriseReport(report);
 	assertEnterpriseReport(report, markdown);
-	return { report, markdown };
+	const coverage = await deriveCoverageSurfaces({
+		root: inputs.root,
+		output: inputs.output,
+		matrix: report.results.supportMatrix,
+		capabilityCoverage: inputs.capabilityCoverage,
+	});
+	return { report, markdown, coverage };
 }
 
 /**
@@ -1033,7 +1059,7 @@ export async function deriveEnterpriseSurfaces(
  * fails here even if every enclosing hash had been recomputed around it.
  */
 export async function verifyEnterpriseSurfaces(inputs: EnterpriseSurfaceInputs): Promise<void> {
-	const { report, markdown } = await deriveEnterpriseSurfaces(inputs);
+	const { report, markdown, coverage } = await deriveEnterpriseSurfaces(inputs);
 	const publishedJson = JSON.parse(
 		await readFile(path.join(inputs.output, ENTERPRISE_REPORT_JSON), 'utf8'),
 	) as unknown;
@@ -1050,6 +1076,11 @@ export async function verifyEnterpriseSurfaces(inputs: EnterpriseSurfaceInputs):
 			`${ENTERPRISE_REPORT_MARKDOWN} does not match independent re-derivation from the canonical receipts`,
 		);
 	assertEnterpriseSurfaceHonesty(publishedMarkdown, ENTERPRISE_REPORT_MARKDOWN);
+	await verifyPublishedCoverageSurfaces(inputs.output, coverage);
+	assertEnterpriseSurfaceHonesty(
+		await readFile(path.join(inputs.output, COVERAGE_REPORT_MARKDOWN), 'utf8'),
+		COVERAGE_REPORT_MARKDOWN,
+	);
 }
 
 export function assertEnterpriseReport(report: EnterpriseReport, rendered: string): void {
@@ -1061,10 +1092,14 @@ export function assertEnterpriseReport(report: EnterpriseReport, rendered: strin
 	for (const lineage of ['react', 'angular']) {
 		const counted = matrix.counted[lineage];
 		if (counted === undefined || counted.cells.length !== counted.ready)
-			throw new Error(`Enterprise matrix ${lineage} cells do not match the counted numerator`);
+			throw new Error(
+				`Enterprise matrix ${lineage} cells do not match the counted numerator`,
+			);
 		for (const cell of counted.cells)
 			if (cell.lineage !== lineage || cell.witnessReceipt.length === 0)
-				throw new Error(`Enterprise matrix cell ${cell.cell} is not derived from a receipt`);
+				throw new Error(
+					`Enterprise matrix cell ${cell.cell} is not derived from a receipt`,
+				);
 	}
 	if (matrix.holdouts.some((holdout) => holdout.countedInLineageNumerator !== false))
 		throw new Error('A holdout reached a lineage numerator in the enterprise matrix');
@@ -1074,6 +1109,7 @@ export function assertEnterpriseReport(report: EnterpriseReport, rendered: strin
 		throw new Error('The permanent falsification history is incomplete');
 	if (matrix.boundaryPrevalence.published !== ANGULAR_PRE_IVY_BOUNDARY_PREVALENCE.published)
 		throw new Error('The boundary prevalence was rounded away from 5-of-6');
-	if (report.claims.nonClaims.length === 0) throw new Error('The claims one-pager has no non-claims');
+	if (report.claims.nonClaims.length === 0)
+		throw new Error('The claims one-pager has no non-claims');
 	assertEnterpriseSurfaceHonesty(rendered, ENTERPRISE_REPORT_MARKDOWN);
 }

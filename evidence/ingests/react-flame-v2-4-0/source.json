@@ -1,0 +1,122 @@
+{
+  "schemaVersion": "versionless.official-source.v1",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "attemptSha256": "ec30f0979d5195f56f8dbe02d9d26c99996169e77af574ef203d22b598fe0b5d",
+  "result": "source-bound",
+  "startedAt": "2026-08-17T21:36:05.981Z",
+  "completedAt": "2026-08-17T21:36:09.292Z",
+  "repository": {
+    "id": 365565715,
+    "fullName": "pawelmalak/flame",
+    "private": false,
+    "archived": false,
+    "disabled": false,
+    "responseBytes": 5255,
+    "responseSha256": "eed760c31605b07a3b1d795482ea410cdba6725bd80ba189aa1afb5580685996"
+  },
+  "revision": {
+    "ref": "refs/tags/v2.4.0",
+    "tagObjectSha": null,
+    "tagKind": "lightweight",
+    "tagDate": null,
+    "tagVerification": "unsigned",
+    "commitSha": "069b6690d9fa7a24a6e7727386ab85148c89b90e",
+    "commitDate": "2026-04-24T15:37:52Z",
+    "commitVerification": "verified",
+    "rootTreeSha": "578532b2bab86d4d2d25e36097d770b323e3bce3",
+    "treeEntries": 427,
+    "treeBlobs": 328,
+    "treeDirectories": 99,
+    "treeSymlinks": 0,
+    "treeGitlinks": 0,
+    "treeTruncated": false
+  },
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/pawelmalak/flame",
+      "status": 200,
+      "bytes": 5255,
+      "sha256": "eed760c31605b07a3b1d795482ea410cdba6725bd80ba189aa1afb5580685996"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/pawelmalak/flame/git/ref/tags/v2.4.0",
+      "status": 200,
+      "bytes": 341,
+      "sha256": "20fa3c30716be0e48b7924567bdc1b268cea154eb7d767936ed6ac1107e28688"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/pawelmalak/flame/git/commits/069b6690d9fa7a24a6e7727386ab85148c89b90e",
+      "status": 200,
+      "bytes": 2595,
+      "sha256": "d469a938c6b053138ab853874ae92a0e5957ebd6b44bb8749d6d9c8d853b1a51"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/pawelmalak/flame/git/trees/578532b2bab86d4d2d25e36097d770b323e3bce3?recursive=1",
+      "status": 200,
+      "bytes": 102697,
+      "sha256": "09aa5659f04e564db6ceb6c643842318b5af704486721b32d1ad20745c8fab4c"
+    },
+    {
+      "endpoint": "https://codeload.github.com/pawelmalak/flame/tar.gz/069b6690d9fa7a24a6e7727386ab85148c89b90e",
+      "status": 200,
+      "bytes": 1237170,
+      "sha256": "95c58a1330ebdc860f5eb81948c6e354c41300895ebc6b985325bdf0b079242f",
+      "stream": 1
+    },
+    {
+      "endpoint": "https://codeload.github.com/pawelmalak/flame/tar.gz/069b6690d9fa7a24a6e7727386ab85148c89b90e",
+      "status": 200,
+      "bytes": 1237170,
+      "sha256": "95c58a1330ebdc860f5eb81948c6e354c41300895ebc6b985325bdf0b079242f",
+      "stream": 2
+    }
+  ],
+  "archiveParity": {
+    "singleRoot": "flame-069b6690d9fa7a24a6e7727386ab85148c89b90e",
+    "safeEntries": 428,
+    "regularFiles": 328,
+    "directories": 100,
+    "specialEntries": 0,
+    "gitBlobs": 328,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "normalizedManifestSha256": "f17895018611f4d3dfe94411c9f858feb424f036a92537b5611455548fccb2e1"
+  },
+  "transaction": {
+    "attemptedRequests": 6,
+    "acceptedResponses": 6,
+    "acceptedWireBytes": 2585228,
+    "acceptedDecodedBytes": 2585228,
+    "redirectsObserved": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "archivesByteIdentical": true,
+    "archiveMatchesGitTree": true,
+    "publishedSource": true,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "cache": {
+    "root": ".versionless/cache/react-flame-v2-4-0-source",
+    "archive1": ".versionless/cache/react-flame-v2-4-0-source/archive/archive-1.tar.gz",
+    "archive2": ".versionless/cache/react-flame-v2-4-0-source/archive/archive-2.tar.gz",
+    "verifiedSource": ".versionless/cache/react-flame-v2-4-0-source/verify/extracted",
+    "rawMetadataPortable": false
+  },
+  "baseline": ".versionless/work/react-flame-v2-4-0/baseline",
+  "licence": {
+    "identifier": null,
+    "identifierSource": null,
+    "identifierRefusal": "license-at-pin.manifest-field-conflicts-with-licence-text",
+    "copyrightNotice": null,
+    "filesAtRoot": [],
+    "artifacts": []
+  },
+  "nonclaims": [
+    "A lightweight or unsigned tag does not establish signer authenticity.",
+    "This record states that the bytes at the recorded commit reconcile with the Git tree the repository publishes at that commit. It establishes no dependency closure, build, browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "The licence reading is a reading of the file present at the pin. It is not a legal opinion and it evaluates no dependency’s terms.",
+    "Acquiring a source is not admitting one. Whether this tree can be ingested, installed, built or migrated is not read here."
+  ]
+}

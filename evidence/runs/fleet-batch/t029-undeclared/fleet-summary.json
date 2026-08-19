@@ -1,0 +1,178 @@
+{
+	"schemaVersion": "versionless.fleet-batch.v1",
+	"flow": "batch",
+	"name": "t029-undeclared",
+	"startedAt": "2026-08-17T23:29:15.323Z",
+	"endedAt": "2026-08-17T23:29:21.257Z",
+	"machineTimeMs": 5933,
+	"declared": {
+		"applicationsFrom": [
+			"evidence/runs/fleet-batch/t029-react-fleet.json"
+		],
+		"laneRoot": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t029-p1c",
+		"forwarded": [],
+		"concurrency": "one application at a time, in the order declared; nothing in this batch ran in parallel",
+		"publish": "declared"
+	},
+	"totals": {
+		"applications": 6,
+		"proven": 0,
+		"refused": 6,
+		"refusedByCode": {
+			"install.lockfile-absent": 6
+		},
+		"defects": 0,
+		"interventionCount": 0,
+		"interventionCountNotAsserted": 0
+	},
+	"unattended": {
+		"state": true,
+		"statement": "Across 6 application(s) the out-of-band harness observed zero interventions and no defect classification. That is a statement about what changed on disk and how many processes were spawned; it is not a statement that any of these applications built or rendered."
+	},
+	"applications": [
+		{
+			"id": "react-antd-admin-template-v2-0-0",
+			"framework": "not-recorded",
+			"applicationRoot": ".versionless/work/react-antd-admin-template-v2-0-0/baseline",
+			"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t029-p1c/react-antd-admin-template-v2-0-0",
+			"runRecordPath": "evidence/runs/react-antd-admin-template-v2-0-0/run-record.json",
+			"interventionRecordPath": "evidence/runs/react-antd-admin-template-v2-0-0/run-record.json.interventions.json",
+			"terminalClassification": "refused:install.lockfile-absent",
+			"interventionCount": 0,
+			"exitCode": 2,
+			"refusal": {
+				"code": "install.lockfile-absent",
+				"message": "Install: the lane carries none of package-lock.json, npm-shrinkwrap.json, so there is no pinned closure to install. This flow installs a recorded closure rather than resolving a new one.",
+				"stage": "install"
+			},
+			"elapsedMs": 596
+		},
+		{
+			"id": "react-colorme-2019-06-06",
+			"framework": "not-recorded",
+			"applicationRoot": ".versionless/work/react-colorme-2019-06-06/baseline",
+			"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t029-p1c/react-colorme-2019-06-06",
+			"runRecordPath": "evidence/runs/react-colorme-2019-06-06/run-record.json",
+			"interventionRecordPath": "evidence/runs/react-colorme-2019-06-06/run-record.json.interventions.json",
+			"terminalClassification": "refused:install.lockfile-absent",
+			"interventionCount": 0,
+			"exitCode": 2,
+			"refusal": {
+				"code": "install.lockfile-absent",
+				"message": "Install: the lane carries none of package-lock.json, npm-shrinkwrap.json, so there is no pinned closure to install. This flow installs a recorded closure rather than resolving a new one.",
+				"stage": "install"
+			},
+			"elapsedMs": 559
+		},
+		{
+			"id": "react-coverview-a1470b01",
+			"framework": "not-recorded",
+			"applicationRoot": ".versionless/work/react-coverview-a1470b01/baseline",
+			"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t029-p1c/react-coverview-a1470b01",
+			"runRecordPath": "evidence/runs/react-coverview-a1470b01/run-record.json",
+			"interventionRecordPath": "evidence/runs/react-coverview-a1470b01/run-record.json.interventions.json",
+			"terminalClassification": "refused:install.lockfile-absent",
+			"interventionCount": 0,
+			"exitCode": 2,
+			"refusal": {
+				"code": "install.lockfile-absent",
+				"message": "Install: the lane carries none of package-lock.json, npm-shrinkwrap.json, so there is no pinned closure to install. This flow installs a recorded closure rather than resolving a new one.",
+				"stage": "install"
+			},
+			"elapsedMs": 552
+		},
+		{
+			"id": "react-cra-redux-1a06509b",
+			"framework": "not-recorded",
+			"applicationRoot": ".versionless/work/react-cra-redux-1a06509b/baseline",
+			"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t029-p1c/react-cra-redux-1a06509b",
+			"runRecordPath": "evidence/runs/react-cra-redux-1a06509b/run-record.json",
+			"interventionRecordPath": "evidence/runs/react-cra-redux-1a06509b/run-record.json.interventions.json",
+			"terminalClassification": "refused:install.lockfile-absent",
+			"interventionCount": 0,
+			"exitCode": 2,
+			"refusal": {
+				"code": "install.lockfile-absent",
+				"message": "Install: the lane carries none of package-lock.json, npm-shrinkwrap.json, so there is no pinned closure to install. This flow installs a recorded closure rather than resolving a new one.",
+				"stage": "install"
+			},
+			"elapsedMs": 560
+		},
+		{
+			"id": "react-flame-v2-4-0",
+			"framework": "not-recorded",
+			"applicationRoot": ".versionless/work/react-flame-v2-4-0/baseline",
+			"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t029-p1c/react-flame-v2-4-0",
+			"runRecordPath": "evidence/runs/react-flame-v2-4-0/run-record.json",
+			"interventionRecordPath": "evidence/runs/react-flame-v2-4-0/run-record.json.interventions.json",
+			"terminalClassification": "refused:install.lockfile-absent",
+			"interventionCount": 0,
+			"exitCode": 2,
+			"refusal": {
+				"code": "install.lockfile-absent",
+				"message": "Install: the lane carries none of package-lock.json, npm-shrinkwrap.json, so there is no pinned closure to install. This flow installs a recorded closure rather than resolving a new one.",
+				"stage": "install"
+			},
+			"elapsedMs": 677
+		},
+		{
+			"id": "react-your-spotify-1-5-0",
+			"framework": "not-recorded",
+			"applicationRoot": ".versionless/work/react-your-spotify-1-5-0/baseline",
+			"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t029-p1c/react-your-spotify-1-5-0",
+			"runRecordPath": "evidence/runs/react-your-spotify-1-5-0/run-record.json",
+			"interventionRecordPath": "evidence/runs/react-your-spotify-1-5-0/run-record.json.interventions.json",
+			"terminalClassification": "refused:install.lockfile-absent",
+			"interventionCount": 0,
+			"exitCode": 2,
+			"refusal": {
+				"code": "install.lockfile-absent",
+				"message": "Install: the lane carries none of package-lock.json, npm-shrinkwrap.json, so there is no pinned closure to install. This flow installs a recorded closure rather than resolving a new one.",
+				"stage": "install"
+			},
+			"elapsedMs": 663
+		}
+	],
+	"publish": {
+		"declared": true,
+		"steps": [
+			{
+				"step": "pack",
+				"command": "pnpm exec vp pack",
+				"status": "skipped",
+				"exitCode": null,
+				"detail": "packages/cli/dist is not older than the sources it is built from"
+			},
+			{
+				"step": "trust:generate",
+				"command": "npm run trust:generate -- --offline --policy trust/policy.json --output evidence/trust/current",
+				"status": "ran",
+				"exitCode": 0,
+				"detail": "the step exited 0"
+			},
+			{
+				"step": "trust:verify",
+				"command": "npm run trust:verify -- --offline",
+				"status": "ran",
+				"exitCode": 0,
+				"detail": "the step exited 0"
+			},
+			{
+				"step": "report:coverage",
+				"command": "report:coverage --offline --verify-only",
+				"status": "ran",
+				"exitCode": 0,
+				"detail": "the step exited 0"
+			}
+		]
+	},
+	"notEstablished": [
+		"A count of refusal sites is not a count of refusable applications. What this summary tallies is the outcome each named application reached on this host, in this order, once.",
+		"A refusal is an outcome rather than a failure of the run. The refusing roots are counted at the cost they actually took.",
+		"The fleet here is whatever list this command was handed. It is not a random sample of any target fleet and it carries whatever selection that list carries.",
+		"The timings are one host, one process, a warm page cache and one repetition. They are a reading of this machine rather than a specification.",
+		"An intervention count of zero is the out-of-band harness reporting that no path outside the declared write set changed and that one process was spawned. It is not a statement that any application in this batch produced a working build.",
+		"Applications ran one at a time. Nothing here establishes what any of these outcomes would have been under a loop that fanned out, and the witness surface is the reason this one does not.",
+		"The publish steps below, when declared, report what each command exited with. A regenerated report is a re-derivation of what the evidence on disk already carried; it is not certification, and no authenticity claim rides along with it."
+	]
+}

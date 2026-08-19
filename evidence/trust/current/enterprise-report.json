@@ -8,9 +8,9 @@
     "slsaLevel": "not-claimed"
   },
   "derivedFrom": {
-    "trustManifestCanonicalDigest": "572a0f061c731e57460c9c21644632fe43646d34a780dc47e739dc09e838768a",
-    "deterministicCoreDigest": "ded201fbeefddf6f4beb284975b27afe480e35602a1fa515a5efd363fa054800",
-    "corpusConformanceDigest": "e6c9068a196f78bd767caa3718686d68d6ed4a83554dd6f17ea2bd556cddd01d",
+    "trustManifestCanonicalDigest": "e876926674880ceebabb2377a55d4e6bf82e2abc0dda42f11ab9950fe21ebde5",
+    "deterministicCoreDigest": "89a6e0c4b8020af4d301ea379038a3b2c71c6bf1bc3705fe2c4f041b23b86ba2",
+    "corpusConformanceDigest": "101412703cc116969dd562a6ea46dde3d05424ad5194e535aca9750e373bc482",
     "adapterFreezeComposite": "27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234",
     "adapterFreezeCommit": "0ecd410691df10fbc68c9ddcd012dafa86aba536"
   },
@@ -202,6 +202,21 @@
         "angular-super-productivity-v2-13-15"
       ],
       "rights": "Ingested at a pin under recorded consent, with the license text hashed at that pin. No redistribution right beyond the upstream license is claimed."
+    },
+    {
+      "application": "react-flame-v2-4-0",
+      "repository": "pawelmalak/flame",
+      "revisionRecordedIn": {
+        "path": "corpus-conformance.json",
+        "field": "applications[].source.revision for react-flame-v2-4-0"
+      },
+      "archiveSha256": "not-recorded-in-the-corpus-record",
+      "license": "MIT",
+      "licenseSha256": "fbfe10674aef1e0bf084850644879fa4114d8a98debc5fb8e680f295af169d43",
+      "verticals": [
+        "react-flame-v2-4-0"
+      ],
+      "rights": "Ingested at a pin under recorded consent, with the license text hashed at that pin. No redistribution right beyond the upstream license is claimed."
     }
   ],
   "toolAndTargetVersions": {
@@ -346,11 +361,11 @@
       },
       {
         "path": "provenance.json",
-        "sha256": "68442659a906d939cefc414ff6eda9372cc1f0fc43a46868c57147aa3ef142df"
+        "sha256": "9ae2cead23697bbb0d249363c72f1cd8ad7280b26475bd6f68e24f8b75d73940"
       },
       {
         "path": "matrix.json",
-        "sha256": "cf6b94e0db1d4a1d53e6ec44d5c0ebeb524e7f96c3cd3a81e170ff43fa50fce9"
+        "sha256": "3dca11f639d90e4519cf914274fced24580db5b121043a28b0c4f4de5e65a39d"
       },
       {
         "path": "controls.json",
@@ -362,7 +377,7 @@
       },
       {
         "path": "corpus-conformance.json",
-        "sha256": "3748d308be0cdddefb4558870637628eb3d5b68c4c5d515d8f7c597a78451e5a"
+        "sha256": "39d2b7eb3040517f867c28a4f546a9ff6c0661c9b8e0ba4ad7ea54f05a709d9d"
       },
       {
         "path": "script-surface.json",
@@ -1923,7 +1938,7 @@
     "derivation": "Every claim restates a score or digest the corpus derived; every non-claim is carried verbatim from the record that already publishes it. Neither list is authored beside the evidence.",
     "claims": [
       "6 of 6 React-lineage cells and 4 of 4 Angular-lineage cells carry a Judge-accepted direct-Witness browser proof against the frozen adapter, each on its own immutable source application.",
-      "Every number above is derived from the Judge counting ledger inside `corpus-conformance.json` (`e6c9068a196f78bd767caa3718686d68d6ed4a83554dd6f17ea2bd556cddd01d`); the cells are enumerated in this record and each names the receipt it was counted off.",
+      "Every number above is derived from the Judge counting ledger inside `corpus-conformance.json` (`101412703cc116969dd562a6ea46dde3d05424ad5194e535aca9750e373bc482`); the cells are enumerated in this record and each names the receipt it was counted off.",
       "8 of 58 enumerated migration capabilities are cross-proven on at least two independent applications and are therefore in the matrix.",
       "Every artifact in this package is bound by SHA-256 to the trust manifest, and the derived documents are re-derived from the same canonical receipts at verification time.",
       "The two published holdouts that did not end RED are reported with the exact outcome string their receipts carry, and both are counted in no lineage numerator."

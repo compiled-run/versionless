@@ -1,0 +1,35 @@
+{
+	"note": "T013a React coverage batch. Six applications acquired under consent VL-LEGACY-CORPUS-2026-08-10 at the pins named in evidence/ingests/<id>/source.json. No per-application declaration is carried here: this manifest names roots and identities only.",
+	"applications": [
+		{
+			"id": "react-antd-admin-template-v2-0-0",
+			"root": ".versionless/work/react-antd-admin-template-v2-0-0/baseline",
+			"framework": "react"
+		},
+		{
+			"id": "react-colorme-2019-06-06",
+			"root": ".versionless/work/react-colorme-2019-06-06/baseline",
+			"framework": "react"
+		},
+		{
+			"id": "react-coverview-a1470b01",
+			"root": ".versionless/work/react-coverview-a1470b01/baseline",
+			"framework": "react"
+		},
+		{
+			"id": "react-cra-redux-1a06509b",
+			"root": ".versionless/work/react-cra-redux-1a06509b/baseline",
+			"framework": "react"
+		},
+		{
+			"id": "react-flame-v2-4-0",
+			"root": ".versionless/work/react-flame-v2-4-0/baseline/client",
+			"framework": "react"
+		},
+		{
+			"id": "react-your-spotify-1-5-0",
+			"root": ".versionless/work/react-your-spotify-1-5-0/baseline/client",
+			"framework": "react"
+		}
+	]
+}

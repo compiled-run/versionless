@@ -1,0 +1,155 @@
+{
+  "schemaVersion": "versionless.official-source.v1",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "attemptSha256": "1ab732073995183ee982a3de2d714280bc8b856b621330aa5e5b4f134cecb602",
+  "result": "source-bound",
+  "startedAt": "2026-08-17T21:36:05.980Z",
+  "completedAt": "2026-08-17T21:36:08.566Z",
+  "repository": {
+    "id": 77732365,
+    "fullName": "tylergaw/colorme",
+    "private": false,
+    "archived": false,
+    "disabled": false,
+    "responseBytes": 5151,
+    "responseSha256": "27c3fda92da2b7da88d4ec3c7bc183a13c82d2b3efc9a8838a2ca5801e8a16ca"
+  },
+  "revision": {
+    "ref": "refs/tags/2019-06-06T02.06.15",
+    "tagObjectSha": "4c01599b5b7209fcfb9628ff43fd9f153b6fefea",
+    "tagKind": "annotated",
+    "tagDate": "2019-06-06T02:06:15Z",
+    "tagVerification": "unsigned",
+    "commitSha": "f90d5ea591f8825be5257f76b3062a6b3005893d",
+    "commitDate": "2019-06-06T02:02:14Z",
+    "commitVerification": "verified",
+    "rootTreeSha": "efe7a285a5ce320de26b53dc81a2265eadc62094",
+    "treeEntries": 55,
+    "treeBlobs": 43,
+    "treeDirectories": 12,
+    "treeSymlinks": 0,
+    "treeGitlinks": 0,
+    "treeTruncated": false
+  },
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/tylergaw/colorme",
+      "status": 200,
+      "bytes": 5151,
+      "sha256": "27c3fda92da2b7da88d4ec3c7bc183a13c82d2b3efc9a8838a2ca5801e8a16ca"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/tylergaw/colorme/git/ref/tags/2019-06-06T02.06.15",
+      "status": 200,
+      "bytes": 377,
+      "sha256": "d5e5b96530f2a89c5a7f84a5dda71fc16669c2c279062bdb4fcb3af617719465"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/tylergaw/colorme/git/tags/4c01599b5b7209fcfb9628ff43fd9f153b6fefea",
+      "status": 200,
+      "bytes": 698,
+      "sha256": "25393654e28082018a2b606bbb8ea9db9bff1ef0cd4e277c9baf5b25819b8d4b"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/tylergaw/colorme/git/commits/f90d5ea591f8825be5257f76b3062a6b3005893d",
+      "status": 200,
+      "bytes": 1834,
+      "sha256": "98df5fed63a5297ece9309406aaa2d57183e912e56d04a70528ea3281595407d"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/tylergaw/colorme/git/trees/efe7a285a5ce320de26b53dc81a2265eadc62094?recursive=1",
+      "status": 200,
+      "bytes": 12787,
+      "sha256": "d551a14a968204886794a0a9deeb3fa21c0e5ec98c00cc6201cd27c4c03da1ce"
+    },
+    {
+      "endpoint": "https://codeload.github.com/tylergaw/colorme/tar.gz/f90d5ea591f8825be5257f76b3062a6b3005893d",
+      "status": 200,
+      "bytes": 74222,
+      "sha256": "072c3ef333750d404c278f8a9a908259853963e7e74911a8310ad06d49fb2fc4",
+      "stream": 1
+    },
+    {
+      "endpoint": "https://codeload.github.com/tylergaw/colorme/tar.gz/f90d5ea591f8825be5257f76b3062a6b3005893d",
+      "status": 200,
+      "bytes": 74222,
+      "sha256": "072c3ef333750d404c278f8a9a908259853963e7e74911a8310ad06d49fb2fc4",
+      "stream": 2
+    }
+  ],
+  "archiveParity": {
+    "singleRoot": "colorme-f90d5ea591f8825be5257f76b3062a6b3005893d",
+    "safeEntries": 56,
+    "regularFiles": 43,
+    "directories": 13,
+    "specialEntries": 0,
+    "gitBlobs": 43,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "normalizedManifestSha256": "a92341034a184745d0949e029e0b74fc30f62aeb86fa0dfd3b231f09b8b85f25"
+  },
+  "transaction": {
+    "attemptedRequests": 7,
+    "acceptedResponses": 7,
+    "acceptedWireBytes": 169291,
+    "acceptedDecodedBytes": 169291,
+    "redirectsObserved": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "archivesByteIdentical": true,
+    "archiveMatchesGitTree": true,
+    "publishedSource": true,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "cache": {
+    "root": ".versionless/cache/react-colorme-2019-06-06-source",
+    "archive1": ".versionless/cache/react-colorme-2019-06-06-source/archive/archive-1.tar.gz",
+    "archive2": ".versionless/cache/react-colorme-2019-06-06-source/archive/archive-2.tar.gz",
+    "verifiedSource": ".versionless/cache/react-colorme-2019-06-06-source/verify/extracted",
+    "rawMetadataPortable": false
+  },
+  "baseline": ".versionless/work/react-colorme-2019-06-06/baseline",
+  "licence": {
+    "identifier": "MIT",
+    "identifierSource": "observed",
+    "identifierRefusal": null,
+    "copyrightNotice": "Copyright (c) 2016 Tyler Gaw",
+    "filesAtRoot": [
+      "LICENSE.md"
+    ],
+    "artifacts": [
+      {
+        "path": "LICENSE.md",
+        "role": "repository-root-licence",
+        "gitBlobSha": "c142551e3812a8060aac2602483432fc1792f50d",
+        "bytes": 1076,
+        "sha256": "e6a21ee241b7cc07088060b3c362ceb4a8d5876082fdd521e82b5e4f306cb950",
+        "firstLine": "The MIT License (MIT)",
+        "permissionGrantPresent": true,
+        "noticeRetentionClausePresent": true,
+        "warrantyDisclaimerPresent": true,
+        "licenseField": null
+      },
+      {
+        "path": "package.json",
+        "role": "frontend-manifest",
+        "gitBlobSha": "c146b11f6516711224c912fdc583fa98c10cc221",
+        "bytes": 1148,
+        "sha256": "6e45acd1af0b0b370ab501a20bd150e3611f218f7fc0396c5a2fc1803205677a",
+        "firstLine": null,
+        "permissionGrantPresent": null,
+        "noticeRetentionClausePresent": null,
+        "warrantyDisclaimerPresent": null,
+        "licenseField": "MIT"
+      }
+    ]
+  },
+  "nonclaims": [
+    "A lightweight or unsigned tag does not establish signer authenticity.",
+    "This record states that the bytes at the recorded commit reconcile with the Git tree the repository publishes at that commit. It establishes no dependency closure, build, browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "The licence reading is a reading of the file present at the pin. It is not a legal opinion and it evaluates no dependency’s terms.",
+    "Acquiring a source is not admitting one. Whether this tree can be ingested, installed, built or migrated is not read here."
+  ]
+}

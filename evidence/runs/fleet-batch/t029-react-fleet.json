@@ -1,0 +1,10 @@
+{
+	"applications": [
+		{ "root": ".versionless/work/react-antd-admin-template-v2-0-0/baseline" },
+		{ "root": ".versionless/work/react-colorme-2019-06-06/baseline" },
+		{ "root": ".versionless/work/react-coverview-a1470b01/baseline" },
+		{ "root": ".versionless/work/react-cra-redux-1a06509b/baseline" },
+		{ "root": ".versionless/work/react-flame-v2-4-0/baseline" },
+		{ "root": ".versionless/work/react-your-spotify-1-5-0/baseline" }
+	]
+}

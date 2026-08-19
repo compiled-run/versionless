@@ -276,10 +276,7 @@ describe('canonical corpus conformance', () => {
 		expect(
 			result.applications.find((application) => application.id === 'killedbygoogle'),
 		).toMatchObject({
-			verticals: [
-				'next-killedbygoogle-derived-state-to-memo',
-				'next-killedbygoogle-v3-0-0',
-			],
+			verticals: ['next-killedbygoogle-derived-state-to-memo', 'next-killedbygoogle-v3-0-0'],
 		});
 		expect(result.applications[1]).toMatchObject({
 			id: 'angular-phonecat',
@@ -401,7 +398,10 @@ describe('canonical corpus conformance', () => {
 			serviceWorker: 'application-unregister',
 			scrollSurface: 'omitted-not-meaningful',
 			productionReadiness: 'verified-direct-witness',
-			readinessScoreboard: { reactLineage: { ready: 1, total: 4, counted: false }, overall: { ready: 3, total: 12 } },
+			readinessScoreboard: {
+				reactLineage: { ready: 1, total: 4, counted: false },
+				overall: { ready: 3, total: 12 },
+			},
 			designatedPilot: false,
 		});
 		expect(result.applications.at(-8)).toEqual({
@@ -505,8 +505,7 @@ describe('canonical corpus conformance', () => {
 				archiveSha256: 'c9d07e8ee7ffaa174dff597dcecbd00c8eb0b6d525bb7a3f9a7d48e6a46ec306',
 				frontendRoot: '.',
 				license: 'MIT',
-				licenseSha256:
-					'460148c79f31dd2a352b401068e0ae512a807cf643edac512eb22cf3342027a3',
+				licenseSha256: '460148c79f31dd2a352b401068e0ae512a807cf643edac512eb22cf3342027a3',
 			},
 			verticals: ['react-hospitalrun'],
 			conformance: {
@@ -606,8 +605,7 @@ describe('canonical corpus conformance', () => {
 				archiveSha256: '11f2ce939f4be04b11e77b7f12e13d7449bf944b9bfefbeca237c46dea12f7ed',
 				archiveBytes: 267218,
 				license: 'MIT',
-				licenseSha256:
-					'd2556dbacc2d52cdda0e8b3ebd15b0492d34028074768b3683815540d17e71af',
+				licenseSha256: 'd2556dbacc2d52cdda0e8b3ebd15b0492d34028074768b3683815540d17e71af',
 			},
 			verticals: ['angular-factoriolab'],
 			conformance: {
@@ -684,7 +682,8 @@ describe('canonical corpus conformance', () => {
 				sha256: bound.sha256,
 			})),
 			runtime: 'node-16.20.2',
-			bundler: 'angular-cli-13.2-custom-webpack-browser-builder-to-angular-16.2-browser-builder',
+			bundler:
+				'angular-cli-13.2-custom-webpack-browser-builder-to-angular-16.2-browser-builder',
 			track: 'production-readiness-direct-witness-angular13-to-angular16-browser-builder',
 			// The mocked non-loopback seam count is published beside the zero
 			// successful non-loopback requests rather than dropped, because the
@@ -720,8 +719,7 @@ describe('canonical corpus conformance', () => {
 				archiveSha256: 'd913ad5d4686b6a236799166c7c781f624b3901a1826304e00c36eca82896bc5',
 				archiveBytes: 8048993,
 				license: 'MIT',
-				licenseSha256:
-					'c45956b16a34a9e0c74a93163f497174e373623333e47ce3251b4d0107120b09',
+				licenseSha256: 'c45956b16a34a9e0c74a93163f497174e373623333e47ce3251b4d0107120b09',
 			},
 			verticals: ['angular-jira-clone'],
 			conformance: {
@@ -779,9 +777,9 @@ describe('canonical corpus conformance', () => {
 		// One member, not a pair: the build-lane receipt is sealed inside the
 		// Witness receipt by the sha256 of its exact bytes, because that receipt
 		// declares no canonical digest of its own.
-		expect(
-			aggregate.fixtures.filter((item) => String(item.id).includes('memos')),
-		).toHaveLength(1);
+		expect(aggregate.fixtures.filter((item) => String(item.id).includes('memos'))).toHaveLength(
+			1,
+		);
 		expect(verified.receipt.canonicalReceipt.binding).toBe('sha256-over-the-exact-bytes');
 		expect(
 			aggregate.fixtures.find((item) => item.receipt === WITNESS_REACT_MEMOS_RECEIPT_PATH),
@@ -842,8 +840,7 @@ describe('canonical corpus conformance', () => {
 				tagKind: 'lightweight',
 				tagVerification: 'not-applicable-no-tag-object',
 				revision: '565fe0cc567c02deb59fc04830df707ea7476d52',
-				archiveSha256:
-					'184834df7e2ea0272d21b4b0bfd7366986bc0aded740442aac91ca58d270f391',
+				archiveSha256: '184834df7e2ea0272d21b4b0bfd7366986bc0aded740442aac91ca58d270f391',
 				frontendRoot: 'web',
 				monorepo: true,
 				license: 'MIT',
@@ -1070,12 +1067,10 @@ describe('canonical corpus conformance', () => {
 				nearestTag: 'refs/tags/v0.72.0',
 				pinnedRevisionIsTagTarget: false,
 				revision: '367d77297b5753644e11ecd22cf80e59c87b0dc8',
-				archiveSha256:
-					'7cef1a1c2ae251e3738d8b8a6c5fe94b118bf13d3a5bae7b522b8db9c1c334ef',
+				archiveSha256: '7cef1a1c2ae251e3738d8b8a6c5fe94b118bf13d3a5bae7b522b8db9c1c334ef',
 				frontendRoot: '.',
 				license: 'MIT',
-				licenseSha256:
-					'3b5b430ae7e6151220591e69a8a056482a13d36518357c025619cf0d60be50bf',
+				licenseSha256: '3b5b430ae7e6151220591e69a8a056482a13d36518357c025619cf0d60be50bf',
 			},
 			verticals: ['react-linkfree-v0-72-0'],
 			conformance: {
@@ -1500,8 +1495,23 @@ describe('canonical corpus conformance', () => {
 
 	it('rejects conformance canonical-digest tampering', async () => {
 		const result = await analyzeCorpusConformance({ rootDir: root });
-		result.summary.sourceApplications = 2 as 3;
+		/**
+		 * A tampered row still fails on the digest. The summary figures no
+		 * longer reach that check: they are counted off the arrays below them,
+		 * so a hand-written count is refused by re-derivation first — see
+		 * `corpus-conformance-run-record-admission.test.ts`.
+		 */
+		const vertical = result.verticals[0] as Record<string, unknown>;
+		vertical.bundler = 'a bundler this corpus never ran';
 		expect(() => verifyCorpusConformanceDigest(result)).toThrow('canonical digest mismatch');
+	});
+
+	it('rejects a summary count that was written rather than counted', async () => {
+		const result = await analyzeCorpusConformance({ rootDir: root });
+		result.summary.sourceApplications = 2;
+		expect(() => verifyCorpusConformanceDigest(result)).toThrow(
+			'summary sourceApplications is not the counted distinct applications',
+		);
 	});
 
 	it('rejects recomputed composed artifact and aggregate rebinding', async () => {
@@ -1690,9 +1700,9 @@ describe('canonical corpus conformance', () => {
 		// The holdout is evidence about the frozen adapter, not a migrated
 		// application, so it is neither an aggregate fixture row nor a Judge
 		// counting cell.
-		expect(
-			aggregate.fixtures.some((fixture) => fixture.receipt === expected.receipt),
-		).toBe(false);
+		expect(aggregate.fixtures.some((fixture) => fixture.receipt === expected.receipt)).toBe(
+			false,
+		);
 		const ledger = readiness.judgeCounting as Array<Record<string, unknown>>;
 		expect(ledger.some((cell) => cell.application === expected.application)).toBe(false);
 		expect(ledger.some((cell) => cell.cell === expected.id)).toBe(false);
@@ -1700,8 +1710,9 @@ describe('canonical corpus conformance', () => {
 
 	it('declares the pre-Ivy support boundary as data, with its instance evidence', async () => {
 		const result = await analyzeCorpusConformance({ rootDir: root });
-		const boundaries = (result.coverage as Record<string, unknown>)
-			.supportBoundaries as Array<Record<string, unknown>>;
+		const boundaries = (result.coverage as Record<string, unknown>).supportBoundaries as Array<
+			Record<string, unknown>
+		>;
 		expect(boundaries).toHaveLength(1);
 		const boundary = boundaries[0] as Record<string, unknown>;
 		expect(boundary.id).toBe(ANGULAR_PRE_IVY_SUPPORT_BOUNDARY.id);
@@ -1732,8 +1743,9 @@ describe('canonical corpus conformance', () => {
 
 	it('publishes the boundary amendment: reading rules, 5-of-6 prevalence, population statement', async () => {
 		const result = await analyzeCorpusConformance({ rootDir: root });
-		const boundaries = (result.coverage as Record<string, unknown>)
-			.supportBoundaries as Array<Record<string, unknown>>;
+		const boundaries = (result.coverage as Record<string, unknown>).supportBoundaries as Array<
+			Record<string, unknown>
+		>;
 		const amendment = boundaries[0]?.amendment as Record<string, unknown>;
 		// The amendment is carried beside the declaration and never merged into
 		// it: the boundary's own condition, mechanism and certification are the
@@ -1779,7 +1791,12 @@ describe('canonical corpus conformance', () => {
 		});
 		expect(prevalence.screened).toMatchObject({
 			count: 4,
-			applications: ['cyclos4-ui', 'ngx-starter-kit', 'tabby', 'coreui-free-angular-admin-template'],
+			applications: [
+				'cyclos4-ui',
+				'ngx-starter-kit',
+				'tabby',
+				'coreui-free-angular-admin-template',
+			],
 			strength: 'screened-and-failed',
 		});
 		expect(prevalence.distinctCondition).toMatchObject({
@@ -1793,7 +1810,9 @@ describe('canonical corpus conformance', () => {
 	});
 
 	it('refuses a boundary amendment whose prevalence or population statement was weakened', () => {
-		expect(() => assertAngularPreIvyBoundaryAmendment(ANGULAR_PRE_IVY_BOUNDARY_AMENDMENT)).not.toThrow();
+		expect(() =>
+			assertAngularPreIvyBoundaryAmendment(ANGULAR_PRE_IVY_BOUNDARY_AMENDMENT),
+		).not.toThrow();
 		const mutations: Array<[string, (value: Record<string, unknown>) => void]> = [
 			[
 				'six-of-six',
@@ -1807,15 +1826,24 @@ describe('canonical corpus conformance', () => {
 				'tested-and-screened-collapsed',
 				(value) => {
 					const prevalence = value.prevalence as Record<string, unknown>;
-					prevalence.tested = { count: 5, applications: ['pigallery2'], strength: 'tested-and-failed' };
-					prevalence.screened = { count: 0, applications: [], strength: 'screened-and-failed' };
+					prevalence.tested = {
+						count: 5,
+						applications: ['pigallery2'],
+						strength: 'tested-and-failed',
+					};
+					prevalence.screened = {
+						count: 0,
+						applications: [],
+						strength: 'screened-and-failed',
+					};
 				},
 			],
 			[
 				'distinct-condition-counted',
 				(value) => {
 					const prevalence = value.prevalence as Record<string, unknown>;
-					(prevalence.distinctCondition as Record<string, unknown>).countedInPrevalence = true;
+					(prevalence.distinctCondition as Record<string, unknown>).countedInPrevalence =
+						true;
 				},
 			],
 			[
@@ -1851,9 +1879,10 @@ describe('canonical corpus conformance', () => {
 			],
 		];
 		for (const [label, mutate] of mutations) {
-			const value = JSON.parse(
-				JSON.stringify(ANGULAR_PRE_IVY_BOUNDARY_AMENDMENT),
-			) as Record<string, unknown>;
+			const value = JSON.parse(JSON.stringify(ANGULAR_PRE_IVY_BOUNDARY_AMENDMENT)) as Record<
+				string,
+				unknown
+			>;
 			mutate(value);
 			expect(() => assertAngularPreIvyBoundaryAmendment(value), label).toThrow();
 		}
@@ -1958,7 +1987,8 @@ describe('canonical corpus conformance', () => {
 					(value) => {
 						mutate(value);
 						const receipt = value as unknown as HoldoutAngularEshopWebspaReceipt;
-						receipt.integrity.canonicalDigest = holdoutAngularEshopWebspaDigest(receipt);
+						receipt.integrity.canonicalDigest =
+							holdoutAngularEshopWebspaDigest(receipt);
 					},
 				);
 				await expect(
@@ -1977,10 +2007,14 @@ describe('canonical corpus conformance', () => {
 		// binding is what stops a bounded pass from being widened one file away.
 		const directory = await corpusCopy('eshop-witness-evidence');
 		try {
-			await mutateJson(directory, 'evidence/runs/angular-eshop-webspa/receipt.json', (value) => {
-				const journey = value.journey as Record<string, unknown>;
-				journey.surfaceLimits = (journey.surfaceLimits as unknown[]).slice(0, 3);
-			});
+			await mutateJson(
+				directory,
+				'evidence/runs/angular-eshop-webspa/receipt.json',
+				(value) => {
+					const journey = value.journey as Record<string, unknown>;
+					journey.surfaceLimits = (journey.surfaceLimits as unknown[]).slice(0, 3);
+				},
+			);
 			await expect(analyzeCorpusConformance({ rootDir: directory })).rejects.toThrow();
 		} finally {
 			await rm(directory, { recursive: true, force: true });

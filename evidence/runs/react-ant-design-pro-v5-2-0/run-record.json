@@ -1,0 +1,320 @@
+{
+	"schema": "versionless.run.v1",
+	"flow": "run",
+	"outcome": "refused",
+	"exitCode": 2,
+	"application": ".versionless/work/react-ant-design-pro-v5-2-0/baseline",
+	"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/lanes3/react-ant-design-pro-v5-2-0",
+	"dryRun": false,
+	"stagePlan": [
+		{
+			"name": "analyze",
+			"forwards": []
+		},
+		{
+			"name": "ingest",
+			"forwards": []
+		},
+		{
+			"name": "license-at-pin",
+			"forwards": []
+		},
+		{
+			"name": "era-cell",
+			"forwards": []
+		},
+		{
+			"name": "plan",
+			"forwards": []
+		},
+		{
+			"name": "apply",
+			"forwards": [
+				"--out"
+			]
+		},
+		{
+			"name": "install",
+			"forwards": []
+		},
+		{
+			"name": "build",
+			"forwards": []
+		},
+		{
+			"name": "witness",
+			"forwards": []
+		}
+	],
+	"stages": [
+		{
+			"name": "analyze",
+			"status": "ran",
+			"record": {
+				"lineage": "react",
+				"frameworkVersionDeclared": "^17.0.0",
+				"detectedFrom": "react",
+				"builder": "unknown",
+				"builderSource": "unknown",
+				"nodeEra": {
+					"declared": ">=10.0.0",
+					"source": "package.json#engines.node"
+				},
+				"packageManager": {
+					"manager": "unknown",
+					"lockfiles": [],
+					"declared": "unknown"
+				},
+				"cellReadings": {
+					"cell": null,
+					"reason": "The frozen React and Next.js adapters publish no target-cell package registry, so no per-package verdict exists for this lineage. Every declared dependency is unknown to the engine rather than accepted by it.",
+					"verdicts": [],
+					"counts": {
+						"unknown": 53
+					}
+				},
+				"notEstablished": [
+					"Detection reads declarations. Nothing here establishes that this application installs, compiles, builds, or behaves as it did on its era toolchain.",
+					"A cell verdict is a reading of a published registry, not an installation: a range written here has not been resolved against any lockfile by this record.",
+					"A dependency the cell has no reading for is reported `unknown`. `unknown` is not `supported` and it is not `unsupported`."
+				]
+			},
+			"startedAt": "2026-08-17T21:15:36.999Z",
+			"endedAt": "2026-08-17T21:15:37.000Z"
+		},
+		{
+			"name": "ingest",
+			"status": "ran",
+			"record": {
+				"stage": "ingest",
+				"schemaVersion": "versionless.operator-ingest.v1",
+				"ran": true,
+				"reason": null,
+				"id": "ant-design-pro",
+				"idSource": "read",
+				"frontendRoot": ".",
+				"frontendRootSource": "read",
+				"pin": {
+					"repository": null,
+					"ref": null,
+					"commitSha": "645d6ed4fd27c6fab55cbf64d2fb2995018bddcb",
+					"commitShaSource": "read",
+					"commitShaReadFrom": "evidence/ingests/react-ant-design-pro-v5-2-0/source.json (consent VL-LEGACY-CORPUS-2026-08-10; result source-bound; archive reconciled against the published Git tree and byte-identical across two streams; journalled manifest 4f91d228d703ce58c96ea5f494dc924f757bd510026486a7e0453c2daa56c413 is the digest this stage walked)"
+				},
+				"tree": {
+					"files": 167,
+					"bytes": 354652,
+					"normalizedManifestSha256": "4f91d228d703ce58c96ea5f494dc924f757bd510026486a7e0453c2daa56c413"
+				},
+				"detected": {
+					"lineage": "react",
+					"frameworkVersionDeclared": "^17.0.0",
+					"detectedFrom": "react",
+					"builder": "unknown",
+					"builderSource": "unknown",
+					"nodeEra": {
+						"declared": ">=10.0.0",
+						"source": "package.json#engines.node"
+					},
+					"packageManager": {
+						"manager": "unknown",
+						"lockfiles": [],
+						"declared": "unknown"
+					},
+					"cellReadings": {
+						"cell": null,
+						"reason": "The frozen React and Next.js adapters publish no target-cell package registry, so no per-package verdict exists for this lineage. Every declared dependency is unknown to the engine rather than accepted by it.",
+						"verdicts": [],
+						"counts": {
+							"unknown": 53
+						}
+					},
+					"notEstablished": [
+						"Detection reads declarations. Nothing here establishes that this application installs, compiles, builds, or behaves as it did on its era toolchain.",
+						"A cell verdict is a reading of a published registry, not an installation: a range written here has not been resolved against any lockfile by this record.",
+						"A dependency the cell has no reading for is reported `unknown`. `unknown` is not `supported` and it is not `unsupported`."
+					]
+				},
+				"licence": {
+					"stage": "license-at-pin",
+					"schemaVersion": "versionless.license-at-pin.v1",
+					"ran": true,
+					"reason": null,
+					"identifier": "MIT",
+					"identifierSource": "observed",
+					"identifierBasis": "verbatim MIT text in the repository root LICENSE file at the pinned revision",
+					"copyrightNotice": "Copyright (c) 2019 Alipay.inc",
+					"manifestLicenseField": null,
+					"artifacts": [
+						{
+							"path": "LICENSE",
+							"role": "repository-root-licence",
+							"gitBlobSha": "c17ba2fb848af3fca998074297d00f38536d5d13",
+							"bytes": 1067,
+							"sha256": "9ceba8ceb1a4be89efaf7131b69d24cbb2f9ab2b99741a0717b4fa8c1da78116",
+							"firstLine": "MIT License",
+							"permissionGrantPresent": true,
+							"noticeRetentionClausePresent": true,
+							"warrantyDisclaimerPresent": true,
+							"licenseField": null
+						},
+						{
+							"path": "package.json",
+							"role": "frontend-manifest",
+							"gitBlobSha": "b88c70157cff338e544af86d387ac52f11305346",
+							"bytes": 4936,
+							"sha256": "8fadec8b280ed339d8ad9ff64e8fa4b8cfaef0a40c184db13b4a01dd6c501230",
+							"firstLine": null,
+							"permissionGrantPresent": null,
+							"noticeRetentionClausePresent": null,
+							"warrantyDisclaimerPresent": null,
+							"licenseField": null
+						}
+					],
+					"licenceFilesAtRoot": [
+						"LICENSE"
+					],
+					"notEstablished": [
+						"This is a record of the licence text present at the pinned revision. It is not a legal opinion, a licence-compatibility finding, or legal approval.",
+						"No licence determination is made for the transitive dependency closure. Each dependency carries its own terms and this stage evaluates none of them.",
+						"The identifier is matched against the canonical wording of the licences this stage recognises. A reworded, translated, amended or dual licence is refused rather than matched to the nearest one, so an absent refusal is not evidence that no such amendment exists.",
+						"Only the source root is read for licence files. A licence carried further down the tree, a per-directory notice, and a vendored third-party licence are outside this reading.",
+						"`identifierSource: declared` means an operator supplied the identifier. This stage did not read it and does not corroborate it."
+					]
+				},
+				"closure": null,
+				"closureReason": "the frontend root carries none of package-lock.json, npm-shrinkwrap.json, so there is no recorded closure to read. The application's declared dependency ranges are in the detection above; what they resolve to is not established by this record.",
+				"notEstablished": [
+					"An ingest record states what the source on disk says at the revision it was pinned to. It is not an acquisition: nothing here establishes that these bytes are the bytes the named repository publishes at that revision, and no archive was fetched, reconciled against a Git tree, or double-streamed by this stage.",
+					"`normalizedManifestSha256` digests the files this stage walked. Installed packages and Git metadata are not walked, so the digest is comparable with another walk of the same shape and not with a digest taken over a whole archive.",
+					"The closure reading is the dependency tree the lockfile itself carries. A lockfile that records its closure only in the `packages` map yields no placements here, and a count of zero placements is the absence of a reading rather than an empty closure.",
+					"Nothing here installs, builds, or runs the application. An admitted application is one whose identity, pin, licence and declared closure were read — not one that was shown to work.",
+					"No era cell was chosen or provisioned. Which Node and toolchain era this source needs is not read here and not established by admission.",
+					"A value recorded with source `declared` was supplied by an operator. This stage did not read it and does not corroborate it."
+				]
+			},
+			"startedAt": "2026-08-17T21:15:37.000Z",
+			"endedAt": "2026-08-17T21:15:37.015Z"
+		},
+		{
+			"name": "license-at-pin",
+			"status": "ran",
+			"record": {
+				"stage": "license-at-pin",
+				"schemaVersion": "versionless.license-at-pin.v1",
+				"ran": true,
+				"reason": null,
+				"identifier": "MIT",
+				"identifierSource": "observed",
+				"identifierBasis": "verbatim MIT text in the repository root LICENSE file at the pinned revision",
+				"copyrightNotice": "Copyright (c) 2019 Alipay.inc",
+				"manifestLicenseField": null,
+				"artifacts": [
+					{
+						"path": "LICENSE",
+						"role": "repository-root-licence",
+						"gitBlobSha": "c17ba2fb848af3fca998074297d00f38536d5d13",
+						"bytes": 1067,
+						"sha256": "9ceba8ceb1a4be89efaf7131b69d24cbb2f9ab2b99741a0717b4fa8c1da78116",
+						"firstLine": "MIT License",
+						"permissionGrantPresent": true,
+						"noticeRetentionClausePresent": true,
+						"warrantyDisclaimerPresent": true,
+						"licenseField": null
+					},
+					{
+						"path": "package.json",
+						"role": "frontend-manifest",
+						"gitBlobSha": "b88c70157cff338e544af86d387ac52f11305346",
+						"bytes": 4936,
+						"sha256": "8fadec8b280ed339d8ad9ff64e8fa4b8cfaef0a40c184db13b4a01dd6c501230",
+						"firstLine": null,
+						"permissionGrantPresent": null,
+						"noticeRetentionClausePresent": null,
+						"warrantyDisclaimerPresent": null,
+						"licenseField": null
+					}
+				],
+				"licenceFilesAtRoot": [
+					"LICENSE"
+				],
+				"notEstablished": [
+					"This is a record of the licence text present at the pinned revision. It is not a legal opinion, a licence-compatibility finding, or legal approval.",
+					"No licence determination is made for the transitive dependency closure. Each dependency carries its own terms and this stage evaluates none of them.",
+					"The identifier is matched against the canonical wording of the licences this stage recognises. A reworded, translated, amended or dual licence is refused rather than matched to the nearest one, so an absent refusal is not evidence that no such amendment exists.",
+					"Only the source root is read for licence files. A licence carried further down the tree, a per-directory notice, and a vendored third-party licence are outside this reading.",
+					"`identifierSource: declared` means an operator supplied the identifier. This stage did not read it and does not corroborate it."
+				]
+			},
+			"startedAt": "2026-08-17T21:15:37.015Z",
+			"endedAt": "2026-08-17T21:15:37.016Z"
+		},
+		{
+			"name": "era-cell",
+			"status": "refused",
+			"reason": "era-cell.node-major-not-inferable",
+			"refusal": {
+				"code": "era-cell.node-major-not-inferable",
+				"message": "Era cell: 6 declaration(s) in this tree state a Node line and none of them names exactly one major this stage reads — Dockerfile#FROM line 1 reads circleci/node:latest-browsers, which names no numeric Node major this stage reads; Dockerfile.dev#FROM line 1 reads node:latest, which names no numeric Node major this stage reads; Dockerfile.hub#FROM line 1 reads circleci/node:latest-browsers, which names no numeric Node major this stage reads; .github/workflows/ci.yml#node_version reads [12.x, 14.x], naming 2 major lines (12, 14); .github/workflows/ci.yml#node-version reads ${{ matrix.node_version }}, which names no numeric Node major this stage reads; package.json#engines.node reads >=10.0.0, which names no numeric Node major this stage reads. A range with an open lower bound names every major above it, a matrix names several, and a floating image tag names whatever it resolves to today rather than what the authors ran; none of those is a reading, and this stage picks from none of them. Declare the era with --node <major>.",
+				"stage": "era-cell",
+				"origin": "pipeline"
+			},
+			"startedAt": "2026-08-17T21:15:37.016Z",
+			"endedAt": "2026-08-17T21:15:37.021Z"
+		},
+		{
+			"name": "plan",
+			"status": "not-run",
+			"reason": "not-run-because: era-cell refused",
+			"startedAt": "2026-08-17T21:15:37.021Z",
+			"endedAt": "2026-08-17T21:15:37.021Z"
+		},
+		{
+			"name": "apply",
+			"status": "not-run",
+			"reason": "not-run-because: era-cell refused",
+			"startedAt": "2026-08-17T21:15:37.021Z",
+			"endedAt": "2026-08-17T21:15:37.021Z"
+		},
+		{
+			"name": "install",
+			"status": "not-run",
+			"reason": "not-run-because: era-cell refused",
+			"startedAt": "2026-08-17T21:15:37.021Z",
+			"endedAt": "2026-08-17T21:15:37.021Z"
+		},
+		{
+			"name": "build",
+			"status": "not-run",
+			"reason": "not-run-because: era-cell refused",
+			"startedAt": "2026-08-17T21:15:37.021Z",
+			"endedAt": "2026-08-17T21:15:37.021Z"
+		},
+		{
+			"name": "witness",
+			"status": "not-run",
+			"reason": "not-run-because: era-cell refused",
+			"startedAt": "2026-08-17T21:15:37.021Z",
+			"endedAt": "2026-08-17T21:15:37.021Z"
+		}
+	],
+	"refusal": {
+		"code": "era-cell.node-major-not-inferable",
+		"message": "Era cell: 6 declaration(s) in this tree state a Node line and none of them names exactly one major this stage reads — Dockerfile#FROM line 1 reads circleci/node:latest-browsers, which names no numeric Node major this stage reads; Dockerfile.dev#FROM line 1 reads node:latest, which names no numeric Node major this stage reads; Dockerfile.hub#FROM line 1 reads circleci/node:latest-browsers, which names no numeric Node major this stage reads; .github/workflows/ci.yml#node_version reads [12.x, 14.x], naming 2 major lines (12, 14); .github/workflows/ci.yml#node-version reads ${{ matrix.node_version }}, which names no numeric Node major this stage reads; package.json#engines.node reads >=10.0.0, which names no numeric Node major this stage reads. A range with an open lower bound names every major above it, a matrix names several, and a floating image tag names whatever it resolves to today rather than what the authors ran; none of those is a reading, and this stage picks from none of them. Declare the era with --node <major>.",
+		"stage": "era-cell",
+		"origin": "pipeline"
+	},
+	"report": {
+		"status": "emitted",
+		"slot": "evidence/trust/current/coverage-report.json",
+		"path": "evidence/trust/current/coverage-report.json",
+		"digest": "65b0d34aeb4b44ada113810aa30e698a51f5d19d9a0acea49377aff234e4c519"
+	},
+	"notEstablished": [
+		"A stage recorded `ran` returned its own record. What that record establishes is what that stage states, and no more: this row adds no reading of its own on top of it.",
+		"A stage recorded `not-run` was not reached, because an earlier stage refused or broke. Nothing here establishes what it would have recorded.",
+		"Exit 2 is a refusal and exit 1 is a defect. A crash, a hang, or a tree that will not install is a defect even when it happens inside a stage that can also refuse.",
+		"The stage timestamps bound the wall-clock interval the seam observed around each stage. They are not a measurement of machine time and they are not comparable across hosts.",
+		"The coverage report at evidence/trust/current/coverage-report.json was emitted by the guarded derivation and recomputes to the digest recorded here. This run did not derive it, did not regenerate it, and establishes nothing about whether it is current with respect to this run."
+	]
+}

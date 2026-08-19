@@ -103,6 +103,12 @@ import {
 	verifyRuntimeScriptObservationEvidence,
 } from '../../core/src/enterprise/runtime-script-observation.ts';
 import {
+	COVERAGE_REPORT_JSON,
+	COVERAGE_REPORT_MARKDOWN,
+	type CoverageReport,
+	readRunRecords,
+} from './coverage-report.ts';
+import {
 	assertEnterpriseSurfaceHonesty,
 	deriveEnterpriseSurfaces,
 	ENTERPRISE_REPORT_JSON,
@@ -273,10 +279,7 @@ async function verifySealedBuildReceipt(
 	if (sha256(bytes) !== sealed.sha256) throw new Error(`${label} build receipt bytes drifted`);
 	const receipt = asRecord(JSON.parse(bytes.toString('utf8')), `${label} build receipt`);
 	const integrity = asRecord(receipt.integrity, `${label} build receipt integrity`);
-	if (
-		integrity.algorithm !== 'sha256' ||
-		integrity.canonicalDigest !== sealed.canonicalDigest
-	)
+	if (integrity.algorithm !== 'sha256' || integrity.canonicalDigest !== sealed.canonicalDigest)
 		throw new Error(`${label} build receipt integrity differs`);
 	if (!Array.isArray(receipt.artifacts))
 		throw new Error(`${label} build receipt artifacts are absent`);
@@ -1383,7 +1386,10 @@ function matrix(conformance: CorpusConformance): Record<string, unknown> {
 			...(killedbygoogleV3
 				? [
 						(() => {
-							const cell = asRecord(killedbygoogleV3, 'KilledByGoogle v3 conformance');
+							const cell = asRecord(
+								killedbygoogleV3,
+								'KilledByGoogle v3 conformance',
+							);
 							return {
 								id: NEXT_KILLEDBYGOOGLE_V3_FIXTURE,
 								framework: cell.framework,
@@ -1433,7 +1439,10 @@ function matrix(conformance: CorpusConformance): Record<string, unknown> {
 			...(tinyTranslator
 				? [
 						(() => {
-							const cell = asRecord(tinyTranslator, 'Angular TinyTranslator conformance');
+							const cell = asRecord(
+								tinyTranslator,
+								'Angular TinyTranslator conformance',
+							);
 							return {
 								id: ANGULAR_TINY_TRANSLATOR_FIXTURE,
 								framework: cell.framework,
@@ -1822,7 +1831,9 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 		!hasAngularSuperProductivityReceipts &&
 		receipts.length !== ANGULAR_TINY_TRANSLATOR_TRUST_RECEIPTS
 	)
-		throw new Error('Angular TinyTranslator browser proof does not preserve exactly 26 receipts');
+		throw new Error(
+			'Angular TinyTranslator browser proof does not preserve exactly 26 receipts',
+		);
 	if (
 		hasAngularSuperProductivityReceipts &&
 		receipts.length !== ANGULAR_SUPER_PRODUCTIVITY_TRUST_RECEIPTS
@@ -1905,7 +1916,16 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 		consent: ingest.consent,
 		sources: ingest.sources,
 	};
-	const conformance = await analyzeCorpusConformance({ rootDir: root });
+	/**
+	 * The same run records the coverage report reads, handed to the corpus so an
+	 * application admitted by a clean `versionless run` enters the conformance
+	 * summary without anyone editing the corpus source. With no run record filed
+	 * the reading is empty and the corpus is exactly its sealed members.
+	 */
+	const conformance = await analyzeCorpusConformance({
+		rootDir: root,
+		runRecords: await readRunRecords(root),
+	});
 	const scriptSurface = await verifyScriptSurface({ rootDir: root, environment });
 	const runtimeObservationConfig = parseRuntimeObservationConfig(
 		JSON.parse(
@@ -2112,11 +2132,15 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
  * receipts and compares them byte for byte, so a hand-edited cell fails even if
  * every enclosing hash were recomputed to match it.
  */
-export async function writeEnterpriseSurfaces(
-	inputs: EnterpriseSurfaceInputs,
-): Promise<{ json: unknown; markdown: string }> {
-	const { report, markdown } = await deriveEnterpriseSurfaces(inputs);
+export async function writeEnterpriseSurfaces(inputs: EnterpriseSurfaceInputs): Promise<{
+	json: unknown;
+	markdown: string;
+	coverage: { report: CoverageReport; markdown: string };
+}> {
+	const { report, markdown, coverage } = await deriveEnterpriseSurfaces(inputs);
 	await writeJson(path.join(inputs.output, ENTERPRISE_REPORT_JSON), report);
 	await writeFile(path.join(inputs.output, ENTERPRISE_REPORT_MARKDOWN), markdown);
-	return { json: report, markdown };
+	await writeJson(path.join(inputs.output, COVERAGE_REPORT_JSON), coverage.report);
+	await writeFile(path.join(inputs.output, COVERAGE_REPORT_MARKDOWN), coverage.markdown);
+	return { json: report, markdown, coverage };
 }

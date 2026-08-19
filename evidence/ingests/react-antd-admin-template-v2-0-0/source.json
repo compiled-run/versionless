@@ -1,0 +1,149 @@
+{
+  "schemaVersion": "versionless.official-source.v1",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "attemptSha256": "03a2e1bff936d11f719970a20e5d881b7586dda96aceea4a909667bfa065c4b9",
+  "result": "source-bound",
+  "startedAt": "2026-08-17T21:36:05.984Z",
+  "completedAt": "2026-08-17T21:36:08.338Z",
+  "repository": {
+    "id": 258943219,
+    "fullName": "NLRX-WJC/react-antd-admin-template",
+    "private": false,
+    "archived": false,
+    "disabled": false,
+    "responseBytes": 6272,
+    "responseSha256": "b107c48343c2eed478f326357e6ec3b8a591f86eae087188eeab867f32f4f4b1"
+  },
+  "revision": {
+    "ref": "refs/tags/v2.0.0",
+    "tagObjectSha": null,
+    "tagKind": "lightweight",
+    "tagDate": null,
+    "tagVerification": "unsigned",
+    "commitSha": "31fc5dfa2c74cb8467bdfd9bf1174fb62351bb1e",
+    "commitDate": "2020-05-22T17:27:02Z",
+    "commitVerification": "unsigned",
+    "rootTreeSha": "95bcc8cdc26be5c398938d6b5667cc5771bd4e03",
+    "treeEntries": 201,
+    "treeBlobs": 133,
+    "treeDirectories": 68,
+    "treeSymlinks": 0,
+    "treeGitlinks": 0,
+    "treeTruncated": false
+  },
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/NLRX-WJC/react-antd-admin-template",
+      "status": 200,
+      "bytes": 6272,
+      "sha256": "b107c48343c2eed478f326357e6ec3b8a591f86eae087188eeab867f32f4f4b1"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/NLRX-WJC/react-antd-admin-template/git/ref/tags/v2.0.0",
+      "status": 200,
+      "bytes": 377,
+      "sha256": "9d244bc6dce19ef7e09dc5949100b898e3d4715b8ed53de45df9f631f46b799a"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/NLRX-WJC/react-antd-admin-template/git/commits/31fc5dfa2c74cb8467bdfd9bf1174fb62351bb1e",
+      "status": 200,
+      "bytes": 1192,
+      "sha256": "156e3872abeb206284b30e6fdadb3dd912f6595a21fc7ff94070e69f9d1de5ea"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/NLRX-WJC/react-antd-admin-template/git/trees/95bcc8cdc26be5c398938d6b5667cc5771bd4e03?recursive=1",
+      "status": 200,
+      "bytes": 49952,
+      "sha256": "b3b32646da0c7b867473d32a9bc23b9c3c25abd58d95bf2a52c36754b0ea848a"
+    },
+    {
+      "endpoint": "https://codeload.github.com/NLRX-WJC/react-antd-admin-template/tar.gz/31fc5dfa2c74cb8467bdfd9bf1174fb62351bb1e",
+      "status": 200,
+      "bytes": 5721785,
+      "sha256": "8a366772b9e635b0c22573833ef430972d1de0715cdd63e68f2821ceface9bd9",
+      "stream": 1
+    },
+    {
+      "endpoint": "https://codeload.github.com/NLRX-WJC/react-antd-admin-template/tar.gz/31fc5dfa2c74cb8467bdfd9bf1174fb62351bb1e",
+      "status": 200,
+      "bytes": 5721785,
+      "sha256": "8a366772b9e635b0c22573833ef430972d1de0715cdd63e68f2821ceface9bd9",
+      "stream": 2
+    }
+  ],
+  "archiveParity": {
+    "singleRoot": "react-antd-admin-template-31fc5dfa2c74cb8467bdfd9bf1174fb62351bb1e",
+    "safeEntries": 202,
+    "regularFiles": 133,
+    "directories": 69,
+    "specialEntries": 0,
+    "gitBlobs": 133,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "normalizedManifestSha256": "98d585a7857e06096bced54d7a4b25e58e326be691e59d47486475b1ec4cf0ea"
+  },
+  "transaction": {
+    "attemptedRequests": 6,
+    "acceptedResponses": 6,
+    "acceptedWireBytes": 11501363,
+    "acceptedDecodedBytes": 11501363,
+    "redirectsObserved": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "archivesByteIdentical": true,
+    "archiveMatchesGitTree": true,
+    "publishedSource": true,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "cache": {
+    "root": ".versionless/cache/react-antd-admin-template-v2-0-0-source",
+    "archive1": ".versionless/cache/react-antd-admin-template-v2-0-0-source/archive/archive-1.tar.gz",
+    "archive2": ".versionless/cache/react-antd-admin-template-v2-0-0-source/archive/archive-2.tar.gz",
+    "verifiedSource": ".versionless/cache/react-antd-admin-template-v2-0-0-source/verify/extracted",
+    "rawMetadataPortable": false
+  },
+  "baseline": ".versionless/work/react-antd-admin-template-v2-0-0/baseline",
+  "licence": {
+    "identifier": "MIT",
+    "identifierSource": "observed",
+    "identifierRefusal": null,
+    "copyrightNotice": "Copyright (c) 2020 难凉热血",
+    "filesAtRoot": [
+      "LICENSE"
+    ],
+    "artifacts": [
+      {
+        "path": "LICENSE",
+        "role": "repository-root-licence",
+        "gitBlobSha": "bb7a9f2f096f01d3922fe49637ea7415f5c2476b",
+        "bytes": 1069,
+        "sha256": "718f1cae084d9d20d619c29fbb4759c805c8f1bd9099b3fe79b9c1649cfb74be",
+        "firstLine": "MIT License",
+        "permissionGrantPresent": true,
+        "noticeRetentionClausePresent": true,
+        "warrantyDisclaimerPresent": true,
+        "licenseField": null
+      },
+      {
+        "path": "package.json",
+        "role": "frontend-manifest",
+        "gitBlobSha": "f3e1e3732257b8e8f522a05acdc40b2bebed2144",
+        "bytes": 2114,
+        "sha256": "d2085e156d4eedd133592addcc43b857221da3393962ce543d53eb118b6e67e1",
+        "firstLine": null,
+        "permissionGrantPresent": null,
+        "noticeRetentionClausePresent": null,
+        "warrantyDisclaimerPresent": null,
+        "licenseField": "MIT"
+      }
+    ]
+  },
+  "nonclaims": [
+    "A lightweight or unsigned tag does not establish signer authenticity.",
+    "This record states that the bytes at the recorded commit reconcile with the Git tree the repository publishes at that commit. It establishes no dependency closure, build, browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "The licence reading is a reading of the file present at the pin. It is not a legal opinion and it evaluates no dependency’s terms.",
+    "Acquiring a source is not admitting one. Whether this tree can be ingested, installed, built or migrated is not read here."
+  ]
+}

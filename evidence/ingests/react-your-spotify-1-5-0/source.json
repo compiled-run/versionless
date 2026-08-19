@@ -1,0 +1,137 @@
+{
+  "schemaVersion": "versionless.official-source.v1",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "attemptSha256": "921e62be68babd1eac03f2d1f05ef1e5b57d70d4397b14248bba9e1122e094e6",
+  "result": "source-bound",
+  "startedAt": "2026-08-17T21:37:42.104Z",
+  "completedAt": "2026-08-17T21:37:53.069Z",
+  "repository": {
+    "id": 238501964,
+    "fullName": "Yooooomi/your_spotify",
+    "private": false,
+    "archived": false,
+    "disabled": false,
+    "responseBytes": 5445,
+    "responseSha256": "ed992246120d46e20b3685654d713c47e4ad8459b2c5b8af84fb44a725c7999f"
+  },
+  "revision": {
+    "ref": "refs/tags/1.5.0",
+    "tagObjectSha": null,
+    "tagKind": "lightweight",
+    "tagDate": null,
+    "tagVerification": "unsigned",
+    "commitSha": "50f6a0d83751f0f3bd5f5d90bf0db9507313a5e9",
+    "commitDate": "2023-02-10T23:35:06Z",
+    "commitVerification": "verified",
+    "rootTreeSha": "ee5d429bae50eb3d487348690350d13ff1e407b3",
+    "treeEntries": 564,
+    "treeBlobs": 423,
+    "treeDirectories": 141,
+    "treeSymlinks": 0,
+    "treeGitlinks": 0,
+    "treeTruncated": false
+  },
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/Yooooomi/your_spotify",
+      "status": 200,
+      "bytes": 5445,
+      "sha256": "ed992246120d46e20b3685654d713c47e4ad8459b2c5b8af84fb44a725c7999f"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/Yooooomi/your_spotify/git/ref/tags/1.5.0",
+      "status": 200,
+      "bytes": 349,
+      "sha256": "49627dfce9ffe4fdffd068b2a896a5bf9781acbde87059497265897df73c9d7c"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/Yooooomi/your_spotify/git/commits/50f6a0d83751f0f3bd5f5d90bf0db9507313a5e9",
+      "status": 200,
+      "bytes": 2252,
+      "sha256": "f227f569b389940936a6302414353f24007d2ec3a06ce072a63a3c21e8e2bd56"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/Yooooomi/your_spotify/git/trees/ee5d429bae50eb3d487348690350d13ff1e407b3?recursive=1",
+      "status": 200,
+      "bytes": 141722,
+      "sha256": "dfdd21a8184cd99da2c47990809c6f548ce9a073d51954236c2a393003f0f6e7"
+    },
+    {
+      "endpoint": "https://codeload.github.com/Yooooomi/your_spotify/tar.gz/50f6a0d83751f0f3bd5f5d90bf0db9507313a5e9",
+      "status": 200,
+      "bytes": 577308,
+      "sha256": "5e579281cf86b7b11cc192a4d004ad71f99adf057cc2334a3c832947db2b310a",
+      "stream": 1
+    },
+    {
+      "endpoint": "https://codeload.github.com/Yooooomi/your_spotify/tar.gz/50f6a0d83751f0f3bd5f5d90bf0db9507313a5e9",
+      "status": 200,
+      "bytes": 577308,
+      "sha256": "5e579281cf86b7b11cc192a4d004ad71f99adf057cc2334a3c832947db2b310a",
+      "stream": 2
+    }
+  ],
+  "archiveParity": {
+    "singleRoot": "your_spotify-50f6a0d83751f0f3bd5f5d90bf0db9507313a5e9",
+    "safeEntries": 565,
+    "regularFiles": 423,
+    "directories": 142,
+    "specialEntries": 0,
+    "gitBlobs": 423,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "normalizedManifestSha256": "9ea682d4d6751716add7915c0023d6c36a047ec0e5c00aef985c5b55ea6607ea"
+  },
+  "transaction": {
+    "attemptedRequests": 6,
+    "acceptedResponses": 6,
+    "acceptedWireBytes": 1304384,
+    "acceptedDecodedBytes": 1304384,
+    "redirectsObserved": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "archivesByteIdentical": true,
+    "archiveMatchesGitTree": true,
+    "publishedSource": true,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "cache": {
+    "root": ".versionless/cache/react-your-spotify-1-5-0-source",
+    "archive1": ".versionless/cache/react-your-spotify-1-5-0-source/archive/archive-1.tar.gz",
+    "archive2": ".versionless/cache/react-your-spotify-1-5-0-source/archive/archive-2.tar.gz",
+    "verifiedSource": ".versionless/cache/react-your-spotify-1-5-0-source/verify/extracted",
+    "rawMetadataPortable": false
+  },
+  "baseline": ".versionless/work/react-your-spotify-1-5-0/baseline",
+  "licence": {
+    "identifier": "GPL-3.0",
+    "identifierSource": "observed",
+    "identifierRefusal": null,
+    "copyrightNotice": "Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>",
+    "filesAtRoot": [
+      "LICENSE"
+    ],
+    "artifacts": [
+      {
+        "path": "LICENSE",
+        "role": "repository-root-licence",
+        "gitBlobSha": "3877ae0a7ff6f94ac222fd704e112723db776114",
+        "bytes": 35823,
+        "sha256": "230184f60bae2feaf244f10a8bac053c8ff33a183bcc365b4d8b876d2b7f4809",
+        "firstLine": "GNU GENERAL PUBLIC LICENSE",
+        "permissionGrantPresent": false,
+        "noticeRetentionClausePresent": false,
+        "warrantyDisclaimerPresent": true,
+        "licenseField": null
+      }
+    ]
+  },
+  "nonclaims": [
+    "A lightweight or unsigned tag does not establish signer authenticity.",
+    "This record states that the bytes at the recorded commit reconcile with the Git tree the repository publishes at that commit. It establishes no dependency closure, build, browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "The licence reading is a reading of the file present at the pin. It is not a legal opinion and it evaluates no dependency’s terms.",
+    "Acquiring a source is not admitting one. Whether this tree can be ingested, installed, built or migrated is not read here."
+  ]
+}

@@ -1,0 +1,143 @@
+{
+  "schemaVersion": "versionless.official-source.v1",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "attemptSha256": "0c6a0fe4df9e7b1b940cdcc2488ed744460dda13263916b20501f7865b954695",
+  "result": "source-bound",
+  "startedAt": "2026-08-17T21:36:05.985Z",
+  "completedAt": "2026-08-17T21:36:08.051Z",
+  "repository": {
+    "id": 285237535,
+    "fullName": "rutikwankhade/CoverView",
+    "private": false,
+    "archived": false,
+    "disabled": false,
+    "responseBytes": 5573,
+    "responseSha256": "f118643b46294cd8f67300a22570ee7c0e8e2c5e6a0a2beea8f4d849f3750762"
+  },
+  "revision": {
+    "ref": "a1470b01e41c9e1128364e500b2ca2107f8432e0",
+    "tagObjectSha": null,
+    "tagKind": "commit-sha",
+    "tagDate": null,
+    "tagVerification": "unsigned",
+    "commitSha": "a1470b01e41c9e1128364e500b2ca2107f8432e0",
+    "commitDate": "2026-07-15T11:50:15Z",
+    "commitVerification": "verified",
+    "rootTreeSha": "3d78a58abc2085173b3cfb66a2e80c75b3bc635b",
+    "treeEntries": 86,
+    "treeBlobs": 74,
+    "treeDirectories": 12,
+    "treeSymlinks": 0,
+    "treeGitlinks": 0,
+    "treeTruncated": false
+  },
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/rutikwankhade/CoverView",
+      "status": 200,
+      "bytes": 5573,
+      "sha256": "f118643b46294cd8f67300a22570ee7c0e8e2c5e6a0a2beea8f4d849f3750762"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/rutikwankhade/CoverView/git/commits/a1470b01e41c9e1128364e500b2ca2107f8432e0",
+      "status": 200,
+      "bytes": 2698,
+      "sha256": "4b42330dcb6d822364107b87a69e3bcfb751cc76d657b4bb9984ec32996cf29e"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/rutikwankhade/CoverView/git/trees/3d78a58abc2085173b3cfb66a2e80c75b3bc635b?recursive=1",
+      "status": 200,
+      "bytes": 20656,
+      "sha256": "fdd96a0500f093e7d216cb4f9fcfe355497df0080aacd935bc78abe708a33139"
+    },
+    {
+      "endpoint": "https://codeload.github.com/rutikwankhade/CoverView/tar.gz/a1470b01e41c9e1128364e500b2ca2107f8432e0",
+      "status": 200,
+      "bytes": 374615,
+      "sha256": "fcad50b398335091519b16bb0dd08933726b78c1f1085e95e57b11659417ed23",
+      "stream": 1
+    },
+    {
+      "endpoint": "https://codeload.github.com/rutikwankhade/CoverView/tar.gz/a1470b01e41c9e1128364e500b2ca2107f8432e0",
+      "status": 200,
+      "bytes": 374615,
+      "sha256": "fcad50b398335091519b16bb0dd08933726b78c1f1085e95e57b11659417ed23",
+      "stream": 2
+    }
+  ],
+  "archiveParity": {
+    "singleRoot": "CoverView-a1470b01e41c9e1128364e500b2ca2107f8432e0",
+    "safeEntries": 87,
+    "regularFiles": 74,
+    "directories": 13,
+    "specialEntries": 0,
+    "gitBlobs": 74,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "normalizedManifestSha256": "c91396e4104a2056b05a43fae690dc75f75ac3b0f2b9bdf97578475a6718bf5c"
+  },
+  "transaction": {
+    "attemptedRequests": 5,
+    "acceptedResponses": 5,
+    "acceptedWireBytes": 778157,
+    "acceptedDecodedBytes": 778157,
+    "redirectsObserved": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "archivesByteIdentical": true,
+    "archiveMatchesGitTree": true,
+    "publishedSource": true,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "cache": {
+    "root": ".versionless/cache/react-coverview-a1470b01-source",
+    "archive1": ".versionless/cache/react-coverview-a1470b01-source/archive/archive-1.tar.gz",
+    "archive2": ".versionless/cache/react-coverview-a1470b01-source/archive/archive-2.tar.gz",
+    "verifiedSource": ".versionless/cache/react-coverview-a1470b01-source/verify/extracted",
+    "rawMetadataPortable": false
+  },
+  "baseline": ".versionless/work/react-coverview-a1470b01/baseline",
+  "licence": {
+    "identifier": "MIT",
+    "identifierSource": "observed",
+    "identifierRefusal": null,
+    "copyrightNotice": "Copyright (c) 2020 Rutik Wankhade",
+    "filesAtRoot": [
+      "LICENSE"
+    ],
+    "artifacts": [
+      {
+        "path": "LICENSE",
+        "role": "repository-root-licence",
+        "gitBlobSha": "6b75d4fcac4ba5a971b0aa486f57e71856a750f6",
+        "bytes": 1071,
+        "sha256": "24ae4deeab7fd89fad4a57235ac34f0c562ede9989c22a4c5b3f9d9a0936af24",
+        "firstLine": "MIT License",
+        "permissionGrantPresent": true,
+        "noticeRetentionClausePresent": true,
+        "warrantyDisclaimerPresent": true,
+        "licenseField": null
+      },
+      {
+        "path": "package.json",
+        "role": "frontend-manifest",
+        "gitBlobSha": "1a33c79c52a076aa4e1cb840031dd8b148b5a30b",
+        "bytes": 1291,
+        "sha256": "bd40031924e33d6465701a1da473c280ab48596295a54395fcb8fdd198200e8e",
+        "firstLine": null,
+        "permissionGrantPresent": null,
+        "noticeRetentionClausePresent": null,
+        "warrantyDisclaimerPresent": null,
+        "licenseField": null
+      }
+    ]
+  },
+  "nonclaims": [
+    "A lightweight or unsigned tag does not establish signer authenticity.",
+    "This record states that the bytes at the recorded commit reconcile with the Git tree the repository publishes at that commit. It establishes no dependency closure, build, browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "The licence reading is a reading of the file present at the pin. It is not a legal opinion and it evaluates no dependency’s terms.",
+    "Acquiring a source is not admitting one. Whether this tree can be ingested, installed, built or migrated is not read here."
+  ]
+}

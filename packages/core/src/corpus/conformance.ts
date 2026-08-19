@@ -480,9 +480,8 @@ async function holdoutLedger(
 		eshopDerived.browserProof !== HOLDOUT_ANGULAR_ESHOP_WEBSPA_BROWSER_PROOF ||
 		eshopDerived.witnessSurface !== HOLDOUT_ANGULAR_ESHOP_WEBSPA_PROVEN_SURFACE ||
 		eshopDerived.witnessSurfaceNotCovered.length !== 7 ||
-		eshopDerived.witnessSurfaceNotCovered.filter(
-			(limit) => limit.state === 'out-of-surface',
-		).length !== 4 ||
+		eshopDerived.witnessSurfaceNotCovered.filter((limit) => limit.state === 'out-of-surface')
+			.length !== 4 ||
 		eshopDerived.witnessRuns !== 4 ||
 		eshopDerived.migratedLaneUnderFreeze !== 'red'
 	)
@@ -501,7 +500,9 @@ async function holdoutLedger(
 		rerun.supersededDigest !== verified.receipt.integrity.canonicalDigest ||
 		rerun.priorGapNowHandled !== true
 	)
-		throw new Error('Corpus holdout re-run must supersede the tranche-one receipt by reference');
+		throw new Error(
+			'Corpus holdout re-run must supersede the tranche-one receipt by reference',
+		);
 	if (rerunVerified.receipt.capabilityAdvance.nowHandledByFrozenCapability !== true)
 		throw new Error('Corpus holdout re-run must record the prior gap as handled');
 	return [
@@ -548,9 +549,10 @@ async function supportBoundaryLedger(root: string): Promise<Array<Record<string,
 				})),
 			},
 			nonclaims: [...ANGULAR_PRE_IVY_SUPPORT_BOUNDARY.nonclaims],
-			amendment: JSON.parse(
-				JSON.stringify(ANGULAR_PRE_IVY_BOUNDARY_AMENDMENT),
-			) as Record<string, unknown>,
+			amendment: JSON.parse(JSON.stringify(ANGULAR_PRE_IVY_BOUNDARY_AMENDMENT)) as Record<
+				string,
+				unknown
+			>,
 		},
 	];
 }
@@ -692,6 +694,204 @@ type CanonicalReceipt = (typeof canonicalReceipts)[number];
 
 interface CorpusConformanceOptions {
 	rootDir?: string;
+	/**
+	 * The `versionless run` records this corpus may admit applications from.
+	 *
+	 * Defaulting to none is the honest default: an absent reading is no
+	 * admission, never a silent one. The caller that can read the run directory
+	 * passes what it read; nothing here goes looking.
+	 */
+	runRecords?: readonly CorpusRunRecordReading[];
+}
+
+/**
+ * A `versionless run` record, as the derived admission path reads it.
+ *
+ * Every field is optional except identity because every absence is a refusal
+ * rather than a parse failure: a run that states no stages, carries no harness
+ * record, or reached no classification simply does not admit an application.
+ */
+export interface CorpusRunRecordReading {
+	readonly id: string;
+	readonly application: string;
+	readonly framework: string;
+	/** The classification the out-of-band intervention harness recorded. */
+	readonly terminalClassification?: string | undefined;
+	/** The count that harness observed. Not the count the run states about itself. */
+	readonly interventions?: { readonly count?: number } | undefined;
+	readonly stages?: readonly { readonly name: string; readonly status: string }[] | undefined;
+	readonly runRecordPath?: string | undefined;
+	readonly interventionRecordPath?: string | undefined;
+	/**
+	 * The ingest stage's pin, carried verbatim out of the run record.
+	 *
+	 * The reader that opens the run record copies these across; nothing here
+	 * re-opens the acquisition journal the pin cites. The pin already names
+	 * where each of its three values came from, and a derivation that went back
+	 * to the journal would be establishing the source from a second document
+	 * rather than from the record under adjudication.
+	 */
+	readonly pin?:
+		| {
+				readonly repository?: string | undefined;
+				readonly ref?: string | undefined;
+				readonly commitSha?: string | undefined;
+		  }
+		| undefined;
+	/** The license-at-pin stage's reading, carried verbatim out of the run record. */
+	readonly licence?:
+		| {
+				readonly identifier?: string | undefined;
+				readonly artifactSha256?: string | undefined;
+		  }
+		| undefined;
+}
+
+/** The prefix a row refused for an unstated source carries. */
+export const RUN_RECORD_SOURCE_INCOMPLETE = 'run-record-states-no-source';
+
+/** A source block derived from a run record, or the field that was missing. */
+export type RunRecordSourceReading =
+	| Readonly<{ source: Record<string, unknown>; statusReason: null }>
+	| Readonly<{ source: null; statusReason: string }>;
+
+/**
+ * The source block a run record states about itself, or a named refusal.
+ *
+ * Five fields, every one of them read off the record being adjudicated: the
+ * repository, ref and commit sha the ingest stage pinned, and the licence
+ * identifier and licence-artifact digest the licence-at-pin stage read at that
+ * pin. A field the record does not carry is refused by name — never defaulted,
+ * never fetched from the acquisition journal the pin cites, and never left
+ * blank so a downstream table can print `undefined` where a reviewer expects a
+ * hash. An application whose provenance this record does not state is an
+ * application this corpus does not admit.
+ */
+export function runRecordSource(record: CorpusRunRecordReading): RunRecordSourceReading {
+	const text = (value: unknown): string | null =>
+		typeof value === 'string' && value.trim() !== '' ? value.trim() : null;
+	const repository = text(record.pin?.repository);
+	const ref = text(record.pin?.ref);
+	const revision = text(record.pin?.commitSha);
+	const license = text(record.licence?.identifier);
+	const licenseSha256 = text(record.licence?.artifactSha256);
+	const missing =
+		repository === null
+			? 'pin.repository'
+			: ref === null
+				? 'pin.ref'
+				: revision === null
+					? 'pin.commitSha'
+					: license === null
+						? 'licenceAtPin.identifier'
+						: licenseSha256 === null
+							? 'licenceAtPin.artifactSha256'
+							: null;
+	if (missing !== null)
+		return Object.freeze({
+			source: null,
+			statusReason: `${RUN_RECORD_SOURCE_INCOMPLETE}:${missing}`,
+		});
+	return Object.freeze({
+		source: {
+			repository,
+			ref,
+			revision,
+			license,
+			licenseSha256,
+			basis: 'run-record',
+			basisPath: record.runRecordPath ?? 'not-recorded',
+		} as Record<string, unknown>,
+		statusReason: null,
+	});
+}
+
+/**
+ * The one place an unseen application enters this corpus without a source edit.
+ *
+ * The eighteen sealed transaction members below are historical assertions about
+ * applications proved before this path existed; they are not re-adjudicated
+ * here and this function never produces one. What it produces is an application
+ * row beside them, admitted on three readings that must all hold: the harness
+ * classified the run `proven`, the harness measured exactly zero interventions,
+ * and the run itself reached every stage it ran. A missing count is not a zero,
+ * a `refused:*` or `defect:*` classification is not a proof, and a run with no
+ * stage rows proved nothing — each of those is an absence of admission rather
+ * than an error, because a corpus that throws on an unproven run cannot be run
+ * over a directory of ordinary runs.
+ *
+ * A fourth reading joins the three: the row states where the application came
+ * from, derived by `runRecordSource` off the same record. A run that pinned no
+ * repository, ref or revision, or whose licence-at-pin stage read no identifier
+ * and no licence artifact, is not admitted — an application beside twelve rows
+ * that each name their source is not admitted with that column blank.
+ *
+ * Rows are keyed by the application identity the run record is filed under —
+ * the identifier `acquire` derived the evidence and lane directories from, not
+ * the lane path the record happens to have been pointed at — deduplicated, and
+ * ordered by that key, so the emitted corpus does not depend on directory
+ * iteration order.
+ */
+export function deriveRunRecordApplications(
+	runRecords: readonly CorpusRunRecordReading[],
+): Array<Record<string, unknown>> {
+	const admitted = new Map<string, Record<string, unknown>>();
+	for (const record of runRecords) {
+		if (record.terminalClassification !== 'proven') continue;
+		if (record.interventions?.count !== 0) continue;
+		const stages = record.stages ?? [];
+		if (stages.length === 0) continue;
+		if (!stages.every((stage) => stage.status === 'ran')) continue;
+		if (typeof record.id !== 'string' || record.id === '') continue;
+		if (admitted.has(record.id)) continue;
+		const derived = runRecordSource(record);
+		if (derived.source === null) continue;
+		admitted.set(record.id, {
+			id: record.id,
+			source: derived.source,
+			provenanceOfStatus: 'run-record',
+			verticals: [record.id],
+			conformance: {
+				terminalClassification: 'proven',
+				interventionCount: 0,
+				stages: stages.map((stage) => ({ name: stage.name, status: stage.status })),
+			},
+			basis: {
+				runRecord: record.runRecordPath ?? 'not-recorded',
+				interventionRecord: record.interventionRecordPath ?? 'not-recorded',
+			},
+			boundaries: {
+				admission: 'derived-from-run-record',
+				judgeCounting: 'not-counted',
+				productionReadiness: 'not-claimed',
+				authenticity: 'not-established',
+				framework: record.framework,
+			},
+		});
+	}
+	return [...admitted.keys()]
+		.sort((left, right) => (left < right ? -1 : left > right ? 1 : 0))
+		.map((key) => admitted.get(key) as Record<string, unknown>);
+}
+
+/**
+ * Refuses a summary that was written rather than counted.
+ *
+ * The two figures are the lengths of the arrays directly below them, so this is
+ * a re-derivation rather than a range check: a corpus whose summary was edited
+ * to a number nobody counted fails here, and one that grew by an admitted run
+ * record passes without anyone widening a literal.
+ */
+export function assertCorpusSummaryDerived(value: CorpusConformance): void {
+	const distinct = new Set(value.applications.map((row) => string(row.id, 'application id')));
+	if (distinct.size !== value.applications.length)
+		throw new Error('Corpus conformance application rows are not distinct source applications');
+	if (value.summary.verticals !== value.verticals.length)
+		throw new Error('Corpus conformance summary verticals is not the counted vertical rows');
+	if (value.summary.sourceApplications !== distinct.size)
+		throw new Error(
+			'Corpus conformance summary sourceApplications is not the counted distinct applications',
+		);
 }
 
 interface JourneyProjection {
@@ -703,8 +903,22 @@ interface JourneyProjection {
 export interface CorpusConformance {
 	schemaVersion: typeof CORPUS_CONFORMANCE_SCHEMA;
 	summary: {
-		verticals: 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20;
-		sourceApplications: 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+		/**
+		 * Counted, not declared. These were literal unions up to twenty verticals
+		 * and twelve source applications, which made proving a thirteenth
+		 * application a source edit — and a source edit inside a gated
+		 * `versionless run` is a human intervention. They are numbers now, and
+		 * `assertCorpusSummaryDerived` re-derives both from the arrays below,
+		 * so widening is counting rather than editing.
+		 */
+		verticals: number;
+		sourceApplications: number;
+		/**
+		 * Pinned at zero because it is a sealed assertion, not a tally: this
+		 * corpus verifies no designated pilot, and every vertical row carries
+		 * `designatedPilot: false` to say so. It stays a literal until a pilot
+		 * exists to count.
+		 */
 		designatedPilotsVerified: 0;
 	};
 	verticals: Array<Record<string, unknown>>;
@@ -1478,9 +1692,7 @@ export function deriveCorpusTransactionState(fixtures: unknown): CorpusTransacti
 								REACT_PAPERCUPS_RECEIPT_PATH,
 								WITNESS_REACT_PAPERCUPS_RECEIPT_PATH,
 							];
-							const hospitalrun = byPath.get(
-								WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH,
-							);
+							const hospitalrun = byPath.get(WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH);
 							if (hospitalrun) {
 								const hospitalrunMigration = byPath.get(
 									REACT_HOSPITALRUN_RECEIPT_PATH,
@@ -2418,7 +2630,8 @@ async function reactMemosConformanceRows(
 					? 'byte-identical'
 					: 'not-byte-identical',
 				migrationClass: receipt.migrationClass.migrationClass,
-				eraBuildDeviation: receipt.eraBuildDeviation.declaredBuildCommandOutcomeAtThisRevision,
+				eraBuildDeviation:
+					receipt.eraBuildDeviation.declaredBuildCommandOutcomeAtThisRevision,
 				projection,
 				readinessScoreboard: receipt.readiness,
 			},
@@ -2455,7 +2668,12 @@ async function reactMemosConformanceRows(
 async function nextKilledbygoogleV3ConformanceRows(
 	root: string,
 	aggregateByPath: Map<string, unknown>,
-	publishedSource: { repository: string; revision: string; archiveSha256: string; license: string },
+	publishedSource: {
+		repository: string;
+		revision: string;
+		archiveSha256: string;
+		license: string;
+	},
 ): Promise<{ vertical: Record<string, unknown>; browserProof: Record<string, unknown> }> {
 	const verified = await verifyWitnessNextKilledbygoogleV3Evidence(root);
 	const witnessMember = record(
@@ -2708,7 +2926,10 @@ async function angularTinyTranslatorConformanceRows(
 		vertical: {
 			id,
 			application,
-			framework: string(witnessMember.framework, 'Angular TinyTranslator aggregate framework'),
+			framework: string(
+				witnessMember.framework,
+				'Angular TinyTranslator aggregate framework',
+			),
 			receiptPath: WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH,
 			receiptDigest: verified.digest,
 			canonicalReceipts: receipt.canonicalReceipts.map((bound) => ({
@@ -3394,8 +3615,7 @@ export async function analyzeCorpusConformance(
 										: transaction.kind ===
 											  'next-killedbygoogle-v3-browser-proof'
 											? 10
-											: transaction.kind ===
-												  'react-linkfree-browser-proof'
+											: transaction.kind === 'react-linkfree-browser-proof'
 												? 11
 												: transaction.kind ===
 													  'angular-tiny-translator-browser-proof'
@@ -3724,7 +3944,7 @@ export async function analyzeCorpusConformance(
 	if (tinyTranslator) verticals.push(tinyTranslator.vertical);
 	if (superProductivity) verticals.push(superProductivity.vertical);
 
-	const applications: Array<Record<string, unknown>> = [
+	const sealedApplications: Array<Record<string, unknown>> = [
 		{
 			id: 'react-boilerplate',
 			source: react[0]?.source,
@@ -3850,11 +4070,26 @@ export async function analyzeCorpusConformance(
 	];
 	if (
 		verticals.length !== transaction.verticals ||
-		applications.length !== transaction.sourceApplications
+		sealedApplications.length !== transaction.sourceApplications
 	)
 		throw new Error(
 			'Corpus conformance rows do not agree with the derived transaction summary',
 		);
+	/**
+	 * The derived rows land after the sealed ones, never among them: the
+	 * transaction state above still counts exactly the applications it sealed,
+	 * and an application already sealed under its own id is not re-admitted by a
+	 * run that names it again.
+	 */
+	const sealedApplicationIds = new Set(
+		sealedApplications.map((row) => string(row.id, 'sealed application id')),
+	);
+	const applications: Array<Record<string, unknown>> = [
+		...sealedApplications,
+		...deriveRunRecordApplications(options.runRecords ?? []).filter(
+			(row) => !sealedApplicationIds.has(string(row.id, 'derived application id')),
+		),
+	];
 
 	const judgeCounting = lineageCountingLedger({
 		reactBoilerplate: reactBoilerplateWitness !== null,
@@ -3880,8 +4115,8 @@ export async function analyzeCorpusConformance(
 	const result: CorpusConformance = {
 		schemaVersion: CORPUS_CONFORMANCE_SCHEMA,
 		summary: {
-			verticals: transaction.verticals,
-			sourceApplications: transaction.sourceApplications,
+			verticals: verticals.length,
+			sourceApplications: applications.length,
 			designatedPilotsVerified: 0,
 		},
 		verticals,
@@ -3924,23 +4159,22 @@ export async function analyzeCorpusConformance(
 				 */
 				holdouts,
 				/**
-					 * The retired olderNext scoreboard. The charter oracle has exactly
-					 * two lineages (React, Angular), so olderNext was never an oracle
-					 * lineage — it was finer tracking of the legacy-Next member. Per the
-					 * T016 charter ruling it is retired to this informational React
-					 * sub-tag rather than deleted: Next.js-on-React is React-lineage, the
-					 * legacy-Next member (next-killedbygoogle-v3-0-0) is now counted
-					 * within the React numerator, and the older-Next direct-Witness
-					 * candidate folds into React here rather than standing as a separate
-					 * 0/4 gate. Recorded, never a silent gate change.
-					 */
+				 * The retired olderNext scoreboard. The charter oracle has exactly
+				 * two lineages (React, Angular), so olderNext was never an oracle
+				 * lineage — it was finer tracking of the legacy-Next member. Per the
+				 * T016 charter ruling it is retired to this informational React
+				 * sub-tag rather than deleted: Next.js-on-React is React-lineage, the
+				 * legacy-Next member (next-killedbygoogle-v3-0-0) is now counted
+				 * within the React numerator, and the older-Next direct-Witness
+				 * candidate folds into React here rather than standing as a separate
+				 * 0/4 gate. Recorded, never a silent gate change.
+				 */
 				olderNext: {
 					retired: true,
 					formerNumerator: '0/4',
 					reclassifiedInto: 'reactLineage',
 					reactSubTag: 'legacy-next',
-					reason:
-						'Next.js-on-React is React-lineage per the charter oracle; the olderNext 0/4 separate numerator was finer tracking, not an oracle lineage, and is retired into the React numerator with the legacy-Next member counted there.',
+					reason: 'Next.js-on-React is React-lineage per the charter oracle; the olderNext 0/4 separate numerator was finer tracking, not an oracle lineage, and is retired into the React numerator with the legacy-Next member counted there.',
 					candidate:
 						nextKilledByGoogleWitness === null
 							? 'not-tested'
@@ -3952,6 +4186,7 @@ export async function analyzeCorpusConformance(
 		},
 		integrity: { algorithm: 'sha256', canonicalDigest: '' },
 	};
+	assertCorpusSummaryDerived(result);
 	result.integrity.canonicalDigest = sha256(canonicalize(result));
 	return result;
 }
@@ -3959,6 +4194,7 @@ export async function analyzeCorpusConformance(
 export function verifyCorpusConformanceDigest(value: CorpusConformance): string {
 	if (value.schemaVersion !== CORPUS_CONFORMANCE_SCHEMA)
 		throw new Error('Unsupported corpus conformance schema');
+	assertCorpusSummaryDerived(value);
 	const copy = structuredClone(value);
 	const declared = copy.integrity.canonicalDigest;
 	copy.integrity.canonicalDigest = '';

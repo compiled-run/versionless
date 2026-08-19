@@ -1,0 +1,72 @@
+{
+	"schemaVersion": "versionless.intervention-count.v1",
+	"flow": "intervention-count",
+	"application": ".versionless/work/react-colorme-2019-06-06/baseline",
+	"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t030-p3/react-colorme-2019-06-06",
+	"runRecord": "evidence/runs/react-colorme-2019-06-06/run-record.json",
+	"writeSet": [
+		"../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t030-p3/react-colorme-2019-06-06",
+		"evidence/runs/react-colorme-2019-06-06/run-record.json",
+		"evidence/runs/react-colorme-2019-06-06/run-record.json.interventions.json"
+	],
+	"invocations": 1,
+	"stdinReads": 0,
+	"mutatedPathsOutsideWriteSet": [],
+	"authoringPathsTouched": [],
+	"interventionCount": 0,
+	"exitCode": 2,
+	"terminalClassification": "refused:install.lockfile-absent",
+	"attempts": [
+		{
+			"argv": [
+				"--experimental-strip-types",
+				"/Users/jacksm5pro/dev/open-source/versionless/packages/cli/src/cli.ts",
+				"run",
+				".versionless/work/react-colorme-2019-06-06/baseline",
+				"--out",
+				"/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t030-p3/react-colorme-2019-06-06",
+				"--record",
+				"evidence/runs/react-colorme-2019-06-06/run-record.json",
+				"--allow-install-scripts",
+				"--allow-peer-conflicts",
+				"--allow-remote-tarballs"
+			],
+			"exitCode": 2,
+			"signal": null,
+			"hang": false,
+			"stdoutBytes": 2793,
+			"stderrBytes": 0,
+			"startedAt": "2026-08-17T23:50:53.297Z",
+			"endedAt": "2026-08-17T23:50:53.675Z"
+		}
+	],
+	"observation": {
+		"stdio": "['ignore', 'pipe', 'pipe']",
+		"environment": {
+			"CI": "1"
+		},
+		"stageBudgetMs": 900000,
+		"trackedPathsSource": "git",
+		"pathsObservedBefore": 1669,
+		"pathsObservedAfter": 1714,
+		"authoringHomes": [
+			"fixtures/**",
+			"packages/cli/src/fixture/**",
+			"packages/cli/src/witness/**",
+			"packages/core/src/receipts/witness-*.ts",
+			"packages/core/src/receipts/capability-coverage.ts",
+			"packages/core/src/corpus/conformance.ts",
+			"packages/trust/src/generate.ts",
+			"packages/cli/src/fixture/legacy-candidate-ingest.ts",
+			".versionless/work/**/*.{mjs,sh}"
+		]
+	},
+	"notEstablished": [
+		"This is a count of interventions this harness could observe from outside the command: bytes on disk that changed, how many times a process was spawned, and whether stdin could have been read. It is not a statement that the run produced a working application.",
+		"`node_modules` and `.git` are not walked below the application root or the lane parent. A change inside an installed dependency tree is not observed here, and the counters do not establish that none happened.",
+		"A directory walk observes files. A permission change, a symlink retarget, or a file whose bytes were rewritten identically is not a change this harness counts.",
+		"`stdinReads: 0` is a construction, not a measurement of the child’s syscalls: the child was spawned with stdin `ignore` and `CI=1`, so a prompt had nothing to read and no answer could have been supplied.",
+		"A hang is a defect, not a refusal and not an intervention. It says the child emitted no stdout inside the stage budget; it does not establish what the child would have done given longer.",
+		"A refusal exit is a terminal outcome, not an intervention. Nothing here establishes what the run would have reached had the refusal not fired."
+	]
+}

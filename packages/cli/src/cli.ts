@@ -1,9 +1,21 @@
 #!/usr/bin/env node
+import { readFile, writeFile } from 'node:fs/promises';
+import * as path from 'pathe';
 import { verifyReceipt } from '../../core/src/receipts/verify.ts';
 import { analyzeCorpusConformance } from '../../core/src/corpus/conformance.ts';
 import { verifyScriptSurface } from '../../core/src/enterprise/script-surface.ts';
 import { verifyRuntimeScriptObservation } from './enterprise/runtime-script-observation-run.ts';
 import { runEnterpriseReport } from './enterprise/enterprise-report-run.ts';
+import { buildCapabilityCoverage } from '../../core/src/receipts/capability-coverage.ts';
+import { sha256 } from '../../core/src/receipts/canonicalize.ts';
+import {
+	COVERAGE_REPORT_JSON,
+	COVERAGE_REPORT_MARKDOWN,
+	deriveCoverageSurfaces,
+	readRunRecords,
+	verifyPublishedCoverageSurfaces,
+} from '../../trust/src/coverage-report.ts';
+import { readSupportedMatrix } from './operator/matrix.ts';
 import { generateTrustPackage } from '../../trust/src/generate.ts';
 import { ingestTrustInputs } from '../../trust/src/ingest.ts';
 import { verifyTrustPackage } from '../../trust/src/verify.ts';
@@ -35,7 +47,14 @@ import { main as runAngularFuxaStandaloneCohort } from './fixture/angular-fuxa-s
 import { main as runAngularFuxaTemplateCompiler } from './fixture/angular-fuxa-template-compiler-run.ts';
 import { main as runVite8SharedAdapterCohort } from './fixture/vite8-shared-adapter-cohort-run.ts';
 import { runDirectDomInventory } from './analysis/direct-dom-inventory.ts';
-import { runWitnessRealApps, verifyWitnessRealApps } from './witness/real-app-run.ts';
+import {
+	runSynthesizedWitnessRealApp,
+	runWitnessRealApps,
+	synthesizedWitnessOutputDir,
+	verifyWitnessRealApps,
+} from './witness/real-app-run.ts';
+import { readJourneyDeclaration } from './witness/journey-synthesis/driver.ts';
+import type { WitnessRealAppRun } from '../../core/src/index.ts';
 import {
 	runWitnessAngularRealworld,
 	verifyWitnessAngularRealworld,
@@ -58,6 +77,15 @@ try {
 		process.stdout.write(outcome.text);
 		if (outcome.exitCode !== 0) process.exitCode = outcome.exitCode;
 	} else if (command === 'fixture:ingest') {
+		// The network acquisition path for the fixtures this repository already
+		// published evidence for. The allowlist below is not an admission gate:
+		// admitting an application the pipeline has never seen is `versionless
+		// ingest <source-root>`, routed above by isOperatorCommand, which reads a
+		// source already on disk and consults no list. What this list still gates
+		// is which remote repositories this command may reach over the network,
+		// under the exact purpose-bound consent each fixture's ingest module
+		// carries — a record of consent given, not a permission to migrate. It is
+		// read here and by `fixture:verify` below, and nowhere else.
 		const fixture = valueAfter('--fixture');
 		const ingest = isLegacyCandidateId(fixture)
 			? (options: { allowNetwork: boolean; consentId?: string }) =>
@@ -238,7 +266,19 @@ try {
 	} else if (command === 'corpus:verify') {
 		if (process.env.VERSIONLESS_NETWORK_MODE !== 'offline' && !args.includes('--offline'))
 			throw new Error('corpus:verify requires VERSIONLESS_NETWORK_MODE=offline');
-		const result = await analyzeCorpusConformance();
+		/**
+		 * The same two inputs the trust generator and verifier read.
+		 *
+		 * `corpus:verify` reported a twelve-application corpus while the emitted
+		 * package carried thirteen, because it re-derived from the corpus source
+		 * with the filed run records withheld. Passing them makes this command
+		 * an independent re-derivation of the published number rather than of a
+		 * different one.
+		 */
+		const result = await analyzeCorpusConformance({
+			rootDir: '.',
+			runRecords: await readRunRecords('.'),
+		});
 		console.log(
 			JSON.stringify({
 				result: 'pass',
@@ -291,6 +331,49 @@ try {
 	} else if (command === 'witness:real-app') {
 		if (args.includes('--verify-provenance-only')) {
 			console.log(JSON.stringify(await verifyLinkedWitnessProvenance()));
+		} else if (args.includes('--journeys') || valueAfter('--baseline') !== undefined) {
+			/**
+			 * The synthesized-journey path. It is reached by declaring a lane pair,
+			 * because a run against journeys nobody authored has to be pointed at the
+			 * lanes it is about — there is no frozen corpus entry to look them up in.
+			 * `--journeys synthesized` forces synthesis even for an application that
+			 * HAS a hand-authored driver, and the record then says the driver was
+			 * overridden rather than absent.
+			 */
+			const application = valueAfter('--app');
+			const baseline = valueAfter('--baseline');
+			const migrated = valueAfter('--migrated');
+			if (!application || !baseline)
+				throw new Error(
+					'witness:real-app synthesized journeys require --app and --baseline (and usually --migrated)',
+				);
+			const declaration = readJourneyDeclaration(valueAfter('--journeys'));
+			const framework = (valueAfter('--framework') ??
+				'react') as WitnessRealAppRun['framework'];
+			const record = await runSynthesizedWitnessRealApp({
+				application,
+				framework,
+				declaration,
+				lanes: [
+					{ lane: 'baseline' as const, laneRoot: baseline },
+					...(migrated === undefined
+						? []
+						: [{ lane: 'migrated' as const, laneRoot: migrated }]),
+				],
+				...(valueAfter('--source-root') === undefined
+					? {}
+					: { sourceRoot: valueAfter('--source-root') }),
+				output: valueAfter('--out') ?? synthesizedWitnessOutputDir(application),
+			});
+			console.log(
+				JSON.stringify({
+					result: 'pass',
+					journeySource: record.journeySource,
+					overridden: record.selection.overridden,
+					replayabilityRatio: record.synthesized.replayabilityRatio,
+					digest: record.integrity.canonicalDigest,
+				}),
+			);
 		} else {
 			const publish = valueAfter('--publish');
 			const verify = valueAfter('--verify');
@@ -379,6 +462,53 @@ try {
 			environment: { ...process.env, VERSIONLESS_NETWORK_MODE: 'offline' },
 		});
 		console.log(JSON.stringify(result));
+	} else if (command === 'report:coverage') {
+		// The coverage half of the same flow, in the same shape: the trust package
+		// is verified before anything is read out of it, and the matrix is read
+		// through `readSupportedMatrix` — the one guarded derivation — rather than
+		// counted again here. `--verify-only` refuses to write, which is the mode a
+		// reviewer runs against a pair they did not generate.
+		//
+		// `trust:generate` and `report:enterprise` already emit this pair beside the
+		// enterprise surfaces; this command is the one that says so on its own, and
+		// re-derives it in isolation.
+		const outputDir = valueAfter('--output') ?? 'evidence/trust/current';
+		if (!args.includes('--offline')) throw new Error('report:coverage requires --offline');
+		const verifyOnly = args.includes('--verify-only');
+		const environment = { ...process.env, VERSIONLESS_NETWORK_MODE: 'offline' };
+		const reading = await readSupportedMatrix({ trustDir: outputDir, environment });
+		const output = path.resolve(outputDir);
+		const derived = await deriveCoverageSurfaces({
+			root: path.resolve('.'),
+			output,
+			matrix: reading.matrix,
+			capabilityCoverage: buildCapabilityCoverage(),
+		});
+		if (verifyOnly) await verifyPublishedCoverageSurfaces(output, derived);
+		else {
+			await writeFile(
+				path.join(output, COVERAGE_REPORT_JSON),
+				`${JSON.stringify(derived.report, null, 2)}\n`,
+			);
+			await writeFile(path.join(output, COVERAGE_REPORT_MARKDOWN), derived.markdown);
+		}
+		console.log(
+			JSON.stringify({
+				result: 'pass',
+				mode: verifyOnly ? 'verified' : 'generated',
+				trustDigest: reading.trustDigest,
+				machineArtifact: path.join(outputDir, COVERAGE_REPORT_JSON),
+				humanDocument: path.join(outputDir, COVERAGE_REPORT_MARKDOWN),
+				machineArtifactSha256: sha256(
+					await readFile(path.join(output, COVERAGE_REPORT_JSON)),
+				),
+				humanDocumentSha256: sha256(
+					await readFile(path.join(output, COVERAGE_REPORT_MARKDOWN)),
+				),
+				coverageDigest: derived.report.integrity.canonicalDigest,
+				certification: 'not-certified',
+			}),
+		);
 	} else if (command === 'trust:verify') {
 		const outputDir = args.find((arg) => !arg.startsWith('--'));
 		console.log(

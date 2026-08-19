@@ -73,6 +73,7 @@ import {
 	validateNextTailwindExclusion,
 	workspaceManifestPaths,
 } from './generate.ts';
+import { readRunRecords } from './coverage-report.ts';
 import { adapterFreezeRecord, verifyAdapterFreezeRecord } from './freeze.ts';
 import { lockPackages, osvRequest } from './ingest.ts';
 import {
@@ -238,9 +239,42 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 	if (emittedConformance.schemaVersion !== CORPUS_CONFORMANCE_SCHEMA)
 		throw new Error('Unsupported corpus conformance schema');
 	verifyCorpusConformanceDigest(emittedConformance);
-	const rederivedConformance = await analyzeCorpusConformance({ rootDir: root });
+	/**
+	 * Re-derive off the same two inputs the generator read.
+	 *
+	 * The emitted conformance is a function of the corpus source *and* the run
+	 * records on disk; re-deriving from the source alone compares a thirteen-
+	 * application corpus against a twelve-application one and calls the missing
+	 * row a mismatch. Reading the records here is not a second opinion about
+	 * admission — `analyzeCorpusConformance` performs that adjudication either
+	 * way — it is the same reading `generate.ts` performs, so the comparison is
+	 * about the emitted package rather than about which inputs each side saw.
+	 */
+	const rederivedRunRecords = await readRunRecords(root);
+	const rederivedConformance = await analyzeCorpusConformance({
+		rootDir: root,
+		runRecords: rederivedRunRecords,
+	});
 	if (canonicalize(emittedConformance) !== canonicalize(rederivedConformance))
 		throw new Error('Corpus conformance does not match independent re-derivation');
+	/**
+	 * How many applications the run-record directory admits, re-adjudicated here.
+	 *
+	 * The aggregate transaction state counts the sealed members and nothing
+	 * else — it is derived from the receipt membership, which a `versionless
+	 * run` never joins. So the number a published corpus must equal is the
+	 * sealed count plus the applications the run records admit, and this side
+	 * re-runs that admission off the directory rather than reading the count out
+	 * of the package it is checking — the rows counted here belong to the
+	 * conformance re-derived one line above from the corpus source and the run
+	 * directory, not to the emitted file. With no run record filed the addend is
+	 * zero and the assertion below is the sealed-only one it has always been.
+	 */
+	const rederivedRunRecordApplications = rederivedConformance.applications.filter(
+		(row) => row.provenanceOfStatus === 'run-record',
+	).length;
+	const expectedSourceApplications =
+		transaction.sourceApplications + rederivedRunRecordApplications;
 	const productionReadiness = asRecord(
 		asRecord(emittedConformance.coverage, 'corpus coverage').productionReadiness,
 		'corpus production readiness',
@@ -313,10 +347,10 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 	}
 	if (
 		emittedConformance.summary.verticals !== transaction.verticals ||
-		emittedConformance.summary.sourceApplications !== transaction.sourceApplications ||
+		emittedConformance.summary.sourceApplications !== expectedSourceApplications ||
 		emittedConformance.summary.designatedPilotsVerified !== 0 ||
 		emittedConformance.verticals.length !== transaction.verticals ||
-		emittedConformance.applications.length !== transaction.sourceApplications
+		emittedConformance.applications.length !== expectedSourceApplications
 	)
 		throw new Error(
 			'Corpus conformance does not match the canonical aggregate transaction state',
@@ -1424,7 +1458,7 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 		throw new Error('Derived Markdown omits the holdout result');
 	if (
 		!report.includes(`${transaction.verticals} verified verticals`) ||
-		!report.includes(`exactly ${transaction.sourceApplications} source applications`) ||
+		!report.includes(`exactly ${expectedSourceApplications} source applications`) ||
 		(transaction.nextKilledByGoogleIntegrated
 			? !report.includes('Killed by Google Next.js 12 Pages/webpack production vertical')
 			: !report.includes('Next.js remains **not-tested**') ||

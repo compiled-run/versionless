@@ -60,6 +60,28 @@ const defaultCaps: LegacyAcquisitionCaps = {
 	requiredArchiveStreams: 2,
 };
 
+/**
+ * The applications this module's *network acquisition* path is consented for.
+ *
+ * This list is no longer an admission gate. Admission runs through the
+ * `ingest` and `license-at-pin` operator stages
+ * (`packages/cli/src/operator/ingest.ts`), which read an application source that
+ * is already on disk and require no entry here, no per-application module, and
+ * no source edit. What still reads this list is the network half and the
+ * evidence it published:
+ *
+ * - `versionless fixture:ingest --fixture <id>` (`packages/cli/src/cli.ts`),
+ *   which acquires an official source over the network under the exact
+ *   purpose-bound consent each entry carries;
+ * - `versionless fixture:verify --fixture <id>`, which re-verifies the sealed
+ *   `evidence/ingests/<id>/` documents that acquisition published;
+ * - `isLegacyCandidateId` and `legacyCandidateConfig` below, which serve those
+ *   two commands and their tests.
+ *
+ * An entry is therefore a record of consent already given for a named remote
+ * repository, not a permission to migrate. Nothing an operator runs against a
+ * local application source consults it.
+ */
 export const legacyCandidates: readonly LegacyCandidateConfig[] = [
 	{
 		id: 'react-papercups-v1-0-0',
@@ -353,9 +375,26 @@ export function collectLockPlacements(lock: unknown): LockPlacement[] {
 	return placements;
 }
 
+/**
+ * What `analyzeLegacyLockClosure` actually reads off a candidate.
+ *
+ * The closure analysis never needed the acquisition half of a
+ * `LegacyCandidateConfig` — no consent id, no owner, no caps, no revision
+ * window. Naming the three fields it does read is what lets the generic
+ * `ingest` operator stage produce the same `versionless.legacy-dependency-closure.v1`
+ * record for an application that has no entry in `legacyCandidates` and no
+ * per-application module. A `LegacyCandidateConfig` still satisfies it, so
+ * every existing caller is unchanged.
+ */
+export type LegacyClosureIdentity = Readonly<{
+	id: string;
+	frontendRoot: string;
+	lockFileName: string;
+}>;
+
 export type LegacyClosureRecord = Readonly<{
 	schemaVersion: 'versionless.legacy-dependency-closure.v1';
-	slug: LegacyCandidateId;
+	slug: string;
 	frontendRoot: string;
 	source: Readonly<{
 		verifiedSourceRoot: string;
@@ -390,7 +429,7 @@ export type LegacyClosureRecord = Readonly<{
 }>;
 
 export function analyzeLegacyLockClosure(
-	config: LegacyCandidateConfig,
+	config: LegacyClosureIdentity,
 	input: {
 		verifiedSourceRoot: string;
 		packageBytes: Uint8Array;

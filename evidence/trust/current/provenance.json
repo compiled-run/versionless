@@ -4,25 +4,37 @@
     {
       "name": "packages/cli/dist/cli.js",
       "digest": {
-        "sha256": "48040241d7736c01d5a79b533074be582a574b11a633e8d977b29c160a597c94"
+        "sha256": "5f3fd1f8d241fbf820b8f8db3e2f0b9ab330d8b49e98aca7ea5732f43fabbba0"
       }
     },
     {
       "name": "packages/cli/dist/index.js",
       "digest": {
-        "sha256": "8e5feacb782e2f2fc45510846ce96a92cf53629b8aa5d731eb9ed9f4574a67c2"
+        "sha256": "ca8ae11baa2989287548acdc245210d1ddb0e845762e36b2f3e491644ecd9d01"
       }
     },
     {
-      "name": "packages/cli/dist/verify-B7NXJ3SC.js",
+      "name": "packages/cli/dist/real-app-run-j9M3z3iN.js",
       "digest": {
-        "sha256": "ec0b61bb378fb974e484120ca34cedfa0c2ff654b40ac9e8b1dacea628935403"
+        "sha256": "3a68a9290d5013bd87665dcdfd1cc79e12ba8a9d83a60b65e7eeecab3054253e"
+      }
+    },
+    {
+      "name": "packages/cli/dist/real-app-run-ym1rzYF1.js",
+      "digest": {
+        "sha256": "3b650fb209b3b93354df21c398a68cae22bb8a6a421f49c1489cc3f2684583a5"
+      }
+    },
+    {
+      "name": "packages/cli/dist/verify-P-VEcvqn.js",
+      "digest": {
+        "sha256": "b302281f686ddd2cda8a4d72f47ad8d6ab2daddddcd45e48a5e51a690d197794"
       }
     },
     {
       "name": "packages/core/dist/index.js",
       "digest": {
-        "sha256": "2ca9afd3305a92ac9e367484d84bd110c503564cf05b7e70ece9e12f815995fd"
+        "sha256": "78345e83837ec793942731240a57f32b5498b6112d0d918ed6547ec187b4218a"
       }
     },
     {
@@ -64,7 +76,7 @@
     {
       "name": "packages/trust/dist/index.js",
       "digest": {
-        "sha256": "4878de2e6617e3bdc3523473b5a2daa52af39d109b69e6adf80619ffad79fbde"
+        "sha256": "b343fbc05b1129dd11498dd8b14797a0681c385605a06193f629758f91c88dc8"
       }
     }
   ],
@@ -354,19 +366,27 @@
       "byproducts": [
         {
           "path": "packages/cli/dist/cli.js",
-          "sha256": "48040241d7736c01d5a79b533074be582a574b11a633e8d977b29c160a597c94"
+          "sha256": "5f3fd1f8d241fbf820b8f8db3e2f0b9ab330d8b49e98aca7ea5732f43fabbba0"
         },
         {
           "path": "packages/cli/dist/index.js",
-          "sha256": "8e5feacb782e2f2fc45510846ce96a92cf53629b8aa5d731eb9ed9f4574a67c2"
+          "sha256": "ca8ae11baa2989287548acdc245210d1ddb0e845762e36b2f3e491644ecd9d01"
         },
         {
-          "path": "packages/cli/dist/verify-B7NXJ3SC.js",
-          "sha256": "ec0b61bb378fb974e484120ca34cedfa0c2ff654b40ac9e8b1dacea628935403"
+          "path": "packages/cli/dist/real-app-run-j9M3z3iN.js",
+          "sha256": "3a68a9290d5013bd87665dcdfd1cc79e12ba8a9d83a60b65e7eeecab3054253e"
+        },
+        {
+          "path": "packages/cli/dist/real-app-run-ym1rzYF1.js",
+          "sha256": "3b650fb209b3b93354df21c398a68cae22bb8a6a421f49c1489cc3f2684583a5"
+        },
+        {
+          "path": "packages/cli/dist/verify-P-VEcvqn.js",
+          "sha256": "b302281f686ddd2cda8a4d72f47ad8d6ab2daddddcd45e48a5e51a690d197794"
         },
         {
           "path": "packages/core/dist/index.js",
-          "sha256": "2ca9afd3305a92ac9e367484d84bd110c503564cf05b7e70ece9e12f815995fd"
+          "sha256": "78345e83837ec793942731240a57f32b5498b6112d0d918ed6547ec187b4218a"
         },
         {
           "path": "packages/experiments/dist/index.js",
@@ -394,7 +414,7 @@
         },
         {
           "path": "packages/trust/dist/index.js",
-          "sha256": "4878de2e6617e3bdc3523473b5a2daa52af39d109b69e6adf80619ffad79fbde"
+          "sha256": "b343fbc05b1129dd11498dd8b14797a0681c385605a06193f629758f91c88dc8"
         }
       ]
     }

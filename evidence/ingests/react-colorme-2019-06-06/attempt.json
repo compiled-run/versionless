@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "versionless.official-source-attempt.v1",
+  "candidate": {
+    "repository": "tylergaw/colorme",
+    "requestedTag": "2019-06-06T02.06.15"
+  },
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "result": "started",
+  "network": {
+    "method": "GET",
+    "credentials": "none",
+    "requestEncoding": "identity",
+    "redirectsAllowed": false,
+    "alternateHostsAllowed": false
+  },
+  "caps": {
+    "metadata": 16777216,
+    "archive": 134217728,
+    "aggregate": 314572800
+  },
+  "requiredArchiveStreams": 2,
+  "publication": {
+    "evidenceRoot": "evidence/ingests/react-colorme-2019-06-06",
+    "cacheRoot": ".versionless/cache/react-colorme-2019-06-06-source",
+    "baseline": ".versionless/work/react-colorme-2019-06-06/baseline",
+    "transactional": true,
+    "readinessCredit": false
+  },
+  "nonclaims": [
+    "A lightweight or unsigned tag does not establish signer authenticity.",
+    "This record states that the bytes at the recorded commit reconcile with the Git tree the repository publishes at that commit. It establishes no dependency closure, build, browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "The licence reading is a reading of the file present at the pin. It is not a legal opinion and it evaluates no dependency’s terms.",
+    "Acquiring a source is not admitting one. Whether this tree can be ingested, installed, built or migrated is not read here."
+  ]
+}

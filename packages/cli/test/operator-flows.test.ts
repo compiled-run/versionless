@@ -19,6 +19,7 @@ import {
 	runOperatorCommand,
 	OPERATOR_COMMANDS,
 } from '../src/operator/flows.ts';
+import { pipelineRefusalOf } from '../src/operator/refusals.ts';
 import { runOperatorVerification } from '../src/operator/verify.ts';
 import {
 	APPLICATION_SOURCE_DIRECTORIES,
@@ -391,6 +392,238 @@ describe('operator byte-identity record', () => {
 		expect(record.angular.operatorDigest).toBe(record.angular.driverDigest);
 		expect(record.react.operatorDigest).toBe(record.react.driverDigest);
 		expect(record.notEstablished.length).toBeGreaterThan(0);
+	});
+});
+
+describe('operator refusals as outcomes', () => {
+	/**
+	 * The refusal is the outcome, not the crash. A fleet report has to be able
+	 * to tally the reason an application was declined, so a refusal leaves the
+	 * flow as a returned record carrying exit 2 and the string verbatim —
+	 * never as a formatted stack trace on stderr.
+	 */
+	it('returns exit 2 and the verbatim string rather than throwing, for a tree no adapter claims', async () => {
+		const application = await temporaryDirectory();
+		const lane = path.join(await temporaryDirectory(), 'lane');
+		try {
+			await writeUnclaimedReactTree(application);
+			const outcome = await runOperatorCommand('migrate', [
+				application,
+				'--out',
+				lane,
+				'--json',
+			]);
+			expect(outcome.exitCode).toBe(2);
+			const json = outcome.json as {
+				outcome: string;
+				refusal: { code: string; message: string; stage: string; origin: string };
+			};
+			expect(json.outcome).toBe('refused');
+			expect(json.refusal.message).toBe(
+				'React plan: this tree declares neither react-scripts nor a Vite configuration, so no frozen React adapter claims it. This flow refuses rather than guessing an origin toolchain.',
+			);
+			expect(json.refusal.code).toBe('plan.react.no-frozen-adapter-claims-this-tree');
+			expect(json.refusal.stage).toBe('plan');
+			expect(json.refusal.origin).toBe('frozen-adapter');
+			expect(JSON.parse(outcome.text) as unknown).toEqual(json);
+		} finally {
+			await rm(application, { recursive: true, force: true });
+			await rm(path.dirname(lane), { recursive: true, force: true });
+		}
+	});
+
+	it('renders a refusal for a reader with its code, stage and origin', async () => {
+		const application = await temporaryDirectory();
+		const lane = path.join(await temporaryDirectory(), 'lane');
+		try {
+			await writeUnclaimedReactTree(application);
+			const outcome = await runOperatorCommand('migrate', [application, '--out', lane]);
+			expect(outcome.exitCode).toBe(2);
+			expect(outcome.text).toContain(
+				'refused: plan.react.no-frozen-adapter-claims-this-tree',
+			);
+			expect(outcome.text).toContain('origin: frozen-adapter');
+			expect(outcome.text).toContain('not established:');
+			expect(outcome.text).not.toContain('    at ');
+		} finally {
+			await rm(application, { recursive: true, force: true });
+			await rm(path.dirname(lane), { recursive: true, force: true });
+		}
+	});
+
+	it('writes the refusal record, because a refused run is still an outcome to count', async () => {
+		const application = await temporaryDirectory();
+		const scratch = await temporaryDirectory();
+		const record = path.join(scratch, 'record.json');
+		try {
+			await writeUnclaimedReactTree(application);
+			const outcome = await runOperatorCommand('migrate', [
+				application,
+				'--out',
+				path.join(scratch, 'lane'),
+				'--record',
+				record,
+				'--json',
+			]);
+			expect(outcome.exitCode).toBe(2);
+			const written = JSON.parse(await readFile(record, 'utf8')) as {
+				refusal: { code: string };
+			};
+			expect(written.refusal.code).toBe('plan.react.no-frozen-adapter-claims-this-tree');
+		} finally {
+			await rm(application, { recursive: true, force: true });
+			await rm(scratch, { recursive: true, force: true });
+		}
+	});
+
+	it('names an argument refusal with a code rather than a bare message', () => {
+		let refusal: ReturnType<typeof pipelineRefusalOf> = null;
+		try {
+			parseOperatorArguments('analyze', ['app', '--verbose']);
+		} catch (error) {
+			refusal = pipelineRefusalOf(error);
+		}
+		expect(refusal?.code).toBe('arguments.unknown-flag');
+		expect(refusal?.stage).toBe('arguments');
+		expect(refusal?.message).toContain('--verbose');
+	});
+
+	/**
+	 * A defect is not a refusal and must not be scored as one. A lane path that
+	 * cannot exist is a broken invocation rather than a named reason an
+	 * application was declined, so it still throws and the caller scores it 1.
+	 */
+	it('lets a defect throw, so it is scored 1 rather than counted as a named refusal', async () => {
+		const scratch = await temporaryDirectory();
+		const blocker = path.join(scratch, 'blocker');
+		try {
+			await writeFile(blocker, 'not a directory\n');
+			const thrown = await runOperatorCommand('migrate', [
+				cypressRwaWorkArea.target,
+				'--out',
+				path.join(blocker, 'lane'),
+			]).then(
+				() => null,
+				(error: unknown) => error,
+			);
+			expect(thrown).not.toBeNull();
+			expect(pipelineRefusalOf(thrown)).toBeNull();
+		} finally {
+			await rm(scratch, { recursive: true, force: true });
+		}
+	});
+});
+
+describe('operator migrate lane stage', () => {
+	/**
+	 * The lane the pipeline emits now carries the build configuration it needs.
+	 * Spike C's finding C4 was that it did not: "the lane's package.json still
+	 * declares react-scripts ^3.4.1 with no Vite configuration".
+	 */
+	it('writes a generated configuration and a manifest that no longer declares react-scripts', async () => {
+		const lane = path.join(await temporaryDirectory(), 'lane');
+		try {
+			const outcome = await runOperatorCommand('migrate', [
+				cypressRwaWorkArea.target,
+				'--out',
+				lane,
+				'--json',
+			]);
+			expect(outcome.exitCode).toBe(0);
+			const configuration = await readFile(path.join(lane, 'vite.config.ts'), 'utf8');
+			expect(configuration).toContain('createCraViteAdapter');
+			expect(configuration).toContain('craProcessEnvironmentDefines');
+			const manifest = JSON.parse(
+				await readFile(path.join(lane, 'package.json'), 'utf8'),
+			) as {
+				dependencies: Record<string, string>;
+				devDependencies: Record<string, string>;
+				scripts: Record<string, string>;
+			};
+			expect(manifest.dependencies['react-scripts']).toBeUndefined();
+			expect(manifest.devDependencies['react-scripts']).toBeUndefined();
+			expect(manifest.scripts.build).toBe('vite build');
+			expect(manifest.devDependencies.vite).toBeDefined();
+			/** And the lane now reads as a Vite tree to this repository's own detection. */
+			const analysis = await analyzeApplication(lane);
+			expect(analysis.builder).toBe('vite');
+			expect(analysis.builderSource).toBe('vite.config.ts');
+		} finally {
+			await rm(path.dirname(lane), { recursive: true, force: true });
+		}
+	});
+
+	it('reports the stages it did not run rather than implying it did', async () => {
+		const lane = path.join(await temporaryDirectory(), 'lane');
+		try {
+			const outcome = await runOperatorCommand('migrate', [
+				cypressRwaWorkArea.target,
+				'--out',
+				lane,
+				'--json',
+			]);
+			const json = outcome.json as {
+				install: { ran: boolean; reason: string };
+				build: { ran: boolean; reason: string };
+				unhandledByStage: { plan: string[]; lane: string[] };
+			};
+			expect(json.install.ran).toBe(false);
+			expect(json.install.reason).toContain('--install was not declared');
+			expect(json.build.ran).toBe(false);
+			expect(json.build.reason).toContain('--build was not declared');
+			/** Findings stay attributed to the stage that made them. */
+			expect(json.unhandledByStage.lane.length).toBeGreaterThan(0);
+			expect(json.unhandledByStage.plan.length).toBeGreaterThan(0);
+		} finally {
+			await rm(path.dirname(lane), { recursive: true, force: true });
+		}
+	});
+
+	it('composes no lane configuration for the Angular lineage, and says why', async () => {
+		const lane = path.join(await temporaryDirectory(), 'lane');
+		try {
+			const [templateDirectory] = APPLICATION_SOURCE_DIRECTORIES;
+			const outcome = await runOperatorCommand('migrate', [
+				SOURCE_TREE,
+				'--out',
+				lane,
+				'--json',
+				'--source-dir',
+				APPLICATION_SOURCE_DIRECTORIES[0] as string,
+				'--template-dir',
+				templateDirectory as string,
+			]);
+			const json = outcome.json as {
+				laneComposition: { composed: boolean; reason: string; files: unknown[] };
+			};
+			expect(json.laneComposition.composed).toBe(false);
+			expect(json.laneComposition.files).toHaveLength(0);
+			expect(json.laneComposition.reason).toContain('Angular');
+		} finally {
+			await rm(path.dirname(lane), { recursive: true, force: true });
+		}
+	});
+
+	/** A record is evidence, and evidence carries no path from this host. */
+	it('keeps the generated sources out of the record it writes', async () => {
+		const lane = path.join(await temporaryDirectory(), 'lane');
+		try {
+			const outcome = await runOperatorCommand('migrate', [
+				cypressRwaWorkArea.target,
+				'--out',
+				lane,
+				'--json',
+			]);
+			const json = outcome.json as {
+				laneComposition: { files: Record<string, unknown>[] };
+			};
+			for (const file of json.laneComposition.files) {
+				expect(Object.keys(file).sort()).toEqual(['changes', 'path', 'sha256']);
+				expect(JSON.stringify(file)).not.toContain('frameworks/react/src/index.ts');
+			}
+		} finally {
+			await rm(path.dirname(lane), { recursive: true, force: true });
+		}
 	});
 });
 

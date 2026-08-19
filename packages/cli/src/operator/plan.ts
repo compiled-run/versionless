@@ -42,6 +42,7 @@ import {
 	workspacePathsBelow,
 	type ApplicationAnalysis,
 } from './analyze.ts';
+import { refuse } from './refusals.ts';
 
 const sha256 = (value: string): string => createHash('sha256').update(value).digest('hex');
 
@@ -157,32 +158,47 @@ export async function composeAngularPlan(
 			? '.angular-cli.json'
 			: null;
 	if (workspaceConfigPath === null)
-		throw new Error(
-			'Angular plan: the application root carries neither angular.json nor .angular-cli.json, so there is no workspace document to migrate.',
-		);
+		refuse({
+			code: 'plan.angular.no-workspace-document',
+			message:
+				'Angular plan: the application root carries neither angular.json nor .angular-cli.json, so there is no workspace document to migrate.',
+			stage: 'plan',
+			origin: 'pipeline',
+		});
 	const declaredRoots = angularSourceRoots(
 		await readJsonFile(path.join(tree, workspaceConfigPath)),
 	);
 	const sourceDirectories = options.sourceDirectories ?? declaredRoots;
 	if (sourceDirectories.length === 0)
-		throw new Error(
-			`Angular plan: ${workspaceConfigPath} declares no sourceRoot for a build target, so the application source directories are unknown. Supply --source-dir <dir> (repeatable) rather than have this flow guess.`,
-		);
+		refuse({
+			code: 'plan.angular.no-declared-source-root',
+			message: `Angular plan: ${workspaceConfigPath} declares no sourceRoot for a build target, so the application source directories are unknown. Supply --source-dir <dir> (repeatable) rather than have this flow guess.`,
+			stage: 'plan',
+			origin: 'pipeline',
+		});
 	for (const directory of [
 		...sourceDirectories,
 		...(options.templateDirectories ?? []),
 		...(options.styleSheetDirectories ?? []),
 	])
 		if (path.isAbsolute(directory) || directory.startsWith('..'))
-			throw new Error(
-				`Angular plan: source directory escapes the application root: ${directory}`,
-			);
+			refuse({
+				code: 'plan.angular.source-directory-escapes-the-application-root',
+				message: `Angular plan: source directory escapes the application root: ${directory}`,
+				stage: 'plan',
+				origin: 'pipeline',
+			});
 	const excluded = options.excludedSuffixes ?? DEFAULT_EXCLUDED_SUFFIXES;
 	const tsConfigPath = (await fileExists(path.join(tree, 'tsconfig.json')))
 		? 'tsconfig.json'
 		: null;
 	if (tsConfigPath === null)
-		throw new Error('Angular plan: the application root carries no tsconfig.json.');
+		refuse({
+			code: 'plan.angular.no-tsconfig',
+			message: 'Angular plan: the application root carries no tsconfig.json.',
+			stage: 'plan',
+			origin: 'pipeline',
+		});
 	const derived: AngularMigrationInput = {
 		packageManifest: {
 			path: 'package.json',
@@ -291,18 +307,25 @@ export async function composeReactPlan(options: ReactPlanOptions): Promise<{
 	if (Object.hasOwn(dependencies, 'react-scripts')) {
 		const template = path.join(tree, 'public/index.html');
 		if (!(await fileExists(template)))
-			throw new Error(
-				'React plan: this create-react-app tree carries no public/index.html, so the adapter has no entry-document template to derive from.',
-			);
+			refuse({
+				code: 'plan.react.no-entry-document-template',
+				message:
+					'React plan: this create-react-app tree carries no public/index.html, so the adapter has no entry-document template to derive from.',
+				stage: 'plan',
+				origin: 'frozen-adapter',
+			});
 		let entryModule = options.entryModule ?? null;
 		if (entryModule === null)
 			for (const candidate of CRA_ENTRY_MODULES)
 				if (entryModule === null && (await fileExists(path.join(tree, candidate))))
 					entryModule = `/${candidate}`;
 		if (entryModule === null)
-			throw new Error(
-				`React plan: none of ${CRA_ENTRY_MODULES.join(', ')} exists, so the application entry module is unknown. Supply --entry <module> rather than have this flow guess.`,
-			);
+			refuse({
+				code: 'plan.react.entry-module-unknown',
+				message: `React plan: none of ${CRA_ENTRY_MODULES.join(', ')} exists, so the application entry module is unknown. Supply --entry <module> rather than have this flow guess.`,
+				stage: 'plan',
+				origin: 'pipeline',
+			});
 		const environment = options.environment ?? (await craBuildEnvironment(tree));
 		const document = craEntryDocument({
 			template: await readFile(template, 'utf8'),
@@ -360,9 +383,21 @@ export async function composeReactPlan(options: ReactPlanOptions): Promise<{
 			]),
 		};
 	}
-	throw new Error(
-		'React plan: this tree declares neither react-scripts nor a Vite configuration, so no frozen React adapter claims it. This flow refuses rather than guessing an origin toolchain.',
-	);
+	/**
+	 * The admission rule is the frozen adapter's, not this flow's: the
+	 * create-react-app adapter keys on the `react-scripts` declaration and the
+	 * Vite-origin adapter keys on a Vite configuration file. Widening it — to an
+	 * ejected create-react-app tree carrying its own webpack configuration, for
+	 * instance — is freeze motion, which is why the origin is recorded as
+	 * `frozen-adapter` rather than as a decision this file could simply change.
+	 */
+	refuse({
+		code: 'plan.react.no-frozen-adapter-claims-this-tree',
+		message:
+			'React plan: this tree declares neither react-scripts nor a Vite configuration, so no frozen React adapter claims it. This flow refuses rather than guessing an origin toolchain.',
+		stage: 'plan',
+		origin: 'frozen-adapter',
+	});
 }
 
 export type PlanOptions = Readonly<{
@@ -430,7 +465,10 @@ export async function planApplication(
 			}),
 		};
 	}
-	throw new Error(
-		`Plan: no frozen adapter claims the ${analysis.lineage} lineage detected at this root. React (create-react-app or Vite origin) and Angular are the lineages this repository publishes a migration engine for.`,
-	);
+	refuse({
+		code: 'plan.lineage-no-frozen-adapter-claims',
+		message: `Plan: no frozen adapter claims the ${analysis.lineage} lineage detected at this root. React (create-react-app or Vite origin) and Angular are the lineages this repository publishes a migration engine for.`,
+		stage: 'plan',
+		origin: 'frozen-adapter',
+	});
 }

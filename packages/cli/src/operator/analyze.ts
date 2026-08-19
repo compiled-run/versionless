@@ -19,6 +19,7 @@ import {
 	ecosystemDispositionOf,
 	type AngularTargetCell,
 } from '../../../frameworks/angular/src/index.ts';
+import { refuse } from './refusals.ts';
 
 export type Lineage = 'angular' | 'react' | 'nextjs' | 'unknown';
 
@@ -270,9 +271,19 @@ export function readCellVerdicts(
 /** Refuse an application root that is not a directory carrying a manifest. */
 export async function assertApplicationRoot(root: string): Promise<void> {
 	if (!(await directoryExists(root)))
-		throw new Error(`Application root is not a directory: ${root}`);
+		refuse({
+			code: 'analyze.application-root-not-a-directory',
+			message: `Application root is not a directory: ${root}`,
+			stage: 'analyze',
+			origin: 'pipeline',
+		});
 	if (!(await fileExists(path.join(root, 'package.json'))))
-		throw new Error(`Application root carries no package.json: ${root}`);
+		refuse({
+			code: 'analyze.application-root-carries-no-manifest',
+			message: `Application root carries no package.json: ${root}`,
+			stage: 'analyze',
+			origin: 'pipeline',
+		});
 }
 
 export async function analyzeApplication(

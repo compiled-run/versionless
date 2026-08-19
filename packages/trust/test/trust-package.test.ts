@@ -974,9 +974,15 @@ snapshots:
 				coverage: Record<string, unknown>;
 				integrity: { canonicalDigest: string };
 			};
+			/**
+			 * Thirteen: the twelve sealed transaction members, plus the one
+			 * application the filed run records admit. The sealed twelve did not
+			 * move — the derived row lands after them and the summary is counted
+			 * off the rows rather than declared.
+			 */
 			expect(conformance.summary).toEqual({
 				verticals: 20,
-				sourceApplications: 12,
+				sourceApplications: 13,
 				designatedPilotsVerified: 0,
 			});
 			expect(conformance.frameworkLanes).toHaveLength(3);

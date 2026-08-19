@@ -1,0 +1,149 @@
+{
+  "schemaVersion": "versionless.official-source.v1",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "attemptSha256": "859ca43c2611d6f3a104deac281070fa5b17e8eb31e3e50f2e9d89b8c9f29eb2",
+  "result": "source-bound",
+  "startedAt": "2026-08-17T20:00:38.398Z",
+  "completedAt": "2026-08-17T20:00:41.964Z",
+  "repository": {
+    "id": 101394335,
+    "fullName": "ant-design/ant-design-pro",
+    "private": false,
+    "archived": false,
+    "disabled": false,
+    "responseBytes": 6712,
+    "responseSha256": "48381e171e2552ed5a953dbee7c104873e2d4370f52d7c8ca5623f3471bb74f0"
+  },
+  "revision": {
+    "ref": "refs/tags/v5.2.0",
+    "tagObjectSha": null,
+    "tagKind": "lightweight",
+    "tagDate": null,
+    "tagVerification": "unsigned",
+    "commitSha": "645d6ed4fd27c6fab55cbf64d2fb2995018bddcb",
+    "commitDate": "2021-12-22T08:21:23Z",
+    "commitVerification": "verified",
+    "rootTreeSha": "897254a6d3f2bae273c240f0225b4497b60369e6",
+    "treeEntries": 202,
+    "treeBlobs": 167,
+    "treeDirectories": 35,
+    "treeSymlinks": 0,
+    "treeGitlinks": 0,
+    "treeTruncated": false
+  },
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/ant-design/ant-design-pro",
+      "status": 200,
+      "bytes": 6712,
+      "sha256": "48381e171e2552ed5a953dbee7c104873e2d4370f52d7c8ca5623f3471bb74f0"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/ant-design/ant-design-pro/git/ref/tags/v5.2.0",
+      "status": 200,
+      "bytes": 359,
+      "sha256": "04b67d9d9d86bbcdef71d832946a42ecbd2178c5be13fbb106adea96d99142d5"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/ant-design/ant-design-pro/git/commits/645d6ed4fd27c6fab55cbf64d2fb2995018bddcb",
+      "status": 200,
+      "bytes": 2040,
+      "sha256": "ffaf2e6ddf735d5c4cf4ae458a6cfd5e56a4c6b10270921434ac844484a24839"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/ant-design/ant-design-pro/git/trees/897254a6d3f2bae273c240f0225b4497b60369e6?recursive=1",
+      "status": 200,
+      "bytes": 48253,
+      "sha256": "1e0c33469933eae397c08e48b5672fbde68ad8c3300dc0861b0e882dd9840e95"
+    },
+    {
+      "endpoint": "https://codeload.github.com/ant-design/ant-design-pro/tar.gz/645d6ed4fd27c6fab55cbf64d2fb2995018bddcb",
+      "status": 200,
+      "bytes": 93812,
+      "sha256": "e938b6b9305042368badb3e28ad0bcc096e0bba2470963cbeae1a50cdc05f1cc",
+      "stream": 1
+    },
+    {
+      "endpoint": "https://codeload.github.com/ant-design/ant-design-pro/tar.gz/645d6ed4fd27c6fab55cbf64d2fb2995018bddcb",
+      "status": 200,
+      "bytes": 93812,
+      "sha256": "e938b6b9305042368badb3e28ad0bcc096e0bba2470963cbeae1a50cdc05f1cc",
+      "stream": 2
+    }
+  ],
+  "archiveParity": {
+    "singleRoot": "ant-design-pro-645d6ed4fd27c6fab55cbf64d2fb2995018bddcb",
+    "safeEntries": 203,
+    "regularFiles": 167,
+    "directories": 36,
+    "specialEntries": 0,
+    "gitBlobs": 167,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "normalizedManifestSha256": "4f91d228d703ce58c96ea5f494dc924f757bd510026486a7e0453c2daa56c413"
+  },
+  "transaction": {
+    "attemptedRequests": 6,
+    "acceptedResponses": 6,
+    "acceptedWireBytes": 244988,
+    "acceptedDecodedBytes": 244988,
+    "redirectsObserved": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "archivesByteIdentical": true,
+    "archiveMatchesGitTree": true,
+    "publishedSource": true,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "cache": {
+    "root": ".versionless/cache/react-ant-design-pro-v5-2-0-source",
+    "archive1": ".versionless/cache/react-ant-design-pro-v5-2-0-source/archive/archive-1.tar.gz",
+    "archive2": ".versionless/cache/react-ant-design-pro-v5-2-0-source/archive/archive-2.tar.gz",
+    "verifiedSource": ".versionless/cache/react-ant-design-pro-v5-2-0-source/verify/extracted",
+    "rawMetadataPortable": false
+  },
+  "baseline": ".versionless/work/react-ant-design-pro-v5-2-0/baseline",
+  "licence": {
+    "identifier": "MIT",
+    "identifierSource": "observed",
+    "identifierRefusal": null,
+    "copyrightNotice": "Copyright (c) 2019 Alipay.inc",
+    "filesAtRoot": [
+      "LICENSE"
+    ],
+    "artifacts": [
+      {
+        "path": "LICENSE",
+        "role": "repository-root-licence",
+        "gitBlobSha": "c17ba2fb848af3fca998074297d00f38536d5d13",
+        "bytes": 1067,
+        "sha256": "9ceba8ceb1a4be89efaf7131b69d24cbb2f9ab2b99741a0717b4fa8c1da78116",
+        "firstLine": "MIT License",
+        "permissionGrantPresent": true,
+        "noticeRetentionClausePresent": true,
+        "warrantyDisclaimerPresent": true,
+        "licenseField": null
+      },
+      {
+        "path": "package.json",
+        "role": "frontend-manifest",
+        "gitBlobSha": "b88c70157cff338e544af86d387ac52f11305346",
+        "bytes": 4936,
+        "sha256": "8fadec8b280ed339d8ad9ff64e8fa4b8cfaef0a40c184db13b4a01dd6c501230",
+        "firstLine": null,
+        "permissionGrantPresent": null,
+        "noticeRetentionClausePresent": null,
+        "warrantyDisclaimerPresent": null,
+        "licenseField": null
+      }
+    ]
+  },
+  "nonclaims": [
+    "A lightweight or unsigned tag does not establish signer authenticity.",
+    "This record states that the bytes at the recorded commit reconcile with the Git tree the repository publishes at that commit. It establishes no dependency closure, build, browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "The licence reading is a reading of the file present at the pin. It is not a legal opinion and it evaluates no dependency’s terms.",
+    "Acquiring a source is not admitting one. Whether this tree can be ingested, installed, built or migrated is not read here."
+  ]
+}

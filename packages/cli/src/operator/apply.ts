@@ -16,6 +16,7 @@ import { mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises';
 import * as path from 'pathe';
 import { directoryExists } from './analyze.ts';
 import type { OperatorPlan } from './plan.ts';
+import { refuse } from './refusals.ts';
 
 const sha256 = (value: Buffer | string): string => createHash('sha256').update(value).digest('hex');
 
@@ -45,21 +46,34 @@ const APPLY_NOT_ESTABLISHED: readonly string[] = Object.freeze([
 export function assertSeparateLane(appRoot: string, out: string): void {
 	const application = path.resolve(appRoot);
 	const lane = path.resolve(out);
-	if (application === lane) throw new Error('migrate: --out must not be the application root.');
+	if (application === lane)
+		refuse({
+			code: 'apply.lane-is-the-application-root',
+			message: 'migrate: --out must not be the application root.',
+			stage: 'apply',
+			origin: 'pipeline',
+		});
 	const laneInside = path.relative(application, lane);
 	if (laneInside !== '' && !laneInside.startsWith('..') && !path.isAbsolute(laneInside))
-		throw new Error(
-			`migrate: --out is inside the application root (${laneInside}). The flow never writes into the tree it read.`,
-		);
+		refuse({
+			code: 'apply.lane-inside-the-application',
+			message: `migrate: --out is inside the application root (${laneInside}). The flow never writes into the tree it read.`,
+			stage: 'apply',
+			origin: 'pipeline',
+		});
 	const applicationInside = path.relative(lane, application);
 	if (
 		applicationInside !== '' &&
 		!applicationInside.startsWith('..') &&
 		!path.isAbsolute(applicationInside)
 	)
-		throw new Error(
-			'migrate: the application root is inside --out. The flow never writes into the tree it read.',
-		);
+		refuse({
+			code: 'apply.application-inside-the-lane',
+			message:
+				'migrate: the application root is inside --out. The flow never writes into the tree it read.',
+			stage: 'apply',
+			origin: 'pipeline',
+		});
 }
 
 /** Refuse an output lane that already carries files. */
@@ -67,9 +81,12 @@ export async function assertEmptyLane(out: string): Promise<void> {
 	if (!(await directoryExists(out))) return;
 	const entries = await readdir(out);
 	if (entries.length > 0)
-		throw new Error(
-			`migrate: --out already carries ${String(entries.length)} entr${entries.length === 1 ? 'y' : 'ies'}. Point it at a new directory rather than have this flow overwrite one.`,
-		);
+		refuse({
+			code: 'apply.lane-already-carries-files',
+			message: `migrate: --out already carries ${String(entries.length)} entr${entries.length === 1 ? 'y' : 'ies'}. Point it at a new directory rather than have this flow overwrite one.`,
+			stage: 'apply',
+			origin: 'pipeline',
+		});
 }
 
 async function copyTree(from: string, to: string): Promise<number> {
@@ -120,6 +137,12 @@ export async function applyPlan(
 		const target = path.join(options.out, entry.path);
 		await mkdir(path.dirname(target), { recursive: true });
 		await writeFile(target, entry.source);
+		/**
+		 * Deliberately not a refusal. A composed file whose bytes do not hash to
+		 * the digest the plan recorded means the plan and the write disagree,
+		 * which is a defect in this flow rather than a named reason an
+		 * application was declined. It exits 1, not 2.
+		 */
 		if (sha256(entry.source) !== entry.sha256After)
 			throw new Error(`migrate: composed digest mismatch for ${entry.path}`);
 		written.push({

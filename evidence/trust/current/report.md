@@ -1,8 +1,8 @@
 # Versionless project trust package
 
-- Canonical SHA-256: `572a0f061c731e57460c9c21644632fe43646d34a780dc47e739dc09e838768a`
-- Deterministic core: `ded201fbeefddf6f4beb284975b27afe480e35602a1fa515a5efd363fa054800`
-- Generated observation: `2026-08-14T11:02:29.109Z`
+- Canonical SHA-256: `e876926674880ceebabb2377a55d4e6bf82e2abc0dda42f11ab9950fe21ebde5`
+- Deterministic core: `89a6e0c4b8020af4d301ea379038a3b2c71c6bf1bc3705fe2c4f041b23b86ba2`
+- Generated observation: `2026-08-18T00:06:57.857Z`
 - Vulnerability input freshness: **stale** (seven-day maximum age)
 - Integrity: **hash-only; authenticity is not established**
 - Assurance: **this package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation**
@@ -16,7 +16,7 @@
 - [Supported corpus/runtime/bundler matrix](matrix.json) — unsupported and untested cells remain visible.
 - [Capability-coverage map](capability-coverage.json) — every exported migration capability with its proving applications and derived generality classification; single-application capabilities are named experimental, not claimed general.
 - [Adapter freeze record](adapter-freeze.json) — the migration engine adapter surface is frozen at commit `0ecd410691df10fbc68c9ddcd012dafa86aba536` with composite SHA-256 `27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234`; the receipts, corpus, and witness registries are deliberately **outside** the freeze so holdout evidence can still be published additively.
-- [Corpus conformance](corpus-conformance.json) — `e6c9068a196f78bd767caa3718686d68d6ed4a83554dd6f17ea2bd556cddd01d`; 20 verified verticals grouped into exactly 12 source applications; zero designated pilots are verified.
+- [Corpus conformance](corpus-conformance.json) — `101412703cc116969dd562a6ea46dde3d05424ad5194e535aca9750e373bc482`; 20 verified verticals grouped into exactly 13 source applications; zero designated pilots are verified.
 - The immutable Killed by Google Next.js 12 Pages/webpack production vertical is verified only for its exact fixture; synthetic Next.js 12 Pages, 13 transition/App, and 14 App classification lanes remain **not-tested**, and generic Next.js support is not claimed.
 - [Static script/resource surface](script-surface.json) — truthfully remains scoped to the prior nine verticals, two applications, and eighteen exact static deployment entrypoints; T220 is **not included** because its script surface was not separately observed; dynamic script insertion: **not-tested**; payment-page applicability: **not established**; PCI compliance is **not claimed**.
 - [Qualified-journey runtime script observation](runtime-script-observation.json) — truthfully remains scoped to 36 runs across the prior nine verticals, two applications, and eighteen lanes; T220 is **not included** because its runtime scripts were not separately observed; this is **not global dynamic-insertion coverage**.

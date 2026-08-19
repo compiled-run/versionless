@@ -3,6 +3,7 @@ import * as path from 'pathe';
 import { analyzeCorpusConformance } from '../../../core/src/corpus/conformance.ts';
 import { buildCapabilityCoverage } from '../../../core/src/receipts/capability-coverage.ts';
 import { sha256 } from '../../../core/src/receipts/canonicalize.ts';
+import { readRunRecords } from '../../../trust/src/coverage-report.ts';
 import {
 	ENTERPRISE_REPORT_JSON,
 	ENTERPRISE_REPORT_MARKDOWN,
@@ -56,7 +57,17 @@ export async function runEnterpriseReport(
 		root,
 		output,
 		manifest: (await readJson('manifest.json')) as unknown as EnterpriseSurfaceInputs['manifest'],
-		conformance: await analyzeCorpusConformance({ rootDir: root }),
+		/**
+		 * Re-derived with the run records, exactly as `generate.ts` and
+		 * `verify.ts` read them. The published enterprise report is a function of
+		 * the corpus source *and* the run-record directory; re-deriving from the
+		 * source alone compares a thirteen-application corpus against a twelve-
+		 * application one and calls the missing row a mismatch.
+		 */
+		conformance: await analyzeCorpusConformance({
+			rootDir: root,
+			runRecords: await readRunRecords(root),
+		}),
 		capabilityCoverage: buildCapabilityCoverage(),
 		matrix: await readJson('matrix.json'),
 		controls: await readJson('controls.json'),

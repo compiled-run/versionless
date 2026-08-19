@@ -21,9 +21,18 @@ import {
 	canonicalize,
 	compareUtf16CodeUnits,
 	parseWitnessRealAppReceipt,
+	parseWitnessSynthesizedRealAppRecord,
 	sha256,
 	WITNESS_REAL_APP_SCHEMA,
+	WITNESS_SYNTHESIZED_NOT_ESTABLISHED,
+	WITNESS_SYNTHESIZED_REAL_APP_SCHEMA,
 	witnessRealAppDigest,
+	witnessReplayabilityRatio,
+	witnessSynthesizedRealAppDigest,
+	type WitnessDriverSelection,
+	type WitnessSynthesizedJourneyRecord,
+	type WitnessSynthesizedJourneyTally,
+	type WitnessSynthesizedRealAppRecord,
 	type WitnessConsoleErrorInventory,
 	type WitnessCancelledDuplicateFetchCategoryEntry,
 	type WitnessCancelledDuplicateFetchInstance,
@@ -66,6 +75,33 @@ import {
 	WITNESS_ANGULAR_FACTORIOLAB_CONSOLE_ERRORS,
 	WITNESS_ANGULAR_FACTORIOLAB_FAILED_REQUESTS,
 } from '../../../core/src/receipts/witness-angular-factoriolab.ts';
+import {
+	CRAWL_DEFAULT_BOUNDS,
+	crawlLaneJourneys,
+	type CrawlBounds,
+} from './journey-synthesis/crawl.ts';
+import { readCypressJourneys } from './journey-synthesis/cypress.ts';
+import { readPlaywrightJourneys } from './journey-synthesis/playwright.ts';
+import {
+	recordDriverSelection,
+	routeLinkSelectors,
+	selectJourneyPath,
+	tallyUnhandledByKind,
+	urlIsRoute,
+	type JourneyDeclaration,
+} from './journey-synthesis/driver.ts';
+import {
+	completeSynthesizedJourney,
+	emitSynthesizedJourneys,
+	emitUnreachableSurface,
+	type SynthesizedJourneyEmission,
+	type SynthesizedJourneyMeasurement,
+} from './journey-synthesis/emit.ts';
+import {
+	isReplayable,
+	type JourneySynthesisSource,
+	type SynthesizedJourney,
+} from './journey-synthesis/types.ts';
 import {
 	WITNESS_ANGULAR_JIRA_CLONE_CANCELLED_DUPLICATE_FETCHES,
 	WITNESS_ANGULAR_JIRA_CLONE_CONSOLE_ERRORS,
@@ -256,7 +292,15 @@ type App =
 	 */
 	| 'angular-eshop-webspa';
 type Lane = 'baseline' | 'migrated';
-type JourneyEvidence = {
+/**
+ * What a journey hands back to the generic runner.
+ *
+ * Exported as a type only, so the journey-synthesis emitter can prove at
+ * compile time that what it derives from an application's own end-to-end suite
+ * fits the shape a hand-authored journey returns. Nothing about the runner's
+ * behaviour changes with the export, and no journey in this file is touched.
+ */
+export type JourneyEvidence = {
 	assertions: string[];
 	offlineEvidence: WitnessOfflineEvidence;
 	timeoutTelemetry?: ServiceWorkerTelemetry;
@@ -2515,8 +2559,7 @@ const TT_UNIT_LIST_ITEM = `${TT_UNIT_LIST} mat-list-item` as const;
  * are clicked directly.
  */
 const TT_FILTER_ALL = `${TT_UNIT_LIST} mat-radio-button[value=all] label` as const;
-const TT_FILTER_NEEDS_REVIEW =
-	`${TT_UNIT_LIST} mat-radio-button[value=needsReview] label` as const;
+const TT_FILTER_NEEDS_REVIEW = `${TT_UNIT_LIST} mat-radio-button[value=needsReview] label` as const;
 const TT_FILTER_BY_SUBSTRING =
 	`${TT_UNIT_LIST} mat-radio-button[value=bySubstring] label :text-is("Search")` as const;
 const TT_FILTER_SUBSTRING_INPUT = '#selectfilter input[type=text]' as const;
@@ -4946,11 +4989,7 @@ const angularTinyTranslatorSpec: AppSpec = {
 		// (b) A genuine hover on the toolbar's project control, for the tooltip
 		// the application renders into its own overlay.
 		await page.hover(TT_EDIT_PROJECT_LINK);
-		await context.expect.page.text(
-			page,
-			TT_TOOLTIP,
-			'Details of the project (click to open)',
-		);
+		await context.expect.page.text(page, TT_TOOLTIP, 'Details of the project (click to open)');
 
 		// (c) The create-project route, where every declared style probe exists
 		// in both lanes: the toolbar, an icon, a raised button and the document.
@@ -5488,15 +5527,31 @@ const angularSuperProductivitySpec: AppSpec = {
 		// settled anchor read off the DOM, never a timing.
 		const iconBeforeStart = await readHeaderIcon();
 		if (iconBeforeStart !== SUPER_PRODUCTIVITY_JOURNEY.timeTracking.iconBeforeStart)
-			throw new Error(`Super Productivity header icon before start differs: ${iconBeforeStart}`);
-		await context.expect.page.count(page, SUPER_PRODUCTIVITY_JOURNEY.timeTracking.currentTask, 0);
+			throw new Error(
+				`Super Productivity header icon before start differs: ${iconBeforeStart}`,
+			);
+		await context.expect.page.count(
+			page,
+			SUPER_PRODUCTIVITY_JOURNEY.timeTracking.currentTask,
+			0,
+		);
 		await page.click(SUPER_PRODUCTIVITY_JOURNEY.timeTracking.playButton);
-		await context.expect.page.count(page, SUPER_PRODUCTIVITY_JOURNEY.timeTracking.currentTask, 1);
+		await context.expect.page.count(
+			page,
+			SUPER_PRODUCTIVITY_JOURNEY.timeTracking.currentTask,
+			1,
+		);
 		const iconAfterStart = await readHeaderIcon();
 		if (iconAfterStart !== SUPER_PRODUCTIVITY_JOURNEY.timeTracking.iconAfterStart)
-			throw new Error(`Super Productivity header icon after start differs: ${iconAfterStart}`);
+			throw new Error(
+				`Super Productivity header icon after start differs: ${iconAfterStart}`,
+			);
 		await page.click(SUPER_PRODUCTIVITY_JOURNEY.timeTracking.playButton);
-		await context.expect.page.count(page, SUPER_PRODUCTIVITY_JOURNEY.timeTracking.currentTask, 0);
+		await context.expect.page.count(
+			page,
+			SUPER_PRODUCTIVITY_JOURNEY.timeTracking.currentTask,
+			0,
+		);
 		const iconAfterStop = await readHeaderIcon();
 		if (iconAfterStop !== SUPER_PRODUCTIVITY_JOURNEY.timeTracking.iconAfterStop)
 			throw new Error(`Super Productivity header icon after stop differs: ${iconAfterStop}`);
@@ -5520,7 +5575,9 @@ const angularSuperProductivitySpec: AppSpec = {
 				`Super Productivity reordered list differs from the pinned after-order: ${canonicalize(renderedOrderAfter)}`,
 			);
 		await measure(`${SUPER_PRODUCTIVITY_JOURNEY.initialRoute} (after the reorder)`);
-		checkpoints.push(await realServiceWorkerCheckpoint(lifecycle, 'after-interactions', script));
+		checkpoints.push(
+			await realServiceWorkerCheckpoint(lifecycle, 'after-interactions', script),
+		);
 
 		// (e) A real document reload. There is no backend: the two tasks and the
 		// order the drag settled them into are in the application's own IndexedDB
@@ -5784,7 +5841,8 @@ const angularSuperProductivitySpec: AppSpec = {
 			offlineEvidence: { state: 'not-applicable' },
 			realServiceWorker: {
 				script,
-				shippedWorkerFiles: WITNESS_ANGULAR_SUPER_PRODUCTIVITY_SERVICE_WORKER.shippedWorkerFiles,
+				shippedWorkerFiles:
+					WITNESS_ANGULAR_SUPER_PRODUCTIVITY_SERVICE_WORKER.shippedWorkerFiles,
 				checkpoints,
 			},
 			renderedStyles,
@@ -6719,8 +6777,7 @@ export async function executeAngularSuperProductivityWitnessRun(options: {
 	receiptRoot: string;
 }): Promise<WitnessRealAppRun> {
 	const app = apps.find((candidate) => candidate.app === ANGULAR_SUPER_PRODUCTIVITY_APP);
-	if (app === undefined)
-		throw new Error('Super Productivity Witness specification is absent');
+	if (app === undefined) throw new Error('Super Productivity Witness specification is absent');
 	return await executeRun(app, options.lane, options.pass, options);
 }
 
@@ -6856,9 +6913,7 @@ async function refusedServiceWorkerCheckpoint(
 	lifecycle: JourneyLifecycle,
 	phase: 'before-interactions' | 'after-interactions' | 'after-online-reload',
 	attempt: { script: string; scopePath: string },
-): Promise<
-	NonNullable<JourneyEvidence['refusedServiceWorker']>['checkpoints'][number]
-> {
+): Promise<NonNullable<JourneyEvidence['refusedServiceWorker']>['checkpoints'][number]> {
 	const telemetry = await lifecycle.serviceWorkerTelemetry(250);
 	const attemptEvents = telemetry.workerEvents;
 	const named = attemptEvents.every((event) =>
@@ -6977,7 +7032,9 @@ export function buildRealServiceWorkerEvidence(input: {
 		const before = input.before.find((entry) => entry.path === path);
 		const after = input.after.find((entry) => entry.path === path);
 		if (before === undefined || after === undefined)
-			throw new Error(`real-service-worker shipped file is absent from the served tree: ${path}`);
+			throw new Error(
+				`real-service-worker shipped file is absent from the served tree: ${path}`,
+			);
 		// A served tree the worker rewrote is not the tree the lane was bound to.
 		if (before.sha256 !== after.sha256)
 			throw new Error(`real-service-worker shipped file changed during the run: ${path}`);
@@ -7356,6 +7413,389 @@ export async function diagnoseReactBaselineServiceWorker(): Promise<void> {
 		`${canonicalize({ result: diagnostic.result, firstMissingTransition })}\n`,
 	);
 }
+
+/**
+ * Witnessing an application through a journey nobody authored.
+ *
+ * Everything below composes the machinery above rather than repeating it. The
+ * serving, the browser context, the byte-identical inventory either side of the
+ * run and the locality gate are `executeRun`'s, unchanged; what is added is the
+ * decision about WHICH journey to replay, and a replay of a derived one.
+ *
+ * Two properties are deliberate.
+ *
+ * One box per journey, one journey at a time, one lane at a time. The generic
+ * host measures rendered style and document extents off "the one live page", so
+ * a box that visited twice would have two and could measure neither; running a
+ * journey per box is what keeps every measurement addressed at the page it is
+ * about. It is also the serialization the determinism-under-load finding
+ * requires, and it is recorded as such rather than assumed.
+ *
+ * A derived journey names routes and never names the gesture that reaches them,
+ * because the reader that derived it saw links. So the replay reaches a route by
+ * clicking something on the current document that points at it, and a route no
+ * anchor points at is recorded unreached. It is never reached by re-addressing
+ * the browser at a URL the application did not offer — that would measure the
+ * static server, not the application.
+ */
+
+type SynthesizedLaneDeclaration = Readonly<{ lane: Lane; laneRoot: string }>;
+
+export type SynthesizedWitnessOptions = Readonly<{
+	application: string;
+	framework: WitnessRealAppRun['framework'];
+	/** The lane pair, witnessed in the order given, one at a time. */
+	lanes: readonly SynthesizedLaneDeclaration[];
+	/** The application source tree the end-to-end readers are pointed at. */
+	sourceRoot?: string;
+	declaration?: JourneyDeclaration;
+	crawlBounds?: CrawlBounds;
+	receiptRoot?: string;
+	/** Where the record is written. Never inside a sealed per-app evidence dir. */
+	output?: string;
+}>;
+
+/** The identity a lane pair that is not a corpus application is witnessed under. */
+const SYNTHESIZED_FIXTURE_APP = 'synthesized-witness-fixture' as const;
+
+/** The hand-authored driver registered for an application, or `null`. */
+function registeredWitnessDriver(application: string): string | null {
+	return apps.some((candidate) => candidate.app === application) ? application : null;
+}
+
+/**
+ * Derive journeys for one lane.
+ *
+ * The suite readers run first, on the source tree, because an application's own
+ * end-to-end suite is a stronger reading of what matters than a traversal of
+ * whatever its homepage links to. The crawl runs only when they produced no
+ * replayable journey, and it is pointed at the served lane rather than at the
+ * source, because a route only exists once something serves it.
+ */
+async function deriveSynthesizedJourneys(
+	sourceRoot: string | undefined,
+	laneRoot: string,
+	bounds: CrawlBounds,
+): Promise<{
+	source: JourneySynthesisSource;
+	journeys: readonly SynthesizedJourney[];
+	crawled: boolean;
+}> {
+	if (sourceRoot !== undefined) {
+		const cypress = await readCypressJourneys(sourceRoot);
+		const replayableCypress = cypress.journeys.filter((journey) => isReplayable(journey));
+		if (replayableCypress.length > 0)
+			return { source: 'cypress', journeys: cypress.journeys, crawled: false };
+		const playwright = await readPlaywrightJourneys(sourceRoot);
+		const replayablePlaywright = playwright.journeys.filter((journey) => isReplayable(journey));
+		if (replayablePlaywright.length > 0)
+			return { source: 'playwright', journeys: playwright.journeys, crawled: false };
+	}
+	const server = await startStaticServer(laneRoot, { profile: 'current-witness' });
+	try {
+		const reading = await crawlLaneJourneys(server.origin, bounds, fetch);
+		return { source: 'crawl', journeys: reading.journeys, crawled: true };
+	} finally {
+		await server.close();
+	}
+}
+
+/**
+ * Replay one derived journey against one served lane, and return what was
+ * measured.
+ *
+ * Nothing in here throws on a step it could not replay. A journey nobody
+ * authored will contain steps this replay cannot express, and turning the run
+ * red for one would mean the whole mechanism only ever reports on applications
+ * whose derivation happened to be perfect. So a step that cannot be replayed is
+ * counted and named, and the counts are what the outcome vocabulary states.
+ */
+function synthesizedReplaySpec(
+	application: string,
+	framework: WitnessRealAppRun['framework'],
+	emission: SynthesizedJourneyEmission,
+	crawlBounds: CrawlBounds | undefined,
+	collect: (measured: SynthesizedJourneyMeasurement, unreplayable: readonly string[]) => void,
+): AppSpec {
+	const routes = emission.plan.routes;
+	const first = routes[0] ?? '/';
+	return {
+		app: application as App,
+		framework,
+		canonicalReceipt: '',
+		canonicalDigest: '',
+		sources: { baseline: '', migrated: '' },
+		initialRoute: first,
+		journey: async (_context, page, _transport, lifecycle) => {
+			const unreplayable: string[] = [];
+			let routesReached = urlIsRoute(page.url, first) ? 1 : 0;
+			let routesWithoutOverflow = 0;
+			const measureOverflow = async (): Promise<void> => {
+				const scroll = await lifecycle.viewportScroll();
+				if (scroll.scrollHeight <= scroll.clientHeight) routesWithoutOverflow += 1;
+			};
+			await measureOverflow();
+			const present = async (selector: string): Promise<boolean> => {
+				try {
+					await lifecycle.probeStyles([
+						{ label: 'synthesized', selector, properties: [] },
+					]);
+					return true;
+				} catch {
+					return false;
+				}
+			};
+			for (const step of emission.plan.steps.slice(1)) {
+				if (step.route !== undefined && step.route !== routes[0]) {
+					let reached = false;
+					for (const selector of routeLinkSelectors(step.route)) {
+						if (!(await present(selector))) continue;
+						try {
+							await page.click(selector, { timeoutMs: 5_000 });
+							reached = urlIsRoute(page.url, step.route);
+						} catch {
+							reached = false;
+						}
+						if (reached) break;
+					}
+					if (reached) {
+						routesReached += 1;
+						await measureOverflow();
+					} else unreplayable.push(`route-not-reachable-by-link:${step.route}`);
+					continue;
+				}
+				const selector = step.selector;
+				if (selector === undefined) {
+					unreplayable.push(`step-names-neither-route-nor-selector:${step.kind}`);
+					continue;
+				}
+				if (!(await present(selector))) {
+					unreplayable.push(`selector-absent-on-lane:${step.kind}`);
+					continue;
+				}
+				try {
+					if (step.kind === 'click') await page.click(selector, { timeoutMs: 5_000 });
+					else if (step.kind === 'type')
+						await page.type(selector, step.value ?? '', { timeoutMs: 5_000 });
+					else if (step.kind === 'press')
+						await page.press(selector, step.value ?? 'Enter', { timeoutMs: 5_000 });
+				} catch {
+					unreplayable.push(`gesture-refused-by-page:${step.kind}`);
+				}
+			}
+			let selectorsPresent = 0;
+			for (const selector of emission.plan.selectors)
+				if (await present(selector)) selectorsPresent += 1;
+			const measured: SynthesizedJourneyMeasurement = {
+				routesReached,
+				selectorsPresent,
+				routesWithoutOverflow,
+			};
+			collect(measured, unreplayable);
+			const completed = completeSynthesizedJourney(
+				emission,
+				measured,
+				crawlBounds === undefined ? {} : { crawlBounds },
+			);
+			return {
+				assertions: [...completed.assertions],
+				offlineEvidence: completed.offlineEvidence,
+				applicationJourney: {
+					...completed.applicationJourney,
+					unreplayableSteps: [...unreplayable],
+				},
+			};
+		},
+	};
+}
+
+/**
+ * Witness one application through whichever journey the selection settled on.
+ *
+ * The lane pair is witnessed one lane at a time and, inside a lane, one journey
+ * at a time. There is no parallel path here and none is reachable from here.
+ */
+export async function runSynthesizedWitnessRealApp(
+	options: SynthesizedWitnessOptions,
+): Promise<WitnessSynthesizedRealAppRecord> {
+	const declaration = options.declaration ?? 'default';
+	const registeredDriver = registeredWitnessDriver(options.application);
+	const path = selectJourneyPath({ registeredDriver, declaration });
+	const bounds = options.crawlBounds ?? CRAWL_DEFAULT_BOUNDS;
+	const laneRecords: WitnessSynthesizedRealAppRecord['lanes'] = [];
+	let selection: WitnessDriverSelection;
+	let tally: WitnessSynthesizedJourneyTally;
+	if (path === 'hand-authored') {
+		selection = recordDriverSelection({ registeredDriver, declaration });
+		tally = {
+			total: 0,
+			replayable: 0,
+			ran: 0,
+			replayabilityRatio: witnessReplayabilityRatio(0, 0),
+			unhandledByKind: {},
+		};
+		const spec = apps.find((candidate) => candidate.app === options.application);
+		if (spec === undefined)
+			throw new Error(
+				`no hand-authored Witness driver is registered for ${options.application}`,
+			);
+		for (const lane of options.lanes) {
+			const run = await executeRun(spec, lane.lane, 1, {
+				laneRoot: lane.laneRoot,
+				...(options.receiptRoot === undefined ? {} : { receiptRoot: options.receiptRoot }),
+			});
+			laneRecords.push({
+				lane: lane.lane,
+				journeys: [],
+				successfulNonLoopback: 0,
+				semanticDigest: run.semanticDigest,
+			});
+		}
+	} else {
+		const firstLane = options.lanes[0];
+		if (firstLane === undefined)
+			throw new Error('a synthesized Witness run requires at least one lane to derive from');
+		const derived = await deriveSynthesizedJourneys(
+			options.sourceRoot,
+			firstLane.laneRoot,
+			bounds,
+		);
+		selection = recordDriverSelection({
+			registeredDriver,
+			declaration,
+			derivedFrom: derived.source,
+		});
+		const crawlBounds = derived.crawled ? bounds : undefined;
+		const emissions = emitSynthesizedJourneys(
+			derived.journeys,
+			crawlBounds === undefined ? {} : { crawlBounds },
+		);
+		const replayable = emissions.filter((emission) => emission.replayable);
+		const unhandled = derived.journeys.flatMap((journey) => [...journey.unhandled]);
+		/**
+		 * Derived journeys that were replayed at least once, counted once each.
+		 *
+		 * The `synthesized` tally is about the derivation — how many journeys came
+		 * out of the reader, how many of those name a route to start from, and how
+		 * many of those were actually replayed — so it is bounded by `replayable`
+		 * no matter how many lanes the pair has. The across-lanes count, which is
+		 * one replay per (lane, journey), is `execution.journeysRun`, and the
+		 * parser recomputes that one from the lane records themselves.
+		 */
+		const ranJourneys = new Set<string>();
+		for (const lane of options.lanes) {
+			const journeys: WitnessSynthesizedJourneyRecord[] = [];
+			const digests: string[] = [];
+			for (const emission of emissions) {
+				if (!emission.replayable) {
+					journeys.push({
+						name: emission.name,
+						source: emission.source,
+						specFile: emission.specFile,
+						replayable: false,
+						ran: false,
+						routesDeclared: emission.plan.routes.length,
+						routesReached: 0,
+						selectorsDeclared: emission.plan.selectors.length,
+						selectorsPresent: 0,
+						routesWithoutOverflow: 0,
+						outcomes: [
+							...emitUnreachableSurface(
+								'e2e-suite-carries-no-replayable-visit',
+								emission.name,
+							).assertions,
+						],
+					});
+					continue;
+				}
+				let captured: SynthesizedJourneyMeasurement | null = null;
+				const spec = synthesizedReplaySpec(
+					options.application,
+					options.framework,
+					emission,
+					crawlBounds,
+					(measured) => {
+						captured = measured;
+					},
+				);
+				const run = await executeRun(spec, lane.lane, 1, {
+					laneRoot: lane.laneRoot,
+					...(options.receiptRoot === undefined
+						? {}
+						: { receiptRoot: options.receiptRoot }),
+				});
+				const measured = captured as SynthesizedJourneyMeasurement | null;
+				if (measured === null)
+					throw new Error(
+						`synthesized journey produced no measurement: ${emission.name}`,
+					);
+				ranJourneys.add(emission.name);
+				digests.push(run.semanticDigest);
+				journeys.push({
+					name: emission.name,
+					source: emission.source,
+					specFile: emission.specFile,
+					replayable: true,
+					ran: true,
+					routesDeclared: emission.plan.routes.length,
+					routesReached: measured.routesReached,
+					selectorsDeclared: emission.plan.selectors.length,
+					selectorsPresent: measured.selectorsPresent,
+					routesWithoutOverflow: measured.routesWithoutOverflow,
+					outcomes: [...run.assertions],
+				});
+			}
+			laneRecords.push({
+				lane: lane.lane,
+				journeys,
+				successfulNonLoopback: 0,
+				semanticDigest: sha256(canonicalize(digests)),
+			});
+		}
+		tally = {
+			total: emissions.length,
+			replayable: replayable.length,
+			ran: ranJourneys.size,
+			replayabilityRatio: witnessReplayabilityRatio(replayable.length, emissions.length),
+			unhandledByKind: tallyUnhandledByKind(unhandled),
+		};
+	}
+	const record: WitnessSynthesizedRealAppRecord = {
+		schemaVersion: WITNESS_SYNTHESIZED_REAL_APP_SCHEMA,
+		flow: 'witness-real-app-synthesized',
+		application: options.application,
+		framework: options.framework,
+		selection,
+		journeySource: selection.journeySource,
+		synthesized: tally,
+		lanes: laneRecords,
+		execution: {
+			mode: 'serialized-one-lane-one-journey',
+			lanesRun: laneRecords.length,
+			journeysRun: laneRecords.reduce(
+				(sum, lane) => sum + lane.journeys.filter((journey) => journey.ran).length,
+				0,
+			),
+		},
+		locality: { mode: 'offline', successfulNonLoopback: 0, osWideIsolation: false },
+		notEstablished: [...WITNESS_SYNTHESIZED_NOT_ESTABLISHED],
+		integrity: { algorithm: 'sha256', canonicalDigest: '' },
+	};
+	record.integrity.canonicalDigest = witnessSynthesizedRealAppDigest(record);
+	parseWitnessSynthesizedRealAppRecord(record);
+	if (options.output !== undefined) {
+		await mkdir(options.output, { recursive: true });
+		await writeFile(join(options.output, 'record.json'), `${canonicalize(record)}\n`);
+	}
+	return record;
+}
+
+/** Where a synthesized run writes, kept out of every sealed per-app evidence dir. */
+export function synthesizedWitnessOutputDir(application: string): string {
+	return join(root, 'evidence/runs/witness-synthesized', application);
+}
+
+export { SYNTHESIZED_FIXTURE_APP };
 
 export async function runWitnessRealApps(output: string): Promise<WitnessRealAppReceipt> {
 	if (process.env.VERSIONLESS_NETWORK_MODE !== 'offline')
