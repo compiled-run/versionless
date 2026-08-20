@@ -1,0 +1,472 @@
+{
+  "schemaVersion": "versionless.angular-13cell-live-witness.v1",
+  "unit": "bank-demo-fleet-pipeline-p2/T009d-pigallery2-live-backend-witness",
+  "goal": "next-tranche-strategy",
+  "measuredAt": "2026-08-20",
+  "repoHeadAtMeasurement": "6e61354993dab9bf1d68d462b9a651e20207c77a",
+  "host": "darwin-arm64 (Apple silicon)",
+  "question": [
+    "T009c witnessed both pigallery2 lanes as a STATIC serve and found it could only ever measure the loading shell: index.html is an EJS template pigallery2's Express backend renders at request time, so with no backend the base href stays unrendered and no bundle loads. Its conclusion was that a gallery-reaching witness needs the live-backend seam.",
+    "This unit stands that backend up - pigallery2's own, at its own era Node - points it at each built lane in turn, and asks the question T009c could not: served by the application's own server, on loopback, in real Chromium, do the two lanes measure the same on the surfaces a bounded crawl reaches?"
+  ],
+  "answerInOneLine": "No. The baseline lane is a running gallery; the migrated lane loads every bundle with a 200 and then dies on ReferenceError: $localize is not defined before Angular bootstraps. The outcome strings differ, and they differ for a reason that inverts their naive reading.",
+  "consent": {
+    "mode": "offline",
+    "fetched": [],
+    "notFetched": [
+      "Nothing was fetched. Both lane outputs were already on disk from T009b; the backend, its dependency closure and the era Node were already on disk from T009a/T009b; the Chromium is the host Playwright install the witness host resolves.",
+      "The gallery media was GENERATED locally by .versionless/work/angular-pigallery2/logs/t009d-gen-media.cjs - three solid-colour PNGs assembled byte by byte from zlib and a hand-written CRC32. No image was downloaded and no image library was added."
+    ],
+    "disclosedNonLoopback": {
+      "count": 0,
+      "what": "Zero. Both lanes ran entirely inside the witness host, whose context.route continues a request only when isWitnessLoopbackUrl holds and fulfils everything else locally with 204. The two CDN stylesheets pigallery2's index.html links were mocked on both lanes (mockedNonLoopback 2 per lane), never fetched."
+    }
+  },
+  "backend": {
+    "what": "pigallery2 1.7.0's own Express server - backend/index.js, the package's declared \"main\" and \"start\" - copied byte-for-byte out of the frozen baseline checkout into a per-lane serve root and run unmodified.",
+    "era": "node v10.24.1 (darwin-x64, under Rosetta), the era runtime T009b built the baseline lane with. The backend was NOT modernized; the Node-16 fallback the packet allowed was never needed.",
+    "recipe": ".versionless/work/angular-pigallery2/logs/t009d-backend.sh",
+    "howTheLaneIsPointedAt": "ProjectPath.FrontendFolder is hard-coded to <root>/dist in the era backend, so the serve root's `dist` is a symlink to the lane output. That is the ONLY thing that differs between the two lanes: same backend copy source, same generated media, same config file, same port, same era Node.",
+    "config": {
+      "file": "<serveRoot>/config.json",
+      "host": "127.0.0.1",
+      "port": 32701,
+      "imagesFolder": ".versionless/work/angular-pigallery2/serve/media",
+      "thumbnailFolder": "<serveRoot>/TEMP (scratch, recreated before every start)",
+      "database": "DatabaseType.memory (1)",
+      "thumbnailProcessingLibrary": "ThumbnailProcessingLib.Jimp (1)",
+      "threading": "disabled",
+      "authenticationRequired": false,
+      "unAuthenticatedUserRole": "UserRoles.Admin (4)",
+      "whyTheseValues": "Every one is one of pigallery2's own declared config knobs, set so the run is loopback-only, deterministic and serialized. The memory database avoids a native SQLite build on this host; it is the application's own supported mode and it is IDENTICAL on both lanes, so it cannot produce a lane difference - but see notEstablished, because it does bound what was exercised."
+    },
+    "serialization": "One lane at a time. The backend was started, witnessed, and STOPPED before the other lane's backend was started; the stop step also pkills any surviving era backend, because a stale process holding port 32701 would serve the wrong lane and mask exactly the difference this unit found. Each lane's served bundle filename was checked against that lane's build before witnessing it.",
+    "readiness": "polled GET / on 127.0.0.1:32701 until 200, at most 60s; both lanes came up in 1-2s."
+  },
+  "witnessRun": {
+    "flow": "witness-host-driven-synthesized-crawl-against-live-backend-origin",
+    "howItWasRun": ".versionless/work/angular-pigallery2/logs/t009d-live-witness.mjs, run under `node --experimental-strip-types`.",
+    "whyNotTheCliDirectly": [
+      "The CLI's witness:real-app synthesized path takes --baseline/--migrated as DIRECTORIES and serves them itself through startStaticServer; it has no flag for a live origin.",
+      "The live-backend seam it does have - AppSpec.backend, spawned by packages/cli/src/witness/live-backend.ts - is reachable only from a REGISTERED AppSpec, and the app names that path admits are the closed lists WITNESS_REAL_APP_STATEFUL_NAMES ([\"cypress-realworld-app\"]) and WITNESS_REAL_APP_PROJECTED_HOLDOUT_NAMES ([\"angular-eshop-webspa\"]) in packages/core/src/receipts/witness-real-app.ts. Adding pigallery2 to that path is a packages/ change, which this unit is forbidden to make.",
+      "So the seam was OPERATED rather than extended, exactly as the packet permits: the crawl reader, the outcome vocabulary, the emitter and the Playwright witness host were imported from packages/ and driven unchanged, with the origin being the live backend instead of a static lane serve. Nothing in packages/ was edited - see the verification."
+    ],
+    "importedUnchangedFromPackages": [
+      "packages/cli/src/witness/journey-synthesis/crawl.ts - crawlLaneJourneys, CRAWL_DEFAULT_BOUNDS",
+      "packages/cli/src/witness/journey-synthesis/emit.ts - emitSynthesizedJourneys, completeSynthesizedJourney",
+      "packages/cli/src/witness/journey-synthesis/driver.ts - routeLinkSelectors",
+      "packages/cli/src/witness/playwright-host.ts - createPlaywrightWitnessHost (and, through it, isWitnessLoopbackUrl)",
+      "packages/cli/src/witness/browser.ts - witnessChromiumExecutablePath"
+    ],
+    "likeForLikeBy": "construction. The journey is derived ONCE, by the bounded crawl, against the baseline lane's live origin, written to t009d-plan.json, and the SAME plan is replayed against the migrated lane. Both lanes ran the identical journey under the identical bounds.",
+    "crawlBounds": {
+      "maxDepth": 2,
+      "maxRoutes": 12,
+      "requestTimeoutMs": 5000
+    },
+    "chromium": {
+      "resolvedBy": "packages/cli/src/witness/browser.ts - witnessChromiumExecutablePath(), the host's own Playwright provisioning",
+      "real": true,
+      "headless": true
+    },
+    "loopbackEnforcement": "structural, in the witness host: context.route('**/*') continues a request only when isWitnessLoopbackUrl() holds and fulfils every other request locally with 204 while incrementing mockedNonLoopback. successfulNonLoopback is 0 by construction, not by report.",
+    "boundedWaits": [
+      "app-pi-gallery2 with more than one child element, at most 15s",
+      "at least one app-gallery-grid-photo, at most 15s",
+      "Both are allowed to time out and be measured either way. Neither is an assertion; they are a bounded chance for the running application to reach its own gallery surface. The migrated lane spent both of them and reached neither."
+    ]
+  },
+  "media": {
+    "what": "A tiny deterministic gallery, generated locally: three 64x48 solid-colour PNGs written byte by byte (zlib deflate + hand-written CRC32), identical for both lanes.",
+    "generator": ".versionless/work/angular-pigallery2/logs/t009d-gen-media.cjs",
+    "dir": ".versionless/work/angular-pigallery2/serve/media",
+    "files": [
+      {
+        "name": "a-crimson.png",
+        "width": 64,
+        "height": 48,
+        "rgb": [
+          200,
+          30,
+          40
+        ],
+        "bytes": 125,
+        "sha256": "f35fe76f2e81d4bfc9cb47d25bdacdc96ebe6b27e4edfd69c2447189f4b281f2"
+      },
+      {
+        "name": "b-forest.png",
+        "width": 64,
+        "height": 48,
+        "rgb": [
+          30,
+          140,
+          60
+        ],
+        "bytes": 124,
+        "sha256": "e98dd3c6320bafd8f6e154f6c93be7a9011fe47594187ec26c25440906b6c7b5"
+      },
+      {
+        "name": "c-indigo.png",
+        "width": 64,
+        "height": 48,
+        "rgb": [
+          50,
+          60,
+          190
+        ],
+        "bytes": 124,
+        "sha256": "a6c4515c39d3f92e78b9bf7e912b191d311b52a2d3a019d4f5d1b78c8f13dc8f"
+      }
+    ],
+    "indexedByTheBackend": "GET /api/gallery/content/ on the baseline lane returned mediaCount 3 with exactly these three names, so the backend really indexed the generated tree."
+  },
+  "lanes": {
+    "baseline": {
+      "lane": "baseline",
+      "what": "pigallery2 1.7.0 frontend built at its own era (Angular 8.1.2 / TypeScript 3.4.5 under Node v10.24.1), served by pigallery2's own Express backend.",
+      "laneRoot": ".versionless/work/angular-pigallery2/baseline/t009b-baseline-run1",
+      "serveRoot": ".versionless/work/angular-pigallery2/serve/baseline",
+      "backendOrigin": "http://127.0.0.1:32701",
+      "backendNode": "v10.24.1 (x64, under Rosetta) - the era backend at its era runtime",
+      "backendReadySeconds": 2,
+      "frontendServedFrom": "the serve root's dist symlink, pointing at the T009b lane output; the backend renders index.html through EJS and serves the rest of the tree itself",
+      "journeySource": "synthesized-crawl",
+      "journeysRun": 1,
+      "journeys": [
+        {
+          "name": "bounded crawl of the served lane to depth 2",
+          "source": "crawl",
+          "specFile": null,
+          "replayable": true,
+          "ran": true,
+          "routesDeclared": 3,
+          "routesReached": 0,
+          "selectorsDeclared": 0,
+          "selectorsPresent": 0,
+          "routesWithoutOverflow": 1,
+          "unreplayableSteps": [
+            "route-not-reachable-by-link:/assets/icon.png",
+            "route-not-reachable-by-link:/styles.7af5efa7635d003dad98.css"
+          ],
+          "outcomes": [
+            "journey-measured-declared-gesture-count-0",
+            "journey-measured-unhandled-construct-count-0",
+            "journey-synthesized-by-crawl-bounded-depth-2-reached-0-routes",
+            "journey-measured-route-reached-0-of-3-declared-routes",
+            "journey-measured-selector-present-0-of-0-declared-selectors",
+            "journey-measured-no-document-overflow-on-1-routes"
+          ]
+        }
+      ],
+      "outcomes": [
+        "journey-measured-declared-gesture-count-0",
+        "journey-measured-unhandled-construct-count-0",
+        "journey-synthesized-by-crawl-bounded-depth-2-reached-0-routes",
+        "journey-measured-route-reached-0-of-3-declared-routes",
+        "journey-measured-selector-present-0-of-0-declared-selectors",
+        "journey-measured-no-document-overflow-on-1-routes"
+      ],
+      "outcomesProvenance": "copied verbatim out of the lane reading the witness host produced; every string comes from completeSynthesizedJourney and the closed vocabulary in packages/cli/src/witness/journey-synthesis/vocabulary.ts. No pass verb appears in any of them.",
+      "routesReached": {
+        "declaredByCrawl": [
+          "/",
+          "/assets/icon.png",
+          "/styles.7af5efa7635d003dad98.css"
+        ],
+        "reachedCount": 0,
+        "routeTheApplicationSettledOn": "/gallery/",
+        "galleryRouteReached": true
+      },
+      "runningApplication": {
+        "title": "PiGallery 2",
+        "baseHref": "/",
+        "baseResolved": "http://127.0.0.1:32701/",
+        "appRootPresent": true,
+        "appRootChildElementCount": 2,
+        "serverInjectDefined": true,
+        "galleryComponentPresent": true,
+        "gridPresent": true,
+        "photoTiles": 3,
+        "photoImages": 0,
+        "thumbnailSrcs": [],
+        "navbarPresent": true,
+        "visibleText": "PiGallery 2\nGallery\nen \n3\nImages\n3 items \nServer error\nSharing is not supported with these settings. Disabling temporally. Please adjust the config properly. Details: \"Error: Memory Database do not support sharing\"\nServer error\nFaces are not supported with these settings. Disabling temporally. Pleas",
+        "location": "/gallery/"
+      },
+      "consoleMessagesVerbatim": [
+        "error: Failed to find a valid digest in the 'integrity' attribute for resource 'https://unpkg.com/leaflet@1.3.4/dist/leaflet.css' with computed SHA-512 integrity 'z4PhNX7vuL3xVChQ1m2AB9Yg5AULVxXcg/SpIdNs6c5H0NE8XYXysP+DGNKHfuwvY7kxvUdBeoGlODJ6+SfaPg=='. The resource has been blocked."
+      ],
+      "pageErrorsVerbatim": [],
+      "requestsObserved": [
+        "GET 200 http://127.0.0.1:32701/",
+        "GET 204 https://unpkg.com/leaflet@1.3.4/dist/leaflet.css",
+        "GET 204 https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/css/bootstrap3/bootstrap-switch.css",
+        "GET 200 http://127.0.0.1:32701/assets/icon.png",
+        "GET 200 http://127.0.0.1:32701/runtime.465c2333d355155ec5f3.js",
+        "GET 200 http://127.0.0.1:32701/styles.7af5efa7635d003dad98.css",
+        "GET 200 http://127.0.0.1:32701/polyfills.6ce7c8613dd7f1c39c89.js",
+        "GET 200 http://127.0.0.1:32701/main.8d7a6399e761b63341dc.js",
+        "GET 200 http://127.0.0.1:32701/open-iconic.3cf97837524dd7445e9d.woff",
+        "GET 200 http://127.0.0.1:32701/api/notifications",
+        "GET 200 http://127.0.0.1:32701/api/gallery/content/",
+        "GET 200 http://127.0.0.1:32701/assets/icon_inv.png"
+      ],
+      "successfulNonLoopback": 0,
+      "mockedNonLoopback": 2,
+      "witnessWallSeconds": 1.409,
+      "laneReading": ".versionless/work/angular-pigallery2/logs/t009d-lane-baseline.json",
+      "laneReadingSha256": "a2b058ed90f1c53dc76ab5e638944508392897aad134f40dd75dea1848e6e77b"
+    },
+    "migrated": {
+      "lane": "migrated",
+      "what": "pigallery2 1.7.0 frontend built at the honest cell (Angular 13.4.0 / TypeScript 4.6.4 under Node v16.20.2), served by the SAME era Express backend.",
+      "laneRoot": ".versionless/work/angular-pigallery2/13cell/t009b-migrated-run1",
+      "serveRoot": ".versionless/work/angular-pigallery2/serve/migrated",
+      "backendOrigin": "http://127.0.0.1:32701",
+      "backendNode": "v10.24.1 (x64, under Rosetta) - the era backend at its era runtime",
+      "backendReadySeconds": 1,
+      "frontendServedFrom": "the serve root's dist symlink, pointing at the T009b lane output; the backend renders index.html through EJS and serves the rest of the tree itself",
+      "journeySource": "synthesized-crawl",
+      "journeysRun": 1,
+      "journeys": [
+        {
+          "name": "bounded crawl of the served lane to depth 2",
+          "source": "crawl",
+          "specFile": null,
+          "replayable": true,
+          "ran": true,
+          "routesDeclared": 3,
+          "routesReached": 1,
+          "selectorsDeclared": 0,
+          "selectorsPresent": 0,
+          "routesWithoutOverflow": 1,
+          "unreplayableSteps": [
+            "route-not-reachable-by-link:/assets/icon.png",
+            "route-not-reachable-by-link:/styles.7af5efa7635d003dad98.css"
+          ],
+          "outcomes": [
+            "journey-measured-declared-gesture-count-0",
+            "journey-measured-unhandled-construct-count-0",
+            "journey-synthesized-by-crawl-bounded-depth-2-reached-1-routes",
+            "journey-measured-route-reached-1-of-3-declared-routes",
+            "journey-measured-selector-present-0-of-0-declared-selectors",
+            "journey-measured-no-document-overflow-on-1-routes"
+          ]
+        }
+      ],
+      "outcomes": [
+        "journey-measured-declared-gesture-count-0",
+        "journey-measured-unhandled-construct-count-0",
+        "journey-synthesized-by-crawl-bounded-depth-2-reached-1-routes",
+        "journey-measured-route-reached-1-of-3-declared-routes",
+        "journey-measured-selector-present-0-of-0-declared-selectors",
+        "journey-measured-no-document-overflow-on-1-routes"
+      ],
+      "outcomesProvenance": "copied verbatim out of the lane reading the witness host produced; every string comes from completeSynthesizedJourney and the closed vocabulary in packages/cli/src/witness/journey-synthesis/vocabulary.ts. No pass verb appears in any of them.",
+      "routesReached": {
+        "declaredByCrawl": [
+          "/",
+          "/assets/icon.png",
+          "/styles.7af5efa7635d003dad98.css"
+        ],
+        "reachedCount": 1,
+        "routeTheApplicationSettledOn": "/",
+        "galleryRouteReached": false
+      },
+      "runningApplication": {
+        "title": "PiGallery 2",
+        "baseHref": "/",
+        "baseResolved": "http://127.0.0.1:32701/",
+        "appRootPresent": true,
+        "appRootChildElementCount": 1,
+        "serverInjectDefined": true,
+        "galleryComponentPresent": false,
+        "gridPresent": false,
+        "photoTiles": 0,
+        "photoImages": 0,
+        "thumbnailSrcs": [],
+        "navbarPresent": false,
+        "visibleText": "",
+        "location": "/"
+      },
+      "consoleMessagesVerbatim": [
+        "error: Failed to find a valid digest in the 'integrity' attribute for resource 'https://unpkg.com/leaflet@1.3.4/dist/leaflet.css' with computed SHA-512 integrity 'z4PhNX7vuL3xVChQ1m2AB9Yg5AULVxXcg/SpIdNs6c5H0NE8XYXysP+DGNKHfuwvY7kxvUdBeoGlODJ6+SfaPg=='. The resource has been blocked.",
+        "error: ERROR Error: Uncaught (in promise): ReferenceError: $localize is not defined\nReferenceError: $localize is not defined\n    at consts (http://127.0.0.1:32701/main.4b2fa472bc230245.js:1:241772)\n    at iu (http://127.0.0.1:32701/main.4b2fa472bc230245.js:1:1891098)\n    at Cs (http://127.0.0.1:32701/main."
+      ],
+      "pageErrorsVerbatim": [],
+      "requestsObserved": [
+        "GET 200 http://127.0.0.1:32701/",
+        "GET 204 https://unpkg.com/leaflet@1.3.4/dist/leaflet.css",
+        "GET 204 https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/css/bootstrap3/bootstrap-switch.css",
+        "GET 200 http://127.0.0.1:32701/assets/icon.png",
+        "GET 200 http://127.0.0.1:32701/styles.aac6e848cd321373.css",
+        "GET 200 http://127.0.0.1:32701/runtime.db24d125644157a2.js",
+        "GET 200 http://127.0.0.1:32701/polyfills.907de136ddb20602.js",
+        "GET 200 http://127.0.0.1:32701/main.4b2fa472bc230245.js",
+        "GET 200 http://127.0.0.1:32701/assets/icon.png"
+      ],
+      "successfulNonLoopback": 0,
+      "mockedNonLoopback": 2,
+      "witnessWallSeconds": 30.997,
+      "laneReading": ".versionless/work/angular-pigallery2/logs/t009d-lane-migrated.json",
+      "laneReadingSha256": "211555005ae73fe564b97346210a5d734183ca3f2b7283320629f535247792e8"
+    }
+  },
+  "parity": {
+    "identical": false,
+    "comparedOn": "the ordered list of outcome strings each lane produced, string for string, plus the per-journey measured counts behind them.",
+    "outcomesBaselineOnly": [
+      "journey-synthesized-by-crawl-bounded-depth-2-reached-0-routes",
+      "journey-measured-route-reached-0-of-3-declared-routes"
+    ],
+    "outcomesMigratedOnly": [
+      "journey-synthesized-by-crawl-bounded-depth-2-reached-1-routes",
+      "journey-measured-route-reached-1-of-3-declared-routes"
+    ],
+    "differingOutcomes": [
+      {
+        "form": "journey-synthesized-by-crawl-bounded-depth-2-reached-<n>-routes",
+        "baseline": "journey-synthesized-by-crawl-bounded-depth-2-reached-0-routes",
+        "migrated": "journey-synthesized-by-crawl-bounded-depth-2-reached-1-routes"
+      },
+      {
+        "form": "journey-measured-route-reached-<n>-of-3-declared-routes",
+        "baseline": "journey-measured-route-reached-0-of-3-declared-routes",
+        "migrated": "journey-measured-route-reached-1-of-3-declared-routes"
+      }
+    ],
+    "readTheseTheRightWayRound": [
+      "The migrated lane's HIGHER number is the WORSE lane. The crawl declared \"/\" among its routes. The baseline lane does not stay on \"/\": the running Angular application redirects itself to /gallery/ within a second, so the recorded location is no longer the declared route and routesReached is 0.",
+      "The migrated lane \"reached\" \"/\" only in the sense that it never left it. Its application never bootstrapped, so nothing ever navigated.",
+      "This is why the outcome strings alone are not the finding. The finding is in runningApplication: baseline has app-gallery, app-gallery-navbar, app-gallery-grid and three app-gallery-grid-photo tiles with the text \"3 Images / 3 items\"; migrated has an empty <app-pi-gallery2> with one placeholder child and no visible text at all."
+    ],
+    "countsCompared": {
+      "routesDeclared": {
+        "baseline": 3,
+        "migrated": 3,
+        "equal": true
+      },
+      "routesReached": {
+        "baseline": 0,
+        "migrated": 1,
+        "equal": false
+      },
+      "selectorsPresent": {
+        "baseline": 0,
+        "migrated": 0,
+        "equal": true
+      },
+      "routesWithoutOverflow": {
+        "baseline": 1,
+        "migrated": 1,
+        "equal": true
+      }
+    },
+    "applicationSurfaceCompared": {
+      "title": {
+        "baseline": "PiGallery 2",
+        "migrated": "PiGallery 2",
+        "equal": true,
+        "note": "The title is server-rendered by the EJS template, so it is identical even on the lane whose application never ran."
+      },
+      "appRootChildElementCount": {
+        "baseline": 2,
+        "migrated": 1,
+        "equal": false
+      },
+      "galleryComponentPresent": {
+        "baseline": true,
+        "migrated": false,
+        "equal": false
+      },
+      "gridPresent": {
+        "baseline": true,
+        "migrated": false,
+        "equal": false
+      },
+      "photoTiles": {
+        "baseline": 3,
+        "migrated": 0,
+        "equal": false
+      },
+      "serverInjectDefined": {
+        "baseline": true,
+        "migrated": true,
+        "equal": true,
+        "note": "Both lanes got a REAL ServerInject object this time - that is the live backend working, and it is exactly what T009c could not obtain."
+      },
+      "apiCallsMade": {
+        "baseline": [
+          "GET /api/notifications",
+          "GET /api/gallery/content/"
+        ],
+        "migrated": [],
+        "equal": false
+      }
+    }
+  },
+  "finding": {
+    "id": "angular-13-lane-of-pigallery2-dies-on-localize-is-not-defined-before-bootstrap",
+    "severity": "this is a real migration defect, found only because the application was actually run",
+    "whatWasObserved": [
+      "Every migrated bundle was served 200: runtime.db24d125644157a2.js, polyfills.907de136ddb20602.js, main.4b2fa472bc230245.js, styles.aac6e848cd321373.css.",
+      "Chromium then reported, verbatim: \"ERROR Error: Uncaught (in promise): ReferenceError: $localize is not defined\\nReferenceError: $localize is not defined\\n    at consts (http://127.0.0.1:32701/main.4b2fa472bc230245.js:1:241772)\".",
+      "The migrated lane issued ZERO requests to the backend API. The baseline lane issued GET /api/notifications and GET /api/gallery/content/, both 200, and rendered three photo tiles from them.",
+      "So the Angular 13 build emits $localize-tagged i18n constants but the built lane loads no @angular/localize polyfill. The Angular 8 lane does not need one: its build substituted translations at compile time through --i18n-file/--i18n-format, the mechanism T009b's baseline command used."
+    ],
+    "whyT009bAndT009cCouldNotSeeIt": [
+      "T009b measured that both lanes BUILD, and build twice to the same bytes. A build that emits $localize calls and omits its polyfill is a perfectly deterministic build.",
+      "T009c measured a static serve, where NEITHER lane bootstrapped, because the EJS index was never rendered. Two lanes that both fail to start look identical. Its parity.identical true was true and shallow, exactly as its own notEstablished said.",
+      "It took the live backend for the two lanes to differ, because it took the live backend for either of them to run at all."
+    ],
+    "whatWasNotDoneAboutIt": "Nothing. Adding the localize polyfill would mean rebuilding or hand-editing the emitted lane, both forbidden here and both properly a separate unit. The defect is recorded, not repaired.",
+    "isThisARunnerDefect": false,
+    "whyNot": "The runner served the lane the migration produced and reported what the browser did with it. Both lanes were served by the same backend, from the same media, with the same config, one at a time; the only difference was which built frontend the dist symlink pointed at."
+  },
+  "machineTimes": {
+    "backendStartSeconds": {
+      "baseline": 2,
+      "migrated": 1
+    },
+    "witnessSeconds": {
+      "baseline": 1.409,
+      "migrated": 30.997
+    },
+    "migratedWitnessNote": "The migrated lane's ~31s is almost entirely the two bounded waits timing out - the application never mounted, so both 15s budgets were spent in full."
+  },
+  "reproduce": [
+    "cd <repo>",
+    "node .versionless/work/angular-pigallery2/logs/t009d-gen-media.cjs <repo>/.versionless/work/angular-pigallery2/serve/media",
+    "sh .versionless/work/angular-pigallery2/logs/t009d-backend.sh setup baseline <repo>/.versionless/work/angular-pigallery2/baseline/t009b-baseline-run1",
+    "sh .versionless/work/angular-pigallery2/logs/t009d-backend.sh start baseline",
+    "node --experimental-strip-types .versionless/work/angular-pigallery2/logs/t009d-live-witness.mjs baseline http://127.0.0.1:32701 <logs>/t009d-plan.json derive <logs>/t009d-lane-baseline.json",
+    "sh .versionless/work/angular-pigallery2/logs/t009d-backend.sh stop baseline",
+    "sh .versionless/work/angular-pigallery2/logs/t009d-backend.sh setup migrated <repo>/.versionless/work/angular-pigallery2/13cell/t009b-migrated-run1",
+    "sh .versionless/work/angular-pigallery2/logs/t009d-backend.sh start migrated",
+    "node --experimental-strip-types .versionless/work/angular-pigallery2/logs/t009d-live-witness.mjs migrated http://127.0.0.1:32701 <logs>/t009d-plan.json replay <logs>/t009d-lane-migrated.json",
+    "sh .versionless/work/angular-pigallery2/logs/t009d-backend.sh stop migrated",
+    "T009D_HEAD=$(git rev-parse HEAD) node .versionless/work/angular-pigallery2/logs/t009d-emit-live-witness.cjs"
+  ],
+  "notEstablished": [
+    "A THREE-IMAGE GENERATED GALLERY IS NOT THE FLEET'S MEDIA DIVERSITY. The media is three 64x48 solid-colour PNGs with no EXIF, no GPS, no faces, no video, no sidecar metadata and no nested directories. Nothing here speaks about EXIF parsing, orientation, date grouping, map surfaces, person detection, video transcoding, or any behaviour that depends on real photographs.",
+    "AUTH SURFACES ARE UNTESTED. The backend ran with Client.authenticationRequired false and unAuthenticatedUserRole Admin, so no login ever happened. Login, session, user management, and every role boundary were not exercised on either lane.",
+    "THE DATABASE WAS THE MEMORY BACKEND, NOT SQLITE. DatabaseType.memory was chosen to avoid a native SQLite build on this host. It is identical on both lanes so it cannot produce the lane difference, but it means search, sharing and face surfaces were DISABLED by the application itself - the baseline lane's own visible text says so, verbatim, in two \"Server error\" notifications. Persistence, indexing across restarts, and every SQL path are untouched.",
+    "ONE JOURNEY, ONE PASS, ONE HOST. The journey is the bounded crawl's, not one anybody authored; pigallery2 1.7.0 ships no Cypress or Playwright suite to read. Nothing here establishes determinism across repeated witness runs, and nothing establishes behaviour under concurrent load.",
+    "THE BASELINE LANE IS NOT CERTIFIED WORKING. What was measured is that it mounts, routes itself to /gallery/, calls its own API twice successfully, and renders three photo tiles for three indexed images. Thumbnails were counted as tiles, not as loaded <img> elements: photoImages is 0 on the baseline lane, so this record does NOT say a thumbnail was generated or displayed. Nothing was clicked; no lightbox, search, settings, share or admin surface was opened.",
+    "THE MIGRATED LANE'S DEFECT IS NAMED, NOT DIAGNOSED TO ITS ROOT. This record establishes that $localize is undefined at runtime in the Angular 13 lane and that the application therefore never bootstrapped. It does not establish that adding @angular/localize/init is sufficient to make the lane work, because that build was not attempted here.",
+    "NO SCREENSHOT, NO PIXEL COMPARISON, NO ACCESSIBILITY READING, NO PERFORMANCE READING.",
+    "THE BACKEND IS THE ERA BACKEND ON BOTH LANES. This record says nothing about whether the Angular 13 frontend would work against a MIGRATED backend, because no backend migration exists. The migration under test is the frontend's alone.",
+    "This record does not re-establish anything T009a, T009b or T009c established. The lane outputs were consumed as-is and not rebuilt."
+  ],
+  "supersedes": {
+    "record": "evidence/runs/angular-13cell/pigallery2-witness-parity.json",
+    "what": "T009c's parity.identical true. That claim was about the static loading shell and said so; on the live backend the two lanes are NOT identical. T009c's finding and its notEstablished stand unchanged - this unit is the seam it named."
+  },
+  "nextUnit": "T010 freeze supersession. It inherits a live-backend parity claim that is real and NEGATIVE: the Angular 13 lane of pigallery2 builds deterministically and does not run. Any pigallery2 claim priced on T009b/T009c green must be repriced on this.",
+  "integrity": {
+    "algorithm": "sha256",
+    "digestOf": "JSON.stringify of this document with the integrity field absent",
+    "recompute": "node -e \"const c=require('crypto'),r=require('./evidence/runs/angular-13cell/pigallery2-live-witness.json');delete r.integrity;console.log(c.createHash('sha256').update(JSON.stringify(r)).digest('hex'))\"",
+    "sha256": "b2318d0a42f51bcd4fba43c94907d0a2a8c2ea20fcc354c51fa29e583b41fa12"
+  }
+}

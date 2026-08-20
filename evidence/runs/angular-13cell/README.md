@@ -363,3 +363,110 @@ re-established: the lane outputs were consumed as-is and never rebuilt or edited
 **Next unit:** T010, the freeze supersession. It inherits a parity claim that is real but
 shallow, plus one named finding — any pigallery2 claim past the loading shell needs the
 live-backend seam, not another static serve.
+
+---
+
+## T009d — pigallery2 on its own live backend: the two lanes are **not** the same
+
+`pigallery2-live-witness.json` · schema `versionless.angular-13cell-live-witness.v1` ·
+sha256 `b2318d0a42f51bcd4fba43c94907d0a2a8c2ea20fcc354c51fa29e583b41fa12`
+
+T009c named the seam and this unit walked through it. pigallery2's **own Express
+backend** — `backend/index.js`, copied byte-for-byte out of the frozen baseline checkout
+and run at its **era Node v10.24.1** (x64 under Rosetta; the Node-16 fallback the packet
+allowed was never needed) — was stood up on `127.0.0.1:32701`, pointed at one built lane
+at a time, and witnessed in real Chromium through the pipeline's witness host.
+`successfulNonLoopback: 0` on both lanes, structurally.
+
+**The answer is no, and the reason is a real migration defect.**
+
+| | baseline (Angular 8.1.2) | migrated (Angular 13.4.0) |
+|---|---|---|
+| bundles served | all 200 | all 200 |
+| `ServerInject` rendered | yes | yes |
+| application bootstrapped | **yes** | **no** |
+| route it settled on | `/gallery/` (its own redirect) | `/` (it never navigated) |
+| API calls made | `GET /api/notifications`, `GET /api/gallery/content/` — both 200 | **none** |
+| gallery grid | `app-gallery-grid` with **3** `app-gallery-grid-photo` tiles, text "3 Images / 3 items" | absent, `<app-pi-gallery2>` empty, no visible text |
+
+Chromium's verbatim console error on the migrated lane:
+
+```
+ERROR Error: Uncaught (in promise): ReferenceError: $localize is not defined
+ReferenceError: $localize is not defined
+    at consts (http://127.0.0.1:32701/main.4b2fa472bc230245.js:1:241772)
+```
+
+The Angular 13 build emits `$localize`-tagged i18n constants and the lane loads no
+`@angular/localize` polyfill; the Angular 8 lane never needed one because its build
+substituted translations at compile time. **Nothing was repaired** — rebuilding or
+hand-editing an emitted lane is a separate unit.
+
+Read the two differing outcome strings the right way round: the migrated lane's *higher*
+`route-reached-1-of-3` is the *worse* lane. The baseline lane scores 0 because the
+running application routed itself off the declared `/`; the migrated lane "reached" `/`
+only by never leaving it.
+
+**Why the earlier units could not see this.** T009b measured that both lanes build, twice,
+byte-identically — and a build that emits `$localize` calls and omits its polyfill is a
+perfectly deterministic build. T009c measured a static serve in which *neither* lane
+bootstrapped, and two lanes that both fail to start look identical. It took the live
+backend for the lanes to differ, because it took the live backend for either of them to
+run at all. T009c's `parity.identical: true` is hereby **superseded** as a claim about
+behaviour; its finding and its `notEstablished` stand unchanged.
+
+### Media
+
+Three 64×48 solid-colour PNGs, **generated locally** by
+`.versionless/work/angular-pigallery2/logs/t009d-gen-media.cjs` (zlib + a hand-written
+CRC32, no image library, nothing fetched), identical for both lanes. The backend really
+indexed them: `GET /api/gallery/content/` returned `mediaCount: 3` with exactly those
+names.
+
+### The seam, operated rather than extended
+
+`witness:real-app --journeys synthesized` takes lane **directories** and serves them
+itself; the live-backend path (`AppSpec.backend` → `packages/cli/src/witness/live-backend.ts`)
+is reachable only from a registered AppSpec whose name is in the closed
+`WITNESS_REAL_APP_STATEFUL_NAMES` / `WITNESS_REAL_APP_PROJECTED_HOLDOUT_NAMES` lists.
+Admitting pigallery2 there is a `packages/**` change this unit was forbidden to make, so
+the crawl reader, the outcome vocabulary, the emitter and the Playwright witness host
+were **imported and driven unchanged** against the live origin. No `packages/**` file was
+written.
+
+### Reproduce
+
+```sh
+node .versionless/work/angular-pigallery2/logs/t009d-gen-media.cjs <repo>/.versionless/work/angular-pigallery2/serve/media
+sh .versionless/work/angular-pigallery2/logs/t009d-backend.sh setup baseline <repo>/.versionless/work/angular-pigallery2/baseline/t009b-baseline-run1
+sh .versionless/work/angular-pigallery2/logs/t009d-backend.sh start baseline
+node --experimental-strip-types .versionless/work/angular-pigallery2/logs/t009d-live-witness.mjs \
+  baseline http://127.0.0.1:32701 <logs>/t009d-plan.json derive <logs>/t009d-lane-baseline.json
+sh .versionless/work/angular-pigallery2/logs/t009d-backend.sh stop baseline
+# ... then the same three steps for `migrated`, with `replay` instead of `derive`
+T009D_HEAD=$(git rev-parse HEAD) node .versionless/work/angular-pigallery2/logs/t009d-emit-live-witness.cjs
+```
+
+One lane at a time; the backend is stopped (and any survivor `pkill`ed) between lanes,
+because a stale process holding the port would serve the wrong lane and mask exactly the
+difference this unit found. Each lane's served `main.*.js` filename was checked against
+that lane's build before witnessing it.
+
+### What T009d does not establish
+
+`notEstablished` in the JSON is the binding list. In short: a **three-image generated
+gallery is not the fleet's media diversity** — no EXIF, GPS, faces, video, sidecars or
+nested directories, so nothing here speaks about metadata, map, person or transcoding
+surfaces. **Auth was off** (`authenticationRequired: false`, unauthenticated role Admin),
+so login, sessions and every role boundary are untested. The database was the
+**in-memory** backend, not SQLite — identical on both lanes, so it cannot explain the lane
+difference, but the application itself disabled search, sharing and faces and said so in
+two "Server error" notices. The baseline lane is **not certified working**: it mounts,
+routes, calls its API and renders three tiles; `photoImages` is 0, so no thumbnail is
+claimed to have loaded, and nothing was clicked. The migrated lane's defect is **named,
+not diagnosed to its root** — no build with the polyfill was attempted. One journey, one
+pass, one host; no screenshots, pixels, accessibility or performance readings. Both lanes
+ran the **era backend**: nothing here speaks about a migrated backend, which does not exist.
+
+**Next unit:** T010, the freeze supersession — now inheriting a live-backend parity claim
+that is real and **negative**.
