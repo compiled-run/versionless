@@ -1,0 +1,187 @@
+{
+  "schema": "versionless.spike.t046-angular-lane-build.v1",
+  "unit": "bank-demo-fleet-pipeline-p2d/T046-u1b-copy-lane-spike",
+  "question": "T046 note O2 - does angular2-hn build GREEN under the provisioned Node 16.20.2 once the polyfills schema defect is out of the way, or are there more walls behind it?",
+  "measuredAt": "2026-08-20T05:25Z",
+  "answersOpenQuestionFrom": {
+    "file": "evidence/spikes/t046-angular-lane-build/verdict.json",
+    "path": ".verdict.o2",
+    "priorAnswer": "UNRESOLVED - blocked behind O1's fix; can only be answered after u2 lands or in a throwaway copy of the lane"
+  },
+  "method": {
+    "why": "u1 proved both Nodes die identically at the 13.3.11 builder's schema validator in under 1.2s, so nothing past the validator has ever been exercised for this app. To price the owner's supersession-#2 decision (board task T044) by measurement rather than by inference, this unit reproduced the lane on a throwaway copy, applied ONLY the minimal edit u2 would produce, and ran the build.",
+    "copy": {
+      "source": "/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t043c/angular2-hn",
+      "destination": "/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t046-u1b-lane-copy",
+      "command": "cp -R <source> <destination>",
+      "wallTimeSeconds": 13.0,
+      "symlinksUsed": false,
+      "nodeModulesEntries": 681,
+      "nodeModulesEntriesInRealLane": 681,
+      "binNgResolvesInsideCopy": true,
+      "binNgSymlinkTarget": "../@angular/cli/bin/ng.js",
+      "binNgRealpath": "<destination>/node_modules/@angular/cli/bin/ng.js",
+      "brokenSymlinksBelowNodeModules": 0,
+      "note": "The .bin links are relative, so the copied closure resolves entirely inside the copy. No path baked into node_modules pointed back at the real lane, and the build's failure mode (below) is a target-string rejection, not a path resolution failure - the copy is not implicated."
+    },
+    "realLaneMutated": false,
+    "repositoryFilesWritten": [
+      "evidence/spikes/t046-angular-lane-build/build-node16-polyfills-string.log",
+      "evidence/spikes/t046-angular-lane-build/verdict-u1b.json"
+    ]
+  },
+  "minimalEditApplied": {
+    "scope": "the throwaway copy only",
+    "file": "<copy>/angular.json",
+    "sites": 2,
+    "arrayElementCountAtEachSite": 1,
+    "elementReadFromTheArray": "src/polyfills.ts",
+    "buildOptions": {"line": 24, "from": "[\"src/polyfills.ts\"]", "to": "\"src/polyfills.ts\""},
+    "testOptions": {"lineBefore": 105, "lineAfter": 103, "from": "[\"src/polyfills.ts\"]", "to": "\"src/polyfills.ts\""},
+    "diffAgainstRealLaneAngularJson": "exactly two hunks, both the polyfills form; no other key, value or byte differs",
+    "otherFixesApplied": "none - one variable per measurement"
+  },
+  "postFixRun": {
+    "label": "npm run build in the throwaway copy, polyfills back to the string form, provisioned Node PATH-prepended",
+    "command": "npm run build",
+    "cwd": "/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t046-u1b-lane-copy",
+    "environment": "PATH=/Users/jacksm5pro/dev/open-source/versionless/.versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64/bin:$PATH",
+    "log": "evidence/spikes/t046-angular-lane-build/build-node16-polyfills-string.log",
+    "logSha256": "ae4c1bb29667c7c1885e49d65858c7db2bc7a41e6f1a2b91af500ec845b0ccbb",
+    "logLines": 181,
+    "exitCode": 1,
+    "wallTimeMs": 6404,
+    "nodeVersion": "v16.20.2",
+    "npmVersion": "8.19.4",
+    "nodeVersionMeasured": true,
+    "nodeVersionAssumed": false,
+    "nodeVersionVerifiedInsideEnvironment": "lines 1-3 of the log are `node -v`, `npm -v` and `command -v node` read in the same shell that then ran `npm run build`; `command -v node` resolved to /Users/jacksm5pro/dev/open-source/versionless/.versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64/bin/node",
+    "green": false,
+    "firstDiagnostic": "Error: Optimization error [350.js]: Error: Invalid target \"es2022\" in \"--target=es2022\"",
+    "firstDiagnosticLogLine": 126,
+    "firstDiagnosticIsNewWall": true,
+    "classification": "pipeline-seam",
+    "outputDirectory": null,
+    "outputFileCount": 0,
+    "indexHtmlAtOutputRoot": false,
+    "witnessContractInputAvailable": false,
+    "schemaValidationDiagnosticsInThisRun": 0
+  },
+  "whatTheFixBought": {
+    "wallCleared": "the polyfills schema rejection is gone - `Schema validation` appears zero times in this log, against once in each of u1's two logs",
+    "distanceGained": "the build went from 833ms of validator to 6.4s of real work: it ran the Sass compiler over every component stylesheet, completed `Browser application bundle generation complete.` twice, and died in the optimizer afterwards",
+    "stagesReached": [
+      "CLI schema validation - PASSED (was the u1 wall)",
+      "Sass compilation of component and global stylesheets - completed with deprecation warnings only",
+      "TypeScript / Ivy compilation and webpack bundling - `Browser application bundle generation complete.` x2",
+      "esbuild optimization pass - FAILED, 5 of 5 chunks"
+    ],
+    "o2Answer": "NO - and the wall behind it is a second instance of the same defect class, not an app problem."
+  },
+  "theNewWall": {
+    "diagnosticVerbatim": "Error: Optimization error [350.js]: Error: Invalid target \"es2022\" in \"--target=es2022\"",
+    "occurrences": 5,
+    "chunksAffected": ["350.js", "738.js", "polyfills.js", "runtime.js", "main.js"],
+    "raisedBy": "<copy>/node_modules/esbuild/lib/main.js:1378",
+    "classification": {
+      "verdict": "pipeline seam",
+      "notAppDefect": "The app's own tsconfig declared `target: \"es2015\"` and `module: \"esnext\"`, both of which the installed esbuild accepts. The app did not ask for es2022.",
+      "notCellDefect": "Node 16.20.2 is never implicated. The compiler, the Sass toolchain and webpack all ran to completion under it. The failure is a string the optimizer was handed, not a runtime capability.",
+      "isPipelineSeam": "The pipeline wrote the value that the pipeline's own declared cell cannot consume."
+    },
+    "causalChain": [
+      {
+        "step": 1,
+        "what": "The frozen Angular adapter rewrites the workspace tsconfig target and module to ES2022, unconditionally.",
+        "where": "packages/frameworks/angular/src/angular-workspace-migration.ts:521-529",
+        "code": "for (const key of ['target', 'module'] as const) { const from = compilerOptions[key]; if (from === 'ES2022') continue; migrated[key] = 'ES2022'; ... }",
+        "cellGated": false,
+        "cellParameterUse": "`migrateAngularTsConfig(source, cell)` receives the cell but uses it in exactly one place in the function - a prose string about `compilerOptions.lib`. No branch anywhere in the rewrite tests `cell.angularLine`.",
+        "recordedInRunRecord": [
+          "compilerOptions.target: \"es2015\" -> \"ES2022\"",
+          "compilerOptions.module: \"esnext\" -> \"ES2022\"",
+          "added compilerOptions.useDefineForClassFields = false"
+        ]
+      },
+      {
+        "step": 2,
+        "what": "The 13.3.11 devkit reads that TypeScript ScriptTarget and turns it into a number.",
+        "where": "<copy>/node_modules/@angular-devkit/build-angular/src/webpack/plugins/javascript-optimizer-plugin.js:102",
+        "code": "target = Number(typescript_1.ScriptTarget[this.options.target].slice(2));",
+        "result": 2022
+      },
+      {
+        "step": 3,
+        "what": "The optimizer worker string-formats it into an esbuild target.",
+        "where": "<copy>/node_modules/@angular-devkit/build-angular/src/webpack/plugins/javascript-optimizer-worker.js:80",
+        "code": "target: `es${options.target}`,",
+        "result": "es2022"
+      },
+      {
+        "step": 4,
+        "what": "esbuild rejects it. The devkit pins esbuild at an exact version that predates es2022 support.",
+        "installedEsbuild": "0.14.22",
+        "devkitDependencyPin": {"esbuild": "0.14.22", "esbuild-wasm": "0.14.22"},
+        "pinIsExact": true,
+        "probe": "Ran the lane's own <copy>/node_modules/.bin/esbuild directly on a trivial file: `--target=es2021` transformed and printed output; `--target=es2022` returned `✘ [ERROR] Invalid target \"es2022\" in \"--target=es2022\"`. The ceiling is the installed binary's, not a configuration mistake."
+      }
+    ],
+    "sameShapeAsO1": "This is the polyfills defect again, one layer deeper. Both are unconditional modern-line rewrites in the frozen Angular adapter, written for the 15/16 devkit line, applied to a workspace whose declared cell is Angular 13.4.0 with devkit 13.3.11. u1 found the first; the copy found the second only because the first was cleared.",
+    "eshopComparison": "The corpus' one green Angular build (evidence/ingests/angular-eshop-webspa-netcore2-2/migration/u4-t024-target-build-run2.log) is not a counterexample to check against blind: it was produced by an ingest path, not by this adapter's tsconfig migration, and T046 should not assume the two wrote the same tsconfig."
+  },
+  "nonFatalNoise": {
+    "sassDeprecations": {
+      "count": 7,
+      "text": "Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.",
+      "files": ["src/app/shared/components/error-message/error-message.component.scss", "src/app/shared/scss/_themes.scss"],
+      "origin": "app source, pre-existing, warning only"
+    },
+    "esbuildCssWarnings": {
+      "count": 3,
+      "text": "Unexpected \">\"",
+      "files": ["src/app/item-details/comment/comment.component.scss", "src/app/user/user.component.scss"],
+      "cause": "the app's `:host > > > a` deep-selector syntax",
+      "origin": "app source, pre-existing, warning only"
+    },
+    "note": "Neither class is fatal and neither is the wall. Recording them so a later unit does not mistake them for the finding."
+  },
+  "network": {
+    "reached": false,
+    "note": "No resolution, registry or fetch activity appears anywhere in the log. VERSIONLESS_NETWORK_MODE was not set and no network mode was requested. The closure the copy carried was sufficient to compile and bundle the whole application.",
+    "ngccInvoked": false,
+    "ngccNote": "No ngcc output appears; the copied closure was already processed."
+  },
+  "laneMutation": {
+    "realLaneEdited": false,
+    "realLaneAnyFileTouched": false,
+    "copyEdited": true,
+    "copyEditedFiles": ["angular.json"],
+    "copyOutputDirectoryCreated": false,
+    "note": "<copy>/dist does not exist. The optimizer failed before emit, so the build wrote no artifact even in the copy."
+  },
+  "verdict": {
+    "o2": {
+      "question": "Does angular2-hn build green under 16.20.2 once the schema is valid?",
+      "answer": "NO. Clearing the polyfills defect moves the wall, it does not remove it. The build now compiles the entire application successfully and dies in the optimizer on `Invalid target \"es2022\"`, five chunks out of five, exit 1, no artifact.",
+      "resolved": true,
+      "resolvedBy": "measurement on a throwaway copy with exactly one variable changed"
+    },
+    "forTheOwnerDecision": {
+      "board": "T044 supersession #2",
+      "priced": "u2 as scoped (gate the polyfills string->array rewrite on the cell) is necessary but NOT sufficient. It buys a build that gets ~6.4s further and still exits 1 with zero artifacts. A green angular2-hn needs the tsconfig target/module rewrite gated on the cell as well - the same gating decision, a second site, in the same frozen subtree.",
+      "meaningForRiskR1": "R1 (frozen-subtree reopen) is not avoidable by keeping u2 small. The subtree has to be reopened either way, and reopening it once for two ungated rewrites is cheaper than reopening it twice.",
+      "whatIsStillUnknown": "Whether a third wall sits behind the target rewrite. This unit changed one variable and stopped, as scoped. Nothing past the esbuild optimizer has been exercised, so the witness contract's input (an output directory with index.html at its root) remains unobserved for this app.",
+      "honestCell": "The one thing measured clean here is that Node 16.20.2 plus the lane's own closure compiles this application end to end. Every wall found so far was written by the pipeline, not met in the runtime."
+    }
+  },
+  "logVerbatimAnchors": {
+    "line1": "v16.20.2",
+    "line2": "8.19.4",
+    "line3": "/Users/jacksm5pro/dev/open-source/versionless/.versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64/bin/node",
+    "line5": "> angular-hnpwa@0.0.0 build",
+    "line6": "> ng build",
+    "bundleCompleteLines": "✔ Browser application bundle generation complete.",
+    "line126": "Error: Optimization error [350.js]: Error: Invalid target \"es2022\" in \"--target=es2022\"",
+    "note": "Lines 1-3 are the runtime readings this unit recorded before invoking `npm run build`, not build output - same discipline as u1."
+  }
+}

@@ -1,0 +1,181 @@
+v16.20.2
+8.19.4
+/Users/jacksm5pro/dev/open-source/versionless/.versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64/bin/node
+
+> angular-hnpwa@0.0.0 build
+> ng build
+
+- Generating browser application bundles (phase: setup)...
+DEPRECATION DEPRECATION WARNING: Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($skull-size, 15) or calc($skull-size / 15)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+   ╷
+68 │           left: $skull-size / 15;
+   │                 ^^^^^^^^^^^^^^^^
+   ╵
+    src/app/shared/components/error-message/error-message.component.scss 68:17  root stylesheet
+
+DEPRECATION WARNING: Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($skull-size, 20) or calc($skull-size / 20)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+   ╷
+69 │           border-right: $skull-size / 20 solid transparent;
+   │                         ^^^^^^^^^^^^^^^^
+   ╵
+    src/app/shared/components/error-message/error-message.component.scss 69:25  root stylesheet
+
+DEPRECATION WARNING: Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($skull-size, 40) or calc($skull-size / 40)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+   ╷
+70 │           border-left: $skull-size / 40 solid transparent;
+   │                        ^^^^^^^^^^^^^^^^
+   ╵
+    src/app/shared/components/error-message/error-message.component.scss 70:24  root stylesheet
+
+DEPRECATION WARNING: Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($skull-size, 10) or calc($skull-size / 10)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+   ╷
+80 │       border-radius: 0 0 $skull-size / 10 $skull-size / 10;
+   │                          ^^^^^^^^^^^^^^^^
+   ╵
+    src/app/shared/components/error-message/error-message.component.scss 80:26  root stylesheet
+
+DEPRECATION WARNING: Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($skull-size, 10) or calc($skull-size / 10)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+   ╷
+80 │       border-radius: 0 0 $skull-size / 10 $skull-size / 10;
+   │                                           ^^^^^^^^^^^^^^^^
+   ╵
+    src/app/shared/components/error-message/error-message.component.scss 80:43  root stylesheet
+
+WARNING: Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($skull-size, 8) or calc($skull-size / 8)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+    ╷
+145 │                 border-top: $skull-size / 8 solid $wrapper-background-color;
+    │                             ^^^^^^^^^^^^^^^
+    ╵
+    src/app/shared/scss/_themes.scss 145:29  theme()
+    src/app/shared/scss/_themes.scss 196:1   @import
+    src/styles.scss 1:9                      root stylesheet
+
+DEPRECATION WARNING: Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+
+Recommendation: math.div($skull-size, 8) or calc($skull-size / 8)
+
+More info and automated migrator: https://sass-lang.com/d/slash-div
+
+    ╷
+148 │                   border-top: $skull-size / 8 solid $wrapper-mobile-background-color;
+    │                               ^^^^^^^^^^^^^^^
+    ╵
+    src/app/shared/scss/_themes.scss 148:31  theme()
+    src/app/shared/scss/_themes.scss 196:1   @import
+    src/styles.scss 1:9                      root stylesheet
+
+✔ Browser application bundle generation complete.
+✔ Browser application bundle generation complete.
+
+Warning: ▲ [WARNING] Unexpected ">"
+
+    /private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t046-u1b-lane-copy/src/app/item-details/comment/comment.component.scss:1:8:
+      1 │ :host > > > a {
+        ╵         ^
+
+
+
+Warning: ▲ [WARNING] Unexpected ">"
+
+    /private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t046-u1b-lane-copy/src/app/item-details/comment/comment.component.scss:5:8:
+      5 │ :host > > > a:hover {
+        ╵         ^
+
+
+
+Warning: ▲ [WARNING] Unexpected ">"
+
+    /private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t046-u1b-lane-copy/src/app/user/user.component.scss:1:8:
+      1 │ :host > > > pre {
+        ╵         ^
+
+
+
+
+
+Error: Optimization error [350.js]: Error: Invalid target "es2022" in "--target=es2022"
+    at /private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t046-u1b-lane-copy/node_modules/esbuild/lib/main.js:1378:29
+    at /private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t046-u1b-lane-copy/node_modules/esbuild/lib/main.js:665:9
+    at handleIncomingPacket (/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t046-u1b-lane-copy/node_modules/esbuild/lib/main.js:760:9)
+    at Socket.readFromStdout (/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t046-u1b-lane-copy/node_modules/esbuild/lib/main.js:632:7)
+    at Socket.emit (node:events:513:28)
+    at addChunk (node:internal/streams/readable:315:12)
+    at readableAddChunk (node:internal/streams/readable:289:9)
+    at Socket.Readable.push (node:internal/streams/readable:228:10)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:190:23)
+
+Error: Optimization error [738.js]: Error: Invalid target "es2022" in "--target=es2022"
+    at /private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t046-u1b-lane-copy/node_modules/esbuild/lib/main.js:1378:29
+    at /private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t046-u1b-lane-copy/node_modules/esbuild/lib/main.js:665:9
+    at handleIncomingPacket (/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t046-u1b-lane-copy/node_modules/esbuild/lib/main.js:760:9)
+    at Socket.readFromStdout (/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t046-u1b-lane-copy/node_modules/esbuild/lib/main.js:632:7)
+    at Socket.emit (node:events:513:28)
+    at addChunk (node:internal/streams/readable:315:12)
+    at readableAddChunk (node:internal/streams/readable:289:9)
+    at Socket.Readable.push (node:internal/streams/readable:228:10)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:190:23)
+
+Error: Optimization error [polyfills.js]: Error: Invalid target "es2022" in "--target=es2022"
+    at /private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t046-u1b-lane-copy/node_modules/esbuild/lib/main.js:1378:29
+    at /private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t046-u1b-lane-copy/node_modules/esbuild/lib/main.js:665:9
+    at handleIncomingPacket (/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t046-u1b-lane-copy/node_modules/esbuild/lib/main.js:760:9)
+    at Socket.readFromStdout (/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t046-u1b-lane-copy/node_modules/esbuild/lib/main.js:632:7)
+    at Socket.emit (node:events:513:28)
+    at addChunk (node:internal/streams/readable:315:12)
+    at readableAddChunk (node:internal/streams/readable:289:9)
+    at Socket.Readable.push (node:internal/streams/readable:228:10)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:190:23)
+
+Error: Optimization error [runtime.js]: Error: Invalid target "es2022" in "--target=es2022"
+    at /private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t046-u1b-lane-copy/node_modules/esbuild/lib/main.js:1378:29
+    at /private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t046-u1b-lane-copy/node_modules/esbuild/lib/main.js:665:9
+    at handleIncomingPacket (/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t046-u1b-lane-copy/node_modules/esbuild/lib/main.js:760:9)
+    at Socket.readFromStdout (/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t046-u1b-lane-copy/node_modules/esbuild/lib/main.js:632:7)
+    at Socket.emit (node:events:513:28)
+    at addChunk (node:internal/streams/readable:315:12)
+    at readableAddChunk (node:internal/streams/readable:289:9)
+    at Socket.Readable.push (node:internal/streams/readable:228:10)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:190:23)
+
+Error: Optimization error [main.js]: Error: Invalid target "es2022" in "--target=es2022"
+    at /private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t046-u1b-lane-copy/node_modules/esbuild/lib/main.js:1378:29
+    at /private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t046-u1b-lane-copy/node_modules/esbuild/lib/main.js:665:9
+    at handleIncomingPacket (/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t046-u1b-lane-copy/node_modules/esbuild/lib/main.js:760:9)
+    at Socket.readFromStdout (/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t046-u1b-lane-copy/node_modules/esbuild/lib/main.js:632:7)
+    at Socket.emit (node:events:513:28)
+    at addChunk (node:internal/streams/readable:315:12)
+    at readableAddChunk (node:internal/streams/readable:289:9)
+    at Socket.Readable.push (node:internal/streams/readable:228:10)
+    at Pipe.onStreamRead (node:internal/stream_base_commons:190:23)
+
+
