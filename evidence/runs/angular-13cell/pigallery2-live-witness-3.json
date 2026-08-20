@@ -1,0 +1,895 @@
+{
+ "schemaVersion": "versionless.angular-13cell-live-witness.v1",
+ "unit": "bank-demo-fleet-pipeline-p2/T009f-locale-provider-rewitness",
+ "goal": "next-tranche-strategy",
+ "measuredAt": "2026-08-20",
+ "repoHeadAtMeasurement": "3cf440071488572cc7c7cdc739d3451ea9c0fcbd",
+ "host": "darwin-arm64 (Apple silicon)",
+ "question": [
+  "T009e closed the $localize defect and caught a SECOND one behind it: the Angular 13 lane bootstrapped, routed itself to /login, and died on \"Error: Cannot find module './messages.en-US.xlf'\" thrown by the TRANSLATIONS DI factory at frontend/app/app.module.ts:114-123, whose guard returns early only when the locale is exactly \"en\". Angular 13 dropped --i18n-locale, so LOCALE_ID fell back to its default \"en-US\" and the guard missed.",
+  "This unit applies the migration-faithful translation of that dropped CLI flag - {provide: LOCALE_ID, useValue: 'en'} in the app module, nothing else - rebuilds twice, and re-witnesses BOTH lanes live in one session. The question is narrow and falsifiable: does the provider translation close the second defect, and does the lane then reach the baseline's gallery readings?",
+  "And a second question T009e forced onto this unit: judged on APPLICATION-LEVEL SIGNALS rather than outcome strings, are the two lanes the same? T009e proved parity.identical can read true across one healthy and one broken lane, so this record is required to compare the signals and to say which flag is authoritative."
+ ],
+ "answerInOneLine": "The provider translation closes the second defect COMPLETELY and no third defect sits behind it: the migrated lane now bootstraps, routes itself to /gallery/, calls GET /api/notifications and GET /api/gallery/content/ at 200, and renders three app-gallery-grid-photo tiles and \"3 Images / 3 items\" - the baseline's exact healthy readings, field for field, this session. The Angular 8 -> 13 migration of pigallery2 is live-witnessed end to end, on a nine-item delta.",
+ "headline": {
+  "secondDefectClosed": true,
+  "howThatIsKnown": "the verbatim console error \"ERROR Error: Uncaught (in promise): Error: Cannot find module './messages.en-US.xlf'\" is GONE from the migrated lane's console. Its consoleErrors array now holds exactly one entry, and it is the same leaflet CDN integrity message the BASELINE lane also emits - the mocked non-loopback stylesheet, present on both lanes in every unit since T009c.",
+  "thirdDefectFound": false,
+  "migratedLaneReachesItsGallery": true,
+  "whatItNowDoes": "bootstraps (app-pi-gallery2 with 2 child elements), routes itself off \"/\" to \"/gallery/\", makes GET /api/notifications 200 and GET /api/gallery/content/ 200, and renders app-gallery, app-gallery-grid, app-gallery-navbar and three app-gallery-grid-photo tiles with the summary \"3 Images / 3 items\" - all five things T009e recorded it could not do.",
+  "matchesBaselineExactly": true,
+  "theTrapFromT009eNotRepeated": "This record does not rest its verdict on parity.identical. It compares eleven application-level signals per lane - bootstrapped, routedTo, apiCalls, gallery tiles, gallery summary text, gallery/grid/navbar presence, photoImages, consoleErrors, pageErrors - and reports parity.applicationSignalsIdentical alongside parity.outcomeStringsIdentical. This time both read true, and they read true for the SAME reason. That is the difference from T009e, and it is only visible because the signals were compared.",
+  "oneLineOfCode": "{provide: LOCALE_ID, useValue: 'en'}, added to the providers array of frontend/app/app.module.ts. LOCALE_ID was already imported from @angular/core on line 1 by the application's own pre-existing TRANSLATIONS deps, so the diff is ONE line, not two."
+ },
+ "consent": {
+  "mode": "offline",
+  "consentId": null,
+  "fetched": [],
+  "notFetched": [
+   "NOTHING WAS FETCHED BY THIS UNIT. Zero consented fetches, zero network installs. The fix is a one-line source edit; every dependency it needs (@angular/core) was already in the cell, and @angular/localize was installed by T009e under VL-LEGACY-CORPUS-2026-08-10 and is untouched here.",
+   "package.json and package-lock.json in the 13cell work area are byte-identical to their post-T009e state - no dependency was added, removed or moved.",
+   "The baseline lane output, the era backend, its dependency closure, the era Node and the three generated PNGs were all already on disk. The Chromium is the host Playwright install the witness host resolves."
+  ],
+  "disclosedNonLoopback": {
+   "count": 0,
+   "what": "Zero, on both lanes, during witnessing. The two CDN stylesheets pigallery2's index.html links were mocked on both lanes (mockedNonLoopback 2 per lane) and never fetched. successfulNonLoopback is 0 on both lanes, structurally."
+  }
+ },
+ "migrationDelta": {
+  "priorCount": 8,
+  "priorCountSource": "T009b counted 7 migration-delta items for this cell; T009e added item 8 (the @angular/localize runtime polyfill). See evidence/runs/angular-13cell/pigallery2-compile.json, pigallery2-lanes.json and pigallery2-live-witness-2.json.",
+  "newCount": 9,
+  "item9": {
+   "name": "LOCALE_ID provider - the provider translation of the removed --i18n-locale CLI flag",
+   "file": ".versionless/work/angular-pigallery2/13cell/frontend/app/app.module.ts",
+   "exactDiff": "+    {provide: LOCALE_ID, useValue: 'en'},",
+   "insertedAt": "the head of the providers array's i18n group, immediately above the pre-existing {provide: TRANSLATIONS, useFactory: translationsFactory, deps: [LOCALE_ID]}.",
+   "importsAdded": [],
+   "whyNoImportWasNeeded": "LOCALE_ID was ALREADY imported from @angular/core on line 1 of app.module.ts - the application has always depended on it, as the deps array of its own TRANSLATIONS provider. The migration only had to SUPPLY it.",
+   "appliedBy": "hand edit - one line. There is no CLI schematic for this; the flag it replaces was removed from the CLI.",
+   "why": [
+    "pigallery2 1.7.0 built its localized bundles with the Angular 8 CLI flag `--i18n-locale <locale>`, which set the application's LOCALE_ID at BUILD time. T009b already recorded the loss of the --i18n-* flags as part of this cell's delta: Angular 9 replaced the whole build-time i18n pipeline and Angular 13 has no --i18n-locale at all.",
+    "Without that flag LOCALE_ID takes its framework DEFAULT, which is \"en-US\" - not \"en\". The application's own translationsFactory guards `if (locale === 'en') return '';` - an EXACT comparison. \"en-US\" is not \"en\", so the guard missed and the factory fell through to `require('raw-loader!../translate/messages.en-US.xlf')` for a file that does not exist and never did: frontend/translate/ ships messages.<lang>.xlf for the translated languages only, and English is precisely the language with no file, because English is the source.",
+    "The migration-faithful translation of `--i18n-locale en` into Angular 13 is to provide LOCALE_ID with the value the flag used to set. That is exactly this line, in the one place Angular 13 offers: the injector.",
+    "It reproduces the ERA SEMANTICS rather than changing the application. The baseline's LOCALE_ID WAS \"en\" - the flag put it there. The 13 lane's LOCALE_ID is now \"en\" too, by the only mechanism 13 has."
+   ],
+   "whatWasDeliberatelyNotDone": [
+    "The application's guard was NOT widened to locale.startsWith('en') or to a normalizing comparison. That would change application logic beyond what the era flag did, and would make a different claim: that the app needs fixing. It does not. The BUILD lost a flag; the flag was restored as a provider.",
+    "No file in frontend/translate/ was added, renamed or generated. No messages.en-US.xlf was created to satisfy the require. The missing file was never the defect - the wrong locale was.",
+    "angular.json, tsconfig.13cell.build.json, polyfills.ts, package.json and package-lock.json are byte-identical to their post-T009e state."
+   ],
+   "buildEvidenceThatItIsAnApplicationChange": "the main bundle CHANGED (sha256 aa66f5cc… -> b3d48f97…, 2026817 -> 2026853 bytes, 36 bytes larger, filename main.4b2fa472bc230245.js -> main.76cb2c7489993b1f.js), while polyfills, runtime, styles, the fonts and 3rdpartylicenses.txt are BYTE-IDENTICAL to T009e. That is the exact opposite signature of item 8, whose main bundle did not change at all - and it is what an application-module edit should look like."
+  }
+ },
+ "rebuild": {
+  "commandVerbatim": "node node_modules/.bin/ng build --configuration production --output-path=./t009f-migrated-run<N>",
+  "sameAsT009bAndT009e": "yes - character for character, only the output directory name differs. The recipe script is .versionless/work/angular-pigallery2/logs/t009f-migrated-build.sh, which is t009e-migrated-build.sh with t009e renamed to t009f and nothing else changed.",
+  "runtime": "node v16.20.2 (darwin-arm64), npm 8.19.4 - the cell runtime, unchanged.",
+  "builds": 2,
+  "runs": [
+   {
+    "run": 1,
+    "outDir": ".versionless/work/angular-pigallery2/13cell/t009f-migrated-run1",
+    "exitCode": 0,
+    "wallSeconds": 9,
+    "webpackHash": "d2b7b9e2678881e8",
+    "webpackTimeMs": 7653,
+    "builtAt": "2026-08-20T06:19:46.160Z",
+    "ngccRan": true
+   },
+   {
+    "run": 2,
+    "outDir": ".versionless/work/angular-pigallery2/13cell/t009f-migrated-run2",
+    "exitCode": 0,
+    "wallSeconds": 4,
+    "webpackHash": "d2b7b9e2678881e8",
+    "webpackTimeMs": 3378,
+    "builtAt": "2026-08-20T06:19:50.607Z",
+    "ngccRan": false
+   }
+  ],
+  "doubleBuildIdentical": true,
+  "doubleBuildIdenticalFromInventory": true,
+  "outputFileCount": 13,
+  "outputTotalBytes": 2495299,
+  "differingFiles": [],
+  "doubleBuildResult": "IDENTICAL - 13/13 files, byte for byte, across two independent runs; both runs printed the same webpack hash d2b7b9e2678881e8. Determinism survives the second fix, as it survived the first.",
+  "webpackHashChangedFrom": "365f7a87a2b00d00 (T009e) -> d2b7b9e2678881e8 (T009f)",
+  "chunkDelta": [
+   {
+    "file": "3rdpartylicenses.txt",
+    "t009eName": "3rdpartylicenses.txt",
+    "t009fName": "3rdpartylicenses.txt",
+    "changed": false,
+    "t009eSha256": "cc251435bafec28ca7cd73aa2ab4adeb7089d94f24420f17cc010b45beddc475",
+    "t009fSha256": "cc251435bafec28ca7cd73aa2ab4adeb7089d94f24420f17cc010b45beddc475"
+   },
+   {
+    "file": "index.html",
+    "t009eName": "index.html",
+    "t009fName": "index.html",
+    "changed": true,
+    "t009eSha256": "99f86a669305961eff5ccb7dc94cff75e3e37488b26701ed2846e159ea7bbb39",
+    "t009fSha256": "c4b4264dd91ec607f30beff2c752d0ad8bcbd5946a1e6477833e3ad0fdc0e55a"
+   },
+   {
+    "file": "main.<hash>.js",
+    "t009eName": "main.4b2fa472bc230245.js",
+    "t009fName": "main.76cb2c7489993b1f.js",
+    "changed": true,
+    "t009eSha256": "aa66f5ccb2314a79c0ac881622a52f8df4faf2b5b74140d7381e35805da2d04f",
+    "t009fSha256": "b3d48f97621df462a552fb36cc344a200ed3d00e5d9c2c910e12cf4e6e7fbec1"
+   },
+   {
+    "file": "open-iconic.<hash>.ttf",
+    "t009eName": "open-iconic.05f3a17709ceaa81.ttf",
+    "t009fName": "open-iconic.05f3a17709ceaa81.ttf",
+    "changed": false,
+    "t009eSha256": "a7e44ff02577bd12b561b224373ab7acfa358f21133e7474ed42dbf875582fcc",
+    "t009fSha256": "a7e44ff02577bd12b561b224373ab7acfa358f21133e7474ed42dbf875582fcc"
+   },
+   {
+    "file": "open-iconic.<hash>.eot",
+    "t009eName": "open-iconic.178770d6dc3ae2e7.eot",
+    "t009fName": "open-iconic.178770d6dc3ae2e7.eot",
+    "changed": false,
+    "t009eSha256": "38ade9a063e0cca2363733603f4ed731b25adc3cfa512a1487f7214a44af4297",
+    "t009fSha256": "38ade9a063e0cca2363733603f4ed731b25adc3cfa512a1487f7214a44af4297"
+   },
+   {
+    "file": "open-iconic.<hash>.woff",
+    "t009eName": "open-iconic.3205870011f84472.woff",
+    "t009fName": "open-iconic.3205870011f84472.woff",
+    "changed": false,
+    "t009eSha256": "7193ea5654497d2356d0a690e3e50f39767fbff4335e57a3443c1435d648a1f2",
+    "t009fSha256": "7193ea5654497d2356d0a690e3e50f39767fbff4335e57a3443c1435d648a1f2"
+   },
+   {
+    "file": "open-iconic.<hash>.svg",
+    "t009eName": "open-iconic.609a03013cfb1ef4.svg",
+    "t009fName": "open-iconic.609a03013cfb1ef4.svg",
+    "changed": false,
+    "t009eSha256": "a14a4b752f92a0b245c1fe1bcc0de2283ed30a6ebaa0b913a40425549dacd707",
+    "t009fSha256": "a14a4b752f92a0b245c1fe1bcc0de2283ed30a6ebaa0b913a40425549dacd707"
+   },
+   {
+    "file": "open-iconic.<hash>.otf",
+    "t009eName": "open-iconic.a0236a1fdc9ab58d.otf",
+    "t009fName": "open-iconic.a0236a1fdc9ab58d.otf",
+    "changed": false,
+    "t009eSha256": "b0352db99004cd6672bff535c65ffd0f77a1c94ebd244f85bc072ee4743efdad",
+    "t009fSha256": "b0352db99004cd6672bff535c65ffd0f77a1c94ebd244f85bc072ee4743efdad"
+   },
+   {
+    "file": "polyfills.<hash>.js",
+    "t009eName": "polyfills.5e5c92c3fb2e7264.js",
+    "t009fName": "polyfills.5e5c92c3fb2e7264.js",
+    "changed": false,
+    "t009eSha256": "2bc56faddb1d61c1195fe018d63b45fed6573c3ed0ee18224d42ab1d7aff8a72",
+    "t009fSha256": "2bc56faddb1d61c1195fe018d63b45fed6573c3ed0ee18224d42ab1d7aff8a72"
+   },
+   {
+    "file": "runtime.<hash>.js",
+    "t009eName": "runtime.411b0840ac02ba1a.js",
+    "t009fName": "runtime.411b0840ac02ba1a.js",
+    "changed": false,
+    "t009eSha256": "9e5f5d8955e5d7c1b6cf282e2f5637ad53108cdb7aba48d20ace220e804b58e1",
+    "t009fSha256": "9e5f5d8955e5d7c1b6cf282e2f5637ad53108cdb7aba48d20ace220e804b58e1"
+   },
+   {
+    "file": "styles.<hash>.css",
+    "t009eName": "styles.aac6e848cd321373.css",
+    "t009fName": "styles.aac6e848cd321373.css",
+    "changed": false,
+    "t009eSha256": "5683bdf042dd273715159571c61ca7bd7c7f2e66d847c02036c598fb020e9fc7",
+    "t009fSha256": "5683bdf042dd273715159571c61ca7bd7c7f2e66d847c02036c598fb020e9fc7"
+   }
+  ],
+  "chunksChangedFromT009e": [
+   "index.html",
+   "main.<hash>.js"
+  ],
+  "chunksUnchangedFromT009e": [
+   "3rdpartylicenses.txt",
+   "open-iconic.<hash>.ttf",
+   "open-iconic.<hash>.eot",
+   "open-iconic.<hash>.woff",
+   "open-iconic.<hash>.svg",
+   "open-iconic.<hash>.otf",
+   "polyfills.<hash>.js",
+   "runtime.<hash>.js",
+   "styles.<hash>.css"
+  ],
+  "whichChunksChanged": {
+   "claim": "EXACTLY TWO artefacts changed: main.<hash>.js and index.html.",
+   "main": "the application bundle, because the application module changed. This is the expected signature and it is the one T009e did NOT have.",
+   "indexHtml": "only because it carries the main bundle's content-hashed filename in its script tag. The line that differs is the script tag line and nothing else; the runtime and polyfills script tags are character-identical.",
+   "polyfillsUnchanged": "polyfills.5e5c92c3fb2e7264.js - byte-identical to T009e. The @angular/localize polyfill from item 8 is untouched by item 9.",
+   "runtimeUnchanged": "runtime.411b0840ac02ba1a.js - byte-identical to T009e.",
+   "stylesUnchanged": "styles.aac6e848cd321373.css - byte-identical to T009e."
+  },
+  "buildWarnings": "IDENTICAL to T009e run for run - `diff` of the warning lines of t009e-migrated-run1.log and t009f-migrated-run1.log is empty. The same four CommonJS optimization-bailout advisories, the same bootstrap :lang selector notice, plus the ngcc deep-import advisory that appears on the first build of a session only (ngcc ran on run1, not run2, in both units). No new warning, and no warning mentioning i18n, locale or a missing translation file. Neither i18n defect was ever visible at build time."
+ },
+ "backend": {
+  "what": "pigallery2 1.7.0's own Express server - backend/index.js - copied byte-for-byte out of the frozen baseline checkout into a per-lane serve root and run unmodified. Identical to T009d and T009e.",
+  "era": "node v10.24.1 (darwin-x64, under Rosetta). The backend was NOT modernized.",
+  "recipe": ".versionless/work/angular-pigallery2/logs/t009f-backend.sh",
+  "recipeProvenance": "T009e's t009f-backend.sh with exactly two path substitutions and no other change: the serve roots become serve/f-<lane> and the backend log becomes t009f-backend-<lane>.log, so T009d's and T009e's own artefacts are left untouched. `diff t009e-backend.sh t009f-backend.sh` shows only those lines.",
+  "howTheLaneIsPointedAt": "ProjectPath.FrontendFolder is hard-coded to <root>/dist, so the serve root's `dist` symlink is the ONLY thing that differs between the two lanes: same backend copy source, same generated media, same config, same port 32701, same era Node.",
+  "config": "identical to T009d/T009e - 127.0.0.1:32701, memory database, Jimp thumbnails, threading off, authenticationRequired false, unAuthenticatedUserRole Admin.",
+  "serialization": "One lane at a time. Baseline was set up, started, witnessed and STOPPED before the migrated backend was started; the stop step pkills any surviving era backend, and `pgrep -fl node-v10.24.1` after the run printed nothing. Each lane's served bundle filenames were read off the live index.html before witnessing it: the baseline served main.8d7a6399e761b63341dc.js and the migrated served main.76cb2c7489993b1f.js - this unit's freshly built bundle, not T009e's.",
+  "readiness": "polled GET / until 200; both lanes came up in 2s."
+ },
+ "media": {
+  "what": "the SAME three 64x48 generated PNGs T009d and T009e used, re-verified by sha256 before the run rather than regenerated.",
+  "dir": ".versionless/work/angular-pigallery2/serve/media",
+  "files": [
+   {
+    "name": "a-crimson.png",
+    "sha256": "f35fe76f2e81d4bfc9cb47d25bdacdc96ebe6b27e4edfd69c2447189f4b281f2"
+   },
+   {
+    "name": "b-forest.png",
+    "sha256": "e98dd3c6320bafd8f6e154f6c93be7a9011fe47594187ec26c25440906b6c7b5"
+   },
+   {
+    "name": "c-indigo.png",
+    "sha256": "a6c4515c39d3f92e78b9bf7e912b191d311b52a2d3a019d4f5d1b78c8f13dc8f"
+   }
+  ],
+  "matchesT009dAndT009e": true,
+  "indexedByTheBackend": "GET /api/gallery/content/ returned 200 on BOTH lanes this session and both running applications rendered \"3 Images / 3 items\" over three tiles, so the backend indexed the same tree for both."
+ },
+ "witnessRun": {
+  "flow": "witness-host-driven-synthesized-crawl-against-live-backend-origin",
+  "howItWasRun": ".versionless/work/angular-pigallery2/logs/t009d-live-witness.mjs - T009d's driver REUSED BYTE-FOR-BYTE for the third time, under `node --experimental-strip-types` on host node v24.15.0. It takes every path as an argument, so not one character of it needed adjusting.",
+  "driverSha256": "c798e2b9793014f828ac557163a4153b217b322756a7234360985b0694c3888a",
+  "driverUnchangedSinceT009d": true,
+  "whyNotTheCliDirectly": "unchanged from T009d/T009e: the CLI's witness:real-app synthesized path takes DIRECTORIES and serves them itself, and its live-backend seam is gated on a registered AppSpec in a closed admitted list in packages/core/src/receipts/witness-real-app.ts. Extending that is a packages/ change this unit is forbidden to make, so the seam was OPERATED, not extended.",
+  "importedUnchangedFromPackages": [
+   "packages/cli/src/witness/journey-synthesis/crawl.ts - crawlLaneJourneys, CRAWL_DEFAULT_BOUNDS",
+   "packages/cli/src/witness/journey-synthesis/emit.ts - emitSynthesizedJourneys, completeSynthesizedJourney",
+   "packages/cli/src/witness/journey-synthesis/driver.ts - routeLinkSelectors",
+   "packages/cli/src/witness/playwright-host.ts - createPlaywrightWitnessHost",
+   "packages/cli/src/witness/browser.ts - witnessChromiumExecutablePath"
+  ],
+  "sameSession": "BOTH lanes were witnessed in this unit, minutes apart, against the same backend recipe on the same host. The baseline reading is FRESH, not carried over from T009d or T009e.",
+  "baselineReproducedAgain": {
+   "claim": "the fresh baseline pass reproduced T009d's and T009e's baseline reading exactly, for the third session running.",
+   "outcomesIdenticalToT009e": true,
+   "surfaceIdenticalToT009e": true,
+   "whyItMatters": "the recipe reproduces. The change in the migrated lane's reading is therefore attributable to the one-line rebuild, not to drift in the harness, the backend, the media or the host."
+  },
+  "likeForLikeBy": "construction. The journey was derived ONCE, by the bounded crawl, against the baseline lane's live origin, written to t009f-plan.json, and the SAME plan replayed against the migrated lane. The derived plan is byte-identical to T009e's t009e-plan.json (same sha256 a9ecbb6c…), so the two units also asked the two lanes the same question.",
+  "crawlBounds": {
+   "maxDepth": 2,
+   "maxRoutes": 12,
+   "requestTimeoutMs": 5000
+  },
+  "plan": ".versionless/work/angular-pigallery2/logs/t009f-plan.json",
+  "planSha256": "a9ecbb6c62c52b65b931af535bfb6c845e597347ca82feb796e0b885b2691567",
+  "chromium": {
+   "resolvedBy": "packages/cli/src/witness/browser.ts - witnessChromiumExecutablePath()",
+   "real": true,
+   "headless": true
+  },
+  "loopbackEnforcement": "structural, in the witness host: context.route continues a request only when isWitnessLoopbackUrl holds and fulfils everything else locally with 204. successfulNonLoopback is 0 by construction on both lanes, not by report.",
+  "boundedWaits": [
+   "app-pi-gallery2 with more than one child element, at most 15s",
+   "at least one app-gallery-grid-photo, at most 15s",
+   "Both allowed to time out and be measured either way. NEITHER timed out on EITHER lane this session: the baseline finished in 1.357s and the migrated in 1.157s, against T009e's migrated 31.0s (both waits spent in full) and T009d's migrated 31s. The wall time alone is a signal that the lane now renders its gallery within the first wait."
+  ]
+ },
+ "lanes": {
+  "baseline": {
+   "lane": "baseline",
+   "origin": "http://127.0.0.1:32701",
+   "mode": "derive",
+   "distServed": ".versionless/work/angular-pigallery2/baseline/t009b-baseline-run1",
+   "bundlesServed": [
+    "main.8d7a6399e761b63341dc.js",
+    "polyfills.6ce7c8613dd7f1c39c89.js",
+    "runtime.465c2333d355155ec5f3.js",
+    "styles.7af5efa7635d003dad98.css"
+   ],
+   "successfulNonLoopback": 0,
+   "mockedNonLoopback": 2,
+   "witnessWallSeconds": 1.357,
+   "declaredRoutes": [
+    "/",
+    "/assets/icon.png",
+    "/styles.7af5efa7635d003dad98.css"
+   ],
+   "journeyCounts": {
+    "routesDeclared": 3,
+    "routesReached": 0,
+    "selectorsDeclared": 0,
+    "selectorsPresent": 0,
+    "routesWithoutOverflow": 1,
+    "unreplayableSteps": [
+     "route-not-reachable-by-link:/assets/icon.png",
+     "route-not-reachable-by-link:/styles.7af5efa7635d003dad98.css"
+    ]
+   },
+   "outcomes": [
+    "journey-measured-declared-gesture-count-0",
+    "journey-measured-unhandled-construct-count-0",
+    "journey-synthesized-by-crawl-bounded-depth-2-reached-0-routes",
+    "journey-measured-route-reached-0-of-3-declared-routes",
+    "journey-measured-selector-present-0-of-0-declared-selectors",
+    "journey-measured-no-document-overflow-on-1-routes"
+   ],
+   "runningApplication": {
+    "title": "PiGallery 2",
+    "baseHref": "/",
+    "baseResolved": "http://127.0.0.1:32701/",
+    "appRootPresent": true,
+    "appRootChildElementCount": 2,
+    "serverInjectDefined": true,
+    "galleryComponentPresent": true,
+    "gridPresent": true,
+    "photoTiles": 3,
+    "photoImages": 0,
+    "thumbnailSrcs": [],
+    "navbarPresent": true,
+    "visibleText": "PiGallery 2\nGallery\nen \n3\nImages\n3 items \nServer error\nSharing is not supported with these settings. Disabling temporally. Please adjust the config properly. Details: \"Error: Memory Database do not support sharing\"\nServer error\nFaces are not supported with these settings. Disabling temporally. Pleas",
+    "location": "/gallery/"
+   },
+   "applicationSignals": {
+    "bootstrapped": true,
+    "bootstrappedReadFrom": "surface.appRootPresent && surface.appRootChildElementCount > 1, evaluated in the page by the witness driver after its two bounded waits.",
+    "routedTo": "/gallery/",
+    "routedToReadFrom": "location.pathname + location.search + location.hash, evaluated in the page after the journey.",
+    "apiCalls": [
+     {
+      "method": "GET",
+      "url": "http://127.0.0.1:32701/api/notifications",
+      "status": 200
+     },
+     {
+      "method": "GET",
+      "url": "http://127.0.0.1:32701/api/gallery/content/",
+      "status": 200
+     }
+    ],
+    "apiCallsReadFrom": "the witness host's own requestOutcomes() network ledger, filtered to /api/. Not inferred from the DOM.",
+    "gallery": {
+     "tiles": 3,
+     "tilesReadFrom": "document.querySelectorAll('app-gallery-grid-photo').length, evaluated in the page.",
+     "summaryText": "3\nImages\n3 items",
+     "summaryTextReadFrom": "verbatim substring of surface.visibleText (document.body.innerText), matched by /(\\d+)\\n(Images|Videos|Items)\\n(\\d+ items)/. The newlines are the page's own line breaks; rendered it reads \"3 Images / 3 items\".",
+     "componentPresent": true,
+     "gridPresent": true,
+     "navbarPresent": true,
+     "photoImages": 0
+    },
+    "consoleErrors": [
+     "Failed to find a valid digest in the 'integrity' attribute for resource 'https://unpkg.com/leaflet@1.3.4/dist/leaflet.css' with computed SHA-512 integrity 'z4PhNX7vuL3xVChQ1m2AB9Yg5AULVxXcg/SpIdNs6c5H0NE8XYXysP+DGNKHfuwvY7kxvUdBeoGlODJ6+SfaPg=='. The resource has been blocked."
+    ],
+    "pageErrors": [],
+    "consoleErrorsReadFrom": "page.onConsoleMessage level==='error' and page.onPageError, collected by the driver for the whole page lifetime. Truncated at 300 characters by the reused driver."
+   },
+   "requestsObserved": [
+    {
+     "method": "GET",
+     "url": "http://127.0.0.1:32701/",
+     "status": 200
+    },
+    {
+     "method": "GET",
+     "url": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/css/bootstrap3/bootstrap-switch.css",
+     "status": 204
+    },
+    {
+     "method": "GET",
+     "url": "https://unpkg.com/leaflet@1.3.4/dist/leaflet.css",
+     "status": 204
+    },
+    {
+     "method": "GET",
+     "url": "http://127.0.0.1:32701/assets/icon.png",
+     "status": 200
+    },
+    {
+     "method": "GET",
+     "url": "http://127.0.0.1:32701/styles.7af5efa7635d003dad98.css",
+     "status": 200
+    },
+    {
+     "method": "GET",
+     "url": "http://127.0.0.1:32701/runtime.465c2333d355155ec5f3.js",
+     "status": 200
+    },
+    {
+     "method": "GET",
+     "url": "http://127.0.0.1:32701/polyfills.6ce7c8613dd7f1c39c89.js",
+     "status": 200
+    },
+    {
+     "method": "GET",
+     "url": "http://127.0.0.1:32701/main.8d7a6399e761b63341dc.js",
+     "status": 200
+    },
+    {
+     "method": "GET",
+     "url": "http://127.0.0.1:32701/api/notifications",
+     "status": 200
+    },
+    {
+     "method": "GET",
+     "url": "http://127.0.0.1:32701/assets/icon_inv.png",
+     "status": 200
+    },
+    {
+     "method": "GET",
+     "url": "http://127.0.0.1:32701/open-iconic.3cf97837524dd7445e9d.woff",
+     "status": 200
+    },
+    {
+     "method": "GET",
+     "url": "http://127.0.0.1:32701/api/gallery/content/",
+     "status": 200
+    },
+    {
+     "method": "GET",
+     "url": "http://127.0.0.1:32701/assets/icon.png",
+     "status": 200
+    }
+   ],
+   "consoleMessages": [
+    "error: Failed to find a valid digest in the 'integrity' attribute for resource 'https://unpkg.com/leaflet@1.3.4/dist/leaflet.css' with computed SHA-512 integrity 'z4PhNX7vuL3xVChQ1m2AB9Yg5AULVxXcg/SpIdNs6c5H0NE8XYXysP+DGNKHfuwvY7kxvUdBeoGlODJ6+SfaPg=='. The resource has been blocked."
+   ],
+   "laneReadingFile": ".versionless/work/angular-pigallery2/logs/t009f-lane-baseline.json"
+  },
+  "migrated": {
+   "lane": "migrated",
+   "origin": "http://127.0.0.1:32701",
+   "mode": "replay",
+   "distServed": ".versionless/work/angular-pigallery2/13cell/t009f-migrated-run1",
+   "bundlesServed": [
+    "main.76cb2c7489993b1f.js",
+    "polyfills.5e5c92c3fb2e7264.js",
+    "runtime.411b0840ac02ba1a.js",
+    "styles.aac6e848cd321373.css"
+   ],
+   "successfulNonLoopback": 0,
+   "mockedNonLoopback": 2,
+   "witnessWallSeconds": 1.157,
+   "declaredRoutes": [
+    "/",
+    "/assets/icon.png",
+    "/styles.7af5efa7635d003dad98.css"
+   ],
+   "journeyCounts": {
+    "routesDeclared": 3,
+    "routesReached": 0,
+    "selectorsDeclared": 0,
+    "selectorsPresent": 0,
+    "routesWithoutOverflow": 1,
+    "unreplayableSteps": [
+     "route-not-reachable-by-link:/assets/icon.png",
+     "route-not-reachable-by-link:/styles.7af5efa7635d003dad98.css"
+    ]
+   },
+   "outcomes": [
+    "journey-measured-declared-gesture-count-0",
+    "journey-measured-unhandled-construct-count-0",
+    "journey-synthesized-by-crawl-bounded-depth-2-reached-0-routes",
+    "journey-measured-route-reached-0-of-3-declared-routes",
+    "journey-measured-selector-present-0-of-0-declared-selectors",
+    "journey-measured-no-document-overflow-on-1-routes"
+   ],
+   "runningApplication": {
+    "title": "PiGallery 2",
+    "baseHref": "/",
+    "baseResolved": "http://127.0.0.1:32701/",
+    "appRootPresent": true,
+    "appRootChildElementCount": 2,
+    "serverInjectDefined": true,
+    "galleryComponentPresent": true,
+    "gridPresent": true,
+    "photoTiles": 3,
+    "photoImages": 0,
+    "thumbnailSrcs": [],
+    "navbarPresent": true,
+    "visibleText": "PiGallery 2\nGallery\nen \n3\nImages\n3 items \nServer error\nSharing is not supported with these settings. Disabling temporally. Please adjust the config properly. Details: \"Error: Memory Database do not support sharing\"\nServer error\nFaces are not supported with these settings. Disabling temporally. Pleas",
+    "location": "/gallery/"
+   },
+   "applicationSignals": {
+    "bootstrapped": true,
+    "bootstrappedReadFrom": "surface.appRootPresent && surface.appRootChildElementCount > 1, evaluated in the page by the witness driver after its two bounded waits.",
+    "routedTo": "/gallery/",
+    "routedToReadFrom": "location.pathname + location.search + location.hash, evaluated in the page after the journey.",
+    "apiCalls": [
+     {
+      "method": "GET",
+      "url": "http://127.0.0.1:32701/api/notifications",
+      "status": 200
+     },
+     {
+      "method": "GET",
+      "url": "http://127.0.0.1:32701/api/gallery/content/",
+      "status": 200
+     }
+    ],
+    "apiCallsReadFrom": "the witness host's own requestOutcomes() network ledger, filtered to /api/. Not inferred from the DOM.",
+    "gallery": {
+     "tiles": 3,
+     "tilesReadFrom": "document.querySelectorAll('app-gallery-grid-photo').length, evaluated in the page.",
+     "summaryText": "3\nImages\n3 items",
+     "summaryTextReadFrom": "verbatim substring of surface.visibleText (document.body.innerText), matched by /(\\d+)\\n(Images|Videos|Items)\\n(\\d+ items)/. The newlines are the page's own line breaks; rendered it reads \"3 Images / 3 items\".",
+     "componentPresent": true,
+     "gridPresent": true,
+     "navbarPresent": true,
+     "photoImages": 0
+    },
+    "consoleErrors": [
+     "Failed to find a valid digest in the 'integrity' attribute for resource 'https://unpkg.com/leaflet@1.3.4/dist/leaflet.css' with computed SHA-512 integrity 'z4PhNX7vuL3xVChQ1m2AB9Yg5AULVxXcg/SpIdNs6c5H0NE8XYXysP+DGNKHfuwvY7kxvUdBeoGlODJ6+SfaPg=='. The resource has been blocked."
+    ],
+    "pageErrors": [],
+    "consoleErrorsReadFrom": "page.onConsoleMessage level==='error' and page.onPageError, collected by the driver for the whole page lifetime. Truncated at 300 characters by the reused driver."
+   },
+   "requestsObserved": [
+    {
+     "method": "GET",
+     "url": "http://127.0.0.1:32701/",
+     "status": 200
+    },
+    {
+     "method": "GET",
+     "url": "https://unpkg.com/leaflet@1.3.4/dist/leaflet.css",
+     "status": 204
+    },
+    {
+     "method": "GET",
+     "url": "https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/css/bootstrap3/bootstrap-switch.css",
+     "status": 204
+    },
+    {
+     "method": "GET",
+     "url": "http://127.0.0.1:32701/assets/icon.png",
+     "status": 200
+    },
+    {
+     "method": "GET",
+     "url": "http://127.0.0.1:32701/runtime.411b0840ac02ba1a.js",
+     "status": 200
+    },
+    {
+     "method": "GET",
+     "url": "http://127.0.0.1:32701/styles.aac6e848cd321373.css",
+     "status": 200
+    },
+    {
+     "method": "GET",
+     "url": "http://127.0.0.1:32701/polyfills.5e5c92c3fb2e7264.js",
+     "status": 200
+    },
+    {
+     "method": "GET",
+     "url": "http://127.0.0.1:32701/main.76cb2c7489993b1f.js",
+     "status": 200
+    },
+    {
+     "method": "GET",
+     "url": "http://127.0.0.1:32701/api/notifications",
+     "status": 200
+    },
+    {
+     "method": "GET",
+     "url": "http://127.0.0.1:32701/open-iconic.3205870011f84472.woff",
+     "status": 200
+    },
+    {
+     "method": "GET",
+     "url": "http://127.0.0.1:32701/assets/icon_inv.png",
+     "status": 200
+    },
+    {
+     "method": "GET",
+     "url": "http://127.0.0.1:32701/api/gallery/content/",
+     "status": 200
+    },
+    {
+     "method": "GET",
+     "url": "http://127.0.0.1:32701/assets/icon.png",
+     "status": 200
+    }
+   ],
+   "consoleMessages": [
+    "error: Failed to find a valid digest in the 'integrity' attribute for resource 'https://unpkg.com/leaflet@1.3.4/dist/leaflet.css' with computed SHA-512 integrity 'z4PhNX7vuL3xVChQ1m2AB9Yg5AULVxXcg/SpIdNs6c5H0NE8XYXysP+DGNKHfuwvY7kxvUdBeoGlODJ6+SfaPg=='. The resource has been blocked."
+   ],
+   "laneReadingFile": ".versionless/work/angular-pigallery2/logs/t009f-lane-migrated.json"
+  }
+ },
+ "parity": {
+  "outcomeStringsIdentical": true,
+  "applicationSignalsIdentical": true,
+  "authoritative": "applicationSignals",
+  "whyApplicationSignalsAreAuthoritative": [
+   "T009e is the proof, in this same directory, on this same app: outcomeStringsIdentical read TRUE while the migrated lane was BROKEN. Both lanes scored routes-reached 0 - the baseline because it left \"/\" for /gallery/ (healthy), the migrated because it left \"/\" for /login (broken). The outcome vocabulary counts route DEPARTURES; it cannot see where either lane arrived.",
+   "The application signals CAN see it. routedTo distinguishes /gallery/ from /login. apiCalls distinguishes two 200s from zero calls. gallery.tiles distinguishes 3 from 0. gallery.summaryText distinguishes \"3 Images / 3 items\" from nothing at all. consoleErrors distinguishes a caught-and-logged Angular ERROR from a clean console.",
+   "So when the two flags disagree, the signals win, and outcomeStringsIdentical must be read as insufficient rather than as corroboration. That is not a claim about this unit's numbers - here both flags read true - it is the rule this unit was required to state BEFORE looking, and it is the rule T009e's trap earned.",
+   "The reverse is also true and worth saying: outcomeStringsIdentical false does not by itself prove a lane is broken (T009d's migrated lane scored routes-reached 1 for the worst possible reason - it never navigated at all). The outcome vocabulary is not a health signal in either direction for this app class."
+  ],
+  "flagsAgreeThisTime": true,
+  "whatAgreementMeansHere": "Both true, and true for the same reason this time: the two lanes really do the same eleven things. Unlike T009e, the green flag is corroborated by signals that can tell health from breakage.",
+  "applicationSignalsComparedOn": [
+   {
+    "field": "bootstrapped",
+    "baseline": true,
+    "migrated": true,
+    "equal": true
+   },
+   {
+    "field": "routedTo",
+    "baseline": "/gallery/",
+    "migrated": "/gallery/",
+    "equal": true
+   },
+   {
+    "field": "apiCalls",
+    "baseline": [
+     "GET /api/gallery/content/ 200",
+     "GET /api/notifications 200"
+    ],
+    "migrated": [
+     "GET /api/gallery/content/ 200",
+     "GET /api/notifications 200"
+    ],
+    "equal": true
+   },
+   {
+    "field": "galleryTiles",
+    "baseline": 3,
+    "migrated": 3,
+    "equal": true
+   },
+   {
+    "field": "gallerySummaryText",
+    "baseline": "3\nImages\n3 items",
+    "migrated": "3\nImages\n3 items",
+    "equal": true
+   },
+   {
+    "field": "galleryComponentPresent",
+    "baseline": true,
+    "migrated": true,
+    "equal": true
+   },
+   {
+    "field": "gridPresent",
+    "baseline": true,
+    "migrated": true,
+    "equal": true
+   },
+   {
+    "field": "navbarPresent",
+    "baseline": true,
+    "migrated": true,
+    "equal": true
+   },
+   {
+    "field": "photoImages",
+    "baseline": 0,
+    "migrated": 0,
+    "equal": true
+   },
+   {
+    "field": "consoleErrors",
+    "baseline": [
+     "Failed to find a valid digest in the 'integrity' attribute for resource 'https://unpkg.com/leaflet@1.3.4/dist/leaflet.css' with computed SHA-512 integrity 'z4PhNX7vuL3xVChQ1m2AB9Yg5AULVxXcg/SpIdNs6c5H0NE8XYXysP+DGNKHfuwvY7kxvUdBeoGlODJ6+SfaPg=='. The resource has been blocked."
+    ],
+    "migrated": [
+     "Failed to find a valid digest in the 'integrity' attribute for resource 'https://unpkg.com/leaflet@1.3.4/dist/leaflet.css' with computed SHA-512 integrity 'z4PhNX7vuL3xVChQ1m2AB9Yg5AULVxXcg/SpIdNs6c5H0NE8XYXysP+DGNKHfuwvY7kxvUdBeoGlODJ6+SfaPg=='. The resource has been blocked."
+    ],
+    "equal": true
+   },
+   {
+    "field": "pageErrors",
+    "baseline": [],
+    "migrated": [],
+    "equal": true
+   }
+  ],
+  "outcomesComparedOn": "the ordered list of outcome strings each lane produced, string for string, plus the per-journey measured counts behind them. Same comparison T009d and T009e made, kept here only so the two flags can be set side by side.",
+  "outcomesBaselineOnly": [],
+  "outcomesMigratedOnly": [],
+  "countsCompared": {
+   "routesDeclared": {
+    "baseline": 3,
+    "migrated": 3
+   },
+   "routesReached": {
+    "baseline": 0,
+    "migrated": 0,
+    "note": "equal, and NOW equal for the same reason: both lanes leave \"/\" for \"/gallery/\". In T009e they were equal for opposite reasons. The number is unchanged between the two units; its meaning is not. This is precisely why the number cannot be the verdict."
+   },
+   "selectorsPresent": {
+    "baseline": 0,
+    "migrated": 0
+   },
+   "routesWithoutOverflow": {
+    "baseline": 1,
+    "migrated": 1
+   }
+  },
+  "fullSurfaceCompared": [
+   {
+    "field": "title",
+    "baseline": "PiGallery 2",
+    "migrated": "PiGallery 2",
+    "equal": true
+   },
+   {
+    "field": "baseHref",
+    "baseline": "/",
+    "migrated": "/",
+    "equal": true
+   },
+   {
+    "field": "baseResolved",
+    "baseline": "http://127.0.0.1:32701/",
+    "migrated": "http://127.0.0.1:32701/",
+    "equal": true
+   },
+   {
+    "field": "appRootPresent",
+    "baseline": true,
+    "migrated": true,
+    "equal": true
+   },
+   {
+    "field": "appRootChildElementCount",
+    "baseline": 2,
+    "migrated": 2,
+    "equal": true
+   },
+   {
+    "field": "serverInjectDefined",
+    "baseline": true,
+    "migrated": true,
+    "equal": true
+   },
+   {
+    "field": "galleryComponentPresent",
+    "baseline": true,
+    "migrated": true,
+    "equal": true
+   },
+   {
+    "field": "gridPresent",
+    "baseline": true,
+    "migrated": true,
+    "equal": true
+   },
+   {
+    "field": "photoTiles",
+    "baseline": 3,
+    "migrated": 3,
+    "equal": true
+   },
+   {
+    "field": "photoImages",
+    "baseline": 0,
+    "migrated": 0,
+    "equal": true
+   },
+   {
+    "field": "thumbnailSrcs",
+    "baseline": [],
+    "migrated": [],
+    "equal": true
+   },
+   {
+    "field": "navbarPresent",
+    "baseline": true,
+    "migrated": true,
+    "equal": true
+   },
+   {
+    "field": "visibleText",
+    "baseline": "PiGallery 2\nGallery\nen \n3\nImages\n3 items \nServer error\nSharing is not supported with these settings. Disabling temporally. Please adjust the config properly. Details: \"Error: Memory Database do not support sharing\"\nServer error\nFaces are not supported with these settings. Disabling temporally. Pleas",
+    "migrated": "PiGallery 2\nGallery\nen \n3\nImages\n3 items \nServer error\nSharing is not supported with these settings. Disabling temporally. Please adjust the config properly. Details: \"Error: Memory Database do not support sharing\"\nServer error\nFaces are not supported with these settings. Disabling temporally. Pleas",
+    "equal": true
+   },
+   {
+    "field": "location",
+    "baseline": "/gallery/",
+    "migrated": "/gallery/",
+    "equal": true
+   }
+  ]
+ },
+ "finding": [
+  "THE SECOND DEFECT IS CLOSED BY THE PROVIDER TRANSLATION ALONE. One line - {provide: LOCALE_ID, useValue: 'en'} - and the \"Cannot find module './messages.en-US.xlf'\" error is gone from the running application's console. The diagnosis T009e published from the error string and the source is confirmed by a build: the locale was wrong, the app was not.",
+  "NO THIRD DEFECT SITS BEHIND IT. The migrated lane's console holds exactly one error and it is the leaflet CDN integrity message the BASELINE also emits, from the mocked non-loopback stylesheet. pageErrors is empty on both lanes.",
+  "THE MIGRATED LANE NOW REACHES THE BASELINE'S READINGS FIELD FOR FIELD. bootstrapped true, routedTo /gallery/, GET /api/notifications 200, GET /api/gallery/content/ 200, three app-gallery-grid-photo tiles, \"3 Images / 3 items\", app-gallery + app-gallery-grid + app-gallery-navbar all present, visibleText character-identical to the baseline's. Eleven compared application signals, eleven equal.",
+  "THE MIGRATION OF PIGALLERY2 FROM ANGULAR 8 TO ANGULAR 13 IS NOW LIVE-WITNESSED END TO END. Compiles (T009a), builds deterministically at both ends (T009b), serves to real Chromium (T009c), runs against its own era backend (T009d), and - after a nine-item migration delta - renders its gallery indistinguishably from the Angular 8 baseline in the same session (this record). Every step is a measured reading, not a claim.",
+  "THE DELTA IS NINE ITEMS AND THE LAST TWO WERE ONLY FINDABLE AT RUNTIME. Items 8 and 9 - the $localize polyfill and the LOCALE_ID provider - produced ZERO build errors and ZERO build warnings. A migration pipeline that stops at \"it builds\" would have shipped this lane twice over, and both times it would have been a white screen or a login page. The live witness is not a nicety in this app class; it is the only thing that caught either defect.",
+  "THE TWO PARITY FLAGS AGREE, AND THAT IS ONLY MEANINGFUL BECAUSE THE SIGNALS WERE COMPARED. outcomeStringsIdentical was also true in T009e, over a broken lane. Its truth here carries information only in the company of applicationSignalsIdentical."
+ ],
+ "machineTimes": {
+  "build": "9s + 4s for two production builds of the migrated lane (ngcc ran on the first only).",
+  "witnessBaselineSeconds": 1.357,
+  "witnessMigratedSeconds": 1.157,
+  "backendStartSeconds": "2s per lane to first 200.",
+  "note": "The migrated lane's witness pass fell from T009e's 31.0s to 1.157s. The 30 seconds T009e spent were two bounded waits timing out; this session neither timed out."
+ },
+ "reproduce": [
+  "cd <repo>",
+  "# 1. the fix - one line, no fetch",
+  "#    add `{provide: LOCALE_ID, useValue: 'en'},` to the providers array of",
+  "#    .versionless/work/angular-pigallery2/13cell/frontend/app/app.module.ts,",
+  "#    immediately above the existing {provide: TRANSLATIONS, ...} entry.",
+  "#    LOCALE_ID is already imported from @angular/core on line 1.",
+  "# 2. rebuild twice and byte-compare",
+  "sh .versionless/work/angular-pigallery2/logs/t009f-migrated-build.sh",
+  "# 3. re-witness both lanes, serialized, baseline first (it derives the plan)",
+  "sh .versionless/work/angular-pigallery2/logs/t009f-backend.sh setup baseline <repo>/.versionless/work/angular-pigallery2/baseline/t009b-baseline-run1",
+  "sh .versionless/work/angular-pigallery2/logs/t009f-backend.sh start baseline",
+  "node --experimental-strip-types .versionless/work/angular-pigallery2/logs/t009d-live-witness.mjs baseline http://127.0.0.1:32701 <logs>/t009f-plan.json derive <logs>/t009f-lane-baseline.json",
+  "sh .versionless/work/angular-pigallery2/logs/t009f-backend.sh stop baseline",
+  "sh .versionless/work/angular-pigallery2/logs/t009f-backend.sh setup migrated <repo>/.versionless/work/angular-pigallery2/13cell/t009f-migrated-run1",
+  "sh .versionless/work/angular-pigallery2/logs/t009f-backend.sh start migrated",
+  "node --experimental-strip-types .versionless/work/angular-pigallery2/logs/t009d-live-witness.mjs migrated http://127.0.0.1:32701 <logs>/t009f-plan.json replay <logs>/t009f-lane-migrated.json",
+  "sh .versionless/work/angular-pigallery2/logs/t009f-backend.sh stop migrated",
+  "# 4. emit",
+  "T009F_HEAD=$(git rev-parse HEAD) node .versionless/work/angular-pigallery2/logs/t009f-emit-live-witness.cjs"
+ ],
+ "notEstablished": [
+  "OUTCOME-STRING PARITY ALONE CANNOT DISTINGUISH A HEALTHY LANE FROM A BROKEN ONE IN THIS APP CLASS. This is T009e's trap restated, and it is not softened by this unit's green reading. parity.outcomeStringsIdentical read TRUE in T009e over a lane that reached no gallery, made no API call and rendered nothing. Any gate that consumes that flag alone is not measuring what it thinks it is measuring, and this record's own green flag must not be cited as evidence that the flag works.",
+  "ELEVEN SIGNALS ARE NOT THE APPLICATION. applicationSignalsIdentical compares bootstrap, route, API calls, tile count, summary text, three component presence booleans, photoImages, consoleErrors and pageErrors. It does not compare pixels, styles, layout, timing, memory, accessibility tree or anything a user would call \"looks right\".",
+  "AUTH AND SETTINGS SURFACES ARE UNTESTED. authenticationRequired was false and unAuthenticatedUserRole was Admin on both lanes; no login was performed, no credential entered, and not one of the fifteen settings components the module declares was rendered or exercised on either lane. T009e's migrated lane landed on /login and this one does not, but nothing here establishes that the LOGIN surface itself works on the Angular 13 lane.",
+  "A THREE-IMAGE GENERATED GALLERY IS NOT THE FLEET'S MEDIA DIVERSITY. Three 64x48 solid-colour PNGs, no EXIF, no GPS, no faces, no video, no nested directories. Nothing here speaks about EXIF parsing, orientation, date grouping, maps, person detection or transcoding.",
+  "THE THUMBNAILS ARE NOT ESTABLISHED. photoImages is 0 on BOTH lanes - three photo TILES rendered, no <img> inside them at read time. Whatever that is (lazy loading, Jimp thumbnail generation still in flight, an intersection observer), it is equal across lanes and unexplained.",
+  "NOTHING WAS CLICKED. selectorsDeclared is 0 and the crawl-derived journey carries no gesture. Both lanes were loaded and read; neither was driven.",
+  "ONE JOURNEY, ONE PASS PER LANE, ONE HOST. Nothing here establishes witness determinism across repeated runs. The BUILD determinism claim is separate and is established, twice over, three units running.",
+  "THE DATABASE WAS THE MEMORY BACKEND, NOT SQLITE - identical on both lanes, so it cannot produce a lane difference, but search, sharing and face surfaces were disabled by the application itself on both, and both lanes render the two \"Server error\" toasts that says so.",
+  "THE BACKEND IS THE ERA BACKEND ON BOTH LANES. Nothing here says anything about an Angular 13 frontend against a migrated backend; no backend migration exists.",
+  "THE CONSOLE MESSAGES ARE TRUNCATED AT 300 CHARACTERS and visibleText at 300 characters, by the reused driver. The comparison of visibleText is therefore a comparison of its first 300 characters.",
+  "THE i18n CLAIM IS ABOUT ENGLISH ONLY. LOCALE_ID is pinned to \"en\", which is the branch of translationsFactory that returns \"\" and loads no .xlf at all. Nothing here establishes that a NON-English locale of pigallery2 builds or runs at Angular 13 - the raw-loader require of messages.<lang>.xlf was never exercised, and Angular 9+ removed the TRANSLATIONS/xlf runtime path this app uses. That is a real open question for a localized deployment and this record does not touch it.",
+  "THIS IS ONE APP AT ONE CELL. Nine delta items for pigallery2 at Angular 8 -> 13 on this host. Nothing here is a per-app cost estimate for any other app in the fleet.",
+  "NOTHING HERE RE-ESTABLISHES T009a, T009b or T009c. The baseline lane output was consumed as-is and not rebuilt."
+ ],
+ "supersedes": {
+  "record": null,
+  "what": "NOTHING. This record EXTENDS pigallery2-live-witness.json (T009d) and pigallery2-live-witness-2.json (T009e); both stand exactly as published, each reporting on the artefact it witnessed. This unit changed the build again, so it reports on a third artefact.",
+  "closesOpenQuestionFrom": "pigallery2-live-witness-2.json notEstablished item \"THE SECOND DEFECT IS DIAGNOSED FROM THE ERROR AND THE SOURCE, NOT FROM A FIX ... it is NOT established that setting LOCALE_ID to 'en' makes the lane work, or that a THIRD defect does not sit behind the second.\" Answered, both halves: it does, and there is not.",
+  "doesNotClose": "pigallery2-live-witness-2.json notEstablished item \"WHY THE LANE LANDS ON /login RATHER THAN /gallery/ IS NOT ESTABLISHED.\" The lane no longer lands on /login, so the question is moot rather than answered - the mechanism by which the translations failure produced a /login landing was never investigated and is not investigated here."
+ },
+ "nextUnit": "T010 freeze supersession inherits a live-backend parity claim that is GREEN on application-level signals, not merely on outcome strings. Three things must travel with it: (a) the pigallery2 Angular 13 lane builds deterministically and renders its gallery indistinguishably from the Angular 8 baseline, on a nine-item migration delta; (b) items 8 and 9 of that delta were invisible at build time and were caught only by a live witness - a build-only pipeline would have shipped a broken lane twice; (c) parity.identical / outcomeStringsIdentical must never again be a gate on its own, and the applicationSignals shape in this record is the minimum a gate should read instead.",
+ "artefacts": {
+  "laneReadings": [
+   ".versionless/work/angular-pigallery2/logs/t009f-lane-baseline.json",
+   ".versionless/work/angular-pigallery2/logs/t009f-lane-migrated.json"
+  ],
+  "plan": ".versionless/work/angular-pigallery2/logs/t009f-plan.json",
+  "buildLogs": [
+   ".versionless/work/angular-pigallery2/13cell/logs/t009f-migrated-run1.log",
+   ".versionless/work/angular-pigallery2/13cell/logs/t009f-migrated-run2.log"
+  ],
+  "buildCompare": ".versionless/work/angular-pigallery2/13cell/logs/t009f-migrated-compare.json",
+  "backendLogs": [
+   ".versionless/work/angular-pigallery2/logs/t009f-backend-baseline.log",
+   ".versionless/work/angular-pigallery2/logs/t009f-backend-migrated.log"
+  ],
+  "recipes": [
+   ".versionless/work/angular-pigallery2/logs/t009f-migrated-build.sh",
+   ".versionless/work/angular-pigallery2/logs/t009f-backend.sh",
+   ".versionless/work/angular-pigallery2/logs/t009d-live-witness.mjs",
+   ".versionless/work/angular-pigallery2/logs/t009f-emit-live-witness.cjs"
+  ],
+  "editedSource": {
+   "file": ".versionless/work/angular-pigallery2/13cell/frontend/app/app.module.ts",
+   "sha256Before": "16fa79c615b1f024dafbf08bfbff8788263d72fe5c2075640861879805bb4e81",
+   "sha256After": "7d5fcf448b5367c2cb2530b31950e7b7d84a938ea56f15dcebde881a4190629d"
+  }
+ },
+ "integrity": {
+  "algorithm": "sha256",
+  "digestOf": "JSON.stringify of this document with the integrity field absent",
+  "recompute": "node -e \"const c=require('crypto'),r=require('./evidence/runs/angular-13cell/pigallery2-live-witness-3.json');delete r.integrity;console.log(c.createHash('sha256').update(JSON.stringify(r)).digest('hex'))\"",
+  "sha256": "c475243c27a18b23ea6155f4f98406171d102bdf0f8ada8987c4ca3d1dfde575"
+ }
+}

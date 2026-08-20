@@ -1,6 +1,6 @@
 # Angular 13 cell — pigallery2
 
-Five records, in order. **T009a** (`pigallery2-compile.json`) established that the app
+Six records, in order. **T009a** (`pigallery2-compile.json`) established that the app
 *compiles* at the cell. **T009b** (`pigallery2-lanes.json`) established that both ends of
 the migration *build reproducibly*. **T009c** (`pigallery2-witness-parity.json`) served
 both lanes to real Chromium on loopback and compared what they measured — and found the
@@ -10,11 +10,26 @@ past the loading shell can be reached at all. **T009d**
 on `ReferenceError: $localize is not defined` before bootstrap. **T009e**
 (`pigallery2-live-witness-2.json`) applied the standard `ng add @angular/localize` fix,
 rebuilt, and re-witnessed: the defect is closed, a second i18n defect sits behind it, and
-the parity flag went **green on a lane that still does not work**.
+the parity flag went **green on a lane that still does not work**. **T009f**
+(`pigallery2-live-witness-3.json`) closed that second defect with the one-line provider
+translation of the CLI flag Angular 13 removed, re-witnessed both lanes, and judged them
+on **application-level signals** rather than outcome strings: the Angular 13 lane now
+renders its gallery indistinguishably from the Angular 8 baseline. No third defect.
 
 > **If you read only one number in this directory, do not let it be
 > `pigallery2-live-witness-2.json` → `parity.identical: true`.** It is true, and the
-> Angular 13 lane is broken. See T009e below.
+> Angular 13 lane is broken at that build. See T009e below. The successor record
+> (T009f) reports `parity.applicationSignalsIdentical` **alongside**
+> `parity.outcomeStringsIdentical` and names the first as authoritative, precisely
+> because the second was proved able to read green over a broken lane.
+
+**The end-to-end result, in one line:** pigallery2 1.7.0 migrates from Angular 8 to
+Angular 13 on a **nine-item delta**, builds deterministically at both ends, and — against
+its own era backend on loopback — routes to `/gallery/`, calls `GET /api/notifications`
+and `GET /api/gallery/content/` at 200, and renders three `app-gallery-grid-photo` tiles
+and "3 Images / 3 items", field for field with the Angular 8 baseline in the same session.
+**Items 8 and 9 of that delta produced zero build errors and zero build warnings** — a
+build-only pipeline would have shipped this lane broken, twice.
 
 ---
 
@@ -667,6 +682,135 @@ journey and one pass per lane, no screenshots or pixels, era backend on both lan
 T009d's record is **not superseded and was not edited** — this unit changed the build, so
 it reports on a different artefact. No `packages/**` file was written.
 
+**Next unit:** T009f — the provider translation of the removed `--i18n-locale` flag,
+re-witnessed, and judged on application signals rather than outcome strings.
+
+---
+
+## T009f — one line closes the second defect, and the lane reaches its gallery
+
+`pigallery2-live-witness-3.json` (schema `versionless.angular-13cell-live-witness.v1`).
+
+T009e diagnosed the second defect but did not fix it: Angular 13 dropped `--i18n-locale`,
+so `LOCALE_ID` fell back to its framework default `en-US`, and the application's own
+`translationsFactory` guards on `locale === 'en'` **exactly** — so it fell through to
+`require('raw-loader!../translate/messages.en-US.xlf')` for a file that does not exist and
+never did (English is the source language; `frontend/translate/` ships `.xlf` for the
+*translated* languages only).
+
+The fix is **migration-delta item 9** and it is one line:
+
+```diff
+   providers: [
+     ...
++    {provide: LOCALE_ID, useValue: 'en'},
+     {
+       provide: TRANSLATIONS,
+       useFactory: translationsFactory,
+       deps: [LOCALE_ID]
+     },
+```
+
+No import was added — `LOCALE_ID` was **already** imported from `@angular/core` on line 1,
+as the `deps` of the app's own pre-existing `TRANSLATIONS` provider. The migration only
+had to *supply* it. That is the whole point: the baseline's `LOCALE_ID` **was** `en`, put
+there by the CLI flag; Angular 13 has no such flag, and the injector is the one place it
+offers. The app's guard was **not** widened to `startsWith('en')`, no `messages.en-US.xlf`
+was created, and nothing else in the cell changed — those would be different claims.
+
+### Headline
+
+| Reading | Baseline (Angular 8) | Migrated (Angular 13) |
+|---|---|---|
+| bootstrapped | `true` | `true` |
+| routed to | `/gallery/` | `/gallery/` |
+| `GET /api/notifications` | 200 | 200 |
+| `GET /api/gallery/content/` | 200 | 200 |
+| `app-gallery-grid-photo` tiles | 3 | 3 |
+| gallery summary text | `3 Images / 3 items` | `3 Images / 3 items` |
+| console errors | 1 (mocked leaflet CDN integrity) | 1 (**the same one**) |
+| page errors | none | none |
+
+`Cannot find module './messages.en-US.xlf'` is **gone**. **No third defect appeared**: the
+migrated lane's only console error is the leaflet CDN integrity message the *baseline*
+also emits, from the non-loopback stylesheet the witness host mocks on both lanes.
+
+The build signature confirms this was an *application* change, unlike item 8: `main.js`
+changed (`aa66f5cc…` → `b3d48f97…`, +36 bytes, `main.4b2fa472bc230245.js` →
+`main.76cb2c7489993b1f.js`) and **`polyfills`, `runtime`, `styles`, the fonts and
+`3rdpartylicenses.txt` are byte-identical to T009e**. `index.html` differs on exactly one
+line — the `main` script tag. Two production builds, byte-identical, same webpack hash
+`d2b7b9e2678881e8`. Build warnings `diff` empty against T009e: **neither i18n defect was
+ever visible at build time.**
+
+### The lesson applied: signals, not outcome strings
+
+T009e proved `parity.identical` can read `true` across one healthy and one broken lane.
+So this record carries an `applicationSignals` block **per lane** —
+`{bootstrapped, routedTo, apiCalls[], gallery:{tiles, summaryText}, consoleErrors[]}`, each
+field annotated with where it was read from (page `evaluate` for DOM facts, the witness
+host's own `requestOutcomes()` network ledger for API calls) — and reports **two** flags:
+
+* `parity.applicationSignalsIdentical` — eleven compared fields, **authoritative**
+* `parity.outcomeStringsIdentical` — the old six-string comparison, kept for continuity
+
+Both read `true` here, and `parity.authoritative` is `"applicationSignals"`. **If the two
+ever disagree, the signals win** — the outcome vocabulary counts route *departures* and
+cannot see where a lane arrived, which is exactly how T009e's broken lane scored green.
+Note that `routesReached` is `0`/`0` in both units: the *number* is unchanged, its
+*meaning* is not. That is why the number cannot be the verdict.
+
+### Reproduce
+
+```sh
+# 1. the fix — one line, no fetch. Add to the providers array of
+#    .versionless/work/angular-pigallery2/13cell/frontend/app/app.module.ts:
+#      {provide: LOCALE_ID, useValue: 'en'},
+# 2. rebuild twice and byte-compare
+sh <repo>/.versionless/work/angular-pigallery2/logs/t009f-migrated-build.sh
+
+# 3. re-witness both lanes, serialized, baseline first (it derives the plan)
+cd <repo>
+sh .versionless/work/angular-pigallery2/logs/t009f-backend.sh setup baseline <repo>/.versionless/work/angular-pigallery2/baseline/t009b-baseline-run1
+sh .versionless/work/angular-pigallery2/logs/t009f-backend.sh start baseline
+node --experimental-strip-types .versionless/work/angular-pigallery2/logs/t009d-live-witness.mjs \
+  baseline http://127.0.0.1:32701 <logs>/t009f-plan.json derive <logs>/t009f-lane-baseline.json
+sh .versionless/work/angular-pigallery2/logs/t009f-backend.sh stop baseline
+# ... then the same three steps for `migrated` (dist → t009f-migrated-run1), with `replay`
+T009F_HEAD=$(git rev-parse HEAD) node .versionless/work/angular-pigallery2/logs/t009f-emit-live-witness.cjs
+```
+
+`t009f-backend.sh` is `t009e-backend.sh` with the serve roots moved to `serve/f-<lane>` and
+the log to `t009f-backend-<lane>.log` — nothing else. The witness driver
+`t009d-live-witness.mjs` is **byte-identical** across T009d, T009e and T009f
+(`c798e2b9…`), and the derived plan is byte-identical to T009e's (`a9ecbb6c…`), so all
+three units asked the two lanes the same question. **Zero fetches** — this unit is
+entirely offline. `successfulNonLoopback` is `0` on both lanes, structurally.
+
+Integrity:
+
+```sh
+node -e "const c=require('crypto'),r=require('./evidence/runs/angular-13cell/pigallery2-live-witness-3.json');delete r.integrity;console.log(c.createHash('sha256').update(JSON.stringify(r)).digest('hex'))"
+# c475243c27a18b23ea6155f4f98406171d102bdf0f8ada8987c4ca3d1dfde575
+```
+
+### What T009f does not establish
+
+`notEstablished` in the JSON is the binding list. In short: **outcome-string parity alone
+still cannot distinguish a healthy lane from a broken one in this app class** — T009e is
+the proof and this record's own green flag must never be cited as evidence that the flag
+works. Eleven signals are not the application: no pixels, styles, layout, timing or
+accessibility tree. **Auth and settings surfaces are untested** — auth was off, no login
+was performed, and not one of the fifteen settings components was rendered on either lane.
+Three 64×48 generated PNGs are not media diversity (no EXIF, GPS, faces, video or nested
+directories). `photoImages` is `0` on **both** lanes — three tiles, no `<img>` at read
+time, equal across lanes and unexplained. Nothing was clicked. One journey, one pass per
+lane, one host. Memory database, era backend on both lanes. **The i18n claim is English
+only**: `LOCALE_ID` is pinned to the branch that loads no `.xlf` at all, so nothing here
+says a *localized* pigallery2 builds or runs at Angular 13. T009d's and T009e's records
+are **not superseded and were not edited**. No `packages/**` file was written.
+
 **Next unit:** T010, the freeze supersession, inheriting a live-backend parity claim that
-is numerically **green** and substantively **negative** — and the harder lesson that
-`parity.identical` proved able to read `true` across one working and one broken lane.
+is green on **application signals**, a nine-item migration delta whose last two items were
+invisible at build time, and the standing rule that `parity.identical` /
+`outcomeStringsIdentical` must never again be a gate on its own.
