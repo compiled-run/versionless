@@ -2,20 +2,22 @@
 	"schemaVersion": "versionless.intervention-count.v1",
 	"flow": "intervention-count",
 	"application": ".versionless/work/react-antd-admin-template-v2-0-0/baseline",
-	"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t030-p3/react-antd-admin-template-v2-0-0",
+	"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t045/lanes/antd",
 	"runRecord": "evidence/runs/react-antd-admin-template-v2-0-0/run-record.json",
 	"writeSet": [
-		"../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t030-p3/react-antd-admin-template-v2-0-0",
+		"../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t045/lanes/antd",
 		"evidence/runs/react-antd-admin-template-v2-0-0/run-record.json",
-		"evidence/runs/react-antd-admin-template-v2-0-0/run-record.json.interventions.json"
+		"evidence/runs/react-antd-admin-template-v2-0-0/run-record.json.interventions.json",
+		".versionless/stage/witness-real-app",
+		"evidence/runs/witness-synthesized"
 	],
 	"invocations": 1,
 	"stdinReads": 0,
 	"mutatedPathsOutsideWriteSet": [],
 	"authoringPathsTouched": [],
 	"interventionCount": 0,
-	"exitCode": 1,
-	"terminalClassification": "defect:install",
+	"exitCode": 2,
+	"terminalClassification": "refused:install.closure-registry-unreachable",
 	"attempts": [
 		{
 			"argv": [
@@ -24,20 +26,22 @@
 				"run",
 				".versionless/work/react-antd-admin-template-v2-0-0/baseline",
 				"--out",
-				"/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t030-p3/react-antd-admin-template-v2-0-0",
+				"/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t045/lanes/antd",
 				"--record",
 				"evidence/runs/react-antd-admin-template-v2-0-0/run-record.json",
+				"--allow-foreign-lockfile",
+				"--allow-git-dependencies",
 				"--allow-install-scripts",
 				"--allow-peer-conflicts",
 				"--allow-remote-tarballs"
 			],
-			"exitCode": 1,
+			"exitCode": 2,
 			"signal": null,
 			"hang": false,
-			"stdoutBytes": 7619,
+			"stdoutBytes": 3862,
 			"stderrBytes": 0,
-			"startedAt": "2026-08-17T23:49:22.317Z",
-			"endedAt": "2026-08-17T23:50:52.939Z"
+			"startedAt": "2026-08-20T13:42:08.795Z",
+			"endedAt": "2026-08-20T13:44:06.348Z"
 		}
 	],
 	"observation": {
@@ -47,8 +51,8 @@
 		},
 		"stageBudgetMs": 900000,
 		"trackedPathsSource": "git",
-		"pathsObservedBefore": 1624,
-		"pathsObservedAfter": 1759,
+		"pathsObservedBefore": 8492,
+		"pathsObservedAfter": 12316,
 		"authoringHomes": [
 			"fixtures/**",
 			"packages/cli/src/fixture/**",

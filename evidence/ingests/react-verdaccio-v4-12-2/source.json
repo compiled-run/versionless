@@ -1,0 +1,155 @@
+{
+  "schemaVersion": "versionless.official-source.v1",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "attemptSha256": "25537a2ea379cd84759f20dfb45e13db50dbdcf7ae56627229778a7b4119ed53",
+  "result": "source-bound",
+  "startedAt": "2026-08-20T13:39:07.952Z",
+  "completedAt": "2026-08-20T13:39:11.071Z",
+  "repository": {
+    "id": 56333861,
+    "fullName": "verdaccio/verdaccio",
+    "private": false,
+    "archived": false,
+    "disabled": false,
+    "responseBytes": 6480,
+    "responseSha256": "9518e56a5e4b6ad30a2aa422e596fa265e2063bcc925d1b4b3c4e1990cc8fbd3"
+  },
+  "revision": {
+    "ref": "refs/tags/v4.12.2",
+    "tagObjectSha": "48c9f8bca906a5b11a283c560c0fe346b03d6c23",
+    "tagKind": "annotated",
+    "tagDate": "2021-06-23T17:16:55Z",
+    "tagVerification": "unsigned",
+    "commitSha": "4fd08e63557d6bfd0e1183b60e8bc4c3a9f14bff",
+    "commitDate": "2021-06-23T17:16:50Z",
+    "commitVerification": "unsigned",
+    "rootTreeSha": "55ceead217b66063d651d8f4fa26c7d539999058",
+    "treeEntries": 750,
+    "treeBlobs": 525,
+    "treeDirectories": 225,
+    "treeSymlinks": 0,
+    "treeGitlinks": 0,
+    "treeTruncated": false
+  },
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/verdaccio/verdaccio",
+      "status": 200,
+      "bytes": 6480,
+      "sha256": "9518e56a5e4b6ad30a2aa422e596fa265e2063bcc925d1b4b3c4e1990cc8fbd3"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/verdaccio/verdaccio/git/ref/tags/v4.12.2",
+      "status": 200,
+      "bytes": 343,
+      "sha256": "6057e5d705488ae89399ff2448f68c779820e0755936f82c39a7b8b88016c6ad"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/verdaccio/verdaccio/git/tags/48c9f8bca906a5b11a283c560c0fe346b03d6c23",
+      "status": 200,
+      "bytes": 685,
+      "sha256": "afdeef8ab20691c7fb47ec7dc242b5a5f448a40f2c4a98a201b78cb4f4057ba0"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/verdaccio/verdaccio/git/commits/4fd08e63557d6bfd0e1183b60e8bc4c3a9f14bff",
+      "status": 200,
+      "bytes": 1125,
+      "sha256": "efa6c9bd8cccc5f40e91f5bd44f092ccd737c726446426aae4ad654fa912549b"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/verdaccio/verdaccio/git/trees/55ceead217b66063d651d8f4fa26c7d539999058?recursive=1",
+      "status": 200,
+      "bytes": 185460,
+      "sha256": "e1d29caccbec9f3b4d8d126937fe677a42511489bbe7bbd593d6a21482bd2115"
+    },
+    {
+      "endpoint": "https://codeload.github.com/verdaccio/verdaccio/tar.gz/4fd08e63557d6bfd0e1183b60e8bc4c3a9f14bff",
+      "status": 200,
+      "bytes": 9694558,
+      "sha256": "ad2b3c9f4599dc22a057499a7b39f0a55371bf4ea2174d23b4044c234974faee",
+      "stream": 1
+    },
+    {
+      "endpoint": "https://codeload.github.com/verdaccio/verdaccio/tar.gz/4fd08e63557d6bfd0e1183b60e8bc4c3a9f14bff",
+      "status": 200,
+      "bytes": 9694558,
+      "sha256": "ad2b3c9f4599dc22a057499a7b39f0a55371bf4ea2174d23b4044c234974faee",
+      "stream": 2
+    }
+  ],
+  "archiveParity": {
+    "singleRoot": "verdaccio-4fd08e63557d6bfd0e1183b60e8bc4c3a9f14bff",
+    "safeEntries": 751,
+    "regularFiles": 525,
+    "directories": 226,
+    "specialEntries": 0,
+    "gitBlobs": 525,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "normalizedManifestSha256": "6c42db539f57e619f74f18a6a255277460305f21bca97cf153cdeed35c7a640a"
+  },
+  "transaction": {
+    "attemptedRequests": 7,
+    "acceptedResponses": 7,
+    "acceptedWireBytes": 19583209,
+    "acceptedDecodedBytes": 19583209,
+    "redirectsObserved": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "archivesByteIdentical": true,
+    "archiveMatchesGitTree": true,
+    "publishedSource": true,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "cache": {
+    "root": ".versionless/cache/react-verdaccio-v4-12-2-source",
+    "archive1": ".versionless/cache/react-verdaccio-v4-12-2-source/archive/archive-1.tar.gz",
+    "archive2": ".versionless/cache/react-verdaccio-v4-12-2-source/archive/archive-2.tar.gz",
+    "verifiedSource": ".versionless/cache/react-verdaccio-v4-12-2-source/verify/extracted",
+    "rawMetadataPortable": false
+  },
+  "baseline": ".versionless/work/react-verdaccio-v4-12-2/baseline",
+  "licence": {
+    "identifier": "MIT",
+    "identifierSource": "observed",
+    "identifierRefusal": null,
+    "copyrightNotice": "Copyright (c) 2018 Verdaccio community",
+    "filesAtRoot": [
+      "LICENSE"
+    ],
+    "artifacts": [
+      {
+        "path": "LICENSE",
+        "role": "repository-root-licence",
+        "gitBlobSha": "a969d7d066f891c97c77d6f6936aa53dc39eca04",
+        "bytes": 1076,
+        "sha256": "df1ab2627cac741d29e886dbcaeddd87b84db38da56a3cfc37dcdc1be81c5717",
+        "firstLine": "MIT License",
+        "permissionGrantPresent": true,
+        "noticeRetentionClausePresent": true,
+        "warrantyDisclaimerPresent": true,
+        "licenseField": null
+      },
+      {
+        "path": "package.json",
+        "role": "frontend-manifest",
+        "gitBlobSha": "d8c764bb9700dcae8900c69919b39eb1a99c92eb",
+        "bytes": 7042,
+        "sha256": "eefe4345266c6ff2ec993d536fc6b058cc8a5bbfbd0e800846174856043b52fa",
+        "firstLine": null,
+        "permissionGrantPresent": null,
+        "noticeRetentionClausePresent": null,
+        "warrantyDisclaimerPresent": null,
+        "licenseField": "MIT"
+      }
+    ]
+  },
+  "nonclaims": [
+    "A lightweight or unsigned tag does not establish signer authenticity.",
+    "This record states that the bytes at the recorded commit reconcile with the Git tree the repository publishes at that commit. It establishes no dependency closure, build, browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "The licence reading is a reading of the file present at the pin. It is not a legal opinion and it evaluates no dependency’s terms.",
+    "Acquiring a source is not admitting one. Whether this tree can be ingested, installed, built or migrated is not read here."
+  ]
+}

@@ -1,10 +1,10 @@
 {
 	"schema": "versionless.run.v1",
 	"flow": "run",
-	"outcome": "refused",
-	"exitCode": 2,
+	"outcome": "defect",
+	"exitCode": 1,
 	"application": ".versionless/work/react-antd-admin-template-v2-0-0/baseline",
-	"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t045/lanes/antd",
+	"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t030-p3/react-antd-admin-template-v2-0-0",
 	"roots": {
 		"source": ".versionless/work/react-antd-admin-template-v2-0-0/baseline",
 		"frontend": ".versionless/work/react-antd-admin-template-v2-0-0/baseline",
@@ -44,9 +44,7 @@
 			"forwards": [
 				"--allow-remote-tarballs",
 				"--allow-install-scripts",
-				"--allow-peer-conflicts",
-				"--allow-foreign-lockfile",
-				"--allow-git-dependencies"
+				"--allow-peer-conflicts"
 			]
 		},
 		{
@@ -93,8 +91,8 @@
 					"A dependency the cell has no reading for is reported `unknown`. `unknown` is not `supported` and it is not `unsupported`."
 				]
 			},
-			"startedAt": "2026-08-20T13:42:09.093Z",
-			"endedAt": "2026-08-20T13:42:09.094Z"
+			"startedAt": "2026-08-17T23:49:22.617Z",
+			"endedAt": "2026-08-17T23:49:22.619Z"
 		},
 		{
 			"name": "ingest",
@@ -112,10 +110,8 @@
 				"frontendRootBasis": ". declares react ^16.13.1 (dependencies.react)",
 				"acquisitionRoot": "/Users/jacksm5pro/dev/open-source/versionless/.versionless/work/react-antd-admin-template-v2-0-0/baseline",
 				"pin": {
-					"repository": "NLRX-WJC/react-antd-admin-template",
-					"repositoryReadFrom": "evidence/ingests/react-antd-admin-template-v2-0-0/source.json (consent VL-LEGACY-CORPUS-2026-08-10; result source-bound; archive reconciled against the published Git tree and byte-identical across two streams; journalled manifest 98d585a7857e06096bced54d7a4b25e58e326be691e59d47486475b1ec4cf0ea is the digest this stage walked)",
-					"ref": "refs/tags/v2.0.0",
-					"refReadFrom": "evidence/ingests/react-antd-admin-template-v2-0-0/source.json (consent VL-LEGACY-CORPUS-2026-08-10; result source-bound; archive reconciled against the published Git tree and byte-identical across two streams; journalled manifest 98d585a7857e06096bced54d7a4b25e58e326be691e59d47486475b1ec4cf0ea is the digest this stage walked)",
+					"repository": null,
+					"ref": null,
 					"commitSha": "31fc5dfa2c74cb8467bdfd9bf1174fb62351bb1e",
 					"commitShaSource": "read",
 					"commitShaReadFrom": "evidence/ingests/react-antd-admin-template-v2-0-0/source.json (consent VL-LEGACY-CORPUS-2026-08-10; result source-bound; archive reconciled against the published Git tree and byte-identical across two streams; journalled manifest 98d585a7857e06096bced54d7a4b25e58e326be691e59d47486475b1ec4cf0ea is the digest this stage walked)"
@@ -258,8 +254,8 @@
 					"A frontend root read by lineage is the one directory among those considered whose manifest declares a framework this stage reads. The basis names every directory considered and what each of their manifests declared; nothing here establishes that the directory chosen is the one its authors would call the application."
 				]
 			},
-			"startedAt": "2026-08-20T13:42:09.094Z",
-			"endedAt": "2026-08-20T13:42:09.115Z"
+			"startedAt": "2026-08-17T23:49:22.619Z",
+			"endedAt": "2026-08-17T23:49:22.641Z"
 		},
 		{
 			"name": "license-at-pin",
@@ -311,8 +307,8 @@
 					"`identifierSource: declared` means an operator supplied the identifier. This stage did not read it and does not corroborate it."
 				]
 			},
-			"startedAt": "2026-08-20T13:42:09.115Z",
-			"endedAt": "2026-08-20T13:42:09.115Z"
+			"startedAt": "2026-08-17T23:49:22.641Z",
+			"endedAt": "2026-08-17T23:49:22.641Z"
 		},
 		{
 			"name": "era-cell",
@@ -480,14 +476,6 @@
 							"platform": "darwin",
 							"architecture": "arm64",
 							"supplier": "workspace-runtime-cache",
-							"location": ".versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64"
-						},
-						{
-							"version": "v16.20.2",
-							"major": 16,
-							"platform": "darwin",
-							"architecture": "arm64",
-							"supplier": "workspace-runtime-cache",
 							"location": ".versionless/cache/angular-eshop-webspa-netcore2-2-target/node-v16.20.2-darwin-arm64"
 						},
 						{
@@ -562,8 +550,8 @@
 					"Satisfaction of a declared range is not corroborated by anything else this tree says. Where other sources name majors, they are listed above with what each literally says, and this stage picks from none of them."
 				]
 			},
-			"startedAt": "2026-08-20T13:42:09.115Z",
-			"endedAt": "2026-08-20T13:42:09.121Z"
+			"startedAt": "2026-08-17T23:49:22.641Z",
+			"endedAt": "2026-08-17T23:49:22.647Z"
 		},
 		{
 			"name": "plan",
@@ -640,8 +628,8 @@
 					]
 				}
 			},
-			"startedAt": "2026-08-20T13:42:09.121Z",
-			"endedAt": "2026-08-20T13:42:09.122Z"
+			"startedAt": "2026-08-17T23:49:22.647Z",
+			"endedAt": "2026-08-17T23:49:22.648Z"
 		},
 		{
 			"name": "apply",
@@ -675,7 +663,7 @@
 					"files": [
 						{
 							"path": "vite.config.ts",
-							"sha256": "e76f7299c69388ecae910b67da639ff1edbbc853ed0aea8b254e6fad9010b352",
+							"sha256": "16a556c1d8156654b7ddcce8de4aa4e999635200f2a74a45d8bee89d9464f4d5",
 							"changes": [
 								"generated from the frozen create-react-app adapter composition with base \"\", template \"index.html\", output build-vite",
 								"environment inlined for NODE_ENV, PUBLIC_URL"
@@ -716,48 +704,40 @@
 					]
 				}
 			},
-			"startedAt": "2026-08-20T13:42:09.122Z",
-			"endedAt": "2026-08-20T13:42:09.157Z"
+			"startedAt": "2026-08-17T23:49:22.648Z",
+			"endedAt": "2026-08-17T23:49:22.686Z"
 		},
 		{
 			"name": "install",
-			"status": "refused",
-			"reason": "install.closure-registry-unreachable",
-			"refusal": {
-				"code": "install.closure-registry-unreachable",
-				"message": "Install: this closure pins registry.npm.taobao.org, and npm could not reach it — CERT_HAS_EXPIRED, requesting https://registry.npm.taobao.org/word-wrap/download/word-wrap-1.2.3.tgz. There is no policy to declare here and this flow offers none: no allowance makes an unreachable registry answer, and a closure that resolves through a registry that is gone cannot be installed as recorded. What this establishes is that this run did not reach registry.npm.taobao.org; whether that host is retired or momentarily unreachable is not established here, and neither is what it would have served. The remedy is re-pinning the closure onto a registry that answers, which changes what the application declares and is therefore a migration decision rather than an install policy. npm’s own output, unaltered:\nnpm error code CERT_HAS_EXPIRED\nnpm error errno CERT_HAS_EXPIRED\nnpm error request to https://registry.npm.taobao.org/word-wrap/download/word-wrap-1.2.3.tgz failed, reason: certificate has expired\nnpm error A complete log of this run can be found in: /private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/***/scratchpad/t045/lanes/antd/.install-home/npm-cache/_logs/2026-08-20T13_42_09_252Z-debug-0.log",
-				"stage": "install",
-				"origin": "pipeline"
-			},
-			"startedAt": "2026-08-20T13:42:09.157Z",
-			"endedAt": "2026-08-20T13:44:06.341Z"
+			"status": "defect",
+			"reason": "install: npm install --no-audit --no-fund --allow-remote all --foreground-scripts --legacy-peer-deps failed in the lane. This is a defect rather than a refusal: the declared policies were applied and the pinned closure still did not install. Command failed: npm install --no-audit --no-fund --allow-remote all --foreground-scripts --legacy-peer-deps\nnpm warn old lockfile\nnpm warn old lockfile The package-lock.json file was created with an old version of npm,\nnpm warn old lockfile so supplemental metadata must be fetched from the registry.\nnpm warn old lockfile\nnpm warn old lockfile This is a one-time fix-up, please be patient...\nnpm warn old lockfile\nnpm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.\nnpm warn deprecated ini@1.3.5: Please update to ini >=1.3.6 to avoid a prototype pollution issue\nnpm warn deprecated urix@0.1.0: Please see https://github.com/lydell/urix#deprecated\nnpm warn deprecated resolve-url@0.2.1: https://github.com/lydell/resolve-url#deprecated\nnpm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me\nnpm warn deprecated source-map-url@0.4.0: See https://github.com/lydell/source-map-url#deprecated\nnpm warn deprecated react-beautiful-dnd@13.1.1: react-beautiful-dnd is now deprecated. Context and options: https://github.com/atlassian/react-beautiful-dnd/issues/2672\nnpm warn deprecated core-js@1.2.7: core-js@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js.\nnpm warn deprecated core-js@1.2.7: core-js@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js.\nnpm error code CERT_HAS_EXPIRED\nnpm error errno CERT_HAS_EXPIRED\nnpm error request to https://registry.npm.taobao.org/word-wrap/download/word-wrap-1.2.3.tgz failed, reason: certificate has expired\nnpm error A complete log of this run can be found in: /Users/jacksm5pro/.npm/_logs/2026-08-17T23_49_22_751Z-debug-0.log\n",
+			"startedAt": "2026-08-17T23:49:22.686Z",
+			"endedAt": "2026-08-17T23:50:52.926Z"
 		},
 		{
 			"name": "build",
 			"status": "not-run",
-			"reason": "not-run-because: install refused",
-			"startedAt": "2026-08-20T13:44:06.341Z",
-			"endedAt": "2026-08-20T13:44:06.341Z"
+			"reason": "not-run-because: install raised a defect",
+			"startedAt": "2026-08-17T23:50:52.926Z",
+			"endedAt": "2026-08-17T23:50:52.926Z"
 		},
 		{
 			"name": "witness",
 			"status": "not-run",
-			"reason": "not-run-because: install refused",
-			"startedAt": "2026-08-20T13:44:06.341Z",
-			"endedAt": "2026-08-20T13:44:06.341Z"
+			"reason": "not-run-because: install raised a defect",
+			"startedAt": "2026-08-17T23:50:52.926Z",
+			"endedAt": "2026-08-17T23:50:52.926Z"
 		}
 	],
-	"refusal": {
-		"code": "install.closure-registry-unreachable",
-		"message": "Install: this closure pins registry.npm.taobao.org, and npm could not reach it — CERT_HAS_EXPIRED, requesting https://registry.npm.taobao.org/word-wrap/download/word-wrap-1.2.3.tgz. There is no policy to declare here and this flow offers none: no allowance makes an unreachable registry answer, and a closure that resolves through a registry that is gone cannot be installed as recorded. What this establishes is that this run did not reach registry.npm.taobao.org; whether that host is retired or momentarily unreachable is not established here, and neither is what it would have served. The remedy is re-pinning the closure onto a registry that answers, which changes what the application declares and is therefore a migration decision rather than an install policy. npm’s own output, unaltered:\nnpm error code CERT_HAS_EXPIRED\nnpm error errno CERT_HAS_EXPIRED\nnpm error request to https://registry.npm.taobao.org/word-wrap/download/word-wrap-1.2.3.tgz failed, reason: certificate has expired\nnpm error A complete log of this run can be found in: /private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/***/scratchpad/t045/lanes/antd/.install-home/npm-cache/_logs/2026-08-20T13_42_09_252Z-debug-0.log",
+	"defect": {
 		"stage": "install",
-		"origin": "pipeline"
+		"message": "install: npm install --no-audit --no-fund --allow-remote all --foreground-scripts --legacy-peer-deps failed in the lane. This is a defect rather than a refusal: the declared policies were applied and the pinned closure still did not install. Command failed: npm install --no-audit --no-fund --allow-remote all --foreground-scripts --legacy-peer-deps\nnpm warn old lockfile\nnpm warn old lockfile The package-lock.json file was created with an old version of npm,\nnpm warn old lockfile so supplemental metadata must be fetched from the registry.\nnpm warn old lockfile\nnpm warn old lockfile This is a one-time fix-up, please be patient...\nnpm warn old lockfile\nnpm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.\nnpm warn deprecated ini@1.3.5: Please update to ini >=1.3.6 to avoid a prototype pollution issue\nnpm warn deprecated urix@0.1.0: Please see https://github.com/lydell/urix#deprecated\nnpm warn deprecated resolve-url@0.2.1: https://github.com/lydell/resolve-url#deprecated\nnpm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me\nnpm warn deprecated source-map-url@0.4.0: See https://github.com/lydell/source-map-url#deprecated\nnpm warn deprecated react-beautiful-dnd@13.1.1: react-beautiful-dnd is now deprecated. Context and options: https://github.com/atlassian/react-beautiful-dnd/issues/2672\nnpm warn deprecated core-js@1.2.7: core-js@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js.\nnpm warn deprecated core-js@1.2.7: core-js@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js.\nnpm error code CERT_HAS_EXPIRED\nnpm error errno CERT_HAS_EXPIRED\nnpm error request to https://registry.npm.taobao.org/word-wrap/download/word-wrap-1.2.3.tgz failed, reason: certificate has expired\nnpm error A complete log of this run can be found in: /Users/jacksm5pro/.npm/_logs/2026-08-17T23_49_22_751Z-debug-0.log\n"
 	},
 	"report": {
 		"status": "emitted",
 		"slot": "evidence/trust/current/coverage-report.json",
 		"path": "evidence/trust/current/coverage-report.json",
-		"digest": "bed5bbaa1f4a145a56af2fc0453b324c5114f866a2d598446b477fe9fdd1126e"
+		"digest": "65b247d1272c9bfa5b32a276da86fd7543983db5c995c24244b1d0fcc79f6d9a"
 	},
 	"notEstablished": [
 		"A stage recorded `ran` returned its own record. What that record establishes is what that stage states, and no more: this row adds no reading of its own on top of it.",

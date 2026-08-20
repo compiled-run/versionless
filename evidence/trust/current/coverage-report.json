@@ -189,8 +189,8 @@
       "application": ".versionless/work/react-antd-admin-template-v2-0-0/baseline",
       "framework": "react",
       "provenanceOfStatus": "run-record",
-      "status": "not-admitted",
-      "statusReason": "run-did-not-proceed:defect",
+      "status": "refused",
+      "refusalCode": "install.closure-registry-unreachable",
       "interventionCount": 0
     },
     {
@@ -207,9 +207,59 @@
       "application": ".versionless/work/react-coverview-a1470b01/baseline",
       "framework": "react",
       "provenanceOfStatus": "run-record",
-      "status": "not-admitted",
-      "statusReason": "run-did-not-proceed:defect",
-      "interventionCount": 0
+      "status": "proven",
+      "interventionCount": 0,
+      "stages": [
+        {
+          "name": "analyze",
+          "status": "ran"
+        },
+        {
+          "name": "ingest",
+          "status": "ran"
+        },
+        {
+          "name": "license-at-pin",
+          "status": "ran"
+        },
+        {
+          "name": "era-cell",
+          "status": "ran"
+        },
+        {
+          "name": "plan",
+          "status": "ran"
+        },
+        {
+          "name": "apply",
+          "status": "ran"
+        },
+        {
+          "name": "install",
+          "status": "ran"
+        },
+        {
+          "name": "build",
+          "status": "ran"
+        },
+        {
+          "name": "witness",
+          "status": "ran"
+        }
+      ],
+      "source": {
+        "repository": "rutikwankhade/CoverView",
+        "ref": "a1470b01e41c9e1128364e500b2ca2107f8432e0",
+        "revision": "a1470b01e41c9e1128364e500b2ca2107f8432e0",
+        "license": "MIT",
+        "licenseSha256": "24ae4deeab7fd89fad4a57235ac34f0c562ede9989c22a4c5b3f9d9a0936af24",
+        "basis": "run-record",
+        "basisPath": "evidence/runs/react-coverview-a1470b01/run-record.json"
+      },
+      "provenBoundedness": [
+        "Dependency install scripts: the install row declares the install-script policy, names 3 package(s) the lockfile marks as carrying an install script, and records npm starting 1 script(s) and skipping 0 by policy. A script npm skipped did not run in the lane this proof was taken on.",
+        "Route reach: the witness row records the replay reaching 1 of 4 declared route(s) across 1 journey(s). Every route it did not reach is unproven by this row rather than proven absent."
+      ]
     },
     {
       "id": "react-cra-redux-1a06509b",
@@ -289,6 +339,15 @@
       "interventionCount": 0
     },
     {
+      "id": "react-verdaccio-v4-12-2",
+      "application": ".versionless/work/react-verdaccio-v4-12-2/baseline",
+      "framework": "unknown",
+      "provenanceOfStatus": "run-record",
+      "status": "refused",
+      "refusalCode": "ingest.frontend-root-declares-no-framework",
+      "interventionCount": 0
+    },
+    {
       "id": "react-your-spotify-1-5-0",
       "application": ".versionless/work/react-your-spotify-1-5-0/baseline",
       "framework": "react",
@@ -299,11 +358,11 @@
     }
   ],
   "totals": {
-    "applications": 23,
-    "proven": 11,
+    "applications": 24,
+    "proven": 12,
     "bounded": 2,
-    "refused": 5,
-    "not-admitted": 5
+    "refused": 7,
+    "not-admitted": 3
   },
   "refusalCensus": {
     "source": "evidence/runs/operator-flows/refusal-census.json",
@@ -558,7 +617,7 @@
   ],
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "bed5bbaa1f4a145a56af2fc0453b324c5114f866a2d598446b477fe9fdd1126e",
+    "canonicalDigest": "61b5e20a76d2b04000eb7f651de200f215f24cbb80da21c96b4bffe3ba951004",
     "authenticity": "not-established",
     "certification": "not-claimed"
   }

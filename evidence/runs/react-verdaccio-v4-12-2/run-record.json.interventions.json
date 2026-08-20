@@ -1,13 +1,13 @@
 {
 	"schemaVersion": "versionless.intervention-count.v1",
 	"flow": "intervention-count",
-	"application": ".versionless/work/react-coverview-a1470b01/baseline",
-	"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t045/lanes/coverview",
-	"runRecord": "evidence/runs/react-coverview-a1470b01/run-record.json",
+	"application": ".versionless/work/react-verdaccio-v4-12-2/baseline",
+	"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t045/lanes/verdaccio",
+	"runRecord": "evidence/runs/react-verdaccio-v4-12-2/run-record.json",
 	"writeSet": [
-		"../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t045/lanes/coverview",
-		"evidence/runs/react-coverview-a1470b01/run-record.json",
-		"evidence/runs/react-coverview-a1470b01/run-record.json.interventions.json",
+		"../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t045/lanes/verdaccio",
+		"evidence/runs/react-verdaccio-v4-12-2/run-record.json",
+		"evidence/runs/react-verdaccio-v4-12-2/run-record.json.interventions.json",
 		".versionless/stage/witness-real-app",
 		"evidence/runs/witness-synthesized"
 	],
@@ -16,32 +16,32 @@
 	"mutatedPathsOutsideWriteSet": [],
 	"authoringPathsTouched": [],
 	"interventionCount": 0,
-	"exitCode": 0,
-	"terminalClassification": "proven",
+	"exitCode": 2,
+	"terminalClassification": "refused:ingest.frontend-root-declares-no-framework",
 	"attempts": [
 		{
 			"argv": [
 				"--experimental-strip-types",
 				"/Users/jacksm5pro/dev/open-source/versionless/packages/cli/src/cli.ts",
 				"run",
-				".versionless/work/react-coverview-a1470b01/baseline",
+				".versionless/work/react-verdaccio-v4-12-2/baseline",
 				"--out",
-				"/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t045/lanes/coverview",
+				"/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t045/lanes/verdaccio",
 				"--record",
-				"evidence/runs/react-coverview-a1470b01/run-record.json",
+				"evidence/runs/react-verdaccio-v4-12-2/run-record.json",
 				"--allow-foreign-lockfile",
 				"--allow-git-dependencies",
 				"--allow-install-scripts",
 				"--allow-peer-conflicts",
 				"--allow-remote-tarballs"
 			],
-			"exitCode": 0,
+			"exitCode": 2,
 			"signal": null,
 			"hang": false,
-			"stdoutBytes": 1864,
+			"stdoutBytes": 3081,
 			"stderrBytes": 0,
-			"startedAt": "2026-08-20T13:41:32.485Z",
-			"endedAt": "2026-08-20T13:41:51.378Z"
+			"startedAt": "2026-08-20T13:39:47.065Z",
+			"endedAt": "2026-08-20T13:39:47.395Z"
 		}
 	],
 	"observation": {
@@ -51,8 +51,8 @@
 		},
 		"stageBudgetMs": 900000,
 		"trackedPathsSource": "git",
-		"pathsObservedBefore": 3797,
-		"pathsObservedAfter": 8433,
+		"pathsObservedBefore": 4248,
+		"pathsObservedAfter": 4248,
 		"authoringHomes": [
 			"fixtures/**",
 			"packages/cli/src/fixture/**",

@@ -1,0 +1,181 @@
+{
+	"schema": "versionless.run.v1",
+	"flow": "run",
+	"outcome": "refused",
+	"exitCode": 2,
+	"application": ".versionless/work/react-verdaccio-v4-12-2/baseline",
+	"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t045/lanes/verdaccio",
+	"roots": {
+		"source": ".versionless/work/react-verdaccio-v4-12-2/baseline",
+		"frontend": ".versionless/work/react-verdaccio-v4-12-2/baseline",
+		"frontendSource": "not-read",
+		"frontendBasis": "the frontend root reading refused; the ingest stage below states which refusal."
+	},
+	"dryRun": false,
+	"stagePlan": [
+		{
+			"name": "analyze",
+			"forwards": []
+		},
+		{
+			"name": "ingest",
+			"forwards": []
+		},
+		{
+			"name": "license-at-pin",
+			"forwards": []
+		},
+		{
+			"name": "era-cell",
+			"forwards": []
+		},
+		{
+			"name": "plan",
+			"forwards": []
+		},
+		{
+			"name": "apply",
+			"forwards": [
+				"--out"
+			]
+		},
+		{
+			"name": "install",
+			"forwards": [
+				"--allow-remote-tarballs",
+				"--allow-install-scripts",
+				"--allow-peer-conflicts",
+				"--allow-foreign-lockfile",
+				"--allow-git-dependencies"
+			]
+		},
+		{
+			"name": "build",
+			"forwards": []
+		},
+		{
+			"name": "witness",
+			"forwards": []
+		}
+	],
+	"stages": [
+		{
+			"name": "analyze",
+			"status": "ran",
+			"record": {
+				"lineage": "unknown",
+				"frameworkVersionDeclared": "unknown",
+				"detectedFrom": "unknown",
+				"builder": "unknown",
+				"builderSource": "unknown",
+				"nodeEra": {
+					"declared": "13",
+					"source": ".nvmrc"
+				},
+				"packageManager": {
+					"manager": "yarn",
+					"lockfiles": [
+						"yarn.lock"
+					],
+					"declared": "unknown"
+				},
+				"cellReadings": {
+					"cell": null,
+					"reason": "The frozen React and Next.js adapters publish no target-cell package registry, so no per-package verdict exists for this lineage. Every declared dependency is unknown to the engine rather than accepted by it.",
+					"verdicts": [],
+					"counts": {
+						"unknown": 112
+					}
+				},
+				"notEstablished": [
+					"Detection reads declarations. Nothing here establishes that this application installs, compiles, builds, or behaves as it did on its era toolchain.",
+					"A cell verdict is a reading of a published registry, not an installation: a range written here has not been resolved against any lockfile by this record.",
+					"A dependency the cell has no reading for is reported `unknown`. `unknown` is not `supported` and it is not `unsupported`."
+				]
+			},
+			"startedAt": "2026-08-20T13:39:47.386Z",
+			"endedAt": "2026-08-20T13:39:47.387Z"
+		},
+		{
+			"name": "ingest",
+			"status": "refused",
+			"reason": "ingest.frontend-root-declares-no-framework",
+			"refusal": {
+				"code": "ingest.frontend-root-declares-no-framework",
+				"message": "Ingest: none of the directories considered declares react, next or angular, so this stage read no frontend to admit: . declares no framework this stage reads. A directory carrying a manifest is not a frontend; declare the one that is with --frontend-root <dir>.",
+				"stage": "ingest",
+				"origin": "pipeline"
+			},
+			"startedAt": "2026-08-20T13:39:47.387Z",
+			"endedAt": "2026-08-20T13:39:47.388Z"
+		},
+		{
+			"name": "license-at-pin",
+			"status": "not-run",
+			"reason": "not-run-because: ingest refused",
+			"startedAt": "2026-08-20T13:39:47.388Z",
+			"endedAt": "2026-08-20T13:39:47.388Z"
+		},
+		{
+			"name": "era-cell",
+			"status": "not-run",
+			"reason": "not-run-because: ingest refused",
+			"startedAt": "2026-08-20T13:39:47.388Z",
+			"endedAt": "2026-08-20T13:39:47.388Z"
+		},
+		{
+			"name": "plan",
+			"status": "not-run",
+			"reason": "not-run-because: ingest refused",
+			"startedAt": "2026-08-20T13:39:47.388Z",
+			"endedAt": "2026-08-20T13:39:47.388Z"
+		},
+		{
+			"name": "apply",
+			"status": "not-run",
+			"reason": "not-run-because: ingest refused",
+			"startedAt": "2026-08-20T13:39:47.388Z",
+			"endedAt": "2026-08-20T13:39:47.388Z"
+		},
+		{
+			"name": "install",
+			"status": "not-run",
+			"reason": "not-run-because: ingest refused",
+			"startedAt": "2026-08-20T13:39:47.388Z",
+			"endedAt": "2026-08-20T13:39:47.388Z"
+		},
+		{
+			"name": "build",
+			"status": "not-run",
+			"reason": "not-run-because: ingest refused",
+			"startedAt": "2026-08-20T13:39:47.388Z",
+			"endedAt": "2026-08-20T13:39:47.388Z"
+		},
+		{
+			"name": "witness",
+			"status": "not-run",
+			"reason": "not-run-because: ingest refused",
+			"startedAt": "2026-08-20T13:39:47.388Z",
+			"endedAt": "2026-08-20T13:39:47.388Z"
+		}
+	],
+	"refusal": {
+		"code": "ingest.frontend-root-declares-no-framework",
+		"message": "Ingest: none of the directories considered declares react, next or angular, so this stage read no frontend to admit: . declares no framework this stage reads. A directory carrying a manifest is not a frontend; declare the one that is with --frontend-root <dir>.",
+		"stage": "ingest",
+		"origin": "pipeline"
+	},
+	"report": {
+		"status": "emitted",
+		"slot": "evidence/trust/current/coverage-report.json",
+		"path": "evidence/trust/current/coverage-report.json",
+		"digest": "bed5bbaa1f4a145a56af2fc0453b324c5114f866a2d598446b477fe9fdd1126e"
+	},
+	"notEstablished": [
+		"A stage recorded `ran` returned its own record. What that record establishes is what that stage states, and no more: this row adds no reading of its own on top of it.",
+		"A stage recorded `not-run` was not reached, because an earlier stage refused or broke. Nothing here establishes what it would have recorded.",
+		"Exit 2 is a refusal and exit 1 is a defect. A crash, a hang, or a tree that will not install is a defect even when it happens inside a stage that can also refuse.",
+		"The stage timestamps bound the wall-clock interval the seam observed around each stage. They are not a measurement of machine time and they are not comparable across hosts.",
+		"The coverage report at evidence/trust/current/coverage-report.json was emitted by the guarded derivation and recomputes to the digest recorded here. This run did not derive it, did not regenerate it, and establishes nothing about whether it is current with respect to this run."
+	]
+}

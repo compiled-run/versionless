@@ -8,9 +8,9 @@
     "slsaLevel": "not-claimed"
   },
   "derivedFrom": {
-    "trustManifestCanonicalDigest": "81936bb130c2e102ca17b38e25a70dff764e2a1fa712d1b70fba43ee16e29d8b",
-    "deterministicCoreDigest": "90fca88fd6a3c6152c30d05ebe47a498a771dbf41fc9beef36ecd26b74f15594",
-    "corpusConformanceDigest": "a15feb959388d42e10c116ff4ead1e320d6ca68ecc09861126bf9706464b4cc8",
+    "trustManifestCanonicalDigest": "77b8e46c00a9dd2e0e7e3be077ca2198a7f0ca154cb8e6ace82c60270a11b048",
+    "deterministicCoreDigest": "31e7de863bf7b2dfe8d844931295bd8ec00835fcdea6c2c31a9824bb75fd76b6",
+    "corpusConformanceDigest": "51d0329422cb86f7591a314d0962569ee9395f5e534999c1ce82bcd3fece8b76",
     "adapterFreezeComposite": "140ce86e163ddbae2ad6f1504022efca9468641cc50fd3dca354c6aba8cbb562",
     "adapterFreezeCommit": "ddc2870aa934be7c8bc6caaeca74095d270776d5"
   },
@@ -204,6 +204,21 @@
       "rights": "Ingested at a pin under recorded consent, with the license text hashed at that pin. No redistribution right beyond the upstream license is claimed."
     },
     {
+      "application": "react-coverview-a1470b01",
+      "repository": "rutikwankhade/CoverView",
+      "revisionRecordedIn": {
+        "path": "corpus-conformance.json",
+        "field": "applications[].source.revision for react-coverview-a1470b01"
+      },
+      "archiveSha256": "not-recorded-in-the-corpus-record",
+      "license": "MIT",
+      "licenseSha256": "24ae4deeab7fd89fad4a57235ac34f0c562ede9989c22a4c5b3f9d9a0936af24",
+      "verticals": [
+        "react-coverview-a1470b01"
+      ],
+      "rights": "Ingested at a pin under recorded consent, with the license text hashed at that pin. No redistribution right beyond the upstream license is claimed."
+    },
+    {
       "application": "react-flame-v2-4-0",
       "repository": "pawelmalak/flame",
       "revisionRecordedIn": {
@@ -365,7 +380,7 @@
       },
       {
         "path": "matrix.json",
-        "sha256": "1a754e85941631d7f0360ef8f872f7e65d2985671cfd26e0e22dc0c3a04ae7e7"
+        "sha256": "3133da361f881da90d107d56799357911efecc9dc7874b3bc37503e39862cef9"
       },
       {
         "path": "controls.json",
@@ -377,7 +392,7 @@
       },
       {
         "path": "corpus-conformance.json",
-        "sha256": "7fcb55288927d3702b9dbf4ac0080e1ae6fe56e27cb131e7f39524e696ba88c7"
+        "sha256": "d1b9ebf9c92a283590f7769789c2d4aa2d4a8edce6cb84ea5b5b5606293129c4"
       },
       {
         "path": "script-surface.json",
@@ -389,7 +404,7 @@
       },
       {
         "path": "capability-coverage.json",
-        "sha256": "58859cc1947b850e5b025812e73c238287adda00b4d16fccd709e775d1334606"
+        "sha256": "4d919f6a8e24f66fbba63859bf185d64e1f8aa0ca3a562ac1b03d4c2367b2f17"
       }
     ],
     "receipts": [
@@ -1942,7 +1957,7 @@
     "derivation": "Every claim restates a score or digest the corpus derived; every non-claim is carried verbatim from the record that already publishes it. Neither list is authored beside the evidence.",
     "claims": [
       "6 of 6 React-lineage cells and 4 of 4 Angular-lineage cells carry a Judge-accepted direct-Witness browser proof against the frozen adapter, each on its own immutable source application.",
-      "Every number above is derived from the Judge counting ledger inside `corpus-conformance.json` (`a15feb959388d42e10c116ff4ead1e320d6ca68ecc09861126bf9706464b4cc8`); the cells are enumerated in this record and each names the receipt it was counted off.",
+      "Every number above is derived from the Judge counting ledger inside `corpus-conformance.json` (`51d0329422cb86f7591a314d0962569ee9395f5e534999c1ce82bcd3fece8b76`); the cells are enumerated in this record and each names the receipt it was counted off.",
       "8 of 59 enumerated migration capabilities are cross-proven on at least two independent applications and are therefore in the matrix.",
       "Every artifact in this package is bound by SHA-256 to the trust manifest, and the derived documents are re-derived from the same canonical receipts at verification time.",
       "The two published holdouts that did not end RED are reported with the exact outcome string their receipts carry, and both are counted in no lineage numerator."

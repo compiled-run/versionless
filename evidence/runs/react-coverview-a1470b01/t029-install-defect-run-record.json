@@ -1,15 +1,15 @@
 {
 	"schema": "versionless.run.v1",
 	"flow": "run",
-	"outcome": "refused",
-	"exitCode": 2,
-	"application": ".versionless/work/react-antd-admin-template-v2-0-0/baseline",
-	"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t045/lanes/antd",
+	"outcome": "defect",
+	"exitCode": 1,
+	"application": ".versionless/work/react-coverview-a1470b01/baseline",
+	"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t030-p3/react-coverview-a1470b01",
 	"roots": {
-		"source": ".versionless/work/react-antd-admin-template-v2-0-0/baseline",
-		"frontend": ".versionless/work/react-antd-admin-template-v2-0-0/baseline",
+		"source": ".versionless/work/react-coverview-a1470b01/baseline",
+		"frontend": ".versionless/work/react-coverview-a1470b01/baseline",
 		"frontendSource": "read",
-		"frontendBasis": ". declares react ^16.13.1 (dependencies.react)"
+		"frontendBasis": ". declares react ^16.14.0 (dependencies.react)"
 	},
 	"dryRun": false,
 	"stagePlan": [
@@ -44,9 +44,7 @@
 			"forwards": [
 				"--allow-remote-tarballs",
 				"--allow-install-scripts",
-				"--allow-peer-conflicts",
-				"--allow-foreign-lockfile",
-				"--allow-git-dependencies"
+				"--allow-peer-conflicts"
 			]
 		},
 		{
@@ -64,13 +62,13 @@
 			"status": "ran",
 			"record": {
 				"lineage": "react",
-				"frameworkVersionDeclared": "^16.13.1",
+				"frameworkVersionDeclared": "^16.14.0",
 				"detectedFrom": "react",
 				"builder": "react-scripts",
 				"builderSource": "package.json",
 				"nodeEra": {
-					"declared": "unknown",
-					"source": "unknown"
+					"declared": ">=24.x",
+					"source": "package.json#engines.node"
 				},
 				"packageManager": {
 					"manager": "npm",
@@ -84,7 +82,7 @@
 					"reason": "The frozen React and Next.js adapters publish no target-cell package registry, so no per-package verdict exists for this lineage. Every declared dependency is unknown to the engine rather than accepted by it.",
 					"verdicts": [],
 					"counts": {
-						"unknown": 42
+						"unknown": 21
 					}
 				},
 				"notEstablished": [
@@ -93,8 +91,8 @@
 					"A dependency the cell has no reading for is reported `unknown`. `unknown` is not `supported` and it is not `unsupported`."
 				]
 			},
-			"startedAt": "2026-08-20T13:42:09.093Z",
-			"endedAt": "2026-08-20T13:42:09.094Z"
+			"startedAt": "2026-08-17T23:50:54.223Z",
+			"endedAt": "2026-08-17T23:50:54.224Z"
 		},
 		{
 			"name": "ingest",
@@ -104,36 +102,34 @@
 				"schemaVersion": "versionless.operator-ingest.v1",
 				"ran": true,
 				"reason": null,
-				"id": "react_antd_admin_template",
+				"id": "cover-img",
 				"idSource": "read",
 				"idReadFrom": "package.json#name",
 				"frontendRoot": ".",
 				"frontendRootSource": "read",
-				"frontendRootBasis": ". declares react ^16.13.1 (dependencies.react)",
-				"acquisitionRoot": "/Users/jacksm5pro/dev/open-source/versionless/.versionless/work/react-antd-admin-template-v2-0-0/baseline",
+				"frontendRootBasis": ". declares react ^16.14.0 (dependencies.react)",
+				"acquisitionRoot": "/Users/jacksm5pro/dev/open-source/versionless/.versionless/work/react-coverview-a1470b01/baseline",
 				"pin": {
-					"repository": "NLRX-WJC/react-antd-admin-template",
-					"repositoryReadFrom": "evidence/ingests/react-antd-admin-template-v2-0-0/source.json (consent VL-LEGACY-CORPUS-2026-08-10; result source-bound; archive reconciled against the published Git tree and byte-identical across two streams; journalled manifest 98d585a7857e06096bced54d7a4b25e58e326be691e59d47486475b1ec4cf0ea is the digest this stage walked)",
-					"ref": "refs/tags/v2.0.0",
-					"refReadFrom": "evidence/ingests/react-antd-admin-template-v2-0-0/source.json (consent VL-LEGACY-CORPUS-2026-08-10; result source-bound; archive reconciled against the published Git tree and byte-identical across two streams; journalled manifest 98d585a7857e06096bced54d7a4b25e58e326be691e59d47486475b1ec4cf0ea is the digest this stage walked)",
-					"commitSha": "31fc5dfa2c74cb8467bdfd9bf1174fb62351bb1e",
+					"repository": null,
+					"ref": null,
+					"commitSha": "a1470b01e41c9e1128364e500b2ca2107f8432e0",
 					"commitShaSource": "read",
-					"commitShaReadFrom": "evidence/ingests/react-antd-admin-template-v2-0-0/source.json (consent VL-LEGACY-CORPUS-2026-08-10; result source-bound; archive reconciled against the published Git tree and byte-identical across two streams; journalled manifest 98d585a7857e06096bced54d7a4b25e58e326be691e59d47486475b1ec4cf0ea is the digest this stage walked)"
+					"commitShaReadFrom": "evidence/ingests/react-coverview-a1470b01/source.json (consent VL-LEGACY-CORPUS-2026-08-10; result source-bound; archive reconciled against the published Git tree and byte-identical across two streams; journalled manifest c91396e4104a2056b05a43fae690dc75f75ac3b0f2b9bdf97578475a6718bf5c is the digest this stage walked)"
 				},
 				"tree": {
-					"files": 133,
-					"bytes": 6562763,
-					"normalizedManifestSha256": "98d585a7857e06096bced54d7a4b25e58e326be691e59d47486475b1ec4cf0ea"
+					"files": 74,
+					"bytes": 1202434,
+					"normalizedManifestSha256": "c91396e4104a2056b05a43fae690dc75f75ac3b0f2b9bdf97578475a6718bf5c"
 				},
 				"detected": {
 					"lineage": "react",
-					"frameworkVersionDeclared": "^16.13.1",
+					"frameworkVersionDeclared": "^16.14.0",
 					"detectedFrom": "react",
 					"builder": "react-scripts",
 					"builderSource": "package.json",
 					"nodeEra": {
-						"declared": "unknown",
-						"source": "unknown"
+						"declared": ">=24.x",
+						"source": "package.json#engines.node"
 					},
 					"packageManager": {
 						"manager": "npm",
@@ -147,7 +143,7 @@
 						"reason": "The frozen React and Next.js adapters publish no target-cell package registry, so no per-package verdict exists for this lineage. Every declared dependency is unknown to the engine rather than accepted by it.",
 						"verdicts": [],
 						"counts": {
-							"unknown": 42
+							"unknown": 21
 						}
 					},
 					"notEstablished": [
@@ -164,15 +160,15 @@
 					"identifier": "MIT",
 					"identifierSource": "observed",
 					"identifierBasis": "verbatim MIT text in the repository root LICENSE file at the pinned revision",
-					"copyrightNotice": "Copyright (c) 2020 难凉热血",
-					"manifestLicenseField": "MIT",
+					"copyrightNotice": "Copyright (c) 2020 Rutik Wankhade",
+					"manifestLicenseField": null,
 					"artifacts": [
 						{
 							"path": "LICENSE",
 							"role": "repository-root-licence",
-							"gitBlobSha": "bb7a9f2f096f01d3922fe49637ea7415f5c2476b",
-							"bytes": 1069,
-							"sha256": "718f1cae084d9d20d619c29fbb4759c805c8f1bd9099b3fe79b9c1649cfb74be",
+							"gitBlobSha": "6b75d4fcac4ba5a971b0aa486f57e71856a750f6",
+							"bytes": 1071,
+							"sha256": "24ae4deeab7fd89fad4a57235ac34f0c562ede9989c22a4c5b3f9d9a0936af24",
 							"firstLine": "MIT License",
 							"permissionGrantPresent": true,
 							"noticeRetentionClausePresent": true,
@@ -182,14 +178,14 @@
 						{
 							"path": "package.json",
 							"role": "frontend-manifest",
-							"gitBlobSha": "f3e1e3732257b8e8f522a05acdc40b2bebed2144",
-							"bytes": 2114,
-							"sha256": "d2085e156d4eedd133592addcc43b857221da3393962ce543d53eb118b6e67e1",
+							"gitBlobSha": "1a33c79c52a076aa4e1cb840031dd8b148b5a30b",
+							"bytes": 1291,
+							"sha256": "bd40031924e33d6465701a1da473c280ab48596295a54395fcb8fdd198200e8e",
 							"firstLine": null,
 							"permissionGrantPresent": null,
 							"noticeRetentionClausePresent": null,
 							"warrantyDisclaimerPresent": null,
-							"licenseField": "MIT"
+							"licenseField": null
 						}
 					],
 					"licenceFilesAtRoot": [
@@ -205,17 +201,17 @@
 				},
 				"closure": {
 					"schemaVersion": "versionless.legacy-dependency-closure.v1",
-					"slug": "react_antd_admin_template",
+					"slug": "cover-img",
 					"frontendRoot": ".",
 					"source": {
 						"verifiedSourceRoot": ".",
-						"packageJsonSha256": "d2085e156d4eedd133592addcc43b857221da3393962ce543d53eb118b6e67e1",
-						"packageLockSha256": "870f0ede41b75dc57a02bc0aa77d1d1d795af63d2ffdb32bac61c4a601a645e7",
-						"packageLockBytes": 645230
+						"packageJsonSha256": "bd40031924e33d6465701a1da473c280ab48596295a54395fcb8fdd198200e8e",
+						"packageLockSha256": "61f5fba61597fc3dcbfe28b8d826d630358a03091d97beb0acbc8c322049c96e",
+						"packageLockBytes": 868202
 					},
 					"lockState": {
 						"file": "package-lock.json",
-						"lockfileVersion": 1,
+						"lockfileVersion": 3,
 						"requiresField": true,
 						"committedWithSource": true,
 						"coversDevDependencies": false,
@@ -223,24 +219,19 @@
 						"everyEntryHasIntegrityHash": true,
 						"entriesWithoutResolvedUrl": [],
 						"entriesWithoutIntegrityHash": [],
-						"lockfileIntegrityAlgorithms": [
-							"none",
-							"sha1"
-						]
+						"lockfileIntegrityAlgorithms": []
 					},
 					"counts": {
-						"declaredDependencies": 36,
-						"declaredDevDependencies": 6,
-						"lockedPlacements": 1932,
-						"distinctNameVersionPairs": 1510,
+						"declaredDependencies": 18,
+						"declaredDevDependencies": 3,
+						"lockedPlacements": 0,
+						"distinctNameVersionPairs": 0,
 						"devPlacements": 0,
-						"optionalPlacements": 146,
-						"bundledPlacements": 198
+						"optionalPlacements": 0,
+						"bundledPlacements": 0
 					},
-					"registryHosts": {
-						"registry.npm.taobao.org": 1734
-					},
-					"closureSha256": "ccae07817458d85bc0dd98715639e7ec8d8b23e55aa8a360e81b9b031d32dc0d",
+					"registryHosts": {},
+					"closureSha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
 					"nonclaims": [
 						"Per-artifact byte digests were not independently mirrored in this unit; the recorded integrity hashes are the ones the committed lockfile declares.",
 						"A resolvable closure establishes no build, browser behavior, licence compatibility of transitive dependencies, migration feasibility, or production readiness."
@@ -258,8 +249,8 @@
 					"A frontend root read by lineage is the one directory among those considered whose manifest declares a framework this stage reads. The basis names every directory considered and what each of their manifests declared; nothing here establishes that the directory chosen is the one its authors would call the application."
 				]
 			},
-			"startedAt": "2026-08-20T13:42:09.094Z",
-			"endedAt": "2026-08-20T13:42:09.115Z"
+			"startedAt": "2026-08-17T23:50:54.224Z",
+			"endedAt": "2026-08-17T23:50:54.236Z"
 		},
 		{
 			"name": "license-at-pin",
@@ -272,15 +263,15 @@
 				"identifier": "MIT",
 				"identifierSource": "observed",
 				"identifierBasis": "verbatim MIT text in the repository root LICENSE file at the pinned revision",
-				"copyrightNotice": "Copyright (c) 2020 难凉热血",
-				"manifestLicenseField": "MIT",
+				"copyrightNotice": "Copyright (c) 2020 Rutik Wankhade",
+				"manifestLicenseField": null,
 				"artifacts": [
 					{
 						"path": "LICENSE",
 						"role": "repository-root-licence",
-						"gitBlobSha": "bb7a9f2f096f01d3922fe49637ea7415f5c2476b",
-						"bytes": 1069,
-						"sha256": "718f1cae084d9d20d619c29fbb4759c805c8f1bd9099b3fe79b9c1649cfb74be",
+						"gitBlobSha": "6b75d4fcac4ba5a971b0aa486f57e71856a750f6",
+						"bytes": 1071,
+						"sha256": "24ae4deeab7fd89fad4a57235ac34f0c562ede9989c22a4c5b3f9d9a0936af24",
 						"firstLine": "MIT License",
 						"permissionGrantPresent": true,
 						"noticeRetentionClausePresent": true,
@@ -290,14 +281,14 @@
 					{
 						"path": "package.json",
 						"role": "frontend-manifest",
-						"gitBlobSha": "f3e1e3732257b8e8f522a05acdc40b2bebed2144",
-						"bytes": 2114,
-						"sha256": "d2085e156d4eedd133592addcc43b857221da3393962ce543d53eb118b6e67e1",
+						"gitBlobSha": "1a33c79c52a076aa4e1cb840031dd8b148b5a30b",
+						"bytes": 1291,
+						"sha256": "bd40031924e33d6465701a1da473c280ab48596295a54395fcb8fdd198200e8e",
 						"firstLine": null,
 						"permissionGrantPresent": null,
 						"noticeRetentionClausePresent": null,
 						"warrantyDisclaimerPresent": null,
-						"licenseField": "MIT"
+						"licenseField": null
 					}
 				],
 				"licenceFilesAtRoot": [
@@ -311,8 +302,8 @@
 					"`identifierSource: declared` means an operator supplied the identifier. This stage did not read it and does not corroborate it."
 				]
 			},
-			"startedAt": "2026-08-20T13:42:09.115Z",
-			"endedAt": "2026-08-20T13:42:09.115Z"
+			"startedAt": "2026-08-17T23:50:54.236Z",
+			"endedAt": "2026-08-17T23:50:54.237Z"
 		},
 		{
 			"name": "era-cell",
@@ -333,10 +324,10 @@
 						"source": "inferred",
 						"readFrom": "the process this stage is running in — the runtime the install and build stages will run the lane in",
 						"basis": "evidence/runs/operator-flows/lane-install-build.json records a lane of this composition installing 428 packages and building 11 outputs at node v24.15.0 on darwin-arm64.",
-						"claim": "the migrated lane will be installed and built in this runtime",
-						"declaredRange": null,
-						"declaredRangeSource": null,
-						"satisfiedByDeclaredRange": null
+						"claim": "the compatibility range this application declares admits the runtime the lane will run in. The range names no era and no major was read from it.",
+						"declaredRange": ">=24.x",
+						"declaredRangeSource": "package.json#engines.node",
+						"satisfiedByDeclaredRange": true
 					},
 					"era": {
 						"outcome": "not-read",
@@ -381,9 +372,9 @@
 							},
 							{
 								"source": "package.json#engines.node",
-								"text": null,
+								"text": ">=24.x",
 								"majors": null,
-								"present": false
+								"present": true
 							}
 						],
 						"claim": "nothing in this tree names the toolchain era its authors used, and this stage read none"
@@ -430,9 +421,9 @@
 						},
 						{
 							"source": "package.json#engines.node",
-							"text": null,
+							"text": ">=24.x",
 							"majors": null,
-							"present": false
+							"present": true
 						}
 					],
 					"architecture": "arm64",
@@ -473,14 +464,6 @@
 							"architecture": "x64",
 							"supplier": "workspace-runtime-cache",
 							"location": ".versionless/cache/angular-eshop-webspa-netcore2-2-runtime/node-v8.11.4-darwin-x64"
-						},
-						{
-							"version": "v16.20.2",
-							"major": 16,
-							"platform": "darwin",
-							"architecture": "arm64",
-							"supplier": "workspace-runtime-cache",
-							"location": ".versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64"
 						},
 						{
 							"version": "v16.20.2",
@@ -562,8 +545,8 @@
 					"Satisfaction of a declared range is not corroborated by anything else this tree says. Where other sources name majors, they are listed above with what each literally says, and this stage picks from none of them."
 				]
 			},
-			"startedAt": "2026-08-20T13:42:09.115Z",
-			"endedAt": "2026-08-20T13:42:09.121Z"
+			"startedAt": "2026-08-17T23:50:54.237Z",
+			"endedAt": "2026-08-17T23:50:54.243Z"
 		},
 		{
 			"name": "plan",
@@ -571,13 +554,13 @@
 			"record": {
 				"analysis": {
 					"lineage": "react",
-					"frameworkVersionDeclared": "^16.13.1",
+					"frameworkVersionDeclared": "^16.14.0",
 					"detectedFrom": "react",
 					"builder": "react-scripts",
 					"builderSource": "package.json",
 					"nodeEra": {
-						"declared": "unknown",
-						"source": "unknown"
+						"declared": ">=24.x",
+						"source": "package.json#engines.node"
 					},
 					"packageManager": {
 						"manager": "npm",
@@ -591,7 +574,7 @@
 						"reason": "The frozen React and Next.js adapters publish no target-cell package registry, so no per-package verdict exists for this lineage. Every declared dependency is unknown to the engine rather than accepted by it.",
 						"verdicts": [],
 						"counts": {
-							"unknown": 42
+							"unknown": 21
 						}
 					},
 					"notEstablished": [
@@ -616,8 +599,8 @@
 							"kind": "workspace",
 							"changed": true,
 							"sha256Before": "",
-							"sha256After": "f849e7027e28a3e06ea8fe7eaa5e5198f1abd3d2525394f53c40b82a6cc14449",
-							"source": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n    <meta name=\"theme-color\" content=\"#000000\" />\n    <meta name=\"description\" content=\"react-antd-admin-template\" />\n    <title>react-antd-admin-template</title>\n  </head>\n  <body>\n    <div id=\"root\"></div>\n    <script type=\"module\" src=\"/src/index.js\"></script>\n  </body>\n</html>\n",
+							"sha256After": "5735fd2dd4eb79d4cf00111df9380fde96460da73ab186de1287f88197d15b32",
+							"source": "<!DOCTYPE html>\n<html lang=\"en\">\n\n<head>\n  <meta charset=\"utf-8\" />\n  <link rel=\"icon\" href=\"./logo.png\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n  <meta name=\"theme-color\" content=\"#000000\" />\n\n  <meta property=\"og:type\" content=\"website\">\n  <meta property=\"og:url\" content=\"https://coverview.vercel.app/\">\n  <meta property=\"og:title\" content=\"Coverview: Creating cover images for your blogs is now super easy\">\n  <meta property=\"og:description\" content=\"Coverview is an open-source tool to create cover images for your blogs quickly and easily. Customize with different themes, colors, fonts and more.\">\n  <meta property=\"og:image\"\n    content=\"https://user-images.githubusercontent.com/47467468/180610249-d24b4ffa-e059-4678-8788-5795498b168c.png\">\n\n  <meta name=\"description\" content=\"Coverview is an open-source tool to create cover images for your blogs quickly and easily. Customize with different themes, colors, fonts and more.\" />\n  <meta property=\"twitter:card\" content=\"summary_large_image\">\n  <meta property=\"twitter:url\" content=\"https://coverview.vercel.app/\">\n  <meta property=\"twitter:title\" content=\"CoverView: Creating cover images for your blogs is now super easy\">\n  <meta property=\"twitter:description\" content=\"Coverview is an open-source tool to create cover images for your blogs quickly and easily. Customize with different themes, colors, fonts and more.\">\n  <meta property=\"twitter:image\"\n    content=\"https://user-images.githubusercontent.com/47467468/180610249-d24b4ffa-e059-4678-8788-5795498b168c.png\">\n  <link rel=\"apple-touch-icon\" href=\"./logo.png\" />\n  <!-- <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/css/bootstrap.min.css\"\n    integrity=\"sha384-VCmXjywReHh4PwowAiWNagnWcLhlEJLA5buUprzK8rxFgeH0kww/aWY76TfkUoSX\" crossorigin=\"anonymous\"> -->\n  <link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/gh/konpa/devicon@master/devicon.min.css\" crossorigin=\"anonymous\">\n  <!--\n      manifest.json provides metadata used when your web app is installed on a\n      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/\n    -->\n\n  <link rel=\"manifest\" href=\"/manifest.json\" />\n\n\n\n  <link href=\"https://fonts.googleapis.com/css2?family=Anek+Latin:wght@400;500;600;700&display=swap?\" rel=\"stylesheet\" crossorigin=\"anonymous\">\n  <link href=\"https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap\" rel=\"stylesheet\" crossorigin=\"anonymous\">\n\n  <!--\n      Notice the use of  in the tags above.\n      It will be replaced with the URL of the `public` folder during the build.\n      Only files inside the `public` folder can be referenced from the HTML.\n\n      Unlike \"/favicon.ico\" or \"favicon.ico\", \"/favicon.ico\" will\n      work correctly both with client-side routing and a non-root public URL.\n      Learn how to configure a non-root public URL by running `npm run build`.\n    -->\n  <!-- Place this tag in your head or just before your close body tag. -->\n  <script defer type=\"text/javascript\" src=\"https://api.pirsch.io/pirsch.js\" id=\"pirschjs\"\n    data-code=\"y1wOy094LZLgd8a0GcLjDsPVQygfceIB\"></script>\n<meta name=\"google-site-verification\" content=\"iC9xqg_PeFTmMUq-zSDqnsyaimqm8NQ2bp6Kxpbyzz4\" />\n    <title>Coverview - Creating cover images for your blogs is now super easy</title>\n</head>\n\n<body>\n  <noscript>You need to enable JavaScript to run this app.</noscript>\n  <div id=\"root\"></div>\n  <!--\n      This HTML file is a template.\n      If you open it directly in the browser, you will see an empty page.\n\n      You can add webfonts, meta tags, or analytics to this file.\n      The build step will place the bundled scripts into the <body> tag.\n\n      To begin the development, run `npm start` or `yarn start`.\n      To create a production bundle, use `npm run build` or `yarn build`.\n    -->\n  <script type=\"module\" src=\"/src/index.js\"></script>\n  </body>\n\n</html>",
 							"changes": [
 								"entry document derived from public/index.html with entry module /src/index.js",
 								"create-react-app template placeholders substituted for NODE_ENV, PUBLIC_URL"
@@ -640,8 +623,8 @@
 					]
 				}
 			},
-			"startedAt": "2026-08-20T13:42:09.121Z",
-			"endedAt": "2026-08-20T13:42:09.122Z"
+			"startedAt": "2026-08-17T23:50:54.243Z",
+			"endedAt": "2026-08-17T23:50:54.244Z"
 		},
 		{
 			"name": "apply",
@@ -653,7 +636,7 @@
 						{
 							"path": "index.html",
 							"kind": "workspace",
-							"sha256After": "f849e7027e28a3e06ea8fe7eaa5e5198f1abd3d2525394f53c40b82a6cc14449",
+							"sha256After": "5735fd2dd4eb79d4cf00111df9380fde96460da73ab186de1287f88197d15b32",
 							"changes": [
 								"entry document derived from public/index.html with entry module /src/index.js",
 								"create-react-app template placeholders substituted for NODE_ENV, PUBLIC_URL"
@@ -661,7 +644,7 @@
 						}
 					],
 					"removed": [],
-					"copied": 133,
+					"copied": 74,
 					"notEstablished": [
 						"Writing a changeset into a lane is not a build. Nothing here establishes that the lane installs, compiles, or emits anything.",
 						"Every byte written differs from the application only where a frozen adapter transform decided it should; each is itemised by file and by change.",
@@ -675,7 +658,7 @@
 					"files": [
 						{
 							"path": "vite.config.ts",
-							"sha256": "e76f7299c69388ecae910b67da639ff1edbbc853ed0aea8b254e6fad9010b352",
+							"sha256": "7be2bc4cf7155ab40eaf88e3b9bea329b9dc6625bbf4207ecc0cf79310affbf3",
 							"changes": [
 								"generated from the frozen create-react-app adapter composition with base \"\", template \"index.html\", output build-vite",
 								"environment inlined for NODE_ENV, PUBLIC_URL"
@@ -683,24 +666,21 @@
 						},
 						{
 							"path": "package.json",
-							"sha256": "d684834b7a8d8001338fb60b418ec4d62f6f56ee076b9f9d9c819e53e6a826c8",
+							"sha256": "a173b5651b1b033f872ce7d2a8b1a55bd104c4022221182eb262668c4ce74d0c",
 							"changes": [
-								"dependencies.react-scripts 3.4.1 removed: the lane is built by the frozen create-react-app Vite adapter composition and no longer runs that toolchain",
+								"dependencies.react-scripts 5.0.1 removed: the lane is built by the frozen create-react-app Vite adapter composition and no longer runs that toolchain",
 								"devDependencies.pathe declared as ^2.0.3: the generated lane configuration imports it, pinned to the range this workspace itself resolves",
 								"devDependencies.ufo declared as ^1.6.4: the generated lane configuration imports it, pinned to the range this workspace itself resolves",
 								"devDependencies.vite declared as 8.0.16: the generated lane configuration imports it, pinned to the range this workspace itself resolves",
-								"scripts.start rewritten from react-app-rewired start to vite",
-								"scripts.build rewritten from react-app-rewired --max-old-space-size=4096 build  to vite build",
+								"scripts.start rewritten from react-scripts start to vite",
+								"scripts.build rewritten from react-scripts build to vite build",
+								"scripts.test removed: react-scripts test",
 								"scripts.eject removed: react-scripts eject"
 							]
 						}
 					],
 					"unhandled": [
-						"The application carries config-overrides.js, a create-react-app build override. The generated lane configuration composes the frozen adapter only and carries nothing that file declares.",
-						"The application declares react-app-rewired ^2.1.5, which replaces create-react-app's own build configuration. The generated lane configuration carries no equivalent.",
-						"The application declares customize-cra ^0.9.1, which replaces create-react-app's own build configuration. The generated lane configuration carries no equivalent.",
-						"The application imports .less stylesheets (first at src/components/BreadCrumb/index.less). create-react-app supplied the less preprocessor; the generated lane configuration declares neither the preprocessor nor a pin for it.",
-						"The application carries .env.production. This flow reads .env only, under create-react-app's REACT_APP_ prefix rule, so whatever .env.production declares is not inlined into the generated configuration.",
+						"scripts.test invoked the removed origin toolchain (react-scripts test). The lane no longer declares react-scripts, and this rewrite carries no successor for that script, so it is dropped rather than left as a command that cannot run.",
 						"scripts.eject invoked the removed origin toolchain (react-scripts eject). The lane no longer declares react-scripts, and this rewrite carries no successor for that script, so it is dropped rather than left as a command that cannot run.",
 						"eslintConfig extends the create-react-app shareable configuration, which react-scripts supplied. The lane no longer declares that package, so the field is preserved verbatim and the configuration it names is not resolvable in the lane.",
 						"The manifest declares a browserslist. create-react-app fed it to Babel and Autoprefixer; the generated lane configuration declares no build target derived from it, so the lane emits whatever the workspace Vite default targets."
@@ -716,48 +696,40 @@
 					]
 				}
 			},
-			"startedAt": "2026-08-20T13:42:09.122Z",
-			"endedAt": "2026-08-20T13:42:09.157Z"
+			"startedAt": "2026-08-17T23:50:54.244Z",
+			"endedAt": "2026-08-17T23:50:54.260Z"
 		},
 		{
 			"name": "install",
-			"status": "refused",
-			"reason": "install.closure-registry-unreachable",
-			"refusal": {
-				"code": "install.closure-registry-unreachable",
-				"message": "Install: this closure pins registry.npm.taobao.org, and npm could not reach it — CERT_HAS_EXPIRED, requesting https://registry.npm.taobao.org/word-wrap/download/word-wrap-1.2.3.tgz. There is no policy to declare here and this flow offers none: no allowance makes an unreachable registry answer, and a closure that resolves through a registry that is gone cannot be installed as recorded. What this establishes is that this run did not reach registry.npm.taobao.org; whether that host is retired or momentarily unreachable is not established here, and neither is what it would have served. The remedy is re-pinning the closure onto a registry that answers, which changes what the application declares and is therefore a migration decision rather than an install policy. npm’s own output, unaltered:\nnpm error code CERT_HAS_EXPIRED\nnpm error errno CERT_HAS_EXPIRED\nnpm error request to https://registry.npm.taobao.org/word-wrap/download/word-wrap-1.2.3.tgz failed, reason: certificate has expired\nnpm error A complete log of this run can be found in: /private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/***/scratchpad/t045/lanes/antd/.install-home/npm-cache/_logs/2026-08-20T13_42_09_252Z-debug-0.log",
-				"stage": "install",
-				"origin": "pipeline"
-			},
-			"startedAt": "2026-08-20T13:42:09.157Z",
-			"endedAt": "2026-08-20T13:44:06.341Z"
+			"status": "defect",
+			"reason": "install: npm install --no-audit --no-fund --allow-remote all --foreground-scripts --legacy-peer-deps failed in the lane. This is a defect rather than a refusal: the declared policies were applied and the pinned closure still did not install. Command failed: npm install --no-audit --no-fund --allow-remote all --foreground-scripts --legacy-peer-deps\nnpm warn deprecated source-map-url@0.4.1: See https://github.com/lydell/source-map-url#deprecated\nnpm warn deprecated urix@0.1.0: Please see https://github.com/lydell/urix#deprecated\nnpm warn deprecated resolve-url@0.2.1: https://github.com/lydell/resolve-url#deprecated\nnpm warn deprecated har-validator@5.1.5: this library is no longer supported\nnpm warn deprecated source-map-resolve@0.5.3: See https://github.com/lydell/source-map-resolve#deprecated\nnpm warn deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.\nnpm warn deprecated request@2.88.2: request has been deprecated, see https://github.com/request/request/issues/3142\nnpm warn deprecated xmldom@0.1.31: Deprecated due to CVE-2021-21366 resolved in 0.5.0\nnpm warn deprecated abab@1.0.4: Use your platform's native atob() and btoa() methods instead\nnpm error code EALLOWGIT\nnpm error Fetching packages of type \"git\" have been disabled\nnpm error Refusing to fetch \"file-saver@git+ssh://git@github.com/eligrey/FileSaver.js.git#e865e37af9f9947ddcced76b549e27dc45c1cb2e\"\nnpm error A complete log of this run can be found in: /Users/jacksm5pro/.npm/_logs/2026-08-17T23_50_54_302Z-debug-0.log\n",
+			"startedAt": "2026-08-17T23:50:54.260Z",
+			"endedAt": "2026-08-17T23:50:56.823Z"
 		},
 		{
 			"name": "build",
 			"status": "not-run",
-			"reason": "not-run-because: install refused",
-			"startedAt": "2026-08-20T13:44:06.341Z",
-			"endedAt": "2026-08-20T13:44:06.341Z"
+			"reason": "not-run-because: install raised a defect",
+			"startedAt": "2026-08-17T23:50:56.823Z",
+			"endedAt": "2026-08-17T23:50:56.823Z"
 		},
 		{
 			"name": "witness",
 			"status": "not-run",
-			"reason": "not-run-because: install refused",
-			"startedAt": "2026-08-20T13:44:06.341Z",
-			"endedAt": "2026-08-20T13:44:06.341Z"
+			"reason": "not-run-because: install raised a defect",
+			"startedAt": "2026-08-17T23:50:56.823Z",
+			"endedAt": "2026-08-17T23:50:56.823Z"
 		}
 	],
-	"refusal": {
-		"code": "install.closure-registry-unreachable",
-		"message": "Install: this closure pins registry.npm.taobao.org, and npm could not reach it — CERT_HAS_EXPIRED, requesting https://registry.npm.taobao.org/word-wrap/download/word-wrap-1.2.3.tgz. There is no policy to declare here and this flow offers none: no allowance makes an unreachable registry answer, and a closure that resolves through a registry that is gone cannot be installed as recorded. What this establishes is that this run did not reach registry.npm.taobao.org; whether that host is retired or momentarily unreachable is not established here, and neither is what it would have served. The remedy is re-pinning the closure onto a registry that answers, which changes what the application declares and is therefore a migration decision rather than an install policy. npm’s own output, unaltered:\nnpm error code CERT_HAS_EXPIRED\nnpm error errno CERT_HAS_EXPIRED\nnpm error request to https://registry.npm.taobao.org/word-wrap/download/word-wrap-1.2.3.tgz failed, reason: certificate has expired\nnpm error A complete log of this run can be found in: /private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/***/scratchpad/t045/lanes/antd/.install-home/npm-cache/_logs/2026-08-20T13_42_09_252Z-debug-0.log",
+	"defect": {
 		"stage": "install",
-		"origin": "pipeline"
+		"message": "install: npm install --no-audit --no-fund --allow-remote all --foreground-scripts --legacy-peer-deps failed in the lane. This is a defect rather than a refusal: the declared policies were applied and the pinned closure still did not install. Command failed: npm install --no-audit --no-fund --allow-remote all --foreground-scripts --legacy-peer-deps\nnpm warn deprecated source-map-url@0.4.1: See https://github.com/lydell/source-map-url#deprecated\nnpm warn deprecated urix@0.1.0: Please see https://github.com/lydell/urix#deprecated\nnpm warn deprecated resolve-url@0.2.1: https://github.com/lydell/resolve-url#deprecated\nnpm warn deprecated har-validator@5.1.5: this library is no longer supported\nnpm warn deprecated source-map-resolve@0.5.3: See https://github.com/lydell/source-map-resolve#deprecated\nnpm warn deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.\nnpm warn deprecated request@2.88.2: request has been deprecated, see https://github.com/request/request/issues/3142\nnpm warn deprecated xmldom@0.1.31: Deprecated due to CVE-2021-21366 resolved in 0.5.0\nnpm warn deprecated abab@1.0.4: Use your platform's native atob() and btoa() methods instead\nnpm error code EALLOWGIT\nnpm error Fetching packages of type \"git\" have been disabled\nnpm error Refusing to fetch \"file-saver@git+ssh://git@github.com/eligrey/FileSaver.js.git#e865e37af9f9947ddcced76b549e27dc45c1cb2e\"\nnpm error A complete log of this run can be found in: /Users/jacksm5pro/.npm/_logs/2026-08-17T23_50_54_302Z-debug-0.log\n"
 	},
 	"report": {
 		"status": "emitted",
 		"slot": "evidence/trust/current/coverage-report.json",
 		"path": "evidence/trust/current/coverage-report.json",
-		"digest": "bed5bbaa1f4a145a56af2fc0453b324c5114f866a2d598446b477fe9fdd1126e"
+		"digest": "65b247d1272c9bfa5b32a276da86fd7543983db5c995c24244b1d0fcc79f6d9a"
 	},
 	"notEstablished": [
 		"A stage recorded `ran` returned its own record. What that record establishes is what that stage states, and no more: this row adds no reading of its own on top of it.",

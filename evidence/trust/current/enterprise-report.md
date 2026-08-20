@@ -2,9 +2,9 @@
 
 One machine artifact for an enterprise reviewer, derived entirely from canonical receipts the trust package already verified. It states what was proven, on which sources, with which tools, under which commands, and — in the same document — what is unsupported, unknown, or deliberately not claimed.
 
-- Trust manifest canonical SHA-256: `81936bb130c2e102ca17b38e25a70dff764e2a1fa712d1b70fba43ee16e29d8b`
-- Deterministic core: `90fca88fd6a3c6152c30d05ebe47a498a771dbf41fc9beef36ecd26b74f15594`
-- Corpus conformance: `a15feb959388d42e10c116ff4ead1e320d6ca68ecc09861126bf9706464b4cc8`
+- Trust manifest canonical SHA-256: `77b8e46c00a9dd2e0e7e3be077ca2198a7f0ca154cb8e6ace82c60270a11b048`
+- Deterministic core: `31e7de863bf7b2dfe8d844931295bd8ec00835fcdea6c2c31a9824bb75fd76b6`
+- Corpus conformance: `51d0329422cb86f7591a314d0962569ee9395f5e534999c1ce82bcd3fece8b76`
 - Adapter freeze: commit `ddc2870aa934be7c8bc6caaeca74095d270776d5`, composite `140ce86e163ddbae2ad6f1504022efca9468641cc50fd3dca354c6aba8cbb562`
 - Certification: **not-certified** — This package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation.
 - Integrity: **hash-only; authenticity is not established**; SLSA level: **not-claimed**
@@ -27,6 +27,7 @@ The machine artifact for this document is [`enterprise-report.json`](enterprise-
 | react-linkfree | https://github.com/EddieHubCommunity/BioDrop | `7cef1a1c2ae251e3738d8b8a6c5fe94b118bf13d3a5bae7b522b8db9c1c334ef` | MIT | `3b5b430ae7e6151220591e69a8a056482a13d36518357c025619cf0d60be50bf` | `corpus-conformance.json` → `applications[].source.revision for react-linkfree` |
 | angular-tiny-translator | https://github.com/martinroob/tiny-translator | `424209463bcccca1714d520e2f68c55d54b204c69367bbeefcdf930d01d3ac18` | MIT | `b33e2f180e3d22c42c1511895a448e9aafb848a51a43a9cfae163f19f7288fb9` | `corpus-conformance.json` → `applications[].source.revision for angular-tiny-translator` |
 | angular-super-productivity | https://github.com/super-productivity/super-productivity | `dead2f5334350459f930f5d5235322e5af38e577c79557d3370e497bf15f24eb` | MIT | `2e279de19632b5694d24b0ac06fd5b837ec487bf821302d9ce195379850a5fcb` | `corpus-conformance.json` → `applications[].source.revision for angular-super-productivity` |
+| react-coverview-a1470b01 | rutikwankhade/CoverView | `not-recorded-in-the-corpus-record` | MIT | `24ae4deeab7fd89fad4a57235ac34f0c562ede9989c22a4c5b3f9d9a0936af24` | `corpus-conformance.json` → `applications[].source.revision for react-coverview-a1470b01` |
 | react-flame-v2-4-0 | pawelmalak/flame | `not-recorded-in-the-corpus-record` | MIT | `fbfe10674aef1e0bf084850644879fa4114d8a98debc5fb8e680f295af169d43` | `corpus-conformance.json` → `applications[].source.revision for react-flame-v2-4-0` |
 
 Each application is pinned to an exact upstream revision. Those revisions are carried in [`corpus-conformance.json`](corpus-conformance.json) rather than restated here, and that record is itself bound by SHA-256 to the trust manifest above.
@@ -61,13 +62,13 @@ Tool: `versionless-local-trust-generator`, adapter frozen at commit `ddc2870aa93
 - `licenses.json` — `d4044d784816c196415fdca9fd7b734bac809d29428c48e4dfb1c4622c834488`
 - `vulnerabilities.json` — `aa0b0970e2e128e30b044f6107b4b77136d759b0a2ee3af9d37c883fa6b8298d`
 - `provenance.json` — `f67af456c8b3c604382661a9bba3cd950f3999f62f18c32cb21338ad7e486179`
-- `matrix.json` — `1a754e85941631d7f0360ef8f872f7e65d2985671cfd26e0e22dc0c3a04ae7e7`
+- `matrix.json` — `3133da361f881da90d107d56799357911efecc9dc7874b3bc37503e39862cef9`
 - `controls.json` — `a5e61dcace162ce814347f931b6f4e4f59934ea1312df79d9c817c19e0e9bef4`
 - `retention.json` — `f1a7f91607bca1de4cc15e2523a3d0791116acc9cfdf853c68b9b35aa2c07568`
-- `corpus-conformance.json` — `7fcb55288927d3702b9dbf4ac0080e1ae6fe56e27cb131e7f39524e696ba88c7`
+- `corpus-conformance.json` — `d1b9ebf9c92a283590f7769789c2d4aa2d4a8edce6cb84ea5b5b5606293129c4`
 - `script-surface.json` — `e10f554b46ddb275a94da16b89c3c265789724ad67aba3e5e5dddc8f0fa6b502`
 - `runtime-script-observation.json` — `086e0c84d48c7f53a814f67a51b7c25239b6f413306361fde1cfdfc3a0f1afc2`
-- `capability-coverage.json` — `58859cc1947b850e5b025812e73c238287adda00b4d16fccd709e775d1334606`
+- `capability-coverage.json` — `4d919f6a8e24f66fbba63859bf185d64e1f8aa0ca3a562ac1b03d4c2367b2f17`
 
 Receipt inventory (27 preserved receipts):
 
@@ -313,7 +314,7 @@ Every claim restates a score or digest the corpus derived; every non-claim is ca
 ### Claims
 
 - 6 of 6 React-lineage cells and 4 of 4 Angular-lineage cells carry a Judge-accepted direct-Witness browser proof against the frozen adapter, each on its own immutable source application.
-- Every number above is derived from the Judge counting ledger inside `corpus-conformance.json` (`a15feb959388d42e10c116ff4ead1e320d6ca68ecc09861126bf9706464b4cc8`); the cells are enumerated in this record and each names the receipt it was counted off.
+- Every number above is derived from the Judge counting ledger inside `corpus-conformance.json` (`51d0329422cb86f7591a314d0962569ee9395f5e534999c1ce82bcd3fece8b76`); the cells are enumerated in this record and each names the receipt it was counted off.
 - 8 of 59 enumerated migration capabilities are cross-proven on at least two independent applications and are therefore in the matrix.
 - Every artifact in this package is bound by SHA-256 to the trust manifest, and the derived documents are re-derived from the same canonical receipts at verification time.
 - The two published holdouts that did not end RED are reported with the exact outcome string their receipts carry, and both are counted in no lineage numerator.

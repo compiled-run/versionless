@@ -1,8 +1,8 @@
 # Versionless project trust package
 
-- Canonical SHA-256: `81936bb130c2e102ca17b38e25a70dff764e2a1fa712d1b70fba43ee16e29d8b`
-- Deterministic core: `90fca88fd6a3c6152c30d05ebe47a498a771dbf41fc9beef36ecd26b74f15594`
-- Generated observation: `2026-08-20T13:30:20.226Z`
+- Canonical SHA-256: `77b8e46c00a9dd2e0e7e3be077ca2198a7f0ca154cb8e6ace82c60270a11b048`
+- Deterministic core: `31e7de863bf7b2dfe8d844931295bd8ec00835fcdea6c2c31a9824bb75fd76b6`
+- Generated observation: `2026-08-20T13:45:34.728Z`
 - Vulnerability input freshness: **verified** (seven-day maximum age)
 - Integrity: **hash-only; authenticity is not established**
 - Assurance: **this package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation**
@@ -16,7 +16,7 @@
 - [Supported corpus/runtime/bundler matrix](matrix.json) — unsupported and untested cells remain visible.
 - [Capability-coverage map](capability-coverage.json) — every exported migration capability with its proving applications and derived generality classification; single-application capabilities are named experimental, not claimed general.
 - [Adapter freeze record](adapter-freeze.json) — the migration engine adapter surface is frozen at commit `ddc2870aa934be7c8bc6caaeca74095d270776d5` with composite SHA-256 `140ce86e163ddbae2ad6f1504022efca9468641cc50fd3dca354c6aba8cbb562`; the receipts, corpus, and witness registries are deliberately **outside** the freeze so holdout evidence can still be published additively.
-- [Corpus conformance](corpus-conformance.json) — `a15feb959388d42e10c116ff4ead1e320d6ca68ecc09861126bf9706464b4cc8`; 20 verified verticals grouped into exactly 13 source applications; zero designated pilots are verified.
+- [Corpus conformance](corpus-conformance.json) — `51d0329422cb86f7591a314d0962569ee9395f5e534999c1ce82bcd3fece8b76`; 20 verified verticals grouped into exactly 14 source applications; zero designated pilots are verified.
 - The immutable Killed by Google Next.js 12 Pages/webpack production vertical is verified only for its exact fixture; synthetic Next.js 12 Pages, 13 transition/App, and 14 App classification lanes remain **not-tested**, and generic Next.js support is not claimed.
 - [Static script/resource surface](script-surface.json) — truthfully remains scoped to the prior nine verticals, two applications, and eighteen exact static deployment entrypoints; T220 is **not included** because its script surface was not separately observed; dynamic script insertion: **not-tested**; payment-page applicability: **not established**; PCI compliance is **not claimed**.
 - [Qualified-journey runtime script observation](runtime-script-observation.json) — truthfully remains scoped to 36 runs across the prior nine verticals, two applications, and eighteen lanes; T220 is **not included** because its runtime scripts were not separately observed; this is **not global dynamic-insertion coverage**.
@@ -149,7 +149,7 @@ The map is the machine-readable evidence record [capability-coverage.json](capab
 
 Cross-proven on at least two independent applications, and therefore in the matrix:
 
-- react: `react-cra-vite-adapter` — 4 application(s) (papercups, react-hospitalrun, react-linkfree, react-flame-v2-4-0)
+- react: `react-cra-vite-adapter` — 5 application(s) (papercups, react-hospitalrun, react-linkfree, react-coverview-a1470b01, react-flame-v2-4-0)
 - angular: `angular-target-cell` — 4 application(s) (angular-factoriolab, angular-jira-clone, angular-super-productivity, angular-tiny-translator)
 - angular: `angular-workspace-migration` — 4 application(s) (angular-factoriolab, angular-jira-clone, angular-super-productivity, angular-tiny-translator)
 - angular: `angular-source-migration` — 4 application(s) (angular-factoriolab, angular-jira-clone, angular-super-productivity, angular-tiny-translator)
