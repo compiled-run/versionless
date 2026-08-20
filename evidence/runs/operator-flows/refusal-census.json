@@ -12,14 +12,14 @@
 	],
 	"filesScanned": 85,
 	"summary": {
-		"sites": 192,
+		"sites": 196,
 		"byOrigin": {
 			"frozen-adapter": 101,
-			"pipeline": 91
+			"pipeline": 95
 		},
 		"byClassification": {
 			"defect": 5,
-			"refusal": 137,
+			"refusal": 141,
 			"unclassified": 50
 		},
 		"byStage": {
@@ -28,7 +28,7 @@
 			"apply": 5,
 			"arguments": 8,
 			"batch": 6,
-			"build": 5,
+			"build": 9,
 			"era-cell": 9,
 			"ingest": 17,
 			"install": 11,
@@ -41,7 +41,7 @@
 			"witness": 1,
 			"witness-synthesize": 2
 		},
-		"distinctCodes": 192,
+		"distinctCodes": 196,
 		"recordedRefusalSites": 99
 	},
 	"entries": [
@@ -548,7 +548,7 @@
 			"stage": "build",
 			"stageBasis": "the build stage runs the lane build through this module.",
 			"file": "packages/cli/src/operator/build.ts",
-			"line": 61,
+			"line": 76,
 			"enclosing": "planLaneBuild"
 		},
 		{
@@ -565,7 +565,27 @@
 			"stage": "build",
 			"stageBasis": "the build stage runs the lane build through this module.",
 			"file": "packages/cli/src/operator/build.ts",
-			"line": 72,
+			"line": 87,
+			"enclosing": "planLaneBuild"
+		},
+		{
+			"code": "build.lane-kind-unrecognised",
+			"message": "Build: the lane carries an installed closure and the build script `${script}`, but neither an ${ANGULAR_WORKSPACE_FILE} nor a ${configuration}, so this stage holds no build contract for it. It declines to run an unrecognised lane's script rather than run it and then count files below a directory no lane declared.",
+			"messageForm": "composed",
+			"staticSegments": [
+				"Build: the lane carries an installed closure and the build script `",
+				"`, but neither an",
+				"nor a",
+				", so this stage holds no build contract for it. It declines to run an unrecognised lane's script rather than run it and then count files below a directory no lane declared."
+			],
+			"classification": "refusal",
+			"condition": "kind === null",
+			"conditionForm": "if-consequent",
+			"origin": "pipeline",
+			"stage": "build",
+			"stageBasis": "the build stage runs the lane build through this module.",
+			"file": "packages/cli/src/operator/build.ts",
+			"line": 96,
 			"enclosing": "planLaneBuild"
 		},
 		{
@@ -583,8 +603,65 @@
 			"stage": "build",
 			"stageBasis": "the build stage runs the lane build through this module.",
 			"file": "packages/cli/src/operator/build.ts",
-			"line": 103,
+			"line": 157,
 			"enclosing": "viteLaneOutDirectory"
+		},
+		{
+			"code": "build.no-ng-build-script",
+			"message": "Build: the lane declares an ${ANGULAR_WORKSPACE_FILE}, so its build is the one its own Angular CLI script runs, but its build script is `${script}` and nothing in it invokes `ng build`. ${otherNgBuildScripts(scripts)} This stage runs the lane's build script and composes no `ng` command of its own, so it refuses rather than run a script that will not build this workspace.",
+			"messageForm": "composed",
+			"staticSegments": [
+				"Build: the lane declares an",
+				", so its build is the one its own Angular CLI script runs, but its build script is `",
+				"` and nothing in it invokes `ng build`.",
+				"This stage runs the lane's build script and composes no `ng` command of its own, so it refuses rather than run a script that will not build this workspace."
+			],
+			"classification": "refusal",
+			"condition": "!INVOKES_NG_BUILD.test(script)",
+			"conditionForm": "if-consequent",
+			"origin": "pipeline",
+			"stage": "build",
+			"stageBasis": "the build stage runs the lane build through this module.",
+			"file": "packages/cli/src/operator/build.ts",
+			"line": 211,
+			"enclosing": "angularLaneBuildPlan"
+		},
+		{
+			"code": "build.workspace-target-absent",
+			"message": "Build: the lane's ${ANGULAR_WORKSPACE_FILE} ${workspace === null ? 'does not read as a JSON object, so no project in it can be read' : declared.length === 0 ? `declares no project with a build target (projects declared: ${Object.keys(projects).join(', ') || 'none'})` : `declares a build target for more than one project (${declared.map((entry) => entry.name).join(', ')}), and this run names no project to build`}, so this stage has no single build target to read the output directory from. It refuses rather than build one project and record it as the lane's.",
+			"messageForm": "composed",
+			"staticSegments": [
+				"Build: the lane's",
+				", so this stage has no single build target to read the output directory from. It refuses rather than build one project and record it as the lane's."
+			],
+			"classification": "refusal",
+			"condition": "declared.length !== 1",
+			"conditionForm": "if-consequent",
+			"origin": "pipeline",
+			"stage": "build",
+			"stageBasis": "the build stage runs the lane build through this module.",
+			"file": "packages/cli/src/operator/build.ts",
+			"line": 262,
+			"enclosing": "angularLaneOutDirectory"
+		},
+		{
+			"code": "build.output-path-absent",
+			"message": "Build: the build target of project ${only.name} in the lane's ${ANGULAR_WORKSPACE_FILE} declares no `options.outputPath` this stage can read as a path, so where its build lands is unknown. This stage counts the files a build emitted below the directory the lane declared; it will not assume one.",
+			"messageForm": "composed",
+			"staticSegments": [
+				"Build: the build target of project",
+				"in the lane's",
+				"declares no `options.outputPath` this stage can read as a path, so where its build lands is unknown. This stage counts the files a build emitted below the directory the lane declared; it will not assume one."
+			],
+			"classification": "refusal",
+			"condition": "typeof outputPath !== 'string' || outputPath.trim() === ''",
+			"conditionForm": "if-consequent",
+			"origin": "pipeline",
+			"stage": "build",
+			"stageBasis": "the build stage runs the lane build through this module.",
+			"file": "packages/cli/src/operator/build.ts",
+			"line": 277,
+			"enclosing": "angularLaneOutDirectory"
 		},
 		{
 			"code": "pipeline.build.build",
@@ -601,7 +678,7 @@
 			"stage": "build",
 			"stageBasis": "the build stage runs the lane build through this module.",
 			"file": "packages/cli/src/operator/build.ts",
-			"line": 174,
+			"line": 365,
 			"enclosing": "runLaneBuild"
 		},
 		{

@@ -736,6 +736,192 @@ describe('build stage', () => {
 	}, 120_000);
 });
 
+/**
+ * The workspace angular2-hn's lane carries after apply, reduced to the keys
+ * this stage reads. `outputPath` is the value the record on disk shows
+ * (`projects.angular-hnpwa.architect.build.options.outputPath`), and it is
+ * deliberately not `build-vite`: a lane whose output directory the stage
+ * assumed would have its files counted below a directory Angular never writes.
+ */
+const ANGULAR_HNPWA_WORKSPACE = {
+	$schema: './node_modules/@angular/cli/lib/config/schema.json',
+	version: 1,
+	newProjectRoot: 'projects',
+	projects: {
+		'angular-hnpwa': {
+			projectType: 'application',
+			root: '',
+			sourceRoot: 'src',
+			prefix: 'app',
+			architect: {
+				build: {
+					builder: '@angular-devkit/build-angular:browser',
+					options: {
+						aot: true,
+						outputPath: 'dist/angular-hnpwa',
+						index: 'src/index.html',
+						main: 'src/main.ts',
+					},
+					configurations: { production: { outputHashing: 'all' } },
+				},
+				test: { builder: '@angular-devkit/build-angular:karma', options: {} },
+			},
+		},
+	},
+};
+
+/** A lane the build stage will read as Angular: a closure, a script, a workspace. */
+async function angularLane(
+	workspace: unknown,
+	scripts: Record<string, string> = { ng: 'ng', build: 'ng build' },
+): Promise<string> {
+	const directory = await temporaryDirectory();
+	await mkdir(path.join(directory, 'node_modules'), { recursive: true });
+	await writeFile(
+		path.join(directory, 'package.json'),
+		`${JSON.stringify({ name: 'lane', version: '0.0.0', private: true, scripts })}\n`,
+	);
+	await writeFile(path.join(directory, 'angular.json'), `${JSON.stringify(workspace)}\n`);
+	return directory;
+}
+
+/** Run a check against a temporary lane and take the lane away afterwards. */
+async function withLane(lane: Promise<string>, check: (directory: string) => Promise<void>) {
+	const directory = await lane;
+	try {
+		await check(directory);
+	} finally {
+		await rm(directory, { recursive: true, force: true });
+	}
+}
+
+describe('build stage — the Angular lane kind', () => {
+	/**
+	 * The second lane kind. Everything in the plan is a reading off the lane:
+	 * the command is the lane's own script, and the output directory is the
+	 * workspace's own `outputPath`. Nothing is composed here — the flag
+	 * spellings an era application needs are the frozen adapter's translation.
+	 */
+	it('plans an Angular lane from its own workspace and its own build script', async () => {
+		await withLane(angularLane(ANGULAR_HNPWA_WORKSPACE), async (directory) => {
+			const planned = await planLaneBuild(directory);
+			expect(planned.command).toEqual(['npm', 'run', 'build']);
+			expect(planned.script).toBe('ng build');
+			expect(planned.configuration).toBe('angular.json');
+			expect(planned.outDirectory).toBe('dist/angular-hnpwa');
+			/** The reading, not the Vite lane's constant. That is the whole point. */
+			expect(planned.outDirectory).not.toBe(LANE_BUILD_DIRECTORY);
+		});
+	});
+
+	/** `architect` and `targets` are two spellings of one slot, so both are read. */
+	it('reads the build target under the targets spelling as well', async () => {
+		const workspace = {
+			version: 1,
+			projects: {
+				shop: { targets: { build: { options: { outputPath: 'dist/shop' } } } },
+			},
+		};
+		await withLane(angularLane(workspace), async (directory) => {
+			expect((await planLaneBuild(directory)).outDirectory).toBe('dist/shop');
+		});
+	});
+
+	/**
+	 * The lane's build script is what this stage runs. A workspace whose build
+	 * script builds something else is refused rather than run, and the message
+	 * names the scripts that would have built it — eshop-webspa's production
+	 * script was called `build:prod`, so the case is real rather than invented.
+	 */
+	it('refuses an Angular lane whose build script does not invoke ng build', async () => {
+		await withLane(
+			angularLane(ANGULAR_HNPWA_WORKSPACE, {
+				build: 'webpack --mode production',
+				'build:prod': 'ng build --prod',
+			}),
+			async (directory) => {
+				const refusal = await refusalOf(async () => planLaneBuild(directory));
+				expect(refusal?.code).toBe('build.no-ng-build-script');
+				expect(refusal?.message).toContain('build:prod');
+			},
+		);
+	});
+
+	it('refuses an Angular workspace that declares no build target', async () => {
+		const workspace = {
+			version: 1,
+			projects: { shop: { architect: { test: { options: {} } } } },
+		};
+		await withLane(angularLane(workspace), async (directory) => {
+			const refusal = await refusalOf(async () => planLaneBuild(directory));
+			expect(refusal?.code).toBe('build.workspace-target-absent');
+			expect(refusal?.message).toContain('shop');
+		});
+	});
+
+	/**
+	 * `run` carries no project declaration, so a workspace with two buildable
+	 * projects is a choice nobody made. Refusing is the honest answer; picking
+	 * the first would record one project's build as the lane's.
+	 */
+	it('refuses a workspace whose build target belongs to more than one project', async () => {
+		const workspace = {
+			version: 1,
+			projects: {
+				shop: { architect: { build: { options: { outputPath: 'dist/shop' } } } },
+				admin: { architect: { build: { options: { outputPath: 'dist/admin' } } } },
+			},
+		};
+		await withLane(angularLane(workspace), async (directory) => {
+			const refusal = await refusalOf(async () => planLaneBuild(directory));
+			expect(refusal?.code).toBe('build.workspace-target-absent');
+			expect(refusal?.message).toContain('admin');
+		});
+	});
+
+	it('refuses a build target that declares no output path', async () => {
+		const workspace = {
+			version: 1,
+			projects: {
+				shop: {
+					architect: {
+						build: { builder: '@angular-devkit/build-angular:browser', options: {} },
+					},
+				},
+			},
+		};
+		await withLane(angularLane(workspace), async (directory) => {
+			const refusal = await refusalOf(async () => planLaneBuild(directory));
+			expect(refusal?.code).toBe('build.output-path-absent');
+			expect(refusal?.message).toContain('shop');
+		});
+	});
+
+	/**
+	 * The successor to the sentence that used to be told to every lane this
+	 * stage had no contract for. A lane that is neither kind is now told that,
+	 * and `build.configuration-absent` is left meaning only what it says — the
+	 * u3 test above still reaches it, because a script that invokes `vite`
+	 * identifies a Vite lane whose configuration is missing.
+	 */
+	it('refuses a lane that is neither a Vite lane nor an Angular one', async () => {
+		const directory = await temporaryDirectory();
+		try {
+			await mkdir(path.join(directory, 'node_modules'), { recursive: true });
+			await writeFile(
+				path.join(directory, 'package.json'),
+				'{"scripts":{"build":"node build.mjs"}}\n',
+			);
+			const refusal = await refusalOf(async () => planLaneBuild(directory));
+			expect(refusal?.code).toBe('build.lane-kind-unrecognised');
+			expect(refusal?.stage).toBe('build');
+			expect(refusal?.origin).toBe('pipeline');
+		} finally {
+			await rm(directory, { recursive: true, force: true });
+		}
+	});
+});
+
 describe('the measured lane install and build record', () => {
 	it('records one run per outcome, with the policy each one declared', async () => {
 		const record = JSON.parse(

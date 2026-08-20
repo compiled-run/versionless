@@ -17,6 +17,15 @@
  * stage deliberately does not take, and the record says so rather than leaving
  * a reader to discover it from the import specifier.
  *
+ * Two lane kinds are recognised, and the lane on disk chooses between them
+ * rather than a declaration this stage was handed: a lane carrying an
+ * `angular.json` is built by whatever its own build script tells the Angular
+ * CLI to do, and a lane carrying the generated Vite configuration is built by
+ * Vite. Neither command is composed here. A lane that is neither is refused by
+ * a name that says so, instead of being told it carries no `vite.config.ts` —
+ * that sentence described this stage's expectation rather than the lane's
+ * condition, and it is now reserved for the lane it is true of.
+ *
  * A non-zero exit from the build is a **defect**, not a refusal.
  */
 
@@ -49,9 +58,15 @@ export type BuildPlan = Readonly<{
  * refuse by name.
  *
  * `outDirectory` is a reading taken from the lane the gates just identified,
- * not a property of this stage. Today one lane kind is recognised and its
- * reading is the constant its own generated configuration was written with;
- * the field carries whatever the recognised lane answers.
+ * not a property of this stage. Two lane kinds are recognised and each answers
+ * for itself: a Vite lane answers with the constant its own generated
+ * configuration was written with, an Angular lane answers with the
+ * `outputPath` its own workspace declares. The field carries whatever the
+ * recognised lane answers.
+ *
+ * The first two gates are lineage-independent — a lane with no closure and a
+ * lane with no build script are the same fact whatever built it — so they run
+ * before the lane kind is asked for at all, exactly as they did.
  */
 export async function planLaneBuild(
 	laneDir: string,
@@ -76,6 +91,15 @@ export async function planLaneBuild(
 			stage: 'build',
 			origin: 'pipeline',
 		});
+	const kind = await laneBuildKind(laneDir, configuration, script);
+	if (kind === null)
+		refuse({
+			code: 'build.lane-kind-unrecognised',
+			message: `Build: the lane carries an installed closure and the build script \`${script}\`, but neither an ${ANGULAR_WORKSPACE_FILE} nor a ${configuration}, so this stage holds no build contract for it. It declines to run an unrecognised lane's script rather than run it and then count files below a directory no lane declared.`,
+			stage: 'build',
+			origin: 'pipeline',
+		});
+	if (kind === 'angular') return angularLaneBuildPlan(laneDir, script, scripts);
 	const outDirectory = await viteLaneOutDirectory(laneDir, configuration);
 	return Object.freeze({
 		command: Object.freeze(['npm', 'run', 'build']),
@@ -83,6 +107,36 @@ export async function planLaneBuild(
 		configuration,
 		outDirectory,
 	});
+}
+
+/** The build contracts this stage holds. A lane answers to one of them or none. */
+type LaneBuildKind = 'angular' | 'vite';
+
+/**
+ * Which build contract the lane answers to, read off the lane rather than
+ * declared to this stage.
+ *
+ * `run` passes this stage nothing (`run.ts:509` calls it with the lane
+ * directory alone), so the lineage the analyze stage read is not available
+ * here and the lane itself has to say what it is. An `angular.json` at the lane
+ * root is the Angular workspace's own declaration of itself and is asked for
+ * first; a lane that carries the generated Vite configuration is the Vite lane
+ * this stage has always built.
+ *
+ * The third question is what keeps `build.configuration-absent` meaning
+ * something. A lane whose build script invokes `vite` and which carries no
+ * configuration is a Vite lane with its configuration missing — that is the
+ * fact that refusal names — while a lane that answers neither question is not
+ * a Vite lane at all and is owed a different sentence.
+ */
+async function laneBuildKind(
+	laneDir: string,
+	configuration: string,
+	script: string,
+): Promise<LaneBuildKind | null> {
+	if (await fileInLane(laneDir, ANGULAR_WORKSPACE_FILE)) return 'angular';
+	if (await fileInLane(laneDir, configuration)) return 'vite';
+	return INVOKES_VITE.test(script) ? 'vite' : null;
 }
 
 /**
@@ -107,6 +161,143 @@ async function viteLaneOutDirectory(laneDir: string, configuration: string): Pro
 			origin: 'pipeline',
 		});
 	return LANE_BUILD_DIRECTORY;
+}
+
+/** The file an Angular workspace declares itself in, at the lane root. */
+const ANGULAR_WORKSPACE_FILE = 'angular.json';
+
+/**
+ * A script that invokes the Angular CLI's build, in either spelling this
+ * repository has evidence of: the bare `ng build` angular2-hn's manifest
+ * declares, and the `…/@angular/cli/bin/ng.js build` form pigallery2's probe
+ * ran. `ng-build` and `packaging build` are not it.
+ */
+const INVOKES_NG_BUILD = /(?:^|[\s;&|(]|[./])ng(?:\.js)?\s+build(?![\w-])/;
+
+/** A script that invokes Vite. `vitest` is not it. */
+const INVOKES_VITE = /(?:^|[\s;&|(]|[./])vite(?![\w-])/;
+
+/**
+ * The plan for a lane that declares an Angular workspace.
+ *
+ * Two things are read off the lane and nothing is composed. The command is
+ * `npm run build` — the same command the Vite lane gets — because the honest
+ * builder of an Angular application is the application's own script: the green
+ * precedent in this repository is eshop-webspa, whose production build ran
+ * `build:prod`, and whose era flag spellings (`--prod --aot --extract-css`)
+ * were translated by the frozen adapter rather than composed by a pipeline
+ * (`packages/frameworks/angular/src/workspace-script-flags.ts`). A stage that
+ * wrote `ng build --configuration production` in here would be stepping over
+ * that translation seam and disagreeing with every lane whose script says
+ * something else.
+ *
+ * The output directory is the workspace's own `outputPath`. It is why this
+ * branch exists at all: angular2-hn declares `dist/angular-hnpwa`, and the
+ * constant a Vite lane answers with would have counted files below a directory
+ * the Angular build never writes.
+ *
+ * What this plan does **not** establish: that `npm run build` selects the
+ * production configuration. angular2-hn's script is bare `ng build` and its
+ * build target declares no `defaultConfiguration`, so the CLI takes base
+ * options — no `fileReplacements`, no `outputHashing`, no budgets. That is the
+ * lane's declaration, reported by running it, not a choice made here.
+ */
+async function angularLaneBuildPlan(
+	laneDir: string,
+	script: string,
+	scripts: Record<string, string>,
+): Promise<BuildPlan> {
+	if (!INVOKES_NG_BUILD.test(script))
+		refuse({
+			code: 'build.no-ng-build-script',
+			message: `Build: the lane declares an ${ANGULAR_WORKSPACE_FILE}, so its build is the one its own Angular CLI script runs, but its build script is \`${script}\` and nothing in it invokes \`ng build\`. ${otherNgBuildScripts(scripts)} This stage runs the lane's build script and composes no \`ng\` command of its own, so it refuses rather than run a script that will not build this workspace.`,
+			stage: 'build',
+			origin: 'pipeline',
+		});
+	return Object.freeze({
+		command: Object.freeze(['npm', 'run', 'build']),
+		script,
+		configuration: ANGULAR_WORKSPACE_FILE,
+		outDirectory: angularLaneOutDirectory(
+			await readJsonFile(path.join(laneDir, ANGULAR_WORKSPACE_FILE)),
+		),
+	});
+}
+
+/** Which other scripts invoke `ng build`, for a manifest whose `build` does not. */
+function otherNgBuildScripts(scripts: Record<string, string>): string {
+	const invoking = Object.entries(scripts)
+		.filter(([name, value]) => name !== 'build' && INVOKES_NG_BUILD.test(String(value)))
+		.map(([name]) => name);
+	return invoking.length === 0
+		? 'No other script in this manifest invokes it either.'
+		: `The scripts that do invoke it are ${invoking.join(', ')}; this stage runs \`npm run build\` and does not choose among them.`;
+}
+
+/**
+ * Where an Angular lane's build lands: the `outputPath` the one project with a
+ * build target declares, read off the workspace the lane carries.
+ *
+ * A single-project workspace is the whole population this stage has evidence
+ * of — angular2-hn declares one project, eshop-webspa declares one — and a
+ * workspace with two buildable projects is a question nobody answered: `run`
+ * carries no project declaration, so choosing one would be a guess about which
+ * application the lane is. The empty case, the unreadable case and the
+ * ambiguous case are one refusal, because they mean one thing: this stage
+ * cannot name a single build target. The message says which of the three it
+ * was, so the refusal is countable without being vague.
+ *
+ * `architect` and `targets` are the two spellings of the same slot in the
+ * workspace schema, so both are read rather than one being preferred.
+ */
+function angularLaneOutDirectory(workspace: Record<string, unknown> | null): string {
+	const projects = objectOf(workspace?.projects);
+	const declared = Object.entries(projects)
+		.map(([name, project]) => ({ name, target: buildTargetOf(project) }))
+		.filter(
+			(entry): entry is { name: string; target: Record<string, unknown> } =>
+				entry.target !== null,
+		);
+	if (declared.length !== 1)
+		refuse({
+			code: 'build.workspace-target-absent',
+			message: `Build: the lane's ${ANGULAR_WORKSPACE_FILE} ${
+				workspace === null
+					? 'does not read as a JSON object, so no project in it can be read'
+					: declared.length === 0
+						? `declares no project with a build target (projects declared: ${Object.keys(projects).join(', ') || 'none'})`
+						: `declares a build target for more than one project (${declared.map((entry) => entry.name).join(', ')}), and this run names no project to build`
+			}, so this stage has no single build target to read the output directory from. It refuses rather than build one project and record it as the lane's.`,
+			stage: 'build',
+			origin: 'pipeline',
+		});
+	const [only] = declared as [{ name: string; target: Record<string, unknown> }];
+	const outputPath = objectOf(only.target.options).outputPath;
+	if (typeof outputPath !== 'string' || outputPath.trim() === '')
+		refuse({
+			code: 'build.output-path-absent',
+			message: `Build: the build target of project ${only.name} in the lane's ${ANGULAR_WORKSPACE_FILE} declares no \`options.outputPath\` this stage can read as a path, so where its build lands is unknown. This stage counts the files a build emitted below the directory the lane declared; it will not assume one.`,
+			stage: 'build',
+			origin: 'pipeline',
+		});
+	return outputPath;
+}
+
+/** The `build` target a workspace project declares, in either spelling, or null. */
+function buildTargetOf(project: unknown): Record<string, unknown> | null {
+	const declared = objectOf(project);
+	const targets = objectOf(declared.architect ?? declared.targets);
+	const build = targets.build;
+	return build !== null && typeof build === 'object' && !Array.isArray(build)
+		? (build as Record<string, unknown>)
+		: null;
+}
+
+/** A reading as the record it is, or an empty one for anything that is not one. */
+function objectOf(value: unknown): Record<string, unknown> {
+	return value !== null && typeof value === 'object' && !Array.isArray(value)
+		? (value as Record<string, unknown>)
+		: {};
 }
 
 async function fileInLane(laneDir: string, file: string): Promise<boolean> {

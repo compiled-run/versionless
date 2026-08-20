@@ -296,14 +296,14 @@
     "source": "evidence/runs/operator-flows/refusal-census.json",
     "adapterFreezeComposite": "140ce86e163ddbae2ad6f1504022efca9468641cc50fd3dca354c6aba8cbb562",
     "totals": {
-      "sites": 192,
+      "sites": 196,
       "byOrigin": {
         "frozen-adapter": 101,
-        "pipeline": 91
+        "pipeline": 95
       },
       "byClassification": {
         "defect": 5,
-        "refusal": 137,
+        "refusal": 141,
         "unclassified": 50
       },
       "byStage": {
@@ -312,7 +312,7 @@
         "apply": 5,
         "arguments": 8,
         "batch": 6,
-        "build": 5,
+        "build": 9,
         "era-cell": 9,
         "ingest": 17,
         "install": 11,
@@ -325,7 +325,7 @@
         "witness": 1,
         "witness-synthesize": 2
       },
-      "distinctCodes": 192,
+      "distinctCodes": 196,
       "recordedRefusalSites": 99
     },
     "byCode": {
@@ -358,7 +358,11 @@
       "batch.declared-application-is-not-readable": 1,
       "build.lane-closure-absent": 1,
       "build.no-build-script": 1,
+      "build.lane-kind-unrecognised": 1,
       "build.configuration-absent": 1,
+      "build.no-ng-build-script": 1,
+      "build.workspace-target-absent": 1,
+      "build.output-path-absent": 1,
       "pipeline.build.build": 1,
       "era-cell.declared-cell-not-described": 1,
       "era-cell.declared-node-not-a-version": 1,
@@ -538,7 +542,7 @@
   ],
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "1807d3cdf6f30245a8c847fbbd875709289456547e9604be94f0ab0f1f37cb41",
+    "canonicalDigest": "1e522f7b25c5b3c331377e4cc8cadedc7384d1b724403edac59a9a1007ff1087",
     "authenticity": "not-established",
     "certification": "not-claimed"
   }

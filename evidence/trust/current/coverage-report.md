@@ -4,7 +4,7 @@ What the fleet pipeline proved, per application, against the sealed baseline it 
 
 - Schema: `versionless.coverage-report.v1`
 - Certification state: **not-certified**
-- Canonical SHA-256: `1807d3cdf6f30245a8c847fbbd875709289456547e9604be94f0ab0f1f37cb41`
+- Canonical SHA-256: `1e522f7b25c5b3c331377e4cc8cadedc7384d1b724403edac59a9a1007ff1087`
 - Integrity: hash-only; authenticity is not established
 
 Every green cell below is filtered out of the Judge counting ledger the corpus derived and cross-checked against that corpus numerator and denominator. No cell is listed by hand, and a cell edited into this record fails re-derivation.
@@ -81,12 +81,12 @@ An application admitted through `versionless run` is recorded proven only if its
 
 Source: `evidence/runs/operator-flows/refusal-census.json`, taken under adapter freeze composite `140ce86e163ddbae2ad6f1504022efca9468641cc50fd3dca354c6aba8cbb562`.
 
-- `byClassification`: {"defect":5,"refusal":137,"unclassified":50}
-- `byOrigin`: {"frozen-adapter":101,"pipeline":91}
-- `byStage`: {"acquire":14,"analyze":2,"apply":5,"arguments":8,"batch":6,"build":5,"era-cell":9,"ingest":17,"install":11,"license-at-pin":4,"not-reached":69,"plan":24,"plan-or-build":13,"refusal-census":1,"supported-matrix":1,"witness":1,"witness-synthesize":2}
-- `distinctCodes`: 192
+- `byClassification`: {"defect":5,"refusal":141,"unclassified":50}
+- `byOrigin`: {"frozen-adapter":101,"pipeline":95}
+- `byStage`: {"acquire":14,"analyze":2,"apply":5,"arguments":8,"batch":6,"build":9,"era-cell":9,"ingest":17,"install":11,"license-at-pin":4,"not-reached":69,"plan":24,"plan-or-build":13,"refusal-census":1,"supported-matrix":1,"witness":1,"witness-synthesize":2}
+- `distinctCodes`: 196
 - `recordedRefusalSites`: 99
-- `sites`: 192
+- `sites`: 196
 
 ### Sites per code
 
@@ -125,7 +125,11 @@ Source: `evidence/runs/operator-flows/refusal-census.json`, taken under adapter 
 - `batch.no-applications-declared`: 1
 - `build.configuration-absent`: 1
 - `build.lane-closure-absent`: 1
+- `build.lane-kind-unrecognised`: 1
 - `build.no-build-script`: 1
+- `build.no-ng-build-script`: 1
+- `build.output-path-absent`: 1
+- `build.workspace-target-absent`: 1
 - `era-cell.arch-not-available`: 1
 - `era-cell.cell-not-declared-for-framework`: 1
 - `era-cell.declared-architecture-not-recognised`: 1
