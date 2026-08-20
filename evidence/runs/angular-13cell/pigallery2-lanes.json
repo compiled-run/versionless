@@ -1,0 +1,472 @@
+{
+  "schemaVersion": "versionless.angular-13cell-lanes.v1",
+  "unit": "bank-demo-fleet-pipeline-p2/T009b-pigallery2-lane-pair",
+  "goal": "next-tranche-strategy",
+  "measuredAt": "2026-08-20",
+  "repoHeadAtMeasurement": "804bc47a566c27d92a787a5c8312ab1d17316592",
+  "host": "darwin-arm64 (Apple silicon)",
+  "question": [
+    "T009a proved pigallery2 1.7.0 AOT-COMPILES at the Angular 13.4.0 cell (ngc, exit 0, 121 emitted files), and listed four things it did not price. Two of them were bundler-stage: the raw-loader translations factory in AppModule, and the angular.json styles entries for bootstrap and open-iconic, neither installed.",
+    "This unit asks the next question: do both ENDS of the migration produce a full production browser bundle, reproducibly? That is, does the app build at its own era, does it build at the cell, and does each build twice to the same bytes?"
+  ],
+  "consent": {
+    "mode": "consented",
+    "id": "VL-LEGACY-CORPUS-2026-08-10",
+    "fetched": [
+      "npm registry, into the 13cell work area only: bootstrap@4.3.1, open-iconic@1.1.1 (both the exact versions pigallery2 1.7.0 declares, needed by the angular.json styles array) and raw-loader@4.0.2 (the webpack-5-compatible successor to the raw-loader@1.0.0 that was transitive in the era closure, needed by the AppModule translations factory). 7 packages added, 1 removed, 1 second."
+    ],
+    "notFetched": [
+      "the Node 10.24.1 era runtime - reused from .versionless/cache/angular-pigallery2-v1-7-0-runtime, already materialized",
+      "the Node 16.20.2 cell runtime - reused from .versionless/cache/angular-13-cell-runtime, already materialized",
+      "the baseline closure - .versionless/work/angular-pigallery2/baseline/node_modules was already installed; no install was run in the baseline lane",
+      "the 13cell Angular closure - already installed by T009a; only the three bundler-stage packages above were added"
+    ]
+  },
+  "lanes": {
+    "baseline": {
+      "what": "pigallery2 1.7.0 built at its own era, unmodified.",
+      "appVersion": "1.7.0",
+      "workArea": ".versionless/work/angular-pigallery2/baseline",
+      "sourceEdits": "NONE. The baseline tree is the app as published; that is the whole point of the lane.",
+      "toolchain": {
+        "node": "v10.24.1",
+        "nodeArch": "x64 (darwin-x64), running under Rosetta 2 on this arm64 host",
+        "npm": "not invoked - closure pre-installed",
+        "angular": "8.1.2",
+        "angularCli": "8.1.2",
+        "angularDevkitBuildAngular": "0.801.2",
+        "typescript": "3.4.5",
+        "rxjs": "6.5.2",
+        "provenance": "every version read verbatim out of .versionless/work/angular-pigallery2/baseline/node_modules/<pkg>/package.json after the builds"
+      },
+      "runtimeSource": ".versionless/cache/angular-pigallery2-v1-7-0-runtime/node-v10.24.1-darwin-x64",
+      "archNote": {
+        "claim": "The era baseline BUILDS on this arm64 host. It did not hit the x64/Rosetta or node-sass class of blocker the packet anticipated.",
+        "why": "node-v10.24.1-darwin-x64 executes under Rosetta 2 (verified: process.arch -> x64, process.platform -> darwin, node -v -> v10.24.1). pigallery2 1.7.0 does not carry node-sass; its styles are plain CSS, so no native SASS binding had to be rebuilt for arm64.",
+        "consequence": "The later parity claim is NOT bounded by a missing baseline. Both ends exist and both are reproducible."
+      },
+      "buildCommandVerbatim": "node node_modules/.bin/ng build --aot  --prod --no-extract-licenses --output-path=./t009b-baseline-run<N> --no-progress --no-progress --i18n-locale en --i18n-format=xlf --i18n-file=frontend/translate/messages.en.xlf --i18n-missing-translation warning",
+      "buildCommandProvenance": "This is pigallery2's OWN production build string, composed by its gulpfile.js `build-prod` -> `build-frontend default` task (gulpfile.js:96-101: `var cmd = 'ng build --aot '; if (isProd) { cmd += ' --prod --no-extract-licenses '; }` then the --output-path/--no-progress/i18n tail). The double space after --aot and the duplicated --no-progress are the gulpfile's, reproduced rather than tidied. The ONLY substitution is --output-path=./dist -> ./t009b-baseline-run<N>, so the two runs land in separate directories instead of overwriting one.",
+      "builds": 2,
+      "runs": [
+        {
+          "run": 1,
+          "outDir": ".versionless/work/angular-pigallery2/baseline/t009b-baseline-run1",
+          "exitCode": 0,
+          "wallSeconds": 28,
+          "webpackHash": "3275e929dd6c45d007ea",
+          "webpackTimeMs": 23197,
+          "log": ".versionless/work/angular-pigallery2/logs/t009b-baseline-run1.log"
+        },
+        {
+          "run": 2,
+          "outDir": ".versionless/work/angular-pigallery2/baseline/t009b-baseline-run2",
+          "exitCode": 0,
+          "wallSeconds": 29,
+          "webpackHash": "3275e929dd6c45d007ea",
+          "webpackTimeMs": null,
+          "log": ".versionless/work/angular-pigallery2/logs/t009b-baseline-run2.log"
+        }
+      ],
+      "outputFileCount": 13,
+      "outputTotalBytes": 2806878,
+      "doubleBuildIdentical": true,
+      "doubleBuildComparison": {
+        "method": "recursive walk of both out dirs, sorted by relative path, sha256 per file; a lane is identical only if the path sets match exactly AND every shared path has the same sha256",
+        "tool": ".versionless/work/angular-pigallery2/logs/inventory.cjs",
+        "onlyInRun1": [],
+        "onlyInRun2": [],
+        "differingFiles": [],
+        "differingFilesClassified": "none - zero files differ. The known non-determinism class (content-hash-in-filename churn) did not fire: outputHashing is content-derived, the content was identical, so the names were identical too.",
+        "result": "IDENTICAL - 13/13 files, byte for byte, across two independent runs"
+      },
+      "outputInventory": [
+        {
+          "path": "assets/icon_inv.png",
+          "bytes": 2798,
+          "sha256": "036185d685003e3ae40db545d676cbab60c8036d219303365875ea5d919a9ba5"
+        },
+        {
+          "path": "assets/icon.png",
+          "bytes": 2798,
+          "sha256": "253d37d8114655dac88147a792be3a6dfdad228d58df7241c4c9a70a25ef1b82"
+        },
+        {
+          "path": "index.html",
+          "bytes": 1446,
+          "sha256": "a4775f3acd3fec8a0cc7857a58ad697e26955944edd49a40e8c4be7c2d72e8d0"
+        },
+        {
+          "path": "main.8d7a6399e761b63341dc.js",
+          "bytes": 2296602,
+          "sha256": "09648f2b63d55471863637544dca96ef44a69d747a2fb7f5d77a9821cbaa4244"
+        },
+        {
+          "path": "open-iconic.3cf97837524dd7445e9d.woff",
+          "bytes": 14984,
+          "sha256": "7193ea5654497d2356d0a690e3e50f39767fbff4335e57a3443c1435d648a1f2"
+        },
+        {
+          "path": "open-iconic.47151e87c5a8666791a9.eot",
+          "bytes": 28196,
+          "sha256": "38ade9a063e0cca2363733603f4ed731b25adc3cfa512a1487f7214a44af4297"
+        },
+        {
+          "path": "open-iconic.527eff645d8ead16666a.otf",
+          "bytes": 20996,
+          "sha256": "b0352db99004cd6672bff535c65ffd0f77a1c94ebd244f85bc072ee4743efdad"
+        },
+        {
+          "path": "open-iconic.93cc7aa654ae36b08287.ttf",
+          "bytes": 28028,
+          "sha256": "a7e44ff02577bd12b561b224373ab7acfa358f21133e7474ed42dbf875582fcc"
+        },
+        {
+          "path": "open-iconic.eca2c26759a009a4a936.svg",
+          "bytes": 54789,
+          "sha256": "a14a4b752f92a0b245c1fe1bcc0de2283ed30a6ebaa0b913a40425549dacd707"
+        },
+        {
+          "path": "polyfills-es5.2f461ca8b99523f633b4.js",
+          "bytes": 71535,
+          "sha256": "aa7340769785c4bf67ebe970cad5843a5788ab3a3e498e71dd15c63dc4d50d6c"
+        },
+        {
+          "path": "polyfills.6ce7c8613dd7f1c39c89.js",
+          "bytes": 100754,
+          "sha256": "0fe87dc28a7dd78eaa410d805f0a5e12b4bcf0f3322038bc745cb7d2dc78c2b1"
+        },
+        {
+          "path": "runtime.465c2333d355155ec5f3.js",
+          "bytes": 1440,
+          "sha256": "eb3d5f2600910179bef8b0709214b7c721ea66e92ebb35bc282264beb2631eaf"
+        },
+        {
+          "path": "styles.7af5efa7635d003dad98.css",
+          "bytes": 182512,
+          "sha256": "ba1b1f6505542c1916853b684f85a143b3868a70941fefcee6cbf7bad1e8a000"
+        }
+      ],
+      "buildWarnings": [
+        "Browserslist: caniuse-lite is outdated. Please run next command `npm update` - a data-freshness notice from the era toolchain, not a build failure. It did not vary between runs."
+      ],
+      "corroboration": "An earlier unit (2026-08-13) built this same baseline three times into build-install/, build-run1/, build-run2/ and recorded byteIdentical:true at the same 13 files / 2806878 bytes. This unit re-ran the pair from scratch today into fresh directories and reproduced that total exactly. The comparison files are .versionless/work/angular-pigallery2/logs/compare-install-run1.json and compare-run1-run2.json; they are the prior reading, not this one, and this record does not depend on them."
+    },
+    "migrated": {
+      "what": "The same application source, with the T009a migration delta applied, built at the honest Angular 13 cell.",
+      "workArea": ".versionless/work/angular-pigallery2/13cell",
+      "toolchain": {
+        "node": "v16.20.2",
+        "nodeArch": "darwin-arm64 (native, no Rosetta)",
+        "npm": "8.19.4",
+        "angular": "13.4.0",
+        "angularCli": "13.3.11",
+        "angularDevkitBuildAngular": "13.3.11",
+        "typescript": "4.6.4",
+        "rxjs": "6.6.7",
+        "rxjsCompat": "6.6.7",
+        "zoneJs": "0.11.8",
+        "provenance": "the cell as T009a sealed it, unchanged. No pin moved in this unit: rxjs is still 6.x, Angular is still 13.4.0, the CLI is still 13.3.11."
+      },
+      "runtimeSource": ".versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64",
+      "buildCommandVerbatim": "node node_modules/.bin/ng build --configuration production --output-path=./t009b-migrated-run<N>",
+      "buildCommandProvenance": "The Angular 13 spelling of the baseline command. --prod was removed from the CLI in v12 in favour of --configuration production; --aot is the v13 default and is no longer a flag; --no-extract-licenses is expressed as extractLicenses in the production configuration; the four ViewEngine --i18n-* flags have no v13 equivalent (see i18nFlagsDropped below). Everything those flags asked for that still exists is expressed in angular.json instead.",
+      "builds": 2,
+      "runs": [
+        {
+          "run": 1,
+          "outDir": ".versionless/work/angular-pigallery2/13cell/t009b-migrated-run1",
+          "exitCode": 0,
+          "wallSeconds": 13,
+          "webpackHash": "d2bb139c5bbeebb0",
+          "webpackTimeMs": 11613,
+          "ngccRan": true,
+          "log": ".versionless/work/angular-pigallery2/13cell/logs/t009b-migrated-run1.log"
+        },
+        {
+          "run": 2,
+          "outDir": ".versionless/work/angular-pigallery2/13cell/t009b-migrated-run2",
+          "exitCode": 0,
+          "wallSeconds": 5,
+          "webpackHash": "d2bb139c5bbeebb0",
+          "webpackTimeMs": 3637,
+          "ngccRan": false,
+          "log": ".versionless/work/angular-pigallery2/13cell/logs/t009b-migrated-run2.log"
+        }
+      ],
+      "outputFileCount": 13,
+      "outputTotalBytes": 2494670,
+      "doubleBuildIdentical": true,
+      "doubleBuildComparison": {
+        "method": "identical method and tool to the baseline lane",
+        "tool": ".versionless/work/angular-pigallery2/logs/inventory.cjs",
+        "onlyInRun1": [],
+        "onlyInRun2": [],
+        "differingFiles": [],
+        "differingFilesClassified": "none - zero files differ. Corroborated independently by the CLI's own output: both runs printed the same webpack build hash d2bb139c5bbeebb0 and the same four content-hashed chunk filenames.",
+        "result": "IDENTICAL - 13/13 files, byte for byte, across two independent runs"
+      },
+      "outputInventory": [
+        {
+          "path": "3rdpartylicenses.txt",
+          "bytes": 35803,
+          "sha256": "bede7abc80778a0da1a7e92958c4eac9a94aa7e59581fe83464f5d7a1cfe8aa3"
+        },
+        {
+          "path": "assets/icon_inv.png",
+          "bytes": 2798,
+          "sha256": "036185d685003e3ae40db545d676cbab60c8036d219303365875ea5d919a9ba5"
+        },
+        {
+          "path": "assets/icon.png",
+          "bytes": 2798,
+          "sha256": "253d37d8114655dac88147a792be3a6dfdad228d58df7241c4c9a70a25ef1b82"
+        },
+        {
+          "path": "index.html",
+          "bytes": 3090,
+          "sha256": "bf3f263d67a2520076b8a10e5844fd73e3413f358a98eab0a8579777f39bc2f7"
+        },
+        {
+          "path": "main.4b2fa472bc230245.js",
+          "bytes": 2026817,
+          "sha256": "aa66f5ccb2314a79c0ac881622a52f8df4faf2b5b74140d7381e35805da2d04f"
+        },
+        {
+          "path": "open-iconic.05f3a17709ceaa81.ttf",
+          "bytes": 28028,
+          "sha256": "a7e44ff02577bd12b561b224373ab7acfa358f21133e7474ed42dbf875582fcc"
+        },
+        {
+          "path": "open-iconic.178770d6dc3ae2e7.eot",
+          "bytes": 28196,
+          "sha256": "38ade9a063e0cca2363733603f4ed731b25adc3cfa512a1487f7214a44af4297"
+        },
+        {
+          "path": "open-iconic.3205870011f84472.woff",
+          "bytes": 14984,
+          "sha256": "7193ea5654497d2356d0a690e3e50f39767fbff4335e57a3443c1435d648a1f2"
+        },
+        {
+          "path": "open-iconic.609a03013cfb1ef4.svg",
+          "bytes": 54789,
+          "sha256": "a14a4b752f92a0b245c1fe1bcc0de2283ed30a6ebaa0b913a40425549dacd707"
+        },
+        {
+          "path": "open-iconic.a0236a1fdc9ab58d.otf",
+          "bytes": 20996,
+          "sha256": "b0352db99004cd6672bff535c65ffd0f77a1c94ebd244f85bc072ee4743efdad"
+        },
+        {
+          "path": "polyfills.907de136ddb20602.js",
+          "bytes": 101064,
+          "sha256": "40d75ce8d35f9b6a4314c81d42577c32723e41d4dd623c229491b2913fc6b6b3"
+        },
+        {
+          "path": "runtime.db24d125644157a2.js",
+          "bytes": 1254,
+          "sha256": "640f5181d7f9d0d68f4eec443a42091f63de4a91af96008d5d8f7bb8d82c62cb"
+        },
+        {
+          "path": "styles.aac6e848cd321373.css",
+          "bytes": 174053,
+          "sha256": "5683bdf042dd273715159571c61ca7bd7c7f2e66d847c02036c598fb020e9fc7"
+        }
+      ],
+      "buildWarnings": [
+        "four \"CommonJS or AMD dependencies can cause optimization bailouts\" notices - typeconfig/src/WebConfigLoader, @yaga/leaflet-ng2, ts-exif-parser, and ng2-slim-loading-bar's ngcc-generated slim-loading-bar.service.js reaching rxjs/Subject. These are optimizer advisories, identical in both runs, and none is an error.",
+        "\"1 rules skipped due to selector errors: .custom-file-input:lang(en)~.custom-file-label -> unmatched pseudo-class :lang\" - emitted by the v13 index/CSS stage against bootstrap 4.3.1. Identical in both runs."
+      ]
+    }
+  },
+  "ngcc": {
+    "question": "The packet asks whether ngcc processes on the first build and hits its cache on the second. It does - and the mechanism is observable, not inferred.",
+    "preState": "The four legacy libraries were ALREADY carrying __processed_by_ivy_ngcc__ markers at 13.4.0 when this unit started, left by T009a's standalone ngcc run. So the interesting cache boundary here is not the library markers - it is the CLI's own per-project run-hash.",
+    "mechanism": "@ngtools/webpack/src/ngcc_processor.js:86-101 hashes the package lock file + its path + ngcc.config.js data + the tsconfig bytes + the relative tsconfig path into a sha256, and writes node_modules/.cli-ngcc/<hash>.lock after a successful pass. If that file already exists on a later build, the entire ngcc pass is skipped.",
+    "observed": {
+      "runHashLockFile": "node_modules/.cli-ngcc/d82393e4603621a94e776744ff54fa57f4001f33434c41a920b1f8a8f2d33adf.lock",
+      "lockFileCreatedBy": "build run 1 of this unit (the directory did not exist before it; the lock is 0 bytes, as the source writes)",
+      "run1": "ngcc PASS RAN. The build log carries ngcc's entry-point analysis line: \"Warning: Entry point 'ng2-slim-loading-bar' contains deep imports into .../rxjs/Subject, .../rxjs/Observable.\" Webpack time 11613ms.",
+      "run2": "ngcc PASS SKIPPED. The same log position is empty - no ngcc line of any kind. Webpack time 3637ms, a 3.2x drop, and the run-hash lock file was untouched.",
+      "conclusion": "First build processes, second build hits the cache, exactly as the packet predicted. The saving is ~8 seconds of the 11.6s first build on this closure."
+    },
+    "ngccConfigJs": "still absent. The ngcc.config.js.held counterfactual T009a committed remains disabled and was not needed for a full production build either - the CLI's resolve.mainFields property order ([es2015, browser, module, main]) carried all four legacy libraries through the bundler stage as well as through ngc.",
+    "librariesUnchangedByThisUnit": {
+      "ng2-slim-loading-bar": {
+        "__processed_by_ivy_ngcc__": {
+          "module": "13.4.0",
+          "typings": "13.4.0"
+        }
+      },
+      "jw-bootstrap-switch-ng2": {
+        "__processed_by_ivy_ngcc__": {
+          "es2015": "13.4.0",
+          "fesm2015": "13.4.0",
+          "typings": "13.4.0"
+        }
+      },
+      "@ngx-translate/i18n-polyfill": {
+        "__processed_by_ivy_ngcc__": {
+          "es2015": "13.4.0",
+          "fesm2015": "13.4.0",
+          "typings": "13.4.0"
+        }
+      },
+      "@yaga/leaflet-ng2": {
+        "__processed_by_ivy_ngcc__": null,
+        "note": "Ivy-native, never an ngcc case - unchanged from T009a"
+      }
+    }
+  },
+  "migrationDeltaSoFar": [
+    {
+      "n": 1,
+      "layer": "app source",
+      "file": "frontend/app/app.routing.ts",
+      "edit": "ModuleWithProviders -> ModuleWithProviders<RouterModule> at line 71",
+      "namedBy": "TS2314 \"Generic type 'ModuleWithProviders<T>' requires 1 type argument(s).\"",
+      "officialCodemod": "migration-v9-module-with-providers",
+      "measuredIn": "T009a"
+    },
+    {
+      "n": 2,
+      "layer": "app source",
+      "file": "frontend/app/ui/gallery/overlay.service.ts",
+      "edit": "cast to (outer.style as any).msOverflowStyle at line 27",
+      "namedBy": "TS2339 \"Property 'msOverflowStyle' does not exist on type 'CSSStyleDeclaration'.\"",
+      "officialCodemod": null,
+      "note": "TypeScript lib.dom era drift between TS 3.4 and TS 4.6, unrelated to Angular or Ivy",
+      "measuredIn": "T009a"
+    },
+    {
+      "n": 3,
+      "layer": "app source",
+      "file": "frontend/app/ui/settings/_abstract/abstract.settings.component.ts",
+      "edit": "added @Directive() above the abstract SettingsComponent base class at line 14",
+      "namedBy": "NG2007 \"Class is using Angular features but is not decorated.\" - the single root of 12 cascading NG8002s",
+      "officialCodemod": "migration-v9-undecorated-classes-with-decorated-fields",
+      "measuredIn": "T009a"
+    },
+    {
+      "n": 4,
+      "layer": "workspace config",
+      "file": "angular.json",
+      "edit": "NEW file for the 13cell work area, derived from pigallery2's own. Two options deleted because the v13 browser schema no longer accepts them: extractCss (v13 always extracts CSS in production) and aot (the v13 default, no longer a build option). Every other option - outputPath, index, main, polyfills, assets, all five styles entries, and every production flag - is the app's own, verbatim.",
+      "namedBy": "required to run ng build at all; T009a compiled with ngc directly and had no workspace",
+      "measuredIn": "T009b"
+    },
+    {
+      "n": 5,
+      "layer": "compiler config",
+      "file": "tsconfig.13cell.build.json",
+      "edit": "NEW file: tsconfig.13cell.json byte-for-byte in its compilerOptions, with files extended from [\"frontend/main.ts\"] to [\"frontend/main.ts\",\"frontend/polyfills.ts\"].",
+      "namedBy": "the @angular-devkit/build-angular browser builder requires the polyfills entry to be part of the TypeScript program; the T009a ngc probe compiled main.ts alone",
+      "note": "NO compilerOption differs from T009a. The app's own semantics (noImplicitAny true, no fullTemplateTypeCheck, no strictTemplates) are still preserved, so the migrated lane is still measuring the app rather than a stricter cell.",
+      "measuredIn": "T009b"
+    },
+    {
+      "n": 6,
+      "layer": "dependencies",
+      "file": "package.json",
+      "edit": "added bootstrap@4.3.1, open-iconic@1.1.1, raw-loader@4.0.2",
+      "namedBy": "T009a's own notEstablished entry: \"its angular.json styles reference bootstrap and open-iconic, neither installed here\" and \"pigallery2's AppModule uses a require('raw-loader!...') translations factory\"",
+      "note": "bootstrap and open-iconic are the EXACT versions pigallery2 1.7.0 declares - not repins, just the era versions finally installed. raw-loader is the one real version move: 1.0.0 (webpack 4, transitive in the era closure) -> 4.0.2 (webpack 5, which Angular 13 uses). All three are bundler-stage, none touches app source.",
+      "measuredIn": "T009b"
+    },
+    {
+      "n": 7,
+      "layer": "build invocation",
+      "file": "(command line)",
+      "edit": "--prod -> --configuration production; --aot dropped (v13 default); --no-extract-licenses expressed as extractLicenses in angular.json; the four --i18n-* flags dropped with no replacement.",
+      "namedBy": "CLI v12/v13 flag removals",
+      "note": "see i18nFlagsDropped - the dropped i18n flags are the one part of this that is not purely cosmetic.",
+      "measuredIn": "T009b"
+    }
+  ],
+  "i18nFlagsDropped": {
+    "what": "The baseline command carries --i18n-locale en --i18n-format=xlf --i18n-file=frontend/translate/messages.en.xlf --i18n-missing-translation warning. The migrated command carries no i18n flags: ViewEngine message-bundle i18n was replaced by @angular/localize in v9+, and @angular/localize is not installed in this cell.",
+    "whyItCostNothingForTHISbuild": "pigallery2 1.7.0 uses ZERO Angular template i18n. A grep of frontend/app for the i18n attribute returns 0 files and 0 sites. All of its translation happens at RUNTIME through the @ngx-translate/i18n-polyfill I18n service, whose message bundle is loaded by the translationsFactory in app.module.ts:115-123 - and that factory short-circuits to '' for locale 'en'. So for the English build, which is what both lanes built, the ViewEngine i18n flags were already no-ops in the baseline.",
+    "whatIsThereforeUNMEASURED": "The gulpfile also emits per-language builds (fr, hu, ru) via the same task with --i18n-locale <lang>. Neither lane built those. The non-English builds, and whether the raw-loader factory path behaves the same at webpack 5 with raw-loader 4.0.2, are not measured by this unit.",
+    "rawLoaderDidResolve": "For the English build the factory returns '' without reaching require(), so raw-loader@4.0.2 was installed and available but its inline-loader path was NOT exercised. Do not read this record as evidence that raw-loader 4 works here."
+  },
+  "crossLaneObservation": {
+    "disclaimer": "DESCRIPTIVE ONLY. This is not a parity claim, not a comparison of correctness, and nothing below was executed. It is recorded because T010 will want the numbers.",
+    "baselineTotalBytes": 2806878,
+    "migratedTotalBytes": 2494670,
+    "deltaBytes": -312208,
+    "deltaPercent": -11.12,
+    "fileCountBothLanes": "13 in each lane, but they are not the same 13.",
+    "shapeDifferences": [
+      "baseline emits polyfills-es5.<hash>.js (71535 bytes); the migrated lane emits none. Angular 13 removed differential loading and ES5 output entirely.",
+      "migrated emits 3rdpartylicenses.txt (35803 bytes); the baseline build passed --no-extract-licenses and emits none. This is the same flag, honoured differently: extractLicenses:true in the v13 production configuration is the CLI default and the baseline explicitly opted out.",
+      "main shrinks 2296602 -> 2026817 bytes (-269785, -11.7%).",
+      "styles shrinks 182512 -> 174053 bytes (-8459, -4.6%).",
+      "index.html grows 1446 -> 3090 bytes (+1644). Unexamined; likely the v13 index generator inlining critical CSS and emitting modulepreload links.",
+      "both lanes emit the same five open-iconic font files at identical byte sizes under different content-hash names."
+    ],
+    "doNotConclude": "A smaller bundle is not a better bundle and not a working bundle. Neither artefact was loaded, served, or executed by this unit."
+  },
+  "machineTimes": {
+    "unit": "seconds, wall clock, this host (darwin-arm64)",
+    "baselineBuild1": 28,
+    "baselineBuild2": 29,
+    "baselineLaneTotal": 57,
+    "migratedNpmInstallBundlerDeps": 1,
+    "migratedBuild1": 13,
+    "migratedBuild2": 5,
+    "migratedLaneTotal": 19,
+    "bothLanesTotal": 76,
+    "comment": "The full lane pair - four production builds of a 44-component application across two Angular majors and two Node majors - costs 76 seconds of machine time on warm closures. The migrated lane is 3x cheaper than the era lane per build (13s/5s vs 28s/29s), and its second build is 5.8x cheaper than the era's. Angular 13 with a warm ngcc run-hash is dramatically faster than Angular 8 webpack 4 under Rosetta. As in T009a, the cost of this cell is the claims surgery, not the compute."
+  },
+  "reproduce": {
+    "baseline": [
+      "export PATH=<repo>/.versionless/cache/angular-pigallery2-v1-7-0-runtime/node-v10.24.1-darwin-x64/bin:$PATH",
+      "cd <repo>/.versionless/work/angular-pigallery2/baseline    # node_modules pre-installed",
+      "node node_modules/.bin/ng build --aot  --prod --no-extract-licenses --output-path=./t009b-baseline-run1 --no-progress --no-progress --i18n-locale en --i18n-format=xlf --i18n-file=frontend/translate/messages.en.xlf --i18n-missing-translation warning",
+      "# repeat with run2, then:",
+      "node ../logs/inventory.cjs t009b-baseline-run1 t009b-baseline-run2   # expect byteIdentical true"
+    ],
+    "migrated": [
+      "export PATH=<repo>/.versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64/bin:$PATH",
+      "cd <repo>/.versionless/work/angular-pigallery2/13cell",
+      "VERSIONLESS_NETWORK_MODE=consented VERSIONLESS_CONSENT_ID=VL-LEGACY-CORPUS-2026-08-10 npm install",
+      "rm -rf node_modules/.cli-ngcc    # to observe the first-build ngcc pass rather than the cache hit",
+      "node node_modules/.bin/ng build --configuration production --output-path=./t009b-migrated-run1",
+      "node node_modules/.bin/ng build --configuration production --output-path=./t009b-migrated-run2",
+      "node ../logs/inventory.cjs t009b-migrated-run1 t009b-migrated-run2   # expect byteIdentical true"
+    ],
+    "logs": [
+      ".versionless/work/angular-pigallery2/logs/t009b-baseline-run1.log, t009b-baseline-run2.log, t009b-baseline-compare.json, t009b-baseline.sh",
+      ".versionless/work/angular-pigallery2/13cell/logs/t009b-migrated-run1.log, t009b-migrated-run2.log, t009b-migrated-compare.json, t009b-npm-install-bundler-deps.log"
+    ],
+    "unversioned": "the work areas and caches are unversioned scratch; this JSON record and its README are the committed artefact"
+  },
+  "notEstablished": [
+    "This proves BOTH LANES BUILD REPRODUCIBLY. That is all. Each lane compiled, bundled and emitted a production browser artefact, twice, to identical bytes. Nothing below follows from it.",
+    "It does not establish runtime behaviour. Not one byte of either bundle was executed. No index.html was opened, no bundle was served, no JavaScript ran.",
+    "It does not establish parity. The two lanes were never compared for behaviour, only described side by side in crossLaneObservation, which is explicitly labelled descriptive. Different bytes and different file shapes are expected across two Angular majors and say nothing about whether the app behaves the same.",
+    "It does not establish the witness. No holdout witness was run. The sealed pigallery2 RED at the Angular 16 cell (evidence/runs/holdout-angular-pigallery2/receipt.json, canonical digest 39a133ff97c37622a4a1821f20e7c442c9bc22ed7597a3e73cbd31323ab2bb10) stands exactly as published: untouched, unweakened, not retried by this unit.",
+    "It does not establish a migration. No engine performed anything. All seven items in migrationDeltaSoFar were applied by hand, as a measurement of what a migration would have to do. Items 1-3 are app-source edits an engine must be able to make; items 4-7 are cell configuration an engine must be able to author.",
+    "It does not establish the non-English builds. Both lanes built only the default English target. The fr/hu/ru builds the gulpfile also emits were not run in either lane, and the raw-loader inline-loader path that only those builds exercise was therefore never executed - see i18nFlagsDropped.",
+    "It does not establish that raw-loader@4.0.2 works in this closure. It was installed and the build succeeded, but the English translationsFactory short-circuits before calling require(), so the loader was never invoked.",
+    "It does not establish behaviour compatibility of the repinned supporting libraries (ngx-bootstrap 5.1.0 -> 8.0.0, ngx-toastr 10.0.4 -> 14.3.0, ngx-clipboard 12.2.0 -> 15.1.0). They now type-check AND bundle; nothing beyond that is claimed, and a bundle is not a behaviour.",
+    "It does not establish the test or e2e closure. tsconfig.13cell.build.json still excludes frontend/test.ts and **/*.spec.ts. The karma and protractor closures at the cell remain unmeasured.",
+    "It does not establish the backend. pigallery2 is full-stack; only the frontend browser bundle was built in either lane. The backend TypeScript, typeorm 0.2.18, sqlite3 4.0.9 and the rest of the gulp pipeline were not touched.",
+    "It does not establish the fullTemplateTypeCheck story. The migrated lane deliberately preserves the app's own laxer settings. T009a's strict reading was taken at an intermediate state and remains the only one; the clean-state strict count is still unmeasured.",
+    "It does not establish anything about other Node eras, other Angular cells, or the Angular 12.2.17 fallback, none of which this unit ran.",
+    "It does not establish reproducibility across hosts or across time. Both lanes were double-built back to back on one darwin-arm64 machine with warm closures. Cross-machine and cold-cache reproducibility are unmeasured.",
+    "It changes no engine claim, no support boundary and no freeze. No packages/** file was read into or written by this unit."
+  ],
+  "priorEvidence": {
+    "compileRecord": "evidence/runs/angular-13cell/pigallery2-compile.json (T009a) - the cell definition, the four legacy libraries, and the three source edits this record restates as items 1-3 of the migration delta",
+    "spikeVerdict": "evidence/spikes/ngcc-1213-feasibility/verdict.json",
+    "sealedHoldoutRed": "evidence/runs/holdout-angular-pigallery2/receipt.json - untouched by this unit"
+  },
+  "nextUnit": "The witness: serve one artefact from each lane and compare observed browser behaviour. That is the unit that can speak about parity; this one cannot.",
+  "integrity": {
+    "algorithm": "sha256",
+    "sha256": "c93051f0b519d68de5d34d37fbfd4e8c859806cf0fac7d4dffa0ee3f0f4a0cdc",
+    "digestOf": "JSON.stringify of this document with the integrity field absent",
+    "recompute": "node -e \"const c=require('crypto'),r=require('./evidence/runs/angular-13cell/pigallery2-lanes.json');delete r.integrity;console.log(c.createHash('sha256').update(JSON.stringify(r)).digest('hex'))\""
+  }
+}
