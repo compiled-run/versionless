@@ -4,7 +4,7 @@ What the fleet pipeline proved, per application, against the sealed baseline it 
 
 - Schema: `versionless.coverage-report.v1`
 - Certification state: **not-certified**
-- Canonical SHA-256: `7c08250714a85591338fbef470282722afc42f1995b4cdba83697e9c3253aec1`
+- Canonical SHA-256: `fda5d591f0547c4770a688a8a39c36cdce6f2f26f303ba0e7ca09761080a03d8`
 - Integrity: hash-only; authenticity is not established
 
 Every green cell below is filtered out of the Judge counting ledger the corpus derived and cross-checked against that corpus numerator and denominator. No cell is listed by hand, and a cell edited into this record fails re-derivation.
@@ -77,12 +77,12 @@ An application admitted through `versionless run` is recorded proven only if its
 
 Source: `evidence/runs/operator-flows/refusal-census.json`, taken under adapter freeze composite `27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234`.
 
-- `byClassification`: {"defect":5,"refusal":136,"unclassified":50}
-- `byOrigin`: {"frozen-adapter":101,"pipeline":90}
-- `byStage`: {"acquire":14,"analyze":2,"apply":5,"arguments":8,"batch":6,"build":5,"era-cell":9,"ingest":17,"install":11,"license-at-pin":4,"not-reached":69,"plan":23,"plan-or-build":13,"refusal-census":1,"supported-matrix":1,"witness":1,"witness-synthesize":2}
-- `distinctCodes`: 191
+- `byClassification`: {"defect":5,"refusal":137,"unclassified":50}
+- `byOrigin`: {"frozen-adapter":101,"pipeline":91}
+- `byStage`: {"acquire":14,"analyze":2,"apply":5,"arguments":8,"batch":6,"build":5,"era-cell":9,"ingest":17,"install":11,"license-at-pin":4,"not-reached":69,"plan":24,"plan-or-build":13,"refusal-census":1,"supported-matrix":1,"witness":1,"witness-synthesize":2}
+- `distinctCodes`: 192
 - `recordedRefusalSites`: 99
-- `sites`: 191
+- `sites`: 192
 
 ### Sites per code
 
@@ -265,6 +265,7 @@ Source: `evidence/runs/operator-flows/refusal-census.json`, taken under adapter 
 - `pipeline.install.install`: 1
 - `pipeline.refusal-census.refusal-census`: 1
 - `pipeline.run.run-the-apply-stage-was-reached-without-a-plan-this-is-a-defect-`: 1
+- `plan.angular.declared-cell-not-published`: 1
 - `plan.angular.no-declared-source-root`: 1
 - `plan.angular.no-tsconfig`: 1
 - `plan.angular.no-workspace-document`: 1

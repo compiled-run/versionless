@@ -155,7 +155,21 @@ const VALUE_FLAGS: Readonly<Record<OperatorCommand, readonly string[]>> = Object
 	'license-at-pin': Object.freeze(['--frontend-root', '--license', '--record']),
 	'era-cell': Object.freeze([...ERA_CELL_VALUE_FLAGS, '--record']),
 	analyze: Object.freeze(['--record']),
-	plan: Object.freeze(['--source-dir', '--template-dir', '--style-dir', '--entry', '--record']),
+	/**
+	 * `--cell` is here as well as on the era-cell stage because the two stages
+	 * read the same declaration for different things: the era-cell stage reads
+	 * the Node line a cell needs, and the plan stage aligns the manifest to the
+	 * cell itself. A `plan` that accepted the declaration only for the former
+	 * would compose against the default cell while reporting the declared one.
+	 */
+	plan: Object.freeze([
+		'--source-dir',
+		'--template-dir',
+		'--style-dir',
+		'--entry',
+		'--cell',
+		'--record',
+	]),
 	migrate: Object.freeze([
 		'--source-dir',
 		'--template-dir',
@@ -551,7 +565,8 @@ const HELP: Readonly<Record<OperatorCommand, string>> = Object.freeze({
 	].join('\n'),
 	plan: [
 		'versionless plan <app-root> [--source-dir <dir>]... [--template-dir <dir>]...',
-		'                 [--style-dir <dir>]... [--entry <module>] [--record <file>] [--json]',
+		'                 [--style-dir <dir>]... [--entry <module>] [--cell <id>]',
+		'                 [--record <file>] [--json]',
 		'',
 		'Compose the changeset the frozen adapter produces for this tree and report it',
 		'without writing anything into the tree: files changed, files removed, unhandled',
@@ -561,6 +576,13 @@ const HELP: Readonly<Record<OperatorCommand, string>> = Object.freeze({
 		'workspace whose compilation unit reaches past its own sourceRoot. Capabilities gated',
 		'on a compiler diagnostic or an installed closure stand down here; the plan reports',
 		'which readings it supplied.',
+		'',
+		'--cell declares which target cell the changeset is composed against. It is resolved',
+		'against the cells the frozen adapters publish as migration targets, and an identifier',
+		'none of them publishes is a named refusal rather than a silent fall back to the',
+		'default cell. Declaring nothing plans against the default, exactly as before. A cell',
+		'the era-cell stage can describe is not necessarily one an adapter publishes: being',
+		'describable says a Node line was read for it, not that a migration engine targets it.',
 	].join('\n'),
 	migrate: [
 		'versionless migrate <app-root> --out <dir> [--materialize] [--ingest] [--era-cell]',
@@ -597,6 +619,13 @@ const HELP: Readonly<Record<OperatorCommand, string>> = Object.freeze({
 		'host cannot provide is a named refusal rather than a native build that fails. It is',
 		'off unless declared, and the record then says the cell was not established rather',
 		'than implying the lane was installed on the era toolchain.',
+		'',
+		'--cell is read by both stages. The era-cell stage reads the Node line the cell needs;',
+		'the plan stage composes the changeset against the cell itself, so a declared cell is',
+		'the cell the manifest is aligned to rather than a label on a default plan. It is',
+		'resolved against the cells the frozen adapters publish as migration targets, and an',
+		'identifier none of them publishes is a named refusal from the plan stage. It does not',
+		'have to be declared: with no --cell the plan composes against the default cell.',
 		'',
 		'--witness runs the witness stage on the built lane, after the build, because there is',
 		'nothing to witness until something has been emitted. It is off unless declared, and the',
@@ -639,6 +668,12 @@ const HELP: Readonly<Record<OperatorCommand, string>> = Object.freeze({
 		'Each stage keeps its own declarations and its own refusing defaults. A flag here',
 		'is forwarded to the stage that owns it; a policy nobody declared is that stage’s',
 		'named refusal, exactly as it is when the stage is invoked alone.',
+		'',
+		'--cell is forwarded to two stages, because two of them read it: the era-cell stage',
+		'reads the Node line the cell needs, and the plan stage composes the changeset against',
+		'the cell itself. A cell the era-cell stage can describe but no frozen adapter publishes',
+		'as a migration target passes the first and is refused by the second, named, at exit 2 —',
+		'rather than being planned against the default cell and reported as the declared one.',
 		'',
 		'The first stage to refuse settles the outcome: its refusal is emitted verbatim at',
 		'exit 2, and every later stage is recorded as not run, with the stage that refused',
@@ -1035,6 +1070,14 @@ async function runOperatorFlow(
 		sourceDirectories: parsed.flags['--source-dir'],
 		templateDirectories: parsed.flags['--template-dir'],
 		styleSheetDirectories: parsed.flags['--style-dir'],
+		/**
+		 * The same `--cell` the era-cell stage reads, carried into the plan
+		 * stage as the target the changeset is composed against. It is passed as
+		 * the identifier rather than as a resolved cell so the resolution — and
+		 * the refusal for an identifier no adapter publishes — happens inside the
+		 * plan stage, where a `run` record can attribute it to the plan row.
+		 */
+		cellId: parsed.flags['--cell']?.[0] ?? null,
 	};
 	const react = { entryModule: parsed.flags['--entry']?.[0] };
 	const licence: LicencePolicy = Object.freeze({

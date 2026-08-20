@@ -225,6 +225,11 @@ async function readPackageManager(
  * Only the Angular target cell publishes a per-package registry, so a React or
  * Next.js tree is reported as having no cell rather than as having a cell that
  * read nothing. A declared package the registry does not carry is `unknown`.
+ *
+ * The cell is the caller's. The plan stage supplies the cell it resolved from
+ * the operator's own `--cell` declaration, so `cell` in the reading names the
+ * cell the changeset was composed against; the default is the fallback for a
+ * caller that declared none, not a claim that this cell was chosen for the tree.
  */
 export function readCellVerdicts(
 	lineage: Lineage,
@@ -286,6 +291,14 @@ export async function assertApplicationRoot(root: string): Promise<void> {
 		});
 }
 
+/**
+ * Read an application tree and report what was detected, with the target cell's
+ * verdict on every dependency it declares.
+ *
+ * The cell is a parameter rather than a constant because the plan stage resolves
+ * one from the operator's `--cell` declaration and hands it here; the default is
+ * what a caller who declared nothing gets, unchanged.
+ */
 export async function analyzeApplication(
 	root: string,
 	cell: AngularTargetCell = ANGULAR_16_BROWSER_CELL,

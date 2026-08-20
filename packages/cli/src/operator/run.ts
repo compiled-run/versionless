@@ -164,7 +164,13 @@ export const RUN_STAGE_FLAGS: Readonly<Record<RunStageName, readonly string[]>> 
 	]),
 	'license-at-pin': Object.freeze(['--frontend-root', '--license']),
 	'era-cell': Object.freeze(['--cell', '--node', '--arch']),
-	plan: Object.freeze(['--source-dir', '--template-dir', '--style-dir', '--entry']),
+	/**
+	 * `--cell` appears here as well as on the era-cell stage because both stages
+	 * read it, for different things: era-cell reads the Node line the cell
+	 * needs, and plan composes the changeset against the cell itself. Listing it
+	 * once would say one of the two stages ignores a declaration it does not.
+	 */
+	plan: Object.freeze(['--source-dir', '--template-dir', '--style-dir', '--entry', '--cell']),
 	apply: Object.freeze(['--out', '--materialize', '--compose-only']),
 	install: Object.freeze([
 		'--allow-remote-tarballs',
@@ -261,6 +267,13 @@ export type RunDeclarations = Readonly<{
 		sourceDirectories?: readonly string[] | undefined;
 		templateDirectories?: readonly string[] | undefined;
 		styleSheetDirectories?: readonly string[] | undefined;
+		/**
+		 * The `--cell` declaration, as an identifier, for the plan stage to
+		 * resolve. It is not resolved here: an identifier no frozen adapter
+		 * publishes is the plan stage's refusal, and the run record has to be
+		 * able to attribute it to the plan row rather than to the chaining.
+		 */
+		cellId?: string | null | undefined;
 	}>;
 	react: Readonly<{ entryModule?: string | undefined }>;
 	install: InstallPolicy;

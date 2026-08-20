@@ -4,7 +4,7 @@
     {
       "name": "packages/cli/dist/cli.js",
       "digest": {
-        "sha256": "dbb95b745bcc0212a864a9e7d3eb94c091bb85113e06410993bdd41f173a1d50"
+        "sha256": "7c25c62d6861f083a84a19957d37ba4bbe42ddee577a0fe4f2a9c841d505ac0b"
       }
     },
     {
@@ -366,7 +366,7 @@
       "byproducts": [
         {
           "path": "packages/cli/dist/cli.js",
-          "sha256": "dbb95b745bcc0212a864a9e7d3eb94c091bb85113e06410993bdd41f173a1d50"
+          "sha256": "7c25c62d6861f083a84a19957d37ba4bbe42ddee577a0fe4f2a9c841d505ac0b"
         },
         {
           "path": "packages/cli/dist/index.js",

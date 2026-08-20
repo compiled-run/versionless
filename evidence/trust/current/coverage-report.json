@@ -278,14 +278,14 @@
     "source": "evidence/runs/operator-flows/refusal-census.json",
     "adapterFreezeComposite": "27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234",
     "totals": {
-      "sites": 191,
+      "sites": 192,
       "byOrigin": {
         "frozen-adapter": 101,
-        "pipeline": 90
+        "pipeline": 91
       },
       "byClassification": {
         "defect": 5,
-        "refusal": 136,
+        "refusal": 137,
         "unclassified": 50
       },
       "byStage": {
@@ -300,14 +300,14 @@
         "install": 11,
         "license-at-pin": 4,
         "not-reached": 69,
-        "plan": 23,
+        "plan": 24,
         "plan-or-build": 13,
         "refusal-census": 1,
         "supported-matrix": 1,
         "witness": 1,
         "witness-synthesize": 2
       },
-      "distinctCodes": 191,
+      "distinctCodes": 192,
       "recordedRefusalSites": 99
     },
     "byCode": {
@@ -391,6 +391,7 @@
       "license-at-pin.identifier-not-recognised": 1,
       "license-at-pin.manifest-field-conflicts-with-licence-text": 1,
       "supported-matrix.trust-package-did-not-verify": 1,
+      "plan.angular.declared-cell-not-published": 1,
       "plan.angular.no-workspace-document": 1,
       "plan.angular.no-declared-source-root": 1,
       "plan.angular.source-directory-escapes-the-application-root": 1,
@@ -519,7 +520,7 @@
   ],
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "7c08250714a85591338fbef470282722afc42f1995b4cdba83697e9c3253aec1",
+    "canonicalDigest": "fda5d591f0547c4770a688a8a39c36cdce6f2f26f303ba0e7ca09761080a03d8",
     "authenticity": "not-established",
     "certification": "not-claimed"
   }

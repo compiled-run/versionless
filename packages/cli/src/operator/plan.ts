@@ -22,6 +22,7 @@ import { readdir, readFile } from 'node:fs/promises';
 import * as path from 'pathe';
 import {
 	ANGULAR_16_BROWSER_CELL,
+	ANGULAR_TARGET_CELLS,
 	migrateAngularCliEraWorkspace,
 	type AngularMigration,
 	type AngularMigrationInput,
@@ -135,8 +136,50 @@ export type AngularPlanOptions = Readonly<{
 	 * that has them gets exactly the changeset a driver that has them gets.
 	 */
 	readings?: Partial<AngularMigrationInput>;
+	/**
+	 * The target cell, already resolved. A caller that holds an
+	 * `AngularTargetCell` — a fixture driver, or `planApplication` after it has
+	 * resolved a declaration — passes it here, and it wins over `cellId`.
+	 */
 	cell?: AngularTargetCell;
+	/**
+	 * The cell an operator declared with `--cell`, as an identifier.
+	 *
+	 * It is resolved against the cells the frozen adapters publish, and an
+	 * identifier none of them publishes is refused rather than resolved. Nothing
+	 * declared leaves the default cell exactly where it was.
+	 */
+	cellId?: string | null;
 }>;
+
+/**
+ * The cell a declared identifier names, or the default when nothing was
+ * declared.
+ *
+ * The registry read is `ANGULAR_TARGET_CELLS` — the cells a frozen adapter
+ * publishes as migration targets — and nothing here widens it. An identifier no
+ * adapter publishes is a named refusal, not a fallback: silently planning
+ * against Angular 16 for an operator who declared another cell would align a
+ * manifest to a line nobody asked for and report it as the cell they named.
+ *
+ * `era-cell.ts` carries a second, larger vocabulary — the cells this repository
+ * can *describe*, published or not — because that stage answers a different
+ * question: which Node runtime a cell needs. Being describable is not being
+ * plannable, and the two are deliberately not the same list.
+ */
+export function resolveAngularTargetCell(declaredId?: string | null): AngularTargetCell {
+	if (declaredId === undefined || declaredId === null || declaredId === '')
+		return ANGULAR_16_BROWSER_CELL;
+	const published = ANGULAR_TARGET_CELLS.find((cell) => cell.id === declaredId);
+	if (published === undefined)
+		refuse({
+			code: 'plan.angular.declared-cell-not-published',
+			message: `Angular plan: --cell ${declaredId} names a cell no frozen adapter publishes as a migration target. The published target cells are ${ANGULAR_TARGET_CELLS.map((cell) => cell.id).join(', ')}. This flow refuses rather than planning against a cell nobody declared.`,
+			stage: 'plan',
+			origin: 'pipeline',
+		});
+	return published;
+}
 
 const DEFAULT_EXCLUDED_SUFFIXES: readonly string[] = Object.freeze(['.spec.ts']);
 
@@ -147,10 +190,15 @@ const DEFAULT_EXCLUDED_SUFFIXES: readonly string[] = Object.freeze(['.spec.ts'])
  * its own build target. A workspace that declares none is refused rather than
  * guessed at: scanning the wrong directory would report a clean changeset for a
  * tree nothing was read from.
+ *
+ * The target cell is resolved before the tree is read, so an operator who
+ * declared a cell this repository cannot plan against is told that rather than
+ * being told something about their workspace document first.
  */
 export async function composeAngularPlan(
 	options: AngularPlanOptions,
 ): Promise<{ migration: AngularMigration; inputsSupplied: readonly string[] }> {
+	const cell = options.cell ?? resolveAngularTargetCell(options.cellId);
 	const tree = options.appRoot;
 	const workspaceConfigPath = (await fileExists(path.join(tree, 'angular.json')))
 		? 'angular.json'
@@ -225,7 +273,7 @@ export async function composeAngularPlan(
 	};
 	const input: AngularMigrationInput = { ...derived, ...options.readings };
 	return {
-		migration: migrateAngularCliEraWorkspace(input, options.cell ?? ANGULAR_16_BROWSER_CELL),
+		migration: migrateAngularCliEraWorkspace(input, cell),
 		inputsSupplied: Object.freeze(Object.keys(input).sort()),
 	};
 }
@@ -406,15 +454,25 @@ export type PlanOptions = Readonly<{
 	react?: Omit<ReactPlanOptions, 'appRoot'>;
 }>;
 
-/** Compose the changeset for an application tree, whatever its lineage. */
+/**
+ * Compose the changeset for an application tree, whatever its lineage.
+ *
+ * The target cell is resolved first and the analyze reading is taken against
+ * it, so the `cellReadings.cell` this returns names the cell the changeset was
+ * actually composed against rather than the default. With nothing declared the
+ * resolution yields the same default cell `analyzeApplication` already carried,
+ * so the undeclared path is the path it was.
+ */
 export async function planApplication(
 	options: PlanOptions,
 ): Promise<{ analysis: ApplicationAnalysis; plan: OperatorPlan }> {
-	const analysis = await analyzeApplication(options.appRoot);
+	const cell = options.angular?.cell ?? resolveAngularTargetCell(options.angular?.cellId);
+	const analysis = await analyzeApplication(options.appRoot, cell);
 	if (analysis.lineage === 'angular') {
 		const { migration, inputsSupplied } = await composeAngularPlan({
 			appRoot: options.appRoot,
 			...options.angular,
+			cell,
 		});
 		return {
 			analysis,

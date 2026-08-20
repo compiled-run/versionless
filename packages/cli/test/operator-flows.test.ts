@@ -19,6 +19,8 @@ import {
 	runOperatorCommand,
 	OPERATOR_COMMANDS,
 } from '../src/operator/flows.ts';
+import { describedCell } from '../src/operator/era-cell.ts';
+import { RUN_STAGE_FLAGS } from '../src/operator/run.ts';
 import { pipelineRefusalOf } from '../src/operator/refusals.ts';
 import { runOperatorVerification } from '../src/operator/verify.ts';
 import {
@@ -270,6 +272,139 @@ describe('operator plan', () => {
 		]);
 		expect(json.plan.notEstablished.length).toBeGreaterThan(0);
 		expect(JSON.parse(outcome.text) as unknown).toEqual(json);
+	});
+});
+
+/**
+ * `--cell` was an era-cell-stage declaration only: the plan stage never saw it,
+ * so an operator could declare a cell, get a green era-cell record naming its
+ * Node line, and have the manifest aligned to the default cell anyway. These
+ * hold the seam closed at both ends — the declaration reaches the plan, and a
+ * declaration the plan cannot honour is refused rather than quietly dropped.
+ */
+describe('operator plan under a declared cell', () => {
+	const angularDirectories = () => {
+		const [templateDirectory] = APPLICATION_SOURCE_DIRECTORIES;
+		return {
+			sourceDirectories: APPLICATION_SOURCE_DIRECTORIES,
+			templateDirectories: [templateDirectory as string],
+			styleSheetDirectories: [templateDirectory as string],
+		};
+	};
+
+	it('carries the declared cell into the plan and into the reading that reports it', async () => {
+		const { analysis, plan } = await planApplication({
+			appRoot: SOURCE_TREE,
+			angular: { ...angularDirectories(), cellId: 'angular-16-browser-builder' },
+		});
+		expect(plan.cell).toBe('angular-16-browser-builder');
+		/** The reading names the cell the changeset was composed against. */
+		expect(analysis.cellReadings.cell).toBe('angular-16-browser-builder');
+	});
+
+	/**
+	 * The sealed path. Declaring the cell the plan already defaults to must
+	 * compose the same changeset the undeclared path composes, byte for byte:
+	 * the seam is new wiring, not a new decision about the 16 target.
+	 */
+	it('composes the same changeset declared as undeclared, for the default cell', async () => {
+		const declared = await planApplication({
+			appRoot: SOURCE_TREE,
+			angular: { ...angularDirectories(), cellId: 'angular-16-browser-builder' },
+		});
+		const undeclared = await planApplication({
+			appRoot: SOURCE_TREE,
+			angular: angularDirectories(),
+		});
+		expect(canonicalize(declared.plan)).toBe(canonicalize(undeclared.plan));
+		expect(canonicalize(declared.analysis)).toBe(canonicalize(undeclared.analysis));
+		expect(undeclared.plan.cell).toBe('angular-16-browser-builder');
+	});
+
+	it('accepts --cell on the plan command line and composes against it', async () => {
+		const { sourceDirectories, templateDirectories, styleSheetDirectories } =
+			angularDirectories();
+		const outcome = await runOperatorCommand('plan', [
+			SOURCE_TREE,
+			...sourceDirectories.flatMap((directory) => ['--source-dir', directory]),
+			...templateDirectories.flatMap((directory) => ['--template-dir', directory]),
+			...styleSheetDirectories.flatMap((directory) => ['--style-dir', directory]),
+			'--cell',
+			'angular-16-browser-builder',
+			'--json',
+		]);
+		expect(outcome.exitCode).toBe(0);
+		const json = outcome.json as {
+			detected: { cellReadings: { cell: string | null } };
+			plan: { cell: string | null };
+		};
+		expect(json.plan.cell).toBe('angular-16-browser-builder');
+		expect(json.detected.cellReadings.cell).toBe('angular-16-browser-builder');
+	});
+
+	/**
+	 * The refusal that was the point of the seam. `angular-13.4.0` is a cell the
+	 * era-cell stage can describe — the ngcc feasibility spike read a Node line
+	 * for it — and no frozen adapter publishes it as a migration target. Being
+	 * describable is not being plannable, and the plan says so by name rather
+	 * than aligning the manifest to Angular 16 under a 13 label.
+	 */
+	it('refuses a declared cell no frozen adapter publishes, rather than falling back', async () => {
+		expect(describedCell('angular-13.4.0')).not.toBeNull();
+		const outcome = await runOperatorCommand('plan', [
+			SOURCE_TREE,
+			'--cell',
+			'angular-13.4.0',
+			'--json',
+		]);
+		expect(outcome.exitCode).toBe(2);
+		const json = outcome.json as {
+			outcome: string;
+			refusal: { code: string; message: string; stage: string; origin: string };
+		};
+		expect(json.outcome).toBe('refused');
+		expect(json.refusal.code).toBe('plan.angular.declared-cell-not-published');
+		expect(json.refusal.stage).toBe('plan');
+		expect(json.refusal.origin).toBe('pipeline');
+		/** The declared identifier and the published ones are both named. */
+		expect(json.refusal.message).toContain('angular-13.4.0');
+		expect(json.refusal.message).toContain('angular-16-browser-builder');
+	});
+
+	it('refuses an identifier nothing describes at all, from the plan stage', async () => {
+		const outcome = await runOperatorCommand('plan', [
+			SOURCE_TREE,
+			'--cell',
+			'angular-99-imaginary',
+		]);
+		expect(outcome.exitCode).toBe(2);
+		expect(outcome.text).toContain('refused: plan.angular.declared-cell-not-published');
+		expect(outcome.text).toContain('angular-99-imaginary');
+	});
+
+	/**
+	 * `migrate` and `run` read the same declaration, and both forward it to the
+	 * plan stage. `run` lists it under both stages that read it, because both do.
+	 */
+	it('forwards the declaration from migrate and run, and names both stages that read it', () => {
+		expect(
+			parseOperatorArguments('plan', ['app', '--cell', 'angular-16-browser-builder']).flags[
+				'--cell'
+			],
+		).toEqual(['angular-16-browser-builder']);
+		expect(
+			parseOperatorArguments('migrate', ['app', '--out', 'lane', '--cell', 'x']).flags[
+				'--cell'
+			],
+		).toEqual(['x']);
+		expect(RUN_STAGE_FLAGS['era-cell']).toContain('--cell');
+		expect(RUN_STAGE_FLAGS.plan).toContain('--cell');
+	});
+
+	it('documents the declaration on the plan, migrate and run help', () => {
+		expect(operatorHelp('plan')).toContain('--cell');
+		expect(operatorHelp('migrate')).toContain('--cell');
+		expect(operatorHelp('run')).toContain('--cell');
 	});
 });
 

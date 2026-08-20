@@ -12,14 +12,14 @@
 	],
 	"filesScanned": 84,
 	"summary": {
-		"sites": 191,
+		"sites": 192,
 		"byOrigin": {
 			"frozen-adapter": 101,
-			"pipeline": 90
+			"pipeline": 91
 		},
 		"byClassification": {
 			"defect": 5,
-			"refusal": 136,
+			"refusal": 137,
 			"unclassified": 50
 		},
 		"byStage": {
@@ -34,14 +34,14 @@
 			"install": 11,
 			"license-at-pin": 4,
 			"not-reached": 69,
-			"plan": 23,
+			"plan": 24,
 			"plan-or-build": 13,
 			"refusal-census": 1,
 			"supported-matrix": 1,
 			"witness": 1,
 			"witness-synthesize": 2
 		},
-		"distinctCodes": 191,
+		"distinctCodes": 192,
 		"recordedRefusalSites": 99
 	},
 	"entries": [
@@ -319,7 +319,7 @@
 			"stage": "analyze",
 			"stageBasis": "the analyze stage reads the tree through this module.",
 			"file": "packages/cli/src/operator/analyze.ts",
-			"line": 274,
+			"line": 279,
 			"enclosing": "assertApplicationRoot"
 		},
 		{
@@ -336,7 +336,7 @@
 			"stage": "analyze",
 			"stageBasis": "the analyze stage reads the tree through this module.",
 			"file": "packages/cli/src/operator/analyze.ts",
-			"line": 281,
+			"line": 286,
 			"enclosing": "assertApplicationRoot"
 		},
 		{
@@ -799,7 +799,7 @@
 			"stage": "arguments",
 			"stageBasis": "the command surface parses and validates arguments here before any stage runs.",
 			"file": "packages/cli/src/operator/flows.ts",
-			"line": 381,
+			"line": 395,
 			"enclosing": "parseOperatorArguments"
 		},
 		{
@@ -817,7 +817,7 @@
 			"stage": "arguments",
 			"stageBasis": "the command surface parses and validates arguments here before any stage runs.",
 			"file": "packages/cli/src/operator/flows.ts",
-			"line": 389,
+			"line": 403,
 			"enclosing": "parseOperatorArguments"
 		},
 		{
@@ -832,7 +832,7 @@
 			"stage": "arguments",
 			"stageBasis": "the command surface parses and validates arguments here before any stage runs.",
 			"file": "packages/cli/src/operator/flows.ts",
-			"line": 403,
+			"line": 417,
 			"enclosing": "parseOperatorArguments"
 		},
 		{
@@ -850,7 +850,7 @@
 			"stage": "arguments",
 			"stageBasis": "the command surface parses and validates arguments here before any stage runs.",
 			"file": "packages/cli/src/operator/flows.ts",
-			"line": 416,
+			"line": 430,
 			"enclosing": "parseOperatorArguments"
 		},
 		{
@@ -867,7 +867,7 @@
 			"stage": "arguments",
 			"stageBasis": "the command surface parses and validates arguments here before any stage runs.",
 			"file": "packages/cli/src/operator/flows.ts",
-			"line": 423,
+			"line": 437,
 			"enclosing": "parseOperatorArguments"
 		},
 		{
@@ -884,7 +884,7 @@
 			"stage": "arguments",
 			"stageBasis": "the command surface parses and validates arguments here before any stage runs.",
 			"file": "packages/cli/src/operator/flows.ts",
-			"line": 430,
+			"line": 444,
 			"enclosing": "parseOperatorArguments"
 		},
 		{
@@ -901,7 +901,7 @@
 			"stage": "arguments",
 			"stageBasis": "the command surface parses and validates arguments here before any stage runs.",
 			"file": "packages/cli/src/operator/flows.ts",
-			"line": 438,
+			"line": 452,
 			"enclosing": "parseOperatorArguments"
 		},
 		{
@@ -1518,6 +1518,25 @@
 			"enclosing": "readSupportedMatrix"
 		},
 		{
+			"code": "plan.angular.declared-cell-not-published",
+			"message": "Angular plan: --cell ${declaredId} names a cell no frozen adapter publishes as a migration target. The published target cells are ${ANGULAR_TARGET_CELLS.map((cell) => cell.id).join(', ')}. This flow refuses rather than planning against a cell nobody declared.",
+			"messageForm": "composed",
+			"staticSegments": [
+				"Angular plan: --cell",
+				"names a cell no frozen adapter publishes as a migration target. The published target cells are",
+				". This flow refuses rather than planning against a cell nobody declared."
+			],
+			"classification": "refusal",
+			"condition": "published === undefined",
+			"conditionForm": "if-consequent",
+			"origin": "pipeline",
+			"stage": "plan",
+			"stageBasis": "the plan stage composes the changeset through this module.",
+			"file": "packages/cli/src/operator/plan.ts",
+			"line": 175,
+			"enclosing": "resolveAngularTargetCell"
+		},
+		{
 			"code": "plan.angular.no-workspace-document",
 			"message": "Angular plan: the application root carries neither angular.json nor .angular-cli.json, so there is no workspace document to migrate.",
 			"messageForm": "static",
@@ -1531,7 +1550,7 @@
 			"stage": "plan",
 			"stageBasis": "the plan stage composes the changeset through this module.",
 			"file": "packages/cli/src/operator/plan.ts",
-			"line": 161,
+			"line": 209,
 			"enclosing": "composeAngularPlan"
 		},
 		{
@@ -1549,7 +1568,7 @@
 			"stage": "plan",
 			"stageBasis": "the plan stage composes the changeset through this module.",
 			"file": "packages/cli/src/operator/plan.ts",
-			"line": 173,
+			"line": 221,
 			"enclosing": "composeAngularPlan"
 		},
 		{
@@ -1566,7 +1585,7 @@
 			"stage": "plan",
 			"stageBasis": "the plan stage composes the changeset through this module.",
 			"file": "packages/cli/src/operator/plan.ts",
-			"line": 185,
+			"line": 233,
 			"enclosing": "composeAngularPlan"
 		},
 		{
@@ -1583,7 +1602,7 @@
 			"stage": "plan",
 			"stageBasis": "the plan stage composes the changeset through this module.",
 			"file": "packages/cli/src/operator/plan.ts",
-			"line": 196,
+			"line": 244,
 			"enclosing": "composeAngularPlan"
 		},
 		{
@@ -1600,7 +1619,7 @@
 			"stage": "plan",
 			"stageBasis": "the plan stage composes the changeset through this module.",
 			"file": "packages/cli/src/operator/plan.ts",
-			"line": 310,
+			"line": 358,
 			"enclosing": "composeReactPlan"
 		},
 		{
@@ -1618,7 +1637,7 @@
 			"stage": "plan",
 			"stageBasis": "the plan stage composes the changeset through this module.",
 			"file": "packages/cli/src/operator/plan.ts",
-			"line": 323,
+			"line": 371,
 			"enclosing": "composeReactPlan"
 		},
 		{
@@ -1635,7 +1654,7 @@
 			"stage": "plan",
 			"stageBasis": "the plan stage composes the changeset through this module.",
 			"file": "packages/cli/src/operator/plan.ts",
-			"line": 394,
+			"line": 442,
 			"enclosing": "composeReactPlan"
 		},
 		{
@@ -1653,7 +1672,7 @@
 			"stage": "plan",
 			"stageBasis": "the plan stage composes the changeset through this module.",
 			"file": "packages/cli/src/operator/plan.ts",
-			"line": 468,
+			"line": 526,
 			"enclosing": "planApplication"
 		},
 		{
@@ -1689,7 +1708,7 @@
 			"stage": "arguments",
 			"stageBasis": "the run flow composes every stage in order here; what it raises of its own is about the chaining, before any stage decides anything.",
 			"file": "packages/cli/src/operator/run.ts",
-			"line": 468,
+			"line": 481,
 			"enclosing": "applied"
 		},
 		{
