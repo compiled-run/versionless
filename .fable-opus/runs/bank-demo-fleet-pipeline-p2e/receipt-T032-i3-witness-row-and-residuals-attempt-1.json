@@ -1,0 +1,30 @@
+{
+  "status": "completed",
+  "summary": "All five items landed. (iii) witness row now carries per-journey outcome strings and locality verbatim; applicationSignals stay authoritative via notEstablished. (a) trust.distribution-not-built refuses on ABSENT subjects, mismatch stays hard; runbook 0a appended. (b) witnessSlotKey derives from acquireBaselineRoot; flame record moved byte-identical (digest 50b1e155 pinned by untouchable run record) plus slot.json. (c) framework read off analyze stage (react), source block published. (d) provenBoundedness derived per-record plus a guard refusing an unbounded run-record proven. Census regen (198 sites), trust regen. Full verify block green; suite 2836 pass; totals 23/11/2/5/5; composite 140ce86e.",
+  "files_changed": [
+    "packages/cli/src/operator/run.ts",
+    "packages/cli/src/operator/witness.ts",
+    "packages/cli/test/operator-witness-row.test.ts",
+    "packages/trust/src/verify.ts",
+    "packages/trust/src/coverage-report.ts",
+    "packages/trust/test/coverage-report-run-record-basis.test.ts",
+    "packages/trust/test/distribution-not-built.test.ts",
+    "evidence/runs/witness-synthesized/baseline/record.json",
+    "evidence/runs/witness-synthesized/react-flame-v2-4-0/record.json",
+    "evidence/runs/witness-synthesized/react-flame-v2-4-0/slot.json",
+    "evidence/runs/operator-flows/refusal-census.json",
+    "evidence/trust/current/coverage-report.json",
+    "evidence/trust/current/coverage-report.md",
+    "evidence/trust/current/corpus-conformance.json",
+    "evidence/trust/current/enterprise-report.json",
+    "evidence/trust/current/enterprise-report.md",
+    "evidence/trust/current/manifest.json",
+    "evidence/trust/current/matrix.json",
+    "evidence/trust/current/report.md",
+    "docs/goals/bank-demo-fleet-pipeline/notes/T998-live-run-runbook.md"
+  ],
+  "open_questions": [
+    "enterprise.ts was left untouched by design: the enterprise report never cites flame's proven (flame appears only in the source inventory), so there was no proven citation there to bound. If the board wants the boundedness echoed on that surface it is a new statement, not a residual.",
+    "Flame's two bounds currently read as 'the reading is absent' because its record predates both i2's installScripts field and this unit's witness journeys. The measured form is already implemented and tested; it needs a post-i2 flame re-run, deliberately not done here (budget). That re-run is the natural refresh."
+  ]
+}

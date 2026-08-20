@@ -1,0 +1,11 @@
+{
+	"unitId": "T046-u5b-runtime-on-defect-rows",
+	"runId": "bank-demo-fleet-pipeline-p2e",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "The u5 runtime block now reaches install and build defect rows. install.ts gained readLaneRuntimeAfterFailure (measured through the child's own environment, falling back to laneRuntimeUnmeasured with resolvedVersion null), laneChildFailure carried as the Error's cause, and laneRuntimeOf to read it back; the cause channel keeps the literal `throw new Error(...)` form the refusal census counts sites by. build.ts and install.ts read and carry the runtime in their catch paths. run.ts adds RunStageRow.runtime and exported stageFailureRow, which runStage now composes through; success-path composition untouched. Census regenerated: relines only, 196 sites. Full suite 2794 passed; trust valid; composite stable; exhibit records untouched.",
+	"agentId": "a139d51c5445c3d8f",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-20T11:46:15.873Z"
+}

@@ -1,0 +1,51 @@
+--- npm run trust:verify -- --offline (exit 0) ---
+{"valid":true,"digest":"0d31456c9b72acc83656355348e663de048848728c25ffd70620da5fb07061f6","deterministicCore":"80829ae4131dd3cdd532cb403325cfccb4bf1da948a32498829d690d96ddb597","artifacts":12}
+
+npm warn Unknown project config "store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "virtual-store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "state-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm notice run versionless-workspace@0.0.0 trust:verify
+npm notice run node --experimental-strip-types packages/cli/src/cli.ts trust:verify --offline
+
+--- npm run receipt:verify (exit 0) ---
+{"valid":true,"digest":"52400147929220935a9ebe47a16c8dff50b5c28e9d51c930d000c99c2bdc8a21","artifacts":10}
+
+npm warn Unknown project config "store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "virtual-store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "state-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm notice run versionless-workspace@0.0.0 receipt:verify
+npm notice run node --experimental-strip-types packages/cli/src/cli.ts receipt:verify
+
+--- VERSIONLESS_NETWORK_MODE=offline npm run corpus:verify (exit 0) ---
+{"result":"pass","digest":"101412703cc116969dd562a6ea46dde3d05424ad5194e535aca9750e373bc482","verticals":20,"sourceApplications":13}
+
+npm warn Unknown project config "store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "virtual-store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "state-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm notice run versionless-workspace@0.0.0 corpus:verify
+npm notice run node --experimental-strip-types packages/cli/src/cli.ts corpus:verify
+
+--- node --experimental-strip-types packages/cli/src/cli.ts report:coverage --offline --verify-only (exit 0) ---
+{"result":"pass","mode":"verified","trustDigest":"0d31456c9b72acc83656355348e663de048848728c25ffd70620da5fb07061f6","machineArtifact":"evidence/trust/current/coverage-report.json","humanDocument":"evidence/trust/current/coverage-report.md","machineArtifactSha256":"37bfae634cdb00d1401d1755d331d42dac0bdcbe8142a0a7aff40f5d482301d3","humanDocumentSha256":"ceba117b617186c9ed1da1de535c860f7cfe6da0acfb4dfcf611a383fc8f9bb2","coverageDigest":"782499729475ef733fa4f1cb1c71967dbbfbc75aa8c635b0e98327671b3c058a","certification":"not-certified"}
+
+
+--- node --experimental-strip-types packages/cli/src/cli.ts refusal-census --verify-only --json 2>/dev/null | node -e "let b='';process.stdin.on('data',d=>b+=d);process.stdin.on('end',()=>{const d=JSON.parse(b);if(!d.matchesPublished)throw new Error('census drifted');console.log('CENSUS-OK sites='+d.census.summary.sites)})" (exit 0) ---
+CENSUS-OK sites=192
+
+
+--- node --experimental-strip-types packages/cli/src/cli.ts supported-matrix --offline 2>&1 | grep -q "react: 6 counted of 6" && echo REACT-CELLS-UNCHANGED (exit 0) ---
+REACT-CELLS-UNCHANGED
+
+
+--- node -e "const f=require('./evidence/trust/current/adapter-freeze.json');if(!String(f.freeze.composite).startsWith('140ce86e'))throw new Error('composite moved');console.log('COMPOSITE-STABLE-140ce86e')" (exit 0) ---
+COMPOSITE-STABLE-140ce86e
+
+
+--- git diff --quiet HEAD -- packages && echo NO-SOURCE-CHANGES-IN-BATCH-TASK (exit 0) ---
+NO-SOURCE-CHANGES-IN-BATCH-TASK
+
+
+--- grep -q 'T012-b2' docs/goals/bank-demo-fleet-pipeline/notes/T012-angular-batch.md && echo NOTE-APPENDED (exit 0) ---
+NOTE-APPENDED
+
+

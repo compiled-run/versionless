@@ -4,7 +4,7 @@ What the fleet pipeline proved, per application, against the sealed baseline it 
 
 - Schema: `versionless.coverage-report.v1`
 - Certification state: **not-certified**
-- Canonical SHA-256: `8a5bb938b8a99e3d0790d5fca032ddd5d7f2f9d51817c2fb7ac92a0099539252`
+- Canonical SHA-256: `bed5bbaa1f4a145a56af2fc0453b324c5114f866a2d598446b477fe9fdd1126e`
 - Integrity: hash-only; authenticity is not established
 
 Every green cell below is filtered out of the Judge counting ledger the corpus derived and cross-checked against that corpus numerator and denominator. No cell is listed by hand, and a cell edited into this record fails re-derivation.
@@ -69,8 +69,8 @@ An application admitted through `versionless run` is recorded proven only if its
 - `react-cra-redux-1a06509b`: refused — intervention count 0
 - `react-flame-v2-4-0`: proven — intervention count 0
   - source: `pawelmalak/flame` at ref `refs/tags/v2.4.0`, revision `069b6690d9fa7a24a6e7727386ab85148c89b90e`, licence MIT `fbfe10674aef1e0bf084850644879fa4114d8a98debc5fb8e680f295af169d43` — read from `evidence/runs/react-flame-v2-4-0/run-record.json` (basis: run-record)
-  - bounded by: Dependency install scripts: the install row declares the install-script policy and names 3 package(s) the lockfile marks as carrying an install script. It records no reading of which of them npm started and which npm skipped by policy — that reading was added to the install row after this run — so this proof does not establish that any of those scripts ran.
-  - bounded by: Route reach: the witness row records 1 journey(s) replayed and carries no per-journey route reading — the journeys were added to the witness row after this run — so how many of the application's declared routes the replay reached is not recorded on this proof.
+  - bounded by: Dependency install scripts: the install row declares the install-script policy, names 3 package(s) the lockfile marks as carrying an install script, and records npm starting 2 script(s) and skipping 0 by policy. A script npm skipped did not run in the lane this proof was taken on.
+  - bounded by: Route reach: the witness row records the replay reaching 1 of 12 declared route(s) across 1 journey(s). Every route it did not reach is unproven by this row rather than proven absent.
 - `react-mycrypto`: refused — intervention count 0
 - `react-your-spotify-1-5-0`: refused — intervention count 0
 

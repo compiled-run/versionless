@@ -1,25 +1,25 @@
 {
-  "runId": "bank-demo-fleet-pipeline",
-  "unitId": "T006a-journey-synthesis-core",
-  "attempt": 1,
-  "promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/bank-demo-fleet-pipeline/prompt-T006a-journey-synthesis-core-attempt-1.md",
-  "subagentType": "opus-worker",
-  "toolUseId": "toolu_01EeKgLWNf7kwHiUJVCrFuj3",
-  "promptId": "98821590-c923-4f6a-83ab-bc0fd1db363a",
-  "background": false,
-  "parallel": false,
-  "effort": null,
-  "contract": [
-    "packages/cli/src/witness/journey-synthesis/**",
-    "packages/cli/src/witness/real-app-run.ts",
-    "packages/cli/src/operator/**",
-    "packages/cli/src/cli.ts",
-    "packages/core/src/receipts/witness-real-app.ts",
-    "packages/cli/test/witness-journey-synthesis.test.ts",
-    "packages/cli/test/operator-flows.test.ts",
-    "packages/cli/test/operator-refusal-census.test.ts",
-    "evidence/runs/operator-flows/**"
-  ],
-  "ts": "2026-08-17T17:51:07.302Z",
-  "pendingName": "00001786989067303883-b1855215-T006a-journey-synthesis-core.json"
+	"runId": "bank-demo-fleet-pipeline",
+	"unitId": "T006a-journey-synthesis-core",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/bank-demo-fleet-pipeline/prompt-T006a-journey-synthesis-core-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01EeKgLWNf7kwHiUJVCrFuj3",
+	"promptId": "98821590-c923-4f6a-83ab-bc0fd1db363a",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/cli/src/witness/journey-synthesis/**",
+		"packages/cli/src/witness/real-app-run.ts",
+		"packages/cli/src/operator/**",
+		"packages/cli/src/cli.ts",
+		"packages/core/src/receipts/witness-real-app.ts",
+		"packages/cli/test/witness-journey-synthesis.test.ts",
+		"packages/cli/test/operator-flows.test.ts",
+		"packages/cli/test/operator-refusal-census.test.ts",
+		"evidence/runs/operator-flows/**"
+	],
+	"ts": "2026-08-17T17:51:07.302Z",
+	"pendingName": "00001786989067303883-b1855215-T006a-journey-synthesis-core.json"
 }

@@ -1,0 +1,11 @@
+{
+	"unitId": "T010-u3-publish-13-cell",
+	"runId": "bank-demo-fleet-pipeline-p2b",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Published ANGULAR_13_BROWSER_CELL + a narrow 11-entry ANGULAR_13_ECOSYSTEM_PACKAGES (every fact traced to evidence/runs/angular-13cell/pigallery2-compile.json), deleted NGCC_ANGULAR_13_CELL so DESCRIBED_CELLS is purely derived, and updated both test files. Green: DESCRIBED-CELLS-UNIQUE, trust:verify valid f61abb7a, SEALED-16-PATH-BYTE-IDENTICAL, FROZEN-DELTA-EXACTLY-TWO-FILES, and both u2 derived blocks pass unedited. Blocked on one u1-authored pin in operator-flows.test.ts, a file my contract forbids editing. Repo-wide the census byte-identity test also fails on shifted line numbers, which sizing 3.3 sequences to u9/u11.",
+	"agentId": "a48336dfe3a901d00",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-20T07:29:42.849Z"
+}

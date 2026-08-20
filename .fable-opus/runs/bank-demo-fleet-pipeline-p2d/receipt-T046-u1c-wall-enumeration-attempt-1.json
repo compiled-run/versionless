@@ -1,0 +1,9 @@
+{
+	"status": "completed",
+	"summary": "Enumeration complete, terminal GREEN, 2 walls total. Applied the one adapter-attributable fix for wall #2 in the scratchpad copy (tsconfig.json target ES2022->es2015, module ES2022->esnext, the era-declared values from the run record; sole ES2022 site, verified by sweep). Build under provisioned Node 16.20.2 exited 0 in 5323ms, zero diagnostics, no network. Output dist/angular-hnpwa: 28 files, index.html at root, 504KB - witness contract input available for the first time. Establishes that gating exactly two ungated rewrites, both in angular-workspace-migration.ts, is necessary AND sufficient for a green angular2-hn lane. R1 reopen confirmed unavoidable but bounded. All three verify commands pass.",
+	"files_changed": [
+		"evidence/spikes/t046-angular-lane-build/verdict-u1c.json",
+		"evidence/spikes/t046-angular-lane-build/build-node16-step1.log"
+	],
+	"open_questions": []
+}

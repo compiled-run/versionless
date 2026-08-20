@@ -1,9 +1,9 @@
 {
-  "agentId": "ae0021dcab9b5f56a",
-  "runId": "bank-demo-fleet-pipeline",
-  "unitId": "T020-papercups-synthesized-witness-run",
-  "attempt": 1,
-  "toolUseId": "toolu_01YRKJXTADwh6GK6GXfHYFtq",
-  "bindingRoute": "sole",
-  "startedAt": "2026-08-17T18:37:54.282Z"
+	"agentId": "ae0021dcab9b5f56a",
+	"runId": "bank-demo-fleet-pipeline",
+	"unitId": "T020-papercups-synthesized-witness-run",
+	"attempt": 1,
+	"toolUseId": "toolu_01YRKJXTADwh6GK6GXfHYFtq",
+	"bindingRoute": "sole",
+	"startedAt": "2026-08-17T18:37:54.282Z"
 }

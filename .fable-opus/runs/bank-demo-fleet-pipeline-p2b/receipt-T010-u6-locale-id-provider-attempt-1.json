@@ -1,0 +1,14 @@
+{
+	"status": "blocked",
+	"summary": "Delivered locale-id-provider.ts (supplied-reading-only LOCALE_ID provider translating the era build's --i18n-locale, cell-gated, idempotent by module-wide provide:LOCALE_ID detection, written first in providers so it cannot overrule an existing provider), its 19 passing tests, the index.ts barrel line, and a regenerated census (sites unchanged at 192; filesScanned 84->85; also absorbed stale era-cell.ts line drift). Sealed path unmoved, census byte-identical, trust:verify valid. Blocked: the barrel line makes packages/core/test/capability-coverage.test.ts red because every barrel module needs an entry in packages/core/src/receipts/capability-coverage.ts, which is outside my contract.",
+	"files_changed": [
+		"packages/frameworks/angular/src/locale-id-provider.ts",
+		"packages/frameworks/angular/src/index.ts",
+		"packages/frameworks/angular/test/locale-id-provider.test.ts",
+		"evidence/runs/operator-flows/refusal-census.json"
+	],
+	"open_questions": [
+		"Exporting locale-id-provider.ts from the Angular barrel (required by both the u6 file contract and the FROZEN-DELTA verify grep) makes packages/core/test/capability-coverage.test.ts fail: it asserts every ./<name>.ts in the barrel has an entry in packages/core/src/receipts/capability-coverage.ts and that summary.angular.total equals the barrel module count (now 51 vs the map's 50). Which cut do you want? (A) Extend u6's contract with packages/core/src/receipts/capability-coverage.ts — one new entry, lineage 'angular', package '@versionless/angular', entryPoints ['provideEraLocaleId'], provenApps [] (experimental/unproven, since nothing composes it yet) — AND the trust regeneration, because capability-coverage.test.ts:102 asserts evidence/trust/current/capability-coverage.json equals buildCapabilityCoverage(), so trust:generate must rewrite all 12 artifacts (u11's job) or trust:verify --offline breaks. (B) Move the index.ts barrel line out of u6 into u7, which composes the capability anyway and can carry the coverage entry, and drop index.ts from u6's FROZEN-DELTA grep (six files). Option B leaves the tree fully green today: the capability and its tests stand alone, and the census already counts the new file (85) regardless of the barrel.",
+		"Secondary, mechanical: the u6 verify grep uses `git diff --name-only HEAD`, which does not list untracked files, so it could never match the two NEW files. I ran `git add -N` on locale-id-provider.ts and its test (no commit, no content change) to make it satisfiable. If intent-to-add is unwanted, future packets creating new files should use `git status --porcelain` instead."
+	]
+}

@@ -1,0 +1,24 @@
+{
+	"status": "completed",
+	"summary": "Enumerated every Angular candidate on disk (2 attemptable, 6 not: empty staging shells, tarball-only fuxa, AngularJS-era phonecat, already-sealed apps), recorded the enumeration before running. Ran two batches against the new angular-13.4.0 cell with the three install policies, interventionCount 0 throughout, --publish chain green. angular2-hn: refused install.lockfile-foreign at 6/9 stages, with era-cell recording cell angular-13.4.0 declared, runtime 16.20.2 — first affirmative 13-cell evidence. angular-kubernetes-dashboard: refused ingest.revision-not-determined at 1/9; revision read and sha256-verified, re-run not-attempted-this-unit on budget. Coverage 21->23 apps, proven 11->11, refused 5->7. Angular 4/4 and react 6/6 unchanged, composite 140ce86e stable, census 192. All 9 verify commands pass.",
+	"files_changed": [
+		"docs/goals/bank-demo-fleet-pipeline/notes/T012-angular-batch.md",
+		"evidence/runs/fleet-batch/t012b1-angular-fleet.json",
+		"evidence/runs/fleet-batch/t012b1-angular-hn.json",
+		"evidence/runs/fleet-batch/t012b1-angular-13cell/fleet-summary.json",
+		"evidence/runs/fleet-batch/t012b1-angular-13cell/fleet-summary.md",
+		"evidence/runs/fleet-batch/t012b1-angular2-hn-13cell/fleet-summary.json",
+		"evidence/runs/fleet-batch/t012b1-angular2-hn-13cell/fleet-summary.md",
+		"evidence/runs/angular2-hn/run-record.json",
+		"evidence/runs/angular2-hn/run-record.json.interventions.json",
+		"evidence/runs/angular-kubernetes-dashboard/run-record.json",
+		"evidence/runs/angular-kubernetes-dashboard/run-record.json.interventions.json",
+		"evidence/trust/current/coverage-report.json",
+		"evidence/trust/current/coverage-report.md",
+		"evidence/trust/current/enterprise-report.json",
+		"evidence/trust/current/enterprise-report.md",
+		"evidence/trust/current/manifest.json",
+		"evidence/trust/current/report.md"
+	],
+	"open_questions": []
+}

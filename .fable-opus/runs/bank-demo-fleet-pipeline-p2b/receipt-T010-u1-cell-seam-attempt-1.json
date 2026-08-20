@@ -1,0 +1,14 @@
+{
+	"status": "completed",
+	"summary": "Threaded --cell from the CLI into the plan and analyze stages. plan.ts gains resolveAngularTargetCell(): default 16 when undeclared, resolution against ANGULAR_TARGET_CELLS otherwise, and refusal plan.angular.declared-cell-not-published (stage plan, exit 2) naming the declared and published ids for anything unpublished. planApplication resolves once and passes the cell to both analyzeApplication and composeAngularPlan. flows.ts adds --cell to plan's flag table, threads cellId, updates plan/migrate/run help; run.ts adds --cell to RUN_STAGE_FLAGS.plan and cellId to RunDeclarations.angular. refusals.ts unchanged: no registry exists. All four verify commands pass; angular-13.4.0 correctly refuses.",
+	"files_changed": [
+		"packages/cli/src/operator/plan.ts",
+		"packages/cli/src/operator/analyze.ts",
+		"packages/cli/src/operator/flows.ts",
+		"packages/cli/src/operator/run.ts",
+		"packages/cli/test/operator-flows.test.ts"
+	],
+	"open_questions": [
+		"packages/cli/test/operator-refusal-census.test.ts now fails: the published evidence/runs/operator-flows/refusal-census.json pins per-site line numbers in the operator files and carries no entry for the new refusal. Regenerating evidence was forbidden in this unit and the census file is outside the file contract; the sizing doc sequences its regeneration to u9. Confirm that is where it lands, or cut a unit for it before Phase B."
+	]
+}

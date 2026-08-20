@@ -1,9 +1,9 @@
 {
-  "agentId": "a2982cbae8dfdda96",
-  "runId": "bank-demo-fleet-pipeline",
-  "unitId": "T014-intervention-count-harness",
-  "attempt": 1,
-  "toolUseId": "toolu_01UqiiC6G97M2gxBdbojow6P",
-  "bindingRoute": "sole",
-  "startedAt": "2026-08-17T19:36:09.845Z"
+	"agentId": "a2982cbae8dfdda96",
+	"runId": "bank-demo-fleet-pipeline",
+	"unitId": "T014-intervention-count-harness",
+	"attempt": 1,
+	"toolUseId": "toolu_01UqiiC6G97M2gxBdbojow6P",
+	"bindingRoute": "sole",
+	"startedAt": "2026-08-17T19:36:09.845Z"
 }

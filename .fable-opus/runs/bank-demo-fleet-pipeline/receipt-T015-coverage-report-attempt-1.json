@@ -1,24 +1,24 @@
 {
-  "status": "blocked",
-  "summary": "Coverage report emitted and derivation-guarded: coverage-report.{json,md} are derived inside deriveEnterpriseSurfaces from the same supportMatrix, written by writeEnterpriseSurfaces, and re-derived plus compared (JSON canonically, MD byte-for-byte, honesty guard) inside verifyEnterpriseSurfaces, which trust:verify --offline calls. Not in the deterministic core: verify.ts's twelve-artifact assertion is outside my contract. Intervention rule encoded and tested both directions; run fills its report slot; report:coverage added to cli.ts. Eight of nine verify commands green; npm test fails on one line of refusal-census.json (340 -> 408) caused by the required run.ts edit.",
-  "files_changed": [
-    "packages/trust/src/coverage-report.ts",
-    "packages/trust/src/enterprise.ts",
-    "packages/trust/src/generate.ts",
-    "packages/cli/src/cli.ts",
-    "packages/cli/src/operator/run.ts",
-    "packages/trust/test/coverage-report.test.ts",
-    "packages/cli/test/operator-run.test.ts",
-    "evidence/trust/current/coverage-report.json",
-    "evidence/trust/current/coverage-report.md",
-    "evidence/trust/current/manifest.json",
-    "evidence/trust/current/provenance.json",
-    "evidence/trust/current/report.md",
-    "evidence/trust/current/enterprise-report.json",
-    "evidence/trust/current/enterprise-report.md"
-  ],
-  "open_questions": [
-    "Grant evidence/runs/operator-flows/refusal-census.json so I can regenerate it (node --experimental-strip-types packages/cli/src/cli.ts refusal-census --out evidence/runs/operator-flows/refusal-census.json). Exactly one field changes (a recorded line number, 340 -> 408) from the packet-ordered run.ts edit; the census summary is byte-identical, so the coverage report and trust package do not need regenerating after it.",
-    "If coverage-report.json must literally join the `deterministic` list in generate.ts, grant packages/trust/src/verify.ts: its expectedArtifacts literal and the 'exactly twelve required artifacts' message must gain the thirteenth entry, otherwise trust:verify --offline fails by construction. Say whether the current binding (full re-derivation and byte comparison inside verifyEnterpriseSurfaces, which trust:verify calls) is accepted instead."
-  ]
+	"status": "blocked",
+	"summary": "Coverage report emitted and derivation-guarded: coverage-report.{json,md} are derived inside deriveEnterpriseSurfaces from the same supportMatrix, written by writeEnterpriseSurfaces, and re-derived plus compared (JSON canonically, MD byte-for-byte, honesty guard) inside verifyEnterpriseSurfaces, which trust:verify --offline calls. Not in the deterministic core: verify.ts's twelve-artifact assertion is outside my contract. Intervention rule encoded and tested both directions; run fills its report slot; report:coverage added to cli.ts. Eight of nine verify commands green; npm test fails on one line of refusal-census.json (340 -> 408) caused by the required run.ts edit.",
+	"files_changed": [
+		"packages/trust/src/coverage-report.ts",
+		"packages/trust/src/enterprise.ts",
+		"packages/trust/src/generate.ts",
+		"packages/cli/src/cli.ts",
+		"packages/cli/src/operator/run.ts",
+		"packages/trust/test/coverage-report.test.ts",
+		"packages/cli/test/operator-run.test.ts",
+		"evidence/trust/current/coverage-report.json",
+		"evidence/trust/current/coverage-report.md",
+		"evidence/trust/current/manifest.json",
+		"evidence/trust/current/provenance.json",
+		"evidence/trust/current/report.md",
+		"evidence/trust/current/enterprise-report.json",
+		"evidence/trust/current/enterprise-report.md"
+	],
+	"open_questions": [
+		"Grant evidence/runs/operator-flows/refusal-census.json so I can regenerate it (node --experimental-strip-types packages/cli/src/cli.ts refusal-census --out evidence/runs/operator-flows/refusal-census.json). Exactly one field changes (a recorded line number, 340 -> 408) from the packet-ordered run.ts edit; the census summary is byte-identical, so the coverage report and trust package do not need regenerating after it.",
+		"If coverage-report.json must literally join the `deterministic` list in generate.ts, grant packages/trust/src/verify.ts: its expectedArtifacts literal and the 'exactly twelve required artifacts' message must gain the thirteenth entry, otherwise trust:verify --offline fails by construction. Say whether the current binding (full re-derivation and byte comparison inside verifyEnterpriseSurfaces, which trust:verify calls) is accepted instead."
+	]
 }

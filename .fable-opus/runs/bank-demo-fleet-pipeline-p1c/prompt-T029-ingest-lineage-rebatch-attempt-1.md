@@ -11,7 +11,7 @@ Why. Yesterday's batch (T013): 6 unseen apps, 0 proven, all refused at ingest or
 
 - `acquisitionLaneOf` walks UP from the given root to the nearest enclosing `.versionless/work/<id>/baseline`, gated by walking THAT tree and matching the journalled `archiveParity` digest (T023's four gates unchanged: `result === source-bound`, `consentId` present, parity basis present, digest matches).
 - Frontend root by **lineage** across the acquisition root and its immediate subdirectories: exactly one manifest declaring react/next/angular is read; zero or several refuse naming every candidate and what each manifest declared. Record `frontendRootBasis`. Never by position.
-- Identifier from the journal under the same five gates when `package.json` has no `name`, `idReadFrom` naming it *an operator declaration made at acquire time*. Never a directory name.
+- Identifier from the journal under the same five gates when `package.json` has no `name`, `idReadFrom` naming it _an operator declaration made at acquire time_. Never a directory name.
 - Propagate the frontend root from ingest to analyze, era-cell, plan, apply in `packages/cli/src/operator/run.ts` (`--frontend-root` exists at :154,161) and print both roots in the run record.
 - Tests in `operator-ingest.test.ts` (walk-up + gate; lineage read with one/zero/several candidates; id from journal) and `operator-run.test.ts` (both roots printed).
 

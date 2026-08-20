@@ -1,0 +1,9 @@
+{
+	"agentId": "ad79a6f8002bffbdd",
+	"runId": "bank-demo-fleet-pipeline-p2",
+	"unitId": "T009a-pigallery2-13cell-compile",
+	"attempt": 1,
+	"toolUseId": "toolu_013HY3CCHGudrUTw2VyNRr3p",
+	"bindingRoute": "sole",
+	"startedAt": "2026-08-20T05:08:11.308Z"
+}

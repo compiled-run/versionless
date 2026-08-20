@@ -1,0 +1,25 @@
+{
+	"runId": "bank-demo-fleet-pipeline-p2d",
+	"unitId": "T046-u5-thread-cell-runtime",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/bank-demo-fleet-pipeline-p2d/prompt-T046-u5-thread-cell-runtime-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_013sJAG5nkcXAsrXFtECsiCc",
+	"promptId": "c7249053-d65d-4ae4-aa1e-66580610a5dd",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/cli/src/operator/run.ts",
+		"packages/cli/src/operator/install.ts",
+		"packages/cli/src/operator/build.ts",
+		"packages/cli/test/operator-flows.test.ts",
+		"packages/cli/test/operator-install-build.test.ts",
+		"evidence/runs/react-flame-v2-4-0/**",
+		"evidence/runs/witness-synthesized/**",
+		"evidence/runs/operator-flows/refusal-census.json",
+		"evidence/trust/current/**"
+	],
+	"ts": "2026-08-20T11:05:34.480Z",
+	"pendingName": "00001787223934481328-3a57c3a7-T046-u5-thread-cell-runtime.json"
+}

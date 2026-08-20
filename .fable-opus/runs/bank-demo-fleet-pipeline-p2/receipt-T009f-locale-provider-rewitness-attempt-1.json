@@ -1,0 +1,25 @@
+{
+	"status": "completed",
+	"summary": "Added {provide: LOCALE_ID, useValue: 'en'} to 13cell app.module.ts (item 9; LOCALE_ID was already imported). Rebuilt twice byte-identical, hash d2b7b9e2678881e8; only main.js + index.html changed vs T009e. Re-witnessed both lanes live on the era backend, serialized, zero non-loopback. Second defect closed, NO third defect: migrated lane bootstraps, routes to /gallery/, both API calls 200, three tiles, '3 Images / 3 items' - identical to baseline field for field. Published pigallery2-live-witness-3.json with per-lane applicationSignals and both parity flags (signals authoritative). README updated. All verify commands pass including trust:verify --offline.",
+	"files_changed": [
+		"evidence/runs/angular-13cell/pigallery2-live-witness-3.json",
+		"evidence/runs/angular-13cell/README.md",
+		".versionless/work/angular-pigallery2/13cell/frontend/app/app.module.ts",
+		".versionless/work/angular-pigallery2/logs/t009f-migrated-build.sh",
+		".versionless/work/angular-pigallery2/logs/t009f-backend.sh",
+		".versionless/work/angular-pigallery2/logs/t009f-emit-live-witness.cjs",
+		".versionless/work/angular-pigallery2/logs/t009f-plan.json",
+		".versionless/work/angular-pigallery2/logs/t009f-lane-baseline.json",
+		".versionless/work/angular-pigallery2/logs/t009f-lane-migrated.json",
+		".versionless/work/angular-pigallery2/logs/t009f-backend-baseline.log",
+		".versionless/work/angular-pigallery2/logs/t009f-backend-migrated.log",
+		".versionless/work/angular-pigallery2/13cell/logs/t009f-migrated-run1.log",
+		".versionless/work/angular-pigallery2/13cell/logs/t009f-migrated-run2.log",
+		".versionless/work/angular-pigallery2/13cell/logs/t009f-migrated-compare.json",
+		".versionless/work/angular-pigallery2/13cell/t009f-migrated-run1",
+		".versionless/work/angular-pigallery2/13cell/t009f-migrated-run2",
+		".versionless/work/angular-pigallery2/serve/f-baseline",
+		".versionless/work/angular-pigallery2/serve/f-migrated"
+	],
+	"open_questions": []
+}

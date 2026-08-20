@@ -1,11 +1,11 @@
 {
-  "unitId": "T039-provenance-sbom-green",
-  "runId": "bank-demo-fleet-pipeline-p1d",
-  "attempt": 1,
-  "outcome": "blocked",
-  "reason": "Landed all three changes: provenance-equivalence helper + all 11 receipt.provenance compare sites (the other 5 call sites hold no compare line); kind:'file' SBOM coordinate with SHA-256 hash and versionless:coordinate-kind, no purl, no file: string, auditableLockText removed, verify.ts 197 literal derived; notEstablished line added. Fresh ingest under AGENTS-utilities-trust-refresh took the inventory 187->189 (mitt@3.0.1 + vendored witness). Declared vp pack, regenerated. trust:verify valid, freeze composite 27741d9c, proven 11, sealed receipts untouched, lint clean. Blocked: clean-tree gate reads count 225 and npm test still has 4 failures (down from 31).",
-  "agentId": "a6540a6dedaa4bf23",
-  "background": false,
-  "verdictDelivered": true,
-  "ts": "2026-08-19T02:01:45.228Z"
+	"unitId": "T039-provenance-sbom-green",
+	"runId": "bank-demo-fleet-pipeline-p1d",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Landed all three changes: provenance-equivalence helper + all 11 receipt.provenance compare sites (the other 5 call sites hold no compare line); kind:'file' SBOM coordinate with SHA-256 hash and versionless:coordinate-kind, no purl, no file: string, auditableLockText removed, verify.ts 197 literal derived; notEstablished line added. Fresh ingest under AGENTS-utilities-trust-refresh took the inventory 187->189 (mitt@3.0.1 + vendored witness). Declared vp pack, regenerated. trust:verify valid, freeze composite 27741d9c, proven 11, sealed receipts untouched, lint clean. Blocked: clean-tree gate reads count 225 and npm test still has 4 failures (down from 31).",
+	"agentId": "a6540a6dedaa4bf23",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-19T02:01:45.228Z"
 }

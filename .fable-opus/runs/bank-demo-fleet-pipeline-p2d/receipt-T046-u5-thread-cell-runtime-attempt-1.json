@@ -1,0 +1,14 @@
+{
+	"status": "completed",
+	"summary": "Threaded the era-cell provision into install and build. install.ts gained LaneRuntimePlan/LaneRuntime, planLaneRuntime (provisioned only when <location>/bin/node exists on disk), laneRuntimeEnvironment (returns the identical object on the host path), and readLaneRuntime (measures node -v through the child's own environment). run.ts captures the era-cell record and passes the plan to both stages; both record a runtime block on their rows. Six new shim-based tests. Census relined (196 sites, byStage.build 9, no new refusal, no trust regen needed). Fresh flame re-run: proven 9/9, count 0, build-vite/24, host runtime now explicitly recorded. Suite 2786 pass; all eight verify commands green.",
+	"files_changed": [
+		"packages/cli/src/operator/run.ts",
+		"packages/cli/src/operator/install.ts",
+		"packages/cli/src/operator/build.ts",
+		"packages/cli/test/operator-install-build.test.ts",
+		"evidence/runs/operator-flows/refusal-census.json",
+		"evidence/runs/react-flame-v2-4-0/run-record.json",
+		"evidence/runs/react-flame-v2-4-0/run-record.json.interventions.json"
+	],
+	"open_questions": []
+}

@@ -1,0 +1,12 @@
+{
+	"status": "blocked",
+	"summary": "Angular lane kind implemented and tested in build.ts: lane-kind dispatch (angular.json first, Vite path untouched), Angular branch reading outputPath from the single build target, four new named refusals, census regenerated (sites 196, byStage.build 9, byte-identical). Suite 2776 pass; flame row, composite and frozen subtrees untouched. Blocked on verification: coverage-report.json embeds the census summary and byCode (coverage-report.ts:477-482), so the 4 new codes make the published coverage pair stale, failing trust:verify and 4 tests. Regenerating it needs evidence/trust/current/coverage-report.json+.md (outside contract) and trust:generate needs VERSIONLESS_NETWORK_MODE=offline (forbidden).",
+	"files_changed": [
+		"packages/cli/src/operator/build.ts",
+		"packages/cli/test/operator-install-build.test.ts",
+		"evidence/runs/operator-flows/refusal-census.json"
+	],
+	"open_questions": [
+		"Adding any refusal code invalidates evidence/trust/current/coverage-report.json/.md, which tally the census. May the file contract be extended to those two paths plus permission to run `VERSIONLESS_NETWORK_MODE=offline node --experimental-strip-types packages/cli/src/cli.ts trust:generate --policy trust/policy.json --output evidence/trust/current --offline`? (`report:coverage --offline` cannot do it: readSupportedMatrix verifies the stale pair before writing.) Only refusalCensus.totals, refusalCensus.byCode and integrity.canonicalDigest derive from the census, so totals {23,11,2,6,4} and the freeze composite are unaffected — but should the blast radius of trust:generate on the other 16 files in evidence/trust/current be measured by an owner first?"
+	]
+}

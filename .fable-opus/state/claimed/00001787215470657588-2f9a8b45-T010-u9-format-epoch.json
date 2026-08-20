@@ -1,0 +1,15 @@
+{
+	"runId": "bank-demo-fleet-pipeline-p2c",
+	"unitId": "T010-u9-format-epoch",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/bank-demo-fleet-pipeline-p2c/prompt-T010-u9-format-epoch-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01CVAzasbuywbQosKK4sySUH",
+	"promptId": "a4d95c64-05be-43fb-94a6-99cf33b762b4",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": ["packages/**", "evidence/runs/operator-flows/refusal-census.json"],
+	"ts": "2026-08-20T08:44:30.656Z",
+	"pendingName": "00001787215470657588-2f9a8b45-T010-u9-format-epoch.json"
+}

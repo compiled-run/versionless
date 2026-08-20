@@ -1,0 +1,14 @@
+{
+	"status": "blocked",
+	"summary": "Published ANGULAR_13_BROWSER_CELL + a narrow 11-entry ANGULAR_13_ECOSYSTEM_PACKAGES (every fact traced to evidence/runs/angular-13cell/pigallery2-compile.json), deleted NGCC_ANGULAR_13_CELL so DESCRIBED_CELLS is purely derived, and updated both test files. Green: DESCRIBED-CELLS-UNIQUE, trust:verify valid f61abb7a, SEALED-16-PATH-BYTE-IDENTICAL, FROZEN-DELTA-EXACTLY-TWO-FILES, and both u2 derived blocks pass unedited. Blocked on one u1-authored pin in operator-flows.test.ts, a file my contract forbids editing. Repo-wide the census byte-identity test also fails on shifted line numbers, which sizing 3.3 sequences to u9/u11.",
+	"files_changed": [
+		"packages/frameworks/angular/src/angular-target-cell.ts",
+		"packages/frameworks/angular/test/angular-target-cell.test.ts",
+		"packages/cli/src/operator/era-cell.ts",
+		"packages/cli/test/operator-era-cell.test.ts"
+	],
+	"open_questions": [
+		"operator-flows.test.ts:356 ('refuses a declared cell no frozen adapter publishes, rather than falling back', authored by u1 in f032aec) hard-codes angular-13.4.0 as the unpublished identifier and now fails with exitCode 0 instead of 2. Publishing the cell is what falsifies it, and u2 (7367e2e) already superseded it with a derived block at operator-flows.test.ts:429 that loops over NEVER_PUBLISHED_CELL plus the derived described-but-unplannable gap and passes. May a follow-up unit delete that u1 test (coverage is fully retained by the u2 derived block), or should it be re-pointed at NEVER_PUBLISHED_CELL? My packet forbids touching operator-flows.test.ts.",
+		"packages/cli/src/fixture/angular-pigallery2-migration-record.ts:693 asserts in prose that 'ANGULAR_TARGET_CELLS carries exactly one entry'. That is false as of this unit. No test pins it, but it should be corrected before that record is regenerated. Which unit owns it?"
+	]
+}

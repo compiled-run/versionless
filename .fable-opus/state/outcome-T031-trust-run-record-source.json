@@ -1,11 +1,11 @@
 {
-  "unitId": "T031-trust-run-record-source",
-  "runId": "bank-demo-fleet-pipeline-p1c",
-  "attempt": 1,
-  "outcome": "blocked",
-  "reason": "Did not edit. Packet's premise is false: the flame run record's ingest pin carries repository:null and ref:null - both exist only in the consent journal evidence/ingests/react-flame-v2-4-0/source.json, which the run record names in prose but never restates. Per the packet's own rule the row must then be refused, leaving proven=10 and failing the verify block's proven=11 assertion. Separately, the ingest record's id is 'client' (from client/package.json#name), not the application id; the honest source is CorpusRunRecordReading.id, which coverage-report.ts already publishes. Cleared as non-blockers: install.lockfile-absent is stale (absent from current source; install ran with a lockfile, exit 0, 117 packages), and all nine stages ran with interventionCount 0.",
-  "agentId": "abf6ca9aba5e84db2",
-  "background": false,
-  "verdictDelivered": true,
-  "ts": "2026-08-17T23:59:25.278Z"
+	"unitId": "T031-trust-run-record-source",
+	"runId": "bank-demo-fleet-pipeline-p1c",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Did not edit. Packet's premise is false: the flame run record's ingest pin carries repository:null and ref:null - both exist only in the consent journal evidence/ingests/react-flame-v2-4-0/source.json, which the run record names in prose but never restates. Per the packet's own rule the row must then be refused, leaving proven=10 and failing the verify block's proven=11 assertion. Separately, the ingest record's id is 'client' (from client/package.json#name), not the application id; the honest source is CorpusRunRecordReading.id, which coverage-report.ts already publishes. Cleared as non-blockers: install.lockfile-absent is stale (absent from current source; install ran with a lockfile, exit 0, 117 packages), and all nine stages ran with interventionCount 0.",
+	"agentId": "abf6ca9aba5e84db2",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-17T23:59:25.278Z"
 }

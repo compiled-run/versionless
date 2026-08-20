@@ -1,0 +1,11 @@
+{
+	"unitId": "T012-b1-angular-batch",
+	"runId": "bank-demo-fleet-pipeline-p2c",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Enumerated every Angular candidate on disk (2 attemptable, 6 not: empty staging shells, tarball-only fuxa, AngularJS-era phonecat, already-sealed apps), recorded the enumeration before running. Ran two batches against the new angular-13.4.0 cell with the three install policies, interventionCount 0 throughout, --publish chain green. angular2-hn: refused install.lockfile-foreign at 6/9 stages, with era-cell recording cell angular-13.4.0 declared, runtime 16.20.2 — first affirmative 13-cell evidence. angular-kubernetes-dashboard: refused ingest.revision-not-determined at 1/9; revision read and sha256-verified, re-run not-attempted-this-unit on budget. Coverage 21->23 apps, proven 11->11, refused 5->7. Angular 4/4 and react 6/6 unchanged, composite 140ce86e stable, census 192. All 9 verify commands pass.",
+	"agentId": "a228adb22646669f4",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-20T09:23:22.038Z"
+}

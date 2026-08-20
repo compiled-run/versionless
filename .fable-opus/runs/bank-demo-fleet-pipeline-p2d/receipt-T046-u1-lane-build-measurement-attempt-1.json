@@ -1,0 +1,12 @@
+{
+	"status": "completed",
+	"summary": "Measured npm run build in the angular2-hn lane under host Node v24.15.0 and the provisioned v16.20.2. Both fail at exit 1 within ~1s with byte-identical diagnostics: 'Schema validation failed with the following errors: / Data path \"/polyfills\" must be string.' Confirms O1 by measurement — the 13.3.11 devkit rejects the array the frozen adapter wrote; u2 and risk R1 stand. O2 is unresolvable here: the validator precedes the compiler, so no toolchain diagnostic was reached and O2 is blocked behind u2. No network reach, no lane mutation, no dist created. All four verify commands pass.",
+	"files_changed": [
+		"evidence/spikes/t046-angular-lane-build/build-host-node.log",
+		"evidence/spikes/t046-angular-lane-build/build-node16.log",
+		"evidence/spikes/t046-angular-lane-build/verdict.json"
+	],
+	"open_questions": [
+		"O2 (does angular2-hn build green under 16.20.2 once the schema is valid) cannot be answered without modifying the lane's angular.json, which this packet forbids. It should be re-cut as a post-u2 measurement, or as a pre-u2 spike against a throwaway copy of the lane if the board wants the answer before authorizing the frozen-subtree reopen."
+	]
+}

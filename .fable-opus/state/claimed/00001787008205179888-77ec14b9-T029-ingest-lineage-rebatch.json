@@ -1,22 +1,22 @@
 {
-  "runId": "bank-demo-fleet-pipeline-p1c",
-  "unitId": "T029-ingest-lineage-rebatch",
-  "attempt": 1,
-  "promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/bank-demo-fleet-pipeline-p1c/prompt-T029-ingest-lineage-rebatch-attempt-1.md",
-  "subagentType": "opus-worker",
-  "toolUseId": "toolu_015HbDCEMWJ3Wk6euJA9cPzf",
-  "promptId": "f40db251-d4ab-408e-b317-b49b815800b4",
-  "background": false,
-  "parallel": false,
-  "effort": null,
-  "contract": [
-    "packages/cli/src/operator/**",
-    "packages/cli/src/cli.ts",
-    "packages/cli/test/**",
-    "evidence/runs/**",
-    "evidence/ingests/**",
-    "evidence/trust/current/**"
-  ],
-  "ts": "2026-08-17T23:10:05.178Z",
-  "pendingName": "00001787008205179888-77ec14b9-T029-ingest-lineage-rebatch.json"
+	"runId": "bank-demo-fleet-pipeline-p1c",
+	"unitId": "T029-ingest-lineage-rebatch",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/bank-demo-fleet-pipeline-p1c/prompt-T029-ingest-lineage-rebatch-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_015HbDCEMWJ3Wk6euJA9cPzf",
+	"promptId": "f40db251-d4ab-408e-b317-b49b815800b4",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/cli/src/operator/**",
+		"packages/cli/src/cli.ts",
+		"packages/cli/test/**",
+		"evidence/runs/**",
+		"evidence/ingests/**",
+		"evidence/trust/current/**"
+	],
+	"ts": "2026-08-17T23:10:05.178Z",
+	"pendingName": "00001787008205179888-77ec14b9-T029-ingest-lineage-rebatch.json"
 }

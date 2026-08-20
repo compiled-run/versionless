@@ -1,0 +1,11 @@
+{
+	"unitId": "T009b-pigallery2-lane-pair",
+	"runId": "bank-demo-fleet-pipeline-p2",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Built the pigallery2 lane pair. Baseline (Angular 8.1.2/Node 10.24.1 x64 under Rosetta) and migrated (Angular 13.4.0/Node 16.20.2 arm64) each built twice to production; both byte-identical (13 files; 2806878 vs 2494670 bytes). No era blocker fired. ngcc ran on build 1 and skipped on build 2 via the .cli-ngcc run-hash lock (11613ms->3637ms). Published pigallery2-lanes.json (schema versionless.angular-13cell-lanes.v1) with per-lane toolchains, verbatim commands, inventories, a seven-item migration delta, and notEstablished; README updated. Consented fetch: bootstrap@4.3.1, open-iconic@1.1.1, raw-loader@4.0.2. All five verify commands pass.",
+	"agentId": "a7e217f3fb752ad3a",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-20T05:29:42.032Z"
+}

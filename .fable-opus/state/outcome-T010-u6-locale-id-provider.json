@@ -1,0 +1,11 @@
+{
+	"unitId": "T010-u6-locale-id-provider",
+	"runId": "bank-demo-fleet-pipeline-p2b",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Delivered locale-id-provider.ts (supplied-reading-only LOCALE_ID provider translating the era build's --i18n-locale, cell-gated, idempotent by module-wide provide:LOCALE_ID detection, written first in providers so it cannot overrule an existing provider), its 19 passing tests, the index.ts barrel line, and a regenerated census (sites unchanged at 192; filesScanned 84->85; also absorbed stale era-cell.ts line drift). Sealed path unmoved, census byte-identical, trust:verify valid. Blocked: the barrel line makes packages/core/test/capability-coverage.test.ts red because every barrel module needs an entry in packages/core/src/receipts/capability-coverage.ts, which is outside my contract.",
+	"agentId": "a22bed4846a86bb59",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-20T08:15:00.127Z"
+}

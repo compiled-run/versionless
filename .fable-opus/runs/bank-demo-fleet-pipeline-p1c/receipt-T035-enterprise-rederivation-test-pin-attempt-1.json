@@ -1,9 +1,9 @@
 {
-  "status": "completed",
-  "summary": "Fixed the third re-derivation site: enterprise-report-run.ts now imports readRunRecords from ../../../trust/src/coverage-report.ts and passes runRecords into analyzeCorpusConformance, matching verify.ts:254 and generate.ts:1925. report:enterprise --offline --verify-only now passes at digest e8769266. Updated the corpus-conformance test pin from 12 to 13 with a comment naming 12 sealed + 1 run-record (react-flame-v2-4-0). Whole chain green: lint 0 errors, 2706 passed + 2 skipped (2708), trust/receipt/corpus/coverage/enterprise/refusal-census all pass, freeze composite stable at 27741d9c, FREEZE-INTACT, COVERAGE proven=11 VERIFIED, matrix 6/6 and 4/4. Note: npm run corpus:verify is scripted without VERSIONLESS_NETWORK_MODE=offline, so the env must supply it; pre-existing, unrelated to these lines.",
-  "files_changed": [
-    "packages/cli/src/enterprise/enterprise-report-run.ts",
-    "packages/cli/test/corpus-conformance.test.ts"
-  ],
-  "open_questions": []
+	"status": "completed",
+	"summary": "Fixed the third re-derivation site: enterprise-report-run.ts now imports readRunRecords from ../../../trust/src/coverage-report.ts and passes runRecords into analyzeCorpusConformance, matching verify.ts:254 and generate.ts:1925. report:enterprise --offline --verify-only now passes at digest e8769266. Updated the corpus-conformance test pin from 12 to 13 with a comment naming 12 sealed + 1 run-record (react-flame-v2-4-0). Whole chain green: lint 0 errors, 2706 passed + 2 skipped (2708), trust/receipt/corpus/coverage/enterprise/refusal-census all pass, freeze composite stable at 27741d9c, FREEZE-INTACT, COVERAGE proven=11 VERIFIED, matrix 6/6 and 4/4. Note: npm run corpus:verify is scripted without VERSIONLESS_NETWORK_MODE=offline, so the env must supply it; pre-existing, unrelated to these lines.",
+	"files_changed": [
+		"packages/cli/src/enterprise/enterprise-report-run.ts",
+		"packages/cli/test/corpus-conformance.test.ts"
+	],
+	"open_questions": []
 }

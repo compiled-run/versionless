@@ -1,0 +1,11 @@
+{
+	"unitId": "T010-u1-cell-seam",
+	"runId": "bank-demo-fleet-pipeline-p2b",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Threaded --cell from the CLI into the plan and analyze stages. plan.ts gains resolveAngularTargetCell(): default 16 when undeclared, resolution against ANGULAR_TARGET_CELLS otherwise, and refusal plan.angular.declared-cell-not-published (stage plan, exit 2) naming the declared and published ids for anything unpublished. planApplication resolves once and passes the cell to both analyzeApplication and composeAngularPlan. flows.ts adds --cell to plan's flag table, threads cellId, updates plan/migrate/run help; run.ts adds --cell to RUN_STAGE_FLAGS.plan and cellId to RunDeclarations.angular. refusals.ts unchanged: no registry exists. All four verify commands pass; angular-13.4.0 correctly refuses.",
+	"agentId": "a1b307752356eba1c",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-20T07:02:34.488Z"
+}

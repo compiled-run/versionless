@@ -1,9 +1,9 @@
 {
-  "agentId": "a2293320a6a0eb400",
-  "runId": "bank-demo-fleet-pipeline-p1d",
-  "unitId": "T040-counter-realpath-tests-green",
-  "attempt": 1,
-  "toolUseId": "toolu_01RwFkWjQcmGJeyMMUn48F8R",
-  "bindingRoute": "sole",
-  "startedAt": "2026-08-19T02:06:41.257Z"
+	"agentId": "a2293320a6a0eb400",
+	"runId": "bank-demo-fleet-pipeline-p1d",
+	"unitId": "T040-counter-realpath-tests-green",
+	"attempt": 1,
+	"toolUseId": "toolu_01RwFkWjQcmGJeyMMUn48F8R",
+	"bindingRoute": "sole",
+	"startedAt": "2026-08-19T02:06:41.257Z"
 }

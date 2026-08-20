@@ -1,9 +1,9 @@
 {
-  "agentId": "adda77212fd648ca4",
-  "runId": "bank-demo-fleet-pipeline-p1b",
-  "unitId": "T021a-batch-runner-ordering",
-  "attempt": 1,
-  "toolUseId": "toolu_01QvR9tUib4SU4KXkQAvp4JR",
-  "bindingRoute": "sole",
-  "startedAt": "2026-08-17T21:05:56.812Z"
+	"agentId": "adda77212fd648ca4",
+	"runId": "bank-demo-fleet-pipeline-p1b",
+	"unitId": "T021a-batch-runner-ordering",
+	"attempt": 1,
+	"toolUseId": "toolu_01QvR9tUib4SU4KXkQAvp4JR",
+	"bindingRoute": "sole",
+	"startedAt": "2026-08-17T21:05:56.812Z"
 }

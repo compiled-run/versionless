@@ -1,11 +1,11 @@
 {
-  "unitId": "T019-synthesized-witness-default",
-  "runId": "bank-demo-fleet-pipeline",
-  "attempt": 1,
-  "outcome": "failed",
-  "reason": "worker reported status \"partial\": Delivered driver selection with recorded reason and --journeys synthesized override, a serialized synthesized-replay path composing executeRun (one lane, one journey per box, routes reached only by clicking links), an additive witness-real-app record whose replayability ratio is required and recomputed by its parser, the --journeys CLI path, and an opt-in --witness migrate stage ordered after build. Tests (a) and (b) pass plus a hermetic two-page loopback crawl-synthesis test. NOT done: no browser-backed replay was executed, so evidence/runs/witness-synthesized is empty and test (c)'s Chromium leg is absent. All six verify commands pass; refusal census regenerated after line shift.",
-  "agentId": "a486785877e382322",
-  "background": false,
-  "verdictDelivered": true,
-  "ts": "2026-08-17T18:33:28.553Z"
+	"unitId": "T019-synthesized-witness-default",
+	"runId": "bank-demo-fleet-pipeline",
+	"attempt": 1,
+	"outcome": "failed",
+	"reason": "worker reported status \"partial\": Delivered driver selection with recorded reason and --journeys synthesized override, a serialized synthesized-replay path composing executeRun (one lane, one journey per box, routes reached only by clicking links), an additive witness-real-app record whose replayability ratio is required and recomputed by its parser, the --journeys CLI path, and an opt-in --witness migrate stage ordered after build. Tests (a) and (b) pass plus a hermetic two-page loopback crawl-synthesis test. NOT done: no browser-backed replay was executed, so evidence/runs/witness-synthesized is empty and test (c)'s Chromium leg is absent. All six verify commands pass; refusal census regenerated after line shift.",
+	"agentId": "a486785877e382322",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-17T18:33:28.553Z"
 }

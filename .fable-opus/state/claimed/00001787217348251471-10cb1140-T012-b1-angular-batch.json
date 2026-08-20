@@ -1,0 +1,19 @@
+{
+	"runId": "bank-demo-fleet-pipeline-p2c",
+	"unitId": "T012-b1-angular-batch",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/bank-demo-fleet-pipeline-p2c/prompt-T012-b1-angular-batch-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_015jDGHBNyUkCkRTpWbJnvEs",
+	"promptId": "f6942b18-856a-4f1e-8a37-67cf7ec7ce3c",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"evidence/runs/**",
+		"evidence/trust/current/**",
+		"docs/goals/bank-demo-fleet-pipeline/notes/T012-angular-batch.md"
+	],
+	"ts": "2026-08-20T09:15:48.250Z",
+	"pendingName": "00001787217348251471-10cb1140-T012-b1-angular-batch.json"
+}

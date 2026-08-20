@@ -1,0 +1,48 @@
+--- pnpm exec vp fmt --check packages (exit 0) ---
+Checking formatting...
+
+All matched files use the correct format.
+Finished in 154ms on 626 files using 18 threads.
+
+
+--- pnpm exec vp test --project node (exit 0) ---
+ RUN  /Users/jacksm5pro/dev/open-source/versionless
+
+{"preflight":"pass"}
+
+ Test Files  260 passed (260)
+      Tests  2768 passed | 2 skipped (2770)
+   Start at  03:50:34
+   Duration  149.76s (transform 10.43s, setup 0ms, import 34.70s, tests 256.72s, environment 13ms)
+
+
+
+--- node -e "const b=require('./evidence/runs/operator-flows/byte-identity.json').angular;if(b.identical!==true||!b.operatorDigest.startsWith('a044d716'))throw new Error('sealed digest moved under fmt: '+b.operatorDigest.slice(0,8));console.log('SEALED-DIGEST-UNMOVED-BY-FMT')" (exit 0) ---
+SEALED-DIGEST-UNMOVED-BY-FMT
+
+
+--- node --experimental-strip-types packages/cli/src/cli.ts refusal-census --verify-only --json 2>/dev/null | node -e "let b='';process.stdin.on('data',d=>b+=d);process.stdin.on('end',()=>{const d=JSON.parse(b);if(!d.matchesPublished)throw new Error('census drifted');console.log('CENSUS-BYTE-IDENTICAL sites='+d.census.summary.sites)})" (exit 0) ---
+CENSUS-BYTE-IDENTICAL sites=192
+
+
+--- npm run trust:verify -- --offline (exit 0) ---
+{"valid":true,"digest":"05d9aca5e427e0ab104f0fb74a9c110b2b6edab7a7d5fc5bf54751a49699a6b0","deterministicCore":"6eae139a6ce02c91bb027a1d45d944f16f5add49e8c2f16754a44ef9de1aa185","artifacts":12}
+
+npm warn Unknown project config "store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "virtual-store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "state-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm notice run versionless-workspace@0.0.0 trust:verify
+npm notice run node --experimental-strip-types packages/cli/src/cli.ts trust:verify --offline
+
+--- node --experimental-strip-types packages/cli/src/cli.ts supported-matrix --offline 2>&1 | grep -q "react: 6 counted of 6" && node --experimental-strip-types packages/cli/src/cli.ts supported-matrix --offline 2>&1 | grep -q "angular: 4 counted of 4" && echo MATRIX-CELLS-UNCHANGED (exit 0) ---
+MATRIX-CELLS-UNCHANGED
+
+
+--- node -e "const f=require('./evidence/trust/current/adapter-freeze.json');if(!String(f.freeze.composite).startsWith('27741d9c'))throw new Error('composite moved');console.log('COMPOSITE-STILL-27741d9c')" (exit 0) ---
+COMPOSITE-STILL-27741d9c
+
+
+--- git diff --quiet HEAD -- packages/core/src/migrations packages/core/src/bundlers packages/core/src/analysis && echo CORE-FROZEN-UNTOUCHED (exit 0) ---
+CORE-FROZEN-UNTOUCHED
+
+

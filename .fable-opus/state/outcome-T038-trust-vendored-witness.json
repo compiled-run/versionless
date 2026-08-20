@@ -1,11 +1,11 @@
 {
-  "unitId": "T038-trust-vendored-witness",
-  "runId": "bank-demo-fleet-pipeline-p1d",
-  "attempt": 1,
-  "outcome": "blocked",
-  "reason": "Ran the packet's decisive compare FIRST: sealed receipts' declaration (4e249b3c) and runtime (d1fd099b) digests, version 0.8.0 and commit 83b86de all EQUAL the vendored tarball's. Only packageSha256 differs (d166f031 vs 920905ea) because pnpm pack rewrites package.json, so it is a recorded fact, not compared. YES branch holds; no sealed driver needs re-running. But the widening cannot be written: the compare is an inlined canonicalize equality in packages/cli/src/witness/*-run.ts (13 sealed drivers + real-app-run.ts, cli.ts, fixture/), not packages/cli/src/operator/ as the packet states, and only provenance.ts/browser.ts are in contract. Made no net changes; restored schema.ts from backup.",
-  "agentId": "ab5c1a1bc427a3842",
-  "background": false,
-  "verdictDelivered": true,
-  "ts": "2026-08-19T01:40:31.661Z"
+	"unitId": "T038-trust-vendored-witness",
+	"runId": "bank-demo-fleet-pipeline-p1d",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Ran the packet's decisive compare FIRST: sealed receipts' declaration (4e249b3c) and runtime (d1fd099b) digests, version 0.8.0 and commit 83b86de all EQUAL the vendored tarball's. Only packageSha256 differs (d166f031 vs 920905ea) because pnpm pack rewrites package.json, so it is a recorded fact, not compared. YES branch holds; no sealed driver needs re-running. But the widening cannot be written: the compare is an inlined canonicalize equality in packages/cli/src/witness/*-run.ts (13 sealed drivers + real-app-run.ts, cli.ts, fixture/), not packages/cli/src/operator/ as the packet states, and only provenance.ts/browser.ts are in contract. Made no net changes; restored schema.ts from backup.",
+	"agentId": "ab5c1a1bc427a3842",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-19T01:40:31.661Z"
 }

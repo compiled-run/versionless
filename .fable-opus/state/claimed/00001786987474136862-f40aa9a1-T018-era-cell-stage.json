@@ -1,22 +1,22 @@
 {
-  "runId": "bank-demo-fleet-pipeline",
-  "unitId": "T018-era-cell-stage",
-  "attempt": 1,
-  "promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/bank-demo-fleet-pipeline/prompt-T018-era-cell-stage-attempt-1.md",
-  "subagentType": "opus-worker",
-  "toolUseId": "toolu_011kF7vENuvgCauYGJhHCfqa",
-  "promptId": "4fb8750b-4f91-49b0-8b83-5aa683c4751d",
-  "background": false,
-  "parallel": false,
-  "effort": null,
-  "contract": [
-    "packages/cli/src/operator/**",
-    "packages/cli/src/cli.ts",
-    "packages/cli/test/operator-era-cell.test.ts",
-    "packages/cli/test/operator-flows.test.ts",
-    "packages/cli/test/operator-refusal-census.test.ts",
-    "evidence/runs/operator-flows/**"
-  ],
-  "ts": "2026-08-17T17:24:34.135Z",
-  "pendingName": "00001786987474136862-f40aa9a1-T018-era-cell-stage.json"
+	"runId": "bank-demo-fleet-pipeline",
+	"unitId": "T018-era-cell-stage",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/bank-demo-fleet-pipeline/prompt-T018-era-cell-stage-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_011kF7vENuvgCauYGJhHCfqa",
+	"promptId": "4fb8750b-4f91-49b0-8b83-5aa683c4751d",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/cli/src/operator/**",
+		"packages/cli/src/cli.ts",
+		"packages/cli/test/operator-era-cell.test.ts",
+		"packages/cli/test/operator-flows.test.ts",
+		"packages/cli/test/operator-refusal-census.test.ts",
+		"evidence/runs/operator-flows/**"
+	],
+	"ts": "2026-08-17T17:24:34.135Z",
+	"pendingName": "00001786987474136862-f40aa9a1-T018-era-cell-stage.json"
 }

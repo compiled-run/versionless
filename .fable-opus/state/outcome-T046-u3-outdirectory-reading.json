@@ -1,0 +1,11 @@
+{
+	"unitId": "T046-u3-outdirectory-reading",
+	"runId": "bank-demo-fleet-pipeline-p2d",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Extracted BuildPlan.outDirectory into a returned reading: new private viteLaneOutDirectory() holds the unchanged build.configuration-absent gate and returns the imported LANE_BUILD_DIRECTORY; plan/record shape, gate order and all refusal strings unchanged; lane.ts untouched. Added a test that runs a lane build end to end and asserts plan and record both carry the constant by symbol. Regenerated the census (line moves only, sites=192, byStage.build=5). Fresh react-flame re-run: proven 9/9, interventions 0, build row byte-identical (build-vite, 24). Unrelated pre-existing staleness surfaced in the regenerated record: install policy field, era-cell runtime list, witness digest 67299c2e->50b1e155 (port removed from journey name). Full suite, trust, coverage, matrix, composite all green.",
+	"agentId": "af31f37210df30437",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-20T10:39:23.964Z"
+}

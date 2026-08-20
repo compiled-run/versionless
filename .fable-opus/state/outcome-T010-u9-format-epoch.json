@@ -1,0 +1,11 @@
+{
+	"unitId": "T010-u9-format-epoch",
+	"runId": "bank-demo-fleet-pipeline-p2c",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Format epoch executed: 263 non-canonical packages/ files at start (angular 75, react 8, core migrations/bundlers/analysis 0/0/0), reformatted via `vp fmt packages` with zero hand edits, then regenerated the refusal census. Finding: the formatter is not idempotent — angular-target-cell.ts needed a second pass (signature line-break only); fmt --check is clean after it. Form-only proof holds: node suite 2768 passed, sealed digest a044d716 unmoved, census byte-identical at 192 sites, trust:verify valid:true, matrix 6/6 and 4/4, coverage {21,11,2,5,3}, composite 27741d9c, and the three core frozen subtrees took zero fmt changes.",
+	"agentId": "a6342a47ca1aa6747",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-20T08:53:06.874Z"
+}

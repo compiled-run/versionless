@@ -12,6 +12,7 @@ Do:
 **(a)** `verify.ts:241` — pass `runRecords` exactly as `generate.ts:1925` does (`await readRunRecords(root)`; add the import from `./coverage-report.ts` mirroring generate's). `cli.ts:268` — same, with `rootDir` and `runRecords`. One line + one import each. Do not invent a second read path.
 
 **(b)** Write the tests T033 ran out of budget for:
+
 - `packages/cli/test/operator-ingest.test.ts`: a journal-adopted pin carries `repository`, `ref`, `commitSha` with per-field basis (`repositoryReadFrom` / `refReadFrom` / `commitShaReadFrom`); declared `--repository`/`--ref` override the journal; a journal failing any of the four gates adopts none of the three.
 - `packages/core/test/**` or `packages/trust/test/**`: `runRecordSource()` derives `{repository, ref, revision, license, licenseSha256, basis, basisPath}` from a run record alone, and refuses by named field (`run-record-states-no-source:<field>`) when one is missing; and a run-record row round-trips `generate → verify` (emitted conformance equals re-derived when both are given the same run records).
 

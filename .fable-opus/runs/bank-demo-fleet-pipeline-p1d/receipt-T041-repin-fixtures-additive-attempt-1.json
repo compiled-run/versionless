@@ -1,10 +1,10 @@
 {
-  "status": "completed",
-  "summary": "Recomputed all five digests locally before pinning; every one matched the packet. Replaced the single-state rootPackageSha256 in the fuxa fixture with a comment naming the @async/witness vendoring. Widened the kbg fixture's ambient-lock admission from two named states to three: the old current (ae8c76d3, 67_396) is preserved as vendoringPredecessor with a comment naming t631/t633-terminal.json, and the new current (a05cd6c6, 68_172) plus its two recomputed cache-key candidates were added. Mirrored the same three values in the test. Full chain green: lint 0 errors, 2708 passed / 2 skipped, trust valid at a99892f8, freeze 27741d9c stable, proven=11, sealed evidence untouched.",
-  "files_changed": [
-    "packages/cli/src/fixture/angular-fuxa-template-compiler-run.ts",
-    "packages/cli/src/fixture/next-killedbygoogle-run.ts",
-    "packages/cli/test/next-killedbygoogle-run.test.ts"
-  ],
-  "open_questions": []
+	"status": "completed",
+	"summary": "Recomputed all five digests locally before pinning; every one matched the packet. Replaced the single-state rootPackageSha256 in the fuxa fixture with a comment naming the @async/witness vendoring. Widened the kbg fixture's ambient-lock admission from two named states to three: the old current (ae8c76d3, 67_396) is preserved as vendoringPredecessor with a comment naming t631/t633-terminal.json, and the new current (a05cd6c6, 68_172) plus its two recomputed cache-key candidates were added. Mirrored the same three values in the test. Full chain green: lint 0 errors, 2708 passed / 2 skipped, trust valid at a99892f8, freeze 27741d9c stable, proven=11, sealed evidence untouched.",
+	"files_changed": [
+		"packages/cli/src/fixture/angular-fuxa-template-compiler-run.ts",
+		"packages/cli/src/fixture/next-killedbygoogle-run.ts",
+		"packages/cli/test/next-killedbygoogle-run.test.ts"
+	],
+	"open_questions": []
 }

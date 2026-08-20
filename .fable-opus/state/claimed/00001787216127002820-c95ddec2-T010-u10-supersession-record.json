@@ -1,0 +1,21 @@
+{
+	"runId": "bank-demo-fleet-pipeline-p2c",
+	"unitId": "T010-u10-supersession-record",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/bank-demo-fleet-pipeline-p2c/prompt-T010-u10-supersession-record-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01EuUSg17w2C2XhqhCeEteMu",
+	"promptId": "6306e423-e6e0-480e-b3f6-13298faefc8b",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/trust/src/freeze.ts",
+		"packages/trust/test/trust-package.test.ts",
+		"evidence/trust/current/**",
+		"evidence/runs/operator-flows/refusal-census.json",
+		"evidence/runs/operator-flows/byte-identity.json"
+	],
+	"ts": "2026-08-20T08:55:27.001Z",
+	"pendingName": "00001787216127002820-c95ddec2-T010-u10-supersession-record.json"
+}

@@ -1,11 +1,11 @@
 {
-  "unitId": "T035-enterprise-rederivation-test-pin",
-  "runId": "bank-demo-fleet-pipeline-p1c",
-  "attempt": 1,
-  "outcome": "failed",
-  "reason": "verify failed: npm run corpus:verify (exit 1)",
-  "agentId": "a633fa1d7144f837e",
-  "background": false,
-  "verdictDelivered": true,
-  "ts": "2026-08-18T00:34:51.918Z"
+	"unitId": "T035-enterprise-rederivation-test-pin",
+	"runId": "bank-demo-fleet-pipeline-p1c",
+	"attempt": 1,
+	"outcome": "failed",
+	"reason": "verify failed: npm run corpus:verify (exit 1)",
+	"agentId": "a633fa1d7144f837e",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-18T00:34:51.918Z"
 }

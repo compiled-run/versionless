@@ -1,9 +1,9 @@
 {
-  "agentId": "a757383bdb1cea135",
-  "runId": "bank-demo-fleet-pipeline",
-  "unitId": "T015-coverage-report",
-  "attempt": 1,
-  "toolUseId": "toolu_01LoMrNwjQAYBhr5GdMVDHbu",
-  "bindingRoute": "sole",
-  "startedAt": "2026-08-17T19:09:42.723Z"
+	"agentId": "a757383bdb1cea135",
+	"runId": "bank-demo-fleet-pipeline",
+	"unitId": "T015-coverage-report",
+	"attempt": 1,
+	"toolUseId": "toolu_01LoMrNwjQAYBhr5GdMVDHbu",
+	"bindingRoute": "sole",
+	"startedAt": "2026-08-17T19:09:42.723Z"
 }

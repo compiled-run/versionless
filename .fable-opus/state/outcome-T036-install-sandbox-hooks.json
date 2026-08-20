@@ -1,11 +1,11 @@
 {
-  "unitId": "T036-install-sandbox-hooks",
-  "runId": "bank-demo-fleet-pipeline-p1d",
-  "attempt": 1,
-  "outcome": "completed",
-  "reason": "Sandboxed the install child (lane-owned HOME/XDG/npm dirs, stripped home- and repo-naming env, lane cwd) and added a before/after boundary snapshot of the checkout top level and .git/hooks that refuses install.script-wrote-outside-lane naming every path; semantics are detect-and-refuse, not prevent, and that is recorded in notEstablished. Added <root>/.git/hooks to the counter's C1 snapshot set. Deleted all 19 husky-referencing non-sample files from .git/hooks (all verified to reference husky first); 14 .sample files left. Tests: env unit test, real-npm escape test, counter hook test. Regenerated census and trust after vp pack. Suite 2711/2 skipped; proven 11; freeze 27741d9c stable.",
-  "agentId": "a13db75046ba5563c",
-  "background": false,
-  "verdictDelivered": true,
-  "ts": "2026-08-20T04:39:04.338Z"
+	"unitId": "T036-install-sandbox-hooks",
+	"runId": "bank-demo-fleet-pipeline-p1d",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Sandboxed the install child (lane-owned HOME/XDG/npm dirs, stripped home- and repo-naming env, lane cwd) and added a before/after boundary snapshot of the checkout top level and .git/hooks that refuses install.script-wrote-outside-lane naming every path; semantics are detect-and-refuse, not prevent, and that is recorded in notEstablished. Added <root>/.git/hooks to the counter's C1 snapshot set. Deleted all 19 husky-referencing non-sample files from .git/hooks (all verified to reference husky first); 14 .sample files left. Tests: env unit test, real-npm escape test, counter hook test. Regenerated census and trust after vp pack. Suite 2711/2 skipped; proven 11; freeze 27741d9c stable.",
+	"agentId": "a13db75046ba5563c",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-20T04:39:04.338Z"
 }

@@ -1,0 +1,19 @@
+{
+	"runId": "bank-demo-fleet-pipeline-p2",
+	"unitId": "T009c-pigallery2-witness-parity",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/bank-demo-fleet-pipeline-p2/prompt-T009c-pigallery2-witness-parity-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01TE6y7aA1ZWi78FwkZJ7q9L",
+	"promptId": "cadacda7-5abb-45e4-9fc6-515ad169d724",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		".versionless/work/angular-pigallery2/**",
+		"evidence/runs/angular-13cell/**",
+		"evidence/runs/witness-synthesized/**"
+	],
+	"ts": "2026-08-20T05:30:50.187Z",
+	"pendingName": "00001787203850188764-4cf93198-T009c-pigallery2-witness-parity.json"
+}

@@ -1,0 +1,9 @@
+{
+	"agentId": "a22bed4846a86bb59",
+	"runId": "bank-demo-fleet-pipeline-p2b",
+	"unitId": "T010-u6-locale-id-provider",
+	"attempt": 1,
+	"toolUseId": "toolu_01XDMrVBQGuyg99v7S8ySSrt",
+	"bindingRoute": "sole",
+	"startedAt": "2026-08-20T08:01:32.086Z"
+}

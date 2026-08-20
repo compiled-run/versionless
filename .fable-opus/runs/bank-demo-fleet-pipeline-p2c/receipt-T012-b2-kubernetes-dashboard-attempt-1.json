@@ -1,0 +1,19 @@
+{
+	"status": "completed",
+	"summary": "Re-ran angular-kubernetes-dashboard through the batch runner with --revision e75ebcf6 declared (re-verified against the tarball sha256 first), --cell angular-13.4.0, and the three install policies. The revision cleared ingest: the app moved 1/9 -> 6/9 stages, interventionCount 0. It then hit defect:install — npm ETARGET on @angular/cdk@^13.4.0. Root-caused to the frozen cell's families['@angular/']='^13.4.0' range: cdk/material stop at 13.3.9 and flex-layout has no stable 13, the exact ETARGET hazard the cell's own rationale names for the CLI but never guarded for the components repo. Not proven. Coverage: refused 7->6, not-admitted 3->4; proven 11 unmoved, angular 4/4, react 6/6, composite 140ce86e, census 192 stable. All 9 verify commands pass.",
+	"files_changed": [
+		"docs/goals/bank-demo-fleet-pipeline/notes/T012-angular-batch.md",
+		"evidence/runs/fleet-batch/t012b2-angular-k8s.json",
+		"evidence/runs/fleet-batch/t012b2-angular-k8s-13cell/fleet-summary.json",
+		"evidence/runs/fleet-batch/t012b2-angular-k8s-13cell/fleet-summary.md",
+		"evidence/runs/angular-kubernetes-dashboard/run-record.json",
+		"evidence/runs/angular-kubernetes-dashboard/run-record.json.interventions.json",
+		"evidence/trust/current/coverage-report.json",
+		"evidence/trust/current/coverage-report.md",
+		"evidence/trust/current/enterprise-report.json",
+		"evidence/trust/current/enterprise-report.md",
+		"evidence/trust/current/manifest.json",
+		"evidence/trust/current/report.md"
+	],
+	"open_questions": []
+}

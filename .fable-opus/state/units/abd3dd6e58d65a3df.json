@@ -1,0 +1,9 @@
+{
+	"agentId": "abd3dd6e58d65a3df",
+	"runId": "bank-demo-fleet-pipeline-p2e",
+	"unitId": "T024-derive-provenapps",
+	"attempt": 1,
+	"toolUseId": "toolu_01QZi2vGWpjSRFDgGv88WsJC",
+	"bindingRoute": "sole",
+	"startedAt": "2026-08-20T11:48:28.270Z"
+}

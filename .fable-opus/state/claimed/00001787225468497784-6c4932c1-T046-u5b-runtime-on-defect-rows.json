@@ -1,0 +1,23 @@
+{
+	"runId": "bank-demo-fleet-pipeline-p2e",
+	"unitId": "T046-u5b-runtime-on-defect-rows",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/bank-demo-fleet-pipeline-p2e/prompt-T046-u5b-runtime-on-defect-rows-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_019tJykLxgTuR4wKFeNLeSUP",
+	"promptId": "d94f0b8b-4a2f-457a-97dc-c9df89deff64",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/cli/src/operator/run.ts",
+		"packages/cli/src/operator/build.ts",
+		"packages/cli/src/operator/install.ts",
+		"packages/cli/test/operator-install-build.test.ts",
+		"packages/cli/test/operator-flows.test.ts",
+		"evidence/runs/operator-flows/refusal-census.json",
+		"evidence/trust/current/**"
+	],
+	"ts": "2026-08-20T11:31:08.496Z",
+	"pendingName": "00001787225468497784-6c4932c1-T046-u5b-runtime-on-defect-rows.json"
+}

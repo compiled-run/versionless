@@ -1,0 +1,18 @@
+{
+	"runId": "bank-demo-fleet-pipeline-p2d",
+	"unitId": "T046-u1b-copy-lane-spike",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/bank-demo-fleet-pipeline-p2d/prompt-T046-u1b-copy-lane-spike-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_015w4MNuvhAT5G5RFonPZL7T",
+	"promptId": "f93c1c3f-b718-4e4f-8936-cc9c0deed5ce",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"evidence/spikes/t046-angular-lane-build/build-node16-polyfills-string.log",
+		"evidence/spikes/t046-angular-lane-build/verdict-u1b.json"
+	],
+	"ts": "2026-08-20T10:17:31.506Z",
+	"pendingName": "00001787221051507370-aa89f69a-T046-u1b-copy-lane-spike.json"
+}

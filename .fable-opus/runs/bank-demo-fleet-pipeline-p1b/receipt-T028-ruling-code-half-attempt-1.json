@@ -1,21 +1,21 @@
 {
-  "status": "blocked",
-  "summary": "(0) applyInterventionRule now refuses proven unless every stage row reads `ran`, with named statusReason `stages-not-all-ran`; INTERVENTION_RULE_STATEMENT states the bar; two new tests cover a synthetic proceeded-but-partial run and a run stating no stages. Totals held at {21,10,2,8,1}. (1) RequiredCell split into runtime{major,version,source,readFrom,basis,claim} and era{outcome,declared,readFrom,consultedSources,claim}; readNodeMajorSources reports all seven slots including absent ones as {text:null,majors:null,present:false}; no-era react/next/angular lineages proceed on the lane runtime quoting lane-install-build.json; cell-not-declared-for-framework and node-major-not-inferable kept verbatim, narrowed to lineages with no lane. (2) declaredRangeAdmitsMajor populates only runtime.satisfiedByDeclaredRange; nodeMajorsOfDeclaration untouched; new refusal era-cell.declared-range-excludes-the-lane-runtime. All five notEstablished lines verbatim. Census+trust regenerated; freeze 27741d9c stable. (3) ingest not started.",
-  "files_changed": [
-    "packages/trust/src/coverage-report.ts",
-    "packages/trust/test/coverage-report.test.ts",
-    "packages/cli/src/operator/era-cell.ts",
-    "packages/cli/test/operator-era-cell.test.ts",
-    "evidence/runs/operator-flows/refusal-census.json",
-    "evidence/trust/current/coverage-report.json",
-    "evidence/trust/current/coverage-report.md",
-    "evidence/trust/current/enterprise-report.json",
-    "evidence/trust/current/enterprise-report.md",
-    "evidence/trust/current/manifest.json",
-    "evidence/trust/current/provenance.json",
-    "evidence/trust/current/report.md"
-  ],
-  "open_questions": [
-    "Deliverable (3) of the T027 ruling is unlanded and needs a follow-up unit: (i) acquisitionLaneOf walking UP to the nearest enclosing .versionless/work/<id>/baseline gated on walking THAT tree and matching the journalled archiveParity digest, four existing gates unchanged; (ii) reading the frontend root by lineage across the acquisition root and its immediate subdirectories with frontendRootBasis naming every candidate and each manifest's reading, refusing on zero or several; (iii) reading the identifier from the journal under the same five gates when package.json has no name, with idReadFrom naming it an operator declaration made at acquire time; and propagating the frontend root from ingest to analyze, era-cell, plan and apply in run.ts with both roots printed in the run record. Note for that unit: react-flame-v2-4-0 already gets PAST ingest today (its acquisition root IS the baseline directory, so acquisitionLaneOf matches exactly) and now refuses at license-at-pin.manifest-field-conflicts-with-licence-text reading the Express ROOT manifest — (ii)+(iii) will move that reading to client/ and the refusal will likely change; react-your-spotify-1-5-0, whose root carries no manifest, is the case that still needs the walk-up."
-  ]
+	"status": "blocked",
+	"summary": "(0) applyInterventionRule now refuses proven unless every stage row reads `ran`, with named statusReason `stages-not-all-ran`; INTERVENTION_RULE_STATEMENT states the bar; two new tests cover a synthetic proceeded-but-partial run and a run stating no stages. Totals held at {21,10,2,8,1}. (1) RequiredCell split into runtime{major,version,source,readFrom,basis,claim} and era{outcome,declared,readFrom,consultedSources,claim}; readNodeMajorSources reports all seven slots including absent ones as {text:null,majors:null,present:false}; no-era react/next/angular lineages proceed on the lane runtime quoting lane-install-build.json; cell-not-declared-for-framework and node-major-not-inferable kept verbatim, narrowed to lineages with no lane. (2) declaredRangeAdmitsMajor populates only runtime.satisfiedByDeclaredRange; nodeMajorsOfDeclaration untouched; new refusal era-cell.declared-range-excludes-the-lane-runtime. All five notEstablished lines verbatim. Census+trust regenerated; freeze 27741d9c stable. (3) ingest not started.",
+	"files_changed": [
+		"packages/trust/src/coverage-report.ts",
+		"packages/trust/test/coverage-report.test.ts",
+		"packages/cli/src/operator/era-cell.ts",
+		"packages/cli/test/operator-era-cell.test.ts",
+		"evidence/runs/operator-flows/refusal-census.json",
+		"evidence/trust/current/coverage-report.json",
+		"evidence/trust/current/coverage-report.md",
+		"evidence/trust/current/enterprise-report.json",
+		"evidence/trust/current/enterprise-report.md",
+		"evidence/trust/current/manifest.json",
+		"evidence/trust/current/provenance.json",
+		"evidence/trust/current/report.md"
+	],
+	"open_questions": [
+		"Deliverable (3) of the T027 ruling is unlanded and needs a follow-up unit: (i) acquisitionLaneOf walking UP to the nearest enclosing .versionless/work/<id>/baseline gated on walking THAT tree and matching the journalled archiveParity digest, four existing gates unchanged; (ii) reading the frontend root by lineage across the acquisition root and its immediate subdirectories with frontendRootBasis naming every candidate and each manifest's reading, refusing on zero or several; (iii) reading the identifier from the journal under the same five gates when package.json has no name, with idReadFrom naming it an operator declaration made at acquire time; and propagating the frontend root from ingest to analyze, era-cell, plan and apply in run.ts with both roots printed in the run record. Note for that unit: react-flame-v2-4-0 already gets PAST ingest today (its acquisition root IS the baseline directory, so acquisitionLaneOf matches exactly) and now refuses at license-at-pin.manifest-field-conflicts-with-licence-text reading the Express ROOT manifest — (ii)+(iii) will move that reading to client/ and the refusal will likely change; react-your-spotify-1-5-0, whose root carries no manifest, is the case that still needs the walk-up."
+	]
 }

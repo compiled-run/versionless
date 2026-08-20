@@ -1,18 +1,18 @@
 {
-  "status": "blocked",
-  "summary": "Delivered the generic ingest and license-at-pin operator stages: local-source admission with no allowlist and no per-app file, 14 named PipelineRefusals, wired into runOperatorCommand and into migrate behind opt-in --ingest, census regenerated 133->147 sites, 18 new tests all passing. Against the pinned papercups source the stage reproduces the sealed closure.json field-identically, the sealed licence artifact digests, and source.json's normalized manifest digest. Blocked on verification only: npm run trust:verify -- --offline fails with 'Provenance subjects differ from the exact distribution inventory', and the same cause fails 3 operator-flows tests. Cause is a stale packages/cli/dist rebuilt during T004; fixing it needs files outside my contract.",
-  "files_changed": [
-    "packages/cli/src/operator/ingest.ts",
-    "packages/cli/src/operator/license.ts",
-    "packages/cli/src/operator/flows.ts",
-    "packages/cli/src/operator/refusals.ts",
-    "packages/cli/src/operator/refusal-census.ts",
-    "packages/cli/src/fixture/legacy-candidate-ingest.ts",
-    "packages/cli/src/cli.ts",
-    "packages/cli/test/operator-ingest.test.ts",
-    "evidence/runs/operator-flows/refusal-census.json"
-  ],
-  "open_questions": [
-    "packages/cli/dist/{cli.js,index.js} and the verify-*.js chunk on disk no longer match evidence/trust/current/provenance.json (dist mtime 2026-08-17T16:37:45Z, built from T004 source, containing none of this unit's strings). This fails npm run trust:verify -- --offline and 3 operator-flows tests, and predates this unit. Should a separate unit regenerate the trust package (evidence/trust/current/**), or restore packages/cli/dist to the provenance state? Both paths are outside this packet's file contract."
-  ]
+	"status": "blocked",
+	"summary": "Delivered the generic ingest and license-at-pin operator stages: local-source admission with no allowlist and no per-app file, 14 named PipelineRefusals, wired into runOperatorCommand and into migrate behind opt-in --ingest, census regenerated 133->147 sites, 18 new tests all passing. Against the pinned papercups source the stage reproduces the sealed closure.json field-identically, the sealed licence artifact digests, and source.json's normalized manifest digest. Blocked on verification only: npm run trust:verify -- --offline fails with 'Provenance subjects differ from the exact distribution inventory', and the same cause fails 3 operator-flows tests. Cause is a stale packages/cli/dist rebuilt during T004; fixing it needs files outside my contract.",
+	"files_changed": [
+		"packages/cli/src/operator/ingest.ts",
+		"packages/cli/src/operator/license.ts",
+		"packages/cli/src/operator/flows.ts",
+		"packages/cli/src/operator/refusals.ts",
+		"packages/cli/src/operator/refusal-census.ts",
+		"packages/cli/src/fixture/legacy-candidate-ingest.ts",
+		"packages/cli/src/cli.ts",
+		"packages/cli/test/operator-ingest.test.ts",
+		"evidence/runs/operator-flows/refusal-census.json"
+	],
+	"open_questions": [
+		"packages/cli/dist/{cli.js,index.js} and the verify-*.js chunk on disk no longer match evidence/trust/current/provenance.json (dist mtime 2026-08-17T16:37:45Z, built from T004 source, containing none of this unit's strings). This fails npm run trust:verify -- --offline and 3 operator-flows tests, and predates this unit. Should a separate unit regenerate the trust package (evidence/trust/current/**), or restore packages/cli/dist to the provenance state? Both paths are outside this packet's file contract."
+	]
 }

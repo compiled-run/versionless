@@ -1,0 +1,41 @@
+--- pnpm exec vp test --project node (exit 0) ---
+ RUN  /Users/jacksm5pro/dev/open-source/versionless
+
+{"preflight":"pass"}
+
+ Test Files  261 passed (261)
+      Tests  2816 passed | 2 skipped (2818)
+   Start at  07:27:59
+   Duration  145.72s (transform 11.72s, setup 0ms, import 38.36s, tests 263.48s, environment 12ms)
+
+
+
+--- node --experimental-strip-types packages/cli/src/cli.ts refusal-census --verify-only --json 2>/dev/null | node -e "let b='';process.stdin.on('data',d=>b+=d);process.stdin.on('end',()=>{const d=JSON.parse(b);if(!d.matchesPublished)throw new Error('census drifted');const codes=d.census.entries.map(e=>e.code);for(const c of ['install.git-dependency-policy-not-declared','install.closure-registry-unreachable']){if(!codes.includes(c))throw new Error('missing '+c)}console.log('CENSUS-OK sites='+d.census.summary.sites)})" (exit 0) ---
+CENSUS-OK sites=198
+
+
+--- npm run trust:verify -- --offline (exit 0) ---
+{"valid":true,"digest":"d1232e1fb4d75d96e323d7c921f5e7301c498eeeb97fafda5b1dd8eaf6931a9f","deterministicCore":"c4c65feb38c59e70d4a96040a0bcf5dabe4bc2e6f52b6c0b6fb63bacff29a45e","artifacts":12}
+
+npm warn Unknown project config "store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "virtual-store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "state-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm notice run versionless-workspace@0.0.0 trust:verify
+npm notice run node --experimental-strip-types packages/cli/src/cli.ts trust:verify --offline
+
+--- node -e "const r=require('./evidence/trust/current/coverage-report.json').totals;if(r.proven!==11||r.applications!==23)throw new Error(JSON.stringify(r));console.log('COVERAGE-TOTALS-UNCHANGED')" (exit 0) ---
+COVERAGE-TOTALS-UNCHANGED
+
+
+--- node --experimental-strip-types packages/cli/src/cli.ts supported-matrix --offline 2>&1 | grep -q "react: 6 counted of 6" && echo REACT-CELLS-UNCHANGED (exit 0) ---
+REACT-CELLS-UNCHANGED
+
+
+--- node -e "const f=require('./evidence/trust/current/adapter-freeze.json');if(!String(f.freeze.composite).startsWith('140ce86e'))throw new Error('composite moved');console.log('COMPOSITE-STABLE')" (exit 0) ---
+COMPOSITE-STABLE
+
+
+--- git diff --quiet HEAD -- packages/frameworks packages/core packages/trust/src && echo FROZEN-TRUST-CORE-UNTOUCHED (exit 0) ---
+FROZEN-TRUST-CORE-UNTOUCHED
+
+

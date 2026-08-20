@@ -1,0 +1,25 @@
+--- node -e "const r=require('./evidence/runs/angular-13cell/pigallery2-lanes.json');if(r.schemaVersion!=='versionless.angular-13cell-lanes.v1')throw new Error('schema');if(!r.lanes||!r.lanes.migrated)throw new Error('migrated lane missing');const m=r.lanes.migrated;if(m.builds!==2||typeof m.doubleBuildIdentical!=='boolean')throw new Error('migrated double-build');if(!r.lanes.baseline||!(r.lanes.baseline.builds===2||typeof r.lanes.baseline.notBuilt==='string'))throw new Error('baseline neither built twice nor named-not-built');if(!Array.isArray(r.migrationDeltaSoFar)||r.migrationDeltaSoFar.length<3)throw new Error('migration delta');if(!Array.isArray(r.notEstablished)||!r.notEstablished.length)throw new Error('notEstablished');if(!r.integrity||!r.integrity.sha256)throw new Error('integrity');console.log('13CELL-LANES ok: migrated identical='+m.doubleBuildIdentical+' baseline='+(r.lanes.baseline.builds===2?('identical='+r.lanes.baseline.doubleBuildIdentical):('not-built: '+String(r.lanes.baseline.notBuilt).slice(0,60))))" (exit 0) ---
+13CELL-LANES ok: migrated identical=true baseline=identical=true
+
+
+--- test -f evidence/runs/angular-13cell/README.md && echo RECIPE-README-PRESENT (exit 0) ---
+RECIPE-README-PRESENT
+
+
+--- git diff --quiet HEAD -- packages/ && echo NO-PACKAGE-CODE-TOUCHED (exit 0) ---
+NO-PACKAGE-CODE-TOUCHED
+
+
+--- git diff --quiet HEAD -- packages/frameworks/react packages/frameworks/angular packages/core/src/migrations packages/core/src/bundlers packages/core/src/analysis && echo FREEZE-INTACT (exit 0) ---
+FREEZE-INTACT
+
+
+--- npm run trust:verify -- --offline (exit 0) ---
+{"valid":true,"digest":"8d3eadd23e19cfda60672cc8bcc27b5427209a818aa7a3adf33b651d494163b9","deterministicCore":"d8cf777caf96a7e8a8c173f60f2e54754ba71456e8a73e2e1d762ea99a152695","artifacts":12}
+
+npm warn Unknown project config "store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "virtual-store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "state-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm notice run versionless-workspace@0.0.0 trust:verify
+npm notice run node --experimental-strip-types packages/cli/src/cli.ts trust:verify --offline
+

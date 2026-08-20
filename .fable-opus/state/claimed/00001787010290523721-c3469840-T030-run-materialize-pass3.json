@@ -1,21 +1,21 @@
 {
-  "runId": "bank-demo-fleet-pipeline-p1c",
-  "unitId": "T030-run-materialize-pass3",
-  "attempt": 1,
-  "promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/bank-demo-fleet-pipeline-p1c/prompt-T030-run-materialize-pass3-attempt-1.md",
-  "subagentType": "opus-worker",
-  "toolUseId": "toolu_01DLpwA9nYv2zaZ4TLYGvg2J",
-  "promptId": "3c79e865-d41a-4464-b918-9ec6cb292888",
-  "background": false,
-  "parallel": false,
-  "effort": null,
-  "contract": [
-    "packages/cli/src/operator/**",
-    "packages/cli/src/cli.ts",
-    "packages/cli/test/**",
-    "evidence/runs/**",
-    "evidence/trust/current/**"
-  ],
-  "ts": "2026-08-17T23:44:50.522Z",
-  "pendingName": "00001787010290523721-c3469840-T030-run-materialize-pass3.json"
+	"runId": "bank-demo-fleet-pipeline-p1c",
+	"unitId": "T030-run-materialize-pass3",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/bank-demo-fleet-pipeline-p1c/prompt-T030-run-materialize-pass3-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01DLpwA9nYv2zaZ4TLYGvg2J",
+	"promptId": "3c79e865-d41a-4464-b918-9ec6cb292888",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/cli/src/operator/**",
+		"packages/cli/src/cli.ts",
+		"packages/cli/test/**",
+		"evidence/runs/**",
+		"evidence/trust/current/**"
+	],
+	"ts": "2026-08-17T23:44:50.522Z",
+	"pendingName": "00001787010290523721-c3469840-T030-run-materialize-pass3.json"
 }

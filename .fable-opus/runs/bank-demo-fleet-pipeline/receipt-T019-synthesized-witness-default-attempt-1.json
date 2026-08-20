@@ -1,15 +1,15 @@
 {
-  "status": "partial",
-  "summary": "Delivered driver selection with recorded reason and --journeys synthesized override, a serialized synthesized-replay path composing executeRun (one lane, one journey per box, routes reached only by clicking links), an additive witness-real-app record whose replayability ratio is required and recomputed by its parser, the --journeys CLI path, and an opt-in --witness migrate stage ordered after build. Tests (a) and (b) pass plus a hermetic two-page loopback crawl-synthesis test. NOT done: no browser-backed replay was executed, so evidence/runs/witness-synthesized is empty and test (c)'s Chromium leg is absent. All six verify commands pass; refusal census regenerated after line shift.",
-  "files_changed": [
-    "packages/cli/src/witness/journey-synthesis/driver.ts",
-    "packages/cli/src/witness/real-app-run.ts",
-    "packages/cli/src/operator/witness.ts",
-    "packages/cli/src/operator/flows.ts",
-    "packages/cli/src/cli.ts",
-    "packages/core/src/receipts/witness-real-app.ts",
-    "packages/cli/test/witness-real-app-synthesized.test.ts",
-    "evidence/runs/operator-flows/refusal-census.json"
-  ],
-  "open_questions": []
+	"status": "partial",
+	"summary": "Delivered driver selection with recorded reason and --journeys synthesized override, a serialized synthesized-replay path composing executeRun (one lane, one journey per box, routes reached only by clicking links), an additive witness-real-app record whose replayability ratio is required and recomputed by its parser, the --journeys CLI path, and an opt-in --witness migrate stage ordered after build. Tests (a) and (b) pass plus a hermetic two-page loopback crawl-synthesis test. NOT done: no browser-backed replay was executed, so evidence/runs/witness-synthesized is empty and test (c)'s Chromium leg is absent. All six verify commands pass; refusal census regenerated after line shift.",
+	"files_changed": [
+		"packages/cli/src/witness/journey-synthesis/driver.ts",
+		"packages/cli/src/witness/real-app-run.ts",
+		"packages/cli/src/operator/witness.ts",
+		"packages/cli/src/operator/flows.ts",
+		"packages/cli/src/cli.ts",
+		"packages/core/src/receipts/witness-real-app.ts",
+		"packages/cli/test/witness-real-app-synthesized.test.ts",
+		"evidence/runs/operator-flows/refusal-census.json"
+	],
+	"open_questions": []
 }

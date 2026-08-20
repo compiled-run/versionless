@@ -2,14 +2,19 @@
   "schemaVersion": "versionless.witness-synthesized-slot.v1",
   "application": "react-flame-v2-4-0",
   "record": "record.json",
-  "recordCanonicalDigest": "50b1e155ad4397d87ed9ab106ce78dbd9b235cff6da0c373ea2ec54999aa461c",
-  "recordFileSha256": "52d2229cf8b9f0e3376f2fcfdf23988283cc71590f58a840d4a83af246962ddb",
-  "publishedUnder": "evidence/runs/witness-synthesized/baseline/record.json",
-  "migratedTo": "evidence/runs/witness-synthesized/react-flame-v2-4-0/record.json",
+  "recordCanonicalDigest": "35140e87ba151fb8fb466a8c680c8d33d0cf0af4737861526f8f5a4137a274ca",
+  "recordFileSha256": "4d71cc8a0b7121ac90ebfe2763ae7d395198b54c5aa371569c434eb76041490e",
+  "publishedUnder": "evidence/runs/witness-synthesized/react-flame-v2-4-0/record.json",
   "runRecord": "evidence/runs/react-flame-v2-4-0/run-record.json",
+  "supersededMigration": {
+    "previouslyPublishedUnder": "evidence/runs/witness-synthesized/baseline/record.json",
+    "migratedRecordCanonicalDigest": "50b1e155ad4397d87ed9ab106ce78dbd9b235cff6da0c373ea2ec54999aa461c",
+    "migratedRecordFileSha256": "52d2229cf8b9f0e3376f2fcfdf23988283cc71590f58a840d4a83af246962ddb"
+  },
   "notEstablished": [
     "This slot exists because the witness stage used to key its output directory by the lane directory name. Every application `acquire` fetches is written to `.versionless/work/<id>/baseline`, so every acquired application shared one `baseline/` slot and each run overwrote the last one's record. The key is now the acquisition identity, which is the name of this directory.",
-    "The record inside this directory is byte-identical to the one published under the shared key: its `application` field still reads `baseline`, which is the key the run that produced it was given. It was not rewritten, because `evidence/runs/react-flame-v2-4-0/run-record.json` pins its canonical digest and that run record is history. The identity of the application this slot belongs to is stated here rather than edited into a sealed digest.",
-    "Nothing here re-runs, re-measures or re-adjudicates the witness run. This file records where a file moved and what it hashes to, and nothing about what the replay established."
+    "The record in this directory is no longer the migrated bytes. It was regenerated in place by a later run of the same single command against the same pin, under the new key: its `application` field is written by the run rather than restated here, and it reads `react-flame-v2-4-0`. The digests above are that record's; `supersededMigration` keeps the digests of the record that was moved here, so the two are not confused for one another.",
+    "`recordCanonicalDigest` is the value the run record's witness row pins for the run that wrote this file. Nothing here re-derives it: a record edited after emission would not be caught by this document.",
+    "Nothing here re-runs, re-measures or re-adjudicates the witness run. This file records where a file is filed and what it hashes to, and nothing about what the replay established."
   ]
 }

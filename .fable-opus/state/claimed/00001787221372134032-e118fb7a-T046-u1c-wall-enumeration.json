@@ -1,0 +1,15 @@
+{
+	"runId": "bank-demo-fleet-pipeline-p2d",
+	"unitId": "T046-u1c-wall-enumeration",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/bank-demo-fleet-pipeline-p2d/prompt-T046-u1c-wall-enumeration-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01LzxpjkfJuv5v96yeisNmNi",
+	"promptId": "7546c979-9eab-4845-aa34-4c07d4ecf4fc",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": ["evidence/spikes/t046-angular-lane-build/**"],
+	"ts": "2026-08-20T10:22:52.132Z",
+	"pendingName": "00001787221372134032-e118fb7a-T046-u1c-wall-enumeration.json"
+}

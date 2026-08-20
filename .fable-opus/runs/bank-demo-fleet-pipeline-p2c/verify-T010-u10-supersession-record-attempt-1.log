@@ -1,0 +1,73 @@
+--- pnpm exec vp test --project node (exit 0) ---
+ RUN  /Users/jacksm5pro/dev/open-source/versionless
+
+{"preflight":"pass"}
+
+ Test Files  260 passed (260)
+      Tests  2768 passed | 2 skipped (2770)
+   Start at  04:09:41
+   Duration  147.97s (transform 11.83s, setup 0ms, import 37.84s, tests 260.13s, environment 13ms)
+
+
+
+--- npm run trust:verify -- --offline (exit 0) ---
+{"valid":true,"digest":"31a6c4ef0ce2367f58428717f8d05c22c02b9ff6d93fd2d8f659f57dc64e5321","deterministicCore":"80829ae4131dd3cdd532cb403325cfccb4bf1da948a32498829d690d96ddb597","artifacts":12}
+
+npm warn Unknown project config "store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "virtual-store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "state-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm notice run versionless-workspace@0.0.0 trust:verify
+npm notice run node --experimental-strip-types packages/cli/src/cli.ts trust:verify --offline
+
+--- npm run receipt:verify (exit 0) ---
+{"valid":true,"digest":"52400147929220935a9ebe47a16c8dff50b5c28e9d51c930d000c99c2bdc8a21","artifacts":10}
+
+npm warn Unknown project config "store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "virtual-store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "state-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm notice run versionless-workspace@0.0.0 receipt:verify
+npm notice run node --experimental-strip-types packages/cli/src/cli.ts receipt:verify
+
+--- VERSIONLESS_NETWORK_MODE=offline npm run corpus:verify (exit 0) ---
+{"result":"pass","digest":"101412703cc116969dd562a6ea46dde3d05424ad5194e535aca9750e373bc482","verticals":20,"sourceApplications":13}
+
+npm warn Unknown project config "store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "virtual-store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "state-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm notice run versionless-workspace@0.0.0 corpus:verify
+npm notice run node --experimental-strip-types packages/cli/src/cli.ts corpus:verify
+
+--- node --experimental-strip-types packages/cli/src/cli.ts refusal-census --verify-only --json 2>/dev/null | node -e "let b='';process.stdin.on('data',d=>b+=d);process.stdin.on('end',()=>{const d=JSON.parse(b);if(!d.matchesPublished)throw new Error('census drifted');console.log('CENSUS-BYTE-IDENTICAL sites='+d.census.summary.sites)})" (exit 0) ---
+CENSUS-BYTE-IDENTICAL sites=192
+
+
+--- node -e "const b=require('./evidence/runs/operator-flows/byte-identity.json').angular;if(b.identical!==true||b.operatorDigest!==b.driverDigest||!b.operatorDigest.startsWith('a044d716'))throw new Error('byte-identity wrong: '+b.operatorDigest.slice(0,8));console.log('SEALED-DIGESTS-STABLE-UNDER-NEW-COMPOSITE')" (exit 0) ---
+SEALED-DIGESTS-STABLE-UNDER-NEW-COMPOSITE
+
+
+--- node --experimental-strip-types packages/cli/src/cli.ts supported-matrix --offline 2>&1 | grep -q "react: 6 counted of 6" && node --experimental-strip-types packages/cli/src/cli.ts supported-matrix --offline 2>&1 | grep -q "angular: 4 counted of 4" && echo MATRIX-CELLS-UNCHANGED (exit 0) ---
+MATRIX-CELLS-UNCHANGED
+
+
+--- node -e "const r=require('./evidence/trust/current/coverage-report.json').totals;if(r.proven!==11||r.applications!==21)throw new Error(JSON.stringify(r));console.log('COVERAGE-TOTALS-UNCHANGED')" (exit 0) ---
+COVERAGE-TOTALS-UNCHANGED
+
+
+--- node -e "const f=require('./evidence/trust/current/adapter-freeze.json');const z=f.freeze;if(String(z.composite).startsWith('27741d9c'))throw new Error('composite did not move');if(!f.supersedes||!String(f.supersedes.composite).startsWith('27741d9c'))throw new Error('supersedes does not carry 27741d9c');if((f.supersedes.chain||z.chain||[]).length<6&&(f.chain||[]).length<6)console.log('CHAIN-LENGTH-CHECK-DEFERRED-TO-SHAPE');const rs=(f.reopens||[]);const t=rs.find(r=>r.task==='T010');if(!t)throw new Error('no T010 reopen entry');if(t.reactSubtreeUnchanged!==false)throw new Error('reactSubtreeUnchanged must be false');console.log('SUPERSESSION-RECORDED composite='+String(z.composite).slice(0,8))" (exit 1) ---
+
+[eval]:1
+const f=require('./evidence/trust/current/adapter-freeze.json');const z=f.freeze;if(String(z.composite).startsWith('27741d9c'))throw new Error('composite did not move');if(!f.supersedes||!String(f.supersedes.composite).startsWith('27741d9c'))throw new Error('supersedes does not carry 27741d9c');if((f.supersedes.chain||z.chain||[]).length<6&&(f.chain||[]).length<6)console.log('CHAIN-LENGTH-CHECK-DEFERRED-TO-SHAPE');const rs=(f.reopens||[]);const t=rs.find(r=>r.task==='T010');if(!t)throw new Error('no T010 reopen entry');if(t.reactSubtreeUnchanged!==false)throw new Error('reactSubtreeUnchanged must be false');console.log('SUPERSESSION-RECORDED composite='+String(z.composite).slice(0,8))
+                                                                                                                                                                                                                                                  ^
+
+Error: supersedes does not carry 27741d9c
+    at [eval]:1:249
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [eval]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3)
+    at node:internal/main/eval_string:71:3
+
+Node.js v24.15.0
+

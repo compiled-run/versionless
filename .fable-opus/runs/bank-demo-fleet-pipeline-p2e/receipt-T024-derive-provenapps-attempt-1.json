@@ -1,0 +1,21 @@
+{
+	"status": "blocked",
+	"summary": "Derivation built and working: provenApps now = sealed baseline (CAPABILITY_SEALED_BASELINE, kept as history) unioned with proofs derived from run records, admitted only via deriveRunRecordApplications and attributed only on a whole entry-point token in the run's plan-stage engine. Totals 8/51/59 reproduced; coverage-report, composite, census, matrix cells unmoved; 19/19 capability tests pass. Finding: react-cra-vite-adapter legitimately gains react-flame-v2-4-0 (3->4, still cross-proven) with no source edit, so capability-coverage.json is not byte-identical. Blocked: packages/trust/src/verify.ts:201 re-derives via buildCapabilityCoverage() with no run records; that file is outside the contract and the scope guard refused the one-line fix.",
+	"files_changed": [
+		"packages/core/src/receipts/capability-coverage.ts",
+		"packages/core/test/capability-coverage.test.ts",
+		"packages/trust/src/coverage-report.ts",
+		"packages/trust/src/generate.ts",
+		"packages/trust/test/capability-coverage-derivation.test.ts",
+		"evidence/trust/current/capability-coverage.json",
+		"evidence/trust/current/enterprise-report.json",
+		"evidence/trust/current/enterprise-report.md",
+		"evidence/trust/current/manifest.json",
+		"evidence/trust/current/report.md"
+	],
+	"open_questions": [
+		"May packages/trust/src/verify.ts enter the file contract for a one-line change? Line 199-203 compares the emitted capability-coverage.json against buildCapabilityCoverage() with no run records; it must become buildCapabilityCoverage({ runRecords: await readRunRecords(root) }) (readRunRecords is already imported there and already called at line 274). Verified by simulation: with run records the published map matches the re-derivation exactly, without them it does not. All 10 failing node tests and both verify-gated packet guards trace solely to this line. Without it the derivation cannot be wired live and the matrix cannot move without a source edit.",
+		"Byte-identity of evidence/trust/current/capability-coverage.json is not achievable once the derivation is live, because the derivation legitimately finds a proof the literals had not read. The emitted SHAPE is unchanged (same keys, same order, same 59 entries); the CONTENT differs in exactly three places: (1) one added CAPABILITY_METHOD sentence stating the derivation rule and its limits; (2) react-cra-vite-adapter provenApps gains 'react-flame-v2-4-0', evidence gains 'evidence/runs/react-flame-v2-4-0/run-record.json', proofCount 3->4 (classification unchanged, cross-proven); (3) that capability's note reworded so 'three independent applications' is stated as the sealed figure rather than the published one. Summary totals {8,51,59}, both lineage summaries, coverage-report.json, and the refusal census are all unchanged. Is that content change accepted, or should the derived proof be withheld from the published artifact?",
+		"Attribution reaches only what a run record names by entry point in its plan stage (orchestrator and adapter entry points). A construct-gated capability that fired underneath migrateAngularCliEraWorkspace is not attributed, because the run does not record it by name. Widening that would need the run record to itemise fired capabilities, which is a run-stage change outside this packet. Is that narrowness accepted for T024?"
+	]
+}

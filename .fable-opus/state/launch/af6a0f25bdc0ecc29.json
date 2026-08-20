@@ -1,8 +1,8 @@
 {
-  "agentId": "af6a0f25bdc0ecc29",
-  "toolUseId": "toolu_01BVih4SD9Wi3XupovKUVe4n",
-  "runId": "bank-demo-fleet-pipeline-p1b",
-  "unitId": "T013a-react-coverage-batch",
-  "status": "async_launched",
-  "ts": "2026-08-17T21:30:06.127Z"
+	"agentId": "af6a0f25bdc0ecc29",
+	"toolUseId": "toolu_01BVih4SD9Wi3XupovKUVe4n",
+	"runId": "bank-demo-fleet-pipeline-p1b",
+	"unitId": "T013a-react-coverage-batch",
+	"status": "async_launched",
+	"ts": "2026-08-17T21:30:06.127Z"
 }

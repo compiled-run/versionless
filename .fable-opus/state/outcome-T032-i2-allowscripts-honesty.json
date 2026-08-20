@@ -1,0 +1,11 @@
+{
+  "unitId": "T032-i2-allowscripts-honesty",
+  "runId": "bank-demo-fleet-pipeline-p2e",
+  "attempt": 1,
+  "outcome": "completed",
+  "reason": "Measured npm 12.0.1 and 8.19.4 on this host: --foreground-scripts grants nothing on npm 12, and --allow-scripts is EALLOWSCRIPTS in project-scoped installs, so the per-package form is unavailable as a flag. --allow-install-scripts now emits --dangerously-allow-all-scripts on majors >=12 and nothing extra below, chosen and justified in source. New installScripts field records RAN/SKIPPED read from npm's own banners and warn block, never from the lockfile, with per-npm-major claims and notEstablished lines. Nine new shim-npm tests, no network, both major shapes; boundary-test comment corrected. Census + trust regenerated; deterministic core, coverage totals, matrix and composite unchanged. Full suite green.",
+  "agentId": "a8ef2bb444d27d784",
+  "background": false,
+  "verdictDelivered": true,
+  "ts": "2026-08-20T13:01:51.070Z"
+}

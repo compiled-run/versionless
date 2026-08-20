@@ -4,7 +4,7 @@
 	"outcome": "proceeded",
 	"exitCode": 0,
 	"application": ".versionless/work/react-flame-v2-4-0/baseline",
-	"lane": "../../../../../var/folders/pt/xbq_fv915rx9wtnmww8npc0w0000gn/T/tmp.XXpfitJcWb/lane",
+	"lane": "../../../../../var/folders/pt/xbq_fv915rx9wtnmww8npc0w0000gn/T/tmp.pevI7lNM/lane",
 	"roots": {
 		"source": ".versionless/work/react-flame-v2-4-0/baseline",
 		"frontend": ".versionless/work/react-flame-v2-4-0/baseline/client",
@@ -91,8 +91,8 @@
 					"A dependency the cell has no reading for is reported `unknown`. `unknown` is not `supported` and it is not `unsupported`."
 				]
 			},
-			"startedAt": "2026-08-20T11:17:01.012Z",
-			"endedAt": "2026-08-20T11:17:01.013Z"
+			"startedAt": "2026-08-20T13:28:34.370Z",
+			"endedAt": "2026-08-20T13:28:34.371Z"
 		},
 		{
 			"name": "ingest",
@@ -256,8 +256,8 @@
 					"A frontend root read by lineage is the one directory among those considered whose manifest declares a framework this stage reads. The basis names every directory considered and what each of their manifests declared; nothing here establishes that the directory chosen is the one its authors would call the application."
 				]
 			},
-			"startedAt": "2026-08-20T11:17:01.013Z",
-			"endedAt": "2026-08-20T11:17:01.044Z"
+			"startedAt": "2026-08-20T13:28:34.371Z",
+			"endedAt": "2026-08-20T13:28:34.404Z"
 		},
 		{
 			"name": "license-at-pin",
@@ -309,8 +309,8 @@
 					"`identifierSource: declared` means an operator supplied the identifier. This stage did not read it and does not corroborate it."
 				]
 			},
-			"startedAt": "2026-08-20T11:17:01.044Z",
-			"endedAt": "2026-08-20T11:17:01.044Z"
+			"startedAt": "2026-08-20T13:28:34.404Z",
+			"endedAt": "2026-08-20T13:28:34.404Z"
 		},
 		{
 			"name": "era-cell",
@@ -560,8 +560,8 @@
 					"Satisfaction of a declared range is not corroborated by anything else this tree says. Where other sources name majors, they are listed above with what each literally says, and this stage picks from none of them."
 				]
 			},
-			"startedAt": "2026-08-20T11:17:01.044Z",
-			"endedAt": "2026-08-20T11:17:01.051Z"
+			"startedAt": "2026-08-20T13:28:34.404Z",
+			"endedAt": "2026-08-20T13:28:34.426Z"
 		},
 		{
 			"name": "plan",
@@ -638,8 +638,8 @@
 					]
 				}
 			},
-			"startedAt": "2026-08-20T11:17:01.051Z",
-			"endedAt": "2026-08-20T11:17:01.052Z"
+			"startedAt": "2026-08-20T13:28:34.426Z",
+			"endedAt": "2026-08-20T13:28:34.426Z"
 		},
 		{
 			"name": "apply",
@@ -712,8 +712,8 @@
 					]
 				}
 			},
-			"startedAt": "2026-08-20T11:17:01.052Z",
-			"endedAt": "2026-08-20T11:17:01.098Z"
+			"startedAt": "2026-08-20T13:28:34.426Z",
+			"endedAt": "2026-08-20T13:28:34.472Z"
 		},
 		{
 			"name": "install",
@@ -730,15 +730,42 @@
 					"allowInstallScripts": true,
 					"skipInstallScripts": false,
 					"allowPeerConflicts": true,
-					"allowForeignLockfile": false
+					"allowForeignLockfile": false,
+					"allowGitDependencies": false
 				},
 				"foreignLockfileDisregarded": null,
+				"gitDependenciesAllowed": null,
 				"remoteTarballDependencies": [],
 				"installScriptPackages": [
 					"node_modules/core-js",
 					"node_modules/core-js-pure",
 					"node_modules/fsevents"
 				],
+				"installScripts": {
+					"policy": "allow-install-scripts",
+					"npm": {
+						"version": "12.0.1",
+						"major": 12
+					},
+					"flags": [
+						"--foreground-scripts",
+						"--dangerously-allow-all-scripts"
+					],
+					"readFrom": "npm's own stdout and stderr for this install: the per-script banners --foreground-scripts prints, and the `npm warn install-scripts` block a gated npm ends the install with.",
+					"ran": [
+						{
+							"package": "fsevents@2.3.3",
+							"lifecycle": "install"
+						},
+						{
+							"package": "core-js-pure@3.31.1",
+							"lifecycle": "postinstall"
+						}
+					],
+					"skipped": [],
+					"reportedSkipped": null,
+					"claim": "The `allow-install-scripts` policy was declared and npm was given --foreground-scripts --dangerously-allow-all-scripts. On npm 12 and above a dependency's install scripts are blocked behind the `allowScripts` field and skipped **silently** unless a matching entry exists; --foreground-scripts decides only where the output of a script npm already chose to run is printed, so it grants nothing. --dangerously-allow-all-scripts bypasses that policy outright, which is what this declaration means: the operator declared that this closure's install scripts may run. `ran` and `skipped` are npm's own account of what followed, not this stage's expectation of it. Read at npm 12.0.1. npm reported 2 script(s) started and 0 skipped by policy."
+				},
 				"command": [
 					"npm",
 					"install",
@@ -747,12 +774,13 @@
 					"--allow-remote",
 					"all",
 					"--foreground-scripts",
+					"--dangerously-allow-all-scripts",
 					"--legacy-peer-deps"
 				],
 				"exitCode": 0,
-				"installedPackages": 117,
+				"installedPackages": 116,
 				"sandbox": {
-					"home": "/var/folders/pt/xbq_fv915rx9wtnmww8npc0w0000gn/T/tmp.XXpfitJcWb/lane/.install-home",
+					"home": "/var/folders/pt/xbq_fv915rx9wtnmww8npc0w0000gn/T/tmp.pevI7lNM/lane/.install-home",
 					"strippedVariables": [
 						"CLAUDE_CODE_EXECPATH (names the invoking user's home)",
 						"FNM_DIR (names the invoking user's home)",
@@ -762,7 +790,8 @@
 						"PNPM_HOME (names the invoking user's home)",
 						"PWD (names the invoking user's home)",
 						"USER_ZDOTDIR (names the invoking user's home)",
-						"ZDOTDIR (names the invoking user's home)"
+						"ZDOTDIR (names the invoking user's home)",
+						"_ (names the invoking user's home)"
 					]
 				},
 				"runtime": {
@@ -785,11 +814,16 @@
 					"`installScriptPackages` counts packages the lockfile declares an install script for. Whether a given script would have built anything on this host is not established here.",
 					"The sandbox is an environment and a working directory, not a container. It moves every path npm resolves from the environment into the lane and drops inherited variables that name the user’s home or this checkout; it does not stop a script that hard-codes an absolute path, and `PATH` is passed through so the child can find its own node. Writes outside the lane are therefore *detected* — the checkout’s `.git/hooks` and its top level are hashed before and after — and refused by name, not prevented.",
 					"The boundary reading watches two places: the top level of the checkout and `.git/hooks`. A write anywhere else outside the lane — a sibling directory, a deeper path in the checkout, another checkout on this host — is not observed here, and `writesOutsideLane: []` does not establish that none happened.",
-					"`closure: resolve` means the lane manifest declares a build toolchain the recorded lockfile predates, so npm resolved rather than replayed. The application’s own pins still come from the lockfile; what was newly resolved is what the manifest rewrite added, and that resolution is not a pin this repository recorded."
+					"`closure: resolve` means the lane manifest declares a build toolchain the recorded lockfile predates, so npm resolved rather than replayed. The application’s own pins still come from the lockfile; what was newly resolved is what the manifest rewrite added, and that resolution is not a pin this repository recorded.",
+					"`installScripts.ran` and `installScripts.skipped` are read from what npm printed on this run, and from nothing else. A script npm ran without printing a banner is not in `ran`, and a package npm skipped without listing it is not in `skipped`; neither list is derived from the lockfile, and neither is an inventory of every script the closure carries.",
+					"`installScripts.ran` names the scripts npm reported *starting*. Whether a script completed, and whether a native build it exists to perform produced anything, is not established here — the install’s exit code is the only outcome this stage read.",
+					"`installScripts.ran` includes the lane’s own package’s lifecycle scripts beside its dependencies’: npm prints the same banner for both, and this reading does not separate them. The allowScripts gate applies only to dependencies, so a lane script appearing in `ran` says nothing about whether the gate was open.",
+					"Which allowance this stage emits is decided by the npm major, and only two majors were measured on this host: npm 12.0.1, which gates a dependency's install scripts behind `allowScripts`, and npm 8.19.4, which has no such gate. npm 9, 10 and 11 were not measured; every npm below 12 is treated as ungated. An npm in that unmeasured range that does gate would report its skips in `installScripts.skipped`, so the reading stays honest, but this stage would not have granted the allowance it was asked for.",
+					"`installScripts.npm` is `npm --version` read through the environment the install child was given. A null there means the reading did not complete, and the allowance was then emitted in the gated form because that is the only form that grants anything; which npm actually ran this install is not established in that case."
 				]
 			},
-			"startedAt": "2026-08-20T11:17:01.098Z",
-			"endedAt": "2026-08-20T11:17:04.759Z"
+			"startedAt": "2026-08-20T13:28:34.472Z",
+			"endedAt": "2026-08-20T13:28:41.191Z"
 		},
 		{
 			"name": "build",
@@ -822,8 +856,8 @@
 					"`outputFiles` counts files below the build directory. It is a count, not a comparison against any previous build."
 				]
 			},
-			"startedAt": "2026-08-20T11:17:04.759Z",
-			"endedAt": "2026-08-20T11:17:06.021Z"
+			"startedAt": "2026-08-20T13:28:41.191Z",
+			"endedAt": "2026-08-20T13:28:42.213Z"
 		},
 		{
 			"name": "witness",
@@ -833,21 +867,49 @@
 				"journeySource": "synthesized-crawl",
 				"replayabilityRatio": 1,
 				"journeysRun": 1,
-				"digest": "50b1e155ad4397d87ed9ab106ce78dbd9b235cff6da0c373ea2ec54999aa461c",
+				"journeys": [
+					{
+						"lane": "migrated",
+						"name": "bounded crawl of the served lane to depth 2",
+						"source": "crawl",
+						"replayable": true,
+						"ran": true,
+						"routesDeclared": 12,
+						"routesReached": 1,
+						"selectorsDeclared": 0,
+						"selectorsPresent": 0,
+						"outcomes": [
+							"journey-measured-declared-gesture-count-0",
+							"journey-measured-unhandled-construct-count-0",
+							"journey-synthesized-by-crawl-bounded-depth-2-reached-1-routes",
+							"journey-measured-route-reached-1-of-12-declared-routes",
+							"journey-measured-selector-present-0-of-0-declared-selectors",
+							"journey-measured-no-document-overflow-on-1-routes"
+						]
+					}
+				],
+				"locality": {
+					"mode": "offline",
+					"successfulNonLoopback": 0,
+					"osWideIsolation": false
+				},
+				"digest": "35140e87ba151fb8fb466a8c680c8d33d0cf0af4737861526f8f5a4137a274ca",
 				"notEstablished": [
 					"A witnessed lane is a lane whose declared journeys were replayed once each on this host, serialized. Nothing here establishes an outcome under concurrent load.",
-					"Where the journeys were synthesized, they were derived from the application own end-to-end suite or from a bounded loopback crawl. The replayability ratio in the record is a count of derived journeys that name a route to start from, not a measure of coverage."
+					"Where the journeys were synthesized, they were derived from the application own end-to-end suite or from a bounded loopback crawl. The replayability ratio in the record is a count of derived journeys that name a route to start from, not a measure of coverage.",
+					"The outcome strings on each journey are the closed measurement vocabulary the standalone record publishes, reproduced verbatim so this row can be read without opening it. They are legibility and not a verdict: no string in that vocabulary is a pass, and nothing in this row is decided by reading one.",
+					"`locality.successfulNonLoopback` is the runner’s own count of requests that left both loopback origins. It is copied here, not recomputed: this stage measured nothing and asserts nothing the standalone record does not already state."
 				]
 			},
-			"startedAt": "2026-08-20T11:17:06.021Z",
-			"endedAt": "2026-08-20T11:17:07.131Z"
+			"startedAt": "2026-08-20T13:28:42.213Z",
+			"endedAt": "2026-08-20T13:28:44.864Z"
 		}
 	],
 	"report": {
 		"status": "emitted",
 		"slot": "evidence/trust/current/coverage-report.json",
 		"path": "evidence/trust/current/coverage-report.json",
-		"digest": "1e522f7b25c5b3c331377e4cc8cadedc7384d1b724403edac59a9a1007ff1087"
+		"digest": "8a5bb938b8a99e3d0790d5fca032ddd5d7f2f9d51817c2fb7ac92a0099539252"
 	},
 	"notEstablished": [
 		"A stage recorded `ran` returned its own record. What that record establishes is what that stage states, and no more: this row adds no reading of its own on top of it.",

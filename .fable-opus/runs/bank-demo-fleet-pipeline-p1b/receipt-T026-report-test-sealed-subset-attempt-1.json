@@ -1,8 +1,6 @@
 {
-  "status": "completed",
-  "summary": "Rewrote the stale coverage-report test to be structural: it now filters report.applications into sealed-receipts and run-record subsets, pins the sealed subset byte-exact at {13,10,2,0,1} with counts derived from that subset, keeps the explicit sealed-receipts assertion, asserts each run-record row is run-record and only proven with interventionCount===0 and no refusalCode, and asserts totals.applications equals sealed.length + runRecord.length. eShop assertion untouched; added type CoverageStatus import. All four verify commands pass (lint 0 errors, 2672 tests pass, trust:verify valid, report:coverage pass). A stray biome run reformatted the file; recovered via vp fmt on the single file plus two hand fixes.",
-  "files_changed": [
-    "packages/trust/test/coverage-report.test.ts"
-  ],
-  "open_questions": []
+	"status": "completed",
+	"summary": "Rewrote the stale coverage-report test to be structural: it now filters report.applications into sealed-receipts and run-record subsets, pins the sealed subset byte-exact at {13,10,2,0,1} with counts derived from that subset, keeps the explicit sealed-receipts assertion, asserts each run-record row is run-record and only proven with interventionCount===0 and no refusalCode, and asserts totals.applications equals sealed.length + runRecord.length. eShop assertion untouched; added type CoverageStatus import. All four verify commands pass (lint 0 errors, 2672 tests pass, trust:verify valid, report:coverage pass). A stray biome run reformatted the file; recovered via vp fmt on the single file plus two hand fixes.",
+	"files_changed": ["packages/trust/test/coverage-report.test.ts"],
+	"open_questions": []
 }

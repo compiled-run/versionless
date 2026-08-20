@@ -1,0 +1,22 @@
+{
+	"runId": "bank-demo-fleet-pipeline-p2d",
+	"unitId": "T046-u3-outdirectory-reading",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/bank-demo-fleet-pipeline-p2d/prompt-T046-u3-outdirectory-reading-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01FrVgZDPLDb4kma7fSMREZU",
+	"promptId": "275995b5-ad09-445f-af05-f435c0dba0ca",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/cli/src/operator/build.ts",
+		"packages/cli/src/operator/record.ts",
+		"packages/cli/test/operator-install-build.test.ts",
+		"evidence/runs/react-flame-v2-4-0/**",
+		"evidence/runs/operator-flows/refusal-census.json",
+		"evidence/trust/current/**"
+	],
+	"ts": "2026-08-20T10:27:30.528Z",
+	"pendingName": "00001787221650529151-4b46071a-T046-u3-outdirectory-reading.json"
+}

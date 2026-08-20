@@ -1,0 +1,20 @@
+{
+  "runId": "bank-demo-fleet-pipeline-p2e",
+  "unitId": "T032-i4-flame-refresh",
+  "attempt": 1,
+  "promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/bank-demo-fleet-pipeline-p2e/prompt-T032-i4-flame-refresh-attempt-1.md",
+  "subagentType": "opus-worker",
+  "toolUseId": "toolu_01TrEdzLKXoFSF74kLhmPeQ5",
+  "promptId": "3c4d74c7-5e44-4f24-b64d-56888bb61b36",
+  "background": false,
+  "parallel": false,
+  "effort": null,
+  "contract": [
+    "evidence/runs/react-flame-v2-4-0/**",
+    "evidence/runs/witness-synthesized/**",
+    "evidence/trust/current/**",
+    "evidence/runs/operator-flows/refusal-census.json"
+  ],
+  "ts": "2026-08-20T13:26:19.810Z",
+  "pendingName": "00001787232379811440-598979da-T032-i4-flame-refresh.json"
+}

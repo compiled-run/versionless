@@ -1,0 +1,45 @@
+--- pnpm exec vp test --project node (exit 0) ---
+ RUN  /Users/jacksm5pro/dev/open-source/versionless
+
+{"preflight":"pass"}
+
+ Test Files  261 passed (261)
+      Tests  2825 passed | 2 skipped (2827)
+   Start at  07:59:25
+   Duration  143.85s (transform 10.45s, setup 0ms, import 34.41s, tests 253.03s, environment 13ms)
+
+
+
+--- node --experimental-strip-types packages/cli/src/cli.ts refusal-census --verify-only --json 2>/dev/null | node -e "let b='';process.stdin.on('data',d=>b+=d);process.stdin.on('end',()=>{const d=JSON.parse(b);if(!d.matchesPublished)throw new Error('census drifted');console.log('CENSUS-OK sites='+d.census.summary.sites)})" (exit 0) ---
+CENSUS-OK sites=198
+
+
+--- npm run trust:verify -- --offline (exit 0) ---
+{"valid":true,"digest":"328766e0b165f05d8d3685d6eba61d84edfe3513705f5e6c731b1ddc49230b2a","deterministicCore":"c4c65feb38c59e70d4a96040a0bcf5dabe4bc2e6f52b6c0b6fb63bacff29a45e","artifacts":12}
+
+npm warn Unknown project config "store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "virtual-store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "state-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm notice run versionless-workspace@0.0.0 trust:verify
+npm notice run node --experimental-strip-types packages/cli/src/cli.ts trust:verify --offline
+
+--- node -e "const r=require('./evidence/trust/current/coverage-report.json').totals;if(r.proven!==11||r.applications!==23)throw new Error(JSON.stringify(r));console.log('COVERAGE-TOTALS-UNCHANGED')" (exit 0) ---
+COVERAGE-TOTALS-UNCHANGED
+
+
+--- node --experimental-strip-types packages/cli/src/cli.ts supported-matrix --offline 2>&1 | grep -q "react: 6 counted of 6" && echo REACT-CELLS-UNCHANGED (exit 0) ---
+REACT-CELLS-UNCHANGED
+
+
+--- node -e "const f=require('./evidence/trust/current/adapter-freeze.json');if(!String(f.freeze.composite).startsWith('140ce86e'))throw new Error('composite moved');console.log('COMPOSITE-STABLE')" (exit 0) ---
+COMPOSITE-STABLE
+
+
+--- git diff --quiet HEAD -- evidence/runs/react-flame-v2-4-0 evidence/runs/angular2-hn && echo APP-RECORDS-UNTOUCHED (exit 0) ---
+APP-RECORDS-UNTOUCHED
+
+
+--- git diff --quiet HEAD -- packages/frameworks packages/core packages/trust/src && echo FROZEN-TRUST-CORE-UNTOUCHED (exit 0) ---
+FROZEN-TRUST-CORE-UNTOUCHED
+
+

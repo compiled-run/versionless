@@ -8,6 +8,7 @@ The coverage grind, React batch: acquire **6–8 React applications the pipeline
 Why this shape. The owner will run this on a bank's repo live. The runbook needs to say honestly: "N of 8 admitted with nothing declared; M of 8 with one fleet-wide declaration; the rest refused, by these codes." Two summaries give exactly that sentence.
 
 Everything you need exists; you are operating it, not building it:
+
 - `versionless acquire <owner/repo> --ref <tag> --id <id> --consent VL-LEGACY-CORPUS-2026-08-10 --json` (T016) — the ONLY fetch path; writes `.versionless/work/<id>/baseline` and `evidence/ingests/<id>/source.json`.
 - `versionless batch --apps <manifest.json|roots…> --out <lane-root> --publish --json` (T021) — serial per app, harness per app, files `evidence/runs/<id>/run-record.json` + `.interventions.json`, writes `evidence/runs/fleet-batch/<name>/fleet-summary.{json,md}`, and `--publish` runs pack-if-stale → trust:generate → trust:verify → report:coverage. Read `packages/cli/src/operator/batch.ts` for how `--name` (or equivalent) sets the summary dir and how per-stage flags (`--node`, `--allow-peer-conflicts`, `--allow-remote-tarballs`, `--allow-install-scripts`, `--journeys`) are forwarded uniformly.
 - Prior scouts left verified candidate menus: read the FULL JSON of `.fable-opus/state/outcome-u2-react-candidate-scout.json` and `outcome-t007-s1-holdout-scout.json`; if the outcome files carry only summaries, the shortlists are in the corresponding transcripts under `.fable-opus/runs/*/` — grep for the unit ids. You may also pick well-known public CRA-era React apps yourself if the menus are exhausted; the bar is: `react-scripts` declared in package.json (the frozen adapter admits CRA→Vite; ejected/umi/webpack trees refuse at plan), an OSI licence file at the pin, a pinned tag, small enough to install and build in budget, and ideally a single-major Node declaration (`.nvmrc` or `engines.node: "16.x"`) so era-cell reads it.
@@ -15,6 +16,7 @@ Everything you need exists; you are operating it, not building it:
 **EXCLUSION LIST — none of these**: any id under `evidence/ingests/` (56 today: `ls evidence/ingests`), any dir under `.versionless/work/`, any module under `packages/cli/src/fixture/` or `packages/cli/src/witness/`, anything in `legacy-candidate-ingest.ts`. Show the check for each chosen app in the receipt.
 
 Do, in order:
+
 1. Choose 6–8 candidates; for each record repo, tag, why chosen, and the exclusion check.
 2. `acquire` each. A candidate whose acquisition refuses (licence absent, parity fail, ref unresolvable) is recorded with its code and replaced if you have spares; do not fight it.
 3. Write a manifest of the acquired baselines; run `batch --publish` with the name `t013a-undeclared` and NO per-app flags. Read the summary: totals, per-app terminal classification and refusal code, `interventionCount` (must be 0 across the batch).

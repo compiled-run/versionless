@@ -1,0 +1,19 @@
+{
+	"runId": "bank-demo-fleet-pipeline-p2",
+	"unitId": "T009b-pigallery2-lane-pair",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/bank-demo-fleet-pipeline-p2/prompt-T009b-pigallery2-lane-pair-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01TsDjSwiVuPvi5oP6erxUgn",
+	"promptId": "92e6ff07-93d2-4f7a-a903-8ac5dc9b0cfd",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		".versionless/work/angular-pigallery2/**",
+		".versionless/cache/**",
+		"evidence/runs/angular-13cell/**"
+	],
+	"ts": "2026-08-20T05:20:52.405Z",
+	"pendingName": "00001787203252406767-d55d5a31-T009b-pigallery2-lane-pair.json"
+}

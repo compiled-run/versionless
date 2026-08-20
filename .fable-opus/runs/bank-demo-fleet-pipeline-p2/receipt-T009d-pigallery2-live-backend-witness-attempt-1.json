@@ -1,0 +1,28 @@
+{
+	"status": "completed",
+	"summary": "Stood up pigallery2's own Express backend at era Node 10.24.1 on 127.0.0.1:32701, pointed it at each built lane in turn (dist symlink), seeded with 3 locally-generated PNGs, and witnessed both serially through the pipeline's witness host with real Chromium. Baseline lane runs: bootstraps, routes to /gallery/, two 200 API calls, 3 photo tiles. Migrated lane loads all bundles 200 then dies on 'ReferenceError: $localize is not defined' before bootstrap, zero API calls. parity.identical=false; T009c's shell parity superseded. successfulNonLoopback 0 both lanes. CLI live-backend path is gated on a closed app-name list, so the seam was operated, not extended. All five verification commands pass.",
+	"files_changed": [
+		"evidence/runs/angular-13cell/pigallery2-live-witness.json",
+		"evidence/runs/angular-13cell/README.md",
+		".versionless/work/angular-pigallery2/logs/t009d-backend.sh",
+		".versionless/work/angular-pigallery2/logs/t009d-gen-media.cjs",
+		".versionless/work/angular-pigallery2/logs/t009d-live-witness.mjs",
+		".versionless/work/angular-pigallery2/logs/t009d-emit-live-witness.cjs",
+		".versionless/work/angular-pigallery2/logs/t009d-media.json",
+		".versionless/work/angular-pigallery2/logs/t009d-plan.json",
+		".versionless/work/angular-pigallery2/logs/t009d-lane-baseline.json",
+		".versionless/work/angular-pigallery2/logs/t009d-lane-migrated.json",
+		".versionless/work/angular-pigallery2/logs/t009d-backend-baseline.log",
+		".versionless/work/angular-pigallery2/logs/t009d-backend-migrated.log",
+		".versionless/work/angular-pigallery2/logs/t009d-start-baseline.txt",
+		".versionless/work/angular-pigallery2/logs/t009d-start-migrated.txt",
+		".versionless/work/angular-pigallery2/serve/media/a-crimson.png",
+		".versionless/work/angular-pigallery2/serve/media/b-forest.png",
+		".versionless/work/angular-pigallery2/serve/media/c-indigo.png",
+		".versionless/work/angular-pigallery2/serve/baseline/",
+		".versionless/work/angular-pigallery2/serve/migrated/"
+	],
+	"open_questions": [
+		"The migrated lane's $localize defect is named, not diagnosed to its root: no rebuild with @angular/localize/init was attempted, so it is not established that adding the polyfill is sufficient. That is the obvious next unit, and T010 should price pigallery2 on a negative live-backend result until it lands."
+	]
+}

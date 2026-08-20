@@ -1,0 +1,9 @@
+{
+	"agentId": "ab64a8076f670dcac",
+	"runId": "bank-demo-fleet-pipeline-p2b",
+	"unitId": "T010-u7-compose-i18n",
+	"attempt": 1,
+	"toolUseId": "toolu_01XFBkL1R3YAkZE7rUv1BYse",
+	"bindingRoute": "sole",
+	"startedAt": "2026-08-20T08:20:01.732Z"
+}

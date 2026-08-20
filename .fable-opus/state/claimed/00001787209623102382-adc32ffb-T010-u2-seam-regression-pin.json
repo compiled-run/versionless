@@ -1,0 +1,18 @@
+{
+	"runId": "bank-demo-fleet-pipeline-p2b",
+	"unitId": "T010-u2-seam-regression-pin",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/bank-demo-fleet-pipeline-p2b/prompt-T010-u2-seam-regression-pin-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01MekhLyUgyKTXjxTXe4fai9",
+	"promptId": "4baafae2-4bc2-466b-881e-25473be61e99",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/cli/test/operator-flows.test.ts",
+		"packages/cli/test/operator-era-cell.test.ts"
+	],
+	"ts": "2026-08-20T07:07:03.101Z",
+	"pendingName": "00001787209623102382-adc32ffb-T010-u2-seam-regression-pin.json"
+}

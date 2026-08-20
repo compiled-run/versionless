@@ -1,0 +1,9 @@
+{
+	"agentId": "a61f953ef40fc9021",
+	"runId": "bank-demo-fleet-pipeline-p2",
+	"unitId": "T009d-pigallery2-live-backend-witness",
+	"attempt": 1,
+	"toolUseId": "toolu_01KmcqiJS3SZAbsRb1T7WjbK",
+	"bindingRoute": "sole",
+	"startedAt": "2026-08-20T05:41:05.456Z"
+}

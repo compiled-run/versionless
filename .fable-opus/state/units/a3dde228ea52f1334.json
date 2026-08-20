@@ -1,9 +1,9 @@
 {
-  "agentId": "a3dde228ea52f1334",
-  "runId": "bank-demo-fleet-pipeline-p1c",
-  "unitId": "T030-run-materialize-pass3",
-  "attempt": 1,
-  "toolUseId": "toolu_01DLpwA9nYv2zaZ4TLYGvg2J",
-  "bindingRoute": "sole",
-  "startedAt": "2026-08-17T23:44:52.312Z"
+	"agentId": "a3dde228ea52f1334",
+	"runId": "bank-demo-fleet-pipeline-p1c",
+	"unitId": "T030-run-materialize-pass3",
+	"attempt": 1,
+	"toolUseId": "toolu_01DLpwA9nYv2zaZ4TLYGvg2J",
+	"bindingRoute": "sole",
+	"startedAt": "2026-08-17T23:44:52.312Z"
 }

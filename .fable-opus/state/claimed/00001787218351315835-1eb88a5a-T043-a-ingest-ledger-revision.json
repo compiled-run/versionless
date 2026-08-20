@@ -1,0 +1,21 @@
+{
+	"runId": "bank-demo-fleet-pipeline-p2c",
+	"unitId": "T043-a-ingest-ledger-revision",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/bank-demo-fleet-pipeline-p2c/prompt-T043-a-ingest-ledger-revision-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01E625yP3D7ciMXLzZEa3oRA",
+	"promptId": "af9c8030-224c-43e1-9afa-99945c6e164c",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/cli/src/operator/ingest.ts",
+		"packages/cli/test/operator-ingest.test.ts",
+		"evidence/runs/**",
+		"evidence/trust/current/**",
+		"evidence/runs/operator-flows/refusal-census.json"
+	],
+	"ts": "2026-08-20T09:32:31.314Z",
+	"pendingName": "00001787218351315835-1eb88a5a-T043-a-ingest-ledger-revision.json"
+}

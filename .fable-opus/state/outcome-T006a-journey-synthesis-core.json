@@ -1,11 +1,11 @@
 {
-  "unitId": "T006a-journey-synthesis-core",
-  "runId": "bank-demo-fleet-pipeline",
-  "attempt": 1,
-  "outcome": "completed",
-  "reason": "Built journey-synthesis core: Cypress and Playwright spec readers (AST-parsed, replayable steps kept, custom commands/intercepts/fixture state recorded as named unhandled notes), a loopback-only bounded crawl fallback, and an emitter mapping to the real-app JourneyEvidence shape with a closed measured-pins vocabulary that refuses verdict words by construction. Added the witness-synthesize operator command with a PipelineRefusal, wired into OPERATOR_COMMANDS, PIPELINE_STAGES and the census. 18 new tests. Verified: lint, npm test (2580/2580, run before a whitespace-only revert), trust:verify --offline (c9941f8f), receipt:verify, census --verify-only, FREEZE-INTACT. real-app-run.ts carries only the JourneyEvidence type export.",
-  "agentId": "aa50c53ab6a508db4",
-  "background": false,
-  "verdictDelivered": true,
-  "ts": "2026-08-17T18:17:43.684Z"
+	"unitId": "T006a-journey-synthesis-core",
+	"runId": "bank-demo-fleet-pipeline",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Built journey-synthesis core: Cypress and Playwright spec readers (AST-parsed, replayable steps kept, custom commands/intercepts/fixture state recorded as named unhandled notes), a loopback-only bounded crawl fallback, and an emitter mapping to the real-app JourneyEvidence shape with a closed measured-pins vocabulary that refuses verdict words by construction. Added the witness-synthesize operator command with a PipelineRefusal, wired into OPERATOR_COMMANDS, PIPELINE_STAGES and the census. 18 new tests. Verified: lint, npm test (2580/2580, run before a whitespace-only revert), trust:verify --offline (c9941f8f), receipt:verify, census --verify-only, FREEZE-INTACT. real-app-run.ts carries only the JourneyEvidence type export.",
+	"agentId": "aa50c53ab6a508db4",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-17T18:17:43.684Z"
 }

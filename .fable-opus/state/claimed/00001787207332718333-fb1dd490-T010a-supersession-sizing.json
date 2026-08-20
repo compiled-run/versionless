@@ -1,0 +1,15 @@
+{
+	"runId": "bank-demo-fleet-pipeline-p2",
+	"unitId": "T010a-supersession-sizing",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/bank-demo-fleet-pipeline-p2/prompt-T010a-supersession-sizing-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01G22JLrbJdW2vJuFPFzjL88",
+	"promptId": "93b76288-168f-4119-81c1-1c2f92f07caf",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": ["docs/goals/bank-demo-fleet-pipeline/notes/T010a-supersession-sizing.md"],
+	"ts": "2026-08-20T06:28:52.717Z",
+	"pendingName": "00001787207332718333-fb1dd490-T010a-supersession-sizing.json"
+}

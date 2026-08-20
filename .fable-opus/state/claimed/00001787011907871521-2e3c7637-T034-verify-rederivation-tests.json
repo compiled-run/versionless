@@ -1,22 +1,22 @@
 {
-  "runId": "bank-demo-fleet-pipeline-p1c",
-  "unitId": "T034-verify-rederivation-tests",
-  "attempt": 1,
-  "promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/bank-demo-fleet-pipeline-p1c/prompt-T034-verify-rederivation-tests-attempt-1.md",
-  "subagentType": "opus-worker",
-  "toolUseId": "toolu_011uepFTMqV7AcaV9TUP9abm",
-  "promptId": "eefd1d65-54c8-495a-b8e1-690af0b34f44",
-  "background": false,
-  "parallel": false,
-  "effort": null,
-  "contract": [
-    "packages/trust/src/verify.ts",
-    "packages/cli/src/cli.ts",
-    "packages/cli/test/operator-ingest.test.ts",
-    "packages/core/test/**",
-    "packages/trust/test/**",
-    "evidence/trust/current/**"
-  ],
-  "ts": "2026-08-18T00:11:47.870Z",
-  "pendingName": "00001787011907871521-2e3c7637-T034-verify-rederivation-tests.json"
+	"runId": "bank-demo-fleet-pipeline-p1c",
+	"unitId": "T034-verify-rederivation-tests",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/bank-demo-fleet-pipeline-p1c/prompt-T034-verify-rederivation-tests-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_011uepFTMqV7AcaV9TUP9abm",
+	"promptId": "eefd1d65-54c8-495a-b8e1-690af0b34f44",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/trust/src/verify.ts",
+		"packages/cli/src/cli.ts",
+		"packages/cli/test/operator-ingest.test.ts",
+		"packages/core/test/**",
+		"packages/trust/test/**",
+		"evidence/trust/current/**"
+	],
+	"ts": "2026-08-18T00:11:47.870Z",
+	"pendingName": "00001787011907871521-2e3c7637-T034-verify-rederivation-tests.json"
 }

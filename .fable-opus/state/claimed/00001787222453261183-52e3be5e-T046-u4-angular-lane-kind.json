@@ -1,0 +1,20 @@
+{
+	"runId": "bank-demo-fleet-pipeline-p2d",
+	"unitId": "T046-u4-angular-lane-kind",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/bank-demo-fleet-pipeline-p2d/prompt-T046-u4-angular-lane-kind-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01B3Y92KnWcjN7g9v4oYzAhd",
+	"promptId": "79705e2e-3d64-44e5-a5fa-78ee791d1f90",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/cli/src/operator/build.ts",
+		"packages/cli/src/operator/record.ts",
+		"packages/cli/test/operator-install-build.test.ts",
+		"evidence/runs/operator-flows/refusal-census.json"
+	],
+	"ts": "2026-08-20T10:40:53.260Z",
+	"pendingName": "00001787222453261183-52e3be5e-T046-u4-angular-lane-kind.json"
+}

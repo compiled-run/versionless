@@ -1,18 +1,18 @@
 {
-  "status": "blocked",
-  "summary": "Landed (a): verify.ts:254 and cli.ts:278 now pass runRecords; trust:verify --offline green (e8769266), corpus:verify reports 13. Passing runRecords alone was insufficient, so within verify.ts I also made the transaction-state comparison and the report-text assertion read sealed count plus re-derived run-record rows, mirroring conformance.ts:4087. Landed (b): all five requested tests, plus repaired four T033-red test files in contract. Trust not regenerated. 12 of 14 verify commands pass; freeze composite, sealed numbers, matrix cells, proven=11 and CONFORMANCE-13 all green.",
-  "files_changed": [
-    "packages/trust/src/verify.ts",
-    "packages/cli/src/cli.ts",
-    "packages/cli/test/operator-ingest.test.ts",
-    "packages/core/test/corpus-conformance-run-record-admission.test.ts",
-    "packages/trust/test/run-record-source-round-trip.test.ts",
-    "packages/trust/test/coverage-report.test.ts",
-    "packages/trust/test/coverage-report-run-record-basis.test.ts",
-    "packages/trust/test/trust-package.test.ts"
-  ],
-  "open_questions": [
-    "packages/cli/src/enterprise/enterprise-report-run.ts:64 is a THIRD analyzeCorpusConformance({rootDir: root}) call with no runRecords, feeding the enterprise report; it re-derives 12 against a published report built from 13, so `report:enterprise --offline --verify-only` throws 'enterprise-report.json does not match independent re-derivation'. Fix is identical to the two named sites (runRecords: await readRunRecords(root) + import from ../../trust/src/coverage-report.ts). File is outside my contract — may I have it?",
-    "packages/cli/test/corpus-conformance.test.ts:23 pins sourceApplications: 12 for corpus:verify, which now correctly reports 13. One-line expectation update; the file is outside my contract (contract names only packages/cli/test/operator-ingest.test.ts). This is the only npm test failure (1 of 2708)."
-  ]
+	"status": "blocked",
+	"summary": "Landed (a): verify.ts:254 and cli.ts:278 now pass runRecords; trust:verify --offline green (e8769266), corpus:verify reports 13. Passing runRecords alone was insufficient, so within verify.ts I also made the transaction-state comparison and the report-text assertion read sealed count plus re-derived run-record rows, mirroring conformance.ts:4087. Landed (b): all five requested tests, plus repaired four T033-red test files in contract. Trust not regenerated. 12 of 14 verify commands pass; freeze composite, sealed numbers, matrix cells, proven=11 and CONFORMANCE-13 all green.",
+	"files_changed": [
+		"packages/trust/src/verify.ts",
+		"packages/cli/src/cli.ts",
+		"packages/cli/test/operator-ingest.test.ts",
+		"packages/core/test/corpus-conformance-run-record-admission.test.ts",
+		"packages/trust/test/run-record-source-round-trip.test.ts",
+		"packages/trust/test/coverage-report.test.ts",
+		"packages/trust/test/coverage-report-run-record-basis.test.ts",
+		"packages/trust/test/trust-package.test.ts"
+	],
+	"open_questions": [
+		"packages/cli/src/enterprise/enterprise-report-run.ts:64 is a THIRD analyzeCorpusConformance({rootDir: root}) call with no runRecords, feeding the enterprise report; it re-derives 12 against a published report built from 13, so `report:enterprise --offline --verify-only` throws 'enterprise-report.json does not match independent re-derivation'. Fix is identical to the two named sites (runRecords: await readRunRecords(root) + import from ../../trust/src/coverage-report.ts). File is outside my contract — may I have it?",
+		"packages/cli/test/corpus-conformance.test.ts:23 pins sourceApplications: 12 for corpus:verify, which now correctly reports 13. One-line expectation update; the file is outside my contract (contract names only packages/cli/test/operator-ingest.test.ts). This is the only npm test failure (1 of 2708)."
+	]
 }

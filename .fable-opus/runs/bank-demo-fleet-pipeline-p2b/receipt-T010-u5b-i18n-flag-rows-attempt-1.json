@@ -1,0 +1,13 @@
+{
+	"status": "blocked",
+	"summary": "All delta-item-7 work is landed in the tree and passing: three carriesValue i18n rows at removedAfterMajor 12 with no successor, value-capture in both token forms, widened ScriptFlagChange.from carrying the removed value into the changeset, negative pin for the surviving --i18n-missing-translation, and 18 tests including 16- and 13-cell pigallery2 cases. Sealed path moved and regenerated: byte-identity angular digest 2b85d619->a044d716, identical true. holdout-angular-pigallery2.ts needed no edit — it derives from the sealed attempt.json and carries no output digest. Full node suite, census, trust, receipt, corpus and frozen-delta all pass. Blocked only on the byte-identity verify command's JSON path.",
+	"files_changed": [
+		"packages/frameworks/angular/src/workspace-script-flags.ts",
+		"packages/frameworks/angular/test/workspace-script-flags.test.ts",
+		"evidence/runs/operator-flows/byte-identity.json"
+	],
+	"open_questions": [
+		"Verification command 2 reads b.identical / b.operatorDigest / b.driverDigest at the top level, but schema versionless.operator-flow-byte-identity.v1 nests them under .angular and .react, so b.identical is undefined and the command throws 'not identical' regardless of outcome. Its own literal 2b85d619 is the angular digest, so .angular is the intended target; run against b.angular it prints BYTE-IDENTITY-MOVED-TOGETHER a044d716. Should the check be re-cut as require(...).angular? I did not hand-add top-level mirror fields because operator-flow-byte-identity-run.ts regenerates the file and would drop them, leaving committed evidence diverging from its generator.",
+		"The packet directed me to update changeset/output digest constants in packages/core/src/receipts/holdout-angular-pigallery2.ts, but no such constant exists: the receipt derives every field from the sealed attempt.json plus two lane logs bound by sha256, and its only 64-hex constants are those three run-evidence hashes, the 4df7bc96 freeze fingerprint and the 1f63f32c subtree oid — all history per freeze.ts:52-56. receipt:verify is green with the file untouched. Confirm that leaving it unedited is correct rather than a missed surface."
+	]
+}

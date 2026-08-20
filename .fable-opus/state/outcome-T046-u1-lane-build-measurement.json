@@ -1,0 +1,11 @@
+{
+	"unitId": "T046-u1-lane-build-measurement",
+	"runId": "bank-demo-fleet-pipeline-p2d",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Measured npm run build in the angular2-hn lane under host Node v24.15.0 and the provisioned v16.20.2. Both fail at exit 1 within ~1s with byte-identical diagnostics: 'Schema validation failed with the following errors: / Data path \"/polyfills\" must be string.' Confirms O1 by measurement — the 13.3.11 devkit rejects the array the frozen adapter wrote; u2 and risk R1 stand. O2 is unresolvable here: the validator precedes the compiler, so no toolchain diagnostic was reached and O2 is blocked behind u2. No network reach, no lane mutation, no dist created. All four verify commands pass.",
+	"agentId": "ae336985ebae27386",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-20T10:16:40.277Z"
+}

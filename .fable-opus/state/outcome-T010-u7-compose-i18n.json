@@ -1,0 +1,11 @@
+{
+	"unitId": "T010-u7-compose-i18n",
+	"runId": "bank-demo-fleet-pipeline-p2b",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Delivered all five parts: widened template-i18n gate with a supplied LocalizeClosureReading (either reading admits, never inferred from the cell), provideEraLocaleId composed last in the per-module pipeline behind eraLocale on AngularMigrationInput, barrel export, locale-id-provider coverage entry, trust+census regenerated. All packet guards reproduce (sealed a044d716, census 192 byte-identical, trust valid, matrix 6/6 4/4, coverage 21/11/2/5/3, composite 27741d9c). vp test is 2 failed of 2770; both are literal capability-count pins in packages/trust/test/, outside my contract, moved by the 59th capability the packet ordered.",
+	"agentId": "ab64a8076f670dcac",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-20T08:40:16.230Z"
+}

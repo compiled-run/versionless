@@ -1,0 +1,11 @@
+{
+	"unitId": "T009e-localize-polyfill-rewitness",
+	"runId": "bank-demo-fleet-pipeline-p2",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "ng add @angular/localize@13.4.0 (canonical CLI path, exactly two edits: devDep + polyfills import) fully closes T009d's $localize defect. Rebuilt twice, byte-identical, hash 365f7a87a2b00d00; main bundle sha256 UNCHANGED, proving a pure runtime-environment fix. Re-witnessed both lanes live in one session; baseline reproduced T009d exactly. Migrated lane now bootstraps and routes, but dies on a SECOND i18n defect: \"Cannot find module './messages.en-US.xlf'\" from the TRANSLATIONS useFactory (LOCALE_ID falls back to en-US at v13; the factory guards on 'en' exactly). Still zero API calls, zero tiles. parity.identical is TRUE across one working and one broken lane. Published witness-2 + README; all 5 verify commands pass; T009d untouched.",
+	"agentId": "a455b0b21dd9125b5",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-20T06:16:46.862Z"
+}

@@ -1,11 +1,11 @@
 {
-  "unitId": "T028-ruling-code-half",
-  "runId": "bank-demo-fleet-pipeline-p1b",
-  "attempt": 1,
-  "outcome": "blocked",
-  "reason": "(0) applyInterventionRule now refuses proven unless every stage row reads `ran`, with named statusReason `stages-not-all-ran`; INTERVENTION_RULE_STATEMENT states the bar; two new tests cover a synthetic proceeded-but-partial run and a run stating no stages. Totals held at {21,10,2,8,1}. (1) RequiredCell split into runtime{major,version,source,readFrom,basis,claim} and era{outcome,declared,readFrom,consultedSources,claim}; readNodeMajorSources reports all seven slots including absent ones as {text:null,majors:null,present:false}; no-era react/next/angular lineages proceed on the lane runtime quoting lane-install-build.json; cell-not-declared-for-framework and node-major-not-inferable kept verbatim, narrowed to lineages with no lane. (2) declaredRangeAdmitsMajor populates only runtime.satisfiedByDeclaredRange; nodeMajorsOfDeclaration untouched; new refusal era-cell.declared-range-excludes-the-lane-runtime. All five notEstablished lines verbatim. Census+trust regenerated; freeze 27741d9c stable. (3) ingest not started.",
-  "agentId": "a541e68552b99d4d9",
-  "background": false,
-  "verdictDelivered": true,
-  "ts": "2026-08-17T23:03:42.129Z"
+	"unitId": "T028-ruling-code-half",
+	"runId": "bank-demo-fleet-pipeline-p1b",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "(0) applyInterventionRule now refuses proven unless every stage row reads `ran`, with named statusReason `stages-not-all-ran`; INTERVENTION_RULE_STATEMENT states the bar; two new tests cover a synthetic proceeded-but-partial run and a run stating no stages. Totals held at {21,10,2,8,1}. (1) RequiredCell split into runtime{major,version,source,readFrom,basis,claim} and era{outcome,declared,readFrom,consultedSources,claim}; readNodeMajorSources reports all seven slots including absent ones as {text:null,majors:null,present:false}; no-era react/next/angular lineages proceed on the lane runtime quoting lane-install-build.json; cell-not-declared-for-framework and node-major-not-inferable kept verbatim, narrowed to lineages with no lane. (2) declaredRangeAdmitsMajor populates only runtime.satisfiedByDeclaredRange; nodeMajorsOfDeclaration untouched; new refusal era-cell.declared-range-excludes-the-lane-runtime. All five notEstablished lines verbatim. Census+trust regenerated; freeze 27741d9c stable. (3) ingest not started.",
+	"agentId": "a541e68552b99d4d9",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-17T23:03:42.129Z"
 }

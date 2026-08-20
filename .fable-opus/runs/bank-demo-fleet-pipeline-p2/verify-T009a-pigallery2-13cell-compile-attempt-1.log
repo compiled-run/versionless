@@ -1,0 +1,25 @@
+--- node -e "const r=require('./evidence/runs/angular-13cell/pigallery2-compile.json');if(r.schemaVersion!=='versionless.angular-13cell-compile.v1')throw new Error('schema');if(!r.cell||!/13\.4\.0/.test(r.cell.angular)||!/16\.20\.2/.test(r.cell.node))throw new Error('cell '+JSON.stringify(r.cell));if(!r.ngcc||!Array.isArray(r.ngcc.libraries)||r.ngcc.libraries.length<2)throw new Error('ngcc libraries');const y=r.ngcc.libraries.find(l=>/leaflet/.test(l.name));if(!y||typeof y.typingsChecked!=='boolean')throw new Error('leaflet typings check missing');if(!r.aot||typeof r.aot.exitCode!=='number')throw new Error('aot');if(!Array.isArray(r.notEstablished)||!r.notEstablished.length)throw new Error('notEstablished');if(!r.integrity||!r.integrity.sha256)throw new Error('integrity');console.log('13CELL-RECORD ok: aot exit '+r.aot.exitCode+' diagnostics '+(r.aot.diagnosticCount??'?')+' ngcc libs '+r.ngcc.libraries.length)" (exit 0) ---
+13CELL-RECORD ok: aot exit 0 diagnostics 0 ngcc libs 4
+
+
+--- test -f evidence/runs/angular-13cell/README.md && echo RECIPE-README-PRESENT (exit 0) ---
+RECIPE-README-PRESENT
+
+
+--- git diff --quiet HEAD -- packages/ && echo NO-PACKAGE-CODE-TOUCHED (exit 0) ---
+NO-PACKAGE-CODE-TOUCHED
+
+
+--- git diff --quiet HEAD -- packages/frameworks/react packages/frameworks/angular packages/core/src/migrations packages/core/src/bundlers packages/core/src/analysis && echo FREEZE-INTACT (exit 0) ---
+FREEZE-INTACT
+
+
+--- npm run trust:verify -- --offline (exit 0) ---
+{"valid":true,"digest":"8d3eadd23e19cfda60672cc8bcc27b5427209a818aa7a3adf33b651d494163b9","deterministicCore":"d8cf777caf96a7e8a8c173f60f2e54754ba71456e8a73e2e1d762ea99a152695","artifacts":12}
+
+npm warn Unknown project config "store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "virtual-store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "state-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm notice run versionless-workspace@0.0.0 trust:verify
+npm notice run node --experimental-strip-types packages/cli/src/cli.ts trust:verify --offline
+
