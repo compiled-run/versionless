@@ -12,14 +12,14 @@
 	],
 	"filesScanned": 85,
 	"summary": {
-		"sites": 196,
+		"sites": 198,
 		"byOrigin": {
 			"frozen-adapter": 101,
-			"pipeline": 95
+			"pipeline": 97
 		},
 		"byClassification": {
 			"defect": 5,
-			"refusal": 141,
+			"refusal": 143,
 			"unclassified": 50
 		},
 		"byStage": {
@@ -31,7 +31,7 @@
 			"build": 9,
 			"era-cell": 9,
 			"ingest": 17,
-			"install": 11,
+			"install": 13,
 			"license-at-pin": 4,
 			"not-reached": 69,
 			"plan": 24,
@@ -41,7 +41,7 @@
 			"witness": 1,
 			"witness-synthesize": 2
 		},
-		"distinctCodes": 196,
+		"distinctCodes": 198,
 		"recordedRefusalSites": 99
 	},
 	"entries": [
@@ -876,7 +876,7 @@
 			"stage": "arguments",
 			"stageBasis": "the command surface parses and validates arguments here before any stage runs.",
 			"file": "packages/cli/src/operator/flows.ts",
-			"line": 399,
+			"line": 403,
 			"enclosing": "parseOperatorArguments"
 		},
 		{
@@ -894,7 +894,7 @@
 			"stage": "arguments",
 			"stageBasis": "the command surface parses and validates arguments here before any stage runs.",
 			"file": "packages/cli/src/operator/flows.ts",
-			"line": 407,
+			"line": 411,
 			"enclosing": "parseOperatorArguments"
 		},
 		{
@@ -909,7 +909,7 @@
 			"stage": "arguments",
 			"stageBasis": "the command surface parses and validates arguments here before any stage runs.",
 			"file": "packages/cli/src/operator/flows.ts",
-			"line": 421,
+			"line": 425,
 			"enclosing": "parseOperatorArguments"
 		},
 		{
@@ -927,7 +927,7 @@
 			"stage": "arguments",
 			"stageBasis": "the command surface parses and validates arguments here before any stage runs.",
 			"file": "packages/cli/src/operator/flows.ts",
-			"line": 434,
+			"line": 438,
 			"enclosing": "parseOperatorArguments"
 		},
 		{
@@ -944,7 +944,7 @@
 			"stage": "arguments",
 			"stageBasis": "the command surface parses and validates arguments here before any stage runs.",
 			"file": "packages/cli/src/operator/flows.ts",
-			"line": 441,
+			"line": 445,
 			"enclosing": "parseOperatorArguments"
 		},
 		{
@@ -961,7 +961,7 @@
 			"stage": "arguments",
 			"stageBasis": "the command surface parses and validates arguments here before any stage runs.",
 			"file": "packages/cli/src/operator/flows.ts",
-			"line": 448,
+			"line": 452,
 			"enclosing": "parseOperatorArguments"
 		},
 		{
@@ -978,7 +978,7 @@
 			"stage": "arguments",
 			"stageBasis": "the command surface parses and validates arguments here before any stage runs.",
 			"file": "packages/cli/src/operator/flows.ts",
-			"line": 456,
+			"line": 460,
 			"enclosing": "parseOperatorArguments"
 		},
 		{
@@ -1312,7 +1312,7 @@
 			"stage": "install",
 			"stageBasis": "the install stage resolves the lane closure through this module.",
 			"file": "packages/cli/src/operator/install.ts",
-			"line": 271,
+			"line": 403,
 			"enclosing": "planLaneInstall"
 		},
 		{
@@ -1329,7 +1329,7 @@
 			"stage": "install",
 			"stageBasis": "the install stage resolves the lane closure through this module.",
 			"file": "packages/cli/src/operator/install.ts",
-			"line": 279,
+			"line": 411,
 			"enclosing": "planLaneInstall"
 		},
 		{
@@ -1348,7 +1348,7 @@
 			"stage": "install",
 			"stageBasis": "the install stage resolves the lane closure through this module.",
 			"file": "packages/cli/src/operator/install.ts",
-			"line": 305,
+			"line": 437,
 			"enclosing": "planLaneInstall"
 		},
 		{
@@ -1368,7 +1368,7 @@
 			"stage": "install",
 			"stageBasis": "the install stage resolves the lane closure through this module.",
 			"file": "packages/cli/src/operator/install.ts",
-			"line": 332,
+			"line": 464,
 			"enclosing": "planLaneInstall"
 		},
 		{
@@ -1386,7 +1386,7 @@
 			"stage": "install",
 			"stageBasis": "the install stage resolves the lane closure through this module.",
 			"file": "packages/cli/src/operator/install.ts",
-			"line": 340,
+			"line": 472,
 			"enclosing": "planLaneInstall"
 		},
 		{
@@ -1404,7 +1404,7 @@
 			"stage": "install",
 			"stageBasis": "the install stage resolves the lane closure through this module.",
 			"file": "packages/cli/src/operator/install.ts",
-			"line": 357,
+			"line": 489,
 			"enclosing": "planLaneInstall"
 		},
 		{
@@ -1424,7 +1424,7 @@
 			"stage": "install",
 			"stageBasis": "the install stage resolves the lane closure through this module.",
 			"file": "packages/cli/src/operator/install.ts",
-			"line": 365,
+			"line": 497,
 			"enclosing": "planLaneInstall"
 		},
 		{
@@ -1443,8 +1443,66 @@
 			"stage": "install",
 			"stageBasis": "the install stage resolves the lane closure through this module.",
 			"file": "packages/cli/src/operator/install.ts",
-			"line": 376,
+			"line": 508,
 			"enclosing": "planLaneInstall"
+		},
+		{
+			"code": "install.peer-resolution-policy-not-declared",
+			"message": "Install: npm refused the lane closure with ERESOLVE — a peer dependency conflict between the application's own era pins and the build toolchain the lane now declares. Declare --allow-peer-conflicts to install through it, which is a decision about what the lane's closure may be, or change what the lane declares. This flow does not take that decision on an operator's behalf.",
+			"messageForm": "static",
+			"staticSegments": [
+				"Install: npm refused the lane closure with ERESOLVE — a peer dependency conflict between the application's own era pins and the build toolchain the lane now declares. Declare --allow-peer-conflicts to install through it, which is a decision about what the lane's closure may be, or change what the lane declares. This flow does not take that decision on an operator's behalf."
+			],
+			"classification": "refusal",
+			"condition": "detail.includes('ERESOLVE') && !policy.allowPeerConflicts",
+			"conditionForm": "if-consequent",
+			"origin": "pipeline",
+			"stage": "install",
+			"stageBasis": "the install stage resolves the lane closure through this module.",
+			"file": "packages/cli/src/operator/install.ts",
+			"line": 1191,
+			"enclosing": "refuseNamedNpmFailure"
+		},
+		{
+			"code": "install.git-dependency-policy-not-declared",
+			"message": "Install: npm refused the lane closure with EALLOWGIT — the closure resolves ${String(reading.refusedSpecs.length)} dependency(ies) from a git reference${reading.refusedSpecs.length === 0 ? '' : `, first ${reading.refusedSpecs[0] ?? ''}`}, and npm fetches none of those by default. Declare --${GIT_DEPENDENCY_POLICY} to carry that policy, which is a decision about what the lane's closure may be: a git dependency is fetched by running git against a remote repository rather than by resolving a registry version, so the registry's version pin, integrity hash and provenance do not apply to it. This flow does not take that decision on an operator's behalf. ${verbatim(reading)}",
+			"messageForm": "composed",
+			"staticSegments": [
+				"Install: npm refused the lane closure with EALLOWGIT — the closure resolves",
+				"dependency(ies) from a git reference",
+				", and npm fetches none of those by default. Declare --",
+				"to carry that policy, which is a decision about what the lane's closure may be: a git dependency is fetched by running git against a remote repository rather than by resolving a registry version, so the registry's version pin, integrity hash and provenance do not apply to it. This flow does not take that decision on an operator's behalf."
+			],
+			"classification": "refusal",
+			"condition": "reading.code === 'EALLOWGIT' && !policy.allowGitDependencies",
+			"conditionForm": "if-consequent",
+			"origin": "pipeline",
+			"stage": "install",
+			"stageBasis": "the install stage resolves the lane closure through this module.",
+			"file": "packages/cli/src/operator/install.ts",
+			"line": 1205,
+			"enclosing": "refuseNamedNpmFailure"
+		},
+		{
+			"code": "install.closure-registry-unreachable",
+			"message": "Install: this closure pins ${reading.request.host}, and npm could not reach it — ${reading.code}, requesting ${reading.request.url}. There is no policy to declare here and this flow offers none: no allowance makes an unreachable registry answer, and a closure that resolves through a registry that is gone cannot be installed as recorded. What this establishes is that this run did not reach ${reading.request.host}; whether that host is retired or momentarily unreachable is not established here, and neither is what it would have served. The remedy is re-pinning the closure onto a registry that answers, which changes what the application declares and is therefore a migration decision rather than an install policy. ${verbatim(reading)}",
+			"messageForm": "composed",
+			"staticSegments": [
+				"Install: this closure pins",
+				", and npm could not reach it —",
+				", requesting",
+				". There is no policy to declare here and this flow offers none: no allowance makes an unreachable registry answer, and a closure that resolves through a registry that is gone cannot be installed as recorded. What this establishes is that this run did not reach",
+				"; whether that host is retired or momentarily unreachable is not established here, and neither is what it would have served. The remedy is re-pinning the closure onto a registry that answers, which changes what the application declares and is therefore a migration decision rather than an install policy."
+			],
+			"classification": "refusal",
+			"condition": "reading.code !== null && REGISTRY_UNREACHABLE_CODES.includes(reading.code) && reading.request !== null && reading.request.host !== DEFAULT_REGISTRY_HOST",
+			"conditionForm": "if-consequent",
+			"origin": "pipeline",
+			"stage": "install",
+			"stageBasis": "the install stage resolves the lane closure through this module.",
+			"file": "packages/cli/src/operator/install.ts",
+			"line": 1230,
+			"enclosing": "refuseNamedNpmFailure"
 		},
 		{
 			"code": "install.script-wrote-outside-lane",
@@ -1464,24 +1522,7 @@
 			"stage": "install",
 			"stageBasis": "the install stage resolves the lane closure through this module.",
 			"file": "packages/cli/src/operator/install.ts",
-			"line": 983,
-			"enclosing": "runLaneInstall"
-		},
-		{
-			"code": "install.peer-resolution-policy-not-declared",
-			"message": "Install: npm refused the lane closure with ERESOLVE — a peer dependency conflict between the application's own era pins and the build toolchain the lane now declares. Declare --allow-peer-conflicts to install through it, which is a decision about what the lane's closure may be, or change what the lane declares. This flow does not take that decision on an operator's behalf.",
-			"messageForm": "static",
-			"staticSegments": [
-				"Install: npm refused the lane closure with ERESOLVE — a peer dependency conflict between the application's own era pins and the build toolchain the lane now declares. Declare --allow-peer-conflicts to install through it, which is a decision about what the lane's closure may be, or change what the lane declares. This flow does not take that decision on an operator's behalf."
-			],
-			"classification": "refusal",
-			"condition": "detail.includes('ERESOLVE') && !policy.allowPeerConflicts",
-			"conditionForm": "if-consequent",
-			"origin": "pipeline",
-			"stage": "install",
-			"stageBasis": "the install stage resolves the lane closure through this module.",
-			"file": "packages/cli/src/operator/install.ts",
-			"line": 1000,
+			"line": 1287,
 			"enclosing": "runLaneInstall"
 		},
 		{
@@ -1499,7 +1540,7 @@
 			"stage": "install",
 			"stageBasis": "the install stage resolves the lane closure through this module.",
 			"file": "packages/cli/src/operator/install.ts",
-			"line": 1027,
+			"line": 1323,
 			"enclosing": "runLaneInstall"
 		},
 		{
@@ -1785,7 +1826,7 @@
 			"stage": "arguments",
 			"stageBasis": "the run flow composes every stage in order here; what it raises of its own is about the chaining, before any stage decides anything.",
 			"file": "packages/cli/src/operator/run.ts",
-			"line": 542,
+			"line": 543,
 			"enclosing": "applied"
 		},
 		{

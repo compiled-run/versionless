@@ -176,6 +176,37 @@ describe('the loop', () => {
 		expect(invocation.argv).toContain('--allow-foreign-lockfile');
 	});
 
+	/**
+	 * The fifth is forwarded the same way, and the batch is where it is actually
+	 * answered: a fleet either fetches git dependencies or it does not, and a
+	 * bank operator says which once. The refusal it converts has no per-app
+	 * escape hatch here — every harness gets the declaration or none does.
+	 */
+	it('forwards the git-dependency policy to every application, like the other four', () => {
+		const forwarded = forwardedRunFlags({
+			'--out': ['lanes'],
+			'--cell': ['react-18.2.0'],
+			'--allow-remote-tarballs': [],
+			'--allow-install-scripts': [],
+			'--allow-peer-conflicts': [],
+			'--allow-foreign-lockfile': [],
+			'--allow-git-dependencies': [],
+		});
+		expect(forwarded).toEqual([
+			'--allow-foreign-lockfile',
+			'--allow-git-dependencies',
+			'--allow-install-scripts',
+			'--allow-peer-conflicts',
+			'--allow-remote-tarballs',
+			'--cell',
+			'react-18.2.0',
+		]);
+		for (const name of ['one', 'two'])
+			expect(
+				harnessInvocationFor(application(name), { laneRoot: 'lanes', forwarded }).argv,
+			).toContain('--allow-git-dependencies');
+	});
+
 	it('runs applications serially, in the order declared, never two at once', async () => {
 		await withTemporaryCwd(async () => {
 			const order: string[] = [];

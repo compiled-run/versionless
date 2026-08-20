@@ -271,6 +271,7 @@ const BOOLEAN_FLAGS: Readonly<Record<OperatorCommand, readonly string[]>> = Obje
 		'--skip-install-scripts',
 		'--allow-peer-conflicts',
 		'--allow-foreign-lockfile',
+		'--allow-git-dependencies',
 	]),
 	/**
 	 * The stage switches are absent on purpose: `run` runs every stage, so
@@ -293,6 +294,7 @@ const BOOLEAN_FLAGS: Readonly<Record<OperatorCommand, readonly string[]>> = Obje
 		'--skip-install-scripts',
 		'--allow-peer-conflicts',
 		'--allow-foreign-lockfile',
+		'--allow-git-dependencies',
 	]),
 	'intervention-count': Object.freeze([
 		'--materialize',
@@ -303,6 +305,7 @@ const BOOLEAN_FLAGS: Readonly<Record<OperatorCommand, readonly string[]>> = Obje
 		'--skip-install-scripts',
 		'--allow-peer-conflicts',
 		'--allow-foreign-lockfile',
+		'--allow-git-dependencies',
 	]),
 	/**
 	 * `--publish` is the ordering step, not a stage switch: it runs the build,
@@ -319,6 +322,7 @@ const BOOLEAN_FLAGS: Readonly<Record<OperatorCommand, readonly string[]>> = Obje
 		'--skip-install-scripts',
 		'--allow-peer-conflicts',
 		'--allow-foreign-lockfile',
+		'--allow-git-dependencies',
 	]),
 	verify: Object.freeze([]),
 	'supported-matrix': Object.freeze([]),
@@ -597,7 +601,7 @@ const HELP: Readonly<Record<OperatorCommand, string>> = Object.freeze({
 		'                    [--cell <id>] [--node <major>] [--arch <arm64|x64>]',
 		'                    [--allow-remote-tarballs] [--allow-install-scripts]',
 		'                    [--skip-install-scripts] [--allow-peer-conflicts]',
-		'                    [--allow-foreign-lockfile]',
+		'                    [--allow-foreign-lockfile] [--allow-git-dependencies]',
 		'                    [--record <file>] [--json]',
 		'',
 		'Apply the composed changeset into a separate output lane. The lane may not be inside',
@@ -653,8 +657,18 @@ const HELP: Readonly<Record<OperatorCommand, string>> = Object.freeze({
 		'npm resolves from the manifest instead. That is the one policy that gives something up,',
 		'so the install row records which lockfile was disregarded and states that the closure is',
 		'no longer pinned by the era lockfile and may drift from what the application shipped',
-		'with. It is never inferred from the lockfile kind. A closure that needs a policy nobody',
-		'declared is a named refusal, not a guess.',
+		'with. It is never inferred from the lockfile kind. --allow-git-dependencies settles the',
+		'fifth: npm fetches no dependency from a git reference by default and stops the install',
+		'with EALLOWGIT, and declaring the policy carries npm’s --allow-git all. The install row',
+		'then records which git dependencies the lockfile pinned, and that a registry version',
+		'pin, integrity hash and provenance do not apply to any of them. A closure that needs a',
+		'policy nobody declared is a named refusal, not a guess.',
+		'',
+		'One measured wall is a refusal with no policy at all. A closure that pins a registry',
+		'this run cannot reach — a retired mirror whose certificate has expired, for instance —',
+		'is install.closure-registry-unreachable, and no flag answers it: nothing an operator',
+		'declares makes an unreachable host answer, and re-pinning the closure onto a registry',
+		'that does is a migration decision rather than an install policy.',
 		'',
 		'Exit 2 is a refusal, 1 is a defect, 0 is a run that proceeded.',
 	].join('\n'),
@@ -668,7 +682,7 @@ const HELP: Readonly<Record<OperatorCommand, string>> = Object.freeze({
 		'                [--entry <module>]',
 		'                [--allow-remote-tarballs] [--allow-install-scripts]',
 		'                [--skip-install-scripts] [--allow-peer-conflicts]',
-		'                [--allow-foreign-lockfile]',
+		'                [--allow-foreign-lockfile] [--allow-git-dependencies]',
 		'                [--record <file>] [--json]',
 		'',
 		'Run every stage on one application, in order: analyze, ingest, license-at-pin,',
@@ -1255,6 +1269,7 @@ async function runOperatorFlow(
 			skipInstallScripts: parsed.flags['--skip-install-scripts'] !== undefined,
 			allowPeerConflicts: parsed.flags['--allow-peer-conflicts'] !== undefined,
 			allowForeignLockfile: parsed.flags['--allow-foreign-lockfile'] !== undefined,
+			allowGitDependencies: parsed.flags['--allow-git-dependencies'] !== undefined,
 		});
 		const install =
 			parsed.flags['--install'] === undefined
@@ -1375,6 +1390,7 @@ async function runOperatorFlow(
 				skipInstallScripts: parsed.flags['--skip-install-scripts'] !== undefined,
 				allowPeerConflicts: parsed.flags['--allow-peer-conflicts'] !== undefined,
 				allowForeignLockfile: parsed.flags['--allow-foreign-lockfile'] !== undefined,
+				allowGitDependencies: parsed.flags['--allow-git-dependencies'] !== undefined,
 			}),
 			flags: parsed.flags,
 		});

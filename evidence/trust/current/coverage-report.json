@@ -296,14 +296,14 @@
     "source": "evidence/runs/operator-flows/refusal-census.json",
     "adapterFreezeComposite": "140ce86e163ddbae2ad6f1504022efca9468641cc50fd3dca354c6aba8cbb562",
     "totals": {
-      "sites": 196,
+      "sites": 198,
       "byOrigin": {
         "frozen-adapter": 101,
-        "pipeline": 95
+        "pipeline": 97
       },
       "byClassification": {
         "defect": 5,
-        "refusal": 141,
+        "refusal": 143,
         "unclassified": 50
       },
       "byStage": {
@@ -315,7 +315,7 @@
         "build": 9,
         "era-cell": 9,
         "ingest": 17,
-        "install": 11,
+        "install": 13,
         "license-at-pin": 4,
         "not-reached": 69,
         "plan": 24,
@@ -325,7 +325,7 @@
         "witness": 1,
         "witness-synthesize": 2
       },
-      "distinctCodes": 196,
+      "distinctCodes": 198,
       "recordedRefusalSites": 99
     },
     "byCode": {
@@ -405,8 +405,10 @@
       "install.lockfile-unreadable": 1,
       "install.remote-tarball-policy-not-declared": 1,
       "install.install-script-policy-not-declared": 1,
-      "install.script-wrote-outside-lane": 1,
       "install.peer-resolution-policy-not-declared": 1,
+      "install.git-dependency-policy-not-declared": 1,
+      "install.closure-registry-unreachable": 1,
+      "install.script-wrote-outside-lane": 1,
       "pipeline.install.install": 1,
       "license-at-pin.licence-file-absent": 1,
       "license-at-pin.root-licence-files-state-different-identifiers": 1,
@@ -542,7 +544,7 @@
   ],
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "7255ac03d2e7916569827a633850323cb551dbd542dadd726b359c559f183f2d",
+    "canonicalDigest": "794a68737d4a0ee07ddfefd6298ce1632006f4d32e930eec261879a01b3edfa2",
     "authenticity": "not-established",
     "certification": "not-claimed"
   }

@@ -180,6 +180,7 @@ export const RUN_STAGE_FLAGS: Readonly<Record<RunStageName, readonly string[]>> 
 		'--skip-install-scripts',
 		'--allow-peer-conflicts',
 		'--allow-foreign-lockfile',
+		'--allow-git-dependencies',
 	]),
 	build: Object.freeze([]),
 	witness: Object.freeze([]),

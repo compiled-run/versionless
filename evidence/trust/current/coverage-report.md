@@ -4,7 +4,7 @@ What the fleet pipeline proved, per application, against the sealed baseline it 
 
 - Schema: `versionless.coverage-report.v1`
 - Certification state: **not-certified**
-- Canonical SHA-256: `7255ac03d2e7916569827a633850323cb551dbd542dadd726b359c559f183f2d`
+- Canonical SHA-256: `794a68737d4a0ee07ddfefd6298ce1632006f4d32e930eec261879a01b3edfa2`
 - Integrity: hash-only; authenticity is not established
 
 Every green cell below is filtered out of the Judge counting ledger the corpus derived and cross-checked against that corpus numerator and denominator. No cell is listed by hand, and a cell edited into this record fails re-derivation.
@@ -81,12 +81,12 @@ An application admitted through `versionless run` is recorded proven only if its
 
 Source: `evidence/runs/operator-flows/refusal-census.json`, taken under adapter freeze composite `140ce86e163ddbae2ad6f1504022efca9468641cc50fd3dca354c6aba8cbb562`.
 
-- `byClassification`: {"defect":5,"refusal":141,"unclassified":50}
-- `byOrigin`: {"frozen-adapter":101,"pipeline":95}
-- `byStage`: {"acquire":14,"analyze":2,"apply":5,"arguments":8,"batch":6,"build":9,"era-cell":9,"ingest":17,"install":11,"license-at-pin":4,"not-reached":69,"plan":24,"plan-or-build":13,"refusal-census":1,"supported-matrix":1,"witness":1,"witness-synthesize":2}
-- `distinctCodes`: 196
+- `byClassification`: {"defect":5,"refusal":143,"unclassified":50}
+- `byOrigin`: {"frozen-adapter":101,"pipeline":97}
+- `byStage`: {"acquire":14,"analyze":2,"apply":5,"arguments":8,"batch":6,"build":9,"era-cell":9,"ingest":17,"install":13,"license-at-pin":4,"not-reached":69,"plan":24,"plan-or-build":13,"refusal-census":1,"supported-matrix":1,"witness":1,"witness-synthesize":2}
+- `distinctCodes`: 198
 - `recordedRefusalSites`: 99
-- `sites`: 196
+- `sites`: 198
 
 ### Sites per code
 
@@ -254,6 +254,8 @@ Source: `evidence/runs/operator-flows/refusal-census.json`, taken under adapter 
 - `ingest.lockfile-closure-unreadable`: 1
 - `ingest.revision-not-determined`: 1
 - `ingest.source-root-not-a-directory`: 1
+- `install.closure-registry-unreachable`: 1
+- `install.git-dependency-policy-not-declared`: 1
 - `install.install-script-policy-conflicts`: 1
 - `install.install-script-policy-not-declared`: 1
 - `install.lockfile-absent`: 1

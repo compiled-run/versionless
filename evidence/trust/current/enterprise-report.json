@@ -8,7 +8,7 @@
     "slsaLevel": "not-claimed"
   },
   "derivedFrom": {
-    "trustManifestCanonicalDigest": "65ea22f50d2bf724ae8e6da35f568eb1cce7712cd23134b8a6b5942fa7f21e12",
+    "trustManifestCanonicalDigest": "d1232e1fb4d75d96e323d7c921f5e7301c498eeeb97fafda5b1dd8eaf6931a9f",
     "deterministicCoreDigest": "c4c65feb38c59e70d4a96040a0bcf5dabe4bc2e6f52b6c0b6fb63bacff29a45e",
     "corpusConformanceDigest": "101412703cc116969dd562a6ea46dde3d05424ad5194e535aca9750e373bc482",
     "adapterFreezeComposite": "140ce86e163ddbae2ad6f1504022efca9468641cc50fd3dca354c6aba8cbb562",

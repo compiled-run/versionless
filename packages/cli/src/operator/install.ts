@@ -28,6 +28,19 @@
  * that pinned its closure with yarn, pnpm or bun. The fourth is the only one
  * that buys its install by giving something up: taken, the lane installs with no
  * pin at all, and the record says so in those words.
+ *
+ * The fifth, `--allow-git-dependencies`, is the first policy whose wall is not
+ * readable before the install runs in every case: npm 12 fetches no git
+ * dependency by default and stops with `EALLOWGIT`, which this stage used to
+ * hand back as `defect:install` with npm's output buried in it. It is a
+ * declaration like the other four.
+ *
+ * One measured wall here is a refusal with *no* policy behind it. An install
+ * whose closure pins a registry this run cannot reach — measured as
+ * `CERT_HAS_EXPIRED` against `registry.npm.taobao.org` — has no honest "proceed
+ * anyway": there is no allowance that makes an unreachable host reachable, and
+ * re-pinning the closure onto a registry that answers is a migration concern
+ * rather than an install policy. It is named, counted, and left at that.
  */
 
 import { execFile } from 'node:child_process';
@@ -93,6 +106,24 @@ export type InstallPolicy = Readonly<{
 	 * by name rather than left for a reader to work out.
 	 */
 	allowForeignLockfile: boolean;
+	/**
+	 * Fetch the closure's git dependencies.
+	 *
+	 * The fifth policy, measured on `coverview`: a 2020 application that pins
+	 * one dependency at a git ref rather than at a registry version. npm 12
+	 * fetches none of those by default (`allow-git` defaults to `none`) and
+	 * stops the whole install with `EALLOWGIT`, so the wall is npm's own
+	 * safety default meeting an era closure, exactly like the remote-tarball
+	 * one.
+	 *
+	 * Declaring it carries npm's `--allow-git all`, and that is a decision
+	 * about what the lane's closure may be: a git dependency is fetched by
+	 * running `git` against a remote repository rather than by resolving a
+	 * registry version, so what arrives is whatever that ref resolves to at
+	 * install time. The declaration is recorded on the install row together
+	 * with the git dependencies it admitted, by name.
+	 */
+	allowGitDependencies: boolean;
 }>;
 
 export const DEFAULT_INSTALL_POLICY: InstallPolicy = Object.freeze({
@@ -101,6 +132,7 @@ export const DEFAULT_INSTALL_POLICY: InstallPolicy = Object.freeze({
 	skipInstallScripts: false,
 	allowPeerConflicts: false,
 	allowForeignLockfile: false,
+	allowGitDependencies: false,
 });
 
 /**
@@ -149,6 +181,50 @@ export function foreignLockfileDisregard(foreign: readonly string[]): ForeignLoc
 	});
 }
 
+/**
+ * The declared name of the git-dependency policy, as an operator declares it.
+ *
+ * A constant for the same reason the foreign-lockfile one is: the name is
+ * written onto the install row, and a reader has to see which declaration
+ * bought this install without going to a flag table for it.
+ */
+export const GIT_DEPENDENCY_POLICY = 'allow-git-dependencies';
+
+/**
+ * The git dependencies a declared policy admitted into the closure.
+ *
+ * Recorded whenever the policy is declared, and `null` otherwise — so a `null`
+ * here reads as "no such declaration was made", not as "none were found".
+ * `dependencies` is read out of the lockfile before the install runs, and
+ * `readFrom` names the lockfile it was read from; with no lockfile read (the
+ * foreign-lockfile policy) `readFrom` is `null` and the list is empty because
+ * nothing was read, which is not the same as the closure carrying none.
+ */
+export type GitDependencyAllowance = Readonly<{
+	/** The policy that was declared, by the name it is declared under. */
+	policy: typeof GIT_DEPENDENCY_POLICY;
+	/** The lockfile the list below was read out of, or `null` for none. */
+	readFrom: string | null;
+	/** Every git dependency the lockfile pins, as npm names it: `name@spec`. */
+	dependencies: readonly string[];
+	/** What declaring the policy admits, stated where the row is read. */
+	consequence: string;
+}>;
+
+/** The allowance record for a plan whose findings are `findings`. */
+export function gitDependencyAllowance(findings: LockfileFindings | null): GitDependencyAllowance {
+	const dependencies = findings?.gitDependencies ?? Object.freeze([]);
+	return Object.freeze({
+		policy: GIT_DEPENDENCY_POLICY,
+		readFrom: findings?.lockfile ?? null,
+		dependencies: Object.freeze([...dependencies]),
+		consequence:
+			findings === null
+				? `The ${GIT_DEPENDENCY_POLICY} policy was declared, so npm was given --allow-git all and this install could fetch dependencies from git references. No lockfile was read on this run, so no list of them is recorded here: the empty list means nothing was read, not that the closure carries none.`
+				: `The ${GIT_DEPENDENCY_POLICY} policy was declared, so npm was given --allow-git all and fetched the ${String(dependencies.length)} git dependency(ies) above out of ${findings.lockfile}. A git dependency is fetched by running git against a remote repository rather than by resolving a registry version, so what it installs is what that reference resolves to at install time and whoever controls the repository controls it; the registry pin, its integrity hash and its provenance do not apply to it.`,
+	});
+}
+
 export type LockfileFindings = Readonly<{
 	lockfile: string;
 	lockfileVersion: number;
@@ -156,6 +232,14 @@ export type LockfileFindings = Readonly<{
 	remoteTarballDependencies: readonly string[];
 	/** Packages the lockfile marks as carrying an install script. */
 	installScriptPackages: readonly string[];
+	/**
+	 * Dependencies the lockfile pins at a git reference, as `name@spec`.
+	 *
+	 * Written the way npm writes them in its own `EALLOWGIT` refusal, so the
+	 * list this stage read out of the lockfile and the specs npm names in its
+	 * output can be read against each other without translation.
+	 */
+	gitDependencies: readonly string[];
 }>;
 
 const INSTALL_NOT_ESTABLISHED: readonly string[] = Object.freeze([
@@ -179,19 +263,61 @@ const FOREIGN_LOCKFILE_NOT_ESTABLISHED: readonly string[] = Object.freeze([
 	'`remoteTarballDependencies` and `installScriptPackages` are empty because no lockfile was read, not because the closure carries none. The remote-tarball and install-script policies are read out of an npm lockfile, and with no lockfile to read they had nothing to find; what npm resolved may still carry either.',
 ]);
 
+/**
+ * What a run that took the git-dependency policy additionally does not know.
+ *
+ * Appended to the install row only when the policy was taken, because both
+ * statements are false about an install that fetched no git dependency at all.
+ */
+const GIT_DEPENDENCY_NOT_ESTABLISHED: readonly string[] = Object.freeze([
+	`The \`${GIT_DEPENDENCY_POLICY}\` policy was declared, so part of this closure came out of a git repository rather than out of a registry. What a git reference resolves to is decided by whoever controls that repository at fetch time; a tag or a branch may move, and this stage does not record what it pointed at. The registry guarantees that bound the rest of the closure — a version pin, an integrity hash, the registry's own provenance — are not established for these dependencies.`,
+	`The git dependencies recorded beside this policy are the ones the lockfile pins. A dependency reached through a git reference that no lockfile records — a transitive one npm resolved fresh — is not in that list, so the list is what was read rather than everything that was fetched.`,
+]);
+
 function hostOf(value: string): string | null {
 	if (!value.startsWith('http://') && !value.startsWith('https://')) return null;
 	const parsed = parseURL(value);
 	return parsed.host ?? null;
 }
 
-/** Read the two policy-bearing facts out of an npm lockfile. */
+/** The git URL schemes npm resolves a dependency from, as npm writes them. */
+const GIT_SCHEMES: readonly string[] = Object.freeze([
+	'git+ssh://',
+	'git+https://',
+	'git+http://',
+	'git+file://',
+	'git://',
+]);
+
+/** Whether `value` is a git reference rather than a registry resolution. */
+function isGitReference(value: string): boolean {
+	return GIT_SCHEMES.some((scheme) => value.startsWith(scheme));
+}
+
+/**
+ * A git dependency written the way npm writes it: `name@spec`.
+ *
+ * The name is the last path segment of the lockfile's own key, which is where
+ * the installed package sits, so a transitive git dependency and a top-level
+ * one are both named by the package rather than by their position.
+ */
+function gitDependencyOf(identifier: string, resolved: string): string {
+	const segments = identifier.split('/').filter((part) => part !== '' && part !== 'node_modules');
+	const scope = segments.length > 1 && segments[segments.length - 2]?.startsWith('@') === true;
+	const name = scope
+		? `${segments[segments.length - 2] ?? ''}/${segments[segments.length - 1] ?? ''}`
+		: (segments[segments.length - 1] ?? identifier);
+	return `${name}@${resolved}`;
+}
+
+/** Read the policy-bearing facts out of an npm lockfile. */
 export function readLockfileFindings(
 	lockfile: string,
 	document: Record<string, unknown>,
 ): LockfileFindings {
 	const remote = new Set<string>();
 	const scripts = new Set<string>();
+	const git = new Set<string>();
 	const lockfileVersion =
 		typeof document.lockfileVersion === 'number' ? document.lockfileVersion : 1;
 	const packages = document.packages as Record<string, unknown> | undefined;
@@ -203,6 +329,8 @@ export function readLockfileFindings(
 			const host = resolved === null ? null : hostOf(resolved);
 			if (host !== null && host !== DEFAULT_REGISTRY_HOST)
 				remote.add(`${key === '' ? '.' : key} <- ${resolved ?? ''}`);
+			if (resolved !== null && isGitReference(resolved))
+				git.add(gitDependencyOf(key === '' ? '.' : key, resolved));
 			if (entry.hasInstallScript === true) scripts.add(key === '' ? '.' : key);
 		}
 	const walk = (tree: Record<string, unknown> | undefined, prefix: string): void => {
@@ -216,6 +344,7 @@ export function readLockfileFindings(
 			const host = hostOf(resolved);
 			if (host !== null && host !== DEFAULT_REGISTRY_HOST)
 				remote.add(`${identifier} <- ${resolved}`);
+			if (isGitReference(resolved)) git.add(gitDependencyOf(identifier, resolved));
 			if (entry.hasInstallScript === true) scripts.add(identifier);
 			walk(entry.dependencies as Record<string, unknown> | undefined, identifier);
 		}
@@ -226,6 +355,7 @@ export function readLockfileFindings(
 		lockfileVersion,
 		remoteTarballDependencies: Object.freeze([...remote].sort()),
 		installScriptPackages: Object.freeze([...scripts].sort()),
+		gitDependencies: Object.freeze([...git].sort()),
 	});
 }
 
@@ -251,6 +381,8 @@ export type InstallPlan = Readonly<{
 	policy: InstallPolicy;
 	/** The foreign lockfile a declared policy disregarded, or `null`. */
 	foreignLockfileDisregarded: ForeignLockfileDisregard | null;
+	/** The git dependencies a declared policy admitted, or `null`. */
+	gitDependenciesAllowed: GitDependencyAllowance | null;
 	command: readonly string[];
 }>;
 
@@ -392,6 +524,7 @@ export async function planLaneInstall(
 		'--no-audit',
 		'--no-fund',
 		...(policy.allowRemoteTarballs ? ['--allow-remote', 'all'] : []),
+		...(policy.allowGitDependencies ? ['--allow-git', 'all'] : []),
 		...(policy.allowInstallScripts ? ['--foreground-scripts'] : ['--ignore-scripts']),
 		...(policy.allowPeerConflicts ? ['--legacy-peer-deps'] : []),
 	];
@@ -402,6 +535,15 @@ export async function planLaneInstall(
 		findings,
 		policy,
 		foreignLockfileDisregarded: disregarded,
+		/**
+		 * Recorded on the declaration, not on the finding: the operator declared
+		 * that this lane may fetch git dependencies, and that is true of the run
+		 * whether the lockfile pinned one or not. The list beside it says which
+		 * ones were read.
+		 */
+		gitDependenciesAllowed: policy.allowGitDependencies
+			? gitDependencyAllowance(findings)
+			: null,
 		command: Object.freeze(command),
 	});
 }
@@ -868,6 +1010,14 @@ export type InstallRecord = Readonly<{
 	 * rather than as "the flag was off".
 	 */
 	foreignLockfileDisregarded: ForeignLockfileDisregard | null;
+	/**
+	 * The git dependencies a declared policy admitted, or `null`.
+	 *
+	 * Present exactly when `--allow-git-dependencies` was declared, so `null`
+	 * reads as "this run fetched from no git reference by declaration" rather
+	 * than as "none were found".
+	 */
+	gitDependenciesAllowed: GitDependencyAllowance | null;
 	remoteTarballDependencies: readonly string[];
 	installScriptPackages: readonly string[];
 	command: readonly string[] | null;
@@ -902,6 +1052,7 @@ export function installNotRequested(reason: string): InstallRecord {
 		closure: null,
 		policy: DEFAULT_INSTALL_POLICY,
 		foreignLockfileDisregarded: null,
+		gitDependenciesAllowed: null,
 		remoteTarballDependencies: Object.freeze([]),
 		installScriptPackages: Object.freeze([]),
 		command: null,
@@ -929,6 +1080,159 @@ export async function installedPackageCount(laneDir: string): Promise<number | n
 			if (scoped.isDirectory()) count += 1;
 	}
 	return count;
+}
+
+/**
+ * What a failed install's output says about itself, read rather than guessed.
+ *
+ * npm prints its diagnosis on `npm error` lines and this reads those lines and
+ * nothing else: the code it named, the package specs it quoted, and the request
+ * it reported failing. Every field is npm's own text, carried through
+ * unaltered, because the classification below turns into a refusal an operator
+ * reads and the words they debug with have to be npm's rather than this
+ * repository's summary of npm's.
+ *
+ * Both prefixes are read. npm printed `npm ERR!` through version 9 and
+ * `npm error` after it, and a lane can be installed by either.
+ */
+export type NpmFailureReading = Readonly<{
+	/** The code npm named, or `null` when it named none. */
+	code: string | null;
+	/** Every `npm error` line of the output, verbatim and in order. */
+	errorLines: readonly string[];
+	/** Every package spec npm quoted as refused, exactly as npm quoted it. */
+	refusedSpecs: readonly string[];
+	/** The request npm reported failing, or `null` when it reported none. */
+	request: Readonly<{ url: string; host: string; reason: string }> | null;
+}>;
+
+/** npm's own prefix on a diagnostic line, in both spellings it has used. */
+const NPM_ERROR_LINE = /^npm (?:error|ERR!)\s?/;
+
+/**
+ * The npm error codes that name a failure to reach a registry.
+ *
+ * `CERT_HAS_EXPIRED` is the measured one — `antd-admin`'s closure pins
+ * `registry.npm.taobao.org`, whose certificate expired after the mirror was
+ * retired. The rest are the siblings npm's own error handling names for the
+ * same thing: the certificate errors Node raises for a host whose TLS cannot be
+ * verified, and the two connection failures npm prints a registry-specific
+ * message for (`ENOTFOUND`, `ECONNREFUSED`). The list stops there on purpose.
+ * It is not a taxonomy of network failures and must not grow into one: a code
+ * earns a place here by being measured against a pinned registry, not by
+ * sounding like it belongs.
+ */
+export const REGISTRY_UNREACHABLE_CODES: readonly string[] = Object.freeze([
+	'CERT_HAS_EXPIRED',
+	'DEPTH_ZERO_SELF_SIGNED_CERT',
+	'SELF_SIGNED_CERT_IN_CHAIN',
+	'UNABLE_TO_VERIFY_LEAF_SIGNATURE',
+	'ENOTFOUND',
+	'ECONNREFUSED',
+]);
+
+/** Read what npm said about the install it stopped. */
+export function readNpmFailure(detail: string): NpmFailureReading {
+	const errorLines: string[] = [];
+	const refused: string[] = [];
+	let code: string | null = null;
+	let request: NpmFailureReading['request'] = null;
+	for (const raw of detail.split('\n')) {
+		const line = raw.replace(/\r$/, '');
+		if (!NPM_ERROR_LINE.test(line)) continue;
+		errorLines.push(line);
+		const body = line.replace(NPM_ERROR_LINE, '');
+		const named = /^code (\S+)$/.exec(body);
+		if (named !== null && code === null) code = named[1] ?? null;
+		const refusing = /^Refusing to fetch "(.+)"$/.exec(body);
+		if (refusing !== null && refusing[1] !== undefined) refused.push(refusing[1]);
+		const failing = /^request to (\S+) failed, reason: (.+)$/.exec(body);
+		if (failing !== null && request === null) {
+			const url = failing[1] ?? '';
+			const host = hostOf(url);
+			if (host !== null) request = Object.freeze({ url, host, reason: failing[2] ?? '' });
+		}
+	}
+	return Object.freeze({
+		code,
+		errorLines: Object.freeze(errorLines),
+		refusedSpecs: Object.freeze(refused),
+		request,
+	});
+}
+
+/** npm's own output, quoted into a refusal without a word changed. */
+function verbatim(reading: NpmFailureReading): string {
+	return `npm’s own output, unaltered:\n${reading.errorLines.join('\n')}`;
+}
+
+/**
+ * The npm-failure interpretation point: name what npm refused, or say nothing.
+ *
+ * Every install failure used to leave here as `defect:install` with npm's wall
+ * of output flattened into the message, and three of them are not defects at
+ * all — they are npm reporting a decision, which is a thing an operator can
+ * answer. This function is where that reading is taken, and it is deliberately
+ * the *only* place: it returns for everything it does not recognise, so an
+ * unclassified npm failure keeps landing on the defect path byte-for-byte as it
+ * did before. A refusal is earned by a measured wall, not by a pattern that
+ * looked close enough.
+ */
+export function refuseNamedNpmFailure(detail: string, policy: InstallPolicy): void {
+	const reading = readNpmFailure(detail);
+	/**
+	 * One npm failure is a policy question rather than a breakage: a peer
+	 * conflict is npm reporting that the closure it was asked for is not
+	 * one it will assemble by default. That is a decision, so it is a named
+	 * refusal an operator can count and answer with a flag. Every other
+	 * failure is a defect.
+	 */
+	if (detail.includes('ERESOLVE') && !policy.allowPeerConflicts)
+		refuse({
+			code: 'install.peer-resolution-policy-not-declared',
+			message: `Install: npm refused the lane closure with ERESOLVE — a peer dependency conflict between the application's own era pins and the build toolchain the lane now declares. Declare --allow-peer-conflicts to install through it, which is a decision about what the lane's closure may be, or change what the lane declares. This flow does not take that decision on an operator's behalf.`,
+			stage: 'install',
+			origin: 'pipeline',
+		});
+	/**
+	 * The second: npm 12 fetches no git dependency by default, and an era
+	 * application that pinned one at a git ref meets that default head-on
+	 * (`coverview`, `file-saver@git+ssh://…`). It is npm's safety default
+	 * meeting an era closure, which is the same shape as the remote-tarball
+	 * wall and gets the same answer — a declaration, or a stop.
+	 */
+	if (reading.code === 'EALLOWGIT' && !policy.allowGitDependencies)
+		refuse({
+			code: 'install.git-dependency-policy-not-declared',
+			message: `Install: npm refused the lane closure with EALLOWGIT — the closure resolves ${String(reading.refusedSpecs.length)} dependency(ies) from a git reference${reading.refusedSpecs.length === 0 ? '' : `, first ${reading.refusedSpecs[0] ?? ''}`}, and npm fetches none of those by default. Declare --${GIT_DEPENDENCY_POLICY} to carry that policy, which is a decision about what the lane's closure may be: a git dependency is fetched by running git against a remote repository rather than by resolving a registry version, so the registry's version pin, integrity hash and provenance do not apply to it. This flow does not take that decision on an operator's behalf. ${verbatim(reading)}`,
+			stage: 'install',
+			origin: 'pipeline',
+		});
+	/**
+	 * The third, and the one with no policy behind it: the closure pins a
+	 * registry this run could not reach (`antd-admin`, `CERT_HAS_EXPIRED`
+	 * against the retired `registry.npm.taobao.org` mirror). There is no honest
+	 * allowance to declare — nothing an operator can say makes an unreachable
+	 * host answer — so this is a refusal that names the wall and stops, and the
+	 * remedy it points at is re-pinning the closure, which is a migration.
+	 *
+	 * The registry host is required, and it must not be npm's own: a failure
+	 * against `registry.npmjs.org` is this host's connectivity rather than
+	 * something the closure pinned, and calling that a refusal of the closure
+	 * would be a lie about whose problem it is. That failure stays a defect.
+	 */
+	if (
+		reading.code !== null &&
+		REGISTRY_UNREACHABLE_CODES.includes(reading.code) &&
+		reading.request !== null &&
+		reading.request.host !== DEFAULT_REGISTRY_HOST
+	)
+		refuse({
+			code: 'install.closure-registry-unreachable',
+			message: `Install: this closure pins ${reading.request.host}, and npm could not reach it — ${reading.code}, requesting ${reading.request.url}. There is no policy to declare here and this flow offers none: no allowance makes an unreachable registry answer, and a closure that resolves through a registry that is gone cannot be installed as recorded. What this establishes is that this run did not reach ${reading.request.host}; whether that host is retired or momentarily unreachable is not established here, and neither is what it would have served. The remedy is re-pinning the closure onto a registry that answers, which changes what the application declares and is therefore a migration decision rather than an install policy. ${verbatim(reading)}`,
+			stage: 'install',
+			origin: 'pipeline',
+		});
 }
 
 /**
@@ -990,19 +1294,11 @@ export async function runLaneInstall(
 		const error = failure;
 		const detail = error instanceof Error ? error.message : String(error);
 		/**
-		 * One npm failure is a policy question rather than a breakage: a peer
-		 * conflict is npm reporting that the closure it was asked for is not
-		 * one it will assemble by default. That is a decision, so it is a named
-		 * refusal an operator can count and answer with a flag. Every other
-		 * failure is a defect.
+		 * Every npm failure this stage has a name for is named there, in one
+		 * place, and everything else falls through to the defect below exactly
+		 * as it always has.
 		 */
-		if (detail.includes('ERESOLVE') && !policy.allowPeerConflicts)
-			refuse({
-				code: 'install.peer-resolution-policy-not-declared',
-				message: `Install: npm refused the lane closure with ERESOLVE — a peer dependency conflict between the application's own era pins and the build toolchain the lane now declares. Declare --allow-peer-conflicts to install through it, which is a decision about what the lane's closure may be, or change what the lane declares. This flow does not take that decision on an operator's behalf.`,
-				stage: 'install',
-				origin: 'pipeline',
-			});
+		refuseNamedNpmFailure(detail, policy);
 		/**
 		 * A defect after the foreign-lockfile policy was taken is bounded
 		 * differently from every other install defect, and the message says so
@@ -1042,6 +1338,7 @@ export async function runLaneInstall(
 		closure: plan.closure,
 		policy,
 		foreignLockfileDisregarded: plan.foreignLockfileDisregarded,
+		gitDependenciesAllowed: plan.gitDependenciesAllowed,
 		remoteTarballDependencies: plan.findings?.remoteTarballDependencies ?? Object.freeze([]),
 		installScriptPackages: plan.findings?.installScriptPackages ?? Object.freeze([]),
 		command: plan.command,
@@ -1058,9 +1355,10 @@ export async function runLaneInstall(
 			pathsObservedAfter: after.size,
 			writesOutsideLane: writes,
 		}),
-		notEstablished:
-			plan.foreignLockfileDisregarded === null
-				? INSTALL_NOT_ESTABLISHED
-				: Object.freeze([...INSTALL_NOT_ESTABLISHED, ...FOREIGN_LOCKFILE_NOT_ESTABLISHED]),
+		notEstablished: Object.freeze([
+			...INSTALL_NOT_ESTABLISHED,
+			...(plan.foreignLockfileDisregarded === null ? [] : FOREIGN_LOCKFILE_NOT_ESTABLISHED),
+			...(plan.gitDependenciesAllowed === null ? [] : GIT_DEPENDENCY_NOT_ESTABLISHED),
+		]),
 	});
 }

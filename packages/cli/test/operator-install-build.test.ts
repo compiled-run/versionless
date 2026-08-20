@@ -16,6 +16,9 @@ import {
 	planLaneInstall,
 	planLaneRuntime,
 	readLockfileFindings,
+	readNpmFailure,
+	refuseNamedNpmFailure,
+	REGISTRY_UNREACHABLE_CODES,
 	runLaneInstall,
 	type InstallPolicy,
 } from '../src/operator/install.ts';
@@ -1386,4 +1389,442 @@ describe('the cell runtime threaded into the lane’s children', () => {
 		expect(unmeasured.resolvedVersion).toBeNull();
 		expect(unmeasured.claim).toContain('the measurement did not complete');
 	});
+});
+
+/**
+ * The two measured npm walls this stage now names, and the seam that names them.
+ *
+ * Both were measured on the fleet and both used to leave here as `defect:install`
+ * with npm's output flattened into the message. Neither is reproduced by running
+ * npm — one needs a git host and the other needs a registry whose certificate
+ * expired — so every test below drives the classification point directly with
+ * npm's own output, quoted verbatim out of the run records that measured it.
+ */
+describe('the npm-failure classification seam', () => {
+	/**
+	 * `coverview`'s install, quoted verbatim from the `install` stage row of
+	 * `evidence/runs/react-coverview-a1470b01/run-record.json`. Two of the nine
+	 * deprecation warnings npm printed are kept, because the reading has to pick
+	 * npm's error lines out of a wall that is mostly not error lines.
+	 */
+	const COVERVIEW_EALLOWGIT = [
+		'Command failed: npm install --no-audit --no-fund --allow-remote all --foreground-scripts --legacy-peer-deps',
+		'npm warn deprecated har-validator@5.1.5: this library is no longer supported',
+		'npm warn deprecated request@2.88.2: request has been deprecated, see https://github.com/request/request/issues/3142',
+		'npm error code EALLOWGIT',
+		'npm error Fetching packages of type "git" have been disabled',
+		'npm error Refusing to fetch "file-saver@git+ssh://git@github.com/eligrey/FileSaver.js.git#e865e37af9f9947ddcced76b549e27dc45c1cb2e"',
+		'npm error A complete log of this run can be found in: /Users/jacksm5pro/.npm/_logs/2026-08-17T23_50_54_302Z-debug-0.log',
+		'',
+	].join('\n');
+
+	/**
+	 * `antd-admin`'s install, quoted verbatim from the `install` stage row of
+	 * `evidence/runs/react-antd-admin-template-v2-0-0/run-record.json`: a closure
+	 * pinned to the retired `registry.npm.taobao.org` mirror, whose certificate
+	 * has since expired.
+	 */
+	const ANTD_CERT_HAS_EXPIRED = [
+		'Command failed: npm install --no-audit --no-fund --allow-remote all --foreground-scripts --legacy-peer-deps',
+		'npm warn old lockfile The package-lock.json file was created with an old version of npm,',
+		'npm error code CERT_HAS_EXPIRED',
+		'npm error errno CERT_HAS_EXPIRED',
+		'npm error request to https://registry.npm.taobao.org/word-wrap/download/word-wrap-1.2.3.tgz failed, reason: certificate has expired',
+		'npm error A complete log of this run can be found in: /Users/jacksm5pro/.npm/_logs/2026-08-17T23_49_22_751Z-debug-0.log',
+		'',
+	].join('\n');
+
+	/**
+	 * The reading is npm's text and nothing else: the code it named, the specs it
+	 * quoted, the request it reported. The warning lines are not error lines and
+	 * do not enter it, and every line that does is carried through unchanged —
+	 * that is what makes the refusals below quotable rather than paraphrased.
+	 */
+	it('reads npm’s own diagnosis out of its output, verbatim', () => {
+		const git = readNpmFailure(COVERVIEW_EALLOWGIT);
+		expect(git.code).toBe('EALLOWGIT');
+		expect(git.refusedSpecs).toEqual([
+			'file-saver@git+ssh://git@github.com/eligrey/FileSaver.js.git#e865e37af9f9947ddcced76b549e27dc45c1cb2e',
+		]);
+		expect(git.request).toBeNull();
+		expect(git.errorLines).toEqual([
+			'npm error code EALLOWGIT',
+			'npm error Fetching packages of type "git" have been disabled',
+			'npm error Refusing to fetch "file-saver@git+ssh://git@github.com/eligrey/FileSaver.js.git#e865e37af9f9947ddcced76b549e27dc45c1cb2e"',
+			'npm error A complete log of this run can be found in: /Users/jacksm5pro/.npm/_logs/2026-08-17T23_50_54_302Z-debug-0.log',
+		]);
+		const registry = readNpmFailure(ANTD_CERT_HAS_EXPIRED);
+		expect(registry.code).toBe('CERT_HAS_EXPIRED');
+		expect(registry.request?.host).toBe('registry.npm.taobao.org');
+		expect(registry.request?.url).toBe(
+			'https://registry.npm.taobao.org/word-wrap/download/word-wrap-1.2.3.tgz',
+		);
+		expect(registry.request?.reason).toBe('certificate has expired');
+		expect(registry.refusedSpecs).toEqual([]);
+		/** npm printed `npm ERR!` before version 10, and a lane may be installed by either. */
+		const legacy = readNpmFailure(
+			'npm ERR! code EALLOWGIT\nnpm ERR! Refusing to fetch "a@git://host/a.git"\n',
+		);
+		expect(legacy.code).toBe('EALLOWGIT');
+		expect(legacy.refusedSpecs).toEqual(['a@git://host/a.git']);
+	});
+
+	/**
+	 * The measured `coverview` wall, named. It was `defect:install` before, which
+	 * said the pipeline broke; it is a policy question, which says npm declined
+	 * to fetch something nobody declared. The refusal quotes npm rather than
+	 * summarising it, because the text an operator debugs with is npm's.
+	 */
+	it('names the git-dependency wall, and quotes npm’s words for it', async () => {
+		const refusal = await refusalOf(async () =>
+			refuseNamedNpmFailure(COVERVIEW_EALLOWGIT, policy()),
+		);
+		expect(refusal?.code).toBe('install.git-dependency-policy-not-declared');
+		expect(refusal?.stage).toBe('install');
+		expect(refusal?.origin).toBe('pipeline');
+		/** The flag that answers it, and the git dependency npm refused. */
+		expect(refusal?.message).toContain('--allow-git-dependencies');
+		expect(refusal?.message).toContain(
+			'file-saver@git+ssh://git@github.com/eligrey/FileSaver.js.git#e865e37af9f9947ddcced76b549e27dc45c1cb2e',
+		);
+		/** npm's error lines, every one of them, unaltered. */
+		for (const line of readNpmFailure(COVERVIEW_EALLOWGIT).errorLines)
+			expect(refusal?.message).toContain(line);
+		/** Declared, the same output is no longer a refusal — it falls to the defect path. */
+		expect(
+			await refusalOf(async () =>
+				refuseNamedNpmFailure(COVERVIEW_EALLOWGIT, policy({ allowGitDependencies: true })),
+			),
+		).toBeNull();
+	});
+
+	/**
+	 * The measured `antd-admin` wall, named — and named without a policy. There
+	 * is no flag that makes an unreachable registry answer, so the refusal offers
+	 * none and says where the remedy actually lives.
+	 */
+	it('names the unreachable pinned registry, with no policy to declare', async () => {
+		const refusal = await refusalOf(async () =>
+			refuseNamedNpmFailure(ANTD_CERT_HAS_EXPIRED, policy()),
+		);
+		expect(refusal?.code).toBe('install.closure-registry-unreachable');
+		expect(refusal?.stage).toBe('install');
+		/** The registry it pins, by host and by the URL npm actually requested. */
+		expect(refusal?.message).toContain('registry.npm.taobao.org');
+		expect(refusal?.message).toContain(
+			'https://registry.npm.taobao.org/word-wrap/download/word-wrap-1.2.3.tgz',
+		);
+		expect(refusal?.message).toContain('CERT_HAS_EXPIRED');
+		/** No allowance, and the remedy named as the migration decision it is. */
+		expect(refusal?.message).toContain('no policy to declare');
+		expect(refusal?.message).toContain('migration decision');
+		/** What it does not claim: that the host is gone rather than briefly unreachable. */
+		expect(refusal?.message).toContain('is not established here');
+		for (const line of readNpmFailure(ANTD_CERT_HAS_EXPIRED).errorLines)
+			expect(refusal?.message).toContain(line);
+		/** Every install policy there is leaves it exactly where it was. */
+		expect(
+			(
+				await refusalOf(async () =>
+					refuseNamedNpmFailure(
+						ANTD_CERT_HAS_EXPIRED,
+						policy({
+							allowRemoteTarballs: true,
+							allowInstallScripts: true,
+							allowPeerConflicts: true,
+							allowForeignLockfile: true,
+							allowGitDependencies: true,
+						}),
+					),
+				)
+			)?.code,
+		).toBe('install.closure-registry-unreachable');
+	});
+
+	/**
+	 * The honest boundary of the registry refusal, which is the whole reason it
+	 * is allowed to exist without becoming a network-error taxonomy. It says one
+	 * thing — *this closure pins a registry this run could not reach* — and it
+	 * says it only when npm named both a code for that and the host it was
+	 * talking to. A failure against npm's own registry is this host's
+	 * connectivity rather than something the closure pinned, and calling that a
+	 * refusal of the closure would be a lie about whose problem it is.
+	 */
+	it('claims a pinned registry only when npm named one that is not npm’s own', async () => {
+		const against = (host: string, code: string): string =>
+			[
+				`npm error code ${code}`,
+				`npm error errno ${code}`,
+				`npm error request to https://${host}/left-pad/-/left-pad-1.3.0.tgz failed, reason: ${code}`,
+				'',
+			].join('\n');
+		/** Every code on the list, against a registry the closure pinned. */
+		for (const code of REGISTRY_UNREACHABLE_CODES) {
+			const refusal = await refusalOf(async () =>
+				refuseNamedNpmFailure(against('registry.example.test', code), policy()),
+			);
+			expect(refusal?.code).toBe('install.closure-registry-unreachable');
+			expect(refusal?.message).toContain(code);
+		}
+		/** The same codes against npm's own registry stay a defect, every one. */
+		for (const code of REGISTRY_UNREACHABLE_CODES)
+			expect(
+				await refusalOf(async () =>
+					refuseNamedNpmFailure(against('registry.npmjs.org', code), policy()),
+				),
+			).toBeNull();
+		/** A code with no request behind it names no registry, so it claims none. */
+		expect(
+			await refusalOf(async () =>
+				refuseNamedNpmFailure(
+					'npm error code ENOTFOUND\nnpm error errno ENOTFOUND\n',
+					policy(),
+				),
+			),
+		).toBeNull();
+		/** And a registry failure npm did not give one of these codes stays a defect too. */
+		expect(
+			await refusalOf(async () =>
+				refuseNamedNpmFailure(against('registry.example.test', 'E404'), policy()),
+			),
+		).toBeNull();
+	});
+
+	/**
+	 * Everything else npm can fail with is untouched, and the one npm failure
+	 * this stage already named is untouched byte for byte. The whole ERESOLVE
+	 * message is compared rather than a substring: it is what this pipeline says
+	 * to every peer-conflicted application, and moving the classification into
+	 * one seam must not have reworded it.
+	 */
+	it('leaves every other npm failure on the defect path, unchanged', async () => {
+		const eresolve = await refusalOf(async () =>
+			refuseNamedNpmFailure(
+				'npm error code ERESOLVE\nnpm error ERESOLVE could not resolve\n',
+				policy(),
+			),
+		);
+		expect(eresolve?.code).toBe('install.peer-resolution-policy-not-declared');
+		expect(eresolve?.message).toBe(
+			"Install: npm refused the lane closure with ERESOLVE — a peer dependency conflict between the application's own era pins and the build toolchain the lane now declares. Declare --allow-peer-conflicts to install through it, which is a decision about what the lane's closure may be, or change what the lane declares. This flow does not take that decision on an operator's behalf.",
+		);
+		/** Four npm failures this stage has no name for, and does not invent one for. */
+		for (const detail of [
+			'npm error code E404\nnpm error 404 Not Found - GET https://registry.npmjs.org/nope\n',
+			'npm error code EJSONPARSE\nnpm error JSON.parse Failed to parse json\n',
+			'npm error code ENOTEMPTY\nnpm error dest /lane/node_modules/react\n',
+			'Command failed: npm ci\nnpm error code EUSAGE\nnpm error `npm ci` can only install with an existing package-lock.json\n',
+		])
+			expect(await refusalOf(async () => refuseNamedNpmFailure(detail, policy()))).toBeNull();
+	});
+});
+
+/**
+ * The fifth declared install policy, on the plan and on the row.
+ *
+ * The wall it answers is measured out of npm's failure output, but what an
+ * operator gets for declaring it is read out of the lockfile before anything
+ * runs: which git dependencies this closure pins, named on the install row
+ * beside the declaration that admitted them.
+ */
+describe('the git-dependency policy', () => {
+	const FILE_SAVER_SPEC =
+		'git+ssh://git@github.com/eligrey/FileSaver.js.git#e865e37af9f9947ddcced76b549e27dc45c1cb2e';
+
+	/** A lane pinned by an npm lockfile that resolves one dependency at a git ref. */
+	async function gitLane(): Promise<string> {
+		const directory = await temporaryDirectory();
+		await writeFile(
+			path.join(directory, 'package.json'),
+			`${JSON.stringify({ name: 'lane', version: '1.0.0' })}\n`,
+		);
+		await writeFile(
+			path.join(directory, 'package-lock.json'),
+			`${JSON.stringify({
+				name: 'lane',
+				lockfileVersion: 3,
+				packages: {
+					'': { name: 'lane', version: '1.0.0' },
+					'node_modules/file-saver': { version: '2.0.5', resolved: FILE_SAVER_SPEC },
+					'node_modules/left-pad': {
+						version: '1.3.0',
+						resolved: 'https://registry.npmjs.org/left-pad/-/left-pad-1.3.0.tgz',
+					},
+				},
+			})}\n`,
+		);
+		return directory;
+	}
+
+	/**
+	 * The list is read the way npm writes it, so the specs this stage read out of
+	 * the lockfile and the specs npm quotes in its own refusal are the same
+	 * strings. A registry dependency is not one of them.
+	 */
+	it('reads the closure’s git dependencies out of the lockfile, as npm names them', () => {
+		const findings = readLockfileFindings('package-lock.json', {
+			lockfileVersion: 3,
+			packages: {
+				'node_modules/file-saver': { version: '2.0.5', resolved: FILE_SAVER_SPEC },
+				'node_modules/a/node_modules/@scope/b': {
+					version: '1.0.0',
+					resolved: 'git+https://github.com/scope/b.git#main',
+				},
+				'node_modules/left-pad': {
+					version: '1.3.0',
+					resolved: 'https://registry.npmjs.org/left-pad/-/left-pad-1.3.0.tgz',
+				},
+			},
+		});
+		expect(findings.gitDependencies).toEqual([
+			'@scope/b@git+https://github.com/scope/b.git#main',
+			`file-saver@${FILE_SAVER_SPEC}`,
+		]);
+		/** A git reference is not a remote tarball, and is not counted as one. */
+		expect(findings.remoteTarballDependencies).toEqual([]);
+		/** A version-range lockfile of the old shape reads the same way. */
+		expect(
+			readLockfileFindings('package-lock.json', {
+				lockfileVersion: 1,
+				dependencies: { 'file-saver': { version: FILE_SAVER_SPEC } },
+			}).gitDependencies,
+		).toEqual([`file-saver@${FILE_SAVER_SPEC}`]);
+	});
+
+	/**
+	 * Undeclared, nothing changes: the plan carries no allowance flag, records no
+	 * allowance, and — this is the part that matters — does not refuse. The wall
+	 * is npm's to raise when it runs, and this stage does not invent a pre-flight
+	 * refusal out of a finding nobody asked it to act on.
+	 */
+	it('changes nothing at all when the policy is not declared', async () => {
+		const lane = await gitLane();
+		try {
+			const plan = await planLaneInstall(lane, policy(), {});
+			expect(plan.command).not.toContain('--allow-git');
+			expect(plan.gitDependenciesAllowed).toBeNull();
+			expect(plan.findings?.gitDependencies).toEqual([`file-saver@${FILE_SAVER_SPEC}`]);
+			expect(DEFAULT_INSTALL_POLICY.allowGitDependencies).toBe(false);
+		} finally {
+			await rm(lane, { recursive: true, force: true });
+		}
+	});
+
+	/**
+	 * Declared, npm is given its own allowance and the row records the
+	 * declaration together with what it admitted — including what a git
+	 * dependency does not come with.
+	 */
+	it('carries npm’s allowance and records which git dependencies it admitted', async () => {
+		const lane = await gitLane();
+		try {
+			const plan = await planLaneInstall(lane, policy({ allowGitDependencies: true }), {});
+			expect(plan.command.join(' ')).toContain('--allow-git all');
+			const allowed = plan.gitDependenciesAllowed;
+			expect(allowed?.policy).toBe('allow-git-dependencies');
+			expect(allowed?.readFrom).toBe('package-lock.json');
+			expect(allowed?.dependencies).toEqual([`file-saver@${FILE_SAVER_SPEC}`]);
+			expect(allowed?.consequence).toContain('git');
+			expect(allowed?.consequence).toContain('integrity hash');
+		} finally {
+			await rm(lane, { recursive: true, force: true });
+		}
+	});
+
+	/**
+	 * The two policies that can be declared together, read together. With the
+	 * foreign-lockfile policy taken there is no lockfile to read a list out of,
+	 * and the record says the list is empty because nothing was read rather than
+	 * letting an empty list read as "this closure has none".
+	 */
+	it('records an unread list as unread when no lockfile was read', async () => {
+		const directory = await temporaryDirectory();
+		try {
+			await writeFile(path.join(directory, 'package.json'), '{}\n');
+			await writeFile(path.join(directory, 'yarn.lock'), '# era yarn lockfile\n');
+			const plan = await planLaneInstall(
+				directory,
+				policy({ allowForeignLockfile: true, allowGitDependencies: true }),
+				{},
+			);
+			const allowed = plan.gitDependenciesAllowed;
+			expect(allowed?.readFrom).toBeNull();
+			expect(allowed?.dependencies).toEqual([]);
+			expect(allowed?.consequence).toContain(
+				'nothing was read, not that the closure carries none',
+			);
+		} finally {
+			await rm(directory, { recursive: true, force: true });
+		}
+	});
+
+	/**
+	 * The seam wired into the stage it belongs to, driven by an npm that fails
+	 * the way `coverview`'s did. The shim is the whole point: no network, no git
+	 * host, and the stage still has to turn npm's exit into the named refusal
+	 * rather than into a defect with npm's output buried in it.
+	 */
+	it('turns a real failing install into the named refusal, not a defect', async () => {
+		const root = await temporaryDirectory();
+		const lane = path.join(root, 'lane');
+		const runtime = path.join(root, 'runtime');
+		try {
+			await mkdir(path.join(runtime, 'bin'), { recursive: true });
+			const node = path.join(runtime, 'bin', 'node');
+			await writeFile(
+				node,
+				['#!/bin/sh', `exec ${JSON.stringify(process.execPath)} "$@"`, ''].join('\n'),
+			);
+			await chmod(node, 0o755);
+			const npm = path.join(runtime, 'bin', 'npm');
+			await writeFile(
+				npm,
+				[
+					'#!/bin/sh',
+					'>&2 echo "npm error code EALLOWGIT"',
+					'>&2 echo "npm error Fetching packages of type \\"git\\" have been disabled"',
+					`>&2 echo 'npm error Refusing to fetch "file-saver@${FILE_SAVER_SPEC}"'`,
+					'exit 1',
+					'',
+				].join('\n'),
+			);
+			await chmod(npm, 0o755);
+			await mkdir(lane, { recursive: true });
+			await writeFile(
+				path.join(lane, 'package.json'),
+				`${JSON.stringify({ name: 'lane', version: '1.0.0' })}\n`,
+			);
+			await writeFile(
+				path.join(lane, 'package-lock.json'),
+				`${JSON.stringify({
+					name: 'lane',
+					lockfileVersion: 3,
+					packages: {
+						'': { name: 'lane', version: '1.0.0' },
+						'node_modules/file-saver': { version: '2.0.5', resolved: FILE_SAVER_SPEC },
+					},
+				})}\n`,
+			);
+			const plan = await planLaneRuntime({
+				supplier: 'test',
+				version: 'v0.0.0-shim',
+				location: runtime,
+			});
+			const refusal = await refusalOf(async () =>
+				runLaneInstall(
+					lane,
+					policy(),
+					{ PATH: process.env.PATH ?? '' },
+					'replay',
+					root,
+					plan,
+				),
+			);
+			expect(refusal?.code).toBe('install.git-dependency-policy-not-declared');
+			expect(refusal?.message).toContain('npm error code EALLOWGIT');
+			expect(refusal?.message).toContain(`file-saver@${FILE_SAVER_SPEC}`);
+		} finally {
+			await rm(root, { recursive: true, force: true });
+		}
+	}, 120_000);
 });

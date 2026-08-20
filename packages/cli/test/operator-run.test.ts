@@ -102,6 +102,7 @@ describe('operator run — the stage plan', () => {
 			'24',
 			'--allow-peer-conflicts',
 			'--allow-foreign-lockfile',
+			'--allow-git-dependencies',
 		]);
 		const forwards = new Map(record.stagePlan.map((row) => [row.name, row.forwards]));
 		expect(forwards.get('ingest')).toContain('--revision');
@@ -109,6 +110,8 @@ describe('operator run — the stage plan', () => {
 		expect(forwards.get('install')).toContain('--allow-peer-conflicts');
 		/** The fourth install policy is the install stage's, and no other's. */
 		expect(forwards.get('install')).toContain('--allow-foreign-lockfile');
+		/** So is the fifth. */
+		expect(forwards.get('install')).toContain('--allow-git-dependencies');
 		expect(forwards.get('analyze')).toEqual([]);
 		/** Every forwarded flag belongs to exactly one stage. */
 		const forwarded = record.stagePlan.flatMap((row) => row.forwards);
