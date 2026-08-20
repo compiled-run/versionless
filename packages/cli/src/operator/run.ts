@@ -42,7 +42,7 @@ import { establishEraCell, type EraCellDeclarations } from './era-cell.ts';
 import { ingestApplicationSource, readFrontendRoot, type IngestDeclarations } from './ingest.ts';
 import { writeLaneFiles } from './lane.ts';
 import { readLicenceAtPin, type LicencePolicy } from './license.ts';
-import { runLaneInstall, type InstallPolicy } from './install.ts';
+import { planLaneRuntime, runLaneInstall, type InstallPolicy } from './install.ts';
 import { planApplication } from './plan.ts';
 import { composeLane, displayPath } from './record.ts';
 import {
@@ -465,7 +465,21 @@ export async function runFullPipeline(declarations: RunDeclarations): Promise<Ru
 			declarations.licence,
 		);
 	});
-	await runStage(state, 'era-cell', () => establishEraCell(composeRoot, declarations.eraCell));
+	/**
+	 * The era-cell record is held, not discarded.
+	 *
+	 * That stage's own `notEstablished` states that *"the runtime named here is
+	 * the runtime the lane this pipeline composes will be installed and built
+	 * in"*, and until this variable existed the record was written into the
+	 * stage table and dropped: `PATH` reached the install child verbatim, so a
+	 * lane whose cell provisioned Node 16 had its closure resolved by whatever
+	 * Node the operator invoked this pipeline with. The claim is now carried to
+	 * the two stages it is about, and recorded on both of their rows.
+	 */
+	const cell = await runStage(state, 'era-cell', () =>
+		establishEraCell(composeRoot, declarations.eraCell),
+	);
+	const runtime = await planLaneRuntime(cell?.provision ?? null);
 	const planned = await runStage(state, 'plan', () =>
 		planApplication({
 			appRoot: composeRoot,
@@ -504,9 +518,13 @@ export async function runFullPipeline(declarations: RunDeclarations): Promise<Ru
 			declarations.install,
 			process.env,
 			applied?.laneComposition.composed === true ? 'resolve' : 'replay',
+			process.cwd(),
+			runtime,
 		),
 	);
-	const built = await runStage(state, 'build', () => runLaneBuild(declarations.out));
+	const built = await runStage(state, 'build', () =>
+		runLaneBuild(declarations.out, undefined, process.env, runtime),
+	);
 	await runStage(state, 'witness', () =>
 		runLaneWitness({
 			application: path.basename(declarations.appRoot),

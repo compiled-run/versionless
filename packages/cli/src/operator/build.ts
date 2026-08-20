@@ -34,6 +34,13 @@ import { readdir } from 'node:fs/promises';
 import { promisify } from 'node:util';
 import * as path from 'pathe';
 import { directoryExists, readJsonFile } from './analyze.ts';
+import {
+	INHERITED_LANE_RUNTIME,
+	laneRuntimeEnvironment,
+	readLaneRuntime,
+	type LaneRuntime,
+	type LaneRuntimePlan,
+} from './install.ts';
 import { LANE_BUILD_DIRECTORY } from './lane.ts';
 import { refuse } from './refusals.ts';
 
@@ -116,8 +123,8 @@ type LaneBuildKind = 'angular' | 'vite';
  * Which build contract the lane answers to, read off the lane rather than
  * declared to this stage.
  *
- * `run` passes this stage nothing (`run.ts:509` calls it with the lane
- * directory alone), so the lineage the analyze stage read is not available
+ * `run` passes this stage a lane, an environment and a runtime and nothing
+ * else, so the lineage the analyze stage read is not available
  * here and the lane itself has to say what it is. An `angular.json` at the lane
  * root is the Angular workspace's own declaration of itself and is asked for
  * first; a lane that carries the generated Vite configuration is the Vite lane
@@ -331,6 +338,8 @@ export type BuildRecord = Readonly<{
 	outDirectory: string | null;
 	exitCode: number | null;
 	outputFiles: number | null;
+	/** The Node runtime the build child resolved, and where it came from. */
+	runtime: LaneRuntime | null;
 	notEstablished: readonly string[];
 }>;
 
@@ -346,20 +355,33 @@ export function buildNotRequested(reason: string): BuildRecord {
 		outDirectory: null,
 		exitCode: null,
 		outputFiles: null,
+		runtime: null,
 		notEstablished: BUILD_NOT_ESTABLISHED,
 	});
 }
 
-/** Run the build this stage planned. A non-zero exit is a defect. */
+/**
+ * Run the build this stage planned. A non-zero exit is a defect.
+ *
+ * `runtime` is the era-cell stage's provision, carried this far so the build
+ * child runs in the runtime that stage named instead of in whatever the
+ * invoking `PATH` happens to hold. It matters most where it is least visible:
+ * the Angular CLI 13 this repository's Angular lanes carry warns and proceeds
+ * on an even Node major above 16 rather than refusing it, so a build under the
+ * wrong runtime does not fail at the CLI — it fails somewhere inside webpack
+ * with a diagnostic that names neither Node nor the cell.
+ */
 export async function runLaneBuild(
 	laneDir: string,
 	configuration = 'vite.config.ts',
 	environment: NodeJS.ProcessEnv = process.env,
+	runtime: LaneRuntimePlan = INHERITED_LANE_RUNTIME,
 ): Promise<BuildRecord> {
 	const plan = await planLaneBuild(laneDir, configuration);
+	const inherited = laneRuntimeEnvironment(runtime, environment);
 	const [binary, ...args] = plan.command as readonly [string, ...string[]];
 	try {
-		await run(binary, args, { cwd: laneDir, env: environment, maxBuffer: 64 * 1024 * 1024 });
+		await run(binary, args, { cwd: laneDir, env: inherited, maxBuffer: 64 * 1024 * 1024 });
 	} catch (error) {
 		const detail = error instanceof Error ? error.message : String(error);
 		throw new Error(
@@ -376,6 +398,7 @@ export async function runLaneBuild(
 		outDirectory: plan.outDirectory,
 		exitCode: 0,
 		outputFiles: await countFilesBelow(path.join(laneDir, plan.outDirectory)),
+		runtime: await readLaneRuntime(runtime, inherited),
 		notEstablished: BUILD_NOT_ESTABLISHED,
 	});
 }

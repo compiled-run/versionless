@@ -431,6 +431,156 @@ export const INSTALL_HOME_DIRECTORY = '.install-home';
  */
 export const SANDBOX_KEPT_VARIABLES: readonly string[] = Object.freeze(['PATH']);
 
+/**
+ * Which runtime a lane child is to be given, decided before it is spawned.
+ *
+ * The era-cell stage names a Node runtime and its record states, in those
+ * words, that *"the runtime named here is the runtime the lane this pipeline
+ * composes will be installed and built in"*. Until this type existed nothing
+ * carried that decision out of the stage: the record was written into the
+ * stage table and discarded, `PATH` reached the install child verbatim, and
+ * the claim was corroborated by nothing. A plan is the smallest thing that can
+ * be handed to both children and then recorded on both rows.
+ *
+ * `pathPrefix` is the runtime directory whose `bin` goes first on `PATH`,
+ * spelled as the era-cell record spells it — relative to this checkout, because
+ * a record carries no absolute host paths. It is `null` whenever nothing is
+ * prepended, and `source` says which of the two cases that is rather than
+ * leaving a reader to infer it from a null.
+ */
+export type LaneRuntimePlan = Readonly<{
+	/** `provisioned` when a cell runtime's `bin` is prepended; `host` when the invoking `PATH` is passed through untouched. */
+	source: 'provisioned' | 'host';
+	/** The supplier the era-cell stage named, or `null` when this stage was handed no provision. */
+	cellSupplier: string | null;
+	/** The version the era-cell stage read for that provision, or `null`. */
+	cellVersion: string | null;
+	/** The runtime directory whose `bin` is prepended to `PATH`, or `null` when none is. */
+	pathPrefix: string | null;
+}>;
+
+/**
+ * The plan for a child this flow hands no era-cell provision at all.
+ *
+ * `migrate --install` and `migrate --build` reach these stages without a
+ * pipeline behind them, and a test calls them with a lane and nothing else.
+ * The honest reading for all of them is the same one that held before this
+ * seam existed: whatever the invoking `PATH` already names.
+ */
+export const INHERITED_LANE_RUNTIME: LaneRuntimePlan = Object.freeze({
+	source: 'host',
+	cellSupplier: null,
+	cellVersion: null,
+	pathPrefix: null,
+});
+
+/**
+ * The runtime a lane child actually ran in, as the row records it.
+ *
+ * `resolvedVersion` is the corroboration and the reason this is a reading
+ * rather than a restatement of the plan: it is `node -v` executed through the
+ * very environment the child was given, so a plan that prepended a directory
+ * which does not in fact supply `node` first shows up here as the host version
+ * instead of the cell's. `null` means `node` was not resolvable on that
+ * environment at all.
+ */
+export type LaneRuntime = Readonly<{
+	source: 'provisioned' | 'host';
+	cellSupplier: string | null;
+	cellVersion: string | null;
+	pathPrefix: string | null;
+	/** `node -v` read through the child's own environment, or `null`. */
+	resolvedVersion: string | null;
+	/** What this reading establishes, and what it does not. */
+	claim: string;
+}>;
+
+/**
+ * Decide the runtime plan from an era-cell provision, by reading the disk.
+ *
+ * The question asked of the provision is the only one that can be answered
+ * here: does its `location` name a runtime tree in this checkout that carries
+ * `bin/node`? The workspace runtime cache spells its locations relative to the
+ * checkout, so it does. The running process spells its location as a sentence
+ * about itself, and a version manager spells its location relative to that
+ * manager's own root — neither resolves here, and neither is guessed at. Both
+ * fall to `host`, which is what the child would have got anyway, and the
+ * supplier and version the stage named are still carried so the row says which
+ * provision it was that could not be prepended.
+ */
+export async function planLaneRuntime(
+	provision: Readonly<{ supplier: string; version: string; location: string }> | null,
+): Promise<LaneRuntimePlan> {
+	if (provision === null) return INHERITED_LANE_RUNTIME;
+	const resolved = path.resolve(provision.location);
+	const prepends = await fileExists(path.join(resolved, 'bin', 'node'));
+	return Object.freeze({
+		source: prepends ? ('provisioned' as const) : ('host' as const),
+		cellSupplier: provision.supplier,
+		cellVersion: provision.version,
+		pathPrefix: prepends ? provision.location : null,
+	});
+}
+
+/**
+ * The environment a lane child is spawned with under `plan`.
+ *
+ * When nothing is prepended this returns the environment it was given — the
+ * same object, not a copy of it — so the path that existed before this seam
+ * did is byte-identical to the path that exists after it. That identity is the
+ * guard: `react-flame-v2-4-0` is the only fully proven run this repository has,
+ * its cell is supplied by the running process, and its install and build
+ * children must be spawned with exactly what they were spawned with before.
+ */
+export function laneRuntimeEnvironment(
+	plan: LaneRuntimePlan,
+	environment: NodeJS.ProcessEnv,
+): NodeJS.ProcessEnv {
+	if (plan.source !== 'provisioned' || plan.pathPrefix === null) return environment;
+	const bin = path.join(path.resolve(plan.pathPrefix), 'bin');
+	const inherited = environment.PATH ?? '';
+	return { ...environment, PATH: inherited === '' ? bin : `${bin}${path.delimiter}${inherited}` };
+}
+
+/** `node -v` through `environment`, or `null` when `node` is not on it. */
+async function resolvedNodeVersion(environment: NodeJS.ProcessEnv): Promise<string | null> {
+	try {
+		const { stdout } = await run('node', ['-v'], { env: environment });
+		const read = stdout.trim();
+		return read === '' ? null : read;
+	} catch {
+		return null;
+	}
+}
+
+/**
+ * Read back what the child's environment actually resolves `node` to, and say
+ * what that does and does not establish.
+ *
+ * It is deliberately taken from the same environment object the child was
+ * spawned with rather than from the plan, so the row reports a measurement of
+ * the child's world instead of repeating the intention behind it.
+ */
+export async function readLaneRuntime(
+	plan: LaneRuntimePlan,
+	environment: NodeJS.ProcessEnv,
+): Promise<LaneRuntime> {
+	const resolvedVersion = await resolvedNodeVersion(environment);
+	return Object.freeze({
+		source: plan.source,
+		cellSupplier: plan.cellSupplier,
+		cellVersion: plan.cellVersion,
+		pathPrefix: plan.pathPrefix,
+		resolvedVersion,
+		claim:
+			plan.source === 'provisioned'
+				? `The child was spawned with ${String(plan.pathPrefix)}/bin first on PATH, so \`node\` — and every shim in the lane's own \`node_modules/.bin\` that starts \`#!/usr/bin/env node\` — resolved to the ${String(plan.cellSupplier)} runtime the era-cell stage named (${String(plan.cellVersion)}). \`resolvedVersion\` is \`node -v\` read through that same environment${resolvedVersion === null ? ', and it read nothing: `node` was not resolvable there' : ''}. It does not establish that a tool the build script invokes by an absolute path of its own resolved through PATH too.`
+				: plan.cellSupplier === null
+					? `Nothing was prepended to PATH and this stage was handed no era-cell provision, so the child inherited the invoking PATH unchanged. \`resolvedVersion\` is \`node -v\` read through that environment${resolvedVersion === null ? ', and it read nothing: `node` was not resolvable there' : ''}; which runtime that is was decided outside this pipeline.`
+					: `Nothing was prepended to PATH. The era-cell stage named ${plan.cellSupplier} ${String(plan.cellVersion)}, whose location is not a runtime directory carrying bin/node that this checkout can resolve — the running process supplies itself, and a version manager spells its location relative to its own root — so the child inherited the invoking PATH unchanged rather than being given a guessed directory. \`resolvedVersion\` is \`node -v\` read through that environment${resolvedVersion === null ? ', and it read nothing: `node` was not resolvable there' : ''}.`,
+	});
+}
+
 export type InstallSandbox = Readonly<{
 	/** The lane-owned directory handed to the child as `HOME`. */
 	home: string;
@@ -630,6 +780,8 @@ export type InstallRecord = Readonly<{
 		home: string | null;
 		strippedVariables: readonly string[];
 	}> | null;
+	/** The Node runtime the install child resolved, and where it came from. */
+	runtime: LaneRuntime | null;
 	/** What was watched outside the lane, and what moved there. */
 	boundary: Readonly<{
 		root: string;
@@ -657,6 +809,7 @@ export function installNotRequested(reason: string): InstallRecord {
 		exitCode: null,
 		installedPackages: null,
 		sandbox: null,
+		runtime: null,
 		boundary: null,
 		notEstablished: INSTALL_NOT_ESTABLISHED,
 	});
@@ -692,9 +845,18 @@ export async function runLaneInstall(
 	environment: NodeJS.ProcessEnv = process.env,
 	closure: ClosureMode = 'replay',
 	boundaryRoot: string = process.cwd(),
+	runtime: LaneRuntimePlan = INHERITED_LANE_RUNTIME,
 ): Promise<InstallRecord> {
-	const plan = await planLaneInstall(laneDir, policy, environment, closure);
-	const sandbox = planInstallSandbox(laneDir, environment, boundaryRoot);
+	/**
+	 * The runtime decision is applied once, here, rather than by the caller:
+	 * the sandbox keeps `PATH` verbatim, so an environment prepended before it
+	 * reaches this function and an environment prepended inside it are the same
+	 * environment, and doing it in one place is what makes the row's `runtime`
+	 * a reading of the child rather than a restatement of a caller's intent.
+	 */
+	const inherited = laneRuntimeEnvironment(runtime, environment);
+	const plan = await planLaneInstall(laneDir, policy, inherited, closure);
+	const sandbox = planInstallSandbox(laneDir, inherited, boundaryRoot);
 	for (const directory of sandbox.directories) await mkdir(directory, { recursive: true });
 	const before = await snapshotInstallBoundary(boundaryRoot, laneDir);
 	const [binary, ...args] = plan.command as readonly [string, ...string[]];
@@ -777,6 +939,7 @@ export async function runLaneInstall(
 			home: sandbox.home,
 			strippedVariables: sandbox.strippedVariables,
 		}),
+		runtime: await readLaneRuntime(runtime, sandbox.environment),
 		boundary: Object.freeze({
 			root: path.resolve(boundaryRoot),
 			pathsObservedBefore: before.size,

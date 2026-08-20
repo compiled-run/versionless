@@ -2,10 +2,10 @@
 	"schemaVersion": "versionless.intervention-count.v1",
 	"flow": "intervention-count",
 	"application": ".versionless/work/react-flame-v2-4-0/baseline",
-	"lane": "../../../../../var/folders/pt/xbq_fv915rx9wtnmww8npc0w0000gn/T/tmp.C2xr2iWnbl/lane",
+	"lane": "../../../../../var/folders/pt/xbq_fv915rx9wtnmww8npc0w0000gn/T/tmp.XXpfitJcWb/lane",
 	"runRecord": "evidence/runs/react-flame-v2-4-0/run-record.json",
 	"writeSet": [
-		"../../../../../private/var/folders/pt/xbq_fv915rx9wtnmww8npc0w0000gn/T/tmp.C2xr2iWnbl/lane",
+		"../../../../../private/var/folders/pt/xbq_fv915rx9wtnmww8npc0w0000gn/T/tmp.XXpfitJcWb/lane",
 		"evidence/runs/react-flame-v2-4-0/run-record.json",
 		"evidence/runs/react-flame-v2-4-0/run-record.json.interventions.json",
 		".versionless/stage/witness-real-app",
@@ -26,7 +26,7 @@
 				"run",
 				".versionless/work/react-flame-v2-4-0/baseline",
 				"--out",
-				"/var/folders/pt/xbq_fv915rx9wtnmww8npc0w0000gn/T/tmp.C2xr2iWnbl/lane",
+				"/var/folders/pt/xbq_fv915rx9wtnmww8npc0w0000gn/T/tmp.XXpfitJcWb/lane",
 				"--record",
 				"evidence/runs/react-flame-v2-4-0/run-record.json",
 				"--allow-install-scripts",
@@ -38,8 +38,8 @@
 			"hang": false,
 			"stdoutBytes": 1829,
 			"stderrBytes": 0,
-			"startedAt": "2026-08-20T10:31:22.689Z",
-			"endedAt": "2026-08-20T10:31:29.836Z"
+			"startedAt": "2026-08-20T11:17:00.709Z",
+			"endedAt": "2026-08-20T11:17:07.142Z"
 		}
 	],
 	"observation": {

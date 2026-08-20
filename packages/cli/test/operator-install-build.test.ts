@@ -1,5 +1,5 @@
 import { execFile } from 'node:child_process';
-import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
+import { chmod, mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { promisify } from 'node:util';
 import * as path from 'pathe';
@@ -7,9 +7,12 @@ import { describe, expect, it } from 'vitest';
 import { planLaneBuild, runLaneBuild } from '../src/operator/build.ts';
 import {
 	DEFAULT_INSTALL_POLICY,
+	INHERITED_LANE_RUNTIME,
 	INSTALL_HOME_DIRECTORY,
+	laneRuntimeEnvironment,
 	planInstallSandbox,
 	planLaneInstall,
+	planLaneRuntime,
 	readLockfileFindings,
 	runLaneInstall,
 	type InstallPolicy,
@@ -711,7 +714,7 @@ describe('build stage', () => {
 				[
 					"import { mkdir, writeFile } from 'node:fs/promises';",
 					`const out = ${JSON.stringify(LANE_BUILD_DIRECTORY)};`,
-					"await mkdir(`${out}/assets`, { recursive: true });",
+					'await mkdir(`${out}/assets`, { recursive: true });',
 					"await writeFile(`${out}/index.html`, '<!doctype html>\\n');",
 					"await writeFile(`${out}/assets/app.js`, 'export {};\\n');",
 					'',
@@ -948,4 +951,243 @@ describe('the measured lane install and build record', () => {
 		expect(proceeded?.build).not.toBeNull();
 		expect(record.notEstablished.length).toBeGreaterThan(0);
 	});
+});
+
+/**
+ * The era-cell stage's runtime claim, made enforceable.
+ *
+ * That stage records, verbatim, that *"the runtime named here is the runtime
+ * the lane this pipeline composes will be installed and built in"*, and until
+ * this seam existed nothing carried it: `run` discarded the record and `PATH`
+ * reached both children verbatim, so `angular2-hn`'s 844 packages were resolved
+ * by the host's Node 24 while its row asserted the provisioned 16.20.2. The
+ * two halves tested here are the enforcement (a provisioned cell's `bin` goes
+ * first on the child's `PATH`) and the guard (a cell supplied by the running
+ * process changes nothing at all — that is `react-flame-v2-4-0`'s shape, and
+ * its environment must be the object it was before).
+ */
+describe('the cell runtime threaded into the lane’s children', () => {
+	/**
+	 * A runtime tree shaped like the one the era-cell stage provisions: a
+	 * directory carrying `bin/node`. The shim answers `node -v` with a version
+	 * of its own and hands everything else to the real runtime, so a row
+	 * reporting the shim's version can only have resolved `node` through the
+	 * directory the plan prepended — which is the fact under test, and it is not
+	 * observable by reading `PATH` back out of the environment.
+	 */
+	async function provisionedRuntime(version: string): Promise<string> {
+		const directory = await temporaryDirectory();
+		await mkdir(path.join(directory, 'bin'), { recursive: true });
+		const shim = path.join(directory, 'bin', 'node');
+		await writeFile(
+			shim,
+			[
+				'#!/bin/sh',
+				`if [ "$1" = "-v" ]; then echo "${version}"; exit 0; fi`,
+				`exec ${JSON.stringify(process.execPath)} "$@"`,
+				'',
+			].join('\n'),
+		);
+		await chmod(shim, 0o755);
+		return directory;
+	}
+
+	/** A Vite lane whose build script emits two files where the plan says it will. */
+	async function viteLane(): Promise<string> {
+		const directory = await temporaryDirectory();
+		await mkdir(path.join(directory, 'node_modules'), { recursive: true });
+		await writeFile(path.join(directory, 'vite.config.ts'), '\n');
+		await writeFile(
+			path.join(directory, 'package.json'),
+			'{"name":"lane","version":"0.0.0","private":true,"scripts":{"build":"node build.mjs"}}\n',
+		);
+		await writeFile(
+			path.join(directory, 'build.mjs'),
+			[
+				"import { mkdir, writeFile } from 'node:fs/promises';",
+				`const out = ${JSON.stringify(LANE_BUILD_DIRECTORY)};`,
+				'await mkdir(out, { recursive: true });',
+				"await writeFile(`${out}/index.html`, '<!doctype html>\\n');",
+				"await writeFile(`${out}/app.js`, 'export {};\\n');",
+				'',
+			].join('\n'),
+		);
+		return directory;
+	}
+
+	/** The provision `angular2-hn`'s era-cell row carries, pointed at a tree on disk. */
+	const cachedProvision = (location: string) =>
+		({
+			supplier: 'workspace-runtime-cache',
+			version: 'v16.20.2',
+			location,
+		}) as const;
+
+	/** The provision `react-flame-v2-4-0`'s era-cell row carries, verbatim. */
+	const RUNNING_PROCESS_PROVISION = {
+		supplier: 'running-process',
+		version: process.version,
+		location: 'the process this stage is running in',
+	} as const;
+
+	it('reads a provision that names a runtime tree, and one that names a sentence', async () => {
+		const directory = await provisionedRuntime('v16.20.2-shim');
+		try {
+			expect(await planLaneRuntime(cachedProvision(directory))).toEqual({
+				source: 'provisioned',
+				cellSupplier: 'workspace-runtime-cache',
+				cellVersion: 'v16.20.2',
+				pathPrefix: directory,
+			});
+			/** The running process supplies itself: there is nothing to prepend. */
+			expect(await planLaneRuntime(RUNNING_PROCESS_PROVISION)).toEqual({
+				source: 'host',
+				cellSupplier: 'running-process',
+				cellVersion: process.version,
+				pathPrefix: null,
+			});
+			/**
+			 * A version manager spells its location relative to its own root, so
+			 * it does not resolve from this checkout. The supplier and version are
+			 * still carried, so the row says which provision could not be used
+			 * rather than reporting that there was none.
+			 */
+			expect(
+				await planLaneRuntime({
+					supplier: 'fnm',
+					version: 'v16.20.2',
+					location: 'node_versions/v16.20.2',
+				}),
+			).toEqual({
+				source: 'host',
+				cellSupplier: 'fnm',
+				cellVersion: 'v16.20.2',
+				pathPrefix: null,
+			});
+			/** A stage handed no provision at all reads as the inherited path. */
+			expect(await planLaneRuntime(null)).toBe(INHERITED_LANE_RUNTIME);
+		} finally {
+			await rm(directory, { recursive: true, force: true });
+		}
+	});
+
+	/**
+	 * The sealed-path guard, asserted as identity rather than as equality: the
+	 * host path must hand the child the very object it was given, so there is no
+	 * copy in which a key could be added, reordered or dropped.
+	 */
+	it('gives the host path the same environment object it was handed', async () => {
+		const plan = await planLaneRuntime(RUNNING_PROCESS_PROVISION);
+		const environment = { PATH: '/usr/bin:/bin', LANG: 'en_US.UTF-8' };
+		expect(laneRuntimeEnvironment(plan, environment)).toBe(environment);
+		expect(laneRuntimeEnvironment(INHERITED_LANE_RUNTIME, environment)).toBe(environment);
+		expect(laneRuntimeEnvironment(plan, process.env)).toBe(process.env);
+	});
+
+	it('puts the provisioned runtime’s bin first, and leaves the rest of PATH behind it', async () => {
+		const directory = await provisionedRuntime('v16.20.2-shim');
+		try {
+			const plan = await planLaneRuntime(cachedProvision(directory));
+			const environment = laneRuntimeEnvironment(plan, { PATH: '/usr/bin:/bin', LANG: 'C' });
+			expect(environment.PATH).toBe(`${directory}/bin:/usr/bin:/bin`);
+			expect(environment.LANG).toBe('C');
+			/** An environment carrying no PATH gets the prefix and nothing invented. */
+			expect(laneRuntimeEnvironment(plan, {}).PATH).toBe(`${directory}/bin`);
+		} finally {
+			await rm(directory, { recursive: true, force: true });
+		}
+	});
+
+	it('builds the lane in the provisioned runtime and records the version the child resolved', async () => {
+		const runtime = await provisionedRuntime('v16.20.2-shim');
+		const lane = await viteLane();
+		try {
+			const plan = await planLaneRuntime(cachedProvision(runtime));
+			const record = await runLaneBuild(lane, undefined, process.env, plan);
+			expect(record.ran).toBe(true);
+			expect(record.outputFiles).toBe(2);
+			expect(record.runtime?.source).toBe('provisioned');
+			expect(record.runtime?.cellSupplier).toBe('workspace-runtime-cache');
+			expect(record.runtime?.cellVersion).toBe('v16.20.2');
+			expect(record.runtime?.pathPrefix).toBe(runtime);
+			/** The measurement, not the intention: `node -v` through the child's own environment. */
+			expect(record.runtime?.resolvedVersion).toBe('v16.20.2-shim');
+			expect(record.runtime?.claim).toContain(`${runtime}/bin first on PATH`);
+		} finally {
+			await rm(runtime, { recursive: true, force: true });
+			await rm(lane, { recursive: true, force: true });
+		}
+	}, 120_000);
+
+	it('records the host runtime explicitly when the cell provisioned no tree', async () => {
+		const lane = await viteLane();
+		try {
+			const plan = await planLaneRuntime(RUNNING_PROCESS_PROVISION);
+			const record = await runLaneBuild(lane, undefined, process.env, plan);
+			expect(record.ran).toBe(true);
+			expect(record.runtime?.source).toBe('host');
+			expect(record.runtime?.cellSupplier).toBe('running-process');
+			expect(record.runtime?.cellVersion).toBe(process.version);
+			expect(record.runtime?.pathPrefix).toBeNull();
+			expect(record.runtime?.resolvedVersion).toMatch(/^v\d+\.\d+\.\d+/);
+			expect(record.runtime?.resolvedVersion).not.toBe('v16.20.2-shim');
+			expect(record.runtime?.claim).toContain('Nothing was prepended to PATH');
+			/** And a build called the way `migrate --build` calls it says so too. */
+			const inherited = await runLaneBuild(lane);
+			expect(inherited.runtime?.source).toBe('host');
+			expect(inherited.runtime?.cellSupplier).toBeNull();
+		} finally {
+			await rm(lane, { recursive: true, force: true });
+		}
+	}, 120_000);
+
+	it('installs the lane closure in the provisioned runtime, and records it on the install row', async () => {
+		const runtime = await provisionedRuntime('v16.20.2-shim');
+		const root = await temporaryDirectory();
+		const lane = path.join(root, 'lane');
+		try {
+			await mkdir(lane, { recursive: true });
+			await writeFile(
+				path.join(lane, 'package.json'),
+				`${JSON.stringify({ name: 'lane', version: '1.0.0' })}\n`,
+			);
+			await writeFile(
+				path.join(lane, 'package-lock.json'),
+				`${JSON.stringify({
+					name: 'lane',
+					version: '1.0.0',
+					lockfileVersion: 3,
+					requires: true,
+					packages: { '': { name: 'lane', version: '1.0.0' } },
+				})}\n`,
+			);
+			const plan = await planLaneRuntime(cachedProvision(runtime));
+			const record = await runLaneInstall(lane, policy(), process.env, 'replay', root, plan);
+			expect(record.ran).toBe(true);
+			expect(record.runtime?.source).toBe('provisioned');
+			expect(record.runtime?.pathPrefix).toBe(runtime);
+			/**
+			 * Read through the sandbox's own environment, which is the one the
+			 * install child got: the sandbox keeps `PATH` verbatim, so the prefix
+			 * survives every other variable it replaces.
+			 */
+			expect(record.runtime?.resolvedVersion).toBe('v16.20.2-shim');
+			expect(record.sandbox?.home).toBe(path.join(lane, INSTALL_HOME_DIRECTORY));
+			/** The same lane on the host path records the host, and prepends nothing. */
+			const host = await runLaneInstall(
+				lane,
+				policy(),
+				process.env,
+				'replay',
+				root,
+				await planLaneRuntime(RUNNING_PROCESS_PROVISION),
+			);
+			expect(host.runtime?.source).toBe('host');
+			expect(host.runtime?.pathPrefix).toBeNull();
+			expect(host.runtime?.resolvedVersion).not.toBe('v16.20.2-shim');
+		} finally {
+			await rm(runtime, { recursive: true, force: true });
+			await rm(root, { recursive: true, force: true });
+		}
+	}, 180_000);
 });

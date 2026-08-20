@@ -4,7 +4,7 @@
 	"outcome": "proceeded",
 	"exitCode": 0,
 	"application": ".versionless/work/react-flame-v2-4-0/baseline",
-	"lane": "../../../../../var/folders/pt/xbq_fv915rx9wtnmww8npc0w0000gn/T/tmp.C2xr2iWnbl/lane",
+	"lane": "../../../../../var/folders/pt/xbq_fv915rx9wtnmww8npc0w0000gn/T/tmp.XXpfitJcWb/lane",
 	"roots": {
 		"source": ".versionless/work/react-flame-v2-4-0/baseline",
 		"frontend": ".versionless/work/react-flame-v2-4-0/baseline/client",
@@ -91,8 +91,8 @@
 					"A dependency the cell has no reading for is reported `unknown`. `unknown` is not `supported` and it is not `unsupported`."
 				]
 			},
-			"startedAt": "2026-08-20T10:31:22.994Z",
-			"endedAt": "2026-08-20T10:31:22.995Z"
+			"startedAt": "2026-08-20T11:17:01.012Z",
+			"endedAt": "2026-08-20T11:17:01.013Z"
 		},
 		{
 			"name": "ingest",
@@ -256,8 +256,8 @@
 					"A frontend root read by lineage is the one directory among those considered whose manifest declares a framework this stage reads. The basis names every directory considered and what each of their manifests declared; nothing here establishes that the directory chosen is the one its authors would call the application."
 				]
 			},
-			"startedAt": "2026-08-20T10:31:22.995Z",
-			"endedAt": "2026-08-20T10:31:23.025Z"
+			"startedAt": "2026-08-20T11:17:01.013Z",
+			"endedAt": "2026-08-20T11:17:01.044Z"
 		},
 		{
 			"name": "license-at-pin",
@@ -309,8 +309,8 @@
 					"`identifierSource: declared` means an operator supplied the identifier. This stage did not read it and does not corroborate it."
 				]
 			},
-			"startedAt": "2026-08-20T10:31:23.025Z",
-			"endedAt": "2026-08-20T10:31:23.025Z"
+			"startedAt": "2026-08-20T11:17:01.044Z",
+			"endedAt": "2026-08-20T11:17:01.044Z"
 		},
 		{
 			"name": "era-cell",
@@ -560,8 +560,8 @@
 					"Satisfaction of a declared range is not corroborated by anything else this tree says. Where other sources name majors, they are listed above with what each literally says, and this stage picks from none of them."
 				]
 			},
-			"startedAt": "2026-08-20T10:31:23.025Z",
-			"endedAt": "2026-08-20T10:31:23.041Z"
+			"startedAt": "2026-08-20T11:17:01.044Z",
+			"endedAt": "2026-08-20T11:17:01.051Z"
 		},
 		{
 			"name": "plan",
@@ -638,8 +638,8 @@
 					]
 				}
 			},
-			"startedAt": "2026-08-20T10:31:23.041Z",
-			"endedAt": "2026-08-20T10:31:23.042Z"
+			"startedAt": "2026-08-20T11:17:01.051Z",
+			"endedAt": "2026-08-20T11:17:01.052Z"
 		},
 		{
 			"name": "apply",
@@ -712,8 +712,8 @@
 					]
 				}
 			},
-			"startedAt": "2026-08-20T10:31:23.042Z",
-			"endedAt": "2026-08-20T10:31:23.086Z"
+			"startedAt": "2026-08-20T11:17:01.052Z",
+			"endedAt": "2026-08-20T11:17:01.098Z"
 		},
 		{
 			"name": "install",
@@ -752,7 +752,7 @@
 				"exitCode": 0,
 				"installedPackages": 117,
 				"sandbox": {
-					"home": "/var/folders/pt/xbq_fv915rx9wtnmww8npc0w0000gn/T/tmp.C2xr2iWnbl/lane/.install-home",
+					"home": "/var/folders/pt/xbq_fv915rx9wtnmww8npc0w0000gn/T/tmp.XXpfitJcWb/lane/.install-home",
 					"strippedVariables": [
 						"CLAUDE_CODE_EXECPATH (names the invoking user's home)",
 						"FNM_DIR (names the invoking user's home)",
@@ -762,9 +762,16 @@
 						"PNPM_HOME (names the invoking user's home)",
 						"PWD (names the invoking user's home)",
 						"USER_ZDOTDIR (names the invoking user's home)",
-						"ZDOTDIR (names the invoking user's home)",
-						"_ (names the invoking user's home)"
+						"ZDOTDIR (names the invoking user's home)"
 					]
+				},
+				"runtime": {
+					"source": "host",
+					"cellSupplier": "running-process",
+					"cellVersion": "v24.15.0",
+					"pathPrefix": null,
+					"resolvedVersion": "v24.15.0",
+					"claim": "Nothing was prepended to PATH. The era-cell stage named running-process v24.15.0, whose location is not a runtime directory carrying bin/node that this checkout can resolve — the running process supplies itself, and a version manager spells its location relative to its own root — so the child inherited the invoking PATH unchanged rather than being given a guessed directory. `resolvedVersion` is `node -v` read through that environment."
 				},
 				"boundary": {
 					"root": "/Users/jacksm5pro/dev/open-source/versionless",
@@ -781,8 +788,8 @@
 					"`closure: resolve` means the lane manifest declares a build toolchain the recorded lockfile predates, so npm resolved rather than replayed. The application’s own pins still come from the lockfile; what was newly resolved is what the manifest rewrite added, and that resolution is not a pin this repository recorded."
 				]
 			},
-			"startedAt": "2026-08-20T10:31:23.086Z",
-			"endedAt": "2026-08-20T10:31:26.977Z"
+			"startedAt": "2026-08-20T11:17:01.098Z",
+			"endedAt": "2026-08-20T11:17:04.759Z"
 		},
 		{
 			"name": "build",
@@ -801,14 +808,22 @@
 				"outDirectory": "build-vite",
 				"exitCode": 0,
 				"outputFiles": 24,
+				"runtime": {
+					"source": "host",
+					"cellSupplier": "running-process",
+					"cellVersion": "v24.15.0",
+					"pathPrefix": null,
+					"resolvedVersion": "v24.15.0",
+					"claim": "Nothing was prepended to PATH. The era-cell stage named running-process v24.15.0, whose location is not a runtime directory carrying bin/node that this checkout can resolve — the running process supplies itself, and a version manager spells its location relative to its own root — so the child inherited the invoking PATH unchanged rather than being given a guessed directory. `resolvedVersion` is `node -v` read through that environment."
+				},
 				"notEstablished": [
 					"A completed build establishes that the lane emitted output. It is not a browser proof, a parity reading, or a witness pass; nothing here establishes that the emitted bundle behaves as the application did on its era toolchain.",
 					"The lane resolves the frozen adapter from this workspace by relative path, so this build is reproducible by this pipeline in this checkout. It does not establish that the lane builds anywhere else.",
 					"`outputFiles` counts files below the build directory. It is a count, not a comparison against any previous build."
 				]
 			},
-			"startedAt": "2026-08-20T10:31:26.977Z",
-			"endedAt": "2026-08-20T10:31:28.298Z"
+			"startedAt": "2026-08-20T11:17:04.759Z",
+			"endedAt": "2026-08-20T11:17:06.021Z"
 		},
 		{
 			"name": "witness",
@@ -824,15 +839,15 @@
 					"Where the journeys were synthesized, they were derived from the application own end-to-end suite or from a bounded loopback crawl. The replayability ratio in the record is a count of derived journeys that name a route to start from, not a measure of coverage."
 				]
 			},
-			"startedAt": "2026-08-20T10:31:28.298Z",
-			"endedAt": "2026-08-20T10:31:29.822Z"
+			"startedAt": "2026-08-20T11:17:06.021Z",
+			"endedAt": "2026-08-20T11:17:07.131Z"
 		}
 	],
 	"report": {
 		"status": "emitted",
 		"slot": "evidence/trust/current/coverage-report.json",
 		"path": "evidence/trust/current/coverage-report.json",
-		"digest": "1807d3cdf6f30245a8c847fbbd875709289456547e9604be94f0ab0f1f37cb41"
+		"digest": "1e522f7b25c5b3c331377e4cc8cadedc7384d1b724403edac59a9a1007ff1087"
 	},
 	"notEstablished": [
 		"A stage recorded `ran` returned its own record. What that record establishes is what that stage states, and no more: this row adds no reading of its own on top of it.",
