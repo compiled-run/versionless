@@ -24,8 +24,8 @@ import {
 	OPERATOR_COMMANDS,
 } from '../src/operator/flows.ts';
 import { DESCRIBED_CELLS, describedCell } from '../src/operator/era-cell.ts';
-import { RUN_STAGE_FLAGS } from '../src/operator/run.ts';
-import { pipelineRefusalOf } from '../src/operator/refusals.ts';
+import { RUN_STAGE_FLAGS, stageFailureRow } from '../src/operator/run.ts';
+import { PipelineRefusalError, pipelineRefusalOf } from '../src/operator/refusals.ts';
 import { runOperatorVerification } from '../src/operator/verify.ts';
 import {
 	APPLICATION_SOURCE_DIRECTORIES,
@@ -987,5 +987,77 @@ describe('operator supported-matrix', () => {
 				json.supportMatrix.counted[lineage]?.total,
 			);
 		expect(outcome.exitCode).toBe(0);
+	});
+});
+
+/**
+ * The row the stage seam writes when a stage does not complete.
+ *
+ * `run` composes one table and the rows in it are what a reader has. A stage
+ * that refused and a stage that broke are two shapes, and the runtime a lane
+ * child's failure carried out is a third field that lands on either of them —
+ * but only when the error actually carried one. Nothing is invented for the
+ * seven stages that never took a runtime plan.
+ */
+describe('operator run stage failure rows', () => {
+	const REFUSAL = {
+		code: 'install.lockfile-absent',
+		message: 'Install: the lane carries none of package-lock.json.',
+		stage: 'install',
+		origin: 'pipeline',
+	} as const;
+
+	it('keeps the refusal row exactly the shape it was', () => {
+		const row = stageFailureRow(
+			'install',
+			new PipelineRefusalError(REFUSAL),
+			'started',
+			'ended',
+		);
+		expect(Object.keys(row)).toEqual([
+			'name',
+			'status',
+			'reason',
+			'refusal',
+			'startedAt',
+			'endedAt',
+		]);
+		expect(row.status).toBe('refused');
+		expect(row.reason).toBe(REFUSAL.code);
+		expect(row.refusal?.message).toBe(REFUSAL.message);
+		expect(row.runtime).toBeUndefined();
+	});
+
+	it('records a defect that carried no runtime without one', () => {
+		const row = stageFailureRow('plan', new Error('plan: something broke'), 'started', 'ended');
+		expect(Object.keys(row)).toEqual(['name', 'status', 'reason', 'startedAt', 'endedAt']);
+		expect(row.status).toBe('defect');
+		expect(row.reason).toBe('plan: something broke');
+		expect(row.runtime).toBeUndefined();
+		expect(pipelineRefusalOf(new Error('plan: something broke'))).toBeNull();
+	});
+
+	it('reads the runtime off an error that carried one, and off nothing else', () => {
+		const runtime = {
+			source: 'provisioned' as const,
+			cellSupplier: 'workspace-runtime-cache',
+			cellVersion: 'v16.20.2',
+			pathPrefix: '.versionless/runtimes/node-v16.20.2',
+			resolvedVersion: 'v16.20.2',
+			claim: 'the child was spawned with that runtime first on PATH.',
+		};
+		const row = stageFailureRow(
+			'build',
+			new Error('build: npm run build failed in the lane.', {
+				cause: { laneRuntime: runtime, childError: new Error('exit 1') },
+			}),
+			'started',
+			'ended',
+		);
+		expect(row.runtime).toEqual(runtime);
+		/** A cause that is not a runtime reading is not read as one. */
+		expect(
+			stageFailureRow('build', new Error('broke', { cause: 'a string' }), 'a', 'b').runtime,
+		).toBeUndefined();
 	});
 });

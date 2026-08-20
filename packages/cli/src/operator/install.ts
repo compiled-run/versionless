@@ -581,6 +581,105 @@ export async function readLaneRuntime(
 	});
 }
 
+/**
+ * The runtime reading for a child whose environment could not be measured.
+ *
+ * The plan's four fields are what this pipeline decided before the child was
+ * spawned, and they are true whatever happened afterwards. `resolvedVersion` is
+ * the one field that is a measurement, so when the measurement does not
+ * complete it stays `null` and the claim says so in those words. Nothing here
+ * promotes `cellVersion` into `resolvedVersion`: a version the cell named is
+ * not a version a child was observed to resolve, and a row that blurred the two
+ * would be exactly the false corroboration this seam exists to prevent.
+ */
+export function laneRuntimeUnmeasured(plan: LaneRuntimePlan, why: string): LaneRuntime {
+	return Object.freeze({
+		source: plan.source,
+		cellSupplier: plan.cellSupplier,
+		cellVersion: plan.cellVersion,
+		pathPrefix: plan.pathPrefix,
+		resolvedVersion: null,
+		claim: `The four fields above are the runtime plan this stage handed the child: ${
+			plan.source === 'provisioned'
+				? `${String(plan.pathPrefix)}/bin was put first on the child's PATH`
+				: 'nothing was prepended and the child inherited the invoking PATH'
+		}. \`resolvedVersion\` is null because the measurement did not complete — ${why} — so no version is recorded here at all, and none is inferred from the plan: what \`node\` resolved to for this child is not established.`,
+	});
+}
+
+/**
+ * The runtime a child ran in, read after that child failed.
+ *
+ * It is the same reading the success path takes, through the same environment
+ * object the child was spawned with, because a failed child does not make its
+ * environment unreadable — `node -v` is a second process and the first one
+ * exiting non-zero says nothing about it. What this adds is the honest floor: a
+ * reading that itself does not complete falls to the plan with
+ * `resolvedVersion: null` rather than propagating a second error out of a
+ * failure path, so the row that records why a stage stopped is never lost to
+ * the reading taken about it.
+ */
+export async function readLaneRuntimeAfterFailure(
+	plan: LaneRuntimePlan,
+	environment: NodeJS.ProcessEnv,
+): Promise<LaneRuntime> {
+	try {
+		return await readLaneRuntime(plan, environment);
+	} catch (error) {
+		return laneRuntimeUnmeasured(
+			plan,
+			`reading it raised ${error instanceof Error ? error.message : String(error)}`,
+		);
+	}
+}
+
+/**
+ * What a lane child's failure carries out of the stage it stopped.
+ *
+ * The install and build rows record `runtime` because their records are
+ * composed after the child exits 0. A child that exits non-zero throws, and the
+ * row `run` composes for that throw carried five fields and no runtime at all —
+ * so the runs where the runtime *is* the diagnosis (a build that dies inside
+ * webpack under a Node the cell never named, with a message that names neither)
+ * were exactly the runs that lost it.
+ *
+ * The reading is therefore taken in the stage, where the child's own
+ * environment object is still in hand, and travels on the error as its `cause`.
+ * Two properties of that choice are deliberate. The throw statement stays
+ * `throw new Error(...)`, which is the form the refusal census counts a defect
+ * site by, so carrying a runtime does not silently remove a counted site. And
+ * `childError` keeps the error the child actually raised, which was previously
+ * flattened into the defect message and dropped.
+ */
+export type LaneChildFailure = Readonly<{
+	/** The runtime the failed child was measured in, or the plan it was given. */
+	laneRuntime: LaneRuntime;
+	/** The error the child raised, unaltered. */
+	childError: unknown;
+}>;
+
+/** The `cause` a lane stage's defect is thrown with. */
+export function laneChildFailure(laneRuntime: LaneRuntime, childError: unknown): LaneChildFailure {
+	return Object.freeze({ laneRuntime, childError });
+}
+
+/**
+ * The runtime an error carries out of the stage whose child it stopped, or
+ * `null` for every error that carries none.
+ *
+ * `null` is the honest answer for the stages that never took a runtime plan and
+ * for a failure raised before any child was spawned, and the caller records the
+ * row without a runtime rather than inventing one.
+ */
+export function laneRuntimeOf(error: unknown): LaneRuntime | null {
+	const cause: unknown = error instanceof Error ? error.cause : null;
+	if (cause === null || typeof cause !== 'object') return null;
+	const carried = (cause as { laneRuntime?: unknown }).laneRuntime;
+	if (carried === null || typeof carried !== 'object') return null;
+	const runtime = carried as LaneRuntime;
+	return typeof runtime.source === 'string' && typeof runtime.claim === 'string' ? runtime : null;
+}
+
 export type InstallSandbox = Readonly<{
 	/** The lane-owned directory handed to the child as `HOME`. */
 	home: string;
@@ -913,12 +1012,25 @@ export async function runLaneInstall(
 		 * the stage produced no record to carry it.
 		 */
 		const disregard = plan.foreignLockfileDisregarded;
+		/**
+		 * The runtime is read here, through the sandbox environment the child was
+		 * actually given, and carried out on the defect. A closure that will not
+		 * install under the Node the cell named and a closure that will not
+		 * install under the host's are different findings, and the row a failed
+		 * install leaves behind could not tell them apart until this reading
+		 * reached it.
+		 */
+		const childFailure = laneChildFailure(
+			await readLaneRuntimeAfterFailure(runtime, sandbox.environment),
+			error,
+		);
 		throw new Error(
 			`install: ${plan.command.join(' ')} failed in the lane. This is a defect rather than a refusal: the declared policies were applied and the pinned closure still did not install.${
 				disregard === null
 					? ''
 					: ` The \`${disregard.policy}\` policy was declared and ${disregard.lockfile} (${disregard.packageManager}) was disregarded, so there was no pinned closure: what failed is a fresh npm resolution from the lane manifest, and it is not established that the era closure would have failed the same way.`
 			} ${detail}`,
+			{ cause: childFailure },
 		);
 	}
 	return Object.freeze({

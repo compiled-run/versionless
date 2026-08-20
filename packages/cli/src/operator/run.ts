@@ -42,7 +42,13 @@ import { establishEraCell, type EraCellDeclarations } from './era-cell.ts';
 import { ingestApplicationSource, readFrontendRoot, type IngestDeclarations } from './ingest.ts';
 import { writeLaneFiles } from './lane.ts';
 import { readLicenceAtPin, type LicencePolicy } from './license.ts';
-import { planLaneRuntime, runLaneInstall, type InstallPolicy } from './install.ts';
+import {
+	laneRuntimeOf,
+	planLaneRuntime,
+	runLaneInstall,
+	type InstallPolicy,
+	type LaneRuntime,
+} from './install.ts';
 import { planApplication } from './plan.ts';
 import { composeLane, displayPath } from './record.ts';
 import {
@@ -189,6 +195,20 @@ export type RunStageRow = Readonly<{
 	refusal?: PipelineRefusal;
 	/** The record the stage itself produced, unaltered. */
 	record?: unknown;
+	/**
+	 * The Node runtime the stage's own child ran in, when the stage did not
+	 * complete and the error it stopped with carried one.
+	 *
+	 * A stage that completes puts this on the record it returns — `install` and
+	 * `build` both do — and a stage that completes is therefore not read here. A
+	 * stage that failed returns no record at all, and until this field existed
+	 * the runtime went with it: the failing build, which is the run where a Node
+	 * the cell never named is the whole diagnosis, was the one run whose row
+	 * could not name a runtime. Absent for every stage that took no runtime plan
+	 * and for a failure raised before any child was spawned, because there is
+	 * nothing measured to record there.
+	 */
+	runtime?: LaneRuntime;
 	startedAt: string;
 	endedAt: string;
 }>;
@@ -292,6 +312,49 @@ type RunState = {
 };
 
 /**
+ * The row a stage that did not complete leaves behind.
+ *
+ * Both failure shapes are composed here, and they are composed together for one
+ * reason: whatever a stage carried out on the error that stopped it has to
+ * reach the row in exactly one place. The `runtime` a lane child's failure
+ * carries is read off the error rather than measured here, because this seam
+ * holds neither the runtime plan nor the environment the child was spawned
+ * with — the stage does, and it read it there.
+ *
+ * The success row is not composed here and deliberately so: it is the shape the
+ * sealed records on disk were written with, and a stage that completed puts its
+ * own runtime on its own record.
+ */
+export function stageFailureRow(
+	name: RunStageName,
+	error: unknown,
+	startedAt: string,
+	endedAt: string,
+): RunStageRow {
+	const runtime = laneRuntimeOf(error);
+	const carried = runtime === null ? {} : { runtime };
+	const refusal = pipelineRefusalOf(error);
+	if (refusal !== null)
+		return Object.freeze({
+			name,
+			status: 'refused' as const,
+			reason: refusal.code,
+			refusal,
+			...carried,
+			startedAt,
+			endedAt,
+		});
+	return Object.freeze({
+		name,
+		status: 'defect' as const,
+		reason: error instanceof Error ? error.message : String(error),
+		...carried,
+		startedAt,
+		endedAt,
+	});
+}
+
+/**
  * The stage seam: the one place a stage begins and ends.
  *
  * Everything a reader can say per stage is decided here — when it started,
@@ -332,19 +395,10 @@ async function runStage<T>(
 		);
 		return value;
 	} catch (error) {
-		const endedAt = new Date().toISOString();
-		const refusal = pipelineRefusalOf(error);
-		if (refusal !== null) {
-			state.rows.push(
-				Object.freeze({
-					name,
-					status: 'refused' as const,
-					reason: refusal.code,
-					refusal,
-					startedAt,
-					endedAt,
-				}),
-			);
+		const row = stageFailureRow(name, error, startedAt, new Date().toISOString());
+		state.rows.push(row);
+		const refusal = row.refusal;
+		if (refusal !== undefined) {
 			state.halted = Object.freeze({ stage: name, status: 'refused' as const });
 			state.refusal = refusal;
 			return null;
@@ -356,12 +410,8 @@ async function runStage<T>(
 		 * it. The exit code is still 1 and the stage is still named, so nothing
 		 * a defect used to be scored as has changed.
 		 */
-		const message = error instanceof Error ? error.message : String(error);
-		state.rows.push(
-			Object.freeze({ name, status: 'defect' as const, reason: message, startedAt, endedAt }),
-		);
 		state.halted = Object.freeze({ stage: name, status: 'defect' as const });
-		state.defect = Object.freeze({ stage: name, message });
+		state.defect = Object.freeze({ stage: name, message: row.reason ?? '' });
 		return null;
 	}
 }

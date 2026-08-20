@@ -10,6 +10,8 @@ import {
 	INHERITED_LANE_RUNTIME,
 	INSTALL_HOME_DIRECTORY,
 	laneRuntimeEnvironment,
+	laneRuntimeOf,
+	laneRuntimeUnmeasured,
 	planInstallSandbox,
 	planLaneInstall,
 	planLaneRuntime,
@@ -27,6 +29,7 @@ import {
 	laneNotComposed,
 } from '../src/operator/lane.ts';
 import { pipelineRefusalOf } from '../src/operator/refusals.ts';
+import { stageFailureRow } from '../src/operator/run.ts';
 
 async function temporaryDirectory(): Promise<string> {
 	return mkdtemp(path.join(tmpdir(), 'versionless-lane-'));
@@ -1190,4 +1193,197 @@ describe('the cell runtime threaded into the lane’s children', () => {
 			await rm(root, { recursive: true, force: true });
 		}
 	}, 180_000);
+
+	/**
+	 * A lane whose build script exits non-zero, so the stage throws instead of
+	 * composing a record. It is the same lane in every other respect: the gates
+	 * pass, the child is spawned in the environment the plan decided, and the
+	 * only difference is the exit code — which is the difference this half of
+	 * the seam is about.
+	 */
+	async function failingViteLane(): Promise<string> {
+		const directory = await viteLane();
+		await writeFile(
+			path.join(directory, 'build.mjs'),
+			["console.error('the build died inside the bundler');", 'process.exit(1);', ''].join(
+				'\n',
+			),
+		);
+		return directory;
+	}
+
+	/** Whatever an awaited call threw, or `null` when it threw nothing. */
+	async function thrownBy(call: () => Promise<unknown>): Promise<unknown> {
+		return call().then(
+			() => null,
+			(error: unknown) => error,
+		);
+	}
+
+	/**
+	 * The gap u6 measured: the runtime reached install and build rows only on the
+	 * success path, so a failing build — the run where a Node the cell never
+	 * named is the entire diagnosis — recorded name, status, reason and two
+	 * timestamps and nothing about the runtime it ran in.
+	 */
+	it('carries the provisioned runtime out on a failing build, onto the defect row', async () => {
+		const runtime = await provisionedRuntime('v16.20.2-shim');
+		const lane = await failingViteLane();
+		try {
+			const plan = await planLaneRuntime(cachedProvision(runtime));
+			const thrown = await thrownBy(() => runLaneBuild(lane, undefined, process.env, plan));
+			expect(thrown).toBeInstanceOf(Error);
+			/** A defect, not a refusal: the scoring this stage had is unchanged. */
+			expect(pipelineRefusalOf(thrown)).toBeNull();
+			const carried = laneRuntimeOf(thrown);
+			expect(carried?.source).toBe('provisioned');
+			expect(carried?.cellSupplier).toBe('workspace-runtime-cache');
+			expect(carried?.cellVersion).toBe('v16.20.2');
+			expect(carried?.pathPrefix).toBe(runtime);
+			/** Measured through the child's own environment, exactly as a success row is. */
+			expect(carried?.resolvedVersion).toBe('v16.20.2-shim');
+			const row = stageFailureRow('build', thrown, 'started', 'ended');
+			expect(row.status).toBe('defect');
+			expect(row.reason).toContain('failed in the lane');
+			expect(row.runtime).toEqual(carried);
+			/** The row a success-path record would carry, and this one now does too. */
+			expect(Object.keys(row)).toEqual([
+				'name',
+				'status',
+				'reason',
+				'runtime',
+				'startedAt',
+				'endedAt',
+			]);
+			/** The child's own error is kept beside the runtime rather than replaced by it. */
+			expect((thrown as Error).cause).toMatchObject({ laneRuntime: row.runtime });
+		} finally {
+			await rm(runtime, { recursive: true, force: true });
+			await rm(lane, { recursive: true, force: true });
+		}
+	}, 120_000);
+
+	it('records the host runtime on a failing build, and on one no plan reached', async () => {
+		const lane = await failingViteLane();
+		try {
+			const plan = await planLaneRuntime(RUNNING_PROCESS_PROVISION);
+			const thrown = await thrownBy(() => runLaneBuild(lane, undefined, process.env, plan));
+			const carried = laneRuntimeOf(thrown);
+			expect(carried?.source).toBe('host');
+			expect(carried?.cellSupplier).toBe('running-process');
+			expect(carried?.cellVersion).toBe(process.version);
+			expect(carried?.pathPrefix).toBeNull();
+			expect(carried?.resolvedVersion).toMatch(/^v\d+\.\d+\.\d+/);
+			expect(carried?.resolvedVersion).not.toBe('v16.20.2-shim');
+			expect(carried?.claim).toContain('Nothing was prepended to PATH');
+			/** And a build called the way `migrate --build` calls it says so too. */
+			const inherited = laneRuntimeOf(await thrownBy(() => runLaneBuild(lane)));
+			expect(inherited?.source).toBe('host');
+			expect(inherited?.cellSupplier).toBeNull();
+		} finally {
+			await rm(lane, { recursive: true, force: true });
+		}
+	}, 120_000);
+
+	/**
+	 * The guard on the other side of the seam. `react-flame-v2-4-0`'s build row
+	 * is the sealed shape every operator change is measured against, so the
+	 * success path composes exactly the record it composed before: the same keys
+	 * in the same order, and no failure carrier anywhere near it.
+	 */
+	it('leaves the success-path build record composed exactly as it was', async () => {
+		const lane = await viteLane();
+		try {
+			const record = await runLaneBuild(
+				lane,
+				undefined,
+				process.env,
+				await planLaneRuntime(RUNNING_PROCESS_PROVISION),
+			);
+			expect(Object.keys(record)).toEqual([
+				'stage',
+				'ran',
+				'reason',
+				'command',
+				'script',
+				'configuration',
+				'outDirectory',
+				'exitCode',
+				'outputFiles',
+				'runtime',
+				'notEstablished',
+			]);
+			expect(record.ran).toBe(true);
+			expect(record.exitCode).toBe(0);
+			expect(record.outputFiles).toBe(2);
+			expect(record.runtime?.resolvedVersion).toMatch(/^v\d+\.\d+\.\d+/);
+			/** A record is not an error and carries nothing off one. */
+			expect(laneRuntimeOf(record)).toBeNull();
+			expect(stageFailureRow('build', record, 'started', 'ended').runtime).toBeUndefined();
+		} finally {
+			await rm(lane, { recursive: true, force: true });
+		}
+	}, 120_000);
+
+	it('carries the runtime out on a failing install too', async () => {
+		const runtime = await provisionedRuntime('v16.20.2-shim');
+		const root = await temporaryDirectory();
+		const lane = path.join(root, 'lane');
+		try {
+			await mkdir(lane, { recursive: true });
+			/**
+			 * A manifest and a lockfile that disagree. `npm ci` refuses to install
+			 * from them and exits non-zero before it reaches a registry, which is
+			 * the cheapest honest failing install this test can stage.
+			 */
+			await writeFile(
+				path.join(lane, 'package.json'),
+				`${JSON.stringify({
+					name: 'lane',
+					version: '1.0.0',
+					dependencies: { 'a-package-this-lockfile-never-pinned': '^1.0.0' },
+				})}\n`,
+			);
+			await writeFile(
+				path.join(lane, 'package-lock.json'),
+				`${JSON.stringify({
+					name: 'lane',
+					version: '1.0.0',
+					lockfileVersion: 3,
+					requires: true,
+					packages: { '': { name: 'lane', version: '1.0.0' } },
+				})}\n`,
+			);
+			const plan = await planLaneRuntime(cachedProvision(runtime));
+			const thrown = await thrownBy(() =>
+				runLaneInstall(lane, policy(), process.env, 'replay', root, plan),
+			);
+			expect(thrown).toBeInstanceOf(Error);
+			expect(pipelineRefusalOf(thrown)).toBeNull();
+			expect((thrown as Error).message).toContain('failed in the lane');
+			const row = stageFailureRow('install', thrown, 'started', 'ended');
+			expect(row.status).toBe('defect');
+			expect(row.runtime?.source).toBe('provisioned');
+			expect(row.runtime?.pathPrefix).toBe(runtime);
+			/** Read through the sandbox environment the install child was confined to. */
+			expect(row.runtime?.resolvedVersion).toBe('v16.20.2-shim');
+		} finally {
+			await rm(runtime, { recursive: true, force: true });
+			await rm(root, { recursive: true, force: true });
+		}
+	}, 180_000);
+
+	/**
+	 * The floor under a reading that does not complete. Nothing promotes the
+	 * version the cell named into the version a child resolved, so a row with no
+	 * measurement says it has none rather than reporting the plan as a reading.
+	 */
+	it('records the plan with no resolved version when the measurement did not complete', async () => {
+		const plan = await planLaneRuntime(RUNNING_PROCESS_PROVISION);
+		const unmeasured = laneRuntimeUnmeasured(plan, 'the reading was not taken');
+		expect(unmeasured.source).toBe('host');
+		expect(unmeasured.cellVersion).toBe(process.version);
+		expect(unmeasured.resolvedVersion).toBeNull();
+		expect(unmeasured.claim).toContain('the measurement did not complete');
+	});
 });

@@ -36,8 +36,10 @@ import * as path from 'pathe';
 import { directoryExists, readJsonFile } from './analyze.ts';
 import {
 	INHERITED_LANE_RUNTIME,
+	laneChildFailure,
 	laneRuntimeEnvironment,
 	readLaneRuntime,
+	readLaneRuntimeAfterFailure,
 	type LaneRuntime,
 	type LaneRuntimePlan,
 } from './install.ts';
@@ -384,8 +386,25 @@ export async function runLaneBuild(
 		await run(binary, args, { cwd: laneDir, env: inherited, maxBuffer: 64 * 1024 * 1024 });
 	} catch (error) {
 		const detail = error instanceof Error ? error.message : String(error);
+		/**
+		 * The runtime reading is taken here, on the path that needs it most.
+		 *
+		 * A build that completes composes its record below, `runtime` included; a
+		 * build that does not throws, and the row `run` writes for that throw
+		 * carried no runtime at all. That is backwards: a Node the cell did not
+		 * name fails inside webpack with a diagnostic naming neither Node nor the
+		 * cell, so the failing run is the one whose row has to say which runtime
+		 * the child was given. It is read through `inherited` — the very
+		 * environment object the child was spawned with — and carried out on the
+		 * defect rather than measured again by a caller reconstructing it.
+		 */
+		const childFailure = laneChildFailure(
+			await readLaneRuntimeAfterFailure(runtime, inherited),
+			error,
+		);
 		throw new Error(
 			`build: ${plan.command.join(' ')} failed in the lane. This is a defect rather than a refusal: the lane was composed and installed and the build still did not complete. ${detail}`,
+			{ cause: childFailure },
 		);
 	}
 	return Object.freeze({
