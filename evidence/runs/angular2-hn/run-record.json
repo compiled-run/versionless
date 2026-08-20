@@ -4,7 +4,7 @@
 	"outcome": "refused",
 	"exitCode": 2,
 	"application": ".versionless/cache/angular2-hn/acquisition/source",
-	"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t012b1b/angular2-hn",
+	"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t043c/angular2-hn",
 	"roots": {
 		"source": ".versionless/cache/angular2-hn/acquisition/source",
 		"frontend": ".versionless/cache/angular2-hn/acquisition/source",
@@ -50,7 +50,8 @@
 			"forwards": [
 				"--allow-remote-tarballs",
 				"--allow-install-scripts",
-				"--allow-peer-conflicts"
+				"--allow-peer-conflicts",
+				"--allow-foreign-lockfile"
 			]
 		},
 		{
@@ -339,8 +340,8 @@
 					"A dependency the cell has no reading for is reported `unknown`. `unknown` is not `supported` and it is not `unsupported`."
 				]
 			},
-			"startedAt": "2026-08-20T09:21:02.880Z",
-			"endedAt": "2026-08-20T09:21:02.881Z"
+			"startedAt": "2026-08-20T09:47:54.620Z",
+			"endedAt": "2026-08-20T09:47:54.622Z"
 		},
 		{
 			"name": "ingest",
@@ -704,8 +705,8 @@
 					"A frontend root read by lineage is the one directory among those considered whose manifest declares a framework this stage reads. The basis names every directory considered and what each of their manifests declared; nothing here establishes that the directory chosen is the one its authors would call the application."
 				]
 			},
-			"startedAt": "2026-08-20T09:21:02.881Z",
-			"endedAt": "2026-08-20T09:21:02.890Z"
+			"startedAt": "2026-08-20T09:47:54.622Z",
+			"endedAt": "2026-08-20T09:47:54.631Z"
 		},
 		{
 			"name": "license-at-pin",
@@ -757,8 +758,8 @@
 					"`identifierSource: declared` means an operator supplied the identifier. This stage did not read it and does not corroborate it."
 				]
 			},
-			"startedAt": "2026-08-20T09:21:02.890Z",
-			"endedAt": "2026-08-20T09:21:02.890Z"
+			"startedAt": "2026-08-20T09:47:54.631Z",
+			"endedAt": "2026-08-20T09:47:54.631Z"
 		},
 		{
 			"name": "era-cell",
@@ -924,8 +925,8 @@
 					"Satisfaction of a declared range is not corroborated by anything else this tree says. Where other sources name majors, they are listed above with what each literally says, and this stage picks from none of them."
 				]
 			},
-			"startedAt": "2026-08-20T09:21:02.890Z",
-			"endedAt": "2026-08-20T09:21:02.901Z"
+			"startedAt": "2026-08-20T09:47:54.631Z",
+			"endedAt": "2026-08-20T09:47:54.635Z"
 		},
 		{
 			"name": "plan",
@@ -1718,8 +1719,8 @@
 					]
 				}
 			},
-			"startedAt": "2026-08-20T09:21:02.901Z",
-			"endedAt": "2026-08-20T09:21:02.931Z"
+			"startedAt": "2026-08-20T09:47:54.635Z",
+			"endedAt": "2026-08-20T09:47:54.666Z"
 		},
 		{
 			"name": "apply",
@@ -1846,48 +1847,116 @@
 					]
 				}
 			},
-			"startedAt": "2026-08-20T09:21:02.931Z",
-			"endedAt": "2026-08-20T09:21:02.952Z"
+			"startedAt": "2026-08-20T09:47:54.666Z",
+			"endedAt": "2026-08-20T09:47:54.686Z"
 		},
 		{
 			"name": "install",
-			"status": "refused",
-			"reason": "install.lockfile-foreign",
-			"refusal": {
-				"code": "install.lockfile-foreign",
-				"message": "Install: the lane carries yarn.lock, and this stage reads package-lock.json, npm-shrinkwrap.json. The closure is pinned — by yarn — and it is pinned in a lockfile this flow does not read, so it is not absent and it is not installable here.",
+			"status": "ran",
+			"record": {
 				"stage": "install",
-				"origin": "pipeline"
+				"ran": true,
+				"reason": null,
+				"packageManager": "npm",
+				"lockfile": null,
+				"closure": "resolve",
+				"policy": {
+					"allowRemoteTarballs": true,
+					"allowInstallScripts": true,
+					"skipInstallScripts": false,
+					"allowPeerConflicts": true,
+					"allowForeignLockfile": true
+				},
+				"foreignLockfileDisregarded": {
+					"policy": "allow-foreign-lockfile",
+					"lockfile": "yarn.lock",
+					"packageManager": "yarn",
+					"lockfilesPresent": [
+						"yarn.lock"
+					],
+					"consulted": false,
+					"consequence": "The allow-foreign-lockfile policy was declared, so this install proceeded without the closure yarn pinned in yarn.lock: the file was left on disk untouched and was not consulted, and npm resolved every dependency fresh from the lane manifest instead. This resolution is NOT pinned by the era lockfile, so the installed closure may drift from the one the era application shipped with, and every claim downstream of this install is bounded by that drift."
+				},
+				"remoteTarballDependencies": [],
+				"installScriptPackages": [],
+				"command": [
+					"npm",
+					"install",
+					"--no-audit",
+					"--no-fund",
+					"--allow-remote",
+					"all",
+					"--foreground-scripts",
+					"--legacy-peer-deps"
+				],
+				"exitCode": 0,
+				"installedPackages": 844,
+				"sandbox": {
+					"home": "/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t043c/angular2-hn/.install-home",
+					"strippedVariables": [
+						"CLAUDE_CODE_EXECPATH (names the invoking user's home)",
+						"FNM_DIR (names the invoking user's home)",
+						"FNM_MULTISHELL_PATH (names the invoking user's home)",
+						"HOME (replaced with a lane-owned directory)",
+						"OLDPWD (names the invoking user's home)",
+						"PNPM_HOME (names the invoking user's home)",
+						"PWD (names the invoking user's home)",
+						"USER_ZDOTDIR (names the invoking user's home)",
+						"ZDOTDIR (names the invoking user's home)"
+					]
+				},
+				"boundary": {
+					"root": "/Users/jacksm5pro/dev/open-source/versionless",
+					"pathsObservedBefore": 24,
+					"pathsObservedAfter": 24,
+					"writesOutsideLane": []
+				},
+				"notEstablished": [
+					"An install resolves a closure. It is not a build, and it is not evidence that the closure works: nothing here establishes that any package in it compiles or runs.",
+					"The policy findings are read from the lockfile. A lockfile that does not mark an install script, or that resolves through a mirror this reading does not recognise, yields a finding this stage did not make.",
+					"`installScriptPackages` counts packages the lockfile declares an install script for. Whether a given script would have built anything on this host is not established here.",
+					"The sandbox is an environment and a working directory, not a container. It moves every path npm resolves from the environment into the lane and drops inherited variables that name the user’s home or this checkout; it does not stop a script that hard-codes an absolute path, and `PATH` is passed through so the child can find its own node. Writes outside the lane are therefore *detected* — the checkout’s `.git/hooks` and its top level are hashed before and after — and refused by name, not prevented.",
+					"The boundary reading watches two places: the top level of the checkout and `.git/hooks`. A write anywhere else outside the lane — a sibling directory, a deeper path in the checkout, another checkout on this host — is not observed here, and `writesOutsideLane: []` does not establish that none happened.",
+					"`closure: resolve` means the lane manifest declares a build toolchain the recorded lockfile predates, so npm resolved rather than replayed. The application’s own pins still come from the lockfile; what was newly resolved is what the manifest rewrite added, and that resolution is not a pin this repository recorded.",
+					"The `allow-foreign-lockfile` policy was declared and no lockfile was read, so nothing pinned this closure: `closure: resolve` here means npm resolved every dependency fresh from the lane manifest at install time, and the era lockfile on disk played no part in it. The installed closure is therefore not established to be the closure the era application shipped with, and nothing downstream of this install can be read as though it were.",
+					"`remoteTarballDependencies` and `installScriptPackages` are empty because no lockfile was read, not because the closure carries none. The remote-tarball and install-script policies are read out of an npm lockfile, and with no lockfile to read they had nothing to find; what npm resolved may still carry either."
+				]
 			},
-			"startedAt": "2026-08-20T09:21:02.952Z",
-			"endedAt": "2026-08-20T09:21:02.953Z"
+			"startedAt": "2026-08-20T09:47:54.686Z",
+			"endedAt": "2026-08-20T09:48:09.209Z"
 		},
 		{
 			"name": "build",
-			"status": "not-run",
-			"reason": "not-run-because: install refused",
-			"startedAt": "2026-08-20T09:21:02.953Z",
-			"endedAt": "2026-08-20T09:21:02.953Z"
+			"status": "refused",
+			"reason": "build.configuration-absent",
+			"refusal": {
+				"code": "build.configuration-absent",
+				"message": "Build: the lane carries no vite.config.ts, so the generated build configuration this stage runs against is missing. The lane composition writes it; a lane without one was not composed by this flow.",
+				"stage": "build",
+				"origin": "pipeline"
+			},
+			"startedAt": "2026-08-20T09:48:09.209Z",
+			"endedAt": "2026-08-20T09:48:09.210Z"
 		},
 		{
 			"name": "witness",
 			"status": "not-run",
-			"reason": "not-run-because: install refused",
-			"startedAt": "2026-08-20T09:21:02.953Z",
-			"endedAt": "2026-08-20T09:21:02.953Z"
+			"reason": "not-run-because: build refused",
+			"startedAt": "2026-08-20T09:48:09.210Z",
+			"endedAt": "2026-08-20T09:48:09.210Z"
 		}
 	],
 	"refusal": {
-		"code": "install.lockfile-foreign",
-		"message": "Install: the lane carries yarn.lock, and this stage reads package-lock.json, npm-shrinkwrap.json. The closure is pinned — by yarn — and it is pinned in a lockfile this flow does not read, so it is not absent and it is not installable here.",
-		"stage": "install",
+		"code": "build.configuration-absent",
+		"message": "Build: the lane carries no vite.config.ts, so the generated build configuration this stage runs against is missing. The lane composition writes it; a lane without one was not composed by this flow.",
+		"stage": "build",
 		"origin": "pipeline"
 	},
 	"report": {
 		"status": "emitted",
 		"slot": "evidence/trust/current/coverage-report.json",
 		"path": "evidence/trust/current/coverage-report.json",
-		"digest": "1efc1b17d80513bf6b5444d9f1c6d04f1a147c6a32e6138f26bcc295947642b9"
+		"digest": "782499729475ef733fa4f1cb1c71967dbbfbc75aa8c635b0e98327671b3c058a"
 	},
 	"notEstablished": [
 		"A stage recorded `ran` returned its own record. What that record establishes is what that stage states, and no more: this row adds no reading of its own on top of it.",

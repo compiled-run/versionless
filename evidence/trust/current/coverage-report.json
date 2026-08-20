@@ -172,7 +172,7 @@
       "framework": "not-recorded",
       "provenanceOfStatus": "run-record",
       "status": "refused",
-      "refusalCode": "install.lockfile-foreign",
+      "refusalCode": "build.configuration-absent",
       "interventionCount": 0
     },
     {
@@ -538,7 +538,7 @@
   ],
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "782499729475ef733fa4f1cb1c71967dbbfbc75aa8c635b0e98327671b3c058a",
+    "canonicalDigest": "1807d3cdf6f30245a8c847fbbd875709289456547e9604be94f0ab0f1f37cb41",
     "authenticity": "not-established",
     "certification": "not-claimed"
   }

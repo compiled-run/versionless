@@ -4,7 +4,7 @@ What the fleet pipeline proved, per application, against the sealed baseline it 
 
 - Schema: `versionless.coverage-report.v1`
 - Certification state: **not-certified**
-- Canonical SHA-256: `782499729475ef733fa4f1cb1c71967dbbfbc75aa8c635b0e98327671b3c058a`
+- Canonical SHA-256: `1807d3cdf6f30245a8c847fbbd875709289456547e9604be94f0ab0f1f37cb41`
 - Integrity: hash-only; authenticity is not established
 
 Every green cell below is filtered out of the Judge counting ledger the corpus derived and cross-checked against that corpus numerator and denominator. No cell is listed by hand, and a cell edited into this record fails re-derivation.
@@ -39,7 +39,7 @@ A capability is claimed general, and therefore in the matrix, only once at least
 | `holdout-angular-eshop-webspa` | eShopOnContainers WebSPA | angular | **bounded** | sealed-receipts | not-applicable | witness-passed-on-bounded-anonymous-catalog-surface |
 | `angular-realworld-v15-to-v16` | angular-realworld-v15-to-v16 | angular | **not-admitted** | sealed-receipts | not-applicable | Judge-declined and demoted from the denominator: the migration changed applicationFilesChanged=0 application files, so it is an Angular 15-to-16 dependency version bump rebuilt under AOT rather than a proven application migration. Its browser-proof receipt stays verified and retained; it is excluded from the Angular denominator rather than counted, which is why the Angular total is four non-demoted cells and not five. |
 | `angular-kubernetes-dashboard` | .versionless/cache/angular-kubernetes-dashboard-stage-t678/acquisition/source | not-recorded | **not-admitted** | run-record | 0 | run-did-not-proceed:defect |
-| `angular2-hn` | .versionless/cache/angular2-hn/acquisition/source | not-recorded | **refused** | run-record | 0 | install.lockfile-foreign |
+| `angular2-hn` | .versionless/cache/angular2-hn/acquisition/source | not-recorded | **refused** | run-record | 0 | build.configuration-absent |
 | `react-ant-design-pro-v5-2-0` | .versionless/work/react-ant-design-pro-v5-2-0/baseline | not-recorded | **refused** | run-record | 0 | era-cell.node-major-not-inferable |
 | `react-antd-admin-template-v2-0-0` | .versionless/work/react-antd-admin-template-v2-0-0/baseline | not-recorded | **not-admitted** | run-record | 0 | run-did-not-proceed:defect |
 | `react-colorme-2019-06-06` | .versionless/work/react-colorme-2019-06-06/baseline | not-recorded | **refused** | run-record | 0 | install.lockfile-absent |

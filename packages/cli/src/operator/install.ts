@@ -20,6 +20,14 @@
  * The policy findings are read out of the lockfile before anything runs, so the
  * refusal arrives before the network is touched rather than after a failed
  * install.
+ *
+ * Two more policies have been added since, both measured here rather than
+ * inherited from npm: `--allow-peer-conflicts`, for a lane whose current build
+ * toolchain fails peer resolution against the application's own era pins, and
+ * `--allow-foreign-lockfile`, for the widest wall of all — an era application
+ * that pinned its closure with yarn, pnpm or bun. The fourth is the only one
+ * that buys its install by giving something up: taken, the lane installs with no
+ * pin at all, and the record says so in those words.
  */
 
 import { execFile } from 'node:child_process';
@@ -66,6 +74,25 @@ export type InstallPolicy = Readonly<{
 	 * lane's closure is allowed to be, so it is declared like the other two.
 	 */
 	allowPeerConflicts: boolean;
+	/**
+	 * Install without the lockfile another package manager pinned.
+	 *
+	 * The fourth policy, and the widest admission wall this repository has
+	 * measured: an era-appropriate application overwhelmingly ships a yarn-era
+	 * `yarn.lock`, and this stage reads npm lockfiles. Undeclared, that is
+	 * `install.lockfile-foreign` and the run stops there. Declared, the install
+	 * proceeds *without* the foreign lockfile — the file is left on disk
+	 * untouched and is never consulted, and npm resolves the closure fresh from
+	 * the lane manifest instead.
+	 *
+	 * That is a decision about what the lane's closure may be, and an expensive
+	 * one: the resolution is no longer pinned by the era lockfile, so the
+	 * installed closure may drift from the one the application shipped with.
+	 * It is therefore declared like the other three, it is never inferred from
+	 * the lockfile kind, and the drift it buys is written onto the install row
+	 * by name rather than left for a reader to work out.
+	 */
+	allowForeignLockfile: boolean;
 }>;
 
 export const DEFAULT_INSTALL_POLICY: InstallPolicy = Object.freeze({
@@ -73,7 +100,54 @@ export const DEFAULT_INSTALL_POLICY: InstallPolicy = Object.freeze({
 	allowInstallScripts: false,
 	skipInstallScripts: false,
 	allowPeerConflicts: false,
+	allowForeignLockfile: false,
 });
+
+/**
+ * The declared name of the foreign-lockfile policy, as an operator declares it.
+ *
+ * It is a constant because it is written into the run record: a reader of the
+ * install row has to be able to see *which* declaration bought this install
+ * without cross-referencing a flag table.
+ */
+export const FOREIGN_LOCKFILE_POLICY = 'allow-foreign-lockfile';
+
+/**
+ * The foreign lockfile a declared policy disregarded, and what that cost.
+ *
+ * Recorded whenever the policy is taken, and absent otherwise. `consulted` is
+ * `false` and not a computed field: this stage has no reader for any of these
+ * formats, so "disregarded" here means the bytes were never opened, not that
+ * they were read and overruled.
+ */
+export type ForeignLockfileDisregard = Readonly<{
+	/** The policy that was declared, by the name it is declared under. */
+	policy: typeof FOREIGN_LOCKFILE_POLICY;
+	/** The lockfile that was left alone, relative to the lane. */
+	lockfile: string;
+	/** The package manager that wrote it. */
+	packageManager: string;
+	/** Every foreign lockfile the lane carries, when it carries more than one. */
+	lockfilesPresent: readonly string[];
+	/** Whether this stage read it. It did not. */
+	consulted: false;
+	/** What declaring the policy costs, stated where the row is read. */
+	consequence: string;
+}>;
+
+/** The disregard record for a lane whose foreign lockfiles are `foreign`. */
+export function foreignLockfileDisregard(foreign: readonly string[]): ForeignLockfileDisregard {
+	const name = foreign[0] as string;
+	const manager = FOREIGN_LOCKFILES[name] ?? 'another package manager';
+	return Object.freeze({
+		policy: FOREIGN_LOCKFILE_POLICY,
+		lockfile: name,
+		packageManager: manager,
+		lockfilesPresent: Object.freeze([...foreign]),
+		consulted: false,
+		consequence: `The ${FOREIGN_LOCKFILE_POLICY} policy was declared, so this install proceeded without the closure ${manager} pinned in ${foreign.join(', ')}: the file was left on disk untouched and was not consulted, and npm resolved every dependency fresh from the lane manifest instead. This resolution is NOT pinned by the era lockfile, so the installed closure may drift from the one the era application shipped with, and every claim downstream of this install is bounded by that drift.`,
+	});
+}
 
 export type LockfileFindings = Readonly<{
 	lockfile: string;
@@ -91,6 +165,18 @@ const INSTALL_NOT_ESTABLISHED: readonly string[] = Object.freeze([
 	'The sandbox is an environment and a working directory, not a container. It moves every path npm resolves from the environment into the lane and drops inherited variables that name the user’s home or this checkout; it does not stop a script that hard-codes an absolute path, and `PATH` is passed through so the child can find its own node. Writes outside the lane are therefore *detected* — the checkout’s `.git/hooks` and its top level are hashed before and after — and refused by name, not prevented.',
 	'The boundary reading watches two places: the top level of the checkout and `.git/hooks`. A write anywhere else outside the lane — a sibling directory, a deeper path in the checkout, another checkout on this host — is not observed here, and `writesOutsideLane: []` does not establish that none happened.',
 	'`closure: resolve` means the lane manifest declares a build toolchain the recorded lockfile predates, so npm resolved rather than replayed. The application’s own pins still come from the lockfile; what was newly resolved is what the manifest rewrite added, and that resolution is not a pin this repository recorded.',
+]);
+
+/**
+ * What a run that took the foreign-lockfile policy additionally does not know.
+ *
+ * Appended to the install row only when the policy was taken, because both
+ * statements are false about every other install: an install that replayed or
+ * resolved against an npm lockfile *did* read one.
+ */
+const FOREIGN_LOCKFILE_NOT_ESTABLISHED: readonly string[] = Object.freeze([
+	`The \`${FOREIGN_LOCKFILE_POLICY}\` policy was declared and no lockfile was read, so nothing pinned this closure: \`closure: resolve\` here means npm resolved every dependency fresh from the lane manifest at install time, and the era lockfile on disk played no part in it. The installed closure is therefore not established to be the closure the era application shipped with, and nothing downstream of this install can be read as though it were.`,
+	'`remoteTarballDependencies` and `installScriptPackages` are empty because no lockfile was read, not because the closure carries none. The remote-tarball and install-script policies are read out of an npm lockfile, and with no lockfile to read they had nothing to find; what npm resolved may still carry either.',
 ]);
 
 function hostOf(value: string): string | null {
@@ -157,10 +243,14 @@ export type ClosureMode = 'replay' | 'resolve';
 
 export type InstallPlan = Readonly<{
 	packageManager: string;
-	lockfile: string;
+	/** The npm lockfile this install reads, or `null` when it reads none. */
+	lockfile: string | null;
 	closure: ClosureMode;
-	findings: LockfileFindings;
+	/** What was read out of the lockfile, or `null` when none was read. */
+	findings: LockfileFindings | null;
 	policy: InstallPolicy;
+	/** The foreign lockfile a declared policy disregarded, or `null`. */
+	foreignLockfileDisregarded: ForeignLockfileDisregard | null;
 	command: readonly string[];
 }>;
 
@@ -220,55 +310,85 @@ export async function planLaneInstall(
 		});
 	}
 	/**
-	 * A lockfile is present and this stage does not read it. Saying `absent`
-	 * here would be false: the application pinned its closure, it pinned it
-	 * with a package manager whose lockfile this stage cannot read, and those
-	 * are different findings for an operator deciding what to do next.
+	 * A lockfile is present and this stage does not read it.
+	 *
+	 * Undeclared this is a refusal, and saying `absent` here would be false: the
+	 * application pinned its closure, it pinned it with a package manager whose
+	 * lockfile this stage cannot read, and those are different findings for an
+	 * operator deciding what to do next.
+	 *
+	 * `--allow-foreign-lockfile` is the declaration that answers it, and what it
+	 * declares is *not* that the foreign lockfile is readable after all — it is
+	 * that this lane may be installed without any pin at all. The foreign file is
+	 * left exactly where it is and is never opened; npm resolves the closure
+	 * fresh from the manifest. The drift that buys is recorded on the row rather
+	 * than swallowed, and the policy is only ever taken because an operator
+	 * declared it: nothing here infers it from the lockfile kind.
 	 */
-	if (lockfile === null && foreign.length > 0)
-		refuse({
-			code: 'install.lockfile-foreign',
-			message: `Install: the lane carries ${foreign.join(', ')}, and this stage reads ${NPM_LOCKFILES.join(', ')}. The closure is pinned — by ${FOREIGN_LOCKFILES[foreign[0] as string] ?? 'another package manager'} — and it is pinned in a lockfile this flow does not read, so it is not absent and it is not installable here.`,
-			stage: 'install',
-			origin: 'pipeline',
-		});
-	if (lockfile === null)
-		refuse({
-			code: 'install.lockfile-absent',
-			message: `Install: the lane carries none of ${NPM_LOCKFILES.join(', ')}, so there is no pinned closure to install. This flow installs a recorded closure rather than resolving a new one.`,
-			stage: 'install',
-			origin: 'pipeline',
-		});
-	const document = await readJsonFile(path.join(laneDir, lockfile));
-	if (document === null)
-		refuse({
-			code: 'install.lockfile-unreadable',
-			message: `Install: ${lockfile} is not readable as a JSON object, so the closure it pins cannot be read and no install policy can be checked against it.`,
-			stage: 'install',
-			origin: 'pipeline',
-		});
-	const findings = readLockfileFindings(lockfile, document);
-	if (findings.remoteTarballDependencies.length > 0 && !policy.allowRemoteTarballs)
-		refuse({
-			code: 'install.remote-tarball-policy-not-declared',
-			message: `Install: the lockfile resolves ${String(findings.remoteTarballDependencies.length)} dependency(ies) from outside ${DEFAULT_REGISTRY_HOST}, first ${findings.remoteTarballDependencies[0] ?? ''}. Modern npm refuses those with EALLOWREMOTE unless the remote-tarball allowance is declared. Declare --allow-remote-tarballs to carry that policy; this flow does not take the allowance on an operator's behalf.`,
-			stage: 'install',
-			origin: 'pipeline',
-		});
-	if (
-		findings.installScriptPackages.length > 0 &&
-		!policy.allowInstallScripts &&
-		!policy.skipInstallScripts
-	)
-		refuse({
-			code: 'install.install-script-policy-not-declared',
-			message: `Install: the lockfile declares ${String(findings.installScriptPackages.length)} package(s) carrying an install script, first ${findings.installScriptPackages[0] ?? ''}. Modern npm skips them by default, which produces a tree whose native build was never attempted. Declare --allow-install-scripts to run them or --skip-install-scripts to record the skip as a decision; this flow does not let the default stand unnamed.`,
-			stage: 'install',
-			origin: 'pipeline',
-		});
+	let disregarded: ForeignLockfileDisregard | null = null;
+	if (lockfile === null) {
+		if (foreign.length > 0) {
+			if (!policy.allowForeignLockfile)
+				refuse({
+					code: 'install.lockfile-foreign',
+					message: `Install: the lane carries ${foreign.join(', ')}, and this stage reads ${NPM_LOCKFILES.join(', ')}. The closure is pinned — by ${FOREIGN_LOCKFILES[foreign[0] as string] ?? 'another package manager'} — and it is pinned in a lockfile this flow does not read, so it is not absent and it is not installable here.`,
+					stage: 'install',
+					origin: 'pipeline',
+				});
+			disregarded = foreignLockfileDisregard(foreign);
+		} else
+			refuse({
+				code: 'install.lockfile-absent',
+				message: `Install: the lane carries none of ${NPM_LOCKFILES.join(', ')}, so there is no pinned closure to install. This flow installs a recorded closure rather than resolving a new one.`,
+				stage: 'install',
+				origin: 'pipeline',
+			});
+	}
+	/**
+	 * The policy findings, when there is a lockfile to read them out of. With
+	 * the foreign-lockfile policy taken there is none, and the two gates below
+	 * are not silently satisfied — they are recorded as never having run, on the
+	 * row itself.
+	 */
+	let findings: LockfileFindings | null = null;
+	if (lockfile !== null) {
+		const document = await readJsonFile(path.join(laneDir, lockfile));
+		if (document === null)
+			refuse({
+				code: 'install.lockfile-unreadable',
+				message: `Install: ${lockfile} is not readable as a JSON object, so the closure it pins cannot be read and no install policy can be checked against it.`,
+				stage: 'install',
+				origin: 'pipeline',
+			});
+		findings = readLockfileFindings(lockfile, document);
+		if (findings.remoteTarballDependencies.length > 0 && !policy.allowRemoteTarballs)
+			refuse({
+				code: 'install.remote-tarball-policy-not-declared',
+				message: `Install: the lockfile resolves ${String(findings.remoteTarballDependencies.length)} dependency(ies) from outside ${DEFAULT_REGISTRY_HOST}, first ${findings.remoteTarballDependencies[0] ?? ''}. Modern npm refuses those with EALLOWREMOTE unless the remote-tarball allowance is declared. Declare --allow-remote-tarballs to carry that policy; this flow does not take the allowance on an operator's behalf.`,
+				stage: 'install',
+				origin: 'pipeline',
+			});
+		if (
+			findings.installScriptPackages.length > 0 &&
+			!policy.allowInstallScripts &&
+			!policy.skipInstallScripts
+		)
+			refuse({
+				code: 'install.install-script-policy-not-declared',
+				message: `Install: the lockfile declares ${String(findings.installScriptPackages.length)} package(s) carrying an install script, first ${findings.installScriptPackages[0] ?? ''}. Modern npm skips them by default, which produces a tree whose native build was never attempted. Declare --allow-install-scripts to run them or --skip-install-scripts to record the skip as a decision; this flow does not let the default stand unnamed.`,
+				stage: 'install',
+				origin: 'pipeline',
+			});
+	}
+	/**
+	 * `npm ci` replays a lockfile, and there is none to replay when the policy
+	 * was taken. The mode is therefore `resolve` regardless of what the caller
+	 * asked for — recorded as `resolve`, so the row says what actually happened.
+	 */
+	const resolvedClosure: ClosureMode = disregarded === null ? closure : 'resolve';
 	const command = [
 		'npm',
-		closure === 'replay' ? 'ci' : 'install',
+		resolvedClosure === 'replay' ? 'ci' : 'install',
 		'--no-audit',
 		'--no-fund',
 		...(policy.allowRemoteTarballs ? ['--allow-remote', 'all'] : []),
@@ -278,9 +398,10 @@ export async function planLaneInstall(
 	return Object.freeze({
 		packageManager: 'npm',
 		lockfile,
-		closure,
+		closure: resolvedClosure,
 		findings,
 		policy,
+		foreignLockfileDisregarded: disregarded,
 		command: Object.freeze(command),
 	});
 }
@@ -490,6 +611,14 @@ export type InstallRecord = Readonly<{
 	lockfile: string | null;
 	closure: ClosureMode | null;
 	policy: InstallPolicy;
+	/**
+	 * The foreign lockfile a declared policy disregarded, or `null`.
+	 *
+	 * Present only when `--allow-foreign-lockfile` was declared *and* the lane
+	 * actually carried one, so `null` reads as "no such decision was taken here"
+	 * rather than as "the flag was off".
+	 */
+	foreignLockfileDisregarded: ForeignLockfileDisregard | null;
 	remoteTarballDependencies: readonly string[];
 	installScriptPackages: readonly string[];
 	command: readonly string[] | null;
@@ -521,6 +650,7 @@ export function installNotRequested(reason: string): InstallRecord {
 		lockfile: null,
 		closure: null,
 		policy: DEFAULT_INSTALL_POLICY,
+		foreignLockfileDisregarded: null,
 		remoteTarballDependencies: Object.freeze([]),
 		installScriptPackages: Object.freeze([]),
 		command: null,
@@ -612,8 +742,21 @@ export async function runLaneInstall(
 				stage: 'install',
 				origin: 'pipeline',
 			});
+		/**
+		 * A defect after the foreign-lockfile policy was taken is bounded
+		 * differently from every other install defect, and the message says so
+		 * where it will be read: there was no recorded closure here, so what
+		 * failed is a resolution this run made rather than a pin the application
+		 * shipped. Naming the policy in the defect keeps that readable even when
+		 * the stage produced no record to carry it.
+		 */
+		const disregard = plan.foreignLockfileDisregarded;
 		throw new Error(
-			`install: ${plan.command.join(' ')} failed in the lane. This is a defect rather than a refusal: the declared policies were applied and the pinned closure still did not install. ${detail}`,
+			`install: ${plan.command.join(' ')} failed in the lane. This is a defect rather than a refusal: the declared policies were applied and the pinned closure still did not install.${
+				disregard === null
+					? ''
+					: ` The \`${disregard.policy}\` policy was declared and ${disregard.lockfile} (${disregard.packageManager}) was disregarded, so there was no pinned closure: what failed is a fresh npm resolution from the lane manifest, and it is not established that the era closure would have failed the same way.`
+			} ${detail}`,
 		);
 	}
 	return Object.freeze({
@@ -624,8 +767,9 @@ export async function runLaneInstall(
 		lockfile: plan.lockfile,
 		closure: plan.closure,
 		policy,
-		remoteTarballDependencies: plan.findings.remoteTarballDependencies,
-		installScriptPackages: plan.findings.installScriptPackages,
+		foreignLockfileDisregarded: plan.foreignLockfileDisregarded,
+		remoteTarballDependencies: plan.findings?.remoteTarballDependencies ?? Object.freeze([]),
+		installScriptPackages: plan.findings?.installScriptPackages ?? Object.freeze([]),
 		command: plan.command,
 		exitCode: 0,
 		installedPackages: await installedPackageCount(laneDir),
@@ -639,6 +783,9 @@ export async function runLaneInstall(
 			pathsObservedAfter: after.size,
 			writesOutsideLane: writes,
 		}),
-		notEstablished: INSTALL_NOT_ESTABLISHED,
+		notEstablished:
+			plan.foreignLockfileDisregarded === null
+				? INSTALL_NOT_ESTABLISHED
+				: Object.freeze([...INSTALL_NOT_ESTABLISHED, ...FOREIGN_LOCKFILE_NOT_ESTABLISHED]),
 	});
 }

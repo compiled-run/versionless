@@ -270,6 +270,7 @@ const BOOLEAN_FLAGS: Readonly<Record<OperatorCommand, readonly string[]>> = Obje
 		'--allow-install-scripts',
 		'--skip-install-scripts',
 		'--allow-peer-conflicts',
+		'--allow-foreign-lockfile',
 	]),
 	/**
 	 * The stage switches are absent on purpose: `run` runs every stage, so
@@ -291,6 +292,7 @@ const BOOLEAN_FLAGS: Readonly<Record<OperatorCommand, readonly string[]>> = Obje
 		'--allow-install-scripts',
 		'--skip-install-scripts',
 		'--allow-peer-conflicts',
+		'--allow-foreign-lockfile',
 	]),
 	'intervention-count': Object.freeze([
 		'--materialize',
@@ -300,6 +302,7 @@ const BOOLEAN_FLAGS: Readonly<Record<OperatorCommand, readonly string[]>> = Obje
 		'--allow-install-scripts',
 		'--skip-install-scripts',
 		'--allow-peer-conflicts',
+		'--allow-foreign-lockfile',
 	]),
 	/**
 	 * `--publish` is the ordering step, not a stage switch: it runs the build,
@@ -315,6 +318,7 @@ const BOOLEAN_FLAGS: Readonly<Record<OperatorCommand, readonly string[]>> = Obje
 		'--allow-install-scripts',
 		'--skip-install-scripts',
 		'--allow-peer-conflicts',
+		'--allow-foreign-lockfile',
 	]),
 	verify: Object.freeze([]),
 	'supported-matrix': Object.freeze([]),
@@ -593,6 +597,7 @@ const HELP: Readonly<Record<OperatorCommand, string>> = Object.freeze({
 		'                    [--cell <id>] [--node <major>] [--arch <arm64|x64>]',
 		'                    [--allow-remote-tarballs] [--allow-install-scripts]',
 		'                    [--skip-install-scripts] [--allow-peer-conflicts]',
+		'                    [--allow-foreign-lockfile]',
 		'                    [--record <file>] [--json]',
 		'',
 		'Apply the composed changeset into a separate output lane. The lane may not be inside',
@@ -642,8 +647,14 @@ const HELP: Readonly<Record<OperatorCommand, string>> = Object.freeze({
 		'--skip-install-scripts settles whether a closure with install scripts runs them.',
 		'--allow-peer-conflicts settles the third, which this repository measured rather than',
 		'inherited: a current build toolchain declared beside an era application’s own pins can',
-		'fail npm peer resolution outright. A closure that needs a policy nobody declared is a',
-		'named refusal, not a guess.',
+		'fail npm peer resolution outright. --allow-foreign-lockfile settles the fourth: a lane',
+		'that pinned its closure with yarn, pnpm or bun is refused by default, and declaring the',
+		'policy installs it without that lockfile — the file is left untouched and unread, and',
+		'npm resolves from the manifest instead. That is the one policy that gives something up,',
+		'so the install row records which lockfile was disregarded and states that the closure is',
+		'no longer pinned by the era lockfile and may drift from what the application shipped',
+		'with. It is never inferred from the lockfile kind. A closure that needs a policy nobody',
+		'declared is a named refusal, not a guess.',
 		'',
 		'Exit 2 is a refusal, 1 is a defect, 0 is a run that proceeded.',
 	].join('\n'),
@@ -657,6 +668,7 @@ const HELP: Readonly<Record<OperatorCommand, string>> = Object.freeze({
 		'                [--entry <module>]',
 		'                [--allow-remote-tarballs] [--allow-install-scripts]',
 		'                [--skip-install-scripts] [--allow-peer-conflicts]',
+		'                [--allow-foreign-lockfile]',
 		'                [--record <file>] [--json]',
 		'',
 		'Run every stage on one application, in order: analyze, ingest, license-at-pin,',
@@ -1242,6 +1254,7 @@ async function runOperatorFlow(
 			allowInstallScripts: parsed.flags['--allow-install-scripts'] !== undefined,
 			skipInstallScripts: parsed.flags['--skip-install-scripts'] !== undefined,
 			allowPeerConflicts: parsed.flags['--allow-peer-conflicts'] !== undefined,
+			allowForeignLockfile: parsed.flags['--allow-foreign-lockfile'] !== undefined,
 		});
 		const install =
 			parsed.flags['--install'] === undefined
@@ -1361,6 +1374,7 @@ async function runOperatorFlow(
 				allowInstallScripts: parsed.flags['--allow-install-scripts'] !== undefined,
 				skipInstallScripts: parsed.flags['--skip-install-scripts'] !== undefined,
 				allowPeerConflicts: parsed.flags['--allow-peer-conflicts'] !== undefined,
+				allowForeignLockfile: parsed.flags['--allow-foreign-lockfile'] !== undefined,
 			}),
 			flags: parsed.flags,
 		});

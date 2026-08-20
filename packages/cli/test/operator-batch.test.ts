@@ -19,6 +19,7 @@ import {
 	type HarnessOutcome,
 	type PublishStep,
 } from '../src/operator/batch.ts';
+import { forwardedRunFlags } from '../src/operator/flows.ts';
 import { pipelineRefusalOf } from '../src/operator/refusals.ts';
 
 /**
@@ -142,6 +143,37 @@ describe('the loop', () => {
 			'--node',
 			'16',
 		]);
+	});
+
+	/**
+	 * The install policies are a per-batch declaration: a bank operator answers
+	 * them once for the fleet, not once per application, and the loop forwards
+	 * them to every harness unchanged. `--allow-foreign-lockfile` is the fourth
+	 * and is forwarded exactly like the three that precede it — as a bare
+	 * switch, never as a flag with a value swallowed after it.
+	 */
+	it('forwards the foreign-lockfile policy to every application, like the other three', () => {
+		const forwarded = forwardedRunFlags({
+			'--out': ['lanes'],
+			'--cell': ['angular-13.4.0'],
+			'--allow-remote-tarballs': [],
+			'--allow-install-scripts': [],
+			'--allow-peer-conflicts': [],
+			'--allow-foreign-lockfile': [],
+		});
+		expect(forwarded).toEqual([
+			'--allow-foreign-lockfile',
+			'--allow-install-scripts',
+			'--allow-peer-conflicts',
+			'--allow-remote-tarballs',
+			'--cell',
+			'angular-13.4.0',
+		]);
+		const invocation = harnessInvocationFor(application('one'), {
+			laneRoot: 'lanes',
+			forwarded,
+		});
+		expect(invocation.argv).toContain('--allow-foreign-lockfile');
 	});
 
 	it('runs applications serially, in the order declared, never two at once', async () => {

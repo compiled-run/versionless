@@ -2,10 +2,10 @@
 	"schemaVersion": "versionless.intervention-count.v1",
 	"flow": "intervention-count",
 	"application": ".versionless/cache/angular2-hn/acquisition/source",
-	"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t012b1b/angular2-hn",
+	"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t043c/angular2-hn",
 	"runRecord": "evidence/runs/angular2-hn/run-record.json",
 	"writeSet": [
-		"../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t012b1b/angular2-hn",
+		"../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t043c/angular2-hn",
 		"evidence/runs/angular2-hn/run-record.json",
 		"evidence/runs/angular2-hn/run-record.json.interventions.json",
 		".versionless/stage/witness-real-app",
@@ -17,7 +17,7 @@
 	"authoringPathsTouched": [],
 	"interventionCount": 0,
 	"exitCode": 2,
-	"terminalClassification": "refused:install.lockfile-foreign",
+	"terminalClassification": "refused:build.configuration-absent",
 	"attempts": [
 		{
 			"argv": [
@@ -26,9 +26,10 @@
 				"run",
 				".versionless/cache/angular2-hn/acquisition/source",
 				"--out",
-				"/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t012b1b/angular2-hn",
+				"/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t043c/angular2-hn",
 				"--record",
 				"evidence/runs/angular2-hn/run-record.json",
+				"--allow-foreign-lockfile",
 				"--allow-install-scripts",
 				"--allow-peer-conflicts",
 				"--allow-remote-tarballs",
@@ -40,10 +41,10 @@
 			"exitCode": 2,
 			"signal": null,
 			"hang": false,
-			"stdoutBytes": 2843,
+			"stdoutBytes": 2761,
 			"stderrBytes": 0,
-			"startedAt": "2026-08-20T09:21:02.579Z",
-			"endedAt": "2026-08-20T09:21:02.961Z"
+			"startedAt": "2026-08-20T09:47:54.317Z",
+			"endedAt": "2026-08-20T09:48:09.220Z"
 		}
 	],
 	"observation": {
@@ -53,8 +54,8 @@
 		},
 		"stageBudgetMs": 900000,
 		"trackedPathsSource": "git",
-		"pathsObservedBefore": 3490,
-		"pathsObservedAfter": 3592,
+		"pathsObservedBefore": 3504,
+		"pathsObservedAfter": 7261,
 		"authoringHomes": [
 			"fixtures/**",
 			"packages/cli/src/fixture/**",

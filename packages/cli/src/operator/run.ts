@@ -173,6 +173,7 @@ export const RUN_STAGE_FLAGS: Readonly<Record<RunStageName, readonly string[]>> 
 		'--allow-install-scripts',
 		'--skip-install-scripts',
 		'--allow-peer-conflicts',
+		'--allow-foreign-lockfile',
 	]),
 	build: Object.freeze([]),
 	witness: Object.freeze([]),

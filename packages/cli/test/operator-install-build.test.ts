@@ -358,6 +358,100 @@ describe('install stage policy', () => {
 	});
 
 	/**
+	 * The refusal is the default, and the default is not softened by the policy
+	 * existing. The whole string is compared rather than a substring: a policy
+	 * that quietly reworded the refusal every undeclared run still emits would
+	 * be a change to what this pipeline says about applications nobody declared
+	 * anything for, which is most of them.
+	 */
+	it('leaves the undeclared foreign-lockfile refusal exactly as it was', async () => {
+		const yarn = await lane({ 'package.json': '{}\n', 'yarn.lock': '# yarn\n' });
+		try {
+			const refusal = await refusalOf(async () => planLaneInstall(yarn, policy(), {}));
+			expect(refusal?.code).toBe('install.lockfile-foreign');
+			expect(refusal?.stage).toBe('install');
+			expect(refusal?.message).toBe(
+				'Install: the lane carries yarn.lock, and this stage reads package-lock.json, npm-shrinkwrap.json. The closure is pinned — by yarn — and it is pinned in a lockfile this flow does not read, so it is not absent and it is not installable here.',
+			);
+			/** The default policy object is the one that refuses. */
+			expect(DEFAULT_INSTALL_POLICY.allowForeignLockfile).toBe(false);
+		} finally {
+			await rm(yarn, { recursive: true, force: true });
+		}
+	});
+
+	/**
+	 * Declared, the install proceeds *without* the lockfile rather than reading
+	 * it: there is no yarn reader here and this policy does not pretend to be
+	 * one. The plan therefore names no lockfile, resolves rather than replays —
+	 * `npm ci` has nothing to replay — and carries the drift it bought as a
+	 * statement, not as an absence for a reader to notice.
+	 */
+	it('installs without the foreign lockfile when the policy is declared, and records the drift', async () => {
+		const yarn = await lane({ 'package.json': '{}\n', 'yarn.lock': '# era yarn lockfile\n' });
+		try {
+			const plan = await planLaneInstall(yarn, policy({ allowForeignLockfile: true }), {});
+			expect(plan.lockfile).toBeNull();
+			expect(plan.findings).toBeNull();
+			expect(plan.closure).toBe('resolve');
+			expect(plan.command).toContain('install');
+			expect(plan.command).not.toContain('ci');
+			const disregarded = plan.foreignLockfileDisregarded;
+			expect(disregarded?.policy).toBe('allow-foreign-lockfile');
+			expect(disregarded?.lockfile).toBe('yarn.lock');
+			expect(disregarded?.packageManager).toBe('yarn');
+			expect(disregarded?.consulted).toBe(false);
+			/** The honesty consequence, by name, on the row itself. */
+			expect(disregarded?.consequence).toContain('NOT pinned by the era lockfile');
+			expect(disregarded?.consequence).toContain('drift');
+			/** The file it disregarded is still on disk, byte for byte. */
+			expect(await readFile(path.join(yarn, 'yarn.lock'), 'utf8')).toBe(
+				'# era yarn lockfile\n',
+			);
+			/** `replay` was asked for and `resolve` is what happened, so `resolve` is recorded. */
+			const asked = await planLaneInstall(
+				yarn,
+				policy({ allowForeignLockfile: true }),
+				{},
+				'replay',
+			);
+			expect(asked.closure).toBe('resolve');
+		} finally {
+			await rm(yarn, { recursive: true, force: true });
+		}
+	});
+
+	/**
+	 * The policy converts one refusal and no others. `lockfile-absent` is a lane
+	 * that pinned nothing at all — declaring a policy about foreign lockfiles
+	 * says nothing about it — and a lane carrying both an npm lockfile and a
+	 * foreign one is still the package-manager refusal, because that lane is not
+	 * missing a closure.
+	 */
+	it('converts only the foreign-lockfile refusal, and leaves the neighbouring two', async () => {
+		const bare = await lane({ 'package.json': '{}\n' });
+		const both = await lane({
+			'package.json': '{}\n',
+			'package-lock.json': '{"lockfileVersion":3,"packages":{}}',
+			'yarn.lock': '\n',
+		});
+		try {
+			const declared = policy({ allowForeignLockfile: true });
+			const absent = await refusalOf(async () => planLaneInstall(bare, declared, {}));
+			expect(absent?.code).toBe('install.lockfile-absent');
+			expect(absent?.message).toContain(
+				'the lane carries none of package-lock.json, npm-shrinkwrap.json',
+			);
+			expect((await refusalOf(async () => planLaneInstall(both, declared, {})))?.code).toBe(
+				'install.package-manager-not-npm',
+			);
+		} finally {
+			for (const directory of [bare, both])
+				await rm(directory, { recursive: true, force: true });
+		}
+	});
+
+	/**
 	 * Both lockfiles present is the case the package-manager refusal keeps: the
 	 * lane is not missing a closure, it carries two, and the policies this stage
 	 * holds are npm's alone.
