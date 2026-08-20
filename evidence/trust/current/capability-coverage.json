@@ -9,7 +9,8 @@
     "angular-eshop-webspa appears as a proving application on the same footing and is likewise absent from the matrix: it is the T023 replacement holdout, an Angular 6.1.4 workspace that was recorded RED at install under the frozen f1a63359 adapter and whose migrated production build, after the authorized T024 reopen, completes and repeats byte-identically. Every capability it proves is recorded on that one application and is therefore experimental. Its T024 u6 Witness is green on the anonymous catalog surface only — identity, basket, orders and campaigns are out of surface, the SignalR hub was never reached, and text entry and drag were not tested — so what is claimed here is that the application installs, builds, and behaves like its era baseline on that surface, and nothing beyond it.",
     "Classification is derived: cross-proven (in-matrix) requires at least two distinct independent applications; fewer is experimental (out-of-matrix).",
     "Where the frozen adapter-freeze.json editorial already classifies a capability this map adopts it unchanged, except ngrx-effects-migration, reclassified cross-proven on the second application (super-productivity) admitted after the freeze.",
-    "Where an application set cannot be determined from records the capability is marked unproven coverage and defaults to experimental."
+    "Where an application set cannot be determined from records the capability is marked unproven coverage and defaults to experimental.",
+    "The proving set published here is derived, not enumerated: it is the sealed baseline this map recorded unioned with every proof read out of the `versionless run` records supplied to the derivation. A run proves a capability only where the corpus already admits that run as a source application — harness-classified proven, exactly zero observed interventions, every stage row ran, and a stated repository, ref, revision, licence identifier and licence digest — and only where the run’s own plan stage names, as a whole identifier token, an entry point that capability declares. The engine a run records is the engine it planned with, so this reaches orchestrator and adapter entry points and reaches no construct-gated capability that fired underneath one without being named. The sealed baseline is a floor: a published map that drops a sealed proving application or falls below the sealed cross-proven count is refused by name."
   ],
   "independentApplications": {
     "react": [
@@ -58,17 +59,19 @@
       "provenApps": [
         "papercups",
         "react-hospitalrun",
-        "react-linkfree"
+        "react-linkfree",
+        "react-flame-v2-4-0"
       ],
       "attribution": "direct-invocation",
       "coverage": "proven",
       "evidence": [
         "packages/cli/src/fixture/react-papercups-v1-0-0-vite8.ts",
         "packages/cli/src/fixture/react-hospitalrun-vite8-run.ts",
-        "packages/cli/src/fixture/react-linkfree-v0-72-0-vite8-run.ts"
+        "packages/cli/src/fixture/react-linkfree-v0-72-0-vite8-run.ts",
+        "evidence/runs/react-flame-v2-4-0/run-record.json"
       ],
-      "note": "create-react-app to Vite 8 adapter; fired on three independent create-react-app applications. Cross-proven in adapter-freeze.",
-      "proofCount": 3,
+      "note": "create-react-app to Vite 8 adapter; fired on three independent create-react-app applications at the seal. Cross-proven in adapter-freeze. Three is the sealed figure and not the published one: an application past those three was derived from a `versionless run` record admitted after the seal, and is cited by that record rather than by a fixture.",
+      "proofCount": 4,
       "classification": "cross-proven"
     },
     {

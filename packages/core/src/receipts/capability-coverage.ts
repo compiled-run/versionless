@@ -27,7 +27,44 @@
  *      fixture, or a construct-gated firing recorded in its build-lane run.
  *   4. Where an application set cannot be determined from records, coverage is
  *      marked `unproven` and the capability defaults to `experimental`.
+ *
+ * **The proving set is derived, not only enumerated.** The arrays below are the
+ * *sealed baseline* — the proving applications this map recorded at the seal,
+ * kept as history and never widened by hand. The live proving set every
+ * `buildCapabilityCoverage()` call publishes is that baseline unioned with the
+ * proofs {@link deriveCapabilityProofs} reads out of the `versionless run`
+ * records the caller supplies, so a run that exercises a capability enters this
+ * matrix without anyone editing this file. This is the same move the corpus
+ * learned in T028/T033 one level up: there a clean run admitted an application,
+ * here a clean run admits an application *into a capability's proof set*.
+ *
+ * Two mechanisms keep that from being a widening of the claim:
+ *
+ *   - **The admission rule is not re-stated here.** A run record proves nothing
+ *     unless {@link deriveRunRecordApplications} already admits it as a corpus
+ *     source application — harness-classified `proven`, exactly zero observed
+ *     interventions, every stage row `ran`, and a stated repository, ref,
+ *     revision, licence identifier and licence digest. The two surfaces cannot
+ *     disagree because only one of them holds the rule.
+ *   - **Attribution is read off the capability's own declared surface.** A run
+ *     is attributed to a capability only where its plan stage names, as a whole
+ *     identifier token, an entry point that capability already declares in
+ *     `entryPoints`. No name table, no prose matching, no substring: the engine
+ *     the run recorded and the entry point the capability publishes are the same
+ *     symbol or the run proves nothing. What this does *not* establish is
+ *     stated with equal care — a run names the engine it planned with, so this
+ *     derivation reaches orchestrator and adapter entry points and reaches no
+ *     construct-gated capability that fired underneath one without the run
+ *     recording it by name.
+ *
+ * The baseline is a floor, never a ceiling: {@link verifyCapabilityCoverage}
+ * refuses a published map that enumerates fewer capabilities than the baseline,
+ * drops a sealed proving application, or falls below the sealed cross-proven
+ * count. A derivation that contradicts the seal is a named failure here rather
+ * than a quiet renumbering.
  */
+
+import { deriveRunRecordApplications, type CorpusRunRecordReading } from '../corpus/conformance.ts';
 
 export const CAPABILITY_COVERAGE_SCHEMA = 'versionless.capability-coverage.v1' as const;
 
@@ -46,6 +83,14 @@ export type CapabilityAttribution =
 	| 'orchestrated-unconditional'
 	| 'orchestrated-construct-gated'
 	| 'narrative'
+	/**
+	 * The proof arrived from a `versionless run` record rather than from a
+	 * fixture this repository authored. Only a capability the sealed baseline
+	 * recorded as `unproven` can reach it: where a sealed attribution already
+	 * exists it is kept, because a derived proof beside it does not change how
+	 * the first one was made.
+	 */
+	| 'run-record'
 	| 'unproven';
 
 export interface CapabilityRecordInput {
@@ -133,15 +178,24 @@ const CAPABILITY_METHOD = [
 	'Classification is derived: cross-proven (in-matrix) requires at least two distinct independent applications; fewer is experimental (out-of-matrix).',
 	'Where the frozen adapter-freeze.json editorial already classifies a capability this map adopts it unchanged, except ngrx-effects-migration, reclassified cross-proven on the second application (super-productivity) admitted after the freeze.',
 	'Where an application set cannot be determined from records the capability is marked unproven coverage and defaults to experimental.',
+	'The proving set published here is derived, not enumerated: it is the sealed baseline this map recorded unioned with every proof read out of the `versionless run` records supplied to the derivation. A run proves a capability only where the corpus already admits that run as a source application — harness-classified proven, exactly zero observed interventions, every stage row ran, and a stated repository, ref, revision, licence identifier and licence digest — and only where the run’s own plan stage names, as a whole identifier token, an entry point that capability declares. The engine a run records is the engine it planned with, so this reaches orchestrator and adapter entry points and reaches no construct-gated capability that fired underneath one without being named. The sealed baseline is a floor: a published map that drops a sealed proving application or falls below the sealed cross-proven count is refused by name.',
 ] as const;
 
 /**
- * The enumerated capabilities. Ordered React barrel first, then the Angular
- * barrel. Every `provenApps` entry is an independent application whose recorded
- * migration exercised the capability; `evidence` points to the run or orchestrator
- * source that records it, as repository-relative paths.
+ * The sealed baseline: the proving applications this map recorded at the seal.
+ *
+ * Ordered React barrel first, then the Angular barrel. Every `provenApps` entry
+ * is an independent application whose recorded migration exercised the
+ * capability; `evidence` points to the run or orchestrator source that records
+ * it, as repository-relative paths.
+ *
+ * This array is history and is never widened by hand to admit a new proof. It
+ * is the floor {@link buildCapabilityCoverage} starts from and
+ * {@link verifyCapabilityCoverage} refuses to publish below; a proof measured
+ * after the seal arrives through {@link deriveCapabilityProofs} instead, which
+ * is what lets the matrix move without a source edit.
  */
-const CAPABILITY_INPUTS: readonly CapabilityRecordInput[] = [
+export const CAPABILITY_SEALED_BASELINE: readonly CapabilityRecordInput[] = [
 	// ---- React lineage (@versionless/react) ----
 	{
 		name: 'react-cra-vite-adapter',
@@ -161,7 +215,7 @@ const CAPABILITY_INPUTS: readonly CapabilityRecordInput[] = [
 			'packages/cli/src/fixture/react-hospitalrun-vite8-run.ts',
 			'packages/cli/src/fixture/react-linkfree-v0-72-0-vite8-run.ts',
 		],
-		note: 'create-react-app to Vite 8 adapter; fired on three independent create-react-app applications. Cross-proven in adapter-freeze.',
+		note: 'create-react-app to Vite 8 adapter; fired on three independent create-react-app applications at the seal. Cross-proven in adapter-freeze. Three is the sealed figure and not the published one: an application past those three was derived from a `versionless run` record admitted after the seal, and is cited by that record rather than by a fixture.',
 	},
 	{
 		name: 'react-cra-process-global',
@@ -912,18 +966,175 @@ function summariseLineage(
 }
 
 /**
+ * The sealed baseline's own summary, counted rather than written down.
+ *
+ * It is derived by running the same classifier over the sealed arrays, so it
+ * cannot drift away from them: a baseline edit moves this figure with it, and a
+ * figure nobody counted cannot be asserted here.
+ */
+export const CAPABILITY_SEALED_BASELINE_SUMMARY: {
+	readonly total: number;
+	readonly crossProven: number;
+	readonly experimental: number;
+} = Object.freeze(
+	((): { total: number; crossProven: number; experimental: number } => {
+		const crossProven = CAPABILITY_SEALED_BASELINE.filter(
+			(input) => classifyCapability(input.provenApps).classification === 'cross-proven',
+		).length;
+		return {
+			total: CAPABILITY_SEALED_BASELINE.length,
+			crossProven,
+			experimental: CAPABILITY_SEALED_BASELINE.length - crossProven,
+		};
+	})(),
+);
+
+/**
+ * A `versionless run` record, as the capability derivation reads it.
+ *
+ * It is a corpus run-record reading plus the engine strings the run's own plan
+ * stages recorded. Nothing else is added, because nothing else is needed: the
+ * admission decision belongs to {@link deriveRunRecordApplications} and the
+ * attribution decision is a comparison between an engine the run named and an
+ * entry point a capability declares.
+ */
+export interface CapabilityProofRunRecord extends CorpusRunRecordReading {
+	/** Every engine string the run's own ran plan stages name, verbatim. */
+	readonly engines?: readonly string[] | undefined;
+}
+
+/** One proof a run record supplies: the application, and where to read it. */
+export interface CapabilityDerivedProof {
+	readonly application: string;
+	readonly evidence: string;
+}
+
+/**
+ * Every entry point this map publishes, mapped to the capability that owns it.
+ *
+ * Built rather than stored, and refused where two capabilities claim the same
+ * symbol: an ambiguous entry point would let one run prove two capabilities, so
+ * it is named as an error here instead of being resolved by a rule nobody
+ * agreed to.
+ */
+export function capabilityEntryPointIndex(): ReadonlyMap<string, string> {
+	const index = new Map<string, string>();
+	for (const capability of CAPABILITY_SEALED_BASELINE)
+		for (const entryPoint of capability.entryPoints) {
+			const owner = index.get(entryPoint);
+			if (owner !== undefined && owner !== capability.name)
+				throw new Error(
+					`Entry point ${entryPoint} is declared by both ${owner} and ${capability.name}`,
+				);
+			index.set(entryPoint, capability.name);
+		}
+	return index;
+}
+
+/** Splits an engine string into whole identifier tokens; nothing is matched partially. */
+const engineTokens = (engine: string): readonly string[] => engine.split(/[^A-Za-z0-9_$]+/u);
+
+/**
+ * The one place a capability gains a proving application without a source edit.
+ *
+ * Two readings must both hold, and neither is made here. The run must be one
+ * {@link deriveRunRecordApplications} already admits as a corpus source
+ * application — that function holds the whole intervention-and-source rule, and
+ * calling it is what keeps this surface from inventing a looser one. And the
+ * run's plan stage must name, as a whole identifier token, an entry point the
+ * capability itself declares; a run that names no entry point of any capability
+ * proves nothing and is not an error.
+ *
+ * A run whose record cannot be pointed at is refused: a proving application the
+ * published map cannot cite is not published as one.
+ */
+export function deriveCapabilityProofs(
+	records: readonly CapabilityProofRunRecord[],
+): ReadonlyMap<string, readonly CapabilityDerivedProof[]> {
+	const index = capabilityEntryPointIndex();
+	const admitted = new Set(
+		deriveRunRecordApplications(records).map((row) => String(row.id ?? '')),
+	);
+	const proofs = new Map<string, Map<string, CapabilityDerivedProof>>();
+	for (const record of records) {
+		if (!admitted.has(record.id)) continue;
+		const evidence = record.runRecordPath;
+		if (typeof evidence !== 'string' || evidence.trim() === '') continue;
+		for (const engine of record.engines ?? [])
+			for (const token of engineTokens(engine)) {
+				const capability = index.get(token);
+				if (capability === undefined) continue;
+				const applications = proofs.get(capability) ?? new Map();
+				if (!applications.has(record.id))
+					applications.set(record.id, { application: record.id, evidence });
+				proofs.set(capability, applications);
+			}
+	}
+	return new Map(
+		[...proofs].map(([capability, applications]) => [
+			capability,
+			[...applications.values()].sort((left, right) =>
+				left.application < right.application
+					? -1
+					: left.application > right.application
+						? 1
+						: 0,
+			),
+		]),
+	);
+}
+
+/** The run records a build may read capability proofs from. Absent is none, never a silent some. */
+export interface CapabilityCoverageOptions {
+	readonly runRecords?: readonly CapabilityProofRunRecord[];
+}
+
+/**
  * Derives the full capability-coverage record. Every classification is computed
  * from the proving-application count — nothing is read from a stored field —
  * and a duplicate proving application is rejected so a count cannot be inflated.
+ *
+ * The proving set each capability publishes is the sealed baseline unioned with
+ * the proofs derived from the supplied run records. Supplying none reproduces
+ * the sealed baseline exactly, which is why a repository with no admitted run
+ * publishes the same map it sealed; supplying a run that names a capability's
+ * own entry point moves that capability's proof count, and the threshold rule —
+ * unchanged, still two distinct applications — decides what that does to the
+ * matrix.
  */
-export function buildCapabilityCoverage(): CapabilityCoverage {
-	const capabilities = CAPABILITY_INPUTS.map((input): CapabilityRecord => {
+export function buildCapabilityCoverage(
+	options: CapabilityCoverageOptions = {},
+): CapabilityCoverage {
+	const derived = deriveCapabilityProofs(options.runRecords ?? []);
+	const capabilities = CAPABILITY_SEALED_BASELINE.map((input): CapabilityRecord => {
 		if (new Set(input.provenApps).size !== input.provenApps.length)
 			throw new Error(`Duplicate proving application listed for ${input.name}`);
 		if (input.coverage === 'unproven' && input.provenApps.length !== 0)
 			throw new Error(`Unproven coverage must list no applications: ${input.name}`);
-		const { proofCount, classification } = classifyCapability(input.provenApps);
-		return { ...input, proofCount, classification };
+		const additions = (derived.get(input.name) ?? []).filter(
+			(proof) => !input.provenApps.includes(proof.application),
+		);
+		const provenApps = [...input.provenApps, ...additions.map((proof) => proof.application)];
+		const evidence = [
+			...input.evidence,
+			...additions
+				.map((proof) => proof.evidence)
+				.filter((path) => !input.evidence.includes(path)),
+		];
+		/**
+		 * A capability the baseline could not attribute, that a run record now
+		 * proves, stops being unproven and says where the proof came from. A
+		 * capability the baseline already attributed keeps its attribution: a
+		 * derived proof beside a fixture proof does not change how the fixture
+		 * proof was made.
+		 */
+		const coverage = provenApps.length === 0 ? input.coverage : 'proven';
+		const attribution =
+			input.attribution === 'unproven' && provenApps.length !== 0
+				? ('run-record' as const)
+				: input.attribution;
+		const { proofCount, classification } = classifyCapability(provenApps);
+		return { ...input, provenApps, attribution, coverage, evidence, proofCount, classification };
 	});
 	const crossProven = capabilities.filter(
 		(capability) => capability.classification === 'cross-proven',
@@ -969,6 +1180,7 @@ export function verifyCapabilityCoverage(value: unknown): CapabilityCoverage {
 	if (!Array.isArray(root.capabilities) || root.capabilities.length === 0)
 		throw new Error('Capability-coverage capabilities are absent');
 	const names = new Set<string>();
+	const publishedApps = new Map<string, readonly string[]>();
 	let crossProven = 0;
 	const reactSummary = { total: 0, crossProven: 0 };
 	const angularSummary = { total: 0, crossProven: 0 };
@@ -988,6 +1200,7 @@ export function verifyCapabilityCoverage(value: unknown): CapabilityCoverage {
 		});
 		if (new Set(provenApps).size !== provenApps.length)
 			throw new Error(`Capability ${name} lists a duplicate proving application`);
+		publishedApps.set(name, provenApps);
 		const { proofCount, classification } = classifyCapability(provenApps);
 		if (capability.proofCount !== proofCount)
 			throw new Error(`Capability ${name} proof count does not match its applications`);
@@ -1035,5 +1248,42 @@ export function verifyCapabilityCoverage(value: unknown): CapabilityCoverage {
 		throw new Error(
 			'Capability-coverage Angular lineage summary does not match the derivation',
 		);
+	assertCapabilityCoverageAtOrAboveSealedBaseline(publishedApps, crossProven);
 	return value as CapabilityCoverage;
+}
+
+/**
+ * Refuses a published map that sits below the seal it descends from.
+ *
+ * The derivation may only move the matrix upward: every capability the seal
+ * enumerated is still enumerated, every proving application the seal recorded is
+ * still recorded, and the cross-proven count never falls under the sealed one. A
+ * derivation that lost a capability, dropped a proving application, or
+ * renumbered the matrix downward fails here by name — which side is wrong is
+ * then a question about the named capability rather than about a total.
+ */
+function assertCapabilityCoverageAtOrAboveSealedBaseline(
+	published: ReadonlyMap<string, readonly string[]>,
+	crossProven: number,
+): void {
+	if (published.size < CAPABILITY_SEALED_BASELINE_SUMMARY.total)
+		throw new Error(
+			`Capability coverage enumerates ${String(published.size)} capabilities where the sealed baseline enumerates ${String(CAPABILITY_SEALED_BASELINE_SUMMARY.total)}`,
+		);
+	for (const sealed of CAPABILITY_SEALED_BASELINE) {
+		const apps = published.get(sealed.name);
+		if (apps === undefined)
+			throw new Error(
+				`Capability coverage drops the sealed baseline capability ${sealed.name}`,
+			);
+		for (const application of sealed.provenApps)
+			if (!apps.includes(application))
+				throw new Error(
+					`Capability ${sealed.name} drops the sealed proving application ${application}`,
+				);
+	}
+	if (crossProven < CAPABILITY_SEALED_BASELINE_SUMMARY.crossProven)
+		throw new Error(
+			`Capability coverage is cross-proven on ${String(crossProven)} capabilities where the sealed baseline records ${String(CAPABILITY_SEALED_BASELINE_SUMMARY.crossProven)}`,
+		);
 }

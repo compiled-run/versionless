@@ -139,6 +139,16 @@ export interface CoverageRunRecord {
 	 * that decides what that means.
 	 */
 	readonly stages?: readonly { readonly name: string; readonly status: string }[] | undefined;
+	/**
+	 * The engine each ran plan stage named, verbatim.
+	 *
+	 * Carried for the capability derivation, which attributes a run to a
+	 * capability only where the engine string names that capability's own
+	 * declared entry point. It is read here rather than there because this is
+	 * the single reader of a run record in this repository, and a second reader
+	 * is a second place the two surfaces could disagree.
+	 */
+	readonly engines?: readonly string[] | undefined;
 	/** The classification the out-of-band harness recorded beside the run. */
 	readonly terminalClassification?: string | undefined;
 	/** Repository-relative basis paths, for a row that has to name its evidence. */
@@ -707,6 +717,32 @@ function runStages(
 	);
 }
 
+/**
+ * The engines a run's own ran plan stages named, in the order they ran.
+ *
+ * Only a stage that reads `ran` contributes: a plan stage that did not run
+ * planned with nothing, and an engine string it carries anyway is not a record
+ * of anything having happened. Nothing is parsed out of the string here — it is
+ * carried verbatim, and the capability derivation is the one place that decides
+ * whether it names an entry point.
+ */
+function runEngines(stages: unknown): readonly string[] | undefined {
+	if (!Array.isArray(stages)) return undefined;
+	const engines: string[] = [];
+	for (const entry of stages) {
+		if (typeof entry !== 'object' || entry === null) continue;
+		const stage = entry as Record<string, unknown>;
+		if (stage.status !== 'ran') continue;
+		const stageRecord = stage.record;
+		if (typeof stageRecord !== 'object' || stageRecord === null) continue;
+		const plan = (stageRecord as Record<string, unknown>).plan;
+		if (typeof plan !== 'object' || plan === null) continue;
+		const engine = (plan as Record<string, unknown>).engine;
+		if (typeof engine === 'string' && engine.trim() !== '') engines.push(engine);
+	}
+	return engines.length === 0 ? undefined : Object.freeze(engines);
+}
+
 export async function readRunRecords(root: string): Promise<readonly CoverageRunRecord[]> {
 	const runsRoot = path.join(root, RUN_RECORD_ROOT);
 	let directories: string[];
@@ -761,6 +797,9 @@ export async function readRunRecords(root: string): Promise<readonly CoverageRun
 				...(runStages(record.stages) === undefined
 					? {}
 					: { stages: runStages(record.stages) }),
+				...(runEngines(record.stages) === undefined
+					? {}
+					: { engines: runEngines(record.stages) }),
 				...(runPin(record.stages) === undefined ? {} : { pin: runPin(record.stages) }),
 				...(runLicence(record.stages) === undefined
 					? {}

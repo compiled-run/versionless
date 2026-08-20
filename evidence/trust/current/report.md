@@ -1,8 +1,8 @@
 # Versionless project trust package
 
-- Canonical SHA-256: `cff1263ab1d2edd2f4b0554ef2745f7bec1d19e5f94dd33743292d4bef1652e9`
-- Deterministic core: `63fa5f86fd274bae1569ac4927bdd7327d1e71368fac19ea0aef428b16464e58`
-- Generated observation: `2026-08-20T11:25:56.855Z`
+- Canonical SHA-256: `65ea22f50d2bf724ae8e6da35f568eb1cce7712cd23134b8a6b5942fa7f21e12`
+- Deterministic core: `c4c65feb38c59e70d4a96040a0bcf5dabe4bc2e6f52b6c0b6fb63bacff29a45e`
+- Generated observation: `2026-08-20T11:59:19.824Z`
 - Vulnerability input freshness: **verified** (seven-day maximum age)
 - Integrity: **hash-only; authenticity is not established**
 - Assurance: **this package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation**
@@ -149,7 +149,7 @@ The map is the machine-readable evidence record [capability-coverage.json](capab
 
 Cross-proven on at least two independent applications, and therefore in the matrix:
 
-- react: `react-cra-vite-adapter` — 3 application(s) (papercups, react-hospitalrun, react-linkfree)
+- react: `react-cra-vite-adapter` — 4 application(s) (papercups, react-hospitalrun, react-linkfree, react-flame-v2-4-0)
 - angular: `angular-target-cell` — 4 application(s) (angular-factoriolab, angular-jira-clone, angular-super-productivity, angular-tiny-translator)
 - angular: `angular-workspace-migration` — 4 application(s) (angular-factoriolab, angular-jira-clone, angular-super-productivity, angular-tiny-translator)
 - angular: `angular-source-migration` — 4 application(s) (angular-factoriolab, angular-jira-clone, angular-super-productivity, angular-tiny-translator)

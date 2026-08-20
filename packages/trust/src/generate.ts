@@ -2002,9 +2002,10 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 	 * summary without anyone editing the corpus source. With no run record filed
 	 * the reading is empty and the corpus is exactly its sealed members.
 	 */
+	const runRecords = await readRunRecords(root);
 	const conformance = await analyzeCorpusConformance({
 		rootDir: root,
-		runRecords: await readRunRecords(root),
+		runRecords,
 	});
 	const scriptSurface = await verifyScriptSurface({ rootDir: root, environment });
 	const runtimeObservationConfig = parseRuntimeObservationConfig(
@@ -2133,7 +2134,14 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 	};
 	await mkdir(output, { recursive: true });
 	const freeze = adapterFreezeRecord();
-	const capabilityCoverage = buildCapabilityCoverage();
+	/**
+	 * The same run records the corpus and the coverage report read, handed to
+	 * the capability map so a clean run that exercised a capability enters that
+	 * capability's proof set without anyone editing the capability source. With
+	 * no admitted run record the reading is empty and the map is exactly the
+	 * baseline it sealed.
+	 */
+	const capabilityCoverage = buildCapabilityCoverage({ runRecords });
 	const deterministic: Array<[string, unknown]> = [
 		['adapter-freeze.json', freeze],
 		['dependency-graph.cdx.json', graph],

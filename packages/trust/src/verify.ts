@@ -198,7 +198,7 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 	verifyCapabilityCoverage(await readJson(path.join(output, 'capability-coverage.json')));
 	if (
 		canonicalize(await readJson(path.join(output, 'capability-coverage.json'))) !==
-		canonicalize(buildCapabilityCoverage())
+		canonicalize(buildCapabilityCoverage({ runRecords: await readRunRecords(root) }))
 	)
 		throw new Error('Capability-coverage map does not match independent re-derivation');
 	const emittedFreeze = verifyAdapterFreezeRecord(
