@@ -1,0 +1,9 @@
+v16.20.2
+8.19.4
+/Users/jacksm5pro/dev/open-source/versionless/.versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64/bin/node
+
+> angular-hnpwa@0.0.0 build
+> ng build
+
+Schema validation failed with the following errors:
+  Data path "/polyfills" must be string.

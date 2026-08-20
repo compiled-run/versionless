@@ -1,0 +1,122 @@
+{
+  "schema": "versionless.spike.t046-angular-lane-build.v1",
+  "unit": "bank-demo-fleet-pipeline-p2d/T046-u1-lane-build-measurement",
+  "question": "T046 note S2.2 / S4.2 / S6.4 O1+O2 - does today's angular2-hn lane build, and if not, is the wall the polyfills schema rejection the sizing predicted?",
+  "measuredAt": "2026-08-20T05:15Z",
+  "lane": {
+    "path": "/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t043c/angular2-hn",
+    "namedBy": "evidence/runs/angular2-hn/run-record.json -> .lane (relative form resolves to this path)",
+    "present": true,
+    "nodeModulesEntries": 681,
+    "buildScript": "ng build",
+    "modifiedByThisUnit": false
+  },
+  "nodeVersions": {
+    "host": "v24.15.0",
+    "provisioned": "v16.20.2",
+    "hostNpm": "12.0.1",
+    "provisionedNpm": "8.19.4",
+    "provisionLocation": ".versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64",
+    "provisionedVerifiedInsideEnvironment": "PATH=<location>/bin:$PATH; `node -v` reported v16.20.2 and `command -v node` resolved to /Users/jacksm5pro/dev/open-source/versionless/.versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64/bin/node - lines 1-3 of build-node16.log",
+    "measured": true,
+    "assumed": false
+  },
+  "polyfillsFormInLane": {
+    "form": "array",
+    "buildOptionsPolyfills": ["src/polyfills.ts"],
+    "testOptionsPolyfills": ["src/polyfills.ts"],
+    "quotedFromLaneAngularJson": "\"polyfills\": [\n              \"src/polyfills.ts\"\n            ]",
+    "installedBuilderSchema": {
+      "package": "@angular-devkit/build-angular",
+      "version": "13.3.11",
+      "file": "node_modules/@angular-devkit/build-angular/src/builders/browser/schema.json",
+      "polyfills": {"type": "string", "description": "The full path for the polyfills file, relative to the current workspace."},
+      "additionalProperties": false
+    },
+    "note": "The lane carries the array form because the frozen adapter rewrote it (angular-workspace-migration.ts:286-293, unconditional). The installed 13.3.11 builder schema demands a string."
+  },
+  "runs": {
+    "host": {
+      "label": "npm run build under host Node",
+      "command": "npm run build",
+      "cwd": "<lane>",
+      "environment": "unmodified host environment (node v24.15.0, npm 12.0.1)",
+      "log": "evidence/spikes/t046-angular-lane-build/build-host-node.log",
+      "logSha256": "94369fb1ed165163b5bb53fb80d6f158e30d8a2b4e8ed5bce69d30950719d25e",
+      "exitCode": 1,
+      "wallTimeMs": 1139,
+      "firstDiagnostic": "Schema validation failed with the following errors:",
+      "firstDiagnosticDetailLine": "  Data path \"/polyfills\" must be string.",
+      "classification": "polyfills-schema-rejection",
+      "classificationIsPredictedClass": true,
+      "outputDirectoryWritten": null,
+      "outputFileCount": 0
+    },
+    "provisioned": {
+      "label": "npm run build with <provision.location>/bin prepended to PATH",
+      "command": "npm run build",
+      "cwd": "<lane>",
+      "environment": "PATH=/Users/jacksm5pro/dev/open-source/versionless/.versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64/bin:$PATH (node v16.20.2, npm 8.19.4)",
+      "log": "evidence/spikes/t046-angular-lane-build/build-node16.log",
+      "logSha256": "8b937d1a6db5f4ae061b9a88fecd7200ec44388d4bdf626c06ab571acf171ce6",
+      "exitCode": 1,
+      "wallTimeMs": 833,
+      "firstDiagnostic": "Schema validation failed with the following errors:",
+      "firstDiagnosticDetailLine": "  Data path \"/polyfills\" must be string.",
+      "classification": "polyfills-schema-rejection",
+      "classificationIsPredictedClass": true,
+      "outputDirectoryWritten": null,
+      "outputFileCount": 0
+    }
+  },
+  "verdict": {
+    "split": false,
+    "statement": "Both runs fail identically, at the same wall, with the same two lines. The failure is exactly the class the sizing predicted: `Data path \"/polyfills\" must be string.` The wall is Node-version-independent - it is a schema rejection raised by the 13.3.11 builder's own validator before any compilation, so swapping Node 24 for the provisioned 16.20.2 changes nothing about it.",
+    "o1": {
+      "question": "Does the 13.3.11 devkit actually reject the polyfills array at build time?",
+      "answer": "YES - confirmed by measurement, twice, under both Nodes. It does not coerce and does not ignore. Exit 1, no artifact, <lane>/dist never created.",
+      "consequence": "T046 note S6.1 u2 (gate the polyfills string->array rewrite on the cell) is NOT eliminated; it stands, and with it risk R1 (frozen-subtree reopen)."
+    },
+    "o2": {
+      "question": "Does angular2-hn build green under 16.20.2 once the schema is valid?",
+      "answer": "UNRESOLVED - and this unit cannot resolve it without modifying the lane's angular.json, which the packet forbids and which would make the measurement circular.",
+      "why": "The schema validator runs before the compiler, so the polyfills rejection short-circuits the build in under a second under both Nodes. No compiler, ngcc, webpack or TypeScript diagnostic was ever reached. O2 is therefore blocked behind O1's fix and can only be answered after u2 lands (or in a throwaway copy of the lane, which this unit was not authorized to make).",
+      "consequence": "Phase B (u2) is a prerequisite for measuring O2, not merely conditional on O1."
+    },
+    "nodeRuntimeThreading": {
+      "finding": "This measurement says nothing for or against S4.2's claim that a PATH-prepended Node 16 is sufficient machinery, because the build never got far enough to exercise it. What it does show is that `PATH=<provision.location>/bin:$PATH` alone is enough to make `npm`, `node` and the lane's `.bin/ng` all resolve to the 16.20.2 runtime: line 3 of build-node16.log is the lane's own resolution of `node`, measured inside the same shell that ran `npm run build`.",
+      "ngShebangMechanismConfirmed": "partially - `ng` was reached and executed (it produced the CLI's own schema-validation output under 16.20.2), which proves the `#!/usr/bin/env node` resolution works. It does not prove anything about the toolchain past validation."
+    },
+    "network": {
+      "reached": false,
+      "note": "Neither run reached for the network. Both terminated inside the CLI's schema validation, before any resolution step. VERSIONLESS_NETWORK_MODE was not set."
+    },
+    "laneMutation": {
+      "anyFileEdited": false,
+      "outputDirectoryCreated": false,
+      "note": "<lane>/dist did not exist before either run and does not exist after either run - the builder never got to deleteOutputPath or emit."
+    }
+  },
+  "logsVerbatim": {
+    "build-host-node.log": [
+      "v24.15.0",
+      "12.0.1",
+      "npm notice run angular-hnpwa@0.0.0 build",
+      "npm notice run ng build",
+      "Schema validation failed with the following errors:",
+      "  Data path \"/polyfills\" must be string."
+    ],
+    "build-node16.log": [
+      "v16.20.2",
+      "8.19.4",
+      "/Users/jacksm5pro/dev/open-source/versionless/.versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64/bin/node",
+      "",
+      "> angular-hnpwa@0.0.0 build",
+      "> ng build",
+      "",
+      "Schema validation failed with the following errors:",
+      "  Data path \"/polyfills\" must be string."
+    ],
+    "note": "The first two/three lines of each log are the runtime readings this unit recorded before invoking `npm run build`, not build output. The npm banner differs between npm 12 (`npm notice run`) and npm 8 (`> pkg@ver build`); the two diagnostic lines are byte-identical between the runs."
+  }
+}
