@@ -1,0 +1,17 @@
+--- test -f docs/goals/bank-demo-fleet-pipeline/notes/interim-audit-2026-08-20.md && wc -l < docs/goals/bank-demo-fleet-pipeline/notes/interim-audit-2026-08-20.md (exit 0) ---
+     596
+
+
+--- git diff --quiet HEAD -- packages evidence && echo NOTHING-TOUCHED (exit 0) ---
+NOTHING-TOUCHED
+
+
+--- npm run trust:verify -- --offline (exit 0) ---
+{"valid":true,"digest":"1563d0126552bd12f910f1330817ae378d0fea834f510e8e1a5457ccaf0f9ba8","deterministicCore":"d435d81c9cff9b53d04762c73a8ec795a9c4282b2df4e0561eccdae7ace0ba64","artifacts":12}
+
+npm warn Unknown project config "store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "virtual-store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "state-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm notice run versionless-workspace@0.0.0 trust:verify
+npm notice run node --experimental-strip-types packages/cli/src/cli.ts trust:verify --offline
+

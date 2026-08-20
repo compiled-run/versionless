@@ -1,0 +1,8 @@
+{
+  "status": "completed",
+  "summary": "Read-only interim audit at HEAD 6f1acac. Four integrity checks run and recorded verbatim; all agree with the published record, freeze composite 140ce86e recomputed by hand from HEAD tree oids. Half 1: command holds (4 apps, 9/9, count 0), clean-checkout/never-handled conjunct still n=1 on T042. Half 2: proven 14 vs sealed 10 HOLDS; cross-proven 8 unmoved (58->59 denominator, one capability 3->7 proofs) WAITS. New findings: 2 of 14 proven rows reached through allow-foreign-lockfile (14->12 if refused); the consent ruling now reaches a proven GPL-3.0 row. Gap map with owners and demo-readiness inventory written. full_outcome_complete NOT declared.",
+  "files_changed": [
+    "docs/goals/bank-demo-fleet-pipeline/notes/interim-audit-2026-08-20.md"
+  ],
+  "open_questions": []
+}

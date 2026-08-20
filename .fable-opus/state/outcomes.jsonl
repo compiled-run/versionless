@@ -241,3 +241,4 @@
 {"ts":"2026-08-20T14:36:17.562Z","unitId":"T047-target-runtime-semantics","runId":"bank-demo-fleet-pipeline-p2f","attempt":1,"agentId":"a265bf0fe0fd124bc","outcome":"failed"}
 {"ts":"2026-08-20T15:07:36.833Z","unitId":"T048-lane-tsconfig-composition","runId":"bank-demo-fleet-pipeline-p2f","attempt":1,"agentId":"af08e850a4e14045e","outcome":"blocked"}
 {"ts":"2026-08-20T15:25:35.362Z","unitId":"T045-b4-tier-f-tranche","runId":"bank-demo-fleet-pipeline-p2f","attempt":1,"agentId":"a47c842a322aeaab4","outcome":"completed"}
+{"ts":"2026-08-20T16:02:34.566Z","unitId":"interim-audit-2026-08-20","runId":"bank-demo-fleet-pipeline-p2g","attempt":1,"agentId":"a80c1b38b0903c9d3","outcome":"completed"}
