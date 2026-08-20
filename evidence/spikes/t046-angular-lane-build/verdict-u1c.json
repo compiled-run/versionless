@@ -1,0 +1,199 @@
+{
+  "schema": "versionless.spike.t046-angular-lane-build.v1",
+  "unit": "bank-demo-fleet-pipeline-p2d/T046-u1c-wall-enumeration",
+  "question": "Iterate the copy-lane measurement until angular2-hn's lane either builds GREEN under the provisioned Node 16.20.2 or hits a wall that is NOT an adapter-written value. What is the exact list of ungated adapter rewrites standing between authorization and a building Angular lane?",
+  "measuredAt": "2026-08-20T10:24Z",
+  "answer": "The enumeration is COMPLETE and it terminated GREEN. Exactly TWO ungated adapter rewrites stand between authorization and a building Angular lane for this app. Both are unconditional modern-line rewrites in the frozen Angular adapter. With both reverted to the values the era app declared - and nothing else touched - angular2-hn builds clean under Node 16.20.2 in 5.3s and emits a 28-file output directory with index.html at its root, satisfying the witness contract's input.",
+  "method": {
+    "copy": "/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t046-u1b-lane-copy",
+    "copyExistedFromU1b": true,
+    "carriedForwardFix": "u1b's polyfills string-form edit in <copy>/angular.json, both sites",
+    "environment": "PATH=/Users/jacksm5pro/dev/open-source/versionless/.versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64/bin:$PATH",
+    "nodeVersionVerifiedInShell": true,
+    "nodeVersionVerificationMethod": "lines 1-3 of build-node16-step1.log are `node -v`, `npm -v`, `command -v node` read in the SAME shell that then ran `npm run build`",
+    "iterationRule": "one variable per step; only fixes traceable to a specific adapter rewrite site; each step's log written before the next begins",
+    "realLaneMutated": false,
+    "packagesMutated": false,
+    "repositoryFilesWritten": [
+      "evidence/spikes/t046-angular-lane-build/build-node16-step1.log",
+      "evidence/spikes/t046-angular-lane-build/verdict-u1c.json"
+    ]
+  },
+  "steps": [
+    {
+      "step": 1,
+      "provenance": "inherited from u1 (evidence/spikes/t046-angular-lane-build/verdict.json) - not re-measured by this unit",
+      "wallName": "polyfills-array-vs-13-schema",
+      "adapterSite": "packages/frameworks/angular/src/angular-workspace-migration.ts (angular.json polyfills string->array rewrite, ungated on cell)",
+      "editApplied": "none - this was the baseline measurement",
+      "exitCode": 1,
+      "firstDiagnostic": "Schema validation failed with the following errors:\n  Data path \"/polyfills\" must be string.",
+      "firstDiagnosticVerbatimSource": "evidence/spikes/t046-angular-lane-build/build-node16.log",
+      "wallTimeMs": 833,
+      "adapterWritten": true,
+      "greenReached": false
+    },
+    {
+      "step": 2,
+      "provenance": "inherited from u1b (evidence/spikes/t046-angular-lane-build/verdict-u1b.json) - not re-measured by this unit",
+      "wallName": "tsconfig-target-es2022-vs-esbuild-0.14.22",
+      "adapterSite": "packages/frameworks/angular/src/angular-workspace-migration.ts:521-529",
+      "editApplied": "<copy>/angular.json: polyfills [\"src/polyfills.ts\"] -> \"src/polyfills.ts\" at both the build and test option sites (2 hunks, no other byte)",
+      "exitCode": 1,
+      "firstDiagnostic": "Error: Optimization error [350.js]: Error: Invalid target \"es2022\" in \"--target=es2022\"",
+      "firstDiagnosticVerbatimSource": "evidence/spikes/t046-angular-lane-build/build-node16-polyfills-string.log:126",
+      "wallTimeMs": 6404,
+      "adapterWritten": true,
+      "greenReached": false
+    },
+    {
+      "step": 3,
+      "provenance": "measured by this unit (u1c)",
+      "wallName": "none - GREEN",
+      "adapterSite": "not-adapter",
+      "editApplied": "<copy>/tsconfig.json: compilerOptions.module \"ES2022\" -> \"esnext\" and compilerOptions.target \"ES2022\" -> \"es2015\" - the two values the era app declared, per the run record's config-change rows. Exactly the output the cell-gated `migrateAngularTsConfig` would produce. 2 hunks, no other byte.",
+      "exitCode": 0,
+      "firstDiagnostic": null,
+      "wallTimeMs": 5323,
+      "adapterWritten": false,
+      "greenReached": true,
+      "log": "evidence/spikes/t046-angular-lane-build/build-node16-step1.log",
+      "logSha256": "52cd81984d5b9992337325ed9bdd3eb3b83b103994f31132f448d5d023e1ca00",
+      "logLines": 142
+    }
+  ],
+  "enumeration": {
+    "complete": true,
+    "terminal": "green",
+    "wallsTotal": 2,
+    "wallsMeasuredByThisUnit": 0,
+    "iterationsBeyondU1b": 1,
+    "iterationCap": 3,
+    "capReached": false,
+    "note": "The first fix this unit applied was also the last. No third wall exists for this application: the very first cell-gated tsconfig value produced a clean build. The enumeration ends because the lane went green, not because a budget or a non-adapter wall stopped it."
+  },
+  "step3Detail": {
+    "wallCleared": "esbuild optimizer target rejection - `Invalid target` appears zero times in this log, against five times in u1b's",
+    "attributionCheck": {
+      "questionAsked": "was the ES2022 value written anywhere else the build consumes?",
+      "searched": "every non-node_modules .json/.js/.ts file in the copy, case-insensitive /es2022/",
+      "hitsFound": 2,
+      "hitLocations": ["tsconfig.json:8 (module)", "tsconfig.json:13 (target)"],
+      "tsconfigAppJsonDeclaresTargetOrModule": false,
+      "angularJsonDeclaresScriptTarget": false,
+      "conclusion": "One adapter rewrite, one file, two keys. tsconfig.app.json and tsconfig.spec.json both `extends` the workspace tsconfig and declare neither key, so the single edit reaches every site the build consumes. The fix is expressible as exactly one rewrite's changed output - no ambiguity, no second rewrite implicated."
+    },
+    "provenanceOfThePreEditFile": {
+      "sha256BeforeEdit": "76eb68f3c1250939aba0744d0532d8c1a461673e8af4b1baf2f8e3611654ca3a",
+      "matchesRunRecordSha256After": true,
+      "runRecordPath": "evidence/runs/angular2-hn/run-record.json:1279",
+      "meaning": "The file this unit edited is byte-identical to the artifact the pipeline actually produced for this app. The measurement is on the real adapter output, not on a reconstruction.",
+      "sha256AfterEdit": "5ad587d2e0b200f022ab6fba6500513766ac3f1ba4f676091f8362b0add4eff6"
+    },
+    "whatWasDeliberatelyNotReverted": {
+      "value": "compilerOptions.useDefineForClassFields = false",
+      "why": "It is a separate `if` block and a separate run-record change row from the target/module loop, so reverting it would have been a second variable in one step. It is also inert at target es2015 - TypeScript's default for useDefineForClassFields is false below ES2022 - so leaving it in place cannot have contributed to the green result.",
+      "oneVariableDisciplineHeld": true
+    },
+    "stagesReached": [
+      "CLI schema validation - PASSED (`Schema validation` appears 0 times)",
+      "Sass compilation - completed, deprecation warnings only",
+      "TypeScript / Ivy compilation and webpack bundling - complete",
+      "esbuild optimization pass - PASSED, all 5 chunks (was the u1b wall)",
+      "emit - dist written"
+    ]
+  },
+  "greenBuild": {
+    "green": true,
+    "exitCode": 0,
+    "totalBuildWallTimeMs": 5323,
+    "ngReportedBuildTimeMs": 4068,
+    "buildHash": "146b1fe3fd4b619b",
+    "outputDirectory": "<copy>/dist/angular-hnpwa",
+    "outputDirectoryConfiguredBy": "angular.json outputPath (untouched by this unit)",
+    "outputFileCountRecursive": 28,
+    "outputRootEntries": ["350.js", "3rdpartylicenses.txt", "738.js", "assets", "favicon.ico", "index.html", "main.js", "manifest.json", "polyfills.js", "runtime.js", "styles.css"],
+    "indexHtmlAtOutputRoot": true,
+    "witnessContractInputAvailable": true,
+    "witnessContractNote": "This is the first time the witness contract's input - an output directory with index.html at its root - has been observed for angular2-hn. u1 and u1b both died before emit and produced no artifact at all.",
+    "outputSizeKb": 504,
+    "initialTotalRawSize": "307.56 kB",
+    "initialTotalTransferSize": "82.35 kB",
+    "lazyChunks": [
+      {"file": "350.js", "name": "item-details-item-details-module", "rawSize": "10.49 kB"},
+      {"file": "738.js", "name": "user-user-module", "rawSize": "3.68 kB"}
+    ]
+  },
+  "nonFatalNoise": {
+    "sassDeprecations": {
+      "count": 5,
+      "text": "Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.",
+      "origin": "app source, pre-existing, warning only"
+    },
+    "esbuildCssWarnings": {
+      "count": 3,
+      "text": "Unexpected \">\"",
+      "cause": "the app's `:host > > > a` deep-selector syntax",
+      "origin": "app source, pre-existing, warning only"
+    },
+    "errorStringsInLog": {
+      "count": 5,
+      "allFromFilename": "src/app/shared/components/error-message/error-message.component.scss",
+      "note": "Every occurrence of the substring `error` in the green log is the word inside that component's path. Zero diagnostics."
+    }
+  },
+  "network": {
+    "reached": false,
+    "networkModeSet": false,
+    "evidence": "zero matches for registry.npmjs / fetch / ngcc / ENOTFOUND anywhere in build-node16-step1.log",
+    "ngccInvoked": false
+  },
+  "laneMutation": {
+    "realLaneEdited": false,
+    "packagesEdited": false,
+    "evidenceRunsEdited": false,
+    "copyEditedFiles": ["angular.json (from u1b)", "tsconfig.json (this unit)"],
+    "copyDiffAgainstRealLane": "exactly 4 hunks across 2 files - 2 polyfills-form hunks in angular.json, 2 value hunks in tsconfig.json. Nothing else differs.",
+    "copyOutputDirectoryCreated": true
+  },
+  "verdict": {
+    "theCompletePrice": {
+      "board": "T044 supersession #2",
+      "statement": "The exact list of ungated adapter rewrites standing between authorization and a building Angular lane for angular2-hn is TWO items long, and it is now closed by measurement rather than by inference.",
+      "list": [
+        {
+          "n": 1,
+          "rewrite": "angular.json `polyfills` string -> single-element array",
+          "site": "packages/frameworks/angular/src/angular-workspace-migration.ts (workspace/angular.json migration)",
+          "sitesWritten": 2,
+          "gateNeeded": "consult cell.angularLine - the array form is a 15+ schema; the 13 builder's schema requires a string",
+          "wallItCauses": "CLI schema validation rejects the workspace before any compilation happens (833ms to exit 1)"
+        },
+        {
+          "n": 2,
+          "rewrite": "tsconfig.json `compilerOptions.target` and `compilerOptions.module` -> \"ES2022\", unconditionally",
+          "site": "packages/frameworks/angular/src/angular-workspace-migration.ts:521-529",
+          "sitesWritten": 1,
+          "gateNeeded": "consult cell.angularLine - the 13.3.11 devkit pins esbuild 0.14.22, which predates es2022 support; the era value es2015/esnext is what the installed optimizer accepts",
+          "wallItCauses": "esbuild optimizer rejects `--target=es2022` on all 5 chunks after a full successful compile (6.4s to exit 1, no artifact)"
+        }
+      ],
+      "sufficiency": "Gating these two - and only these two - is NECESSARY AND SUFFICIENT for a green angular2-hn build under the provisioned cell. u1b could only establish necessity and prove insufficiency of the first alone; this unit establishes the sufficiency of the pair.",
+      "bothInSameFile": true,
+      "bothInSameFunctionFile": "packages/frameworks/angular/src/angular-workspace-migration.ts",
+      "meaningForRiskR1": "R1 (frozen-subtree reopen) is confirmed unavoidable and confirmed BOUNDED. Both gates live in one frozen file. One reopen of that file, two conditionals, closes the whole distance for this app. The scope the owner is being asked to authorize is now a measured quantity, not an open-ended one.",
+      "meaningForU2AsScoped": "u2 as originally scoped (gate the polyfills rewrite only) is necessary but not sufficient - u1b proved that. This unit proves the missing piece is exactly one more gate in the same file, not an unbounded chain."
+    },
+    "honestCellRestated": "Node 16.20.2 plus the lane's own offline closure compiles, bundles, optimizes and emits this entire application in 5.3 seconds. Every wall the enumeration found was a value the pipeline wrote, and none was a limit of the runtime, of the app, or of the host. The cell was never the problem.",
+    "scopeOfThisClaim": "One application - angular2-hn, the 13-cell lane. Whether other Angular apps in the fleet hit additional ungated rewrites past these two is NOT established here; this unit enumerated one lane to its end. The two rewrites found are workspace-level and cell-independent in their ungatedness, so they will fire for every 13-line app, but a different app may exercise a rewrite this one does not."
+  },
+  "logVerbatimAnchors": {
+    "line1": "v16.20.2",
+    "line2": "8.19.4",
+    "line3": "/Users/jacksm5pro/dev/open-source/versionless/.versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64/bin/node",
+    "line5": "> angular-hnpwa@0.0.0 build",
+    "line6": "> ng build",
+    "buildLine": "Build at: 2026-08-20T10:24:08.700Z - Hash: 146b1fe3fd4b619b - Time: 4068ms",
+    "note": "Lines 1-3 are the runtime readings this unit recorded before invoking `npm run build`, not build output - same discipline as u1 and u1b."
+  }
+}
