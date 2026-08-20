@@ -2,20 +2,22 @@
 	"schemaVersion": "versionless.intervention-count.v1",
 	"flow": "intervention-count",
 	"application": ".versionless/work/react-your-spotify-1-5-0/baseline",
-	"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t030-p3/react-your-spotify-1-5-0",
+	"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t045b3/lanes/your-spotify",
 	"runRecord": "evidence/runs/react-your-spotify-1-5-0/run-record.json",
 	"writeSet": [
-		"../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t030-p3/react-your-spotify-1-5-0",
+		"../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t045b3/lanes/your-spotify",
 		"evidence/runs/react-your-spotify-1-5-0/run-record.json",
-		"evidence/runs/react-your-spotify-1-5-0/run-record.json.interventions.json"
+		"evidence/runs/react-your-spotify-1-5-0/run-record.json.interventions.json",
+		".versionless/stage/witness-real-app",
+		"evidence/runs/witness-synthesized"
 	],
 	"invocations": 1,
 	"stdinReads": 0,
 	"mutatedPathsOutsideWriteSet": [],
 	"authoringPathsTouched": [],
 	"interventionCount": 0,
-	"exitCode": 2,
-	"terminalClassification": "refused:install.lockfile-foreign",
+	"exitCode": 1,
+	"terminalClassification": "defect:build",
 	"attempts": [
 		{
 			"argv": [
@@ -24,20 +26,22 @@
 				"run",
 				".versionless/work/react-your-spotify-1-5-0/baseline",
 				"--out",
-				"/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t030-p3/react-your-spotify-1-5-0",
+				"/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t045b3/lanes/your-spotify",
 				"--record",
 				"evidence/runs/react-your-spotify-1-5-0/run-record.json",
+				"--allow-foreign-lockfile",
+				"--allow-git-dependencies",
 				"--allow-install-scripts",
 				"--allow-peer-conflicts",
 				"--allow-remote-tarballs"
 			],
-			"exitCode": 2,
+			"exitCode": 1,
 			"signal": null,
 			"hang": false,
-			"stdoutBytes": 2912,
+			"stdoutBytes": 4498,
 			"stderrBytes": 0,
-			"startedAt": "2026-08-17T23:51:02.265Z",
-			"endedAt": "2026-08-17T23:51:02.690Z"
+			"startedAt": "2026-08-20T14:06:22.435Z",
+			"endedAt": "2026-08-20T14:06:38.914Z"
 		}
 	],
 	"observation": {
@@ -47,8 +51,8 @@
 		},
 		"stageBudgetMs": 900000,
 		"trackedPathsSource": "git",
-		"pathsObservedBefore": 2410,
-		"pathsObservedAfter": 2742,
+		"pathsObservedBefore": 7650,
+		"pathsObservedAfter": 9513,
 		"authoringHomes": [
 			"fixtures/**",
 			"packages/cli/src/fixture/**",

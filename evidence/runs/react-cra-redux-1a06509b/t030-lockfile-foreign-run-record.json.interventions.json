@@ -2,22 +2,20 @@
 	"schemaVersion": "versionless.intervention-count.v1",
 	"flow": "intervention-count",
 	"application": ".versionless/work/react-cra-redux-1a06509b/baseline",
-	"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t045b3/lanes/cra-redux",
+	"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t030-p3/react-cra-redux-1a06509b",
 	"runRecord": "evidence/runs/react-cra-redux-1a06509b/run-record.json",
 	"writeSet": [
-		"../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t045b3/lanes/cra-redux",
+		"../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t030-p3/react-cra-redux-1a06509b",
 		"evidence/runs/react-cra-redux-1a06509b/run-record.json",
-		"evidence/runs/react-cra-redux-1a06509b/run-record.json.interventions.json",
-		".versionless/stage/witness-real-app",
-		"evidence/runs/witness-synthesized"
+		"evidence/runs/react-cra-redux-1a06509b/run-record.json.interventions.json"
 	],
 	"invocations": 1,
 	"stdinReads": 0,
 	"mutatedPathsOutsideWriteSet": [],
 	"authoringPathsTouched": [],
 	"interventionCount": 0,
-	"exitCode": 0,
-	"terminalClassification": "proven",
+	"exitCode": 2,
+	"terminalClassification": "refused:install.lockfile-foreign",
 	"attempts": [
 		{
 			"argv": [
@@ -26,22 +24,20 @@
 				"run",
 				".versionless/work/react-cra-redux-1a06509b/baseline",
 				"--out",
-				"/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t045b3/lanes/cra-redux",
+				"/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t030-p3/react-cra-redux-1a06509b",
 				"--record",
 				"evidence/runs/react-cra-redux-1a06509b/run-record.json",
-				"--allow-foreign-lockfile",
-				"--allow-git-dependencies",
 				"--allow-install-scripts",
 				"--allow-peer-conflicts",
 				"--allow-remote-tarballs"
 			],
-			"exitCode": 0,
+			"exitCode": 2,
 			"signal": null,
 			"hang": false,
-			"stdoutBytes": 1865,
+			"stdoutBytes": 2853,
 			"stderrBytes": 0,
-			"startedAt": "2026-08-20T14:05:49.297Z",
-			"endedAt": "2026-08-20T14:06:05.722Z"
+			"startedAt": "2026-08-17T23:50:57.105Z",
+			"endedAt": "2026-08-17T23:50:57.434Z"
 		}
 	],
 	"observation": {
@@ -51,8 +47,8 @@
 		},
 		"stageBudgetMs": 900000,
 		"trackedPathsSource": "git",
-		"pathsObservedBefore": 3750,
-		"pathsObservedAfter": 7247,
+		"pathsObservedBefore": 1768,
+		"pathsObservedAfter": 1791,
 		"authoringHomes": [
 			"fixtures/**",
 			"packages/cli/src/fixture/**",

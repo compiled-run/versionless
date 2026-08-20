@@ -2,7 +2,7 @@
   "schemaVersion": "versionless.corpus-conformance.v1",
   "summary": {
     "verticals": 20,
-    "sourceApplications": 14,
+    "sourceApplications": 15,
     "designatedPilotsVerified": 0
   },
   "verticals": [
@@ -1793,6 +1793,75 @@
       }
     },
     {
+      "id": "react-cra-redux-1a06509b",
+      "source": {
+        "repository": "notrab/create-react-app-redux",
+        "ref": "1a06509b0c0e5a3440f8c1e1d1cc7b8169d7988f",
+        "revision": "1a06509b0c0e5a3440f8c1e1d1cc7b8169d7988f",
+        "license": "MIT",
+        "licenseSha256": "b2675162788a19ede4b69024906455b9032e8dadebb8bbccfb833c216c2c2124",
+        "basis": "run-record",
+        "basisPath": "evidence/runs/react-cra-redux-1a06509b/run-record.json"
+      },
+      "provenanceOfStatus": "run-record",
+      "verticals": [
+        "react-cra-redux-1a06509b"
+      ],
+      "conformance": {
+        "terminalClassification": "proven",
+        "interventionCount": 0,
+        "stages": [
+          {
+            "name": "analyze",
+            "status": "ran"
+          },
+          {
+            "name": "ingest",
+            "status": "ran"
+          },
+          {
+            "name": "license-at-pin",
+            "status": "ran"
+          },
+          {
+            "name": "era-cell",
+            "status": "ran"
+          },
+          {
+            "name": "plan",
+            "status": "ran"
+          },
+          {
+            "name": "apply",
+            "status": "ran"
+          },
+          {
+            "name": "install",
+            "status": "ran"
+          },
+          {
+            "name": "build",
+            "status": "ran"
+          },
+          {
+            "name": "witness",
+            "status": "ran"
+          }
+        ]
+      },
+      "basis": {
+        "runRecord": "evidence/runs/react-cra-redux-1a06509b/run-record.json",
+        "interventionRecord": "evidence/runs/react-cra-redux-1a06509b/run-record.json.interventions.json"
+      },
+      "boundaries": {
+        "admission": "derived-from-run-record",
+        "judgeCounting": "not-counted",
+        "productionReadiness": "not-claimed",
+        "authenticity": "not-established",
+        "framework": "react"
+      }
+    },
+    {
       "id": "react-flame-v2-4-0",
       "source": {
         "repository": "pawelmalak/flame",
@@ -2335,6 +2404,6 @@
   },
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "51d0329422cb86f7591a314d0962569ee9395f5e534999c1ce82bcd3fece8b76"
+    "canonicalDigest": "4b065b48f1fd7ad7945044de0655fe407206b4684a664235ff4738428b6fd25f"
   }
 }

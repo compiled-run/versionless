@@ -266,9 +266,59 @@
       "application": ".versionless/work/react-cra-redux-1a06509b/baseline",
       "framework": "react",
       "provenanceOfStatus": "run-record",
-      "status": "refused",
-      "refusalCode": "install.lockfile-foreign",
-      "interventionCount": 0
+      "status": "proven",
+      "interventionCount": 0,
+      "stages": [
+        {
+          "name": "analyze",
+          "status": "ran"
+        },
+        {
+          "name": "ingest",
+          "status": "ran"
+        },
+        {
+          "name": "license-at-pin",
+          "status": "ran"
+        },
+        {
+          "name": "era-cell",
+          "status": "ran"
+        },
+        {
+          "name": "plan",
+          "status": "ran"
+        },
+        {
+          "name": "apply",
+          "status": "ran"
+        },
+        {
+          "name": "install",
+          "status": "ran"
+        },
+        {
+          "name": "build",
+          "status": "ran"
+        },
+        {
+          "name": "witness",
+          "status": "ran"
+        }
+      ],
+      "source": {
+        "repository": "notrab/create-react-app-redux",
+        "ref": "1a06509b0c0e5a3440f8c1e1d1cc7b8169d7988f",
+        "revision": "1a06509b0c0e5a3440f8c1e1d1cc7b8169d7988f",
+        "license": "MIT",
+        "licenseSha256": "b2675162788a19ede4b69024906455b9032e8dadebb8bbccfb833c216c2c2124",
+        "basis": "run-record",
+        "basisPath": "evidence/runs/react-cra-redux-1a06509b/run-record.json"
+      },
+      "provenBoundedness": [
+        "Dependency install scripts: the install row declares the install-script policy, names 0 package(s) the lockfile marks as carrying an install script, and records npm starting 1 script(s) and skipping 0 by policy. A script npm skipped did not run in the lane this proof was taken on.",
+        "Route reach: the witness row records the replay reaching 1 of 4 declared route(s) across 1 journey(s). Every route it did not reach is unproven by this row rather than proven absent."
+      ]
     },
     {
       "id": "react-flame-v2-4-0",
@@ -352,17 +402,17 @@
       "application": ".versionless/work/react-your-spotify-1-5-0/baseline",
       "framework": "react",
       "provenanceOfStatus": "run-record",
-      "status": "refused",
-      "refusalCode": "install.lockfile-foreign",
+      "status": "not-admitted",
+      "statusReason": "run-did-not-proceed:defect",
       "interventionCount": 0
     }
   ],
   "totals": {
     "applications": 24,
-    "proven": 12,
+    "proven": 13,
     "bounded": 2,
-    "refused": 7,
-    "not-admitted": 3
+    "refused": 5,
+    "not-admitted": 4
   },
   "refusalCensus": {
     "source": "evidence/runs/operator-flows/refusal-census.json",
@@ -617,7 +667,7 @@
   ],
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "61b5e20a76d2b04000eb7f651de200f215f24cbb80da21c96b4bffe3ba951004",
+    "canonicalDigest": "d0cc045b7da96a8cadd522d298704c2eba8ed00e334fd98cc1f4784154434c7f",
     "authenticity": "not-established",
     "certification": "not-claimed"
   }

@@ -61,6 +61,7 @@
         "react-hospitalrun",
         "react-linkfree",
         "react-coverview-a1470b01",
+        "react-cra-redux-1a06509b",
         "react-flame-v2-4-0"
       ],
       "attribution": "direct-invocation",
@@ -70,10 +71,11 @@
         "packages/cli/src/fixture/react-hospitalrun-vite8-run.ts",
         "packages/cli/src/fixture/react-linkfree-v0-72-0-vite8-run.ts",
         "evidence/runs/react-coverview-a1470b01/run-record.json",
+        "evidence/runs/react-cra-redux-1a06509b/run-record.json",
         "evidence/runs/react-flame-v2-4-0/run-record.json"
       ],
       "note": "create-react-app to Vite 8 adapter; fired on three independent create-react-app applications at the seal. Cross-proven in adapter-freeze. Three is the sealed figure and not the published one: an application past those three was derived from a `versionless run` record admitted after the seal, and is cited by that record rather than by a fixture.",
-      "proofCount": 5,
+      "proofCount": 6,
       "classification": "cross-proven"
     },
     {
