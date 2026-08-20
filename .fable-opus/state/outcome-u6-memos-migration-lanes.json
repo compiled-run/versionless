@@ -1,0 +1,11 @@
+{
+	"unitId": "u6-memos-migration-lanes",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Delivered the memos OLD-VITE-ORIGIN migration cell. New reusable react-vite-origin-adapter (era build-target pinning, analyzer-driven config planning that refuses unknown options/plugins pre-build, removed-client-API restoration, preprocessor resolution), exported and covered by 30 tests; overfitting guard extended with 'memos'. Era baseline lane (vite 2.9.5, Node 16.20.2, frozen lockfile, tsc-gate deviation carried with its label) and migrated lane (vite 8.0.16) each rebuild byte-identically; applicationFilesChanged is 0 of 120 src files. Build-parity evidence written. Fixed a real defect: .tsx parsed as JS caused a false refusal. tsc, lint (0 errors), and 1325 tests pass. No network needed; all builds offline.",
+	"agentId": "ad50ea719d689f020",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-11T15:36:28.349Z"
+}

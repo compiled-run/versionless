@@ -1,0 +1,15 @@
+{
+	"runId": "lrapr-t008",
+	"unitId": "hx1-ingest-cypress-rwa",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t008/prompt-hx1-ingest-cypress-rwa-attempt-1.md",
+	"subagentType": "opus-worker-isolated",
+	"toolUseId": "toolu_01ENSS4LKj3nEoYJGbUNuTGr",
+	"promptId": "43898742-d1b8-4806-8db9-b9e647b36120",
+	"background": true,
+	"parallel": true,
+	"effort": null,
+	"contract": ["fixtures/react-cypress-rwa/**", "evidence/ingests/react-cypress-rwa/**"],
+	"ts": "2026-08-11T12:31:32.949Z",
+	"pendingName": "00001786451492950084-663c5157-hx1-ingest-cypress-rwa.json"
+}

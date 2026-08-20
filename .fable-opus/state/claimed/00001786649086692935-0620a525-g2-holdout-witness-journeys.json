@@ -1,0 +1,25 @@
+{
+	"runId": "lrapr-t017b",
+	"unitId": "g2-holdout-witness-journeys",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t017b/prompt-g2-holdout-witness-journeys-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_014Zfr8JBy2VpocbL6pssJbp",
+	"promptId": "75835019-3690-4a65-a41c-61223ec4278f",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/cli/src/witness/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/src/receipts/witness-react-cypress-rwa.ts",
+		"packages/core/src/receipts/witness-real-app.ts",
+		"packages/core/src/index.ts",
+		"packages/core/test/**",
+		"evidence/runs/react-cypress-rwa/**",
+		"fixtures/**"
+	],
+	"ts": "2026-08-13T19:24:46.691Z",
+	"pendingName": "00001786649086692935-0620a525-g2-holdout-witness-journeys.json"
+}

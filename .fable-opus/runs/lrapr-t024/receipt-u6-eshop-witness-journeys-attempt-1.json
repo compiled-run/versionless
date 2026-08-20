@@ -1,0 +1,23 @@
+{
+	"status": "completed",
+	"summary": "Chose the declared same-origin loopback projection (measured: the app concatenates every service URL onto purchaseUrl, and neither bundle reaches any external origin). Built projection, core schema, AppSpec, runner wiring and driver; ran 2 lanes x 2 passes green. Parity digest 585ae9ec across all four runs; per-lane semantic digests stable across passes and distinct between lanes; mutation of ' products - Page ' went red and restored byte-identically, restored run reproducing the parity digest; successfulNonLoopback 0, zero console errors/failed requests. Identity/basket/orders/campaigns recorded out-of-surface, SignalR not-reached, text-entry and drag not-tested. All five verify commands pass; freeze intact.",
+	"files_changed": [
+		"packages/core/src/receipts/witness-angular-eshop-webspa.ts",
+		"packages/core/src/receipts/witness-real-app.ts",
+		"packages/core/src/index.ts",
+		"packages/core/test/witness-angular-eshop-webspa.test.ts",
+		"packages/cli/src/witness/angular-eshop-webspa-projection.ts",
+		"packages/cli/src/witness/angular-eshop-webspa-spec.ts",
+		"packages/cli/src/witness/angular-eshop-webspa-run.ts",
+		"packages/cli/src/witness/real-app-run.ts",
+		"packages/cli/src/fixture/angular-eshop-webspa-witness-probe.ts",
+		"packages/cli/test/witness-angular-eshop-webspa-projection.test.ts",
+		"fixtures/angular-eshop-webspa/witness-projection-seed.json",
+		"evidence/runs/angular-eshop-webspa/receipt.json",
+		"evidence/runs/angular-eshop-webspa/receipt.md",
+		"evidence/runs/angular-eshop-webspa/witness-journeys.json",
+		"evidence/runs/angular-eshop-webspa/witness-mutation.json",
+		"evidence/runs/angular-eshop-webspa/witness-projection-ledger.json"
+	],
+	"open_questions": []
+}

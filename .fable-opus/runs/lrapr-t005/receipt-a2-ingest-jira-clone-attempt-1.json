@@ -1,0 +1,32 @@
+{
+	"status": "completed",
+	"summary": "Admitted and ingested trungvose/jira-clone-angular @ 059455b9 (2022-03-13) as slug angular-jira-clone. All five admission gates pass, re-verified from wire: MIT LICENSE (sha256 c45956b1..., no license field in package.json, recorded as absence), substantive Angular 13.2.4/CLI 13.2.5 app, era-coherent, 6 code-backed journeys. LFS prechecked per a1 lesson: no .gitattributes, zero pointer stubs, tree self-contained. 7 ledgered requests, all 200, 46,187,131 bytes, archive double-fetch byte-identical d913ad5d..., 250/250 blobs reconcile. Baseline in Node 16.20.2 arm64: npm ci exit 0 (2729 pkgs, lockfileVersion 2); production build FAILED exit 1 on invalid extractCss key; repo's own npm run build exit 0; one labeled deviation removing that key built exit 0.",
+	"files_changed": [
+		"evidence/ingests/angular-jira-clone/attempt.json",
+		"evidence/ingests/angular-jira-clone/source.json",
+		"evidence/ingests/angular-jira-clone/identity.json",
+		"evidence/ingests/angular-jira-clone/license.json",
+		"evidence/ingests/angular-jira-clone/provenance.json",
+		"evidence/ingests/angular-jira-clone/closure.json",
+		"evidence/ingests/angular-jira-clone/admission.json",
+		"evidence/ingests/angular-jira-clone/baseline-attempt.json",
+		"evidence/ingests/angular-jira-clone/baseline-result.json",
+		"evidence/ingests/angular-jira-clone/build-followups.json",
+		"evidence/ingests/angular-jira-clone/reconciliation.json",
+		"evidence/ingests/angular-jira-clone/lfs.json",
+		"evidence/ingests/angular-jira-clone/probe-tree.json",
+		"evidence/ingests/angular-jira-clone/probe-ledger.ndjson",
+		"evidence/ingests/angular-jira-clone/transcript.ndjson",
+		"evidence/ingests/angular-jira-clone/scripts/lib.cjs",
+		"evidence/ingests/angular-jira-clone/scripts/acquire-source.cjs",
+		"evidence/ingests/angular-jira-clone/scripts/reconcile.cjs",
+		"evidence/ingests/angular-jira-clone/scripts/analyze.cjs",
+		"evidence/ingests/angular-jira-clone/scripts/baseline.cjs",
+		"evidence/ingests/angular-jira-clone/scripts/build-followups.cjs",
+		"fixtures/angular-jira-clone/fixture.json"
+	],
+	"open_questions": [
+		"Working caches were written to gitignored .versionless/cache/angular-jira-clone-{source,runtime,baseline} following the a1/factoriolab precedent rather than into the contract dirs (node_modules and dist would otherwise be git-visible inside evidence/). Confirm that remains the accepted convention.",
+		"The v2.0.0 tag tree's missing LICENSE was corroborated by the pinned commit's own subject line but not independently re-fetched; recorded as such in license.json rather than claimed as verified."
+	]
+}

@@ -1,0 +1,15 @@
+{
+	"runId": "lrapr-t1",
+	"unitId": "t007-s1-holdout-scout",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t1/prompt-t007-s1-holdout-scout-attempt-1.md",
+	"subagentType": "opus-worker-isolated",
+	"toolUseId": "toolu_01A2b9c42dFdyzWTRSnpzYoj",
+	"promptId": "f1de5dc0-4c87-4ce2-9df7-ec6a368d3b12",
+	"background": true,
+	"parallel": true,
+	"effort": null,
+	"contract": [],
+	"ts": "2026-08-10T18:43:01.531Z",
+	"pendingName": "00001786387381532077-d8e47a4b-t007-s1-holdout-scout.json"
+}

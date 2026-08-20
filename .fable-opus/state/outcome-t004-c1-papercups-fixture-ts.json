@@ -1,0 +1,11 @@
+{
+	"unitId": "t004-c1-papercups-fixture-ts",
+	"runId": "lrapr-t004",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Papercups is now a first-class generic fixture: evidence data copied verbatim, drivers ported to strict-TS generic machinery (legacy-candidate-ingest.ts) parameterized by LegacyCandidateConfig, offline evidence verification (legacy-candidate-verify.ts, 22 checks incl. byte-exact attempt recomputation), tier-f FixtureId union and fixture:ingest/fixture:verify allowlists extended, 25 new tests. tsc, lint, the no-mjs guard, and all affected suites (95 tests) pass. `vp test --project node` fails only because the isolated worktree lacks the ~20GB gitignored .versionless corpus cache: all 91 failures are ENOENT under .versionless, none in files I touched.",
+	"agentId": "a9643c8993d4e3f6d",
+	"background": true,
+	"verdictDelivered": true,
+	"ts": "2026-08-10T19:33:36.835Z"
+}

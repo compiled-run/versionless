@@ -1,0 +1,21 @@
+{
+	"runId": "lrapr-t005",
+	"unitId": "mj3a-sentry-v8-capability",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t005/prompt-mj3a-sentry-v8-capability-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_013MooRaKpUZhieg2zpHzYS2",
+	"promptId": "8b97a260-6c02-4585-9540-afa9140b9786",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/frameworks/angular/**",
+		"packages/cli/test/**",
+		"packages/core/test/**",
+		"evidence/runs/angular-jira-clone/**",
+		"fixtures/angular-jira-clone/**"
+	],
+	"ts": "2026-08-11T07:43:28.451Z",
+	"pendingName": "00001786434208452815-5402bcc9-mj3a-sentry-v8-capability.json"
+}

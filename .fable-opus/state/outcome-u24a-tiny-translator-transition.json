@@ -1,0 +1,11 @@
+{
+	"unitId": "u24a-tiny-translator-transition",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Landed the tiny-translator aggregate/conformance/trust transition as one coherent change on top of the react-linkfree tip. Wrote the single-member append fixture (predecessor react-linkfree-browser-proof, new kind angular-tiny-translator-browser-proof, .t006a.tmp atomic staging) and ran it --append for real. Extended conformance.ts (union state, derive chain, rows adapted to tiny-translator's real fields — serviceWorkerAttempt, persistence, scrollAbsence, angularLineage 1/4 counted:false), trust generate/verify/render (RECEIPTS=26, MATRIX_CELLS=24), the 7 predecessor append-fixture guards, both integrate fixtures, and every pin across 8 test files. Then vp pack + trust:generate. Measured: 26 receipts/19 verticals/11 apps/24 cells, resolvedDeps 39, angularLineage 2/4. All 7 verify gates pass (2099 tests).",
+	"agentId": "aa5e72496e11868e2",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-12T19:32:49.094Z"
+}

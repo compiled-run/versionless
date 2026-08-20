@@ -1,0 +1,11 @@
+{
+	"status": "completed",
+	"summary": "Ran trust:generate offline (--policy trust/policy.json --output evidence/trust/current), regenerating all trust render artifacts from source rather than hand-editing. Generator rewrote adapter-freeze.json from 5de7df56 to 4df7bc96 (NOT reverted) with supersession record intact, confirming freeze.ts is its source of truth. report.md now shows composite 4df7bc96 (commit c695a586) and react-cra-process-global as single-app/experimental; the green-2026-08-13 passing frozen-adapter receipt (composite 4df7bc96) exists and is consistent. Full gate green: tsc 0, lint 0 errors, node tests 2224/2224, trust:verify valid:true (digest 9ab3d6be, 12 artifacts). Holdout ledger keeps its immutable failed d9f75ef6 record by design (derived from aggregate.json, required by verify.ts). No commit/stage.",
+	"files_changed": [
+		"evidence/trust/current/adapter-freeze.json",
+		"evidence/trust/current/manifest.json",
+		"evidence/trust/current/report.md",
+		"evidence/trust/current/vulnerabilities.json"
+	],
+	"open_questions": []
+}

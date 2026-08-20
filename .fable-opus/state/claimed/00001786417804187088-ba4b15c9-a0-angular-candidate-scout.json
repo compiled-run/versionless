@@ -1,0 +1,15 @@
+{
+	"runId": "lrapr-t005",
+	"unitId": "a0-angular-candidate-scout",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t005/prompt-a0-angular-candidate-scout-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01PZ94TSSPUwhCX9P32vhFgz",
+	"promptId": "74f53810-a75c-474c-83d1-84a834a45861",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [],
+	"ts": "2026-08-11T03:10:04.186Z",
+	"pendingName": "00001786417804187088-ba4b15c9-a0-angular-candidate-scout.json"
+}

@@ -1,12 +1,17 @@
+import { execFile } from 'node:child_process';
 import { mkdir, mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
+import { promisify } from 'node:util';
 import * as path from 'pathe';
 import { describe, expect, it } from 'vitest';
 import { planLaneBuild } from '../src/operator/build.ts';
 import {
 	DEFAULT_INSTALL_POLICY,
+	INSTALL_HOME_DIRECTORY,
+	planInstallSandbox,
 	planLaneInstall,
 	readLockfileFindings,
+	runLaneInstall,
 	type InstallPolicy,
 } from '../src/operator/install.ts';
 import {
@@ -414,6 +419,149 @@ describe('install stage policy', () => {
 			await rm(directory, { recursive: true, force: true });
 		}
 	});
+});
+
+describe('the install sandbox', () => {
+	it('points every home npm reads at the lane and drops what names the checkout', () => {
+		const lane = '/checkout/.versionless/work/app/lane';
+		const sandbox = planInstallSandbox(
+			lane,
+			{
+				HOME: '/Users/someone',
+				PATH: '/Users/someone/.nvm/versions/node/v24/bin:/usr/bin',
+				INIT_CWD: '/checkout',
+				EDITOR: '/Users/someone/bin/vi',
+				npm_config_cache: '/Users/someone/.npm',
+				LANG: 'en_US.UTF-8',
+			},
+			'/checkout',
+		);
+		const environment = sandbox.environment;
+		expect(environment.HOME).toBe(`${lane}/${INSTALL_HOME_DIRECTORY}`);
+		expect(environment.XDG_CONFIG_HOME?.startsWith(sandbox.home)).toBe(true);
+		expect(environment.XDG_CACHE_HOME?.startsWith(sandbox.home)).toBe(true);
+		expect(environment.npm_config_cache?.startsWith(sandbox.home)).toBe(true);
+		expect(environment.npm_config_prefix?.startsWith(sandbox.home)).toBe(true);
+		expect(environment.npm_config_userconfig?.startsWith(sandbox.home)).toBe(true);
+		expect(environment.npm_config_globalconfig?.startsWith(sandbox.home)).toBe(true);
+		/** Inherited routes back out: the checkout, the user's home, npm's own config. */
+		expect(environment.INIT_CWD).toBeUndefined();
+		expect(environment.EDITOR).toBeUndefined();
+		expect(sandbox.strippedVariables.some((entry) => entry.startsWith('INIT_CWD'))).toBe(true);
+		expect(sandbox.strippedVariables.some((entry) => entry.startsWith('EDITOR'))).toBe(true);
+		/** `PATH` is the named exception, and a variable that names neither stays. */
+		expect(environment.PATH).toBe('/Users/someone/.nvm/versions/node/v24/bin:/usr/bin');
+		expect(environment.LANG).toBe('en_US.UTF-8');
+	});
+
+	/**
+	 * The escape this stage exists to catch, reproduced.
+	 *
+	 * A package whose `postinstall` writes into the checkout's `.git/hooks` is
+	 * exactly what happened here on 2026-08-10, and the semantics implemented are
+	 * **detect-and-refuse**, not prevent: the sandbox moves every path npm
+	 * resolves from the environment into the lane, but a script that hard-codes
+	 * an absolute path is not stopped by an environment. So the write lands, the
+	 * stage refuses by name, and the file is left where it is for the operator to
+	 * read rather than quietly reverted.
+	 */
+	it('refuses by name when an install script writes into the checkout', async () => {
+		const root = await temporaryDirectory();
+		try {
+			const hooks = path.join(root, '.git', 'hooks');
+			await mkdir(hooks, { recursive: true });
+			const lane = path.join(root, 'lane');
+			await mkdir(lane, { recursive: true });
+			/** The fixture, built here and packed here: nothing is fetched. */
+			const fixture = path.join(root, 'fixture', 'package');
+			await mkdir(fixture, { recursive: true });
+			await writeFile(
+				path.join(fixture, 'package.json'),
+				`${JSON.stringify(
+					{
+						name: 'pwn',
+						version: '1.0.0',
+						scripts: {
+							postinstall: `mkdir -p ${hooks} && echo x > ${path.join(hooks, 'pwned')}`,
+						},
+					},
+					null,
+					2,
+				)}\n`,
+			);
+			await promisify(execFile)('tar', [
+				'-czf',
+				path.join(lane, 'pwn.tgz'),
+				'-C',
+				path.join(root, 'fixture'),
+				'package',
+			]);
+			/**
+			 * The same `postinstall`, carried twice.
+			 *
+			 * npm 12 blocks a *dependency's* install script behind its own
+			 * `allowScripts` allowlist — `pwn@1.0.0 … blocked because they are not
+			 * covered by allowScripts` — which this stage's `--foreground-scripts`
+			 * does not grant, so the tarball's copy is refused by npm before this
+			 * boundary is reached. The lane's own script is one npm does run, and
+			 * the boundary is a property of the install child rather than of which
+			 * package's script fired inside it.
+			 */
+			await writeFile(
+				path.join(lane, 'package.json'),
+				`${JSON.stringify({
+					name: 'lane',
+					version: '1.0.0',
+					scripts: {
+						postinstall: `mkdir -p ${hooks} && echo x > ${path.join(hooks, 'pwned')}`,
+					},
+					dependencies: { pwn: 'file:pwn.tgz' },
+				})}\n`,
+			);
+			await writeFile(
+				path.join(lane, 'package-lock.json'),
+				`${JSON.stringify({
+					name: 'lane',
+					version: '1.0.0',
+					lockfileVersion: 3,
+					requires: true,
+					packages: {
+						'': {
+							name: 'lane',
+							version: '1.0.0',
+							dependencies: { pwn: 'file:pwn.tgz' },
+						},
+						'node_modules/pwn': {
+							version: '1.0.0',
+							resolved: 'file:pwn.tgz',
+							hasInstallScript: true,
+						},
+					},
+				})}\n`,
+			);
+			const refusal = await refusalOf(async () =>
+				runLaneInstall(
+					lane,
+					policy({ allowInstallScripts: true }),
+					{ PATH: process.env.PATH ?? '' },
+					'resolve',
+					root,
+				),
+			);
+			expect(refusal?.code).toBe('install.script-wrote-outside-lane');
+			expect(refusal?.stage).toBe('install');
+			/** Every path is named, in the spelling the checkout uses. */
+			expect(refusal?.message).toContain('created .git/hooks/pwned');
+			/** Detected, not prevented: the evidence is left on disk. */
+			expect(await readFile(path.join(hooks, 'pwned'), 'utf8')).toBe('x\n');
+			/** The child did get a lane-owned home, and npm used it. */
+			expect(
+				await readFile(path.join(lane, 'node_modules', 'pwn', 'package.json'), 'utf8'),
+			).toContain('"pwn"');
+		} finally {
+			await rm(root, { recursive: true, force: true });
+		}
+	}, 120_000);
 });
 
 describe('build stage', () => {

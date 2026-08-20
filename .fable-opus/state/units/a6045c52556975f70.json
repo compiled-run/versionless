@@ -1,0 +1,9 @@
+{
+  "agentId": "a6045c52556975f70",
+  "runId": "bank-demo-fleet-pipeline-p1b",
+  "unitId": "T026-report-test-sealed-subset",
+  "attempt": 1,
+  "toolUseId": "toolu_01EsQ4gf8HgXYqmrYEoU9br5",
+  "bindingRoute": "sole",
+  "startedAt": "2026-08-17T21:19:38.766Z"
+}

@@ -1,0 +1,9 @@
+{
+  "agentId": "a97b3ecae2a0c3b11",
+  "runId": "bank-demo-fleet-pipeline-p1c",
+  "unitId": "T034-verify-rederivation-tests",
+  "attempt": 1,
+  "toolUseId": "toolu_011uepFTMqV7AcaV9TUP9abm",
+  "bindingRoute": "sole",
+  "startedAt": "2026-08-18T00:11:50.508Z"
+}

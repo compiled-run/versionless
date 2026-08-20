@@ -1,0 +1,11 @@
+{
+	"unitId": "a3-ingest-ionic-conference",
+	"runId": "lrapr-t005",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Acquisition of ionic-team/ionic-conference-app @ v4 (a7b2fc6) completed cleanly: tag resolved from the wire to the expected sha, archive fetched twice byte-identical (230dcc68..., 4309471 bytes), 197/197 blobs reconciled against tree f42d2144, no Git LFS routing (no .gitattributes, 0 pointer stubs). The MIT admission gate FAILED: the root LICENSE is the full Apache License 2.0 (11341 bytes, 'Copyright 2015 Drifty Co.') and package.json declares Apache-2.0; GitHub reports NOASSERTION. Five other gates passed. Per the single-candidate packet I recorded the failure append-only and blocked; no baseline install or build was run and no registry traffic was generated.",
+	"agentId": "ac160006871a688db",
+	"background": true,
+	"verdictDelivered": true,
+	"ts": "2026-08-11T04:02:44.532Z"
+}

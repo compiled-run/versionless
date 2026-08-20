@@ -1,0 +1,22 @@
+{
+	"runId": "lrapr-t006",
+	"unitId": "u20c2e-assemble-rebuild-behavior",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t006/prompt-u20c2e-assemble-rebuild-behavior-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01RZpkihJLhELSGoV21EmoHg",
+	"promptId": "0299eb5e-5beb-41c0-9d9a-ad2bd7777291",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/frameworks/angular/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/test/**",
+		"evidence/runs/angular-super-productivity-v2-13-15/**",
+		"fixtures/angular-super-productivity-v2-13-15/**"
+	],
+	"ts": "2026-08-12T11:53:33.630Z",
+	"pendingName": "00001786535613631687-2ced6317-u20c2e-assemble-rebuild-behavior.json"
+}

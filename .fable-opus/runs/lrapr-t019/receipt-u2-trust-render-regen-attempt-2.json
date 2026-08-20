@@ -1,0 +1,11 @@
+{
+	"status": "completed",
+	"summary": "Regenerated all trust render artifacts via the offline generator (VERSIONLESS_NETWORK_MODE=offline trust:generate --offline), reproducing the prior attempt's output. Corrected offline verify (trust:verify --offline) returns valid:true. Confirmed report.md/adapter-freeze.json reflect freeze composite 4df7bc96 at commit c695a586, react-cra-process-global as single-app/experimental (not cross-proven), and the passing green holdout receipt (green-2026-08-13, holdoutOutcome passed, composite 4df7bc96); the immutable historical failed ledger record left by design. All three verify commands pass (tsc exit 0, vp lint 0 errors, verify valid:true). No hand-edits, no writes outside evidence/trust, nothing staged.",
+	"files_changed": [
+		"evidence/trust/current/adapter-freeze.json",
+		"evidence/trust/current/manifest.json",
+		"evidence/trust/current/report.md",
+		"evidence/trust/current/vulnerabilities.json"
+	],
+	"open_questions": []
+}

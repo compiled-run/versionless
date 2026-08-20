@@ -1,0 +1,20 @@
+--- sh -c 'ls evidence/ingests/react-hospitalrun/source.json evidence/ingests/react-hospitalrun/attempt.json fixtures/react-hospitalrun/fixture.json' (exit 0) ---
+evidence/ingests/react-hospitalrun/attempt.json
+evidence/ingests/react-hospitalrun/source.json
+fixtures/react-hospitalrun/fixture.json
+
+
+--- sh -c '! find evidence/ingests/react-hospitalrun fixtures/react-hospitalrun -name "*.mjs" -o -name "*.js" -o -name "*.cjs" | grep -q .' (exit 0) ---
+
+
+--- pnpm exec tsc --noEmit (exit 0) ---
+
+
+--- env npm_config_offline=true VERSIONLESS_NETWORK_MODE=offline pnpm run receipt:verify (exit 0) ---
+
+> versionless-workspace@0.0.0 receipt:verify /Users/jacksm5pro/dev/open-source/versionless
+> node --experimental-strip-types packages/cli/src/cli.ts receipt:verify
+
+{"valid":true,"digest":"52400147929220935a9ebe47a16c8dff50b5c28e9d51c930d000c99c2bdc8a21","artifacts":10}
+
+

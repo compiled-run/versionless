@@ -1,0 +1,12 @@
+{
+	"status": "completed",
+	"summary": "Wired the generic live-backend serving path so a served production-static SPA reaches its own loopback backend. Added declared LiveBackendSpec fields host + corsOriginPortEnv (no app-name branch); liveBackendOrigin honors the declared host, startLiveBackend injects the ephemeral served port into the CORS var, and executeRun serves/buckets at a declared-host servedOrigin. Set host:'localhost' + corsOriginPortEnv:['REACT_APP_PORT'] on the cypress-rwa AppSpec. Proof (raw probe, baseline): POST /users=200, POST /graphql=200, reached checkAuth-gated authenticated dashboard + settings + peer search with seed data, consoleErrors=[], no CORS rejection. tsc, vp lint, vp test --project node (2170 passed) all green. No backend left on 3001.",
+	"files_changed": [
+		"packages/cli/src/witness/live-backend.ts",
+		"packages/cli/src/witness/real-app-run.ts",
+		"packages/cli/src/witness/react-cypress-rwa-run.ts",
+		"packages/cli/src/fixture/react-cypress-rwa-calibrate-run.ts",
+		"packages/cli/test/witness-live-backend-origin.test.ts"
+	],
+	"open_questions": []
+}

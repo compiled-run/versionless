@@ -1,0 +1,11 @@
+{
+	"unitId": "u7-kbg-migration-lanes",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Built the LEGACY-NEXT static-export adapter (react-next-static-adapter.ts): analyzer-driven, binding-resolved lifts for next/head, next/link, type-only next and next/app, plus getStaticProps carried into a synthesized entry; every other Next surface is a named refusal. Added the next/babel preset translation that recovers the @emotion/react JSX importSource. Ran both lanes twice: era lane is honestly red on byte-stability (random Next build id, deterministic modulo it), migrated Vite 8 lane is byte-stable, no closure install needed (era lockfile rides), 24/24 public assets byte-identical, 8 application files changed. Eight recorded differences published. tsc, lint, and all 1362 node tests green.",
+	"agentId": "ab604013512f7569e",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-11T16:08:26.800Z"
+}

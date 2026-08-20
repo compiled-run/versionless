@@ -12,14 +12,14 @@
 	],
 	"filesScanned": 84,
 	"summary": {
-		"sites": 190,
+		"sites": 191,
 		"byOrigin": {
 			"frozen-adapter": 101,
-			"pipeline": 89
+			"pipeline": 90
 		},
 		"byClassification": {
 			"defect": 5,
-			"refusal": 135,
+			"refusal": 136,
 			"unclassified": 50
 		},
 		"byStage": {
@@ -31,7 +31,7 @@
 			"build": 5,
 			"era-cell": 9,
 			"ingest": 17,
-			"install": 10,
+			"install": 11,
 			"license-at-pin": 4,
 			"not-reached": 69,
 			"plan": 23,
@@ -41,7 +41,7 @@
 			"witness": 1,
 			"witness-synthesize": 2
 		},
-		"distinctCodes": 190,
+		"distinctCodes": 191,
 		"recordedRefusalSites": 99
 	},
 	"entries": [
@@ -1235,7 +1235,7 @@
 			"stage": "install",
 			"stageBasis": "the install stage resolves the lane closure through this module.",
 			"file": "packages/cli/src/operator/install.ts",
-			"line": 178,
+			"line": 181,
 			"enclosing": "planLaneInstall"
 		},
 		{
@@ -1252,7 +1252,7 @@
 			"stage": "install",
 			"stageBasis": "the install stage resolves the lane closure through this module.",
 			"file": "packages/cli/src/operator/install.ts",
-			"line": 186,
+			"line": 189,
 			"enclosing": "planLaneInstall"
 		},
 		{
@@ -1271,7 +1271,7 @@
 			"stage": "install",
 			"stageBasis": "the install stage resolves the lane closure through this module.",
 			"file": "packages/cli/src/operator/install.ts",
-			"line": 212,
+			"line": 215,
 			"enclosing": "planLaneInstall"
 		},
 		{
@@ -1291,7 +1291,7 @@
 			"stage": "install",
 			"stageBasis": "the install stage resolves the lane closure through this module.",
 			"file": "packages/cli/src/operator/install.ts",
-			"line": 226,
+			"line": 229,
 			"enclosing": "planLaneInstall"
 		},
 		{
@@ -1309,7 +1309,7 @@
 			"stage": "install",
 			"stageBasis": "the install stage resolves the lane closure through this module.",
 			"file": "packages/cli/src/operator/install.ts",
-			"line": 233,
+			"line": 236,
 			"enclosing": "planLaneInstall"
 		},
 		{
@@ -1327,7 +1327,7 @@
 			"stage": "install",
 			"stageBasis": "the install stage resolves the lane closure through this module.",
 			"file": "packages/cli/src/operator/install.ts",
-			"line": 241,
+			"line": 244,
 			"enclosing": "planLaneInstall"
 		},
 		{
@@ -1347,7 +1347,7 @@
 			"stage": "install",
 			"stageBasis": "the install stage resolves the lane closure through this module.",
 			"file": "packages/cli/src/operator/install.ts",
-			"line": 249,
+			"line": 252,
 			"enclosing": "planLaneInstall"
 		},
 		{
@@ -1366,8 +1366,29 @@
 			"stage": "install",
 			"stageBasis": "the install stage resolves the lane closure through this module.",
 			"file": "packages/cli/src/operator/install.ts",
-			"line": 260,
+			"line": 263,
 			"enclosing": "planLaneInstall"
+		},
+		{
+			"code": "install.script-wrote-outside-lane",
+			"message": "Install: the closure's install scripts wrote outside the lane. ${String(writes.length)} watched path(s) under ${path.resolve(boundaryRoot)} moved while `${plan.command.join(' ')}` ran: ${writes.join('; ')}. The install ran with the install-script allowance, which permits a package's own build to run inside the lane; it does not permit it to write into the checkout that acquired it. The child was given a lane-owned HOME and a lane cwd, so this write reached the checkout by naming it rather than by inheriting it. The lane is not accepted as installed and the paths above are left as they are, so an operator can read what was attempted.",
+			"messageForm": "composed",
+			"staticSegments": [
+				"Install: the closure's install scripts wrote outside the lane.",
+				"watched path(s) under",
+				"moved while `",
+				"` ran:",
+				". The install ran with the install-script allowance, which permits a package's own build to run inside the lane; it does not permit it to write into the checkout that acquired it. The child was given a lane-owned HOME and a lane cwd, so this write reached the checkout by naming it rather than by inheriting it. The lane is not accepted as installed and the paths above are left as they are, so an operator can read what was attempted."
+			],
+			"classification": "refusal",
+			"condition": "writes.length > 0",
+			"conditionForm": "if-consequent",
+			"origin": "pipeline",
+			"stage": "install",
+			"stageBasis": "the install stage resolves the lane closure through this module.",
+			"file": "packages/cli/src/operator/install.ts",
+			"line": 592,
+			"enclosing": "runLaneInstall"
 		},
 		{
 			"code": "install.peer-resolution-policy-not-declared",
@@ -1383,7 +1404,7 @@
 			"stage": "install",
 			"stageBasis": "the install stage resolves the lane closure through this module.",
 			"file": "packages/cli/src/operator/install.ts",
-			"line": 366,
+			"line": 609,
 			"enclosing": "runLaneInstall"
 		},
 		{
@@ -1395,13 +1416,13 @@
 				"failed in the lane. This is a defect rather than a refusal: the declared policies were applied and the pinned closure still did not install."
 			],
 			"classification": "defect",
-			"condition": "unconditional within runLaneInstall",
-			"conditionForm": "unconditional",
+			"condition": "failure !== null",
+			"conditionForm": "if-consequent",
 			"origin": "pipeline",
 			"stage": "install",
 			"stageBasis": "the install stage resolves the lane closure through this module.",
 			"file": "packages/cli/src/operator/install.ts",
-			"line": 372,
+			"line": 615,
 			"enclosing": "runLaneInstall"
 		},
 		{

@@ -1,0 +1,11 @@
+{
+	"unitId": "u20c2g-rebind-dist25",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Rebound the migrated super-productivity lane from dist-23 to dist-25. Wrote a record-builder driver (angular-super-productivity-u20c2g-rebind-record.ts) that recomputes inventory, inventorySha256, determinism (deterministic modulo ngsw timestamp across dist-25/dist-26), census, font seam, and the reorder-in-bundle from the on-disk u20c2e trees, superseding u23 by reference and carrying the u20c2e regression-gone proof by digest. Produced evidence record u20c2g-dist25-rebind-lane.json, then rebound the schema migrated canonicalReceipt entry, the migrated lane chain (appended dist-25 link, set u23 contradictedBy), and AppSpec sources.migrated to dist-25. Verification: tsc 0, lint 0 errors, node 2077/2077 pass. No journeys/legs.",
+	"agentId": "acd6da9a9b0f53d1d",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-12T13:28:24.492Z"
+}

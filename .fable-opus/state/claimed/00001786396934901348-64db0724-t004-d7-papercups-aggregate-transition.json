@@ -1,0 +1,24 @@
+{
+	"runId": "lrapr-t004",
+	"unitId": "t004-d7-papercups-aggregate-transition",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t004/prompt-t004-d7-papercups-aggregate-transition-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01PkZHyu7SNNQFNNbPJnuaT6",
+	"promptId": "84711cf2-8a9b-4159-b0c0-246422068bd1",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/core/src/corpus/conformance.ts",
+		"packages/core/test/**",
+		"packages/trust/src/**",
+		"packages/trust/test/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"evidence/runs/aggregate.json",
+		"evidence/trust/current/**"
+	],
+	"ts": "2026-08-10T21:22:14.900Z",
+	"pendingName": "00001786396934901348-64db0724-t004-d7-papercups-aggregate-transition.json"
+}

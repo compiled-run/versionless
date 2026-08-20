@@ -1,0 +1,19 @@
+{
+	"status": "completed",
+	"summary": "Audited all 41 Angular index exports against the era composition's transitive import graph: 24 unreachable, classified by transform signature. Composed four class-(a) capabilities into migrateAngularCliEraWorkspace — module-with-providers-type-argument, subject-void-type-argument, promise-executor-void-parameter (pure per-module), and unparameterised-base-class via new supply-gated baseClassDiagnostics/genericBaseClasses inputs, run first since it is compiler-positioned. Added 14 tests (positive, negative, idempotence per capability). Four green verticals unchanged; suite 228->229 files, 2236->2250 tests, all pass. pigallery2 re-measured: 3->4 app files changed, G5's TS2314 site answered, plus one named refusal. React subtree oid verified intact.",
+	"files_changed": [
+		"packages/frameworks/angular/src/angular-cli-era-migration.ts",
+		"packages/frameworks/angular/test/angular-cli-era-composition-wiring.test.ts",
+		"packages/cli/src/fixture/angular-pigallery2-migration-record.ts",
+		"packages/core/src/receipts/capability-coverage.ts",
+		"evidence/trust/current/capability-coverage.json",
+		"evidence/ingests/angular-pigallery2-v1-7-0/attempt.json",
+		"evidence/ingests/angular-pigallery2-v1-7-0/migration/u3-composed-changeset.json",
+		"evidence/ingests/angular-pigallery2-v1-7-0/migration/u3-source-migration.json"
+	],
+	"open_questions": [
+		"G5's second site is misattributed in the T018 record: abstract.settings.component.ts:14 is NG2007 (undecorated base class using Angular features), which unparameterised-base-class does not answer — it fills TS2314 type arguments. Nothing in packages/frameworks/angular/src handles NG2007. That half of G5 is a missing capability, not a wiring gap, and needs its own unit.",
+		"template-i18n-runtime is class (a) by precondition (the composition already holds manifest, templates and cell) but was not composed: it also returns a polyfill entry point requiring declarePolyfillEntryPoint into the builder target, and that seam collides with the hand-composed angular-tiny-translator-localize-run.ts lane, which would change a green vertical's output. Which path owns the localize declaration is a decision the cockpit should make.",
+		"The 16 class-(b) driver-seam capabilities (webpack-tilde-style-specifier, widened-union-narrowing, rxjs-prototype-patch-migration and others) are candidates for the same supply-gated seam unparameterised-base-class just received, one reading at a time. Should that be a follow-up unit, or are they deliberately driver-facing permanently?"
+	]
+}

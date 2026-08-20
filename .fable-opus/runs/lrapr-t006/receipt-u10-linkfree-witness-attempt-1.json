@@ -1,0 +1,32 @@
+{
+	"status": "completed",
+	"summary": "Browser-proved the LinkFree CRA5 vertical on both lanes (2/2 baseline + 2/2 migrated, one behavior digest) against a committed SYNTHETIC 12-profile corpus indexed by the app's own unmodified generate.js; staging proves 18 bundler-authored paths byte-identical. Journeys: homepage, directory, typed narrowing + full-clear restore, real react-router navigation to a profile (content, 14 links, hover restyle), measured scroll plus the app's scroll-to-top control, and the 404 reached by the app's own example link (route redacted by closed list). Both avatar hosts answered in-context via the real onerror cascade; exact inventories, zero successful non-loopback. Mutation red/byte-identical-restore green. 5 style probes identical across purged/unpurged CSS. All five verify commands pass.",
+	"files_changed": [
+		"packages/core/src/receipts/witness-react-linkfree.ts",
+		"packages/core/src/receipts/witness-real-app.ts",
+		"packages/core/src/index.ts",
+		"packages/core/test/witness-react-linkfree.test.ts",
+		"packages/cli/src/witness/real-app-run.ts",
+		"packages/cli/src/witness/react-linkfree-run.ts",
+		"packages/cli/src/fixture/react-linkfree-v0-72-0-witness-corpus.ts",
+		"packages/cli/test/witness-react-linkfree-run.test.ts",
+		"evidence/runs/witness-react-linkfree-v0-72-0/receipt.json",
+		"evidence/runs/witness-react-linkfree-v0-72-0/receipt.md",
+		"evidence/runs/react-linkfree-v0-72-0/artifacts/witness-journeys.json",
+		"evidence/runs/react-linkfree-v0-72-0/artifacts/witness-mutation.json",
+		"evidence/runs/react-linkfree-v0-72-0/artifacts/witness-synthetic-corpus.json",
+		"fixtures/react-linkfree-v0-72-0/witness-corpus/synthetic-aurora.json",
+		"fixtures/react-linkfree-v0-72-0/witness-corpus/synthetic-basalt.json",
+		"fixtures/react-linkfree-v0-72-0/witness-corpus/synthetic-cinder.json",
+		"fixtures/react-linkfree-v0-72-0/witness-corpus/synthetic-delta.json",
+		"fixtures/react-linkfree-v0-72-0/witness-corpus/synthetic-ember.json",
+		"fixtures/react-linkfree-v0-72-0/witness-corpus/synthetic-fjord.json",
+		"fixtures/react-linkfree-v0-72-0/witness-corpus/synthetic-glacier.json",
+		"fixtures/react-linkfree-v0-72-0/witness-corpus/synthetic-harbor.json",
+		"fixtures/react-linkfree-v0-72-0/witness-corpus/synthetic-indigo.json",
+		"fixtures/react-linkfree-v0-72-0/witness-corpus/synthetic-juniper.json",
+		"fixtures/react-linkfree-v0-72-0/witness-corpus/synthetic-kestrel.json",
+		"fixtures/react-linkfree-v0-72-0/witness-corpus/synthetic-nimbus.json"
+	],
+	"open_questions": []
+}

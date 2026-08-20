@@ -1,0 +1,21 @@
+{
+	"status": "completed",
+	"summary": "Closed all three bundler families and a fourth that surfaced behind them; the migrated lane now builds green (exit 0, 58 artifacts, deterministic across two runs modulo ngsw.json's timestamp). @ngx-formly corrected to ^6.3.12 via a new, tested peer-strictness refinement (7.x is stamped Angular 18.2.13; peers are identical across majors and so non-discriminating). Three new capabilities added with tests: sass-mixin-hyphenation-successor, json-module-named-import, stylesheet-url-rebase. Zero accommodations added; u18h's 19 carried forward. Logical-name parity is a strict subset: the two web workers are not emitted because the era string-form Worker call is invisible to webpack 5 — measured and recorded, not closed.",
+	"files_changed": [
+		"packages/frameworks/angular/src/angular-target-cell.ts",
+		"packages/frameworks/angular/src/index.ts",
+		"packages/frameworks/angular/src/sass-mixin-hyphenation-successor.ts",
+		"packages/frameworks/angular/src/json-module-named-import.ts",
+		"packages/frameworks/angular/src/stylesheet-url-rebase.ts",
+		"packages/frameworks/angular/test/angular-target-cell.test.ts",
+		"packages/frameworks/angular/test/sass-mixin-hyphenation-successor.test.ts",
+		"packages/frameworks/angular/test/json-module-named-import.test.ts",
+		"packages/frameworks/angular/test/stylesheet-url-rebase.test.ts",
+		"packages/cli/src/fixture/angular-super-productivity-u18i-run.ts",
+		"evidence/runs/angular-super-productivity-v2-13-15/u18i-closure-correction-green.json"
+	],
+	"open_questions": [
+		"The web-worker family is measured but open: both sites use the era `new Worker('./x.worker', {type:'module'})` string form, which webpack 5 does not detect, so no chunk emits and the build stays green while the workers would 404 at runtime. A capability looks derivable (workspace declares webWorkerTsConfig, the literal resolves to a .worker.ts in the tree, options already say type:'module') but was not budgeted here.",
+		"Only @ngx-formly was re-read under the peer-strictness refinement. The other Angular 16 ecosystem entries carry no build stamp, which records that their peers discriminated — not that their stamps were checked."
+	]
+}

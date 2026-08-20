@@ -1,0 +1,25 @@
+{
+	"runId": "lrapr-t023",
+	"unitId": "u3-boundary-amend-candidate3-acquire",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t023/prompt-u3-boundary-amend-candidate3-acquire-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01XALHKZrqG6EAeyqwS7Stfc",
+	"promptId": "69d302a3-b417-4ac1-9a5c-ea46d76f1d91",
+	"background": false,
+	"parallel": false,
+	"effort": "high",
+	"contract": [
+		"packages/trust/**",
+		"packages/core/src/receipts/**",
+		"packages/core/src/corpus/conformance.ts",
+		"packages/core/src/index.ts",
+		"packages/core/test/**",
+		"packages/cli/test/**",
+		"evidence/trust/**",
+		"evidence/ingests/angular-eshop-webspa-netcore2-2/**",
+		"docs/goals/legacy-react-angular-production-readiness/**"
+	],
+	"ts": "2026-08-14T04:26:19.169Z",
+	"pendingName": "00001786681579170822-141a808e-u3-boundary-amend-candidate3-acquire.json"
+}

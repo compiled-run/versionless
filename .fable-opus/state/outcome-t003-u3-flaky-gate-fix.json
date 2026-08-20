@@ -1,0 +1,11 @@
+{
+	"unitId": "t003-u3-flaky-gate-fix",
+	"runId": "lrapr-t1",
+	"attempt": 1,
+	"outcome": "failed",
+	"reason": "verify failed: pnpm exec vp test --project node (exit 1)",
+	"agentId": "adbdac5c63dfce2ab",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-10T17:54:41.053Z"
+}

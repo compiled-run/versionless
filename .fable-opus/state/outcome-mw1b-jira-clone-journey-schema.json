@@ -1,0 +1,11 @@
+{
+	"unitId": "mw1b-jira-clone-journey-schema",
+	"runId": "lrapr-t005",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Verified the jira-clone journey in the browser on both lanes and measured every fact the cell needs (seven style probes identical across lanes, exact seam inventory, drag/modal/create/filter selectors, scroll absence, seed-board restore). Three spec contradictions surfaced: create-issue is navbar item :nth-of-type(3) (item 2 is a search drawer whose overlay hangs the journey), one Backspace does not widen the filter, and the reload cancels a third Sentry envelope POST whose failure the generic inventory would record by full URL including the DSN public key. Wrote no repository files; the remaining work also exceeds one unit.",
+	"agentId": "aaacaedcb4933f3b9",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-11T09:42:28.571Z"
+}

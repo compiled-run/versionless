@@ -1,0 +1,15 @@
+{
+	"status": "completed",
+	"summary": "Applied the full composed changeset to the pinned jira-clone tree: 7/160 application files changed (5 modal/Sentry modules, main.ts, styles.scss) plus 3 workspace files, all digested; 15 declaredDifferences including the 152717->550342 style aggregate; 14 unhandled peer holes reported not guessed. Acquired @ctrl/tinycolor@4.2.0 under consent with URL+sha512, recording the resolver's unasked-for yaml rearrangement as a delta. Migrated Angular 16.2 production build GREEN x2 byte-stable (24 files); era lane rerun reproduces the committed state and the ingest build. Build-level parity recorded: 14/27 emission points identical, nine known differences as non-claims. DSN/GA assertion green. tsc clean, lint 0 errors, 1131/1131.",
+	"files_changed": [
+		"packages/cli/src/fixture/angular-jira-clone-apply-run.ts",
+		"packages/cli/src/fixture/angular-jira-clone-parity-run.ts",
+		"packages/cli/test/angular-jira-clone-mj3c.test.ts",
+		"packages/cli/test/angular-jira-clone-lanes.test.ts",
+		"evidence/runs/angular-jira-clone/mj3c-source-migration.json",
+		"evidence/runs/angular-jira-clone/mj3c-era-baseline.json",
+		"evidence/runs/angular-jira-clone/mj3c-migrated-build.json",
+		"evidence/runs/angular-jira-clone/mj3c-build-parity.json"
+	],
+	"open_questions": []
+}

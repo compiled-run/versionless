@@ -1,0 +1,15 @@
+{
+	"runId": "lrapr-t004-hospitalrun",
+	"unitId": "h1-candidate-ingest",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t004-hospitalrun/prompt-h1-candidate-ingest-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01LNg2XGWadbTjqAjyBpjRQq",
+	"promptId": "e0992174-49cd-499d-9552-97445657d4e8",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": ["fixtures/react-hospitalrun/**", "evidence/ingests/react-hospitalrun/**"],
+	"ts": "2026-08-10T23:19:26.699Z",
+	"pendingName": "00001786403966700420-45a7132a-h1-candidate-ingest.json"
+}

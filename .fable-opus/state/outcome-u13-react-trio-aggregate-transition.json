@@ -1,0 +1,11 @@
+{
+	"unitId": "u13-react-trio-aggregate-transition",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Landed all three React-trio cells as one transition. Appends run for real in declared order (memos 23 receipts/16 verticals/9 apps, killedbygoogle v3 24/17/9, LinkFree 25/18/10; 23 matrix cells), each refusing anything but its exact predecessor. Deviation from the packet's 11-app estimate reported, not forced: kbg v3 pins the same repo/revision/archive as the existing killedbygoogle application, so it joins that application's verticals rather than double-counting one immutable source; conformance and trust both refuse divergence or a duplicate row. reactLineage stays 3/4, olderNext 0/4, all three cells counted:false with reasons. vp pack ran before trust:generate. All seven verify commands pass; 1489/1489 tests.",
+	"agentId": "a1b63e4093d9a2849",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-11T19:41:42.420Z"
+}

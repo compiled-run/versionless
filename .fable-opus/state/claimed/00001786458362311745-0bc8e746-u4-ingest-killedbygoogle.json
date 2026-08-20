@@ -1,0 +1,18 @@
+{
+	"runId": "lrapr-t006",
+	"unitId": "u4-ingest-killedbygoogle",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t006/prompt-u4-ingest-killedbygoogle-attempt-1.md",
+	"subagentType": "opus-worker-isolated",
+	"toolUseId": "toolu_01SRR8QtppadtFvZNuktUBSD",
+	"promptId": "a7aadeec-b44d-4477-90b6-a1e25e984d22",
+	"background": true,
+	"parallel": true,
+	"effort": null,
+	"contract": [
+		"fixtures/next-killedbygoogle-v3-0-0/**",
+		"evidence/ingests/next-killedbygoogle-v3-0-0/**"
+	],
+	"ts": "2026-08-11T14:26:02.310Z",
+	"pendingName": "00001786458362311745-0bc8e746-u4-ingest-killedbygoogle.json"
+}

@@ -1,0 +1,11 @@
+{
+  "unitId": "T016-acquire-unseen-app",
+  "runId": "bank-demo-fleet-pipeline-p1b",
+  "attempt": 1,
+  "outcome": "completed",
+  "reason": "Added the generic `acquire` operator stage (consented HTTPS transaction only, ref->commit resolution, dual-stream archive, git-tree parity gate, licence-presence gate) and wired it into OPERATOR_COMMANDS/flags/help/dispatch plus a new `acquire` PIPELINE_STAGE and CENSUS_MODULES entry. Added 10+ refusal codes, so I regenerated the census AND trust; no dist rebuild was needed. Acquired ant-design/ant-design-pro v5.2.0 (SHA 645d6ed4fd27c6fab55cbf64d2fb2995018bddcb, MIT observed, LICENSE blob c17ba2fb848af3fca998074297d00f38536d5d13), absent from every exclusion list. ingest on its baseline exits 0; `run` exits 2 with era-cell.node-major-not-inferable, left as observed. 7 new tests; suite 2630 pass.",
+  "agentId": "aa5926c412b0fbd13",
+  "background": false,
+  "verdictDelivered": true,
+  "ts": "2026-08-17T20:13:04.501Z"
+}

@@ -1,0 +1,11 @@
+{
+	"unitId": "t004-d4-papercups-journeys",
+	"runId": "lrapr-t004",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Implemented the real papercups journey in real-app-run.ts (sign-in, three-category inbox triage, Phoenix shout reply round-trip, hover) plus an exported executeReactPapercupsWitnessRun. Verified green on both real lanes: identical routes and tracked-event counts, zero console errors, zero page errors, zero failed requests, zero successful non-loopback. Repo gate green (tsc, lint, 817 tests). Blocked before receipts/aggregate: core's deriveCorpusTransactionState pins the aggregate to an exact size and ordering, so adding any witness-react-papercups member makes corpus:verify throw, and the only fix is in packages/core, which the packet forbids while requiring corpus:verify to pass.",
+	"agentId": "a5e8db9f7d5d87a63",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-10T20:44:56.258Z"
+}

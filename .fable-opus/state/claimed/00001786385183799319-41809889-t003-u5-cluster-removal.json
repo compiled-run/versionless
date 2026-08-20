@@ -1,0 +1,20 @@
+{
+	"runId": "lrapr-t1",
+	"unitId": "t003-u5-cluster-removal",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t1/prompt-t003-u5-cluster-removal-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01EDJfT17GDc6bSboXWFrAho",
+	"promptId": "f1de5dc0-4c87-4ce2-9df7-ec6a368d3b12",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/frameworks/react/**",
+		"packages/frameworks/angular/**",
+		"packages/cli/**",
+		"vite.config.ts"
+	],
+	"ts": "2026-08-10T18:06:23.798Z",
+	"pendingName": "00001786385183799319-41809889-t003-u5-cluster-removal.json"
+}

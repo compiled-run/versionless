@@ -1,0 +1,26 @@
+{
+	"runId": "lrapr-t006",
+	"unitId": "u9-kbg-witness",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t006/prompt-u9-kbg-witness-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01CA9dDjPMjmMee1HmAdadW2",
+	"promptId": "5447821f-26df-4d9b-aab5-a9dc46f53aa8",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/cli/src/witness/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/src/receipts/witness-next-killedbygoogle-v3.ts",
+		"packages/core/src/receipts/witness-real-app.ts",
+		"packages/core/src/index.ts",
+		"packages/core/test/**",
+		"evidence/runs/next-killedbygoogle-v3-0-0/**",
+		"evidence/runs/witness-next-killedbygoogle-v3-0-0/**",
+		"fixtures/next-killedbygoogle-v3-0-0/**"
+	],
+	"ts": "2026-08-11T16:36:42.200Z",
+	"pendingName": "00001786466202201923-c0cc6f38-u9-kbg-witness.json"
+}

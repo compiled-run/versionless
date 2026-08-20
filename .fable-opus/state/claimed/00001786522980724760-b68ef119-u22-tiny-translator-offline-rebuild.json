@@ -1,0 +1,25 @@
+{
+	"runId": "lrapr-t006",
+	"unitId": "u22-tiny-translator-offline-rebuild",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t006/prompt-u22-tiny-translator-offline-rebuild-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01YHqVVJ2iyF7y4oQKKrJ3AT",
+	"promptId": "355dd936-ab60-40cf-8421-e65fe1e0fd85",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/cli/src/witness/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/src/receipts/witness-angular-tiny-translator.ts",
+		"packages/core/src/index.ts",
+		"packages/core/test/**",
+		"evidence/runs/angular-tiny-translator-v0-12-0/**",
+		"evidence/runs/witness-angular-tiny-translator-v0-12-0/**",
+		"fixtures/angular-tiny-translator-v0-12-0/**"
+	],
+	"ts": "2026-08-12T08:23:00.723Z",
+	"pendingName": "00001786522980724760-b68ef119-u22-tiny-translator-offline-rebuild.json"
+}

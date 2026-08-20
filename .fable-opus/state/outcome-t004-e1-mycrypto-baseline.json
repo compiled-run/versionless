@@ -1,0 +1,11 @@
+{
+	"unitId": "t004-e1-mycrypto-baseline",
+	"runId": "lrapr-t004",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Acquired Node 12.14.1 darwin-x64 from nodejs.org and verified its sha256 against the official SHASUMS256.txt (both URLs/digests recorded). The declared cell could not be executed: Rosetta 2 is absent, proven by a control probe where arch -x86_64 /usr/bin/true fails despite that binary carrying an x86_64 slice, plus missing oah runtime dir and oahd daemon; no docker/podman/colima fallback. Separately, the ingest's sealed source archive is gone from cache and re-fetching it was outside the network allowance, so the work root was not materialized. No install or build ran; no runtime substitution or engine override was applied. Prior failure record preserved (66 insertions, 0 deletions). All five verify commands pass.",
+	"agentId": "ad4e42d10415c0cb1",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-10T22:04:44.510Z"
+}

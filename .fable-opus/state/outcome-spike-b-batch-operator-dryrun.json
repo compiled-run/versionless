@@ -1,0 +1,11 @@
+{
+	"unitId": "spike-b-batch-operator-dryrun",
+	"runId": "nts-t004",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Built fleet-batch-spike-run.ts composing only existing operator flows (operator/* untouched) over 12 ingested roots (7 React, 5 Angular): 8 migrated to OS-temp scratch lanes, 4 refused with verbatim strings. Measured pure machine time: 0.80ms/app median, ~4-6s serial for all 300 apps; Angular ~40x React. Prune proof on react-boilerplate-v4-composed: work dir renamed aside (never deleted), receipt verify returned identical digest with dir absent, restored and verified; verdict yes. Extrapolation + parallelizable-vs-witness-serialized table emitted. README passes assertEnterpriseSurfaceHonesty. All 4 verify commands pass; freeze intact; 32 tests pass; nothing committed.",
+	"agentId": "ab0cccc8fd8241647",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-14T17:01:01.186Z"
+}

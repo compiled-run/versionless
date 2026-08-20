@@ -1,0 +1,25 @@
+{
+	"runId": "lrapr-t016",
+	"unitId": "f1-refreeze-count-capmap",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t016/prompt-f1-refreeze-count-capmap-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01My5ZKMPRtbcn5WCP1RNWtC",
+	"promptId": "53c575ee-13cb-4a33-8c63-638bf3ee8775",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/core/src/corpus/conformance.ts",
+		"packages/core/src/receipts/**",
+		"packages/core/test/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/trust/**",
+		"evidence/runs/aggregate.json",
+		"evidence/trust/current/**",
+		"docs/goals/legacy-react-angular-production-readiness/**"
+	],
+	"ts": "2026-08-12T20:15:08.099Z",
+	"pendingName": "00001786565708100512-954a69f4-f1-refreeze-count-capmap.json"
+}

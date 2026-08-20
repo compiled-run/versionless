@@ -1,0 +1,11 @@
+{
+	"unitId": "u18j-worker-chunks-parity",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Added the web-worker-url-specifier capability (11 tests) rewriting the era string-form Worker construction to the URL form, provable from webWorkerTsConfig, the resolved worker source, and the constructor shape; five named refusal classes. Applied via a new u18j driver: 2 sites, 0 refusals. Three green builds emit 62 artifacts including both worker chunks, referenced by the runtime chunk and precached by ngsw.json; deterministic modulo the ngsw timestamp. Parity: 58 common, but the chunks emit as lz.js/reminder.js because webpack 5 names worker chunks from the options `name` — recorded as a named naming difference, not the predicted name closure. Ledger u18j written; whole gate green.",
+	"agentId": "a0999f3c15bfb7bb8",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-12T03:07:36.850Z"
+}

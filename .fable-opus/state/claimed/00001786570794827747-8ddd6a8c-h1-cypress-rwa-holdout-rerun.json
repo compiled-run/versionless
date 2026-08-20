@@ -1,0 +1,29 @@
+{
+	"runId": "lrapr-t017",
+	"unitId": "h1-cypress-rwa-holdout-rerun",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t017/prompt-h1-cypress-rwa-holdout-rerun-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_012NLQCuj65nT5scsHVYcQe3",
+	"promptId": "24c4e819-a57b-426d-bd77-1834a01557a9",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"fixtures/**",
+		"evidence/runs/holdout-react-cypress-rwa/**",
+		"evidence/runs/react-cypress-rwa/**",
+		"packages/cli/src/witness/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/src/receipts/holdout-react-cypress-rwa.ts",
+		"packages/core/src/corpus/conformance.ts",
+		"packages/core/src/index.ts",
+		"packages/core/test/**",
+		"packages/trust/**",
+		"evidence/trust/current/**",
+		"docs/goals/legacy-react-angular-production-readiness/**"
+	],
+	"ts": "2026-08-12T21:39:54.826Z",
+	"pendingName": "00001786570794827747-8ddd6a8c-h1-cypress-rwa-holdout-rerun.json"
+}

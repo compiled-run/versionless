@@ -1,0 +1,11 @@
+{
+	"unitId": "h3c-cra-sloppy-cjs",
+	"runId": "lrapr-t004-hospitalrun",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Added createCraSloppyCommonJsGlobalsPlugin: dependency CJS modules are scope-analysed for names they write but never bind, and each gets a conditional globalThis binding so strict-mode ESM resolves the reference — reproducing webpack 4's shared implicit global, including cross-module reads. Application source and harmony modules untouched; unanalysable modules fail loudly. 11 new unit tests use the real-Vite-build-in-a-browser-realm idiom with strict output. Both HospitalRun lanes rebuilt x2 offline, deterministic, and both boot (target: zero console errors; baseline: known service-worker inventory only). Receipt and build profile regenerated under sha256(canonicalize(files)), recording all three runtime breaks and why the superseded digests were irreproducible. Full gate green.",
+	"agentId": "a4577e43cdfd8a487",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-11T01:08:15.691Z"
+}

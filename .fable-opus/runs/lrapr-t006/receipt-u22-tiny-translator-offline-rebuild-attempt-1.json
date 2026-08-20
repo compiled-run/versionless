@@ -1,0 +1,18 @@
+{
+	"status": "completed",
+	"summary": "Applied the landed font-inlining-disable capability to the tiny-translator stage workspace and rebuilt twice under an in-process egress guard. Control build (pre-capability) went red on a DNS attempt to fonts.googleapis.com; build-15/16 are green with zero egress attempts, byte-identical across 524 files, and the emitted index.html carries the era runtime font link with no inlined @font-face. Published u22-offline-font-lane.json superseding u19k by reference; re-pinned canonical roots (dist-15/16), seam origins (both lanes now googleapis), fontSeamDifference, mat-icon degradations (now identical), style-difference reason, amendments, findings and accommodations. Republished the witness receipt (digest 65b0a976) with 2/2+2/2 green and mutation red/byte-restore/green. All five verify commands pass.",
+	"files_changed": [
+		"packages/cli/src/fixture/angular-tiny-translator-u22-font-run.ts",
+		"packages/cli/src/fixture/angular-tiny-translator-u22-font-record.ts",
+		"packages/cli/src/witness/angular-tiny-translator-run.ts",
+		"packages/cli/src/witness/real-app-run.ts",
+		"packages/cli/test/witness-angular-tiny-translator-run.test.ts",
+		"packages/core/src/receipts/witness-angular-tiny-translator.ts",
+		"packages/core/test/witness-angular-tiny-translator-receipt.test.ts",
+		"evidence/runs/angular-tiny-translator-v0-12-0/u22-offline-font-lane.json",
+		"evidence/runs/angular-tiny-translator-v0-12-0/witness-artifacts/witness-journeys.json",
+		"evidence/runs/witness-angular-tiny-translator-v0-12-0/receipt.json",
+		"evidence/runs/witness-angular-tiny-translator-v0-12-0/receipt.md"
+	],
+	"open_questions": []
+}

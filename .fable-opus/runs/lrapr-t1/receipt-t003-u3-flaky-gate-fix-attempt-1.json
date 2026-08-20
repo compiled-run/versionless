@@ -1,0 +1,23 @@
+{
+	"status": "completed",
+	"summary": "Converted every fixed TCP bind in the cli src/test trees to ephemeral allocation: 7 in-process servers now listen on port 0 behind an ephemeralPort guard, and 2 child-process servers reserve a port via probe socket. Deleted the three PORT_PLAN constants behind the EADDRINUSE 44210 collision; replaced the cohort test's exact-port assertions with stronger source-level checks forbidding any hardcoded loopback port. Set global testTimeout/hookTimeout 120_000 in vite.config.ts (chosen because 3 contended failures were unidentified and packages/trust tests are outside contract) and raised in-contract 30_000 timeouts to 300_000. tsc, lint, and two consecutive full runs all green: 878/878, 144s and 150s.",
+	"files_changed": [
+		"packages/cli/src/fixture/angular-phonecat-run.ts",
+		"packages/cli/src/fixture/angular-phonecat-composed-run.ts",
+		"packages/cli/src/fixture/angular-phonecat-route-resolve-run.ts",
+		"packages/cli/src/fixture/angular-phonecat-vite8-run.ts",
+		"packages/cli/src/fixture/react-boilerplate-v4-vite8-run.ts",
+		"packages/cli/src/fixture/react-boilerplate-v4-composed-run.ts",
+		"packages/cli/src/fixture/react-boilerplate-v4-data-flow-run.ts",
+		"packages/cli/src/fixture/react-boilerplate-v4-node24-run.ts",
+		"packages/cli/src/fixture/run.ts",
+		"packages/cli/src/fixture/vite8-shared-adapter-cohort-run.ts",
+		"packages/cli/test/vite8-shared-adapter-cohort-run.test.ts",
+		"packages/cli/test/dashboard-contacts-dependency-preflight.test.ts",
+		"packages/cli/test/witness-angular-contacts-run.test.ts",
+		"vite.config.ts"
+	],
+	"open_questions": [
+		"react-boilerplate-v4-data-flow-run.ts:417 still binds fixed port 43440: its origin is recorded in sealed evidence/runs/react-boilerplate-v4-data-flow/artifacts/upgrade.json, so making it ephemeral would break that artifact's digest and the CLI determinism verify. No test exercises it, so the gate is unaffected. Should a later unit re-publish that evidence to close the last fixed port?"
+	]
+}

@@ -1,0 +1,18 @@
+{
+	"runId": "lrapr-t023",
+	"unitId": "u2-gate-zero-replacement-selection",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t023/prompt-u2-gate-zero-replacement-selection-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_018w2sNHWA5ZwGrD7SykBYxs",
+	"promptId": "3809adf7-f099-41df-aae0-5a26fd4a280c",
+	"background": false,
+	"parallel": false,
+	"effort": "high",
+	"contract": [
+		"evidence/ingests/**",
+		"docs/goals/legacy-react-angular-production-readiness/notes/t023-candidate-selection.md"
+	],
+	"ts": "2026-08-14T03:43:56.405Z",
+	"pendingName": "00001786679036406049-a48629a1-u2-gate-zero-replacement-selection.json"
+}

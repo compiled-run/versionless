@@ -1,0 +1,12 @@
+{
+	"status": "completed",
+	"summary": "Measured webpack 4.44.2's actual decode from the holdout's committed baseline chunk: UTF-8 with U+FFFD replacement, not latin1 — proven by the valid-UTF-8 sibling module carrying the same names through the same toolchain with accents intact. Implemented the byte-keyed capability (encoding classification, invalid-byte offsets, webpack's utf8BufferToString, pre-load plugin scoped to dependency JS) and led the composed CRA adapter with it. Valid UTF-8 returns null so those files stay untouched; UTF-16/32 refuse truthfully. Added fixture-scale red/green vite builds, negatives, a React overfitting guard, a self-verifying evidence record cross-checked against the immutable holdout receipt. tsc, lint, and 1289 node tests green.",
+	"files_changed": [
+		"packages/frameworks/react/src/react-cra-vite-adapter.ts",
+		"packages/frameworks/react/test/react-cra-vite-adapter.test.ts",
+		"packages/cli/src/fixture/react-cypress-rwa-non-utf8-decoding.ts",
+		"packages/cli/test/react-cypress-rwa-non-utf8-decoding.test.ts",
+		"evidence/runs/react-cypress-rwa/non-utf8-module-decoding.json"
+	],
+	"open_questions": []
+}

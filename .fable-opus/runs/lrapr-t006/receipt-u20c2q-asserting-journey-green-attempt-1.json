@@ -1,0 +1,13 @@
+{
+	"status": "completed",
+	"summary": "Drove the five-leg asserting Super Productivity witness journey GREEN on both lanes (pageErrors 0, cleanPage, 4 navigations, one shared behaviorDigest a38d983e...). Corrected five pins to measured values, RED-first: taskLists 2->1; leg-d checkbox counted after the collapsible expand; theme.control -> mat-select[id*=huePrimary] (bare selector matched all 3 hue selects); re-armed trackEvents after the leg-e reload; and aligned the behavior digest's renderedStyleProjection to properties-only so the Material pre-MDC->MDC geometry deltas (header 48/56, side-nav 199/196, all CSS properties equal) don't break parity. Added a geometry-invariance test, updated pin tests, wrote the calibration evidence note. No publish. tsc/lint/test(2099)/evidence-dir all green; nothing staged.",
+	"files_changed": [
+		"packages/core/src/receipts/witness-angular-super-productivity.ts",
+		"packages/cli/src/witness/real-app-run.ts",
+		"packages/cli/test/witness-angular-super-productivity-run.test.ts",
+		"packages/core/test/witness-angular-super-productivity-receipt.test.ts",
+		"evidence/runs/angular-super-productivity-v2-13-15/u20c2q-asserting-journey-green.json",
+		"packages/cli/src/fixture/angular-super-productivity-u20c2q-drive.ts"
+	],
+	"open_questions": []
+}

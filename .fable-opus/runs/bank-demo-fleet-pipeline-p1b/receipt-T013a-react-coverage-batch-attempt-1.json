@@ -1,0 +1,38 @@
+{
+  "status": "completed",
+  "summary": "Acquired 6 unseen CRA-era React apps under consent VL-LEGACY-CORPUS-2026-08-10 (3 further candidates refused acquisition on the two-stream byte-identity guard and were replaced, not fought). Ran batch --publish as t013a-undeclared with zero per-app declarations: 6 applications, 0 proven, 6 refused, 0 defects, interventionCount 0. Second fleet-wide --node run skipped per the packet's condition: era-cell.node-major-not-inferable is 1 of 6, not modal. Coverage report moved 15->21 applications, refused 2->8; proven held at the sealed 10, so the oracle did not move. Trust digest db90c298->73f57571; dist not rebuilt; freeze composite stable.",
+  "files_changed": [
+    "evidence/runs/fleet-batch/t013a-react-fleet.json",
+    "evidence/runs/fleet-batch/t013a-undeclared/fleet-summary.json",
+    "evidence/runs/fleet-batch/t013a-undeclared/fleet-summary.md",
+    "evidence/ingests/react-antd-admin-template-v2-0-0/source.json",
+    "evidence/ingests/react-colorme-2019-06-06/source.json",
+    "evidence/ingests/react-coverview-a1470b01/source.json",
+    "evidence/ingests/react-cra-redux-1a06509b/source.json",
+    "evidence/ingests/react-flame-v2-4-0/source.json",
+    "evidence/ingests/react-your-spotify-1-5-0/source.json",
+    "evidence/runs/react-antd-admin-template-v2-0-0/run-record.json",
+    "evidence/runs/react-antd-admin-template-v2-0-0/run-record.json.interventions.json",
+    "evidence/runs/react-colorme-2019-06-06/run-record.json",
+    "evidence/runs/react-colorme-2019-06-06/run-record.json.interventions.json",
+    "evidence/runs/react-coverview-a1470b01/run-record.json",
+    "evidence/runs/react-coverview-a1470b01/run-record.json.interventions.json",
+    "evidence/runs/react-cra-redux-1a06509b/run-record.json",
+    "evidence/runs/react-cra-redux-1a06509b/run-record.json.interventions.json",
+    "evidence/runs/react-flame-v2-4-0/run-record.json",
+    "evidence/runs/react-flame-v2-4-0/run-record.json.interventions.json",
+    "evidence/runs/react-your-spotify-1-5-0/run-record.json",
+    "evidence/runs/react-your-spotify-1-5-0/run-record.json.interventions.json",
+    "evidence/trust/current/manifest.json",
+    "evidence/trust/current/provenance.json",
+    "evidence/trust/current/report.md",
+    "evidence/trust/current/enterprise-report.json",
+    "evidence/trust/current/enterprise-report.md",
+    "evidence/trust/current/coverage-report.json",
+    "evidence/trust/current/coverage-report.md"
+  ],
+  "open_questions": [
+    "The React lineage publishes no target-cell registry, so two of six apps refuse era-cell.cell-not-declared-for-framework regardless of what they declare — an adapter-widening decision under freeze 27741d9c, not an edit this unit may make.",
+    "Sub-directory frontends (flame/client, your_spotify/client) refuse ingest.revision-not-determined because the acquisition journal names only the baseline root; monorepo-shaped bank repos need a frontendRoot the journal can vouch for."
+  ]
+}

@@ -1,0 +1,11 @@
+{
+	"unitId": "h4b-policy-admit-and-reland",
+	"runId": "lrapr-t004-hospitalrun",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Extended the payment-signals permitted-context closed list to admit an exact lowercase 40-hex git object id under revision/parentRevision/targetRevision on a corpus-conformance application source; added positive and negative tests pinning HospitalRun's revision and every neighbouring shape. Re-ran the append (kind react-hospitalrun-browser-proof, 20 receipts) and trust:generate. Measured counts match h4's prediction exactly: 20 trust receipts, 18 matrix cells, 13 verticals, 6 source applications. Moved all pre-append pins to those measured values across papercups staged-copy tests, corpus-conformance counts and fixture counts; added a HospitalRun append suite and conformance row test. All seven verification commands pass; 917/917 tests green.",
+	"agentId": "a89f30d648b504227",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-11T03:07:00.716Z"
+}

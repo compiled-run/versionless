@@ -1,0 +1,11 @@
+{
+	"unitId": "mw2-jira-clone-aggregate-transition",
+	"runId": "lrapr-t005",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Executed the jira-clone aggregate transition as one change. New derived append tool appends ONE member (four mj3c build receipts sealed inside the witness receipt); ran it for real. Added angular-jira-clone-browser-proof state, derived conformance rows, and trust wiring (generate/verify/render). Measured post-append: 22 receipts, 15 verticals, 8 source applications, 20 matrix cells; angularLineage stays 1/4 counted:false. Locality publishes mockedNonLoopbackSeams:10 and persistence is emitted as measured rather than copying factoriolab's shape. Every pre-append pin repointed to exact measured values; nothing loosened; no sensitive-scan trip. All seven verification commands pass; 1220/1220 tests.",
+	"agentId": "a963272cfb93fb782",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-11T11:46:47.940Z"
+}

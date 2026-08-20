@@ -1,0 +1,16 @@
+--- pnpm install --prefer-offline (exit 0) ---
+Scope: all 10 workspace projects
+Lockfile is up to date, resolution step is skipped
+Already up to date
+
+Done in 171ms using pnpm v10.33.2
+
+
+--- sh -c 'ls evidence/ingests/react-cypress-rwa/source.json' (exit 0) ---
+evidence/ingests/react-cypress-rwa/source.json
+
+
+--- sh -c 'ls evidence/ingests/react-cypress-rwa/attempt.json' (exit 0) ---
+evidence/ingests/react-cypress-rwa/attempt.json
+
+

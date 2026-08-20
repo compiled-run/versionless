@@ -1,0 +1,15 @@
+{
+	"runId": "nts-t004",
+	"unitId": "spike-a-ngcc-1213-feasibility",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/nts-t004/prompt-spike-a-ngcc-1213-feasibility-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01G52nk45pLuDiyz9Xx66Jyu",
+	"promptId": "5ff7b915-3f18-4c25-80e9-4ebdbcfb1e47",
+	"background": false,
+	"parallel": false,
+	"effort": "high",
+	"contract": ["evidence/spikes/ngcc-1213-feasibility/**", "docs/goals/next-tranche-strategy/**"],
+	"ts": "2026-08-14T16:30:50.344Z",
+	"pendingName": "00001786725050345430-40ae16f9-spike-a-ngcc-1213-feasibility.json"
+}

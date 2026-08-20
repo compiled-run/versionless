@@ -1,0 +1,11 @@
+{
+  "unitId": "T033-run-record-self-sufficient",
+  "runId": "bank-demo-fleet-pipeline-p1c",
+  "attempt": 1,
+  "outcome": "blocked",
+  "reason": "Steps 1-3 and 5 delivered and observed: ingest adopts repository/ref/commitSha from the journal under T023's unweakened four gates with per-field basis; flame re-ran once (9 stages ran, count 0, proven, full pin); conformance rows key on the application id and carry a run-record-derived source block, refused by named field when incomplete; enterprise needed no change; vp pack ran once (dist was stale by mtime) and trust:generate succeeded — coverage proven=11, conformance sourceApplications=13, freeze 27741d9c stable, FREEZE-INTACT. Blocked: trust:verify and three other verify commands throw at packages/trust/src/verify.ts:241, outside my contract. Tests for steps 1 and 3 not yet written.",
+  "agentId": "a72c7f3b0d210829b",
+  "background": false,
+  "verdictDelivered": true,
+  "ts": "2026-08-18T00:10:03.662Z"
+}

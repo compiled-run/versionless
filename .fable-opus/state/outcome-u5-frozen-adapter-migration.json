@@ -1,0 +1,11 @@
+{
+	"unitId": "u5-frozen-adapter-migration",
+	"runId": "lrapr-t023",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "T023 holdout event completed as a RED with a to-the-byte diagnosis, per the packet's blocked-on-RED ruling. The frozen engine composed and applied a changeset (84 scanned / 8 app + 3 workspace changed, tslint.json removed, 3 unhandled, 8 declared differences); the migrated install was refused at dependency resolution, so no build ran. The @angular/http question is answered No: the public seam passed every reading gate with a real @angular/common@16.2.12 surface and refused all 6 modules on call shape. Five gaps itemised (G1-G5), capability composition mapped, hop-class findings named. Freeze intact, tsc/lint/tests green, no chase, no hand edits, no commits.",
+	"agentId": "af65563f18b15356d",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-14T05:18:46.328Z"
+}

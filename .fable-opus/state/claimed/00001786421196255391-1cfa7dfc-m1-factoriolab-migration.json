@@ -1,0 +1,26 @@
+{
+	"runId": "lrapr-t005",
+	"unitId": "m1-factoriolab-migration",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t005/prompt-m1-factoriolab-migration-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_0192Lf2H43UZgpvPyY72LfSR",
+	"promptId": "61396293-7aa9-49a9-bd0a-448452b41b72",
+	"background": false,
+	"parallel": false,
+	"effort": "high",
+	"contract": [
+		"packages/frameworks/angular/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/test/**",
+		"evidence/runs/angular-factoriolab/**",
+		"fixtures/angular-factoriolab/**",
+		"package.json",
+		"pnpm-lock.yaml",
+		"pnpm-workspace.yaml",
+		"vite.config.ts"
+	],
+	"ts": "2026-08-11T04:06:36.254Z",
+	"pendingName": "00001786421196255391-1cfa7dfc-m1-factoriolab-migration.json"
+}

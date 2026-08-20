@@ -1,0 +1,11 @@
+{
+	"unitId": "mj3a-sentry-v8-capability",
+	"runId": "lrapr-t005",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Added the generic Sentry-v8 tracing capability to @versionless/angular following the ngrx idiom: migrateSentryV8Tracing rewrites @sentry/tracing BrowserTracing constructions into @sentry/angular's browserTracingIntegration, folds away a binding-resolved routingInstrumentation, and relocates tracingOrigins to tracePropagationTargets on the enclosing binding-resolved Sentry.init, refusing (leaving whole and reporting) unresolvable inits, non-plain literals, pre-existing tracePropagationTargets, contested inits, foreign bindings, and unnamable factories. Wired into index.ts and the composed era migration. 20 new tests. Verified read-only against the staged @sentry/angular@8.55.2 types; no closure writes, no builds. tsc, vp lint and vp test --project node (1067 tests) all green.",
+	"agentId": "a829cc311c211ceaa",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-11T08:08:29.823Z"
+}

@@ -1,0 +1,11 @@
+{
+	"unitId": "m1-factoriolab-migration",
+	"runId": "lrapr-t005",
+	"attempt": 1,
+	"outcome": "failed",
+	"reason": "worker reported status \"partial\": Built packages/frameworks/angular: four app-agnostic Angular-CLI-era migration capabilities (target cell + manifest alignment, angular.json migration, tsconfig lift, analyzer-driven source migration) plus a composed changeset, 27 tests, overfitting guard. Applied to the re-acquired pinned factoriolab tree: applicationFilesChanged=2 of 157 scanned, workspaceFilesChanged=3, itemized with before/after digests in sealed evidence. Both build lanes NOT delivered: the packet's stated era baseline cache is absent from this workspace (gitignored, did not survive unit a1), so no baseline rebuild and no target build were possible; recorded as notEstablished, not claimed. tsc, lint, full node suite (941 tests) green.",
+	"agentId": "a8ec7b0638b42ab28",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-11T04:24:20.785Z"
+}

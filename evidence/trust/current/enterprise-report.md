@@ -2,8 +2,8 @@
 
 One machine artifact for an enterprise reviewer, derived entirely from canonical receipts the trust package already verified. It states what was proven, on which sources, with which tools, under which commands, and — in the same document — what is unsupported, unknown, or deliberately not claimed.
 
-- Trust manifest canonical SHA-256: `a99892f8323e0b5381d5bee3b10a17db13240a7df9b65221fc2b45cac3c56d4c`
-- Deterministic core: `9dc8fe09c4a05ff58889bc68a4335a57037d8a18f1637c619f1feea05d70add4`
+- Trust manifest canonical SHA-256: `8d3eadd23e19cfda60672cc8bcc27b5427209a818aa7a3adf33b651d494163b9`
+- Deterministic core: `d8cf777caf96a7e8a8c173f60f2e54754ba71456e8a73e2e1d762ea99a152695`
 - Corpus conformance: `101412703cc116969dd562a6ea46dde3d05424ad5194e535aca9750e373bc482`
 - Adapter freeze: commit `0ecd410691df10fbc68c9ddcd012dafa86aba536`, composite `27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234`
 - Certification: **not-certified** — This package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation.
@@ -60,7 +60,7 @@ Tool: `versionless-local-trust-generator`, adapter frozen at commit `0ecd410691d
 - `dependency-graph.cdx.json` — `de3b1ef9139723e2c6c78058c80db361a30f26f6c3e1be59830ea0b5165f6017`
 - `licenses.json` — `d4044d784816c196415fdca9fd7b734bac809d29428c48e4dfb1c4622c834488`
 - `vulnerabilities.json` — `aa0b0970e2e128e30b044f6107b4b77136d759b0a2ee3af9d37c883fa6b8298d`
-- `provenance.json` — `9c081d2747b4f6552edf242012e9388a602e6472853d6faf61079854cb136778`
+- `provenance.json` — `6d2555537b0c8e84aefa2452203892d2ffb46669a84ce7853b4967cc5d85982a`
 - `matrix.json` — `3dca11f639d90e4519cf914274fced24580db5b121043a28b0c4f4de5e65a39d`
 - `controls.json` — `a5e61dcace162ce814347f931b6f4e4f59934ea1312df79d9c817c19e0e9bef4`
 - `retention.json` — `f1a7f91607bca1de4cc15e2523a3d0791116acc9cfdf853c68b9b35aa2c07568`

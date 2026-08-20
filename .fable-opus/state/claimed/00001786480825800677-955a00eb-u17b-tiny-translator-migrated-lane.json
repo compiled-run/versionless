@@ -1,0 +1,25 @@
+{
+	"runId": "lrapr-t006",
+	"unitId": "u17b-tiny-translator-migrated-lane",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t006/prompt-u17b-tiny-translator-migrated-lane-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_015qAX6HyVvewdA1m2YagHi6",
+	"promptId": "1a4e958b-0242-4190-b796-38c4d2b0d992",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/frameworks/angular/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/test/**",
+		"evidence/runs/angular-tiny-translator-v0-12-0/**",
+		"fixtures/angular-tiny-translator-v0-12-0/**",
+		"package.json",
+		"pnpm-lock.yaml",
+		"pnpm-workspace.yaml"
+	],
+	"ts": "2026-08-11T20:40:25.799Z",
+	"pendingName": "00001786480825800677-955a00eb-u17b-tiny-translator-migrated-lane.json"
+}

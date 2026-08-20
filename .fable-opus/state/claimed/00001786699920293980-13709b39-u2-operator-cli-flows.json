@@ -1,0 +1,23 @@
+{
+	"runId": "lrapr-t009",
+	"unitId": "u2-operator-cli-flows",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t009/prompt-u2-operator-cli-flows-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01P9fATtbw72MKciuWivzeAg",
+	"promptId": "822d110f-c959-43da-847b-3f2122c8c15e",
+	"background": false,
+	"parallel": false,
+	"effort": "high",
+	"contract": [
+		"packages/cli/src/**",
+		"packages/cli/test/**",
+		"packages/core/src/index.ts",
+		"packages/core/test/**",
+		"docs/**",
+		"README.md",
+		"evidence/runs/operator-flows/**"
+	],
+	"ts": "2026-08-14T09:32:00.292Z",
+	"pendingName": "00001786699920293980-13709b39-u2-operator-cli-flows.json"
+}

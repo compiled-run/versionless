@@ -1,0 +1,13 @@
+{
+	"status": "blocked",
+	"summary": "Calibration measured a hard RED instead of four calibratable facts. The migrated lane's pinned canonical build (dist-7, inventory digest re-derived and identical to u17d's) throws 'process is not defined' at module evaluation and renders nothing: util@0.12.5's top-level NODE_DEBUG read, declared for ngx-i18nsupport-lib by u17c with no process shim. Separately, the era lane registers %BASE_HREF%ngsw-worker.js (400, two console errors), contradicting the zero-service-worker policy, the empty baseline inventory and a nonclaim. Recorded both as a sealed, measured evidence record; published no receipt. tsc/lint/1912 tests/receipt:verify all green; nothing committed.",
+	"files_changed": [
+		"evidence/runs/angular-tiny-translator-v0-12-0/u19d-witness-calibration-red.json",
+		"packages/cli/src/fixture/angular-tiny-translator-witness-red-record.ts"
+	],
+	"open_questions": [
+		"The migrated build does not boot. Fixing it means supplying a `process` shim (or removing the util dependency) in the migration capability under packages/frameworks/**, which is outside this contract, and it invalidates the bound u17d build record and its digests pinned in the schema. Cut a build unit for the process/node-globals capability plus a migrated-lane rebuild and re-pin, then re-cut the witness publish?",
+		"The era lane's service-worker registration contradicts three schema pins (zero-service-worker policy, empty baseline console-error inventory, the 'neither build registers a service worker' nonclaim). Should the witness admit the era lane as a service-worker-attempting lane (recording the attempt, the 400 and the two console errors exactly, per the mw1e amend-what-measurement-contradicts precedent), or should the era lane be rebuilt from the plain (non-ngsw) production variant u15 recorded as the second variant?",
+		"Should the witness schema's receipt path constant move to evidence/runs/witness-angular-tiny-translator-v0-12-0/ (the packet's path) as part of the eventual publish unit? It currently reads witness-angular-tiny-translator, and I left it untouched since nothing could be published."
+	]
+}

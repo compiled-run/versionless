@@ -1,0 +1,11 @@
+{
+	"unitId": "u3-trust-regen-at-head",
+	"runId": "lrapr-t010",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Both rulings executed at HEAD. vp pack (byte-stable twice) then trust:generate --offline closed the u2 packProvenanceFinding: trust:verify valid (572a0f06), enterprise verify-only pass, operator-flows 25/25, node suite 2476/2476, tsc/lint/receipt/corpus/script-surface green, supported-matrix byte-stable. fmt recorded as a declared deviation (249 files, u2 counts reproduced, 82 frozen; nothing reformatted). summary.json gates.finalState written. Freeze verified intact before and after. Blocked on the packet's reserved stop: the deterministic core moved 656e861a -> ded201fb, which is structurally forced because provenance.json is a member of the core preimage.",
+	"agentId": "ab85d12e9a57f8838",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-14T11:16:12.182Z"
+}

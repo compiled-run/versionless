@@ -1,0 +1,14 @@
+{
+	"status": "partial",
+	"summary": "Proved the papercups migrated build supports three substantive journeys under a stubbed Phoenix transport (login renders the full console with conversations and reply footer). Found two blockers: papercups calls /api same-origin so the non-loopback transport hook never fires, and the dashboard opens a Phoenix WebSocket that Playwright routes cannot intercept, emitting console errors that fail clean-page. Delivered the verified seams for both: startStaticServer api+upgrade hooks and search on WitnessTransportRequest, with a new passing test. tsc, lint, 795 node tests and offline receipt:verify are green. Journeys, 2x2 runs, mutation proof, receipts and aggregate update are not done.",
+	"files_changed": [
+		"packages/cli/src/witness/real-app-run.ts",
+		"packages/cli/src/witness/playwright-host.ts",
+		"packages/cli/test/witness-angular-realworld-run.test.ts",
+		"packages/cli/test/witness-static-server-loopback-api.test.ts"
+	],
+	"open_questions": [
+		"real-app-run.ts's App union cannot gain a react-papercups key because WitnessRealAppRun.app is typed from WITNESS_REAL_APP_NAMES in packages/core (forbidden here). Should the next unit define a papercups-local run type in packages/cli/src/witness, or is a scoped packages/core edit authorized?",
+		"The Phoenix v2 WebSocket stub (handshake, frame codec, phx_reply, shout echo) is required for any dashboard journey to pass clean-page. Should it be its own unit before the journey unit?"
+	]
+}

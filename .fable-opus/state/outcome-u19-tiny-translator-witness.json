@@ -1,0 +1,11 @@
+{
+	"unitId": "u19-tiny-translator-witness",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Wrote nothing; four blockers found. (1) The witness host lacks both generic mechanisms this cell's journeys require: a file-input load (setInputFiles) for the XLIFF FileReader surface, and download capture (acceptDownloads + download event) for the export surface. Neither exists anywhere in packages/, and the raw Playwright Page never escapes createPlaywrightWitnessHost. (2) The lanes do not share the font seam: critters inlined the stylesheet in the migrated lane, so baseline blocks fonts.googleapis.com while migrated blocks a fonts.gstatic.com woff2, giving two different mat-icon degradations. (3) u17 was not capability-only: 9 application files changed, including the FileReader service journey (a) drives. (4) Full vertical plus two novel host mechanisms exceeds this packet.",
+	"agentId": "a5ffebb9e7e6676d0",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-12T03:14:08.428Z"
+}

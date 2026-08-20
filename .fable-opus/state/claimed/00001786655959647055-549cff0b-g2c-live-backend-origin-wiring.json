@@ -1,0 +1,23 @@
+{
+	"runId": "lrapr-t017b",
+	"unitId": "g2c-live-backend-origin-wiring",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t017b/prompt-g2c-live-backend-origin-wiring-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01XntRkxMSJ9ZDJXoaU9NquT",
+	"promptId": "c511b2bf-e76e-4837-bedd-bc2391738125",
+	"background": false,
+	"parallel": false,
+	"effort": "high",
+	"contract": [
+		"packages/cli/src/witness/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/src/receipts/witness-real-app.ts",
+		"packages/core/src/receipts/witness-react-cypress-rwa.ts",
+		"packages/core/src/index.ts",
+		"packages/core/test/**"
+	],
+	"ts": "2026-08-13T21:19:19.646Z",
+	"pendingName": "00001786655959647055-549cff0b-g2c-live-backend-origin-wiring.json"
+}

@@ -1,0 +1,27 @@
+{
+	"runId": "lrapr-t006",
+	"unitId": "u19f-localize-boot-green",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t006/prompt-u19f-localize-boot-green-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_012qzEcXtuH3nR1nDG4bmgSt",
+	"promptId": "fcc7269c-2f42-4c02-bb2a-7863957d4988",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/frameworks/angular/**",
+		"packages/cli/src/witness/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/src/receipts/witness-angular-tiny-translator.ts",
+		"packages/core/test/**",
+		"evidence/runs/angular-tiny-translator-v0-12-0/**",
+		"fixtures/angular-tiny-translator-v0-12-0/**",
+		"package.json",
+		"pnpm-lock.yaml",
+		"pnpm-workspace.yaml"
+	],
+	"ts": "2026-08-12T04:45:33.136Z",
+	"pendingName": "00001786509933138006-f21bf584-u19f-localize-boot-green.json"
+}

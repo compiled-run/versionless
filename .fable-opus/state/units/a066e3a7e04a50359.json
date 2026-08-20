@@ -1,0 +1,9 @@
+{
+  "agentId": "a066e3a7e04a50359",
+  "runId": "bank-demo-fleet-pipeline-p1b",
+  "unitId": "T023-ingest-seam-era-sources",
+  "attempt": 1,
+  "toolUseId": "toolu_01SrkTTySXN14f2WWgm35zYq",
+  "bindingRoute": "sole",
+  "startedAt": "2026-08-17T20:28:27.140Z"
+}

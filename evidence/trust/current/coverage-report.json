@@ -278,14 +278,14 @@
     "source": "evidence/runs/operator-flows/refusal-census.json",
     "adapterFreezeComposite": "27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234",
     "totals": {
-      "sites": 190,
+      "sites": 191,
       "byOrigin": {
         "frozen-adapter": 101,
-        "pipeline": 89
+        "pipeline": 90
       },
       "byClassification": {
         "defect": 5,
-        "refusal": 135,
+        "refusal": 136,
         "unclassified": 50
       },
       "byStage": {
@@ -297,7 +297,7 @@
         "build": 5,
         "era-cell": 9,
         "ingest": 17,
-        "install": 10,
+        "install": 11,
         "license-at-pin": 4,
         "not-reached": 69,
         "plan": 23,
@@ -307,7 +307,7 @@
         "witness": 1,
         "witness-synthesize": 2
       },
-      "distinctCodes": 190,
+      "distinctCodes": 191,
       "recordedRefusalSites": 99
     },
     "byCode": {
@@ -383,6 +383,7 @@
       "install.lockfile-unreadable": 1,
       "install.remote-tarball-policy-not-declared": 1,
       "install.install-script-policy-not-declared": 1,
+      "install.script-wrote-outside-lane": 1,
       "install.peer-resolution-policy-not-declared": 1,
       "pipeline.install.install": 1,
       "license-at-pin.licence-file-absent": 1,
@@ -518,7 +519,7 @@
   ],
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "0523b29798cebfc4c2e79bc550d3a10f28564f8dd63d039e5dfb71764bc2ca99",
+    "canonicalDigest": "7c08250714a85591338fbef470282722afc42f1995b4cdba83697e9c3253aec1",
     "authenticity": "not-established",
     "certification": "not-claimed"
   }

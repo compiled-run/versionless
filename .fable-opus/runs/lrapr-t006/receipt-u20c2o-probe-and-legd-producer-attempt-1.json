@@ -1,0 +1,12 @@
+{
+	"status": "completed",
+	"summary": "Added the additive two-phase style-probe primitive (probeStyles + exported assertWitnessAdHocStyleProbes guard) on the generic JourneyLifecycle, refusing empty lists and leaving the fixed renderedStyles() untouched. Drove leg d in executeAngularSuperProductivityWitnessRun LAST (after the leg-e reload+census): addProject dialog create (1->2), project switch (title flip), /project-settings nav, before-read of --palette-primary-contrast-50, uncheck isAutoContrast + drive huePrimary mat-select + save, after-read (RED if unshifted), w shortcut. Populated applicationJourney.settings (assertSettings passes). Added leg-d selectors and bumped navigations 2->4 (reload 2 + two leg-d hash navs; switch records none, per the theme-calibrate box). Tests added. tsc clean, lint 0 errors, node suite 2098/2098.",
+	"files_changed": [
+		"packages/cli/src/witness/real-app-run.ts",
+		"packages/core/src/receipts/witness-angular-super-productivity.ts",
+		"packages/cli/test/witness-angular-super-productivity-run.test.ts"
+	],
+	"open_questions": [
+		"navigations=4 is evidence-based (theme-calibrate box: leg-d adds exactly [project-settings, work-view]; project switch adds 0; base reload=2) but is a runtime value the node tests do not exercise — the downstream browser-runner unit should confirm it (and the per-lane styleValueBefore/After dark->light contrast strings) on both dist-run2 and dist-25, RED-first on any real break."
+	]
+}

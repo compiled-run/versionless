@@ -1,0 +1,11 @@
+{
+	"unitId": "g2b-holdout-journey-calibrate",
+	"runId": "lrapr-t017b",
+	"attempt": 2,
+	"outcome": "blocked",
+	"reason": "Measured the live cypress-rwa surface; the journey cannot pass because the generic live-backend path never wired the SPA-to-backend origin: backend CORS allows only http://localhost:${REACT_APP_PORT} but the runner serves the SPA from http://127.0.0.1:<ephemeral>, so all credentialed XHR are CORS-rejected. Proved the fix (serve/address via localhost:<P> + backend env REACT_APP_PORT=<P>); baseline then runs green through money-movement's amount form. Wrote an in-contract diagnostic probe. Remaining work (serving wiring in runner+live-backend, inventory origin reconciliation, schema category rewrite, selector fixes, determinism on two lanes) exceeds one unit. tsc passes.",
+	"agentId": "a3ab1963f26cf625e",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-13T21:16:03.304Z"
+}

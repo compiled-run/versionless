@@ -1,0 +1,14 @@
+{
+	"status": "blocked",
+	"summary": "AppSpec+journey, dedicated runner, generic groupedText/browserStorageKeys host primitives and 17 tests delivered; tsc/lint/node-tests all green (1200/1200). Browser-verified both lanes: identical rendered styles, journey evidence, routes and tracked events; zero console errors and zero failed requests. Two landed core-schema facts are contradicted by measurement and cannot be fixed inside my contract: assertRoutes demands routes[0]==='/', but the harness never records the initial load (measured ['/project/board' x3]; published factoriolab/HospitalRun receipts omit theirs too, and the app has no in-app link to '/'); and the pinned 8-seam inventory misses two endpoints the seeded description fetches. With both amended locally, all four runs are green.",
+	"files_changed": [
+		"packages/cli/src/witness/real-app-run.ts",
+		"packages/cli/src/witness/playwright-host.ts",
+		"packages/cli/src/witness/angular-jira-clone-run.ts",
+		"packages/cli/test/witness-angular-jira-clone-run.test.ts"
+	],
+	"open_questions": [
+		"packages/core/src/receipts/witness-angular-jira-clone.ts assertRoutes requires routes[0] === '/' (WITNESS_ANGULAR_JIRA_CLONE_ROUTES[0]). The harness records only post-load navigations, so the measured sequence in every run is exactly ['/project/board','/project/board','/project/board'] (router redirect, reload, post-reload redirect). Published factoriolab ('/list#p=iron-plate*1') and HospitalRun ('/patients') receipts confirm the initial route is never recorded, and jira-clone offers no in-app link back to '/', so no journey can satisfy it. Amend to assert that every recorded navigation is the board route and the distinct set is exactly ['/project/board'], keeping the root as a documented redirect rather than a recorded navigation?",
+		"WITNESS_ANGULAR_JIRA_CLONE_MOCKED_SEAMS pins 8 endpoints; the journey reaches 10. The two extra are GET https://github.com/trungk18/angular-spotify/raw/main/libs/web/shared/assets/src/assets/readme/angular-spotify-demo-short.gif and .../angular-spotify-visualization.gif, embedded as <img> in the seeded description of Story-2021 and fetched the moment the issue modal renders it (which the spec requires asserting). mw1b's seam census never opened that modal. Add both to baseline and migrated (locality.mockedNonLoopbackSeams then derives 10 automatically)? With them added locally, both lanes ran fully green."
+	]
+}

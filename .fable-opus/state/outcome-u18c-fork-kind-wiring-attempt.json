@@ -1,0 +1,11 @@
+{
+	"unitId": "u18c-fork-kind-wiring-attempt",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Landed the successor-fork EcosystemPackage kind (lineage-verified, refuses unverified lineage) plus a surface-measured source capability that refuses per declaration, extended the tilde stylesheet pass with package renames, and wired entry-components-removal into migrateAngularCliEraWorkspace. Re-composed the changeset (40/494 application files, was 20), installed the fork, ran the fork/barrel-split/tilde round (12 files), and re-attempted the production build: still red, exit 1, no artifact. Diagnostics 269 to 110; eight remaining demands itemized including a newly discovered angular-material-css-vars sass-subpath demand. tsc, lint, full node suite (1652 tests) green.",
+	"agentId": "a3fc7fba87374f848",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-11T23:03:54.678Z"
+}

@@ -1,0 +1,23 @@
+{
+	"runId": "lrapr-t006",
+	"unitId": "u24a-tiny-translator-transition",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t006/prompt-u24a-tiny-translator-transition-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01LJ5js2EqddkxoxZuirfSh6",
+	"promptId": "d1e30a25-220a-4ab7-8ecd-96e8838f9e8d",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/core/src/corpus/conformance.ts",
+		"packages/core/test/**",
+		"packages/trust/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"evidence/runs/aggregate.json",
+		"evidence/trust/current/**"
+	],
+	"ts": "2026-08-12T18:55:46.805Z",
+	"pendingName": "00001786560946806253-d8a5213d-u24a-tiny-translator-transition.json"
+}

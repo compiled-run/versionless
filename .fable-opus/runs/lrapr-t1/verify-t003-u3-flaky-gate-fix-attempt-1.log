@@ -1,0 +1,449 @@
+--- pnpm exec tsc --noEmit (exit 0) ---
+
+
+--- pnpm exec vp lint (exit 0) ---
+
+  ! eslint(no-unused-vars): Type alias 'RefRow' is declared but never used.
+    ,-[packages/cli/src/fixture/react-appsmith-ingest.ts:38:6]
+ 37 | 
+ 38 | type RefRow = { ref: string; object: { type: 'commit' | 'tag'; sha: string } };
+    :      ^^^|^^
+    :         `-- 'RefRow' is declared here
+ 39 | type Candidate = {
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Variable 'umiMajor' is declared but never used. Unused variables should start with a '_'.
+      ,-[packages/cli/src/fixture/react-appsmith-ingest.ts:1011:9]
+ 1010 |         const webpackMajor = selectedPackage.webpackMajor;
+ 1011 |         const umiMajor = selectedPackage.umiMajor ?? null;
+      :               ^^^^|^^^
+      :                   `-- 'umiMajor' is declared here
+ 1012 |         const craMajor = selectedPackage.craMajor ?? null;
+      `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Identifier 'basename' is imported but never used.
+   ,-[packages/cli/src/fixture/react-jira-clone-ingest.ts:6:10]
+ 5 | import { charIn, createRegExp } from 'magic-regexp';
+ 6 | import { basename, dirname, join, relative, resolve } from 'pathe';
+   :          ^^^^|^^^
+   :              `-- 'basename' is imported here
+ 7 | import { getQuery, joinURL, parseURL, withQuery } from 'ufo';
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'dirname' is imported but never used.
+   ,-[packages/cli/src/fixture/react-jira-clone-ingest.ts:6:20]
+ 5 | import { charIn, createRegExp } from 'magic-regexp';
+ 6 | import { basename, dirname, join, relative, resolve } from 'pathe';
+   :                    ^^^|^^^
+   :                       `-- 'dirname' is imported here
+ 7 | import { getQuery, joinURL, parseURL, withQuery } from 'ufo';
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'rm' is imported but never used.
+   ,-[packages/cli/src/fixture/react-sqlpad-v5-5-0-ingest.ts:2:52]
+ 1 | import { createHash } from 'node:crypto';
+ 2 | import { access, mkdir, readFile, readdir, rename, rm, writeFile } from 'node:fs/promises';
+   :                                                    ^|
+   :                                                     `-- 'rm' is imported here
+ 3 | import { request } from 'node:https';
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'cp' is imported but never used.
+   ,-[packages/cli/src/fixture/angular-realworld-v15-ingest.ts:5:2]
+ 4 |     access,
+ 5 |     cp,
+   :     ^|
+   :      `-- 'cp' is imported here
+ 6 |     mkdir,
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Variable 't643StartPath' is declared but never used. Unused variables should start with a '_'.
+    ,-[packages/cli/src/fixture/angular-realworld-production-parity-run.ts:29:7]
+ 28 | const t643AttemptDirectory = path.join(output, 'attempts');
+ 29 | const t643StartPath = path.join(t643AttemptDirectory, 't643-start.json');
+    :       ^^^^^^|^^^^^^
+    :             `-- 't643StartPath' is declared here
+ 30 | const t643ReceiptPath = path.join(t643AttemptDirectory, 't643-receipt.json');
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Type alias 'RefRow' is declared but never used.
+    ,-[packages/cli/src/fixture/react-strapi-ingest.ts:38:6]
+ 37 | 
+ 38 | type RefRow = { ref: string; object: { type: 'commit' | 'tag'; sha: string } };
+    :      ^^^|^^
+    :         `-- 'RefRow' is declared here
+ 39 | type Candidate = {
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Variable 'umiMajor' is declared but never used. Unused variables should start with a '_'.
+     ,-[packages/cli/src/fixture/react-strapi-ingest.ts:967:9]
+ 966 |         const webpackMajor = selectedPackage.webpackMajor;
+ 967 |         const umiMajor = selectedPackage.umiMajor ?? null;
+     :               ^^^^|^^^
+     :                   `-- 'umiMajor' is declared here
+ 968 |         const craMajor = selectedPackage.craMajor ?? null;
+     `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Variable 'umiMajor' is declared but never used. Unused variables should start with a '_'.
+     ,-[packages/cli/src/fixture/react-kafka-ui-v0-3-3-ingest.ts:774:9]
+ 773 |         const webpackMajor = selectedPackage.webpackMajor;
+ 774 |         const umiMajor = selectedPackage.umiMajor ?? null;
+     :               ^^^^|^^^
+     :                   `-- 'umiMajor' is declared here
+ 775 |         const craMajor = selectedPackage.craMajor ?? null;
+     `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Identifier 'withQuery' is imported but never used.
+    ,-[packages/cli/src/fixture/react-verdaccio-ingest.ts:16:29]
+ 15 | import { basename, dirname, join, relative, resolve } from 'pathe';
+ 16 | import { joinURL, parseURL, withQuery } from 'ufo';
+    :                             ^^^^|^^^^
+    :                                 `-- 'withQuery' is imported here
+ 17 | import { canonicalize, sha256 } from '../../../core/src/receipts/canonicalize.ts';
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Type alias 'RefRow' is declared but never used.
+    ,-[packages/cli/src/fixture/react-verdaccio-ingest.ts:36:6]
+ 35 | 
+ 36 | type RefRow = { ref: string; object: { type: 'commit' | 'tag'; sha: string } };
+    :      ^^^|^^
+    :         `-- 'RefRow' is declared here
+ 37 | type Candidate = {
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Identifier 'WITNESS_NEXT_KILLED_BY_GOOGLE_TRACKED_EVENTS' is imported but never used.
+    ,-[packages/core/test/witness-next-killedbygoogle-receipt.test.ts:13:2]
+ 12 |     WITNESS_NEXT_KILLED_BY_GOOGLE_SCHEMA,
+ 13 |     WITNESS_NEXT_KILLED_BY_GOOGLE_TRACKED_EVENTS,
+    :     ^^^^^^^^^^^^^^^^^^^^^^|^^^^^^^^^^^^^^^^^^^^^
+    :                           `-- 'WITNESS_NEXT_KILLED_BY_GOOGLE_TRACKED_EVENTS' is imported here
+ 14 |     witnessNextKilledByGoogleBehaviorDigest,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'createHash' is imported but never used.
+   ,-[packages/cli/src/fixture/react-sqlpad-v5-5-0-run.ts:2:10]
+ 1 | import { spawn } from 'node:child_process';
+ 2 | import { createHash } from 'node:crypto';
+   :          ^^^^^|^^^^
+   :               `-- 'createHash' is imported here
+ 3 | import { access, cp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'cp' is imported but never used.
+   ,-[packages/cli/src/fixture/angular-realworld-v15-to-v16-ingest.ts:5:2]
+ 4 |     access,
+ 5 |     cp,
+   :     ^|
+   :      `-- 'cp' is imported here
+ 6 |     mkdir,
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'spawn' is imported but never used.
+   ,-[packages/cli/src/fixture/react-flagsmith-ingest.ts:1:10]
+ 1 | import { spawn } from 'node:child_process';
+   :          ^^|^^
+   :            `-- 'spawn' is imported here
+ 2 | import { createHash } from 'node:crypto';
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'createHash' is imported but never used.
+   ,-[packages/cli/src/fixture/react-flagsmith-ingest.ts:2:10]
+ 1 | import { spawn } from 'node:child_process';
+ 2 | import { createHash } from 'node:crypto';
+   :          ^^^^^|^^^^
+   :               `-- 'createHash' is imported here
+ 3 | import {
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'access' is imported but never used.
+   ,-[packages/cli/src/fixture/react-flagsmith-ingest.ts:4:2]
+ 3 | import {
+ 4 |     access,
+   :     ^^^|^^
+   :        `-- 'access' is imported here
+ 5 |     cp,
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'cp' is imported but never used.
+   ,-[packages/cli/src/fixture/react-flagsmith-ingest.ts:5:2]
+ 4 |     access,
+ 5 |     cp,
+   :     ^|
+   :      `-- 'cp' is imported here
+ 6 |     lstat,
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'lstat' is imported but never used.
+   ,-[packages/cli/src/fixture/react-flagsmith-ingest.ts:6:2]
+ 5 |     cp,
+ 6 |     lstat,
+   :     ^^|^^
+   :       `-- 'lstat' is imported here
+ 7 |     mkdir,
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'mkdir' is imported but never used.
+   ,-[packages/cli/src/fixture/react-flagsmith-ingest.ts:7:2]
+ 6 |     lstat,
+ 7 |     mkdir,
+   :     ^^|^^
+   :       `-- 'mkdir' is imported here
+ 8 |     readFile,
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'readFile' is imported but never used.
+   ,-[packages/cli/src/fixture/react-flagsmith-ingest.ts:8:2]
+ 7 |     mkdir,
+ 8 |     readFile,
+   :     ^^^^|^^^
+   :         `-- 'readFile' is imported here
+ 9 |     readdir,
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'readdir' is imported but never used.
+    ,-[packages/cli/src/fixture/react-flagsmith-ingest.ts:9:2]
+  8 |     readFile,
+  9 |     readdir,
+    :     ^^^|^^^
+    :        `-- 'readdir' is imported here
+ 10 |     readlink,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'readlink' is imported but never used.
+    ,-[packages/cli/src/fixture/react-flagsmith-ingest.ts:10:2]
+  9 |     readdir,
+ 10 |     readlink,
+    :     ^^^^|^^^
+    :         `-- 'readlink' is imported here
+ 11 |     rename,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'rename' is imported but never used.
+    ,-[packages/cli/src/fixture/react-flagsmith-ingest.ts:11:2]
+ 10 |     readlink,
+ 11 |     rename,
+    :     ^^^|^^
+    :        `-- 'rename' is imported here
+ 12 |     writeFile,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'writeFile' is imported but never used.
+    ,-[packages/cli/src/fixture/react-flagsmith-ingest.ts:12:2]
+ 11 |     rename,
+ 12 |     writeFile,
+    :     ^^^^|^^^^
+    :         `-- 'writeFile' is imported here
+ 13 | } from 'node:fs/promises';
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'request' is imported but never used.
+    ,-[packages/cli/src/fixture/react-flagsmith-ingest.ts:14:10]
+ 13 | } from 'node:fs/promises';
+ 14 | import { request } from 'node:https';
+    :          ^^^|^^^
+    :             `-- 'request' is imported here
+ 15 | import { charIn, createRegExp } from 'magic-regexp';
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'analyze' is imported but never used.
+    ,-[packages/cli/src/fixture/react-flagsmith-ingest.ts:16:10]
+ 15 | import { charIn, createRegExp } from 'magic-regexp';
+ 16 | import { analyze } from 'yuku-analyzer';
+    :          ^^^|^^^
+    :             `-- 'analyze' is imported here
+ 17 | import { dirname, extname, join, normalize, relative, resolve } from 'pathe';
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'extname' is imported but never used.
+    ,-[packages/cli/src/fixture/react-flagsmith-ingest.ts:17:19]
+ 16 | import { analyze } from 'yuku-analyzer';
+ 17 | import { dirname, extname, join, normalize, relative, resolve } from 'pathe';
+    :                   ^^^|^^^
+    :                      `-- 'extname' is imported here
+ 18 | import { getQuery, joinURL, parseURL, stringifyParsedURL, withQuery } from 'ufo';
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Variable 'umiMajor' is declared but never used. Unused variables should start with a '_'.
+     ,-[packages/cli/src/fixture/react-unleash-ingest.ts:934:9]
+ 933 |         const webpackMajor = selectedPackage.webpackMajor;
+ 934 |         const umiMajor = selectedPackage.umiMajor ?? null;
+     :               ^^^^|^^^
+     :                   `-- 'umiMajor' is declared here
+ 935 |         const craMajor = selectedPackage.craMajor ?? null;
+     `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Variable 'craMajor' is declared but never used. Unused variables should start with a '_'.
+     ,-[packages/cli/src/fixture/react-unleash-ingest.ts:935:9]
+ 934 |         const umiMajor = selectedPackage.umiMajor ?? null;
+ 935 |         const craMajor = selectedPackage.craMajor ?? null;
+     :               ^^^^|^^^
+     :                   `-- 'craMajor' is declared here
+ 936 |         const viteMajor = selectedPackage.viteMajor ?? null;
+     `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Identifier 'NODE_ARCHIVE_SHA256' is imported but never used.
+    ,-[packages/cli/src/fixture/angular-realworld-v15-to-v16-run.ts:14:27]
+ 13 | } from './angular-realworld-v15-to-v16-ingest.ts';
+ 14 | import { CHROMIUM_SHA256, NODE_ARCHIVE_SHA256 } from './angular-realworld-v15-ingest.ts';
+    :                           ^^^^^^^^^|^^^^^^^^^
+    :                                    `-- 'NODE_ARCHIVE_SHA256' is imported here
+ 15 | 
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-extra-boolean-cast): Redundant Boolean call
+     ,-[packages/cli/src/fixture/vite8-shared-adapter-cohort-run.ts:148:8]
+ 147 |                 violations.push('url-not-canonical');
+ 148 |             if (Boolean(parseURL(candidate.url).host)) violations.push('url-remote');
+     :                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 149 |         }
+     `----
+  help: Remove the Boolean call as it will already be coerced to a boolean
+
+  ! eslint-plugin-unicorn(no-useless-spread): Using a spread operator here creates a new array unnecessarily.
+     ,-[packages/cli/src/fixture/vite8-shared-adapter-cohort-run.ts:208:13]
+ 207 |         actualValidation,
+ 208 |         missing: [...expected.filter((entry) => !actualByPath.has(entry.path))].sort(
+     :                   ^^^
+ 209 |             (left, right) => compareUtf16CodeUnits(left.path, right.path),
+     `----
+  help: `expected.filter` returns a new array. Spreading it into an array expression to create a new array is redundant.
+
+  ! eslint-plugin-unicorn(no-useless-spread): Using a spread operator here creates a new array unnecessarily.
+     ,-[packages/cli/src/fixture/vite8-shared-adapter-cohort-run.ts:211:16]
+ 210 |         ),
+ 211 |         unexpected: [...actual.filter((entry) => !expectedByPath.has(entry.path))].sort(
+     :                      ^^^
+ 212 |             (left, right) => compareUtf16CodeUnits(left.path, right.path),
+     `----
+  help: `actual.filter` returns a new array. Spreading it into an array expression to create a new array is redundant.
+
+  ! eslint(no-unused-vars): Type alias 'RefRow' is declared but never used.
+    ,-[packages/cli/src/fixture/react-mattermost-ingest.ts:39:6]
+ 38 | 
+ 39 | type RefRow = { ref: string; object: { type: 'commit' | 'tag'; sha: string } };
+    :      ^^^|^^
+    :         `-- 'RefRow' is declared here
+ 40 | type Candidate = {
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Variable 'umiMajor' is declared but never used. Unused variables should start with a '_'.
+     ,-[packages/cli/src/fixture/react-mattermost-ingest.ts:954:9]
+ 953 |         const webpackMajor = selectedPackage.webpackMajor;
+ 954 |         const umiMajor = selectedPackage.umiMajor ?? null;
+     :               ^^^^|^^^
+     :                   `-- 'umiMajor' is declared here
+ 955 |         const craMajor = selectedPackage.craMajor ?? null;
+     `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Identifier 'withQuery' is imported but never used.
+    ,-[packages/cli/src/fixture/react-apisix-dashboard-ingest.ts:16:29]
+ 15 | import { basename, dirname, join, relative, resolve } from 'pathe';
+ 16 | import { joinURL, parseURL, withQuery } from 'ufo';
+    :                             ^^^^|^^^^
+    :                                 `-- 'withQuery' is imported here
+ 17 | import { canonicalize, sha256 } from '../../../core/src/receipts/canonicalize.ts';
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Variable 'hex40' is declared but never used. Unused variables should start with a '_'.
+    ,-[packages/cli/src/fixture/react-apisix-dashboard-ingest.ts:30:7]
+ 29 | const cacheRoot = join(root, '.versionless/cache/react-apisix-dashboard-source-t684');
+ 30 | const hex40 = createRegExp(
+    :       ^^|^^
+    :         `-- 'hex40' is declared here
+ 31 |     charIn('0123456789').from('a', 'f').times(40).at.lineStart().at.lineEnd(),
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Type alias 'RefRow' is declared but never used.
+    ,-[packages/cli/src/fixture/react-apisix-dashboard-ingest.ts:37:6]
+ 36 | 
+ 37 | type RefRow = { ref: string; object: { type: 'commit' | 'tag'; sha: string } };
+    :      ^^^|^^
+    :         `-- 'RefRow' is declared here
+ 38 | type Candidate = {
+    `----
+  help: Consider removing this declaration.
+
+Found 40 warnings and 0 errors.
+Finished in 100ms on 331 files with 93 rules using 18 threads.
+
+
+--- pnpm exec vp test --project node (exit 0) ---
+ RUN  /Users/jacksm5pro/dev/open-source/versionless
+
+{"preflight":"pass"}
+
+ Test Files  143 passed (143)
+      Tests  878 passed (878)
+   Start at  12:49:38
+   Duration  156.65s (transform 5.67s, setup 0ms, import 15.26s, tests 233.54s, environment 7ms)
+
+
+
+--- pnpm exec vp test --project node (exit 1) ---
+ RUN  /Users/jacksm5pro/dev/open-source/versionless
+
+{"preflight":"pass"}
+ ❯ |node| packages/cli/test/witness-angular-contacts-run.test.ts (4 tests | 1 failed) 2329ms
+     × launches two real linked-Witness browser clients through CRUD and network causality 2322ms
+
+ Test Files  1 failed | 142 passed (143)
+      Tests  1 failed | 877 passed (878)
+   Start at  12:52:15
+   Duration  145.02s (transform 6.08s, setup 0ms, import 15.97s, tests 219.72s, environment 6ms)
+
+
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |node| packages/cli/test/witness-angular-contacts-run.test.ts > Angular Contacts direct Witness > launches two real linked-Witness browser clients through CRUD and network causality
+Error: Angular Contacts actual linked Witness runtime evidence differs: {"actual":{"clients":[{"client":"client-a","interactions":{"click":6,"press":2,"type":4},"navigationCount":1,"navigationUrls":[{"queryOrFragmentRedacted":false,"url":"http://127.0.0.1:54462/","urlDigest":"b60ad42b856202ff4e33eda613bc8f75938b518df5af653a622b1da0ab6068aa"}],"serviceWorkerEvents":0},{"client":"client-b","interactions":{"click":0,"press":0,"type":0},"navigationCount":0,"navigationUrls":[],"serviceWorkerEvents":0}],"consoleErrors":[],"locality":{"loopbackOnly":true,"nonLoopbackUrls":[]},"networkMethods":["DELETE","GET","PATCH","POST"],"pageErrors":[],"requestFailures":[{"client":"client-a","lifecycle":[{"durationMs":15,"endTimeMs":1786384338016,"failedReason":null,"responseTimeMs":1786384338016,"startTimeMs":1786384338001,"status":200},{"durationMs":16,"endTimeMs":1786384338078,"failedReason":null,"responseTimeMs":1786384338078,"startTimeMs":1786384338062,"status":200},{"durationMs":3,"endTimeMs":1786384338305,"failedReason":null,"responseTimeMs":1786384338305,"startTimeMs":1786384338302,"status":200},{"durationMs":3,"endTimeMs":1786384338426,"failedReason":null,"responseTimeMs":1786384338426,"startTimeMs":1786384338423,"status":200},{"durationMs":3,"endTimeMs":1786384338598,"failedReason":null,"responseTimeMs":1786384338598,"startTimeMs":1786384338595,"status":200},{"durationMs":3,"endTimeMs":1786384338654,"failedReason":null,"responseTimeMs":1786384338654,"startTimeMs":1786384338651,"status":200},{"durationMs":3,"endTimeMs":1786384338764,"failedReason":null,"responseTimeMs":1786384338764,"startTimeMs":1786384338761,"status":200},{"durationMs":3,"endTimeMs":1786384338772,"failedReason":null,"responseTimeMs":1786384338772,"startTimeMs":1786384338769,"status":200},{"durationMs":3,"endTimeMs":1786384338814,"failedReason":null,"responseTimeMs":1786384338814,"startTimeMs":1786384338811,"status":200},{"durationMs":4,"endTimeMs":1786384338828,"failedReason":"net::ERR_ABORTED","responseTimeMs":null,"startTimeMs":1786384338824,"status":null},{"durationMs":5,"endTimeMs":1786384338190,"failedReason":null,"responseTimeMs":1786384338190,"startTimeMs":1786384338185,"status":200},{"durationMs":5,"endTimeMs":1786384338485,"failedReason":null,"responseTimeMs":1786384338485,"startTimeMs":1786384338480,"status":200},{"durationMs":6,"endTimeMs":1786384337952,"failedReason":null,"responseTimeMs":1786384337952,"startTimeMs":1786384337946,"status":200},{"durationMs":6,"endTimeMs":1786384338246,"failedReason":null,"responseTimeMs":1786384338246,"startTimeMs":1786384338240,"status":200},{"durationMs":6,"endTimeMs":1786384338834,"failedReason":null,"responseTimeMs":1786384338834,"startTimeMs":1786384338828,"status":200},{"durationMs":7,"endTimeMs":1786384338509,"failedReason":null,"responseTimeMs":1786384338509,"startTimeMs":1786384338502,"status":200},{"durationMs":7,"endTimeMs":1786384338544,"failedReason":null,"responseTimeMs":1786384338544,"startTimeMs":1786384338537,"status":200},{"durationMs":8,"endTimeMs":1786384338135,"failedReason":null,"responseTimeMs":1786384338135,"startTimeMs":1786384338127,"status":200},{"durationMs":8,"endTimeMs":1786384338376,"failedReason":null,"responseTimeMs":1786384338376,"startTimeMs":1786384338368,"status":200},{"durationMs":9,"endTimeMs":1786384338719,"failedReason":null,"responseTimeMs":1786384338719,"startTimeMs":1786384338710,"status":200}],"method":"GET","reason":"net::ERR_ABORTED","url":{"queryOrFragmentRedacted":false,"url":"http://127.0.0.1:54462/api/contacts","urlDigest":"9ed10946ce91eb386a7f13cbcd380768ff5b2e530decd59fe9bab676f007428c"}}],"totalInteractions":{"click":6,"press":2,"type":4},"totalNavigations":1},"expected":{"consoleErrors":0,"locality":"loopback-only","minimumInteractions":{"click":5,"press":2,"type":4},"minimumNavigations":1,"pageErrors":0,"requestFailures":0,"requiredNetworkMethods":["DELETE","GET","PATCH","POST"],"serviceWorkerEventsPerClient":0},"mismatches":["requestFailures"]}
+ ❯ verifyAngularContactsLinkedWitnessRuntime packages/cli/src/witness/angular-contacts-run.ts:374:9
+    372|  const diagnostic = diagnoseAngularContactsLinkedWitnessRuntime(client…
+    373|  if (diagnostic.mismatches.length !== 0)
+    374|   throw new Error(
+       |         ^
+    375|    `Angular Contacts actual linked Witness runtime evidence differs: $…
+    376|   );
+ ❯ runAngularContactsLinkedWitnessProbe packages/cli/src/witness/angular-contacts-run.ts:481:28
+ ❯ packages/cli/test/witness-angular-contacts-run.test.ts:411:18
+ ❯ .versionless/cache/pnpm-virtual-store/@voidzero-dev+vite-plus-test@0.1.20_@types+node@24.12.2_typescript@5.9.3_vite@8.0.16_@types+node@24.12.2_/node_modules/@voidzero-dev/vite-plus-test/dist/@vitest/runner/chunk-artifact.js:1903:22
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+

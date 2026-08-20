@@ -1,0 +1,11 @@
+{
+  "unitId": "T022a-conformance-ceiling",
+  "runId": "bank-demo-fleet-pipeline-p1b",
+  "attempt": 1,
+  "outcome": "completed",
+  "reason": "Opened the conformance ceiling: summary.verticals/sourceApplications are now numbers re-derived by assertCorpusSummaryDerived (called in the builder and in verifyCorpusConformanceDigest); designatedPilotsVerified stays a pinned literal. Added deriveRunRecordApplications, admitting a run only on proven classification + zero measured interventions + every stage ran, appended after the 18 sealed members, deduped and ordered by id. readRunRecords now carries stages, classification and basis paths; generate.ts passes them in. Nine new tests plus a split tampering assertion. Rebuilt dist once, regenerated trust offline: digest 8b8f69b1 -> 9227423d, freeze composite 27741d9c stable, matrix verbatim, corpus-conformance.json byte-identical. All ten verify commands green; npm test 2654 passed / 2 skipped.",
+  "agentId": "a4d8a7638b5b81f57",
+  "background": false,
+  "verdictDelivered": true,
+  "ts": "2026-08-17T21:03:05.728Z"
+}

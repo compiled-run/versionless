@@ -1,0 +1,12 @@
+{
+	"status": "completed",
+	"summary": "Ran the cypress-realworld-app holdout through the frozen React adapters. Freeze fingerprint recomputed to d9f75ef6...eb77 before and after; zero adapter bytes changed. Baseline lane green and byte-stable across two builds in the declared Node 14.16.1 cell (84 files, digest 57cea249...0028) from the committed frozen lockfile. Migrated lane RED, identically across two attempts: after 10181 modules, UNLOADABLE_DEPENDENCY on faker 5.5.3's ISO-8859-1 Italian name file (6 invalid UTF-8 bytes), reached from production code src/utils/transactionUtils.ts. Missing capability recorded as non-UTF-8 module source decoding; nothing patched. applicationFilesChanged=0 hand edits. Whole-repo gate green (tsc, lint, 1239 tests).",
+	"files_changed": [
+		"packages/cli/src/fixture/react-cypress-rwa-migration-run.ts",
+		"packages/cli/test/react-cypress-rwa-migration-run.test.ts",
+		"fixtures/react-cypress-rwa/vite.config.ts",
+		"evidence/runs/react-cypress-rwa/build-profile.json",
+		"evidence/runs/react-cypress-rwa/t008-run.md"
+	],
+	"open_questions": []
+}

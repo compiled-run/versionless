@@ -1,0 +1,20 @@
+{
+	"runId": "lrapr-t010",
+	"unitId": "u2-portfolio-rerun-and-gates",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t010/prompt-u2-portfolio-rerun-and-gates-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01RLgsfE8pDxYfiiox9ddKf2",
+	"promptId": "005971f7-8bc6-468d-993e-779a09adfb28",
+	"background": false,
+	"parallel": false,
+	"effort": "high",
+	"contract": [
+		"evidence/runs/clean-checkout-2026-08-14/**",
+		"evidence/trust/**",
+		"docs/goals/legacy-react-angular-production-readiness/**",
+		"fixtures/**"
+	],
+	"ts": "2026-08-14T10:20:38.366Z",
+	"pendingName": "00001786702838367955-83c6d330-u2-portfolio-rerun-and-gates.json"
+}

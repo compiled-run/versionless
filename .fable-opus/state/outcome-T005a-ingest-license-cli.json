@@ -1,0 +1,11 @@
+{
+  "unitId": "T005a-ingest-license-cli",
+  "runId": "bank-demo-fleet-pipeline",
+  "attempt": 1,
+  "outcome": "blocked",
+  "reason": "Delivered the generic ingest and license-at-pin operator stages: local-source admission with no allowlist and no per-app file, 14 named PipelineRefusals, wired into runOperatorCommand and into migrate behind opt-in --ingest, census regenerated 133->147 sites, 18 new tests all passing. Against the pinned papercups source the stage reproduces the sealed closure.json field-identically, the sealed licence artifact digests, and source.json's normalized manifest digest. Blocked on verification only: npm run trust:verify -- --offline fails with 'Provenance subjects differ from the exact distribution inventory', and the same cause fails 3 operator-flows tests. Cause is a stale packages/cli/dist rebuilt during T004; fixing it needs files outside my contract.",
+  "agentId": "ab2ccbc4dc59d6e75",
+  "background": false,
+  "verdictDelivered": true,
+  "ts": "2026-08-17T17:06:30.123Z"
+}

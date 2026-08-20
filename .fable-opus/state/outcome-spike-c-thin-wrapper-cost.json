@@ -1,0 +1,11 @@
+{
+	"unitId": "spike-c-thin-wrapper-cost",
+	"runId": "nts-t004",
+	"attempt": 1,
+	"outcome": "failed",
+	"reason": "worker reported status \"partial\": Gate zero passed for both candidates (shlink LICENSE MIT 249a8196..., sqlpad LICENSE.md MIT 93dec0b7...) with archives re-verified byte-identical offline. The spike stopped before the witness stage on two named gaps: the frozen React adapter refuses shlink's ejected-CRA tree (no react-scripts/Vite declaration), and shlink's own baseline cannot build on this host (webpack4 md4 hash, then node-sass 4.12 arm64/Node24 refusal). Comparator run on sqlpad's client showed migrate materialises only an entry document (1 written, 167 copied), not an installable Vite tree. Ledger: 37s machine, ~22min operator, 0 builds, 0 witness passes, 0 new TS lines. Verdict threeUnitsCredible=false (unreached, not refuted). tsc, lint, new test, freeze composite 27741d9c all verified; full node suite not run before budget.",
+	"agentId": "aa1f5fefe067a9d45",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-14T17:13:52.865Z"
+}

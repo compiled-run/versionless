@@ -1,0 +1,25 @@
+{
+	"runId": "lrapr-t005",
+	"unitId": "mj3-source-transforms-parity",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t005/prompt-mj3-source-transforms-parity-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_017tiVwiLPM1Mb593QPS9yh2",
+	"promptId": "8b97a260-6c02-4585-9540-afa9140b9786",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/frameworks/angular/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/test/**",
+		"evidence/runs/angular-jira-clone/**",
+		"fixtures/angular-jira-clone/**",
+		"package.json",
+		"pnpm-lock.yaml",
+		"pnpm-workspace.yaml"
+	],
+	"ts": "2026-08-11T07:36:00.106Z",
+	"pendingName": "00001786433760107240-0a83c9ea-mj3-source-transforms-parity.json"
+}

@@ -1,0 +1,30 @@
+{
+	"status": "completed",
+	"summary": "Admitted and ingested martinroob/tiny-translator v0.12.0 (commit 08dcacf6, 2017-12-08) as angular-tiny-translator-v0-12-0. All five gates passed: MIT LICENSE blob 67e75a82 (1068 B, Martin Roob), .angular-cli.json workspace format, Angular 5.0.3/CLI 1.5.4, era-coherent date, six code-backed journeys. Archive double-fetch byte-identical, 175/175 blobs reconciled, zero LFS pointers. Declared era cell Node 8.9.3 + yarn 1.3.2 (both digest-verified); frozen install exit 0 and BOTH production builds exit 0, no deviation. Corrected two scout claims (localStorage not IndexedDB; no GitHub-download feature). Recorded committed key.pem and the fonts.googleapis.com egress.",
+	"files_changed": [
+		"evidence/ingests/angular-tiny-translator-v0-12-0/admission.json",
+		"evidence/ingests/angular-tiny-translator-v0-12-0/attempt.json",
+		"evidence/ingests/angular-tiny-translator-v0-12-0/baseline-attempt.json",
+		"evidence/ingests/angular-tiny-translator-v0-12-0/closure.json",
+		"evidence/ingests/angular-tiny-translator-v0-12-0/license.json",
+		"evidence/ingests/angular-tiny-translator-v0-12-0/probe-ledger.ndjson",
+		"evidence/ingests/angular-tiny-translator-v0-12-0/probe-tree.json",
+		"evidence/ingests/angular-tiny-translator-v0-12-0/provenance.json",
+		"evidence/ingests/angular-tiny-translator-v0-12-0/reconciliation.json",
+		"evidence/ingests/angular-tiny-translator-v0-12-0/runtime-egress.json",
+		"evidence/ingests/angular-tiny-translator-v0-12-0/source.json",
+		"evidence/ingests/angular-tiny-translator-v0-12-0/transcript.ndjson",
+		"evidence/ingests/angular-tiny-translator-v0-12-0/drivers/acquire.mjs",
+		"evidence/ingests/angular-tiny-translator-v0-12-0/drivers/acquire-output.json",
+		"evidence/ingests/angular-tiny-translator-v0-12-0/drivers/reconcile.mjs",
+		"evidence/ingests/angular-tiny-translator-v0-12-0/drivers/reconcile-output.json",
+		"evidence/ingests/angular-tiny-translator-v0-12-0/drivers/baseline-install.sh",
+		"evidence/ingests/angular-tiny-translator-v0-12-0/drivers/baseline-build.sh",
+		"evidence/ingests/angular-tiny-translator-v0-12-0/drivers/facts.mjs",
+		"evidence/ingests/angular-tiny-translator-v0-12-0/drivers/facts-output.json",
+		"evidence/ingests/angular-tiny-translator-v0-12-0/drivers/ledger-append-cell.mjs",
+		"evidence/ingests/angular-tiny-translator-v0-12-0/drivers/validate.mjs",
+		"fixtures/angular-tiny-translator-v0-12-0/fixture.json"
+	],
+	"open_questions": []
+}

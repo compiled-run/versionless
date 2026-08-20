@@ -1,0 +1,11 @@
+{
+	"unitId": "u20c2i-leg-drivers-calibration",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Leg (d) is a hard, source-confirmed break: super-productivity v2.13.15 has NO dark-theme UI control (isDarkMode formly field commented out; /project-settings offers only primary/accent/warn colors), so 'toggle dark theme via the project-settings formly save' cannot be driven — matching the packet's own leg-d blocked clause. Legs (c)/(b) are drivable and I confirmed migrated dist-25 is clean (pageErrors 0) with all selectors resolving, but the live c+b drive hung on add-task-bar-input after the reload and captured no readings, so c+b are unmeasured and I will not pin guessed values. Extended the calibrate driver (dist-25 rebind + c+b probes) in-contract; tsc green. Blocking for a leg-d decision and a c+b re-cut.",
+	"agentId": "ac11dca4fa02ab3f2",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-12T14:07:56.946Z"
+}

@@ -1,0 +1,11 @@
+{
+	"unitId": "hx2-migration-under-freeze",
+	"runId": "lrapr-t008",
+	"attempt": 1,
+	"outcome": "failed",
+	"reason": "verify failed: sh -c 'git diff --name-only -- packages/frameworks packages/core/src/migrations packages/core/src/bundlers packages/core/src/analysis | wc -l | grep -qx \"0\"' (exit 1)",
+	"agentId": "ad475035f80de473a",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-11T13:09:20.408Z"
+}

@@ -1,0 +1,23 @@
+{
+	"runId": "lrapr-t017b",
+	"unitId": "g2e-migrated-lane-two-lane-determinism",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t017b/prompt-g2e-migrated-lane-two-lane-determinism-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_013hhMxKoWz4pumRbxrZvCD3",
+	"promptId": "3ad8eee0-0b0e-4f9e-9731-b11d2d2434bd",
+	"background": false,
+	"parallel": false,
+	"effort": "high",
+	"contract": [
+		"packages/cli/src/witness/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/src/receipts/witness-react-cypress-rwa.ts",
+		"packages/core/src/index.ts",
+		"packages/core/test/**",
+		"evidence/runs/react-cypress-rwa/**"
+	],
+	"ts": "2026-08-13T22:29:20.176Z",
+	"pendingName": "00001786660160177524-021a14ff-g2e-migrated-lane-two-lane-determinism.json"
+}

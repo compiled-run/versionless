@@ -1,0 +1,11 @@
+{
+	"unitId": "h1-cypress-rwa-holdout-rerun",
+	"runId": "lrapr-t017",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Re-ran the cypress-realworld-app React holdout against the re-frozen adapters (5de7df56, applied as-is). Baseline rebuilt x2 byte-stable (Node 14.16.1, digest 57cea249, reproduces tranche-one). Migrated lane: the new non-UTF-8 capability carries the build past faker (10181->10182 modules, full transform phase), then stops x2 on a NEW gap — react-virtualized 9.22.3 ESM MISSING_EXPORT bpfrpt_proptype_WindowScroller (babel-plugin-flow-react-proptypes dangling import), itemized to the byte. A completed RED falsification result. Published a new dated re-run receipt superseding the immutable tranche-one FAIL by reference; corpus ledger binds it as uncounted superseding verification. Fingerprint intact, 0 frozen bytes changed. Whole gate green: tsc, lint, 2134 node tests, offline receipt:verify.",
+	"agentId": "a994c9856bbf192e8",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-12T22:08:58.466Z"
+}

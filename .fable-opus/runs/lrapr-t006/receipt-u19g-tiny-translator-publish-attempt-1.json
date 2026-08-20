@@ -1,0 +1,11 @@
+{
+	"status": "partial",
+	"summary": "Calibrated three measured contradictions of the tiny-translator Witness schema and landed the harness for them: roots re-pinned from u17d/dist-7 to u19f/dist-11 (bound by file-sha256), per-lane console-error inventories pinned to the two measured refused-service-worker errors (era zone.js form vs migrated caught form), a new refusedServiceWorker evidence shape replacing the zero policy whose empty-workerEvents pin the attempt trace contradicts, and two Material selectors corrected from measurement. Mutation seam re-verified unique in dist-11 main.js at offset 1055648. Journey still red at the post-mark assertion (measured: view advances, list filters to untranslated, page shows '33 % translated'); reviewer half unmeasured. Nothing published. tsc/lint clean, 1933/1933 node tests pass.",
+	"files_changed": [
+		"packages/cli/src/witness/angular-tiny-translator-run.ts",
+		"packages/cli/src/witness/real-app-run.ts",
+		"packages/cli/src/fixture/angular-tiny-translator-calibrate-run.ts",
+		"packages/cli/test/witness-angular-tiny-translator-run.test.ts"
+	],
+	"open_questions": []
+}

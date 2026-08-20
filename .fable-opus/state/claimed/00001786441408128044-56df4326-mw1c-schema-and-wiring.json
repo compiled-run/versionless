@@ -1,0 +1,22 @@
+{
+	"runId": "lrapr-t005",
+	"unitId": "mw1c-schema-and-wiring",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t005/prompt-mw1c-schema-and-wiring-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01WxbWm2o81FMTqdQx535ifc",
+	"promptId": "8b97a260-6c02-4585-9540-afa9140b9786",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/cli/src/witness/**",
+		"packages/cli/test/**",
+		"packages/core/src/receipts/witness-angular-jira-clone.ts",
+		"packages/core/src/receipts/witness-real-app.ts",
+		"packages/core/src/index.ts",
+		"packages/core/test/**"
+	],
+	"ts": "2026-08-11T09:43:28.127Z",
+	"pendingName": "00001786441408128044-56df4326-mw1c-schema-and-wiring.json"
+}

@@ -1,0 +1,23 @@
+{
+	"runId": "lrapr-t017b",
+	"unitId": "g2g-two-lane-parity-determinism",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t017b/prompt-g2g-two-lane-parity-determinism-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01Wqd3RWL8U8oZ1nLGC6Dkrm",
+	"promptId": "d05a9229-66c9-4571-ad92-efc201065e8f",
+	"background": false,
+	"parallel": false,
+	"effort": "high",
+	"contract": [
+		"packages/cli/src/witness/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/src/receipts/witness-react-cypress-rwa.ts",
+		"packages/core/src/index.ts",
+		"packages/core/test/**",
+		"evidence/runs/react-cypress-rwa/**"
+	],
+	"ts": "2026-08-13T23:21:40.526Z",
+	"pendingName": "00001786663300527018-f8aa39a5-g2g-two-lane-parity-determinism.json"
+}

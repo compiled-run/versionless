@@ -1,0 +1,11 @@
+{
+	"unitId": "u17d-tiny-translator-final-green",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Closed the tiny-translator migrated lane. Five generic capabilities: deep-import-redirection (mirror of the barrel split; the installed 16.2.12 surface still exports UpdateAvailableEvent, correcting u17c's premise, so the demand was the specifier alone), entry-components-removal (analyzer-proven reach via declarations/bootstrap), module-with-providers-type-argument (T read from the static call receiver or enclosing class), widened-union-narrowing (TS2322-driven runtime typeof guard, difference declared), and webpack-tilde-style-specifier (fifth family surfaced only once the four cleared). Production build green, 524 files, deterministic across two runs, build-level parity by logical name recorded with its limits. 37 new tests; tsc clean, lint 0 errors, 1604/1604 node tests.",
+	"agentId": "ab982c98f78275ef7",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-11T21:53:44.274Z"
+}

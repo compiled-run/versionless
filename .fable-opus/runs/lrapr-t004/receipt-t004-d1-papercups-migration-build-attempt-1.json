@@ -1,0 +1,19 @@
+{
+	"status": "completed",
+	"summary": "Materialized papercups v1.0.0 (verified archive digest) into baseline/target work lanes, acquired dependencies under consent VL-LEGACY-CORPUS-2026-08-10 from the committed lockfile, and built both lanes twice: webpack 4.42.0/node 16.20.2 baseline deterministic, Vite 8.0.16/node 24.15.0 target deterministic with zero application source edits. Generalized the reusable React adapter with CRA capabilities (template placeholders, entry document synthesis, process.env defines, webpack tilde CSS specifiers, public/ replication), all application-agnostic and unit tested. Added fixture-scoped verification plus tests, and canonical evidence recording build-level parity only with browser gates left not-run. All six verification commands pass; no react-boilerplate regression (792 tests pass).",
+	"files_changed": [
+		"packages/frameworks/react/src/react-cra-vite-adapter.ts",
+		"packages/frameworks/react/src/index.ts",
+		"packages/frameworks/react/test/react-cra-vite-adapter.test.ts",
+		"packages/cli/src/fixture/react-papercups-v1-0-0-vite8.ts",
+		"packages/cli/test/react-papercups-v1-0-0-vite8.test.ts",
+		"fixtures/react-papercups-v1-0-0/vite.config.ts",
+		"evidence/runs/react-papercups-v1-0-0/build-profile.json",
+		"evidence/runs/react-papercups-v1-0-0/t004-run.json",
+		"evidence/runs/react-papercups-v1-0-0/t004-run.md"
+	],
+	"open_questions": [
+		"The Vite target emits no service-worker/precache counterpart to the CRA baseline; recorded as a baseline-only output, unresolved and blocking any offline-journey claim.",
+		"jsx-in-.js, svgr, and absolute-import capabilities were not implemented because papercups does not exercise them; the mycrypto cross-proof may require them."
+	]
+}

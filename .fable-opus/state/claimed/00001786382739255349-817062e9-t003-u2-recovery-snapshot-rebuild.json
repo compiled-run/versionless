@@ -1,0 +1,17 @@
+{
+	"runId": "lrapr-t1",
+	"unitId": "t003-u2-recovery-snapshot-rebuild",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t1/prompt-t003-u2-recovery-snapshot-rebuild-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_011qJN5XTxjVBiDGRbdKiu5F",
+	"promptId": "898b7392-7c0b-482b-abb0-2bc9b00d4a6d",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"docs/goals/legacy-react-angular-production-readiness/notes/pre-goal-recovery-manifest.json"
+	],
+	"ts": "2026-08-10T17:25:39.254Z",
+	"pendingName": "00001786382739255349-817062e9-t003-u2-recovery-snapshot-rebuild.json"
+}

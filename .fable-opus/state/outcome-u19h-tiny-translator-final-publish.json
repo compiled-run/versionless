@@ -1,0 +1,11 @@
+{
+	"unitId": "u19h-tiny-translator-final-publish",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Calibration found a real cross-lane behavioral break, so nothing was published. Migrated (Angular 16.2) silently discards a typed translation: textarea.ng-dirty set in both lanes, but app-normalized-message-input stays ng-pristine, undo never enables (>11s) and the exported XLIFF carries state=final with the ORIGINAL text; baseline (Angular 5) propagates within ~200ms. App source is a faithful .debounceTime->.pipe(debounceTime) translation, so this is a runtime regression invisible to both build lanes. Landed real measured journey corrections (filter-label selectors, reviewer-half semantics, download settle, debounce anchor); tsc and lint clean.",
+	"agentId": "a9a51e99072dbb97d",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-12T06:02:16.695Z"
+}

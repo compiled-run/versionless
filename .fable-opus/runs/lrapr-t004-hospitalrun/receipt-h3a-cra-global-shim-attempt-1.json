@@ -1,0 +1,14 @@
+{
+	"status": "blocked",
+	"summary": "Added the generic CRA global-compatibility capability (craGlobalIdentifierDefines + createCraGlobalIdentifierPlugin, wired into createCraViteAdapter so all consumers inherit it) with 3 tests that build real Vite bundles and evaluate them in a global-less vm realm. Whole gate green: tsc, lint, pack, 855/855 tests, offline receipt:verify. HospitalRun target rebuilt x2 deterministic (27fd5df5...); the global ReferenceError is gone but the boot probe still fails with a different generic webpack-4 gap: Node core modules (stream/util/crypto) resolve to Vite's browser-external stub, so readable-stream 1.x throws at inherits and #root stays empty. Receipt regeneration and baseline rebuild withheld; papercups impact measured, not regenerated.",
+	"files_changed": [
+		"packages/frameworks/react/src/react-cra-vite-adapter.ts",
+		"packages/frameworks/react/test/react-cra-vite-adapter.test.ts"
+	],
+	"open_questions": [
+		"Boot still fails after the global fix: TypeError 'Object prototype may only be an Object or null: undefined' at inherits, because webpack 4 auto-polyfilled Node core modules (node-libs-browser) and Vite resolves them to __vite-browser-external. 12 stub requires: stream (sublevel-pouchdb/readable-stream, level-iterator-stream/readable-stream, root readable-stream), util (BufferList, debuglog), crypto (pouchdb-quick-search). Should the next unit add a second generic capability reproducing webpack 4's node-libs-browser resolution table using shim packages already present in the app's own closure (failing loudly when absent), or is another mechanism preferred?",
+		"HospitalRun receipt/build-profile regeneration is withheld because the migrated build still does not boot: regenerate now recording 'gate caught two real runtime breaks', or after the node-core-module capability lands so the receipt can record a booting build?",
+		"The superseded receipt's lane digests (302e499b/9fedeeb1) are not reproducible from its own recorded file lists under any scheme I tried; papercups' scheme sha256(canonicalize(files)) reproduces its lane digests exactly and is what my rebuild used (27fd5df5...). Confirm the regenerated HospitalRun profile should adopt and explicitly record that scheme.",
+		"Papercups regeneration schedule: with the shim its target lane digest moves 3a3fd4ba -> ee51defd; changed files are assets/index-Ckm7yL2X.js -> assets/index-CLRIxk-j.js (+40 bytes, 10 global -> globalThis), its .js.map, and index.html. All CSS and public assets are byte-identical. Which unit regenerates build-profile.json and the witness receipt abd33d56 lane artifacts?"
+	]
+}

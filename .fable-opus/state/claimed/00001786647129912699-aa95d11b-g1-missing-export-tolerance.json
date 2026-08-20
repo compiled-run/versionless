@@ -1,0 +1,25 @@
+{
+	"runId": "lrapr-t017b",
+	"unitId": "g1-missing-export-tolerance",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t017b/prompt-g1-missing-export-tolerance-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01REQFc9Y186yKRAdkgTmLqy",
+	"promptId": "24c4e819-a57b-426d-bd77-1834a01557a9",
+	"background": false,
+	"parallel": false,
+	"effort": "high",
+	"contract": [
+		"packages/frameworks/react/**",
+		"packages/core/src/migrations/**",
+		"packages/core/src/bundlers/**",
+		"packages/core/src/analysis/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/test/**",
+		"fixtures/**",
+		"evidence/runs/react-cypress-rwa/**"
+	],
+	"ts": "2026-08-13T18:52:09.911Z",
+	"pendingName": "00001786647129912699-aa95d11b-g1-missing-export-tolerance.json"
+}

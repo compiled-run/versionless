@@ -1,0 +1,15 @@
+{
+	"status": "partial",
+	"summary": "Landed the tiny-translator AppSpec/journey in real-app-run.ts (both opt-ins declared, file-input load asserted as the FileReader parity arbitration, download capture parsed for the typed translation, per-lane mat-icon degradations, filter narrow/clear, localStorage persistence, scroll-absence measurement), the generic file-input/download inventory builders and their executeRun wiring, capturedDownloadTexts on the host, the dedicated runner with regenerate-if-missing plus u17d inventory verification, and two test files. Whole-repo gate green: tsc clean, lint 0 errors, 1912/1912. Verified dist-7 is present and matches u17d (30c5c3be...). No browser pass ran, so navigation count, console inventories, scroll absence and Material selectors are uncalibrated.",
+	"files_changed": [
+		"packages/cli/src/witness/real-app-run.ts",
+		"packages/cli/src/witness/playwright-host.ts",
+		"packages/cli/src/witness/angular-tiny-translator-run.ts",
+		"packages/cli/test/witness-angular-tiny-translator-run.test.ts",
+		"packages/cli/test/witness-file-input-and-download-mechanisms.test.ts"
+	],
+	"open_questions": [
+		"Packet premise was wrong: the migrated stage tree is intact and dist-7 reproduces the u17d inventory exactly (recomputed inventorySha256 30c5c3be8143fc0697b6829208ed30cd1e6b281db63bdcd834a571c74692e0e1). Regeneration was encapsulated but not exercised.",
+		"A calibration unit is needed before publish: one baseline and one migrated pass to fix TINY_TRANSLATOR_JOURNEY_NAVIGATIONS (currently 6), pin the per-lane console-error inventory (answering the gstatic woff2 in-context with an empty body will probably make Chrome log a font-decode error in the migrated lane, so the empty inventory may be wrong there), confirm scroll absence at 1280x1024, and confirm the Material 5-vs-16 selectors mat-tooltip-component, mat-radio-button[value=...] and button:text-is(...)."
+	]
+}

@@ -1,0 +1,11 @@
+{
+	"unitId": "u18-super-productivity-migration-lanes",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "failed",
+	"reason": "worker reported status \"partial\": Delivered the era baseline lane and the composed changeset. Era lane is truthfully NOT byte-stable: three consecutive green rebuilds emit three distinct main chunks, chased to Sass random() at daily-summary.component.scss:184 inlined into the app chunk; styles.css is stable, consistent with that cause. Changeset over the pinned tree: 20/494 application files changed, 3 workspace, 5 unhandled, 8 declared differences, digests throughout. Added 12 registry-measured Angular-16 cell dispositions incl. jira2md (^3.0.1, no peers, git specifier dropped) and both floating-latest deps. 20 tests; overfitting guard extended and it caught my own owner-name leak. Owed: migrated lane entirely (apply, closure install, build x2, parity-or-red). Gate green: tsc clean, lint 0 errors, 1619/1619.",
+	"agentId": "a147dcb8ca4121c4a",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-11T22:14:19.596Z"
+}

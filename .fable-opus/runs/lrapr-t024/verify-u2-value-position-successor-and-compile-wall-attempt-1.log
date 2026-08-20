@@ -1,0 +1,299 @@
+--- pnpm exec tsc --noEmit (exit 0) ---
+
+
+--- pnpm exec vp lint (exit 0) ---
+
+  ! eslint(no-unused-vars): Identifier 'cp' is imported but never used.
+   ,-[packages/cli/src/fixture/angular-realworld-v15-to-v16-ingest.ts:5:2]
+ 4 |     access,
+ 5 |     cp,
+   :     ^|
+   :      `-- 'cp' is imported here
+ 6 |     mkdir,
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Variable 'umiMajor' is declared but never used. Unused variables should start with a '_'.
+     ,-[packages/cli/src/fixture/react-kafka-ui-v0-3-3-ingest.ts:774:9]
+ 773 |         const webpackMajor = selectedPackage.webpackMajor;
+ 774 |         const umiMajor = selectedPackage.umiMajor ?? null;
+     :               ^^^^|^^^
+     :                   `-- 'umiMajor' is declared here
+ 775 |         const craMajor = selectedPackage.craMajor ?? null;
+     `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unsafe-optional-chaining): Unsafe usage of optional chaining
+     ,-[packages/core/test/corpus-conformance.test.ts:879:11]
+ 878 |         expect(earlier).toBeDefined();
+ 879 |         expect((earlier?.source as Record<string, unknown>).revision).toBe(
+     :                 ^^^^^^^^^^^^^^^
+ 880 |             verified.receipt.source.revision,
+     `----
+  help: If this short-circuits with 'undefined' the evaluation will throw TypeError
+
+  ! eslint(no-unsafe-optional-chaining): Unsafe usage of optional chaining
+     ,-[packages/core/test/corpus-conformance.test.ts:942:5]
+ 941 |         expect(verified.receipt.source.revision).toBe(
+ 942 |             (killedbygoogle?.source as Record<string, unknown>).revision,
+     :              ^^^^^^^^^^^^^^^^^^^^^^
+ 943 |         );
+     `----
+  help: If this short-circuits with 'undefined' the evaluation will throw TypeError
+
+  ! eslint(no-unsafe-optional-chaining): Unsafe usage of optional chaining
+     ,-[packages/core/test/corpus-conformance.test.ts:945:5]
+ 944 |         expect(verified.receipt.source.archiveSha256).toBe(
+ 945 |             (killedbygoogle?.source as Record<string, unknown>).archiveSha256,
+     :              ^^^^^^^^^^^^^^^^^^^^^^
+ 946 |         );
+     `----
+  help: If this short-circuits with 'undefined' the evaluation will throw TypeError
+
+  ! eslint(no-unused-vars): Identifier 'cp' is imported but never used.
+   ,-[packages/cli/src/fixture/angular-realworld-v15-ingest.ts:5:2]
+ 4 |     access,
+ 5 |     cp,
+   :     ^|
+   :      `-- 'cp' is imported here
+ 6 |     mkdir,
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Variable 't643StartPath' is declared but never used. Unused variables should start with a '_'.
+    ,-[packages/cli/src/fixture/angular-realworld-production-parity-run.ts:29:7]
+ 28 | const t643AttemptDirectory = path.join(output, 'attempts');
+ 29 | const t643StartPath = path.join(t643AttemptDirectory, 't643-start.json');
+    :       ^^^^^^|^^^^^^
+    :             `-- 't643StartPath' is declared here
+ 30 | const t643ReceiptPath = path.join(t643AttemptDirectory, 't643-receipt.json');
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Identifier 'rm' is imported but never used.
+   ,-[packages/cli/src/fixture/react-sqlpad-v5-5-0-ingest.ts:2:52]
+ 1 | import { createHash } from 'node:crypto';
+ 2 | import { access, mkdir, readFile, readdir, rename, rm, writeFile } from 'node:fs/promises';
+   :                                                    ^|
+   :                                                     `-- 'rm' is imported here
+ 3 | import { request } from 'node:https';
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'WITNESS_NEXT_KILLED_BY_GOOGLE_TRACKED_EVENTS' is imported but never used.
+    ,-[packages/core/test/witness-next-killedbygoogle-receipt.test.ts:13:2]
+ 12 |     WITNESS_NEXT_KILLED_BY_GOOGLE_SCHEMA,
+ 13 |     WITNESS_NEXT_KILLED_BY_GOOGLE_TRACKED_EVENTS,
+    :     ^^^^^^^^^^^^^^^^^^^^^^|^^^^^^^^^^^^^^^^^^^^^
+    :                           `-- 'WITNESS_NEXT_KILLED_BY_GOOGLE_TRACKED_EVENTS' is imported here
+ 14 |     witnessNextKilledByGoogleBehaviorDigest,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Type alias 'RefRow' is declared but never used.
+    ,-[packages/cli/src/fixture/react-strapi-ingest.ts:38:6]
+ 37 | 
+ 38 | type RefRow = { ref: string; object: { type: 'commit' | 'tag'; sha: string } };
+    :      ^^^|^^
+    :         `-- 'RefRow' is declared here
+ 39 | type Candidate = {
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Variable 'umiMajor' is declared but never used. Unused variables should start with a '_'.
+     ,-[packages/cli/src/fixture/react-strapi-ingest.ts:967:9]
+ 966 |         const webpackMajor = selectedPackage.webpackMajor;
+ 967 |         const umiMajor = selectedPackage.umiMajor ?? null;
+     :               ^^^^|^^^
+     :                   `-- 'umiMajor' is declared here
+ 968 |         const craMajor = selectedPackage.craMajor ?? null;
+     `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Variable 'umiMajor' is declared but never used. Unused variables should start with a '_'.
+     ,-[packages/cli/src/fixture/react-unleash-ingest.ts:934:9]
+ 933 |         const webpackMajor = selectedPackage.webpackMajor;
+ 934 |         const umiMajor = selectedPackage.umiMajor ?? null;
+     :               ^^^^|^^^
+     :                   `-- 'umiMajor' is declared here
+ 935 |         const craMajor = selectedPackage.craMajor ?? null;
+     `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Variable 'craMajor' is declared but never used. Unused variables should start with a '_'.
+     ,-[packages/cli/src/fixture/react-unleash-ingest.ts:935:9]
+ 934 |         const umiMajor = selectedPackage.umiMajor ?? null;
+ 935 |         const craMajor = selectedPackage.craMajor ?? null;
+     :               ^^^^|^^^
+     :                   `-- 'craMajor' is declared here
+ 936 |         const viteMajor = selectedPackage.viteMajor ?? null;
+     `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Identifier 'NODE_ARCHIVE_SHA256' is imported but never used.
+    ,-[packages/cli/src/fixture/angular-realworld-v15-to-v16-run.ts:14:27]
+ 13 | } from './angular-realworld-v15-to-v16-ingest.ts';
+ 14 | import { CHROMIUM_SHA256, NODE_ARCHIVE_SHA256 } from './angular-realworld-v15-ingest.ts';
+    :                           ^^^^^^^^^|^^^^^^^^^
+    :                                    `-- 'NODE_ARCHIVE_SHA256' is imported here
+ 15 | 
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'withQuery' is imported but never used.
+    ,-[packages/cli/src/fixture/react-verdaccio-ingest.ts:16:29]
+ 15 | import { basename, dirname, join, relative, resolve } from 'pathe';
+ 16 | import { joinURL, parseURL, withQuery } from 'ufo';
+    :                             ^^^^|^^^^
+    :                                 `-- 'withQuery' is imported here
+ 17 | import { canonicalize, sha256 } from '../../../core/src/receipts/canonicalize.ts';
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Type alias 'RefRow' is declared but never used.
+    ,-[packages/cli/src/fixture/react-verdaccio-ingest.ts:36:6]
+ 35 | 
+ 36 | type RefRow = { ref: string; object: { type: 'commit' | 'tag'; sha: string } };
+    :      ^^^|^^
+    :         `-- 'RefRow' is declared here
+ 37 | type Candidate = {
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Identifier 'withQuery' is imported but never used.
+    ,-[packages/cli/src/fixture/react-apisix-dashboard-ingest.ts:16:29]
+ 15 | import { basename, dirname, join, relative, resolve } from 'pathe';
+ 16 | import { joinURL, parseURL, withQuery } from 'ufo';
+    :                             ^^^^|^^^^
+    :                                 `-- 'withQuery' is imported here
+ 17 | import { canonicalize, sha256 } from '../../../core/src/receipts/canonicalize.ts';
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Variable 'hex40' is declared but never used. Unused variables should start with a '_'.
+    ,-[packages/cli/src/fixture/react-apisix-dashboard-ingest.ts:30:7]
+ 29 | const cacheRoot = join(root, '.versionless/cache/react-apisix-dashboard-source-t684');
+ 30 | const hex40 = createRegExp(
+    :       ^^|^^
+    :         `-- 'hex40' is declared here
+ 31 |     charIn('0123456789').from('a', 'f').times(40).at.lineStart().at.lineEnd(),
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Type alias 'RefRow' is declared but never used.
+    ,-[packages/cli/src/fixture/react-apisix-dashboard-ingest.ts:37:6]
+ 36 | 
+ 37 | type RefRow = { ref: string; object: { type: 'commit' | 'tag'; sha: string } };
+    :      ^^^|^^
+    :         `-- 'RefRow' is declared here
+ 38 | type Candidate = {
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Type alias 'RefRow' is declared but never used.
+    ,-[packages/cli/src/fixture/react-appsmith-ingest.ts:38:6]
+ 37 | 
+ 38 | type RefRow = { ref: string; object: { type: 'commit' | 'tag'; sha: string } };
+    :      ^^^|^^
+    :         `-- 'RefRow' is declared here
+ 39 | type Candidate = {
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Variable 'umiMajor' is declared but never used. Unused variables should start with a '_'.
+      ,-[packages/cli/src/fixture/react-appsmith-ingest.ts:1011:9]
+ 1010 |         const webpackMajor = selectedPackage.webpackMajor;
+ 1011 |         const umiMajor = selectedPackage.umiMajor ?? null;
+      :               ^^^^|^^^
+      :                   `-- 'umiMajor' is declared here
+ 1012 |         const craMajor = selectedPackage.craMajor ?? null;
+      `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Type alias 'RefRow' is declared but never used.
+    ,-[packages/cli/src/fixture/react-mattermost-ingest.ts:39:6]
+ 38 | 
+ 39 | type RefRow = { ref: string; object: { type: 'commit' | 'tag'; sha: string } };
+    :      ^^^|^^
+    :         `-- 'RefRow' is declared here
+ 40 | type Candidate = {
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Variable 'umiMajor' is declared but never used. Unused variables should start with a '_'.
+     ,-[packages/cli/src/fixture/react-mattermost-ingest.ts:954:9]
+ 953 |         const webpackMajor = selectedPackage.webpackMajor;
+ 954 |         const umiMajor = selectedPackage.umiMajor ?? null;
+     :               ^^^^|^^^
+     :                   `-- 'umiMajor' is declared here
+ 955 |         const craMajor = selectedPackage.craMajor ?? null;
+     `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-extra-boolean-cast): Redundant Boolean call
+     ,-[packages/cli/src/fixture/vite8-shared-adapter-cohort-run.ts:148:8]
+ 147 |                 violations.push('url-not-canonical');
+ 148 |             if (Boolean(parseURL(candidate.url).host)) violations.push('url-remote');
+     :                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 149 |         }
+     `----
+  help: Remove the Boolean call as it will already be coerced to a boolean
+
+  ! eslint-plugin-unicorn(no-useless-spread): Using a spread operator here creates a new array unnecessarily.
+     ,-[packages/cli/src/fixture/vite8-shared-adapter-cohort-run.ts:208:13]
+ 207 |         actualValidation,
+ 208 |         missing: [...expected.filter((entry) => !actualByPath.has(entry.path))].sort(
+     :                   ^^^
+ 209 |             (left, right) => compareUtf16CodeUnits(left.path, right.path),
+     `----
+  help: `expected.filter` returns a new array. Spreading it into an array expression to create a new array is redundant.
+
+  ! eslint-plugin-unicorn(no-useless-spread): Using a spread operator here creates a new array unnecessarily.
+     ,-[packages/cli/src/fixture/vite8-shared-adapter-cohort-run.ts:211:16]
+ 210 |         ),
+ 211 |         unexpected: [...actual.filter((entry) => !expectedByPath.has(entry.path))].sort(
+     :                      ^^^
+ 212 |             (left, right) => compareUtf16CodeUnits(left.path, right.path),
+     `----
+  help: `actual.filter` returns a new array. Spreading it into an array expression to create a new array is redundant.
+
+  ! eslint(no-unused-vars): Identifier 'WITNESS_REACT_CYPRESS_RWA_PLACEHOLDERS' is imported but never used.
+   ,-[packages/core/src/receipts/holdout-react-cypress-rwa-witness.ts:6:2]
+ 5 |     summarizeWitnessReactCypressRwaTwoLaneParity,
+ 6 |     WITNESS_REACT_CYPRESS_RWA_PLACEHOLDERS,
+   :     ^^^^^^^^^^^^^^^^^^^|^^^^^^^^^^^^^^^^^^
+   :                        `-- 'WITNESS_REACT_CYPRESS_RWA_PLACEHOLDERS' is imported here
+ 7 |     WITNESS_REACT_CYPRESS_RWA_ROUTES,
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Variable 'KBG_FILTER' is declared but never used. Unused variables should start with a '_'.
+      ,-[packages/cli/src/witness/real-app-run.ts:2094:7]
+ 2093 | const KBG_SEARCH_BOX = '#searchBox' as const;
+ 2094 | const KBG_FILTER = '#listFilter' as const;
+      :       ^^^^^|^^^^
+      :            `-- 'KBG_FILTER' is declared here
+ 2095 | const KBG_FILTER_INPUT = '#react-select-filter-select-input' as const;
+      `----
+  help: Consider removing this declaration.
+
+Found 28 warnings and 0 errors.
+Finished in 92ms on 568 files with 93 rules using 18 threads.
+
+
+--- pnpm exec vp test --project node (exit 0) ---
+ RUN  /Users/jacksm5pro/dev/open-source/versionless
+
+{"preflight":"pass"}
+
+ Test Files  238 passed (238)
+      Tests  2380 passed (2380)
+   Start at  01:29:36
+   Duration  151.26s (transform 8.97s, setup 0ms, import 29.86s, tests 232.56s, environment 12ms)
+
+
+
+--- sh -c 'test "$(git rev-parse HEAD:packages/frameworks/react)" = "972ca80155bbc2a6eb3779943cd481b71d35e803" && echo REACT-INTACT' (exit 0) ---
+REACT-INTACT
+
+

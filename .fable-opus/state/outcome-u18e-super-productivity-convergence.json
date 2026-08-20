@@ -1,0 +1,11 @@
+{
+	"unitId": "u18e-super-productivity-convergence",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Added two surface-verified Angular capabilities: unparameterised-base-class (TS2314-driven, fills a generic base class's type argument from the installed declaration plus its companion type, binding-resolved) and declared-type-member-rename (TS2339 with a declared receiver, two-sided member-surface check). Fired on 5 application files: 2 formly components parameterised, 3 @ngrx/entity addAll→setAll. Production build 57→33 diagnostics (TS2314 2→0, TS2740 2→0, TS2339 17→0, TS2322 7→4); still red, remainder itemized in the u18e record. rxjs/internal-compatibility and mat-chip-list were read and refused on the reading, not skipped. to→props proved unnecessary: the installed core still publishes the deprecated getter. tsc, lint, and 1698 node tests green.",
+	"agentId": "a7a2bd2d8ea441a3d",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-12T00:14:05.518Z"
+}

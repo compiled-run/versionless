@@ -1,0 +1,11 @@
+{
+	"unitId": "u20-super-productivity-witness",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Reconnaissance only; no files written. Established both lanes' dists are on disk and usable, the ngsw census matches the packet (both lanes ship ngsw), and the 19+1 accommodation inventory is final as of u18h. Found two packet corrections: the Google Fonts seam is asymmetric across lanes (era = one googleapis CSS link; migrated = inlined CSS with ~20 direct gstatic woff/woff2 URLs), and persistence is IndexedDB via localforage rather than localStorage. Cut the unit per the mw1 precedent: schema+wiring / journey+runner+calibration / publish. Declined to land the drag-surface wiring because that membership must be earned by a measured drag.",
+	"agentId": "ae97c3d10d0f31928",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-12T07:33:49.969Z"
+}

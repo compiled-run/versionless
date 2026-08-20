@@ -1,0 +1,18 @@
+{
+  "runId": "bank-demo-fleet-pipeline-p1c",
+  "unitId": "T035-enterprise-rederivation-test-pin",
+  "attempt": 1,
+  "promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/bank-demo-fleet-pipeline-p1c/prompt-T035-enterprise-rederivation-test-pin-attempt-1.md",
+  "subagentType": "opus-worker",
+  "toolUseId": "toolu_01Pc1AshHDukZDqnpfSamKQH",
+  "promptId": "1ea04f9b-6b17-4d84-bfd2-155a5ea1aa08",
+  "background": false,
+  "parallel": false,
+  "effort": null,
+  "contract": [
+    "packages/cli/src/enterprise/enterprise-report-run.ts",
+    "packages/cli/test/corpus-conformance.test.ts"
+  ],
+  "ts": "2026-08-18T00:28:28.772Z",
+  "pendingName": "00001787012908773736-f9d20c32-T035-enterprise-rederivation-test-pin.json"
+}

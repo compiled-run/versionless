@@ -1,0 +1,25 @@
+{
+	"status": "blocked",
+	"summary": "Delivered the generic custom-webpack absorption capability (statically reads the fragment, matches each declared capability against the official builder's native postcss pipeline, restores the devkit builder, releases @angular-builders/custom-webpack; all-or-nothing, no app-specific branch), plus generic cli.defaultCollection->schematicCollections and @angular-eslint family alignment. extractCss fell out of the pre-existing generic removed-option table. Migration recorded: 0/116 application files changed, 3 workspace files, digests itemized. Era lane green: production build x2, 24 files, byte-stable and byte-identical to the ingest deviation build. Migrated lane red at closure install (ERESOLVE). tsc, lint, and all 1029 node tests pass.",
+	"files_changed": [
+		"packages/frameworks/angular/src/custom-webpack-absorption.ts",
+		"packages/frameworks/angular/src/angular-workspace-migration.ts",
+		"packages/frameworks/angular/src/angular-cli-era-migration.ts",
+		"packages/frameworks/angular/src/angular-target-cell.ts",
+		"packages/frameworks/angular/src/index.ts",
+		"packages/frameworks/angular/test/custom-webpack-absorption.test.ts",
+		"packages/cli/src/fixture/angular-jira-clone-migration-run.ts",
+		"packages/cli/src/fixture/angular-jira-clone-build-lanes-run.ts",
+		"packages/cli/test/angular-jira-clone-lanes.test.ts",
+		"evidence/runs/angular-jira-clone/mj1-source-migration.json",
+		"evidence/runs/angular-jira-clone/mj1-era-baseline.json",
+		"evidence/runs/angular-jira-clone/mj1-migrated-lane.json"
+	],
+	"open_questions": [
+		"Era lane state: GREEN and byte-stable. `npx ng build --configuration production` on the restored cache, native Node 16.20.2 / npm 8.19.4, run twice, 24 files each, identical inventories, and byte-identical to the a2 ingest's deviation build (reproducesIngestBuild true). Carries the one recorded deviation: extractCss deleted from angular.json in the git-ignored tree.",
+		"Migrated lane state: RED at closure install, before any build. `npm install --no-audit --no-fund` under consent VL-LEGACY-CORPUS-2026-08-10 / VERSIONLESS_NETWORK_MODE=consented failed with npm ERESOLVE; no tarball was fetched, so there is no acquired URL or digest to record. First conflict: @ant-design/icons-angular@13.1.0 peers @angular/common@^13.0.1 against the aligned root ^16.2.0.",
+		"Cut line: the adapter's cell aligns @angular/*, @angular-devkit/*, @schematics/*, @ngrx/*, @angular-eslint/* and the karma/jasmine toolchain. It says nothing about the Angular-major-coupled COMMUNITY library layer this application has and factoriolab did not: ng-zorro-antd 13, @ant-design/icons-angular 13, @datorama/akita 7 with akita-ng-entity-service / akita-ng-router-store / akita-ngdevtools, @ngneat/{content-loader,until-destroy,tailwind}, @sentry/angular 6, ngx-quill 16, @storybook/angular 6 plus four addons, and codelyzer 6 / nz-tslint-rules (a TSLint line with no Angular 16 release at all). Each declares a peer range on the Angular major, so every era copy refuses the target line.",
+		"Decision needed before a retry: should the cell gain an `ecosystemPackages` table (same generic shape as the existing `testPackages`, keyed by package name, applied to any manifest) naming the version each community library publishes for the target Angular major? That is generic in form, but populating it honestly needs registry-verified versions per package, and the codelyzer/nz-tslint-rules pair has no Angular 16 successor at all — dropping them is a decision about the application's lint cell, not a mechanical rewrite.",
+		"Scope warning for the re-cut: this is very likely NOT a config-only hop. ng-zorro 13->16, Akita's Angular bindings, and @ngneat/until-destroy 8->v10+ carry API changes, so applicationFilesChanged will probably move off 0 and may need one or more new source transforms. I would cut it as: (a) one unit to declare and evidence the ecosystem table and get the closure to resolve, (b) one unit for the migrated build plus whatever source transforms the compiler then demands, (c) build-level parity. Attempting all three in one unit is what ran this one past its budget."
+	]
+}

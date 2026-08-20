@@ -1,0 +1,14 @@
+{
+	"status": "blocked",
+	"summary": "Landed the generic CRA node-core-module capability in the React Vite adapter: webpack 4's node-libs-browser table, lazy per-need resolution from the application's own closure with a loud module-naming failure when a shim is absent, plus webpack's injected process/Buffer/setImmediate bootstrap and an opt-in entry-document hook. 21 adapter unit tests including real Vite control/adapted builds evaluated in a browser-shaped realm. Whole repo gate green (tsc, lint, pack, 863 node tests, offline receipt:verify). HospitalRun target now builds, but boot still fails on a third, different generic gap outside this packet, so no rebuild x2, no boot proof and no receipt regeneration were performed.",
+	"files_changed": [
+		"packages/frameworks/react/src/react-cra-vite-adapter.ts",
+		"packages/frameworks/react/test/react-cra-vite-adapter.test.ts",
+		"packages/cli/src/fixture/react-hospitalrun-vite8-run.ts"
+	],
+	"open_questions": [
+		"Boot still fails after this capability. Exact error: `ReferenceError: txt is not defined`, #root innerHTML length 0, zero console errors, zero failed requests. Source located via the bundle sourcemap: node_modules/md5-jkmyers/src/md5.js line 101 executes `txt = '';` against an undeclared variable; the package reaches the graph through pouchdb-quick-search, an application dependency. webpack 4 wrapped CommonJS modules in sloppy-mode functions so the assignment created an implicit global; Vite/rolldown emits strict-mode ESM so it throws at load. This is a third generic CRA->Vite gap of a different family (CJS sloppy-mode semantics), not the node-core-module table. Does the PM want a third generic capability cut as its own unit (e.g. preserving webpack's non-strict CommonJS evaluation, or a scoped implicit-global declaration for CJS dependencies), and should HospitalRun's rebuild-x2 + boot + receipt regeneration move to that unit?",
+		"No shim was missing: every entry the graph asked for (stream, util, crypto, buffer, process, timers, and their transitive requires) resolved from the application's own closure via node-libs-browser's hoisted placements. The capability failed nothing.",
+		"Confirmed for the receipt work when unblocked: sha256(canonicalize(files)) reproduces all four papercups lane digests exactly, and reproduces none of HospitalRun's four recorded lane digests (302e499b... baseline, 9fedeeb1... target), so the superseded digests are indeed unreproducible under that scheme."
+	]
+}

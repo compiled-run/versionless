@@ -1,0 +1,23 @@
+{
+	"runId": "lrapr-t021",
+	"unitId": "u4-app-source-transform-wall",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t021/prompt-u4-app-source-transform-wall-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_018KkdBTVWmqTgSaniV9yp7s",
+	"promptId": "a497d274-6cb1-4c83-886b-24106be7dfc7",
+	"background": false,
+	"parallel": false,
+	"effort": "high",
+	"contract": [
+		"packages/frameworks/angular/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/test/**",
+		"evidence/ingests/angular-pigallery2-v1-7-0/**",
+		"packages/core/src/receipts/capability-coverage.ts",
+		"evidence/trust/current/capability-coverage.json"
+	],
+	"ts": "2026-08-14T02:47:34.949Z",
+	"pendingName": "00001786675654950354-3ece1560-u4-app-source-transform-wall.json"
+}

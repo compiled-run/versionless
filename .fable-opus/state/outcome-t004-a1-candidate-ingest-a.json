@@ -1,0 +1,11 @@
+{
+	"unitId": "t004-a1-candidate-ingest-a",
+	"runId": "lrapr-t1",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Admitted and ingested papercups-io/papercups v1.0.0 (commit 3546a5f6, 2020-07-28) as react-papercups-v1-0-0. All six admission gates evidenced: MIT root LICENSE, substantive Phoenix+React operator console, React 16.13.1, CRA react-scripts 3.4.1 / webpack 4.42.0, ~6-year-old tag, 5 enumerated journeys. Archive fetched twice byte-identical (sha256 f8a6576c...), reconciled against the git tree with 0 missing/extra/mismatched blobs. Closure from lockfileVersion 1: 2001 placements, all resolved+integrity, mixed sha1/sha512. Baseline npm ci and npm run build both SUCCEEDED on pinned Node 16.20.2. Candidates 2 and 3 not reached.",
+	"agentId": "aeb089a27a4e00e12",
+	"background": true,
+	"verdictDelivered": true,
+	"ts": "2026-08-10T18:53:34.983Z"
+}

@@ -1,0 +1,25 @@
+{
+	"runId": "lrapr-t006",
+	"unitId": "u20c2p-runner-publish-final",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t006/prompt-u20c2p-runner-publish-final-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_0164NwTzZK8L8fBnNG7geMWE",
+	"promptId": "b2f510be-82aa-4861-a346-1dc58da77fc2",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/cli/src/witness/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/src/receipts/witness-angular-super-productivity.ts",
+		"packages/core/src/index.ts",
+		"packages/core/test/**",
+		"evidence/runs/angular-super-productivity-v2-13-15/**",
+		"evidence/runs/witness-angular-super-productivity-v2-13-15/**",
+		"fixtures/angular-super-productivity-v2-13-15/**"
+	],
+	"ts": "2026-08-12T17:32:17.663Z",
+	"pendingName": "00001786555937664043-727eb19f-u20c2p-runner-publish-final.json"
+}

@@ -1,0 +1,18 @@
+{
+	"status": "completed",
+	"summary": "Added two Angular capabilities: split-element-successor (NG8001 chip-list split, successor resolved from template facts plus five checks against installed declarations, input-bearing case proven by MatChipInput's typed host binding, children by the container's typed content query) and removed-entry-point-symbol-successor (fromPromise->from, written-down claim narrowed by four surface refusals). 30 tests for the two idioms plus 9 record tests. Applied to the stage tree, rebuilt: 33 -> 30 diagnostics (NG8001 2->0, TS2307 1->0), still red, remainder itemized in six families. Packet premise corrected: datetime-input's chip list hosts no matChipInput and resolved to mat-chip-set, not mat-chip-grid. All four verify commands pass.",
+	"files_changed": [
+		"packages/frameworks/angular/src/split-element-successor.ts",
+		"packages/frameworks/angular/src/removed-entry-point-symbol-successor.ts",
+		"packages/frameworks/angular/src/index.ts",
+		"packages/frameworks/angular/test/split-element-successor.test.ts",
+		"packages/frameworks/angular/test/removed-entry-point-symbol-successor.test.ts",
+		"packages/cli/src/fixture/angular-super-productivity-u18f-run.ts",
+		"packages/cli/test/angular-super-productivity-u18f.test.ts",
+		"evidence/runs/angular-super-productivity-v2-13-15/u18f-capability-round.json"
+	],
+	"open_questions": [
+		"The packet asserted both chip sites host matChipInput; datetime-input.component.html:23 does not, and resolved to mat-chip-set per the documented static-display shape. Confirm that reading stands.",
+		"u18e's applicationFilesChanged method did not count src/tslint.json, removed by the earlier tslint capability. u18f records it explicitly; confirm which counting method future rounds should use."
+	]
+}

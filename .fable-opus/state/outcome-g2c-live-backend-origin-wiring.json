@@ -1,0 +1,11 @@
+{
+	"unitId": "g2c-live-backend-origin-wiring",
+	"runId": "lrapr-t017b",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Wired the generic live-backend serving path so a served production-static SPA reaches its own loopback backend. Added declared LiveBackendSpec fields host + corsOriginPortEnv (no app-name branch); liveBackendOrigin honors the declared host, startLiveBackend injects the ephemeral served port into the CORS var, and executeRun serves/buckets at a declared-host servedOrigin. Set host:'localhost' + corsOriginPortEnv:['REACT_APP_PORT'] on the cypress-rwa AppSpec. Proof (raw probe, baseline): POST /users=200, POST /graphql=200, reached checkAuth-gated authenticated dashboard + settings + peer search with seed data, consoleErrors=[], no CORS rejection. tsc, vp lint, vp test --project node (2170 passed) all green. No backend left on 3001.",
+	"agentId": "abcc16cba855f665d",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-13T21:47:48.880Z"
+}

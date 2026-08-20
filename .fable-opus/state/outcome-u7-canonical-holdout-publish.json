@@ -1,0 +1,11 @@
+{
+	"unitId": "u7-canonical-holdout-publish",
+	"runId": "lrapr-t024",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Published the eShop WebSPA holdout canonically: outcome transitioned to witness-passed-on-bounded-anonymous-catalog-surface, binding the sealed u6 Witness evidence by sha256 (5 files) and recomputing the Witness-served migrated inventory from the sealed u4 build inventory to prove post-freeze byte-identical adapter output. RED/reopen/re-freeze history retained; build-era non-claims carried unedited; counting left false with decidedBy judge. Guards widened to 9 re-sealed anti-overclaim mutations (RED-erasure, two scope-inflations, two witness-overclaims, reopen-hiding, generic-pass, counting-flip, sealed-witness edit). Conformance, freeze record, capability map and trust report updated; trust artifacts regenerated offline. All six verify commands pass; freeze intact; peer receipts and sealed witness files byte-untouched.",
+	"agentId": "a75de4f1650fd4ab9",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-14T08:59:21.447Z"
+}

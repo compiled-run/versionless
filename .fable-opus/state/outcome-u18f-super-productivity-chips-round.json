@@ -1,0 +1,11 @@
+{
+	"unitId": "u18f-super-productivity-chips-round",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Added two Angular capabilities: split-element-successor (NG8001 chip-list split, successor resolved from template facts plus five checks against installed declarations, input-bearing case proven by MatChipInput's typed host binding, children by the container's typed content query) and removed-entry-point-symbol-successor (fromPromise->from, written-down claim narrowed by four surface refusals). 30 tests for the two idioms plus 9 record tests. Applied to the stage tree, rebuilt: 33 -> 30 diagnostics (NG8001 2->0, TS2307 1->0), still red, remainder itemized in six families. Packet premise corrected: datetime-input's chip list hosts no matChipInput and resolved to mat-chip-set, not mat-chip-grid. All four verify commands pass.",
+	"agentId": "a1c7e50053d639933",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-12T01:13:02.530Z"
+}

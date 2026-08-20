@@ -1,0 +1,11 @@
+{
+  "unitId": "T040-counter-realpath-tests-green",
+  "runId": "bank-demo-fleet-pipeline-p1d",
+  "attempt": 1,
+  "outcome": "blocked",
+  "reason": "Blocker (1) closed: intervention-count.ts now resolves symlinked ancestors (new exported physicalPath) on root, write set, and every snapshot/observed path before comparison; two new tests cover a symlinked root (count 0 for lane+record only, count 1 for one outside write). Clean-tree gate now reads 'proven count 0 idempotent' twice with trust valid in the copy (was 225). Lint 0 errors; trust digest a99892f8 unchanged, so no regeneration. Blocker (2) needs packages/cli/src/fixture/{angular-fuxa-template-compiler-run,next-killedbygoogle-run}.ts, outside my contract: they pin the pre-T039 root package.json and pnpm-lock.yaml bytes. Replacement digests computed and listed above. Suite now 4 failed / 2704 passed.",
+  "agentId": "a2293320a6a0eb400",
+  "background": false,
+  "verdictDelivered": true,
+  "ts": "2026-08-19T02:19:09.222Z"
+}

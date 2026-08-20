@@ -1,0 +1,11 @@
+{
+	"unitId": "f1-refreeze-count-capmap",
+	"runId": "lrapr-t016",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Fingerprint recomputes and matches (5de7df56...); frozen diff empty; re-freeze commit is cce3417. BLOCKER: reactLineage cannot derive to 6/6 by flipping counted:true alone. The Judge ledger in packages/core/src/corpus/conformance.ts has only 5 React-lineage cells (boilerplate, papercups, hospitalrun, memos, linkfree); next-killedbygoogle-v3-0-0 is lineage:'next' (line 312). Flipping the 5 named cells yields React 5, not 6. Reaching 6/6 requires reclassifying next-killedbygoogle-v3 from 'next' into the React numerator — a public-semantics decision the packet does not authorize and that contradicts the cell's standing Next-lineage/olderNext-0/4 reasoning. AngularLineage derives cleanly to 4/4 (realworld demoted). No files changed.",
+	"agentId": "a816817bcdd5c0624",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-12T20:25:44.558Z"
+}

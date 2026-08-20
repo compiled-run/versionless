@@ -23,10 +23,11 @@
  */
 
 import { execFile } from 'node:child_process';
-import { readdir } from 'node:fs/promises';
+import { mkdir, readFile, readdir } from 'node:fs/promises';
 import { promisify } from 'node:util';
 import * as path from 'pathe';
 import { parseURL } from 'ufo';
+import { sha256 } from '../../../core/src/receipts/canonicalize.ts';
 import { directoryExists, fileExists, readJsonFile } from './analyze.ts';
 import { refuse } from './refusals.ts';
 
@@ -87,6 +88,8 @@ const INSTALL_NOT_ESTABLISHED: readonly string[] = Object.freeze([
 	'An install resolves a closure. It is not a build, and it is not evidence that the closure works: nothing here establishes that any package in it compiles or runs.',
 	'The policy findings are read from the lockfile. A lockfile that does not mark an install script, or that resolves through a mirror this reading does not recognise, yields a finding this stage did not make.',
 	'`installScriptPackages` counts packages the lockfile declares an install script for. Whether a given script would have built anything on this host is not established here.',
+	'The sandbox is an environment and a working directory, not a container. It moves every path npm resolves from the environment into the lane and drops inherited variables that name the user’s home or this checkout; it does not stop a script that hard-codes an absolute path, and `PATH` is passed through so the child can find its own node. Writes outside the lane are therefore *detected* — the checkout’s `.git/hooks` and its top level are hashed before and after — and refused by name, not prevented.',
+	'The boundary reading watches two places: the top level of the checkout and `.git/hooks`. A write anywhere else outside the lane — a sibling directory, a deeper path in the checkout, another checkout on this host — is not observed here, and `writesOutsideLane: []` does not establish that none happened.',
 	'`closure: resolve` means the lane manifest declares a build toolchain the recorded lockfile predates, so npm resolved rather than replayed. The application’s own pins still come from the lockfile; what was newly resolved is what the manifest rewrite added, and that resolution is not a pin this repository recorded.',
 ]);
 
@@ -282,6 +285,202 @@ export async function planLaneInstall(
 	});
 }
 
+/**
+ * The lane-owned home an install child is given, relative to the lane.
+ *
+ * `--allow-install-scripts` is a policy about what may run, and until this
+ * existed it was silently also a policy about where those scripts may write.
+ * On 2026-08-10 an acquired application's `postinstall` — husky v4, out of
+ * `.versionless/work/react-mycrypto/baseline/node_modules` — overwrote all 18
+ * of this repository's own Git hooks and rewrote them to source a file it
+ * created in `.git/hooks`. Nothing refused, nothing counted it, and the hooks
+ * fired on every commit afterwards. They were inert only because `yarn` was
+ * missing from `PATH`.
+ */
+export const INSTALL_HOME_DIRECTORY = '.install-home';
+
+/**
+ * The variables kept verbatim even when they name the user's home.
+ *
+ * `PATH` is the honest exception and it is named rather than hidden: the node
+ * and npm this stage runs are frequently installed under the invoking user's
+ * home (nvm, volta, asdf), so filtering `PATH` for home references would leave
+ * the child unable to find the binary it is supposed to be. Everything else
+ * that points at the user's home or at this checkout is dropped.
+ */
+export const SANDBOX_KEPT_VARIABLES: readonly string[] = Object.freeze(['PATH']);
+
+export type InstallSandbox = Readonly<{
+	/** The lane-owned directory handed to the child as `HOME`. */
+	home: string;
+	/** Every directory created before the child runs. */
+	directories: readonly string[];
+	/** The exact environment the child is spawned with. */
+	environment: Readonly<Record<string, string>>;
+	/** Inherited variables dropped, and why they were dropped. */
+	strippedVariables: readonly string[];
+}>;
+
+/** Whether `value` names `base` or anything under it. */
+function referencesDirectory(value: string, base: string | null): boolean {
+	if (base === null || base.length < 2) return false;
+	return value === base || value.includes(base);
+}
+
+/**
+ * The environment an install child gets: lane-owned, and nothing borrowed.
+ *
+ * Every path npm writes to outside a project — its cache, its prefix, its two
+ * config files, and the XDG directories a package's own script reads — is
+ * pointed inside the lane, so the ordinary case of a script writing "to the
+ * user's config" lands in a directory the lane owns and the run can throw away.
+ * Then every inherited variable that names the user's home or this checkout is
+ * dropped, so a script cannot read the escape route out of its own environment.
+ */
+export function planInstallSandbox(
+	laneDir: string,
+	environment: NodeJS.ProcessEnv,
+	boundaryRoot: string,
+): InstallSandbox {
+	const lane = path.resolve(laneDir);
+	const home = path.join(lane, INSTALL_HOME_DIRECTORY);
+	const config = path.join(home, '.config');
+	const cache = path.join(home, '.cache');
+	const npmCache = path.join(home, 'npm-cache');
+	const prefix = path.join(home, 'npm-prefix');
+	const owned: Record<string, string> = {
+		HOME: home,
+		XDG_CONFIG_HOME: config,
+		XDG_CACHE_HOME: cache,
+		npm_config_cache: npmCache,
+		npm_config_prefix: prefix,
+		npm_config_userconfig: path.join(home, '.npmrc'),
+		npm_config_globalconfig: path.join(prefix, 'etc', 'npmrc'),
+	};
+	const inheritedHome =
+		typeof environment.HOME === 'string' && environment.HOME !== ''
+			? path.resolve(environment.HOME)
+			: null;
+	const root = path.resolve(boundaryRoot);
+	const stripped: string[] = [];
+	const passed: Record<string, string> = {};
+	for (const key of Object.keys(environment).sort()) {
+		const value = environment[key];
+		if (value === undefined) continue;
+		if (key in owned) {
+			stripped.push(`${key} (replaced with a lane-owned directory)`);
+			continue;
+		}
+		/** npm reads its configuration from `npm_config_*` case-insensitively. */
+		if (/^npm_config_/i.test(key)) {
+			stripped.push(`${key} (inherited npm configuration)`);
+			continue;
+		}
+		if (SANDBOX_KEPT_VARIABLES.includes(key)) {
+			passed[key] = value;
+			continue;
+		}
+		if (referencesDirectory(value, inheritedHome)) {
+			stripped.push(`${key} (names the invoking user's home)`);
+			continue;
+		}
+		if (referencesDirectory(value, root)) {
+			stripped.push(`${key} (names this checkout)`);
+			continue;
+		}
+		passed[key] = value;
+	}
+	return Object.freeze({
+		home,
+		directories: Object.freeze([home, config, cache, npmCache, prefix]),
+		environment: Object.freeze({ ...passed, ...owned }),
+		strippedVariables: Object.freeze(stripped),
+	});
+}
+
+/** One digest per watched file, keyed by absolute path. */
+export type BoundarySnapshot = ReadonlyMap<string, string>;
+
+async function hashIfReadable(file: string): Promise<string | null> {
+	try {
+		return sha256(await readFile(file));
+	} catch {
+		return null;
+	}
+}
+
+async function hashTree(directory: string, into: Map<string, string>): Promise<void> {
+	let entries;
+	try {
+		entries = await readdir(directory, { withFileTypes: true });
+	} catch {
+		return;
+	}
+	for (const entry of entries) {
+		const full = path.join(directory, entry.name);
+		if (entry.isDirectory()) {
+			await hashTree(full, into);
+			continue;
+		}
+		if (!entry.isFile()) continue;
+		const digest = await hashIfReadable(full);
+		if (digest !== null) into.set(full, digest);
+	}
+}
+
+/**
+ * The surface an install child is not allowed to move, hashed.
+ *
+ * Two places, and both are chosen because a write there is executable rather
+ * than merely untidy: the checkout's `.git/hooks`, which is what the husky
+ * escape took, and the top level of the checkout, which is where a `postinstall`
+ * that guesses at a project root lands. Neither is walked deeply, so the reading
+ * is cheap enough to take on every install. Anything inside the lane is excluded
+ * by construction: the lane is what the child is *for*.
+ */
+export async function snapshotInstallBoundary(
+	boundaryRoot: string,
+	laneDir: string,
+): Promise<BoundarySnapshot> {
+	const root = path.resolve(boundaryRoot);
+	const lane = path.resolve(laneDir);
+	const snapshot = new Map<string, string>();
+	let entries;
+	try {
+		entries = await readdir(root, { withFileTypes: true });
+	} catch {
+		entries = [];
+	}
+	for (const entry of entries) {
+		if (!entry.isFile()) continue;
+		const digest = await hashIfReadable(path.join(root, entry.name));
+		if (digest !== null) snapshot.set(path.join(root, entry.name), digest);
+	}
+	await hashTree(path.join(root, '.git', 'hooks'), snapshot);
+	for (const file of [...snapshot.keys()])
+		if (file === lane || file.startsWith(`${lane}/`)) snapshot.delete(file);
+	return snapshot;
+}
+
+/** Every watched path the child created, changed, or removed, named. */
+export function boundaryWrites(
+	before: BoundarySnapshot,
+	after: BoundarySnapshot,
+	boundaryRoot: string,
+): readonly string[] {
+	const root = path.resolve(boundaryRoot);
+	const name = (file: string): string => {
+		const relative = path.relative(root, file);
+		return relative === '' || relative.startsWith('..') ? file : relative;
+	};
+	const writes: string[] = [];
+	for (const [file, digest] of after)
+		if (before.get(file) !== digest)
+			writes.push(`${before.has(file) ? 'modified' : 'created'} ${name(file)}`);
+	for (const file of before.keys()) if (!after.has(file)) writes.push(`deleted ${name(file)}`);
+	return Object.freeze(writes.sort());
+}
+
 export type InstallRecord = Readonly<{
 	stage: 'install';
 	ran: boolean;
@@ -297,6 +496,18 @@ export type InstallRecord = Readonly<{
 	exitCode: number | null;
 	/** Packages present in the lane's installed closure afterwards. */
 	installedPackages: number | null;
+	/** The lane-owned environment the install child was confined to. */
+	sandbox: Readonly<{
+		home: string | null;
+		strippedVariables: readonly string[];
+	}> | null;
+	/** What was watched outside the lane, and what moved there. */
+	boundary: Readonly<{
+		root: string;
+		pathsObservedBefore: number;
+		pathsObservedAfter: number;
+		writesOutsideLane: readonly string[];
+	}> | null;
 	notEstablished: readonly string[];
 }>;
 
@@ -315,6 +526,8 @@ export function installNotRequested(reason: string): InstallRecord {
 		command: null,
 		exitCode: null,
 		installedPackages: null,
+		sandbox: null,
+		boundary: null,
 		notEstablished: INSTALL_NOT_ESTABLISHED,
 	});
 }
@@ -348,12 +561,42 @@ export async function runLaneInstall(
 	policy: InstallPolicy = DEFAULT_INSTALL_POLICY,
 	environment: NodeJS.ProcessEnv = process.env,
 	closure: ClosureMode = 'replay',
+	boundaryRoot: string = process.cwd(),
 ): Promise<InstallRecord> {
 	const plan = await planLaneInstall(laneDir, policy, environment, closure);
+	const sandbox = planInstallSandbox(laneDir, environment, boundaryRoot);
+	for (const directory of sandbox.directories) await mkdir(directory, { recursive: true });
+	const before = await snapshotInstallBoundary(boundaryRoot, laneDir);
 	const [binary, ...args] = plan.command as readonly [string, ...string[]];
+	let failure: unknown = null;
 	try {
-		await run(binary, args, { cwd: laneDir, env: environment, maxBuffer: 64 * 1024 * 1024 });
+		await run(binary, args, {
+			cwd: laneDir,
+			env: sandbox.environment,
+			maxBuffer: 64 * 1024 * 1024,
+		});
 	} catch (error) {
+		failure = error;
+	}
+	/**
+	 * The boundary is read before the exit code is, and it decides first.
+	 *
+	 * A script that wrote into the checkout and then failed is not a broken
+	 * install that happens to have had a side effect; it is the side effect,
+	 * and reporting the exit code instead would bury the only fact an operator
+	 * needs. So the escape is named whether the install succeeded or not.
+	 */
+	const after = await snapshotInstallBoundary(boundaryRoot, laneDir);
+	const writes = boundaryWrites(before, after, boundaryRoot);
+	if (writes.length > 0)
+		refuse({
+			code: 'install.script-wrote-outside-lane',
+			message: `Install: the closure's install scripts wrote outside the lane. ${String(writes.length)} watched path(s) under ${path.resolve(boundaryRoot)} moved while \`${plan.command.join(' ')}\` ran: ${writes.join('; ')}. The install ran with the install-script allowance, which permits a package's own build to run inside the lane; it does not permit it to write into the checkout that acquired it. The child was given a lane-owned HOME and a lane cwd, so this write reached the checkout by naming it rather than by inheriting it. The lane is not accepted as installed and the paths above are left as they are, so an operator can read what was attempted.`,
+			stage: 'install',
+			origin: 'pipeline',
+		});
+	if (failure !== null) {
+		const error = failure;
 		const detail = error instanceof Error ? error.message : String(error);
 		/**
 		 * One npm failure is a policy question rather than a breakage: a peer
@@ -386,6 +629,16 @@ export async function runLaneInstall(
 		command: plan.command,
 		exitCode: 0,
 		installedPackages: await installedPackageCount(laneDir),
+		sandbox: Object.freeze({
+			home: sandbox.home,
+			strippedVariables: sandbox.strippedVariables,
+		}),
+		boundary: Object.freeze({
+			root: path.resolve(boundaryRoot),
+			pathsObservedBefore: before.size,
+			pathsObservedAfter: after.size,
+			writesOutsideLane: writes,
+		}),
 		notEstablished: INSTALL_NOT_ESTABLISHED,
 	});
 }

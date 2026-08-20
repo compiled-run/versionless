@@ -1,0 +1,17 @@
+{
+	"status": "completed",
+	"summary": "Clean git worktree at HEAD d5ef9ea, offline install (90 pkgs, 0 downloaded), freeze recomputed to 27741d9c by plain shell. Gates: tsc/fmt/lint/pack green; receipt:verify 52400147 and corpus:verify e6c9068a reproduce recorded digests. vp test, trust:verify and script-surface:verify recorded UNKNOWN (not green) — all failures were missing .versionless work/stage lanes, staged too late to re-run. Both holdouts re-executed FRESH in a real browser: React parity 963785/5c3285/54313316 matched, 51/51 both lanes; eShop parity 585ae9ec matched and all five sealed witness artifacts reproduced byte-identically. T019 fidelity caveat closed. Finding: React pass-twice determinism drifted under concurrent load; passed alone.",
+	"files_changed": [
+		"evidence/runs/clean-checkout-2026-08-14/summary.json",
+		"evidence/runs/clean-checkout-2026-08-14/gates.json",
+		"evidence/runs/clean-checkout-2026-08-14/staging-manifest.json",
+		"evidence/runs/clean-checkout-2026-08-14/holdout-react-cypress-rwa-fresh.json",
+		"evidence/runs/clean-checkout-2026-08-14/holdout-angular-eshop-webspa-fresh.json",
+		"docs/goals/legacy-react-angular-production-readiness/notes/t010-clean-checkout-log.md"
+	],
+	"open_questions": [
+		"vp test --project node, trust:verify --offline and script-surface:verify were left UNKNOWN: their remaining failures were missing .versionless/work/react-boilerplate-v4 and .versionless/stage lanes, both staged at the end of this unit with no budget to re-execute. The next unit should re-run these three gates first with full staging in place to confirm they are green.",
+		"The first React parity attempt drifted on the migrated lane's pass-twice determinism under concurrent CPU load, and the core gate throws before writing any measurement — so that attempt's diff surface is unrecoverable. Should the portfolio rerun capture per-pass measurements on the throwing path so a drift is diagnosable rather than a bare refusal?",
+		"Both holdout lanes were STAGED from this host's materialized work trees (hashes verified against sealed lane digests), not rebuilt from source. Does T010 require a from-source rebuild of both lanes, or is byte-verified staging plus fresh live re-execution sufficient for the independent-verifiability claim?"
+	]
+}

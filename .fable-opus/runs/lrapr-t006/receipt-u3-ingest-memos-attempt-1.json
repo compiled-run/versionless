@@ -1,0 +1,26 @@
+{
+	"status": "completed",
+	"summary": "Admitted and ingested usememos/memos @ 565fe0cc (v0.1.3, 2022-07-01) as react-memos-v0-1-3. All six gates passed: MIT root LICENSE bytes verified, Vite 2.9.5 origin bundler, era-coherent, 6 journeys, zero LFS (byte-scanned), archive double-fetch byte-identical and 205/205 blobs reconciled. Corrected three scout claims: tag is lightweight not annotated; 120 web/src files not 140; Dockerfile declares Node 14.18.2. Baseline on Node 16.20.2 + yarn 1.22.19: install succeeded under --frozen-lockfile; declared `yarn build` FAILED in tsc (lockfile pins two @types/react under skipLibCheck:false — not drift). One labelled deviation showed vite build alone succeeds. Backend recorded as present, out of scope.",
+	"files_changed": [
+		"evidence/ingests/react-memos-v0-1-3/attempt.json",
+		"evidence/ingests/react-memos-v0-1-3/source.json",
+		"evidence/ingests/react-memos-v0-1-3/admission.json",
+		"evidence/ingests/react-memos-v0-1-3/license.json",
+		"evidence/ingests/react-memos-v0-1-3/provenance.json",
+		"evidence/ingests/react-memos-v0-1-3/reconciliation.json",
+		"evidence/ingests/react-memos-v0-1-3/inventory.json",
+		"evidence/ingests/react-memos-v0-1-3/closure.json",
+		"evidence/ingests/react-memos-v0-1-3/baseline-attempt.json",
+		"evidence/ingests/react-memos-v0-1-3/probe-tree.json",
+		"evidence/ingests/react-memos-v0-1-3/probe-ledger.ndjson",
+		"evidence/ingests/react-memos-v0-1-3/transcript.ndjson",
+		"evidence/ingests/react-memos-v0-1-3/drivers/01-probe.mjs",
+		"evidence/ingests/react-memos-v0-1-3/drivers/02-acquire.mjs",
+		"evidence/ingests/react-memos-v0-1-3/drivers/03-inventory.mjs",
+		"evidence/ingests/react-memos-v0-1-3/drivers/04-baseline.sh",
+		"evidence/ingests/react-memos-v0-1-3/drivers/05-baseline-deviation.sh",
+		"evidence/ingests/react-memos-v0-1-3/drivers/06-closure.mjs",
+		"fixtures/react-memos-v0-1-3/fixture.json"
+	],
+	"open_questions": []
+}

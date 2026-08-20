@@ -1,0 +1,24 @@
+{
+	"runId": "lrapr-t024",
+	"unitId": "u3-httpclient-call-surface",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t024/prompt-u3-httpclient-call-surface-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_014DqtoLNg9WiKhpgmboGian",
+	"promptId": "a7a74bcf-1d18-48c7-bf38-2c6d8dc99da6",
+	"background": false,
+	"parallel": false,
+	"effort": "high",
+	"contract": [
+		"packages/frameworks/angular/**",
+		"packages/core/src/migrations/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/test/**",
+		"packages/core/src/receipts/capability-coverage.ts",
+		"evidence/trust/current/capability-coverage.json",
+		"evidence/ingests/angular-eshop-webspa-netcore2-2/**"
+	],
+	"ts": "2026-08-14T06:32:59.183Z",
+	"pendingName": "00001786689179184220-73392705-u3-httpclient-call-surface.json"
+}

@@ -1,0 +1,23 @@
+{
+	"runId": "lrapr-t006",
+	"unitId": "u13-react-trio-aggregate-transition",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t006/prompt-u13-react-trio-aggregate-transition-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01HNPQMF5HziCevrTUC3W5Yh",
+	"promptId": "22e899db-02ca-4ead-9185-1f6babeb1e7f",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/core/src/corpus/conformance.ts",
+		"packages/core/test/**",
+		"packages/trust/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"evidence/runs/aggregate.json",
+		"evidence/trust/current/**"
+	],
+	"ts": "2026-08-11T19:01:20.729Z",
+	"pendingName": "00001786474880730347-8e4d81ff-u13-react-trio-aggregate-transition.json"
+}

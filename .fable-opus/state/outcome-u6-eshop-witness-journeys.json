@@ -1,0 +1,11 @@
+{
+	"unitId": "u6-eshop-witness-journeys",
+	"runId": "lrapr-t024",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Chose the declared same-origin loopback projection (measured: the app concatenates every service URL onto purchaseUrl, and neither bundle reaches any external origin). Built projection, core schema, AppSpec, runner wiring and driver; ran 2 lanes x 2 passes green. Parity digest 585ae9ec across all four runs; per-lane semantic digests stable across passes and distinct between lanes; mutation of ' products - Page ' went red and restored byte-identically, restored run reproducing the parity digest; successfulNonLoopback 0, zero console errors/failed requests. Identity/basket/orders/campaigns recorded out-of-surface, SignalR not-reached, text-entry and drag not-tested. All five verify commands pass; freeze intact.",
+	"agentId": "a14a903c0dd84dc7c",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-14T08:32:42.622Z"
+}

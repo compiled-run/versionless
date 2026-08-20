@@ -1,0 +1,26 @@
+{
+	"runId": "lrapr-t004-hospitalrun",
+	"unitId": "h3-witness-vertical",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t004-hospitalrun/prompt-h3-witness-vertical-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01MAx5bQw6LhoQdX1C7XwXfB",
+	"promptId": "06be6a29-20e6-4107-ab25-1e1ae444d8fa",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/cli/src/witness/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/src/receipts/witness-react-hospitalrun.ts",
+		"packages/core/src/receipts/witness-real-app.ts",
+		"packages/core/src/index.ts",
+		"packages/core/test/**",
+		"evidence/runs/react-hospitalrun/**",
+		"evidence/runs/witness-react-hospitalrun/**",
+		"fixtures/react-hospitalrun/**"
+	],
+	"ts": "2026-08-10T23:54:47.894Z",
+	"pendingName": "00001786406087895563-4e541b04-h3-witness-vertical.json"
+}

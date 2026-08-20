@@ -1,0 +1,11 @@
+{
+	"unitId": "u1-g5-wiring-repair",
+	"runId": "lrapr-t021",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Audited all 41 Angular index exports against the era composition's transitive import graph: 24 unreachable, classified by transform signature. Composed four class-(a) capabilities into migrateAngularCliEraWorkspace — module-with-providers-type-argument, subject-void-type-argument, promise-executor-void-parameter (pure per-module), and unparameterised-base-class via new supply-gated baseClassDiagnostics/genericBaseClasses inputs, run first since it is compiler-positioned. Added 14 tests (positive, negative, idempotence per capability). Four green verticals unchanged; suite 228->229 files, 2236->2250 tests, all pass. pigallery2 re-measured: 3->4 app files changed, G5's TS2314 site answered, plus one named refusal. React subtree oid verified intact.",
+	"agentId": "a8dcb9ffb99ce381e",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-14T01:47:23.265Z"
+}

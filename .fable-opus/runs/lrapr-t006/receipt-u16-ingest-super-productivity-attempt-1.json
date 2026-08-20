@@ -1,0 +1,27 @@
+{
+	"status": "completed",
+	"summary": "Ingested super-productivity v2.13.15 (commit 2943c5c4) as the Angular 8 pre-Ivy C2 cell. All five admission gates pass against reconciled bytes: MIT LICENSE blob 4ebcbdf9 (1072 B) confirmed, 967/967 blobs reconcile exactly, zero LFS pointers, 8 journeys, ViewEngine confirmed (zero enableIvy hits). Corrected three scout claims: repository renamed to the super-productivity org (301 recorded, not followed; same repo id), differential loading is partial only, and the 6.94 MB size does not reproduce. Baseline is green with zero deviations: frozen yarn install exit 0, ng build --aot --prod exit 0, 27 dist files. PM-approved git dependency jira2md recorded with resolved commit, double-fetched tarball digest, and integrity absence as found; found a second floating-latest dep and a second non-registry dep.",
+	"files_changed": [
+		"evidence/ingests/angular-super-productivity-v2-13-15/attempt.json",
+		"evidence/ingests/angular-super-productivity-v2-13-15/source.json",
+		"evidence/ingests/angular-super-productivity-v2-13-15/license.json",
+		"evidence/ingests/angular-super-productivity-v2-13-15/closure.json",
+		"evidence/ingests/angular-super-productivity-v2-13-15/admission.json",
+		"evidence/ingests/angular-super-productivity-v2-13-15/baseline-attempt.json",
+		"evidence/ingests/angular-super-productivity-v2-13-15/provenance.json",
+		"evidence/ingests/angular-super-productivity-v2-13-15/reconciliation.json",
+		"evidence/ingests/angular-super-productivity-v2-13-15/lfs.json",
+		"evidence/ingests/angular-super-productivity-v2-13-15/owner-rename.json",
+		"evidence/ingests/angular-super-productivity-v2-13-15/probe-tree.json",
+		"evidence/ingests/angular-super-productivity-v2-13-15/probe-ledger.ndjson",
+		"evidence/ingests/angular-super-productivity-v2-13-15/tools/acquire.mjs",
+		"evidence/ingests/angular-super-productivity-v2-13-15/tools/reconcile.mjs",
+		"evidence/ingests/angular-super-productivity-v2-13-15/tools/acquire-git-dependency.mjs",
+		"evidence/ingests/angular-super-productivity-v2-13-15/tools/baseline.sh",
+		"fixtures/angular-super-productivity-v2-13-15/fixture.json"
+	],
+	"open_questions": [
+		"The T006 board records the candidate under the stale owner johannesjo/super-productivity. Should the board coordinates be updated to the canonical super-productivity/super-productivity, or left as the scout wrote them with owner-rename.json as the amendment?",
+		"attempt.json's allowlist was written pre-acquisition with the stale owner segment and was deliberately left unedited as the opened-transaction record, with owner-rename.json as the append-only amendment. Confirm that matches the intended append-only idiom rather than rewriting the envelope."
+	]
+}

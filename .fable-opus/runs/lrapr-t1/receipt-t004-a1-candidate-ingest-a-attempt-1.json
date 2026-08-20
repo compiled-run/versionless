@@ -1,0 +1,24 @@
+{
+	"status": "completed",
+	"summary": "Admitted and ingested papercups-io/papercups v1.0.0 (commit 3546a5f6, 2020-07-28) as react-papercups-v1-0-0. All six admission gates evidenced: MIT root LICENSE, substantive Phoenix+React operator console, React 16.13.1, CRA react-scripts 3.4.1 / webpack 4.42.0, ~6-year-old tag, 5 enumerated journeys. Archive fetched twice byte-identical (sha256 f8a6576c...), reconciled against the git tree with 0 missing/extra/mismatched blobs. Closure from lockfileVersion 1: 2001 placements, all resolved+integrity, mixed sha1/sha512. Baseline npm ci and npm run build both SUCCEEDED on pinned Node 16.20.2. Candidates 2 and 3 not reached.",
+	"files_changed": [
+		"evidence/ingests/react-papercups-v1-0-0/probe.mjs",
+		"evidence/ingests/react-papercups-v1-0-0/blob.mjs",
+		"evidence/ingests/react-papercups-v1-0-0/acquire.mjs",
+		"evidence/ingests/react-papercups-v1-0-0/closure.mjs",
+		"evidence/ingests/react-papercups-v1-0-0/baseline.mjs",
+		"evidence/ingests/react-papercups-v1-0-0/probe-ledger.ndjson",
+		"evidence/ingests/react-papercups-v1-0-0/probe-tree.json",
+		"evidence/ingests/react-papercups-v1-0-0/admission.json",
+		"evidence/ingests/react-papercups-v1-0-0/license.json",
+		"evidence/ingests/react-papercups-v1-0-0/provenance.json",
+		"evidence/ingests/react-papercups-v1-0-0/attempt.json",
+		"evidence/ingests/react-papercups-v1-0-0/source.json",
+		"evidence/ingests/react-papercups-v1-0-0/closure.json",
+		"evidence/ingests/react-papercups-v1-0-0/baseline-attempt.json",
+		"fixtures/react-papercups-v1-0-0/fixture.json"
+	],
+	"open_questions": [
+		"The CLI fixture:ingest allowlist and the tier-f FixtureId union are both closed, so neither could name this candidate without an out-of-contract packages/** edit. I composed the existing acquisition primitives into small drivers stored beside the evidence instead of blocking. Confirm that placement, or re-cut a serial unit to add the candidate to the generic machinery."
+	]
+}

@@ -1,0 +1,25 @@
+{
+	"status": "blocked",
+	"summary": "Papercups is now a first-class generic fixture: evidence data copied verbatim, drivers ported to strict-TS generic machinery (legacy-candidate-ingest.ts) parameterized by LegacyCandidateConfig, offline evidence verification (legacy-candidate-verify.ts, 22 checks incl. byte-exact attempt recomputation), tier-f FixtureId union and fixture:ingest/fixture:verify allowlists extended, 25 new tests. tsc, lint, the no-mjs guard, and all affected suites (95 tests) pass. `vp test --project node` fails only because the isolated worktree lacks the ~20GB gitignored .versionless corpus cache: all 91 failures are ENOENT under .versionless, none in files I touched.",
+	"files_changed": [
+		"evidence/ingests/react-papercups-v1-0-0/admission.json",
+		"evidence/ingests/react-papercups-v1-0-0/attempt.json",
+		"evidence/ingests/react-papercups-v1-0-0/baseline-attempt.json",
+		"evidence/ingests/react-papercups-v1-0-0/closure.json",
+		"evidence/ingests/react-papercups-v1-0-0/license.json",
+		"evidence/ingests/react-papercups-v1-0-0/probe-ledger.ndjson",
+		"evidence/ingests/react-papercups-v1-0-0/probe-tree.json",
+		"evidence/ingests/react-papercups-v1-0-0/provenance.json",
+		"evidence/ingests/react-papercups-v1-0-0/source.json",
+		"fixtures/react-papercups-v1-0-0/fixture.json",
+		"packages/cli/src/cli.ts",
+		"packages/cli/src/fixture/legacy-candidate-ingest.ts",
+		"packages/cli/src/fixture/legacy-candidate-verify.ts",
+		"packages/cli/src/fixture/tier-f-ingest.ts",
+		"packages/cli/test/legacy-candidate-ingest.test.ts",
+		"packages/cli/test/legacy-candidate-verify.test.ts"
+	],
+	"open_questions": [
+		"`pnpm exec vp test --project node` cannot pass in an isolated worktree: 34 pre-existing corpus suites need the gitignored ~20GB .versionless cache/work/stage trees that exist only in the main checkout. Should the gate for this unit be run in the main checkout after merge, or may a worker link/copy the main checkout's .versionless into its worktree (shared mutable state, risky while lanes run in parallel)?"
+	]
+}

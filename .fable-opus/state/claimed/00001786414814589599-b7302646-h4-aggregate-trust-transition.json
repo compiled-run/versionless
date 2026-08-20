@@ -1,0 +1,24 @@
+{
+	"runId": "lrapr-t004-hospitalrun",
+	"unitId": "h4-aggregate-trust-transition",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t004-hospitalrun/prompt-h4-aggregate-trust-transition-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01NegJetK59xXYRiYh7QG7Yv",
+	"promptId": "48f8ba82-216b-48dd-b04b-e41e3be04f7b",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/core/src/corpus/conformance.ts",
+		"packages/core/test/**",
+		"packages/trust/src/**",
+		"packages/trust/test/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"evidence/runs/aggregate.json",
+		"evidence/trust/current/**"
+	],
+	"ts": "2026-08-11T02:20:14.588Z",
+	"pendingName": "00001786414814589599-b7302646-h4-aggregate-trust-transition.json"
+}

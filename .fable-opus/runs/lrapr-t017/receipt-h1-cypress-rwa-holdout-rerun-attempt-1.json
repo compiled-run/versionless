@@ -1,0 +1,16 @@
+{
+	"status": "completed",
+	"summary": "Re-ran the cypress-realworld-app React holdout against the re-frozen adapters (5de7df56, applied as-is). Baseline rebuilt x2 byte-stable (Node 14.16.1, digest 57cea249, reproduces tranche-one). Migrated lane: the new non-UTF-8 capability carries the build past faker (10181->10182 modules, full transform phase), then stops x2 on a NEW gap — react-virtualized 9.22.3 ESM MISSING_EXPORT bpfrpt_proptype_WindowScroller (babel-plugin-flow-react-proptypes dangling import), itemized to the byte. A completed RED falsification result. Published a new dated re-run receipt superseding the immutable tranche-one FAIL by reference; corpus ledger binds it as uncounted superseding verification. Fingerprint intact, 0 frozen bytes changed. Whole gate green: tsc, lint, 2134 node tests, offline receipt:verify.",
+	"files_changed": [
+		"packages/core/src/receipts/holdout-react-cypress-rwa.ts",
+		"packages/core/src/corpus/conformance.ts",
+		"packages/core/test/holdout-react-cypress-rwa-rerun.test.ts",
+		"evidence/runs/react-cypress-rwa/rerun-2026-08-12/build-profile.json",
+		"evidence/runs/react-cypress-rwa/rerun-2026-08-12/run.md",
+		"evidence/runs/react-cypress-rwa/rerun-2026-08-12/migrated-error.log",
+		"evidence/runs/holdout-react-cypress-rwa/rerun-2026-08-12/receipt.json",
+		"evidence/runs/holdout-react-cypress-rwa/rerun-2026-08-12/receipt.md",
+		"docs/goals/legacy-react-angular-production-readiness/notes/t017-unit-log.md"
+	],
+	"open_questions": []
+}

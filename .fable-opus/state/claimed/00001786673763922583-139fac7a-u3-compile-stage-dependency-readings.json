@@ -1,0 +1,23 @@
+{
+	"runId": "lrapr-t021",
+	"unitId": "u3-compile-stage-dependency-readings",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t021/prompt-u3-compile-stage-dependency-readings-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_015FtCRSrx9LkwEKGAvYn8ob",
+	"promptId": "6cff9c89-1162-481c-b522-2f090e05388a",
+	"background": false,
+	"parallel": false,
+	"effort": "high",
+	"contract": [
+		"packages/frameworks/angular/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/test/**",
+		"evidence/ingests/angular-pigallery2-v1-7-0/**",
+		"packages/core/src/receipts/capability-coverage.ts",
+		"evidence/trust/current/capability-coverage.json"
+	],
+	"ts": "2026-08-14T02:16:03.921Z",
+	"pendingName": "00001786673763922583-139fac7a-u3-compile-stage-dependency-readings.json"
+}

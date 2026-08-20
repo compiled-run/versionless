@@ -1,0 +1,11 @@
+{
+	"unitId": "u19b-host-mechanisms-schema",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Landed the two opt-in witness host mechanisms (Playwright setInputFiles behind a per-AppSpec declaration recording fixture path/name/bytes/sha256; acceptDownloads plus a capturedDownloads readback, both granted only by declaration) and the tiny-translator core schema with parser/renderer/verifier/aggregate member, barrel-exported. Added generic file-input and download evidence types to witness-real-app.ts and the app to the closed name list. Tests: 17 CLI mechanism positives/negatives including a walk over every existing spec proving neither opt-in is declared, and 27 core schema round-trip/rejection tests. tsc clean, vp lint 0 errors, 204 files / 1894 tests pass. No journeys, no publish, nothing committed.",
+	"agentId": "adb98d690baaf4bf0",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-12T03:44:24.400Z"
+}

@@ -1,0 +1,25 @@
+{
+	"status": "completed",
+	"summary": "Ingested React holdout cypress-io/cypress-realworld-app v1.0.18 = f6b5cf3a1799998dab71181eeed59460f8ada5f4 (lightweight tag; wire-confirmed). Archive bd93192...7b315, 925160 bytes, byte-identical x2; 208/208 blobs reconcile against tree 3e09844...63c5. No .gitattributes so zero LFS. All admission gates pass: MIT text bytes from archive, React 17.0.2, react-scripts 4.0.3/webpack 4.44.2, 2021-08-06 coherent, 7 journeys. Corrected scout: local mode is passport-local+express-session, NOT JWT, selected by absence of provider env vars. Baseline in declared cell Node 14.16.1: install 40s frozen-lockfile, typecheck clean, build SUCCEEDED (84 files/17.1MB), API booted serving 401/200/401/200 on loopback, zero deviations, zero external hosts. Zero adapter influence.",
+	"files_changed": [
+		"evidence/ingests/react-cypress-rwa/attempt.json",
+		"evidence/ingests/react-cypress-rwa/source.json",
+		"evidence/ingests/react-cypress-rwa/license.json",
+		"evidence/ingests/react-cypress-rwa/admission.json",
+		"evidence/ingests/react-cypress-rwa/provenance.json",
+		"evidence/ingests/react-cypress-rwa/reconciliation.json",
+		"evidence/ingests/react-cypress-rwa/closure.json",
+		"evidence/ingests/react-cypress-rwa/baseline-attempt.json",
+		"evidence/ingests/react-cypress-rwa/probe-ledger.ndjson",
+		"evidence/ingests/react-cypress-rwa/probe-tree.json",
+		"evidence/ingests/react-cypress-rwa/drivers/acquire.cjs",
+		"evidence/ingests/react-cypress-rwa/drivers/reconcile.cjs",
+		"evidence/ingests/react-cypress-rwa/drivers/fetch-runtime.cjs",
+		"evidence/ingests/react-cypress-rwa/drivers/baseline.sh",
+		"fixtures/react-cypress-rwa/fixture.json"
+	],
+	"open_questions": [
+		"Driver scripts were written inside the contract (evidence/ingests/react-cypress-rwa/drivers/) because the scope guard blocks writes to the scratchpad and every other location; PM should confirm whether to keep or strip them at merge (provenance.json marks them non-merge working tools).",
+		"The holdout builds cleanly with zero deviations, so it exercises the frozen adapters against a well-formed CRA 4 app rather than a decayed one. PM may want a decayed second holdout to strengthen the falsification run."
+	]
+}

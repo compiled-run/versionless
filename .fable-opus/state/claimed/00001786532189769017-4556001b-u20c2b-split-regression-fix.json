@@ -1,0 +1,26 @@
+{
+	"runId": "lrapr-t006",
+	"unitId": "u20c2b-split-regression-fix",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t006/prompt-u20c2b-split-regression-fix-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01V4d65PzpgfzorCujs88oDU",
+	"promptId": "70e36fef-e38a-4eed-b4b9-07d00144d42b",
+	"background": false,
+	"parallel": false,
+	"effort": "high",
+	"contract": [
+		"packages/frameworks/angular/**",
+		"packages/cli/src/witness/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/test/**",
+		"evidence/runs/angular-super-productivity-v2-13-15/**",
+		"fixtures/angular-super-productivity-v2-13-15/**",
+		"package.json",
+		"pnpm-lock.yaml",
+		"pnpm-workspace.yaml"
+	],
+	"ts": "2026-08-12T10:56:29.767Z",
+	"pendingName": "00001786532189769017-4556001b-u20c2b-split-regression-fix.json"
+}

@@ -1,0 +1,11 @@
+{
+	"unitId": "u17b-tiny-translator-migrated-lane",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Delivered the tiny-translator MIGRATED lane: changeset applied to a stage tree, Angular 16.2 closure installed under consent (770+501 packages, 1405 locked), production build attempted once through build-angular:browser. Build is truthfully RED with four demand families itemised by file/symbol/library/diagnostic/transform (Material barrel removal, node util in browser code, RxJS prototype patching, and the injection-token errors consequent on the barrel). Extended three generic capabilities (rxjs deep-specifier collapse, rxjs patch-import refusal, builder-package declaration) plus two registry-read cell dispositions (@angular/http no-successor, @angular/flex-layout ^15.0.0-beta.42). Application files changed 2/58 -> 13/58. No parity claimed. Repo gate green.",
+	"agentId": "ac78880f630d6b0f7",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-11T21:01:57.591Z"
+}

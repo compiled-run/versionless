@@ -1,0 +1,20 @@
+{
+	"status": "blocked",
+	"summary": "Both rulings executed at HEAD. vp pack (byte-stable twice) then trust:generate --offline closed the u2 packProvenanceFinding: trust:verify valid (572a0f06), enterprise verify-only pass, operator-flows 25/25, node suite 2476/2476, tsc/lint/receipt/corpus/script-surface green, supported-matrix byte-stable. fmt recorded as a declared deviation (249 files, u2 counts reproduced, 82 frozen; nothing reformatted). summary.json gates.finalState written. Freeze verified intact before and after. Blocked on the packet's reserved stop: the deterministic core moved 656e861a -> ded201fb, which is structurally forced because provenance.json is a member of the core preimage.",
+	"files_changed": [
+		"evidence/trust/current/provenance.json",
+		"evidence/trust/current/manifest.json",
+		"evidence/trust/current/report.md",
+		"evidence/trust/current/enterprise-report.json",
+		"evidence/trust/current/enterprise-report.md",
+		"evidence/runs/clean-checkout-2026-08-14/summary.json",
+		"evidence/runs/clean-checkout-2026-08-14/fmt-deviation.json",
+		"evidence/runs/clean-checkout-2026-08-14/trust-regeneration.json",
+		"docs/goals/legacy-react-angular-production-readiness/notes/t010-portfolio-and-release-candidate.md"
+	],
+	"open_questions": [
+		"Ratify the new deterministic core digest? before 656e861a54c4a06bda94e324dbee756f241b11d4a1128d48b9b8fa307b459b45, after ded201fbeefddf6f4beb284975b27afe480e35602a1fa515a5efd363fa054800 (canonicalDigest 213b43e8 -> 572a0f06). The packet required 656e861a to hold, but it cannot: coreDigest = sha256(canonicalize({artifacts, receipts})) over the 12-artifact list and provenance.json is entry 5 of it (packages/trust/src/generate.ts:2044, :2058), so re-attesting HEAD's dist necessarily moves it. Only provenance.json changed (873511f7 -> 68442659); the other 11 core artifacts and all 27 receipts are byte-identical.",
+		"I left the regenerated package in place rather than reverting, because reverting restores an attestation of dist bytes HEAD cannot produce (unrecoverable per u2) and puts trust:verify plus 3 tests back to red. Confirm that was the right call, or order a revert.",
+		"evidence/runs/operator-flows/supported-matrix.json and verify.json still quote trust digest 213b43e8 and are outside my file contract. No gate reads them as an expectation (operator-flows is 25/25), but they are stale transcripts — should they be re-recorded in the change that ratifies ded201fb?"
+	]
+}

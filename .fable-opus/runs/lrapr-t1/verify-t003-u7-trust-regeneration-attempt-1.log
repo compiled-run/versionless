@@ -1,0 +1,36 @@
+--- env npm_config_offline=true VERSIONLESS_NETWORK_MODE=offline pnpm run trust:verify (exit 0) ---
+
+> versionless-workspace@0.0.0 trust:verify /Users/jacksm5pro/dev/open-source/versionless
+> node --experimental-strip-types packages/cli/src/cli.ts trust:verify
+
+{"valid":true,"digest":"7eedb668a3603b856e6037a015ba459b9586df54ab578cf625aee8b95fb4b8b3","deterministicCore":"ae85ea574eafc87ac240336ac022fd3572a8bbfd31db55bd131408b7684379e6","artifacts":10}
+
+
+--- env npm_config_offline=true VERSIONLESS_NETWORK_MODE=offline pnpm run corpus:verify (exit 0) ---
+
+> versionless-workspace@0.0.0 corpus:verify /Users/jacksm5pro/dev/open-source/versionless
+> node --experimental-strip-types packages/cli/src/cli.ts corpus:verify
+
+{"result":"pass","digest":"e74c36bce753d7f0c0193fffb562ae3803458c4682426021b9a26a166eb8c032","verticals":11,"sourceApplications":4}
+
+
+--- env npm_config_offline=true VERSIONLESS_NETWORK_MODE=offline pnpm run receipt:verify (exit 0) ---
+
+> versionless-workspace@0.0.0 receipt:verify /Users/jacksm5pro/dev/open-source/versionless
+> node --experimental-strip-types packages/cli/src/cli.ts receipt:verify
+
+{"valid":true,"digest":"52400147929220935a9ebe47a16c8dff50b5c28e9d51c930d000c99c2bdc8a21","artifacts":10}
+
+
+--- pnpm exec vp test --project node (exit 0) ---
+ RUN  /Users/jacksm5pro/dev/open-source/versionless
+
+{"preflight":"pass"}
+
+ Test Files  116 passed (116)
+      Tests  753 passed (753)
+   Start at  13:34:28
+   Duration  149.43s (transform 5.04s, setup 0ms, import 12.76s, tests 207.26s, environment 5ms)
+
+
+

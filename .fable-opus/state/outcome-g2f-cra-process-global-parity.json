@@ -1,0 +1,11 @@
+{
+	"unitId": "g2f-cra-process-global-parity",
+	"runId": "lrapr-t017b",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Added a generic, analyzer-driven CRA/webpack-4 process-global parity capability to the React adapter. New react-cra-process-global.ts reads the bundle's real process.<member> usage, reproduces the exact process/browser@0.11.10 surface for only the reached members (browser/cwd/env/nextTick/version/versions) with honest undefined leaves (stdout/pid/etc), and injects a classic shim ahead of the entry via createCraViteAdapter — no app-name/source branch. Rebuilt target/build-vite: shim present, correct members. Boot proof: g2e 0/1 legs + process-not-defined pageError -> now 0 console errors, root renders, reaches signup-form and fills it. Registered experimental/single-app (not cross-proven). Verify all green. Regenerated derived evidence/trust/current/capability-coverage.json (outside allow-list) so the coverage integrity test passes with the new record.",
+	"agentId": "aaa25d3f3c6f8d8d0",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-13T23:19:45.853Z"
+}

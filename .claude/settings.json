@@ -1,0 +1,14 @@
+{
+	"hooks": {
+		"Stop": [
+			{
+				"hooks": [
+					{
+						"type": "command",
+						"command": "node /Users/jacksm5pro/dev/open-source/guessless/scripts/claim-gate.mjs"
+					}
+				]
+			}
+		]
+	}
+}

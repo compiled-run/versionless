@@ -1,0 +1,11 @@
+{
+	"unitId": "u20c2c-binding-reorder-capability",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Landed the PM-ruled generic template-binding-reorder capability (packages/frameworks/angular/src/template-binding-reorder.ts): reads a directive class for @Input() set accessors that dereference another same-directive @Input() in a throwing position (Renderer2 element-method arg0 or .classList), then topologically reorders a call site's directive-input bindings so every dep precedes its dependent; refuses cycles and unmatchable selectors, no-ops already-safe/non-input/unprovable/unbound cases. 16 tests (positive split shape + 4 refusal negatives + reading/selector cases). Wired into the composed changeset (era-migration templates input + lanes-run gathering): fires exactly once on the split shape, applicationFilesChanged increments with the reordered template itemized; values byte-identical, outputs untouched. Gate green: tsc clean, vp lint exit 0, overfitting guard passes, targeted tests green. OWED as a clean re-cut: the offline rebuild x2 + browser behavior-check (0 page errors, throw gone) + superseding build record over u23 — a multi-minute build+Playwright lane beyond this unit's 35-min budget.",
+	"agentId": "ae0dd924f35dd08c9",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-12T11:35:28.825Z"
+}

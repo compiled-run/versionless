@@ -1,0 +1,25 @@
+{
+	"runId": "lrapr-t006",
+	"unitId": "u19k-tiny-translator-publish-close",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t006/prompt-u19k-tiny-translator-publish-close-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01UapnYHHGL6GUK5txeSQoVF",
+	"promptId": "8f12d1fc-1104-44a8-9afc-a797fa0cf075",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/cli/src/witness/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/src/receipts/witness-angular-tiny-translator.ts",
+		"packages/core/src/index.ts",
+		"packages/core/test/**",
+		"evidence/runs/angular-tiny-translator-v0-12-0/**",
+		"evidence/runs/witness-angular-tiny-translator-v0-12-0/**",
+		"fixtures/angular-tiny-translator-v0-12-0/**"
+	],
+	"ts": "2026-08-12T06:51:27.927Z",
+	"pendingName": "00001786517487928533-37dd861a-u19k-tiny-translator-publish-close.json"
+}

@@ -1,0 +1,11 @@
+{
+	"unitId": "u4-eshop-webspa-baseline",
+	"runId": "lrapr-t023",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Era baseline for the eShopOnContainers WebSPA holdout: archive sha256 re-verified, full pinned tree extracted to a read-only corpus, WebSPA subpath copied to a mutable lane. Era cell = Node 8.11.4 darwin-x64 (Dockerfile node:8.11 evidence; Rosetta recorded as host fact). npm install exit 0, 1271 packages, registry closure fully intact — no narrowing needed. npm 5.6.0 rewrote package-lock requires-specs only (no version/resolved/integrity drift); authored lock restored before builds, lane byte-identical to corpus. Two production builds via the app's own `npm run build:prod` (build-angular:browser 0.7.5) both exit 0, same webpack hash, output byte-identical (25 files, 1660416 bytes). Freeze intact; no migration or witness work.",
+	"agentId": "a03a0320cbae68453",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-14T04:59:12.537Z"
+}

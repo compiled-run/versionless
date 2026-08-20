@@ -1,0 +1,22 @@
+{
+	"runId": "lrapr-t004",
+	"unitId": "t004-d1-papercups-migration-build",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t004/prompt-t004-d1-papercups-migration-build-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01UZEXTge3mV1ohrz74FfqoX",
+	"promptId": "011adbb1-806d-4a1d-b3ca-1f4e162f80e9",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/frameworks/react/**",
+		"packages/cli/src/**",
+		"packages/cli/test/**",
+		"evidence/runs/react-papercups-v1-0-0/**",
+		"fixtures/react-papercups-v1-0-0/**",
+		"vite.config.ts"
+	],
+	"ts": "2026-08-10T19:37:50.931Z",
+	"pendingName": "00001786390670932914-d0629b50-t004-d1-papercups-migration-build.json"
+}

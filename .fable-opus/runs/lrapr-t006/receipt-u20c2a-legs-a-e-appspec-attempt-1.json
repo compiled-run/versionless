@@ -1,0 +1,17 @@
+{
+	"status": "completed",
+	"summary": "Delivered the angular-super-productivity AppSpec with legs (a) create-task and (e) reload-persistence, both driven green on both lanes by calibration. Fixed the playwright-host NUL byte. Corrected three calibration contradictions, each recorded as a constant: the work-view host tag; the IndexedDB reader's localeCompare ordering, which disagreed with every schema's code-unit sortedUnique check; and the telemetry reader's refusal of the cross-origin cache member the app's own lazy externalAssets group creates on reload. Found an unrepaired migrated-lane runtime regression (split.component TypeError, 1 page error + 2 console errors per load, zero in era) and deliberately kept it OUT of the expected inventories. No drag, no legs (c)/(d), no runner, nothing published. tsc clean, lint 0 errors, 2050/2050.",
+	"files_changed": [
+		"packages/cli/src/witness/playwright-host.ts",
+		"packages/cli/src/witness/real-app-run.ts",
+		"packages/cli/src/fixture/angular-super-productivity-calibrate-run.ts",
+		"packages/cli/test/witness-angular-super-productivity-run.test.ts",
+		"packages/cli/test/witness-file-input-and-download-mechanisms.test.ts",
+		"packages/core/src/receipts/witness-angular-super-productivity.ts"
+	],
+	"open_questions": [
+		"The migrated lane cannot publish until the split.component regression is repaired: witnessRecord.pageErrors must be 0 and it measures 1 per document load (2 console errors). Root cause is an @Input() set splitPos calling renderer addClass against an undefined element ref under Angular 16 input-setter timing. Repair needs packages/frameworks/** plus a lane rebuild, both outside this contract. Recorded as WITNESS_ANGULAR_SUPER_PRODUCTIVITY_MIGRATED_LANE_REGRESSION.",
+		"Two rendered-style probes genuinely differ across the lift and will need declared-difference entries at publish time: header-icon-button font-family (Roboto,\"Helvetica Neue\",sans-serif vs Arial) and document-body font-family (drops \"Helvetica Neue\"). Measured values are recorded in WITNESS_ANGULAR_SUPER_PRODUCTIVITY_MEASURED_STYLE_DIFFERENCES. Because the schema requires the two lanes' typeface records to be exactly equal, the typeface reading is anchored on side-navigation (identical in both lanes) rather than document-body; confirm that anchor choice.",
+		"docs/goals/legacy-react-angular-production-readiness/notes/t006-unit-log.md shows as modified in git but was already modified at session start and was not touched by this unit."
+	]
+}

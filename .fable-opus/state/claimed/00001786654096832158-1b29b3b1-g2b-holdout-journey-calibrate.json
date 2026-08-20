@@ -1,0 +1,24 @@
+{
+	"runId": "lrapr-t017b",
+	"unitId": "g2b-holdout-journey-calibrate",
+	"attempt": 2,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t017b/prompt-g2b-holdout-journey-calibrate-attempt-2.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_011K28i64NXhLTUaTH6KaUBw",
+	"promptId": "c511b2bf-e76e-4837-bedd-bc2391738125",
+	"background": false,
+	"parallel": false,
+	"effort": "high",
+	"contract": [
+		"packages/cli/src/witness/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/src/receipts/witness-react-cypress-rwa.ts",
+		"packages/core/src/index.ts",
+		"packages/core/test/**",
+		"evidence/runs/react-cypress-rwa/**",
+		"fixtures/**"
+	],
+	"ts": "2026-08-13T20:48:16.831Z",
+	"pendingName": "00001786654096832158-1b29b3b1-g2b-holdout-journey-calibrate.json"
+}

@@ -1,0 +1,11 @@
+{
+	"unitId": "u3-compile-stage-dependency-readings",
+	"runId": "lrapr-t021",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Closed G4 with evidence-driven verdicts: ngx-bootstrap aligned ^11.0.2 (peers discriminate 15/16/17; stamp 16.1.4 confirms; bs-datepicker.css still published), @yaga/leaflet-ng2 and jw-bootstrap-switch-ng2 no-successor (newest lines are full-compilation Angular 12 and pre-Ivy ViewEngine respectively; TS2416 unchanged at 1.1.0). xlf-google-translate aligned ^1.0.4 per the jira2md precedent — authored manifest now installs with no narrowing. Added generic workspace-engines-retarget capability (one field, cell-derived value, excludes-only condition, three stand-downs). Re-ran once: install exit 0/2276 pkgs; build exit 1/260 diagnostics, TS2314 7->0, TS2416 1->0, TS2307 2->7, MNF 3->8, new leaflet undeclared-edge/TS7006/NG1010 named not fixed. Suite 2288 green, React frozen.",
+	"agentId": "a959fe1fc98c3c8cc",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-14T02:46:11.733Z"
+}

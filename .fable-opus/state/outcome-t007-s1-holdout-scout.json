@@ -1,0 +1,11 @@
+{
+	"unitId": "t007-s1-holdout-scout",
+	"runId": "lrapr-t1",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Read-only scout. Verified 6 holdout candidates via GitHub raw/API metadata only; no files written, no source archives fetched. All six are MIT-licensed with the LICENSE header quoted at the exact pinned tag, and none appear on the T004-lane, graveyard, or react-boilerplate exclusion lists: cypress-realworld-app v1.0.18 (CRA 4, React 17, in-repo lowdb API) scored 5; hospitalrun-frontend v2.0.0-alpha.7 (CRA 3.4, PouchDB) 4; MyCrypto 2.5.64 (raw webpack 4.46) 4; ant-design-pro v5.2.0 (Umi 3.5) 3; react-admin v3.19.12 examples/demo (react-scripts 5, fakerest) 3; kepler.gl v2.5.5 demo-app (webpack 4, Mapbox token required) 2. Dropped influxdata/chronograf: LICENSE at 1.8.10 is AGPL-3, not MIT.",
+	"agentId": "a95dd1fa3b7259f56",
+	"background": true,
+	"verdictDelivered": true,
+	"ts": "2026-08-10T18:50:29.348Z"
+}

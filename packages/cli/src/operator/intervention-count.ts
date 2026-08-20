@@ -14,10 +14,13 @@
  * statements.
  *
  * **C1 — worktree mutation outside the declared write set.** Every tracked path
- * in the checkout, plus the application root and the lane parent, hashed before
- * and after. The command declares its write set (`--out`, `--record`, and the
- * `evidence/**` paths it names); a changed or created path outside that set is
- * one intervention, named.
+ * in the checkout, plus the application root, the lane parent, and the
+ * checkout's own `.git/hooks`, hashed before and after. The command declares
+ * its write set (`--out`, `--record`, and the `evidence/**` paths it names); a
+ * changed or created path outside that set is one intervention, named. The
+ * hooks directory is in the set because it is untracked — so `git ls-files`
+ * cannot report it — and it is the one untracked place a child can leave an
+ * executable this checkout will run later.
  *
  * **C2 — prompt / stdin reads.** The child is spawned with stdin `ignore` and
  * `CI=1`, so a read of stdin cannot be answered by construction. A child that
@@ -211,6 +214,20 @@ type Snapshot = ReadonlyMap<string, string>;
 const SKIPPED_DIRECTORIES: readonly string[] = Object.freeze(['node_modules', '.git']);
 
 /**
+ * The one place inside `.git` this harness does watch, as path segments.
+ *
+ * `.git` is not tracked and not walked, which for every other file in it is the
+ * right reading — an object or a ref moving is Git doing its job. Hooks are not
+ * that. A hook file is an executable this checkout runs on the operator's next
+ * commit, and an acquired application's install script can write one: this
+ * repository's own `.git/hooks` was overwritten by a dependency's `postinstall`
+ * on 2026-08-10 and the counter scored the run zero, because the write landed
+ * in the one directory the snapshot could not see. Watching it is what makes
+ * that write countable rather than invisible.
+ */
+const GIT_HOOKS_DIRECTORY: readonly string[] = Object.freeze(['.git', 'hooks']);
+
+/**
  * The physical path for `value`, every symlinked ancestor resolved.
  *
  * One file can be named two ways at once. macOS `mktemp -d` hands back
@@ -303,6 +320,7 @@ export async function snapshotWatchedPaths(
 	const tracked = await trackedPaths(root);
 	const files: string[] = tracked === null ? [] : [...tracked];
 	if (tracked === null) await walkFiles(root, files);
+	await walkFiles(path.join(root, ...GIT_HOOKS_DIRECTORY), files);
 	await walkFiles(physicalPath(declarations.appRoot), files);
 	await walkFiles(path.dirname(physicalPath(declarations.out)), files);
 	const snapshot = new Map<string, string>();

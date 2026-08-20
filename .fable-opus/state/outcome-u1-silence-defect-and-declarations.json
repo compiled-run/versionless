@@ -1,0 +1,11 @@
+{
+	"unitId": "u1-silence-defect-and-declarations",
+	"runId": "lrapr-t024",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Closed G1/G2/G4/G5 generically. G1: alignAngularPackageManifest now reports every unread era-pinned declaration as unhandled (edit unchanged; test-toolchain line kept verbatim). G2: @ng-bootstrap/ng-bootstrap aligned ^15.1.2 (peers ^16.0.0, stamp 16.0.6; 16.0.0 stamped 17.0.0 excluded), preboot no-successor (ViewEngine tarball, no ngDeclare, ngcc gone). G5/G4: two new supply-gated capabilities — era-lockfile supersession as a changeset removal, and npm-script flag retargeting. Re-run: install GREEN (1689 packages, exit 0, unforced), one build attempt RED, G3 untouched and now compiler-stated; new classes named (NgbModule.forRoot, Observable.throw, tilde sass wiring gap). No green-vertical changeset shifted. tsc/lint/node suite (2362) green; React subtree intact.",
+	"agentId": "abbacff9c430e9868",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-14T05:57:37.462Z"
+}

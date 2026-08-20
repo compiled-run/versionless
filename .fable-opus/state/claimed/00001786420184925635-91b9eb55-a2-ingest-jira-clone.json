@@ -1,0 +1,15 @@
+{
+	"runId": "lrapr-t005",
+	"unitId": "a2-ingest-jira-clone",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t005/prompt-a2-ingest-jira-clone-attempt-1.md",
+	"subagentType": "opus-worker-isolated",
+	"toolUseId": "toolu_01GMDXw8ynTGwaZxyvTgWVhK",
+	"promptId": "e6cdf257-501d-4d07-94ce-fd4964f0c60e",
+	"background": true,
+	"parallel": true,
+	"effort": null,
+	"contract": ["fixtures/angular-jira-clone/**", "evidence/ingests/angular-jira-clone/**"],
+	"ts": "2026-08-11T03:49:44.924Z",
+	"pendingName": "00001786420184925635-91b9eb55-a2-ingest-jira-clone.json"
+}

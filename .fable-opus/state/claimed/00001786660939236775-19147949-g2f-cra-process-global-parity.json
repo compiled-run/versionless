@@ -1,0 +1,26 @@
+{
+	"runId": "lrapr-t017b",
+	"unitId": "g2f-cra-process-global-parity",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t017b/prompt-g2f-cra-process-global-parity-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_013Hf4g7VmNL5Xq92pExH8op",
+	"promptId": "3fa03add-c794-42e5-b11c-c76f0544f5c5",
+	"background": false,
+	"parallel": false,
+	"effort": "high",
+	"contract": [
+		"packages/frameworks/react/**",
+		"packages/core/src/bundlers/**",
+		"packages/core/src/migrations/**",
+		"packages/core/src/analysis/**",
+		"packages/core/src/receipts/capability-coverage.ts",
+		"packages/core/src/receipts/witness-react-cypress-rwa.ts",
+		"packages/core/src/index.ts",
+		"packages/core/test/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**"
+	],
+	"ts": "2026-08-13T22:42:19.235Z",
+	"pendingName": "00001786660939236775-19147949-g2f-cra-process-global-parity.json"
+}

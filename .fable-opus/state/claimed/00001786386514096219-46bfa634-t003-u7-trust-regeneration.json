@@ -1,0 +1,15 @@
+{
+	"runId": "lrapr-t1",
+	"unitId": "t003-u7-trust-regeneration",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t1/prompt-t003-u7-trust-regeneration-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01UGeBmLJcaVuY5hRijB4LEC",
+	"promptId": "f1de5dc0-4c87-4ce2-9df7-ec6a368d3b12",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": ["evidence/trust/current/**", "evidence/runs/aggregate.json"],
+	"ts": "2026-08-10T18:28:34.095Z",
+	"pendingName": "00001786386514096219-46bfa634-t003-u7-trust-regeneration.json"
+}

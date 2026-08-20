@@ -1,0 +1,11 @@
+{
+	"unitId": "u19i-data-loss-root-cause",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Root-caused the migrated lane's silent translation loss to (c) an app-latent bug exposed: the component's setDisabledState rebuilds this.form without re-subscribing, and Angular 16 calls setDisabledState on every CVA at attach while Angular 5 did not. Measured live in both lanes with counters inserted at four byte-exact sites of the migrated lane's own bundle: typing emits 10x on the live form, 0x on the subscribed form, 0 debounce timers armed, propagateChange never called. Refuted our pipe translation via a positive control (emits in 204ms) and dual-rxjs via a closure/bundle census. Sealed cause record written; no fix applied.",
+	"agentId": "a09215b22d556260e",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-12T06:32:45.061Z"
+}

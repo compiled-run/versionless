@@ -1,0 +1,11 @@
+{
+	"unitId": "u20c1-host-indexeddb-ngsw",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Landed both witness host capabilities. (1) Generic IndexedDB key reader on playwright-host: enumerates databases, object stores and keys only (never values), refusing non-enumerable origins, would-be-created databases and unrecordable key shapes; per-AppSpec opt-in that adds nothing to the browser context, with the walk test extended to prove no published spec declares it and every spec's host refuses the reading. (2) Additive succeeding-service-worker shape: WitnessRealServiceWorkerEvidence in core, a phased checkpoint helper, a pure validated builder, executeRun emitting run.serviceWorker, and a mutual-exclusion check against the zero/refused/blocked shapes. staticInventory gained an additive entries list rather than widening its pinned two-name worker filter. 19 new tests including a builder round-trip against the schema parser (now exported). No journeys, no drag membership. tsc clean, lint 0 errors (27 warnings, baseline-identical), 2031/2031 node tests.",
+	"agentId": "ab0096e1f210d7333",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-12T10:12:00.529Z"
+}

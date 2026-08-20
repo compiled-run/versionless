@@ -1,0 +1,20 @@
+{
+	"runId": "nts-t004",
+	"unitId": "spike-b-batch-operator-dryrun",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/nts-t004/prompt-spike-b-batch-operator-dryrun-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01PUR15xzUTRYKNwJAs3Gkii",
+	"promptId": "5ff7b915-3f18-4c25-80e9-4ebdbcfb1e47",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"\"packages/cli/src/fixture/fleet-batch-spike-run.ts\"",
+		"\"packages/cli/test/**\"",
+		"\"evidence/spikes/fleet-batch-dryrun/**\"",
+		"\"docs/goals/next-tranche-strategy/**\""
+	],
+	"ts": "2026-08-14T16:45:52.184Z",
+	"pendingName": "00001786725952185508-df43ff9a-spike-b-batch-operator-dryrun.json"
+}

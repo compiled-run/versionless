@@ -1,0 +1,20 @@
+{
+	"status": "blocked",
+	"summary": "Landed the node-core runtime-globals coherence capability in @versionless/angular (reads the installed module's proven load-time global dereferences, supplies the narrowest object graph via the builder's polyfills seam, refuses everything unproven by name) with 12 tests; applied to the stage; build-9/build-10 green, 524 files, byte-identical. Browser boot check confirms 'process is not defined' is fixed but the lane still does not mount: '$localize is not defined' at bootstrap, from Angular 16 i18n templates needing @angular/localize, which is not installed. Per the packet I did not publish the superseding build record or re-pin schema digests to a non-booting artifact. Receipt-path constant corrected. All four verify commands pass.",
+	"files_changed": [
+		"packages/frameworks/angular/src/node-core-runtime-globals.ts",
+		"packages/frameworks/angular/src/index.ts",
+		"packages/frameworks/angular/test/node-core-runtime-globals.test.ts",
+		"packages/cli/src/fixture/angular-tiny-translator-globals-run.ts",
+		"packages/cli/src/witness/angular-tiny-translator-boot-check.ts",
+		"packages/cli/src/witness/angular-tiny-translator-run.ts",
+		"packages/core/src/receipts/witness-angular-tiny-translator.ts",
+		"packages/core/test/witness-angular-tiny-translator-receipt.test.ts",
+		"evidence/runs/angular-tiny-translator-v0-12-0/u19e-node-core-runtime-globals.json"
+	],
+	"open_questions": [
+		"Boot still fails after the shim, on a new cause outside the ruled capability: 'ReferenceError: $localize is not defined' at t.bootstrap in main.2e2ecec27aebe0e1.js (dist-9). The app's templates carry Angular i18n markers, so AOT emits $localize tagged templates; the global comes only from @angular/localize/init and @angular/localize is absent from the installed closure. Does PM authorise a second capability (template-i18n runtime declaration: declare @angular/localize at the cell's read range and add @angular/localize/init as a polyfills entry) plus the consented npm install it requires?",
+		"Given that, should the superseding build record and the schema digest re-pin wait for a lane that actually mounts (my reading), or does PM want u17d superseded now on the build facts alone with boot recorded as still red?",
+		"The era SW-attempting admission (exact 400 + two console errors, zero-SW policy pin becomes SW-ATTEMPT per mw1e, nonclaim replaced) is untouched because it travels with the digest re-pin. Should it be cut as its own unit so it can land independently of the boot fix?"
+	]
+}

@@ -1,0 +1,11 @@
+{
+	"unitId": "u1-clean-checkout-holdout-reexecution",
+	"runId": "lrapr-t010",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Clean git worktree at HEAD d5ef9ea, offline install (90 pkgs, 0 downloaded), freeze recomputed to 27741d9c by plain shell. Gates: tsc/fmt/lint/pack green; receipt:verify 52400147 and corpus:verify e6c9068a reproduce recorded digests. vp test, trust:verify and script-surface:verify recorded UNKNOWN (not green) — all failures were missing .versionless work/stage lanes, staged too late to re-run. Both holdouts re-executed FRESH in a real browser: React parity 963785/5c3285/54313316 matched, 51/51 both lanes; eShop parity 585ae9ec matched and all five sealed witness artifacts reproduced byte-identically. T019 fidelity caveat closed. Finding: React pass-twice determinism drifted under concurrent load; passed alone.",
+	"agentId": "a64223d1430dcbf41",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-14T10:19:39.373Z"
+}

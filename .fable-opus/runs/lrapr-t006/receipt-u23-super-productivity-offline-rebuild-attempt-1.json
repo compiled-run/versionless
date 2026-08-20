@@ -1,0 +1,12 @@
+{
+	"status": "completed",
+	"summary": "Rebuilt the super-productivity migrated lane offline-faithful. Egress-guarded control build of the workspace as u18j left it went red on a DNS lookup to fonts.googleapis.com with 'Inlining of fonts failed'. Applied the landed font-inlining-disable capability (2 sites in angular.json, no application source touched); rebuilt twice green with zero egress attempts, 62 artifacts, deterministic modulo ngsw.json's timestamp (compared key by key, hashTable identical). Sass-random fired only across the supersede boundary and is recorded with its first differing byte inside the confetti keyframe. Census re-verified: same logical names, both worker chunks byte-identical, referenced and precached. Emitted index.html carries the era Roboto link and zero inlined rules (was 45). New sealed record supersedes u18j. No witness work. Gate green.",
+	"files_changed": [
+		"packages/cli/src/fixture/angular-super-productivity-u23-font-run.ts",
+		"packages/cli/src/fixture/angular-super-productivity-u23-font-record.ts",
+		"packages/cli/src/fixture/angular-tiny-translator-u22-font-run.ts",
+		"packages/cli/test/angular-super-productivity-u23.test.ts",
+		"evidence/runs/angular-super-productivity-v2-13-15/u23-offline-font-lane.json"
+	],
+	"open_questions": []
+}

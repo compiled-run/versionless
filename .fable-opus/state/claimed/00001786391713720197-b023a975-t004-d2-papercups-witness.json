@@ -1,0 +1,23 @@
+{
+	"runId": "lrapr-t004",
+	"unitId": "t004-d2-papercups-witness",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t004/prompt-t004-d2-papercups-witness-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_0127unSZ2McCuATrybEstise",
+	"promptId": "a44f8eb4-0131-4597-bdd2-cf2656677e43",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/cli/src/witness/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"evidence/runs/react-papercups-v1-0-0/**",
+		"evidence/runs/witness-react-papercups/**",
+		"evidence/runs/aggregate.json",
+		"fixtures/react-papercups-v1-0-0/**"
+	],
+	"ts": "2026-08-10T19:55:13.719Z",
+	"pendingName": "00001786391713720197-b023a975-t004-d2-papercups-witness.json"
+}

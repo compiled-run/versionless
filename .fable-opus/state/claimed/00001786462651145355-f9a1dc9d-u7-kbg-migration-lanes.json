@@ -1,0 +1,25 @@
+{
+	"runId": "lrapr-t006",
+	"unitId": "u7-kbg-migration-lanes",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t006/prompt-u7-kbg-migration-lanes-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01MzcY94GNsWjRka3Qx3vn9k",
+	"promptId": "f1d067e2-1a32-457d-97fb-ac3bc57648d6",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/frameworks/react/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/test/**",
+		"evidence/runs/next-killedbygoogle-v3-0-0/**",
+		"fixtures/next-killedbygoogle-v3-0-0/**",
+		"package.json",
+		"pnpm-lock.yaml",
+		"pnpm-workspace.yaml"
+	],
+	"ts": "2026-08-11T15:37:31.144Z",
+	"pendingName": "00001786462651145355-f9a1dc9d-u7-kbg-migration-lanes.json"
+}

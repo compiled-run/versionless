@@ -1,0 +1,11 @@
+{
+  "unitId": "T020-papercups-synthesized-witness-run",
+  "runId": "bank-demo-fleet-pipeline",
+  "attempt": 1,
+  "outcome": "completed",
+  "reason": "Drove the synthesized witness path with real Chromium (repo-pinned chrome-headless-shell-1208) against the papercups lane pair via witness:real-app --journeys synthesized; published record.json. Two small in-contract fixes: synthesized.ran was counted per-(lane,journey) so it exceeded replayable on a two-lane pair (now a Set of emission names; execution.journeysRun stays the across-lanes count); and the vocabulary enumerator walked only the diagonal for the crawl form, missing depth-2-reached-1. Recorded: journeySource synthesized-crawl; reason hand-authored-driver-overridden-by-declaration displacing papercups; total 1, replayable 1, ran 1; replayabilityRatio 1; successfulNonLoopback 0. Added test (c) plus a published-record assertion leg. All six verify commands pass; 2593/2593.",
+  "agentId": "ae0021dcab9b5f56a",
+  "background": false,
+  "verdictDelivered": true,
+  "ts": "2026-08-17T18:47:07.791Z"
+}

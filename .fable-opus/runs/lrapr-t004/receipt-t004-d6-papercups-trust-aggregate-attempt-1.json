@@ -1,0 +1,17 @@
+{
+	"status": "blocked",
+	"summary": "Landed the core barrel export, a derived-not-authored papercups aggregate append tool with 4 tests, and a canonical offline trust regeneration (digests only; no counts moved). Blocked before appending the aggregate: doing so fails 8 tests in packages/core/test/witness-react-papercups.test.ts and packages/core/test/corpus-conformance.test.ts, both outside my contract and explicitly protected. Also analyzeCorpusConformance emits no papercups vertical or application row, so summary would claim 12/5 while listing 11/4 and the trust matrix cell would have no conformance row to derive from. Whole repo gate green as left.",
+	"files_changed": [
+		"packages/core/src/index.ts",
+		"packages/cli/src/fixture/react-papercups-aggregate-append.ts",
+		"packages/cli/test/react-papercups-aggregate-append.test.ts",
+		"evidence/trust/current/manifest.json",
+		"evidence/trust/current/provenance.json",
+		"evidence/trust/current/report.md"
+	],
+	"open_questions": [
+		"Allowance for packages/core/test/**? Appending the two papercups members fails 8 tests that pin the pre-append state: witness-react-papercups.test.ts ('derives the exact composition once both Papercups receipts join' reads the live aggregate and re-appends, giving 20 not 18; 'refuses the Witness receipt without its retained build receipt', 'refuses an unexpected extra member alongside the Papercups tail', 'refuses a Papercups member whose shape drifts' now throw 'Aggregate membership contains duplicate receipts' instead of /Papercups/; 'keeps the zero-service-worker state when Papercups has not joined' expects kind react-zero-sw-reconciliation) and corpus-conformance.test.ts ('derives the canonical eleven verticals...' expects summary 11/4, plus two staged-copy tests that throw 'Prepublication aggregate must contain exactly ten canonical receipts').",
+		"How should the papercups matrix cell derive? analyzeCorpusConformance (packages/core/src/corpus/conformance.ts, outside my contract) sets summary.verticals=12 and sourceApplications=5 from the transaction but pushes no papercups vertical into conformance.verticals and no papercups entry into conformance.applications. Trust matrix() builds cells from conformance.verticals and matrix.derivedFrom pins corpus-conformance.json, so a papercups cell would be forced rather than derived. Ruling needed: (a) extend conformance to emit the papercups vertical plus its source application (needs packages/core/src allowance), or (b) authorize a transaction-kind-gated cell whose fields derive from the papercups Witness receipt rather than from conformance.",
+		"In-contract fallout to schedule in the re-cut: packages/cli/test/angular-realworld-v15-to-v16-integrate.test.ts expects the live aggregate to hold 16 fixtures, and packages/cli/test/corpus-conformance.test.ts expects verticals 11 / sourceApplications 4. Both need repointing to the papercups state once the append lands."
+	]
+}

@@ -1,0 +1,13 @@
+{
+	"status": "completed",
+	"summary": "Added the web-worker-url-specifier capability (11 tests) rewriting the era string-form Worker construction to the URL form, provable from webWorkerTsConfig, the resolved worker source, and the constructor shape; five named refusal classes. Applied via a new u18j driver: 2 sites, 0 refusals. Three green builds emit 62 artifacts including both worker chunks, referenced by the runtime chunk and precached by ngsw.json; deterministic modulo the ngsw timestamp. Parity: 58 common, but the chunks emit as lz.js/reminder.js because webpack 5 names worker chunks from the options `name` — recorded as a named naming difference, not the predicted name closure. Ledger u18j written; whole gate green.",
+	"files_changed": [
+		"packages/frameworks/angular/src/web-worker-url-specifier.ts",
+		"packages/frameworks/angular/src/index.ts",
+		"packages/frameworks/angular/test/web-worker-url-specifier.test.ts",
+		"packages/cli/src/fixture/angular-super-productivity-u18j-run.ts",
+		"packages/cli/test/angular-super-productivity-u18j.test.ts",
+		"evidence/runs/angular-super-productivity-v2-13-15/u18j-worker-chunks-parity.json"
+	],
+	"open_questions": []
+}

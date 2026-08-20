@@ -1,0 +1,11 @@
+{
+	"unitId": "h4-aggregate-trust-transition",
+	"runId": "lrapr-t004-hospitalrun",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Built the full HospitalRun transition: derived append tool, react-hospitalrun-browser-proof state, derived conformance vertical/application rows, trust receipt+matrix+report wiring. Ran the append for real; it derived kind=react-hospitalrun-browser-proof, receipts=20, and corpus:verify measured 13 verticals / 6 source applications. trust:generate then refused the derived row: HospitalRun's revision 8156955145551d0366df10faa28e724f3377dea1 opens with a 13-digit run and trips panLike in packages/core/src/policy/payment-signals.ts, which is outside my contract. Reverted the append, restored partial trust writes, regenerated trust at the unchanged Papercups state. All seven gate commands pass; new code is inert.",
+	"agentId": "a2c0f09c843d9c72e",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-11T02:41:24.615Z"
+}

@@ -1,0 +1,21 @@
+{
+	"runId": "lrapr-t1",
+	"unitId": "t003-u3-flaky-gate-fix",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t1/prompt-t003-u3-flaky-gate-fix-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01RgavhPH39Q4BtkHCHsDs9X",
+	"promptId": "898b7392-7c0b-482b-abb0-2bc9b00d4a6d",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/cli/test/**",
+		"packages/cli/src/**",
+		"packages/core/test/**",
+		"packages/frameworks/**/test/**",
+		"vite.config.ts"
+	],
+	"ts": "2026-08-10T17:31:01.949Z",
+	"pendingName": "00001786383061950078-65c5c9c0-t003-u3-flaky-gate-fix.json"
+}

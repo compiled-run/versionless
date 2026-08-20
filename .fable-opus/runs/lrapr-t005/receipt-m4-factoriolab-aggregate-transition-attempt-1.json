@@ -1,0 +1,32 @@
+{
+	"status": "completed",
+	"summary": "Landed the factoriolab aggregate/conformance/trust transition as one change, first angular-lineage cell. Derived append tool appends ONE member (its three build receipts are sealed inside the Witness receipt, not separate rows) — ran for real: 20->21 receipts. New kind angular-factoriolab-browser-proof: 14 verticals, 7 apps, 34 resolvedDependencies, 19 matrix cells, all measured post-append. Rows/cell derive from receipts; readiness counted:false so coverage angularLineage stays 1/4. Every pre-append pin moved to exact measured values (papercups/hospitalrun staged-copy tests, integrate closed lists, corpus counts); nothing loosened, payment-signals untouched, no scan trip. All 7 verify commands pass; 1000/1000.",
+	"files_changed": [
+		"evidence/runs/aggregate.json",
+		"evidence/trust/current/corpus-conformance.json",
+		"evidence/trust/current/manifest.json",
+		"evidence/trust/current/matrix.json",
+		"evidence/trust/current/provenance.json",
+		"evidence/trust/current/report.md",
+		"packages/cli/src/fixture/angular-factoriolab-aggregate-append.ts",
+		"packages/cli/src/fixture/angular-realworld-v15-to-v16-integrate.ts",
+		"packages/cli/src/fixture/next-killedbygoogle-integrate.ts",
+		"packages/cli/src/fixture/react-hospitalrun-aggregate-append.ts",
+		"packages/cli/src/fixture/react-papercups-aggregate-append.ts",
+		"packages/cli/test/aggregate-pre-append.ts",
+		"packages/cli/test/angular-factoriolab-aggregate-append.test.ts",
+		"packages/cli/test/angular-realworld-v15-to-v16-integrate.test.ts",
+		"packages/cli/test/corpus-conformance.test.ts",
+		"packages/cli/test/next-killedbygoogle-integrate.test.ts",
+		"packages/cli/test/react-hospitalrun-aggregate-append.test.ts",
+		"packages/cli/test/react-papercups-aggregate-append.test.ts",
+		"packages/core/src/corpus/conformance.ts",
+		"packages/core/test/corpus-conformance.test.ts",
+		"packages/core/test/witness-react-papercups.test.ts",
+		"packages/trust/src/generate.ts",
+		"packages/trust/src/render.ts",
+		"packages/trust/src/verify.ts",
+		"packages/trust/test/trust-package.test.ts"
+	],
+	"open_questions": []
+}

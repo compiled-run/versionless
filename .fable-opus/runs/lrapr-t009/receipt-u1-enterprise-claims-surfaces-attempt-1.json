@@ -1,0 +1,22 @@
+{
+	"status": "completed",
+	"summary": "Added packages/trust/src/enterprise.ts deriving the enterprise machine artifact + human document from canonical receipts: 6 React / 4 Angular green cells filtered off the Judge ledger and cross-checked against the corpus numerator and denominator; both holdouts quoted with exact receipt outcomes ('passed' 76f0b5bd, 'witness-passed-on-bounded-anonymous-catalog-surface' fb921b46); pigallery2 + eShop frozen-install + cypress tranche-one REDs retained; 5-of-6 prevalence, population statement and tranche-two commitment verbatim; 50 experimental capabilities out-of-matrix. Verification re-derives both files, so hand-edits fail. Added report:enterprise CLI flow, 10 guard tests, and corrected broader README claims. All seven verify commands pass; freeze intact; nothing committed.",
+	"files_changed": [
+		"README.md",
+		"evidence/trust/current/manifest.json",
+		"evidence/trust/current/report.md",
+		"evidence/trust/current/enterprise-report.json",
+		"evidence/trust/current/enterprise-report.md",
+		"packages/cli/src/cli.ts",
+		"packages/cli/src/enterprise/enterprise-report-run.ts",
+		"packages/trust/src/enterprise.ts",
+		"packages/trust/src/generate.ts",
+		"packages/trust/src/index.ts",
+		"packages/trust/src/render.ts",
+		"packages/trust/src/verify.ts",
+		"packages/trust/test/enterprise-surfaces.test.ts"
+	],
+	"open_questions": [
+		"Pinned upstream revisions are carried by pointer to corpus-conformance.json rather than restated in enterprise-report.json: two are 40-hex git object ids that the synthetic-evidence scanner (packages/core/src/policy/payment-signals.ts, outside this file contract) admits only inside the corpus-conformance document context. If the cockpit wants the revisions inline, that scanner needs a new admitted context."
+	]
+}

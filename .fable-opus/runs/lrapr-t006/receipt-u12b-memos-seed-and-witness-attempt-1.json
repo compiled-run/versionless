@@ -1,0 +1,13 @@
+{
+	"status": "partial",
+	"summary": "Landed the credentials-only seed amendment under the recorded PM ruling: owner pair is now owner@evidence.invalid / synthetic-pass, both proven to pass the pinned Signin validator (transcribed from the pinned source and test-checked), with the superseded pair proven refused. Seed digest cf422f2c->3694ff46 and behavior digest 1672b43f->b17da56b, both re-frozen and recorded with authority, reason and superseded values in MEMOS_SEED_AMENDMENT, the seed fixture and the evidence projection block (regenerated via their writers). tsc clean, lint 0 errors, 1442/1442 node tests, offline receipt:verify valid. The witness vertical (core schema, AppSpec journeys, runner, browser runs, canonical receipts) is NOT built, so that verification command fails; it needs its own unit.",
+	"files_changed": [
+		"packages/cli/src/witness/memos-projection.ts",
+		"packages/cli/src/fixture/react-memos-v0-1-3-api-surface.ts",
+		"packages/cli/test/react-memos-v0-1-3-api-surface.test.ts",
+		"packages/cli/test/witness-memos-projection.test.ts",
+		"fixtures/react-memos-v0-1-3/witness-projection-seed.json",
+		"evidence/runs/react-memos-v0-1-3/t006-api-surface.json"
+	],
+	"open_questions": []
+}

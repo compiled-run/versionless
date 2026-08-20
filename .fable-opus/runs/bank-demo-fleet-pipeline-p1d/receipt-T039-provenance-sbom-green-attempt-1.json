@@ -1,0 +1,42 @@
+{
+  "status": "blocked",
+  "summary": "Landed all three changes: provenance-equivalence helper + all 11 receipt.provenance compare sites (the other 5 call sites hold no compare line); kind:'file' SBOM coordinate with SHA-256 hash and versionless:coordinate-kind, no purl, no file: string, auditableLockText removed, verify.ts 197 literal derived; notEstablished line added. Fresh ingest under AGENTS-utilities-trust-refresh took the inventory 187->189 (mitt@3.0.1 + vendored witness). Declared vp pack, regenerated. trust:verify valid, freeze composite 27741d9c, proven 11, sealed receipts untouched, lint clean. Blocked: clean-tree gate reads count 225 and npm test still has 4 failures (down from 31).",
+  "files_changed": [
+    "packages/cli/src/witness/provenance.ts",
+    "packages/cli/src/witness/react-papercups-run.ts",
+    "packages/cli/src/witness/react-memos-run.ts",
+    "packages/cli/src/witness/react-boilerplate-run.ts",
+    "packages/cli/src/witness/react-boilerplate-zero-sw-run.ts",
+    "packages/cli/src/witness/react-hospitalrun-run.ts",
+    "packages/cli/src/witness/react-linkfree-run.ts",
+    "packages/cli/src/witness/angular-factoriolab-run.ts",
+    "packages/cli/src/witness/angular-jira-clone-run.ts",
+    "packages/cli/src/witness/angular-tiny-translator-run.ts",
+    "packages/cli/src/witness/next-killedbygoogle-run.ts",
+    "packages/cli/src/witness/next-killedbygoogle-v3-0-0-run.ts",
+    "packages/cli/src/witness/real-app-run.ts",
+    "packages/core/src/receipts/witness-real-app.ts",
+    "packages/trust/src/schema.ts",
+    "packages/trust/src/ingest.ts",
+    "packages/trust/src/generate.ts",
+    "packages/trust/src/verify.ts",
+    "packages/trust/test/trust-package.test.ts",
+    "evidence/trust/current/manifest.json",
+    "evidence/trust/current/dependency-graph.cdx.json",
+    "evidence/trust/current/licenses.json",
+    "evidence/trust/current/vulnerabilities.json",
+    "evidence/trust/current/provenance.json",
+    "evidence/trust/current/report.md",
+    "evidence/trust/current/coverage-report.json",
+    "evidence/trust/current/coverage-report.md",
+    "evidence/trust/current/enterprise-report.json",
+    "evidence/trust/current/enterprise-report.md",
+    ".versionless/cache/trust/ingest.json",
+    ".versionless/cache/trust/osv.json",
+    ".versionless/cache/trust/cisa-kev.json"
+  ],
+  "open_questions": [
+    "Clean-tree gate reads 'clean count 225', and every counted path is the run's own declared output (.lane/** = --out, .rr.json = --record, plus $W2/.versionless/stage and evidence/runs/witness-synthesized writes). The '../../../../../../../..' prefixes show intervention-count.ts:504 relativized against a /private/var/folders root while snapshot paths stayed /var/folders — macOS mktemp -d symlink — so insideWriteSet matched nothing. T037's git-worktree gate normalized that prefix; the packet's rsync+mktemp copy does not. May I realpath both root and snapshot paths in packages/cli/src/operator/intervention-count.ts (in contract), or should the gate command be changed instead? I will not edit the counter to make its own gate pass without that decision.",
+    "npm test is 4 failed | 2702 passed | 2 skipped, down from 31 failed. One is packages/cli/test/next-killedbygoogle-run.test.ts > 'validates portable hash-only cacheKey provenance schema, privacy, and integrity' -> 'T314 source-bound cacheKey model differs'. I could not isolate in-budget whether these 4 are pre-existing (masked behind the earlier 31) or caused by the declared vp pack / provenance widening. Needs the remaining 3 names and a pre-existing-or-not verdict before this can be called green."
+  ]
+}

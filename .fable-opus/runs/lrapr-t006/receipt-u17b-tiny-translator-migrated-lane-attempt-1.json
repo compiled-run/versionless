@@ -1,0 +1,23 @@
+{
+	"status": "completed",
+	"summary": "Delivered the tiny-translator MIGRATED lane: changeset applied to a stage tree, Angular 16.2 closure installed under consent (770+501 packages, 1405 locked), production build attempted once through build-angular:browser. Build is truthfully RED with four demand families itemised by file/symbol/library/diagnostic/transform (Material barrel removal, node util in browser code, RxJS prototype patching, and the injection-token errors consequent on the barrel). Extended three generic capabilities (rxjs deep-specifier collapse, rxjs patch-import refusal, builder-package declaration) plus two registry-read cell dispositions (@angular/http no-successor, @angular/flex-layout ^15.0.0-beta.42). Application files changed 2/58 -> 13/58. No parity claimed. Repo gate green.",
+	"files_changed": [
+		"packages/frameworks/angular/src/angular-target-cell.ts",
+		"packages/frameworks/angular/src/angular-source-migration.ts",
+		"packages/frameworks/angular/src/angular-cli-era-migration.ts",
+		"packages/frameworks/angular/src/builder-package-declaration.ts",
+		"packages/frameworks/angular/src/index.ts",
+		"packages/frameworks/angular/test/builder-package-declaration.test.ts",
+		"packages/frameworks/angular/test/angular-source-migration.test.ts",
+		"packages/frameworks/angular/test/tslint-toolchain-removal.test.ts",
+		"packages/cli/src/fixture/angular-tiny-translator-apply-run.ts",
+		"packages/cli/src/fixture/angular-tiny-translator-migrated-lane-run.ts",
+		"packages/cli/test/angular-tiny-translator-migrated-lane.test.ts",
+		"evidence/runs/angular-tiny-translator-v0-12-0/u17b-source-migration.json",
+		"evidence/runs/angular-tiny-translator-v0-12-0/u17b-migrated-lane.json"
+	],
+	"open_questions": [
+		"The @angular/material barrel split needs a reading of the installed package's own type surface to map symbol to secondary entry point; that is a closure-reading capability like the exports-map resolver, not a table the adapter can carry, and it was left for the next unit rather than hardcoded.",
+		"The node-util demand has two halves needing different answers: a call-site transform for the 16 application modules importing format, and a declared browser shim for ngx-i18nsupport-lib's own imports, which no application transform reaches."
+	]
+}

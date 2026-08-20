@@ -1,0 +1,10 @@
+{
+	"status": "blocked",
+	"summary": "Implemented the real papercups journey in real-app-run.ts (sign-in, three-category inbox triage, Phoenix shout reply round-trip, hover) plus an exported executeReactPapercupsWitnessRun. Verified green on both real lanes: identical routes and tracked-event counts, zero console errors, zero page errors, zero failed requests, zero successful non-loopback. Repo gate green (tsc, lint, 817 tests). Blocked before receipts/aggregate: core's deriveCorpusTransactionState pins the aggregate to an exact size and ordering, so adding any witness-react-papercups member makes corpus:verify throw, and the only fix is in packages/core, which the packet forbids while requiring corpus:verify to pass.",
+	"files_changed": ["packages/cli/src/witness/real-app-run.ts"],
+	"open_questions": [
+		"evidence/runs/aggregate.json cannot gain a member without editing packages/core/src/corpus/conformance.ts (deriveCorpusTransactionState asserts byPath.size === canonicalReceipts.length + 7 and an exact ordered path list; verified empirically that appending one member fails corpus:verify at conformance.ts:558). Should the file contract be widened to include packages/core/src/corpus/conformance.ts, or should the papercups vertical publish receipts without aggregate membership?",
+		"There is no papercups witness receipt schema in packages/core/src/receipts/. Should evidence/runs/witness-react-papercups/receipt.{json,md} be backed by a new core schema module (contract widening), or by a schema defined inside packages/cli/src/witness/ against repo idiom?",
+		"Papercups has no scrollable surface at 1280x720 (scrollHeight === clientHeight for body, .ant-layout-content, both siders and the document), so a scroll gesture would time out. Confirm that omitting scroll for this app is acceptable, or authorize extending the frozen projection to create an overflowing conversation."
+	]
+}

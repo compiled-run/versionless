@@ -1,0 +1,24 @@
+{
+	"status": "completed",
+	"summary": "Admitted and ingested codyogden/killedbygoogle @ 56809c31 (v3.0.0, 2022-02-06) as next-killedbygoogle-v3-0-0. All five admission gates passed with every scout fact re-verified: MIT LICENSE 1067 B blob a7069eea, pages/ router on next ^12.0.10, 72 blobs, zero LFS. Five consented responses, archive double-fetch byte-identical, blob-level tree parity clean. Baseline in Node 16.20.2/yarn 1.22.19: install, next build, and next export all succeeded. Recorded the three third-party script destinations with blocking guidance, the nine press-logo asset exclusions, the +1 ad-li count arithmetic behind both upstream specs, and the single-route limitation as a non-claim. Cross-checked the retired T128 artifact read-only: agreement on all immutable facts.",
+	"files_changed": [
+		"evidence/ingests/next-killedbygoogle-v3-0-0/attempt.json",
+		"evidence/ingests/next-killedbygoogle-v3-0-0/source.json",
+		"evidence/ingests/next-killedbygoogle-v3-0-0/license.json",
+		"evidence/ingests/next-killedbygoogle-v3-0-0/provenance.json",
+		"evidence/ingests/next-killedbygoogle-v3-0-0/admission.json",
+		"evidence/ingests/next-killedbygoogle-v3-0-0/reconciliation.json",
+		"evidence/ingests/next-killedbygoogle-v3-0-0/closure.json",
+		"evidence/ingests/next-killedbygoogle-v3-0-0/baseline-attempt.json",
+		"evidence/ingests/next-killedbygoogle-v3-0-0/runtime-egress.json",
+		"evidence/ingests/next-killedbygoogle-v3-0-0/probe-tree.json",
+		"evidence/ingests/next-killedbygoogle-v3-0-0/probe-ledger.ndjson",
+		"evidence/ingests/next-killedbygoogle-v3-0-0/transcript.ndjson",
+		"evidence/ingests/next-killedbygoogle-v3-0-0/drivers/acquire.mjs",
+		"evidence/ingests/next-killedbygoogle-v3-0-0/drivers/reconcile.mjs",
+		"evidence/ingests/next-killedbygoogle-v3-0-0/drivers/closure.mjs",
+		"evidence/ingests/next-killedbygoogle-v3-0-0/drivers/baseline.sh",
+		"fixtures/next-killedbygoogle-v3-0-0/fixture.json"
+	],
+	"open_questions": []
+}

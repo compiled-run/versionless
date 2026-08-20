@@ -1,0 +1,11 @@
+{
+	"unitId": "g2e-migrated-lane-two-lane-determinism",
+	"runId": "lrapr-t017b",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Item 1 DONE: repointed the cypress-rwa calibrate driver's migrated lane from the incomplete target/build-vite-run1 (6 files, no index.html) to the complete target/build-vite (18 files, index.html+assets); confirmed no other stale build-vite-run*/rerun*/probe root is referenced (probe already used build-vite). Items 2-5 BLOCKED: the repointed migrated lane reveals a genuine runtime break. The frozen Vite/rolldown bundle throws 'process is not defined' at module-eval and white-screens; baseline runs the full journey. Measured side-by-side in this env, migrated RED reproduced deterministically twice. tsc clean, lint 0 errors. Not fixed (adapter frozen; no harness process shim) - RED falsification evidence for a follow-up adapter reopen.",
+	"agentId": "a49fd109500e182c6",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-13T22:35:57.289Z"
+}

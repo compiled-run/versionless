@@ -1,0 +1,21 @@
+{
+	"runId": "lrapr-t005",
+	"unitId": "mw1d-journey-runner-tests",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t005/prompt-mw1d-journey-runner-tests-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_018zPy5yDAbHYGwmJBEKoYko",
+	"promptId": "a0fdc1f7-af35-4b6f-8642-270e3a3e6d70",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/cli/src/witness/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/test/**",
+		"fixtures/angular-jira-clone/**"
+	],
+	"ts": "2026-08-11T10:13:30.527Z",
+	"pendingName": "00001786443210529047-e57831fb-mw1d-journey-runner-tests.json"
+}

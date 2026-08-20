@@ -1,0 +1,11 @@
+{
+	"unitId": "u19d-tiny-translator-calibrate-publish",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Calibration measured a hard RED instead of four calibratable facts. The migrated lane's pinned canonical build (dist-7, inventory digest re-derived and identical to u17d's) throws 'process is not defined' at module evaluation and renders nothing: util@0.12.5's top-level NODE_DEBUG read, declared for ngx-i18nsupport-lib by u17c with no process shim. Separately, the era lane registers %BASE_HREF%ngsw-worker.js (400, two console errors), contradicting the zero-service-worker policy, the empty baseline inventory and a nonclaim. Recorded both as a sealed, measured evidence record; published no receipt. tsc/lint/1912 tests/receipt:verify all green; nothing committed.",
+	"agentId": "a8f139a1526d2377d",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-12T04:22:23.967Z"
+}

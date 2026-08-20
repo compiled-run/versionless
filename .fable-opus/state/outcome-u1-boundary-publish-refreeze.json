@@ -1,0 +1,11 @@
+{
+	"unitId": "u1-boundary-publish-refreeze",
+	"runId": "lrapr-t023",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Stage 1: published the pigallery2 1.7.0 RED as a permanent holdout-ledger entry following the React holdout pattern (new derived receipt module + evidence receipt bound by sha256 to the sealed T021 attempt record and u4 logs, aggregate holdouts membership, conformance cross-check), and declared the pre-Ivy-only-dependency Angular 16 unsupported boundary as data in coverage.supportBoundaries, matrix.json boundaries and report.md with non-certification language and a trust:verify guard. Stage 2: re-froze at HEAD 852079a1, composite f1a63359 (React verified unchanged at 972ca801, Angular 1f63f32c), supersession chain d9f75ef6->5de7df56->4df7bc96->f1a63359 citing the authorized T021 reopen, all 12 T021 capabilities experimental. Artifacts regenerated offline; trust:verify valid:true; 2313 tests green.",
+	"agentId": "ae8551a81292c06c2",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-14T03:42:42.886Z"
+}

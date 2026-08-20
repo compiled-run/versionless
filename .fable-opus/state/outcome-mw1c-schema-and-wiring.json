@@ -1,0 +1,11 @@
+{
+	"unitId": "mw1c-schema-and-wiring",
+	"runId": "lrapr-t005",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Landed the jira-clone witness core schema and its generic wiring. Additive only: witnessRecordedRequestPath makes non-loopback records query-free (same-origin unchanged), the cancelled-duplicate category matches through it and carries nonLoopbackScope only when a non-loopback member exists, plus a new mocked-seam inventory, rendered-style and application-journey slots through AppSpec/JourneyLifecycle/executeRun. New core schema pins source identity, four bound mj3c receipts, eight query-free seams, the Sentry-envelope member, board/style/scroll/route evidence, with parser, renderer, verifier, aggregate member, barrel export. 32 new tests. tsc, lint (0 errors) and 151 files / 1183 node tests green; factoriolab, hospitalrun and papercups verifiers untouched and passing.",
+	"agentId": "ab968e26b495bea14",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-11T10:12:51.859Z"
+}

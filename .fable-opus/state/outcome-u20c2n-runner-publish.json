@@ -1,0 +1,11 @@
+{
+	"unitId": "u20c2n-runner-publish",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Unit bundles ~5 sequential sub-units and requires live 6-pass browser publishing plus an elaborate committed-schema receipt, exceeding a 40-min bounded worker; a stopped mid-publish worker would file no receipt. Diligence done: producer (real-app-run.ts ~5280-5569) drives legs a/c/b/e but not d; leg-d theme needs a within-journey before/after read of --palette-primary-contrast-50 that JourneyLifecycle.renderedStyles() (no-arg, fixed probes) cannot provide, so a shared lifecycle style-probe primitive is prerequisite. assertSettings already requires settings (core 1732/1972). Runner angular-super-productivity-run.ts and published receipt do not exist. Both lanes + Playwright present; work is doable but must be re-cut.",
+	"agentId": "a1f6b15ed474266c9",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-12T17:04:06.449Z"
+}

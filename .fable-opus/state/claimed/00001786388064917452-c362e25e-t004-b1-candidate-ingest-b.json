@@ -1,0 +1,22 @@
+{
+	"runId": "lrapr-t1",
+	"unitId": "t004-b1-candidate-ingest-b",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t1/prompt-t004-b1-candidate-ingest-b-attempt-1.md",
+	"subagentType": "opus-worker-isolated",
+	"toolUseId": "toolu_01MRSH9RDcerNCQ37MbQWJDg",
+	"promptId": "b86ecbfa-1261-4c2a-8341-fe0dc839eeda",
+	"background": true,
+	"parallel": true,
+	"effort": null,
+	"contract": [
+		"fixtures/react-sound-redux/**",
+		"fixtures/react-winds/**",
+		"fixtures/react-phoenix-trello/**",
+		"evidence/ingests/react-sound-redux/**",
+		"evidence/ingests/react-winds/**",
+		"evidence/ingests/react-phoenix-trello/**"
+	],
+	"ts": "2026-08-10T18:54:24.916Z",
+	"pendingName": "00001786388064917452-c362e25e-t004-b1-candidate-ingest-b.json"
+}

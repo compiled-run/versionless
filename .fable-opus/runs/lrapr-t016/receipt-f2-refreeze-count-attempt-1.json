@@ -1,0 +1,18 @@
+{
+	"status": "blocked",
+	"summary": "Deliverable 2 (counting) is complete and green: conformance.ts now flips react-memos/linkfree/tiny-translator/super-productivity to counted, reclassifies next-killedbygoogle-v3 next->react (reactSubTag legacy-next), demotes angular-realworld from the Angular denominator, derives totals, and retires olderNext to an informational React sub-tag. Regenerated corpus-conformance.json derives reactLineage 6/6 + angularLineage 4/4; tests, tsc, lint, pack green. Deliverable 1 (re-freeze) is blocked: writing the packet-named re-freeze commit cce34175340273919c0b70341dfada5533f0307c into adapter-freeze.json trips the pan-like sensitive scan at $.freeze.commit (14-digit run 34175340273919). trust:generate aborts, so adapter-freeze.json cannot be written and trust:verify cannot pass.",
+	"files_changed": [
+		"packages/core/src/corpus/conformance.ts",
+		"packages/trust/src/freeze.ts",
+		"packages/trust/src/render.ts",
+		"packages/core/test/corpus-conformance.test.ts",
+		"evidence/trust/current/corpus-conformance.json",
+		"evidence/trust/current/matrix.json",
+		"evidence/trust/current/manifest.json",
+		"evidence/trust/current/provenance.json",
+		"evidence/trust/current/report.md"
+	],
+	"open_questions": [
+		"The re-freeze commit cce34175340273919c0b70341dfada5533f0307c trips the pan-like scan ($.freeze.commit, 14-digit run 34175340273919), exactly like HospitalRun's revision 8156955... did in T004. Two resolutions, both outside what f2 may decide alone: (A) Add a narrow, principled admission for the freeze-record commit object-id in packages/core/src/policy/payment-signals.ts, mirroring the existing isCorpusProvenanceRevisionObjectId admission (40-char lowercase-hex git object id under a closed context) — this is the established non-weakening precedent, but payment-signals.ts is OUTSIDE my file contract and the packet forbids loosening the scan. (B) Stamp the freeze commit at a frozen-equivalent commit whose SHA has no 13-19 digit run — HEAD 4875e099e6c2264dd850a2fa86705a942d4fb771 has the byte-identical frozen subtree OIDs (9b2af393/ca3824d0/5237ce59/cec2f0b5/262dc8b7) and the identical composite 5de7df56, so recording 'frozen at 4875e09' asserts the same byte-state and is a one-line in-contract change to freeze.ts that passes the scan and all verify commands — but it changes the packet-named commit from cce3417, which I will not do unilaterally. Which resolution should f2 apply? Recommendation: (B), stamp HEAD 4875e09 (in-contract, non-weakening, byte-equivalent composite 5de7df56)."
+	]
+}

@@ -1,0 +1,15 @@
+{
+	"runId": "lrapr-t019",
+	"unitId": "u2-trust-render-regen",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t019/prompt-u2-trust-render-regen-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01N9huz9CReinjqPw3Tc9yYT",
+	"promptId": "9fde6242-6ff2-4276-9a77-9290c665808b",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": ["evidence/trust/**"],
+	"ts": "2026-08-14T00:22:56.225Z",
+	"pendingName": "00001786666976226848-46047906-u2-trust-render-regen.json"
+}

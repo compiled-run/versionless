@@ -1,0 +1,11 @@
+{
+	"unitId": "u4-app-source-transform-wall",
+	"runId": "lrapr-t021",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Landed four generic app-source capabilities on the Angular holdout: undecorated-angular-base-class (NG2007 -> @Directive(), binding-resolved), application-source-dependency (inline webpack loader chains + post-disposition direct imports; raw-loader, leaflet, @types/leaflet declared at cell-read ranges, no-successor packages reported with sites), departed-dom-lib-member (TS2339-positioned CSSStyleDeclaration vendor-prefix widening), and deep-import-redirection composed (fires and refuses both ngx-bootstrap sites by name). Cell gained leaflet/@types/leaflet/raw-loader readings. Re-ran migration + install (exit 0, 2285 pkgs) + build once: 260 -> 257 diagnostics, NG2007/TS2339 gone, MNF 8->6, TS2307 7->6. Remaining wall is the three no-successor libraries at six import sites plus their NG1010/template downstream; options recorded, nothing stubbed.",
+	"agentId": "a2caa387c2e3adb3d",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-14T03:15:30.621Z"
+}

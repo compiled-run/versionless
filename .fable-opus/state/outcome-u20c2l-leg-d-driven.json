@@ -1,0 +1,11 @@
+{
+	"unitId": "u20c2l-leg-d-driven",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Extended the leg-(d) calibration driver (within contract) and measured the baseline lane live. Project-switch leg is GREEN/deterministic: addProject dialog -> save (projects 1->2) -> switch flips main-header .current-project-title 'Super Productivity'->'Witness leg-d project'. The formly theme save DOES shift --palette-primary-500 (11,119,210 -> 12,122,212 on body+drawer), but the witness PageHandle has NO fill/evaluate/setInputValue and char-press/arrow keys leave a native input[type=color] unchanged; palette recomputes only on save, so I could NOT confirm the color value was actually driven vs save-side re-quantization. Migrated lane unmeasured; 'no guessed values' forbids pinning. Full scope (both-lane calibrate + schema shape + producer wiring + tests + gate) exceeds this unit. Repo still typechecks.",
+	"agentId": "a064c33407fd10052",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-12T16:25:13.944Z"
+}

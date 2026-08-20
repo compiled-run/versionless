@@ -1,0 +1,25 @@
+{
+	"runId": "lrapr-t006",
+	"unitId": "u21-corpus-integrity-corrections",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t006/prompt-u21-corpus-integrity-corrections-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01Re9CNZUpi3pA7q8y9jBDmQ",
+	"promptId": "d038e3e4-a04f-458a-a3fa-6206f6424e3e",
+	"background": false,
+	"parallel": false,
+	"effort": "high",
+	"contract": [
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/frameworks/angular/**",
+		"packages/core/test/**",
+		"evidence/runs/angular-super-productivity-v2-13-15/**",
+		"evidence/runs/angular-factoriolab/**",
+		"evidence/runs/angular-tiny-translator-v0-12-0/**",
+		"evidence/runs/angular-jira-clone/**",
+		"fixtures/**"
+	],
+	"ts": "2026-08-12T07:53:09.452Z",
+	"pendingName": "00001786521189453870-62ab8973-u21-corpus-integrity-corrections.json"
+}

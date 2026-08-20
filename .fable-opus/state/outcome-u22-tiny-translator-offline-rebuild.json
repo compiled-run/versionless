@@ -1,0 +1,11 @@
+{
+	"unitId": "u22-tiny-translator-offline-rebuild",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Applied the landed font-inlining-disable capability to the tiny-translator stage workspace and rebuilt twice under an in-process egress guard. Control build (pre-capability) went red on a DNS attempt to fonts.googleapis.com; build-15/16 are green with zero egress attempts, byte-identical across 524 files, and the emitted index.html carries the era runtime font link with no inlined @font-face. Published u22-offline-font-lane.json superseding u19k by reference; re-pinned canonical roots (dist-15/16), seam origins (both lanes now googleapis), fontSeamDifference, mat-icon degradations (now identical), style-difference reason, amendments, findings and accommodations. Republished the witness receipt (digest 65b0a976) with 2/2+2/2 green and mutation red/byte-restore/green. All five verify commands pass.",
+	"agentId": "a0156f8e87f172002",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-12T08:53:41.640Z"
+}

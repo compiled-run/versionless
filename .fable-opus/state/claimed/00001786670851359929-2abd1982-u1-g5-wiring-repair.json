@@ -1,0 +1,23 @@
+{
+	"runId": "lrapr-t021",
+	"unitId": "u1-g5-wiring-repair",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t021/prompt-u1-g5-wiring-repair-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01XBzRMPRipdVeJt8hujnPam",
+	"promptId": "e60cdce8-a6ec-472c-83b6-18b7d8402563",
+	"background": false,
+	"parallel": false,
+	"effort": "high",
+	"contract": [
+		"packages/frameworks/angular/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/test/**",
+		"evidence/ingests/angular-pigallery2-v1-7-0/**",
+		"packages/core/src/receipts/capability-coverage.ts",
+		"evidence/trust/current/capability-coverage.json"
+	],
+	"ts": "2026-08-14T01:27:31.358Z",
+	"pendingName": "00001786670851359929-2abd1982-u1-g5-wiring-repair.json"
+}

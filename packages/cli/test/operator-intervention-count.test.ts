@@ -118,6 +118,39 @@ process.stdout.write('ran\\n');
 		}
 	});
 
+	/**
+	 * The counter's blind spot, closed.
+	 *
+	 * `.git` is untracked, so `git ls-files` cannot name a hook and the walk
+	 * skips the directory outright. That is how an acquired application's
+	 * `postinstall` rewrote all 18 of this repository's hooks on 2026-08-10 and
+	 * the run still scored zero: the write was real, executable, and invisible.
+	 */
+	it('counts a child that writes a Git hook into the checkout, and names the path', async () => {
+		const place = await checkout();
+		try {
+			await mkdir(path.join(place.root, '.git', 'hooks'), { recursive: true });
+			const record = path.join(place.root, 'lanes', 'run-record.json');
+			const hook = path.join(place.root, '.git', 'hooks', 'x');
+			const script = await childScript(
+				place.root,
+				`import { mkdirSync, writeFileSync } from 'node:fs';
+mkdirSync(${JSON.stringify(place.lane)}, { recursive: true });
+writeFileSync(${JSON.stringify(path.join(place.lane, 'index.js'))}, 'lane\\n');
+writeFileSync(${JSON.stringify(record)}, JSON.stringify({ schema: 'versionless.run.v1', outcome: 'proceeded', stages: [{ name: 'analyze', status: 'ran' }] }));
+writeFileSync(${JSON.stringify(hook)}, '#!/bin/sh\\nexit 0\\n');
+process.stdout.write('ran\\n');
+`,
+			);
+			const counted = await countInterventions(declarationsFor(place, script));
+			expect(counted.mutatedPathsOutsideWriteSet).toHaveLength(1);
+			expect(counted.mutatedPathsOutsideWriteSet[0]).toContain('.git/hooks/x');
+			expect(counted.interventionCount).toBe(1);
+		} finally {
+			await rm(place.root, { recursive: true, force: true });
+		}
+	});
+
 	it('counts zero under a symlinked root when the child writes only its lane and record', async () => {
 		const place = await symlinkedCheckout();
 		try {

@@ -1,0 +1,11 @@
+{
+	"unitId": "e1b-declared-cell-baseline",
+	"runId": "lrapr-t004-mycrypto",
+	"attempt": 1,
+	"agentId": "a850f9021a24a350d",
+	"outcome": "failed",
+	"reason": "killed: Owner dropped MyCrypto from the counted matrix (crypto app wrong for approvals-facing evidence); unit stopped mid-flight by owner interrupt, no receipt possible",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-10T23:19:02.430Z"
+}

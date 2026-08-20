@@ -1,0 +1,28 @@
+{
+	"status": "completed",
+	"summary": "Added framework-neutral operator flows (analyze/plan/migrate/verify/supported-matrix) composing only frozen public APIs, wired into cli.ts, with help/JSON/record modes and refusal states. Proved byte identity with the fixture drivers on one app per lineage: pigallery2 canonical AngularMigration digest 2b85d6193872 identical both paths; cypress-rwa entry document 96c4b5771390 identical. Ran analyze+plan on both real corpus apps, plus a migrate changeset-lane (8 files), verify, and supported-matrix; 8 records in evidence/runs/operator-flows. 21 new tests; suite 2476 passing. Docs+README added. DISCLOSURE: repo-wide `vp fmt` reformatted out-of-contract files; 249 tracked ones restored, AGENTS.md and scripts/guessless-reproduce-check.mjs could not be (formatter-only changes).",
+	"files_changed": [
+		"packages/cli/src/cli.ts",
+		"packages/cli/src/operator/analyze.ts",
+		"packages/cli/src/operator/plan.ts",
+		"packages/cli/src/operator/apply.ts",
+		"packages/cli/src/operator/verify.ts",
+		"packages/cli/src/operator/matrix.ts",
+		"packages/cli/src/operator/flows.ts",
+		"packages/cli/src/fixture/operator-flow-byte-identity-run.ts",
+		"packages/cli/test/operator-flows.test.ts",
+		"docs/operator-flows.md",
+		"README.md",
+		"evidence/runs/operator-flows/analyze-angular-pigallery2-v1-7-0.json",
+		"evidence/runs/operator-flows/analyze-react-cypress-rwa.json",
+		"evidence/runs/operator-flows/plan-angular-pigallery2-v1-7-0.json",
+		"evidence/runs/operator-flows/plan-react-cypress-rwa.json",
+		"evidence/runs/operator-flows/migrate-angular-pigallery2-v1-7-0.json",
+		"evidence/runs/operator-flows/verify.json",
+		"evidence/runs/operator-flows/supported-matrix.json",
+		"evidence/runs/operator-flows/byte-identity.json",
+		"AGENTS.md",
+		"scripts/guessless-reproduce-check.mjs"
+	],
+	"open_questions": []
+}

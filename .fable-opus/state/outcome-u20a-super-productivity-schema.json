@@ -1,0 +1,11 @@
+{
+	"unitId": "u20a-super-productivity-schema",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Reconnaissance complete; no files written. Two findings. (1) Blocking: u18-era-baseline.json's 64-entry inventory publishes sha256(readFileSync(path,'latin1')), not sha256 of the files — 64/64 match latin1, only 22/64 match real sha256. Same defect in three published angular-factoriolab records. The era lane cannot be bound as goal item 1 requires, since the witness verifier computes real sha256 over the served root. Retained rebuild-*.manifest.txt files are raw-correct and offer a clean rebinding. (2) The font-inlining probe found an undeclared, migration-introduced, every-build fetch to fonts.googleapis.com against a consent that sets alternateHostsAllowed:false.",
+	"agentId": "a49bc1fe3b3b2635e",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-12T07:51:57.927Z"
+}

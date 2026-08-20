@@ -1,0 +1,9 @@
+{
+  "agentId": "aa5926c412b0fbd13",
+  "runId": "bank-demo-fleet-pipeline-p1b",
+  "unitId": "T016-acquire-unseen-app",
+  "attempt": 1,
+  "toolUseId": "toolu_01UfNGunYbiHNLVwKrH9D1rM",
+  "bindingRoute": "sole",
+  "startedAt": "2026-08-17T19:55:02.675Z"
+}

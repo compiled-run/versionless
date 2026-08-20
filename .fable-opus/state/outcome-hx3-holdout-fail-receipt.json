@@ -1,0 +1,11 @@
+{
+	"unitId": "hx3-holdout-fail-receipt",
+	"runId": "lrapr-t008",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Published the cypress-realworld-app holdout falsification receipt as a FAIL, recorded with pass-level rigor. New core schema derives the whole receipt from the byte-bound committed run evidence (parser/renderer/verifier/corpus-record, barrel-exported); canonical receipt.json/md emitted via a new CLI publisher. The holdout appears as an explicit holdouts record in aggregate.json and corpus coverage.productionReadiness, never as a fixture row or Judge counting cell; conformance and trust both independently refuse a dropped, counted, or unreported holdout. Aggregate/conformance/trust regenerated (vp pack before trust:generate). Numerators measured unchanged at reactLineage 3/4, angularLineage 2/4. All ten verify commands pass; suite 1260/1260; freeze fingerprint intact.",
+	"agentId": "a808e052aa7fc2a5e",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-11T13:36:21.886Z"
+}

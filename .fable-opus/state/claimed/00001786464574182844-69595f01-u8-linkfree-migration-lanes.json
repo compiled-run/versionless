@@ -1,0 +1,25 @@
+{
+	"runId": "lrapr-t006",
+	"unitId": "u8-linkfree-migration-lanes",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t006/prompt-u8-linkfree-migration-lanes-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_015w8JSLrduBSuNQMDQ5UNkk",
+	"promptId": "5447821f-26df-4d9b-aab5-a9dc46f53aa8",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/frameworks/react/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/test/**",
+		"evidence/runs/react-linkfree-v0-72-0/**",
+		"fixtures/react-linkfree-v0-72-0/**",
+		"package.json",
+		"pnpm-lock.yaml",
+		"pnpm-workspace.yaml"
+	],
+	"ts": "2026-08-11T16:09:34.181Z",
+	"pendingName": "00001786464574182844-69595f01-u8-linkfree-migration-lanes.json"
+}

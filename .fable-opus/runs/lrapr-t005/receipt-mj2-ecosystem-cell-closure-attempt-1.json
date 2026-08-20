@@ -1,0 +1,21 @@
+{
+	"status": "completed",
+	"summary": "Added a generic ecosystemPackages disposition table to the Angular target cell (19 registry-verified entries, each carrying its reading; no-successor packages dropped with recorded dispositions) and a generic tslint-toolchain-removal capability driven off the cell rather than hard-coded. Wired declaredDifferences/removedFiles through the workspace migration and composed changeset. The migrated closure now resolves: npm install exit 0, 1981 packages, 2022 artifacts recorded with URL+integrity. One production build ran and is recorded RED with all 5 compiler demands itemized (Sentry v8 tracing/routingInstrumentation, ng-zorro exports map, undeclared @ctrl/tinycolor, nzComponentParams x3). Counts truthful: 0 app / 3 workspace files changed, 116 scanned. 1047/1047 tests, lint and tsc clean.",
+	"files_changed": [
+		"packages/frameworks/angular/src/angular-target-cell.ts",
+		"packages/frameworks/angular/src/tslint-toolchain-removal.ts",
+		"packages/frameworks/angular/src/angular-workspace-migration.ts",
+		"packages/frameworks/angular/src/angular-cli-era-migration.ts",
+		"packages/frameworks/angular/src/index.ts",
+		"packages/frameworks/angular/test/angular-target-cell.test.ts",
+		"packages/frameworks/angular/test/tslint-toolchain-removal.test.ts",
+		"packages/cli/src/fixture/angular-jira-clone-migration-run.ts",
+		"packages/cli/src/fixture/angular-jira-clone-closure-run.ts",
+		"packages/cli/test/angular-jira-clone-lanes.test.ts",
+		"packages/cli/test/angular-factoriolab-migration-run.test.ts",
+		"evidence/runs/angular-jira-clone/mj2-source-migration.json",
+		"evidence/runs/angular-jira-clone/mj2-migrated-closure.json",
+		"evidence/runs/angular-jira-clone/mj2-acquired-closure.json"
+	],
+	"open_questions": []
+}

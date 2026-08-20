@@ -1,0 +1,11 @@
+{
+	"unitId": "mj1-jira-clone-migration-lanes",
+	"runId": "lrapr-t005",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Delivered the generic custom-webpack absorption capability (statically reads the fragment, matches each declared capability against the official builder's native postcss pipeline, restores the devkit builder, releases @angular-builders/custom-webpack; all-or-nothing, no app-specific branch), plus generic cli.defaultCollection->schematicCollections and @angular-eslint family alignment. extractCss fell out of the pre-existing generic removed-option table. Migration recorded: 0/116 application files changed, 3 workspace files, digests itemized. Era lane green: production build x2, 24 files, byte-stable and byte-identical to the ingest deviation build. Migrated lane red at closure install (ERESOLVE). tsc, lint, and all 1029 node tests pass.",
+	"agentId": "a1777cbde4778ff2c",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-11T07:01:36.682Z"
+}

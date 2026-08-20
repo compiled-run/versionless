@@ -1,0 +1,11 @@
+{
+  "unitId": "T037-self-contained-checkout",
+  "runId": "bank-demo-fleet-pipeline-p1c",
+  "attempt": 1,
+  "outcome": "blocked",
+  "reason": "(a) browser now resolves from the host Playwright install via packages/cli/src/witness/browser.ts, with a named witness.browser-not-provisioned refusal raised in operator/witness.ts and counted by the census; (b) script-surface and runtime-script-observation raise named source-absent conditions instead of ENOENT, so offline verify survives a missing work dir (Spike B TRUE, narrowed: static half reconciled against trust/script-surface.json, network half still fully re-derived); (d) pipeline-owned stage dirs declared in the write set; (e) crawl journey named port-free. Clean worktree gate: interventionCount 0, terminalClassification proven, idempotent across two runs, witness digest identical. (c) vendored tarball installs and the CLI loads standalone, but trust:ingest/schema reject a file: lock coordinate and 11 sealed receipts embed the old link:../witness provenance.",
+  "agentId": "a0d8862b6d0a0ddfa",
+  "background": false,
+  "verdictDelivered": true,
+  "ts": "2026-08-19T01:32:27.970Z"
+}

@@ -1,0 +1,11 @@
+{
+  "unitId": "T021a-batch-runner-ordering",
+  "runId": "bank-demo-fleet-pipeline-p1b",
+  "attempt": 1,
+  "outcome": "blocked",
+  "reason": "Built `versionless batch` (packages/cli/src/operator/batch.ts): serial per-app intervention-count invocation, fleet read only from --apps manifest/roots, refusals read as returned outcomes, defect rows non-aborting, honesty-guarded versionless.fleet-batch.v1 summary, and --publish running pack/trust:generate/trust:verify/report:coverage in order with chain-stop. Registered in flows.ts, declared batch.ts in CENSUS_MODULES, 18 new tests pass. Proved on react-mycrypto and react-ant-design-pro-v5-2-0 without and with --publish: 0 interventions, 2 refusals, freeze composite 27741d9c unmoved, report lists both as refused. npm test fails only at packages/trust/test/coverage-report.test.ts:90-100, outside my file contract.",
+  "agentId": "adda77212fd648ca4",
+  "background": false,
+  "verdictDelivered": true,
+  "ts": "2026-08-17T21:18:07.562Z"
+}

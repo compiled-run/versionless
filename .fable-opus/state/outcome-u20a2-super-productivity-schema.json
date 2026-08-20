@@ -1,0 +1,11 @@
+{
+	"unitId": "u20a2-super-productivity-schema",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Landed the super-productivity witness core schema on corrected foundations: era lane bound via the u21 digest-correction record (64-file inventory, supersede chain to u18-era-baseline verified out of the record), migrated lane via u23-offline-font-lane (62 artifacts, deterministic-modulo the ngsw timestamp, Sass-random boundary fact recorded separately), one shared font seam across both lanes, real ngsw registration with three telemetry checkpoints per lane, IndexedDB/localforage persistence, 19/8/5+1 accommodations with the payload bound by digest. Facts needing a browser are rule-pinned, not asserted. Wired into WITNESS_REAL_APP_NAMES and the barrel; drag membership refused explicitly. No journeys, no publish, no CLI change. Whole-repo gate green.",
+	"agentId": "ae44144f34f26186b",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-12T09:41:12.605Z"
+}

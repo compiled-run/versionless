@@ -1,0 +1,22 @@
+{
+  "status": "completed",
+  "summary": "Added the generic `acquire` operator stage (consented HTTPS transaction only, ref->commit resolution, dual-stream archive, git-tree parity gate, licence-presence gate) and wired it into OPERATOR_COMMANDS/flags/help/dispatch plus a new `acquire` PIPELINE_STAGE and CENSUS_MODULES entry. Added 10+ refusal codes, so I regenerated the census AND trust; no dist rebuild was needed. Acquired ant-design/ant-design-pro v5.2.0 (SHA 645d6ed4fd27c6fab55cbf64d2fb2995018bddcb, MIT observed, LICENSE blob c17ba2fb848af3fca998074297d00f38536d5d13), absent from every exclusion list. ingest on its baseline exits 0; `run` exits 2 with era-cell.node-major-not-inferable, left as observed. 7 new tests; suite 2630 pass.",
+  "files_changed": [
+    "packages/cli/src/operator/acquire.ts",
+    "packages/cli/src/operator/flows.ts",
+    "packages/cli/src/operator/refusals.ts",
+    "packages/cli/src/operator/refusal-census.ts",
+    "packages/cli/test/operator-acquire.test.ts",
+    "evidence/runs/operator-flows/refusal-census.json",
+    "evidence/ingests/react-ant-design-pro-v5-2-0/source.json",
+    "evidence/ingests/react-ant-design-pro-v5-2-0/attempt.json",
+    "evidence/trust/current/enterprise-report.json",
+    "evidence/trust/current/enterprise-report.md",
+    "evidence/trust/current/manifest.json",
+    "evidence/trust/current/provenance.json",
+    "evidence/trust/current/report.md",
+    "evidence/trust/current/coverage-report.json",
+    "evidence/trust/current/coverage-report.md"
+  ],
+  "open_questions": []
+}

@@ -1,0 +1,26 @@
+{
+	"runId": "lrapr-t006",
+	"unitId": "u12c-memos-witness-publish",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t006/prompt-u12c-memos-witness-publish-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_015Zsb4VMpEBeRJ7HtitN8hV",
+	"promptId": "3c112356-df6c-4947-9d95-4eea37d5a788",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/cli/src/witness/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/src/receipts/witness-react-memos.ts",
+		"packages/core/src/receipts/witness-real-app.ts",
+		"packages/core/src/index.ts",
+		"packages/core/test/**",
+		"evidence/runs/react-memos-v0-1-3/**",
+		"evidence/runs/witness-react-memos-v0-1-3/**",
+		"fixtures/react-memos-v0-1-3/**"
+	],
+	"ts": "2026-08-11T18:26:46.360Z",
+	"pendingName": "00001786472806362661-72bda882-u12c-memos-witness-publish.json"
+}

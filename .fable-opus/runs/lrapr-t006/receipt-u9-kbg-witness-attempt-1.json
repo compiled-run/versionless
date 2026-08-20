@@ -1,0 +1,19 @@
+{
+	"status": "completed",
+	"summary": "Browser-proved the killedbygoogle LEGACY-NEXT vertical. New core schema witness-next-killedbygoogle-v3.ts (barrel-exported), corpus name next-killedbygoogle-v3-0-0, journey in real-app-run.ts, dedicated runner, cli+core tests. 2/2 baseline + 2/2 migrated share one behavior digest; era pre-rendered and migrated client-mounted documents settle to the same 263-record list (digest-compared) with identical resolved styles on 7 probes, answering u7's DOM and Emotion questions. Two real lane differences published, not normalised: era fetches 3 third-party seams vs migrated 1 (React-inserted scripts never execute), and era records one extra client-router navigation. Mutation red/restore green. Inventories exact, zero successful non-loopback, counted:false. All five verify commands pass.",
+	"files_changed": [
+		"packages/core/src/receipts/witness-next-killedbygoogle-v3.ts",
+		"packages/core/src/receipts/witness-real-app.ts",
+		"packages/core/src/index.ts",
+		"packages/core/test/witness-next-killedbygoogle-v3-receipt.test.ts",
+		"packages/core/test/witness-real-app-receipt.test.ts",
+		"packages/cli/src/witness/next-killedbygoogle-v3-0-0-run.ts",
+		"packages/cli/src/witness/real-app-run.ts",
+		"packages/cli/test/witness-next-killedbygoogle-v3-0-0-run.test.ts",
+		"evidence/runs/witness-next-killedbygoogle-v3-0-0/receipt.json",
+		"evidence/runs/witness-next-killedbygoogle-v3-0-0/receipt.md",
+		"evidence/runs/next-killedbygoogle-v3-0-0/artifacts/witness-journeys.json",
+		"evidence/runs/next-killedbygoogle-v3-0-0/artifacts/witness-mutation.json"
+	],
+	"open_questions": []
+}

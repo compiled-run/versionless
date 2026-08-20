@@ -1,0 +1,11 @@
+{
+	"unitId": "u17-tiny-translator-migration-lanes",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "failed",
+	"reason": "worker reported status \"partial\": Delivered the .angular-cli.json -> angular.json synthesis capability (format-driven, app-agnostic, refuses unknown fields by name), wired it into the composed changeset so the existing spine runs on the synthesized workspace, and added 14 tests plus four new corpus names in the overfitting guard. Era baseline lane measured truthfully: two consecutive ng build --prod --aot runs from the restored cache are byte-identical over 524 files. Composed changeset computed over the real pinned tree and recorded. Owed: the migrated lane entirely — changeset apply, consented Angular 16.2 closure install, build attempt x2, parity or honest red, and the Angular 5->16 compiler-demand itemization. No migrated-lane record was written for a lane that did not run.",
+	"agentId": "ac815cb716706526f",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-11T20:37:10.671Z"
+}

@@ -1,0 +1,11 @@
+{
+	"unitId": "u5-refreeze-and-holdout-ledger",
+	"runId": "lrapr-t024",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Re-froze at composite 27741d9c (commit 0ecd410) with React unchanged at 972ca801 and Angular moved to 4b6e2f44; supersession chain extended to five links citing the authorized T024 reopen, 9 new capabilities appended as experimental (24->33) and both reopens listed countably. Published the eShop holdout ledger entry honestly as migrated-build-green-witness-pending: gate zero passed on the T022 overturn, RED at install under f1a63359 retained, GREEN build x2 byte-identical after the reopen, witness not-run, counted in no numerator. pigallery2 and React receipts byte-untouched. Trust artifacts regenerated offline; all six verify commands pass (2423 tests, trust:verify valid).",
+	"agentId": "ab22f732c3c1b0860",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-14T08:03:45.889Z"
+}

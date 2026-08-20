@@ -1,0 +1,26 @@
+{
+	"runId": "lrapr-t005",
+	"unitId": "m3-factoriolab-witness",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t005/prompt-m3-factoriolab-witness-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01GAUNqdW37VbRyCZGdKH4VG",
+	"promptId": "fd548c64-4a45-43c3-a4e6-8dae4be4c9b4",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/cli/src/witness/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/src/receipts/witness-angular-factoriolab.ts",
+		"packages/core/src/receipts/witness-real-app.ts",
+		"packages/core/src/index.ts",
+		"packages/core/test/**",
+		"evidence/runs/angular-factoriolab/**",
+		"evidence/runs/witness-angular-factoriolab/**",
+		"fixtures/angular-factoriolab/**"
+	],
+	"ts": "2026-08-11T04:58:18.936Z",
+	"pendingName": "00001786424298937889-8186bf55-m3-factoriolab-witness.json"
+}

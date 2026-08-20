@@ -4,7 +4,7 @@ What the fleet pipeline proved, per application, against the sealed baseline it 
 
 - Schema: `versionless.coverage-report.v1`
 - Certification state: **not-certified**
-- Canonical SHA-256: `0523b29798cebfc4c2e79bc550d3a10f28564f8dd63d039e5dfb71764bc2ca99`
+- Canonical SHA-256: `7c08250714a85591338fbef470282722afc42f1995b4cdba83697e9c3253aec1`
 - Integrity: hash-only; authenticity is not established
 
 Every green cell below is filtered out of the Judge counting ledger the corpus derived and cross-checked against that corpus numerator and denominator. No cell is listed by hand, and a cell edited into this record fails re-derivation.
@@ -77,12 +77,12 @@ An application admitted through `versionless run` is recorded proven only if its
 
 Source: `evidence/runs/operator-flows/refusal-census.json`, taken under adapter freeze composite `27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234`.
 
-- `byClassification`: {"defect":5,"refusal":135,"unclassified":50}
-- `byOrigin`: {"frozen-adapter":101,"pipeline":89}
-- `byStage`: {"acquire":14,"analyze":2,"apply":5,"arguments":8,"batch":6,"build":5,"era-cell":9,"ingest":17,"install":10,"license-at-pin":4,"not-reached":69,"plan":23,"plan-or-build":13,"refusal-census":1,"supported-matrix":1,"witness":1,"witness-synthesize":2}
-- `distinctCodes`: 190
+- `byClassification`: {"defect":5,"refusal":136,"unclassified":50}
+- `byOrigin`: {"frozen-adapter":101,"pipeline":90}
+- `byStage`: {"acquire":14,"analyze":2,"apply":5,"arguments":8,"batch":6,"build":5,"era-cell":9,"ingest":17,"install":11,"license-at-pin":4,"not-reached":69,"plan":23,"plan-or-build":13,"refusal-census":1,"supported-matrix":1,"witness":1,"witness-synthesize":2}
+- `distinctCodes`: 191
 - `recordedRefusalSites`: 99
-- `sites`: 190
+- `sites`: 191
 
 ### Sites per code
 
@@ -255,6 +255,7 @@ Source: `evidence/runs/operator-flows/refusal-census.json`, taken under adapter 
 - `install.package-manager-not-npm`: 1
 - `install.peer-resolution-policy-not-declared`: 1
 - `install.remote-tarball-policy-not-declared`: 1
+- `install.script-wrote-outside-lane`: 1
 - `license-at-pin.identifier-not-recognised`: 1
 - `license-at-pin.licence-file-absent`: 1
 - `license-at-pin.manifest-field-conflicts-with-licence-text`: 1

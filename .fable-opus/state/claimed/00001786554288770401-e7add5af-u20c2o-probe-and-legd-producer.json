@@ -1,0 +1,22 @@
+{
+	"runId": "lrapr-t006",
+	"unitId": "u20c2o-probe-and-legd-producer",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t006/prompt-u20c2o-probe-and-legd-producer-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01RtgREjw71tyy5aeSF3KVv9",
+	"promptId": "490404e9-9530-44f2-b211-7f8557ad3ab1",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/cli/src/witness/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/src/receipts/witness-angular-super-productivity.ts",
+		"packages/core/test/**",
+		"fixtures/angular-super-productivity-v2-13-15/**"
+	],
+	"ts": "2026-08-12T17:04:48.769Z",
+	"pendingName": "00001786554288770401-e7add5af-u20c2o-probe-and-legd-producer.json"
+}

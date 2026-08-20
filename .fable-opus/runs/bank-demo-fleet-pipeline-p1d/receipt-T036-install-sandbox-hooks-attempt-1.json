@@ -1,0 +1,40 @@
+{
+  "status": "completed",
+  "summary": "Sandboxed the install child (lane-owned HOME/XDG/npm dirs, stripped home- and repo-naming env, lane cwd) and added a before/after boundary snapshot of the checkout top level and .git/hooks that refuses install.script-wrote-outside-lane naming every path; semantics are detect-and-refuse, not prevent, and that is recorded in notEstablished. Added <root>/.git/hooks to the counter's C1 snapshot set. Deleted all 19 husky-referencing non-sample files from .git/hooks (all verified to reference husky first); 14 .sample files left. Tests: env unit test, real-npm escape test, counter hook test. Regenerated census and trust after vp pack. Suite 2711/2 skipped; proven 11; freeze 27741d9c stable.",
+  "files_changed": [
+    "packages/cli/src/operator/install.ts",
+    "packages/cli/src/operator/intervention-count.ts",
+    "packages/cli/test/operator-install-build.test.ts",
+    "packages/cli/test/operator-intervention-count.test.ts",
+    "evidence/runs/operator-flows/refusal-census.json",
+    "evidence/trust/current/coverage-report.json",
+    "evidence/trust/current/coverage-report.md",
+    "evidence/trust/current/enterprise-report.json",
+    "evidence/trust/current/enterprise-report.md",
+    "evidence/trust/current/manifest.json",
+    "evidence/trust/current/provenance.json",
+    "evidence/trust/current/report.md",
+    ".git/hooks/husky.local.sh",
+    ".git/hooks/husky.sh",
+    ".git/hooks/applypatch-msg",
+    ".git/hooks/commit-msg",
+    ".git/hooks/post-applypatch",
+    ".git/hooks/post-checkout",
+    ".git/hooks/post-commit",
+    ".git/hooks/post-merge",
+    ".git/hooks/post-rewrite",
+    ".git/hooks/post-update",
+    ".git/hooks/pre-applypatch",
+    ".git/hooks/pre-auto-gc",
+    ".git/hooks/pre-commit",
+    ".git/hooks/pre-merge-commit",
+    ".git/hooks/pre-push",
+    ".git/hooks/pre-rebase",
+    ".git/hooks/prepare-commit-msg",
+    ".git/hooks/push-to-checkout",
+    ".git/hooks/sendemail-validate"
+  ],
+  "open_questions": [
+    "npm 12 blocks dependency install scripts behind allowScripts; --foreground-scripts does not grant it, so --allow-install-scripts does not currently run a dependency's native build. Fixing it means emitting --dangerously-allow-all-scripts, which moves the plan, census and lane-install-build.json — deliberately not done here."
+  ]
+}

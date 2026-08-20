@@ -1,0 +1,11 @@
+{
+	"unitId": "g1-missing-export-tolerance",
+	"runId": "lrapr-t017b",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Added a generic 'missing-export tolerance for a self-inconsistent dependency ES module' capability to the reopened React CRA adapter: a dangling named import in a dependency ESM resolves to undefined (webpack 4 semantics), analyzer-proven absent, dependency-scoped, refusing app-source and value-position-at-eval uses. The cypress-realworld-app holdout now migrates GREEN (10182 modules, 18 files emitted, deterministic digest 7051b848). 11 new tests (positive/negative/build-probe). Gate green: tsc clean, lint 0 errors, node tests 2145/2145. Evidence recorded under evidence/runs/react-cypress-rwa/green-2026-08-13/. Zero application-source hand edits; no app-name/revision branch.",
+	"agentId": "aa8ed8c7f82c8681a",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-13T19:23:26.217Z"
+}

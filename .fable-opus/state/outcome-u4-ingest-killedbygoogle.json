@@ -1,0 +1,11 @@
+{
+	"unitId": "u4-ingest-killedbygoogle",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Admitted and ingested codyogden/killedbygoogle @ 56809c31 (v3.0.0, 2022-02-06) as next-killedbygoogle-v3-0-0. All five admission gates passed with every scout fact re-verified: MIT LICENSE 1067 B blob a7069eea, pages/ router on next ^12.0.10, 72 blobs, zero LFS. Five consented responses, archive double-fetch byte-identical, blob-level tree parity clean. Baseline in Node 16.20.2/yarn 1.22.19: install, next build, and next export all succeeded. Recorded the three third-party script destinations with blocking guidance, the nine press-logo asset exclusions, the +1 ad-li count arithmetic behind both upstream specs, and the single-route limitation as a non-claim. Cross-checked the retired T128 artifact read-only: agreement on all immutable facts.",
+	"agentId": "a9c1766787b7d7667",
+	"background": true,
+	"verdictDelivered": true,
+	"ts": "2026-08-11T14:45:00.550Z"
+}

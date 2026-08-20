@@ -1,0 +1,16 @@
+{
+	"status": "blocked",
+	"summary": "Acquired Node 12.14.1 darwin-x64 from nodejs.org and verified its sha256 against the official SHASUMS256.txt (both URLs/digests recorded). The declared cell could not be executed: Rosetta 2 is absent, proven by a control probe where arch -x86_64 /usr/bin/true fails despite that binary carrying an x86_64 slice, plus missing oah runtime dir and oahd daemon; no docker/podman/colima fallback. Separately, the ingest's sealed source archive is gone from cache and re-fetching it was outside the network allowance, so the work root was not materialized. No install or build ran; no runtime substitution or engine override was applied. Prior failure record preserved (66 insertions, 0 deletions). All five verify commands pass.",
+	"files_changed": [
+		"evidence/ingests/react-mycrypto/baseline-attempt.json",
+		"evidence/ingests/react-mycrypto/runtime-acquisition.json",
+		"evidence/runs/react-mycrypto/build-profile.json",
+		"evidence/runs/react-mycrypto/build-profile.md",
+		"fixtures/react-mycrypto/fixture.json"
+	],
+	"open_questions": [
+		"Rosetta 2 is not installed on this darwin-arm64 host and installing it requires `softwareupdate --install-rosetta` (admin privileges + interactive licence acceptance + host mutation), which is outside this unit's scope. Should the mycrypto declared-cell baseline be re-dispatched to a host with Rosetta 2 or a native x86_64 host? The verified runtime URL and digest are recorded and reusable as-is.",
+		"The sealed source archive (sha256 62eea670ce0ebd6c0c56c60bfc85ac1311a6f4291375ac1abb45508412fc1ccd) is absent from .versionless/cache/react-mycrypto-source, and re-fetching from codeload.github.com was not in this unit's network allowance. Should a future unit be granted that allowance, or should the consented source acquisition for react-mycrypto be re-run first?",
+		"No container runtime exists on this host, but if one were provisioned, would running Node 12.14.1 on linux/amd64 count as the declared cell? The repo declares only a Node version, not an OS, so this is a doctrine decision the packet did not settle — I did not assume it."
+	]
+}

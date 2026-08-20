@@ -1,0 +1,11 @@
+{
+	"unitId": "u2-portfolio-rerun-and-gates",
+	"runId": "lrapr-t010",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "The three UNKNOWN gates all re-ran GREEN (node 2476/2476; trust:verify valid, core 656e861a; script-surface 9 verticals/18 lanes/0 external scripts), confirming u1's staging diagnosis. Portfolio is GREEN: 10/10 counted cells re-derived to sealed digests, 4 runs each collapsing to one behavior digest, successfulNonLoopback 0, and 39/39 on-disk mutation-target copies byte-identical to recorded restored bytes; holdouts 76f0b5bd/fb921b46 match, REDs retained, matrix byte-stable. Blocked because running the packet-listed vp pack gate exposed that the trust package attests non-reproducible dist bytes, turning trust:verify and 3 node tests red. Freeze intact, no product code changed.",
+	"agentId": "a9a532f3227ed98d1",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-14T10:59:18.205Z"
+}

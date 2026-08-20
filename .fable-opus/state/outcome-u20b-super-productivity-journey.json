@@ -1,0 +1,11 @@
+{
+	"unitId": "u20b-super-productivity-journey",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Calibrated the era lane against the live DOM with a new probe driver and recorded the measurements; the full AppSpec/journey/runner/tests exceed this unit. Measured: app boots into planning mode with zero tasks; five of six pinned style probes resolve; work-view-page resolves 0; real ngsw registers, activates and controls the page with 7 caches; font seam answered in-context; no failed requests; no first-route overflow; localStorage empty at boot. Two blockers: the host cannot read IndexedDB (localforage SUP/SUP_STORE), and the earned drag membership lives in witness-real-app.ts, outside the file contract. tsc clean, lint 0 errors.",
+	"agentId": "aedd6896ec96c8403",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-12T09:50:44.434Z"
+}

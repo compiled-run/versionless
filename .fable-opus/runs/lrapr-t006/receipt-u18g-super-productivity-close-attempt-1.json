@@ -1,0 +1,16 @@
+{
+	"status": "completed",
+	"summary": "Took u18f's cheapest family. Two new generic capabilities: synthetic-default-import-interop (TS1259 -> tsconfig allowSyntheticDefaultImports, refusing esModuleInterop by counting 12 callable namespace imports; 13 refusals recorded) and promise-executor-void-parameter (TS2794 -> new Promise<void>, refusing any resolve that escapes or settles with a value). Production build 30 -> 27 diagnostics, still red, nothing introduced. Also measured ngx-electron 2.2.0 as View Engine only with ngcc gone, closing that NG6002 as a source demand rather than a capability. 33 new tests; tsc, lint, and the full 1770-test node suite green. Smaller itemized remainder recorded in u18g-capability-round.json.",
+	"files_changed": [
+		"packages/frameworks/angular/src/synthetic-default-import-interop.ts",
+		"packages/frameworks/angular/src/promise-executor-void-parameter.ts",
+		"packages/frameworks/angular/src/angular-workspace-migration.ts",
+		"packages/frameworks/angular/src/index.ts",
+		"packages/frameworks/angular/test/synthetic-default-import-interop.test.ts",
+		"packages/frameworks/angular/test/promise-executor-void-parameter.test.ts",
+		"packages/cli/src/fixture/angular-super-productivity-u18g-run.ts",
+		"packages/cli/test/angular-super-productivity-u18g.test.ts",
+		"evidence/runs/angular-super-productivity-v2-13-15/u18g-capability-round.json"
+	],
+	"open_questions": []
+}

@@ -1,0 +1,11 @@
+{
+	"unitId": "f3-capability-coverage-map",
+	"runId": "lrapr-t016",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Produced the capability-coverage map. Enumerated all 48 exported capabilities (7 React + 41 Angular barrels) and grounded each to its proving applications via direct-invocation grep of run fixtures, era-orchestrator composition analysis, and the adapter-freeze editorial. Classification is derived purely from distinct-app proof count (>=2 = cross-proven/in-matrix): 8 cross-proven (React: react-cra-vite-adapter; Angular: angular-cli-era-migration, workspace-migration, target-cell, source-migration, ngrx-effects-migration, barrel-entry-point-split, webpack-tilde-style-specifier), 40 experimental/out-of-matrix (6 React, 34 Angular). Three capabilities whose per-app firing was not determinable from records (undeclared-runtime-dependency, package-exports-style-imports, builder-package-declaration) are marked coverage:unproven and defaulted experimental. Published evidence/trust/current/capability-coverage.json (12th deterministic artifact), added verifyCapabilityCoverage recomputing classification from counts, rendered a report section, and added tests. All seven verify commands pass.",
+	"agentId": "ac68bbe6bfefca62c",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-12T21:38:33.129Z"
+}

@@ -1,0 +1,21 @@
+{
+	"runId": "lrapr-t004-mycrypto",
+	"unitId": "e1b-declared-cell-baseline",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t004-mycrypto/prompt-e1b-declared-cell-baseline-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_012TfQ1akGM2CHxb8LGoZmSS",
+	"promptId": "ebf10568-389c-4f83-ab3c-65b2c9021222",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"evidence/ingests/react-mycrypto/**",
+		"evidence/runs/react-mycrypto/**",
+		"fixtures/react-mycrypto/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**"
+	],
+	"ts": "2026-08-10T23:05:17.288Z",
+	"pendingName": "00001786403117289257-1840e2a8-e1b-declared-cell-baseline.json"
+}

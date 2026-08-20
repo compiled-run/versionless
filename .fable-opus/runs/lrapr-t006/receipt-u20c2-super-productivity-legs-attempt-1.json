@@ -1,0 +1,10 @@
+{
+	"status": "blocked",
+	"summary": "Read every leg's real surfaces out of the era source but wrote no code; four legs plus AppSpec, schema corrections and tests exceed one unit at this budget, and starting the calibrate/write/gate loop with ~7 minutes left would have ended in a stop with no receipt. Established: the work-view host tag is `work-view` (work-view-page is only the filename); leg (a)'s double-enter semantics and isAddToBacklog=false; leg (c)'s two non-equivalent play anchors; leg (d) needs project creation plus a formly theme save, so it is three sub-legs; leg (e)'s reader is ready. Found a raw NUL byte in playwright-host.ts that makes grep/rg silently return nothing for that file.",
+	"files_changed": [],
+	"open_questions": [
+		"Re-cut as three units: (a)+(e) with the AppSpec skeleton and the `work-view` host-tag correction, (c) alone, (d) alone — is that the split you want, or should (c) fold into the first?",
+		"Leg (d) requires creating a second project through the side-nav addProject() dialog before any switch is possible, and dark theme is per-project via a formly config-section save on /project-settings rather than a global toggle. Confirm that dialog-driven project creation is in scope for (d), or narrow (d) to the theme save plus the `w`/`b` shortcut on the single seeded project.",
+		"Should the raw 0x00 at offset 11502 of packages/cli/src/witness/playwright-host.ts be fixed to `\\u0000` as its own tiny unit? It currently makes ripgrep report the file as binary and return no matches, which is how u20b concluded the IndexedDB reader was absent."
+	]
+}

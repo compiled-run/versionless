@@ -1,0 +1,16 @@
+{
+	"status": "completed",
+	"summary": "Delivered LinkFree's CRA 5/webpack 5 build lanes. Added one generic adapter capability (createCraJavaScriptJsxPlugin) for JSX in application-source JavaScript — the only break react-scripts 5 surfaced — with unit tests and 'linkfree' added to the overfitting guard. Baseline rebuilt x2 and measured byte-stable; Vite 8 lane built x2 deterministic; both digests reproduced across two full orchestration runs. purgecss declared out of the Vite build's scope with both lanes measured (619824->50728; 587122->43283) and the baseline measurement proven to reproduce the shipped stylesheet. Corpus paths folded into per-lane aggregate digests so no contributor filename enters evidence. tsc, lint (0 errors), and 1380 node tests green.",
+	"files_changed": [
+		"packages/frameworks/react/src/react-cra-vite-adapter.ts",
+		"packages/frameworks/react/test/react-cra-vite-adapter.test.ts",
+		"packages/cli/src/fixture/react-linkfree-v0-72-0-vite8-run.ts",
+		"packages/cli/src/fixture/react-linkfree-v0-72-0-vite8.ts",
+		"packages/cli/test/react-linkfree-v0-72-0-vite8.test.ts",
+		"fixtures/react-linkfree-v0-72-0/vite.config.ts",
+		"evidence/runs/react-linkfree-v0-72-0/build-profile.json",
+		"evidence/runs/react-linkfree-v0-72-0/t006-run.json",
+		"evidence/runs/react-linkfree-v0-72-0/t006-run.md"
+	],
+	"open_questions": []
+}

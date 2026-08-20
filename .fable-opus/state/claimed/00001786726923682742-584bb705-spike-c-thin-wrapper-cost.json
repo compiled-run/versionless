@@ -1,0 +1,25 @@
+{
+	"runId": "nts-t004",
+	"unitId": "spike-c-thin-wrapper-cost",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/nts-t004/prompt-spike-c-thin-wrapper-cost-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_01BLCRNWi23rNFfiGXzJNSNQ",
+	"promptId": "5ff7b915-3f18-4c25-80e9-4ebdbcfb1e47",
+	"background": false,
+	"parallel": false,
+	"effort": "high",
+	"contract": [
+		"evidence/ingests/react-shlink-web-client/**",
+		"evidence/ingests/react-sqlpad-v5-5-0/**",
+		"evidence/spikes/thin-wrapper-cost/**",
+		"packages/cli/src/fixture/react-shlink-web-client-migration-run.ts",
+		"packages/cli/src/fixture/react-sqlpad-v5-5-0-migration-run.ts",
+		"packages/cli/src/witness/react-shlink-web-client-run.ts",
+		"packages/cli/src/witness/react-sqlpad-v5-5-0-run.ts",
+		"packages/cli/test/**",
+		"docs/goals/next-tranche-strategy/**"
+	],
+	"ts": "2026-08-14T17:02:03.681Z",
+	"pendingName": "00001786726923682742-584bb705-spike-c-thin-wrapper-cost.json"
+}

@@ -1,0 +1,11 @@
+{
+	"unitId": "u2-value-position-successor-and-compile-wall",
+	"runId": "lrapr-t024",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Four measured compile classes closed generically: a new five-position use-position successor (HttpModule->HttpClientModule; JsonpModule dropped, gated on measured non-use) and a new removed-static-module-method capability (NgbModule.forRoot, gated on the aligned .d.ts), plus rxjs-prototype-patch (Observable.throw x4 -> throwError, diagnostic-gated) and tilde-sass composed into the workspace migration. Response->HttpResponse<any> was tried, measured to produce 18 new TS2322/TS2345, and withdrawn; Http/Response/Headers now refuse at every position. Re-run: install GREEN, build RED, narrowed to 5 TS2307 + 1 MNF + 1 TS2339. New gap G6 (HttpClient call-surface) named, not chased. Suite 2380 green; React intact.",
+	"agentId": "a634a73033600ad9b",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-14T06:32:08.284Z"
+}

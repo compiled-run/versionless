@@ -1,0 +1,11 @@
+{
+	"unitId": "u24-angular-two-aggregate-transition",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Reconnaissance complete; no contract files edited. Measured the full two-cell surface against the actual code: conformance.ts (2 imports, 2 union kinds + summary type widening, extended derivation chain, 2 BESPOKE row functions, ledger + 6 assembly touch-points), trust generate/verify/render (counts, 2 matrix cells, 2 verify cells, flags, dispatch, prose), pin migration across 3 test files, 2 new fixtures + 2 new tests, 2 live appends + 2 trust regenerations, then a 7-command heavy gate. The two witness receipts are structurally distinct so per-cell wiring is bespoke, not copyable. This exceeds one unit's safe budget under the 35-min watchdog; attempting both risks a mid-edit stop that files no receipt. Recommending a one-cell-per-unit cut.",
+	"agentId": "ad2948a681c20c602",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-12T18:55:14.058Z"
+}

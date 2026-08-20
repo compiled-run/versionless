@@ -1,0 +1,10 @@
+{
+	"status": "completed",
+	"summary": "Rebuilt the pre-goal recovery snapshot as 3-parent stash commit 1e1dafd112d7fe525f3e9183148f506225e0f9a2 at the new ref ...-20260810-2, using temporary GIT_INDEX_FILEs only; real index and worktree unchanged (0 staged, 69 dirty paths intact) and the old ref untouched. Captured 52 entries: 9 tracked-modified plus 43 untracked, excluding all 17 .fable-opus/ paths. The old manifest's bytes were captured before overwriting the contract path. Wrote the new manifest in the verifier's schema. Demonstrated restoration in a fresh detached worktree: git stash apply then verify-recovery-snapshot.ts returned verified:true with 52 entries; worktree removed.",
+	"files_changed": [
+		"docs/goals/legacy-react-angular-production-readiness/notes/pre-goal-recovery-manifest.json"
+	],
+	"open_questions": [
+		"The rulings 'capture the OLD manifest bytes at the contract path' and 'the manifest must not list itself' are jointly unsatisfiable under the verifier's strict unexpected-paths check: capturing the path without listing it makes verification throw 'Unexpected restored paths'. I resolved it as 'itself' = the new manifest's content, so the snapshot holds the OLD bytes and the manifest lists that path once with the OLD digest 58b13d38e6ba2343ef63f074e4d552a0a183734c2d23e08980bdb811d72abe87. Confirm this reading, or say the path should be omitted from the snapshot entirely and I will rebuild."
+	]
+}

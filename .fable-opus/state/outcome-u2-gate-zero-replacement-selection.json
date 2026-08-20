@@ -1,0 +1,11 @@
+{
+	"unitId": "u2-gate-zero-replacement-selection",
+	"runId": "lrapr-t023",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Built and recorded the ordered candidate list before screening (fleet-shape axes only; Squidex removed on the T006 never-recycle graveyard). Screened five real MIT Angular apps in that fixed order with exactly the three checks, manifests/registry/published-bytes only. All five passed LICENSE-at-pin (named holders, blob sha1 recomputed against the pinned tree) and UNUSED; all five failed BOUNDARY on distinct no-successor ViewEngine libraries in active module-scope use. No candidate committed, no acquisition, no baseline/migration/trial. tsc and lint pass; the ingest-presence verify fails by design.",
+	"agentId": "aae88906349defa72",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-14T04:21:13.421Z"
+}

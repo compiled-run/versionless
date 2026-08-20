@@ -1,0 +1,25 @@
+{
+	"runId": "lrapr-t006",
+	"unitId": "u18f-super-productivity-chips-round",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t006/prompt-u18f-super-productivity-chips-round-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_015LNmvx6PNqJqvb9GfkBMNQ",
+	"promptId": "a04bf95a-3608-4198-9b7b-a80da6bcc594",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/frameworks/angular/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/test/**",
+		"evidence/runs/angular-super-productivity-v2-13-15/**",
+		"fixtures/angular-super-productivity-v2-13-15/**",
+		"package.json",
+		"pnpm-lock.yaml",
+		"pnpm-workspace.yaml"
+	],
+	"ts": "2026-08-12T00:14:57.179Z",
+	"pendingName": "00001786493697180236-dc743003-u18f-super-productivity-chips-round.json"
+}

@@ -1,0 +1,23 @@
+{
+	"runId": "lrapr-t024",
+	"unitId": "u4-exports-map-wiring-green-attempt",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t024/prompt-u4-exports-map-wiring-green-attempt-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_0189mh5Vii65xTx7X4KJ98Jo",
+	"promptId": "a7a74bcf-1d18-48c7-bf38-2c6d8dc99da6",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/frameworks/angular/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/test/**",
+		"packages/core/src/receipts/capability-coverage.ts",
+		"evidence/trust/current/capability-coverage.json",
+		"evidence/ingests/angular-eshop-webspa-netcore2-2/**"
+	],
+	"ts": "2026-08-14T07:05:02.855Z",
+	"pendingName": "00001786691102856642-b367b1d2-u4-exports-map-wiring-green-attempt.json"
+}

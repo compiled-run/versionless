@@ -1,0 +1,11 @@
+{
+	"unitId": "u23-super-productivity-offline-rebuild",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Rebuilt the super-productivity migrated lane offline-faithful. Egress-guarded control build of the workspace as u18j left it went red on a DNS lookup to fonts.googleapis.com with 'Inlining of fonts failed'. Applied the landed font-inlining-disable capability (2 sites in angular.json, no application source touched); rebuilt twice green with zero egress attempts, 62 artifacts, deterministic modulo ngsw.json's timestamp (compared key by key, hashTable identical). Sass-random fired only across the supersede boundary and is recorded with its first differing byte inside the confetti keyframe. Census re-verified: same logical names, both worker chunks byte-identical, referenced and precached. Emitted index.html carries the era Roboto link and zero inlined rules (was 45). New sealed record supersedes u18j. No witness work. Gate green.",
+	"agentId": "aac06382e17be5a6d",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-12T09:17:09.422Z"
+}

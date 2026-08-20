@@ -1,0 +1,11 @@
+{
+	"unitId": "h3b-cra-node-core-modules",
+	"runId": "lrapr-t004-hospitalrun",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Landed the generic CRA node-core-module capability in the React Vite adapter: webpack 4's node-libs-browser table, lazy per-need resolution from the application's own closure with a loud module-naming failure when a shim is absent, plus webpack's injected process/Buffer/setImmediate bootstrap and an opt-in entry-document hook. 21 adapter unit tests including real Vite control/adapted builds evaluated in a browser-shaped realm. Whole repo gate green (tsc, lint, pack, 863 node tests, offline receipt:verify). HospitalRun target now builds, but boot still fails on a third, different generic gap outside this packet, so no rebuild x2, no boot proof and no receipt regeneration were performed.",
+	"agentId": "a6122f2b9cdf70472",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-11T00:33:05.744Z"
+}

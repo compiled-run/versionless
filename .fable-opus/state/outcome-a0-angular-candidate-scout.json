@@ -1,0 +1,11 @@
+{
+	"unitId": "a0-angular-candidate-scout",
+	"runId": "lrapr-t005",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Read-only Angular scout. Mined the T011 audit, the retired 6MB spine board, evidence/ingests residue and the T007 holdout note to fix the Angular graveyard, then verified public metadata (gh API reads of LICENSE and package.json bytes at each pinned SHA) for fresh candidates. Delivered a 5-candidate ranked shortlist spanning Angular CLI 1.7, 8, 10 and 13 with pins, license evidence locations, builder/Node/package-manager facts, journey sketches, stub costs and admission risks; a ~25-entry reject list with one-line reasons; and a recommended 3-app first cohort (factoriolab -> jira-clone-angular -> angular-realworld) with a swap rule. Full detail in the message body. No files written, no downloads.",
+	"agentId": "a4decdece73936271",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-11T03:30:10.316Z"
+}

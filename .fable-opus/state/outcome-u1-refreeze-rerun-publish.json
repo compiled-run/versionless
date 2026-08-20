@@ -1,0 +1,11 @@
+{
+	"unitId": "u1-refreeze-rerun-publish",
+	"runId": "lrapr-t019",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Re-froze the adapter at recomputed composite 4df7bc96 (commit c695a58, React oid 972ca801; Angular/migrations/bundlers/analysis byte-identical vs 5de7df56 — no cross-lineage drift) in freeze.ts + adapter-freeze.json, with a supersession record naming the authorized react-cra-process-global reopen; added react-cra-process-global to the experimental list (now 12) and fixed the coupled length test. Re-proved the cypress-realworld-app journey under the frozen fingerprint via the canonical parity gate: 51/51 both lanes, behaviour-digest parity, pass-twice determinism, successfulNonLoopback=0. Authored + published the canonical PASSING witness-holdout receipt (green-2026-08-13, digest 76f0b5bd, frozenAdapterFingerprint=4df7bc96) and verified it independently via offline receipt:verify. tsc/lint clean, vp test 2224/2224.",
+	"agentId": "a3c62fb8ea855ad17",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-14T00:20:13.023Z"
+}

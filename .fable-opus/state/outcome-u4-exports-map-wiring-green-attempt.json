@@ -1,0 +1,11 @@
+{
+	"unitId": "u4-exports-map-wiring-green-attempt",
+	"runId": "lrapr-t024",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "G7 closed and the eShop holdout builds GREEN. Root cause was two-part: the driver supplied no packageExports reading, and once supplied the capability still refused (ngx-toastr publishes no root aggregate). Added a narrower rule, republishedSubpath — the exports map's own resolution run backwards to find the literal key naming exactly the blocked file, taken only when it answers every blocked import, declaring nothing because it is the same bytes. Reading placed driver-side per the T021-u1 precedent (needs the lane's installed closure). Build exits 0; run twice into separate outputs, byte-identical including hashed filenames; 25 files, 19 assets carried byte-identical from the era lane. Suite 2422 green, React subtree intact, attempt.json append-only.",
+	"agentId": "a7b750b180b9b78d7",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-14T07:30:31.950Z"
+}

@@ -1,0 +1,6 @@
+{
+	"status": "completed",
+	"summary": "Read-only Angular cohort-two scout. Fixed the graveyard from t005/t011 plus the retired spine board, then harvested 646 repos still carrying .angular-cli.json and star-ranked them via GraphQL, proving no production app survives at HEAD in that format. Delivered a 5-candidate ranked shortlist with LICENSE blob sha+size+copyright verified at each exact pin, ~30 rejects with reasons, and a 2-cell cut: altair v1.9.0 (Angular 5/CLI 1.6, .angular-cli.json) then super-productivity v2.13.15 (Angular 8 pre-Ivy, zero backend), with tiny-translator v0.12.0 as the C1 swap and pigallery2 1.7.0 as the un-ingested holdout reserve. Two rulings owed: altair's placeholder copyright, super-productivity's git-protocol dependency.",
+	"files_changed": [],
+	"open_questions": []
+}

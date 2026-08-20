@@ -1,0 +1,11 @@
+{
+  "unitId": "T029-ingest-lineage-rebatch",
+  "runId": "bank-demo-fleet-pipeline-p1c",
+  "attempt": 1,
+  "outcome": "completed",
+  "reason": "(3) ingest landed: acquisitionLaneOf walks UP to the nearest enclosing .versionless/work/<id>/baseline (subPath recorded, digest gate applied to the enclosing tree, T023's four gates unchanged); frontend root read by LINEAGE across the root and its immediate subdirs with frontendRootBasis naming every candidate (new codes ingest.frontend-root-lineage-ambiguous / -declares-no-framework; old codes kept verbatim); identifier read from the journal under all five gates with idReadFrom naming it an acquire-time operator declaration; the reading propagates to analyze/license-at-pin/era-cell/plan/apply and both roots print in the run record. batch rows now carry refusal.stage. (5) Both passes: 6 apps, 0 proven, 0 defects, interventionCount 0, refusedByCode {install.lockfile-absent: 6}, all refusals at stage install. Zero of the four T013 codes survive; all six now pass ingest and era-cell. Coverage held at proven=10/21; freeze composite 27741d9c stable; trust b8c3a7ed -> 443f8243. install.lockfile-absent is a run-materialize defect, not an app fact.",
+  "agentId": "a47565f5e2a3c7ab9",
+  "background": false,
+  "verdictDelivered": true,
+  "ts": "2026-08-17T23:42:44.515Z"
+}

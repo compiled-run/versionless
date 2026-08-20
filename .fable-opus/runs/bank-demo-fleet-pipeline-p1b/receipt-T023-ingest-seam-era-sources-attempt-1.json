@@ -1,0 +1,20 @@
+{
+  "status": "completed",
+  "summary": "Closed both admission walls. (1) ingest reads the pin from the consent-journalled acquisition receipt when .git is absent, gated on result=source-bound, consentId, parity basis, and the journalled manifest digest matching the walked tree; basis recorded in the existing commitShaReadFrom; five new named refusals; RUN_STAGES untouched, no fetch. (2) era-cell consults .nvmrc/.node-version, volta, .tool-versions, Dockerfile* FROM, workflows, engines in ruling order, refuses residue/multiplicity, adds era-cell.node-major-sources-disagree, no floor rule, all sources on record. Re-gate: refused:era-cell.node-major-not-inferable, interventionCount 0. Trust 2b6f6d1d -> 8b8f69b1; freeze 27741d9c stable; 2646 tests pass. Dist not rebuilt (out of contract, unused by verify).",
+  "files_changed": [
+    "packages/cli/src/operator/ingest.ts",
+    "packages/cli/src/operator/era-cell.ts",
+    "packages/cli/test/operator-ingest.test.ts",
+    "packages/cli/test/operator-era-cell.test.ts",
+    "packages/cli/test/operator-run.test.ts",
+    "evidence/runs/operator-flows/refusal-census.json",
+    "evidence/trust/current/manifest.json",
+    "evidence/trust/current/provenance.json",
+    "evidence/trust/current/report.md",
+    "evidence/trust/current/enterprise-report.json",
+    "evidence/trust/current/enterprise-report.md",
+    "evidence/trust/current/coverage-report.json",
+    "evidence/trust/current/coverage-report.md"
+  ],
+  "open_questions": []
+}

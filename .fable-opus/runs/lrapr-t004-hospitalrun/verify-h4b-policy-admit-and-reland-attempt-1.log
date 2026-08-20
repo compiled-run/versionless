@@ -1,0 +1,325 @@
+--- pnpm exec tsc --noEmit (exit 0) ---
+
+
+--- pnpm exec vp lint (exit 0) ---
+
+  ! eslint(no-unused-vars): Identifier 'WITNESS_NEXT_KILLED_BY_GOOGLE_TRACKED_EVENTS' is imported but never used.
+    ,-[packages/core/test/witness-next-killedbygoogle-receipt.test.ts:13:2]
+ 12 |     WITNESS_NEXT_KILLED_BY_GOOGLE_SCHEMA,
+ 13 |     WITNESS_NEXT_KILLED_BY_GOOGLE_TRACKED_EVENTS,
+    :     ^^^^^^^^^^^^^^^^^^^^^^|^^^^^^^^^^^^^^^^^^^^^
+    :                           `-- 'WITNESS_NEXT_KILLED_BY_GOOGLE_TRACKED_EVENTS' is imported here
+ 14 |     witnessNextKilledByGoogleBehaviorDigest,
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'withQuery' is imported but never used.
+    ,-[packages/cli/src/fixture/react-verdaccio-ingest.ts:16:29]
+ 15 | import { basename, dirname, join, relative, resolve } from 'pathe';
+ 16 | import { joinURL, parseURL, withQuery } from 'ufo';
+    :                             ^^^^|^^^^
+    :                                 `-- 'withQuery' is imported here
+ 17 | import { canonicalize, sha256 } from '../../../core/src/receipts/canonicalize.ts';
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Type alias 'RefRow' is declared but never used.
+    ,-[packages/cli/src/fixture/react-verdaccio-ingest.ts:36:6]
+ 35 | 
+ 36 | type RefRow = { ref: string; object: { type: 'commit' | 'tag'; sha: string } };
+    :      ^^^|^^
+    :         `-- 'RefRow' is declared here
+ 37 | type Candidate = {
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Identifier 'withQuery' is imported but never used.
+    ,-[packages/cli/src/fixture/react-apisix-dashboard-ingest.ts:16:29]
+ 15 | import { basename, dirname, join, relative, resolve } from 'pathe';
+ 16 | import { joinURL, parseURL, withQuery } from 'ufo';
+    :                             ^^^^|^^^^
+    :                                 `-- 'withQuery' is imported here
+ 17 | import { canonicalize, sha256 } from '../../../core/src/receipts/canonicalize.ts';
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Variable 'hex40' is declared but never used. Unused variables should start with a '_'.
+    ,-[packages/cli/src/fixture/react-apisix-dashboard-ingest.ts:30:7]
+ 29 | const cacheRoot = join(root, '.versionless/cache/react-apisix-dashboard-source-t684');
+ 30 | const hex40 = createRegExp(
+    :       ^^|^^
+    :         `-- 'hex40' is declared here
+ 31 |     charIn('0123456789').from('a', 'f').times(40).at.lineStart().at.lineEnd(),
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Type alias 'RefRow' is declared but never used.
+    ,-[packages/cli/src/fixture/react-apisix-dashboard-ingest.ts:37:6]
+ 36 | 
+ 37 | type RefRow = { ref: string; object: { type: 'commit' | 'tag'; sha: string } };
+    :      ^^^|^^
+    :         `-- 'RefRow' is declared here
+ 38 | type Candidate = {
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-extra-boolean-cast): Redundant Boolean call
+     ,-[packages/cli/src/fixture/vite8-shared-adapter-cohort-run.ts:148:8]
+ 147 |                 violations.push('url-not-canonical');
+ 148 |             if (Boolean(parseURL(candidate.url).host)) violations.push('url-remote');
+     :                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 149 |         }
+     `----
+  help: Remove the Boolean call as it will already be coerced to a boolean
+
+  ! eslint-plugin-unicorn(no-useless-spread): Using a spread operator here creates a new array unnecessarily.
+     ,-[packages/cli/src/fixture/vite8-shared-adapter-cohort-run.ts:208:13]
+ 207 |         actualValidation,
+ 208 |         missing: [...expected.filter((entry) => !actualByPath.has(entry.path))].sort(
+     :                   ^^^
+ 209 |             (left, right) => compareUtf16CodeUnits(left.path, right.path),
+     `----
+  help: `expected.filter` returns a new array. Spreading it into an array expression to create a new array is redundant.
+
+  ! eslint-plugin-unicorn(no-useless-spread): Using a spread operator here creates a new array unnecessarily.
+     ,-[packages/cli/src/fixture/vite8-shared-adapter-cohort-run.ts:211:16]
+ 210 |         ),
+ 211 |         unexpected: [...actual.filter((entry) => !expectedByPath.has(entry.path))].sort(
+     :                      ^^^
+ 212 |             (left, right) => compareUtf16CodeUnits(left.path, right.path),
+     `----
+  help: `actual.filter` returns a new array. Spreading it into an array expression to create a new array is redundant.
+
+  ! eslint(no-unused-vars): Variable 't643StartPath' is declared but never used. Unused variables should start with a '_'.
+    ,-[packages/cli/src/fixture/angular-realworld-production-parity-run.ts:29:7]
+ 28 | const t643AttemptDirectory = path.join(output, 'attempts');
+ 29 | const t643StartPath = path.join(t643AttemptDirectory, 't643-start.json');
+    :       ^^^^^^|^^^^^^
+    :             `-- 't643StartPath' is declared here
+ 30 | const t643ReceiptPath = path.join(t643AttemptDirectory, 't643-receipt.json');
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Type alias 'RefRow' is declared but never used.
+    ,-[packages/cli/src/fixture/react-mattermost-ingest.ts:39:6]
+ 38 | 
+ 39 | type RefRow = { ref: string; object: { type: 'commit' | 'tag'; sha: string } };
+    :      ^^^|^^
+    :         `-- 'RefRow' is declared here
+ 40 | type Candidate = {
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Variable 'umiMajor' is declared but never used. Unused variables should start with a '_'.
+     ,-[packages/cli/src/fixture/react-mattermost-ingest.ts:954:9]
+ 953 |         const webpackMajor = selectedPackage.webpackMajor;
+ 954 |         const umiMajor = selectedPackage.umiMajor ?? null;
+     :               ^^^^|^^^
+     :                   `-- 'umiMajor' is declared here
+ 955 |         const craMajor = selectedPackage.craMajor ?? null;
+     `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Identifier 'rm' is imported but never used.
+   ,-[packages/cli/src/fixture/react-sqlpad-v5-5-0-ingest.ts:2:52]
+ 1 | import { createHash } from 'node:crypto';
+ 2 | import { access, mkdir, readFile, readdir, rename, rm, writeFile } from 'node:fs/promises';
+   :                                                    ^|
+   :                                                     `-- 'rm' is imported here
+ 3 | import { request } from 'node:https';
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Type alias 'RefRow' is declared but never used.
+    ,-[packages/cli/src/fixture/react-appsmith-ingest.ts:38:6]
+ 37 | 
+ 38 | type RefRow = { ref: string; object: { type: 'commit' | 'tag'; sha: string } };
+    :      ^^^|^^
+    :         `-- 'RefRow' is declared here
+ 39 | type Candidate = {
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Variable 'umiMajor' is declared but never used. Unused variables should start with a '_'.
+      ,-[packages/cli/src/fixture/react-appsmith-ingest.ts:1011:9]
+ 1010 |         const webpackMajor = selectedPackage.webpackMajor;
+ 1011 |         const umiMajor = selectedPackage.umiMajor ?? null;
+      :               ^^^^|^^^
+      :                   `-- 'umiMajor' is declared here
+ 1012 |         const craMajor = selectedPackage.craMajor ?? null;
+      `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Type alias 'RefRow' is declared but never used.
+    ,-[packages/cli/src/fixture/react-strapi-ingest.ts:38:6]
+ 37 | 
+ 38 | type RefRow = { ref: string; object: { type: 'commit' | 'tag'; sha: string } };
+    :      ^^^|^^
+    :         `-- 'RefRow' is declared here
+ 39 | type Candidate = {
+    `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Variable 'umiMajor' is declared but never used. Unused variables should start with a '_'.
+     ,-[packages/cli/src/fixture/react-strapi-ingest.ts:967:9]
+ 966 |         const webpackMajor = selectedPackage.webpackMajor;
+ 967 |         const umiMajor = selectedPackage.umiMajor ?? null;
+     :               ^^^^|^^^
+     :                   `-- 'umiMajor' is declared here
+ 968 |         const craMajor = selectedPackage.craMajor ?? null;
+     `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Identifier 'cp' is imported but never used.
+   ,-[packages/cli/src/fixture/angular-realworld-v15-ingest.ts:5:2]
+ 4 |     access,
+ 5 |     cp,
+   :     ^|
+   :      `-- 'cp' is imported here
+ 6 |     mkdir,
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'NODE_ARCHIVE_SHA256' is imported but never used.
+    ,-[packages/cli/src/fixture/angular-realworld-v15-to-v16-run.ts:14:27]
+ 13 | } from './angular-realworld-v15-to-v16-ingest.ts';
+ 14 | import { CHROMIUM_SHA256, NODE_ARCHIVE_SHA256 } from './angular-realworld-v15-ingest.ts';
+    :                           ^^^^^^^^^|^^^^^^^^^
+    :                                    `-- 'NODE_ARCHIVE_SHA256' is imported here
+ 15 | 
+    `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Identifier 'cp' is imported but never used.
+   ,-[packages/cli/src/fixture/angular-realworld-v15-to-v16-ingest.ts:5:2]
+ 4 |     access,
+ 5 |     cp,
+   :     ^|
+   :      `-- 'cp' is imported here
+ 6 |     mkdir,
+   `----
+  help: Consider removing this import.
+
+  ! eslint(no-unused-vars): Variable 'umiMajor' is declared but never used. Unused variables should start with a '_'.
+     ,-[packages/cli/src/fixture/react-kafka-ui-v0-3-3-ingest.ts:774:9]
+ 773 |         const webpackMajor = selectedPackage.webpackMajor;
+ 774 |         const umiMajor = selectedPackage.umiMajor ?? null;
+     :               ^^^^|^^^
+     :                   `-- 'umiMajor' is declared here
+ 775 |         const craMajor = selectedPackage.craMajor ?? null;
+     `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Variable 'umiMajor' is declared but never used. Unused variables should start with a '_'.
+     ,-[packages/cli/src/fixture/react-unleash-ingest.ts:934:9]
+ 933 |         const webpackMajor = selectedPackage.webpackMajor;
+ 934 |         const umiMajor = selectedPackage.umiMajor ?? null;
+     :               ^^^^|^^^
+     :                   `-- 'umiMajor' is declared here
+ 935 |         const craMajor = selectedPackage.craMajor ?? null;
+     `----
+  help: Consider removing this declaration.
+
+  ! eslint(no-unused-vars): Variable 'craMajor' is declared but never used. Unused variables should start with a '_'.
+     ,-[packages/cli/src/fixture/react-unleash-ingest.ts:935:9]
+ 934 |         const umiMajor = selectedPackage.umiMajor ?? null;
+ 935 |         const craMajor = selectedPackage.craMajor ?? null;
+     :               ^^^^|^^^
+     :                   `-- 'craMajor' is declared here
+ 936 |         const viteMajor = selectedPackage.viteMajor ?? null;
+     `----
+  help: Consider removing this declaration.
+
+Found 23 warnings and 0 errors.
+Finished in 92ms on 306 files with 93 rules using 18 threads.
+
+
+--- pnpm exec vp pack (exit 0) ---
+[34mℹ[39m [38;2;180;100;126m[@versionless/core][39m entry: [38;2;180;100;126m./src/index.ts[39m
+[34mℹ[39m [38;2;180;100;126m[@versionless/core][39m tsconfig: [38;2;180;100;126m../../tsconfig.json[39m
+[34mℹ[39m [38;2;180;100;119m[@versionless/trust][39m entry: [38;2;180;100;119m./src/index.ts[39m
+[34mℹ[39m [38;2;180;100;119m[@versionless/trust][39m tsconfig: [38;2;180;100;119m../../tsconfig.json[39m
+[34mℹ[39m [38;2;134;100;180m[@versionless/react][39m entry: [38;2;134;100;180m./src/index.ts[39m
+[34mℹ[39m [38;2;134;100;180m[@versionless/react][39m tsconfig: [38;2;134;100;180m../../../tsconfig.json[39m
+[34mℹ[39m [38;2;180;146;0m[@versionless/nextjs][39m entry: [38;2;180;146;0m./src/index.ts[39m
+[34mℹ[39m [38;2;180;146;0m[@versionless/nextjs][39m tsconfig: [38;2;180;146;0m../../../tsconfig.json[39m
+[34mℹ[39m [38;2;180;180;100m[@versionless/angular][39m entry: [38;2;180;180;100m./src/index.ts[39m
+[34mℹ[39m [38;2;180;180;100m[@versionless/angular][39m tsconfig: [38;2;180;180;100m../../../tsconfig.json[39m
+[34mℹ[39m [38;2;180;150;100m[@versionless/angularjs][39m entry: [38;2;180;150;100m./src/index.ts[39m
+[34mℹ[39m [38;2;180;150;100m[@versionless/angularjs][39m tsconfig: [38;2;180;150;100m../../../tsconfig.json[39m
+[34mℹ[39m [38;2;100;120;180m[versionless][39m entry: [38;2;100;120;180m./src/index.ts, ./src/cli.ts[39m
+[34mℹ[39m [38;2;100;120;180m[versionless][39m tsconfig: [38;2;100;120;180m../../tsconfig.json[39m
+[34mℹ[39m [38;2;143;100;180m[@versionless/experiments][39m entry: [38;2;143;100;180m./src/index.ts[39m
+[34mℹ[39m [38;2;143;100;180m[@versionless/experiments][39m tsconfig: [38;2;143;100;180m../../tsconfig.json[39m
+[34mℹ[39m [38;2;100;100;180m[@versionless/node-guard][39m entry: [38;2;100;100;180m./src/index.ts[39m
+[34mℹ[39m [38;2;100;100;180m[@versionless/node-guard][39m tsconfig: [38;2;100;100;180m../../tsconfig.json[39m
+[34mℹ[39m Build start
+[34mℹ[39m Cleaning 11 files
+[34mℹ[39m [38;2;180;180;100m[@versionless/angular][39m [2mdist/[22m[1mindex.js[22m  [2m1.93 kB[22m [2m│ gzip: 0.85 kB[22m
+[34mℹ[39m [38;2;180;180;100m[@versionless/angular][39m 1 files, total: 1.93 kB
+[34mℹ[39m [38;2;143;100;180m[@versionless/experiments][39m [2mdist/[22m[1mindex.js[22m  [2m0.20 kB[22m [2m│ gzip: 0.17 kB[22m
+[34mℹ[39m [38;2;143;100;180m[@versionless/experiments][39m 1 files, total: 0.20 kB
+[32m✔[39m [38;2;180;180;100m[@versionless/angular][39m Build complete in [32m19ms[39m
+[34mℹ[39m [38;2;100;100;180m[@versionless/node-guard][39m [2mdist/[22m[1mindex.cjs[22m  [2m2.88 kB[22m [2m│ gzip: 1.24 kB[22m
+[34mℹ[39m [38;2;100;100;180m[@versionless/node-guard][39m 1 files, total: 2.88 kB
+[32m✔[39m [38;2;143;100;180m[@versionless/experiments][39m Build complete in [32m20ms[39m
+[32m✔[39m [38;2;100;100;180m[@versionless/node-guard][39m Build complete in [32m20ms[39m
+[34mℹ[39m [38;2;180;150;100m[@versionless/angularjs][39m [2mdist/[22m[1mindex.js[22m  [2m19.78 kB[22m [2m│ gzip: 5.41 kB[22m
+[34mℹ[39m [38;2;180;150;100m[@versionless/angularjs][39m 1 files, total: 19.78 kB
+[32m✔[39m [38;2;180;150;100m[@versionless/angularjs][39m Build complete in [32m22ms[39m
+[34mℹ[39m [38;2;134;100;180m[@versionless/react][39m [2mdist/[22m[1mindex.js[22m  [2m51.51 kB[22m [2m│ gzip: 14.78 kB[22m
+[34mℹ[39m [38;2;134;100;180m[@versionless/react][39m 1 files, total: 51.51 kB
+[32m✔[39m [38;2;134;100;180m[@versionless/react][39m Build complete in [32m23ms[39m
+[34mℹ[39m [38;2;180;146;0m[@versionless/nextjs][39m [2mdist/[22m[1mindex.js[22m  [2m141.30 kB[22m [2m│ gzip: 31.26 kB[22m
+[34mℹ[39m [38;2;180;146;0m[@versionless/nextjs][39m 1 files, total: 141.30 kB
+[32m✔[39m [38;2;180;146;0m[@versionless/nextjs][39m Build complete in [32m31ms[39m
+[34mℹ[39m [38;2;180;100;126m[@versionless/core][39m [2mdist/[22m[1mindex.js[22m  [2m490.18 kB[22m [2m│ gzip: 109.70 kB[22m
+[34mℹ[39m [38;2;180;100;126m[@versionless/core][39m 1 files, total: 490.18 kB
+[32m✔[39m [38;2;180;100;126m[@versionless/core][39m Build complete in [32m35ms[39m
+[34mℹ[39m [38;2;180;100;119m[@versionless/trust][39m [2mdist/[22m[1mindex.js[22m  [2m439.05 kB[22m [2m│ gzip: 97.11 kB[22m
+[34mℹ[39m [38;2;180;100;119m[@versionless/trust][39m 1 files, total: 439.05 kB
+[32m✔[39m [38;2;180;100;119m[@versionless/trust][39m Build complete in [32m37ms[39m
+[34mℹ[39m [38;2;100;120;180m[versionless][39m Granting execute permission to [4mdist/cli.js[24m
+[34mℹ[39m [38;2;100;120;180m[versionless][39m [2mdist/[22m[1mcli.js[22m              [2m157.61 kB[22m [2m│ gzip: 35.28 kB[22m
+[34mℹ[39m [38;2;100;120;180m[versionless][39m [2mdist/[22m[1mindex.js[22m            [2m 35.52 kB[22m [2m│ gzip:  7.28 kB[22m
+[34mℹ[39m [38;2;100;120;180m[versionless][39m [2mdist/[22mverify-Dt0zgcwf.js  [2m  1.03 MB[22m
+[34mℹ[39m [38;2;100;120;180m[versionless][39m 3 files, total: 1.23 MB
+[32m✔[39m [38;2;100;120;180m[versionless][39m Build complete in [32m44ms[39m
+
+
+--- pnpm exec vp test --project node (exit 0) ---
+ RUN  /Users/jacksm5pro/dev/open-source/versionless
+
+{"preflight":"pass"}
+
+ Test Files  131 passed (131)
+      Tests  917 passed (917)
+   Start at  22:04:25
+   Duration  153.66s (transform 4.92s, setup 0ms, import 14.74s, tests 219.54s, environment 6ms)
+
+
+
+--- env npm_config_offline=true VERSIONLESS_NETWORK_MODE=offline pnpm run receipt:verify (exit 0) ---
+
+> versionless-workspace@0.0.0 receipt:verify /Users/jacksm5pro/dev/open-source/versionless
+> node --experimental-strip-types packages/cli/src/cli.ts receipt:verify
+
+{"valid":true,"digest":"52400147929220935a9ebe47a16c8dff50b5c28e9d51c930d000c99c2bdc8a21","artifacts":10}
+
+
+--- env npm_config_offline=true VERSIONLESS_NETWORK_MODE=offline pnpm run corpus:verify (exit 0) ---
+
+> versionless-workspace@0.0.0 corpus:verify /Users/jacksm5pro/dev/open-source/versionless
+> node --experimental-strip-types packages/cli/src/cli.ts corpus:verify
+
+{"result":"pass","digest":"82dd60812ccec129f7a858d146ba2a79a652b0a94615af9d69106fbdb4aaf974","verticals":13,"sourceApplications":6}
+
+
+--- env npm_config_offline=true VERSIONLESS_NETWORK_MODE=offline pnpm run trust:verify (exit 0) ---
+
+> versionless-workspace@0.0.0 trust:verify /Users/jacksm5pro/dev/open-source/versionless
+> node --experimental-strip-types packages/cli/src/cli.ts trust:verify
+
+{"valid":true,"digest":"06fbc17afa787bae151ce3db0939ff3138647c570492bf0fb5422f3ef35f2cf5","deterministicCore":"7714ce9771eb9e07ad95717be3ad4a2da0e5846d318b808f948e3287f327fb19","artifacts":10}
+
+

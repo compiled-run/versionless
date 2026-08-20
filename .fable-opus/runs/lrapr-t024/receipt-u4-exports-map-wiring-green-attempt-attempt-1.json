@@ -1,0 +1,23 @@
+{
+	"status": "completed",
+	"summary": "G7 closed and the eShop holdout builds GREEN. Root cause was two-part: the driver supplied no packageExports reading, and once supplied the capability still refused (ngx-toastr publishes no root aggregate). Added a narrower rule, republishedSubpath — the exports map's own resolution run backwards to find the literal key naming exactly the blocked file, taken only when it answers every blocked import, declaring nothing because it is the same bytes. Reading placed driver-side per the T021-u1 precedent (needs the lane's installed closure). Build exits 0; run twice into separate outputs, byte-identical including hashed filenames; 25 files, 19 assets carried byte-identical from the era lane. Suite 2422 green, React subtree intact, attempt.json append-only.",
+	"files_changed": [
+		"packages/frameworks/angular/src/package-exports-style-imports.ts",
+		"packages/frameworks/angular/test/package-exports-style-imports.test.ts",
+		"packages/cli/src/fixture/angular-eshop-webspa-migration-run.ts",
+		"packages/cli/src/fixture/angular-eshop-webspa-migration-record.ts",
+		"packages/cli/src/fixture/angular-eshop-webspa-build-inventory.ts",
+		"packages/cli/test/angular-eshop-webspa-migration.test.ts",
+		"packages/core/src/receipts/capability-coverage.ts",
+		"evidence/trust/current/capability-coverage.json",
+		"evidence/ingests/angular-eshop-webspa-netcore2-2/attempt.json",
+		"evidence/ingests/angular-eshop-webspa-netcore2-2/migration/u4-t024-composed-changeset.json",
+		"evidence/ingests/angular-eshop-webspa-netcore2-2/migration/u4-t024-source-migration.json",
+		"evidence/ingests/angular-eshop-webspa-netcore2-2/migration/u4-t024-angular-http-seam-probe.json",
+		"evidence/ingests/angular-eshop-webspa-netcore2-2/migration/u4-t024-lane-install.log",
+		"evidence/ingests/angular-eshop-webspa-netcore2-2/migration/u4-t024-target-build.log",
+		"evidence/ingests/angular-eshop-webspa-netcore2-2/migration/u4-t024-target-build-run2.log",
+		"evidence/ingests/angular-eshop-webspa-netcore2-2/migration/u4-t024-build-inventory-run1-vs-run2.json"
+	],
+	"open_questions": []
+}

@@ -1,0 +1,11 @@
+{
+	"unitId": "t004-d7-papercups-aggregate-transition",
+	"runId": "lrapr-t004",
+	"attempt": 1,
+	"outcome": "completed",
+	"reason": "Executed the papercups aggregate transition as one change. Ran the append tool for real (aggregate 16->18 members, derives react-papercups-browser-proof). analyzeCorpusConformance now emits papercups vertical + source application derived from aggregate members and the verified receipt, with a new row/summary agreement invariant (verticals 11->12, apps 4->5). Trust pipeline learned the new kind: receipts 16->18 (not 20 - reality per derivation), matrix cells 16->17 derived from conformance, shared verifyTrustReceipt dispatch, new verifyReactPapercupsCanonicalReceipt. Pins moved to exact values; added positive papercups coverage. Regenerated evidence/trust/current offline. All seven verify commands green; 846/846 tests.",
+	"agentId": "ad57fd9ba575b6023",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-10T21:53:46.388Z"
+}

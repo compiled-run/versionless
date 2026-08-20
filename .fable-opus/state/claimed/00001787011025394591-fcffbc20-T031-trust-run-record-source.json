@@ -1,0 +1,24 @@
+{
+  "runId": "bank-demo-fleet-pipeline-p1c",
+  "unitId": "T031-trust-run-record-source",
+  "attempt": 1,
+  "promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/bank-demo-fleet-pipeline-p1c/prompt-T031-trust-run-record-source-attempt-1.md",
+  "subagentType": "opus-worker",
+  "toolUseId": "toolu_0187JHnzeYTGW6SvFJpAnX7R",
+  "promptId": "672a0d64-1af3-4054-9990-429c0f8475bf",
+  "background": false,
+  "parallel": false,
+  "effort": null,
+  "contract": [
+    "packages/core/src/corpus/conformance.ts",
+    "packages/trust/src/enterprise.ts",
+    "packages/trust/src/coverage-report.ts",
+    "packages/trust/src/generate.ts",
+    "packages/trust/src/schema.ts",
+    "packages/core/test/**",
+    "packages/trust/test/**",
+    "evidence/trust/current/**"
+  ],
+  "ts": "2026-08-17T23:57:05.393Z",
+  "pendingName": "00001787011025394591-fcffbc20-T031-trust-run-record-source.json"
+}

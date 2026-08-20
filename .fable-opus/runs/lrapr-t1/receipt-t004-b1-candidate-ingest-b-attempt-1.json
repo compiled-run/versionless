@@ -1,0 +1,24 @@
+{
+	"status": "blocked",
+	"summary": "All three ranked candidates failed hard admission gates before acquisition. sound-redux is GPL-3.0 and Winds is BSD-3-Clause (both fail MIT). phoenix-trello passed MIT but pins react ^0.14.5, below the React 15-17 floor, and no branch or tag of it ever reached React 15; it also has no lock file and a file:deps/phoenix manifest entry. No archive was fetched for any candidate, so acquisition budget is untouched. Wrote append-only attempt/terminal/request-ledger/transcript records for all three slugs. No source.json exists because nothing was admitted, so that verify command fails honestly. Slug substitution is forbidden, so I am blocking rather than improvising.",
+	"files_changed": [
+		"evidence/ingests/react-sound-redux/attempt.json",
+		"evidence/ingests/react-sound-redux/terminal.json",
+		"evidence/ingests/react-sound-redux/request-ledger.ndjson",
+		"evidence/ingests/react-sound-redux/transcript.ndjson",
+		"evidence/ingests/react-winds/attempt.json",
+		"evidence/ingests/react-winds/terminal.json",
+		"evidence/ingests/react-winds/request-ledger.ndjson",
+		"evidence/ingests/react-winds/transcript.ndjson",
+		"evidence/ingests/react-phoenix-trello/attempt.json",
+		"evidence/ingests/react-phoenix-trello/terminal.json",
+		"evidence/ingests/react-phoenix-trello/request-ledger.ndjson",
+		"evidence/ingests/react-phoenix-trello/transcript.ndjson"
+	],
+	"open_questions": [
+		"All three literal slugs in the packet are terminally rejected. Please re-cut lane B with a fresh ranked list of MIT React 15-17 candidates, pre-screened for SPDX id before dispatch: the two cheapest failures here were licence checks that a single GET on /repos/{owner}/{repo} would have caught at packet-composition time.",
+		"Is BSD-3-Clause acceptable for this corpus? If the MIT-only gate is actually a permissive-licence gate, GetStream/Winds becomes re-attemptable immediately (CRA-era, ~100 tags, archived upstream) and only needs its licence file read directly to confirm.",
+		"phoenix-trello showed LICENSE=MIT but package.json license=ISC. Does the portfolio need a standing rule for which declaration governs when a repo contradicts itself? I preserved this as unresolved rather than picking MIT.",
+		"The verify fence asserts ls evidence/ingests/*/source.json, which no gate-rejection outcome can satisfy. Should a blocked/rejected lane get a distinct fence, or should rejected candidates emit a source.json with result 'not-bound'?"
+	]
+}

@@ -1,0 +1,11 @@
+{
+	"unitId": "u19e-browser-globals-rebuild",
+	"runId": "lrapr-t006",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Landed the node-core runtime-globals coherence capability in @versionless/angular (reads the installed module's proven load-time global dereferences, supplies the narrowest object graph via the builder's polyfills seam, refuses everything unproven by name) with 12 tests; applied to the stage; build-9/build-10 green, 524 files, byte-identical. Browser boot check confirms 'process is not defined' is fixed but the lane still does not mount: '$localize is not defined' at bootstrap, from Angular 16 i18n templates needing @angular/localize, which is not installed. Per the packet I did not publish the superseding build record or re-pin schema digests to a non-booting artifact. Receipt-path constant corrected. All four verify commands pass.",
+	"agentId": "aaec4f5000545374e",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-12T04:44:43.039Z"
+}

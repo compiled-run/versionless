@@ -1,0 +1,25 @@
+{
+	"runId": "lrapr-t006",
+	"unitId": "u18g-super-productivity-close",
+	"attempt": 1,
+	"promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/lrapr-t006/prompt-u18g-super-productivity-close-attempt-1.md",
+	"subagentType": "opus-worker",
+	"toolUseId": "toolu_0118LJhxyzo3U3bE7S6y3j72",
+	"promptId": "48fa64bf-5a3d-4408-bd93-f80a9012a481",
+	"background": false,
+	"parallel": false,
+	"effort": null,
+	"contract": [
+		"packages/frameworks/angular/**",
+		"packages/cli/src/fixture/**",
+		"packages/cli/test/**",
+		"packages/core/test/**",
+		"evidence/runs/angular-super-productivity-v2-13-15/**",
+		"fixtures/angular-super-productivity-v2-13-15/**",
+		"package.json",
+		"pnpm-lock.yaml",
+		"pnpm-workspace.yaml"
+	],
+	"ts": "2026-08-12T01:13:43.966Z",
+	"pendingName": "00001786497223967952-290f7bd0-u18g-super-productivity-close.json"
+}

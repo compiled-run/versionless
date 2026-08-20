@@ -1,0 +1,11 @@
+{
+	"unitId": "t004-b1-candidate-ingest-b",
+	"runId": "lrapr-t1",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "All three ranked candidates failed hard admission gates before acquisition. sound-redux is GPL-3.0 and Winds is BSD-3-Clause (both fail MIT). phoenix-trello passed MIT but pins react ^0.14.5, below the React 15-17 floor, and no branch or tag of it ever reached React 15; it also has no lock file and a file:deps/phoenix manifest entry. No archive was fetched for any candidate, so acquisition budget is untouched. Wrote append-only attempt/terminal/request-ledger/transcript records for all three slugs. No source.json exists because nothing was admitted, so that verify command fails honestly. Slug substitution is forbidden, so I am blocking rather than improvising.",
+	"agentId": "a1238f18ec638a434",
+	"background": true,
+	"verdictDelivered": true,
+	"ts": "2026-08-10T19:07:05.399Z"
+}

@@ -1,0 +1,11 @@
+{
+	"unitId": "t004-d6-papercups-trust-aggregate",
+	"runId": "lrapr-t004",
+	"attempt": 1,
+	"outcome": "blocked",
+	"reason": "Landed the core barrel export, a derived-not-authored papercups aggregate append tool with 4 tests, and a canonical offline trust regeneration (digests only; no counts moved). Blocked before appending the aggregate: doing so fails 8 tests in packages/core/test/witness-react-papercups.test.ts and packages/core/test/corpus-conformance.test.ts, both outside my contract and explicitly protected. Also analyzeCorpusConformance emits no papercups vertical or application row, so summary would claim 12/5 while listing 11/4 and the trust matrix cell would have no conformance row to derive from. Whole repo gate green as left.",
+	"agentId": "a8162ef70c0901e91",
+	"background": false,
+	"verdictDelivered": true,
+	"ts": "2026-08-10T21:21:34.349Z"
+}
