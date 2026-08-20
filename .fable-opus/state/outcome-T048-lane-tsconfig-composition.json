@@ -1,0 +1,11 @@
+{
+  "unitId": "T048-lane-tsconfig-composition",
+  "runId": "bank-demo-fleet-pipeline-p2f",
+  "attempt": 1,
+  "outcome": "blocked",
+  "reason": "Mapped the wall: apply copies only the app root, and Vite resolves a tsconfig's `extends` relative to that file, so your-spotify's `extends: ../tsconfig.json` pointed above the lane. Fixed generally in lane.ts: extends chains reaching outside the app root are flattened into a self-contained lane tsconfig.json emitted as a third composed lane file; unreadable chains are named as unhandled, not rewritten. 9 tests added, two running real Vite 8.0.16 (one reproduces the wall, one builds green). Flame held 9/9 count 0, shape unmoved. your-spotify PROVEN 9/9, count 0 — proven 13 to 14. Trust regenerated, census unmoved at 200, all guards hold. Blocked on one pinned integer outside the contract.",
+  "agentId": "af08e850a4e14045e",
+  "background": false,
+  "verdictDelivered": true,
+  "ts": "2026-08-20T15:07:36.834Z"
+}

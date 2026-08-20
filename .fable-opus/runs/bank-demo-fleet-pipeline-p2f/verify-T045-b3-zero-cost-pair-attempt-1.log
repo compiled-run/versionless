@@ -1,0 +1,59 @@
+--- npm run trust:verify -- --offline (exit 0) ---
+{"valid":true,"digest":"a802c57fe34f8827efc9f89d42233dd16d37075b661fd00ce10b3751c814be2b","deterministicCore":"35d603fdfab533ad31a7d23ca891264b5351e4390a6d2c90bd9cfff0c5b13be3","artifacts":12}
+
+npm warn Unknown project config "store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "virtual-store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "state-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm notice run versionless-workspace@0.0.0 trust:verify
+npm notice run node --experimental-strip-types packages/cli/src/cli.ts trust:verify --offline
+
+--- npm run receipt:verify (exit 0) ---
+{"valid":true,"digest":"52400147929220935a9ebe47a16c8dff50b5c28e9d51c930d000c99c2bdc8a21","artifacts":10}
+
+npm warn Unknown project config "store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "virtual-store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "state-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm notice run versionless-workspace@0.0.0 receipt:verify
+npm notice run node --experimental-strip-types packages/cli/src/cli.ts receipt:verify
+
+--- VERSIONLESS_NETWORK_MODE=offline npm run corpus:verify (exit 0) ---
+{"result":"pass","digest":"4b065b48f1fd7ad7945044de0655fe407206b4684a664235ff4738428b6fd25f","verticals":20,"sourceApplications":15}
+
+npm warn Unknown project config "store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "virtual-store-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm warn Unknown project config "state-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+npm notice run versionless-workspace@0.0.0 corpus:verify
+npm notice run node --experimental-strip-types packages/cli/src/cli.ts corpus:verify
+
+--- node --experimental-strip-types packages/cli/src/cli.ts report:coverage --offline --verify-only (exit 0) ---
+{"result":"pass","mode":"verified","trustDigest":"a802c57fe34f8827efc9f89d42233dd16d37075b661fd00ce10b3751c814be2b","machineArtifact":"evidence/trust/current/coverage-report.json","humanDocument":"evidence/trust/current/coverage-report.md","machineArtifactSha256":"bfba1cab0552bf0ea18bcdd0fc84666089983bf1befa4130b171c6a0c2156d12","humanDocumentSha256":"24fc52340b5915074ef05fa575ab5721d9ce81c743b268ed92ce37c94d2e0c50","coverageDigest":"d0cc045b7da96a8cadd522d298704c2eba8ed00e334fd98cc1f4784154434c7f","certification":"not-certified"}
+
+
+--- node --experimental-strip-types packages/cli/src/cli.ts refusal-census --verify-only --json 2>/dev/null | node -e "let b='';process.stdin.on('data',d=>b+=d);process.stdin.on('end',()=>{const d=JSON.parse(b);if(!d.matchesPublished)throw new Error('census drifted');console.log('CENSUS-OK sites='+d.census.summary.sites)})" (exit 0) ---
+CENSUS-OK sites=198
+
+
+--- node -e "const r=require('./evidence/trust/current/coverage-report.json').totals;if(r.proven<12)throw new Error('proven regressed: '+r.proven);console.log('PROVEN-FLOOR-HELD proven='+r.proven+' apps='+r.applications)" (exit 0) ---
+PROVEN-FLOOR-HELD proven=13 apps=24
+
+
+--- node --experimental-strip-types packages/cli/src/cli.ts supported-matrix --offline 2>&1 | grep -q "angular: 4 counted of 4" && echo ANGULAR-CELLS-STABLE (exit 0) ---
+ANGULAR-CELLS-STABLE
+
+
+--- node -e "const f=require('./evidence/trust/current/adapter-freeze.json');if(!String(f.freeze.composite).startsWith('140ce86e'))throw new Error('composite moved');console.log('COMPOSITE-STABLE')" (exit 0) ---
+COMPOSITE-STABLE
+
+
+--- git diff --quiet HEAD -- packages && echo NO-SOURCE-CHANGES (exit 0) ---
+NO-SOURCE-CHANGES
+
+
+--- git diff --quiet HEAD -- evidence/runs/react-flame-v2-4-0 evidence/runs/react-coverview-a1470b01 evidence/runs/angular2-hn && echo EXHIBITS-UNTOUCHED (exit 0) ---
+EXHIBITS-UNTOUCHED
+
+
+--- grep -q '§15\|## 15' docs/goals/bank-demo-fleet-pipeline/notes/T012-angular-batch.md && echo NOTE-APPENDED (exit 0) ---
+NOTE-APPENDED
+
+

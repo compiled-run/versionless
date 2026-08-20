@@ -235,3 +235,8 @@
 {"ts":"2026-08-20T13:01:51.070Z","unitId":"T032-i2-allowscripts-honesty","runId":"bank-demo-fleet-pipeline-p2e","attempt":1,"agentId":"a8ef2bb444d27d784","outcome":"completed"}
 {"ts":"2026-08-20T13:25:20.873Z","unitId":"T032-i3-witness-row-and-residuals","runId":"bank-demo-fleet-pipeline-p2e","attempt":1,"agentId":"ac35455c9f417459e","outcome":"completed"}
 {"ts":"2026-08-20T13:32:04.276Z","unitId":"T032-i4-flame-refresh","runId":"bank-demo-fleet-pipeline-p2e","attempt":1,"agentId":"a1039b0b3193077d4","outcome":"completed"}
+{"ts":"2026-08-20T13:49:09.675Z","unitId":"T045-b1-acquire-run-grind","runId":"bank-demo-fleet-pipeline-p2f","attempt":1,"agentId":"ac6281e5c3c13707c","outcome":"completed"}
+{"ts":"2026-08-20T14:03:49.600Z","unitId":"T045-b2-candidate-rescreen","runId":"bank-demo-fleet-pipeline-p2f","attempt":1,"agentId":"af2c90934a9d15dcb","outcome":"completed"}
+{"ts":"2026-08-20T14:10:41.539Z","unitId":"T045-b3-zero-cost-pair","runId":"bank-demo-fleet-pipeline-p2f","attempt":1,"agentId":"aa3d6297bde2a4365","outcome":"completed"}
+{"ts":"2026-08-20T14:36:17.562Z","unitId":"T047-target-runtime-semantics","runId":"bank-demo-fleet-pipeline-p2f","attempt":1,"agentId":"a265bf0fe0fd124bc","outcome":"failed"}
+{"ts":"2026-08-20T15:07:36.833Z","unitId":"T048-lane-tsconfig-composition","runId":"bank-demo-fleet-pipeline-p2f","attempt":1,"agentId":"af08e850a4e14045e","outcome":"blocked"}

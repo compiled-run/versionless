@@ -1,0 +1,20 @@
+{
+  "runId": "bank-demo-fleet-pipeline-p2f",
+  "unitId": "T045-b1-acquire-run-grind",
+  "attempt": 1,
+  "promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/bank-demo-fleet-pipeline-p2f/prompt-T045-b1-acquire-run-grind-attempt-1.md",
+  "subagentType": "opus-worker",
+  "toolUseId": "toolu_01ENmdGjkQ91bvVLkn3PduVY",
+  "promptId": "7877ec67-3683-44ee-9506-d280eaffbd9b",
+  "background": false,
+  "parallel": false,
+  "effort": null,
+  "contract": [
+    "evidence/runs/**",
+    "evidence/ingests/**",
+    "evidence/trust/current/**",
+    "docs/goals/bank-demo-fleet-pipeline/notes/T012-angular-batch.md"
+  ],
+  "ts": "2026-08-20T13:34:35.564Z",
+  "pendingName": "00001787232875565591-9760b9c9-T045-b1-acquire-run-grind.json"
+}

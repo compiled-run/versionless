@@ -1,0 +1,17 @@
+{
+  "runId": "bank-demo-fleet-pipeline-p2f",
+  "unitId": "T045-b2-candidate-rescreen",
+  "attempt": 1,
+  "promptPath": "/Users/jacksm5pro/dev/open-source/versionless/.fable-opus/runs/bank-demo-fleet-pipeline-p2f/prompt-T045-b2-candidate-rescreen-attempt-1.md",
+  "subagentType": "opus-worker",
+  "toolUseId": "toolu_013UfM9KLeWdt5Leb7jauegB",
+  "promptId": "833d61c5-6fb7-407d-8d33-390a9a1a30a5",
+  "background": false,
+  "parallel": false,
+  "effort": null,
+  "contract": [
+    "docs/goals/bank-demo-fleet-pipeline/notes/T045-candidate-screen.md"
+  ],
+  "ts": "2026-08-20T13:50:13.280Z",
+  "pendingName": "00001787233813281193-dcc6b858-T045-b2-candidate-rescreen.json"
+}

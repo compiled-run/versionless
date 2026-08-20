@@ -1,0 +1,29 @@
+{
+  "status": "completed",
+  "summary": "Ran both zero-cost candidates on the shipped one-command path with all five install policies, no offline env, fresh lanes. react-cra-redux-1a06509b: PROVEN, 9/9 ran, interventionCount 0 — screen's prediction held exactly. react-your-spotify-1-5-0: defect at build, 7/9, count 0 — frontend root read as client with no declaration (screen correct), but era-cell read client/Dockerfile FROM node:16-alpine and provisioned Node 16.20.2 while the migrated lane is Vite 8.0.16 requiring Node 20.19+. Prior records preserved as t030-lockfile-foreign-*. Coverage proven 12 to 13. Published and verified; all guards hold.",
+  "files_changed": [
+    "docs/goals/bank-demo-fleet-pipeline/notes/T012-angular-batch.md",
+    "evidence/runs/react-cra-redux-1a06509b/run-record.json",
+    "evidence/runs/react-cra-redux-1a06509b/run-record.json.interventions.json",
+    "evidence/runs/react-cra-redux-1a06509b/t030-lockfile-foreign-run-record.json",
+    "evidence/runs/react-cra-redux-1a06509b/t030-lockfile-foreign-run-record.json.interventions.json",
+    "evidence/runs/react-your-spotify-1-5-0/run-record.json",
+    "evidence/runs/react-your-spotify-1-5-0/run-record.json.interventions.json",
+    "evidence/runs/react-your-spotify-1-5-0/t030-lockfile-foreign-run-record.json",
+    "evidence/runs/react-your-spotify-1-5-0/t030-lockfile-foreign-run-record.json.interventions.json",
+    "evidence/runs/witness-synthesized/react-cra-redux-1a06509b/",
+    "evidence/trust/current/capability-coverage.json",
+    "evidence/trust/current/corpus-conformance.json",
+    "evidence/trust/current/coverage-report.json",
+    "evidence/trust/current/coverage-report.md",
+    "evidence/trust/current/enterprise-report.json",
+    "evidence/trust/current/enterprise-report.md",
+    "evidence/trust/current/manifest.json",
+    "evidence/trust/current/matrix.json",
+    "evidence/trust/current/report.md"
+  ],
+  "open_questions": [
+    "Should era-cell read the era of the composed (migrated) lane rather than the source tree for lineages whose adapter replaces the toolchain, or should build refuse by name (build.era-runtime-cannot-run-migrated-toolchain) instead of emitting an unnamed defect? Both are packages/** changes, out of contract here.",
+    "Is it intended that a React-lineage run provisions its runtime from .versionless/cache/angular-13-cell-runtime/?"
+  ]
+}

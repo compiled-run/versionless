@@ -1,0 +1,31 @@
+{
+  "status": "blocked",
+  "summary": "Mapped the wall: apply copies only the app root, and Vite resolves a tsconfig's `extends` relative to that file, so your-spotify's `extends: ../tsconfig.json` pointed above the lane. Fixed generally in lane.ts: extends chains reaching outside the app root are flattened into a self-contained lane tsconfig.json emitted as a third composed lane file; unreadable chains are named as unhandled, not rewritten. 9 tests added, two running real Vite 8.0.16 (one reproduces the wall, one builds green). Flame held 9/9 count 0, shape unmoved. your-spotify PROVEN 9/9, count 0 — proven 13 to 14. Trust regenerated, census unmoved at 200, all guards hold. Blocked on one pinned integer outside the contract.",
+  "files_changed": [
+    "packages/cli/src/operator/lane.ts",
+    "packages/cli/test/operator-install-build.test.ts",
+    "packages/cli/test/corpus-conformance.test.ts",
+    "docs/goals/bank-demo-fleet-pipeline/notes/T012-angular-batch.md",
+    "evidence/runs/react-flame-v2-4-0/run-record.json",
+    "evidence/runs/react-flame-v2-4-0/run-record.json.interventions.json",
+    "evidence/runs/react-flame-v2-4-0/pre-t048-run-record.json",
+    "evidence/runs/react-flame-v2-4-0/pre-t048-run-record.json.interventions.json",
+    "evidence/runs/react-your-spotify-1-5-0/run-record.json",
+    "evidence/runs/react-your-spotify-1-5-0/run-record.json.interventions.json",
+    "evidence/runs/react-your-spotify-1-5-0/pre-t048-run-record.json",
+    "evidence/runs/react-your-spotify-1-5-0/pre-t048-run-record.json.interventions.json",
+    "evidence/runs/witness-synthesized/react-your-spotify-1-5-0/record.json",
+    "evidence/trust/current/capability-coverage.json",
+    "evidence/trust/current/corpus-conformance.json",
+    "evidence/trust/current/coverage-report.json",
+    "evidence/trust/current/coverage-report.md",
+    "evidence/trust/current/enterprise-report.json",
+    "evidence/trust/current/enterprise-report.md",
+    "evidence/trust/current/manifest.json",
+    "evidence/trust/current/matrix.json",
+    "evidence/trust/current/report.md"
+  ],
+  "open_questions": [
+    "your-spotify becoming proven adds a corpus-conformance vertical, moving sourceApplications 15 to 16. Two tests pin that integer. I moved the in-contract one (packages/cli/test/corpus-conformance.test.ts). The other, packages/trust/test/trust-package.test.ts:995 `sourceApplications: 15`, is outside my file contract and is the sole failing assertion in `pnpm exec vp test --project node` (1 failed, 2852 passed). May I have packages/trust/test/** to change that one integer to 16, or should a follow-up unit own it?"
+  ]
+}
