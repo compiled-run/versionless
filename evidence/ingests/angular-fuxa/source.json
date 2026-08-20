@@ -1,0 +1,131 @@
+{
+  "schemaVersion": "versionless.official-source.v1",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "attemptSha256": "52091d67cf98733022570474dc1496cba02185f9c9416dec42bee20eda8db8fa",
+  "result": "source-bound",
+  "startedAt": "2026-08-20T15:13:30.482Z",
+  "completedAt": "2026-08-20T15:13:35.036Z",
+  "repository": {
+    "id": 174708928,
+    "fullName": "frangoteam/FUXA",
+    "private": false,
+    "archived": false,
+    "disabled": false,
+    "responseBytes": 6352,
+    "responseSha256": "c6553168ddcc4d3b39e6408eadb09501b63a5d75a97a7dc7d7e1fd6b69002be9"
+  },
+  "revision": {
+    "ref": "8b323c177615c0d152a54e5ef0a6f98dae7b8ff0",
+    "tagObjectSha": null,
+    "tagKind": "commit-sha",
+    "tagDate": null,
+    "tagVerification": "unsigned",
+    "commitSha": "8b323c177615c0d152a54e5ef0a6f98dae7b8ff0",
+    "commitDate": "2024-05-22T17:27:16Z",
+    "commitVerification": "unsigned",
+    "rootTreeSha": "6c9f146b3292a3795d5ae35c53c0f39f0fc0b490",
+    "treeEntries": 1505,
+    "treeBlobs": 1260,
+    "treeDirectories": 245,
+    "treeSymlinks": 0,
+    "treeGitlinks": 0,
+    "treeTruncated": false
+  },
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/frangoteam/FUXA",
+      "status": 200,
+      "bytes": 6352,
+      "sha256": "c6553168ddcc4d3b39e6408eadb09501b63a5d75a97a7dc7d7e1fd6b69002be9"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/frangoteam/FUXA/git/commits/8b323c177615c0d152a54e5ef0a6f98dae7b8ff0",
+      "status": 200,
+      "bytes": 1075,
+      "sha256": "121f64a867a1d8298cbda3daed78894c393ffe38362c398471cc9b6ec56cde4e"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/frangoteam/FUXA/git/trees/6c9f146b3292a3795d5ae35c53c0f39f0fc0b490?recursive=1",
+      "status": 200,
+      "bytes": 385343,
+      "sha256": "56c7d60ed0786efa79bbcf51134302e7699ff77ee7383c9337cb7b0755b43592"
+    },
+    {
+      "endpoint": "https://codeload.github.com/frangoteam/FUXA/tar.gz/8b323c177615c0d152a54e5ef0a6f98dae7b8ff0",
+      "status": 200,
+      "bytes": 14646918,
+      "sha256": "4913aabfec74fc990664a5d60760d8f3438ee067b682f833f5869cd2c9c3c372",
+      "stream": 1
+    },
+    {
+      "endpoint": "https://codeload.github.com/frangoteam/FUXA/tar.gz/8b323c177615c0d152a54e5ef0a6f98dae7b8ff0",
+      "status": 200,
+      "bytes": 14646918,
+      "sha256": "4913aabfec74fc990664a5d60760d8f3438ee067b682f833f5869cd2c9c3c372",
+      "stream": 2
+    }
+  ],
+  "archiveParity": {
+    "singleRoot": "FUXA-8b323c177615c0d152a54e5ef0a6f98dae7b8ff0",
+    "safeEntries": 1506,
+    "regularFiles": 1260,
+    "directories": 246,
+    "specialEntries": 0,
+    "gitBlobs": 1260,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "normalizedManifestSha256": "2c6f828bcb77c506e673998c2119d8c1a71f5674898d0558d2d08aedebd8da61"
+  },
+  "transaction": {
+    "attemptedRequests": 5,
+    "acceptedResponses": 5,
+    "acceptedWireBytes": 29686606,
+    "acceptedDecodedBytes": 29686606,
+    "redirectsObserved": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "archivesByteIdentical": true,
+    "archiveMatchesGitTree": true,
+    "publishedSource": true,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "cache": {
+    "root": ".versionless/cache/angular-fuxa-source",
+    "archive1": ".versionless/cache/angular-fuxa-source/archive/archive-1.tar.gz",
+    "archive2": ".versionless/cache/angular-fuxa-source/archive/archive-2.tar.gz",
+    "verifiedSource": ".versionless/cache/angular-fuxa-source/verify/extracted",
+    "rawMetadataPortable": false
+  },
+  "baseline": ".versionless/work/angular-fuxa/baseline",
+  "licence": {
+    "identifier": "MIT",
+    "identifierSource": "observed",
+    "identifierRefusal": null,
+    "copyrightNotice": "Copyright (c) 2019-2021 frangoteam 4frango@gmail.com",
+    "filesAtRoot": [
+      "LICENSE"
+    ],
+    "artifacts": [
+      {
+        "path": "LICENSE",
+        "role": "repository-root-licence",
+        "gitBlobSha": "e624b1d1fb61ab167a45763acb0f462348fdf25d",
+        "bytes": 1090,
+        "sha256": "c95c127580398d71176e7553465ef142a8c0a6a7f3d1c547a7469300cf524a90",
+        "firstLine": "MIT License",
+        "permissionGrantPresent": true,
+        "noticeRetentionClausePresent": true,
+        "warrantyDisclaimerPresent": true,
+        "licenseField": null
+      }
+    ]
+  },
+  "nonclaims": [
+    "A lightweight or unsigned tag does not establish signer authenticity.",
+    "This record states that the bytes at the recorded commit reconcile with the Git tree the repository publishes at that commit. It establishes no dependency closure, build, browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "The licence reading is a reading of the file present at the pin. It is not a legal opinion and it evaluates no dependency’s terms.",
+    "Acquiring a source is not admitting one. Whether this tree can be ingested, installed, built or migrated is not read here."
+  ]
+}

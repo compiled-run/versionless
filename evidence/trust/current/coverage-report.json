@@ -158,6 +158,24 @@
       "statusReason": "Judge-declined and demoted from the denominator: the migration changed applicationFilesChanged=0 application files, so it is an Angular 15-to-16 dependency version bump rebuilt under AOT rather than a proven application migration. Its browser-proof receipt stays verified and retained; it is excluded from the Angular denominator rather than counted, which is why the Angular total is four non-demoted cells and not five."
     },
     {
+      "id": "angular-contacts",
+      "application": ".versionless/work/angular-contacts/baseline",
+      "framework": "angular",
+      "provenanceOfStatus": "run-record",
+      "status": "not-admitted",
+      "statusReason": "run-did-not-proceed:defect",
+      "interventionCount": 0
+    },
+    {
+      "id": "angular-fuxa",
+      "application": ".versionless/work/angular-fuxa/baseline",
+      "framework": "angular",
+      "provenanceOfStatus": "run-record",
+      "status": "not-admitted",
+      "statusReason": "run-did-not-proceed:defect",
+      "interventionCount": 0
+    },
+    {
       "id": "angular-kubernetes-dashboard",
       "application": ".versionless/cache/angular-kubernetes-dashboard-stage-t678/acquisition/source",
       "framework": "angular",
@@ -176,6 +194,15 @@
       "interventionCount": 0
     },
     {
+      "id": "next-tailwind-starter-blog",
+      "application": ".versionless/work/next-tailwind-starter-blog/baseline",
+      "framework": "nextjs",
+      "provenanceOfStatus": "run-record",
+      "status": "refused",
+      "refusalCode": "plan.lineage-no-frozen-adapter-claims",
+      "interventionCount": 0
+    },
+    {
       "id": "react-ant-design-pro-v5-2-0",
       "application": ".versionless/work/react-ant-design-pro-v5-2-0/baseline",
       "framework": "react",
@@ -191,6 +218,15 @@
       "provenanceOfStatus": "run-record",
       "status": "refused",
       "refusalCode": "install.closure-registry-unreachable",
+      "interventionCount": 0
+    },
+    {
+      "id": "react-avataaars",
+      "application": ".versionless/work/react-avataaars/baseline",
+      "framework": "react",
+      "provenanceOfStatus": "run-record",
+      "status": "refused",
+      "refusalCode": "plan.react.no-frozen-adapter-claims-this-tree",
       "interventionCount": 0
     },
     {
@@ -319,6 +355,15 @@
         "Dependency install scripts: the install row declares the install-script policy, names 0 package(s) the lockfile marks as carrying an install script, and records npm starting 1 script(s) and skipping 0 by policy. A script npm skipped did not run in the lane this proof was taken on.",
         "Route reach: the witness row records the replay reaching 1 of 4 declared route(s) across 1 journey(s). Every route it did not reach is unproven by this row rather than proven absent."
       ]
+    },
+    {
+      "id": "react-dashboard",
+      "application": ".versionless/work/react-dashboard/baseline",
+      "framework": "react",
+      "provenanceOfStatus": "run-record",
+      "status": "not-admitted",
+      "statusReason": "run-did-not-proceed:defect",
+      "interventionCount": 0
     },
     {
       "id": "react-flame-v2-4-0",
@@ -458,11 +503,11 @@
     }
   ],
   "totals": {
-    "applications": 24,
+    "applications": 29,
     "proven": 14,
     "bounded": 2,
-    "refused": 5,
-    "not-admitted": 3
+    "refused": 7,
+    "not-admitted": 6
   },
   "refusalCensus": {
     "source": "evidence/runs/operator-flows/refusal-census.json",
@@ -719,7 +764,7 @@
   ],
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "47ab9dc92e5c4587dc23cee36cb1567d1421a72db7ab6acc97d48e7603bf6d4e",
+    "canonicalDigest": "feaeab2ae5c4e39c60a4bcab06245348260ba81166eb1a6a70aa9bbb23805576",
     "authenticity": "not-established",
     "certification": "not-claimed"
   }

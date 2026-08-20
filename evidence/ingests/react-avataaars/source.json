@@ -1,0 +1,143 @@
+{
+  "schemaVersion": "versionless.official-source.v1",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "attemptSha256": "1a31018d658898813cbc274ca82955b616d8502208d5490abf599990b67db8f4",
+  "result": "source-bound",
+  "startedAt": "2026-08-20T15:16:43.439Z",
+  "completedAt": "2026-08-20T15:16:44.646Z",
+  "repository": {
+    "id": 111056609,
+    "fullName": "fangpenlin/avataaars-generator",
+    "private": false,
+    "archived": false,
+    "disabled": false,
+    "responseBytes": 5830,
+    "responseSha256": "933ffab45a3d6b0e4dc1d78e178e27e3a2ca2b11cd2c8ad64887fa171e990680"
+  },
+  "revision": {
+    "ref": "c191c6c2d27f41245e803912d43c7213436a34d3",
+    "tagObjectSha": null,
+    "tagKind": "commit-sha",
+    "tagDate": null,
+    "tagVerification": "unsigned",
+    "commitSha": "c191c6c2d27f41245e803912d43c7213436a34d3",
+    "commitDate": "2021-09-21T21:37:09Z",
+    "commitVerification": "verified",
+    "rootTreeSha": "94a3d1a024682b3f21ad30b9de8d4e1541a376d3",
+    "treeEntries": 35,
+    "treeBlobs": 28,
+    "treeDirectories": 7,
+    "treeSymlinks": 0,
+    "treeGitlinks": 0,
+    "treeTruncated": false
+  },
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/fangpenlin/avataaars-generator",
+      "status": 200,
+      "bytes": 5830,
+      "sha256": "933ffab45a3d6b0e4dc1d78e178e27e3a2ca2b11cd2c8ad64887fa171e990680"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/fangpenlin/avataaars-generator/git/commits/c191c6c2d27f41245e803912d43c7213436a34d3",
+      "status": 200,
+      "bytes": 2415,
+      "sha256": "854bc5fb4d42b68cb83e9290871d2a694ce40b41d780b9814340d70e7e0d9fab"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/fangpenlin/avataaars-generator/git/trees/94a3d1a024682b3f21ad30b9de8d4e1541a376d3?recursive=1",
+      "status": 200,
+      "bytes": 8451,
+      "sha256": "9021f200680fcad440c48dac8d6e369cb9a4147c9413af2e06cdd36c92541776"
+    },
+    {
+      "endpoint": "https://codeload.github.com/fangpenlin/avataaars-generator/tar.gz/c191c6c2d27f41245e803912d43c7213436a34d3",
+      "status": 200,
+      "bytes": 166934,
+      "sha256": "4863a1304b659f1105f69d8ae0c715428c41d2d64b43edfd701148ddfca900da",
+      "stream": 1
+    },
+    {
+      "endpoint": "https://codeload.github.com/fangpenlin/avataaars-generator/tar.gz/c191c6c2d27f41245e803912d43c7213436a34d3",
+      "status": 200,
+      "bytes": 166934,
+      "sha256": "4863a1304b659f1105f69d8ae0c715428c41d2d64b43edfd701148ddfca900da",
+      "stream": 2
+    }
+  ],
+  "archiveParity": {
+    "singleRoot": "avataaars-generator-c191c6c2d27f41245e803912d43c7213436a34d3",
+    "safeEntries": 36,
+    "regularFiles": 28,
+    "directories": 8,
+    "specialEntries": 0,
+    "gitBlobs": 28,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "normalizedManifestSha256": "62ba3110d2a41c219a088cb952ff565b9042d94afb58ff4eea917dcf854d2a43"
+  },
+  "transaction": {
+    "attemptedRequests": 5,
+    "acceptedResponses": 5,
+    "acceptedWireBytes": 350564,
+    "acceptedDecodedBytes": 350564,
+    "redirectsObserved": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "archivesByteIdentical": true,
+    "archiveMatchesGitTree": true,
+    "publishedSource": true,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "cache": {
+    "root": ".versionless/cache/react-avataaars-source",
+    "archive1": ".versionless/cache/react-avataaars-source/archive/archive-1.tar.gz",
+    "archive2": ".versionless/cache/react-avataaars-source/archive/archive-2.tar.gz",
+    "verifiedSource": ".versionless/cache/react-avataaars-source/verify/extracted",
+    "rawMetadataPortable": false
+  },
+  "baseline": ".versionless/work/react-avataaars/baseline",
+  "licence": {
+    "identifier": "MIT",
+    "identifierSource": "observed",
+    "identifierRefusal": null,
+    "copyrightNotice": "Copyright (c) 2017 Fang-Pen Lin",
+    "filesAtRoot": [
+      "LICENSE"
+    ],
+    "artifacts": [
+      {
+        "path": "LICENSE",
+        "role": "repository-root-licence",
+        "gitBlobSha": "231dae7328bad5850f1a81a3bc1fa0da963bba9f",
+        "bytes": 1069,
+        "sha256": "479dc70764e2e2213229618168810342d8b2fe362cfeb8353fede23630d22e48",
+        "firstLine": "MIT License",
+        "permissionGrantPresent": true,
+        "noticeRetentionClausePresent": true,
+        "warrantyDisclaimerPresent": true,
+        "licenseField": null
+      },
+      {
+        "path": "package.json",
+        "role": "frontend-manifest",
+        "gitBlobSha": "0b2e96d620943cfc0c58b63c48cce8c664d9ab7b",
+        "bytes": 1648,
+        "sha256": "ab38720b2b8fe9529a49040d6d20fe23627d0cdf2699195bf9f2eaf58b5d0b18",
+        "firstLine": null,
+        "permissionGrantPresent": null,
+        "noticeRetentionClausePresent": null,
+        "warrantyDisclaimerPresent": null,
+        "licenseField": null
+      }
+    ]
+  },
+  "nonclaims": [
+    "A lightweight or unsigned tag does not establish signer authenticity.",
+    "This record states that the bytes at the recorded commit reconcile with the Git tree the repository publishes at that commit. It establishes no dependency closure, build, browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "The licence reading is a reading of the file present at the pin. It is not a legal opinion and it evaluates no dependency’s terms.",
+    "Acquiring a source is not admitting one. Whether this tree can be ingested, installed, built or migrated is not read here."
+  ]
+}

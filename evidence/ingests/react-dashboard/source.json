@@ -1,0 +1,143 @@
+{
+  "schemaVersion": "versionless.official-source.v1",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "attemptSha256": "9fe03ac4bb307af14fb11185e282cae26b492ec48c7435e2c416aa663ae060cf",
+  "result": "source-bound",
+  "startedAt": "2026-08-20T15:15:54.173Z",
+  "completedAt": "2026-08-20T15:15:58.815Z",
+  "repository": {
+    "id": 175625430,
+    "fullName": "darekkay/dashboard",
+    "private": false,
+    "archived": false,
+    "disabled": false,
+    "responseBytes": 5311,
+    "responseSha256": "af95c86697646d14f616bd55ab6bf249e73ff12fb17e444d7ec4bb5dfc036676"
+  },
+  "revision": {
+    "ref": "4b8be9f7e0080d680598c74d7e6cfbe080566059",
+    "tagObjectSha": null,
+    "tagKind": "commit-sha",
+    "tagDate": null,
+    "tagVerification": "unsigned",
+    "commitSha": "4b8be9f7e0080d680598c74d7e6cfbe080566059",
+    "commitDate": "2024-08-13T16:44:28Z",
+    "commitVerification": "unsigned",
+    "rootTreeSha": "adc596cb1c3834a0ebf9cea580c87eb9b002ddfa",
+    "treeEntries": 739,
+    "treeBlobs": 522,
+    "treeDirectories": 217,
+    "treeSymlinks": 0,
+    "treeGitlinks": 0,
+    "treeTruncated": false
+  },
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/darekkay/dashboard",
+      "status": 200,
+      "bytes": 5311,
+      "sha256": "af95c86697646d14f616bd55ab6bf249e73ff12fb17e444d7ec4bb5dfc036676"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/darekkay/dashboard/git/commits/4b8be9f7e0080d680598c74d7e6cfbe080566059",
+      "status": 200,
+      "bytes": 1151,
+      "sha256": "16b09c765d20cbacf2b9f2d2a809cc35fbc1cc0c059d2dfa604b8131c4214fff"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/darekkay/dashboard/git/trees/adc596cb1c3834a0ebf9cea580c87eb9b002ddfa?recursive=1",
+      "status": 200,
+      "bytes": 178425,
+      "sha256": "43fd5e8539e1e4a218f139a5a719f60432413305bf5f73612fc7e891ddd674f4"
+    },
+    {
+      "endpoint": "https://codeload.github.com/darekkay/dashboard/tar.gz/4b8be9f7e0080d680598c74d7e6cfbe080566059",
+      "status": 200,
+      "bytes": 19362785,
+      "sha256": "84a3a8a5e3e39803a25cc7d35e862f99f22aa3fd4e0c39e413a7a2d0e68901e0",
+      "stream": 1
+    },
+    {
+      "endpoint": "https://codeload.github.com/darekkay/dashboard/tar.gz/4b8be9f7e0080d680598c74d7e6cfbe080566059",
+      "status": 200,
+      "bytes": 19362785,
+      "sha256": "84a3a8a5e3e39803a25cc7d35e862f99f22aa3fd4e0c39e413a7a2d0e68901e0",
+      "stream": 2
+    }
+  ],
+  "archiveParity": {
+    "singleRoot": "dashboard-4b8be9f7e0080d680598c74d7e6cfbe080566059",
+    "safeEntries": 740,
+    "regularFiles": 522,
+    "directories": 218,
+    "specialEntries": 0,
+    "gitBlobs": 522,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "normalizedManifestSha256": "d7a5ebc037d833a2a701ed794fad85eb5c2b7b026594428dca5a364d345bbca6"
+  },
+  "transaction": {
+    "attemptedRequests": 5,
+    "acceptedResponses": 5,
+    "acceptedWireBytes": 38910457,
+    "acceptedDecodedBytes": 38910457,
+    "redirectsObserved": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "archivesByteIdentical": true,
+    "archiveMatchesGitTree": true,
+    "publishedSource": true,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "cache": {
+    "root": ".versionless/cache/react-dashboard-source",
+    "archive1": ".versionless/cache/react-dashboard-source/archive/archive-1.tar.gz",
+    "archive2": ".versionless/cache/react-dashboard-source/archive/archive-2.tar.gz",
+    "verifiedSource": ".versionless/cache/react-dashboard-source/verify/extracted",
+    "rawMetadataPortable": false
+  },
+  "baseline": ".versionless/work/react-dashboard/baseline",
+  "licence": {
+    "identifier": "MIT",
+    "identifierSource": "observed",
+    "identifierRefusal": null,
+    "copyrightNotice": "Copyright (c) 2020 Darek Kay <hello@darekkay.com>",
+    "filesAtRoot": [
+      "LICENSE"
+    ],
+    "artifacts": [
+      {
+        "path": "LICENSE",
+        "role": "repository-root-licence",
+        "gitBlobSha": "9eff794e29a74d3ef1d96c9cedeb6a21865bb9e9",
+        "bytes": 1097,
+        "sha256": "0e856f37545c4692e654e10a3a438ffa712a24fb0bfa4bf55d4caa170b71ee9f",
+        "firstLine": "The MIT License (MIT)",
+        "permissionGrantPresent": true,
+        "noticeRetentionClausePresent": true,
+        "warrantyDisclaimerPresent": true,
+        "licenseField": null
+      },
+      {
+        "path": "package.json",
+        "role": "frontend-manifest",
+        "gitBlobSha": "6f2b3021aa25cf32282266750fb79a8b6b5c8152",
+        "bytes": 853,
+        "sha256": "67078ae02e3618446cca64a6bc02deedf9b531e79efed3ce07bc021b0ff92bab",
+        "firstLine": null,
+        "permissionGrantPresent": null,
+        "noticeRetentionClausePresent": null,
+        "warrantyDisclaimerPresent": null,
+        "licenseField": "MIT"
+      }
+    ]
+  },
+  "nonclaims": [
+    "A lightweight or unsigned tag does not establish signer authenticity.",
+    "This record states that the bytes at the recorded commit reconcile with the Git tree the repository publishes at that commit. It establishes no dependency closure, build, browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "The licence reading is a reading of the file present at the pin. It is not a legal opinion and it evaluates no dependency’s terms.",
+    "Acquiring a source is not admitting one. Whether this tree can be ingested, installed, built or migrated is not read here."
+  ]
+}

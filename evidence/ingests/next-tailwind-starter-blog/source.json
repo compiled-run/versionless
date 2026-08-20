@@ -1,0 +1,143 @@
+{
+  "schemaVersion": "versionless.official-source.v1",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "attemptSha256": "d95c70a46793d25b3f6547e9f011359e9f176f95d1a0d1e39f6a2c5c4aad0642",
+  "result": "source-bound",
+  "startedAt": "2026-08-20T15:17:11.849Z",
+  "completedAt": "2026-08-20T15:17:13.489Z",
+  "repository": {
+    "id": 328121260,
+    "fullName": "timlrx/tailwind-nextjs-starter-blog",
+    "private": false,
+    "archived": false,
+    "disabled": false,
+    "responseBytes": 6289,
+    "responseSha256": "d0bd8a49d8178d0b74e7333ef0bae9fc632d4b109d5fe8a1283a2fa6b4b54f37"
+  },
+  "revision": {
+    "ref": "09ba0550caea03a8c38bc4878d05838d2a57f999",
+    "tagObjectSha": null,
+    "tagKind": "commit-sha",
+    "tagDate": null,
+    "tagVerification": "unsigned",
+    "commitSha": "09ba0550caea03a8c38bc4878d05838d2a57f999",
+    "commitDate": "2023-07-07T03:17:22Z",
+    "commitVerification": "unsigned",
+    "rootTreeSha": "2609b3fc4a63d7bccd8f187d66c141f4a7d3cadf",
+    "treeEntries": 138,
+    "treeBlobs": 110,
+    "treeDirectories": 28,
+    "treeSymlinks": 0,
+    "treeGitlinks": 0,
+    "treeTruncated": false
+  },
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/timlrx/tailwind-nextjs-starter-blog",
+      "status": 200,
+      "bytes": 6289,
+      "sha256": "d0bd8a49d8178d0b74e7333ef0bae9fc632d4b109d5fe8a1283a2fa6b4b54f37"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/timlrx/tailwind-nextjs-starter-blog/git/commits/09ba0550caea03a8c38bc4878d05838d2a57f999",
+      "status": 200,
+      "bytes": 1210,
+      "sha256": "dc528e00b42aa44c2077dba0d1edc6dcf433b93dee33eb914a2e8cea5a87a029"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/timlrx/tailwind-nextjs-starter-blog/git/trees/2609b3fc4a63d7bccd8f187d66c141f4a7d3cadf?recursive=1",
+      "status": 200,
+      "bytes": 34296,
+      "sha256": "fb973101ca1377b189f7ca6c2271d4d8b173536359acc9efcd5ab74af5404ed3"
+    },
+    {
+      "endpoint": "https://codeload.github.com/timlrx/tailwind-nextjs-starter-blog/tar.gz/09ba0550caea03a8c38bc4878d05838d2a57f999",
+      "status": 200,
+      "bytes": 1267627,
+      "sha256": "c227efa283b4a17d7ae76aa1b9ea259075f606128642d59f7b43ca63405ee1f7",
+      "stream": 1
+    },
+    {
+      "endpoint": "https://codeload.github.com/timlrx/tailwind-nextjs-starter-blog/tar.gz/09ba0550caea03a8c38bc4878d05838d2a57f999",
+      "status": 200,
+      "bytes": 1267627,
+      "sha256": "c227efa283b4a17d7ae76aa1b9ea259075f606128642d59f7b43ca63405ee1f7",
+      "stream": 2
+    }
+  ],
+  "archiveParity": {
+    "singleRoot": "tailwind-nextjs-starter-blog-09ba0550caea03a8c38bc4878d05838d2a57f999",
+    "safeEntries": 139,
+    "regularFiles": 110,
+    "directories": 29,
+    "specialEntries": 0,
+    "gitBlobs": 110,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "normalizedManifestSha256": "5649cd8d1efce43af4ec09049fba69072469befe85f89079f0a4b99406fa3bc2"
+  },
+  "transaction": {
+    "attemptedRequests": 5,
+    "acceptedResponses": 5,
+    "acceptedWireBytes": 2577049,
+    "acceptedDecodedBytes": 2577049,
+    "redirectsObserved": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "archivesByteIdentical": true,
+    "archiveMatchesGitTree": true,
+    "publishedSource": true,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "cache": {
+    "root": ".versionless/cache/next-tailwind-starter-blog-source",
+    "archive1": ".versionless/cache/next-tailwind-starter-blog-source/archive/archive-1.tar.gz",
+    "archive2": ".versionless/cache/next-tailwind-starter-blog-source/archive/archive-2.tar.gz",
+    "verifiedSource": ".versionless/cache/next-tailwind-starter-blog-source/verify/extracted",
+    "rawMetadataPortable": false
+  },
+  "baseline": ".versionless/work/next-tailwind-starter-blog/baseline",
+  "licence": {
+    "identifier": "MIT",
+    "identifierSource": "observed",
+    "identifierRefusal": null,
+    "copyrightNotice": "Copyright (c) 2021 Timothy Lin",
+    "filesAtRoot": [
+      "LICENSE"
+    ],
+    "artifacts": [
+      {
+        "path": "LICENSE",
+        "role": "repository-root-licence",
+        "gitBlobSha": "215f501e4aa86a16597bb6d007fbf3c9bfd02d56",
+        "bytes": 1068,
+        "sha256": "317b52bec9a462916d9219427552de01604be107efc60606a3046df2d2ee0ff2",
+        "firstLine": "MIT License",
+        "permissionGrantPresent": true,
+        "noticeRetentionClausePresent": true,
+        "warrantyDisclaimerPresent": true,
+        "licenseField": null
+      },
+      {
+        "path": "package.json",
+        "role": "frontend-manifest",
+        "gitBlobSha": "6113dc18761779d691846fde59aa4dcfd7642451",
+        "bytes": 2212,
+        "sha256": "cfe626f2e2b3b94346beb71e338010ff4bb0095b541e298776933be24292061f",
+        "firstLine": null,
+        "permissionGrantPresent": null,
+        "noticeRetentionClausePresent": null,
+        "warrantyDisclaimerPresent": null,
+        "licenseField": null
+      }
+    ]
+  },
+  "nonclaims": [
+    "A lightweight or unsigned tag does not establish signer authenticity.",
+    "This record states that the bytes at the recorded commit reconcile with the Git tree the repository publishes at that commit. It establishes no dependency closure, build, browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "The licence reading is a reading of the file present at the pin. It is not a legal opinion and it evaluates no dependency’s terms.",
+    "Acquiring a source is not admitting one. Whether this tree can be ingested, installed, built or migrated is not read here."
+  ]
+}

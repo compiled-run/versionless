@@ -1,0 +1,2143 @@
+{
+	"schema": "versionless.run.v1",
+	"flow": "run",
+	"outcome": "defect",
+	"exitCode": 1,
+	"application": ".versionless/work/angular-contacts/baseline",
+	"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t045b4/lanes/contacts",
+	"roots": {
+		"source": ".versionless/work/angular-contacts/baseline",
+		"frontend": ".versionless/work/angular-contacts/baseline",
+		"frontendSource": "read",
+		"frontendBasis": ". declares angular 9.0.0 (dependencies.@angular/core)"
+	},
+	"dryRun": false,
+	"stagePlan": [
+		{
+			"name": "analyze",
+			"forwards": []
+		},
+		{
+			"name": "ingest",
+			"forwards": []
+		},
+		{
+			"name": "license-at-pin",
+			"forwards": []
+		},
+		{
+			"name": "era-cell",
+			"forwards": [
+				"--cell"
+			]
+		},
+		{
+			"name": "plan",
+			"forwards": [
+				"--cell"
+			]
+		},
+		{
+			"name": "apply",
+			"forwards": [
+				"--out"
+			]
+		},
+		{
+			"name": "install",
+			"forwards": [
+				"--allow-remote-tarballs",
+				"--allow-install-scripts",
+				"--allow-peer-conflicts",
+				"--allow-foreign-lockfile",
+				"--allow-git-dependencies"
+			]
+		},
+		{
+			"name": "build",
+			"forwards": []
+		},
+		{
+			"name": "witness",
+			"forwards": []
+		}
+	],
+	"stages": [
+		{
+			"name": "analyze",
+			"status": "ran",
+			"record": {
+				"lineage": "angular",
+				"frameworkVersionDeclared": "9.0.0",
+				"detectedFrom": "@angular/core",
+				"builder": "@angular-devkit/build-angular:browser",
+				"builderSource": "angular.json",
+				"nodeEra": {
+					"declared": "unknown",
+					"source": "unknown"
+				},
+				"packageManager": {
+					"manager": "npm",
+					"lockfiles": [
+						"package-lock.json"
+					],
+					"declared": "unknown"
+				},
+				"cellReadings": {
+					"cell": "angular-16-browser-builder",
+					"reason": null,
+					"verdicts": [
+						{
+							"package": "@angular-devkit/build-angular",
+							"declaredRange": "~0.900.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/animations",
+							"declaredRange": "9.0.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/cli",
+							"declaredRange": "^9.0.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/common",
+							"declaredRange": "9.0.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/compiler",
+							"declaredRange": "9.0.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/compiler-cli",
+							"declaredRange": "^9.0.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/core",
+							"declaredRange": "9.0.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/forms",
+							"declaredRange": "9.0.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/language-service",
+							"declaredRange": "9.0.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/platform-browser",
+							"declaredRange": "9.0.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/platform-browser-dynamic",
+							"declaredRange": "9.0.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/pwa",
+							"declaredRange": "^0.900.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/router",
+							"declaredRange": "9.0.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/service-worker",
+							"declaredRange": "9.0.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@ngrx/effects",
+							"declaredRange": "^8.6.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@ngrx/entity",
+							"declaredRange": "^8.6.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@ngrx/store",
+							"declaredRange": "^8.6.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@ngrx/store-devtools",
+							"declaredRange": "^8.6.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@types/jasmine",
+							"declaredRange": "3.3.13",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@types/jasminewd2",
+							"declaredRange": "~2.0.6",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@types/node",
+							"declaredRange": "~12.0.7",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "bootstrap",
+							"declaredRange": "^4.4.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "codelyzer",
+							"declaredRange": "~5.1.0",
+							"verdict": "no-successor",
+							"fact": "codelyzer stops at 6.0.2, a TSLint rule set for Angular 9-era workspaces. Nothing succeeds it on the TSLint line and its ESLint replacement is @angular-eslint, which this cell already aligns as a family.",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "core-js",
+							"declaredRange": "3.1.3",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "font-awesome",
+							"declaredRange": "^4.7.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "jasmine-core",
+							"declaredRange": "~3.4.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "jasmine-marbles",
+							"declaredRange": "^0.5.0",
+							"verdict": "aligned",
+							"fact": "jasmine-marbles versions against RxJS rather than against Angular: 0.9.2, the newest release and the `latest` dist-tag, declares peer rxjs \"^7.0.0\", which the ~7.8.0 this cell writes satisfies; 0.8.4 and every earlier 0.8.x declare \"^6.5.3\", which it does not. It declares no @angular/* peer and no engines.node. The package sits in this table rather than in the generated test toolchain because it is a community library the cell reads, and because leaving it at an era range pinned to RxJS 6 makes the whole closure unresolvable beside the RxJS 7 this cell writes.",
+							"alignedRange": "^0.9.2"
+						},
+						{
+							"package": "jasmine-spec-reporter",
+							"declaredRange": "~4.2.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "karma",
+							"declaredRange": "^4.1.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "karma-chrome-launcher",
+							"declaredRange": "~2.2.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "karma-coverage-istanbul-reporter",
+							"declaredRange": "~2.0.5",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "karma-jasmine",
+							"declaredRange": "~2.0.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "karma-jasmine-html-reporter",
+							"declaredRange": "^1.4.2",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "ngx-socket-io",
+							"declaredRange": "^3.0.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "protractor",
+							"declaredRange": "~5.4.2",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "rxjs",
+							"declaredRange": "6.5.4",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "ts-node",
+							"declaredRange": "~8.2.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "tslib",
+							"declaredRange": "^1.10.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "tslint",
+							"declaredRange": "~5.17.0",
+							"verdict": "no-successor",
+							"fact": "TSLint stops at 6.1.3 and was deprecated by its own maintainers in favour of ESLint before Angular 13 shipped. There is no TSLint release for any Angular line at or beyond this cell, so the whole TSLint toolchain is dropped rather than carried.",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "typescript",
+							"declaredRange": "3.7.5",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "zone.js",
+							"declaredRange": "^0.10.2",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						}
+					],
+					"counts": {
+						"aligned": 1,
+						"no-successor": 2,
+						"successor-fork": 0,
+						"unknown": 38
+					}
+				},
+				"notEstablished": [
+					"Detection reads declarations. Nothing here establishes that this application installs, compiles, builds, or behaves as it did on its era toolchain.",
+					"A cell verdict is a reading of a published registry, not an installation: a range written here has not been resolved against any lockfile by this record.",
+					"A dependency the cell has no reading for is reported `unknown`. `unknown` is not `supported` and it is not `unsupported`."
+				]
+			},
+			"startedAt": "2026-08-20T15:18:56.819Z",
+			"endedAt": "2026-08-20T15:18:56.821Z"
+		},
+		{
+			"name": "ingest",
+			"status": "ran",
+			"record": {
+				"stage": "ingest",
+				"schemaVersion": "versionless.operator-ingest.v1",
+				"ran": true,
+				"reason": null,
+				"id": "angular-contacts",
+				"idSource": "read",
+				"idReadFrom": "package.json#name",
+				"frontendRoot": ".",
+				"frontendRootSource": "read",
+				"frontendRootBasis": ". declares angular 9.0.0 (dependencies.@angular/core)",
+				"acquisitionRoot": "/Users/jacksm5pro/dev/open-source/versionless/.versionless/work/angular-contacts/baseline",
+				"pin": {
+					"repository": "avatsaev/angular-contacts-app-example",
+					"repositoryReadFrom": "evidence/ingests/angular-contacts/source.json (consent VL-LEGACY-CORPUS-2026-08-10; result source-bound; archive reconciled against the published Git tree and byte-identical across two streams; journalled manifest 58a4a6bf507c8f2b577fcadb6c1026eff8468864be7115edd8fee68260f62b16 is the digest this stage walked)",
+					"ref": "875aa2df7f5f87b6731a1259b63e2b399fa5fb3f",
+					"refReadFrom": "evidence/ingests/angular-contacts/source.json (consent VL-LEGACY-CORPUS-2026-08-10; result source-bound; archive reconciled against the published Git tree and byte-identical across two streams; journalled manifest 58a4a6bf507c8f2b577fcadb6c1026eff8468864be7115edd8fee68260f62b16 is the digest this stage walked)",
+					"commitSha": "875aa2df7f5f87b6731a1259b63e2b399fa5fb3f",
+					"commitShaSource": "read",
+					"commitShaReadFrom": "evidence/ingests/angular-contacts/source.json (consent VL-LEGACY-CORPUS-2026-08-10; result source-bound; archive reconciled against the published Git tree and byte-identical across two streams; journalled manifest 58a4a6bf507c8f2b577fcadb6c1026eff8468864be7115edd8fee68260f62b16 is the digest this stage walked)"
+				},
+				"tree": {
+					"files": 108,
+					"bytes": 667218,
+					"normalizedManifestSha256": "58a4a6bf507c8f2b577fcadb6c1026eff8468864be7115edd8fee68260f62b16"
+				},
+				"detected": {
+					"lineage": "angular",
+					"frameworkVersionDeclared": "9.0.0",
+					"detectedFrom": "@angular/core",
+					"builder": "@angular-devkit/build-angular:browser",
+					"builderSource": "angular.json",
+					"nodeEra": {
+						"declared": "unknown",
+						"source": "unknown"
+					},
+					"packageManager": {
+						"manager": "npm",
+						"lockfiles": [
+							"package-lock.json"
+						],
+						"declared": "unknown"
+					},
+					"cellReadings": {
+						"cell": "angular-16-browser-builder",
+						"reason": null,
+						"verdicts": [
+							{
+								"package": "@angular-devkit/build-angular",
+								"declaredRange": "~0.900.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/animations",
+								"declaredRange": "9.0.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/cli",
+								"declaredRange": "^9.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/common",
+								"declaredRange": "9.0.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/compiler",
+								"declaredRange": "9.0.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/compiler-cli",
+								"declaredRange": "^9.0.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/core",
+								"declaredRange": "9.0.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/forms",
+								"declaredRange": "9.0.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/language-service",
+								"declaredRange": "9.0.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/platform-browser",
+								"declaredRange": "9.0.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/platform-browser-dynamic",
+								"declaredRange": "9.0.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/pwa",
+								"declaredRange": "^0.900.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/router",
+								"declaredRange": "9.0.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/service-worker",
+								"declaredRange": "9.0.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@ngrx/effects",
+								"declaredRange": "^8.6.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@ngrx/entity",
+								"declaredRange": "^8.6.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@ngrx/store",
+								"declaredRange": "^8.6.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@ngrx/store-devtools",
+								"declaredRange": "^8.6.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@types/jasmine",
+								"declaredRange": "3.3.13",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@types/jasminewd2",
+								"declaredRange": "~2.0.6",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@types/node",
+								"declaredRange": "~12.0.7",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "bootstrap",
+								"declaredRange": "^4.4.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "codelyzer",
+								"declaredRange": "~5.1.0",
+								"verdict": "no-successor",
+								"fact": "codelyzer stops at 6.0.2, a TSLint rule set for Angular 9-era workspaces. Nothing succeeds it on the TSLint line and its ESLint replacement is @angular-eslint, which this cell already aligns as a family.",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "core-js",
+								"declaredRange": "3.1.3",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "font-awesome",
+								"declaredRange": "^4.7.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "jasmine-core",
+								"declaredRange": "~3.4.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "jasmine-marbles",
+								"declaredRange": "^0.5.0",
+								"verdict": "aligned",
+								"fact": "jasmine-marbles versions against RxJS rather than against Angular: 0.9.2, the newest release and the `latest` dist-tag, declares peer rxjs \"^7.0.0\", which the ~7.8.0 this cell writes satisfies; 0.8.4 and every earlier 0.8.x declare \"^6.5.3\", which it does not. It declares no @angular/* peer and no engines.node. The package sits in this table rather than in the generated test toolchain because it is a community library the cell reads, and because leaving it at an era range pinned to RxJS 6 makes the whole closure unresolvable beside the RxJS 7 this cell writes.",
+								"alignedRange": "^0.9.2"
+							},
+							{
+								"package": "jasmine-spec-reporter",
+								"declaredRange": "~4.2.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "karma",
+								"declaredRange": "^4.1.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "karma-chrome-launcher",
+								"declaredRange": "~2.2.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "karma-coverage-istanbul-reporter",
+								"declaredRange": "~2.0.5",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "karma-jasmine",
+								"declaredRange": "~2.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "karma-jasmine-html-reporter",
+								"declaredRange": "^1.4.2",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "ngx-socket-io",
+								"declaredRange": "^3.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "protractor",
+								"declaredRange": "~5.4.2",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "rxjs",
+								"declaredRange": "6.5.4",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "ts-node",
+								"declaredRange": "~8.2.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "tslib",
+								"declaredRange": "^1.10.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "tslint",
+								"declaredRange": "~5.17.0",
+								"verdict": "no-successor",
+								"fact": "TSLint stops at 6.1.3 and was deprecated by its own maintainers in favour of ESLint before Angular 13 shipped. There is no TSLint release for any Angular line at or beyond this cell, so the whole TSLint toolchain is dropped rather than carried.",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "typescript",
+								"declaredRange": "3.7.5",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "zone.js",
+								"declaredRange": "^0.10.2",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							}
+						],
+						"counts": {
+							"aligned": 1,
+							"no-successor": 2,
+							"successor-fork": 0,
+							"unknown": 38
+						}
+					},
+					"notEstablished": [
+						"Detection reads declarations. Nothing here establishes that this application installs, compiles, builds, or behaves as it did on its era toolchain.",
+						"A cell verdict is a reading of a published registry, not an installation: a range written here has not been resolved against any lockfile by this record.",
+						"A dependency the cell has no reading for is reported `unknown`. `unknown` is not `supported` and it is not `unsupported`."
+					]
+				},
+				"licence": {
+					"stage": "license-at-pin",
+					"schemaVersion": "versionless.license-at-pin.v1",
+					"ran": true,
+					"reason": null,
+					"identifier": "MIT",
+					"identifierSource": "observed",
+					"identifierBasis": "verbatim MIT text in the repository root LICENSE file at the pinned revision",
+					"copyrightNotice": "Copyright (c) 2019 Aslan Vatsaev",
+					"manifestLicenseField": null,
+					"artifacts": [
+						{
+							"path": "LICENSE",
+							"role": "repository-root-licence",
+							"gitBlobSha": "baf98a00bc38c625c72fca74547648bd9df7f8b6",
+							"bytes": 1070,
+							"sha256": "9ff0d278c18401b8a4d68198e66f074137c3b63ce6d0b4c76c5478ac58825760",
+							"firstLine": "MIT License",
+							"permissionGrantPresent": true,
+							"noticeRetentionClausePresent": true,
+							"warrantyDisclaimerPresent": true,
+							"licenseField": null
+						},
+						{
+							"path": "package.json",
+							"role": "frontend-manifest",
+							"gitBlobSha": "79e1cbb91a20d2c527332d09ad760f41b867ec47",
+							"bytes": 1928,
+							"sha256": "4f2e53e959ff85a2e3a02803ae5903957d8485828ca4549de1f1a62e82fa79f8",
+							"firstLine": null,
+							"permissionGrantPresent": null,
+							"noticeRetentionClausePresent": null,
+							"warrantyDisclaimerPresent": null,
+							"licenseField": null
+						}
+					],
+					"licenceFilesAtRoot": [
+						"LICENSE"
+					],
+					"notEstablished": [
+						"This is a record of the licence text present at the pinned revision. It is not a legal opinion, a licence-compatibility finding, or legal approval.",
+						"No licence determination is made for the transitive dependency closure. Each dependency carries its own terms and this stage evaluates none of them.",
+						"The identifier is matched against the canonical wording of the licences this stage recognises. A reworded, translated, amended or dual licence is refused rather than matched to the nearest one, so an absent refusal is not evidence that no such amendment exists.",
+						"Only the source root is read for licence files. A licence carried further down the tree, a per-directory notice, and a vendored third-party licence are outside this reading.",
+						"`identifierSource: declared` means an operator supplied the identifier. This stage did not read it and does not corroborate it."
+					]
+				},
+				"closure": {
+					"schemaVersion": "versionless.legacy-dependency-closure.v1",
+					"slug": "angular-contacts",
+					"frontendRoot": ".",
+					"source": {
+						"verifiedSourceRoot": ".",
+						"packageJsonSha256": "4f2e53e959ff85a2e3a02803ae5903957d8485828ca4549de1f1a62e82fa79f8",
+						"packageLockSha256": "d23b1a49b210c9b397194747f1a2a7d0032438e7277d710400fdabb6d8a2bb74",
+						"packageLockBytes": 561409
+					},
+					"lockState": {
+						"file": "package-lock.json",
+						"lockfileVersion": 1,
+						"requiresField": true,
+						"committedWithSource": true,
+						"coversDevDependencies": true,
+						"everyEntryHasResolvedUrl": true,
+						"everyEntryHasIntegrityHash": true,
+						"entriesWithoutResolvedUrl": [],
+						"entriesWithoutIntegrityHash": [],
+						"lockfileIntegrityAlgorithms": [
+							"none",
+							"sha1",
+							"sha512"
+						]
+					},
+					"counts": {
+						"declaredDependencies": 22,
+						"declaredDevDependencies": 19,
+						"lockedPlacements": 1596,
+						"distinctNameVersionPairs": 1199,
+						"devPlacements": 1492,
+						"optionalPlacements": 74,
+						"bundledPlacements": 66
+					},
+					"registryHosts": {
+						"registry.npmjs.org": 1530
+					},
+					"closureSha256": "0921ab28f2f030a2f4abc8633479b04f1579f6cd6bcfedef56549a864a7abc90",
+					"nonclaims": [
+						"Per-artifact byte digests were not independently mirrored in this unit; the recorded integrity hashes are the ones the committed lockfile declares.",
+						"A resolvable closure establishes no build, browser behavior, licence compatibility of transitive dependencies, migration feasibility, or production readiness."
+					]
+				},
+				"closureReason": null,
+				"notEstablished": [
+					"An ingest record states what the source on disk says at the revision it was pinned to. It is not an acquisition: nothing here establishes that these bytes are the bytes the named repository publishes at that revision, and no archive was fetched, reconciled against a Git tree, or double-streamed by this stage.",
+					"`normalizedManifestSha256` digests the files this stage walked. Installed packages and Git metadata are not walked, so the digest is comparable with another walk of the same shape and not with a digest taken over a whole archive.",
+					"The closure reading is the dependency tree the lockfile itself carries. A lockfile that records its closure only in the `packages` map yields no placements here, and a count of zero placements is the absence of a reading rather than an empty closure.",
+					"Nothing here installs, builds, or runs the application. An admitted application is one whose identity, pin, licence and declared closure were read — not one that was shown to work.",
+					"No era cell was chosen or provisioned. Which Node and toolchain era this source needs is not read here and not established by admission.",
+					"A value recorded with source `declared` was supplied by an operator. This stage did not read it and does not corroborate it.",
+					"An identifier read from an acquisition journal is the identifier an operator declared when the source was fetched. The application itself declares none, and nothing here establishes that the two would agree.",
+					"A frontend root read by lineage is the one directory among those considered whose manifest declares a framework this stage reads. The basis names every directory considered and what each of their manifests declared; nothing here establishes that the directory chosen is the one its authors would call the application."
+				]
+			},
+			"startedAt": "2026-08-20T15:18:56.821Z",
+			"endedAt": "2026-08-20T15:18:56.835Z"
+		},
+		{
+			"name": "license-at-pin",
+			"status": "ran",
+			"record": {
+				"stage": "license-at-pin",
+				"schemaVersion": "versionless.license-at-pin.v1",
+				"ran": true,
+				"reason": null,
+				"identifier": "MIT",
+				"identifierSource": "observed",
+				"identifierBasis": "verbatim MIT text in the repository root LICENSE file at the pinned revision",
+				"copyrightNotice": "Copyright (c) 2019 Aslan Vatsaev",
+				"manifestLicenseField": null,
+				"artifacts": [
+					{
+						"path": "LICENSE",
+						"role": "repository-root-licence",
+						"gitBlobSha": "baf98a00bc38c625c72fca74547648bd9df7f8b6",
+						"bytes": 1070,
+						"sha256": "9ff0d278c18401b8a4d68198e66f074137c3b63ce6d0b4c76c5478ac58825760",
+						"firstLine": "MIT License",
+						"permissionGrantPresent": true,
+						"noticeRetentionClausePresent": true,
+						"warrantyDisclaimerPresent": true,
+						"licenseField": null
+					},
+					{
+						"path": "package.json",
+						"role": "frontend-manifest",
+						"gitBlobSha": "79e1cbb91a20d2c527332d09ad760f41b867ec47",
+						"bytes": 1928,
+						"sha256": "4f2e53e959ff85a2e3a02803ae5903957d8485828ca4549de1f1a62e82fa79f8",
+						"firstLine": null,
+						"permissionGrantPresent": null,
+						"noticeRetentionClausePresent": null,
+						"warrantyDisclaimerPresent": null,
+						"licenseField": null
+					}
+				],
+				"licenceFilesAtRoot": [
+					"LICENSE"
+				],
+				"notEstablished": [
+					"This is a record of the licence text present at the pinned revision. It is not a legal opinion, a licence-compatibility finding, or legal approval.",
+					"No licence determination is made for the transitive dependency closure. Each dependency carries its own terms and this stage evaluates none of them.",
+					"The identifier is matched against the canonical wording of the licences this stage recognises. A reworded, translated, amended or dual licence is refused rather than matched to the nearest one, so an absent refusal is not evidence that no such amendment exists.",
+					"Only the source root is read for licence files. A licence carried further down the tree, a per-directory notice, and a vendored third-party licence are outside this reading.",
+					"`identifierSource: declared` means an operator supplied the identifier. This stage did not read it and does not corroborate it."
+				]
+			},
+			"startedAt": "2026-08-20T15:18:56.835Z",
+			"endedAt": "2026-08-20T15:18:56.835Z"
+		},
+		{
+			"name": "era-cell",
+			"status": "ran",
+			"record": {
+				"stage": "era-cell",
+				"schemaVersion": "versionless.era-cell.v1",
+				"ran": true,
+				"reason": null,
+				"outcome": "provisioned",
+				"required": {
+					"cell": "angular-13.4.0",
+					"cellSource": "declared",
+					"cellBasis": "published by the frozen Angular adapter as an AngularTargetCell; the Node line is the cell's own nodeLine declaration.",
+					"runtime": {
+						"major": 16,
+						"version": "16.20.2",
+						"source": "inferred",
+						"readFrom": "angular-13.4.0#nodeLine",
+						"basis": "published by the frozen Angular adapter as an AngularTargetCell; the Node line is the cell's own nodeLine declaration.",
+						"claim": "the migrated lane will be installed and built in this runtime",
+						"declaredRange": null,
+						"declaredRangeSource": null,
+						"satisfiedByDeclaredRange": null
+					},
+					"era": {
+						"outcome": "not-read",
+						"declared": null,
+						"readFrom": null,
+						"consultedSources": [],
+						"claim": "the era was not read from this tree: the cell angular-13.4.0 names the Node line the lane is migrated into, and this stage consulted no source in it for the toolchain era its authors used"
+					},
+					"nodeMajor": 16,
+					"nodeMajorSource": "inferred",
+					"nodeMajorReadFrom": "angular-13.4.0#nodeLine",
+					"nodeMajorSources": [],
+					"architecture": "arm64",
+					"architectureSource": "inferred",
+					"architectureBasis": "no package in the closure is one this repository measured as publishing no binding for an architecture, so the cell is read at the host architecture arm64",
+					"architectureRequirements": []
+				},
+				"determination": {
+					"inferred": [
+						"architecture",
+						"nodeMajor"
+					],
+					"declared": [
+						"cell"
+					]
+				},
+				"host": {
+					"platform": "darwin",
+					"architecture": "arm64",
+					"runningNodeVersion": "v24.15.0",
+					"runningNodeMajor": 24,
+					"suppliers": [
+						"running-process",
+						"workspace-runtime-cache",
+						"fnm"
+					],
+					"installed": [
+						{
+							"version": "v8.9.3",
+							"major": 8,
+							"platform": "darwin",
+							"architecture": "x64",
+							"supplier": "workspace-runtime-cache",
+							"location": ".versionless/cache/angular-tiny-translator-v0-12-0-runtime/node-v8.9.3-darwin-x64"
+						},
+						{
+							"version": "v8.11.4",
+							"major": 8,
+							"platform": "darwin",
+							"architecture": "x64",
+							"supplier": "workspace-runtime-cache",
+							"location": ".versionless/cache/angular-eshop-webspa-netcore2-2-runtime/node-v8.11.4-darwin-x64"
+						},
+						{
+							"version": "v16.20.2",
+							"major": 16,
+							"platform": "darwin",
+							"architecture": "arm64",
+							"supplier": "workspace-runtime-cache",
+							"location": ".versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64"
+						},
+						{
+							"version": "v16.20.2",
+							"major": 16,
+							"platform": "darwin",
+							"architecture": "arm64",
+							"supplier": "workspace-runtime-cache",
+							"location": ".versionless/cache/angular-eshop-webspa-netcore2-2-target/node-v16.20.2-darwin-arm64"
+						},
+						{
+							"version": "v16.20.2",
+							"major": 16,
+							"platform": "darwin",
+							"architecture": "arm64",
+							"supplier": "workspace-runtime-cache",
+							"location": ".versionless/cache/angular-jira-clone-runtime/node-v16.20.2-darwin-arm64"
+						},
+						{
+							"version": "v14.16.1",
+							"major": 14,
+							"platform": "darwin",
+							"architecture": "x64",
+							"supplier": "workspace-runtime-cache",
+							"location": ".versionless/cache/react-cypress-rwa-runtime/node-v14.16.1-darwin-x64"
+						},
+						{
+							"version": "v12.14.1",
+							"major": 12,
+							"platform": "darwin",
+							"architecture": "x64",
+							"supplier": "workspace-runtime-cache",
+							"location": ".versionless/cache/react-mycrypto-runtime/node-v12.14.1-darwin-x64"
+						},
+						{
+							"version": "v10.24.1",
+							"major": 10,
+							"platform": "darwin",
+							"architecture": "x64",
+							"supplier": "workspace-runtime-cache",
+							"location": ".versionless/cache/angular-pigallery2-v1-7-0-runtime/node-v10.24.1-darwin-x64"
+						},
+						{
+							"version": "v24.15.0",
+							"major": 24,
+							"platform": "darwin",
+							"architecture": "arm64",
+							"supplier": "fnm",
+							"location": "node-versions/v24.15.0"
+						},
+						{
+							"version": "v24.15.0",
+							"major": 24,
+							"platform": "darwin",
+							"architecture": "arm64",
+							"supplier": "running-process",
+							"location": "the process this stage is running in"
+						}
+					]
+				},
+				"provision": {
+					"supplier": "workspace-runtime-cache",
+					"version": "v16.20.2",
+					"location": ".versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64",
+					"translation": null
+				},
+				"refusal": null,
+				"notEstablished": [
+					"This record states which toolchain cell the application needs and whether a Node runtime of that cell is on this host. It is not an installation of the cell: nothing here establishes that the framework packages a cell declares were resolved, downloaded, or built.",
+					"`already-present` and `provisioned` state that a runtime of the required major and architecture was found at a location this stage read. Nothing here establishes that the application installs, compiles, builds, or behaves on it.",
+					"The architecture requirement is read from the closure the lockfile and the manifest declare, against the packages this repository measured a binding reading for. A native dependency nobody measured is not counted, and an absent requirement is not evidence that every dependency in the closure has a binding for this architecture.",
+					"Installed runtimes are the ones discoverable at the locations this stage reads: the running process, the workspace runtime cache, and the installed-version directories of the version managers whose layout it knows. A runtime installed anywhere else is reported as absent rather than searched for.",
+					"A version manager runtime is read as a directory. Its platform and architecture are recorded as the host’s because that is what a version manager installs for; no binary header was read.",
+					"No network was opened and no other program was run. A runtime this host does not already carry is refused, not fetched.",
+					"A value recorded with source `declared` was supplied by an operator. This stage did not read it and does not corroborate it.",
+					"The runtime named here is the runtime the lane this pipeline composes will be installed and built in. It is not the era this application was authored for: nothing here establishes which toolchain its authors used.",
+					"An era recorded as not-read states that no declaration in this tree named exactly one Node major that this stage reads. It is not a statement that the application has no era, and it is not a statement that the runtime below is that era.",
+					"Nothing here establishes that this application installs, compiles, builds, or behaves in the runtime named above. The install and build stages are where that is attempted, and their records are where it is stated.",
+					"A declared compatibility range that admits this runtime is a satisfied constraint. It states that the application claims to work on a set of runtimes that includes this one; it names no era, and no Node major was read out of it.",
+					"Satisfaction of a declared range is not corroborated by anything else this tree says. Where other sources name majors, they are listed above with what each literally says, and this stage picks from none of them."
+				]
+			},
+			"startedAt": "2026-08-20T15:18:56.835Z",
+			"endedAt": "2026-08-20T15:18:56.840Z"
+		},
+		{
+			"name": "plan",
+			"status": "ran",
+			"record": {
+				"analysis": {
+					"lineage": "angular",
+					"frameworkVersionDeclared": "9.0.0",
+					"detectedFrom": "@angular/core",
+					"builder": "@angular-devkit/build-angular:browser",
+					"builderSource": "angular.json",
+					"nodeEra": {
+						"declared": "unknown",
+						"source": "unknown"
+					},
+					"packageManager": {
+						"manager": "npm",
+						"lockfiles": [
+							"package-lock.json"
+						],
+						"declared": "unknown"
+					},
+					"cellReadings": {
+						"cell": "angular-13.4.0",
+						"reason": null,
+						"verdicts": [
+							{
+								"package": "@angular-devkit/build-angular",
+								"declaredRange": "~0.900.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/animations",
+								"declaredRange": "9.0.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/cli",
+								"declaredRange": "^9.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/common",
+								"declaredRange": "9.0.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/compiler",
+								"declaredRange": "9.0.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/compiler-cli",
+								"declaredRange": "^9.0.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/core",
+								"declaredRange": "9.0.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/forms",
+								"declaredRange": "9.0.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/language-service",
+								"declaredRange": "9.0.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/platform-browser",
+								"declaredRange": "9.0.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/platform-browser-dynamic",
+								"declaredRange": "9.0.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/pwa",
+								"declaredRange": "^0.900.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/router",
+								"declaredRange": "9.0.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/service-worker",
+								"declaredRange": "9.0.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@ngrx/effects",
+								"declaredRange": "^8.6.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@ngrx/entity",
+								"declaredRange": "^8.6.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@ngrx/store",
+								"declaredRange": "^8.6.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@ngrx/store-devtools",
+								"declaredRange": "^8.6.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@types/jasmine",
+								"declaredRange": "3.3.13",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@types/jasminewd2",
+								"declaredRange": "~2.0.6",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@types/node",
+								"declaredRange": "~12.0.7",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "bootstrap",
+								"declaredRange": "^4.4.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "codelyzer",
+								"declaredRange": "~5.1.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "core-js",
+								"declaredRange": "3.1.3",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "font-awesome",
+								"declaredRange": "^4.7.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "jasmine-core",
+								"declaredRange": "~3.4.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "jasmine-marbles",
+								"declaredRange": "^0.5.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "jasmine-spec-reporter",
+								"declaredRange": "~4.2.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "karma",
+								"declaredRange": "^4.1.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "karma-chrome-launcher",
+								"declaredRange": "~2.2.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "karma-coverage-istanbul-reporter",
+								"declaredRange": "~2.0.5",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "karma-jasmine",
+								"declaredRange": "~2.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "karma-jasmine-html-reporter",
+								"declaredRange": "^1.4.2",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "ngx-socket-io",
+								"declaredRange": "^3.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "protractor",
+								"declaredRange": "~5.4.2",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "rxjs",
+								"declaredRange": "6.5.4",
+								"verdict": "aligned",
+								"fact": "rxjs 6.6.7 is the pin this whole cell is held together by, and it was measured rather than chosen: ngcc 13 raises a hard exit-1 error against an rxjs 7 closure, and under 6.6.7 the same pass emitted only a warning — \"Entry point 'ng2-slim-loading-bar' contains deep imports into rxjs/Subject, rxjs/Observable\" — and then exited 0. That is the spike’s rxjs-major condition confirmed at application scale rather than at probe scale. 6.6.7 is the version the installed package-lock.json of the T009 proving run carried, read verbatim, and evidence/runs/angular-13cell/pigallery2-compile.json § cell.pinsHeld records it as a pin the run never left. rxjs-compat is pinned to the same minor by this cell for the same reading.",
+								"alignedRange": "~6.6.7"
+							},
+							{
+								"package": "ts-node",
+								"declaredRange": "~8.2.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "tslib",
+								"declaredRange": "^1.10.0",
+								"verdict": "aligned",
+								"fact": "tslib 2.6.3 is the version the installed closure of the T009 proving run resolved, read verbatim from its package-lock.json and recorded in evidence/runs/angular-13cell/pigallery2-compile.json § cell. It is a reading of what this cell installed, not a survey of the 2.x line and not a claim about the lowest 2.x this Angular line accepts.",
+								"alignedRange": "^2.6.3"
+							},
+							{
+								"package": "tslint",
+								"declaredRange": "~5.17.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "typescript",
+								"declaredRange": "3.7.5",
+								"verdict": "aligned",
+								"fact": "typescript 4.6.4 is the compiler the T009 proving run used to reach `ngc` exit 0 with 0 diagnostics, read verbatim from the installed package-lock.json and recorded in evidence/runs/angular-13cell/pigallery2-compile.json § cell. Its era drift is measured as well as its version: lib.dom between TS 3.4 and TS 4.6 dropped the IE/WinJS `msOverflowStyle` vendor property, which the run recorded as one of the three single-line application source edits the lift required. Neither the Angular 13 line’s full accepted TypeScript range nor any other 4.x line was read here.",
+								"alignedRange": "~4.6.4"
+							},
+							{
+								"package": "zone.js",
+								"declaredRange": "^0.10.2",
+								"verdict": "aligned",
+								"fact": "zone.js 0.11.8 is the version the installed closure of the T009 proving run resolved, read verbatim from its package-lock.json and recorded in evidence/runs/angular-13cell/pigallery2-compile.json § cell. It is a reading of what this cell installed, not a survey of what the 0.11 line published or of what Angular 13.4.0 would otherwise accept.",
+								"alignedRange": "~0.11.8"
+							}
+						],
+						"counts": {
+							"aligned": 4,
+							"no-successor": 0,
+							"successor-fork": 0,
+							"unknown": 37
+						}
+					},
+					"notEstablished": [
+						"Detection reads declarations. Nothing here establishes that this application installs, compiles, builds, or behaves as it did on its era toolchain.",
+						"A cell verdict is a reading of a published registry, not an installation: a range written here has not been resolved against any lockfile by this record.",
+						"A dependency the cell has no reading for is reported `unknown`. `unknown` is not `supported` and it is not `unsupported`."
+					]
+				},
+				"plan": {
+					"lineage": "angular",
+					"engine": "@versionless/angular migrateAngularCliEraWorkspace",
+					"cell": "angular-13.4.0",
+					"inputsSupplied": [
+						"packageManifest",
+						"sourceModules",
+						"styleSheets",
+						"templates",
+						"tsConfig",
+						"workspaceConfig",
+						"workspaceFiles"
+					],
+					"applicationFilesScanned": 49,
+					"files": [
+						{
+							"path": "package.json",
+							"kind": "workspace",
+							"changed": true,
+							"sha256Before": "4f2e53e959ff85a2e3a02803ae5903957d8485828ca4549de1f1a62e82fa79f8",
+							"sha256After": "568d52fe55b862edd5b5e1526651a9c8e184131cc067fd2126e35ee662179e71",
+							"source": "{\n  \"name\": \"angular-contacts\",\n  \"version\": \"0.0.0\",\n  \"scripts\": {\n    \"ng\": \"ng\",\n    \"start\": \"ng serve\",\n    \"build\": \"ng build\",\n    \"build:dev\": \"ng build --configuration=dev\",\n    \"build:prod\": \"ng build --configuration production\",\n    \"test\": \"ng test\",\n    \"lint\": \"ng lint angular-contacts\",\n    \"e2e\": \"ng e2e\",\n    \"deploy\": \"surge -d https://angular-contacts-ngrx.surge.sh -p dist/angular-contacts\",\n    \"predeploy\": \"ng build --configuration production && cat dist/angular-contacts/index.html > dist/angular-contacts/200.html\"\n  },\n  \"private\": true,\n  \"dependencies\": {\n    \"@angular/animations\": \"^13.4.0\",\n    \"@angular/common\": \"^13.4.0\",\n    \"@angular/compiler\": \"^13.4.0\",\n    \"@angular/core\": \"^13.4.0\",\n    \"@angular/forms\": \"^13.4.0\",\n    \"@angular/platform-browser\": \"^13.4.0\",\n    \"@angular/platform-browser-dynamic\": \"^13.4.0\",\n    \"@angular/pwa\": \"^13.4.0\",\n    \"@angular/router\": \"^13.4.0\",\n    \"@angular/service-worker\": \"^13.4.0\",\n    \"@ngrx/effects\": \"^8.6.0\",\n    \"@ngrx/entity\": \"^8.6.0\",\n    \"@ngrx/store\": \"^8.6.0\",\n    \"@ngrx/store-devtools\": \"^8.6.0\",\n    \"bootstrap\": \"^4.4.1\",\n    \"core-js\": \"3.1.3\",\n    \"font-awesome\": \"^4.7.0\",\n    \"jasmine-marbles\": \"^0.5.0\",\n    \"ngx-socket-io\": \"^3.0.1\",\n    \"rxjs\": \"~6.6.7\",\n    \"tslib\": \"^2.6.3\",\n    \"zone.js\": \"~0.11.8\"\n  },\n  \"devDependencies\": {\n    \"@angular-devkit/build-angular\": \"~13.3.11\",\n    \"@angular/cli\": \"~13.3.11\",\n    \"@angular/compiler-cli\": \"^13.4.0\",\n    \"@angular/language-service\": \"^13.4.0\",\n    \"@types/jasmine\": \"3.3.13\",\n    \"@types/node\": \"~12.0.7\",\n    \"jasmine-core\": \"~3.4.0\",\n    \"karma\": \"^4.1.0\",\n    \"karma-chrome-launcher\": \"~2.2.0\",\n    \"karma-coverage-istanbul-reporter\": \"~2.0.5\",\n    \"karma-jasmine\": \"~2.0.1\",\n    \"karma-jasmine-html-reporter\": \"^1.4.2\",\n    \"ts-node\": \"~8.2.0\",\n    \"typescript\": \"~4.6.4\"\n  }\n}\n",
+							"changes": [
+								"dependencies.@angular/animations: 9.0.0 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/common: 9.0.0 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/compiler: 9.0.0 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/core: 9.0.0 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/forms: 9.0.0 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/platform-browser: 9.0.0 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/platform-browser-dynamic: 9.0.0 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/pwa: ^0.900.1 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/router: 9.0.0 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/service-worker: 9.0.0 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.rxjs: 6.5.4 -> ~6.6.7 — aligned to the community layer angular-13.4.0 declares: rxjs 6.6.7 is the pin this whole cell is held together by, and it was measured rather than chosen: ngcc 13 raises a hard exit-1 error against an rxjs 7 closure, and under 6.6.7 the same pass emitted only a warning — \"Entry point 'ng2-slim-loading-bar' contains deep imports into rxjs/Subject, rxjs/Observable\" — and then exited 0. That is the spike’s rxjs-major condition confirmed at application scale rather than at probe scale. 6.6.7 is the version the installed package-lock.json of the T009 proving run carried, read verbatim, and evidence/runs/angular-13cell/pigallery2-compile.json § cell.pinsHeld records it as a pin the run never left. rxjs-compat is pinned to the same minor by this cell for the same reading.",
+								"dependencies.tslib: ^1.10.0 -> ^2.6.3 — aligned to the community layer angular-13.4.0 declares: tslib 2.6.3 is the version the installed closure of the T009 proving run resolved, read verbatim from its package-lock.json and recorded in evidence/runs/angular-13cell/pigallery2-compile.json § cell. It is a reading of what this cell installed, not a survey of the 2.x line and not a claim about the lowest 2.x this Angular line accepts.",
+								"dependencies.zone.js: ^0.10.2 -> ~0.11.8 — aligned to the community layer angular-13.4.0 declares: zone.js 0.11.8 is the version the installed closure of the T009 proving run resolved, read verbatim from its package-lock.json and recorded in evidence/runs/angular-13cell/pigallery2-compile.json § cell. It is a reading of what this cell installed, not a survey of what the 0.11 line published or of what Angular 13.4.0 would otherwise accept.",
+								"devDependencies.@angular-devkit/build-angular: ~0.900.1 -> ~13.3.11 — aligned to angular-13.4.0",
+								"devDependencies.@angular/cli: ^9.0.1 -> ~13.3.11 — aligned to angular-13.4.0",
+								"devDependencies.@angular/compiler-cli: ^9.0.0 -> ^13.4.0 — aligned to angular-13.4.0",
+								"devDependencies.@angular/language-service: 9.0.0 -> ^13.4.0 — aligned to angular-13.4.0",
+								"removed devDependencies.@types/jasminewd2 (was ~2.0.6) — released by a builder target the workspace migration removed",
+								"removed devDependencies.codelyzer (was ~5.1.0) — released by a builder target the workspace migration removed",
+								"removed devDependencies.jasmine-spec-reporter (was ~4.2.1) — released by a builder target the workspace migration removed",
+								"removed devDependencies.protractor (was ~5.4.2) — released by a builder target the workspace migration removed",
+								"removed devDependencies.tslint (was ~5.17.0) — released by a builder target the workspace migration removed",
+								"devDependencies.typescript: 3.7.5 -> ~4.6.4 — aligned to the community layer angular-13.4.0 declares: typescript 4.6.4 is the compiler the T009 proving run used to reach `ngc` exit 0 with 0 diagnostics, read verbatim from the installed package-lock.json and recorded in evidence/runs/angular-13cell/pigallery2-compile.json § cell. Its era drift is measured as well as its version: lib.dom between TS 3.4 and TS 4.6 dropped the IE/WinJS `msOverflowStyle` vendor property, which the run recorded as one of the three single-line application source edits the lift required. Neither the Angular 13 line’s full accepted TypeScript range nor any other 4.x line was read here.",
+								"scripts.build:prod: --prod -> --configuration production — `--prod` was a shorthand for `--configuration production` and was removed from the Angular CLI after the 11 line; a 12-or-later CLI reports it as an unknown argument and exits before the builder runs. The replacement selects the same configuration by name, which is why the retarget is refused where the migrated workspace does not declare one.",
+								"scripts.predeploy: --prod -> --configuration production — `--prod` was a shorthand for `--configuration production` and was removed from the Angular CLI after the 11 line; a 12-or-later CLI reports it as an unknown argument and exits before the builder runs. The replacement selects the same configuration by name, which is why the retarget is refused where the migrated workspace does not declare one."
+							]
+						},
+						{
+							"path": "angular.json",
+							"kind": "workspace",
+							"changed": true,
+							"sha256Before": "9d6fb5d2b6d178f29932a3b49142bee76deacea54dfd093a8724903a81e48bd2",
+							"sha256After": "d3e4eb7ec86527d6c23762d351f4aa5c2a9d8865d1ee6a45206cc18af5ef60b3",
+							"source": "{\n  \"$schema\": \"./node_modules/@angular/cli/lib/config/schema.json\",\n  \"version\": 1,\n  \"newProjectRoot\": \"projects\",\n  \"projects\": {\n    \"angular-contacts\": {\n      \"root\": \"\",\n      \"sourceRoot\": \"src\",\n      \"projectType\": \"application\",\n      \"prefix\": \"app\",\n      \"schematics\": {\n        \"@schematics/angular:component\": {\n          \"styleext\": \"sass\",\n          \"changeDetection\": \"OnPush\"\n        }\n      },\n      \"architect\": {\n        \"build\": {\n          \"builder\": \"@angular-devkit/build-angular:browser\",\n          \"options\": {\n            \"outputPath\": \"dist/angular-contacts\",\n            \"index\": \"src/index.html\",\n            \"main\": \"src/main.ts\",\n            \"polyfills\": [\n              \"src/polyfills.ts\"\n            ],\n            \"tsConfig\": \"src/tsconfig.app.json\",\n            \"assets\": [\n              \"src/favicon.ico\",\n              \"src/assets\",\n              \"src/manifest.json\",\n              \"src/manifest.json\"\n            ],\n            \"styles\": [\n              \"src/styles.sass\",\n              \"node_modules/font-awesome/css/font-awesome.min.css\",\n              \"node_modules/bootstrap/dist/css/bootstrap.min.css\"\n            ],\n            \"scripts\": [],\n            \"optimization\": {\n              \"scripts\": true,\n              \"styles\": true,\n              \"fonts\": {\n                \"inline\": false\n              }\n            }\n          },\n          \"configurations\": {\n            \"production\": {\n              \"fileReplacements\": [\n                {\n                  \"replace\": \"src/environments/environment.ts\",\n                  \"with\": \"src/environments/environment.prod.ts\"\n                }\n              ],\n              \"optimization\": {\n                \"scripts\": true,\n                \"styles\": true,\n                \"fonts\": {\n                  \"inline\": false\n                }\n              },\n              \"outputHashing\": \"all\",\n              \"sourceMap\": false,\n              \"namedChunks\": false,\n              \"aot\": true,\n              \"extractLicenses\": true,\n              \"vendorChunk\": false,\n              \"buildOptimizer\": true,\n              \"serviceWorker\": true,\n              \"ngswConfigPath\": \"src/ngsw-config.json\"\n            },\n            \"dev\": {\n              \"fileReplacements\": [\n                {\n                  \"replace\": \"src/environments/environment.ts\",\n                  \"with\": \"src/environments/environment.dev.ts\"\n                }\n              ],\n              \"optimization\": {\n                \"scripts\": true,\n                \"styles\": true,\n                \"fonts\": {\n                  \"inline\": false\n                }\n              },\n              \"outputHashing\": \"all\",\n              \"sourceMap\": false,\n              \"namedChunks\": false,\n              \"aot\": true,\n              \"extractLicenses\": true,\n              \"vendorChunk\": false,\n              \"buildOptimizer\": true,\n              \"serviceWorker\": false\n            },\n            \"local\": {\n              \"fileReplacements\": [\n                {\n                  \"replace\": \"src/environments/environment.ts\",\n                  \"with\": \"src/environments/environment.local.ts\"\n                }\n              ],\n              \"optimization\": false,\n              \"outputHashing\": \"all\",\n              \"sourceMap\": true,\n              \"namedChunks\": false,\n              \"aot\": true,\n              \"extractLicenses\": true,\n              \"vendorChunk\": false,\n              \"buildOptimizer\": false,\n              \"serviceWorker\": false\n            }\n          }\n        },\n        \"serve\": {\n          \"builder\": \"@angular-devkit/build-angular:dev-server\",\n          \"options\": {\n            \"browserTarget\": \"angular-contacts:build\"\n          },\n          \"configurations\": {\n            \"production\": {\n              \"browserTarget\": \"angular-contacts:build:production\"\n            },\n            \"dev\": {\n              \"browserTarget\": \"angular-contacts:build:dev\"\n            },\n            \"local\": {\n              \"browserTarget\": \"angular-contacts:build:local\"\n            }\n          }\n        },\n        \"extract-i18n\": {\n          \"builder\": \"@angular-devkit/build-angular:extract-i18n\",\n          \"options\": {\n            \"browserTarget\": \"angular-contacts:build\"\n          }\n        },\n        \"test\": {\n          \"builder\": \"@angular-devkit/build-angular:karma\",\n          \"options\": {\n            \"main\": \"src/test.ts\",\n            \"polyfills\": [\n              \"src/polyfills.ts\"\n            ],\n            \"tsConfig\": \"src/tsconfig.spec.json\",\n            \"karmaConfig\": \"src/karma.conf.js\",\n            \"styles\": [\n              \"src/styles.sass\"\n            ],\n            \"scripts\": [],\n            \"assets\": [\n              \"src/favicon.ico\",\n              \"src/assets\",\n              \"src/manifest.json\",\n              \"src/manifest.json\"\n            ]\n          }\n        }\n      }\n    },\n    \"angular-contacts-e2e\": {\n      \"root\": \"e2e/\",\n      \"projectType\": \"application\",\n      \"architect\": {}\n    }\n  }\n}\n",
+							"changes": [
+								"removed defaultProject (was \"angular-contacts\")",
+								"projects.angular-contacts.architect.build.options.polyfills: \"src/polyfills.ts\" -> [\"src/polyfills.ts\"]",
+								"added projects.angular-contacts.architect.build.options.optimization = {\"scripts\":true,\"styles\":true,\"fonts\":{\"inline\":false}}",
+								"projects.angular-contacts.architect.build.configurations.production.optimization: true -> {\"scripts\":true,\"styles\":true,\"fonts\":{\"inline\":false}}",
+								"removed projects.angular-contacts.architect.build.configurations.production.extractCss (was true)",
+								"projects.angular-contacts.architect.build.configurations.dev.optimization: true -> {\"scripts\":true,\"styles\":true,\"fonts\":{\"inline\":false}}",
+								"removed projects.angular-contacts.architect.build.configurations.dev.extractCss (was true)",
+								"removed projects.angular-contacts.architect.build.configurations.local.extractCss (was true)",
+								"projects.angular-contacts.architect.test.options.polyfills: \"src/polyfills.ts\" -> [\"src/polyfills.ts\"]",
+								"removed projects.angular-contacts.architect.lint (was @angular-devkit/build-angular:tslint)",
+								"removed projects.angular-contacts-e2e.architect.e2e (was @angular-devkit/build-angular:protractor)",
+								"removed projects.angular-contacts-e2e.architect.lint (was @angular-devkit/build-angular:tslint)"
+							]
+						},
+						{
+							"path": "tsconfig.json",
+							"kind": "workspace",
+							"changed": true,
+							"sha256Before": "b94f3165ed0bd06d7d750f5470b0daea33b1bda3a59cd5c770dba940726158e7",
+							"sha256After": "8ad8f980207cb16f11515a964d89074456665689fe9938b95832024cf0d0f09e",
+							"source": "{\n  \"compileOnSave\": false,\n  \"compilerOptions\": {\n    \"baseUrl\": \"./\",\n    \"importHelpers\": true,\n    \"outDir\": \"./dist/out-tsc\",\n    \"sourceMap\": true,\n    \"declaration\": false,\n    \"moduleResolution\": \"node\",\n    \"emitDecoratorMetadata\": true,\n    \"experimentalDecorators\": true,\n    \"target\": \"ES2022\",\n    \"typeRoots\": [\n      \"node_modules/@types\"\n    ],\n    \"lib\": [\n      \"es2017\",\n      \"dom\"\n    ],\n    \"paths\": {\n      \"@app/core/*\": [\n        \"src/app/core/*\"\n      ],\n      \"@app/root-store/*\": [\n        \"src/app/store/*\"\n      ],\n      \"@app/root-store\": [\n        \"src/app/store/index\"\n      ],\n      \"@app/contacts-store/*\": [\n        \"src/app/views/contacts/store/*\"\n      ],\n      \"@app/contacts-store\": [\n        \"src/app/views/contacts/store/index\"\n      ],\n      \"@app/env\": [\n        \"src/environments/environment\"\n      ]\n    },\n    \"module\": \"ES2022\",\n    \"useDefineForClassFields\": false\n  }\n}\n",
+							"changes": [
+								"compilerOptions.target: \"es5\" -> \"ES2022\"",
+								"added compilerOptions.module = \"ES2022\"",
+								"added compilerOptions.useDefineForClassFields = false"
+							]
+						},
+						{
+							"path": "src/app/app-routing.module.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "51e4351920262dc0f72d8087aa937b4e095183ee1853eac9c3875d945c9cf976",
+							"sha256After": "51e4351920262dc0f72d8087aa937b4e095183ee1853eac9c3875d945c9cf976",
+							"source": "import { NgModule } from '@angular/core';\nimport { Routes, RouterModule } from '@angular/router';\n\n\nconst routes: Routes = [\n  {\n    path: '',\n    pathMatch: 'full',\n    redirectTo: '/contacts'\n  },\n  {\n    path: 'contacts', loadChildren: 'src/app/views/contacts/contacts.module#ContactsModule',\n  }\n];\n\n@NgModule({\n  imports: [RouterModule.forRoot(routes)],\n  exports: [RouterModule]\n})\nexport class AppRoutingModule { }\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/app.component.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "426e8daf06f1d4d212f776016e94e4ca27dff88062b4bad7abb22a52af56978b",
+							"sha256After": "426e8daf06f1d4d212f776016e94e4ca27dff88062b4bad7abb22a52af56978b",
+							"source": "import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';\nimport {Observable} from 'rxjs';\nimport * as fromRoot from '@app/root-store';\nimport {select, Store} from '@ngrx/store';\n\n@Component({\n  selector: 'app-root',\n  template: `\n    <app-toolbar [title]=\"currentPageTitle$ | async\" ></app-toolbar>\n\n    <div class=\"container\">\n      <router-outlet></router-outlet>\n      <app-footer></app-footer>\n    </div>\n  `,\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class AppComponent implements OnInit {\n\n  currentPageTitle$ = this.store.pipe(\n    select(fromRoot.getCurrentTitle)\n  );\n  constructor(private store: Store<fromRoot.State>) {}\n\n  ngOnInit() {\n  }\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/app.module.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "fa70641518ac02a902ac45366b76bdf17bed49c7b9b793f3de3b1f70f73351d9",
+							"sha256After": "fa70641518ac02a902ac45366b76bdf17bed49c7b9b793f3de3b1f70f73351d9",
+							"source": "import { BrowserModule } from '@angular/platform-browser';\nimport { NgModule } from '@angular/core';\nimport { AppRoutingModule } from './app-routing.module';\nimport { AppComponent } from './app.component';\nimport { StoreDevtoolsModule } from '@ngrx/store-devtools';\nimport {StoreModule} from '@ngrx/store';\nimport {EffectsModule} from '@ngrx/effects';\nimport {SharedModule} from './core/modules/shared.module';\nimport {ReactiveFormsModule} from '@angular/forms';\nimport {HttpClientModule} from '@angular/common/http';\nimport {SocketIoModule} from 'ngx-socket-io';\nimport {ServiceWorkerModule } from '@angular/service-worker';\nimport {environment} from '@app/env';\nimport {ROOT_REDUCERS} from '@app/root-store';\n\n@NgModule({\n  declarations: [\n    AppComponent\n  ],\n  imports: [\n    BrowserModule,\n    AppRoutingModule,\n    SharedModule,\n    ReactiveFormsModule,\n    HttpClientModule,\n    SocketIoModule,\n    StoreModule.forRoot(ROOT_REDUCERS), /* Initialise the Central Store with Application's main reducer*/\n    EffectsModule.forRoot([]), /* Start monitoring app's side effects */\n    !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 50 }) : [],\n    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })\n  ],\n  providers: [],\n  bootstrap: [AppComponent]\n})\nexport class AppModule { }\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/core/components/contact-details/contact-details-container.component.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "f924e8a7c1e3d858152977a071e035acfa6e6f5385bece16a93723375f461587",
+							"sha256After": "f924e8a7c1e3d858152977a071e035acfa6e6f5385bece16a93723375f461587",
+							"source": "import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';\nimport { Contact } from '@app/core/models';\n\n\n@Component({\n  selector: 'app-contact-details-container',\n  templateUrl: './contact-details-container.component.html',\n  styleUrls: ['./contact-details-container.component.sass'],\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class ContactDetailsContainerComponent implements OnInit {\n\n  @Input() contact: Contact;\n  @Output() edit = new EventEmitter<Contact>();\n  @Output() remove = new EventEmitter<Contact>();\n\n  constructor() { }\n\n  ngOnInit() {\n\n  }\n\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/core/components/contact-form/contact-form.component.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "8572313fc4e745c0ae9bb3b657456b34fec4b27d248b691787fa271e43be1eb8",
+							"sha256After": "8572313fc4e745c0ae9bb3b657456b34fec4b27d248b691787fa271e43be1eb8",
+							"source": "import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';\nimport { Contact } from '@app/core/models';\nimport {FormBuilder, FormGroup, Validators} from '@angular/forms';\n\n\n@Component({\n  selector: 'app-contact-form',\n  templateUrl: './contact-form.component.html',\n  styleUrls: ['./contact-form.component.sass'],\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class ContactFormComponent implements OnInit, OnChanges {\n\n  @Input() contact: Contact = {\n    id: undefined,\n    name: '',\n    email: '',\n    phone: ''\n  };\n\n  @Output() save = new EventEmitter<Contact>();\n\n  form: FormGroup;\n\n  constructor(public formBuilder: FormBuilder) {\n    this.form = this.formBuilder.group({\n      id: [this.contact.id],\n      name: [this.contact.name, Validators.required],\n      email: [this.contact.email, Validators.required],\n      phone: [this.contact.phone]\n    });\n  }\n\n  ngOnInit() {\n\n  }\n\n  ngOnChanges() {\n    if (this.contact) {\n      this.form.patchValue({...this.contact});\n    }\n  }\n\n  submit() {\n    if (this.form.valid) {\n      this.save.emit(this.form.value);\n    }\n\n  }\n\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/core/components/contact-list/contact-list.component.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "45c3b2923818b0e87df3a80422988318546bc3ff0a9068ce863b29cd89cd4db3",
+							"sha256After": "45c3b2923818b0e87df3a80422988318546bc3ff0a9068ce863b29cd89cd4db3",
+							"source": "import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';\nimport { Contact } from '@app/core/models';\n\n@Component({\n  selector: 'app-contact-list',\n  templateUrl: './contact-list.component.html',\n  styleUrls: ['./contact-list.component.sass'],\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class ContactListComponent implements OnInit {\n\n\n  @Input() contacts: Contact[];\n  @Output() edit = new EventEmitter<Contact>();\n  @Output() show = new EventEmitter<Contact>();\n  @Output() remove = new EventEmitter<Contact>();\n\n  contactsTrackByFn = (index: number, contact: Contact) => contact.id;\n\n  constructor() {}\n\n  ngOnInit() {}\n\n\n  showDetails(contact: Contact) {\n    this.show.emit(contact);\n  }\n\n  editContact(contact: Contact) {\n    this.edit.emit(contact);\n  }\n\n  deleteContact(contact: Contact) {\n    this.remove.emit(contact);\n  }\n\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/core/components/footer/footer.component.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "80e39a4d3578c35bb9e3ca240028bcad3791d8dcc5a02bbd0bc8aa3857708be5",
+							"sha256After": "80e39a4d3578c35bb9e3ca240028bcad3791d8dcc5a02bbd0bc8aa3857708be5",
+							"source": "import {ChangeDetectionStrategy, Component} from '@angular/core';\n\n@Component({\n  selector: 'app-footer',\n  templateUrl: './footer.component.html',\n  styleUrls: ['./footer.component.sass'],\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class FooterComponent { }\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/core/components/toolbar/toolbar.component.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "031ca68bbaf5155414371a6d8330940fdfae082e8f7af7736f2a37076aaced72",
+							"sha256After": "031ca68bbaf5155414371a6d8330940fdfae082e8f7af7736f2a37076aaced72",
+							"source": "import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';\n\n@Component({\n  selector: 'app-toolbar',\n  templateUrl: './toolbar.component.html',\n  styleUrls: ['./toolbar.component.sass'],\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class ToolbarComponent implements OnInit {\n\n  @Input() title;\n\n  constructor() { }\n\n  ngOnInit() {\n\n  }\n\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/core/helpers/ngrx.helpers.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "5a83bde36e9f1af1b21eb3e5be0cd8c99c0e465fe93c147dc8e5e7f17a065f51",
+							"sha256After": "5a83bde36e9f1af1b21eb3e5be0cd8c99c0e465fe93c147dc8e5e7f17a065f51",
+							"source": "import {Observable} from 'rxjs';\nimport {map} from 'rxjs/operators';\n\n\nexport function toPayload<r extends string, T>(k: r) {\n  return (source: Observable<T>) =>\n    source.pipe( map(data => ({r: data})));\n}\n\n\nexport const setState = <S>(update: Partial<S>, state: S) => ({\n  ...state,\n  ...update\n});\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/core/models/contact.events.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "8a83f6b07d69ac89f32ac13f63eaee7a1aabca9c1e89b91756880ec55816692e",
+							"sha256After": "8a83f6b07d69ac89f32ac13f63eaee7a1aabca9c1e89b91756880ec55816692e",
+							"source": "export enum ContactsEventTypes {\n  // SERVER SIDE SOCKET ACTIONS\n  LIVE_CREATED = '[Contacts] LIVE CREATED',\n  LIVE_UPDATED = '[Contacts] LIVE UPDATED',\n  LIVE_DELETED = '[Contacts] LIVE DELETED',\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/core/models/contact.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "33ffee1970f865091f990f62db0aec192fd4bab26c1a657a43346d7901e759cd",
+							"sha256After": "33ffee1970f865091f990f62db0aec192fd4bab26c1a657a43346d7901e759cd",
+							"source": "export interface Contact {\n  id?: number;\n  name: string;\n  email: string;\n  phone?: string;\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/core/models/index.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "8ae710c38efccf4dbeca2014cac605a0d5a276863dd0902cb906ea9e44ea3e4f",
+							"sha256After": "8ae710c38efccf4dbeca2014cac605a0d5a276863dd0902cb906ea9e44ea3e4f",
+							"source": "export * from './contact';\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/core/modules/shared.module.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "00f6118d3025b80d03aeb8b1a97bff94023105fcda7bad602204cc5d6a78b68b",
+							"sha256After": "00f6118d3025b80d03aeb8b1a97bff94023105fcda7bad602204cc5d6a78b68b",
+							"source": "import { NgModule } from '@angular/core';\nimport {ContactListComponent} from '../components/contact-list/contact-list.component';\nimport {ContactFormComponent} from '../components/contact-form/contact-form.component';\nimport {ContactDetailsContainerComponent} from '../components/contact-details/contact-details-container.component';\nimport {ToolbarComponent} from '../components/toolbar/toolbar.component';\nimport {CommonModule} from '@angular/common';\nimport {ReactiveFormsModule} from '@angular/forms';\nimport {RouterModule} from '@angular/router';\nimport {FooterComponent} from '@app/core/components/footer/footer.component';\n\n@NgModule({\n  imports: [\n    CommonModule,\n    ReactiveFormsModule,\n    RouterModule\n  ],\n  declarations: [\n    ContactListComponent,\n    ContactDetailsContainerComponent,\n    ContactFormComponent,\n    ToolbarComponent,\n    FooterComponent\n  ],\n  exports: [\n    ContactListComponent,\n    ContactDetailsContainerComponent,\n    ContactFormComponent,\n    ToolbarComponent,\n    FooterComponent\n  ]\n})\nexport class SharedModule { }\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/core/resolvers/title.resolver.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "08ff144b7f5ad2064480e899aa9c2c76a52c3fd96da424c672729b6a16b62aca",
+							"sha256After": "08ff144b7f5ad2064480e899aa9c2c76a52c3fd96da424c672729b6a16b62aca",
+							"source": "import {Injectable} from '@angular/core';\nimport {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';\nimport {Observable, of} from 'rxjs';\nimport * as fromRoot from '@app/root-store';\nimport {Store} from '@ngrx/store';\nimport {setCurrentTitle} from '../../store/actions/ui-actions';\n\n@Injectable({\n  providedIn: 'root'\n})\n\nexport class TitleResolver implements Resolve<string> {\n  constructor(private store: Store<fromRoot.State>) {}\n\n  resolve(route: ActivatedRouteSnapshot,\n          state: RouterStateSnapshot): Observable<string> {\n\n    this.store.dispatch(setCurrentTitle({payload: route.data.title}));\n\n    return of(route.data.title);\n\n  }\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/store/actions/ui-actions.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "554e0c35901b2597ae108d2a3acba05c3063f761e5f9bbe8e3611cec6b4f410e",
+							"sha256After": "554e0c35901b2597ae108d2a3acba05c3063f761e5f9bbe8e3611cec6b4f410e",
+							"source": "import {createAction, props} from '@ngrx/store';\n\nexport const setCurrentTitle = createAction(\n  '[UI] Set current title',\n  props<{payload: string}>()\n);\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/store/index.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "9ba5094a8a051b025a16a4cd816552277e6abb9508eaa3d8b147a0e661a1e7b7",
+							"sha256After": "9ba5094a8a051b025a16a4cd816552277e6abb9508eaa3d8b147a0e661a1e7b7",
+							"source": "import {Action, ActionReducerMap, createFeatureSelector, createSelector} from '@ngrx/store';\n\nimport * as fromUi from './reducers/ui-reducer';\nimport {InjectionToken} from '@angular/core';\n\nexport interface State {\n  ui: fromUi.UiState;\n  // more state here\n}\n\n// AOT compatibility\nexport const ROOT_REDUCERS = new InjectionToken<ActionReducerMap<State, Action>>(\n  'ROOT_REDUCERS_TOKEN',\n  {\n    factory: () => ({\n      ui: fromUi.reducer\n    })\n  }\n);\n\n/// selectors\nexport const getUiState = createFeatureSelector<fromUi.UiState>('ui');\n\nexport const getCurrentTitle = createSelector(getUiState, fromUi.getCurrentTitle);\n\n\n\n\n\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/store/reducers/ui-reducer.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "5fc291d9a13a39c4f974179c645bfb65fea5c20150c0810df41abeb3503040f2",
+							"sha256After": "5fc291d9a13a39c4f974179c645bfb65fea5c20150c0810df41abeb3503040f2",
+							"source": "import {createReducer, on} from '@ngrx/store';\nimport {setCurrentTitle} from '@app/root-store/actions/ui-actions';\nimport {setState} from '@app/core/helpers/ngrx.helpers';\n\nexport interface UiState {\n  currentTitle: string;\n}\n\nexport const INIT_UI_STATE: UiState = {\n  currentTitle: undefined\n};\n\nexport const reducer = createReducer(\n  INIT_UI_STATE,\n  on(setCurrentTitle, (state, {payload: currentTitle}) =>\n    setState({currentTitle}, state)\n  )\n);\n\n\n// SELECTORS\nexport const getCurrentTitle = (state: UiState) => state ? state.currentTitle : null;\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/views/contacts/contact-details/contact-details.component.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "083d64d8669ad75a045c44150153d903da4822b6798b813279962d1f6de23a03",
+							"sha256After": "083d64d8669ad75a045c44150153d903da4822b6798b813279962d1f6de23a03",
+							"source": "import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';\nimport { ActivatedRoute, Router } from '@angular/router';\nimport { Subscription } from 'rxjs';\nimport {filter, map, switchMap} from 'rxjs/operators';\nimport { Contact } from '@app/core/models';\nimport { ContactsStoreFacade } from '@app/contacts-store/contacts.store-facade';\nimport { ContactsEffects } from '@app/contacts-store/contacts-effects';\n\n@Component({\n  selector: 'app-contact-details',\n  templateUrl: './contact-details.component.html',\n  styleUrls: ['./contact-details.component.sass'],\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class ContactDetailsComponent implements OnInit, OnDestroy {\n\n  contact$ = this.activatedRoute.params.pipe(\n    map( params => params.contactId),\n    switchMap(id => this.contactsFacade.getContactById(id))\n  );\n\n  redirectSub: Subscription;\n\n  constructor(\n      private activatedRoute: ActivatedRoute,\n      private router: Router,\n      private contactsFacade: ContactsStoreFacade,\n      private contactsEffects: ContactsEffects\n  ) {}\n\n  ngOnInit() {\n\n    // If the destroy effect fires, we check if the current id is the one being viewed, and redirect to index\n\n    this.redirectSub = this.contactsEffects.destroy$.pipe(\n      filter( action =>\n        action.id === +this.activatedRoute.snapshot.params.contactId\n      )\n    ).subscribe(_ => this.router.navigate(['/contacts']));\n\n    this.activatedRoute.params.subscribe(params => {\n      // update our id from the backend in case it was modified by another client\n      this.contactsFacade.loadContact(+params.contactId);\n    });\n\n  }\n\n\n  editContact(contact: Contact) {\n    this.router.navigate(['/contacts', contact.id, 'edit']);\n  }\n\n  deleteContact(contact: Contact) {\n    const r = confirm('Are you sure?');\n    if (r) {\n      this.contactsFacade.deleteContact(contact.id);\n    }\n  }\n\n  ngOnDestroy() {\n    this.redirectSub.unsubscribe();\n  }\n\n\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/views/contacts/contact-edit/contact-edit.component.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "49afdaba2d909cc30934b7cb2e986692278c882d5571a967c61426fde305867e",
+							"sha256After": "49afdaba2d909cc30934b7cb2e986692278c882d5571a967c61426fde305867e",
+							"source": "import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';\nimport { Subscription } from 'rxjs';\nimport { Contact } from '@app/core/models';\nimport { ActivatedRoute, Router } from '@angular/router';\nimport {filter, map, switchMap} from 'rxjs/operators';\nimport { ContactsStoreFacade } from '@app/contacts-store/contacts.store-facade';\nimport { ContactsEffects } from '@app/contacts-store/contacts-effects';\n\n\n@Component({\n  selector: 'app-contact-edit',\n  templateUrl: './contact-edit.component.html',\n  styleUrls: ['./contact-edit.component.sass'],\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class ContactEditComponent implements OnInit, OnDestroy {\n\n  contact$ = this.activatedRoute.params.pipe(\n    map( params => params.contactId),\n    switchMap(id => this.contactsFacade.getContactById(id))\n  );\n  redirectSub: Subscription;\n\n  constructor(\n    private activatedRoute: ActivatedRoute,\n    private router: Router,\n    private contactsFacade: ContactsStoreFacade,\n    private contactsEffects: ContactsEffects\n  ) { }\n\n  ngOnInit() {\n\n    // listen to update$ side effect, after updating redirect to the contact details view\n    this.redirectSub = this.contactsEffects.update$.pipe(\n      // make sure that the currently edited contact has been update and not some other contact (emitted by sockets)\n      filter( action => action.contact.id === +this.activatedRoute.snapshot.params.contactId)\n    ).subscribe(\n      action => this.router.navigate(['/contacts', action.contact.id])\n    );\n\n    this.activatedRoute.params.subscribe(params => {\n      // update our id from the backend in case it was modified by another client\n      this.contactsFacade.loadContact(+params.contactId);\n    });\n\n  }\n\n  ngOnDestroy() {\n    this.redirectSub.unsubscribe();\n  }\n\n  submitted(contact: Contact) {\n    this.contactsFacade.updateContact(contact);\n  }\n\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/views/contacts/contact-new/contact-new.component.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "66303499d6dacc93bab1112400724a3ac99fd578e892c1e84d64137fe9ba3f9a",
+							"sha256After": "66303499d6dacc93bab1112400724a3ac99fd578e892c1e84d64137fe9ba3f9a",
+							"source": "import { ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';\nimport { Contact } from '@app/core/models';\nimport { Router} from '@angular/router';\nimport { ContactsStoreFacade} from '@app/contacts-store/contacts.store-facade';\n\n@Component({\n  selector: 'app-contact-new',\n  templateUrl: './contact-new.component.html',\n  styleUrls: ['./contact-new.component.sass'],\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class ContactNewComponent implements OnInit, OnDestroy {\n\n  constructor(\n    private contactsFacade: ContactsStoreFacade,\n    private router: Router\n  ) { }\n\n  ngOnInit() {\n  }\n\n  ngOnDestroy() {\n  }\n\n  submitted(contact: Contact) {\n    this.contactsFacade.createContact(contact);\n    this.router.navigate(['/contacts']);\n  }\n\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/views/contacts/contacts-index/contacts-index.component.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "8ccad6996383117056919ebab04af54fe80b3a47bae4e1fb04f479208b575fa7",
+							"sha256After": "8ccad6996383117056919ebab04af54fe80b3a47bae4e1fb04f479208b575fa7",
+							"source": "import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';\nimport { Contact } from '@app/core/models';\nimport { Router } from '@angular/router';\nimport { ContactsStoreFacade } from '@app/contacts-store/contacts.store-facade';\n\n\n@Component({\n  selector: 'app-contacts-index',\n  templateUrl: './contacts-index.component.html',\n  styleUrls: ['./contacts-index.component.sass'],\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class ContactsIndexComponent implements OnInit {\n\n  contacts$ = this.contactsFacade.contacts$;\n\n  constructor(private contactsFacade: ContactsStoreFacade, private router: Router) { }\n\n  ngOnInit() {}\n\n  editContact(contact: Contact) {\n    this.router.navigate(['/contacts', contact.id, 'edit']);\n  }\n\n  showContact(contact: Contact) {\n    this.router.navigate(['/contacts', contact.id]);\n  }\n\n  deleteContact(contact: Contact) {\n    const r = confirm('Are you sure?');\n    if (r) {\n      this.contactsFacade.deleteContact(contact.id);\n    }\n  }\n\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/views/contacts/contacts-routing.module.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "7c95d295bf39c5104edc620895465271261af6702d6219127d240c2c541b9131",
+							"sha256After": "7c95d295bf39c5104edc620895465271261af6702d6219127d240c2c541b9131",
+							"source": "import { NgModule } from '@angular/core';\nimport { Routes, RouterModule } from '@angular/router';\nimport {ContactsComponent} from './contacts.component';\nimport {ContactNewComponent} from './contact-new/contact-new.component';\nimport {ContactsIndexComponent} from './contacts-index/contacts-index.component';\nimport {ContactDetailsComponent} from './contact-details/contact-details.component';\nimport {ContactEditComponent} from './contact-edit/contact-edit.component';\nimport {TitleResolver} from '@app/core/resolvers/title.resolver';\n\nconst routes: Routes = [\n  {\n    path: '',\n    component: ContactsComponent,\n    children: [\n      {\n        path: '',\n        component: ContactsIndexComponent,\n        data: {title: 'Contacts index'},\n        resolve: {title: TitleResolver}\n      },\n      {\n        path: 'new',\n        component: ContactNewComponent,\n        data: {title: 'New contact'},\n        resolve: {title: TitleResolver}\n      },\n      {\n        path: ':contactId',\n        component: ContactDetailsComponent,\n        data: {title: 'Contact details'},\n        resolve: {title: TitleResolver}\n      },\n      {\n        path: ':contactId/edit',\n        component: ContactEditComponent,\n        data: {title: 'Edit contact'},\n        resolve: {title: TitleResolver}\n      }\n    ]\n  }\n];\n\n@NgModule({\n  imports: [RouterModule.forChild(routes)],\n  exports: [RouterModule]\n})\nexport class ContactsRoutingModule { }\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/views/contacts/contacts.component.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "953953224de9cec22994a9db5d0010fe2997901068f07b062adc5db1aeefdb55",
+							"sha256After": "953953224de9cec22994a9db5d0010fe2997901068f07b062adc5db1aeefdb55",
+							"source": "import {ChangeDetectionStrategy, Component} from '@angular/core';\n\n@Component({\n  selector: 'app-contacts',\n  template: `<router-outlet></router-outlet>`,\n  changeDetection: ChangeDetectionStrategy.OnPush\n})\nexport class ContactsComponent {}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/views/contacts/contacts.module.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "8b33045f8bb46658daaab145b629528d37396e76f5d9face85ffb19b436004bd",
+							"sha256After": "8b33045f8bb46658daaab145b629528d37396e76f5d9face85ffb19b436004bd",
+							"source": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport {ContactsComponent} from './contacts.component';\nimport {ContactDetailsComponent} from './contact-details/contact-details.component';\nimport {ContactEditComponent} from './contact-edit/contact-edit.component';\nimport {ContactNewComponent} from './contact-new/contact-new.component';\nimport {ContactsIndexComponent} from './contacts-index/contacts-index.component';\nimport {SharedModule} from '@app/core/modules/shared.module';\nimport {ContactsRoutingModule} from './contacts-routing.module';\nimport {StoreModule} from '@ngrx/store';\nimport {EffectsModule} from '@ngrx/effects';\nimport {ContactsEffects} from './store/contacts-effects';\nimport {ContactsStoreFacade} from '@app/contacts-store/contacts.store-facade';\nimport {reducers} from '@app/contacts-store';\nimport {ContactsSocketService} from './services/contacts-socket.service';\nimport {ContactsService} from './services/contacts.service';\n\n\n@NgModule({\n  imports: [\n    CommonModule,\n    SharedModule,\n    ContactsRoutingModule,\n    StoreModule.forFeature('contacts', reducers),\n    EffectsModule.forFeature([ContactsEffects])\n  ],\n  declarations: [\n    ContactsComponent,\n    ContactDetailsComponent,\n    ContactEditComponent,\n    ContactNewComponent,\n    ContactsIndexComponent\n  ],\n  providers: [ContactsService, ContactsSocketService, ContactsStoreFacade]\n})\nexport class ContactsModule { }\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/views/contacts/services/contacts-mock.service.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "a0601b0118882332f26e560cf68490619d573c77e3ac735a0b075ac7f93dd7c1",
+							"sha256After": "a0601b0118882332f26e560cf68490619d573c77e3ac735a0b075ac7f93dd7c1",
+							"source": "import { Observable, of } from 'rxjs';\nimport { Contact } from '@app/core/models';\n\n\nexport class ContactsServiceMock {\n\n  contacts = [{\n    id: 1,\n    name: 'john',\n    email: 'john@gmail.com'\n  }, {\n    id: 2,\n    name: 'adam',\n    email: 'adam@gmail.com'\n  }];\n\n  index(): Observable<Contact[]> {\n   return of(this.contacts);\n  }\n\n  show(conactId: number): Observable<Contact> {\n    return of({\n      id: 1,\n      name: 'john',\n      email: 'john@gmail.com'\n    });\n  }\n\n  create(contact: Contact) {\n    return of({\n      id: 4,\n      name: 'john doe',\n      email: 'john@gmail.com'\n    });\n  }\n\n  destroy(id: number): Observable<number> {\n    return of(1);\n  }\n\n  update(contact: Contact): Observable<Contact> {\n    return of(contact);\n  }\n\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/views/contacts/services/contacts-socket.service.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "88e3f058df5b758194b6ff07faf2689a87cdaba500abe61a34783ead4821347f",
+							"sha256After": "88e3f058df5b758194b6ff07faf2689a87cdaba500abe61a34783ead4821347f",
+							"source": "import { Injectable } from '@angular/core';\nimport {Socket} from 'ngx-socket-io';\nimport {environment} from '@app/env';\nimport {ContactsEventTypes} from '@app/core/models/contact.events';\nimport {Contact} from '@app/core/models';\n\n\n@Injectable()\nexport class ContactsSocketService extends Socket {\n\n  liveCreated$ = this.fromEvent<Contact>(ContactsEventTypes.LIVE_CREATED);\n  liveUpdated$ = this.fromEvent<Contact>(ContactsEventTypes.LIVE_UPDATED);\n  liveDeleted$ = this.fromEvent<number>(ContactsEventTypes.LIVE_DELETED);\n\n  constructor() {\n    super({\n      url: `${environment.socketConfig.url}/contacts`,\n      options: environment.socketConfig.opts\n    });\n  }\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/views/contacts/services/contacts.service.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "79695888dbb4cd90d17d1e450816d4b8b03713141121a0fb764e6ff5fe681c22",
+							"sha256After": "79695888dbb4cd90d17d1e450816d4b8b03713141121a0fb764e6ff5fe681c22",
+							"source": "import { Injectable } from '@angular/core';\nimport {Observable} from 'rxjs';\nimport {HttpClient} from '@angular/common/http';\nimport {Contact} from '@app/core/models';\nimport {environment} from '@app/env';\n\n\n@Injectable()\nexport class ContactsService {\n\n  constructor(private http: HttpClient ) { }\n\n\n  index(): Observable<Contact[]> {\n    return this.http\n        .get<Contact[]>(`${environment.appApi.baseUrl}/contacts`);\n  }\n\n  show(conactId: number): Observable<Contact> {\n    return this.http\n        .get<Contact>(`${environment.appApi.baseUrl}/contacts/${conactId}`);\n  }\n\n  create(contact: Contact): Observable<Contact> {\n    return this.http.post<Contact>(`${environment.appApi.baseUrl}/contacts`, contact);\n  }\n\n  update(contact: Partial<Contact>): Observable<Contact> {\n    return this.http.patch<Contact>(`${environment.appApi.baseUrl}/contacts/${contact.id}`, contact);\n  }\n\n\n  destroy(id: number): Observable<Contact> {\n    return this.http.delete<Contact>(`${environment.appApi.baseUrl}/contacts/${id}`);\n  }\n\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/views/contacts/store/contacts-actions.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "2808789f867be28d226303f967f943850c0b414fb6fc7222f1340b424d6e88c5",
+							"sha256After": "2808789f867be28d226303f967f943850c0b414fb6fc7222f1340b424d6e88c5",
+							"source": "import {createAction, props} from '@ngrx/store';\nimport { Contact } from '@app/core/models';\n\nexport const loadAll = createAction(\n  '[Contacts] Load all'\n);\n\nexport const load = createAction(\n  '[Contacts] Load',\n  props<{id: number}>()\n);\n\nexport const create = createAction(\n  '[Contacts] Create',\n  props<{contact: Contact}>()\n);\n\nexport const update = createAction(\n  '[Contacts] Update',\n  props<{contact: Partial<Contact>}>()\n);\n\nexport const remove = createAction(\n  '[Contacts] Remove',\n  props<{id: number}>()\n);\n\nexport const loadAllSuccess = createAction(\n  '[Contacts] Load all success',\n  props<{contacts: Contact[]}>()\n);\n\nexport const loadSuccess = createAction(\n  '[Contacts] Load success',\n  props<{'contact': Contact}>()\n);\n\nexport const createSuccess = createAction(\n  '[Contacts] Create success',\n  props<{contact: Contact}>()\n);\n\nexport const updateSuccess = createAction(\n  '[Contacts] Update success',\n  props<{contact: Partial<Contact>}>()\n);\n\n\nexport const removeSuccess = createAction(\n  '[Contacts] Remove success',\n  props<{id: number}>()\n);\n\n\nexport const failure = createAction(\n  '[Contacts] Failure',\n  props<{err: {concern: 'CREATE' | 'PATCH', error: any}}>()\n);\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/views/contacts/store/contacts-effects.ts",
+							"kind": "application",
+							"changed": true,
+							"sha256Before": "78035aecbb6e1cd1d1156791ea33c6a2ed2ec16340cba49f148a96f9439663c9",
+							"sha256After": "e2b801fe0efeb4963a47dbd1288137a40d2315f9eb73fa5e072c50092bdd8b8b",
+							"source": "import { Injectable } from '@angular/core';\nimport { of } from 'rxjs';\nimport {\n  catchError,\n  exhaustMap,\n  map, pluck,\n  startWith,\n  switchMap\n} from 'rxjs/operators';\nimport {Actions, createEffect, ofType} from '@ngrx/effects';\nimport {ContactsService} from '../services/contacts.service';\nimport {ContactsSocketService} from '../services/contacts-socket.service';\nimport {\n  create,\n  createSuccess,\n  failure,\n  load,\n  loadAll,\n  loadAllSuccess,\n  loadSuccess,\n  remove,\n  removeSuccess,\n  update,\n  updateSuccess\n} from '@app/contacts-store/contacts-actions';\n\n\n/**\n * Effects file is for isolating and managing side effects of the application in one place\n * Http requests, Sockets, Routing, LocalStorage, etc\n */\n\n@Injectable()\nexport class ContactsEffects {\n\n\n  loadAll$ = createEffect( () => this.actions$.pipe(\n    ofType(loadAll), /* When action is dispatched */\n    startWith(loadAll()),\n    /* Hit the Contacts Index endpoint of our REST API */\n    /* Dispatch LoadAllSuccess action to the central store with id list returned by the backend as id*/\n    /* 'Contacts Reducers' will take care of the rest */\n    switchMap(() => this.contactsService.index().pipe(\n      map(contacts => loadAllSuccess({contacts}))\n    )),\n  ));\n\n\n  load$ = createEffect( () => this.actions$.pipe(\n    ofType(load),\n    pluck('id'),\n    switchMap( id => this.contactsService.show(id).pipe(\n      map(contact => loadSuccess({contact}))\n    ))\n  ));\n\n\n  create$ = createEffect( () =>this.actions$.pipe(\n    ofType(create),\n    pluck('contact'),\n    switchMap( contact => this.contactsService.create(contact).pipe(\n      map(contact => createSuccess({contact})),\n      catchError(err => {\n        alert(err.message);\n        return of(failure({err: {concern: 'CREATE', error: err}}));\n      })\n    ))\n  ));\n\n\n  update$ = createEffect( () => this.actions$.pipe(\n    ofType(update),\n    pluck('contact'),\n    exhaustMap( contact => this.contactsService.update(contact).pipe(\n      map(contact => updateSuccess({contact}))\n    ))\n  ));\n\n  destroy$ = createEffect( () => this.actions$.pipe(\n    ofType(remove),\n    pluck('id'),\n    switchMap( id => this.contactsService.destroy(id).pipe(\n      pluck('id'),\n      map(id => removeSuccess({id}))\n    ))\n  ));\n\n  // Socket Live Events\n\n  liveCreate$ = createEffect(() => this.contactsSocket.liveCreated$.pipe(\n    map(contact => createSuccess({contact}))\n  ));\n\n\n  liveUpdate$ = createEffect(() => this.contactsSocket.liveUpdated$.pipe(\n    map(contact => updateSuccess({contact}))\n  ));\n\n  liveDestroy$ = createEffect(() => this.contactsSocket.liveDeleted$.pipe(\n    map(id => removeSuccess({id}))\n  ));\n\n  constructor(\n    private actions$: Actions,\n    private contactsService: ContactsService,\n    private contactsSocket: ContactsSocketService\n  ) {}\n\n}\n",
+							"changes": [
+								"line 90: ngrx-effect-decorator @Effect() liveCreate$ -> liveCreate$ = createEffect(() => …)",
+								"line 96: ngrx-effect-decorator @Effect() liveUpdate$ -> liveUpdate$ = createEffect(() => …)",
+								"line 101: ngrx-effect-decorator @Effect() liveDestroy$ -> liveDestroy$ = createEffect(() => …)"
+							]
+						},
+						{
+							"path": "src/app/views/contacts/store/contacts-reducer.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "d0eb84f621c87f7051a87b7caa0158e3a73c2b6c1ed6d8a2d1b1805fcb67f4fe",
+							"sha256After": "d0eb84f621c87f7051a87b7caa0158e3a73c2b6c1ed6d8a2d1b1805fcb67f4fe",
+							"source": "import { Contact } from '@app/core/models';\nimport {EntityState, createEntityAdapter} from '@ngrx/entity';\nimport {createReducer, on} from '@ngrx/store';\nimport {\n  createSuccess,\n  loadAllSuccess,\n  loadSuccess, removeSuccess,\n  updateSuccess\n} from '@app/contacts-store/contacts-actions';\n\n// This adapter will allow is to manipulate contacts (mostly CRUD operations)\nexport const contactsAdapter = createEntityAdapter<Contact>({\n  selectId: (contact: Contact) => contact.id,\n  sortComparer: false\n});\n\n// -----------------------------------------\n// The shape of EntityState\n// ------------------------------------------\n// interface EntityState<Contact> {\n//   ids: string[] | number[];\n//   entities: { [id: string]: Contact };\n// }\n// -----------------------------------------\n// -> ids arrays allow us to sort data easily\n// -> entities map allows us to access the data quickly without iterating/filtering though an array of objects\n\nexport interface State extends EntityState<Contact> {\n  // additional props here\n}\n\nexport const INIT_STATE: State = contactsAdapter.getInitialState({\n  // additional props default values here\n});\n\nexport const reducer = createReducer<State>(\n  INIT_STATE,\n  on(loadAllSuccess, (state, {contacts}) =>\n    contactsAdapter.addAll(contacts, state)\n  ),\n  on(loadSuccess, (state, {contact}) =>\n    contactsAdapter.upsertOne(contact, state)\n  ),\n  on(createSuccess, (state, {contact}) =>\n    contactsAdapter.addOne(contact, state)\n  ),\n  on(updateSuccess, (state, {contact}) =>\n    contactsAdapter.updateOne({id: contact.id, changes: contact}, state)\n  ),\n  on(removeSuccess, (state, {id}) =>\n    contactsAdapter.removeOne(id, state)\n  )\n);\n\nexport const getContactById = (id: number) => (state: State) => state.entities[id];\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/views/contacts/store/contacts.store-facade.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "85410decc4992cde4cfc296528925b1826f7d76a3d80275bdd70c3159ad94484",
+							"sha256After": "85410decc4992cde4cfc296528925b1826f7d76a3d80275bdd70c3159ad94484",
+							"source": "import { Injectable } from '@angular/core';\nimport * as fromRoot from '@app/root-store';\nimport * as fromContacts from '@app/contacts-store';\nimport { select, Store } from '@ngrx/store';\n\nimport { Contact } from '@app/core/models';\nimport {create, load, remove, update} from '@app/contacts-store/contacts-actions';\n\n@Injectable()\nexport class ContactsStoreFacade {\n\n  contacts$ = this.store.pipe(\n    select(fromContacts.getAllContacts)\n  );\n\n  constructor(private store: Store<fromRoot.State>) { }\n\n  loadContact(id: number) {\n    this.store.dispatch(load({id}));\n  }\n\n  createContact(contact: Contact) {\n    this.store.dispatch(create({contact}));\n  }\n\n  updateContact(contact: Contact) {\n    this.store.dispatch(update({contact}));\n  }\n\n  deleteContact(id: number) {\n    this.store.dispatch(remove({id}));\n  }\n\n  getContactById(id: number) {\n    return this.store.pipe(\n      select(fromContacts.getContactById(id))\n    )\n  }\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/views/contacts/store/index.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "f529053c251b5aeff66142be37c7cf7dd81d28eb7e95f12fbe60b3a20b42cd67",
+							"sha256After": "f529053c251b5aeff66142be37c7cf7dd81d28eb7e95f12fbe60b3a20b42cd67",
+							"source": "import * as fromContacts from './contacts-reducer';\nimport {Action, combineReducers, createFeatureSelector, createSelector} from '@ngrx/store';\n\nexport interface ContactsState {\n  contacts: fromContacts.State;\n}\n\n/** Provide reducers with AoT-compilation compliance */\nexport function reducers(state: ContactsState | undefined, action: Action) {\n  return combineReducers({\n    contacts: fromContacts.reducer\n  })(state, action)\n}\n\n\n/**\n * The createFeatureSelector function selects a piece of state from the root of the state object.\n * This is used for selecting feature states that are loaded eagerly or lazily.\n */\n\nexport const getContactsState = createFeatureSelector<ContactsState>('contacts');\n\nexport const getContactsEntitiesState = createSelector(\n  getContactsState,\n  state => state.contacts\n);\n\nexport const {\n  selectAll: getAllContacts,\n} = fromContacts.contactsAdapter.getSelectors(getContactsEntitiesState);\n\nexport const getContactById = (id: number) => createSelector(\n  getContactsEntitiesState,\n  fromContacts.getContactById(id)\n);\n",
+							"changes": []
+						},
+						{
+							"path": "src/environments/environment.dev.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "8a91516667b531968c6f47752381b43de653f86602bb559c139bd20b6f255464",
+							"sha256After": "8a91516667b531968c6f47752381b43de653f86602bb559c139bd20b6f255464",
+							"source": "export const environment = {\n  production: true,\n  appApi: {\n    baseUrl: 'http://dev.contacts.com:3000'\n  },\n  socketConfig: {\n    url: 'http://dev.contacts.com:3000',\n    opts: {\n      transports: ['websocket']\n    }\n  }\n};\n",
+							"changes": []
+						},
+						{
+							"path": "src/environments/environment.local.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "1e4199bad5a3c47813c6d36011ef158e1e64d56d44846cf1d7e5785a2fee1fe0",
+							"sha256After": "1e4199bad5a3c47813c6d36011ef158e1e64d56d44846cf1d7e5785a2fee1fe0",
+							"source": "export const environment = {\n  production: false,\n  appApi: {\n    baseUrl: 'http://localhost:3000'\n  },\n  socketConfig: {\n    url: 'http://localhost:3000',\n    opts: {\n      transports: ['websocket']\n    }\n  }\n};\n",
+							"changes": []
+						},
+						{
+							"path": "src/environments/environment.prod.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "257af4ea1aad33520bc01c6fae8a93563e053d5c882107c309d3e452d5ff0cd8",
+							"sha256After": "257af4ea1aad33520bc01c6fae8a93563e053d5c882107c309d3e452d5ff0cd8",
+							"source": "export const environment = {\n  production: true,\n  appApi: {\n    baseUrl: 'https://contacts-api.vatsaev.com'\n  },\n  socketConfig: {\n    url: 'https://contacts-api.vatsaev.com',\n    opts: {\n      transports: ['websocket']\n    }\n  }\n};\n",
+							"changes": []
+						},
+						{
+							"path": "src/environments/environment.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "07932c6c1c76beddd6dbdac4cf67cc8a234a80511b2ea8ecae914eec7f32f1b2",
+							"sha256After": "07932c6c1c76beddd6dbdac4cf67cc8a234a80511b2ea8ecae914eec7f32f1b2",
+							"source": "// This file can be replaced during build by using the `fileReplacements` array.\n// `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.\n// The list of file replacements can be found in `angular.json`.\n\nexport const environment = {\n  production: false,\n  appApi: {\n    baseUrl: 'http://localhost:3000'\n  },\n  socketConfig: {\n    url: 'http://localhost:3000',\n    opts: {\n      transports: ['websocket']\n    }\n  }\n};\n\n/*\n * In development mode, to ignore zone related error stack frames such as\n * `zone.run`, `zoneDelegate.invokeTask` for easier debugging, you can\n * import the following file, but please comment it out in production mode\n * because it will have performance impact when throw error\n */\n// import 'zone.js/dist/zone-error';  // Included with Angular CLI.\n",
+							"changes": []
+						},
+						{
+							"path": "src/main.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "446dc4034ea917866e4d00f42468b2fb581ad6ad73a321ba706ec96b945ecb00",
+							"sha256After": "446dc4034ea917866e4d00f42468b2fb581ad6ad73a321ba706ec96b945ecb00",
+							"source": "import { enableProdMode } from '@angular/core';\nimport { platformBrowserDynamic } from '@angular/platform-browser-dynamic';\n\nimport { AppModule } from './app/app.module';\nimport { environment } from './environments/environment';\n\nif (environment.production) {\n  enableProdMode();\n}\n\nplatformBrowserDynamic().bootstrapModule(AppModule).then(() => {\n  if ('serviceWorker' in navigator && environment.production) {\n    navigator.serviceWorker.register('/ngsw-worker.js');\n  }\n}).catch(err => console.log(err));\n",
+							"changes": []
+						},
+						{
+							"path": "src/polyfills.ts",
+							"kind": "application",
+							"changed": true,
+							"sha256Before": "293baf2fac7a559702a94e7e0edcaa4f0c7f66421cb0aae974b67a0cfa357195",
+							"sha256After": "5081738064f7709b27768634784b6b18a43055258821b33a2a6f506138168a4e",
+							"source": "/**\n * This file includes polyfills needed by Angular and is loaded before the app.\n * You can add your own extra polyfills to this file.\n *\n * This file is divided into 2 sections:\n *   1. Browser polyfills. These are applied before loading ZoneJS and are sorted by browsers.\n *   2. Application imports. Files imported after ZoneJS that should be loaded before your main\n *      file.\n *\n * The current setup is for so-called \"evergreen\" browsers; the last versions of browsers that\n * automatically update themselves. This includes Safari >= 10, Chrome >= 55 (including Opera),\n * Edge >= 13 on the desktop, and iOS 10 and Chrome on mobile.\n *\n * Learn more in https://angular.io/guide/browser-support\n */\n\n/***************************************************************************************************\n * BROWSER POLYFILLS\n */\n\n/** IE10 and IE11 requires the following for NgClass support on SVG elements */\n// import 'classlist.js';  // Run `npm install --save classlist.js`.\n\n/**\n * Web Animations `@angular/platform-browser/animations`\n * Only required if AnimationBuilder is used within the application and using IE/Edge or Safari.\n * Standard animation support in Angular DOES NOT require any polyfills (as of Angular 6.0).\n */\n// import 'web-animations-js';  // Run `npm install --save web-animations-js`.\n\n/**\n * By default, zone.js will patch all possible macroTask and DomEvents\n * user can disable parts of macroTask/DomEvents patch by setting following flags\n * because those flags need to be set before `zone.js` being loaded, and webpack\n * will put import in the top of bundle, so user need to create a separate file\n * in this directory (for example: zone-flags.ts), and put the following flags\n * into that file, and then add the following code before importing zone.js.\n * import './zone-flags.ts';\n *\n * The flags allowed in zone-flags.ts are listed here.\n *\n * The following flags will work for all browsers.\n *\n * (window as any).__Zone_disable_requestAnimationFrame = true; // disable patch requestAnimationFrame\n * (window as any).__Zone_disable_on_property = true; // disable patch onProperty such as onclick\n * (window as any).__zone_symbol__BLACK_LISTED_EVENTS = ['scroll', 'mousemove']; // disable patch specified eventNames\n *\n *  in IE/Edge developer tools, the addEventListener will also be wrapped by zone.js\n *  with the following flag, it will bypass `zone.js` patch for IE/Edge\n *\n *  (window as any).__Zone_enable_cross_context_check = true;\n *\n */\n\n/***************************************************************************************************\n * Zone JS is required by default for Angular itself.\n */\nimport 'zone.js';  // Included with Angular CLI.\n\n\n/***************************************************************************************************\n * APPLICATION IMPORTS\n */\n\n\n(window as any).global = window;\n",
+							"changes": [
+								"line 58: module-specifier zone.js/dist/zone -> zone.js"
+							]
+						},
+						{
+							"path": "src/test.ts",
+							"kind": "application",
+							"changed": true,
+							"sha256Before": "d0e763cd3db1c76fa804d238422f1120ed648d21ed4a172c2d3476e5060a14c4",
+							"sha256After": "9b1c90dfacfbb8e9bd9f44392375a1496621311aacda385c36976b5c4d4bf7d5",
+							"source": "// This file is required by karma.conf.js and loads recursively all the .spec and framework files\n\nimport 'zone.js/testing';\nimport { getTestBed } from '@angular/core/testing';\nimport {\n  BrowserDynamicTestingModule,\n  platformBrowserDynamicTesting\n} from '@angular/platform-browser-dynamic/testing';\n\ndeclare const require: any;\n\n// First, initialize the Angular testing environment.\ngetTestBed().initTestEnvironment(\n  BrowserDynamicTestingModule,\n  platformBrowserDynamicTesting()\n);\n// Then we find all the tests.\nconst context = require.context('./', true, /\\.spec\\.ts$/);\n// And load the modules.\ncontext.keys().map(context);\n",
+							"changes": [
+								"line 3: module-specifier zone.js/dist/zone-testing -> zone.js/testing"
+							]
+						},
+						{
+							"path": "src/app/core/components/contact-details/contact-details-container.component.html",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "fab49bf0a66bb2334dcf7bf5dd37b74b90c07a561d51ff658dd679e83a43e337",
+							"sha256After": "fab49bf0a66bb2334dcf7bf5dd37b74b90c07a561d51ff658dd679e83a43e337",
+							"source": "\n\n<div class=\"contact-details-container\" *ngIf=\"contact\">\n\n  <div class=\"card\">\n    <div class=\"card-header\">\n      Contact\n    </div>\n    <div class=\"card-body\">\n      <p>Name: <span class=\"badge badge-primary\">{{contact.name}}</span></p>\n      <p>Email:  <span class=\"badge badge-primary\">{{contact.email}}</span></p>\n      <p>Phone:  <span class=\"badge badge-primary\">{{contact.phone}}</span></p>\n    </div>\n    <div class=\"card-footer text-muted\">\n      <span class=\"float-md-right \">\n        <button (click)=\"edit.emit(contact)\" class=\"btn btn-sm btn-outline-primary\"> EDIT</button>\n        <button (click)=\"remove.emit(contact)\" class=\"btn btn-sm btn-outline-danger\"> DELETE</button>\n      </span>\n\n    </div>\n  </div>\n\n</div>\n\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/core/components/contact-form/contact-form.component.html",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "d2ebe0121429e990275f6ca2b0b46836b0df3f93ecef5b9f5bcc2e26585949b3",
+							"sha256After": "d2ebe0121429e990275f6ca2b0b46836b0df3f93ecef5b9f5bcc2e26585949b3",
+							"source": "<form (submit)=\"submit()\"  class=\"form\" [formGroup]=\"form\">\n\n  <div class=\"form-group\">\n    <label for=\"name-input\">Name:</label>\n    <input id=\"name-input\" type=\"text\" class=\"form-control\" formControlName=\"name\">\n  </div>\n\n  <div class=\"form-group\">\n    <label for=\"email-input\">Email:</label>\n    <input id=\"email-input\" type=\"email\" class=\"form-control\" formControlName=\"email\">\n  </div>\n\n\n\n  <div class=\"form-group\">\n    <label for=\"phone-input\">Phone:</label>\n    <input id=\"phone-input\" type=\"tel\" class=\"form-control\" formControlName=\"phone\">\n  </div>\n\n\n  <div class=\"form-group\">\n    <button\n            type=\"submit\"\n            [disabled]=\"!form.valid\"\n            class=\"btn btn-success float-right\">\n      Submit\n    </button>\n  </div>\n\n</form>",
+							"changes": []
+						},
+						{
+							"path": "src/app/core/components/contact-list/contact-list.component.html",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "f5cd8ef8fa6e671ae81485992e653cf2c5173fa79439b3301eb4b83690b8730c",
+							"sha256After": "f5cd8ef8fa6e671ae81485992e653cf2c5173fa79439b3301eb4b83690b8730c",
+							"source": "<table *ngIf=\"contacts; else loading\" class=\"table table-hover table-responsive-md\">\n  <thead class=\"header\">\n  <tr>\n    <th>#</th>\n    <th>Name</th>\n    <th>Email</th>\n    <th>Phone</th>\n    <th></th>\n  </tr>\n  </thead>\n  <tbody>\n  <tr class=\"contact-row\" *ngFor=\"let c of contacts; trackBy: contactsTrackByFn\">\n    <th scope=\"row\">{{c.id}}</th>\n    <td>{{c.name}}</td>\n    <td>{{c.email}}</td>\n    <td>{{c.phone}}</td>\n    <td>\n\n      <span class=\"float-right\">\n\n        <button (click)=\"showDetails(c)\" class=\"btn btn-outline-primary mb-1 btn-sm\">\n          DETAILS\n        </button>\n\n        <button (click)=\"editContact(c)\" class=\"btn btn-outline-primary mb-1 btn-sm\">\n          EDIT\n        </button>\n\n        <button (click)=\"deleteContact(c)\" class=\"btn btn-outline-danger mb-1 btn-sm\">\n          DELETE\n        </button>\n\n      </span>\n\n    </td>\n  </tr>\n\n  </tbody>\n</table>\n\n<ng-template #loading>\n  <span>loading contacts...</span>\n</ng-template>\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/core/components/footer/footer.component.html",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "7e74c71963c9aca93daae800d42323dfa4e3054e630d4e7b6abff4a1b6073ad4",
+							"sha256After": "7e74c71963c9aca93daae800d42323dfa4e3054e630d4e7b6abff4a1b6073ad4",
+							"source": "\nCreated by\n<a target=\"_blank\" rel=\"noopener\" href=\"https://twitter.com/avatsaev\">\n  <i class=\"fa fa-twitter\"></i>@avatsaev\n</a>\n\nSource code on\n<a target=\"_blank\" rel=\"noopener\" href=\"https://github.com/avatsaev/angular-contacts-app-example\">\n  <i class=\"fa fa-github\"></i> GitHub\n</a>\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/core/components/toolbar/toolbar.component.html",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "c45c24d265c80c4e7a769a67de700fee484f7c0a400e5e7f063e1e4af1757922",
+							"sha256After": "c45c24d265c80c4e7a769a67de700fee484f7c0a400e5e7f063e1e4af1757922",
+							"source": "<nav class=\"navbar navbar-expand-md navbar-dark fixed-top bg-primary\">\n\n\n  <a style=\"min-width: 280px\" class=\"navbar-brand\" routerLink=\"/\">\n    Angular contacts\n    <span class=\"page title\" *ngIf=\"title\">\n     - <span class=\"title-string\">{{title}}</span>\n    </span>\n  </a>\n\n  <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#main-navbar\" aria-controls=\"main-navbar\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n    <span class=\"navbar-toggler-icon\"></span>\n  </button>\n\n  <div class=\"collapse navbar-collapse\" id=\"main-navbar\">\n    <ul class=\"navbar-nav mr-auto\">\n      <li class=\"nav-item \" [routerLink]=\"['/contacts']\" routerLinkActive=\"active\" [routerLinkActiveOptions]=\"{exact:\ntrue}\">\n\n        <span class=\"nav-link\" >  <i class=\"fa fa-list-ul\" aria-hidden=\"true\"></i> Index </span>\n      </li>\n\n\n      <li class=\"nav-item\" [routerLink]=\"['/contacts','new']\" routerLinkActive=\"active\">\n\n        <span class=\"nav-link\" > <i class=\"fa fa-plus-square\" aria-hidden=\"true\"></i> New </span>\n      </li>\n\n    </ul>\n\n  </div>\n</nav>\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/views/contacts/contact-details/contact-details.component.html",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "8ffa5d151265c8708e0953bdcd95c94dd200b62cd317561dba734c542b3ec03b",
+							"sha256After": "8ffa5d151265c8708e0953bdcd95c94dd200b62cd317561dba734c542b3ec03b",
+							"source": "<app-contact-details-container\n        [contact]=\"contact$ | async\"\n        (edit)=\"editContact($event)\"\n        (remove)=\"deleteContact($event)\"\n></app-contact-details-container>\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/views/contacts/contact-edit/contact-edit.component.html",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "59b8dee3f07bd4b044eab66a660aca64d4c556e05b6ab7fc870e0dd1111aeb1a",
+							"sha256After": "59b8dee3f07bd4b044eab66a660aca64d4c556e05b6ab7fc870e0dd1111aeb1a",
+							"source": "\n\n\n<div class=\"card\">\n  <div class=\"card-header\">\n    Edit Contact\n  </div>\n  <div class=\"card-body\">\n    <app-contact-form [contact]=\"contact$ | async\" (save)=\"submitted($event)\"> </app-contact-form>\n\n  </div>\n\n</div>\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/views/contacts/contact-new/contact-new.component.html",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "e89aac31aada8af2669f1b78aecf99fbaf0d79d9fb119cc1f310160e4b3693c1",
+							"sha256After": "e89aac31aada8af2669f1b78aecf99fbaf0d79d9fb119cc1f310160e4b3693c1",
+							"source": "\n<div class=\"card\">\n  <div class=\"card-header\">\n    New Contact\n  </div>\n  <div class=\"card-body\">\n    <app-contact-form (save)=\"submitted($event)\"></app-contact-form>\n  </div>\n\n</div>\n\n\n\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/views/contacts/contacts-index/contacts-index.component.html",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "46ca4ce195bd7480429c0d027d4d1e37a9ebc09e08ff98c9b8b17667f0fe0d09",
+							"sha256After": "46ca4ce195bd7480429c0d027d4d1e37a9ebc09e08ff98c9b8b17667f0fe0d09",
+							"source": "<h1> Contact list</h1>\n\n\n\n\n<app-contact-list [contacts]=\"contacts$ | async\"\n                  (show)=\"showContact($event)\"\n                  (remove)=\"deleteContact($event)\"\n                  (edit)=\"editContact($event)\"\n></app-contact-list>\n",
+							"changes": []
+						},
+						{
+							"path": "src/index.html",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "b471957a3de66623577a310c35ca3ecb16e068aea2b021cbb7f18088b69c21f4",
+							"sha256After": "b471957a3de66623577a310c35ca3ecb16e068aea2b021cbb7f18088b69c21f4",
+							"source": "<!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Angular Contacts</title>\n  <base href=\"/\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <link rel=\"icon\" type=\"image/x-icon\" href=\"favicon.ico\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n  <link rel=\"manifest\" href=\"manifest.json\">\n  <meta name=\"theme-color\" content=\"#1976d2\">\n\n  <script src=\"https://code.jquery.com/jquery-3.3.1.slim.min.js\" integrity=\"sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo\" crossorigin=\"anonymous\"></script>\n  <script src=\"https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js\" integrity=\"sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM\" crossorigin=\"anonymous\"></script>\n</head>\n<body>\n  <app-root></app-root>\n  <noscript>Please enable JavaScript to continue using this application.</noscript>\n</body>\n</html>\n",
+							"changes": []
+						}
+					],
+					"removedFiles": [],
+					"unhandled": [
+						"projects.angular-contacts.architect.lint used @angular-devkit/build-angular:tslint, which the 13.4 devkit does not ship; the target was removed and no replacement capability was chosen for it",
+						"projects.angular-contacts-e2e.architect.e2e used @angular-devkit/build-angular:protractor, which the 13.4 devkit does not ship; the target was removed and no replacement capability was chosen for it",
+						"projects.angular-contacts-e2e.architect.lint used @angular-devkit/build-angular:tslint, which the 13.4 devkit does not ship; the target was removed and no replacement capability was chosen for it",
+						"dependencies.@ngrx/effects is declared at ^8.6.0 and angular-13.4.0 has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+						"dependencies.@ngrx/entity is declared at ^8.6.0 and angular-13.4.0 has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+						"dependencies.@ngrx/store is declared at ^8.6.0 and angular-13.4.0 has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+						"dependencies.@ngrx/store-devtools is declared at ^8.6.0 and angular-13.4.0 has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+						"dependencies.bootstrap is declared at ^4.4.1 and angular-13.4.0 has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+						"dependencies.core-js is declared at 3.1.3 and angular-13.4.0 has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+						"dependencies.font-awesome is declared at ^4.7.0 and angular-13.4.0 has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+						"dependencies.jasmine-marbles is coupled to the Angular test cell but is not part of the toolchain angular-13.4.0 generates, so it was left at its era range",
+						"dependencies.ngx-socket-io is declared at ^3.0.1 and angular-13.4.0 has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+						"devDependencies.@types/jasmine is coupled to the Angular test cell but is not part of the toolchain angular-13.4.0 generates, so it was left at its era range",
+						"devDependencies.@types/node is declared at ~12.0.7 and angular-13.4.0 has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+						"devDependencies.jasmine-core is coupled to the Angular test cell but is not part of the toolchain angular-13.4.0 generates, so it was left at its era range",
+						"devDependencies.karma is coupled to the Angular test cell but is not part of the toolchain angular-13.4.0 generates, so it was left at its era range",
+						"devDependencies.karma-chrome-launcher is coupled to the Angular test cell but is not part of the toolchain angular-13.4.0 generates, so it was left at its era range",
+						"devDependencies.karma-coverage-istanbul-reporter is coupled to the Angular test cell but is not part of the toolchain angular-13.4.0 generates, so it was left at its era range",
+						"devDependencies.karma-jasmine is coupled to the Angular test cell but is not part of the toolchain angular-13.4.0 generates, so it was left at its era range",
+						"devDependencies.karma-jasmine-html-reporter is coupled to the Angular test cell but is not part of the toolchain angular-13.4.0 generates, so it was left at its era range",
+						"devDependencies.ts-node is declared at ~8.2.0 and angular-13.4.0 has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+						"@app/contacts-store is named by this application's own source — src/app/views/contacts/contact-details/contact-details.component.ts:6 (module-import `@app/contacts-store/contacts.store-facade`), src/app/views/contacts/contact-details/contact-details.component.ts:7 (module-import `@app/contacts-store/contacts-effects`), src/app/views/contacts/contact-edit/contact-edit.component.ts:6 (module-import `@app/contacts-store/contacts.store-facade`), src/app/views/contacts/contact-edit/contact-edit.component.ts:7 (module-import `@app/contacts-store/contacts-effects`), src/app/views/contacts/contact-new/contact-new.component.ts:4 (module-import `@app/contacts-store/contacts.store-facade`), src/app/views/contacts/contacts-index/contacts-index.component.ts:4 (module-import `@app/contacts-store/contacts.store-facade`), src/app/views/contacts/contacts.module.ts:13 (module-import `@app/contacts-store/contacts.store-facade`), src/app/views/contacts/contacts.module.ts:14 (module-import `@app/contacts-store`), src/app/views/contacts/store/contacts-effects.ts:14 (module-import `@app/contacts-store/contacts-actions`), src/app/views/contacts/store/contacts-effects.ts:15 (module-import `@app/contacts-store/contacts-actions`), src/app/views/contacts/store/contacts-effects.ts:16 (module-import `@app/contacts-store/contacts-actions`), src/app/views/contacts/store/contacts-effects.ts:17 (module-import `@app/contacts-store/contacts-actions`), src/app/views/contacts/store/contacts-effects.ts:18 (module-import `@app/contacts-store/contacts-actions`), src/app/views/contacts/store/contacts-effects.ts:19 (module-import `@app/contacts-store/contacts-actions`), src/app/views/contacts/store/contacts-effects.ts:20 (module-import `@app/contacts-store/contacts-actions`), src/app/views/contacts/store/contacts-effects.ts:21 (module-import `@app/contacts-store/contacts-actions`), src/app/views/contacts/store/contacts-effects.ts:22 (module-import `@app/contacts-store/contacts-actions`), src/app/views/contacts/store/contacts-effects.ts:23 (module-import `@app/contacts-store/contacts-actions`), src/app/views/contacts/store/contacts-effects.ts:24 (module-import `@app/contacts-store/contacts-actions`), src/app/views/contacts/store/contacts-reducer.ts:5 (module-import `@app/contacts-store/contacts-actions`), src/app/views/contacts/store/contacts-reducer.ts:6 (module-import `@app/contacts-store/contacts-actions`), src/app/views/contacts/store/contacts-reducer.ts:7 (module-import `@app/contacts-store/contacts-actions`), src/app/views/contacts/store/contacts-reducer.ts:7 (module-import `@app/contacts-store/contacts-actions`), src/app/views/contacts/store/contacts-reducer.ts:8 (module-import `@app/contacts-store/contacts-actions`), src/app/views/contacts/store/contacts.store-facade.ts:3 (module-import `@app/contacts-store`), src/app/views/contacts/store/contacts.store-facade.ts:7 (module-import `@app/contacts-store/contacts-actions`), src/app/views/contacts/store/contacts.store-facade.ts:7 (module-import `@app/contacts-store/contacts-actions`), src/app/views/contacts/store/contacts.store-facade.ts:7 (module-import `@app/contacts-store/contacts-actions`), src/app/views/contacts/store/contacts.store-facade.ts:7 (module-import `@app/contacts-store/contacts-actions`) — and is declared by neither the application manifest nor anything the closure is obliged to supply, but angular-13.4.0 has read no line for it, so the manifest was left as it is rather than declaring an unverified version",
+						"@app/core is named by this application's own source — src/app/core/components/contact-details/contact-details-container.component.ts:2 (module-import `@app/core/models`), src/app/core/components/contact-form/contact-form.component.ts:2 (module-import `@app/core/models`), src/app/core/components/contact-list/contact-list.component.ts:2 (module-import `@app/core/models`), src/app/core/modules/shared.module.ts:9 (module-import `@app/core/components/footer/footer.component`), src/app/store/reducers/ui-reducer.ts:3 (module-import `@app/core/helpers/ngrx.helpers`), src/app/views/contacts/contact-details/contact-details.component.ts:5 (module-import `@app/core/models`), src/app/views/contacts/contact-edit/contact-edit.component.ts:3 (module-import `@app/core/models`), src/app/views/contacts/contact-new/contact-new.component.ts:2 (module-import `@app/core/models`), src/app/views/contacts/contacts-index/contacts-index.component.ts:2 (module-import `@app/core/models`), src/app/views/contacts/contacts-routing.module.ts:8 (module-import `@app/core/resolvers/title.resolver`), src/app/views/contacts/contacts.module.ts:8 (module-import `@app/core/modules/shared.module`), src/app/views/contacts/services/contacts-mock.service.ts:2 (module-import `@app/core/models`), src/app/views/contacts/services/contacts-socket.service.ts:4 (module-import `@app/core/models/contact.events`), src/app/views/contacts/services/contacts-socket.service.ts:5 (module-import `@app/core/models`), src/app/views/contacts/services/contacts.service.ts:4 (module-import `@app/core/models`), src/app/views/contacts/store/contacts-actions.ts:2 (module-import `@app/core/models`), src/app/views/contacts/store/contacts-reducer.ts:1 (module-import `@app/core/models`), src/app/views/contacts/store/contacts.store-facade.ts:6 (module-import `@app/core/models`) — and is declared by neither the application manifest nor anything the closure is obliged to supply, but angular-13.4.0 has read no line for it, so the manifest was left as it is rather than declaring an unverified version",
+						"@app/env is named by this application's own source — src/app/app.module.ts:13 (module-import `@app/env`), src/app/views/contacts/services/contacts-socket.service.ts:3 (module-import `@app/env`), src/app/views/contacts/services/contacts.service.ts:5 (module-import `@app/env`) — and is declared by neither the application manifest nor anything the closure is obliged to supply, but angular-13.4.0 has read no line for it, so the manifest was left as it is rather than declaring an unverified version",
+						"@app/root-store is named by this application's own source — src/app/app.component.ts:3 (module-import `@app/root-store`), src/app/app.module.ts:14 (module-import `@app/root-store`), src/app/core/resolvers/title.resolver.ts:4 (module-import `@app/root-store`), src/app/store/reducers/ui-reducer.ts:2 (module-import `@app/root-store/actions/ui-actions`), src/app/views/contacts/store/contacts.store-facade.ts:2 (module-import `@app/root-store`) — and is declared by neither the application manifest nor anything the closure is obliged to supply, but angular-13.4.0 has read no line for it, so the manifest was left as it is rather than declaring an unverified version",
+						"compilerOptions.lib was left as declared; the 13.4 line does not require a specific lib set and narrowing one could remove a type surface the application relies on"
+					],
+					"declaredDifferences": [
+						"projects.angular-contacts.architect.build.options.optimization builds with font inlining disabled (`optimization.fonts.inline: false`). On the 13.4 line that option defaults to on, and it makes the build itself fetch every Google Fonts and Adobe Fonts stylesheet the application links and paste the answer into the emitted index.html. The era build did no such thing: it emitted the application's own link element and the browser fetched the stylesheet at runtime. This cell keeps that behaviour — the migrated document ships the same link and the same runtime fetch — rather than moving a third-party request into the build, where it would make the emitted bytes depend on what a font host served on the build day and on whether the build host could reach it at all. Inlining would not have removed the runtime request in any case: the inlined stylesheet still points at the font host for the font files themselves.",
+						"projects.angular-contacts.architect.build.configurations.production.optimization builds with font inlining disabled (`optimization.fonts.inline: false`). On the 13.4 line that option defaults to on, and it makes the build itself fetch every Google Fonts and Adobe Fonts stylesheet the application links and paste the answer into the emitted index.html. The era build did no such thing: it emitted the application's own link element and the browser fetched the stylesheet at runtime. This cell keeps that behaviour — the migrated document ships the same link and the same runtime fetch — rather than moving a third-party request into the build, where it would make the emitted bytes depend on what a font host served on the build day and on whether the build host could reach it at all. Inlining would not have removed the runtime request in any case: the inlined stylesheet still points at the font host for the font files themselves.",
+						"projects.angular-contacts.architect.build.configurations.dev.optimization builds with font inlining disabled (`optimization.fonts.inline: false`). On the 13.4 line that option defaults to on, and it makes the build itself fetch every Google Fonts and Adobe Fonts stylesheet the application links and paste the answer into the emitted index.html. The era build did no such thing: it emitted the application's own link element and the browser fetched the stylesheet at runtime. This cell keeps that behaviour — the migrated document ships the same link and the same runtime fetch — rather than moving a third-party request into the build, where it would make the emitted bytes depend on what a font host served on the build day and on whether the build host could reach it at all. Inlining would not have removed the runtime request in any case: the inlined stylesheet still points at the font host for the font files themselves."
+					],
+					"notEstablished": [
+						"A composed changeset is a set of edits, not a build. Nothing here establishes that the migrated tree installs, compiles, or emits anything.",
+						"`applicationFilesScanned` counts files the engine read. A file it scanned and left alone is counted as scanned and not as changed.",
+						"A capability gated on a reading this tree did not supply stood down. That is not evidence that the tree has nothing for it to do."
+					]
+				}
+			},
+			"startedAt": "2026-08-20T15:18:56.840Z",
+			"endedAt": "2026-08-20T15:18:56.873Z"
+		},
+		{
+			"name": "apply",
+			"status": "ran",
+			"record": {
+				"applied": {
+					"mode": "materialized",
+					"written": [
+						{
+							"path": "package.json",
+							"kind": "workspace",
+							"sha256After": "568d52fe55b862edd5b5e1526651a9c8e184131cc067fd2126e35ee662179e71",
+							"changes": [
+								"dependencies.@angular/animations: 9.0.0 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/common: 9.0.0 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/compiler: 9.0.0 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/core: 9.0.0 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/forms: 9.0.0 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/platform-browser: 9.0.0 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/platform-browser-dynamic: 9.0.0 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/pwa: ^0.900.1 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/router: 9.0.0 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/service-worker: 9.0.0 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.rxjs: 6.5.4 -> ~6.6.7 — aligned to the community layer angular-13.4.0 declares: rxjs 6.6.7 is the pin this whole cell is held together by, and it was measured rather than chosen: ngcc 13 raises a hard exit-1 error against an rxjs 7 closure, and under 6.6.7 the same pass emitted only a warning — \"Entry point 'ng2-slim-loading-bar' contains deep imports into rxjs/Subject, rxjs/Observable\" — and then exited 0. That is the spike’s rxjs-major condition confirmed at application scale rather than at probe scale. 6.6.7 is the version the installed package-lock.json of the T009 proving run carried, read verbatim, and evidence/runs/angular-13cell/pigallery2-compile.json § cell.pinsHeld records it as a pin the run never left. rxjs-compat is pinned to the same minor by this cell for the same reading.",
+								"dependencies.tslib: ^1.10.0 -> ^2.6.3 — aligned to the community layer angular-13.4.0 declares: tslib 2.6.3 is the version the installed closure of the T009 proving run resolved, read verbatim from its package-lock.json and recorded in evidence/runs/angular-13cell/pigallery2-compile.json § cell. It is a reading of what this cell installed, not a survey of the 2.x line and not a claim about the lowest 2.x this Angular line accepts.",
+								"dependencies.zone.js: ^0.10.2 -> ~0.11.8 — aligned to the community layer angular-13.4.0 declares: zone.js 0.11.8 is the version the installed closure of the T009 proving run resolved, read verbatim from its package-lock.json and recorded in evidence/runs/angular-13cell/pigallery2-compile.json § cell. It is a reading of what this cell installed, not a survey of what the 0.11 line published or of what Angular 13.4.0 would otherwise accept.",
+								"devDependencies.@angular-devkit/build-angular: ~0.900.1 -> ~13.3.11 — aligned to angular-13.4.0",
+								"devDependencies.@angular/cli: ^9.0.1 -> ~13.3.11 — aligned to angular-13.4.0",
+								"devDependencies.@angular/compiler-cli: ^9.0.0 -> ^13.4.0 — aligned to angular-13.4.0",
+								"devDependencies.@angular/language-service: 9.0.0 -> ^13.4.0 — aligned to angular-13.4.0",
+								"removed devDependencies.@types/jasminewd2 (was ~2.0.6) — released by a builder target the workspace migration removed",
+								"removed devDependencies.codelyzer (was ~5.1.0) — released by a builder target the workspace migration removed",
+								"removed devDependencies.jasmine-spec-reporter (was ~4.2.1) — released by a builder target the workspace migration removed",
+								"removed devDependencies.protractor (was ~5.4.2) — released by a builder target the workspace migration removed",
+								"removed devDependencies.tslint (was ~5.17.0) — released by a builder target the workspace migration removed",
+								"devDependencies.typescript: 3.7.5 -> ~4.6.4 — aligned to the community layer angular-13.4.0 declares: typescript 4.6.4 is the compiler the T009 proving run used to reach `ngc` exit 0 with 0 diagnostics, read verbatim from the installed package-lock.json and recorded in evidence/runs/angular-13cell/pigallery2-compile.json § cell. Its era drift is measured as well as its version: lib.dom between TS 3.4 and TS 4.6 dropped the IE/WinJS `msOverflowStyle` vendor property, which the run recorded as one of the three single-line application source edits the lift required. Neither the Angular 13 line’s full accepted TypeScript range nor any other 4.x line was read here.",
+								"scripts.build:prod: --prod -> --configuration production — `--prod` was a shorthand for `--configuration production` and was removed from the Angular CLI after the 11 line; a 12-or-later CLI reports it as an unknown argument and exits before the builder runs. The replacement selects the same configuration by name, which is why the retarget is refused where the migrated workspace does not declare one.",
+								"scripts.predeploy: --prod -> --configuration production — `--prod` was a shorthand for `--configuration production` and was removed from the Angular CLI after the 11 line; a 12-or-later CLI reports it as an unknown argument and exits before the builder runs. The replacement selects the same configuration by name, which is why the retarget is refused where the migrated workspace does not declare one."
+							]
+						},
+						{
+							"path": "angular.json",
+							"kind": "workspace",
+							"sha256After": "d3e4eb7ec86527d6c23762d351f4aa5c2a9d8865d1ee6a45206cc18af5ef60b3",
+							"changes": [
+								"removed defaultProject (was \"angular-contacts\")",
+								"projects.angular-contacts.architect.build.options.polyfills: \"src/polyfills.ts\" -> [\"src/polyfills.ts\"]",
+								"added projects.angular-contacts.architect.build.options.optimization = {\"scripts\":true,\"styles\":true,\"fonts\":{\"inline\":false}}",
+								"projects.angular-contacts.architect.build.configurations.production.optimization: true -> {\"scripts\":true,\"styles\":true,\"fonts\":{\"inline\":false}}",
+								"removed projects.angular-contacts.architect.build.configurations.production.extractCss (was true)",
+								"projects.angular-contacts.architect.build.configurations.dev.optimization: true -> {\"scripts\":true,\"styles\":true,\"fonts\":{\"inline\":false}}",
+								"removed projects.angular-contacts.architect.build.configurations.dev.extractCss (was true)",
+								"removed projects.angular-contacts.architect.build.configurations.local.extractCss (was true)",
+								"projects.angular-contacts.architect.test.options.polyfills: \"src/polyfills.ts\" -> [\"src/polyfills.ts\"]",
+								"removed projects.angular-contacts.architect.lint (was @angular-devkit/build-angular:tslint)",
+								"removed projects.angular-contacts-e2e.architect.e2e (was @angular-devkit/build-angular:protractor)",
+								"removed projects.angular-contacts-e2e.architect.lint (was @angular-devkit/build-angular:tslint)"
+							]
+						},
+						{
+							"path": "tsconfig.json",
+							"kind": "workspace",
+							"sha256After": "8ad8f980207cb16f11515a964d89074456665689fe9938b95832024cf0d0f09e",
+							"changes": [
+								"compilerOptions.target: \"es5\" -> \"ES2022\"",
+								"added compilerOptions.module = \"ES2022\"",
+								"added compilerOptions.useDefineForClassFields = false"
+							]
+						},
+						{
+							"path": "src/app/views/contacts/store/contacts-effects.ts",
+							"kind": "application",
+							"sha256After": "e2b801fe0efeb4963a47dbd1288137a40d2315f9eb73fa5e072c50092bdd8b8b",
+							"changes": [
+								"line 90: ngrx-effect-decorator @Effect() liveCreate$ -> liveCreate$ = createEffect(() => …)",
+								"line 96: ngrx-effect-decorator @Effect() liveUpdate$ -> liveUpdate$ = createEffect(() => …)",
+								"line 101: ngrx-effect-decorator @Effect() liveDestroy$ -> liveDestroy$ = createEffect(() => …)"
+							]
+						},
+						{
+							"path": "src/polyfills.ts",
+							"kind": "application",
+							"sha256After": "5081738064f7709b27768634784b6b18a43055258821b33a2a6f506138168a4e",
+							"changes": [
+								"line 58: module-specifier zone.js/dist/zone -> zone.js"
+							]
+						},
+						{
+							"path": "src/test.ts",
+							"kind": "application",
+							"sha256After": "9b1c90dfacfbb8e9bd9f44392375a1496621311aacda385c36976b5c4d4bf7d5",
+							"changes": [
+								"line 3: module-specifier zone.js/dist/zone-testing -> zone.js/testing"
+							]
+						}
+					],
+					"removed": [],
+					"copied": 108,
+					"notEstablished": [
+						"Writing a changeset into a lane is not a build. Nothing here establishes that the lane installs, compiles, or emits anything.",
+						"Every byte written differs from the application only where a frozen adapter transform decided it should; each is itemised by file and by change.",
+						"In changeset-lane mode the lane carries only the files the changeset rewrites. `removed` is then what the changeset says the tree should no longer carry, not a deletion this run performed."
+					]
+				},
+				"laneComposition": {
+					"lineage": "angular",
+					"composed": false,
+					"reason": "the generated lane build configuration is the create-react-app composition. The Angular changeset rewrites the workspace's own build declarations through the frozen adapter, so this flow composes no additional configuration for it.",
+					"files": [],
+					"unhandled": [],
+					"declaredDifferences": [],
+					"notEstablished": [
+						"A composed build configuration is not a build. Nothing here establishes that the lane installs, compiles, or emits anything; the install and build stages report that separately.",
+						"The generated configuration reproduces the generic create-react-app shape over the frozen adapter exports. Every per-application difference it does not carry is listed as an unhandled finding rather than left to be inferred from a failing build.",
+						"The generated configuration resolves the frozen adapter from this workspace by relative path, exactly as the fixture configurations do. The lane is therefore buildable by this pipeline and is not a self-contained package; resolving a published @versionless/react is a separate packaging decision this flow does not take."
+					]
+				}
+			},
+			"startedAt": "2026-08-20T15:18:56.873Z",
+			"endedAt": "2026-08-20T15:18:56.894Z"
+		},
+		{
+			"name": "install",
+			"status": "defect",
+			"reason": "install: npm ci --no-audit --no-fund --allow-remote all --allow-git all --foreground-scripts --legacy-peer-deps failed in the lane. This is a defect rather than a refusal: the declared policies were applied and the pinned closure still did not install. Command failed: npm ci --no-audit --no-fund --allow-remote all --allow-git all --foreground-scripts --legacy-peer-deps\nnpm WARN old lockfile \nnpm WARN old lockfile The package-lock.json file was created with an old version of npm,\nnpm WARN old lockfile so supplemental metadata must be fetched from the registry.\nnpm WARN old lockfile \nnpm WARN old lockfile This is a one-time fix-up, please be patient...\nnpm WARN old lockfile \nnpm ERR! code ETARGET\nnpm ERR! notarget No matching version found for @angular/pwa@^13.4.0.\nnpm ERR! notarget In most cases you or one of your dependencies are requesting\nnpm ERR! notarget a package version that doesn't exist.\n\nnpm ERR! A complete log of this run can be found in:\nnpm ERR!     /private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t045b4/lanes/contacts/.install-home/npm-cache/_logs/2026-08-20T15_18_57_267Z-debug-0.log\n",
+			"runtime": {
+				"source": "provisioned",
+				"cellSupplier": "workspace-runtime-cache",
+				"cellVersion": "v16.20.2",
+				"pathPrefix": ".versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64",
+				"resolvedVersion": "v16.20.2",
+				"claim": "The child was spawned with .versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64/bin first on PATH, so `node` — and every shim in the lane's own `node_modules/.bin` that starts `#!/usr/bin/env node` — resolved to the workspace-runtime-cache runtime the era-cell stage named (v16.20.2). `resolvedVersion` is `node -v` read through that same environment. It does not establish that a tool the build script invokes by an absolute path of its own resolved through PATH too."
+			},
+			"startedAt": "2026-08-20T15:18:56.894Z",
+			"endedAt": "2026-08-20T15:19:06.093Z"
+		},
+		{
+			"name": "build",
+			"status": "not-run",
+			"reason": "not-run-because: install raised a defect",
+			"startedAt": "2026-08-20T15:19:06.093Z",
+			"endedAt": "2026-08-20T15:19:06.093Z"
+		},
+		{
+			"name": "witness",
+			"status": "not-run",
+			"reason": "not-run-because: install raised a defect",
+			"startedAt": "2026-08-20T15:19:06.093Z",
+			"endedAt": "2026-08-20T15:19:06.093Z"
+		}
+	],
+	"defect": {
+		"stage": "install",
+		"message": "install: npm ci --no-audit --no-fund --allow-remote all --allow-git all --foreground-scripts --legacy-peer-deps failed in the lane. This is a defect rather than a refusal: the declared policies were applied and the pinned closure still did not install. Command failed: npm ci --no-audit --no-fund --allow-remote all --allow-git all --foreground-scripts --legacy-peer-deps\nnpm WARN old lockfile \nnpm WARN old lockfile The package-lock.json file was created with an old version of npm,\nnpm WARN old lockfile so supplemental metadata must be fetched from the registry.\nnpm WARN old lockfile \nnpm WARN old lockfile This is a one-time fix-up, please be patient...\nnpm WARN old lockfile \nnpm ERR! code ETARGET\nnpm ERR! notarget No matching version found for @angular/pwa@^13.4.0.\nnpm ERR! notarget In most cases you or one of your dependencies are requesting\nnpm ERR! notarget a package version that doesn't exist.\n\nnpm ERR! A complete log of this run can be found in:\nnpm ERR!     /private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t045b4/lanes/contacts/.install-home/npm-cache/_logs/2026-08-20T15_18_57_267Z-debug-0.log\n"
+	},
+	"report": {
+		"status": "emitted",
+		"slot": "evidence/trust/current/coverage-report.json",
+		"path": "evidence/trust/current/coverage-report.json",
+		"digest": "47ab9dc92e5c4587dc23cee36cb1567d1421a72db7ab6acc97d48e7603bf6d4e"
+	},
+	"notEstablished": [
+		"A stage recorded `ran` returned its own record. What that record establishes is what that stage states, and no more: this row adds no reading of its own on top of it.",
+		"A stage recorded `not-run` was not reached, because an earlier stage refused or broke. Nothing here establishes what it would have recorded.",
+		"Exit 2 is a refusal and exit 1 is a defect. A crash, a hang, or a tree that will not install is a defect even when it happens inside a stage that can also refuse.",
+		"The stage timestamps bound the wall-clock interval the seam observed around each stage. They are not a measurement of machine time and they are not comparable across hosts.",
+		"The coverage report at evidence/trust/current/coverage-report.json was emitted by the guarded derivation and recomputes to the digest recorded here. This run did not derive it, did not regenerate it, and establishes nothing about whether it is current with respect to this run."
+	]
+}

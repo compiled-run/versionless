@@ -1,0 +1,143 @@
+{
+  "schemaVersion": "versionless.official-source.v1",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "attemptSha256": "f9a6b8e614f519b5761bbfae3970fb71c2f85fc4bad56f5bba71921408417f3c",
+  "result": "source-bound",
+  "startedAt": "2026-08-20T15:18:28.479Z",
+  "completedAt": "2026-08-20T15:18:30.065Z",
+  "repository": {
+    "id": 96062036,
+    "fullName": "avatsaev/angular-contacts-app-example",
+    "private": false,
+    "archived": false,
+    "disabled": false,
+    "responseBytes": 6217,
+    "responseSha256": "c0c9720c85fdf4f6c52d2f3f42ed7463d21dbd985a78cfe5517cab31e6065eb7"
+  },
+  "revision": {
+    "ref": "875aa2df7f5f87b6731a1259b63e2b399fa5fb3f",
+    "tagObjectSha": null,
+    "tagKind": "commit-sha",
+    "tagDate": null,
+    "tagVerification": "unsigned",
+    "commitSha": "875aa2df7f5f87b6731a1259b63e2b399fa5fb3f",
+    "commitDate": "2020-06-26T07:04:38Z",
+    "commitVerification": "verified",
+    "rootTreeSha": "f34816d11135fb7b3963948cd2b85c96df583d01",
+    "treeEntries": 140,
+    "treeBlobs": 108,
+    "treeDirectories": 32,
+    "treeSymlinks": 0,
+    "treeGitlinks": 0,
+    "treeTruncated": false
+  },
+  "requests": [
+    {
+      "endpoint": "https://api.github.com/repos/avatsaev/angular-contacts-app-example",
+      "status": 200,
+      "bytes": 6217,
+      "sha256": "c0c9720c85fdf4f6c52d2f3f42ed7463d21dbd985a78cfe5517cab31e6065eb7"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/avatsaev/angular-contacts-app-example/git/commits/875aa2df7f5f87b6731a1259b63e2b399fa5fb3f",
+      "status": 200,
+      "bytes": 1909,
+      "sha256": "5f673ef65d29193d4d9e364500789cd8b49e35e82ce877da154ea68c0a730ef8"
+    },
+    {
+      "endpoint": "https://api.github.com/repos/avatsaev/angular-contacts-app-example/git/trees/f34816d11135fb7b3963948cd2b85c96df583d01?recursive=1",
+      "status": 200,
+      "bytes": 36826,
+      "sha256": "5bf7b5c71a7d35599ca9192d4a74f958d8eb62e9ef0b1ef2a90fea3d0e5a673f"
+    },
+    {
+      "endpoint": "https://codeload.github.com/avatsaev/angular-contacts-app-example/tar.gz/875aa2df7f5f87b6731a1259b63e2b399fa5fb3f",
+      "status": 200,
+      "bytes": 168794,
+      "sha256": "93b2add6bbda402b86769b39a50cc4cae9050c363619ce3b5f20e8f7cd2f42f0",
+      "stream": 1
+    },
+    {
+      "endpoint": "https://codeload.github.com/avatsaev/angular-contacts-app-example/tar.gz/875aa2df7f5f87b6731a1259b63e2b399fa5fb3f",
+      "status": 200,
+      "bytes": 168794,
+      "sha256": "93b2add6bbda402b86769b39a50cc4cae9050c363619ce3b5f20e8f7cd2f42f0",
+      "stream": 2
+    }
+  ],
+  "archiveParity": {
+    "singleRoot": "angular-contacts-app-example-875aa2df7f5f87b6731a1259b63e2b399fa5fb3f",
+    "safeEntries": 141,
+    "regularFiles": 108,
+    "directories": 33,
+    "specialEntries": 0,
+    "gitBlobs": 108,
+    "missingFiles": 0,
+    "extraFiles": 0,
+    "mismatchedBlobs": 0,
+    "normalizedManifestSha256": "58a4a6bf507c8f2b577fcadb6c1026eff8468864be7115edd8fee68260f62b16"
+  },
+  "transaction": {
+    "attemptedRequests": 5,
+    "acceptedResponses": 5,
+    "acceptedWireBytes": 382540,
+    "acceptedDecodedBytes": 382540,
+    "redirectsObserved": 0,
+    "setCookiesUsed": 0,
+    "retries": 0,
+    "archivesByteIdentical": true,
+    "archiveMatchesGitTree": true,
+    "publishedSource": true,
+    "readinessCredit": false,
+    "implementationStarted": false
+  },
+  "cache": {
+    "root": ".versionless/cache/angular-contacts-source",
+    "archive1": ".versionless/cache/angular-contacts-source/archive/archive-1.tar.gz",
+    "archive2": ".versionless/cache/angular-contacts-source/archive/archive-2.tar.gz",
+    "verifiedSource": ".versionless/cache/angular-contacts-source/verify/extracted",
+    "rawMetadataPortable": false
+  },
+  "baseline": ".versionless/work/angular-contacts/baseline",
+  "licence": {
+    "identifier": "MIT",
+    "identifierSource": "observed",
+    "identifierRefusal": null,
+    "copyrightNotice": "Copyright (c) 2019 Aslan Vatsaev",
+    "filesAtRoot": [
+      "LICENSE"
+    ],
+    "artifacts": [
+      {
+        "path": "LICENSE",
+        "role": "repository-root-licence",
+        "gitBlobSha": "baf98a00bc38c625c72fca74547648bd9df7f8b6",
+        "bytes": 1070,
+        "sha256": "9ff0d278c18401b8a4d68198e66f074137c3b63ce6d0b4c76c5478ac58825760",
+        "firstLine": "MIT License",
+        "permissionGrantPresent": true,
+        "noticeRetentionClausePresent": true,
+        "warrantyDisclaimerPresent": true,
+        "licenseField": null
+      },
+      {
+        "path": "package.json",
+        "role": "frontend-manifest",
+        "gitBlobSha": "79e1cbb91a20d2c527332d09ad760f41b867ec47",
+        "bytes": 1928,
+        "sha256": "4f2e53e959ff85a2e3a02803ae5903957d8485828ca4549de1f1a62e82fa79f8",
+        "firstLine": null,
+        "permissionGrantPresent": null,
+        "noticeRetentionClausePresent": null,
+        "warrantyDisclaimerPresent": null,
+        "licenseField": null
+      }
+    ]
+  },
+  "nonclaims": [
+    "A lightweight or unsigned tag does not establish signer authenticity.",
+    "This record states that the bytes at the recorded commit reconcile with the Git tree the repository publishes at that commit. It establishes no dependency closure, build, browser behavior, migration feasibility, pilot status, production readiness, certification, or legal approval.",
+    "The licence reading is a reading of the file present at the pin. It is not a legal opinion and it evaluates no dependency’s terms.",
+    "Acquiring a source is not admitting one. Whether this tree can be ingested, installed, built or migrated is not read here."
+  ]
+}
