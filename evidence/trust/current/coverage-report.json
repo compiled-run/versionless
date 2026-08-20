@@ -160,7 +160,7 @@
     {
       "id": "angular-kubernetes-dashboard",
       "application": ".versionless/cache/angular-kubernetes-dashboard-stage-t678/acquisition/source",
-      "framework": "not-recorded",
+      "framework": "angular",
       "provenanceOfStatus": "run-record",
       "status": "not-admitted",
       "statusReason": "run-did-not-proceed:defect",
@@ -169,7 +169,7 @@
     {
       "id": "angular2-hn",
       "application": ".versionless/cache/angular2-hn/acquisition/source",
-      "framework": "not-recorded",
+      "framework": "angular",
       "provenanceOfStatus": "run-record",
       "status": "not-admitted",
       "statusReason": "run-did-not-proceed:defect",
@@ -178,7 +178,7 @@
     {
       "id": "react-ant-design-pro-v5-2-0",
       "application": ".versionless/work/react-ant-design-pro-v5-2-0/baseline",
-      "framework": "not-recorded",
+      "framework": "react",
       "provenanceOfStatus": "run-record",
       "status": "refused",
       "refusalCode": "era-cell.node-major-not-inferable",
@@ -187,7 +187,7 @@
     {
       "id": "react-antd-admin-template-v2-0-0",
       "application": ".versionless/work/react-antd-admin-template-v2-0-0/baseline",
-      "framework": "not-recorded",
+      "framework": "react",
       "provenanceOfStatus": "run-record",
       "status": "not-admitted",
       "statusReason": "run-did-not-proceed:defect",
@@ -196,7 +196,7 @@
     {
       "id": "react-colorme-2019-06-06",
       "application": ".versionless/work/react-colorme-2019-06-06/baseline",
-      "framework": "not-recorded",
+      "framework": "react",
       "provenanceOfStatus": "run-record",
       "status": "refused",
       "refusalCode": "install.lockfile-absent",
@@ -205,7 +205,7 @@
     {
       "id": "react-coverview-a1470b01",
       "application": ".versionless/work/react-coverview-a1470b01/baseline",
-      "framework": "not-recorded",
+      "framework": "react",
       "provenanceOfStatus": "run-record",
       "status": "not-admitted",
       "statusReason": "run-did-not-proceed:defect",
@@ -214,7 +214,7 @@
     {
       "id": "react-cra-redux-1a06509b",
       "application": ".versionless/work/react-cra-redux-1a06509b/baseline",
-      "framework": "not-recorded",
+      "framework": "react",
       "provenanceOfStatus": "run-record",
       "status": "refused",
       "refusalCode": "install.lockfile-foreign",
@@ -223,7 +223,7 @@
     {
       "id": "react-flame-v2-4-0",
       "application": ".versionless/work/react-flame-v2-4-0/baseline",
-      "framework": "not-recorded",
+      "framework": "react",
       "provenanceOfStatus": "run-record",
       "status": "proven",
       "interventionCount": 0,
@@ -264,12 +264,25 @@
           "name": "witness",
           "status": "ran"
         }
+      ],
+      "source": {
+        "repository": "pawelmalak/flame",
+        "ref": "refs/tags/v2.4.0",
+        "revision": "069b6690d9fa7a24a6e7727386ab85148c89b90e",
+        "license": "MIT",
+        "licenseSha256": "fbfe10674aef1e0bf084850644879fa4114d8a98debc5fb8e680f295af169d43",
+        "basis": "run-record",
+        "basisPath": "evidence/runs/react-flame-v2-4-0/run-record.json"
+      },
+      "provenBoundedness": [
+        "Dependency install scripts: the install row declares the install-script policy and names 3 package(s) the lockfile marks as carrying an install script. It records no reading of which of them npm started and which npm skipped by policy — that reading was added to the install row after this run — so this proof does not establish that any of those scripts ran.",
+        "Route reach: the witness row records 1 journey(s) replayed and carries no per-journey route reading — the journeys were added to the witness row after this run — so how many of the application's declared routes the replay reached is not recorded on this proof."
       ]
     },
     {
       "id": "react-mycrypto",
       "application": ".versionless/work/react-mycrypto/baseline",
-      "framework": "not-recorded",
+      "framework": "react",
       "provenanceOfStatus": "run-record",
       "status": "refused",
       "refusalCode": "ingest.acquisition-journal-does-not-match-the-tree",
@@ -278,7 +291,7 @@
     {
       "id": "react-your-spotify-1-5-0",
       "application": ".versionless/work/react-your-spotify-1-5-0/baseline",
-      "framework": "not-recorded",
+      "framework": "react",
       "provenanceOfStatus": "run-record",
       "status": "refused",
       "refusalCode": "install.lockfile-foreign",
@@ -536,6 +549,7 @@
   "notEstablished": [
     "A row recorded `proven` states that the Judge counted that cell off a witness receipt under the frozen adapter. It is not a statement about the application outside the cell, about a later revision of it, or about any application not listed.",
     "A row recorded `proven` with `provenanceOfStatus: run-record` states a pipeline proof and nothing wider: the command ran unattended, the out-of-band harness counted zero interventions, and every stage in the table it carries read `ran`. No Judge counted a matrix cell from it, it is not counted in any lineage numerator, and the source it names is the one its own run record pinned.",
+    "The `provenBoundedness` lines on a run-record `proven` row are derived from that run record and from nothing else. Each names the field it was read out of; a line saying a reading is absent means the record predates that reading, not that the reading came back empty. What those lines bound is what the row establishes — a route the replay did not reach and an install script npm did not start are unproven by this row rather than proven absent.",
     "A row recorded `bounded` carries its outcome string verbatim because the outcome is bounded to the surface named in it. Restating it as a whole-application result is the failure this document is guarded against.",
     "A row recorded `not-admitted` was not proven by this record. Nothing here establishes that it would fail; it establishes only that no receipt in this package counts it.",
     "The refusal census enumerates refusal *sites* in the operator and frozen-adapter sources. It is a census of what the code can refuse, not a tally of what any run refused.",
@@ -544,7 +558,7 @@
   ],
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "794a68737d4a0ee07ddfefd6298ce1632006f4d32e930eec261879a01b3edfa2",
+    "canonicalDigest": "8a5bb938b8a99e3d0790d5fca032ddd5d7f2f9d51817c2fb7ac92a0099539252",
     "authenticity": "not-established",
     "certification": "not-claimed"
   }

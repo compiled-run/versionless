@@ -1826,7 +1826,7 @@
 			"stage": "arguments",
 			"stageBasis": "the run flow composes every stage in order here; what it raises of its own is about the chaining, before any stage decides anything.",
 			"file": "packages/cli/src/operator/run.ts",
-			"line": 543,
+			"line": 577,
 			"enclosing": "applied"
 		},
 		{
@@ -1879,7 +1879,7 @@
 			"stage": "witness",
 			"stageBasis": "the witness stage replays the derived journeys against the built lane through this module; what it raises of its own is about this host, not about the application.",
 			"file": "packages/cli/src/operator/witness.ts",
-			"line": 59,
+			"line": 104,
 			"enclosing": "witnessing"
 		},
 		{

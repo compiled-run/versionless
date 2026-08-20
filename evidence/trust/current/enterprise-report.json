@@ -8,9 +8,9 @@
     "slsaLevel": "not-claimed"
   },
   "derivedFrom": {
-    "trustManifestCanonicalDigest": "328766e0b165f05d8d3685d6eba61d84edfe3513705f5e6c731b1ddc49230b2a",
-    "deterministicCoreDigest": "c4c65feb38c59e70d4a96040a0bcf5dabe4bc2e6f52b6c0b6fb63bacff29a45e",
-    "corpusConformanceDigest": "101412703cc116969dd562a6ea46dde3d05424ad5194e535aca9750e373bc482",
+    "trustManifestCanonicalDigest": "97f9d4bcc230ff349528f1f8b774913baf0b2765dded79f867885b8b3ff46f02",
+    "deterministicCoreDigest": "90fca88fd6a3c6152c30d05ebe47a498a771dbf41fc9beef36ecd26b74f15594",
+    "corpusConformanceDigest": "a15feb959388d42e10c116ff4ead1e320d6ca68ecc09861126bf9706464b4cc8",
     "adapterFreezeComposite": "140ce86e163ddbae2ad6f1504022efca9468641cc50fd3dca354c6aba8cbb562",
     "adapterFreezeCommit": "ddc2870aa934be7c8bc6caaeca74095d270776d5"
   },
@@ -365,7 +365,7 @@
       },
       {
         "path": "matrix.json",
-        "sha256": "3dca11f639d90e4519cf914274fced24580db5b121043a28b0c4f4de5e65a39d"
+        "sha256": "1a754e85941631d7f0360ef8f872f7e65d2985671cfd26e0e22dc0c3a04ae7e7"
       },
       {
         "path": "controls.json",
@@ -377,7 +377,7 @@
       },
       {
         "path": "corpus-conformance.json",
-        "sha256": "39d2b7eb3040517f867c28a4f546a9ff6c0661c9b8e0ba4ad7ea54f05a709d9d"
+        "sha256": "7fcb55288927d3702b9dbf4ac0080e1ae6fe56e27cb131e7f39524e696ba88c7"
       },
       {
         "path": "script-surface.json",
@@ -1942,7 +1942,7 @@
     "derivation": "Every claim restates a score or digest the corpus derived; every non-claim is carried verbatim from the record that already publishes it. Neither list is authored beside the evidence.",
     "claims": [
       "6 of 6 React-lineage cells and 4 of 4 Angular-lineage cells carry a Judge-accepted direct-Witness browser proof against the frozen adapter, each on its own immutable source application.",
-      "Every number above is derived from the Judge counting ledger inside `corpus-conformance.json` (`101412703cc116969dd562a6ea46dde3d05424ad5194e535aca9750e373bc482`); the cells are enumerated in this record and each names the receipt it was counted off.",
+      "Every number above is derived from the Judge counting ledger inside `corpus-conformance.json` (`a15feb959388d42e10c116ff4ead1e320d6ca68ecc09861126bf9706464b4cc8`); the cells are enumerated in this record and each names the receipt it was counted off.",
       "8 of 59 enumerated migration capabilities are cross-proven on at least two independent applications and are therefore in the matrix.",
       "Every artifact in this package is bound by SHA-256 to the trust manifest, and the derived documents are re-derived from the same canonical receipts at verification time.",
       "The two published holdouts that did not end RED are reported with the exact outcome string their receipts carry, and both are counted in no lineage numerator."

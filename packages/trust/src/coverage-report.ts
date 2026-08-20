@@ -115,6 +115,33 @@ export interface CoverageApplicationRow {
 	 * what distinguishes a pipeline proof from a counted matrix cell here.
 	 */
 	readonly stages?: readonly { readonly name: string; readonly status: string }[];
+	/**
+	 * Where the application came from, for a run-record row, verbatim from the
+	 * same `runRecordSource` reading the corpus admission path uses.
+	 *
+	 * The derivation already computed it — a run whose record states no
+	 * repository, ref, revision, licence identifier or licence digest is refused
+	 * a proven status on it — and then dropped it. So the published row asserted
+	 * a proof whose source the reader could not see, while the code that decided
+	 * the proof had the source in hand. It is carried rather than recomputed:
+	 * one reading, published where it was used.
+	 */
+	readonly source?: Readonly<Record<string, unknown>>;
+	/**
+	 * What bounds a run-record `proven`, derived from the record itself.
+	 *
+	 * A pipeline proof is a proof of the run, not of the application: the run
+	 * declared an install-script policy npm may or may not have honoured, and it
+	 * replayed the journeys a derivation produced and no others. Both bounds are
+	 * readable off the run record, so both are stated beside the status rather
+	 * than left for a reader to reconstruct. Every line here is composed from a
+	 * field the record carries; where the record carries no reading, the line
+	 * says that the reading is absent instead of guessing at it.
+	 *
+	 * It never changes a status. `proven` with a bound stated is the same
+	 * `proven` it was; what changes is whether a reader can see what it covers.
+	 */
+	readonly provenBoundedness?: readonly string[];
 }
 
 /**
@@ -149,6 +176,39 @@ export interface CoverageRunRecord {
 	 * is a second place the two surfaces could disagree.
 	 */
 	readonly engines?: readonly string[] | undefined;
+	/**
+	 * The install stage's own account of dependency install scripts.
+	 *
+	 * Three separate readings, kept apart because they answer different
+	 * questions: whether the operator declared the policy at all, how many
+	 * packages the lockfile says carry an install script, and — where the record
+	 * carries it — npm's own count of what it started and what it skipped by
+	 * policy. A record written before that last reading existed carries
+	 * `not-recorded`, which is the honest state: not a zero.
+	 */
+	readonly installScripts?:
+		| {
+				readonly policyDeclared: boolean;
+				readonly lockfileDeclaredPackages: number;
+				readonly ran: number | 'not-recorded';
+				readonly skipped: number | 'not-recorded';
+		  }
+		| undefined;
+	/**
+	 * The witness stage's own route readings, summed across its journeys.
+	 *
+	 * `routesDeclared` and `routesReached` are absent on a record written before
+	 * the witness row carried its journeys, and are `not-recorded` here rather
+	 * than zero for the same reason the install reading is: an unmeasured reach
+	 * is not a measured nothing.
+	 */
+	readonly witness?:
+		| {
+				readonly journeysRun: number | 'not-recorded';
+				readonly routesDeclared: number | 'not-recorded';
+				readonly routesReached: number | 'not-recorded';
+		  }
+		| undefined;
 	/** The classification the out-of-band harness recorded beside the run. */
 	readonly terminalClassification?: string | undefined;
 	/** Repository-relative basis paths, for a row that has to name its evidence. */
@@ -355,7 +415,50 @@ export function applyInterventionRule(record: CoverageRunRecord): CoverageApplic
 		status: 'proven' as const,
 		interventionCount: 0,
 		stages: [...stages],
+		source: Object.freeze({ ...derived.source }),
+		provenBoundedness: provenBoundedness(record),
 	});
+}
+
+/**
+ * What a run-record `proven` is bounded by, composed from the record's own
+ * fields.
+ *
+ * Nothing is hardcoded per application. Each line names the field it was read
+ * out of and states what that field does — or does not — record, so a record
+ * written before a reading existed produces a line saying the reading is absent
+ * rather than a line quietly asserting a zero. A later run whose record carries
+ * the reading produces the measured line from the same code.
+ */
+export function provenBoundedness(record: CoverageRunRecord): readonly string[] {
+	const lines: string[] = [];
+	const scripts = record.installScripts;
+	if (scripts === undefined)
+		lines.push(
+			'Dependency install scripts: the run record carries no install stage reading, so nothing here states whether any dependency install script ran in the lane this proof was taken on.',
+		);
+	else if (scripts.ran === 'not-recorded' || scripts.skipped === 'not-recorded')
+		lines.push(
+			`Dependency install scripts: the install row ${scripts.policyDeclared ? 'declares the install-script policy' : 'declares no install-script policy'} and names ${String(scripts.lockfileDeclaredPackages)} package(s) the lockfile marks as carrying an install script. It records no reading of which of them npm started and which npm skipped by policy — that reading was added to the install row after this run — so this proof does not establish that any of those scripts ran.`,
+		);
+	else
+		lines.push(
+			`Dependency install scripts: the install row ${scripts.policyDeclared ? 'declares the install-script policy' : 'declares no install-script policy'}, names ${String(scripts.lockfileDeclaredPackages)} package(s) the lockfile marks as carrying an install script, and records npm starting ${String(scripts.ran)} script(s) and skipping ${String(scripts.skipped)} by policy. A script npm skipped did not run in the lane this proof was taken on.`,
+		);
+	const witness = record.witness;
+	if (witness === undefined)
+		lines.push(
+			'Route reach: the run record carries no witness stage reading, so nothing here states how much of the application the replay reached.',
+		);
+	else if (witness.routesDeclared === 'not-recorded' || witness.routesReached === 'not-recorded')
+		lines.push(
+			`Route reach: the witness row records ${witness.journeysRun === 'not-recorded' ? 'no count of' : String(witness.journeysRun)} journey(s) replayed and carries no per-journey route reading — the journeys were added to the witness row after this run — so how many of the application's declared routes the replay reached is not recorded on this proof.`,
+		);
+	else
+		lines.push(
+			`Route reach: the witness row records the replay reaching ${String(witness.routesReached)} of ${String(witness.routesDeclared)} declared route(s) across ${witness.journeysRun === 'not-recorded' ? 'an unrecorded number of' : String(witness.journeysRun)} journey(s). Every route it did not reach is unproven by this row rather than proven absent.`,
+		);
+	return Object.freeze(lines);
 }
 
 const interventionField = (
@@ -427,6 +530,7 @@ const censusByCode = (census: Record<string, unknown>): Record<string, number> =
 const NOT_ESTABLISHED: readonly string[] = Object.freeze([
 	'A row recorded `proven` states that the Judge counted that cell off a witness receipt under the frozen adapter. It is not a statement about the application outside the cell, about a later revision of it, or about any application not listed.',
 	'A row recorded `proven` with `provenanceOfStatus: run-record` states a pipeline proof and nothing wider: the command ran unattended, the out-of-band harness counted zero interventions, and every stage in the table it carries read `ran`. No Judge counted a matrix cell from it, it is not counted in any lineage numerator, and the source it names is the one its own run record pinned.',
+	'The `provenBoundedness` lines on a run-record `proven` row are derived from that run record and from nothing else. Each names the field it was read out of; a line saying a reading is absent means the record predates that reading, not that the reading came back empty. What those lines bound is what the row establishes — a route the replay did not reach and an install script npm did not start are unproven by this row rather than proven absent.',
 	'A row recorded `bounded` carries its outcome string verbatim because the outcome is bounded to the surface named in it. Restating it as a whole-application result is the failure this document is guarded against.',
 	'A row recorded `not-admitted` was not proven by this record. Nothing here establishes that it would fail; it establishes only that no receipt in this package counts it.',
 	'The refusal census enumerates refusal *sites* in the operator and frozen-adapter sources. It is a census of what the code can refuse, not a tally of what any run refused.',
@@ -517,7 +621,57 @@ const detailOf = (row: CoverageApplicationRow): string =>
 	row.refusalCode ??
 	row.statusReason ??
 	row.acceptance ??
-	'no further detail is recorded';
+	((row.provenBoundedness ?? []).length > 0
+		? 'proven on this run and bounded by what the run recorded; the bounds are stated with this row in section 3'
+		: 'no further detail is recorded');
+
+/**
+ * The source block, on the one line the row already occupies.
+ *
+ * A run-record row that names no source states so rather than printing nothing:
+ * an absent line and a line that says the source is absent read the same to a
+ * machine and not at all the same to a reader.
+ */
+const sourceLine = (row: CoverageApplicationRow): string => {
+	if (row.provenanceOfStatus !== 'run-record') return '';
+	const source = row.source;
+	if (source === undefined) return '';
+	const field = (name: string): string => {
+		const value = source[name];
+		return typeof value === 'string' && value.trim() !== '' ? value : 'not-recorded';
+	};
+	return `\n  - source: \`${field('repository')}\` at ref \`${field('ref')}\`, revision \`${field('revision')}\`, licence ${field('license')} \`${field('licenseSha256')}\` — read from \`${field('basisPath')}\` (basis: ${field('basis')})`;
+};
+
+/** The boundedness statement, one bullet per bound the record supports. */
+const boundednessLines = (row: CoverageApplicationRow): string =>
+	(row.provenBoundedness ?? []).map((line) => `\n  - bounded by: ${line}`).join('');
+
+/**
+ * Refuses a coverage rendering that states a pipeline proof without stating what
+ * bounds it.
+ *
+ * The guard is here rather than in the shared enterprise honesty check because
+ * it is about this document's own rule: `assertEnterpriseSurfaceHonesty` runs
+ * over three surfaces, and only this one carries run-record rows. A `proven`
+ * printed with no bound beside it is the exact shape a reader generalises from,
+ * so it stops the render rather than reaching one.
+ */
+function assertProvenBoundednessStated(text: string, report: CoverageReport): void {
+	for (const row of report.applications) {
+		if (row.provenanceOfStatus !== 'run-record' || row.status !== 'proven') continue;
+		const bounds = row.provenBoundedness ?? [];
+		if (bounds.length === 0)
+			throw new Error(
+				`${COVERAGE_REPORT_MARKDOWN} records ${row.id} proven from a run record and states nothing that bounds it`,
+			);
+		for (const bound of bounds)
+			if (!text.includes(bound))
+				throw new Error(
+					`${COVERAGE_REPORT_MARKDOWN} drops a boundedness statement it carries for ${row.id}`,
+				);
+	}
+}
 
 const rowLine = (row: CoverageApplicationRow): string =>
 	`| \`${row.id}\` | ${row.application} | ${row.framework} | **${row.status}** | ${row.provenanceOfStatus} | ${
@@ -588,7 +742,7 @@ ${
 		: runRows
 				.map(
 					(row) =>
-						`- \`${row.id}\`: ${row.status} — intervention count ${String(row.interventionCount ?? 'not-asserted')}${row.statusReason === undefined ? '' : ` (${row.statusReason})`}`,
+						`- \`${row.id}\`: ${row.status} — intervention count ${String(row.interventionCount ?? 'not-asserted')}${row.statusReason === undefined ? '' : ` (${row.statusReason})`}${sourceLine(row)}${boundednessLines(row)}`,
 				)
 				.join('\n')
 }
@@ -620,6 +774,7 @@ ${Object.keys(report.refusalCensus.byCode)
 ${report.notEstablished.map((line) => `- ${line}`).join('\n')}
 `;
 	assertEnterpriseSurfaceHonesty(text, COVERAGE_REPORT_MARKDOWN);
+	assertProvenBoundednessStated(text, report);
 	return text;
 }
 
@@ -717,6 +872,93 @@ function runStages(
 	);
 }
 
+/** The record a named stage of a run published, or `undefined`. */
+function stageRecord(stages: unknown, name: string): Record<string, unknown> | undefined {
+	if (!Array.isArray(stages)) return undefined;
+	const stage = stages.find(
+		(entry) =>
+			typeof entry === 'object' &&
+			entry !== null &&
+			(entry as Record<string, unknown>).name === name,
+	);
+	const value = (stage as Record<string, unknown> | undefined)?.record;
+	return typeof value === 'object' && value !== null
+		? (value as Record<string, unknown>)
+		: undefined;
+}
+
+/**
+ * The lineage the run's analyze stage detected, verbatim.
+ *
+ * The run record carries no top-level lineage field, so every run-record row
+ * published `not-recorded` in its framework column while the analyze stage row
+ * inside the same record named the lineage it had detected. The column is read
+ * from where the reading actually is. A run whose analyze stage did not run, or
+ * whose analyze record names no lineage, still reads `not-recorded` — that is a
+ * run which detected nothing, not a gap in this reader.
+ */
+function runFramework(record: Record<string, unknown>): string {
+	if (typeof record.lineage === 'string' && record.lineage.trim() !== '') return record.lineage;
+	const analyzed = stageRecord(record.stages, 'analyze');
+	const lineage = analyzed?.lineage;
+	return typeof lineage === 'string' && lineage.trim() !== '' ? lineage : 'not-recorded';
+}
+
+/** The install stage's install-script readings, verbatim. */
+function runInstallScripts(stages: unknown): CoverageRunRecord['installScripts'] {
+	const installed = stageRecord(stages, 'install');
+	if (installed === undefined) return undefined;
+	const declared = installed.installScriptPackages;
+	const policy = installed.policy;
+	const policyDeclared =
+		typeof policy === 'object' &&
+		policy !== null &&
+		(policy as Record<string, unknown>).allowInstallScripts === true;
+	const activity = installed.installScripts;
+	const measured = typeof activity === 'object' && activity !== null;
+	const list = (value: unknown): number | 'not-recorded' =>
+		Array.isArray(value) ? value.length : 'not-recorded';
+	return Object.freeze({
+		policyDeclared,
+		lockfileDeclaredPackages: Array.isArray(declared) ? declared.length : 0,
+		ran: measured
+			? list((activity as Record<string, unknown>).ran)
+			: ('not-recorded' as const),
+		skipped: measured
+			? list((activity as Record<string, unknown>).skipped)
+			: ('not-recorded' as const),
+	});
+}
+
+/** The witness stage's route readings, summed over the journeys it carries. */
+function runWitness(stages: unknown): CoverageRunRecord['witness'] {
+	const witnessed = stageRecord(stages, 'witness');
+	if (witnessed === undefined) return undefined;
+	const journeysRun = witnessed.journeysRun;
+	const journeys = witnessed.journeys;
+	if (!Array.isArray(journeys) || journeys.length === 0)
+		return Object.freeze({
+			journeysRun: typeof journeysRun === 'number' ? journeysRun : ('not-recorded' as const),
+			routesDeclared: 'not-recorded' as const,
+			routesReached: 'not-recorded' as const,
+		});
+	const sum = (field: string): number | 'not-recorded' => {
+		let total = 0;
+		for (const entry of journeys) {
+			if (typeof entry !== 'object' || entry === null) return 'not-recorded';
+			const value = (entry as Record<string, unknown>)[field];
+			if (typeof value !== 'number') return 'not-recorded';
+			total += value;
+		}
+		return total;
+	};
+	return Object.freeze({
+		journeysRun: typeof journeysRun === 'number' ? journeysRun : journeys.length,
+		routesDeclared: sum('routesDeclared'),
+		routesReached: sum('routesReached'),
+	});
+}
+
 /**
  * The engines a run's own ran plan stages named, in the order they ran.
  *
@@ -776,7 +1018,7 @@ export async function readRunRecords(root: string): Promise<readonly CoverageRun
 			Object.freeze({
 				id: directory,
 				application: asString(record.application, 'run record application'),
-				framework: typeof record.lineage === 'string' ? record.lineage : 'not-recorded',
+				framework: runFramework(record),
 				outcome: asString(record.outcome, 'run record outcome'),
 				...(typeof record.refusal === 'object' && record.refusal !== null
 					? {
@@ -800,6 +1042,12 @@ export async function readRunRecords(root: string): Promise<readonly CoverageRun
 				...(runEngines(record.stages) === undefined
 					? {}
 					: { engines: runEngines(record.stages) }),
+				...(runInstallScripts(record.stages) === undefined
+					? {}
+					: { installScripts: runInstallScripts(record.stages) }),
+				...(runWitness(record.stages) === undefined
+					? {}
+					: { witness: runWitness(record.stages) }),
 				...(runPin(record.stages) === undefined ? {} : { pin: runPin(record.stages) }),
 				...(runLicence(record.stages) === undefined
 					? {}

@@ -35,6 +35,7 @@ import {
 	coverageReportDigest,
 	type CoverageReport,
 } from '../../../trust/src/coverage-report.ts';
+import { acquireBaselineRoot } from './acquire.ts';
 import { analyzeApplication, fileExists } from './analyze.ts';
 import { applyPlan } from './apply.ts';
 import { runLaneBuild } from './build.ts';
@@ -62,6 +63,39 @@ import {
 import { runLaneWitness } from './witness.ts';
 
 export const RUN_SCHEMA = 'versionless.run.v1';
+
+/**
+ * The lane directory `acquire` writes every acquired application into.
+ *
+ * It is derived from `acquireBaselineRoot` rather than spelled again, so the
+ * two cannot drift: if `acquire` ever renames the lane, this reading renames
+ * with it instead of silently keying every application under a stale name.
+ */
+const ACQUIRE_LANE_DIRECTORY = path.basename(acquireBaselineRoot('id'));
+
+/**
+ * The key the witness stage files its standalone record under.
+ *
+ * The witness runner publishes one record per key beneath
+ * `evidence/runs/witness-synthesized/`, and this row used to hand it
+ * `path.basename(appRoot)`. Every application `acquire` fetches has the same
+ * basename — `acquire` writes them all to
+ * `.versionless/work/<id>/baseline` — so every acquired application wrote its
+ * record into one shared `baseline/` slot and each run silently overwrote the
+ * last one's. The key is therefore read one directory up, where the
+ * acquisition identity lives: the same identity the run record and the evidence
+ * directory are filed under.
+ *
+ * An `appRoot` that is not an acquired baseline keeps its own basename, because
+ * there is no acquisition identity above it to read and inventing one would
+ * name a directory nothing on disk agrees with.
+ */
+export function witnessSlotKey(appRoot: string): string {
+	const resolved = path.resolve(appRoot);
+	if (path.basename(resolved) !== ACQUIRE_LANE_DIRECTORY) return path.basename(resolved);
+	const identity = path.basename(path.dirname(resolved));
+	return identity === '' || identity === '.' ? path.basename(resolved) : identity;
+}
 
 /**
  * The slot the coverage report occupies.
@@ -578,7 +612,7 @@ export async function runFullPipeline(declarations: RunDeclarations): Promise<Ru
 	);
 	await runStage(state, 'witness', () =>
 		runLaneWitness({
-			application: path.basename(declarations.appRoot),
+			application: witnessSlotKey(declarations.appRoot),
 			sourceRoot: declarations.appRoot,
 			laneBuild: path.join(declarations.out, built?.outDirectory ?? 'dist'),
 		}),

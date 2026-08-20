@@ -2,9 +2,9 @@
 
 One machine artifact for an enterprise reviewer, derived entirely from canonical receipts the trust package already verified. It states what was proven, on which sources, with which tools, under which commands, and — in the same document — what is unsupported, unknown, or deliberately not claimed.
 
-- Trust manifest canonical SHA-256: `328766e0b165f05d8d3685d6eba61d84edfe3513705f5e6c731b1ddc49230b2a`
-- Deterministic core: `c4c65feb38c59e70d4a96040a0bcf5dabe4bc2e6f52b6c0b6fb63bacff29a45e`
-- Corpus conformance: `101412703cc116969dd562a6ea46dde3d05424ad5194e535aca9750e373bc482`
+- Trust manifest canonical SHA-256: `97f9d4bcc230ff349528f1f8b774913baf0b2765dded79f867885b8b3ff46f02`
+- Deterministic core: `90fca88fd6a3c6152c30d05ebe47a498a771dbf41fc9beef36ecd26b74f15594`
+- Corpus conformance: `a15feb959388d42e10c116ff4ead1e320d6ca68ecc09861126bf9706464b4cc8`
 - Adapter freeze: commit `ddc2870aa934be7c8bc6caaeca74095d270776d5`, composite `140ce86e163ddbae2ad6f1504022efca9468641cc50fd3dca354c6aba8cbb562`
 - Certification: **not-certified** — This package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation.
 - Integrity: **hash-only; authenticity is not established**; SLSA level: **not-claimed**
@@ -61,10 +61,10 @@ Tool: `versionless-local-trust-generator`, adapter frozen at commit `ddc2870aa93
 - `licenses.json` — `d4044d784816c196415fdca9fd7b734bac809d29428c48e4dfb1c4622c834488`
 - `vulnerabilities.json` — `aa0b0970e2e128e30b044f6107b4b77136d759b0a2ee3af9d37c883fa6b8298d`
 - `provenance.json` — `f67af456c8b3c604382661a9bba3cd950f3999f62f18c32cb21338ad7e486179`
-- `matrix.json` — `3dca11f639d90e4519cf914274fced24580db5b121043a28b0c4f4de5e65a39d`
+- `matrix.json` — `1a754e85941631d7f0360ef8f872f7e65d2985671cfd26e0e22dc0c3a04ae7e7`
 - `controls.json` — `a5e61dcace162ce814347f931b6f4e4f59934ea1312df79d9c817c19e0e9bef4`
 - `retention.json` — `f1a7f91607bca1de4cc15e2523a3d0791116acc9cfdf853c68b9b35aa2c07568`
-- `corpus-conformance.json` — `39d2b7eb3040517f867c28a4f546a9ff6c0661c9b8e0ba4ad7ea54f05a709d9d`
+- `corpus-conformance.json` — `7fcb55288927d3702b9dbf4ac0080e1ae6fe56e27cb131e7f39524e696ba88c7`
 - `script-surface.json` — `e10f554b46ddb275a94da16b89c3c265789724ad67aba3e5e5dddc8f0fa6b502`
 - `runtime-script-observation.json` — `086e0c84d48c7f53a814f67a51b7c25239b6f413306361fde1cfdfc3a0f1afc2`
 - `capability-coverage.json` — `58859cc1947b850e5b025812e73c238287adda00b4d16fccd709e775d1334606`
@@ -313,7 +313,7 @@ Every claim restates a score or digest the corpus derived; every non-claim is ca
 ### Claims
 
 - 6 of 6 React-lineage cells and 4 of 4 Angular-lineage cells carry a Judge-accepted direct-Witness browser proof against the frozen adapter, each on its own immutable source application.
-- Every number above is derived from the Judge counting ledger inside `corpus-conformance.json` (`101412703cc116969dd562a6ea46dde3d05424ad5194e535aca9750e373bc482`); the cells are enumerated in this record and each names the receipt it was counted off.
+- Every number above is derived from the Judge counting ledger inside `corpus-conformance.json` (`a15feb959388d42e10c116ff4ead1e320d6ca68ecc09861126bf9706464b4cc8`); the cells are enumerated in this record and each names the receipt it was counted off.
 - 8 of 59 enumerated migration capabilities are cross-proven on at least two independent applications and are therefore in the matrix.
 - Every artifact in this package is bound by SHA-256 to the trust manifest, and the derived documents are re-derived from the same canonical receipts at verification time.
 - The two published holdouts that did not end RED are reported with the exact outcome string their receipts carry, and both are counted in no lineage numerator.

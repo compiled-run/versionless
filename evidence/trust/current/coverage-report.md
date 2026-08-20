@@ -4,7 +4,7 @@ What the fleet pipeline proved, per application, against the sealed baseline it 
 
 - Schema: `versionless.coverage-report.v1`
 - Certification state: **not-certified**
-- Canonical SHA-256: `794a68737d4a0ee07ddfefd6298ce1632006f4d32e930eec261879a01b3edfa2`
+- Canonical SHA-256: `8a5bb938b8a99e3d0790d5fca032ddd5d7f2f9d51817c2fb7ac92a0099539252`
 - Integrity: hash-only; authenticity is not established
 
 Every green cell below is filtered out of the Judge counting ledger the corpus derived and cross-checked against that corpus numerator and denominator. No cell is listed by hand, and a cell edited into this record fails re-derivation.
@@ -38,16 +38,16 @@ A capability is claimed general, and therefore in the matrix, only once at least
 | `holdout-react-cypress-rwa` | cypress-realworld-app | react | **bounded** | sealed-receipts | not-applicable | passed |
 | `holdout-angular-eshop-webspa` | eShopOnContainers WebSPA | angular | **bounded** | sealed-receipts | not-applicable | witness-passed-on-bounded-anonymous-catalog-surface |
 | `angular-realworld-v15-to-v16` | angular-realworld-v15-to-v16 | angular | **not-admitted** | sealed-receipts | not-applicable | Judge-declined and demoted from the denominator: the migration changed applicationFilesChanged=0 application files, so it is an Angular 15-to-16 dependency version bump rebuilt under AOT rather than a proven application migration. Its browser-proof receipt stays verified and retained; it is excluded from the Angular denominator rather than counted, which is why the Angular total is four non-demoted cells and not five. |
-| `angular-kubernetes-dashboard` | .versionless/cache/angular-kubernetes-dashboard-stage-t678/acquisition/source | not-recorded | **not-admitted** | run-record | 0 | run-did-not-proceed:defect |
-| `angular2-hn` | .versionless/cache/angular2-hn/acquisition/source | not-recorded | **not-admitted** | run-record | 0 | run-did-not-proceed:defect |
-| `react-ant-design-pro-v5-2-0` | .versionless/work/react-ant-design-pro-v5-2-0/baseline | not-recorded | **refused** | run-record | 0 | era-cell.node-major-not-inferable |
-| `react-antd-admin-template-v2-0-0` | .versionless/work/react-antd-admin-template-v2-0-0/baseline | not-recorded | **not-admitted** | run-record | 0 | run-did-not-proceed:defect |
-| `react-colorme-2019-06-06` | .versionless/work/react-colorme-2019-06-06/baseline | not-recorded | **refused** | run-record | 0 | install.lockfile-absent |
-| `react-coverview-a1470b01` | .versionless/work/react-coverview-a1470b01/baseline | not-recorded | **not-admitted** | run-record | 0 | run-did-not-proceed:defect |
-| `react-cra-redux-1a06509b` | .versionless/work/react-cra-redux-1a06509b/baseline | not-recorded | **refused** | run-record | 0 | install.lockfile-foreign |
-| `react-flame-v2-4-0` | .versionless/work/react-flame-v2-4-0/baseline | not-recorded | **proven** | run-record | 0 | no further detail is recorded |
-| `react-mycrypto` | .versionless/work/react-mycrypto/baseline | not-recorded | **refused** | run-record | 0 | ingest.acquisition-journal-does-not-match-the-tree |
-| `react-your-spotify-1-5-0` | .versionless/work/react-your-spotify-1-5-0/baseline | not-recorded | **refused** | run-record | 0 | install.lockfile-foreign |
+| `angular-kubernetes-dashboard` | .versionless/cache/angular-kubernetes-dashboard-stage-t678/acquisition/source | angular | **not-admitted** | run-record | 0 | run-did-not-proceed:defect |
+| `angular2-hn` | .versionless/cache/angular2-hn/acquisition/source | angular | **not-admitted** | run-record | 0 | run-did-not-proceed:defect |
+| `react-ant-design-pro-v5-2-0` | .versionless/work/react-ant-design-pro-v5-2-0/baseline | react | **refused** | run-record | 0 | era-cell.node-major-not-inferable |
+| `react-antd-admin-template-v2-0-0` | .versionless/work/react-antd-admin-template-v2-0-0/baseline | react | **not-admitted** | run-record | 0 | run-did-not-proceed:defect |
+| `react-colorme-2019-06-06` | .versionless/work/react-colorme-2019-06-06/baseline | react | **refused** | run-record | 0 | install.lockfile-absent |
+| `react-coverview-a1470b01` | .versionless/work/react-coverview-a1470b01/baseline | react | **not-admitted** | run-record | 0 | run-did-not-proceed:defect |
+| `react-cra-redux-1a06509b` | .versionless/work/react-cra-redux-1a06509b/baseline | react | **refused** | run-record | 0 | install.lockfile-foreign |
+| `react-flame-v2-4-0` | .versionless/work/react-flame-v2-4-0/baseline | react | **proven** | run-record | 0 | proven on this run and bounded by what the run recorded; the bounds are stated with this row in section 3 |
+| `react-mycrypto` | .versionless/work/react-mycrypto/baseline | react | **refused** | run-record | 0 | ingest.acquisition-journal-does-not-match-the-tree |
+| `react-your-spotify-1-5-0` | .versionless/work/react-your-spotify-1-5-0/baseline | react | **refused** | run-record | 0 | install.lockfile-foreign |
 
 Totals: 11 proven, 2 bounded, 5 refused, 5 not-admitted, of 23 rows.
 
@@ -68,6 +68,9 @@ An application admitted through `versionless run` is recorded proven only if its
 - `react-coverview-a1470b01`: not-admitted — intervention count 0 (run-did-not-proceed:defect)
 - `react-cra-redux-1a06509b`: refused — intervention count 0
 - `react-flame-v2-4-0`: proven — intervention count 0
+  - source: `pawelmalak/flame` at ref `refs/tags/v2.4.0`, revision `069b6690d9fa7a24a6e7727386ab85148c89b90e`, licence MIT `fbfe10674aef1e0bf084850644879fa4114d8a98debc5fb8e680f295af169d43` — read from `evidence/runs/react-flame-v2-4-0/run-record.json` (basis: run-record)
+  - bounded by: Dependency install scripts: the install row declares the install-script policy and names 3 package(s) the lockfile marks as carrying an install script. It records no reading of which of them npm started and which npm skipped by policy — that reading was added to the install row after this run — so this proof does not establish that any of those scripts ran.
+  - bounded by: Route reach: the witness row records 1 journey(s) replayed and carries no per-journey route reading — the journeys were added to the witness row after this run — so how many of the application's declared routes the replay reached is not recorded on this proof.
 - `react-mycrypto`: refused — intervention count 0
 - `react-your-spotify-1-5-0`: refused — intervention count 0
 
@@ -293,6 +296,7 @@ Source: `evidence/runs/operator-flows/refusal-census.json`, taken under adapter 
 
 - A row recorded `proven` states that the Judge counted that cell off a witness receipt under the frozen adapter. It is not a statement about the application outside the cell, about a later revision of it, or about any application not listed.
 - A row recorded `proven` with `provenanceOfStatus: run-record` states a pipeline proof and nothing wider: the command ran unattended, the out-of-band harness counted zero interventions, and every stage in the table it carries read `ran`. No Judge counted a matrix cell from it, it is not counted in any lineage numerator, and the source it names is the one its own run record pinned.
+- The `provenBoundedness` lines on a run-record `proven` row are derived from that run record and from nothing else. Each names the field it was read out of; a line saying a reading is absent means the record predates that reading, not that the reading came back empty. What those lines bound is what the row establishes — a route the replay did not reach and an install script npm did not start are unproven by this row rather than proven absent.
 - A row recorded `bounded` carries its outcome string verbatim because the outcome is bounded to the surface named in it. Restating it as a whole-application result is the failure this document is guarded against.
 - A row recorded `not-admitted` was not proven by this record. Nothing here establishes that it would fail; it establishes only that no receipt in this package counts it.
 - The refusal census enumerates refusal *sites* in the operator and frozen-adapter sources. It is a census of what the code can refuse, not a tally of what any run refused.

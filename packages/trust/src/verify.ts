@@ -87,6 +87,58 @@ import {
 	validatePackageCoordinate,
 } from './schema.ts';
 
+/**
+ * The name a pristine checkout's failure is reported under.
+ *
+ * It is a code rather than a sentence for the reason every other named refusal
+ * in this repository is: an operator can grep it, a fleet report can tally it,
+ * and a runbook can name the remedy against a stable string. The digest
+ * comparison below it stays unnamed and stays a hard error, because a
+ * distribution that is present and does not match is a different fact.
+ */
+export const TRUST_DISTRIBUTION_NOT_BUILT = 'trust.distribution-not-built' as const;
+
+/**
+ * Refuses, by name, a verification run against a checkout whose distribution
+ * has not been built yet.
+ *
+ * The provenance record attests the built distribution: every `subject` it
+ * carries is a file inside a package's `dist` directory, and `dist` is not
+ * committed. So a pristine clone that runs the trust verification before
+ * `npm run build` has
+ * nothing on disk to compare, and until this refusal existed it was told
+ * `Provenance subjects differ from the exact distribution inventory` — the
+ * sentence for a distribution that was built and does not match, handed to an
+ * operator whose distribution was never built at all. The two readings lead to
+ * opposite actions, so they are separated here.
+ *
+ * The detection is keyed on the subject files being **absent**, never on a
+ * digest mismatch. A subject that exists and hashes to something else is not a
+ * missing build and is not caught here: it falls through to the comparison
+ * below, which is the hard error it has always been.
+ */
+export async function assertDistributionBuilt(
+	root: string,
+	subjects: readonly { readonly path: unknown }[],
+): Promise<void> {
+	const names = subjects
+		.map((subject) => subject.path)
+		.filter((name): name is string => typeof name === 'string');
+	if (names.length === 0) return;
+	const absent: string[] = [];
+	for (const name of names) {
+		try {
+			await access(path.join(root, name));
+		} catch {
+			absent.push(name);
+		}
+	}
+	if (absent.length === 0) return;
+	throw new Error(
+		`${TRUST_DISTRIBUTION_NOT_BUILT}: the provenance record attests ${String(names.length)} distribution subject(s) and ${String(absent.length)} of them are absent from this checkout (first: ${absent[0] ?? ''}). The distribution under packages/*/dist is a provenance subject and is not committed, so a checkout that has not been built has nothing for this verification to compare. Remedy: run \`npm run build\`, then run the trust verification — build first, trust second. This is not a digest mismatch: a distribution that is present and does not match the attestation is reported separately and is not this refusal.`,
+	);
+}
+
 async function filesBelow(directory: string): Promise<string[]> {
 	try {
 		await access(directory);
@@ -620,6 +672,7 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 		.sort((left, right) => compareUtf16CodeUnits(String(left.path), String(right.path)));
 	if (canonicalize(subjectInventory) !== canonicalize(byproductInventory))
 		throw new Error('Provenance subjects and byproducts differ');
+	await assertDistributionBuilt(root, subjectInventory);
 	const expectedDistributionInventory = await Promise.all(
 		(await filesBelow(path.join(root, 'packages')))
 			.filter((file) => file.includes(`${path.sep}dist${path.sep}`))

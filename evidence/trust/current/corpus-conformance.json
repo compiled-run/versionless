@@ -1789,7 +1789,7 @@
         "judgeCounting": "not-counted",
         "productionReadiness": "not-claimed",
         "authenticity": "not-established",
-        "framework": "not-recorded"
+        "framework": "react"
       }
     }
   ],
@@ -2266,6 +2266,6 @@
   },
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "101412703cc116969dd562a6ea46dde3d05424ad5194e535aca9750e373bc482"
+    "canonicalDigest": "a15feb959388d42e10c116ff4ead1e320d6ca68ecc09861126bf9706464b4cc8"
   }
 }

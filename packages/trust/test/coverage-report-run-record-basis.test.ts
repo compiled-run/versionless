@@ -12,7 +12,12 @@ import { tmpdir } from 'node:os';
 import * as path from 'pathe';
 import { describe, expect, it } from 'vitest';
 import { deriveRunRecordApplications } from '../../core/src/corpus/conformance.ts';
-import { readInterventionRecord, readRunRecords } from '../src/coverage-report.ts';
+import {
+	applyInterventionRule,
+	provenBoundedness,
+	readInterventionRecord,
+	readRunRecords,
+} from '../src/coverage-report.ts';
 
 describe('run records as corpus admission evidence', () => {
 	it('carries stages, classification and basis paths through to an admitted row', async () => {
@@ -145,5 +150,176 @@ describe('run records as corpus admission evidence', () => {
 		} finally {
 			await rm(checkout, { recursive: true, force: true });
 		}
+	});
+});
+
+/**
+ * The honesty surface of a run-record row: what it publishes about where the
+ * application came from, what bounds the proof, and which lineage it detected.
+ *
+ * Each leg reads the field out of a record on disk rather than a hand-built
+ * row, because the defect these close was exactly a reader that had the fact in
+ * hand and published a row without it.
+ */
+describe('what a run-record row publishes about its own proof', () => {
+	const record = (stages: unknown[]): Record<string, unknown> => ({
+		schema: 'versionless.run.v1',
+		application: '.versionless/work/an-application/baseline',
+		outcome: 'proceeded',
+		stages,
+	});
+
+	const sourceStages = [
+		{
+			name: 'analyze',
+			status: 'ran',
+			record: { lineage: 'react', builder: 'react-scripts' },
+		},
+		{
+			name: 'ingest',
+			status: 'ran',
+			record: {
+				pin: {
+					repository: 'acme/an-application',
+					ref: 'refs/tags/v2.4.0',
+					commitSha: '069b6690d9fa7a24a6e7727386ab85148c89b90e',
+				},
+			},
+		},
+		{
+			name: 'license-at-pin',
+			status: 'ran',
+			record: {
+				identifier: 'MIT',
+				artifacts: [
+					{
+						role: 'repository-root-licence',
+						sha256: 'fbfe10674aef1e0bf084850644879fa4114d8a98debc5fb8e680f295af169d43',
+					},
+				],
+			},
+		},
+	];
+
+	const readOne = async (stages: unknown[]) => {
+		const checkout = await mkdtemp(path.join(tmpdir(), 'versionless-run-row-'));
+		const directory = path.join(checkout, 'evidence/runs/an-application');
+		await mkdir(directory, { recursive: true });
+		await writeFile(
+			path.join(directory, 'run-record.json'),
+			`${JSON.stringify(record(stages))}\n`,
+		);
+		await writeFile(
+			path.join(directory, 'intervention-count.json'),
+			`${JSON.stringify({
+				schemaVersion: 'versionless.intervention-count.v1',
+				interventionCount: 0,
+				terminalClassification: 'proven',
+			})}\n`,
+		);
+		try {
+			const [reading] = await readRunRecords(checkout);
+			if (reading === undefined) throw new Error('no run record was read');
+			return reading;
+		} finally {
+			await rm(checkout, { recursive: true, force: true });
+		}
+	};
+
+	it('reads the framework off the analyze stage the record already carries', async () => {
+		const reading = await readOne(sourceStages);
+		expect(reading.framework).toBe('react');
+		expect(applyInterventionRule({ ...reading, stages: [] }).framework).toBe('react');
+	});
+
+	it('publishes the source block the proven decision was taken on', async () => {
+		const reading = await readOne([
+			...sourceStages,
+			{ name: 'era-cell', status: 'ran' },
+			{ name: 'plan', status: 'ran' },
+			{ name: 'apply', status: 'ran' },
+			{ name: 'install', status: 'ran' },
+			{ name: 'build', status: 'ran' },
+			{ name: 'witness', status: 'ran' },
+		]);
+		const row = applyInterventionRule(reading);
+		expect(row.status).toBe('proven');
+		expect(row.source).toMatchObject({
+			repository: 'acme/an-application',
+			ref: 'refs/tags/v2.4.0',
+			license: 'MIT',
+			basis: 'run-record',
+		});
+	});
+
+	it('states a bound it cannot measure as absent rather than as a zero', async () => {
+		const reading = await readOne([
+			...sourceStages,
+			{
+				name: 'install',
+				status: 'ran',
+				record: {
+					policy: { allowInstallScripts: true },
+					installScriptPackages: ['node_modules/core-js', 'node_modules/fsevents'],
+				},
+			},
+			{ name: 'witness', status: 'ran', record: { ran: true, journeysRun: 1 } },
+		]);
+		expect(reading.installScripts).toMatchObject({
+			policyDeclared: true,
+			lockfileDeclaredPackages: 2,
+			ran: 'not-recorded',
+			skipped: 'not-recorded',
+		});
+		expect(reading.witness).toMatchObject({
+			journeysRun: 1,
+			routesDeclared: 'not-recorded',
+			routesReached: 'not-recorded',
+		});
+		const bounds = provenBoundedness(reading);
+		expect(bounds.join('\n')).toContain('2 package(s)');
+		expect(bounds.join('\n')).toContain('records no reading of which of them npm started');
+		expect(bounds.join('\n')).toContain('carries no per-journey route reading');
+	});
+
+	it('states the measured bound once the record carries the readings', async () => {
+		const reading = await readOne([
+			...sourceStages,
+			{
+				name: 'install',
+				status: 'ran',
+				record: {
+					policy: { allowInstallScripts: true },
+					installScriptPackages: ['node_modules/core-js', 'node_modules/fsevents'],
+					installScripts: {
+						ran: ['node_modules/core-js'],
+						skipped: [{ package: 'node_modules/fsevents' }],
+					},
+				},
+			},
+			{
+				name: 'witness',
+				status: 'ran',
+				record: {
+					ran: true,
+					journeysRun: 1,
+					journeys: [
+						{
+							lane: 'migrated',
+							name: 'bounded crawl',
+							routesDeclared: 12,
+							routesReached: 1,
+							outcomes: ['journey-measured-route-reached-1-of-12-declared-routes'],
+						},
+					],
+					locality: { mode: 'offline', successfulNonLoopback: 0 },
+				},
+			},
+		]);
+		expect(reading.installScripts).toMatchObject({ ran: 1, skipped: 1 });
+		expect(reading.witness).toMatchObject({ routesDeclared: 12, routesReached: 1 });
+		const bounds = provenBoundedness(reading).join('\n');
+		expect(bounds).toContain('starting 1 script(s) and skipping 1 by policy');
+		expect(bounds).toContain('reaching 1 of 12 declared route(s)');
 	});
 });

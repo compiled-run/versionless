@@ -17,6 +17,30 @@ import type { WitnessSynthesizedRealAppRecord } from '../../../core/src/receipts
 import { witnessBrowserNotProvisioned } from '../witness/browser.ts';
 import { refuse } from './refusals.ts';
 
+/**
+ * One replayed journey as this row carries it: the standalone record's reading,
+ * copied and not re-derived.
+ *
+ * `outcomes` are the closed-vocabulary strings the standalone record already
+ * publishes, reproduced verbatim. They are legibility and never a verdict: a
+ * reader learns from them which routes a replay reached and which it did not,
+ * and nothing here promotes a string in that vocabulary to a pass. The counts
+ * beside them are the same numbers the strings are composed from, carried so a
+ * reader who will not parse prose does not have to.
+ */
+export type WitnessJourneyRow = Readonly<{
+	lane: 'baseline' | 'migrated';
+	name: string;
+	source: 'cypress' | 'playwright' | 'crawl';
+	replayable: boolean;
+	ran: boolean;
+	routesDeclared: number;
+	routesReached: number;
+	selectorsDeclared: number;
+	selectorsPresent: number;
+	outcomes: readonly string[];
+}>;
+
 export type WitnessRecord = Readonly<{
 	ran: boolean;
 	/** Why the stage did not run, when it did not. */
@@ -24,6 +48,25 @@ export type WitnessRecord = Readonly<{
 	journeySource?: WitnessSynthesizedRealAppRecord['journeySource'];
 	replayabilityRatio?: number;
 	journeysRun?: number;
+	/**
+	 * Every replayed journey, in the order the lanes ran, with its outcome
+	 * strings verbatim.
+	 *
+	 * Before this field the row carried a digest and three counts, and a reader
+	 * who wanted to know what the replay actually reached had to open the
+	 * standalone record the digest names. The row is the surface a fleet report
+	 * reads, so the thin row was the thin proof.
+	 */
+	journeys?: readonly WitnessJourneyRow[];
+	/**
+	 * The locality reading the run recorded, verbatim.
+	 *
+	 * `successfulNonLoopback` is the number the whole locality claim rests on,
+	 * and a row that omitted it asked a reader to take the claim on the stage's
+	 * word. It is copied rather than recomputed here: this stage measured
+	 * nothing, the runner did.
+	 */
+	locality?: WitnessSynthesizedRealAppRecord['locality'];
 	digest?: string;
 	notEstablished: readonly string[];
 }>;
@@ -35,6 +78,8 @@ const NOT_REQUESTED_NOT_ESTABLISHED: readonly string[] = Object.freeze([
 const RAN_NOT_ESTABLISHED: readonly string[] = Object.freeze([
 	'A witnessed lane is a lane whose declared journeys were replayed once each on this host, serialized. Nothing here establishes an outcome under concurrent load.',
 	'Where the journeys were synthesized, they were derived from the application own end-to-end suite or from a bounded loopback crawl. The replayability ratio in the record is a count of derived journeys that name a route to start from, not a measure of coverage.',
+	'The outcome strings on each journey are the closed measurement vocabulary the standalone record publishes, reproduced verbatim so this row can be read without opening it. They are legibility and not a verdict: no string in that vocabulary is a pass, and nothing in this row is decided by reading one.',
+	'`locality.successfulNonLoopback` is the runner’s own count of requests that left both loopback origins. It is copied here, not recomputed: this stage measured nothing and asserts nothing the standalone record does not already state.',
 ]);
 
 export function witnessNotRequested(reason: string): WitnessRecord {
@@ -107,7 +152,39 @@ export async function runLaneWitness(options: {
 		journeySource: record.journeySource,
 		replayabilityRatio: record.synthesized.replayabilityRatio,
 		journeysRun: record.execution.journeysRun,
+		journeys: witnessJourneyRows(record),
+		locality: Object.freeze({ ...record.locality }),
 		digest: record.integrity.canonicalDigest,
 		notEstablished: RAN_NOT_ESTABLISHED,
 	});
+}
+
+/**
+ * The standalone record's per-journey readings, flattened lane by lane.
+ *
+ * The lane is carried on every row rather than nesting the rows under it: a
+ * two-lane run and a one-lane run then read the same way, and a reader counting
+ * routes never has to know which shape they were handed.
+ */
+export function witnessJourneyRows(
+	record: WitnessSynthesizedRealAppRecord,
+): readonly WitnessJourneyRow[] {
+	return Object.freeze(
+		record.lanes.flatMap((lane) =>
+			lane.journeys.map((journey) =>
+				Object.freeze({
+					lane: lane.lane,
+					name: journey.name,
+					source: journey.source,
+					replayable: journey.replayable,
+					ran: journey.ran,
+					routesDeclared: journey.routesDeclared,
+					routesReached: journey.routesReached,
+					selectorsDeclared: journey.selectorsDeclared,
+					selectorsPresent: journey.selectorsPresent,
+					outcomes: Object.freeze([...journey.outcomes]),
+				}),
+			),
+		),
+	);
 }
