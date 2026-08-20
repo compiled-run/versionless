@@ -1,0 +1,9 @@
+{
+	"applications": [
+		{
+			"id": "angular2-hn",
+			"root": ".versionless/cache/angular2-hn/acquisition/source",
+			"framework": "angular"
+		}
+	]
+}

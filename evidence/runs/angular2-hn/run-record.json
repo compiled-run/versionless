@@ -1,0 +1,1899 @@
+{
+	"schema": "versionless.run.v1",
+	"flow": "run",
+	"outcome": "refused",
+	"exitCode": 2,
+	"application": ".versionless/cache/angular2-hn/acquisition/source",
+	"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t012b1b/angular2-hn",
+	"roots": {
+		"source": ".versionless/cache/angular2-hn/acquisition/source",
+		"frontend": ".versionless/cache/angular2-hn/acquisition/source",
+		"frontendSource": "read",
+		"frontendBasis": ". declares angular ~9.0.1 (dependencies.@angular/core)"
+	},
+	"dryRun": false,
+	"stagePlan": [
+		{
+			"name": "analyze",
+			"forwards": []
+		},
+		{
+			"name": "ingest",
+			"forwards": [
+				"--revision"
+			]
+		},
+		{
+			"name": "license-at-pin",
+			"forwards": []
+		},
+		{
+			"name": "era-cell",
+			"forwards": [
+				"--cell"
+			]
+		},
+		{
+			"name": "plan",
+			"forwards": [
+				"--cell"
+			]
+		},
+		{
+			"name": "apply",
+			"forwards": [
+				"--out"
+			]
+		},
+		{
+			"name": "install",
+			"forwards": [
+				"--allow-remote-tarballs",
+				"--allow-install-scripts",
+				"--allow-peer-conflicts"
+			]
+		},
+		{
+			"name": "build",
+			"forwards": []
+		},
+		{
+			"name": "witness",
+			"forwards": []
+		}
+	],
+	"stages": [
+		{
+			"name": "analyze",
+			"status": "ran",
+			"record": {
+				"lineage": "angular",
+				"frameworkVersionDeclared": "~9.0.1",
+				"detectedFrom": "@angular/core",
+				"builder": "@angular-devkit/build-angular:browser",
+				"builderSource": "angular.json",
+				"nodeEra": {
+					"declared": "unknown",
+					"source": "unknown"
+				},
+				"packageManager": {
+					"manager": "yarn",
+					"lockfiles": [
+						"yarn.lock"
+					],
+					"declared": "unknown"
+				},
+				"cellReadings": {
+					"cell": "angular-16-browser-builder",
+					"reason": null,
+					"verdicts": [
+						{
+							"package": "@angular-devkit/build-angular",
+							"declaredRange": "~0.900.2",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/animations",
+							"declaredRange": "~9.0.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/cli",
+							"declaredRange": "~9.0.2",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/common",
+							"declaredRange": "~9.0.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/compiler",
+							"declaredRange": "~9.0.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/compiler-cli",
+							"declaredRange": "~9.0.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/core",
+							"declaredRange": "~9.0.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/forms",
+							"declaredRange": "~9.0.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/language-service",
+							"declaredRange": "~9.0.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/platform-browser",
+							"declaredRange": "~9.0.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/platform-browser-dynamic",
+							"declaredRange": "~9.0.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/router",
+							"declaredRange": "~9.0.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/service-worker",
+							"declaredRange": "~9.0.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@types/jasmine",
+							"declaredRange": "~3.3.8",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@types/jasminewd2",
+							"declaredRange": "~2.0.3",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@types/node",
+							"declaredRange": "^12.11.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "codelyzer",
+							"declaredRange": "^5.1.2",
+							"verdict": "no-successor",
+							"fact": "codelyzer stops at 6.0.2, a TSLint rule set for Angular 9-era workspaces. Nothing succeeds it on the TSLint line and its ESLint replacement is @angular-eslint, which this cell already aligns as a family.",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "jasmine-core",
+							"declaredRange": "~3.4.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "jasmine-spec-reporter",
+							"declaredRange": "~4.2.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "karma",
+							"declaredRange": "~4.1.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "karma-chrome-launcher",
+							"declaredRange": "~2.2.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "karma-coverage-istanbul-reporter",
+							"declaredRange": "~2.0.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "karma-jasmine",
+							"declaredRange": "~2.0.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "karma-jasmine-html-reporter",
+							"declaredRange": "^1.4.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "node-fetch",
+							"declaredRange": "^2.6.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "protractor",
+							"declaredRange": "~5.4.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "rxjs",
+							"declaredRange": "~6.5.4",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "rxjs-compat",
+							"declaredRange": "^6.5.2",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "ts-node",
+							"declaredRange": "~7.0.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "tslib",
+							"declaredRange": "^1.10.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "tslint",
+							"declaredRange": "~5.15.0",
+							"verdict": "no-successor",
+							"fact": "TSLint stops at 6.1.3 and was deprecated by its own maintainers in favour of ESLint before Angular 13 shipped. There is no TSLint release for any Angular line at or beyond this cell, so the whole TSLint toolchain is dropped rather than carried.",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "typescript",
+							"declaredRange": "~3.7.5",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "unfetch",
+							"declaredRange": "^4.1.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "zone.js",
+							"declaredRange": "~0.10.2",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						}
+					],
+					"counts": {
+						"aligned": 0,
+						"no-successor": 2,
+						"successor-fork": 0,
+						"unknown": 32
+					}
+				},
+				"notEstablished": [
+					"Detection reads declarations. Nothing here establishes that this application installs, compiles, builds, or behaves as it did on its era toolchain.",
+					"A cell verdict is a reading of a published registry, not an installation: a range written here has not been resolved against any lockfile by this record.",
+					"A dependency the cell has no reading for is reported `unknown`. `unknown` is not `supported` and it is not `unsupported`."
+				]
+			},
+			"startedAt": "2026-08-20T09:21:02.880Z",
+			"endedAt": "2026-08-20T09:21:02.881Z"
+		},
+		{
+			"name": "ingest",
+			"status": "ran",
+			"record": {
+				"stage": "ingest",
+				"schemaVersion": "versionless.operator-ingest.v1",
+				"ran": true,
+				"reason": null,
+				"id": "angular-hnpwa",
+				"idSource": "read",
+				"idReadFrom": "package.json#name",
+				"frontendRoot": ".",
+				"frontendRootSource": "read",
+				"frontendRootBasis": ". declares angular ~9.0.1 (dependencies.@angular/core)",
+				"acquisitionRoot": null,
+				"pin": {
+					"repository": null,
+					"repositoryReadFrom": null,
+					"ref": null,
+					"refReadFrom": null,
+					"commitSha": "f6cc578d66c6fa7997f6ef46c7ed4488a85002d8",
+					"commitShaSource": "declared",
+					"commitShaReadFrom": null
+				},
+				"tree": {
+					"files": 102,
+					"bytes": 570987,
+					"normalizedManifestSha256": "90e4f119e33b070cce6a265136c2bd7446c68a827c7fa0db2ec2fad8f1d876eb"
+				},
+				"detected": {
+					"lineage": "angular",
+					"frameworkVersionDeclared": "~9.0.1",
+					"detectedFrom": "@angular/core",
+					"builder": "@angular-devkit/build-angular:browser",
+					"builderSource": "angular.json",
+					"nodeEra": {
+						"declared": "unknown",
+						"source": "unknown"
+					},
+					"packageManager": {
+						"manager": "yarn",
+						"lockfiles": [
+							"yarn.lock"
+						],
+						"declared": "unknown"
+					},
+					"cellReadings": {
+						"cell": "angular-16-browser-builder",
+						"reason": null,
+						"verdicts": [
+							{
+								"package": "@angular-devkit/build-angular",
+								"declaredRange": "~0.900.2",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/animations",
+								"declaredRange": "~9.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/cli",
+								"declaredRange": "~9.0.2",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/common",
+								"declaredRange": "~9.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/compiler",
+								"declaredRange": "~9.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/compiler-cli",
+								"declaredRange": "~9.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/core",
+								"declaredRange": "~9.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/forms",
+								"declaredRange": "~9.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/language-service",
+								"declaredRange": "~9.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/platform-browser",
+								"declaredRange": "~9.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/platform-browser-dynamic",
+								"declaredRange": "~9.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/router",
+								"declaredRange": "~9.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/service-worker",
+								"declaredRange": "~9.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@types/jasmine",
+								"declaredRange": "~3.3.8",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@types/jasminewd2",
+								"declaredRange": "~2.0.3",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@types/node",
+								"declaredRange": "^12.11.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "codelyzer",
+								"declaredRange": "^5.1.2",
+								"verdict": "no-successor",
+								"fact": "codelyzer stops at 6.0.2, a TSLint rule set for Angular 9-era workspaces. Nothing succeeds it on the TSLint line and its ESLint replacement is @angular-eslint, which this cell already aligns as a family.",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "jasmine-core",
+								"declaredRange": "~3.4.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "jasmine-spec-reporter",
+								"declaredRange": "~4.2.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "karma",
+								"declaredRange": "~4.1.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "karma-chrome-launcher",
+								"declaredRange": "~2.2.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "karma-coverage-istanbul-reporter",
+								"declaredRange": "~2.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "karma-jasmine",
+								"declaredRange": "~2.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "karma-jasmine-html-reporter",
+								"declaredRange": "^1.4.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "node-fetch",
+								"declaredRange": "^2.6.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "protractor",
+								"declaredRange": "~5.4.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "rxjs",
+								"declaredRange": "~6.5.4",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "rxjs-compat",
+								"declaredRange": "^6.5.2",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "ts-node",
+								"declaredRange": "~7.0.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "tslib",
+								"declaredRange": "^1.10.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "tslint",
+								"declaredRange": "~5.15.0",
+								"verdict": "no-successor",
+								"fact": "TSLint stops at 6.1.3 and was deprecated by its own maintainers in favour of ESLint before Angular 13 shipped. There is no TSLint release for any Angular line at or beyond this cell, so the whole TSLint toolchain is dropped rather than carried.",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "typescript",
+								"declaredRange": "~3.7.5",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "unfetch",
+								"declaredRange": "^4.1.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "zone.js",
+								"declaredRange": "~0.10.2",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							}
+						],
+						"counts": {
+							"aligned": 0,
+							"no-successor": 2,
+							"successor-fork": 0,
+							"unknown": 32
+						}
+					},
+					"notEstablished": [
+						"Detection reads declarations. Nothing here establishes that this application installs, compiles, builds, or behaves as it did on its era toolchain.",
+						"A cell verdict is a reading of a published registry, not an installation: a range written here has not been resolved against any lockfile by this record.",
+						"A dependency the cell has no reading for is reported `unknown`. `unknown` is not `supported` and it is not `unsupported`."
+					]
+				},
+				"licence": {
+					"stage": "license-at-pin",
+					"schemaVersion": "versionless.license-at-pin.v1",
+					"ran": true,
+					"reason": null,
+					"identifier": "MIT",
+					"identifierSource": "observed",
+					"identifierBasis": "verbatim MIT text in the repository root LICENSE.md file at the pinned revision",
+					"copyrightNotice": "Copyright (c) 2017 Houssein Djirdeh",
+					"manifestLicenseField": null,
+					"artifacts": [
+						{
+							"path": "LICENSE.md",
+							"role": "repository-root-licence",
+							"gitBlobSha": "f52c984e1947a4a1024c0ec071a47cac98ae0c9f",
+							"bytes": 1073,
+							"sha256": "889b40a44577e6b92143f1ba0da2f295fe94d45e6ab5c28fba2aba79fdc18142",
+							"firstLine": "MIT License",
+							"permissionGrantPresent": true,
+							"noticeRetentionClausePresent": true,
+							"warrantyDisclaimerPresent": true,
+							"licenseField": null
+						},
+						{
+							"path": "package.json",
+							"role": "frontend-manifest",
+							"gitBlobSha": "ae8aeb42dbac8b4714c341d3cfcdf173a3772573",
+							"bytes": 1528,
+							"sha256": "a61415a2c9bec89e341f2ac0f0aa88274c2f6b038bc39ba2b59081af51edcb2b",
+							"firstLine": null,
+							"permissionGrantPresent": null,
+							"noticeRetentionClausePresent": null,
+							"warrantyDisclaimerPresent": null,
+							"licenseField": null
+						}
+					],
+					"licenceFilesAtRoot": [
+						"LICENSE.md"
+					],
+					"notEstablished": [
+						"This is a record of the licence text present at the pinned revision. It is not a legal opinion, a licence-compatibility finding, or legal approval.",
+						"No licence determination is made for the transitive dependency closure. Each dependency carries its own terms and this stage evaluates none of them.",
+						"The identifier is matched against the canonical wording of the licences this stage recognises. A reworded, translated, amended or dual licence is refused rather than matched to the nearest one, so an absent refusal is not evidence that no such amendment exists.",
+						"Only the source root is read for licence files. A licence carried further down the tree, a per-directory notice, and a vendored third-party licence are outside this reading.",
+						"`identifierSource: declared` means an operator supplied the identifier. This stage did not read it and does not corroborate it."
+					]
+				},
+				"closure": null,
+				"closureReason": "the frontend root carries yarn.lock, whose closure is pinned by yarn. This reading is of an npm lockfile and this flow does not translate it onto another package manager's format.",
+				"notEstablished": [
+					"An ingest record states what the source on disk says at the revision it was pinned to. It is not an acquisition: nothing here establishes that these bytes are the bytes the named repository publishes at that revision, and no archive was fetched, reconciled against a Git tree, or double-streamed by this stage.",
+					"`normalizedManifestSha256` digests the files this stage walked. Installed packages and Git metadata are not walked, so the digest is comparable with another walk of the same shape and not with a digest taken over a whole archive.",
+					"The closure reading is the dependency tree the lockfile itself carries. A lockfile that records its closure only in the `packages` map yields no placements here, and a count of zero placements is the absence of a reading rather than an empty closure.",
+					"Nothing here installs, builds, or runs the application. An admitted application is one whose identity, pin, licence and declared closure were read — not one that was shown to work.",
+					"No era cell was chosen or provisioned. Which Node and toolchain era this source needs is not read here and not established by admission.",
+					"A value recorded with source `declared` was supplied by an operator. This stage did not read it and does not corroborate it.",
+					"An identifier read from an acquisition journal is the identifier an operator declared when the source was fetched. The application itself declares none, and nothing here establishes that the two would agree.",
+					"A frontend root read by lineage is the one directory among those considered whose manifest declares a framework this stage reads. The basis names every directory considered and what each of their manifests declared; nothing here establishes that the directory chosen is the one its authors would call the application."
+				]
+			},
+			"startedAt": "2026-08-20T09:21:02.881Z",
+			"endedAt": "2026-08-20T09:21:02.890Z"
+		},
+		{
+			"name": "license-at-pin",
+			"status": "ran",
+			"record": {
+				"stage": "license-at-pin",
+				"schemaVersion": "versionless.license-at-pin.v1",
+				"ran": true,
+				"reason": null,
+				"identifier": "MIT",
+				"identifierSource": "observed",
+				"identifierBasis": "verbatim MIT text in the repository root LICENSE.md file at the pinned revision",
+				"copyrightNotice": "Copyright (c) 2017 Houssein Djirdeh",
+				"manifestLicenseField": null,
+				"artifacts": [
+					{
+						"path": "LICENSE.md",
+						"role": "repository-root-licence",
+						"gitBlobSha": "f52c984e1947a4a1024c0ec071a47cac98ae0c9f",
+						"bytes": 1073,
+						"sha256": "889b40a44577e6b92143f1ba0da2f295fe94d45e6ab5c28fba2aba79fdc18142",
+						"firstLine": "MIT License",
+						"permissionGrantPresent": true,
+						"noticeRetentionClausePresent": true,
+						"warrantyDisclaimerPresent": true,
+						"licenseField": null
+					},
+					{
+						"path": "package.json",
+						"role": "frontend-manifest",
+						"gitBlobSha": "ae8aeb42dbac8b4714c341d3cfcdf173a3772573",
+						"bytes": 1528,
+						"sha256": "a61415a2c9bec89e341f2ac0f0aa88274c2f6b038bc39ba2b59081af51edcb2b",
+						"firstLine": null,
+						"permissionGrantPresent": null,
+						"noticeRetentionClausePresent": null,
+						"warrantyDisclaimerPresent": null,
+						"licenseField": null
+					}
+				],
+				"licenceFilesAtRoot": [
+					"LICENSE.md"
+				],
+				"notEstablished": [
+					"This is a record of the licence text present at the pinned revision. It is not a legal opinion, a licence-compatibility finding, or legal approval.",
+					"No licence determination is made for the transitive dependency closure. Each dependency carries its own terms and this stage evaluates none of them.",
+					"The identifier is matched against the canonical wording of the licences this stage recognises. A reworded, translated, amended or dual licence is refused rather than matched to the nearest one, so an absent refusal is not evidence that no such amendment exists.",
+					"Only the source root is read for licence files. A licence carried further down the tree, a per-directory notice, and a vendored third-party licence are outside this reading.",
+					"`identifierSource: declared` means an operator supplied the identifier. This stage did not read it and does not corroborate it."
+				]
+			},
+			"startedAt": "2026-08-20T09:21:02.890Z",
+			"endedAt": "2026-08-20T09:21:02.890Z"
+		},
+		{
+			"name": "era-cell",
+			"status": "ran",
+			"record": {
+				"stage": "era-cell",
+				"schemaVersion": "versionless.era-cell.v1",
+				"ran": true,
+				"reason": null,
+				"outcome": "provisioned",
+				"required": {
+					"cell": "angular-13.4.0",
+					"cellSource": "declared",
+					"cellBasis": "published by the frozen Angular adapter as an AngularTargetCell; the Node line is the cell's own nodeLine declaration.",
+					"runtime": {
+						"major": 16,
+						"version": "16.20.2",
+						"source": "inferred",
+						"readFrom": "angular-13.4.0#nodeLine",
+						"basis": "published by the frozen Angular adapter as an AngularTargetCell; the Node line is the cell's own nodeLine declaration.",
+						"claim": "the migrated lane will be installed and built in this runtime",
+						"declaredRange": null,
+						"declaredRangeSource": null,
+						"satisfiedByDeclaredRange": null
+					},
+					"era": {
+						"outcome": "not-read",
+						"declared": null,
+						"readFrom": null,
+						"consultedSources": [],
+						"claim": "the era was not read from this tree: the cell angular-13.4.0 names the Node line the lane is migrated into, and this stage consulted no source in it for the toolchain era its authors used"
+					},
+					"nodeMajor": 16,
+					"nodeMajorSource": "inferred",
+					"nodeMajorReadFrom": "angular-13.4.0#nodeLine",
+					"nodeMajorSources": [],
+					"architecture": "arm64",
+					"architectureSource": "inferred",
+					"architectureBasis": "no package in the closure is one this repository measured as publishing no binding for an architecture, so the cell is read at the host architecture arm64",
+					"architectureRequirements": []
+				},
+				"determination": {
+					"inferred": [
+						"architecture",
+						"nodeMajor"
+					],
+					"declared": [
+						"cell"
+					]
+				},
+				"host": {
+					"platform": "darwin",
+					"architecture": "arm64",
+					"runningNodeVersion": "v24.15.0",
+					"runningNodeMajor": 24,
+					"suppliers": [
+						"running-process",
+						"workspace-runtime-cache",
+						"fnm"
+					],
+					"installed": [
+						{
+							"version": "v8.9.3",
+							"major": 8,
+							"platform": "darwin",
+							"architecture": "x64",
+							"supplier": "workspace-runtime-cache",
+							"location": ".versionless/cache/angular-tiny-translator-v0-12-0-runtime/node-v8.9.3-darwin-x64"
+						},
+						{
+							"version": "v8.11.4",
+							"major": 8,
+							"platform": "darwin",
+							"architecture": "x64",
+							"supplier": "workspace-runtime-cache",
+							"location": ".versionless/cache/angular-eshop-webspa-netcore2-2-runtime/node-v8.11.4-darwin-x64"
+						},
+						{
+							"version": "v16.20.2",
+							"major": 16,
+							"platform": "darwin",
+							"architecture": "arm64",
+							"supplier": "workspace-runtime-cache",
+							"location": ".versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64"
+						},
+						{
+							"version": "v16.20.2",
+							"major": 16,
+							"platform": "darwin",
+							"architecture": "arm64",
+							"supplier": "workspace-runtime-cache",
+							"location": ".versionless/cache/angular-eshop-webspa-netcore2-2-target/node-v16.20.2-darwin-arm64"
+						},
+						{
+							"version": "v16.20.2",
+							"major": 16,
+							"platform": "darwin",
+							"architecture": "arm64",
+							"supplier": "workspace-runtime-cache",
+							"location": ".versionless/cache/angular-jira-clone-runtime/node-v16.20.2-darwin-arm64"
+						},
+						{
+							"version": "v14.16.1",
+							"major": 14,
+							"platform": "darwin",
+							"architecture": "x64",
+							"supplier": "workspace-runtime-cache",
+							"location": ".versionless/cache/react-cypress-rwa-runtime/node-v14.16.1-darwin-x64"
+						},
+						{
+							"version": "v12.14.1",
+							"major": 12,
+							"platform": "darwin",
+							"architecture": "x64",
+							"supplier": "workspace-runtime-cache",
+							"location": ".versionless/cache/react-mycrypto-runtime/node-v12.14.1-darwin-x64"
+						},
+						{
+							"version": "v10.24.1",
+							"major": 10,
+							"platform": "darwin",
+							"architecture": "x64",
+							"supplier": "workspace-runtime-cache",
+							"location": ".versionless/cache/angular-pigallery2-v1-7-0-runtime/node-v10.24.1-darwin-x64"
+						},
+						{
+							"version": "v24.15.0",
+							"major": 24,
+							"platform": "darwin",
+							"architecture": "arm64",
+							"supplier": "fnm",
+							"location": "node-versions/v24.15.0"
+						},
+						{
+							"version": "v24.15.0",
+							"major": 24,
+							"platform": "darwin",
+							"architecture": "arm64",
+							"supplier": "running-process",
+							"location": "the process this stage is running in"
+						}
+					]
+				},
+				"provision": {
+					"supplier": "workspace-runtime-cache",
+					"version": "v16.20.2",
+					"location": ".versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64",
+					"translation": null
+				},
+				"refusal": null,
+				"notEstablished": [
+					"This record states which toolchain cell the application needs and whether a Node runtime of that cell is on this host. It is not an installation of the cell: nothing here establishes that the framework packages a cell declares were resolved, downloaded, or built.",
+					"`already-present` and `provisioned` state that a runtime of the required major and architecture was found at a location this stage read. Nothing here establishes that the application installs, compiles, builds, or behaves on it.",
+					"The architecture requirement is read from the closure the lockfile and the manifest declare, against the packages this repository measured a binding reading for. A native dependency nobody measured is not counted, and an absent requirement is not evidence that every dependency in the closure has a binding for this architecture.",
+					"Installed runtimes are the ones discoverable at the locations this stage reads: the running process, the workspace runtime cache, and the installed-version directories of the version managers whose layout it knows. A runtime installed anywhere else is reported as absent rather than searched for.",
+					"A version manager runtime is read as a directory. Its platform and architecture are recorded as the host’s because that is what a version manager installs for; no binary header was read.",
+					"No network was opened and no other program was run. A runtime this host does not already carry is refused, not fetched.",
+					"A value recorded with source `declared` was supplied by an operator. This stage did not read it and does not corroborate it.",
+					"The runtime named here is the runtime the lane this pipeline composes will be installed and built in. It is not the era this application was authored for: nothing here establishes which toolchain its authors used.",
+					"An era recorded as not-read states that no declaration in this tree named exactly one Node major that this stage reads. It is not a statement that the application has no era, and it is not a statement that the runtime below is that era.",
+					"Nothing here establishes that this application installs, compiles, builds, or behaves in the runtime named above. The install and build stages are where that is attempted, and their records are where it is stated.",
+					"A declared compatibility range that admits this runtime is a satisfied constraint. It states that the application claims to work on a set of runtimes that includes this one; it names no era, and no Node major was read out of it.",
+					"Satisfaction of a declared range is not corroborated by anything else this tree says. Where other sources name majors, they are listed above with what each literally says, and this stage picks from none of them."
+				]
+			},
+			"startedAt": "2026-08-20T09:21:02.890Z",
+			"endedAt": "2026-08-20T09:21:02.901Z"
+		},
+		{
+			"name": "plan",
+			"status": "ran",
+			"record": {
+				"analysis": {
+					"lineage": "angular",
+					"frameworkVersionDeclared": "~9.0.1",
+					"detectedFrom": "@angular/core",
+					"builder": "@angular-devkit/build-angular:browser",
+					"builderSource": "angular.json",
+					"nodeEra": {
+						"declared": "unknown",
+						"source": "unknown"
+					},
+					"packageManager": {
+						"manager": "yarn",
+						"lockfiles": [
+							"yarn.lock"
+						],
+						"declared": "unknown"
+					},
+					"cellReadings": {
+						"cell": "angular-13.4.0",
+						"reason": null,
+						"verdicts": [
+							{
+								"package": "@angular-devkit/build-angular",
+								"declaredRange": "~0.900.2",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/animations",
+								"declaredRange": "~9.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/cli",
+								"declaredRange": "~9.0.2",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/common",
+								"declaredRange": "~9.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/compiler",
+								"declaredRange": "~9.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/compiler-cli",
+								"declaredRange": "~9.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/core",
+								"declaredRange": "~9.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/forms",
+								"declaredRange": "~9.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/language-service",
+								"declaredRange": "~9.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/platform-browser",
+								"declaredRange": "~9.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/platform-browser-dynamic",
+								"declaredRange": "~9.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/router",
+								"declaredRange": "~9.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@angular/service-worker",
+								"declaredRange": "~9.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@types/jasmine",
+								"declaredRange": "~3.3.8",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@types/jasminewd2",
+								"declaredRange": "~2.0.3",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "@types/node",
+								"declaredRange": "^12.11.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "codelyzer",
+								"declaredRange": "^5.1.2",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "jasmine-core",
+								"declaredRange": "~3.4.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "jasmine-spec-reporter",
+								"declaredRange": "~4.2.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "karma",
+								"declaredRange": "~4.1.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "karma-chrome-launcher",
+								"declaredRange": "~2.2.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "karma-coverage-istanbul-reporter",
+								"declaredRange": "~2.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "karma-jasmine",
+								"declaredRange": "~2.0.1",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "karma-jasmine-html-reporter",
+								"declaredRange": "^1.4.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "node-fetch",
+								"declaredRange": "^2.6.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "protractor",
+								"declaredRange": "~5.4.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "rxjs",
+								"declaredRange": "~6.5.4",
+								"verdict": "aligned",
+								"fact": "rxjs 6.6.7 is the pin this whole cell is held together by, and it was measured rather than chosen: ngcc 13 raises a hard exit-1 error against an rxjs 7 closure, and under 6.6.7 the same pass emitted only a warning — \"Entry point 'ng2-slim-loading-bar' contains deep imports into rxjs/Subject, rxjs/Observable\" — and then exited 0. That is the spike’s rxjs-major condition confirmed at application scale rather than at probe scale. 6.6.7 is the version the installed package-lock.json of the T009 proving run carried, read verbatim, and evidence/runs/angular-13cell/pigallery2-compile.json § cell.pinsHeld records it as a pin the run never left. rxjs-compat is pinned to the same minor by this cell for the same reading.",
+								"alignedRange": "~6.6.7"
+							},
+							{
+								"package": "rxjs-compat",
+								"declaredRange": "^6.5.2",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "ts-node",
+								"declaredRange": "~7.0.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "tslib",
+								"declaredRange": "^1.10.0",
+								"verdict": "aligned",
+								"fact": "tslib 2.6.3 is the version the installed closure of the T009 proving run resolved, read verbatim from its package-lock.json and recorded in evidence/runs/angular-13cell/pigallery2-compile.json § cell. It is a reading of what this cell installed, not a survey of the 2.x line and not a claim about the lowest 2.x this Angular line accepts.",
+								"alignedRange": "^2.6.3"
+							},
+							{
+								"package": "tslint",
+								"declaredRange": "~5.15.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "typescript",
+								"declaredRange": "~3.7.5",
+								"verdict": "aligned",
+								"fact": "typescript 4.6.4 is the compiler the T009 proving run used to reach `ngc` exit 0 with 0 diagnostics, read verbatim from the installed package-lock.json and recorded in evidence/runs/angular-13cell/pigallery2-compile.json § cell. Its era drift is measured as well as its version: lib.dom between TS 3.4 and TS 4.6 dropped the IE/WinJS `msOverflowStyle` vendor property, which the run recorded as one of the three single-line application source edits the lift required. Neither the Angular 13 line’s full accepted TypeScript range nor any other 4.x line was read here.",
+								"alignedRange": "~4.6.4"
+							},
+							{
+								"package": "unfetch",
+								"declaredRange": "^4.1.0",
+								"verdict": "unknown",
+								"fact": "unknown",
+								"alignedRange": "unknown"
+							},
+							{
+								"package": "zone.js",
+								"declaredRange": "~0.10.2",
+								"verdict": "aligned",
+								"fact": "zone.js 0.11.8 is the version the installed closure of the T009 proving run resolved, read verbatim from its package-lock.json and recorded in evidence/runs/angular-13cell/pigallery2-compile.json § cell. It is a reading of what this cell installed, not a survey of what the 0.11 line published or of what Angular 13.4.0 would otherwise accept.",
+								"alignedRange": "~0.11.8"
+							}
+						],
+						"counts": {
+							"aligned": 4,
+							"no-successor": 0,
+							"successor-fork": 0,
+							"unknown": 30
+						}
+					},
+					"notEstablished": [
+						"Detection reads declarations. Nothing here establishes that this application installs, compiles, builds, or behaves as it did on its era toolchain.",
+						"A cell verdict is a reading of a published registry, not an installation: a range written here has not been resolved against any lockfile by this record.",
+						"A dependency the cell has no reading for is reported `unknown`. `unknown` is not `supported` and it is not `unsupported`."
+					]
+				},
+				"plan": {
+					"lineage": "angular",
+					"engine": "@versionless/angular migrateAngularCliEraWorkspace",
+					"cell": "angular-13.4.0",
+					"inputsSupplied": [
+						"packageManifest",
+						"sourceModules",
+						"styleSheets",
+						"templates",
+						"tsConfig",
+						"workspaceConfig",
+						"workspaceFiles"
+					],
+					"applicationFilesScanned": 44,
+					"files": [
+						{
+							"path": "package.json",
+							"kind": "workspace",
+							"changed": true,
+							"sha256Before": "a61415a2c9bec89e341f2ac0f0aa88274c2f6b038bc39ba2b59081af51edcb2b",
+							"sha256After": "ee88004e550d0ffddfff1c002db9495ca883237c59ba886b95d506f60ec54502",
+							"source": "{\n  \"name\": \"angular-hnpwa\",\n  \"version\": \"0.0.0\",\n  \"scripts\": {\n    \"ng\": \"ng\",\n    \"start\": \"ng serve\",\n    \"build\": \"ng build\",\n    \"test\": \"ng test\",\n    \"lint\": \"ng lint\",\n    \"e2e\": \"ng e2e\"\n  },\n  \"private\": true,\n  \"dependencies\": {\n    \"@angular/animations\": \"^13.4.0\",\n    \"@angular/common\": \"^13.4.0\",\n    \"@angular/compiler\": \"^13.4.0\",\n    \"@angular/core\": \"^13.4.0\",\n    \"@angular/forms\": \"^13.4.0\",\n    \"@angular/platform-browser\": \"^13.4.0\",\n    \"@angular/platform-browser-dynamic\": \"^13.4.0\",\n    \"@angular/router\": \"^13.4.0\",\n    \"@angular/service-worker\": \"^13.4.0\",\n    \"node-fetch\": \"^2.6.0\",\n    \"rxjs\": \"~6.6.7\",\n    \"rxjs-compat\": \"~6.6.7\",\n    \"tslib\": \"^2.6.3\",\n    \"unfetch\": \"^4.1.0\",\n    \"zone.js\": \"~0.11.8\"\n  },\n  \"devDependencies\": {\n    \"@angular-devkit/build-angular\": \"~13.3.11\",\n    \"@angular/cli\": \"~13.3.11\",\n    \"@angular/compiler-cli\": \"^13.4.0\",\n    \"@angular/language-service\": \"^13.4.0\",\n    \"@types/jasmine\": \"~3.3.8\",\n    \"@types/node\": \"^12.11.1\",\n    \"jasmine-core\": \"~3.4.0\",\n    \"karma\": \"~4.1.0\",\n    \"karma-chrome-launcher\": \"~2.2.0\",\n    \"karma-coverage-istanbul-reporter\": \"~2.0.1\",\n    \"karma-jasmine\": \"~2.0.1\",\n    \"karma-jasmine-html-reporter\": \"^1.4.0\",\n    \"ts-node\": \"~7.0.0\",\n    \"typescript\": \"~4.6.4\"\n  },\n  \"prettier\": {\n    \"trailingComma\": \"es5\",\n    \"tabWidth\": 4,\n    \"singleQuote\": true,\n    \"printWidth\": 120\n  }\n}\n",
+							"changes": [
+								"dependencies.@angular/animations: ~9.0.1 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/common: ~9.0.1 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/compiler: ~9.0.1 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/core: ~9.0.1 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/forms: ~9.0.1 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/platform-browser: ~9.0.1 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/platform-browser-dynamic: ~9.0.1 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/router: ~9.0.1 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/service-worker: ~9.0.1 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.rxjs: ~6.5.4 -> ~6.6.7 — aligned to the community layer angular-13.4.0 declares: rxjs 6.6.7 is the pin this whole cell is held together by, and it was measured rather than chosen: ngcc 13 raises a hard exit-1 error against an rxjs 7 closure, and under 6.6.7 the same pass emitted only a warning — \"Entry point 'ng2-slim-loading-bar' contains deep imports into rxjs/Subject, rxjs/Observable\" — and then exited 0. That is the spike’s rxjs-major condition confirmed at application scale rather than at probe scale. 6.6.7 is the version the installed package-lock.json of the T009 proving run carried, read verbatim, and evidence/runs/angular-13cell/pigallery2-compile.json § cell.pinsHeld records it as a pin the run never left. rxjs-compat is pinned to the same minor by this cell for the same reading.",
+								"dependencies.rxjs-compat: ^6.5.2 -> ~6.6.7 — aligned to angular-13.4.0",
+								"dependencies.tslib: ^1.10.0 -> ^2.6.3 — aligned to the community layer angular-13.4.0 declares: tslib 2.6.3 is the version the installed closure of the T009 proving run resolved, read verbatim from its package-lock.json and recorded in evidence/runs/angular-13cell/pigallery2-compile.json § cell. It is a reading of what this cell installed, not a survey of the 2.x line and not a claim about the lowest 2.x this Angular line accepts.",
+								"dependencies.zone.js: ~0.10.2 -> ~0.11.8 — aligned to the community layer angular-13.4.0 declares: zone.js 0.11.8 is the version the installed closure of the T009 proving run resolved, read verbatim from its package-lock.json and recorded in evidence/runs/angular-13cell/pigallery2-compile.json § cell. It is a reading of what this cell installed, not a survey of what the 0.11 line published or of what Angular 13.4.0 would otherwise accept.",
+								"devDependencies.@angular-devkit/build-angular: ~0.900.2 -> ~13.3.11 — aligned to angular-13.4.0",
+								"devDependencies.@angular/cli: ~9.0.2 -> ~13.3.11 — aligned to angular-13.4.0",
+								"devDependencies.@angular/compiler-cli: ~9.0.1 -> ^13.4.0 — aligned to angular-13.4.0",
+								"devDependencies.@angular/language-service: ~9.0.1 -> ^13.4.0 — aligned to angular-13.4.0",
+								"removed devDependencies.@types/jasminewd2 (was ~2.0.3) — released by a builder target the workspace migration removed",
+								"removed devDependencies.codelyzer (was ^5.1.2) — released by a builder target the workspace migration removed",
+								"removed devDependencies.jasmine-spec-reporter (was ~4.2.1) — released by a builder target the workspace migration removed",
+								"removed devDependencies.protractor (was ~5.4.0) — released by a builder target the workspace migration removed",
+								"removed devDependencies.tslint (was ~5.15.0) — released by a builder target the workspace migration removed",
+								"devDependencies.typescript: ~3.7.5 -> ~4.6.4 — aligned to the community layer angular-13.4.0 declares: typescript 4.6.4 is the compiler the T009 proving run used to reach `ngc` exit 0 with 0 diagnostics, read verbatim from the installed package-lock.json and recorded in evidence/runs/angular-13cell/pigallery2-compile.json § cell. Its era drift is measured as well as its version: lib.dom between TS 3.4 and TS 4.6 dropped the IE/WinJS `msOverflowStyle` vendor property, which the run recorded as one of the three single-line application source edits the lift required. Neither the Angular 13 line’s full accepted TypeScript range nor any other 4.x line was read here."
+							]
+						},
+						{
+							"path": "angular.json",
+							"kind": "workspace",
+							"changed": true,
+							"sha256Before": "f3ee9824b728ecc5696d79a75ce4a3716618b1cd0321d7ffa059d643396be403",
+							"sha256After": "421caa5197dd8576a27423f9d3f4529df5c7c021142a33888f3c261cd4ce46c8",
+							"source": "{\n  \"$schema\": \"./node_modules/@angular/cli/lib/config/schema.json\",\n  \"version\": 1,\n  \"newProjectRoot\": \"projects\",\n  \"projects\": {\n    \"angular-hnpwa\": {\n      \"projectType\": \"application\",\n      \"schematics\": {\n        \"@schematics/angular:component\": {\n          \"style\": \"scss\"\n        }\n      },\n      \"root\": \"\",\n      \"sourceRoot\": \"src\",\n      \"prefix\": \"app\",\n      \"architect\": {\n        \"build\": {\n          \"builder\": \"@angular-devkit/build-angular:browser\",\n          \"options\": {\n            \"aot\": true,\n            \"outputPath\": \"dist/angular-hnpwa\",\n            \"index\": \"src/index.html\",\n            \"main\": \"src/main.ts\",\n            \"polyfills\": [\n              \"src/polyfills.ts\"\n            ],\n            \"tsConfig\": \"tsconfig.app.json\",\n            \"assets\": [\n              \"src/favicon.ico\",\n              \"src/assets\",\n              \"src/manifest.json\",\n              \"src/manifest.webmanifest\"\n            ],\n            \"styles\": [\n              \"src/styles.scss\"\n            ],\n            \"scripts\": [],\n            \"optimization\": {\n              \"scripts\": true,\n              \"styles\": true,\n              \"fonts\": {\n                \"inline\": false\n              }\n            }\n          },\n          \"configurations\": {\n            \"production\": {\n              \"fileReplacements\": [\n                {\n                  \"replace\": \"src/environments/environment.ts\",\n                  \"with\": \"src/environments/environment.prod.ts\"\n                }\n              ],\n              \"optimization\": {\n                \"scripts\": true,\n                \"styles\": true,\n                \"fonts\": {\n                  \"inline\": false\n                }\n              },\n              \"outputHashing\": \"all\",\n              \"sourceMap\": true,\n              \"namedChunks\": true,\n              \"aot\": true,\n              \"extractLicenses\": true,\n              \"vendorChunk\": false,\n              \"buildOptimizer\": true,\n              \"budgets\": [\n                {\n                  \"type\": \"initial\",\n                  \"maximumWarning\": \"2mb\",\n                  \"maximumError\": \"5mb\"\n                },\n                {\n                  \"type\": \"anyComponentStyle\",\n                  \"maximumWarning\": \"6kb\"\n                }\n              ],\n              \"serviceWorker\": true,\n              \"ngswConfigPath\": \"ngsw-config.json\"\n            }\n          }\n        },\n        \"serve\": {\n          \"builder\": \"@angular-devkit/build-angular:dev-server\",\n          \"options\": {\n            \"browserTarget\": \"angular-hnpwa:build\"\n          },\n          \"configurations\": {\n            \"production\": {\n              \"browserTarget\": \"angular-hnpwa:build:production\"\n            }\n          }\n        },\n        \"extract-i18n\": {\n          \"builder\": \"@angular-devkit/build-angular:extract-i18n\",\n          \"options\": {\n            \"browserTarget\": \"angular-hnpwa:build\"\n          }\n        },\n        \"test\": {\n          \"builder\": \"@angular-devkit/build-angular:karma\",\n          \"options\": {\n            \"main\": \"src/test.ts\",\n            \"polyfills\": [\n              \"src/polyfills.ts\"\n            ],\n            \"tsConfig\": \"tsconfig.spec.json\",\n            \"karmaConfig\": \"karma.conf.js\",\n            \"assets\": [\n              \"src/favicon.ico\",\n              \"src/assets\",\n              \"src/manifest.webmanifest\"\n            ],\n            \"styles\": [\n              \"src/styles.scss\"\n            ],\n            \"scripts\": []\n          }\n        }\n      }\n    }\n  }\n}\n",
+							"changes": [
+								"removed defaultProject (was \"angular-hnpwa\")",
+								"projects.angular-hnpwa.architect.build.options.polyfills: \"src/polyfills.ts\" -> [\"src/polyfills.ts\"]",
+								"added projects.angular-hnpwa.architect.build.options.optimization = {\"scripts\":true,\"styles\":true,\"fonts\":{\"inline\":false}}",
+								"projects.angular-hnpwa.architect.build.configurations.production.optimization: true -> {\"scripts\":true,\"styles\":true,\"fonts\":{\"inline\":false}}",
+								"removed projects.angular-hnpwa.architect.build.configurations.production.extractCss (was true)",
+								"projects.angular-hnpwa.architect.test.options.polyfills: \"src/polyfills.ts\" -> [\"src/polyfills.ts\"]",
+								"removed projects.angular-hnpwa.architect.lint (was @angular-devkit/build-angular:tslint)",
+								"removed projects.angular-hnpwa.architect.e2e (was @angular-devkit/build-angular:protractor)"
+							]
+						},
+						{
+							"path": "tsconfig.json",
+							"kind": "workspace",
+							"changed": true,
+							"sha256Before": "5dd4c0b270bbd31e6cb586e2db3cfd7f2dbef5b17041f2c3724c6b105e52907a",
+							"sha256After": "76eb68f3c1250939aba0744d0532d8c1a461673e8af4b1baf2f8e3611654ca3a",
+							"source": "{\n  \"compileOnSave\": false,\n  \"compilerOptions\": {\n    \"baseUrl\": \"./\",\n    \"outDir\": \"./dist/out-tsc\",\n    \"sourceMap\": true,\n    \"declaration\": false,\n    \"module\": \"ES2022\",\n    \"moduleResolution\": \"node\",\n    \"emitDecoratorMetadata\": true,\n    \"experimentalDecorators\": true,\n    \"importHelpers\": true,\n    \"target\": \"ES2022\",\n    \"typeRoots\": [\n      \"node_modules/@types\"\n    ],\n    \"lib\": [\n      \"es2018\",\n      \"dom\"\n    ],\n    \"useDefineForClassFields\": false\n  }\n}\n",
+							"changes": [
+								"compilerOptions.target: \"es2015\" -> \"ES2022\"",
+								"compilerOptions.module: \"esnext\" -> \"ES2022\"",
+								"added compilerOptions.useDefineForClassFields = false"
+							]
+						},
+						{
+							"path": "src/app/app.component.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "dd196754a14e44018a644e2def9bad3e15950fa2b0a5a7287ba8f87ea349ace1",
+							"sha256After": "dd196754a14e44018a644e2def9bad3e15950fa2b0a5a7287ba8f87ea349ace1",
+							"source": "import { Component } from '@angular/core';\nimport { Router, NavigationEnd } from '@angular/router';\n\nimport { SettingsService } from './shared/services/settings.service';\nimport { Settings } from './shared/models/settings';\n\ndeclare let ga: Function;\n\n@Component({\n  selector: 'app-root',\n  templateUrl: './app.component.html',\n  styleUrls: ['./app.component.scss']\n})\n\nexport class AppComponent {\n  settings: Settings;\n  theme: string;\n\n  constructor(\n    private _settingsService: SettingsService,\n    public router: Router\n  ) {\n    this.settings = this._settingsService.settings;\n    this.router.events.subscribe(event => {\n      if (event instanceof NavigationEnd) {\n        ga('set', 'page', event.urlAfterRedirects);\n        ga('send', 'pageview');\n      }\n    });\n  }\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/app.module.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "875e6b2851b1850df0c542f0ead6508f9bb76d57116bf20316b81e783d50c79f",
+							"sha256After": "875e6b2851b1850df0c542f0ead6508f9bb76d57116bf20316b81e783d50c79f",
+							"source": "import { BrowserModule } from '@angular/platform-browser';\nimport { NgModule } from '@angular/core';\n\nimport { routing } from './app.routes';\n\nimport { AppComponent } from './app.component';\nimport { CoreModule } from './core/core.module';\nimport { FeedComponent } from './feeds/feed/feed.component';\nimport { ItemComponent } from './feeds/item/item.component';\nimport { SharedComponentsModule } from './shared/components/shared-components.module';\nimport { PipesModule } from './shared/pipes/pipes.module';\nimport { ServiceWorkerModule } from '@angular/service-worker';\nimport { environment } from '../environments/environment';\nimport { HackerNewsAPIService } from './shared/services/hackernews-api.service';\nimport { SettingsService } from './shared/services/settings.service';\n\n@NgModule({\n    declarations: [AppComponent, FeedComponent, ItemComponent],\n    imports: [\n        BrowserModule,\n        routing,\n        CoreModule,\n        SharedComponentsModule,\n        PipesModule,\n        ServiceWorkerModule.register('ngsw-worker.js', {\n            enabled: environment.production,\n        }),\n    ],\n    providers: [HackerNewsAPIService, SettingsService],\n    bootstrap: [AppComponent],\n})\nexport class AppModule {}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/app.routes.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "c30f65e0164092dc63e8374d56d59eb43ea5db71f5f669e6e5ac296b1716f10d",
+							"sha256After": "c30f65e0164092dc63e8374d56d59eb43ea5db71f5f669e6e5ac296b1716f10d",
+							"source": "import { Routes, RouterModule } from '@angular/router';\n\nimport { FeedComponent } from './feeds/feed/feed.component';\n\nconst feedRoutes = [{\n  path: ':page',\n  component: FeedComponent\n}];\n\nconst routes: Routes = [\n  {path: '', redirectTo: 'news/1', pathMatch: 'full'},\n  {\n    path: 'news',\n    children: feedRoutes,\n    data: {feedType: 'news'}\n  },\n  {\n    path: 'newest',\n    children: feedRoutes,\n    data: {feedType: 'newest'}\n  },\n  {\n    path: 'show',\n    children: feedRoutes,\n    data: {feedType: 'show'}\n  },\n  {\n    path: 'ask',\n    children: feedRoutes,\n    data: {feedType: 'ask'}\n  },\n  {\n    path: 'jobs',\n    children: feedRoutes,\n    data: {feedType: 'jobs'}\n  },\n  {path: 'item', loadChildren: () => import('./item-details/item-details.module').then(m => m.ItemDetailsModule)},\n  {path: 'user', loadChildren: () => import('./user/user.module').then(m => m.UserModule)}\n];\n\n\n// - Updated Export\nexport const routing = RouterModule.forRoot(routes);\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/core/core.module.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "31c15a51cb8e50bfc39b2d1aa5337a17615bd737cf03a78fc750fd336f64b502",
+							"sha256After": "31c15a51cb8e50bfc39b2d1aa5337a17615bd737cf03a78fc750fd336f64b502",
+							"source": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { RouterModule } from '@angular/router';\nimport { SettingsComponent } from './settings/settings.component';\nimport { HeaderComponent } from './header/header.component';\nimport { FooterComponent } from './footer/footer.component';\n\n@NgModule({\n  imports: [CommonModule, RouterModule],\n  declarations: [HeaderComponent, FooterComponent, SettingsComponent],\n  exports: [HeaderComponent, FooterComponent]\n})\nexport class CoreModule { }\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/core/footer/footer.component.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "29b3c7ecdba3f4e2582c864dcc037040b41b85ca84de6423fa79b578a632ad6c",
+							"sha256After": "29b3c7ecdba3f4e2582c864dcc037040b41b85ca84de6423fa79b578a632ad6c",
+							"source": "import { Component, OnInit } from '@angular/core';\n\n@Component({\n  selector: 'app-footer',\n  templateUrl: './footer.component.html',\n  styleUrls: ['./footer.component.scss']\n})\nexport class FooterComponent implements OnInit {\n\n  constructor() { }\n\n  ngOnInit() {\n  }\n\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/core/header/header.component.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "9d76ade4be8f25c5e08155d1b0d9d81020599ac78852bbf829bfffb9603bd112",
+							"sha256After": "9d76ade4be8f25c5e08155d1b0d9d81020599ac78852bbf829bfffb9603bd112",
+							"source": "import { Component, OnInit } from '@angular/core';\n\nimport { SettingsService } from '../../shared/services/settings.service';\nimport { Settings } from '../../shared/models/settings';\n\n@Component({\n  selector: 'app-header',\n  templateUrl: './header.component.html',\n  styleUrls: ['./header.component.scss']\n})\nexport class HeaderComponent implements OnInit {\n  settings: Settings;\n\n  constructor(private _settingsService: SettingsService) {\n    this.settings = this._settingsService.settings;\n  }\n\n  ngOnInit() {\n  }\n\n  toggleSettings() {\n    this._settingsService.toggleSettings();\n  }\n\n  scrollTop() {\n    window.scrollTo(0, 0);\n  }\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/core/settings/settings.component.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "fb233140c3d288da677ef93495fce85b0943c17edf1395e43901464c25a2b9cb",
+							"sha256After": "fb233140c3d288da677ef93495fce85b0943c17edf1395e43901464c25a2b9cb",
+							"source": "import { Component, OnInit } from '@angular/core';\n\nimport { SettingsService } from '../../shared/services/settings.service';\nimport { Settings } from '../../shared/models/settings';\n\n@Component({\n  selector: 'app-settings',\n  templateUrl: './settings.component.html',\n  styleUrls: ['./settings.component.scss']\n})\nexport class SettingsComponent implements OnInit {\n  settings: Settings;\n\n  constructor(private _settingsService: SettingsService) {\n    this.settings = this._settingsService.settings;\n  }\n\n  ngOnInit() {\n  }\n\n  closeSettings() {\n    this._settingsService.toggleSettings();\n  }\n\n  toggleOpenLinksInNewTab() {\n    this._settingsService.toggleOpenLinksInNewTab();\n  }\n\n  selectTheme(theme) {\n    this._settingsService.setTheme(theme);\n  }\n\n  changeTitleFont(val){\n    this._settingsService.setFont(val);\n  }\n\n  changeSpacing(val){\n    this._settingsService.setSpacing(val);\n  }\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/feeds/feed/feed.component.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "ae82b2d10b6c44de367c9cf455f07c031cb41a03d6c4035d915d72ea22e3db1e",
+							"sha256After": "ae82b2d10b6c44de367c9cf455f07c031cb41a03d6c4035d915d72ea22e3db1e",
+							"source": "import { Component, OnInit } from '@angular/core';\nimport { Observable } from 'rxjs';\nimport { Subscription } from 'rxjs';\nimport { ActivatedRoute } from '@angular/router';\n\nimport { HackerNewsAPIService } from '../../shared/services/hackernews-api.service';\nimport { Story } from '../../shared/models/story';\n\n@Component({\n  selector: 'app-feed',\n  templateUrl: './feed.component.html',\n  styleUrls: ['./feed.component.scss']\n})\n\nexport class FeedComponent implements OnInit {\n  typeSub: Subscription;\n  pageSub: Subscription;\n  items: Story[];\n  feedType: string;\n  pageNum: number;\n  listStart: number;\n  errorMessage = '';\n\n  constructor(\n    private _hackerNewsAPIService: HackerNewsAPIService,\n    private route: ActivatedRoute\n  ) { }\n\n  ngOnInit() {\n    this.typeSub = this.route\n      .data\n      .subscribe(data => {\n        this.feedType = (data as any).feedType;\n      });\n\n    this.pageSub = this.route.params.subscribe(params => {\n      this.pageNum = params['page'] ? +params['page'] : 1;\n      this._hackerNewsAPIService.fetchFeed(this.feedType, this.pageNum)\n        .subscribe(\n          items => this.items = items,\n          error => this.errorMessage = 'Could not load ' + this.feedType + ' stories.',\n          () => {\n            this.listStart = ((this.pageNum - 1) * 30) + 1;\n            window.scrollTo(0, 0);\n          }\n        );\n    });\n  }\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/feeds/item/item.component.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "7d01988bbf08f986d9f346a9043223d83b10a87ebcd72fccea596b42b1b479a0",
+							"sha256After": "7d01988bbf08f986d9f346a9043223d83b10a87ebcd72fccea596b42b1b479a0",
+							"source": "import { Component, Input, OnInit } from '@angular/core';\nimport { Story } from '../../shared/models/story';\n\nimport { SettingsService } from '../../shared/services/settings.service';\nimport { Settings } from '../../shared/models/settings';\n\n@Component({\n  selector: 'item',\n  templateUrl: './item.component.html',\n  styleUrls: ['./item.component.scss']\n})\nexport class ItemComponent implements OnInit {\n  @Input() item: Story;\n  settings: Settings;\n\n  constructor(private _settingsService: SettingsService) {\n    this.settings = this._settingsService.settings;\n  }\n\n  ngOnInit() {}\n\n  get hasUrl(): boolean {\n    return this.item.url.indexOf('http') === 0;\n  }\n\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/item-details/comment/comment.component.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "2097d90a66768067c1a7f3d258f9ded669b52a09a92369f0094d2b9edf1b2839",
+							"sha256After": "2097d90a66768067c1a7f3d258f9ded669b52a09a92369f0094d2b9edf1b2839",
+							"source": "import { Component, Input, OnInit } from '@angular/core';\n\nimport { Comment } from '../../shared/models/comment';\n\n@Component({\n  selector: 'app-comment',\n  templateUrl: './comment.component.html',\n  styleUrls: ['./comment.component.scss']\n})\nexport class CommentComponent implements OnInit {\n  @Input() comment: Comment;\n  collapse: boolean;\n\n  constructor() {}\n\n  ngOnInit() {\n    this.collapse = false;\n  }\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/item-details/item-details.component.ts",
+							"kind": "application",
+							"changed": true,
+							"sha256Before": "586408f9cb6773b53acd93353aa0659ac958a02c22fca5556c25f6743da38910",
+							"sha256After": "dd76d1e5dfe77ffd2e2395f1d7ada936258713b7c09bf2be04c2ef86e9ffb6bc",
+							"source": "import { Component, OnInit } from '@angular/core';\nimport { ActivatedRoute } from '@angular/router';\nimport { Location } from '@angular/common';\nimport { Subscription } from 'rxjs';\n\nimport { HackerNewsAPIService } from '../shared/services/hackernews-api.service';\nimport { SettingsService } from '../shared/services/settings.service';\n\nimport { Story } from '../shared/models/story';\nimport { Settings } from '../shared/models/settings';\n\n@Component({\n  selector: 'app-item-details',\n  templateUrl: './item-details.component.html',\n  styleUrls: ['./item-details.component.scss']\n})\nexport class ItemDetailsComponent implements OnInit {\n  sub: Subscription;\n  item: Story;\n  errorMessage = '';\n  settings: Settings;\n\n  constructor(\n    private _hackerNewsAPIService: HackerNewsAPIService,\n    private _settingsService: SettingsService,\n    private route: ActivatedRoute,\n    private _location: Location\n  ) {\n    this.settings = this._settingsService.settings;\n  }\n\n  ngOnInit() {\n    this.sub = this.route.params.subscribe(params => {\n      let itemID = +params['id'];\n      this._hackerNewsAPIService.fetchItemContent(itemID).subscribe(item => {\n        this.item = item;\n      }, error => this.errorMessage = 'Could not load item comments.');\n    });\n    window.scrollTo(0, 0);\n  }\n\n  goBack() {\n    this._location.back();\n  }\n\n  get hasUrl(): boolean {\n    return this.item.url.indexOf('http') === 0;\n  }\n\n}\n",
+							"changes": [
+								"line 4: module-specifier rxjs/Subscription -> rxjs"
+							]
+						},
+						{
+							"path": "src/app/item-details/item-details.module.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "fe43b70ac4d6864b97196dca038a7f17610859fbaf8d9423e89fe250672378bc",
+							"sha256After": "fe43b70ac4d6864b97196dca038a7f17610859fbaf8d9423e89fe250672378bc",
+							"source": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { RouterModule, Routes } from '@angular/router';\nimport { ItemDetailsComponent } from './item-details.component';\nimport { CommentComponent } from './comment/comment.component';\nimport { SharedComponentsModule } from '../shared/components/shared-components.module';\nimport { PipesModule } from '../shared/pipes/pipes.module';\n\n\nconst routes: Routes = [\n  {\n    path: ':id',\n    component: ItemDetailsComponent\n  }\n]\n\n@NgModule({\n  imports: [ SharedComponentsModule, CommonModule, RouterModule, PipesModule, RouterModule.forChild(routes) ],\n  declarations: [ ItemDetailsComponent, CommentComponent ],\n  exports: [ ItemDetailsComponent, RouterModule]\n})\nexport class ItemDetailsModule {}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/shared/components/error-message/error-message.component.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "127bd79b83547f37a27472212cc7028c2d924101b0f59dc68b2e95c0df6746b2",
+							"sha256After": "127bd79b83547f37a27472212cc7028c2d924101b0f59dc68b2e95c0df6746b2",
+							"source": "import { Component, Input, OnInit } from '@angular/core';\n\n@Component({\n  selector: 'app-error-message',\n  templateUrl: './error-message.component.html',\n  styleUrls: ['./error-message.component.scss']\n})\nexport class ErrorMessageComponent implements OnInit {\n  @Input() message: string;\n\n  constructor() { }\n\n  ngOnInit() {\n  }\n\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/shared/components/loader/loader.component.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "dff03557ca2b85be194b12ed81467150ddc5efdd545bdf1fcd25bdc6ff3a2b8f",
+							"sha256After": "dff03557ca2b85be194b12ed81467150ddc5efdd545bdf1fcd25bdc6ff3a2b8f",
+							"source": "import { Component, OnInit } from '@angular/core';\n\n@Component({\n  selector: 'app-loader',\n  templateUrl: './loader.component.html',\n  styleUrls: ['./loader.component.scss']\n})\nexport class LoaderComponent implements OnInit {\n\n  constructor() { }\n\n  ngOnInit() {\n  }\n\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/shared/components/shared-components.module.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "e1a27f7d913bd44ee93ed835d29bf7d1ca2abe48d9043d73964287016aa9efe6",
+							"sha256After": "e1a27f7d913bd44ee93ed835d29bf7d1ca2abe48d9043d73964287016aa9efe6",
+							"source": "import { CommonModule } from '@angular/common';\nimport { NgModule } from '@angular/core';\nimport { LoaderComponent } from './loader/loader.component';\nimport { ErrorMessageComponent } from './error-message/error-message.component';\n\n@NgModule({\n  imports: [CommonModule],\n  declarations: [ LoaderComponent, ErrorMessageComponent ],\n  exports: [ LoaderComponent, ErrorMessageComponent ]\n})\nexport class SharedComponentsModule {}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/shared/models/comment.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "1067dd9d2c40f424f821f910a2a28725d721240650727ef2fabceb85cc6c65ac",
+							"sha256After": "1067dd9d2c40f424f821f910a2a28725d721240650727ef2fabceb85cc6c65ac",
+							"source": "export class Comment {\n    id: number;\n    level: number;\n    user: string;\n    time: number;\n    time_ago: string;\n    content: string;\n    deleted: boolean;\n    comments: Comment[];\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/shared/models/feed-type.type.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "f29ed5480340d041699645087204ddbc463a1fdd80079c1acbd80fdf4672c442",
+							"sha256After": "f29ed5480340d041699645087204ddbc463a1fdd80079c1acbd80fdf4672c442",
+							"source": "export type FeedType = 'poll' | 'story' | 'job';\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/shared/models/poll-result.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "7e91220a7cd122f5224fd5034f5062722a33d88ac2a0b131cb611111661084ed",
+							"sha256After": "7e91220a7cd122f5224fd5034f5062722a33d88ac2a0b131cb611111661084ed",
+							"source": "export class PollResult {\n    points: number;\n    content: string;\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/shared/models/settings.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "4525a1085c866f84c42364bf15eaae20d84c5a96068097d4cafd71799e1766e3",
+							"sha256After": "4525a1085c866f84c42364bf15eaae20d84c5a96068097d4cafd71799e1766e3",
+							"source": "export interface Settings {\n   showSettings: boolean;\n   openLinkInNewTab: boolean;\n   theme: string;\n   titleFontSize: string;\n   listSpacing: string;\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/shared/models/story.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "a4661f117624161fb5cf0adbde562516b7135b00610cacaddd3fdece7b49e45c",
+							"sha256After": "a4661f117624161fb5cf0adbde562516b7135b00610cacaddd3fdece7b49e45c",
+							"source": "import { Comment } from './comment';\nimport { FeedType } from './feed-type.type';\nimport { PollResult } from './poll-result';\n\nexport class Story {\n    id: number;\n    title: string;\n    points: number;\n    user: string;\n    time: number;\n    time_ago: number;\n    type: FeedType;\n    url: string;\n    domain: string;\n    comments: Comment[];\n    comments_count: number;\n    poll: PollResult[];\n    poll_votes_count: number;\n    deleted: boolean;\n    dead: boolean;\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/shared/models/user.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "cac4c43b07717d991b1af46c0279d02d7d5faaa6a43feff1d8518d632aa703b9",
+							"sha256After": "cac4c43b07717d991b1af46c0279d02d7d5faaa6a43feff1d8518d632aa703b9",
+							"source": "export class User {\n    id: string;\n    crated_time: number;\n    created: string;\n    karma: number;\n    avg: number;\n    about: string;\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/shared/pipes/comment.pipe.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "4a491179e8911ceb3b16267363aac2baf6d2f91e7aa9f100d7d959185969565f",
+							"sha256After": "4a491179e8911ceb3b16267363aac2baf6d2f91e7aa9f100d7d959185969565f",
+							"source": "import {Pipe, PipeTransform} from '@angular/core';\n\n@Pipe({\n  name: 'comment',\n  pure: true\n})\nexport class CommentPipe implements PipeTransform {\n  transform(comment: number): string {\n   if (comment > 0) {\n     let st = comment === 1 ? 'comment' : 'comments';\n     return `${comment} ${st}`;\n   }\n   return 'discuss';\n  }\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/shared/pipes/pipes.module.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "37a80e269619ec4f12fbb3f55c393b7a1262846b2c3139d27b71c5bba025e52b",
+							"sha256After": "37a80e269619ec4f12fbb3f55c393b7a1262846b2c3139d27b71c5bba025e52b",
+							"source": "import { NgModule } from '@angular/core';\nimport { CommentPipe } from './comment.pipe';\n\n@NgModule({\n  declarations: [CommentPipe],\n  exports: [CommentPipe]\n})\nexport class PipesModule {}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/shared/services/hackernews-api.service.ts",
+							"kind": "application",
+							"changed": true,
+							"sha256Before": "ba710aa3edcd38d0346f655f8b35c5b487da5083c3fa17c7b0bb0de56410128d",
+							"sha256After": "bed3ce37b9c10b4f62834eeb3a3afd6e9ee34f3c999c685af44a36a4d1d3341a",
+							"source": "import { Injectable } from '@angular/core';\nimport { Observable } from 'rxjs';\nimport fetch from 'unfetch';\nimport {map } from 'rxjs/operators';\n\nimport { Story } from '../models/story';\nimport { User } from '../models/user';\nimport { PollResult } from '../models/poll-result';\n\n// wrap fetch in observable so we can keep it chill\n@Injectable()\nexport class HackerNewsAPIService {\n  baseUrl: string;\n\n  constructor() {\n    this.baseUrl = 'https://node-hnapi.herokuapp.com';\n  }\n\n  fetchFeed(feedType: string, page: number): Observable<Story[]> {\n    return lazyFetch(`${this.baseUrl}/${feedType}?page=${page}`);\n  }\n\n  fetchItemContent(id: number): Observable<Story> {\n    return lazyFetch(`${this.baseUrl}/item/${id}`).pipe(map((story: Story) => {\n      if (story.type === 'poll') {\n        let numberOfPollOptions = story.poll.length;\n        story.poll_votes_count = 0;\n        for (let i = 1; i <= numberOfPollOptions; i++) {\n          this.fetchPollContent(story.id + i).subscribe(pollResults => {\n            story.poll[i - 1] = pollResults;\n            story.poll_votes_count += pollResults.points;\n          });\n        }\n      }\n      return story;\n    }));\n  }\n\n  fetchPollContent(id: number): Observable<PollResult> {\n    return lazyFetch(`${this.baseUrl}/item/${id}`);\n  }\n\n  fetchUser(id: string): Observable<User> {\n    return lazyFetch(`${this.baseUrl}/user/${id}`);\n  }\n}\n\nfunction lazyFetch<T>(url, options?) {\n  return new Observable<T>(fetchObserver => {\n    let cancelToken = false;\n    fetch(url, options)\n      .then(res => {\n        if (!cancelToken) {\n          return res.json()\n            .then(data => {\n              fetchObserver.next(data);\n              fetchObserver.complete();\n            });\n        }\n      }).catch(err => fetchObserver.error(err));\n    return () => {\n      cancelToken = true;\n    };\n  });\n}\n\n",
+							"changes": [
+								"line 2: module-specifier rxjs/Observable -> rxjs"
+							]
+						},
+						{
+							"path": "src/app/shared/services/settings.service.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "17e183d13d9474cf6ca2729fc41663bc5cd951ec9011892fb38528a92213e548",
+							"sha256After": "17e183d13d9474cf6ca2729fc41663bc5cd951ec9011892fb38528a92213e548",
+							"source": "import { Injectable } from '@angular/core';\n\nimport { Settings } from '../models/settings';\n\n@Injectable({\n  providedIn: 'root'\n})\nexport class SettingsService {\n  settings: Settings = {\n    showSettings : false,\n    openLinkInNewTab: localStorage.getItem(\"openLinkInNewTab\") ? JSON.parse(localStorage.getItem(\"openLinkInNewTab\")) : false,\n    theme: 'default',\n    titleFontSize: localStorage.getItem(\"titleFontSize\") ? localStorage.getItem(\"titleFontSize\") : '16',\n    listSpacing: localStorage.getItem(\"listSpacing\") ? localStorage.getItem(\"listSpacing\") : '0',\n  };\n\n  darkColorSchemeMedia = window.matchMedia('(prefers-color-scheme: dark)');\n  \n  constructor() {\n    this.subscribeToSystemPreferredColorScheme();\n    this.initTheme();\n  }\n  \n  ngOnDestroy() {\n    this.unSubscribeToSystemPrefferedColorScheme();\n  }\n\n  handleSystemPreferredColorSchemeChange(event: MediaQueryListEvent) {\n    let theme;\n    if (event.matches) {\n      theme = 'night';\n    } else {\n      theme = 'default';\n    }\n    this.setTheme(theme);\n  }\n  \n  subscribeToSystemPreferredColorScheme() {\n    this.darkColorSchemeMedia.addEventListener(\n      'change',\n      this.handleSystemPreferredColorSchemeChange.bind(this)\n    );\n  }\n\n  initTheme() {\n    const savedTheme = localStorage.getItem(\"theme\");\n    if (savedTheme) {\n      this.settings.theme = savedTheme;\n    } else {\n      this.darkColorSchemeMedia.dispatchEvent(\n        new MediaQueryListEvent('change', {\n          media: this.darkColorSchemeMedia.media,\n          matches: this.darkColorSchemeMedia.matches\n        })\n      );\n    }\n  }\n\n  unSubscribeToSystemPrefferedColorScheme() {\n    this.darkColorSchemeMedia.removeEventListener(\n      'change',\n      this.handleSystemPreferredColorSchemeChange.bind(this)\n    );\n  }\n\n  toggleSettings() {\n    this.settings.showSettings = !this.settings.showSettings;\n  }\n\n  toggleOpenLinksInNewTab() {\n    this.settings.openLinkInNewTab = !this.settings.openLinkInNewTab;\n    localStorage.setItem(\"openLinkInNewTab\", JSON.stringify(this.settings.openLinkInNewTab));\n  }\n\n  setTheme(theme) {\n    this.settings.theme = theme;\n    localStorage.setItem(\"theme\", this.settings.theme);\n  }\n\n  setFont(fontSize){\n    this.settings.titleFontSize = fontSize;\n    localStorage.setItem(\"titleFontSize\", this.settings.titleFontSize);\n  }\n\n  setSpacing(listSpace){\n    this.settings.listSpacing = listSpace;\n    localStorage.setItem(\"listSpacing\", this.settings.listSpacing);\n  }\n}\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/user/user.component.ts",
+							"kind": "application",
+							"changed": true,
+							"sha256Before": "25b7e570ecf6208e6e58af327b205a9304c7f7a53d71f884623d11e22201d867",
+							"sha256After": "dd841a21228e068bc6f6c6a3c14aa7a784754a1519bcef464bb7d2ab550d255a",
+							"source": "import { Component, OnInit } from '@angular/core';\nimport { ActivatedRoute } from '@angular/router';\nimport { Location } from '@angular/common';\nimport { Subscription } from 'rxjs';\n\nimport { HackerNewsAPIService } from '../shared/services/hackernews-api.service';\nimport { User } from '../shared/models/user';\n\n@Component({\n  selector: 'app-user',\n  templateUrl: './user.component.html',\n  styleUrls: ['./user.component.scss']\n})\nexport class UserComponent implements OnInit {\n  sub: Subscription;\n  user: User;\n  errorMessage = '';\n\n  constructor(\n    private _hackerNewsAPIService: HackerNewsAPIService,\n    private route: ActivatedRoute,\n    private _location: Location\n  ) {}\n\n  ngOnInit() {\n    this.sub = this.route.params.subscribe(params => {\n      let userID = params['id'];\n      this._hackerNewsAPIService.fetchUser(userID).subscribe(data => {\n        this.user = data;\n      }, error => this.errorMessage = 'Could not load user ' + userID + '.');\n    });\n  }\n\n  goBack() {\n    this._location.back();\n  }\n}\n",
+							"changes": [
+								"line 4: module-specifier rxjs/Subscription -> rxjs"
+							]
+						},
+						{
+							"path": "src/app/user/user.module.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "1e27bb24b266d47f54127d8aaf2e5c3bf59bb2dcae6379ab2a7910508ed42608",
+							"sha256After": "1e27bb24b266d47f54127d8aaf2e5c3bf59bb2dcae6379ab2a7910508ed42608",
+							"source": "import { NgModule } from '@angular/core';\nimport { CommonModule } from '@angular/common';\nimport { Routes, RouterModule } from '@angular/router';\nimport { UserComponent } from './user.component';\nimport { SharedComponentsModule } from '../shared/components/shared-components.module';\n\n\nconst routes: Routes = [\n  {\n    path: ':id',\n    component: UserComponent\n  }\n]\n\n\n@NgModule({\n  imports: [CommonModule, SharedComponentsModule, RouterModule.forChild(routes)],\n  declarations: [UserComponent],\n  exports: [UserComponent, RouterModule]\n})\nexport class UserModule {}\n",
+							"changes": []
+						},
+						{
+							"path": "src/environments/environment.prod.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "365e9914fc285641a8c9152fa331c83164325564451bd2b05c73859ceaf54a3c",
+							"sha256After": "365e9914fc285641a8c9152fa331c83164325564451bd2b05c73859ceaf54a3c",
+							"source": "export const environment = {\n  production: true\n};\n",
+							"changes": []
+						},
+						{
+							"path": "src/environments/environment.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "f5aa4e3c0ed4c5f5445d1dcad5f62ed3294cb1d2aedfb2d74c69273ee6acdd56",
+							"sha256After": "f5aa4e3c0ed4c5f5445d1dcad5f62ed3294cb1d2aedfb2d74c69273ee6acdd56",
+							"source": "// This file can be replaced during build by using the `fileReplacements` array.\n// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.\n// The list of file replacements can be found in `angular.json`.\n\nexport const environment = {\n  production: false\n};\n\n/*\n * For easier debugging in development mode, you can import the following file\n * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.\n *\n * This import should be commented out in production mode because it will have a negative impact\n * on performance if an error is thrown.\n */\n// import 'zone.js/dist/zone-error';  // Included with Angular CLI.\n",
+							"changes": []
+						},
+						{
+							"path": "src/main.ts",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "44bab8ced43078310e1affbf44ca0682f42151082fe1d59a653699697ecabd7d",
+							"sha256After": "44bab8ced43078310e1affbf44ca0682f42151082fe1d59a653699697ecabd7d",
+							"source": "import { enableProdMode } from '@angular/core';\nimport { platformBrowserDynamic } from '@angular/platform-browser-dynamic';\n\nimport { AppModule } from './app/app.module';\nimport { environment } from './environments/environment';\n\nif (environment.production) {\n  enableProdMode();\n}\n\nplatformBrowserDynamic().bootstrapModule(AppModule)\n  .catch(err => console.error(err));\n",
+							"changes": []
+						},
+						{
+							"path": "src/polyfills.ts",
+							"kind": "application",
+							"changed": true,
+							"sha256Before": "1715fced821c47d9bbd972f56e95e34eccd2dc25ec1cfc368dd3ac1ef17e67fa",
+							"sha256After": "23220a766f0662f823cfac5e3c855aebf4a7b0bb025b3dd725a7bc871d2ef4b8",
+							"source": "/**\n * This file includes polyfills needed by Angular and is loaded before the app.\n * You can add your own extra polyfills to this file.\n *\n * This file is divided into 2 sections:\n *   1. Browser polyfills. These are applied before loading ZoneJS and are sorted by browsers.\n *   2. Application imports. Files imported after ZoneJS that should be loaded before your main\n *      file.\n *\n * The current setup is for so-called \"evergreen\" browsers; the last versions of browsers that\n * automatically update themselves. This includes Safari >= 10, Chrome >= 55 (including Opera),\n * Edge >= 13 on the desktop, and iOS 10 and Chrome on mobile.\n *\n * Learn more in https://angular.io/guide/browser-support\n */\n\n/***************************************************************************************************\n * BROWSER POLYFILLS\n */\n\n/** IE10 and IE11 requires the following for NgClass support on SVG elements */\n// import 'classlist.js';  // Run `npm install --save classlist.js`.\n\n/**\n * Web Animations `@angular/platform-browser/animations`\n * Only required if AnimationBuilder is used within the application and using IE/Edge or Safari.\n * Standard animation support in Angular DOES NOT require any polyfills (as of Angular 6.0).\n */\n// import 'web-animations-js';  // Run `npm install --save web-animations-js`.\n\n/**\n * By default, zone.js will patch all possible macroTask and DomEvents\n * user can disable parts of macroTask/DomEvents patch by setting following flags\n * because those flags need to be set before `zone.js` being loaded, and webpack\n * will put import in the top of bundle, so user need to create a separate file\n * in this directory (for example: zone-flags.ts), and put the following flags\n * into that file, and then add the following code before importing zone.js.\n * import './zone-flags.ts';\n *\n * The flags allowed in zone-flags.ts are listed here.\n *\n * The following flags will work for all browsers.\n *\n * (window as any).__Zone_disable_requestAnimationFrame = true; // disable patch requestAnimationFrame\n * (window as any).__Zone_disable_on_property = true; // disable patch onProperty such as onclick\n * (window as any).__zone_symbol__UNPATCHED_EVENTS = ['scroll', 'mousemove']; // disable patch specified eventNames\n *\n *  in IE/Edge developer tools, the addEventListener will also be wrapped by zone.js\n *  with the following flag, it will bypass `zone.js` patch for IE/Edge\n *\n *  (window as any).__Zone_enable_cross_context_check = true;\n *\n */\n\n/***************************************************************************************************\n * Zone JS is required by default for Angular itself.\n */\nimport 'zone.js';  // Included with Angular CLI.\n\n\n/***************************************************************************************************\n * APPLICATION IMPORTS\n */\n",
+							"changes": [
+								"line 58: module-specifier zone.js/dist/zone -> zone.js"
+							]
+						},
+						{
+							"path": "src/test.ts",
+							"kind": "application",
+							"changed": true,
+							"sha256Before": "d0e763cd3db1c76fa804d238422f1120ed648d21ed4a172c2d3476e5060a14c4",
+							"sha256After": "9b1c90dfacfbb8e9bd9f44392375a1496621311aacda385c36976b5c4d4bf7d5",
+							"source": "// This file is required by karma.conf.js and loads recursively all the .spec and framework files\n\nimport 'zone.js/testing';\nimport { getTestBed } from '@angular/core/testing';\nimport {\n  BrowserDynamicTestingModule,\n  platformBrowserDynamicTesting\n} from '@angular/platform-browser-dynamic/testing';\n\ndeclare const require: any;\n\n// First, initialize the Angular testing environment.\ngetTestBed().initTestEnvironment(\n  BrowserDynamicTestingModule,\n  platformBrowserDynamicTesting()\n);\n// Then we find all the tests.\nconst context = require.context('./', true, /\\.spec\\.ts$/);\n// And load the modules.\ncontext.keys().map(context);\n",
+							"changes": [
+								"line 3: module-specifier zone.js/dist/zone-testing -> zone.js/testing"
+							]
+						},
+						{
+							"path": "src/app/app.component.html",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "74080ed938f6c24a89013630f79f3d329c8442a8bad68ecef779a20ff3f493a1",
+							"sha256After": "74080ed938f6c24a89013630f79f3d329c8442a8bad68ecef779a20ff3f493a1",
+							"source": "<div class=\"{{ settings.theme }}\">\n  <div class=\"body-cover\"></div>\n  <div class=\"wrapper\">\n    <app-header></app-header>\n    <router-outlet></router-outlet>\n    <app-footer></app-footer>\n  </div>\n</div>\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/core/footer/footer.component.html",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "47d5059a9106042fdd44a0c4889486f8045b8b0999f50d590df8a21811719df9",
+							"sha256After": "47d5059a9106042fdd44a0c4889486f8045b8b0999f50d590df8a21811719df9",
+							"source": "<div id=\"footer\">\n    <p>Show this project some ❤ on <a href=\"https://github.com/hdjirdeh/angular2-hn\" target=\"_blank\" rel=\"noopener\">GitHub</a></p>\n </div>\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/core/header/header.component.html",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "ad08d93e1a964bb9e02ec3e1266c983d7bb13d99cfa25e90c7301579b4479770",
+							"sha256After": "ad08d93e1a964bb9e02ec3e1266c983d7bb13d99cfa25e90c7301579b4479770",
+							"source": "<header>\n    <div id=\"header\">\n      <a class=\"home-link\" routerLink=\"/news/1\" routerLinkActive=\"active\" (click)=\"scrollTop()\">\n        <div class=\"logo-inner\"></div>\n        <img class=\"logo\" src=\"assets/images/logo.svg\" alt=\"Logo\">\n      </a>\n      <div class=\"header-text\">\n        <div class=\"left\">\n          <span class=\"header-nav\">\n            <a routerLink=\"/newest/1\" routerLinkActive=\"active\" (click)=\"scrollTop()\">new</a>\n              |\n            <a routerLink=\"/show/1\" routerLinkActive=\"active\" (click)=\"scrollTop()\">show</a>\n              |\n            <a routerLink=\"/ask/1\" routerLinkActive=\"active\" (click)=\"scrollTop()\">ask</a>\n              |\n            <a routerLink=\"/jobs/1\" routerLinkActive=\"active\" (click)=\"scrollTop()\">jobs</a>\n          </span>\n        </div>\n      </div>\n      <div class=\"info\">\n        <img class=\"settings\" src=\"assets/images/cog.svg\" alt=\"Settings\" (click)=\"toggleSettings()\">\n      </div>\n    </div>\n    <app-settings *ngIf=\"settings.showSettings\"></app-settings>\n  </header>\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/core/settings/settings.component.html",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "c6b7301c171c91ec7f316728e96bc7e3f02ba8a78c279e835fa5afcb0888ee06",
+							"sha256After": "c6b7301c171c91ec7f316728e96bc7e3f02ba8a78c279e835fa5afcb0888ee06",
+							"source": "<div id=\"popup1\" class=\"overlay\">\n    <div class=\"popup\">\n        <h1>Settings</h1>\n        <hr>\n        <span class=\"close\" (click)=\"closeSettings()\">&times;</span>\n        <div class=\"content\">\n            <div class=\"control-section\">\n                <h2>Links</h2>\n                <input \n                    type=\"checkbox\" \n                    [checked]=\"settings.openLinkInNewTab\" \n                    (change)=\"toggleOpenLinksInNewTab()\" />\n                    Open links in a new tab\n            </div>\n            <div class=\"theme-controls\">\n                <div class=\"control-section\">\n                    <h2>Select a theme</h2>\n                    <div>\n                        <label>\n                        <input #default \n                            name=\"theme\" \n                            type=\"radio\" \n                            value=\"default\" \n                            [checked]=\"settings.theme === default.value\"\n                            (click)=\"selectTheme(default.value)\" />\n                            Default\n                        </label>\n                    </div>\n                    <div>\n                        <label>\n                        <input #night \n                            name=\"theme\" \n                            type=\"radio\" \n                            value=\"night\" \n                            [checked]=\"settings.theme === night.value\" \n                            (click)=\"selectTheme(night.value)\" />\n                            Night\n                        </label>\n                    </div>\n                    <div>\n                        <label>\n                        <input \n                            #amoledblack \n                            name=\"theme\" \n                            type=\"radio\" \n                            value=\"amoledblack\" \n                            [checked]=\"settings.theme === amoledblack.value\"\n                            (click)=\"selectTheme(amoledblack.value)\" />\n                            Black (AMOLED)\n                        </label>\n                    </div>\n                </div>\n                <div class=\"control-section\">\n                    <h2>Change Font</h2>\n                    <div>\n                        <label>\n                        Font size:\n                        <input \n                            #titleFont \n                            min=\"1\" \n                            [value]=\"settings.titleFontSize\" \n                            name=\"theme\" \n                            type=\"number\" \n                            (keyup)=\"changeTitleFont(titleFont.value)\" />\n                        </label>\n                    </div>\n                    <div>\n                        <label>\n                        List spacing:\n                        <input \n                            #listSpacing \n                            min=\"0\" \n                            [value]=\"settings.listSpacing\" \n                            name=\"theme\" \n                            type=\"number\" \n                            (keyup)=\"changeSpacing(listSpacing.value)\" />\n                        </label>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n</div>\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/feeds/feed/feed.component.html",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "136fdaade23899783d93d1946bfb70299d1f9077c1ae170cab81bc45b93eb770",
+							"sha256After": "136fdaade23899783d93d1946bfb70299d1f9077c1ae170cab81bc45b93eb770",
+							"source": "<div class=\"main-content\">\n  <app-loader *ngIf=\"!items && !errorMessage\"></app-loader>\n  <app-error-message [message]=\"errorMessage\" *ngIf=\"!items && errorMessage !==''\"></app-error-message>\n\n  <div *ngIf=\"items\">\n    <p class=\"job-header\" *ngIf=\"feedType === 'jobs'\">\n      These are jobs at startups that were funded by Y Combinator.\n      You can also get a job at a YC startup through <a href=\"https://triplebyte.com/?ref=yc_jobs\">Triplebyte</a>.\n    </p>\n    <ol *ngIf=\"feedType !== 'new'\" [class.list-margin]=\"feedType !== 'jobs'\" start=\"{{ listStart }}\">\n      <li *ngFor=\"let item of items\" class=\"post\">\n        <item class=\"item-block\" [item]=\"item\"></item>\n      </li>\n    </ol>\n    <div class=\"nav\">\n      <a *ngIf=\"listStart !== 1\" [routerLink]=\"['/' + feedType, pageNum - 1]\" routerLinkActive=\"active\" class=\"prev\">\n        ‹ Prev\n      </a>\n      <a *ngIf=\"items.length === 30\" [routerLink]=\"['/' + feedType, pageNum + 1]\" routerLinkActive=\"active\" class=\"more\">\n        More ›\n      </a>\n    </div>\n  </div>\n</div>\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/feeds/item/item.component.html",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "0ec926351d29a8c26d48198a2385224e1c98465dd3600583221fffb6411651c8",
+							"sha256After": "0ec926351d29a8c26d48198a2385224e1c98465dd3600583221fffb6411651c8",
+							"source": "<div [ngStyle]=\"{'margin-bottom': settings.listSpacing+'px'}\">\n  <p *ngIf=\"hasUrl\">\n    <a class=\"title\" [ngStyle]=\"{'font-size': settings.titleFontSize+'px'}\" href=\"{{item.url}}\" [attr.target]=\"settings.openLinkInNewTab ? '_blank' : null\" [attr.rel]=\"settings.openLinkInNewTab ? 'noopener' : null\">\n      {{item.title}}\n    </a>\n    <span *ngIf=\"item.domain\" class=\"domain\">({{item.domain}})</span>\n  </p>\n  <p *ngIf=\"!hasUrl\">\n    <a class=\"title\" [ngStyle]=\"{'font-size': settings.titleFontSize+'px'}\" [routerLink]=\"['/item', item.id]\" routerLinkActive=\"active\">\n      {{item.title}}\n    </a>\n  </p>\n  <div class=\"subtext-palm\">\n    <div class=\"details\" *ngIf=\"item.type !== 'job'\">\n      <span class=\"name\"><a [routerLink]=\"['/user', item.user]\" routerLinkActive=\"active\">{{item.user}}</a></span>\n      <span class=\"right\">{{item.points}} ★</span>\n    </div>\n    <div class=\"details\">\n    {{ item.time_ago }}\n    <a [routerLink]=\"['/item', item.id]\" routerLinkActive=\"active\" class=\"comment-number\" *ngIf=\"item.type !== 'job'\"> •\n      {{item.comments_count | comment }}\n    </a>\n    </div>\n  </div>\n  <div class=\"subtext-laptop\">\n    <span *ngIf=\"item.type !== 'job'\">\n      {{item.points}} points by\n      <a [routerLink]=\"['/user', item.user]\" routerLinkActive=\"active\">{{item.user}}</a>\n    </span>\n    <span [class.item-details]=\"item.type !== 'job'\">\n      {{ item.time_ago }}\n      <span *ngIf=\"item.type !== 'job'\"> |\n        <a [routerLink]=\"['/item', item.id]\" routerLinkActive=\"active\">\n          {{item.comments_count | comment }}\n        </a>\n      </span>\n    </span>\n  </div>\n</div>\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/item-details/comment/comment.component.html",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "ad66f88213a15c0fb0622edaedfc8c5037365faac2e6d506d721b05d1d465510",
+							"sha256After": "ad66f88213a15c0fb0622edaedfc8c5037365faac2e6d506d721b05d1d465510",
+							"source": "<div *ngIf=\"!comment.deleted\">\n  <div class=\"meta\" [class.meta-collapse]=\"collapse\">\n    <span class=\"collapse\" (click)=\"collapse = !collapse\">[{{collapse ? '+' : '-'}}]</span> \n    <a [routerLink]=\"['/user', comment.user]\" routerLinkActive=\"active\">{{comment.user}}</a>\n    <span class=\"time\">{{comment.time_ago}}</span>\n  </div>\n  <div class=\"comment-tree\">\n    <div [hidden]=\"collapse\">\n      <p class=\"comment-text\" [innerHTML]=\"comment.content\"></p>\n      <ul class=\"subtree\">\n        <li *ngFor=\"let subComment of comment.comments\"> \n          <app-comment [comment]=\"subComment\"></app-comment>\n        </li>\n      </ul>\n    </div>\n  </div>\n</div>\n<div *ngIf=\"comment.deleted\">\n  <div class=\"deleted-meta\">\n    <span class=\"collapse\">[deleted]</span> | Comment Deleted\n  </div>\n</div>",
+							"changes": []
+						},
+						{
+							"path": "src/app/item-details/item-details.component.html",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "66fe98fa186936fdccdd610d2f2b5509019d0b70f1043af63ebc2b0f787de5e5",
+							"sha256After": "66fe98fa186936fdccdd610d2f2b5509019d0b70f1043af63ebc2b0f787de5e5",
+							"source": "<div class=\"main-content\">\n  <app-loader *ngIf=\"!item && !errorMessage\"></app-loader>\n  <app-error-message [message]=\"errorMessage\" *ngIf=\"!item && errorMessage !== ''\"></app-error-message>\n\n  <div *ngIf=\"item\" class=\"item\">\n    <div class=\"mobile item-header\">\n      <p class=\"title-block\">\n        <span class=\"back-button\" (click)=\"goBack()\"></span>\n        <a *ngIf=\"hasUrl\" class=\"title\" href=\"{{item.url}}\" [attr.target]=\"settings.openLinkInNewTab ? '_blank' : null\" [attr.rel]=\"settings.openLinkInNewTab ? 'noopener' : null\">\n          {{item.title}}\n        </a>\n        <a *ngIf=\"!hasUrl\" class=\"title\" [routerLink]=\"['/item', item.id]\"\n          routerLinkActive=\"active\">\n          {{item.title}}\n        </a>\n      </p>\n    </div>\n    <div class=\"laptop\" [class.item-header]=\"item.comments_count > 0 || item.type === 'job'\" [class.head-margin]=\"item.text\">\n      <p *ngIf=\"hasUrl\">\n        <a class=\"title\" href=\"{{item.url}}\" [attr.target]=\"settings.openLinkInNewTab ? '_blank' : null\" [attr.rel]=\"settings.openLinkInNewTab ? 'noopener' : null\">\n        {{item.title}}\n        </a>\n        <span *ngIf=\"item.domain\" class=\"domain\">({{item.domain}})</span>\n      </p>\n      <p *ngIf=\"!hasUrl\">\n        <a class=\"title\" [routerLink]=\"['/item', item.id]\" routerLinkActive=\"active\">\n        {{item.title}}\n        </a>\n      </p>\n      <div class=\"subtext\">\n        <span *ngIf=\"item.type !== 'job'\">\n        {{item.points}} points by\n          <a [routerLink]=\"['/user', item.user]\" routerLinkActive=\"active\">{{item.user}}</a>\n        </span>\n        <span [class.item-details]=\"item.type !== 'job'\">\n          {{item.time_ago}}\n          <span *ngIf=\"item.type !== 'job'\"> |\n            <a [routerLink]=\"['/item', item.id]\" routerLinkActive=\"active\">\n             {{item.comments_count | comment }}\n            </a>\n          </span>\n        </span>\n      </div>\n    </div>\n    <div *ngIf=\"item.type === 'poll'\" class=\"pollResults\">\n      <div *ngFor=\"let pollResult of item.poll\" class=\"pollContent\">\n        <div [innerHTML]=\"pollResult.content\"></div>\n        <div class=\"subtext\">{{pollResult.points}} points</div>\n        <div class=\"pollBar\" [ngStyle]=\"{'width': pollResult.points/item.poll_votes_count*100+'%'}\"></div>\n      </div>\n    </div>\n    <p class=\"subject\" [innerHTML]=\"item.content\"></p>\n    <ul class=\"comment-list\">\n      <li *ngFor=\"let comment of item.comments\" >\n        <app-comment [comment]=\"comment\"></app-comment>\n      </li>\n    </ul>\n  </div>\n</div>\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/shared/components/error-message/error-message.component.html",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "e8efb836d2d6c90748e0937c6ba37ece91e145b713884f2bf2fcd05bdca487ac",
+							"sha256After": "e8efb836d2d6c90748e0937c6ba37ece91e145b713884f2bf2fcd05bdca487ac",
+							"source": "<div class=\"error-section\">\n  <div class=\"skull\">\n    <div class=\"head\">\n      <div class=\"crack\"></div>\n    </div>\n    <div class=\"mouth\">\n      <div class=\"teeth\"></div>\n    </div>\n  </div>\n  <p class=\"strong\">{{ message }}</p>\n  <p>If you are offline viewing, you'll need to visit this page with a network connection first before it can work offline.</p>\n</div>\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/shared/components/loader/loader.component.html",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "bd5072585e680c0683f3ade548ef77ff70460530699dc6b488b0e93c08a8d78c",
+							"sha256After": "bd5072585e680c0683f3ade548ef77ff70460530699dc6b488b0e93c08a8d78c",
+							"source": "<div class=\"loading-section\">\n  <div class=\"loader\">\n    Loading...\n  </div>\n</div>\n",
+							"changes": []
+						},
+						{
+							"path": "src/app/user/user.component.html",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "749f9dfabfbd8bca2951bf5bb6c1a0d08947d8a3f450afc8238522baa1a618fe",
+							"sha256After": "749f9dfabfbd8bca2951bf5bb6c1a0d08947d8a3f450afc8238522baa1a618fe",
+							"source": "<app-loader *ngIf=\"!user && !errorMessage\"></app-loader>\n<app-error-message [message]=\"errorMessage\" *ngIf=\"!user && errorMessage !== ''\"></app-error-message>\n\n<div *ngIf=\"user\" class=\"profile\">\n  <div class=\"mobile item-header\">\n    <p class=\"title-block\">\n      <span class=\"back-button\" (click)=\"goBack()\"></span>\n      Profile: {{ user.id }}\n    </p>\n  </div>\n  <div class=\"main-details\">\n    <span class=\"name\">{{ user.id }}</span>\n    <span class=\"right\">{{ user.karma }} ★</span>\n    <p class=\"age\">Created {{ user.created }}</p>\n  </div>\n  <div class=\"other-details\" *ngIf=\"user.about\">\n    <p [innerHTML]=\"user.about\"></p>\n  </div>\n</div>\n",
+							"changes": []
+						},
+						{
+							"path": "src/index.html",
+							"kind": "application",
+							"changed": false,
+							"sha256Before": "48df4f1abf36502ee482cd7731a237e04cbf3fa4f500d14e14ae40cf300cec8e",
+							"sha256After": "48df4f1abf36502ee482cd7731a237e04cbf3fa4f500d14e14ae40cf300cec8e",
+							"source": "<!doctype html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"utf-8\">\n  <title>Angular 2 HN</title>\n  <base href=\"/\">\n\n\t<meta name=\"description\" content=\"A Hacker News client built with Angular CLI, RxJS and Webpack\"/>\n\n\t<meta name=\"twitter:card\" content=\"summary\">\n\t<meta name=\"twitter:site\" content=\"@hdjirdeh\">\n\t<meta name=\"twitter:title\" content=\"Angular 2 HN\">\n\t<meta name=\"twitter:description\" content=\"A Hacker News client built with Angular CLI, RxJS and Webpack\">\n\t<meta name=\"twitter:creator\" content=\"@hdjirdeh\">\n\t<meta name=\"twitter:image\" content=\"assets/images/logo-loading.png\">\n\n\t<meta property=\"og:title\" content=\"Angular 2 HN\"/>\n\t<meta property=\"og:type\" content=\"website\"/>\n\t<meta property=\"og:url\" content=\"https://angular2-hn.firebaseapp.com/\"/>\n\t<meta property=\"og:image\" content=\"assets/images/logo-loading.png\"/>\n\t<meta property=\"og:description\" content=\"A Hacker News client built with Angular CLI, RxJS and Webpack\"/>\n\t<meta property=\"og:site_name\" content=\"Angular 2 HN\"/>\n\t<meta property=\"fb:admins\" content=\"10202985971279760\"/>\n\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n\n  <meta name=\"theme-color\" content=\"#b92b27\">\n\n  <meta name=\"msapplication-TileColor\" content=\"#b92b27\">\n  <meta name=\"msapplication-TileImage\" content=\"assets/icons/mstile-150x150.png\">\n  <meta name=\"msapplication-config\" content=\"assets/icons/browserconfig.xml\">\n\n  <meta name=\"apple-mobile-web-app-capable\" content=\"yes\">\n  <meta name=\"apple-mobile-web-app-status-bar-style\" content=\"black\">\n\n  <link rel=\"manifest\" href=\"/manifest.json\">\n  <link rel=\"mask-icon\" href=\"assets/icons/safari-pinned-tab.svg\" color=\"#b92b27\">\n\n  <link rel=\"icon\" type=\"image/x-icon\" href=\"favicon.ico\">\n  <link rel=\"icon\" type=\"image/png\" href=\"assets/icons/favicon-32x32.png\" sizes=\"32x32\">\n  <link rel=\"icon\" type=\"image/png\" href=\"assets/icons/favicon-16x16.png\" sizes=\"16x16\">\n\n  <link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"assets/icons/apple-touch-icon.png\">\n  <link rel=\"apple-touch-icon\" sizes=\"120x120\" href=\"assets/icons/apple-touch-icon-120x120.png\">\n  <link rel=\"apple-touch-icon\" sizes=\"152x152\" href=\"assets/icons/apple-touch-icon-152x152.png\">\n  <link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"assets/icons/apple-touch-icon-180x180.png\">\n  <style>\n    #skip a {  position:absolute;  left:-10000px;  top:auto;  width:1px;  height:1px;  overflow:hidden;  }\n    #skip a:focus {  position:static;  width:auto;  height:auto;  }\n  </style>\n  <link rel=\"manifest\" href=\"manifest.webmanifest\">\n  <meta name=\"theme-color\" content=\"#1976d2\">\n</head>\n<body>\n  <div id=\"skip\"><a href=\"#content\">skip to navigation</a></div>\n  <app-root></app-root>\n\n  <div class=\"app-loader\" id=\"content\">\n    <img class=\"logo\" src=\"assets/images/logo.svg\" alt=\"Logo\">\n\n    <noscript>\n      <h4 style=\"font-family: 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica;\">\n        Sorry, JavaScript needs to be enabled in order to run this application.\n      </h4>\n    </noscript>\n  </div>\n\n  <script>\n    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){\n    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\n    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\n    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');\n\n    ga('create', 'UA-66348622-3', 'auto');\n\n  </script>\n</body>\n</html>\n",
+							"changes": []
+						}
+					],
+					"removedFiles": [],
+					"unhandled": [
+						"projects.angular-hnpwa.architect.lint used @angular-devkit/build-angular:tslint, which the 13.4 devkit does not ship; the target was removed and no replacement capability was chosen for it",
+						"projects.angular-hnpwa.architect.e2e used @angular-devkit/build-angular:protractor, which the 13.4 devkit does not ship; the target was removed and no replacement capability was chosen for it",
+						"dependencies.node-fetch is declared at ^2.6.0 and angular-13.4.0 has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+						"dependencies.unfetch is declared at ^4.1.0 and angular-13.4.0 has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+						"devDependencies.@types/jasmine is coupled to the Angular test cell but is not part of the toolchain angular-13.4.0 generates, so it was left at its era range",
+						"devDependencies.@types/node is declared at ^12.11.1 and angular-13.4.0 has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+						"devDependencies.jasmine-core is coupled to the Angular test cell but is not part of the toolchain angular-13.4.0 generates, so it was left at its era range",
+						"devDependencies.karma is coupled to the Angular test cell but is not part of the toolchain angular-13.4.0 generates, so it was left at its era range",
+						"devDependencies.karma-chrome-launcher is coupled to the Angular test cell but is not part of the toolchain angular-13.4.0 generates, so it was left at its era range",
+						"devDependencies.karma-coverage-istanbul-reporter is coupled to the Angular test cell but is not part of the toolchain angular-13.4.0 generates, so it was left at its era range",
+						"devDependencies.karma-jasmine is coupled to the Angular test cell but is not part of the toolchain angular-13.4.0 generates, so it was left at its era range",
+						"devDependencies.karma-jasmine-html-reporter is coupled to the Angular test cell but is not part of the toolchain angular-13.4.0 generates, so it was left at its era range",
+						"devDependencies.ts-node is declared at ~7.0.0 and angular-13.4.0 has read no line for it: it is named by none of the cell's exact ranges, its generated test toolchain or its community layer, and no family prefix it writes matches the name. The era declaration was carried into the migrated manifest unchanged, which is the only honest edit for a package nobody read — and it is reported here rather than left silent, because an era pin standing beside an aligned framework is where a dependency-resolution refusal comes from, and a lane is owed that before the package manager tells it.",
+						"compilerOptions.lib was left as declared; the 13.4 line does not require a specific lib set and narrowing one could remove a type surface the application relies on"
+					],
+					"declaredDifferences": [
+						"projects.angular-hnpwa.architect.build.options.optimization builds with font inlining disabled (`optimization.fonts.inline: false`). On the 13.4 line that option defaults to on, and it makes the build itself fetch every Google Fonts and Adobe Fonts stylesheet the application links and paste the answer into the emitted index.html. The era build did no such thing: it emitted the application's own link element and the browser fetched the stylesheet at runtime. This cell keeps that behaviour — the migrated document ships the same link and the same runtime fetch — rather than moving a third-party request into the build, where it would make the emitted bytes depend on what a font host served on the build day and on whether the build host could reach it at all. Inlining would not have removed the runtime request in any case: the inlined stylesheet still points at the font host for the font files themselves.",
+						"projects.angular-hnpwa.architect.build.configurations.production.optimization builds with font inlining disabled (`optimization.fonts.inline: false`). On the 13.4 line that option defaults to on, and it makes the build itself fetch every Google Fonts and Adobe Fonts stylesheet the application links and paste the answer into the emitted index.html. The era build did no such thing: it emitted the application's own link element and the browser fetched the stylesheet at runtime. This cell keeps that behaviour — the migrated document ships the same link and the same runtime fetch — rather than moving a third-party request into the build, where it would make the emitted bytes depend on what a font host served on the build day and on whether the build host could reach it at all. Inlining would not have removed the runtime request in any case: the inlined stylesheet still points at the font host for the font files themselves."
+					],
+					"notEstablished": [
+						"A composed changeset is a set of edits, not a build. Nothing here establishes that the migrated tree installs, compiles, or emits anything.",
+						"`applicationFilesScanned` counts files the engine read. A file it scanned and left alone is counted as scanned and not as changed.",
+						"A capability gated on a reading this tree did not supply stood down. That is not evidence that the tree has nothing for it to do."
+					]
+				}
+			},
+			"startedAt": "2026-08-20T09:21:02.901Z",
+			"endedAt": "2026-08-20T09:21:02.931Z"
+		},
+		{
+			"name": "apply",
+			"status": "ran",
+			"record": {
+				"applied": {
+					"mode": "materialized",
+					"written": [
+						{
+							"path": "package.json",
+							"kind": "workspace",
+							"sha256After": "ee88004e550d0ffddfff1c002db9495ca883237c59ba886b95d506f60ec54502",
+							"changes": [
+								"dependencies.@angular/animations: ~9.0.1 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/common: ~9.0.1 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/compiler: ~9.0.1 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/core: ~9.0.1 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/forms: ~9.0.1 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/platform-browser: ~9.0.1 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/platform-browser-dynamic: ~9.0.1 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/router: ~9.0.1 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.@angular/service-worker: ~9.0.1 -> ^13.4.0 — aligned to angular-13.4.0",
+								"dependencies.rxjs: ~6.5.4 -> ~6.6.7 — aligned to the community layer angular-13.4.0 declares: rxjs 6.6.7 is the pin this whole cell is held together by, and it was measured rather than chosen: ngcc 13 raises a hard exit-1 error against an rxjs 7 closure, and under 6.6.7 the same pass emitted only a warning — \"Entry point 'ng2-slim-loading-bar' contains deep imports into rxjs/Subject, rxjs/Observable\" — and then exited 0. That is the spike’s rxjs-major condition confirmed at application scale rather than at probe scale. 6.6.7 is the version the installed package-lock.json of the T009 proving run carried, read verbatim, and evidence/runs/angular-13cell/pigallery2-compile.json § cell.pinsHeld records it as a pin the run never left. rxjs-compat is pinned to the same minor by this cell for the same reading.",
+								"dependencies.rxjs-compat: ^6.5.2 -> ~6.6.7 — aligned to angular-13.4.0",
+								"dependencies.tslib: ^1.10.0 -> ^2.6.3 — aligned to the community layer angular-13.4.0 declares: tslib 2.6.3 is the version the installed closure of the T009 proving run resolved, read verbatim from its package-lock.json and recorded in evidence/runs/angular-13cell/pigallery2-compile.json § cell. It is a reading of what this cell installed, not a survey of the 2.x line and not a claim about the lowest 2.x this Angular line accepts.",
+								"dependencies.zone.js: ~0.10.2 -> ~0.11.8 — aligned to the community layer angular-13.4.0 declares: zone.js 0.11.8 is the version the installed closure of the T009 proving run resolved, read verbatim from its package-lock.json and recorded in evidence/runs/angular-13cell/pigallery2-compile.json § cell. It is a reading of what this cell installed, not a survey of what the 0.11 line published or of what Angular 13.4.0 would otherwise accept.",
+								"devDependencies.@angular-devkit/build-angular: ~0.900.2 -> ~13.3.11 — aligned to angular-13.4.0",
+								"devDependencies.@angular/cli: ~9.0.2 -> ~13.3.11 — aligned to angular-13.4.0",
+								"devDependencies.@angular/compiler-cli: ~9.0.1 -> ^13.4.0 — aligned to angular-13.4.0",
+								"devDependencies.@angular/language-service: ~9.0.1 -> ^13.4.0 — aligned to angular-13.4.0",
+								"removed devDependencies.@types/jasminewd2 (was ~2.0.3) — released by a builder target the workspace migration removed",
+								"removed devDependencies.codelyzer (was ^5.1.2) — released by a builder target the workspace migration removed",
+								"removed devDependencies.jasmine-spec-reporter (was ~4.2.1) — released by a builder target the workspace migration removed",
+								"removed devDependencies.protractor (was ~5.4.0) — released by a builder target the workspace migration removed",
+								"removed devDependencies.tslint (was ~5.15.0) — released by a builder target the workspace migration removed",
+								"devDependencies.typescript: ~3.7.5 -> ~4.6.4 — aligned to the community layer angular-13.4.0 declares: typescript 4.6.4 is the compiler the T009 proving run used to reach `ngc` exit 0 with 0 diagnostics, read verbatim from the installed package-lock.json and recorded in evidence/runs/angular-13cell/pigallery2-compile.json § cell. Its era drift is measured as well as its version: lib.dom between TS 3.4 and TS 4.6 dropped the IE/WinJS `msOverflowStyle` vendor property, which the run recorded as one of the three single-line application source edits the lift required. Neither the Angular 13 line’s full accepted TypeScript range nor any other 4.x line was read here."
+							]
+						},
+						{
+							"path": "angular.json",
+							"kind": "workspace",
+							"sha256After": "421caa5197dd8576a27423f9d3f4529df5c7c021142a33888f3c261cd4ce46c8",
+							"changes": [
+								"removed defaultProject (was \"angular-hnpwa\")",
+								"projects.angular-hnpwa.architect.build.options.polyfills: \"src/polyfills.ts\" -> [\"src/polyfills.ts\"]",
+								"added projects.angular-hnpwa.architect.build.options.optimization = {\"scripts\":true,\"styles\":true,\"fonts\":{\"inline\":false}}",
+								"projects.angular-hnpwa.architect.build.configurations.production.optimization: true -> {\"scripts\":true,\"styles\":true,\"fonts\":{\"inline\":false}}",
+								"removed projects.angular-hnpwa.architect.build.configurations.production.extractCss (was true)",
+								"projects.angular-hnpwa.architect.test.options.polyfills: \"src/polyfills.ts\" -> [\"src/polyfills.ts\"]",
+								"removed projects.angular-hnpwa.architect.lint (was @angular-devkit/build-angular:tslint)",
+								"removed projects.angular-hnpwa.architect.e2e (was @angular-devkit/build-angular:protractor)"
+							]
+						},
+						{
+							"path": "tsconfig.json",
+							"kind": "workspace",
+							"sha256After": "76eb68f3c1250939aba0744d0532d8c1a461673e8af4b1baf2f8e3611654ca3a",
+							"changes": [
+								"compilerOptions.target: \"es2015\" -> \"ES2022\"",
+								"compilerOptions.module: \"esnext\" -> \"ES2022\"",
+								"added compilerOptions.useDefineForClassFields = false"
+							]
+						},
+						{
+							"path": "src/app/item-details/item-details.component.ts",
+							"kind": "application",
+							"sha256After": "dd76d1e5dfe77ffd2e2395f1d7ada936258713b7c09bf2be04c2ef86e9ffb6bc",
+							"changes": [
+								"line 4: module-specifier rxjs/Subscription -> rxjs"
+							]
+						},
+						{
+							"path": "src/app/shared/services/hackernews-api.service.ts",
+							"kind": "application",
+							"sha256After": "bed3ce37b9c10b4f62834eeb3a3afd6e9ee34f3c999c685af44a36a4d1d3341a",
+							"changes": [
+								"line 2: module-specifier rxjs/Observable -> rxjs"
+							]
+						},
+						{
+							"path": "src/app/user/user.component.ts",
+							"kind": "application",
+							"sha256After": "dd841a21228e068bc6f6c6a3c14aa7a784754a1519bcef464bb7d2ab550d255a",
+							"changes": [
+								"line 4: module-specifier rxjs/Subscription -> rxjs"
+							]
+						},
+						{
+							"path": "src/polyfills.ts",
+							"kind": "application",
+							"sha256After": "23220a766f0662f823cfac5e3c855aebf4a7b0bb025b3dd725a7bc871d2ef4b8",
+							"changes": [
+								"line 58: module-specifier zone.js/dist/zone -> zone.js"
+							]
+						},
+						{
+							"path": "src/test.ts",
+							"kind": "application",
+							"sha256After": "9b1c90dfacfbb8e9bd9f44392375a1496621311aacda385c36976b5c4d4bf7d5",
+							"changes": [
+								"line 3: module-specifier zone.js/dist/zone-testing -> zone.js/testing"
+							]
+						}
+					],
+					"removed": [],
+					"copied": 102,
+					"notEstablished": [
+						"Writing a changeset into a lane is not a build. Nothing here establishes that the lane installs, compiles, or emits anything.",
+						"Every byte written differs from the application only where a frozen adapter transform decided it should; each is itemised by file and by change.",
+						"In changeset-lane mode the lane carries only the files the changeset rewrites. `removed` is then what the changeset says the tree should no longer carry, not a deletion this run performed."
+					]
+				},
+				"laneComposition": {
+					"lineage": "angular",
+					"composed": false,
+					"reason": "the generated lane build configuration is the create-react-app composition. The Angular changeset rewrites the workspace's own build declarations through the frozen adapter, so this flow composes no additional configuration for it.",
+					"files": [],
+					"unhandled": [],
+					"declaredDifferences": [],
+					"notEstablished": [
+						"A composed build configuration is not a build. Nothing here establishes that the lane installs, compiles, or emits anything; the install and build stages report that separately.",
+						"The generated configuration reproduces the generic create-react-app shape over the frozen adapter exports. Every per-application difference it does not carry is listed as an unhandled finding rather than left to be inferred from a failing build.",
+						"The generated configuration resolves the frozen adapter from this workspace by relative path, exactly as the fixture configurations do. The lane is therefore buildable by this pipeline and is not a self-contained package; resolving a published @versionless/react is a separate packaging decision this flow does not take."
+					]
+				}
+			},
+			"startedAt": "2026-08-20T09:21:02.931Z",
+			"endedAt": "2026-08-20T09:21:02.952Z"
+		},
+		{
+			"name": "install",
+			"status": "refused",
+			"reason": "install.lockfile-foreign",
+			"refusal": {
+				"code": "install.lockfile-foreign",
+				"message": "Install: the lane carries yarn.lock, and this stage reads package-lock.json, npm-shrinkwrap.json. The closure is pinned — by yarn — and it is pinned in a lockfile this flow does not read, so it is not absent and it is not installable here.",
+				"stage": "install",
+				"origin": "pipeline"
+			},
+			"startedAt": "2026-08-20T09:21:02.952Z",
+			"endedAt": "2026-08-20T09:21:02.953Z"
+		},
+		{
+			"name": "build",
+			"status": "not-run",
+			"reason": "not-run-because: install refused",
+			"startedAt": "2026-08-20T09:21:02.953Z",
+			"endedAt": "2026-08-20T09:21:02.953Z"
+		},
+		{
+			"name": "witness",
+			"status": "not-run",
+			"reason": "not-run-because: install refused",
+			"startedAt": "2026-08-20T09:21:02.953Z",
+			"endedAt": "2026-08-20T09:21:02.953Z"
+		}
+	],
+	"refusal": {
+		"code": "install.lockfile-foreign",
+		"message": "Install: the lane carries yarn.lock, and this stage reads package-lock.json, npm-shrinkwrap.json. The closure is pinned — by yarn — and it is pinned in a lockfile this flow does not read, so it is not absent and it is not installable here.",
+		"stage": "install",
+		"origin": "pipeline"
+	},
+	"report": {
+		"status": "emitted",
+		"slot": "evidence/trust/current/coverage-report.json",
+		"path": "evidence/trust/current/coverage-report.json",
+		"digest": "1efc1b17d80513bf6b5444d9f1c6d04f1a147c6a32e6138f26bcc295947642b9"
+	},
+	"notEstablished": [
+		"A stage recorded `ran` returned its own record. What that record establishes is what that stage states, and no more: this row adds no reading of its own on top of it.",
+		"A stage recorded `not-run` was not reached, because an earlier stage refused or broke. Nothing here establishes what it would have recorded.",
+		"Exit 2 is a refusal and exit 1 is a defect. A crash, a hang, or a tree that will not install is a defect even when it happens inside a stage that can also refuse.",
+		"The stage timestamps bound the wall-clock interval the seam observed around each stage. They are not a measurement of machine time and they are not comparable across hosts.",
+		"The coverage report at evidence/trust/current/coverage-report.json was emitted by the guarded derivation and recomputes to the digest recorded here. This run did not derive it, did not regenerate it, and establishes nothing about whether it is current with respect to this run."
+	]
+}

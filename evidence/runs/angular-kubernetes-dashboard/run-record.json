@@ -1,0 +1,873 @@
+{
+	"schema": "versionless.run.v1",
+	"flow": "run",
+	"outcome": "refused",
+	"exitCode": 2,
+	"application": ".versionless/cache/angular-kubernetes-dashboard-stage-t678/acquisition/source",
+	"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t012b1/angular-kubernetes-dashboard",
+	"roots": {
+		"source": ".versionless/cache/angular-kubernetes-dashboard-stage-t678/acquisition/source",
+		"frontend": ".versionless/cache/angular-kubernetes-dashboard-stage-t678/acquisition/source",
+		"frontendSource": "read",
+		"frontendBasis": ". declares angular 12.2.9 (dependencies.@angular/core)"
+	},
+	"dryRun": false,
+	"stagePlan": [
+		{
+			"name": "analyze",
+			"forwards": []
+		},
+		{
+			"name": "ingest",
+			"forwards": []
+		},
+		{
+			"name": "license-at-pin",
+			"forwards": []
+		},
+		{
+			"name": "era-cell",
+			"forwards": [
+				"--cell"
+			]
+		},
+		{
+			"name": "plan",
+			"forwards": [
+				"--cell"
+			]
+		},
+		{
+			"name": "apply",
+			"forwards": [
+				"--out"
+			]
+		},
+		{
+			"name": "install",
+			"forwards": [
+				"--allow-remote-tarballs",
+				"--allow-install-scripts",
+				"--allow-peer-conflicts"
+			]
+		},
+		{
+			"name": "build",
+			"forwards": []
+		},
+		{
+			"name": "witness",
+			"forwards": []
+		}
+	],
+	"stages": [
+		{
+			"name": "analyze",
+			"status": "ran",
+			"record": {
+				"lineage": "angular",
+				"frameworkVersionDeclared": "12.2.9",
+				"detectedFrom": "@angular/core",
+				"builder": "@angular-devkit/build-angular:browser",
+				"builderSource": "angular.json",
+				"nodeEra": {
+					"declared": ">=14.16.1",
+					"source": "package.json#engines.node"
+				},
+				"packageManager": {
+					"manager": "npm",
+					"lockfiles": [
+						"package-lock.json"
+					],
+					"declared": "unknown"
+				},
+				"cellReadings": {
+					"cell": "angular-16-browser-builder",
+					"reason": null,
+					"verdicts": [
+						{
+							"package": "@angular-devkit/build-angular",
+							"declaredRange": "12.2.9",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/animations",
+							"declaredRange": "12.2.9",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/cdk",
+							"declaredRange": "12.2.9",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/cli",
+							"declaredRange": "12.2.9",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/common",
+							"declaredRange": "12.2.9",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/compiler",
+							"declaredRange": "12.2.9",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/compiler-cli",
+							"declaredRange": "12.2.9",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/core",
+							"declaredRange": "12.2.9",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/flex-layout",
+							"declaredRange": "12.0.0-beta.35",
+							"verdict": "aligned",
+							"fact": "@angular/flex-layout stops at 15.0.0-beta.42 — the newest version published on any line, and the `latest` dist-tag — so the `@angular/` family range this cell writes for Angular's own packages names a 16.x that was never published. Under this cell's rule 15.0.0-beta.42 is still the newest satisfying line: it declares peer @angular/core, @angular/common and @angular/platform-browser \">=15.0.2\", @angular/cdk \">=15.0.0\" and rxjs \"^6.5.3 || ^7.4.0\", all satisfied by the ^16.2.0 and ~7.8.0 this cell writes, and it declares no engines.node. The package is deprecated on the registry (\"consider using CSS Flexbox and CSS Grid\"); that is recorded here rather than acted on, because dropping a layout library an application imports is a source decision, not a cell reading.",
+							"alignedRange": "^15.0.0-beta.42"
+						},
+						{
+							"package": "@angular/forms",
+							"declaredRange": "12.2.9",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/language-service",
+							"declaredRange": "12.2.9",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/localize",
+							"declaredRange": "12.2.9",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/material",
+							"declaredRange": "12.2.9",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/platform-browser",
+							"declaredRange": "12.2.9",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/platform-browser-dynamic",
+							"declaredRange": "12.2.9",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@angular/router",
+							"declaredRange": "12.2.9",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@babel/core",
+							"declaredRange": "7.15.8",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@babel/preset-env",
+							"declaredRange": "7.15.8",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@babel/register",
+							"declaredRange": "7.15.3",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@cypress/webpack-preprocessor",
+							"declaredRange": "5.9.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@swimlane/ngx-charts",
+							"declaredRange": "19.1.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@types/c3",
+							"declaredRange": "0.7.6",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@types/d3",
+							"declaredRange": "7.0.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@types/d3-scale",
+							"declaredRange": "4.0.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@types/file-saver",
+							"declaredRange": "2.0.2",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@types/jasmine",
+							"declaredRange": "3.9.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@types/jasminewd2",
+							"declaredRange": "2.0.10",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@types/jest",
+							"declaredRange": "27.0.2",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@types/js-yaml",
+							"declaredRange": "4.0.3",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@types/lodash",
+							"declaredRange": "4.14.175",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "@types/node",
+							"declaredRange": "16.10.9",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "ace-builds",
+							"declaredRange": "1.4.13",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "angular-page-visibility",
+							"declaredRange": "11.0.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "ansi-to-html",
+							"declaredRange": "0.7.2",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "c3",
+							"declaredRange": "0.7.20",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "codelyzer",
+							"declaredRange": "6.0.2",
+							"verdict": "no-successor",
+							"fact": "codelyzer stops at 6.0.2, a TSLint rule set for Angular 9-era workspaces. Nothing succeeds it on the TSLint line and its ESLint replacement is @angular-eslint, which this cell already aligns as a family.",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "concurrently",
+							"declaredRange": "6.3.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "core-js",
+							"declaredRange": "3.18.3",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "cypress",
+							"declaredRange": "8.6.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "d3",
+							"declaredRange": "6.7.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "del",
+							"declaredRange": "6.0.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "eslint",
+							"declaredRange": "7.32.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "eslint-plugin-rxjs",
+							"declaredRange": "3.3.7",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "file-saver",
+							"declaredRange": "2.0.5",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "git-describe",
+							"declaredRange": "4.1.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "gts",
+							"declaredRange": "3.1.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "gulp",
+							"declaredRange": "4.0.2",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "gulp-filter",
+							"declaredRange": "7.0.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "husky",
+							"declaredRange": "7.0.2",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "jasmine-core",
+							"declaredRange": "3.10.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "jasmine-spec-reporter",
+							"declaredRange": "7.0.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "jest",
+							"declaredRange": "27.2.5",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "jest-preset-angular",
+							"declaredRange": "10.0.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "js-beautify",
+							"declaredRange": "1.14.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "js-yaml",
+							"declaredRange": "4.1.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "license-check-and-add",
+							"declaredRange": "4.0.2",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "lint-staged",
+							"declaredRange": "11.2.3",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "lodash",
+							"declaredRange": "4.17.21",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "material-design-icons",
+							"declaredRange": "3.0.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "minimatch",
+							"declaredRange": "3.0.4",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "minimist",
+							"declaredRange": "1.2.5",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "ng-in-viewport",
+							"declaredRange": "6.1.5",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "ngx-cookie-service",
+							"declaredRange": "12.0.3",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "ngx-i18nsupport",
+							"declaredRange": "0.17.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "ngx-pipes",
+							"declaredRange": "2.7.5",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "node-gyp",
+							"declaredRange": "8.2.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "normalize.css",
+							"declaredRange": "8.0.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "q",
+							"declaredRange": "1.5.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "raw-loader",
+							"declaredRange": "4.0.2",
+							"verdict": "aligned",
+							"fact": "raw-loader 4.0.2 is the newest version published and the `latest` dist-tag (2020-10-09); the package is no longer developed because webpack 5 absorbed what it does into the `asset/source` module type, but it is not deprecated on the registry and it is the line that still answers an inline `raw-loader!` request. 4.0.2 declares peer webpack \"^4.0.0 || ^5.0.0\" — satisfied by the webpack 5 the @angular-devkit/build-angular ^16.2.0 this cell writes builds with — and engines.node \">= 10.13.0\", satisfied by this cell's Node 16.20.2. The 3.x line before it declares peer webpack \"^4.3.0\" and is excluded by the target builder's webpack major. Read from https://registry.npmjs.org/raw-loader under consent VL-LEGACY-CORPUS-2026-08-10 on 2026-08-13.",
+							"alignedRange": "^4.0.2"
+						},
+						{
+							"package": "roboto-fontface",
+							"declaredRange": "0.10.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "run-node",
+							"declaredRange": "2.0.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "rxjs",
+							"declaredRange": "6.6.7",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "rxjs-compat",
+							"declaredRange": "6.6.7",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "sass",
+							"declaredRange": "1.43.2",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "sass-loader",
+							"declaredRange": "12.2.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "semver",
+							"declaredRange": "7.3.5",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "sockjs-client",
+							"declaredRange": "1.5.2",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "source-map-explorer",
+							"declaredRange": "2.5.2",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "strip-ansi",
+							"declaredRange": "6.0.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "stylelint",
+							"declaredRange": "13.13.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "stylelint-config-standard",
+							"declaredRange": "22.0.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "stylelint-no-unsupported-browser-features",
+							"declaredRange": "5.0.2",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "stylelint-order",
+							"declaredRange": "4.1.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "systemjs",
+							"declaredRange": "6.10.3",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "tar",
+							"declaredRange": "6.1.11",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "through2",
+							"declaredRange": "4.0.2",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "truncate-url",
+							"declaredRange": "1.0.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "ts-jest",
+							"declaredRange": "27.0.5",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "ts-loader",
+							"declaredRange": "9.2.6",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "ts-node",
+							"declaredRange": "10.3.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "tslib",
+							"declaredRange": "2.3.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "typescript",
+							"declaredRange": "4.3.5",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "wait-on",
+							"declaredRange": "6.0.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "web-animations-js",
+							"declaredRange": "2.3.2",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "webpack-dev-server",
+							"declaredRange": "3.11.2",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "xterm",
+							"declaredRange": "4.14.1",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "xterm-addon-fit",
+							"declaredRange": "0.5.0",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						},
+						{
+							"package": "zone.js",
+							"declaredRange": "0.11.4",
+							"verdict": "unknown",
+							"fact": "unknown",
+							"alignedRange": "unknown"
+						}
+					],
+					"counts": {
+						"aligned": 2,
+						"no-successor": 1,
+						"successor-fork": 0,
+						"unknown": 95
+					}
+				},
+				"notEstablished": [
+					"Detection reads declarations. Nothing here establishes that this application installs, compiles, builds, or behaves as it did on its era toolchain.",
+					"A cell verdict is a reading of a published registry, not an installation: a range written here has not been resolved against any lockfile by this record.",
+					"A dependency the cell has no reading for is reported `unknown`. `unknown` is not `supported` and it is not `unsupported`."
+				]
+			},
+			"startedAt": "2026-08-20T09:19:54.432Z",
+			"endedAt": "2026-08-20T09:19:54.433Z"
+		},
+		{
+			"name": "ingest",
+			"status": "refused",
+			"reason": "ingest.revision-not-determined",
+			"refusal": {
+				"code": "ingest.revision-not-determined",
+				"message": "Ingest: .versionless/cache/angular-kubernetes-dashboard-stage-t678/acquisition/source carries no readable Git metadata and no acquisition journal of this pipeline's own names it, so the revision this source is pinned to is not something this stage read. An unpinned source has no revision for the licence reading or any later record to be relative to; declare it with --revision <commit-sha>.",
+				"stage": "ingest",
+				"origin": "pipeline"
+			},
+			"startedAt": "2026-08-20T09:19:54.433Z",
+			"endedAt": "2026-08-20T09:19:54.543Z"
+		},
+		{
+			"name": "license-at-pin",
+			"status": "not-run",
+			"reason": "not-run-because: ingest refused",
+			"startedAt": "2026-08-20T09:19:54.543Z",
+			"endedAt": "2026-08-20T09:19:54.543Z"
+		},
+		{
+			"name": "era-cell",
+			"status": "not-run",
+			"reason": "not-run-because: ingest refused",
+			"startedAt": "2026-08-20T09:19:54.544Z",
+			"endedAt": "2026-08-20T09:19:54.544Z"
+		},
+		{
+			"name": "plan",
+			"status": "not-run",
+			"reason": "not-run-because: ingest refused",
+			"startedAt": "2026-08-20T09:19:54.544Z",
+			"endedAt": "2026-08-20T09:19:54.544Z"
+		},
+		{
+			"name": "apply",
+			"status": "not-run",
+			"reason": "not-run-because: ingest refused",
+			"startedAt": "2026-08-20T09:19:54.544Z",
+			"endedAt": "2026-08-20T09:19:54.544Z"
+		},
+		{
+			"name": "install",
+			"status": "not-run",
+			"reason": "not-run-because: ingest refused",
+			"startedAt": "2026-08-20T09:19:54.544Z",
+			"endedAt": "2026-08-20T09:19:54.544Z"
+		},
+		{
+			"name": "build",
+			"status": "not-run",
+			"reason": "not-run-because: ingest refused",
+			"startedAt": "2026-08-20T09:19:54.544Z",
+			"endedAt": "2026-08-20T09:19:54.544Z"
+		},
+		{
+			"name": "witness",
+			"status": "not-run",
+			"reason": "not-run-because: ingest refused",
+			"startedAt": "2026-08-20T09:19:54.544Z",
+			"endedAt": "2026-08-20T09:19:54.544Z"
+		}
+	],
+	"refusal": {
+		"code": "ingest.revision-not-determined",
+		"message": "Ingest: .versionless/cache/angular-kubernetes-dashboard-stage-t678/acquisition/source carries no readable Git metadata and no acquisition journal of this pipeline's own names it, so the revision this source is pinned to is not something this stage read. An unpinned source has no revision for the licence reading or any later record to be relative to; declare it with --revision <commit-sha>.",
+		"stage": "ingest",
+		"origin": "pipeline"
+	},
+	"report": {
+		"status": "emitted",
+		"slot": "evidence/trust/current/coverage-report.json",
+		"path": "evidence/trust/current/coverage-report.json",
+		"digest": "cff230ac35d267e5272b58d17595b4be82f47019e4e9710d05df095f26b589a9"
+	},
+	"notEstablished": [
+		"A stage recorded `ran` returned its own record. What that record establishes is what that stage states, and no more: this row adds no reading of its own on top of it.",
+		"A stage recorded `not-run` was not reached, because an earlier stage refused or broke. Nothing here establishes what it would have recorded.",
+		"Exit 2 is a refusal and exit 1 is a defect. A crash, a hang, or a tree that will not install is a defect even when it happens inside a stage that can also refuse.",
+		"The stage timestamps bound the wall-clock interval the seam observed around each stage. They are not a measurement of machine time and they are not comparable across hosts.",
+		"The coverage report at evidence/trust/current/coverage-report.json was emitted by the guarded derivation and recomputes to the digest recorded here. This run did not derive it, did not regenerate it, and establishes nothing about whether it is current with respect to this run."
+	]
+}

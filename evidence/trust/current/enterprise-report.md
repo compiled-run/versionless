@@ -2,7 +2,7 @@
 
 One machine artifact for an enterprise reviewer, derived entirely from canonical receipts the trust package already verified. It states what was proven, on which sources, with which tools, under which commands, and — in the same document — what is unsupported, unknown, or deliberately not claimed.
 
-- Trust manifest canonical SHA-256: `31a6c4ef0ce2367f58428717f8d05c22c02b9ff6d93fd2d8f659f57dc64e5321`
+- Trust manifest canonical SHA-256: `449831ecd19f30aed8d0a768d6783e2d063df9a5d995adb5f6175d4fb2935383`
 - Deterministic core: `80829ae4131dd3cdd532cb403325cfccb4bf1da948a32498829d690d96ddb597`
 - Corpus conformance: `101412703cc116969dd562a6ea46dde3d05424ad5194e535aca9750e373bc482`
 - Adapter freeze: commit `ddc2870aa934be7c8bc6caaeca74095d270776d5`, composite `140ce86e163ddbae2ad6f1504022efca9468641cc50fd3dca354c6aba8cbb562`

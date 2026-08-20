@@ -158,6 +158,24 @@
       "statusReason": "Judge-declined and demoted from the denominator: the migration changed applicationFilesChanged=0 application files, so it is an Angular 15-to-16 dependency version bump rebuilt under AOT rather than a proven application migration. Its browser-proof receipt stays verified and retained; it is excluded from the Angular denominator rather than counted, which is why the Angular total is four non-demoted cells and not five."
     },
     {
+      "id": "angular-kubernetes-dashboard",
+      "application": ".versionless/cache/angular-kubernetes-dashboard-stage-t678/acquisition/source",
+      "framework": "not-recorded",
+      "provenanceOfStatus": "run-record",
+      "status": "refused",
+      "refusalCode": "ingest.revision-not-determined",
+      "interventionCount": 0
+    },
+    {
+      "id": "angular2-hn",
+      "application": ".versionless/cache/angular2-hn/acquisition/source",
+      "framework": "not-recorded",
+      "provenanceOfStatus": "run-record",
+      "status": "refused",
+      "refusalCode": "install.lockfile-foreign",
+      "interventionCount": 0
+    },
+    {
       "id": "react-ant-design-pro-v5-2-0",
       "application": ".versionless/work/react-ant-design-pro-v5-2-0/baseline",
       "framework": "not-recorded",
@@ -268,10 +286,10 @@
     }
   ],
   "totals": {
-    "applications": 21,
+    "applications": 23,
     "proven": 11,
     "bounded": 2,
-    "refused": 5,
+    "refused": 7,
     "not-admitted": 3
   },
   "refusalCensus": {
@@ -520,7 +538,7 @@
   ],
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "cff230ac35d267e5272b58d17595b4be82f47019e4e9710d05df095f26b589a9",
+    "canonicalDigest": "311522043dda9e9c04f93fa813f78545d454b37e45b7a5b117ad56d8d39d2534",
     "authenticity": "not-established",
     "certification": "not-claimed"
   }
