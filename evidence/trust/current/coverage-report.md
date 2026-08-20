@@ -4,7 +4,7 @@ What the fleet pipeline proved, per application, against the sealed baseline it 
 
 - Schema: `versionless.coverage-report.v1`
 - Certification state: **not-certified**
-- Canonical SHA-256: `1e522f7b25c5b3c331377e4cc8cadedc7384d1b724403edac59a9a1007ff1087`
+- Canonical SHA-256: `7255ac03d2e7916569827a633850323cb551dbd542dadd726b359c559f183f2d`
 - Integrity: hash-only; authenticity is not established
 
 Every green cell below is filtered out of the Judge counting ledger the corpus derived and cross-checked against that corpus numerator and denominator. No cell is listed by hand, and a cell edited into this record fails re-derivation.
@@ -39,7 +39,7 @@ A capability is claimed general, and therefore in the matrix, only once at least
 | `holdout-angular-eshop-webspa` | eShopOnContainers WebSPA | angular | **bounded** | sealed-receipts | not-applicable | witness-passed-on-bounded-anonymous-catalog-surface |
 | `angular-realworld-v15-to-v16` | angular-realworld-v15-to-v16 | angular | **not-admitted** | sealed-receipts | not-applicable | Judge-declined and demoted from the denominator: the migration changed applicationFilesChanged=0 application files, so it is an Angular 15-to-16 dependency version bump rebuilt under AOT rather than a proven application migration. Its browser-proof receipt stays verified and retained; it is excluded from the Angular denominator rather than counted, which is why the Angular total is four non-demoted cells and not five. |
 | `angular-kubernetes-dashboard` | .versionless/cache/angular-kubernetes-dashboard-stage-t678/acquisition/source | not-recorded | **not-admitted** | run-record | 0 | run-did-not-proceed:defect |
-| `angular2-hn` | .versionless/cache/angular2-hn/acquisition/source | not-recorded | **refused** | run-record | 0 | build.configuration-absent |
+| `angular2-hn` | .versionless/cache/angular2-hn/acquisition/source | not-recorded | **not-admitted** | run-record | 0 | run-did-not-proceed:defect |
 | `react-ant-design-pro-v5-2-0` | .versionless/work/react-ant-design-pro-v5-2-0/baseline | not-recorded | **refused** | run-record | 0 | era-cell.node-major-not-inferable |
 | `react-antd-admin-template-v2-0-0` | .versionless/work/react-antd-admin-template-v2-0-0/baseline | not-recorded | **not-admitted** | run-record | 0 | run-did-not-proceed:defect |
 | `react-colorme-2019-06-06` | .versionless/work/react-colorme-2019-06-06/baseline | not-recorded | **refused** | run-record | 0 | install.lockfile-absent |
@@ -49,7 +49,7 @@ A capability is claimed general, and therefore in the matrix, only once at least
 | `react-mycrypto` | .versionless/work/react-mycrypto/baseline | not-recorded | **refused** | run-record | 0 | ingest.acquisition-journal-does-not-match-the-tree |
 | `react-your-spotify-1-5-0` | .versionless/work/react-your-spotify-1-5-0/baseline | not-recorded | **refused** | run-record | 0 | install.lockfile-foreign |
 
-Totals: 11 proven, 2 bounded, 6 refused, 4 not-admitted, of 23 rows.
+Totals: 11 proven, 2 bounded, 5 refused, 5 not-admitted, of 23 rows.
 
 ### Counting notes carried by the bounded rows
 
@@ -61,7 +61,7 @@ Totals: 11 proven, 2 bounded, 6 refused, 4 not-admitted, of 23 rows.
 An application admitted through `versionless run` is recorded proven only if its run record exists, carries `interventions.count === 0`, and every one of its stage rows reads `ran`. A run record that does not assert an intervention count cannot yield a proven application: it is recorded `not-admitted` with `intervention-count-not-asserted`, because an unmeasured intervention count is not a measured zero. A run that proceeded with a stage that did not run is recorded `not-admitted` with `stages-not-all-ran`, which is the same bar the intervention harness and the corpus conformance admission path already hold. Applications whose status derives from sealed receipts are outside this rule; their status is what the Judge counting ledger and the holdout ledger already carry.
 
 - `angular-kubernetes-dashboard`: not-admitted — intervention count 0 (run-did-not-proceed:defect)
-- `angular2-hn`: refused — intervention count 0
+- `angular2-hn`: not-admitted — intervention count 0 (run-did-not-proceed:defect)
 - `react-ant-design-pro-v5-2-0`: refused — intervention count 0
 - `react-antd-admin-template-v2-0-0`: not-admitted — intervention count 0 (run-did-not-proceed:defect)
 - `react-colorme-2019-06-06`: refused — intervention count 0

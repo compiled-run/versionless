@@ -171,8 +171,8 @@
       "application": ".versionless/cache/angular2-hn/acquisition/source",
       "framework": "not-recorded",
       "provenanceOfStatus": "run-record",
-      "status": "refused",
-      "refusalCode": "build.configuration-absent",
+      "status": "not-admitted",
+      "statusReason": "run-did-not-proceed:defect",
       "interventionCount": 0
     },
     {
@@ -289,8 +289,8 @@
     "applications": 23,
     "proven": 11,
     "bounded": 2,
-    "refused": 6,
-    "not-admitted": 4
+    "refused": 5,
+    "not-admitted": 5
   },
   "refusalCensus": {
     "source": "evidence/runs/operator-flows/refusal-census.json",
@@ -542,7 +542,7 @@
   ],
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "1e522f7b25c5b3c331377e4cc8cadedc7384d1b724403edac59a9a1007ff1087",
+    "canonicalDigest": "7255ac03d2e7916569827a633850323cb551dbd542dadd726b359c559f183f2d",
     "authenticity": "not-established",
     "certification": "not-claimed"
   }

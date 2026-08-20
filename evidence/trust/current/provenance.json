@@ -4,31 +4,31 @@
     {
       "name": "packages/cli/dist/cli.js",
       "digest": {
-        "sha256": "e806f37c5a6e71e096f2c3dde46c89ea31416a3a87e54b311795b3bb692696c8"
+        "sha256": "5934a4ec73d86766303db0d859a6267884c4d67592649391e4e0e0b1ff2d8ed0"
       }
     },
     {
       "name": "packages/cli/dist/index.js",
       "digest": {
-        "sha256": "5927d2441689f2c25164f2453139270256e2ca17e3109d6f4a99457a4632529b"
+        "sha256": "cc7cb8aa8871ee384d23a7b8b2a897cf2b70dc5fdcb559cd859e580d3db35538"
       }
     },
     {
-      "name": "packages/cli/dist/real-app-run-KaFDPenF.js",
+      "name": "packages/cli/dist/real-app-run-D3mBk8PB.js",
       "digest": {
-        "sha256": "44dffd53c42f45af3585a9fcfdbd4244da1d28891e68dee154dbd9b8cf8cd2c7"
+        "sha256": "d8d2fc9c1155b794c538d3b0ed50ec954043c6af3ba46876db45e8c86871fb39"
       }
     },
     {
-      "name": "packages/cli/dist/real-app-run-bdd2nn8S.js",
+      "name": "packages/cli/dist/real-app-run-Mn6wTDau.js",
       "digest": {
-        "sha256": "249c29dca323db9c409c0368eccca55bb72b7fce93b5f51c7712d4776bb98d32"
+        "sha256": "aa69533361973b2ab96cfd0fa2dba649848e7aac28b39d39ab05b40abc4fc95e"
       }
     },
     {
-      "name": "packages/cli/dist/verify-CwxZAoKx.js",
+      "name": "packages/cli/dist/verify-DZrf0lkA.js",
       "digest": {
-        "sha256": "d53bb4bd3368c6ef7d6e5fafdcf5bc97c7320e03ad4454c29dde3247ef8ecea9"
+        "sha256": "f503699161ce5a67406153ed12a57c44a3a6b96260c141dd461a38be80eb854e"
       }
     },
     {
@@ -366,23 +366,23 @@
       "byproducts": [
         {
           "path": "packages/cli/dist/cli.js",
-          "sha256": "e806f37c5a6e71e096f2c3dde46c89ea31416a3a87e54b311795b3bb692696c8"
+          "sha256": "5934a4ec73d86766303db0d859a6267884c4d67592649391e4e0e0b1ff2d8ed0"
         },
         {
           "path": "packages/cli/dist/index.js",
-          "sha256": "5927d2441689f2c25164f2453139270256e2ca17e3109d6f4a99457a4632529b"
+          "sha256": "cc7cb8aa8871ee384d23a7b8b2a897cf2b70dc5fdcb559cd859e580d3db35538"
         },
         {
-          "path": "packages/cli/dist/real-app-run-KaFDPenF.js",
-          "sha256": "44dffd53c42f45af3585a9fcfdbd4244da1d28891e68dee154dbd9b8cf8cd2c7"
+          "path": "packages/cli/dist/real-app-run-D3mBk8PB.js",
+          "sha256": "d8d2fc9c1155b794c538d3b0ed50ec954043c6af3ba46876db45e8c86871fb39"
         },
         {
-          "path": "packages/cli/dist/real-app-run-bdd2nn8S.js",
-          "sha256": "249c29dca323db9c409c0368eccca55bb72b7fce93b5f51c7712d4776bb98d32"
+          "path": "packages/cli/dist/real-app-run-Mn6wTDau.js",
+          "sha256": "aa69533361973b2ab96cfd0fa2dba649848e7aac28b39d39ab05b40abc4fc95e"
         },
         {
-          "path": "packages/cli/dist/verify-CwxZAoKx.js",
-          "sha256": "d53bb4bd3368c6ef7d6e5fafdcf5bc97c7320e03ad4454c29dde3247ef8ecea9"
+          "path": "packages/cli/dist/verify-DZrf0lkA.js",
+          "sha256": "f503699161ce5a67406153ed12a57c44a3a6b96260c141dd461a38be80eb854e"
         },
         {
           "path": "packages/core/dist/index.js",
