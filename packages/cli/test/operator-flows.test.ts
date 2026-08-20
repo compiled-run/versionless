@@ -5,6 +5,10 @@ import { describe, expect, it } from 'vitest';
 import { canonicalize } from '../../core/src/receipts/canonicalize.ts';
 import { assertEnterpriseSurfaceHonesty } from '../../trust/src/enterprise.ts';
 import { ADAPTER_FREEZE_COMPOSITE } from '../../trust/src/freeze.ts';
+import {
+	ANGULAR_16_BROWSER_CELL,
+	ANGULAR_TARGET_CELLS,
+} from '../../frameworks/angular/src/index.ts';
 import { analyzeApplication, readCellVerdicts } from '../src/operator/analyze.ts';
 import { applyPlan, assertSeparateLane } from '../src/operator/apply.ts';
 import {
@@ -19,7 +23,7 @@ import {
 	runOperatorCommand,
 	OPERATOR_COMMANDS,
 } from '../src/operator/flows.ts';
-import { describedCell } from '../src/operator/era-cell.ts';
+import { DESCRIBED_CELLS, describedCell } from '../src/operator/era-cell.ts';
 import { RUN_STAGE_FLAGS } from '../src/operator/run.ts';
 import { pipelineRefusalOf } from '../src/operator/refusals.ts';
 import { runOperatorVerification } from '../src/operator/verify.ts';
@@ -405,6 +409,213 @@ describe('operator plan under a declared cell', () => {
 		expect(operatorHelp('plan')).toContain('--cell');
 		expect(operatorHelp('migrate')).toContain('--cell');
 		expect(operatorHelp('run')).toContain('--cell');
+	});
+});
+
+/**
+ * The trap this seam was cut to close, held shut at the flow level.
+ *
+ * The defect was not that a cell resolved wrongly — it was that two stages read
+ * `--cell` for different things and neither of them said no. The era-cell stage
+ * describes a cell and reads the Node line it needs; the plan stage composes a
+ * changeset against a cell a frozen adapter publishes. An identifier in the
+ * first vocabulary and not the second used to pass the era-cell stage green and
+ * then be dropped on the floor: the plan aligned the manifest to Angular 16 and
+ * the operator was handed a lane for a cell they never declared.
+ *
+ * The identifiers are derived from the two registries rather than named here,
+ * so publishing a cell later moves it out of the unresolvable set instead of
+ * falsifying these tests. `NEVER_PUBLISHED_CELL` keeps the set non-empty
+ * whatever gets published: it is outside both vocabularies by construction.
+ */
+describe('operator plan under a cell no adapter publishes', () => {
+	/** An identifier outside both vocabularies, and not a candidate for either. */
+	const NEVER_PUBLISHED_CELL = 'angular-0.0.0-never-published';
+
+	const publishedCellIds = ANGULAR_TARGET_CELLS.map((cell) => cell.id);
+
+	/** Described, and not plannable: the exact gap the trap lived in. */
+	const describedButUnplannable = DESCRIBED_CELLS.map((cell) => cell.id).filter(
+		(id) => !publishedCellIds.includes(id),
+	);
+
+	/** Every identifier the plan stage cannot resolve, in the order they matter. */
+	const unresolvable = [NEVER_PUBLISHED_CELL, ...describedButUnplannable];
+
+	const ZERO_REVISION = '0000000000000000000000000000000000000000';
+
+	/** The running runtime, declared so the era-cell stage reads this host green. */
+	const RUNNING_NODE_MAJOR = process.versions.node.split('.')[0] as string;
+
+	const angularDirectoryFlags = (): readonly string[] => {
+		const [templateDirectory] = APPLICATION_SOURCE_DIRECTORIES;
+		return [
+			...APPLICATION_SOURCE_DIRECTORIES.flatMap((directory) => ['--source-dir', directory]),
+			'--template-dir',
+			templateDirectory as string,
+			'--style-dir',
+			templateDirectory as string,
+		];
+	};
+
+	type RefusedRecord = Readonly<{
+		outcome: string;
+		refusal: Readonly<{ code: string; message: string; stage: string; origin: string }>;
+	}>;
+
+	type StageRow = Readonly<{
+		name: string;
+		status: string;
+		refusal?: Readonly<{ code: string; stage: string }>;
+		record?: unknown;
+	}>;
+
+	it('refuses every identifier it cannot resolve, and composes no plan at all', async () => {
+		expect(unresolvable.length).toBeGreaterThan(0);
+		for (const declared of unresolvable) {
+			const outcome = await runOperatorCommand('plan', [
+				SOURCE_TREE,
+				...angularDirectoryFlags(),
+				'--cell',
+				declared,
+				'--json',
+			]);
+			expect(outcome.exitCode).toBe(2);
+			const json = outcome.json as RefusedRecord & Record<string, unknown>;
+			expect(json.outcome).toBe('refused');
+			expect(json.refusal.code).toBe('plan.angular.declared-cell-not-published');
+			expect(json.refusal.stage).toBe('plan');
+			expect(json.refusal.origin).toBe('pipeline');
+			/**
+			 * The record carries a refusal where a plan would be. A plan emitted
+			 * beside the refusal — for any cell, and above all for the default one
+			 * — would be the original defect wearing a refusal as a label.
+			 */
+			expect('plan' in json).toBe(false);
+			expect('detected' in json).toBe(false);
+			/** The declaration and the whole published vocabulary are both named. */
+			expect(json.refusal.message).toContain(declared);
+			for (const published of publishedCellIds)
+				expect(json.refusal.message).toContain(published);
+		}
+	});
+
+	/**
+	 * The end-to-end shape of the original defect: a run in which the era-cell
+	 * stage is green for the declared cell. The era-cell stage has a description
+	 * of it and this host provides the declared runtime, so nothing before the
+	 * plan objects — and the plan stage is where the run stops, with the cell
+	 * named, rather than composing a lane against Angular 16 under that name.
+	 *
+	 * The loop is over the derived gap, so a unit that publishes one of these
+	 * cells shrinks it rather than breaking this: the trap it describes only
+	 * exists while some cell is describable and not plannable.
+	 */
+	it('stops a run at the plan stage even after the era-cell stage recorded the cell green', async () => {
+		for (const declared of describedButUnplannable) {
+			const directory = await temporaryDirectory();
+			try {
+				const outcome = await runOperatorCommand('run', [
+					SOURCE_TREE,
+					'--out',
+					path.join(directory, 'lane'),
+					'--revision',
+					ZERO_REVISION,
+					'--cell',
+					declared,
+					'--node',
+					RUNNING_NODE_MAJOR,
+					'--json',
+				]);
+				expect(outcome.exitCode).toBe(2);
+				const record = outcome.json as Readonly<{
+					outcome: string;
+					stages: readonly StageRow[];
+					refusal?: Readonly<{ code: string; stage: string }>;
+				}>;
+				const row = (name: string) => record.stages.find((stage) => stage.name === name);
+				/** The stage that used to be the whole of the operator's evidence. */
+				const eraCell = row('era-cell');
+				expect(eraCell?.status).toBe('ran');
+				const eraCellRecord = eraCell?.record as {
+					outcome: string;
+					required: { cell: string };
+				};
+				expect(eraCellRecord.outcome).toBe('already-present');
+				expect(eraCellRecord.required.cell).toBe(declared);
+				/** And the stage that now refuses instead of aligning to the default. */
+				expect(row('plan')?.status).toBe('refused');
+				expect(row('plan')?.refusal?.code).toBe('plan.angular.declared-cell-not-published');
+				expect(row('plan')?.record).toBe(undefined);
+				expect(record.refusal?.code).toBe('plan.angular.declared-cell-not-published');
+				expect(record.refusal?.stage).toBe('plan');
+				/** Nothing downstream ran, so no lane was written for the wrong cell. */
+				for (const name of ['apply', 'install', 'build', 'witness'])
+					expect(row(name)?.status).toBe('not-run');
+			} finally {
+				await rm(directory, { recursive: true, force: true });
+			}
+		}
+	});
+
+	/**
+	 * The half of the vocabulary split the era-cell stage owns. An identifier
+	 * nothing describes never reaches the plan at all: the run stops one stage
+	 * earlier, with the refusal that names the described cells. The two stages
+	 * refuse different things and each says which it is.
+	 */
+	it('stops a run at the era-cell stage when nothing describes the identifier either', async () => {
+		expect(describedCell(NEVER_PUBLISHED_CELL)).toBe(null);
+		const directory = await temporaryDirectory();
+		try {
+			const outcome = await runOperatorCommand('run', [
+				SOURCE_TREE,
+				'--out',
+				path.join(directory, 'lane'),
+				'--revision',
+				ZERO_REVISION,
+				'--cell',
+				NEVER_PUBLISHED_CELL,
+				'--json',
+			]);
+			expect(outcome.exitCode).toBe(2);
+			const record = outcome.json as Readonly<{
+				stages: readonly StageRow[];
+				refusal?: Readonly<{ code: string; stage: string }>;
+			}>;
+			const row = (name: string) => record.stages.find((stage) => stage.name === name);
+			expect(row('era-cell')?.status).toBe('refused');
+			expect(record.refusal?.code).toBe('era-cell.declared-cell-not-described');
+			expect(record.refusal?.stage).toBe('era-cell');
+			expect(row('plan')?.status).toBe('not-run');
+			expect(row('plan')?.record).toBe(undefined);
+		} finally {
+			await rm(directory, { recursive: true, force: true });
+		}
+	});
+
+	/**
+	 * Declaring the default cell by its own identifier is the same invocation as
+	 * declaring nothing, all the way out to the emitted record. A second code
+	 * path for the declared case would be a place for the two to drift, and the
+	 * byte comparison is what says there is not one.
+	 */
+	it('emits the same record for the default cell declared as for nothing declared', async () => {
+		const declared = await runOperatorCommand('plan', [
+			SOURCE_TREE,
+			...angularDirectoryFlags(),
+			'--cell',
+			ANGULAR_16_BROWSER_CELL.id,
+			'--json',
+		]);
+		const undeclared = await runOperatorCommand('plan', [
+			SOURCE_TREE,
+			...angularDirectoryFlags(),
+			'--json',
+		]);
+		expect(declared.exitCode).toBe(0);
+		expect(undeclared.exitCode).toBe(0);
+		expect(canonicalize(declared.json)).toBe(canonicalize(undeclared.json));
 	});
 });
 

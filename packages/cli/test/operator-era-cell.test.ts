@@ -29,6 +29,7 @@ import {
 	NGCC_ANGULAR_13_CELL,
 	NODE_MAJOR_SOURCE_SLOTS,
 	declaredRangeAdmitsMajor,
+	describedCell,
 	establishEraCell,
 	eraCellNotRequested,
 	eraCellRefused,
@@ -43,8 +44,13 @@ import {
 	type HostCellReading,
 	type InstalledRuntime,
 } from '../src/operator/era-cell.ts';
+import {
+	ANGULAR_16_BROWSER_CELL,
+	ANGULAR_TARGET_CELLS,
+} from '../../frameworks/angular/src/index.ts';
 import { cypressRwaWorkArea } from '../src/fixture/react-cypress-rwa-migration-run.ts';
 import { runOperatorCommand } from '../src/operator/flows.ts';
+import { resolveAngularTargetCell } from '../src/operator/plan.ts';
 import {
 	EXIT_REFUSAL,
 	PIPELINE_STAGES,
@@ -803,5 +809,106 @@ describe('era-cell — the stage in the pipeline', () => {
 		} finally {
 			await rm(directory, { recursive: true, force: true });
 		}
+	});
+});
+
+/**
+ * Describable is not plannable.
+ *
+ * Two vocabularies meet at `--cell` and they are deliberately different sizes.
+ * This file's stage describes every cell it can read a Node line for, published
+ * or not; the plan stage resolves only the cells a frozen adapter publishes as
+ * a migration target. The defect that produced the seam was the gap between
+ * them going unread: a cell this stage described happily, and the plan then
+ * aligned to the default cell under the declared cell's name.
+ *
+ * The assertions below are derived from the two lists rather than written
+ * against today's membership, because the membership is expected to move — a
+ * cell published later must resolve here with no edit to this test, and the
+ * rule it would then satisfy is the same rule. What is pinned is the rule:
+ * every described id an adapter publishes resolves to that adapter's own cell,
+ * and every one it does not is a named refusal.
+ */
+describe('era-cell — describable is not plannable', () => {
+	/** The refusal a resolution raised, or `null` when it resolved. */
+	function refusalOfResolving(id: string) {
+		try {
+			resolveAngularTargetCell(id);
+			return null;
+		} catch (error) {
+			const refusal = pipelineRefusalOf(error);
+			if (refusal === null) throw error;
+			return refusal;
+		}
+	}
+
+	const publishedCellOf = (id: string) =>
+		ANGULAR_TARGET_CELLS.find((cell) => cell.id === id) ?? null;
+
+	it('resolves every described cell an adapter publishes, and refuses every one it does not', () => {
+		expect(DESCRIBED_CELLS.length).toBeGreaterThan(0);
+		for (const described of DESCRIBED_CELLS) {
+			const published = publishedCellOf(described.id);
+			if (published === null) {
+				const refusal = refusalOfResolving(described.id);
+				expect(refusal?.code).toBe('plan.angular.declared-cell-not-published');
+				expect(refusal?.stage).toBe('plan');
+				expect(refusal?.origin).toBe('pipeline');
+				expect(refusal?.message).toContain(described.id);
+				continue;
+			}
+			/** The adapter's own object, not a copy of it built here. */
+			expect(resolveAngularTargetCell(described.id)).toBe(published);
+			expect(described.nodeLine).toBe(published.nodeLine);
+		}
+	});
+
+	/**
+	 * The other direction of the same rule. A cell the plan can resolve is one
+	 * the era-cell stage can also describe, so an operator never reaches a plan
+	 * through a declaration this stage would have refused to read a Node line
+	 * for. This holds by construction today — `DESCRIBED_CELLS` is derived from
+	 * the published registry — and pinning it keeps a later hand-written entry
+	 * from separating the two.
+	 */
+	it('describes every cell the plan stage can resolve', () => {
+		expect(ANGULAR_TARGET_CELLS.length).toBeGreaterThan(0);
+		for (const published of ANGULAR_TARGET_CELLS) {
+			expect(describedCell(published.id)?.id).toBe(published.id);
+			expect(resolveAngularTargetCell(published.id)).toBe(published);
+		}
+	});
+
+	/**
+	 * An identifier outside both vocabularies, which no unit is going to publish
+	 * later: the refusal has to name what was declared and what is available,
+	 * because an operator who mistyped a cell has no other way to see the list.
+	 */
+	it('refuses an identifier no adapter will ever publish, naming it and the published cells', () => {
+		const never = 'angular-0.0.0-never-published';
+		expect(describedCell(never)).toBe(null);
+		expect(publishedCellOf(never)).toBe(null);
+		const refusal = refusalOfResolving(never);
+		expect(refusal?.code).toBe('plan.angular.declared-cell-not-published');
+		expect(refusal?.stage).toBe('plan');
+		expect(refusal?.origin).toBe('pipeline');
+		expect(refusal?.message).toContain(never);
+		for (const published of ANGULAR_TARGET_CELLS)
+			expect(refusal?.message).toContain(published.id);
+		/** A refusal is exit 2. Declaring a cell that does not exist is not a defect. */
+		expect(refusalRecord('plan', refusal as never).exitCode).toBe(EXIT_REFUSAL);
+	});
+
+	/**
+	 * Declaring the default cell by name is resolution, not a second path into
+	 * the plan: the resolver hands back the very object the undeclared path
+	 * uses. An equal-looking copy would be a second definition of the cell, and
+	 * the changeset would then depend on which of the two a caller got.
+	 */
+	it('resolves the default cell to the same object nothing-declared resolves to', () => {
+		expect(resolveAngularTargetCell(ANGULAR_16_BROWSER_CELL.id)).toBe(ANGULAR_16_BROWSER_CELL);
+		expect(resolveAngularTargetCell(undefined)).toBe(ANGULAR_16_BROWSER_CELL);
+		expect(resolveAngularTargetCell(null)).toBe(ANGULAR_16_BROWSER_CELL);
+		expect(resolveAngularTargetCell('')).toBe(ANGULAR_16_BROWSER_CELL);
 	});
 });
