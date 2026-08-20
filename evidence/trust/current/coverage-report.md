@@ -4,7 +4,7 @@ What the fleet pipeline proved, per application, against the sealed baseline it 
 
 - Schema: `versionless.coverage-report.v1`
 - Certification state: **not-certified**
-- Canonical SHA-256: `d885c7457df9b6b3a15cfd842ebd647e9b8093de5fc0d307f6b130e5f00251df`
+- Canonical SHA-256: `47ab9dc92e5c4587dc23cee36cb1567d1421a72db7ab6acc97d48e7603bf6d4e`
 - Integrity: hash-only; authenticity is not established
 
 Every green cell below is filtered out of the Judge counting ledger the corpus derived and cross-checked against that corpus numerator and denominator. No cell is listed by hand, and a cell edited into this record fails re-derivation.
@@ -48,9 +48,9 @@ A capability is claimed general, and therefore in the matrix, only once at least
 | `react-flame-v2-4-0` | .versionless/work/react-flame-v2-4-0/baseline | react | **proven** | run-record | 0 | proven on this run and bounded by what the run recorded; the bounds are stated with this row in section 3 |
 | `react-mycrypto` | .versionless/work/react-mycrypto/baseline | react | **refused** | run-record | 0 | ingest.acquisition-journal-does-not-match-the-tree |
 | `react-verdaccio-v4-12-2` | .versionless/work/react-verdaccio-v4-12-2/baseline | unknown | **refused** | run-record | 0 | ingest.frontend-root-declares-no-framework |
-| `react-your-spotify-1-5-0` | .versionless/work/react-your-spotify-1-5-0/baseline | react | **not-admitted** | run-record | 0 | run-did-not-proceed:defect |
+| `react-your-spotify-1-5-0` | .versionless/work/react-your-spotify-1-5-0/baseline | react | **proven** | run-record | 0 | proven on this run and bounded by what the run recorded; the bounds are stated with this row in section 3 |
 
-Totals: 13 proven, 2 bounded, 5 refused, 4 not-admitted, of 24 rows.
+Totals: 14 proven, 2 bounded, 5 refused, 3 not-admitted, of 24 rows.
 
 ### Counting notes carried by the bounded rows
 
@@ -80,7 +80,10 @@ An application admitted through `versionless run` is recorded proven only if its
   - bounded by: Route reach: the witness row records the replay reaching 1 of 12 declared route(s) across 1 journey(s). Every route it did not reach is unproven by this row rather than proven absent.
 - `react-mycrypto`: refused — intervention count 0
 - `react-verdaccio-v4-12-2`: refused — intervention count 0
-- `react-your-spotify-1-5-0`: not-admitted — intervention count 0 (run-did-not-proceed:defect)
+- `react-your-spotify-1-5-0`: proven — intervention count 0
+  - source: `Yooooomi/your_spotify` at ref `refs/tags/1.5.0`, revision `50f6a0d83751f0f3bd5f5d90bf0db9507313a5e9`, licence GPL-3.0 `230184f60bae2feaf244f10a8bac053c8ff33a183bcc365b4d8b876d2b7f4809` — read from `evidence/runs/react-your-spotify-1-5-0/run-record.json` (basis: run-record)
+  - bounded by: Dependency install scripts: the install row declares the install-script policy, names 0 package(s) the lockfile marks as carrying an install script, and records npm starting 2 script(s) and skipping 0 by policy. A script npm skipped did not run in the lane this proof was taken on.
+  - bounded by: Route reach: the witness row records the replay reaching 1 of 5 declared route(s) across 1 journey(s). Every route it did not reach is unproven by this row rather than proven absent.
 
 ## 4. Boundary prevalence
 

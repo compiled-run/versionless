@@ -23,10 +23,11 @@ describe('corpus conformance CLI', () => {
 		expect(JSON.parse(result.stdout)).toMatchObject({
 			result: 'pass',
 			verticals: 20,
-			// 12 sealed corpus applications + 1 run-record application
-			// (`react-flame-v2-4-0`), which `corpus:verify` adjudicates alongside
-			// the sealed members rather than counting separately.
-			sourceApplications: 15,
+			// 12 sealed corpus applications + the run-record applications
+			// (`react-flame-v2-4-0` among them, and `react-your-spotify-1-5-0`
+			// since T048 carried it to 9 of 9), which `corpus:verify` adjudicates
+			// alongside the sealed members rather than counting separately.
+			sourceApplications: 16,
 		});
 	});
 

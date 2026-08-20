@@ -2,10 +2,10 @@
 	"schemaVersion": "versionless.intervention-count.v1",
 	"flow": "intervention-count",
 	"application": ".versionless/work/react-your-spotify-1-5-0/baseline",
-	"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t047/lanes/your-spotify",
+	"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t048/lanes/your-spotify",
 	"runRecord": "evidence/runs/react-your-spotify-1-5-0/run-record.json",
 	"writeSet": [
-		"../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t047/lanes/your-spotify",
+		"../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t048/lanes/your-spotify",
 		"evidence/runs/react-your-spotify-1-5-0/run-record.json",
 		"evidence/runs/react-your-spotify-1-5-0/run-record.json.interventions.json",
 		".versionless/stage/witness-real-app",
@@ -16,8 +16,8 @@
 	"mutatedPathsOutsideWriteSet": [],
 	"authoringPathsTouched": [],
 	"interventionCount": 0,
-	"exitCode": 1,
-	"terminalClassification": "defect:build",
+	"exitCode": 0,
+	"terminalClassification": "proven",
 	"attempts": [
 		{
 			"argv": [
@@ -26,7 +26,7 @@
 				"run",
 				".versionless/work/react-your-spotify-1-5-0/baseline",
 				"--out",
-				"/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t047/lanes/your-spotify",
+				"/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t048/lanes/your-spotify",
 				"--record",
 				"evidence/runs/react-your-spotify-1-5-0/run-record.json",
 				"--allow-foreign-lockfile",
@@ -35,13 +35,13 @@
 				"--allow-peer-conflicts",
 				"--allow-remote-tarballs"
 			],
-			"exitCode": 1,
+			"exitCode": 0,
 			"signal": null,
 			"hang": false,
-			"stdoutBytes": 6738,
+			"stdoutBytes": 1925,
 			"stderrBytes": 0,
-			"startedAt": "2026-08-20T14:28:56.089Z",
-			"endedAt": "2026-08-20T14:29:15.895Z"
+			"startedAt": "2026-08-20T14:54:01.345Z",
+			"endedAt": "2026-08-20T14:54:24.118Z"
 		}
 	],
 	"observation": {
@@ -51,8 +51,8 @@
 		},
 		"stageBudgetMs": 900000,
 		"trackedPathsSource": "git",
-		"pathsObservedBefore": 7592,
-		"pathsObservedAfter": 12302,
+		"pathsObservedBefore": 7597,
+		"pathsObservedAfter": 12313,
 		"authoringHomes": [
 			"fixtures/**",
 			"packages/cli/src/fixture/**",

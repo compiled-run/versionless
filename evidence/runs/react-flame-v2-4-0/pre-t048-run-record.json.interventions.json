@@ -2,10 +2,10 @@
 	"schemaVersion": "versionless.intervention-count.v1",
 	"flow": "intervention-count",
 	"application": ".versionless/work/react-flame-v2-4-0/baseline",
-	"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t048/lanes/flame",
+	"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t047/lanes/flame",
 	"runRecord": "evidence/runs/react-flame-v2-4-0/run-record.json",
 	"writeSet": [
-		"../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t048/lanes/flame",
+		"../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t047/lanes/flame",
 		"evidence/runs/react-flame-v2-4-0/run-record.json",
 		"evidence/runs/react-flame-v2-4-0/run-record.json.interventions.json",
 		".versionless/stage/witness-real-app",
@@ -26,7 +26,7 @@
 				"run",
 				".versionless/work/react-flame-v2-4-0/baseline",
 				"--out",
-				"/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t048/lanes/flame",
+				"/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t047/lanes/flame",
 				"--record",
 				"evidence/runs/react-flame-v2-4-0/run-record.json",
 				"--allow-install-scripts",
@@ -38,8 +38,8 @@
 			"hang": false,
 			"stdoutBytes": 1895,
 			"stderrBytes": 0,
-			"startedAt": "2026-08-20T14:53:20.172Z",
-			"endedAt": "2026-08-20T14:53:29.584Z"
+			"startedAt": "2026-08-20T14:28:28.839Z",
+			"endedAt": "2026-08-20T14:28:38.417Z"
 		}
 	],
 	"observation": {
@@ -49,8 +49,8 @@
 		},
 		"stageBudgetMs": 900000,
 		"trackedPathsSource": "git",
-		"pathsObservedBefore": 4071,
-		"pathsObservedAfter": 7502,
+		"pathsObservedBefore": 4066,
+		"pathsObservedAfter": 7497,
 		"authoringHomes": [
 			"fixtures/**",
 			"packages/cli/src/fixture/**",

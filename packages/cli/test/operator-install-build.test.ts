@@ -32,9 +32,12 @@ import {
 	composeLaneViteConfig,
 	composeReactLane,
 	craBaseFromHomepage,
+	flattenTsconfigChain,
 	FROZEN_REACT_ADAPTER_SOURCE,
 	LANE_BUILD_DIRECTORY,
 	laneNotComposed,
+	parseTsconfigSource,
+	readTsconfigChain,
 } from '../src/operator/lane.ts';
 import { pipelineRefusalOf } from '../src/operator/refusals.ts';
 import { stageFailureRow } from '../src/operator/run.ts';
@@ -59,6 +62,7 @@ const PAPERCUPS = '.versionless/work/react-papercups-v1-0-0/baseline';
 const PAPERCUPS_FIXTURE_CONFIG = 'fixtures/react-papercups-v1-0-0/vite.config.ts';
 const LINKFREE = '.versionless/work/react-linkfree-v0-72-0/baseline';
 const CYPRESS_RWA = '.versionless/work/react-cypress-rwa/baseline';
+const FLAME_CLIENT = '.versionless/work/react-flame-v2-4-0/baseline/client';
 
 const policy = (overrides: Partial<InstallPolicy> = {}): InstallPolicy =>
 	Object.freeze({ ...DEFAULT_INSTALL_POLICY, ...overrides });
@@ -235,6 +239,293 @@ describe('lane composition over the corpus', () => {
 		expect(composition.composed).toBe(false);
 		expect(composition.files).toHaveLength(0);
 		expect(composition.reason).toContain('Angular');
+	});
+});
+
+/**
+ * The lane-composition wall T047 measured on `react-your-spotify-1-5-0`: the
+ * lane installed and Vite's own transform then stopped with `Tsconfig not found
+ * <lane-parent>/tsconfig.json`, because the application's `tsconfig.json`
+ * extends one that lives above the directory the apply stage copies.
+ *
+ * These tests run the workspace's own Vite against a composed lane, so the
+ * reading is Vite's rather than this suite's. The generated `vite.config.ts` is
+ * deliberately not written into that lane: it imports Vite, pathe, ufo and the
+ * frozen adapter by paths that resolve from this workspace, and what is under
+ * test here is the TypeScript configuration the lane carries, not the config
+ * generator the run records already exercise.
+ */
+describe('the lane’s TypeScript configuration', () => {
+	const VITE_BIN = path.resolve('node_modules/vite/bin/vite.js');
+
+	const clientManifest = {
+		name: 'client_ts',
+		version: '1.5.0',
+		dependencies: { react: '^18.2.0', 'react-scripts': '5.0.1' },
+		scripts: { build: 'react-scripts build' },
+	};
+
+	const clientTsconfig = (specifier: string | null) => ({
+		...(specifier === null ? {} : { extends: specifier }),
+		compilerOptions: {
+			target: 'es5',
+			jsx: 'react-jsx',
+			isolatedModules: true,
+			noFallthroughCasesInSwitch: true,
+		},
+		include: ['./src/**/*'],
+	});
+
+	/**
+	 * The your-spotify layout, reduced to what the wall needed: a TypeScript
+	 * create-react-app client in a subdirectory of a split repository, extending
+	 * a configuration that sits above it.
+	 */
+	async function splitRepository(
+		options: Readonly<{
+			specifier?: string | null;
+			parent?: Record<string, unknown> | null;
+			typescript?: boolean;
+		}> = {},
+	): Promise<{ root: string; client: string }> {
+		const root = await temporaryDirectory();
+		const client = path.join(root, 'client');
+		await mkdir(path.join(client, 'src'), { recursive: true });
+		const parent =
+			options.parent === undefined ? { compilerOptions: { strict: true } } : options.parent;
+		if (parent !== null)
+			await writeFile(
+				path.join(root, 'tsconfig.json'),
+				`${JSON.stringify(parent, null, 2)}\n`,
+			);
+		await writeFile(
+			path.join(client, 'package.json'),
+			`${JSON.stringify(clientManifest, null, 2)}\n`,
+		);
+		if (options.typescript !== false)
+			await writeFile(
+				path.join(client, 'tsconfig.json'),
+				`${JSON.stringify(clientTsconfig(options.specifier === undefined ? '../tsconfig.json' : options.specifier), null, 2)}\n`,
+			);
+		await writeFile(
+			path.join(client, 'index.html'),
+			'<!doctype html>\n<html><body><div id="root"></div><script type="module" src="/src/main.ts"></script></body></html>\n',
+		);
+		await writeFile(
+			path.join(client, 'src/main.ts'),
+			'const mounted: number = 1;\nexport default mounted;\n',
+		);
+		return { root, client };
+	}
+
+	/** Copy the application into the lane exactly as the apply stage does. */
+	async function materialize(from: string, to: string): Promise<void> {
+		await mkdir(path.join(to, 'src'), { recursive: true });
+		for (const name of ['package.json', 'tsconfig.json', 'index.html', 'src/main.ts'])
+			try {
+				await writeFile(path.join(to, name), await readFile(path.join(from, name), 'utf8'));
+			} catch {
+				/** The JavaScript shape carries no tsconfig.json; nothing to copy. */
+			}
+	}
+
+	async function viteBuild(lane: string): Promise<{ code: number; output: string }> {
+		try {
+			const { stdout, stderr } = await promisify(execFile)(
+				process.execPath,
+				[VITE_BIN, 'build', '--outDir', LANE_BUILD_DIRECTORY],
+				{ cwd: lane },
+			);
+			return { code: 0, output: `${stdout}${stderr}` };
+		} catch (error) {
+			const failure = error as { code?: number; stdout?: string; stderr?: string };
+			return {
+				code: failure.code ?? 1,
+				output: `${failure.stdout ?? ''}${failure.stderr ?? ''}`,
+			};
+		}
+	}
+
+	it('reproduces the measured wall when the application’s own file travels unchanged', async () => {
+		const { root, client } = await splitRepository();
+		const lane = path.join(await temporaryDirectory(), 'lane');
+		try {
+			await materialize(client, lane);
+			const { code, output } = await viteBuild(lane);
+			expect(code).not.toBe(0);
+			expect(output).toContain('Tsconfig not found');
+			expect(output).toContain('builtin:vite-transform');
+		} finally {
+			await rm(root, { recursive: true, force: true });
+			await rm(path.dirname(lane), { recursive: true, force: true });
+		}
+	}, 120_000);
+
+	it('composes a self-contained configuration that Vite builds', async () => {
+		const { root, client } = await splitRepository();
+		const lane = path.join(await temporaryDirectory(), 'lane');
+		try {
+			await materialize(client, lane);
+			const composition = await composeReactLane({
+				appRoot: client,
+				laneDir: lane,
+				adapterModule: '@versionless/react',
+			});
+			const composed = composition.files.find((file) => file.path === 'tsconfig.json');
+			expect(composed).toBeDefined();
+			expect(composed?.changes.join('\n')).toContain('flattened into this file');
+			for (const file of composition.files)
+				if (file.path !== 'vite.config.ts')
+					await writeFile(path.join(lane, file.path), file.source);
+			/** The lane's configuration now names nothing above the lane. */
+			const written = JSON.parse(
+				await readFile(path.join(lane, 'tsconfig.json'), 'utf8'),
+			) as {
+				extends?: unknown;
+				compilerOptions: Record<string, unknown>;
+				include: string[];
+			};
+			expect(written.extends).toBeUndefined();
+			/** Inherited from above the lane, and the application's own on top. */
+			expect(written.compilerOptions.strict).toBe(true);
+			expect(written.compilerOptions.jsx).toBe('react-jsx');
+			expect(written.include).toEqual(['./src/**/*']);
+			const { code, output } = await viteBuild(lane);
+			expect(output).not.toContain('Tsconfig not found');
+			expect(code).toBe(0);
+			/** Vite itself ran, and emitted: the reading above is its own. */
+			expect(output).toContain('vite v');
+			expect(
+				await readFile(path.join(lane, LANE_BUILD_DIRECTORY, 'index.html'), 'utf8'),
+			).toContain('<script type="module"');
+		} finally {
+			await rm(root, { recursive: true, force: true });
+			await rm(path.dirname(lane), { recursive: true, force: true });
+		}
+	}, 120_000);
+
+	it('leaves a configuration that already travels with the lane alone', async () => {
+		const { root, client } = await splitRepository({ specifier: null });
+		try {
+			const composition = await composeReactLane({
+				appRoot: client,
+				laneDir: '/nonexistent-lane',
+				adapterModule: '@versionless/react',
+			});
+			expect(composition.files.map((file) => file.path)).toEqual([
+				'vite.config.ts',
+				'package.json',
+			]);
+		} finally {
+			await rm(root, { recursive: true, force: true });
+		}
+	});
+
+	it('composes no configuration for an application that declares none', async () => {
+		const { root, client } = await splitRepository({ typescript: false });
+		try {
+			const composition = await composeReactLane({
+				appRoot: client,
+				laneDir: '/nonexistent-lane',
+				adapterModule: '@versionless/react',
+			});
+			expect(composition.files.map((file) => file.path)).toEqual([
+				'vite.config.ts',
+				'package.json',
+			]);
+		} finally {
+			await rm(root, { recursive: true, force: true });
+		}
+	});
+
+	/**
+	 * The sealed reproduction's own shape. flame's client carries a
+	 * self-contained `tsconfig.json`, so the rule that answers your-spotify must
+	 * add nothing to flame's lane.
+	 */
+	it('adds no lane file to the sealed flame reproduction', async () => {
+		const composition = await composeReactLane({
+			appRoot: FLAME_CLIENT,
+			laneDir: '/nonexistent-lane',
+			adapterModule: '@versionless/react',
+		});
+		expect(composition.files.map((file) => file.path)).toEqual([
+			'vite.config.ts',
+			'package.json',
+		]);
+	});
+
+	it('keeps a package specifier the lane’s own node_modules resolves', async () => {
+		const { root, client } = await splitRepository({
+			parent: {
+				extends: '@tsconfig/node18/tsconfig.json',
+				compilerOptions: { strict: true },
+			},
+		});
+		try {
+			const chain = await readTsconfigChain(client, 'tsconfig.json');
+			const flattened = flattenTsconfigChain(chain as NonNullable<typeof chain>);
+			const written = JSON.parse(flattened.source as string) as Record<string, unknown>;
+			expect(written.extends).toBe('@tsconfig/node18/tsconfig.json');
+			expect(Object.keys(written)[0]).toBe('extends');
+			expect(flattened.changes.join('\n')).toContain('resolves through the lane');
+		} finally {
+			await rm(root, { recursive: true, force: true });
+		}
+	});
+
+	it('names an extends that resolves nowhere rather than rewriting the file', async () => {
+		const { root, client } = await splitRepository({
+			specifier: '../missing.json',
+			parent: null,
+		});
+		try {
+			const composition = await composeReactLane({
+				appRoot: client,
+				laneDir: '/nonexistent-lane',
+				adapterModule: '@versionless/react',
+			});
+			expect(composition.files.map((file) => file.path)).toEqual([
+				'vite.config.ts',
+				'package.json',
+			]);
+			expect(composition.unhandled.join('\n')).toContain(
+				'names no file this flow could find',
+			);
+		} finally {
+			await rm(root, { recursive: true, force: true });
+		}
+	});
+
+	it('names path-valued options inherited from above the lane', async () => {
+		const { root, client } = await splitRepository({
+			parent: { compilerOptions: { baseUrl: './src', strict: true } },
+		});
+		try {
+			const composition = await composeReactLane({
+				appRoot: client,
+				laneDir: '/nonexistent-lane',
+				adapterModule: '@versionless/react',
+			});
+			const joined = composition.unhandled.join('\n');
+			expect(joined).toContain('compilerOptions.baseUrl');
+			expect(joined).toContain('rather than rebasing them');
+			/** And the alias reading now sees what the whole chain resolves to. */
+			expect(joined).toContain('module resolution aliases');
+		} finally {
+			await rm(root, { recursive: true, force: true });
+		}
+	});
+
+	it('reads the JSONC forms a tsconfig is allowed to carry', () => {
+		const parsed = parseTsconfigSource(
+			'{\n\t// the client\n\t"extends": "../tsconfig.json", /* above */\n\t"include": ["src"],\n}\n',
+		);
+		expect(parsed?.extends).toBe('../tsconfig.json');
+		expect(parsed?.include).toEqual(['src']);
+		/** A comment marker inside a string stays part of the string. */
+		expect(parseTsconfigSource('{"a":"http://x//y"}')?.a).toBe('http://x//y');
+		expect(parseTsconfigSource('{ not json }')).toBe(null);
 	});
 });
 

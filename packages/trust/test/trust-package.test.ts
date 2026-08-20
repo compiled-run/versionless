@@ -992,7 +992,7 @@ snapshots:
 			 */
 			expect(conformance.summary).toEqual({
 				verticals: 20,
-				sourceApplications: 15,
+				sourceApplications: 16,
 				designatedPilotsVerified: 0,
 			});
 			expect(conformance.frameworkLanes).toHaveLength(3);

@@ -8,9 +8,9 @@
     "slsaLevel": "not-claimed"
   },
   "derivedFrom": {
-    "trustManifestCanonicalDigest": "3bfd50a744ea59bfdb4c45adadcbc8f2fce93a9ec8ef6e96d93b549b84101328",
-    "deterministicCoreDigest": "35d603fdfab533ad31a7d23ca891264b5351e4390a6d2c90bd9cfff0c5b13be3",
-    "corpusConformanceDigest": "4b065b48f1fd7ad7945044de0655fe407206b4684a664235ff4738428b6fd25f",
+    "trustManifestCanonicalDigest": "78dbc246d143e568e4b8909c01a32bfe69e1af9993b92ce9fb44585fd3159b27",
+    "deterministicCoreDigest": "d435d81c9cff9b53d04762c73a8ec795a9c4282b2df4e0561eccdae7ace0ba64",
+    "corpusConformanceDigest": "532eb5b705104f9f9af3e0dc8ae028c36b20e3ba4ade4c438533e3f341418965",
     "adapterFreezeComposite": "140ce86e163ddbae2ad6f1504022efca9468641cc50fd3dca354c6aba8cbb562",
     "adapterFreezeCommit": "ddc2870aa934be7c8bc6caaeca74095d270776d5"
   },
@@ -247,6 +247,21 @@
         "react-flame-v2-4-0"
       ],
       "rights": "Ingested at a pin under recorded consent, with the license text hashed at that pin. No redistribution right beyond the upstream license is claimed."
+    },
+    {
+      "application": "react-your-spotify-1-5-0",
+      "repository": "Yooooomi/your_spotify",
+      "revisionRecordedIn": {
+        "path": "corpus-conformance.json",
+        "field": "applications[].source.revision for react-your-spotify-1-5-0"
+      },
+      "archiveSha256": "not-recorded-in-the-corpus-record",
+      "license": "GPL-3.0",
+      "licenseSha256": "230184f60bae2feaf244f10a8bac053c8ff33a183bcc365b4d8b876d2b7f4809",
+      "verticals": [
+        "react-your-spotify-1-5-0"
+      ],
+      "rights": "Ingested at a pin under recorded consent, with the license text hashed at that pin. No redistribution right beyond the upstream license is claimed."
     }
   ],
   "toolAndTargetVersions": {
@@ -395,7 +410,7 @@
       },
       {
         "path": "matrix.json",
-        "sha256": "1342593b8673aa8ae1f2f9df70d6bfb84b0059e7f54e005a86a4d1c64e6dcb9e"
+        "sha256": "e616fd15930848b2ef5acb0e01efe55de247807e2de6bba39adf7aa58f516d6d"
       },
       {
         "path": "controls.json",
@@ -407,7 +422,7 @@
       },
       {
         "path": "corpus-conformance.json",
-        "sha256": "7a2fe0b3a7c28d2e41632ad2d4d1617f40a5695b814dce7231281200e6db47e9"
+        "sha256": "6c4188449cae9940c89312a91cb2d0e6b93db43e5ced22273bd79c9dda707762"
       },
       {
         "path": "script-surface.json",
@@ -419,7 +434,7 @@
       },
       {
         "path": "capability-coverage.json",
-        "sha256": "e2a86fcd80b968cbaf0a8688e097760adc93a7ce9b0dc504f3ae9279e915d10c"
+        "sha256": "0c566a4c48b93c75aa2b8a67b52214db1f4dcc227fd05982ed5cd489ff2cd590"
       }
     ],
     "receipts": [
@@ -1972,7 +1987,7 @@
     "derivation": "Every claim restates a score or digest the corpus derived; every non-claim is carried verbatim from the record that already publishes it. Neither list is authored beside the evidence.",
     "claims": [
       "6 of 6 React-lineage cells and 4 of 4 Angular-lineage cells carry a Judge-accepted direct-Witness browser proof against the frozen adapter, each on its own immutable source application.",
-      "Every number above is derived from the Judge counting ledger inside `corpus-conformance.json` (`4b065b48f1fd7ad7945044de0655fe407206b4684a664235ff4738428b6fd25f`); the cells are enumerated in this record and each names the receipt it was counted off.",
+      "Every number above is derived from the Judge counting ledger inside `corpus-conformance.json` (`532eb5b705104f9f9af3e0dc8ae028c36b20e3ba4ade4c438533e3f341418965`); the cells are enumerated in this record and each names the receipt it was counted off.",
       "8 of 59 enumerated migration capabilities are cross-proven on at least two independent applications and are therefore in the matrix.",
       "Every artifact in this package is bound by SHA-256 to the trust manifest, and the derived documents are re-derived from the same canonical receipts at verification time.",
       "The two published holdouts that did not end RED are reported with the exact outcome string their receipts carry, and both are counted in no lineage numerator."

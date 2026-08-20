@@ -2,9 +2,9 @@
 
 One machine artifact for an enterprise reviewer, derived entirely from canonical receipts the trust package already verified. It states what was proven, on which sources, with which tools, under which commands, and — in the same document — what is unsupported, unknown, or deliberately not claimed.
 
-- Trust manifest canonical SHA-256: `3bfd50a744ea59bfdb4c45adadcbc8f2fce93a9ec8ef6e96d93b549b84101328`
-- Deterministic core: `35d603fdfab533ad31a7d23ca891264b5351e4390a6d2c90bd9cfff0c5b13be3`
-- Corpus conformance: `4b065b48f1fd7ad7945044de0655fe407206b4684a664235ff4738428b6fd25f`
+- Trust manifest canonical SHA-256: `78dbc246d143e568e4b8909c01a32bfe69e1af9993b92ce9fb44585fd3159b27`
+- Deterministic core: `d435d81c9cff9b53d04762c73a8ec795a9c4282b2df4e0561eccdae7ace0ba64`
+- Corpus conformance: `532eb5b705104f9f9af3e0dc8ae028c36b20e3ba4ade4c438533e3f341418965`
 - Adapter freeze: commit `ddc2870aa934be7c8bc6caaeca74095d270776d5`, composite `140ce86e163ddbae2ad6f1504022efca9468641cc50fd3dca354c6aba8cbb562`
 - Certification: **not-certified** — This package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation.
 - Integrity: **hash-only; authenticity is not established**; SLSA level: **not-claimed**
@@ -30,6 +30,7 @@ The machine artifact for this document is [`enterprise-report.json`](enterprise-
 | react-coverview-a1470b01 | rutikwankhade/CoverView | `not-recorded-in-the-corpus-record` | MIT | `24ae4deeab7fd89fad4a57235ac34f0c562ede9989c22a4c5b3f9d9a0936af24` | `corpus-conformance.json` → `applications[].source.revision for react-coverview-a1470b01` |
 | react-cra-redux-1a06509b | notrab/create-react-app-redux | `not-recorded-in-the-corpus-record` | MIT | `b2675162788a19ede4b69024906455b9032e8dadebb8bbccfb833c216c2c2124` | `corpus-conformance.json` → `applications[].source.revision for react-cra-redux-1a06509b` |
 | react-flame-v2-4-0 | pawelmalak/flame | `not-recorded-in-the-corpus-record` | MIT | `fbfe10674aef1e0bf084850644879fa4114d8a98debc5fb8e680f295af169d43` | `corpus-conformance.json` → `applications[].source.revision for react-flame-v2-4-0` |
+| react-your-spotify-1-5-0 | Yooooomi/your_spotify | `not-recorded-in-the-corpus-record` | GPL-3.0 | `230184f60bae2feaf244f10a8bac053c8ff33a183bcc365b4d8b876d2b7f4809` | `corpus-conformance.json` → `applications[].source.revision for react-your-spotify-1-5-0` |
 
 Each application is pinned to an exact upstream revision. Those revisions are carried in [`corpus-conformance.json`](corpus-conformance.json) rather than restated here, and that record is itself bound by SHA-256 to the trust manifest above.
 
@@ -63,13 +64,13 @@ Tool: `versionless-local-trust-generator`, adapter frozen at commit `ddc2870aa93
 - `licenses.json` — `d4044d784816c196415fdca9fd7b734bac809d29428c48e4dfb1c4622c834488`
 - `vulnerabilities.json` — `aa0b0970e2e128e30b044f6107b4b77136d759b0a2ee3af9d37c883fa6b8298d`
 - `provenance.json` — `f67af456c8b3c604382661a9bba3cd950f3999f62f18c32cb21338ad7e486179`
-- `matrix.json` — `1342593b8673aa8ae1f2f9df70d6bfb84b0059e7f54e005a86a4d1c64e6dcb9e`
+- `matrix.json` — `e616fd15930848b2ef5acb0e01efe55de247807e2de6bba39adf7aa58f516d6d`
 - `controls.json` — `a5e61dcace162ce814347f931b6f4e4f59934ea1312df79d9c817c19e0e9bef4`
 - `retention.json` — `f1a7f91607bca1de4cc15e2523a3d0791116acc9cfdf853c68b9b35aa2c07568`
-- `corpus-conformance.json` — `7a2fe0b3a7c28d2e41632ad2d4d1617f40a5695b814dce7231281200e6db47e9`
+- `corpus-conformance.json` — `6c4188449cae9940c89312a91cb2d0e6b93db43e5ced22273bd79c9dda707762`
 - `script-surface.json` — `e10f554b46ddb275a94da16b89c3c265789724ad67aba3e5e5dddc8f0fa6b502`
 - `runtime-script-observation.json` — `086e0c84d48c7f53a814f67a51b7c25239b6f413306361fde1cfdfc3a0f1afc2`
-- `capability-coverage.json` — `e2a86fcd80b968cbaf0a8688e097760adc93a7ce9b0dc504f3ae9279e915d10c`
+- `capability-coverage.json` — `0c566a4c48b93c75aa2b8a67b52214db1f4dcc227fd05982ed5cd489ff2cd590`
 
 Receipt inventory (27 preserved receipts):
 
@@ -315,7 +316,7 @@ Every claim restates a score or digest the corpus derived; every non-claim is ca
 ### Claims
 
 - 6 of 6 React-lineage cells and 4 of 4 Angular-lineage cells carry a Judge-accepted direct-Witness browser proof against the frozen adapter, each on its own immutable source application.
-- Every number above is derived from the Judge counting ledger inside `corpus-conformance.json` (`4b065b48f1fd7ad7945044de0655fe407206b4684a664235ff4738428b6fd25f`); the cells are enumerated in this record and each names the receipt it was counted off.
+- Every number above is derived from the Judge counting ledger inside `corpus-conformance.json` (`532eb5b705104f9f9af3e0dc8ae028c36b20e3ba4ade4c438533e3f341418965`); the cells are enumerated in this record and each names the receipt it was counted off.
 - 8 of 59 enumerated migration capabilities are cross-proven on at least two independent applications and are therefore in the matrix.
 - Every artifact in this package is bound by SHA-256 to the trust manifest, and the derived documents are re-derived from the same canonical receipts at verification time.
 - The two published holdouts that did not end RED are reported with the exact outcome string their receipts carry, and both are counted in no lineage numerator.

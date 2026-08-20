@@ -402,17 +402,67 @@
       "application": ".versionless/work/react-your-spotify-1-5-0/baseline",
       "framework": "react",
       "provenanceOfStatus": "run-record",
-      "status": "not-admitted",
-      "statusReason": "run-did-not-proceed:defect",
-      "interventionCount": 0
+      "status": "proven",
+      "interventionCount": 0,
+      "stages": [
+        {
+          "name": "analyze",
+          "status": "ran"
+        },
+        {
+          "name": "ingest",
+          "status": "ran"
+        },
+        {
+          "name": "license-at-pin",
+          "status": "ran"
+        },
+        {
+          "name": "era-cell",
+          "status": "ran"
+        },
+        {
+          "name": "plan",
+          "status": "ran"
+        },
+        {
+          "name": "apply",
+          "status": "ran"
+        },
+        {
+          "name": "install",
+          "status": "ran"
+        },
+        {
+          "name": "build",
+          "status": "ran"
+        },
+        {
+          "name": "witness",
+          "status": "ran"
+        }
+      ],
+      "source": {
+        "repository": "Yooooomi/your_spotify",
+        "ref": "refs/tags/1.5.0",
+        "revision": "50f6a0d83751f0f3bd5f5d90bf0db9507313a5e9",
+        "license": "GPL-3.0",
+        "licenseSha256": "230184f60bae2feaf244f10a8bac053c8ff33a183bcc365b4d8b876d2b7f4809",
+        "basis": "run-record",
+        "basisPath": "evidence/runs/react-your-spotify-1-5-0/run-record.json"
+      },
+      "provenBoundedness": [
+        "Dependency install scripts: the install row declares the install-script policy, names 0 package(s) the lockfile marks as carrying an install script, and records npm starting 2 script(s) and skipping 0 by policy. A script npm skipped did not run in the lane this proof was taken on.",
+        "Route reach: the witness row records the replay reaching 1 of 5 declared route(s) across 1 journey(s). Every route it did not reach is unproven by this row rather than proven absent."
+      ]
     }
   ],
   "totals": {
     "applications": 24,
-    "proven": 13,
+    "proven": 14,
     "bounded": 2,
     "refused": 5,
-    "not-admitted": 4
+    "not-admitted": 3
   },
   "refusalCensus": {
     "source": "evidence/runs/operator-flows/refusal-census.json",
@@ -669,7 +719,7 @@
   ],
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "d885c7457df9b6b3a15cfd842ebd647e9b8093de5fc0d307f6b130e5f00251df",
+    "canonicalDigest": "47ab9dc92e5c4587dc23cee36cb1567d1421a72db7ab6acc97d48e7603bf6d4e",
     "authenticity": "not-established",
     "certification": "not-claimed"
   }

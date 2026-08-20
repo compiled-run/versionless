@@ -317,6 +317,375 @@ export function craBaseFromHomepage(homepage: unknown): {
 	return { base: value, unhandled: Object.freeze([]) };
 }
 
+/**
+ * The lane's TypeScript configuration.
+ *
+ * The apply stage materialises the lane by copying the application root, so a
+ * file the application references from *above* its own root does not travel
+ * with it. A create-react-app client that lives in a `client/` directory of a
+ * split repository routinely does exactly that: its `tsconfig.json` carries
+ * `"extends": "../tsconfig.json"`, and the specifier is resolved relative to
+ * the configuration file rather than to any project root, so in the lane it
+ * names a file one directory above the lane and Vite's transform stops with
+ * `Tsconfig not found <lane-parent>/tsconfig.json`.
+ *
+ * The rule this composition applies is the same one the manifest rewrite
+ * applies: a lane declares what the lane can actually resolve. An `extends`
+ * chain that reaches outside the application root is read here, while both ends
+ * are still on disk, and flattened into a lane-root configuration that is
+ * self-contained. A chain that stays inside the application root is left
+ * untouched — it travels with the copy already — and an application with no
+ * TypeScript configuration at all receives no lane file, so neither shape gains
+ * a byte it did not have.
+ */
+
+/**
+ * `tsconfig.json` is JSONC by specification: `//` and block comments and
+ * trailing commas are legal in it and are common in the corpus. Reading it with
+ * a plain `JSON.parse` would report a perfectly ordinary configuration as
+ * unreadable, so the comment and trailing-comma forms are stripped first.
+ * Nothing else about the text is interpreted.
+ */
+export function parseTsconfigSource(source: string): Record<string, unknown> | null {
+	let stripped = '';
+	let inString = false;
+	let escaped = false;
+	let inLineComment = false;
+	let inBlockComment = false;
+	for (let index = 0; index < source.length; index += 1) {
+		const character = source[index] as string;
+		const next = source[index + 1];
+		if (inLineComment) {
+			if (character === '\n') {
+				inLineComment = false;
+				stripped += character;
+			}
+			continue;
+		}
+		if (inBlockComment) {
+			if (character === '*' && next === '/') {
+				inBlockComment = false;
+				index += 1;
+			}
+			continue;
+		}
+		if (inString) {
+			stripped += character;
+			if (escaped) escaped = false;
+			else if (character === '\\') escaped = true;
+			else if (character === '"') inString = false;
+			continue;
+		}
+		if (character === '"') {
+			inString = true;
+			stripped += character;
+			continue;
+		}
+		if (character === '/' && next === '/') {
+			inLineComment = true;
+			index += 1;
+			continue;
+		}
+		if (character === '/' && next === '*') {
+			inBlockComment = true;
+			index += 1;
+			continue;
+		}
+		stripped += character;
+	}
+	try {
+		const parsed = JSON.parse(stripped.replace(/,(\s*[}\]])/g, '$1')) as unknown;
+		return parsed !== null && typeof parsed === 'object' && !Array.isArray(parsed)
+			? (parsed as Record<string, unknown>)
+			: null;
+	} catch {
+		return null;
+	}
+}
+
+/** A configuration cycle or a pathological chain stops here rather than hangs. */
+const TSCONFIG_CHAIN_LIMIT = 16;
+
+/** `compilerOptions` whose values TypeScript resolves as paths. */
+const TSCONFIG_PATH_OPTIONS: readonly string[] = Object.freeze([
+	'baseUrl',
+	'declarationDir',
+	'outDir',
+	'outFile',
+	'paths',
+	'rootDir',
+	'rootDirs',
+	'tsBuildInfoFile',
+	'typeRoots',
+]);
+
+/** Top-level fields whose values TypeScript resolves as paths. */
+const TSCONFIG_PATH_FIELDS: readonly string[] = Object.freeze([
+	'exclude',
+	'files',
+	'include',
+	'references',
+]);
+
+export type TsconfigSegment = Readonly<{
+	/** The `extends` specifier that reached this segment; null for the app's own. */
+	specifier: string | null;
+	/** Where it was read from, or null for a specifier this flow does not resolve. */
+	file: string | null;
+	/** True when the segment is inside the application root, so the copy carries it. */
+	travels: boolean;
+	/** Its parsed contents, or null when it could not be read. */
+	contents: Record<string, unknown> | null;
+}>;
+
+export type TsconfigChain = Readonly<{
+	name: string;
+	/** The application root the chain is read against. */
+	root: string;
+	/** The application's own configuration source, verbatim. */
+	source: string;
+	/** Outermost ancestor first, the application's own configuration last. */
+	segments: readonly TsconfigSegment[];
+}>;
+
+/** The specifiers an `extends` declares; TypeScript 5 allows an array of them. */
+function extendsSpecifiers(value: unknown): readonly string[] {
+	if (typeof value === 'string') return [value];
+	if (Array.isArray(value))
+		return value.filter((entry): entry is string => typeof entry === 'string');
+	return [];
+}
+
+/** True for a specifier TypeScript resolves as a path rather than through node_modules. */
+function isPathSpecifier(specifier: string): boolean {
+	return (
+		specifier === '.' ||
+		specifier === '..' ||
+		specifier.startsWith('./') ||
+		specifier.startsWith('../') ||
+		path.isAbsolute(specifier)
+	);
+}
+
+/** The file a path-shaped `extends` names, under TypeScript's own candidates. */
+async function resolveExtendsFile(
+	fromDirectory: string,
+	specifier: string,
+): Promise<string | null> {
+	const base = path.resolve(fromDirectory, specifier);
+	for (const candidate of [base, `${base}.json`, path.join(base, 'tsconfig.json')])
+		if (await fileExists(candidate)) return candidate;
+	return null;
+}
+
+/**
+ * Read the application's TypeScript configuration and everything it extends.
+ *
+ * Returns null when the application declares none, which is the create-react-app
+ * JavaScript shape and gets no lane file.
+ */
+export async function readTsconfigChain(tree: string, name: string): Promise<TsconfigChain | null> {
+	const own = path.join(tree, name);
+	let source: string;
+	try {
+		source = await readFile(own, 'utf8');
+	} catch {
+		return null;
+	}
+	const root = path.resolve(tree);
+	const inside = (file: string): boolean => {
+		const relative = path.relative(root, path.resolve(file));
+		return relative !== '' && !relative.startsWith('..') && !path.isAbsolute(relative);
+	};
+	const seen = new Set<string>();
+	const walk = async (
+		file: string,
+		specifier: string | null,
+		text: string | null,
+	): Promise<TsconfigSegment[]> => {
+		const resolved = path.resolve(file);
+		const segment = (contents: Record<string, unknown> | null): TsconfigSegment =>
+			Object.freeze({ specifier, file: resolved, travels: inside(resolved), contents });
+		if (seen.has(resolved) || seen.size >= TSCONFIG_CHAIN_LIMIT) return [segment(null)];
+		seen.add(resolved);
+		let raw = text;
+		if (raw === null)
+			try {
+				raw = await readFile(resolved, 'utf8');
+			} catch {
+				raw = null;
+			}
+		const contents = raw === null ? null : parseTsconfigSource(raw);
+		const ancestors: TsconfigSegment[] = [];
+		for (const declared of extendsSpecifiers(contents?.extends)) {
+			if (!isPathSpecifier(declared)) {
+				/** A bare specifier resolves through node_modules, which the lane installs. */
+				ancestors.push(
+					Object.freeze({
+						specifier: declared,
+						file: null,
+						travels: true,
+						contents: null,
+					}),
+				);
+				continue;
+			}
+			const target = await resolveExtendsFile(path.dirname(resolved), declared);
+			if (target === null) {
+				ancestors.push(
+					Object.freeze({
+						specifier: declared,
+						file: null,
+						travels: false,
+						contents: null,
+					}),
+				);
+				continue;
+			}
+			ancestors.push(...(await walk(target, declared, null)));
+		}
+		return [...ancestors, segment(contents)];
+	};
+	return Object.freeze({
+		name,
+		root,
+		source,
+		segments: Object.freeze(await walk(own, null, source)),
+	});
+}
+
+export type TsconfigFlattening = Readonly<{
+	/** The lane configuration to write, or null when the chain travels as it is. */
+	source: string | null;
+	changes: readonly string[];
+	unhandled: readonly string[];
+	/** What the whole chain resolves `compilerOptions` to. */
+	compilerOptions: Readonly<Record<string, unknown>>;
+}>;
+
+/**
+ * Flatten an `extends` chain that reaches outside the application root.
+ *
+ * The merge is TypeScript's own: `compilerOptions` are merged field by field
+ * with the extending configuration winning, and every other top-level field is
+ * replaced outright rather than merged. Order is preserved so a configuration
+ * that only ever extended a sibling reads the way it was written.
+ *
+ * A chain this flow cannot read end to end is **not** flattened. A dangling
+ * `extends`, an unreadable ancestor, or a bare specifier sitting in the middle
+ * of the chain each produce a named unhandled finding and leave the application's
+ * own file exactly as the copy carried it; a lane that built because a
+ * configuration was quietly rewritten would be worse than one that did not.
+ */
+export function flattenTsconfigChain(chain: TsconfigChain): TsconfigFlattening {
+	const own = chain.segments[chain.segments.length - 1] as TsconfigSegment;
+	const label = (segment: TsconfigSegment): string =>
+		segment.file === null
+			? (segment.specifier ?? chain.name)
+			: path.relative(chain.root, segment.file);
+	const merged: Record<string, unknown> = {};
+	let compilerOptions: Record<string, unknown> = {};
+	for (const segment of chain.segments) {
+		if (segment.contents === null) continue;
+		for (const [key, value] of Object.entries(segment.contents)) {
+			if (key === 'extends') continue;
+			if (
+				key === 'compilerOptions' &&
+				value !== null &&
+				typeof value === 'object' &&
+				!Array.isArray(value)
+			) {
+				/** Claim the field's position on first sight so the order is the author's. */
+				merged.compilerOptions = compilerOptions;
+				compilerOptions = { ...compilerOptions, ...(value as Record<string, unknown>) };
+				continue;
+			}
+			merged[key] = value;
+		}
+	}
+	if (Object.hasOwn(merged, 'compilerOptions')) merged.compilerOptions = compilerOptions;
+
+	const unhandled: string[] = [];
+	const outside = chain.segments.filter((segment) => segment.file !== null && !segment.travels);
+	const dangling = chain.segments.filter((segment) => segment.file === null && !segment.travels);
+	const unreadable = chain.segments.filter(
+		(segment) => segment.file !== null && segment.contents === null,
+	);
+	const bare = chain.segments.filter((segment) => segment.file === null && segment.travels);
+	for (const segment of dangling)
+		unhandled.push(
+			`${chain.name} extends ${String(segment.specifier)}, which names no file this flow could find. The lane carries the declaration verbatim and nothing here resolves it.`,
+		);
+	if (outside.length === 0)
+		return Object.freeze({
+			source: null,
+			changes: Object.freeze([]),
+			unhandled: Object.freeze(unhandled),
+			compilerOptions: Object.freeze(compilerOptions),
+		});
+
+	const reached = outside.map((segment) => label(segment)).join(', ');
+	if (unreadable.length > 0) {
+		unhandled.push(
+			`${chain.name} extends ${reached}, which lies outside the application root and is not copied into the lane, and this flow could not read ${unreadable.map((segment) => label(segment)).join(', ')} as a TypeScript configuration. The chain is left as written rather than flattened from a partial reading.`,
+		);
+		return Object.freeze({
+			source: null,
+			changes: Object.freeze([]),
+			unhandled: Object.freeze(unhandled),
+			compilerOptions: Object.freeze(compilerOptions),
+		});
+	}
+	const leadingBare = bare.length === 1 && chain.segments[0] === bare[0];
+	if (bare.length > 0 && !leadingBare) {
+		unhandled.push(
+			`${chain.name} extends ${reached} from outside the application root and the chain also extends the package ${bare.map((segment) => String(segment.specifier)).join(', ')} at a position this flow cannot preserve while flattening. The chain is left as written.`,
+		);
+		return Object.freeze({
+			source: null,
+			changes: Object.freeze([]),
+			unhandled: Object.freeze(unhandled),
+			compilerOptions: Object.freeze(compilerOptions),
+		});
+	}
+	for (const segment of outside) {
+		const inherited = Object.keys(
+			(segment.contents?.compilerOptions as Record<string, unknown> | undefined) ?? {},
+		).filter(
+			(key) =>
+				TSCONFIG_PATH_OPTIONS.includes(key) &&
+				!Object.hasOwn(
+					(own.contents?.compilerOptions as Record<string, unknown> | undefined) ?? {},
+					key,
+				),
+		);
+		const fields = Object.keys(segment.contents ?? {}).filter(
+			(key) => TSCONFIG_PATH_FIELDS.includes(key) && !Object.hasOwn(own.contents ?? {}, key),
+		);
+		if (inherited.length === 0 && fields.length === 0) continue;
+		unhandled.push(
+			`${label(segment)} declares ${[...inherited.map((key) => `compilerOptions.${key}`), ...fields].sort().join(', ')}, whose values TypeScript resolves relative to ${label(segment)}'s own directory. That directory is outside the lane, so the flattened lane configuration carries those values unchanged against a different directory rather than rebasing them.`,
+		);
+	}
+
+	const flattened: Record<string, unknown> = leadingBare
+		? { extends: String((bare[0] as TsconfigSegment).specifier), ...merged }
+		: merged;
+	const changes = [
+		`extends ${reached} flattened into this file: the chain reaches outside the application root, which the apply stage does not copy into the lane, so the lane's TypeScript configuration is composed self-contained instead of naming a file one directory above the lane`,
+	];
+	if (leadingBare)
+		changes.push(
+			`extends ${String((bare[0] as TsconfigSegment).specifier)} kept: a package specifier resolves through the lane's own node_modules`,
+		);
+	return Object.freeze({
+		source: `${JSON.stringify(flattened, null, manifestIndent(chain.source))}\n`,
+		changes: Object.freeze(changes),
+		unhandled: Object.freeze(unhandled),
+		compilerOptions: Object.freeze(compilerOptions),
+	});
+}
+
 /** The first file below `directory` carrying one of `extensions`, or null. */
 async function findByExtension(
 	directory: string,
@@ -448,16 +817,26 @@ export async function composeReactLane(options: ReactLaneOptions): Promise<LaneC
 			`The application imports ${extension} stylesheets (first at ${path.relative(tree, found)}). create-react-app supplied the ${preprocessor} preprocessor; the generated lane configuration declares neither the preprocessor nor a pin for it.`,
 		);
 	}
+	const configurationFiles: LaneFile[] = [];
 	for (const name of ['tsconfig.json', 'jsconfig.json']) {
-		const configuration = await readJsonFile(path.join(tree, name));
-		const compilerOptions = configuration?.compilerOptions as
-			| Record<string, unknown>
-			| undefined;
-		if (compilerOptions === undefined) continue;
-		if (compilerOptions.baseUrl !== undefined || compilerOptions.paths !== undefined)
+		const chain = await readTsconfigChain(tree, name);
+		if (chain === null) continue;
+		const flattened = flattenTsconfigChain(chain);
+		unhandled.push(...flattened.unhandled);
+		const { baseUrl, paths } = flattened.compilerOptions;
+		if (baseUrl !== undefined || paths !== undefined)
 			unhandled.push(
 				`${name} declares module resolution aliases (baseUrl or paths). create-react-app honoured them through its own webpack resolver; the generated lane configuration declares no matching resolve.alias.`,
 			);
+		if (flattened.source === null) continue;
+		configurationFiles.push(
+			Object.freeze({
+				path: name,
+				source: flattened.source,
+				sha256: sha256(flattened.source),
+				changes: flattened.changes,
+			}),
+		);
 	}
 	for (const name of UNREAD_ENVIRONMENT_FILES)
 		if (await fileExists(path.join(tree, name)))
@@ -512,6 +891,7 @@ export async function composeReactLane(options: ReactLaneOptions): Promise<LaneC
 				sha256: sha256(rewrite.source),
 				changes: rewrite.changes,
 			}),
+			...configurationFiles,
 		]),
 		unhandled: Object.freeze(unhandled),
 		declaredDifferences: Object.freeze(declaredDifferences),
