@@ -548,7 +548,7 @@
 			"stage": "build",
 			"stageBasis": "the build stage runs the lane build through this module.",
 			"file": "packages/cli/src/operator/build.ts",
-			"line": 52,
+			"line": 61,
 			"enclosing": "planLaneBuild"
 		},
 		{
@@ -565,7 +565,7 @@
 			"stage": "build",
 			"stageBasis": "the build stage runs the lane build through this module.",
 			"file": "packages/cli/src/operator/build.ts",
-			"line": 63,
+			"line": 72,
 			"enclosing": "planLaneBuild"
 		},
 		{
@@ -583,8 +583,8 @@
 			"stage": "build",
 			"stageBasis": "the build stage runs the lane build through this module.",
 			"file": "packages/cli/src/operator/build.ts",
-			"line": 71,
-			"enclosing": "planLaneBuild"
+			"line": 103,
+			"enclosing": "viteLaneOutDirectory"
 		},
 		{
 			"code": "pipeline.build.build",
@@ -601,7 +601,7 @@
 			"stage": "build",
 			"stageBasis": "the build stage runs the lane build through this module.",
 			"file": "packages/cli/src/operator/build.ts",
-			"line": 147,
+			"line": 174,
 			"enclosing": "runLaneBuild"
 		},
 		{

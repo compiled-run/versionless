@@ -4,7 +4,7 @@
 	"outcome": "proceeded",
 	"exitCode": 0,
 	"application": ".versionless/work/react-flame-v2-4-0/baseline",
-	"lane": "../../../../../var/folders/pt/xbq_fv915rx9wtnmww8npc0w0000gn/T/tmp.mKAhz9yRYU/lane",
+	"lane": "../../../../../var/folders/pt/xbq_fv915rx9wtnmww8npc0w0000gn/T/tmp.C2xr2iWnbl/lane",
 	"roots": {
 		"source": ".versionless/work/react-flame-v2-4-0/baseline",
 		"frontend": ".versionless/work/react-flame-v2-4-0/baseline/client",
@@ -91,8 +91,8 @@
 					"A dependency the cell has no reading for is reported `unknown`. `unknown` is not `supported` and it is not `unsupported`."
 				]
 			},
-			"startedAt": "2026-08-18T00:04:05.303Z",
-			"endedAt": "2026-08-18T00:04:05.304Z"
+			"startedAt": "2026-08-20T10:31:22.994Z",
+			"endedAt": "2026-08-20T10:31:22.995Z"
 		},
 		{
 			"name": "ingest",
@@ -256,8 +256,8 @@
 					"A frontend root read by lineage is the one directory among those considered whose manifest declares a framework this stage reads. The basis names every directory considered and what each of their manifests declared; nothing here establishes that the directory chosen is the one its authors would call the application."
 				]
 			},
-			"startedAt": "2026-08-18T00:04:05.304Z",
-			"endedAt": "2026-08-18T00:04:05.336Z"
+			"startedAt": "2026-08-20T10:31:22.995Z",
+			"endedAt": "2026-08-20T10:31:23.025Z"
 		},
 		{
 			"name": "license-at-pin",
@@ -309,8 +309,8 @@
 					"`identifierSource: declared` means an operator supplied the identifier. This stage did not read it and does not corroborate it."
 				]
 			},
-			"startedAt": "2026-08-18T00:04:05.336Z",
-			"endedAt": "2026-08-18T00:04:05.337Z"
+			"startedAt": "2026-08-20T10:31:23.025Z",
+			"endedAt": "2026-08-20T10:31:23.025Z"
 		},
 		{
 			"name": "era-cell",
@@ -478,6 +478,14 @@
 							"platform": "darwin",
 							"architecture": "arm64",
 							"supplier": "workspace-runtime-cache",
+							"location": ".versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64"
+						},
+						{
+							"version": "v16.20.2",
+							"major": 16,
+							"platform": "darwin",
+							"architecture": "arm64",
+							"supplier": "workspace-runtime-cache",
 							"location": ".versionless/cache/angular-eshop-webspa-netcore2-2-target/node-v16.20.2-darwin-arm64"
 						},
 						{
@@ -552,8 +560,8 @@
 					"Satisfaction of a declared range is not corroborated by anything else this tree says. Where other sources name majors, they are listed above with what each literally says, and this stage picks from none of them."
 				]
 			},
-			"startedAt": "2026-08-18T00:04:05.337Z",
-			"endedAt": "2026-08-18T00:04:05.354Z"
+			"startedAt": "2026-08-20T10:31:23.025Z",
+			"endedAt": "2026-08-20T10:31:23.041Z"
 		},
 		{
 			"name": "plan",
@@ -630,8 +638,8 @@
 					]
 				}
 			},
-			"startedAt": "2026-08-18T00:04:05.354Z",
-			"endedAt": "2026-08-18T00:04:05.355Z"
+			"startedAt": "2026-08-20T10:31:23.041Z",
+			"endedAt": "2026-08-20T10:31:23.042Z"
 		},
 		{
 			"name": "apply",
@@ -704,8 +712,8 @@
 					]
 				}
 			},
-			"startedAt": "2026-08-18T00:04:05.355Z",
-			"endedAt": "2026-08-18T00:04:05.401Z"
+			"startedAt": "2026-08-20T10:31:23.042Z",
+			"endedAt": "2026-08-20T10:31:23.086Z"
 		},
 		{
 			"name": "install",
@@ -721,8 +729,10 @@
 					"allowRemoteTarballs": true,
 					"allowInstallScripts": true,
 					"skipInstallScripts": false,
-					"allowPeerConflicts": true
+					"allowPeerConflicts": true,
+					"allowForeignLockfile": false
 				},
+				"foreignLockfileDisregarded": null,
 				"remoteTarballDependencies": [],
 				"installScriptPackages": [
 					"node_modules/core-js",
@@ -741,15 +751,38 @@
 				],
 				"exitCode": 0,
 				"installedPackages": 117,
+				"sandbox": {
+					"home": "/var/folders/pt/xbq_fv915rx9wtnmww8npc0w0000gn/T/tmp.C2xr2iWnbl/lane/.install-home",
+					"strippedVariables": [
+						"CLAUDE_CODE_EXECPATH (names the invoking user's home)",
+						"FNM_DIR (names the invoking user's home)",
+						"FNM_MULTISHELL_PATH (names the invoking user's home)",
+						"HOME (replaced with a lane-owned directory)",
+						"OLDPWD (names the invoking user's home)",
+						"PNPM_HOME (names the invoking user's home)",
+						"PWD (names the invoking user's home)",
+						"USER_ZDOTDIR (names the invoking user's home)",
+						"ZDOTDIR (names the invoking user's home)",
+						"_ (names the invoking user's home)"
+					]
+				},
+				"boundary": {
+					"root": "/Users/jacksm5pro/dev/open-source/versionless",
+					"pathsObservedBefore": 24,
+					"pathsObservedAfter": 24,
+					"writesOutsideLane": []
+				},
 				"notEstablished": [
 					"An install resolves a closure. It is not a build, and it is not evidence that the closure works: nothing here establishes that any package in it compiles or runs.",
 					"The policy findings are read from the lockfile. A lockfile that does not mark an install script, or that resolves through a mirror this reading does not recognise, yields a finding this stage did not make.",
 					"`installScriptPackages` counts packages the lockfile declares an install script for. Whether a given script would have built anything on this host is not established here.",
+					"The sandbox is an environment and a working directory, not a container. It moves every path npm resolves from the environment into the lane and drops inherited variables that name the user’s home or this checkout; it does not stop a script that hard-codes an absolute path, and `PATH` is passed through so the child can find its own node. Writes outside the lane are therefore *detected* — the checkout’s `.git/hooks` and its top level are hashed before and after — and refused by name, not prevented.",
+					"The boundary reading watches two places: the top level of the checkout and `.git/hooks`. A write anywhere else outside the lane — a sibling directory, a deeper path in the checkout, another checkout on this host — is not observed here, and `writesOutsideLane: []` does not establish that none happened.",
 					"`closure: resolve` means the lane manifest declares a build toolchain the recorded lockfile predates, so npm resolved rather than replayed. The application’s own pins still come from the lockfile; what was newly resolved is what the manifest rewrite added, and that resolution is not a pin this repository recorded."
 				]
 			},
-			"startedAt": "2026-08-18T00:04:05.401Z",
-			"endedAt": "2026-08-18T00:04:07.773Z"
+			"startedAt": "2026-08-20T10:31:23.086Z",
+			"endedAt": "2026-08-20T10:31:26.977Z"
 		},
 		{
 			"name": "build",
@@ -774,8 +807,8 @@
 					"`outputFiles` counts files below the build directory. It is a count, not a comparison against any previous build."
 				]
 			},
-			"startedAt": "2026-08-18T00:04:07.773Z",
-			"endedAt": "2026-08-18T00:04:09.101Z"
+			"startedAt": "2026-08-20T10:31:26.977Z",
+			"endedAt": "2026-08-20T10:31:28.298Z"
 		},
 		{
 			"name": "witness",
@@ -785,21 +818,21 @@
 				"journeySource": "synthesized-crawl",
 				"replayabilityRatio": 1,
 				"journeysRun": 1,
-				"digest": "67299c2e65abe5d2b39255210d189feee6220f0dd660a83d50aea3b159b9d0a1",
+				"digest": "50b1e155ad4397d87ed9ab106ce78dbd9b235cff6da0c373ea2ec54999aa461c",
 				"notEstablished": [
 					"A witnessed lane is a lane whose declared journeys were replayed once each on this host, serialized. Nothing here establishes an outcome under concurrent load.",
 					"Where the journeys were synthesized, they were derived from the application own end-to-end suite or from a bounded loopback crawl. The replayability ratio in the record is a count of derived journeys that name a route to start from, not a measure of coverage."
 				]
 			},
-			"startedAt": "2026-08-18T00:04:09.101Z",
-			"endedAt": "2026-08-18T00:04:10.219Z"
+			"startedAt": "2026-08-20T10:31:28.298Z",
+			"endedAt": "2026-08-20T10:31:29.822Z"
 		}
 	],
 	"report": {
 		"status": "emitted",
 		"slot": "evidence/trust/current/coverage-report.json",
 		"path": "evidence/trust/current/coverage-report.json",
-		"digest": "65b247d1272c9bfa5b32a276da86fd7543983db5c995c24244b1d0fcc79f6d9a"
+		"digest": "1807d3cdf6f30245a8c847fbbd875709289456547e9604be94f0ab0f1f37cb41"
 	},
 	"notEstablished": [
 		"A stage recorded `ran` returned its own record. What that record establishes is what that stage states, and no more: this row adds no reading of its own on top of it.",

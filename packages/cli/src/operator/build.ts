@@ -40,10 +40,19 @@ export type BuildPlan = Readonly<{
 	command: readonly string[];
 	script: string;
 	configuration: string;
+	/** Where the identified lane says its build lands, relative to the lane. */
 	outDirectory: string;
 }>;
 
-/** Decide the build command for a lane, or refuse by name. */
+/**
+ * Decide the build command for a lane and read where its output lands, or
+ * refuse by name.
+ *
+ * `outDirectory` is a reading taken from the lane the gates just identified,
+ * not a property of this stage. Today one lane kind is recognised and its
+ * reading is the constant its own generated configuration was written with;
+ * the field carries whatever the recognised lane answers.
+ */
 export async function planLaneBuild(
 	laneDir: string,
 	configuration = 'vite.config.ts',
@@ -67,6 +76,29 @@ export async function planLaneBuild(
 			stage: 'build',
 			origin: 'pipeline',
 		});
+	const outDirectory = await viteLaneOutDirectory(laneDir, configuration);
+	return Object.freeze({
+		command: Object.freeze(['npm', 'run', 'build']),
+		script,
+		configuration,
+		outDirectory,
+	});
+}
+
+/**
+ * Where a Vite lane's build lands, asked of the lane rather than assumed of
+ * every lane.
+ *
+ * The plan used to write `LANE_BUILD_DIRECTORY` in directly, which was true of
+ * the only lane this stage can build and said nothing about the lane itself. It
+ * is a reading now: the lane is identified by the configuration it carries, and
+ * that identification is what answers where the output goes. The answer for a
+ * Vite lane is still the constant, and deliberately so — `lane.ts:486` wrote
+ * that same constant into the generated configuration this gate just found, so
+ * reading the lane and reading the constant are one fact. It is imported rather
+ * than repeated here so the two cannot drift apart.
+ */
+async function viteLaneOutDirectory(laneDir: string, configuration: string): Promise<string> {
 	if (!(await fileInLane(laneDir, configuration)))
 		refuse({
 			code: 'build.configuration-absent',
@@ -74,12 +106,7 @@ export async function planLaneBuild(
 			stage: 'build',
 			origin: 'pipeline',
 		});
-	return Object.freeze({
-		command: Object.freeze(['npm', 'run', 'build']),
-		script,
-		configuration,
-		outDirectory: LANE_BUILD_DIRECTORY,
-	});
+	return LANE_BUILD_DIRECTORY;
 }
 
 async function fileInLane(laneDir: string, file: string): Promise<boolean> {

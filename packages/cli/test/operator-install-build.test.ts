@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os';
 import { promisify } from 'node:util';
 import * as path from 'pathe';
 import { describe, expect, it } from 'vitest';
-import { planLaneBuild } from '../src/operator/build.ts';
+import { planLaneBuild, runLaneBuild } from '../src/operator/build.ts';
 import {
 	DEFAULT_INSTALL_POLICY,
 	INSTALL_HOME_DIRECTORY,
@@ -686,6 +686,54 @@ describe('build stage', () => {
 			await rm(directory, { recursive: true, force: true });
 		}
 	});
+
+	/**
+	 * `outDirectory` is a reading the plan takes off the lane it identified, not
+	 * a constant the stage writes in. For a Vite lane the reading is still the
+	 * constant, because `composeLaneViteConfig` wrote that same constant into
+	 * the configuration the gate just found — so the assertion is against the
+	 * exported symbol rather than against the string `'build-vite'`. A test that
+	 * spelled the value out would keep passing if the two ever drifted apart,
+	 * which is the one failure this seam exists to prevent.
+	 */
+	it('reads the Vite lane’s output directory from the constant its own configuration was written with', async () => {
+		const directory = await temporaryDirectory();
+		try {
+			await mkdir(path.join(directory, 'node_modules'), { recursive: true });
+			await writeFile(path.join(directory, 'vite.config.ts'), '\n');
+			await writeFile(
+				path.join(directory, 'package.json'),
+				'{"name":"lane","version":"0.0.0","private":true,"scripts":{"build":"node build.mjs"}}\n',
+			);
+			/** Stands in for the build tool: it emits where the plan says it will. */
+			await writeFile(
+				path.join(directory, 'build.mjs'),
+				[
+					"import { mkdir, writeFile } from 'node:fs/promises';",
+					`const out = ${JSON.stringify(LANE_BUILD_DIRECTORY)};`,
+					"await mkdir(`${out}/assets`, { recursive: true });",
+					"await writeFile(`${out}/index.html`, '<!doctype html>\\n');",
+					"await writeFile(`${out}/assets/app.js`, 'export {};\\n');",
+					'',
+				].join('\n'),
+			);
+			const planned = await planLaneBuild(directory);
+			expect(planned.outDirectory).toBe(LANE_BUILD_DIRECTORY);
+			/** The record carries the plan's reading through, unchanged. */
+			const record = await runLaneBuild(directory);
+			expect(record.ran).toBe(true);
+			expect(record.exitCode).toBe(0);
+			expect(record.command).toEqual(['npm', 'run', 'build']);
+			expect(record.script).toBe('node build.mjs');
+			expect(record.configuration).toBe('vite.config.ts');
+			expect(record.outDirectory).toBe(planned.outDirectory);
+			expect(record.outDirectory).toBe(LANE_BUILD_DIRECTORY);
+			/** And the count is taken below that reading, not below a guess. */
+			expect(record.outputFiles).toBe(2);
+		} finally {
+			await rm(directory, { recursive: true, force: true });
+		}
+	}, 120_000);
 });
 
 describe('the measured lane install and build record', () => {

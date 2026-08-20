@@ -2,12 +2,14 @@
 	"schemaVersion": "versionless.intervention-count.v1",
 	"flow": "intervention-count",
 	"application": ".versionless/work/react-flame-v2-4-0/baseline",
-	"lane": "../../../../../var/folders/pt/xbq_fv915rx9wtnmww8npc0w0000gn/T/tmp.mKAhz9yRYU/lane",
+	"lane": "../../../../../var/folders/pt/xbq_fv915rx9wtnmww8npc0w0000gn/T/tmp.C2xr2iWnbl/lane",
 	"runRecord": "evidence/runs/react-flame-v2-4-0/run-record.json",
 	"writeSet": [
-		"../../../../../var/folders/pt/xbq_fv915rx9wtnmww8npc0w0000gn/T/tmp.mKAhz9yRYU/lane",
+		"../../../../../private/var/folders/pt/xbq_fv915rx9wtnmww8npc0w0000gn/T/tmp.C2xr2iWnbl/lane",
 		"evidence/runs/react-flame-v2-4-0/run-record.json",
-		"evidence/runs/react-flame-v2-4-0/run-record.json.interventions.json"
+		"evidence/runs/react-flame-v2-4-0/run-record.json.interventions.json",
+		".versionless/stage/witness-real-app",
+		"evidence/runs/witness-synthesized"
 	],
 	"invocations": 1,
 	"stdinReads": 0,
@@ -24,7 +26,7 @@
 				"run",
 				".versionless/work/react-flame-v2-4-0/baseline",
 				"--out",
-				"/var/folders/pt/xbq_fv915rx9wtnmww8npc0w0000gn/T/tmp.mKAhz9yRYU/lane",
+				"/var/folders/pt/xbq_fv915rx9wtnmww8npc0w0000gn/T/tmp.C2xr2iWnbl/lane",
 				"--record",
 				"evidence/runs/react-flame-v2-4-0/run-record.json",
 				"--allow-install-scripts",
@@ -36,8 +38,8 @@
 			"hang": false,
 			"stdoutBytes": 1829,
 			"stderrBytes": 0,
-			"startedAt": "2026-08-18T00:04:04.991Z",
-			"endedAt": "2026-08-18T00:04:10.232Z"
+			"startedAt": "2026-08-20T10:31:22.689Z",
+			"endedAt": "2026-08-20T10:31:29.836Z"
 		}
 	],
 	"observation": {
@@ -47,8 +49,8 @@
 		},
 		"stageBudgetMs": 900000,
 		"trackedPathsSource": "git",
-		"pathsObservedBefore": 1819,
-		"pathsObservedAfter": 2036,
+		"pathsObservedBefore": 3740,
+		"pathsObservedAfter": 4323,
 		"authoringHomes": [
 			"fixtures/**",
 			"packages/cli/src/fixture/**",
