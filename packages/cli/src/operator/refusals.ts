@@ -57,6 +57,13 @@ export const PIPELINE_STAGES = [
 	 * an application whose own suite and served lane yield nothing to replay.
 	 */
 	'witness-synthesize',
+	/**
+	 * Replaying a journey against a served lane in a real browser. It is a stage
+	 * of its own rather than part of `witness-synthesize` because its refusals
+	 * are about this host — no browser is provisioned here — and
+	 * `witness-synthesize` refuses about the application's own suite.
+	 */
+	'witness',
 ] as const;
 
 export type PipelineStage = (typeof PIPELINE_STAGES)[number];

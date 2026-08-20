@@ -566,6 +566,37 @@ async function localResource(
 	return { path: relative.split(path.sep).join('/'), sha256: sha256(await readFile(file)) };
 }
 
+/** The name a tree without the scanned deployment refuses under. */
+export const SCRIPT_SURFACE_SOURCE_ABSENT = 'trust.script-surface-source-absent';
+
+/**
+ * The refusal a tree that does not carry the scanned deployment raises.
+ *
+ * The script surface is read from built lanes under `.versionless/work`, which
+ * is gitignored: a fresh clone has the committed declaration and the emitted
+ * evidence but not the trees they were read from. Before this class that showed
+ * up as a bare ENOENT from `readFile`, which took `trust:verify`,
+ * `report:coverage --verify-only` and `supported-matrix` down with it in every
+ * clean checkout. A missing source is a named condition a caller can decide
+ * about, not a crash.
+ */
+export class ScriptSurfaceSourceAbsentError extends Error {
+	readonly missingPath: string;
+
+	constructor(missingPath: string) {
+		super(
+			`${SCRIPT_SURFACE_SOURCE_ABSENT}: ${missingPath} is not in this tree, so the script surface cannot be re-read from the deployment it was scanned from. Build the lane, or verify the emitted surface against the committed declaration in trust/script-surface.json instead.`,
+		);
+		this.name = 'ScriptSurfaceSourceAbsentError';
+		this.missingPath = missingPath;
+	}
+}
+
+/** The refusal an error carries, or `null` when the error is something else. */
+export function scriptSurfaceSourceAbsent(error: unknown): ScriptSurfaceSourceAbsentError | null {
+	return error instanceof ScriptSurfaceSourceAbsentError ? error : null;
+}
+
 export async function scanStaticEntrypoint(options: {
 	rootDir: string;
 	entrypointPath: string;
@@ -575,7 +606,11 @@ export async function scanStaticEntrypoint(options: {
 }): Promise<{ scripts: ScriptRecord[]; resources: ResourceRecord[] }> {
 	if (!digestPattern.test(options.entrypointSha256)) throw new Error('Entrypoint is unhashed');
 	const file = path.resolve(options.rootDir, options.entrypointPath);
-	const body = await readFile(file);
+	const body = await readFile(file).catch((error: unknown) => {
+		if ((error as NodeJS.ErrnoException).code === 'ENOENT')
+			throw new ScriptSurfaceSourceAbsentError(options.entrypointPath);
+		throw error;
+	});
 	if (sha256(body) !== options.entrypointSha256) throw new Error('Entrypoint SHA-256 mismatch');
 	const tags = staticTags(body.toString('utf8'));
 	const scripts: ScriptRecord[] = [];
@@ -695,6 +730,107 @@ export function assertNoIntroducedExternalScripts(
 	);
 	if (target.some((item) => item.kind === 'external' && !legacyExternal.has(item.source)))
 		throw new Error('Target introduces an external script');
+}
+
+/**
+ * Verify an emitted script surface in a tree that no longer carries the builds.
+ *
+ * This is the reading a fresh clone can actually take, and it is deliberately
+ * narrower than {@link verifyScriptSurface}. Two halves are checked, and the
+ * boundary between them is the point of the function.
+ *
+ * The network half is re-derived in full: the per-lane receipt is verified by
+ * digest, its journey artifact is re-hashed, its observations are re-filtered,
+ * and the result must equal what the emitted record says — the same computation
+ * `verifyScriptSurface` performs, from the same committed evidence, with
+ * nothing borrowed from the emitted document.
+ *
+ * The static half is *not* re-derived, because the deployment it was read from
+ * is not here. It is instead reconciled with `trust/script-surface.json`, a
+ * separately committed declaration: entrypoint path and digest, receipt path
+ * and digest, and the external scripts and resources, which the declaration
+ * spells literally. The local script and resource digests are the emitted
+ * record's own and are re-checked by nothing here. A caller must not read this
+ * as a re-derivation of the static surface; it is a consistency check against a
+ * second committed file, which is a weaker claim and is recorded as one.
+ */
+export async function verifyScriptSurfaceAgainstDeclaration(
+	emitted: ScriptSurface,
+	options: {
+		rootDir?: string;
+		configPath?: string;
+		environment?: NodeJS.ProcessEnv;
+	} = {},
+): Promise<void> {
+	const environment = options.environment ?? process.env;
+	if (environment.VERSIONLESS_NETWORK_MODE !== 'offline')
+		throw new Error('Script-surface verification requires VERSIONLESS_NETWORK_MODE=offline');
+	const root = path.resolve(options.rootDir ?? '.');
+	const configPath = path.resolve(root, options.configPath ?? 'trust/script-surface.json');
+	const config = parseConfig(JSON.parse(await readFile(configPath, 'utf8')));
+	if (emitted.schemaVersion !== config.schemaVersion)
+		throw new Error('Emitted script surface and its declaration disagree on the schema');
+	if (emitted.verticals.length !== config.verticals.length)
+		throw new Error('Emitted script surface and its declaration disagree on the vertical count');
+	for (const [index, vertical] of config.verticals.entries()) {
+		const emittedVertical = emitted.verticals[index];
+		if (emittedVertical === undefined || emittedVertical.id !== vertical.id)
+			throw new Error(`Emitted script surface is missing vertical ${vertical.id}`);
+		if (emittedVertical.sourceApplication !== vertical.sourceApplication)
+			throw new Error(`${vertical.id} source application does not match its declaration`);
+		if (emittedVertical.lanes.length !== vertical.lanes.length)
+			throw new Error(`${vertical.id} lane count does not match its declaration`);
+		for (const [laneIndex, lane] of vertical.lanes.entries()) {
+			const emittedLane = emittedVertical.lanes[laneIndex];
+			if (emittedLane === undefined || emittedLane.lane !== lane.lane)
+				throw new Error(`${vertical.id} is missing lane ${lane.lane}`);
+			if (
+				emittedLane.entrypoint.path !== lane.entrypointPath ||
+				emittedLane.entrypoint.sha256 !== lane.entrypointSha256 ||
+				emittedLane.receipt.path !== lane.receiptPath ||
+				emittedLane.receipt.digest !== lane.receiptDigest
+			)
+				throw new Error(
+					`${vertical.id}/${lane.lane} binding does not match its declaration`,
+				);
+			const declaredExternal = [
+				...lane.expectedScriptSources.filter((source) => externalURL(source) !== null),
+				...lane.expectedResourceHrefs.filter((href) => externalURL(href) !== null),
+			].sort();
+			const emittedExternal = [
+				...emittedLane.scripts
+					.filter((item) => item.kind === 'external')
+					.map((item) => item.source),
+				...emittedLane.resources
+					.filter((item) => item.kind === 'external')
+					.map((item) => item.href),
+			].sort();
+			if (canonicalize(emittedExternal) !== canonicalize(declaredExternal))
+				throw new Error(
+					`${vertical.id}/${lane.lane} external resources do not match their declaration`,
+				);
+			if (
+				emittedLane.scripts.length !== lane.expectedScriptSources.length ||
+				emittedLane.resources.length !== lane.expectedResourceHrefs.length
+			)
+				throw new Error(
+					`${vertical.id}/${lane.lane} static tag counts do not match their declaration`,
+				);
+			const network = await networkObservations(root, lane);
+			if (canonicalize(emittedLane.network) !== canonicalize(network))
+				throw new Error(
+					`${vertical.id}/${lane.lane} network observations do not match independent re-derivation`,
+				);
+			if (canonicalize(emittedExternal) !== canonicalize(network.blocked))
+				throw new Error(
+					`${vertical.id}/${lane.lane} static resources do not reconcile with blocked requests`,
+				);
+			if (network.successfulNonLoopback.length !== 0)
+				throw new Error(
+					`${vertical.id}/${lane.lane} observed successful non-loopback traffic`,
+				);
+		}
+	}
 }
 
 export async function verifyScriptSurface(

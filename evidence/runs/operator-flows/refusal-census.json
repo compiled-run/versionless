@@ -12,14 +12,14 @@
 	],
 	"filesScanned": 84,
 	"summary": {
-		"sites": 189,
+		"sites": 190,
 		"byOrigin": {
 			"frozen-adapter": 101,
-			"pipeline": 88
+			"pipeline": 89
 		},
 		"byClassification": {
 			"defect": 5,
-			"refusal": 134,
+			"refusal": 135,
 			"unclassified": 50
 		},
 		"byStage": {
@@ -38,9 +38,10 @@
 			"plan-or-build": 13,
 			"refusal-census": 1,
 			"supported-matrix": 1,
+			"witness": 1,
 			"witness-synthesize": 2
 		},
-		"distinctCodes": 189,
+		"distinctCodes": 190,
 		"recordedRefusalSites": 99
 	},
 	"entries": [
@@ -1650,7 +1651,7 @@
 			"stage": "refusal-census",
 			"stageBasis": "the census flow derives this document here.",
 			"file": "packages/cli/src/operator/refusal-census.ts",
-			"line": 707,
+			"line": 712,
 			"enclosing": "buildRefusalCensus"
 		},
 		{
@@ -1707,6 +1708,21 @@
 			"file": "packages/cli/src/operator/witness-synthesize.ts",
 			"line": 220,
 			"enclosing": "readCrawlBound"
+		},
+		{
+			"code": "witness.browser-not-provisioned",
+			"message": "${missing.message}",
+			"messageForm": "composed",
+			"staticSegments": [],
+			"classification": "refusal",
+			"condition": "unconditional within witnessing",
+			"conditionForm": "unconditional",
+			"origin": "pipeline",
+			"stage": "witness",
+			"stageBasis": "the witness stage replays the derived journeys against the built lane through this module; what it raises of its own is about this host, not about the application.",
+			"file": "packages/cli/src/operator/witness.ts",
+			"line": 59,
+			"enclosing": "witnessing"
 		},
 		{
 			"code": "frozen.direct-dom-access.direct-dom-input-path-must-be-relative-and-contained",

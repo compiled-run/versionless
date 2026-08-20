@@ -38,7 +38,10 @@ import {
 	WITNESS_ANGULAR_TINY_TRANSLATOR_CONSOLE_ERRORS,
 	WITNESS_ANGULAR_TINY_TRANSLATOR_FAILED_REQUESTS,
 } from './real-app-run.ts';
-import { verifyLinkedWitnessProvenance } from './provenance.ts';
+import {
+	assertLinkedWitnessProvenanceEquivalent,
+	verifyLinkedWitnessProvenance,
+} from './provenance.ts';
 
 const root = resolve(import.meta.dirname, '../../../..');
 const fixtureEvidence = join(root, 'evidence/runs/angular-tiny-translator-v0-12-0');
@@ -495,8 +498,7 @@ export async function verifyWitnessAngularTinyTranslator(
 	const receipt = parseWitnessAngularTinyTranslatorReceipt(
 		JSON.parse(await readFile(join(output, 'receipt.json'), 'utf8')),
 	);
-	if (canonicalize(receipt.provenance) !== canonicalize(expectedProvenance))
-		throw new Error('TinyTranslator linked Witness provenance differs');
+	assertLinkedWitnessProvenanceEquivalent(receipt.provenance, expectedProvenance, "TinyTranslator");
 	for (const bound of receipt.canonicalReceipts)
 		if (sha256(await readFile(join(root, bound.path))) !== bound.sha256)
 			throw new Error(`TinyTranslator bound build receipt bytes drifted: ${bound.path}`);

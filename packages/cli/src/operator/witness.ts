@@ -14,6 +14,8 @@
 
 import * as path from 'pathe';
 import type { WitnessSynthesizedRealAppRecord } from '../../../core/src/receipts/witness-real-app.ts';
+import { witnessBrowserNotProvisioned } from '../witness/browser.ts';
+import { refuse } from './refusals.ts';
 
 export type WitnessRecord = Readonly<{
 	ran: boolean;
@@ -40,6 +42,30 @@ export function witnessNotRequested(reason: string): WitnessRecord {
 }
 
 /**
+ * Run the witness body, and name the one condition that is about this host.
+ *
+ * A host with no provisioned browser is not a defect in the application and not
+ * a defect in the pipeline: it is a declaration nobody made. It is raised here,
+ * inside the operator surface, so the census can count it and a fleet report can
+ * tally it — the resolver itself lives under `witness/` and stays free of the
+ * refusal carrier.
+ */
+async function witnessing<T>(body: () => Promise<T>): Promise<T> {
+	try {
+		return await body();
+	} catch (error) {
+		const missing = witnessBrowserNotProvisioned(error);
+		if (missing === null) throw error;
+		refuse({
+			code: 'witness.browser-not-provisioned',
+			message: missing.message,
+			stage: 'witness',
+			origin: 'pipeline',
+		});
+	}
+}
+
+/**
  * Witness the built lane.
  *
  * The runner is imported lazily, because it pulls in a browser host and a static
@@ -54,23 +80,28 @@ export async function runLaneWitness(options: {
 }): Promise<WitnessRecord> {
 	const { runSynthesizedWitnessRealApp, synthesizedWitnessOutputDir } =
 		await import('../witness/real-app-run.ts');
-	const record = await runSynthesizedWitnessRealApp({
-		application: options.application,
-		framework: 'react',
-		declaration: 'default',
-		sourceRoot: options.sourceRoot,
-		lanes:
-			options.baselineBuild === undefined
-				? [{ lane: 'migrated' as const, laneRoot: path.resolve(options.laneBuild) }]
-				: [
-						{
-							lane: 'baseline' as const,
-							laneRoot: path.resolve(options.baselineBuild),
-						},
-						{ lane: 'migrated' as const, laneRoot: path.resolve(options.laneBuild) },
-					],
-		output: synthesizedWitnessOutputDir(options.application),
-	});
+	const record = await witnessing(async () =>
+		runSynthesizedWitnessRealApp({
+			application: options.application,
+			framework: 'react',
+			declaration: 'default',
+			sourceRoot: options.sourceRoot,
+			lanes:
+				options.baselineBuild === undefined
+					? [{ lane: 'migrated' as const, laneRoot: path.resolve(options.laneBuild) }]
+					: [
+							{
+								lane: 'baseline' as const,
+								laneRoot: path.resolve(options.baselineBuild),
+							},
+							{
+								lane: 'migrated' as const,
+								laneRoot: path.resolve(options.laneBuild),
+							},
+						],
+			output: synthesizedWitnessOutputDir(options.application),
+		}),
+	);
 	return Object.freeze({
 		ran: true,
 		journeySource: record.journeySource,

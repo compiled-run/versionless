@@ -42,6 +42,7 @@
 
 import { spawn } from 'node:child_process';
 import { execFile } from 'node:child_process';
+import { realpathSync } from 'node:fs';
 import { readFile, readdir, stat } from 'node:fs/promises';
 import { promisify } from 'node:util';
 import * as path from 'pathe';
@@ -209,6 +210,44 @@ type Snapshot = ReadonlyMap<string, string>;
 
 const SKIPPED_DIRECTORIES: readonly string[] = Object.freeze(['node_modules', '.git']);
 
+/**
+ * The physical path for `value`, every symlinked ancestor resolved.
+ *
+ * One file can be named two ways at once. macOS `mktemp -d` hands back
+ * `/var/folders/…`, a symlink to `/private/var/folders/…`, and `process.cwd()`
+ * reports the physical form — so a checkout rooted at a temporary directory
+ * gets its observed writes spelled physically while the write set the command
+ * declared (`--out`, `--record`) keeps the symlinked spelling it was typed
+ * with. String comparison then says the run's own lane is not in the run's own
+ * write set, and the counter scores the pipeline's declared output as an
+ * operator intervention.
+ *
+ * Both sides are resolved here before they are ever compared. This narrows
+ * nothing: the same set of files is watched, and a write outside the write set
+ * is still counted under either spelling. It only stops one file from being
+ * mistaken for two.
+ *
+ * A path that does not exist yet — the lane, before the child creates it — is
+ * resolved as far as its nearest existing ancestor, so a declaration made
+ * ahead of the write is comparable to the file that write will produce.
+ */
+export function physicalPath(value: string): string {
+	const absolute = path.resolve(value);
+	const tail: string[] = [];
+	let head = absolute;
+	for (;;) {
+		try {
+			const resolved = realpathSync(head);
+			return tail.length === 0 ? resolved : path.join(resolved, ...[...tail].reverse());
+		} catch {
+			const parent = path.dirname(head);
+			if (parent === head) return absolute;
+			tail.push(path.basename(head));
+			head = parent;
+		}
+	}
+}
+
 async function hashFile(file: string): Promise<string | null> {
 	try {
 		return sha256(await readFile(file));
@@ -260,19 +299,40 @@ async function trackedPaths(root: string): Promise<readonly string[] | null> {
 export async function snapshotWatchedPaths(
 	declarations: Pick<InterventionCountDeclarations, 'root' | 'appRoot' | 'out'>,
 ): Promise<{ snapshot: Snapshot; source: 'git' | 'directory-walk' }> {
-	const root = path.resolve(declarations.root);
+	const root = physicalPath(declarations.root);
 	const tracked = await trackedPaths(root);
 	const files: string[] = tracked === null ? [] : [...tracked];
 	if (tracked === null) await walkFiles(root, files);
-	await walkFiles(path.resolve(declarations.appRoot), files);
-	await walkFiles(path.dirname(path.resolve(declarations.out)), files);
+	await walkFiles(physicalPath(declarations.appRoot), files);
+	await walkFiles(path.dirname(physicalPath(declarations.out)), files);
 	const snapshot = new Map<string, string>();
-	for (const file of new Set(files.map((file) => path.resolve(file)))) {
+	/** One spelling per file: the walk can reach the same file by two routes. */
+	for (const file of new Set(files.map((file) => physicalPath(file)))) {
 		const digest = await hashFile(file);
 		if (digest !== null) snapshot.set(file, digest);
 	}
 	return { snapshot, source: tracked === null ? 'directory-walk' : 'git' };
 }
+
+/**
+ * The directories the pipeline owns and writes on every run, repo-relative.
+ *
+ * These are the run's own outputs, not an operator's intervention: the witness
+ * stage stages its receipts under `.versionless/stage/witness-real-app` and
+ * publishes the synthesized lane record under `evidence/runs/witness-synthesized`.
+ * Before they were declared, the first run's outputs were counted as the second
+ * run's mutations, so a second invocation scored a higher `interventionCount`
+ * than the first for no reason an operator could act on — the counter was
+ * measuring itself. Declaring them is what makes the count idempotent.
+ *
+ * The list is deliberately narrow. It names directories this pipeline writes,
+ * not `evidence/` or `.versionless/` wholesale: widening it would hide exactly
+ * the mutations the counter exists to catch.
+ */
+export const PIPELINE_OWNED_WRITE_SET: readonly string[] = Object.freeze([
+	'.versionless/stage/witness-real-app',
+	'evidence/runs/witness-synthesized',
+]);
 
 /** Whether a path is one the command declared it writes. */
 function insideWriteSet(file: string, writeSet: readonly string[]): boolean {
@@ -459,15 +519,16 @@ export function cliEntryPath(): string {
 export async function countInterventions(
 	declarations: InterventionCountDeclarations,
 ): Promise<InterventionCountRecord> {
-	const root = path.resolve(declarations.root);
-	const laneAbsolute = path.resolve(declarations.out);
-	const runRecordAbsolute = path.resolve(declarations.runRecord);
-	const harnessRecordAbsolute = path.resolve(interventionRecordPathFor(declarations.runRecord));
+	const root = physicalPath(declarations.root);
+	const laneAbsolute = physicalPath(declarations.out);
+	const runRecordAbsolute = physicalPath(declarations.runRecord);
+	const harnessRecordAbsolute = physicalPath(interventionRecordPathFor(declarations.runRecord));
 	const writeSet = [
 		laneAbsolute,
 		runRecordAbsolute,
 		harnessRecordAbsolute,
-		...declarations.evidencePaths.map((entry) => path.resolve(root, entry)),
+		...PIPELINE_OWNED_WRITE_SET.map((entry) => physicalPath(path.resolve(root, entry))),
+		...declarations.evidencePaths.map((entry) => physicalPath(path.resolve(root, entry))),
 	];
 	const before = await snapshotWatchedPaths(declarations);
 	const attempts: SpawnAttempt[] = [];

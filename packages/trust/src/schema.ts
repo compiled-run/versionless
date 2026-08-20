@@ -22,13 +22,36 @@ export interface TrustIngestRecord {
 	schemaVersion: typeof TRUST_SCHEMA;
 	purpose: typeof TRUST_PURPOSE;
 	consent: { allowNetwork: true; mode: 'consented'; consentId: string };
-	packages: Array<{ name: string; version: string }>;
+	packages: PackageCoordinate[];
 	sources: [TrustSource, TrustSource];
 }
 
+/**
+ * A resolved package in the lockfile.
+ *
+ * Almost every entry is a registry coordinate and needs nothing but a name and a
+ * version — the registry is what makes those two strings identify bytes. One
+ * entry is not: `@async/witness` is installed from a `pnpm pack` tarball
+ * committed under `vendor/`, and for that one a name and a version identify
+ * nothing on their own, because no registry will ever be asked to resolve them.
+ *
+ * So a non-registry coordinate carries what a registry would otherwise supply:
+ * `kind: 'file'` says out loud that this is not a registry resolution,
+ * `tarball` names the committed artifact as a repository-relative path, and
+ * `sha256` digests it. The `file:` protocol prefix pnpm writes into the lockfile
+ * is deliberately not carried: a protocol-prefixed specifier is a machine-local
+ * instruction, and `assertPortableEvidence` refuses it in emitted evidence. The
+ * path and the digest say the same thing without pretending to be a URL.
+ */
 export interface PackageCoordinate {
 	name: string;
 	version: string;
+	/** Present only when the package is resolved from a committed tarball rather than a registry. */
+	kind?: 'file';
+	/** Repository-relative path to the committed tarball, with no protocol prefix. */
+	tarball?: string;
+	/** Digest of the committed tarball's bytes. */
+	sha256?: string;
 }
 
 export function packageVersionWithoutPeerContext(version: string): string {
@@ -129,6 +152,17 @@ const packageVersion = createRegExp(
 const sha256Hex = createRegExp(
 	charIn('0123456789').from('a', 'f').times(64).at.lineStart().at.lineEnd(),
 );
+/**
+ * A committed tarball is named as `vendor/<file>.tgz` and nothing else: one
+ * directory, one file name drawn from characters that cannot spell a protocol,
+ * a parent traversal or an absolute path.
+ */
+const vendoredTarballPath = createRegExp(
+	exactly('vendor/')
+		.at.lineStart()
+		.and(oneOrMore(charIn('0123456789._-').from('a', 'z').from('A', 'Z')), '.tgz')
+		.at.lineEnd(),
+);
 
 export function validatePackageCoordinate(value: unknown, label: string): PackageCoordinate {
 	const coordinate = asRecord(value, label);
@@ -137,7 +171,18 @@ export function validatePackageCoordinate(value: unknown, label: string): Packag
 	if (!(unscopedPackageName.test(name) || scopedPackageName.test(name)))
 		throw new Error(`Invalid ${label}.name`);
 	if (!packageVersion.test(version)) throw new Error(`Invalid ${label}.version`);
-	return { name, version };
+	if (coordinate.kind === undefined) {
+		if (coordinate.tarball !== undefined || coordinate.sha256 !== undefined)
+			throw new Error(`Invalid ${label}: a registry coordinate carries no tarball`);
+		return { name, version };
+	}
+	if (coordinate.kind !== 'file')
+		throw new Error(`Invalid ${label}.kind: only 'file' is a non-registry coordinate`);
+	const tarball = asString(coordinate.tarball, `${label}.tarball`);
+	const sha256 = asString(coordinate.sha256, `${label}.sha256`);
+	if (!vendoredTarballPath.test(tarball)) throw new Error(`Invalid ${label}.tarball`);
+	if (!sha256Hex.test(sha256)) throw new Error(`Invalid ${label}.sha256`);
+	return { name, version, kind: 'file', tarball, sha256 };
 }
 
 export function validatePackageCoordinates(value: unknown, label: string): PackageCoordinate[] {

@@ -21,7 +21,10 @@ import {
 	type WitnessReactBoilerplateZeroSwRun,
 } from '../../../core/src/index.ts';
 import { executeReactBoilerplateZeroSwWitnessRun } from './real-app-run.ts';
-import { verifyLinkedWitnessProvenance } from './provenance.ts';
+import {
+	assertLinkedWitnessProvenanceEquivalent,
+	verifyLinkedWitnessProvenance,
+} from './provenance.ts';
 
 const root = resolve(import.meta.dirname, '../../../..');
 const fixtureEvidence = join(root, 'evidence/runs/react-boilerplate-v4-zero-sw');
@@ -416,8 +419,7 @@ export async function verifyWitnessReactBoilerplateZeroSw(
 	const receipt = parseWitnessReactBoilerplateZeroSwReceipt(
 		JSON.parse(await readFile(join(output, 'receipt.json'), 'utf8')),
 	);
-	if (canonicalize(receipt.provenance) !== canonicalize(expectedProvenance))
-		throw new Error('React Boilerplate zero-SW linked Witness provenance differs');
+	assertLinkedWitnessProvenanceEquivalent(receipt.provenance, expectedProvenance, "React Boilerplate zero-SW");
 	const canonicalBytes = await readFile(join(root, receipt.canonicalReceipt.path));
 	if (sha256(canonicalBytes) !== receipt.canonicalReceipt.sha256)
 		throw new Error('React Boilerplate zero-SW canonical receipt bytes drifted');

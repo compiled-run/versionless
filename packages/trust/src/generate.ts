@@ -725,12 +725,41 @@ export function packagePurl(name: string, version: string): string {
 	return `pkg:npm/${encoded}@${encodePurlSegment(version)}`;
 }
 
+/**
+ * The reference a committed-tarball component is known by.
+ *
+ * A purl is a claim that a package manager can resolve the coordinate, and for
+ * `@async/witness` no package manager can: it is not published. Emitting
+ * `pkg:npm/%40async/witness@0.8.0` would name a package that does not exist and
+ * would collide with it if it ever did. So the component gets a reference that
+ * says where it actually comes from, and carries no `purl` at all — its identity
+ * travels in the SHA-256 of the tarball beside it.
+ */
+function componentProperty(
+	component: Record<string, unknown>,
+	name: string,
+): string | undefined {
+	if (component.properties === undefined) return undefined;
+	if (!Array.isArray(component.properties))
+		throw new Error('CycloneDX component properties are malformed');
+	for (const value of component.properties) {
+		const property = asRecord(value, 'CycloneDX component property');
+		if (property.name === name) return asString(property.value, `CycloneDX ${name}`);
+	}
+	return undefined;
+}
+
+export function vendoredComponentReference(name: string, version: string): string {
+	validatePackageCoordinate({ name, version }, 'vendored component coordinate');
+	return `vendor:${name}@${version}`;
+}
+
 async function dependencyGraph(
 	root: string,
 	lockText: string,
 	manifests: Array<{ path: string; value: Record<string, unknown> }>,
 ): Promise<Record<string, unknown>> {
-	const resolved = lockPackages(lockText);
+	const resolved = lockPackages(lockText, { rootDir: root });
 	const workspace = await Promise.all(
 		manifests.map(async ({ path: manifestPath, value }) => ({
 			type: 'application',
@@ -749,14 +778,29 @@ async function dependencyGraph(
 	);
 	const components = [
 		...workspace,
-		...resolved.map((item) => ({
-			type: 'library',
-			'bom-ref': packagePurl(item.name, item.version),
-			name: item.name,
-			version: item.version,
-			purl: packagePurl(item.name, item.version),
-			properties: [{ name: 'versionless:source', value: 'pnpm-lock.yaml' }],
-		})),
+		...resolved.map((item) =>
+			item.kind === 'file'
+				? {
+						type: 'library',
+						'bom-ref': vendoredComponentReference(item.name, item.version),
+						name: item.name,
+						version: item.version,
+						hashes: [{ alg: 'SHA-256', content: item.sha256 }],
+						properties: [
+							{ name: 'versionless:source', value: 'pnpm-lock.yaml' },
+							{ name: 'versionless:coordinate-kind', value: 'file' },
+							{ name: 'versionless:tarball', value: item.tarball },
+						],
+					}
+				: {
+						type: 'library',
+						'bom-ref': packagePurl(item.name, item.version),
+						name: item.name,
+						version: item.version,
+						purl: packagePurl(item.name, item.version),
+						properties: [{ name: 'versionless:source', value: 'pnpm-lock.yaml' }],
+					},
+		),
 	];
 	const rootRef = 'workspace:.';
 	return {
@@ -953,8 +997,12 @@ export async function licenseInventory(
 		const installedVersion = packageVersionWithoutPeerContext(item.version);
 		const fields = await licenseFields(catalog.get(`${item.name}@${installedVersion}`) ?? []);
 		entries.push({
-			name: item.name,
-			version: item.version,
+			/**
+			 * The whole coordinate, so a non-registry entry is named as one here too:
+			 * a license row that said only `@async/witness@0.8.0` would read as a
+			 * registry package whose licence someone could go look up.
+			 */
+			...item,
 			source: 'pnpm-lock.yaml',
 			spdxExpression: fields.spdxExpression,
 			licenseText: fields.licenseText,
@@ -1543,10 +1591,42 @@ export function validateCycloneDx17(
 		if (refs.has(ref))
 			throw new Error('CycloneDX component reference is missing or duplicated');
 		if (component.type === 'library') {
-			const purl = packagePurl(name, version);
-			if (component.purl !== purl || ref !== purl)
-				throw new Error('CycloneDX npm purl/reference mismatch');
-			libraries.push({ name, version });
+			const coordinateKind = componentProperty(component, 'versionless:coordinate-kind');
+			if (coordinateKind === undefined) {
+				const purl = packagePurl(name, version);
+				if (component.purl !== purl || ref !== purl)
+					throw new Error('CycloneDX npm purl/reference mismatch');
+				if (component.hashes !== undefined)
+					throw new Error('CycloneDX registry component carries a tarball digest');
+				libraries.push({ name, version });
+			} else {
+				/**
+				 * A non-registry component is held to the opposite standard: no purl,
+				 * because nothing can resolve one, and a digest, because the bytes are
+				 * the only identity it has.
+				 */
+				if (coordinateKind !== 'file')
+					throw new Error('CycloneDX coordinate kind is unsupported');
+				if (component.purl !== undefined || ref !== vendoredComponentReference(name, version))
+					throw new Error('CycloneDX vendored reference is malformed');
+				const tarball = componentProperty(component, 'versionless:tarball');
+				const hashes = Array.isArray(component.hashes) ? component.hashes : [];
+				const digest = asRecord(hashes[0], 'CycloneDX vendored hash');
+				if (hashes.length !== 1 || digest.alg !== 'SHA-256')
+					throw new Error('CycloneDX vendored component must carry one SHA-256 hash');
+				libraries.push(
+					validatePackageCoordinate(
+						{
+							name,
+							version,
+							kind: 'file',
+							tarball,
+							sha256: digest.content,
+						},
+						'CycloneDX vendored coordinate',
+					),
+				);
+			}
 		} else if (component.type === 'application') {
 			if (!workspaceReference.test(ref) || component.purl !== undefined)
 				throw new Error('CycloneDX workspace reference is malformed');
@@ -1646,7 +1726,7 @@ export async function generateTrustPackage(options: GenerateTrustOptions): Promi
 			throw new Error(`Cached source digest mismatch: ${source.kind}`);
 	}
 	const lockText = await readFile(path.join(root, 'pnpm-lock.yaml'), 'utf8');
-	const packages = lockPackages(lockText);
+	const packages = lockPackages(lockText, { rootDir: root });
 	if (packages.length === 0) throw new Error('Resolved package inventory is empty');
 	if (canonicalize(packages) !== canonicalize(ingest.packages))
 		throw new Error('Cached OSV request does not cover the current lockfile');

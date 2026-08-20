@@ -20,7 +20,10 @@ import {
 	type WitnessReactBoilerplateRun,
 } from '../../../core/src/index.ts';
 import { executeReactBoilerplateWitnessRun } from './real-app-run.ts';
-import { verifyLinkedWitnessProvenance } from './provenance.ts';
+import {
+	assertLinkedWitnessProvenanceEquivalent,
+	verifyLinkedWitnessProvenance,
+} from './provenance.ts';
 
 const root = resolve(import.meta.dirname, '../../../..');
 const stageRoot = join(root, '.versionless/stage/witness-react-boilerplate');
@@ -318,8 +321,7 @@ export async function verifyWitnessReactBoilerplate(
 	const receipt = parseWitnessReactBoilerplateReceipt(
 		JSON.parse(await readFile(join(output, 'receipt.json'), 'utf8')),
 	);
-	if (canonicalize(receipt.provenance) !== canonicalize(expectedProvenance))
-		throw new Error('React Boilerplate Witness local provenance differs');
+	assertLinkedWitnessProvenanceEquivalent(receipt.provenance, expectedProvenance, "React Boilerplate");
 	const canonicalBytes = await readFile(join(root, receipt.canonicalReceipt.path));
 	if (sha256(canonicalBytes) !== receipt.canonicalReceipt.sha256)
 		throw new Error('React Boilerplate Witness canonical receipt bytes drifted');

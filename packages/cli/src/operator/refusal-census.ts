@@ -159,6 +159,11 @@ export const CENSUS_MODULES: readonly CensusModule[] = Object.freeze([
 		'the verify flow runs the offline checks through this module.',
 	),
 	OPERATOR_MODULE(
+		'witness.ts',
+		'witness',
+		'the witness stage replays the derived journeys against the built lane through this module; what it raises of its own is about this host, not about the application.',
+	),
+	OPERATOR_MODULE(
 		'witness-synthesize.ts',
 		'witness-synthesize',
 		'the witness-synthesize stage reads the application own end-to-end suite and, failing that, crawls its served lane through this module.',

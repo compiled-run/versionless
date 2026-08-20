@@ -1089,6 +1089,7 @@ export const WITNESS_SYNTHESIZED_NOT_ESTABLISHED: readonly string[] = Object.fre
 	'A journey step this run could not replay is recorded as unhandled. That is a gap in the derivation, not a defect in the application.',
 	'Journeys were replayed one lane at a time and one journey at a time on this host. Nothing here establishes an outcome under concurrent load.',
 	'No journey left the loopback origin. A step that would have is recorded unhandled rather than run.',
+	'The Witness build behind this run was checked for identity, not for how it was installed. Compared: the package version, its declaration and runtime digests, and the upstream commit it claims. Recorded and not compared: the specifier form, the link target, any sibling checkout git readings, and the manifest digest, which pnpm pack rewrites.',
 ]);
 
 function record(value: unknown, label: string): Record<string, unknown> {

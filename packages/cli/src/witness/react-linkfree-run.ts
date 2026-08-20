@@ -32,7 +32,10 @@ import {
 	executeReactLinkfreeWitnessRun,
 	LINKFREE_MUTATION_SEAM,
 } from './real-app-run.ts';
-import { verifyLinkedWitnessProvenance } from './provenance.ts';
+import {
+	assertLinkedWitnessProvenanceEquivalent,
+	verifyLinkedWitnessProvenance,
+} from './provenance.ts';
 
 const root = resolve(import.meta.dirname, '../../../..');
 const fixtureEvidence = join(root, 'evidence/runs/react-linkfree-v0-72-0');
@@ -313,8 +316,7 @@ export async function verifyWitnessReactLinkfree(
 	const receipt = parseWitnessReactLinkfreeReceipt(
 		JSON.parse(await readFile(join(output, 'receipt.json'), 'utf8')),
 	);
-	if (canonicalize(receipt.provenance) !== canonicalize(expectedProvenance))
-		throw new Error('LinkFree linked Witness provenance differs');
+	assertLinkedWitnessProvenanceEquivalent(receipt.provenance, expectedProvenance, "LinkFree");
 	const canonicalBytes = await readFile(join(root, receipt.canonicalReceipt.path));
 	if (sha256(canonicalBytes) !== receipt.canonicalReceipt.sha256)
 		throw new Error('LinkFree canonical receipt bytes drifted');

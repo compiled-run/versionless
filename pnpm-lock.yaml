@@ -12,8 +12,8 @@ importers:
         specifier: 22.1.0
         version: 22.1.0
       '@async/witness':
-        specifier: link:../witness
-        version: link:../witness
+        specifier: file:vendor/async-witness-0.8.0.tgz
+        version: file:vendor/async-witness-0.8.0.tgz(vite@8.0.16(@types/node@24.12.2))
       '@types/node':
         specifier: 24.12.2
         version: 24.12.2
@@ -129,6 +129,14 @@ packages:
   '@angular/compiler@22.1.0':
     resolution: {integrity: sha512-WCmuPnuXgqnqrkbrwqQRyldi1k3rlzNLVDl8ntINF7XWuJh0KfQLEkRK0FCCmBztWJkbGug4RBVnKTWlKhRzCQ==}
     engines: {node: ^22.22.3 || ^24.15.0 || >=26.0.0}
+
+  '@async/witness@file:vendor/async-witness-0.8.0.tgz':
+    resolution: {integrity: sha512-gRc6cWWuj2FrpIhfoBaQ6p6DZGo/4zUJhx4QNSw/ZJ3FsffLRzeo5jt069E2fW52KglsUfHmZvzyoXYzy+oWng==, tarball: file:vendor/async-witness-0.8.0.tgz}
+    version: 0.8.0
+    engines: {node: '>=22'}
+    hasBin: true
+    peerDependencies:
+      vite: ^8.0.0
 
   '@emnapi/core@1.10.0':
     resolution: {integrity: sha512-yq6OkJ4p82CAfPl0u9mQebQHKPJkY7WrIuk205cTYnYe+k2Z8YBh11FrbRG/H6ihirqcacOgl2BIO8oyMQLeXw==}
@@ -989,6 +997,9 @@ packages:
   magic-string@0.30.21:
     resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
 
+  mitt@3.0.1:
+    resolution: {integrity: sha512-vKivATfr97l2/QBCYAkXYDbrIWPM2IIKEl7YPhjCvKlG3kE2gm+uBo6nEXK3M5/Ffh/FLpKExzOQ3JJoJGFKBw==}
+
   mrmime@2.0.1:
     resolution: {integrity: sha512-Y3wQdFg2Va6etvQ5I82yUhGdsKrcYox6p7FfL1LbK2J4V01F9TGlepTIhnK24t7koZibmg82KGglhA1XK5IsLQ==}
     engines: {node: '>=10'}
@@ -1275,6 +1286,13 @@ snapshots:
   '@angular/compiler@22.1.0':
     dependencies:
       tslib: 2.8.1
+
+  '@async/witness@file:vendor/async-witness-0.8.0.tgz(vite@8.0.16(@types/node@24.12.2))':
+    dependencies:
+      mitt: 3.0.1
+      pathe: 2.0.3
+      tinyglobby: 0.2.17
+      vite: 8.0.16(@types/node@24.12.2)
 
   '@emnapi/core@1.10.0':
     dependencies:
@@ -1809,6 +1827,8 @@ snapshots:
   magic-string@0.30.21:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
+
+  mitt@3.0.1: {}
 
   mrmime@2.0.1: {}
 

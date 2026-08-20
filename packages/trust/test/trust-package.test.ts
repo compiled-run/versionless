@@ -63,7 +63,14 @@ import { verifyTrustPackage } from '../src/verify.ts';
 const root = path.resolve(import.meta.dirname, '../../..');
 const observedAt = '2026-08-05T12:00:00.000Z';
 const offline = { VERSIONLESS_NETWORK_MODE: 'offline' };
-const expectedResolvedPackages = 187;
+/**
+ * 187 before `@async/witness` was vendored; 189 after. The tarball brought the
+ * package itself and `mitt@3.0.1` into the resolved closure, and both are now in
+ * the inventory rather than filtered out of it. Production code derives this
+ * number from the lockfile — it is pinned here, and only here, so that a change
+ * to the closure has to be stated rather than absorbed.
+ */
+const expectedResolvedPackages = 189;
 const expectedWorkspacePackages = 10;
 const expectedComponents = expectedResolvedPackages + expectedWorkspacePackages;
 
@@ -99,6 +106,7 @@ async function setup(): Promise<{
 	const calls: Array<{ url: string; body?: string }> = [];
 	const resolvedPackages = lockPackages(
 		await readFile(path.join(root, 'pnpm-lock.yaml'), 'utf8'),
+		{ rootDir: root },
 	);
 	const ingest = await ingestTrustInputs({
 		rootDir: root,
@@ -251,7 +259,9 @@ snapshots:
 			{ package: { ecosystem: 'npm', name: '@scope/pkg' }, version: '1.2.3' },
 			{ package: { ecosystem: 'npm', name: 'plain' }, version: '4.5.6' },
 		]);
-		const current = lockPackages(await readFile(path.join(root, 'pnpm-lock.yaml'), 'utf8'));
+		const current = lockPackages(await readFile(path.join(root, 'pnpm-lock.yaml'), 'utf8'), {
+			rootDir: root,
+		});
 		expect(current).toHaveLength(expectedResolvedPackages);
 		expect(new Set(current.map((item) => `${item.name}@${item.version}`)).size).toBe(
 			expectedResolvedPackages,

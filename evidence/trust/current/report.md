@@ -1,16 +1,16 @@
 # Versionless project trust package
 
-- Canonical SHA-256: `e876926674880ceebabb2377a55d4e6bf82e2abc0dda42f11ab9950fe21ebde5`
-- Deterministic core: `89a6e0c4b8020af4d301ea379038a3b2c71c6bf1bc3705fe2c4f041b23b86ba2`
-- Generated observation: `2026-08-18T00:06:57.857Z`
-- Vulnerability input freshness: **stale** (seven-day maximum age)
+- Canonical SHA-256: `a99892f8323e0b5381d5bee3b10a17db13240a7df9b65221fc2b45cac3c56d4c`
+- Deterministic core: `9dc8fe09c4a05ff58889bc68a4335a57037d8a18f1637c619f1feea05d70add4`
+- Generated observation: `2026-08-19T01:55:44.723Z`
+- Vulnerability input freshness: **verified** (seven-day maximum age)
 - Integrity: **hash-only; authenticity is not established**
 - Assurance: **this package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation**
 
 ## Contents
 
 - [CycloneDX 1.7 dependency graph](dependency-graph.cdx.json) — locally profile-validated; this is not independent or official certification.
-- [License inventory](licenses.json) — SPDX expressions: 89 verified, 108 unknown, 0 ambiguous; license texts: 77 verified, 120 unknown, 0 ambiguous.
+- [License inventory](licenses.json) — SPDX expressions: 90 verified, 109 unknown, 0 ambiguous; license texts: 78 verified, 121 unknown, 0 ambiguous.
 - [Vulnerability and KEV report](vulnerabilities.json) — cached OSV batch and CISA KEV observations only.
 - [SLSA/in-toto-shaped provenance](provenance.json) — shape only; no SLSA level or signer authenticity is claimed.
 - [Supported corpus/runtime/bundler matrix](matrix.json) — unsupported and untested cells remain visible.

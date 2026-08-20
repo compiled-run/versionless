@@ -2,7 +2,7 @@
   "schemaVersion": "versionless.trust.v1",
   "coverage": {
     "workspaceManifests": 10,
-    "resolvedPackages": 187
+    "resolvedPackages": 189
   },
   "rootLicenseText": {
     "state": "unknown",
@@ -10,13 +10,13 @@
   },
   "summary": {
     "spdxExpression": {
-      "verified": 89,
-      "unknown": 108,
+      "verified": 90,
+      "unknown": 109,
       "ambiguous": 0
     },
     "licenseText": {
-      "verified": 77,
-      "unknown": 120,
+      "verified": 78,
+      "unknown": 121,
       "ambiguous": 0
     }
   },
@@ -29,7 +29,7 @@
         "state": "verified",
         "value": "MIT",
         "candidateId": "package.json",
-        "manifestSha256": "6acf2dd25ff7d909046736b8b78f0ca11f07e938b724756a57a00d51e5751d82"
+        "manifestSha256": "cfd2b0ceb3e0d9f9a89d863405ea43f0394eb91f756cc402907cd72521fbf806"
       },
       "licenseText": {
         "state": "unknown",
@@ -170,6 +170,22 @@
         "files": [
           "LICENSE"
         ]
+      }
+    },
+    {
+      "name": "@async/witness",
+      "version": "0.8.0",
+      "kind": "file",
+      "tarball": "vendor/async-witness-0.8.0.tgz",
+      "sha256": "c15d44fac722e7f0eb1366301d093ce43910e914606fa25d83ea1c08a47f2201",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "unknown",
+        "reason": "Matching installed manifest has no SPDX expression."
+      },
+      "licenseText": {
+        "state": "unknown",
+        "reason": "Matching installed license text unavailable."
       }
     },
     {
@@ -2285,6 +2301,25 @@
         "state": "verified",
         "candidateId": ".versionless/cache/pnpm-virtual-store/magic-string@0.30.21/node_modules/magic-string/package.json",
         "sha256": "1cbe51b907662f6cb1492b16c359384a595180bf0e4d101603ed525e75c4e484",
+        "files": [
+          "LICENSE"
+        ]
+      }
+    },
+    {
+      "name": "mitt",
+      "version": "3.0.1",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/mitt@3.0.1/node_modules/mitt/package.json",
+        "manifestSha256": "99966ad2891dfe56614f039f5d03ada4bda6dba810952272ae57359abb527b91"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/mitt@3.0.1/node_modules/mitt/package.json",
+        "sha256": "1cab22f196264195a4caec8ca5630170fdde76ee8f43346e47021d087332d3b0",
         "files": [
           "LICENSE"
         ]

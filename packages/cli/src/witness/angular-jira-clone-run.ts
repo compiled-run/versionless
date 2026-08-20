@@ -26,7 +26,10 @@ import {
 	type WitnessAngularJiraCloneRun,
 } from '../../../core/src/receipts/witness-angular-jira-clone.ts';
 import { executeAngularJiraCloneWitnessRun, JIRA_CLONE_MUTATION_SEAM } from './real-app-run.ts';
-import { verifyLinkedWitnessProvenance } from './provenance.ts';
+import {
+	assertLinkedWitnessProvenanceEquivalent,
+	verifyLinkedWitnessProvenance,
+} from './provenance.ts';
 
 const root = resolve(import.meta.dirname, '../../../..');
 const fixtureEvidence = join(root, 'evidence/runs/angular-jira-clone');
@@ -357,8 +360,7 @@ export async function verifyWitnessAngularJiraClone(
 	const receipt = parseWitnessAngularJiraCloneReceipt(
 		JSON.parse(await readFile(join(output, 'receipt.json'), 'utf8')),
 	);
-	if (canonicalize(receipt.provenance) !== canonicalize(expectedProvenance))
-		throw new Error('jira-clone linked Witness provenance differs');
+	assertLinkedWitnessProvenanceEquivalent(receipt.provenance, expectedProvenance, "jira-clone");
 	for (const bound of receipt.canonicalReceipts)
 		if (sha256(await readFile(join(root, bound.path))) !== bound.sha256)
 			throw new Error(`jira-clone bound build receipt bytes drifted: ${bound.path}`);

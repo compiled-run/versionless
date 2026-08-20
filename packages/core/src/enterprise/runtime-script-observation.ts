@@ -1,3 +1,4 @@
+import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import { charIn, createRegExp, oneOrMore } from 'magic-regexp';
 import * as path from 'pathe';
@@ -218,15 +219,61 @@ export function parseRuntimeObservationConfig(value: unknown): RuntimeObservatio
 	};
 }
 
+/** The name a tree without the observing browser refuses under. */
+export const RUNTIME_OBSERVATION_BROWSER_ABSENT = 'trust.runtime-observation-browser-absent';
+
+/**
+ * The refusal a tree that does not carry the observing browser raises.
+ *
+ * `config.browser.executable` names the exact Chromium build the sealed runtime
+ * observation was taken with, and it lives under `.versionless/cache`, which is
+ * gitignored. Re-hashing it is a real check on a host that has it and an
+ * impossibility on a host that does not; before this class the second case was
+ * a bare ENOENT that took `trust:verify` down in every clean checkout. What
+ * survives without the binary is the binding between the committed config and
+ * the committed evidence, which is checked either way and is not this error's
+ * business.
+ */
+export class RuntimeObservationBrowserAbsentError extends Error {
+	readonly missingPath: string;
+
+	constructor(missingPath: string) {
+		super(
+			`${RUNTIME_OBSERVATION_BROWSER_ABSENT}: ${missingPath} is not in this tree, so the browser the sealed runtime observation was taken with cannot be re-hashed here. The digest binding between trust/runtime-script-observation.json and the emitted evidence is still checked; the binary itself is not.`,
+		);
+		this.name = 'RuntimeObservationBrowserAbsentError';
+		this.missingPath = missingPath;
+	}
+}
+
+/** The refusal an error carries, or `null` when the error is something else. */
+export function runtimeObservationBrowserAbsent(
+	error: unknown,
+): RuntimeObservationBrowserAbsentError | null {
+	return error instanceof RuntimeObservationBrowserAbsentError ? error : null;
+}
+
 export async function verifyRuntimeObservationInputs(
 	config: RuntimeObservationConfig,
 	rootDir = '.',
 ): Promise<void> {
-	if (
-		sha256(await readFile(path.resolve(rootDir, config.browser.executable))) !==
-		config.browser.sha256
-	)
+	const browser = await readFile(path.resolve(rootDir, config.browser.executable)).catch(
+		(error: unknown) => {
+			if ((error as NodeJS.ErrnoException).code === 'ENOENT')
+				throw new RuntimeObservationBrowserAbsentError(config.browser.executable);
+			throw error;
+		},
+	);
+	if (sha256(browser) !== config.browser.sha256)
 		throw new Error('Runtime browser digest mismatch');
+	await verifyRuntimeObservationFixtures(config, rootDir);
+}
+
+/** The committed inputs, which every tree carries: journeys and their payloads. */
+export async function verifyRuntimeObservationFixtures(
+	config: RuntimeObservationConfig,
+	rootDir = '.',
+): Promise<void> {
 	for (const binding of Object.values(config.profiles)) {
 		if (
 			sha256(await readFile(path.resolve(rootDir, binding.journey))) !== binding.journeySha256
@@ -270,7 +317,19 @@ export async function verifyRuntimeScriptObservationEvidence(
 	options: VerifyRuntimeEvidenceOptions,
 ): Promise<RuntimeScriptObservation> {
 	const checkout = path.resolve(options.rootDir ?? '.');
-	await verifyRuntimeObservationInputs(options.config, checkout);
+	/**
+	 * A checkout without the observing browser still gets every check that does
+	 * not need it: the journey and payload fixtures are committed and are hashed
+	 * below by the same call, and the config-to-evidence input binding is
+	 * compared further down. Only the re-hash of the binary is skipped, and it
+	 * is skipped by name rather than by a swallowed ENOENT.
+	 */
+	try {
+		await verifyRuntimeObservationInputs(options.config, checkout);
+	} catch (error) {
+		if (runtimeObservationBrowserAbsent(error) === null) throw error;
+		await verifyRuntimeObservationFixtures(options.config, checkout);
+	}
 	bindRuntimeObservationConfig(options.config, options.surface);
 	const root = object(value, 'runtime observation evidence');
 	exactKeys(
@@ -410,6 +469,22 @@ export async function verifyRuntimeScriptObservationEvidence(
 				const deploymentRoot = path.dirname(
 					path.join(checkout, staticLane.entrypoint.path),
 				);
+				/**
+				 * Whether the built lane is in this tree, decided once per lane.
+				 *
+				 * The lanes live under `.versionless/work`, which is gitignored, so
+				 * a fresh clone carries the evidence and not the deployment it was
+				 * taken from. Where the deployment is here every local script is
+				 * re-hashed and nothing is relaxed. Where it is not, the re-hash is
+				 * dropped for the whole lane rather than per file — a lane that
+				 * re-hashed the files that happen to be present and skipped the
+				 * rest would report a check it did not perform. Everything that
+				 * does not need the deployment is still enforced below: the paths
+				 * reconcile with the recorded digests, the inventory matches the
+				 * static surface, and the blocked and synthetic classifications
+				 * must equal the canonical lane evidence.
+				 */
+				const deploymentPresent = existsSync(deploymentRoot);
 				const sources: string[] = [];
 				for (const rawScript of run.scripts) {
 					const script = object(rawScript, 'runtime script');
@@ -432,10 +507,9 @@ export async function verifyRuntimeScriptObservationEvidence(
 					)
 						throw new Error('Runtime script path/hash reconciliation failed');
 					const file = path.resolve(deploymentRoot, resolvedPath);
-					if (
-						!file.startsWith(`${deploymentRoot}${path.sep}`) ||
-						sha256(await readFile(file)) !== script.sha256
-					)
+					if (!file.startsWith(`${deploymentRoot}${path.sep}`))
+						throw new Error('Runtime local script independent rehash failed');
+					if (deploymentPresent && sha256(await readFile(file)) !== script.sha256)
 						throw new Error('Runtime local script independent rehash failed');
 					sources.push(source);
 				}

@@ -299,7 +299,17 @@ export async function crawlLaneJourneys(
 		}),
 	);
 	const journey: SynthesizedJourney = Object.freeze({
-		name: `bounded crawl of ${origin} to depth ${String(bounds.maxDepth)}`,
+		/**
+		 * The name says what the journey measures, and not where it was served.
+		 *
+		 * A synthesized crawl is served on an ephemeral loopback port, so a name
+		 * carrying the origin carried the port, and the port put a fresh value
+		 * into the emitted record on every run — which put a fresh value into
+		 * `integrity.canonicalDigest` and into every lane `semanticDigest`. A
+		 * parity digest that changes every run cannot establish parity. The
+		 * origin is still recorded, on `locality.origin`, which no digest reads.
+		 */
+		name: `bounded crawl of the served lane to depth ${String(bounds.maxDepth)}`,
 		source: 'crawl',
 		specFile: null,
 		steps: Object.freeze(steps),

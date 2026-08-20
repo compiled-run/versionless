@@ -21,7 +21,10 @@ import {
 	type WitnessNextPrerenderPayloadEvidence,
 } from '../../../core/src/index.ts';
 import { executeNextKilledByGoogleWitnessRun } from './real-app-run.ts';
-import { verifyLinkedWitnessProvenance } from './provenance.ts';
+import {
+	assertLinkedWitnessProvenanceEquivalent,
+	verifyLinkedWitnessProvenance,
+} from './provenance.ts';
 
 const root = resolve(import.meta.dirname, '../../../..');
 const stageRoot = join(root, '.versionless/stage/witness-next-killedbygoogle');
@@ -389,8 +392,7 @@ export async function verifyWitnessNextKilledByGoogle(
 	const receipt = parseWitnessNextKilledByGoogleReceipt(
 		JSON.parse(await readFile(join(output, 'receipt.json'), 'utf8')),
 	);
-	if (canonicalize(receipt.provenance) !== canonicalize(provenance))
-		throw new Error('KilledByGoogle Witness local provenance differs');
+	assertLinkedWitnessProvenanceEquivalent(receipt.provenance, provenance, "KilledByGoogle");
 	if (
 		sha256(await readFile(join(root, receipt.canonicalReceipt.path))) !==
 		receipt.canonicalReceipt.sha256

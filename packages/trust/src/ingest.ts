@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import * as path from 'pathe';
 import { canonicalize, sha256 } from '../../core/src/receipts/canonicalize.ts';
@@ -33,14 +34,38 @@ function unquote(value: string): string {
 	return value;
 }
 
-function splitPackageKey(key: string): PackageCoordinate {
+function splitPackageKey(key: string): { name: string; version: string } {
 	const slash = key.startsWith('@') ? key.indexOf('/') : -1;
 	const split = key.startsWith('@') ? key.indexOf('@', slash + 1) : key.indexOf('@');
 	if (split <= 0) throw new Error(`Malformed pnpm package coordinate: ${key}`);
 	return { name: key.slice(0, split), version: key.slice(split + 1) };
 }
 
-export function lockPackages(lock: string): PackageCoordinate[] {
+/** pnpm writes a committed tarball's key as `name@file:vendor/<file>.tgz`. */
+const FILE_PROTOCOL = 'file:';
+
+export interface LockPackagesOptions {
+	/**
+	 * The repository root, needed only to digest the committed tarball behind a
+	 * non-registry coordinate. Omitting it while the lockfile contains one is an
+	 * error rather than a silent drop: a coordinate with no digest is not
+	 * auditable, and dropping it would understate the inventory.
+	 */
+	rootDir?: string;
+}
+
+/**
+ * Read every resolved package out of a pnpm lockfile.
+ *
+ * A registry entry is its key: `name@version`. A `file:` entry is not — its key
+ * carries an installation instruction where the version belongs, so the version
+ * is read from the entry's own `version:` line and the instruction is reduced to
+ * the two facts that survive being copied to another machine: which committed
+ * file, and what its bytes hash to. Nothing here invents a registry coordinate
+ * for something no registry has; the entry stays in the inventory, named as what
+ * it is.
+ */
+export function lockPackages(lock: string, options: LockPackagesOptions = {}): PackageCoordinate[] {
 	const lines = lock.replaceAll('\r\n', '\n').split('\n');
 	const section = lines.findIndex((line) => line === 'packages:');
 	if (section < 0 || lines.indexOf('packages:', section + 1) >= 0)
@@ -54,12 +79,45 @@ export function lockPackages(lock: string): PackageCoordinate[] {
 		const packageKey = line.slice(2, -1);
 		if (!packageKey || packageKey.trimStart() !== packageKey)
 			throw new Error(`Malformed top-level pnpm package entry: ${line}`);
-		packages.push(splitPackageKey(unquote(packageKey)));
+		const entry = splitPackageKey(unquote(packageKey));
+		if (!entry.version.startsWith(FILE_PROTOCOL)) {
+			packages.push(entry);
+			continue;
+		}
+		packages.push(fileCoordinate(entry, lines, index, options));
 	}
 	return validatePackageCoordinates(
 		packages.sort((a, b) => `${a.name}@${a.version}`.localeCompare(`${b.name}@${b.version}`)),
 		'pnpm packages',
 	);
+}
+
+function fileCoordinate(
+	entry: { name: string; version: string },
+	lines: string[],
+	index: number,
+	options: LockPackagesOptions,
+): PackageCoordinate {
+	const tarball = entry.version.slice(FILE_PROTOCOL.length);
+	let version: string | undefined;
+	for (let cursor = index + 1; cursor < lines.length; cursor++) {
+		const line = lines[cursor] ?? '';
+		if (!line.startsWith('    ')) break;
+		if (line.startsWith('    version: ')) version = line.slice('    version: '.length).trim();
+	}
+	if (!version)
+		throw new Error(`pnpm ${FILE_PROTOCOL} package entry states no version: ${entry.name}`);
+	if (!options.rootDir)
+		throw new Error(
+			`Digesting ${entry.name} requires the repository root: a ${FILE_PROTOCOL} coordinate is only auditable with its tarball digest`,
+		);
+	return {
+		name: entry.name,
+		version,
+		kind: 'file',
+		tarball,
+		sha256: sha256(readFileSync(path.join(options.rootDir, tarball))),
+	};
 }
 
 export function osvRequest(packages: PackageCoordinate[]): string {
@@ -91,7 +149,9 @@ export async function ingestTrustInputs(options: IngestTrustOptions): Promise<Tr
 
 	const rootDir = path.resolve(options.rootDir ?? '.');
 	const cacheDir = path.resolve(rootDir, options.cacheDir ?? '.versionless/cache/trust');
-	const packages = lockPackages(await readFile(path.join(rootDir, 'pnpm-lock.yaml'), 'utf8'));
+	const packages = lockPackages(await readFile(path.join(rootDir, 'pnpm-lock.yaml'), 'utf8'), {
+		rootDir,
+	});
 	const request = osvRequest(packages);
 	const fetcher = options.fetcher ?? fetch;
 	const osvText = await responseText(

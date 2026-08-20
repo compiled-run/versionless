@@ -21,7 +21,10 @@ import {
 	type WitnessReactHospitalrunRun,
 } from '../../../core/src/receipts/witness-react-hospitalrun.ts';
 import { executeReactHospitalrunWitnessRun, HOSPITALRUN_MUTATION_SEAM } from './real-app-run.ts';
-import { verifyLinkedWitnessProvenance } from './provenance.ts';
+import {
+	assertLinkedWitnessProvenanceEquivalent,
+	verifyLinkedWitnessProvenance,
+} from './provenance.ts';
 
 const root = resolve(import.meta.dirname, '../../../..');
 const fixtureEvidence = join(root, 'evidence/runs/react-hospitalrun');
@@ -271,8 +274,7 @@ export async function verifyWitnessReactHospitalrun(
 	const receipt = parseWitnessReactHospitalrunReceipt(
 		JSON.parse(await readFile(join(output, 'receipt.json'), 'utf8')),
 	);
-	if (canonicalize(receipt.provenance) !== canonicalize(expectedProvenance))
-		throw new Error('HospitalRun linked Witness provenance differs');
+	assertLinkedWitnessProvenanceEquivalent(receipt.provenance, expectedProvenance, "HospitalRun");
 	const canonicalBytes = await readFile(join(root, receipt.canonicalReceipt.path));
 	if (sha256(canonicalBytes) !== receipt.canonicalReceipt.sha256)
 		throw new Error('HospitalRun canonical receipt bytes drifted');

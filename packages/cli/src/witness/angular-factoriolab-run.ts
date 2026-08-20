@@ -21,7 +21,10 @@ import {
 	type WitnessAngularFactoriolabRun,
 } from '../../../core/src/receipts/witness-angular-factoriolab.ts';
 import { executeAngularFactoriolabWitnessRun, FACTORIOLAB_MUTATION_SEAM } from './real-app-run.ts';
-import { verifyLinkedWitnessProvenance } from './provenance.ts';
+import {
+	assertLinkedWitnessProvenanceEquivalent,
+	verifyLinkedWitnessProvenance,
+} from './provenance.ts';
 
 const root = resolve(import.meta.dirname, '../../../..');
 const fixtureEvidence = join(root, 'evidence/runs/angular-factoriolab');
@@ -303,8 +306,7 @@ export async function verifyWitnessAngularFactoriolab(
 	const receipt = parseWitnessAngularFactoriolabReceipt(
 		JSON.parse(await readFile(join(output, 'receipt.json'), 'utf8')),
 	);
-	if (canonicalize(receipt.provenance) !== canonicalize(expectedProvenance))
-		throw new Error('factoriolab linked Witness provenance differs');
+	assertLinkedWitnessProvenanceEquivalent(receipt.provenance, expectedProvenance, "factoriolab");
 	for (const bound of receipt.canonicalReceipts)
 		if (sha256(await readFile(join(root, bound.path))) !== bound.sha256)
 			throw new Error(`factoriolab bound build receipt bytes drifted: ${bound.path}`);

@@ -18,7 +18,10 @@ import {
 	type WitnessReactPapercupsRun,
 } from '../../../core/src/receipts/witness-react-papercups.ts';
 import { executeReactPapercupsWitnessRun } from './real-app-run.ts';
-import { verifyLinkedWitnessProvenance } from './provenance.ts';
+import {
+	assertLinkedWitnessProvenanceEquivalent,
+	verifyLinkedWitnessProvenance,
+} from './provenance.ts';
 
 const root = resolve(import.meta.dirname, '../../../..');
 const fixtureEvidence = join(root, 'evidence/runs/react-papercups-v1-0-0');
@@ -268,8 +271,7 @@ export async function verifyWitnessReactPapercups(
 	const receipt = parseWitnessReactPapercupsReceipt(
 		JSON.parse(await readFile(join(output, 'receipt.json'), 'utf8')),
 	);
-	if (canonicalize(receipt.provenance) !== canonicalize(expectedProvenance))
-		throw new Error('Papercups linked Witness provenance differs');
+	assertLinkedWitnessProvenanceEquivalent(receipt.provenance, expectedProvenance, "Papercups");
 	const canonicalBytes = await readFile(join(root, receipt.canonicalReceipt.path));
 	if (sha256(canonicalBytes) !== receipt.canonicalReceipt.sha256)
 		throw new Error('Papercups canonical receipt bytes drifted');

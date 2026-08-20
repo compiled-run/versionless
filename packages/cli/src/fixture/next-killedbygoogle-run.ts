@@ -145,8 +145,14 @@ const expectedNextTarball = 'f8069b42f1ba01bd63c528ff4bd084f0f13119649eee9f34f4c
 const expectedNextBuildSource = '8b9f70734856102c56df52752081ee73b0b39dca2adbc51dc2d40d8331d22dac';
 const expectedHistoricalAmbientPnpmLock =
 	'71fb680c6febb2024b8117efadf3ca0641fafa1cc076a08a126724a1b337e166';
-const expectedCurrentAmbientPnpmLock =
+// The ambient pnpm-lock state that immediately preceded vendoring @async/witness into the root
+// manifest (T037/T039). Still named by published evidence — keep it accepted, do not retire it:
+//   evidence/dependencies/angular-contacts/t631-terminal.json
+//   evidence/dependencies/angular-contacts/t633-terminal.json
+const expectedVendoringPredecessorAmbientPnpmLock =
 	'ae8c76d3483d5dcd72428ba3a0b9eb0b1731724c14f6f0893ac20972cea5e66a';
+const expectedCurrentAmbientPnpmLock =
+	'a05cd6c698fd531c4dcb6c1117512a0c8ce463cc56edf2e7eccb89585b56066e';
 const expectedHistoricalCacheKeyCandidates = [
 	{
 		updateOrder: ['fixture/yarn.lock', 'ambient/pnpm-lock.yaml'],
@@ -157,7 +163,7 @@ const expectedHistoricalCacheKeyCandidates = [
 		cacheKeySha256: '02a3831f05baeda599f7f5a78c2baf2bdb4ae2eb0cf2f6e0bb9e0a2bc7e0b50d',
 	},
 ] as const;
-const expectedCurrentCacheKeyCandidates = [
+const expectedVendoringPredecessorCacheKeyCandidates = [
 	{
 		updateOrder: ['fixture/yarn.lock', 'ambient/pnpm-lock.yaml'],
 		cacheKeySha256: '703d86dff0cb0b8c6aa8413365b62c6bbe780b73a520e9e53856bd25cb511c4a',
@@ -165,6 +171,16 @@ const expectedCurrentCacheKeyCandidates = [
 	{
 		updateOrder: ['ambient/pnpm-lock.yaml', 'fixture/yarn.lock'],
 		cacheKeySha256: '1688d4c1f17ce2ad3a8b6065707176112fe6cac438882d3257ba0428e126bd26',
+	},
+] as const;
+const expectedCurrentCacheKeyCandidates = [
+	{
+		updateOrder: ['fixture/yarn.lock', 'ambient/pnpm-lock.yaml'],
+		cacheKeySha256: '023652bbcc92f4de735e3e30446fcdc6dcb41e3bbc0f651bd236e792ed863b1e',
+	},
+	{
+		updateOrder: ['ambient/pnpm-lock.yaml', 'fixture/yarn.lock'],
+		cacheKeySha256: '906bba8598f806f62350582d43d03ce906d4f654ab98e78089a588b421c83eb9',
 	},
 ] as const;
 const expectedPreviousDiagnostic =
@@ -3665,9 +3681,14 @@ export function validateNextServerCacheKeyProvenanceArtifact(
 		ambientBinding?.sha256 === expectedHistoricalAmbientPnpmLock &&
 		ambientBinding.byteLength === 67_243 &&
 		canonicalize(model.candidates) === canonicalize(expectedHistoricalCacheKeyCandidates);
+	const vendoringPredecessorAmbientBinding =
+		ambientBinding?.sha256 === expectedVendoringPredecessorAmbientPnpmLock &&
+		ambientBinding.byteLength === 67_396 &&
+		canonicalize(model.candidates) ===
+			canonicalize(expectedVendoringPredecessorCacheKeyCandidates);
 	const currentAmbientBinding =
 		ambientBinding?.sha256 === expectedCurrentAmbientPnpmLock &&
-		ambientBinding.byteLength === 67_396 &&
+		ambientBinding.byteLength === 68_172 &&
 		canonicalize(model.candidates) === canonicalize(expectedCurrentCacheKeyCandidates);
 	if (
 		fixed.nextVersion !== '12.0.10' ||
@@ -3686,7 +3707,9 @@ export function validateNextServerCacheKeyProvenanceArtifact(
 		model.locks[0]?.sha256 !== expectedLock ||
 		model.locks[0]?.byteLength !== 256_958 ||
 		model.locks[1]?.identity !== 'ambient/pnpm-lock.yaml' ||
-		(!historicalAmbientBinding && !currentAmbientBinding) ||
+		(!historicalAmbientBinding &&
+			!vendoringPredecessorAmbientBinding &&
+			!currentAmbientBinding) ||
 		model.locks.some(
 			(lock) =>
 				canonicalize(Object.keys(lock).sort(compare)) !==

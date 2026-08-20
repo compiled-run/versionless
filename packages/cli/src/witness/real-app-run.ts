@@ -237,6 +237,7 @@ import {
 	type WitnessTransportRequest,
 	type WitnessViewportScroll,
 } from './playwright-host.ts';
+import { witnessChromiumExecutablePath } from './browser.ts';
 import { type LiveBackendHandle, type LiveBackendSpec, startLiveBackend } from './live-backend.ts';
 import { verifyLinkedWitnessProvenance } from './provenance.ts';
 import type {
@@ -247,10 +248,6 @@ import type {
 
 const root = resolve(import.meta.dirname, '../../../..');
 const stageRoot = join(root, '.versionless/stage/witness-real-app');
-const chromiumExecutable = join(
-	root,
-	'.versionless/cache/react-boilerplate-v4/ms-playwright/chromium_headless_shell-1208/chrome-headless-shell-mac-arm64/chrome-headless-shell',
-);
 const killedByGoogleArchive = join(
 	root,
 	'.versionless/cache/tier-f/next-killedbygoogle/c28878d0f65b56aa595763c852477fb0c1e3533e5c7f7ea9daa2be16f102368d/source.tar.gz',
@@ -6170,7 +6167,7 @@ async function executeRun(
 		app.app === 'angular-phonecat' ? await expectedPhonecatImages(laneRoot) : null;
 	const differentialEvents: WitnessDifferentialEvent[] = [];
 	const host = createPlaywrightWitnessHost({
-		chromiumExecutable,
+		chromiumExecutable: witnessChromiumExecutablePath(),
 		contextProfile,
 		transport:
 			app.transport === undefined
@@ -7154,7 +7151,9 @@ async function mutationProof(
 	try {
 		await writeFile(file, mutatedText);
 		const staticServer = await startStaticServer(dirname(file));
-		const host = createPlaywrightWitnessHost({ chromiumExecutable });
+		const host = createPlaywrightWitnessHost({
+			chromiumExecutable: witnessChromiumExecutablePath(),
+		});
 		const definition = box(`${app}-mutation-red`, async (context) => {
 			const page = await context.browser.visit(joinURL(staticServer.origin, '/'));
 			await context.expect.page.text(page, 'title', expectedTitle);
@@ -7244,7 +7243,7 @@ async function runReactBaselineDifferentialProfile(
 	const transportEvidence: JourneyTransportEvidence = { apiUsernames: [] };
 	const expectedServiceWorker = await expectedReactTelemetry(laneRoot, 'baseline');
 	const host = createPlaywrightWitnessHost({
-		chromiumExecutable,
+		chromiumExecutable: witnessChromiumExecutablePath(),
 		contextProfile: profile,
 		diagnosticEvent: recordEvent,
 		transport: async (request) => await app.transport!(request, transportEvidence),
@@ -7397,7 +7396,7 @@ export async function diagnoseReactBaselineServiceWorker(): Promise<void> {
 		environment: {
 			chromium: canonicalReceipt.environment?.browser?.chromium ?? 'unknown',
 			playwright: canonicalReceipt.environment?.browser?.playwright ?? 'unknown',
-			linkedWitnessCommit: provenance.commit,
+			linkedWitnessCommit: provenance.sourceCommit,
 			workerSha256: sha256(
 				await readFile(join(stageRoot, 'lanes/react-boilerplate/baseline/sw.js')),
 			),

@@ -538,17 +538,17 @@ describe('Killed by Google Next 12 production runner', () => {
 			},
 			{
 				identity: 'ambient/pnpm-lock.yaml',
-				sha256: 'ae8c76d3483d5dcd72428ba3a0b9eb0b1731724c14f6f0893ac20972cea5e66a',
+				sha256: 'a05cd6c698fd531c4dcb6c1117512a0c8ce463cc56edf2e7eccb89585b56066e',
 			},
 		]);
 		expect(model.candidates).toEqual([
 			{
 				updateOrder: ['fixture/yarn.lock', 'ambient/pnpm-lock.yaml'],
-				cacheKeySha256: '703d86dff0cb0b8c6aa8413365b62c6bbe780b73a520e9e53856bd25cb511c4a',
+				cacheKeySha256: '023652bbcc92f4de735e3e30446fcdc6dcb41e3bbc0f651bd236e792ed863b1e',
 			},
 			{
 				updateOrder: ['ambient/pnpm-lock.yaml', 'fixture/yarn.lock'],
-				cacheKeySha256: '1688d4c1f17ce2ad3a8b6065707176112fe6cac438882d3257ba0428e126bd26',
+				cacheKeySha256: '906bba8598f806f62350582d43d03ce906d4f654ab98e78089a588b421c83eb9',
 			},
 		]);
 		expect(new Set(model.candidates.map((candidate) => candidate.cacheKeySha256)).size).toBe(2);

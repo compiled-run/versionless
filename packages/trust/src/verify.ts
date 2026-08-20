@@ -37,7 +37,10 @@ import { ANGULAR_TINY_TRANSLATOR_FIXTURE } from '../../core/src/receipts/witness
 import { ANGULAR_SUPER_PRODUCTIVITY_FIXTURE } from '../../core/src/receipts/witness-angular-super-productivity.ts';
 import {
 	SCRIPT_SURFACE_SCHEMA,
+	scriptSurfaceSourceAbsent,
 	verifyScriptSurface,
+	verifyScriptSurfaceAgainstDeclaration,
+	type ScriptSurface,
 } from '../../core/src/enterprise/script-surface.ts';
 import {
 	parseRuntimeObservationConfig,
@@ -212,9 +215,30 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 	);
 	if (emittedScriptSurface.schemaVersion !== SCRIPT_SURFACE_SCHEMA)
 		throw new Error('Unsupported emitted script-surface schema');
-	const rederivedScriptSurface = await verifyScriptSurface({ rootDir: root, environment });
-	if (canonicalize(emittedScriptSurface) !== canonicalize(rederivedScriptSurface))
-		throw new Error('Script surface does not match independent re-derivation');
+	/**
+	 * The script surface is read from built lanes under `.versionless/work`,
+	 * which is gitignored. A fresh clone has the emitted evidence and the
+	 * committed declaration but not the deployments they were scanned from, and
+	 * before this branch that clone got an ENOENT that took the whole of
+	 * `trust:verify`, `report:coverage --verify-only` and `supported-matrix`
+	 * down with it. A tree that carries the builds still gets the full
+	 * re-derivation and nothing about it is relaxed; a tree that does not gets
+	 * the named `trust.script-surface-source-absent` condition and the narrower
+	 * reading `verifyScriptSurfaceAgainstDeclaration` documents — the network
+	 * half re-derived from committed receipts, the static half reconciled with
+	 * `trust/script-surface.json` rather than re-read.
+	 */
+	let rederivedScriptSurface: ScriptSurface;
+	try {
+		rederivedScriptSurface = await verifyScriptSurface({ rootDir: root, environment });
+		if (canonicalize(emittedScriptSurface) !== canonicalize(rederivedScriptSurface))
+			throw new Error('Script surface does not match independent re-derivation');
+	} catch (error) {
+		if (scriptSurfaceSourceAbsent(error) === null) throw error;
+		const declared = emittedScriptSurface as unknown as ScriptSurface;
+		await verifyScriptSurfaceAgainstDeclaration(declared, { rootDir: root, environment });
+		rederivedScriptSurface = declared;
+	}
 	const runtimeConfig = parseRuntimeObservationConfig(
 		await readJson(path.join(root, 'trust/runtime-script-observation.json')),
 	);
@@ -355,7 +379,9 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 		throw new Error(
 			'Corpus conformance does not match the canonical aggregate transaction state',
 		);
-	const packages = lockPackages(await readFile(path.join(root, 'pnpm-lock.yaml'), 'utf8'));
+	const packages = lockPackages(await readFile(path.join(root, 'pnpm-lock.yaml'), 'utf8'), {
+		rootDir: root,
+	});
 	if (packages.length === 0) throw new Error('Current pnpm resolved inventory is empty');
 	const workspacePaths = await workspaceManifestPaths(root);
 	const workspaceSources = workspacePaths.map((manifestPath) =>
@@ -378,13 +404,22 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 	const graph = await readJson(path.join(output, 'dependency-graph.cdx.json'));
 	validateCycloneDx17(graph, { workspace, packages });
 	const graphRecord = asRecord(graph, 'dependency graph');
+	/**
+	 * The graph is the ten workspace manifests plus every resolved lockfile entry,
+	 * and that is the only thing the count can be. A literal here would pass while
+	 * the lockfile said something else, which is the failure it is supposed to
+	 * catch.
+	 */
+	const expectedGraphEntries = workspace.length + packages.length;
 	if (
 		!Array.isArray(graphRecord.components) ||
 		!Array.isArray(graphRecord.dependencies) ||
-		graphRecord.components.length !== 197 ||
-		graphRecord.dependencies.length !== 197
+		graphRecord.components.length !== expectedGraphEntries ||
+		graphRecord.dependencies.length !== expectedGraphEntries
 	)
-		throw new Error('Dependency graph must preserve exactly 197 components and dependencies');
+		throw new Error(
+			`Dependency graph must preserve exactly ${expectedGraphEntries} components and dependencies`,
+		);
 	const licenses = asRecord(
 		await readJson(path.join(output, 'licenses.json')),
 		'license inventory',
