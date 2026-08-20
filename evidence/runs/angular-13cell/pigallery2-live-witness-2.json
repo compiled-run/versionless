@@ -1,0 +1,605 @@
+{
+ "schemaVersion": "versionless.angular-13cell-live-witness.v1",
+ "unit": "bank-demo-fleet-pipeline-p2/T009e-localize-polyfill-rewitness",
+ "goal": "next-tranche-strategy",
+ "measuredAt": "2026-08-20",
+ "repoHeadAtMeasurement": "60d5527eff60ee7ca28dc14530ae83a31b49fdac",
+ "host": "darwin-arm64 (Apple silicon)",
+ "question": [
+  "T009d caught the Angular 13 lane of pigallery2 dying on \"ReferenceError: $localize is not defined\" before bootstrap, and said in its own notEstablished that it had NOT established that adding @angular/localize/init is sufficient, because that build was never attempted.",
+  "This unit performs exactly that standard Angular 9+ migration step - nothing more - rebuilds the lane twice, and re-witnesses both lanes live against the same era backend in the same session. The question is narrow and falsifiable: does the standard step close the defect, and does the lane then run?"
+ ],
+ "answerInOneLine": "The standard step closes the $localize defect COMPLETELY and exposes a second one behind it: the lane now bootstraps and routes itself, then dies on \"Error: Cannot find module './messages.en-US.xlf'\" from a DI factory, never reaches its gallery, and makes ZERO API calls - while the outcome strings, for the first time, read identical: true. Read that parity flag as the warning it is.",
+ "headline": {
+  "localizeDefectClosed": true,
+  "howThatIsKnown": "the migrated lane no longer sits on \"/\". Its running application navigated itself to \"/login\" - Angular's router ran, which it cannot do unless the module bootstrapped. In T009d the application never moved off \"/\" because it never started.",
+  "laneNowBootstraps": true,
+  "laneStillDoesNotWork": true,
+  "whatItStillCannotDo": "reach its gallery. galleryComponentPresent false, gridPresent false, photoTiles 0, navbarPresent false, visibleText empty, and ZERO calls to /api/notifications or /api/gallery/content/ - against a baseline lane that does all five.",
+  "theTrap": "parity.identical is TRUE and the lane is BROKEN. Both lanes now report routes-reached 0 for OPPOSITE reasons: the baseline leaves \"/\" for /gallery/ (healthy), the migrated leaves \"/\" for /login (broken). The outcome vocabulary cannot tell those apart. Anything downstream that prices a pigallery2 claim on parity.identical alone would price this lane as GREEN."
+ },
+ "consent": {
+  "mode": "consented",
+  "consentId": "VL-LEGACY-CORPUS-2026-08-10",
+  "fetched": [
+   "@angular/localize@13.4.0 and its five transitive additions, installed into the 13cell work area by `ng add @angular/localize@13.4.0 --skip-confirmation` under VERSIONLESS_NETWORK_MODE=consented VERSIONLESS_CONSENT_ID=VL-LEGACY-CORPUS-2026-08-10. This is the ONE consented fetch this unit made."
+  ],
+  "lockDeltaIsAdditiveOnly": {
+   "added": [
+    "node_modules/@angular/localize",
+    "node_modules/@angular/localize/node_modules/@babel/core",
+    "node_modules/@angular/localize/node_modules/@babel/generator",
+    "node_modules/@angular/localize/node_modules/@jridgewell/gen-mapping",
+    "node_modules/@angular/localize/node_modules/jsesc",
+    "node_modules/@angular/localize/node_modules/semver"
+   ],
+   "removed": [],
+   "changedExistingPackages": [],
+   "checkedBy": "package-lock.json compared entry-by-entry against a pre-install snapshot. No pin already in the cell moved: Angular is still 13.4.0, the CLI still 13.3.11, rxjs still 6.6.7, TypeScript still 4.6.4."
+  },
+  "notFetched": [
+   "Nothing else. The baseline lane output, the era backend, its dependency closure, the era Node and the three generated PNGs were all already on disk. The Chromium is the host Playwright install the witness host resolves.",
+   "No media was fetched. The gallery media is byte-identical to T009d's - same three generated PNGs, same sha256s, verified before the run."
+  ],
+  "disclosedNonLoopback": {
+   "count": 0,
+   "what": "Zero, on both lanes, during witnessing. The two CDN stylesheets pigallery2's index.html links were mocked on both lanes (mockedNonLoopback 2 per lane) and never fetched. The consented npm fetch happened BEFORE any browser was launched and is disclosed above."
+  }
+ },
+ "migrationDelta": {
+  "priorCount": 7,
+  "priorCountSource": "T009b counted 7 migration-delta items for this cell (evidence/runs/angular-13cell/pigallery2-compile.json / pigallery2-lanes.json).",
+  "newCount": 8,
+  "item8": {
+   "name": "@angular/localize runtime polyfill",
+   "appliedBy": "ng add @angular/localize@13.4.0 --skip-confirmation - the CANONICAL Angular CLI path, not a hand edit. The CLI 13.3.11 in the cell offered it and ran its own schematic.",
+   "commandVerbatim": "VERSIONLESS_NETWORK_MODE=consented VERSIONLESS_CONSENT_ID=VL-LEGACY-CORPUS-2026-08-10 node node_modules/.bin/ng add @angular/localize@13.4.0 --skip-confirmation",
+   "whatTheSchematicChanged": [
+    "package.json devDependencies: + \"@angular/localize\": \"^13.4.0\" (resolved to exactly 13.4.0, verified from node_modules/@angular/localize/package.json).",
+    "frontend/polyfills.ts: + `import '@angular/localize/init';` at the top of the file, with the CLI's own two-line comment above it."
+   ],
+   "whatTheSchematicDidNOTChange": "angular.json and tsconfig.13cell.build.json are byte-identical to before the run - diffed against a pre-run snapshot. The schematic touched exactly the two files above and the lock file. So the claim \"the STANDARD step, and only the standard step\" is literal here, not a paraphrase.",
+   "exactPolyfillsDiff": "+/***************************************************************************************************\n+ * Load `$localize` onto the global scope - used if i18n tags appear in Angular templates.\n+ */\n+import '@angular/localize/init';",
+   "why": [
+    "Angular 9 moved template i18n from a compile-time ViewEngine transform to a RUNTIME tagged-template function named $localize. From v9 on, the AOT compiler emits `$localize\\`...\\`` tagged constants into the component `consts` of any component carrying i18n attributes - and pigallery2 1.7.0 carries them throughout its templates.",
+    "The emitted bundle therefore REFERENCES $localize whether or not the application ever translates anything. Nothing in @angular/core defines it; the tag lives in the separate @angular/localize package and is installed onto the global scope only by importing @angular/localize/init before bootstrap. That is why the CLI puts the import in polyfills.ts and why `ng add @angular/localize` exists as a first-class migration step.",
+    "This is measurable in the artefacts, not inferred: the migrated main bundle contains 215 occurrences of $localize both BEFORE and AFTER the fix (it is byte-identical - see rebuild.mainBundleUnchanged), and the polyfills bundle contains 0 before and 2 after, one of which is the assignment that defines the tag globally."
+   ],
+   "whereTheFirstEmittedTagSits": "main.4b2fa472bc230245.js offset 241780, inside the `consts` factory of the app-login component: `t=$localize`:\\u241f380bac8029fe968edf74d1856635666bf8b55516\\u241f1692815930495952260:Please log in`` - within eight bytes of the 241772 column T009d's ReferenceError named. The catch and the fix point at the same place in the same bundle."
+  },
+  "item8DoesNotMakeTheLaneWork": "It closes the defect it names and nothing else. See finding.secondDefect."
+ },
+ "rebuild": {
+  "commandVerbatim": "node node_modules/.bin/ng build --configuration production --output-path=./t009e-migrated-run<N>",
+  "sameAsT009b": "yes - character for character, only the output directory name differs. The recipe script is .versionless/work/angular-pigallery2/logs/t009e-migrated-build.sh, which is T009b's loop with t009b renamed to t009e.",
+  "runtime": "node v16.20.2 (darwin-arm64), npm 8.19.4 - the cell runtime, unchanged.",
+  "builds": 2,
+  "runs": [
+   {
+    "run": 1,
+    "outDir": ".versionless/work/angular-pigallery2/13cell/t009e-migrated-run1",
+    "exitCode": 0,
+    "wallSeconds": 7,
+    "webpackHash": "365f7a87a2b00d00",
+    "webpackTimeMs": 5597,
+    "ngccRan": true
+   },
+   {
+    "run": 2,
+    "outDir": ".versionless/work/angular-pigallery2/13cell/t009e-migrated-run2",
+    "exitCode": 0,
+    "wallSeconds": 4,
+    "webpackHash": "365f7a87a2b00d00",
+    "webpackTimeMs": 3290,
+    "ngccRan": false
+   }
+  ],
+  "doubleBuildIdentical": true,
+  "outputFileCount": 13,
+  "outputTotalBytes": 2495263,
+  "differingFiles": [],
+  "doubleBuildResult": "IDENTICAL - 13/13 files, byte for byte, across two independent runs; both runs printed the same webpack hash 365f7a87a2b00d00. Determinism survives the fix.",
+  "webpackHashChangedFrom": "d2bb139c5bbeebb0 (T009b) -> 365f7a87a2b00d00 (T009e)",
+  "chunkFilenames": {
+   "before": [
+    "main.4b2fa472bc230245.js",
+    "polyfills.907de136ddb20602.js",
+    "runtime.db24d125644157a2.js",
+    "styles.aac6e848cd321373.css"
+   ],
+   "after": [
+    "main.4b2fa472bc230245.js",
+    "polyfills.5e5c92c3fb2e7264.js",
+    "runtime.411b0840ac02ba1a.js",
+    "styles.aac6e848cd321373.css"
+   ]
+  },
+  "mainBundleUnchanged": {
+   "claim": "The main bundle is BYTE-IDENTICAL before and after the fix.",
+   "sha256": "aa66f5ccb2314a79c0ac881622a52f8df4faf2b5b74140d7381e35805da2d04f",
+   "holdsFor": [
+    "t009b-migrated-run1/main.4b2fa472bc230245.js",
+    "t009e-migrated-run1/main.4b2fa472bc230245.js",
+    "t009e-migrated-run2/main.4b2fa472bc230245.js"
+   ],
+   "whyThatMatters": "It proves the fix is purely a runtime-environment fix. Not one byte of the application changed; only the polyfills chunk (which now defines the tag) and the runtime chunk (whose chunk map records the new polyfills hash). Any doubt that T009d's defect was \"the app is wrong\" rather than \"the tag was missing\" is settled by this hash."
+  },
+  "localizeInEmittedBundles": {
+   "askedFor": "the packet asks whether $localize references remain unresolved in the emitted main bundle",
+   "answer": "The identifier is still there - 215 occurrences, exactly as before - and that is CORRECT, not a leftover. The AOT compiler emits the tag; the polyfill defines it. What changed is the definition, not the references.",
+   "counts": {
+    "main.js (T009b, before)": 215,
+    "main.js (T009e, after)": 215,
+    "polyfills.js (T009b, before)": 0,
+    "polyfills.js (T009e, after)": 2
+   },
+   "definitionSiteInPolyfills": "a.$localize=u - the assignment onto the global object, from @angular/localize/init, present only in the T009e polyfills chunk."
+  },
+  "buildWarnings": "unchanged from T009b - the same four CommonJS optimization-bailout advisories and the same bootstrap :lang selector notice, in both runs. No new warning, and no warning mentioning i18n, localize or a missing translation file. The second defect is invisible at build time."
+ },
+ "backend": {
+  "what": "pigallery2 1.7.0's own Express server - backend/index.js - copied byte-for-byte out of the frozen baseline checkout into a per-lane serve root and run unmodified. Identical to T009d.",
+  "era": "node v10.24.1 (darwin-x64, under Rosetta). The backend was NOT modernized.",
+  "recipe": ".versionless/work/angular-pigallery2/logs/t009e-backend.sh",
+  "recipeProvenance": "T009d's t009d-backend.sh with exactly two path substitutions and no other change: the serve roots become serve/e-<lane> and the backend log becomes t009e-backend-<lane>.log, so T009d's own artefacts are left untouched. `diff t009d-backend.sh t009e-backend.sh` shows only those lines.",
+  "howTheLaneIsPointedAt": "ProjectPath.FrontendFolder is hard-coded to <root>/dist, so the serve root's `dist` symlink is the ONLY thing that differs between the two lanes: same backend copy source, same generated media, same config, same port 32701, same era Node.",
+  "config": "identical to T009d - 127.0.0.1:32701, memory database, Jimp thumbnails, threading off, authenticationRequired false, unAuthenticatedUserRole Admin.",
+  "serialization": "One lane at a time. Baseline was set up, started, witnessed and STOPPED before the migrated backend was started; the stop step pkills any surviving era backend. Each lane's served bundle filenames were read off the live index.html and checked against that lane's build BEFORE witnessing it - both matched (see lanes.*.bundlesServed).",
+  "readiness": "polled GET / until 200; both lanes came up in 2s."
+ },
+ "media": {
+  "what": "the SAME three 64x48 generated PNGs T009d used, re-verified by sha256 before the run rather than regenerated.",
+  "dir": ".versionless/work/angular-pigallery2/serve/media",
+  "files": [
+   {
+    "name": "a-crimson.png",
+    "sha256": "f35fe76f2e81d4bfc9cb47d25bdacdc96ebe6b27e4edfd69c2447189f4b281f2"
+   },
+   {
+    "name": "b-forest.png",
+    "sha256": "e98dd3c6320bafd8f6e154f6c93be7a9011fe47594187ec26c25440906b6c7b5"
+   },
+   {
+    "name": "c-indigo.png",
+    "sha256": "a6c4515c39d3f92e78b9bf7e912b191d311b52a2d3a019d4f5d1b78c8f13dc8f"
+   }
+  ],
+  "matchesT009d": true,
+  "indexedByTheBackend": "GET /api/gallery/content/ on the baseline lane returned its gallery again and the running application rendered \"3 Images / 3 items\", so the backend indexed the same tree it did in T009d."
+ },
+ "witnessRun": {
+  "flow": "witness-host-driven-synthesized-crawl-against-live-backend-origin",
+  "howItWasRun": ".versionless/work/angular-pigallery2/logs/t009d-live-witness.mjs - T009d's driver REUSED BYTE-FOR-BYTE, under `node --experimental-strip-types` on host node v24.15.0. It takes every path as an argument, so not one character of it needed adjusting.",
+  "driverSha256": "c798e2b9793014f828ac557163a4153b217b322756a7234360985b0694c3888a",
+  "whyNotTheCliDirectly": "unchanged from T009d: the CLI's witness:real-app synthesized path takes DIRECTORIES and serves them itself, and its live-backend seam is gated on a registered AppSpec in a closed admitted list in packages/core/src/receipts/witness-real-app.ts. Extending that is a packages/ change this unit is forbidden to make, so the seam was OPERATED, not extended.",
+  "importedUnchangedFromPackages": [
+   "packages/cli/src/witness/journey-synthesis/crawl.ts - crawlLaneJourneys, CRAWL_DEFAULT_BOUNDS",
+   "packages/cli/src/witness/journey-synthesis/emit.ts - emitSynthesizedJourneys, completeSynthesizedJourney",
+   "packages/cli/src/witness/journey-synthesis/driver.ts - routeLinkSelectors",
+   "packages/cli/src/witness/playwright-host.ts - createPlaywrightWitnessHost",
+   "packages/cli/src/witness/browser.ts - witnessChromiumExecutablePath"
+  ],
+  "sameSession": "BOTH lanes were witnessed in this unit, minutes apart, against the same backend recipe on the same host. The baseline reading is FRESH, not carried over from T009d - which is what makes the comparison this record publishes a same-session one.",
+  "baselineReproducedT009d": {
+   "claim": "the fresh baseline pass reproduced T009d's baseline reading exactly.",
+   "outcomesIdenticalToT009d": true,
+   "surfaceIdenticalToT009d": "title, location /gallery/, appRootChildElementCount 2, galleryComponentPresent true, gridPresent true, photoTiles 3, navbarPresent true, and the same two API calls at 200. The only differing field across sessions is witnessWallSeconds.",
+   "whyItMatters": "the recipe reproduces. Any change in the migrated lane's reading is therefore attributable to the rebuild, not to drift in the harness."
+  },
+  "likeForLikeBy": "construction. The journey was derived ONCE, by the bounded crawl, against the baseline lane's live origin, written to t009e-plan.json, and the SAME plan replayed against the migrated lane.",
+  "crawlBounds": {
+   "maxDepth": 2,
+   "maxRoutes": 12,
+   "requestTimeoutMs": 5000
+  },
+  "plan": ".versionless/work/angular-pigallery2/logs/t009e-plan.json",
+  "planSha256": "a9ecbb6c62c52b65b931af535bfb6c845e597347ca82feb796e0b885b2691567",
+  "chromium": {
+   "resolvedBy": "packages/cli/src/witness/browser.ts - witnessChromiumExecutablePath()",
+   "real": true,
+   "headless": true
+  },
+  "loopbackEnforcement": "structural, in the witness host: context.route continues a request only when isWitnessLoopbackUrl holds and fulfils everything else locally with 204. successfulNonLoopback is 0 by construction on both lanes, not by report.",
+  "boundedWaits": [
+   "app-pi-gallery2 with more than one child element, at most 15s",
+   "at least one app-gallery-grid-photo, at most 15s",
+   "Both allowed to time out and be measured either way. The migrated lane spent both in full again (31.0s wall, against the baseline's 1.3s) - for a different reason than in T009d: this time the application was running, it just never rendered a gallery."
+  ]
+ },
+ "lanes": {
+  "baseline": {
+   "lane": "baseline",
+   "what": "pigallery2 1.7.0 frontend built by its OWN toolchain (Angular 7.2.15 ViewEngine under era Node v10.24.1), served by its own era Express backend. Byte-for-byte the T009b baseline output; nothing about this lane changed in T009e.",
+   "laneRoot": ".versionless/work/angular-pigallery2/baseline/t009b-baseline-run1",
+   "serveRoot": ".versionless/work/angular-pigallery2/serve/e-baseline",
+   "backendOrigin": "http://127.0.0.1:32701",
+   "backendNode": "v10.24.1 (x64, under Rosetta) - the era backend at its era runtime",
+   "backendReadySeconds": 2,
+   "frontendServedFrom": "the serve root's dist symlink, pointing at the lane output; the backend renders index.html through EJS and serves the rest of the tree itself",
+   "bundlesServed": [
+    "main.8d7a6399e761b63341dc.js",
+    "polyfills.6ce7c8613dd7f1c39c89.js",
+    "runtime.465c2333d355155ec5f3.js",
+    "styles.7af5efa7635d003dad98.css"
+   ],
+   "journeySource": "synthesized-crawl",
+   "journeysRun": 1,
+   "journeys": [
+    {
+     "name": "bounded crawl of the served lane to depth 2",
+     "source": "crawl",
+     "specFile": null,
+     "replayable": true,
+     "ran": true,
+     "routesDeclared": 3,
+     "routesReached": 0,
+     "selectorsDeclared": 0,
+     "selectorsPresent": 0,
+     "routesWithoutOverflow": 1,
+     "unreplayableSteps": [
+      "route-not-reachable-by-link:/assets/icon.png",
+      "route-not-reachable-by-link:/styles.7af5efa7635d003dad98.css"
+     ],
+     "outcomes": [
+      "journey-measured-declared-gesture-count-0",
+      "journey-measured-unhandled-construct-count-0",
+      "journey-synthesized-by-crawl-bounded-depth-2-reached-0-routes",
+      "journey-measured-route-reached-0-of-3-declared-routes",
+      "journey-measured-selector-present-0-of-0-declared-selectors",
+      "journey-measured-no-document-overflow-on-1-routes"
+     ]
+    }
+   ],
+   "outcomes": [
+    "journey-measured-declared-gesture-count-0",
+    "journey-measured-unhandled-construct-count-0",
+    "journey-synthesized-by-crawl-bounded-depth-2-reached-0-routes",
+    "journey-measured-route-reached-0-of-3-declared-routes",
+    "journey-measured-selector-present-0-of-0-declared-selectors",
+    "journey-measured-no-document-overflow-on-1-routes"
+   ],
+   "outcomesProvenance": "copied verbatim out of the lane reading the witness host produced; every string comes from completeSynthesizedJourney and the closed vocabulary in packages/cli/src/witness/journey-synthesis/vocabulary.ts. No pass verb appears in any of them.",
+   "routesReached": {
+    "declaredByCrawl": [
+     "/",
+     "/assets/icon.png",
+     "/styles.7af5efa7635d003dad98.css"
+    ],
+    "reachedCount": 0,
+    "routeTheApplicationSettledOn": "/gallery/",
+    "galleryRouteReached": true
+   },
+   "runningApplication": {
+    "title": "PiGallery 2",
+    "baseHref": "/",
+    "baseResolved": "http://127.0.0.1:32701/",
+    "appRootPresent": true,
+    "appRootChildElementCount": 2,
+    "serverInjectDefined": true,
+    "galleryComponentPresent": true,
+    "gridPresent": true,
+    "photoTiles": 3,
+    "photoImages": 0,
+    "thumbnailSrcs": [],
+    "navbarPresent": true,
+    "visibleText": "PiGallery 2\nGallery\nen \n3\nImages\n3 items \nServer error\nSharing is not supported with these settings. Disabling temporally. Please adjust the config properly. Details: \"Error: Memory Database do not support sharing\"\nServer error\nFaces are not supported with these settings. Disabling temporally. Pleas",
+    "location": "/gallery/"
+   },
+   "consoleMessagesVerbatim": [
+    "error: Failed to find a valid digest in the 'integrity' attribute for resource 'https://unpkg.com/leaflet@1.3.4/dist/leaflet.css' with computed SHA-512 integrity 'z4PhNX7vuL3xVChQ1m2AB9Yg5AULVxXcg/SpIdNs6c5H0NE8XYXysP+DGNKHfuwvY7kxvUdBeoGlODJ6+SfaPg=='. The resource has been blocked."
+   ],
+   "consoleMessagesTruncation": "each console message is truncated to 300 characters by the witness driver (t009d-live-witness.mjs), unchanged from T009d. The truncation is the driver's, not this record's.",
+   "pageErrorsVerbatim": [],
+   "requestsObserved": [
+    "GET 200 http://127.0.0.1:32701/",
+    "GET 204 https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/css/bootstrap3/bootstrap-switch.css",
+    "GET 204 https://unpkg.com/leaflet@1.3.4/dist/leaflet.css",
+    "GET 200 http://127.0.0.1:32701/assets/icon.png",
+    "GET 200 http://127.0.0.1:32701/runtime.465c2333d355155ec5f3.js",
+    "GET 200 http://127.0.0.1:32701/styles.7af5efa7635d003dad98.css",
+    "GET 200 http://127.0.0.1:32701/polyfills.6ce7c8613dd7f1c39c89.js",
+    "GET 200 http://127.0.0.1:32701/main.8d7a6399e761b63341dc.js",
+    "GET 200 http://127.0.0.1:32701/open-iconic.3cf97837524dd7445e9d.woff",
+    "GET 200 http://127.0.0.1:32701/api/notifications",
+    "GET 200 http://127.0.0.1:32701/api/gallery/content/",
+    "GET 200 http://127.0.0.1:32701/assets/icon_inv.png"
+   ],
+   "successfulNonLoopback": 0,
+   "mockedNonLoopback": 2,
+   "witnessWallSeconds": 1.329,
+   "laneReading": ".versionless/work/angular-pigallery2/logs/t009e-lane-baseline.json",
+   "laneReadingSha256": "4124031901478652e4535a0b9d905562ea6aa734dafd8654d6ee3683f580eb12"
+  },
+  "migrated": {
+   "lane": "migrated",
+   "what": "pigallery2 1.7.0 frontend built at the honest cell (Angular 13.4.0 / TypeScript 4.6.4 under Node v16.20.2), REBUILT in this unit after the @angular/localize fix, served by the SAME era Express backend.",
+   "laneRoot": ".versionless/work/angular-pigallery2/13cell/t009e-migrated-run1",
+   "serveRoot": ".versionless/work/angular-pigallery2/serve/e-migrated",
+   "backendOrigin": "http://127.0.0.1:32701",
+   "backendNode": "v10.24.1 (x64, under Rosetta) - the era backend at its era runtime",
+   "backendReadySeconds": 2,
+   "frontendServedFrom": "the serve root's dist symlink, pointing at the lane output; the backend renders index.html through EJS and serves the rest of the tree itself",
+   "bundlesServed": [
+    "main.4b2fa472bc230245.js",
+    "polyfills.5e5c92c3fb2e7264.js",
+    "runtime.411b0840ac02ba1a.js",
+    "styles.aac6e848cd321373.css"
+   ],
+   "journeySource": "synthesized-crawl",
+   "journeysRun": 1,
+   "journeys": [
+    {
+     "name": "bounded crawl of the served lane to depth 2",
+     "source": "crawl",
+     "specFile": null,
+     "replayable": true,
+     "ran": true,
+     "routesDeclared": 3,
+     "routesReached": 0,
+     "selectorsDeclared": 0,
+     "selectorsPresent": 0,
+     "routesWithoutOverflow": 1,
+     "unreplayableSteps": [
+      "route-not-reachable-by-link:/assets/icon.png",
+      "route-not-reachable-by-link:/styles.7af5efa7635d003dad98.css"
+     ],
+     "outcomes": [
+      "journey-measured-declared-gesture-count-0",
+      "journey-measured-unhandled-construct-count-0",
+      "journey-synthesized-by-crawl-bounded-depth-2-reached-0-routes",
+      "journey-measured-route-reached-0-of-3-declared-routes",
+      "journey-measured-selector-present-0-of-0-declared-selectors",
+      "journey-measured-no-document-overflow-on-1-routes"
+     ]
+    }
+   ],
+   "outcomes": [
+    "journey-measured-declared-gesture-count-0",
+    "journey-measured-unhandled-construct-count-0",
+    "journey-synthesized-by-crawl-bounded-depth-2-reached-0-routes",
+    "journey-measured-route-reached-0-of-3-declared-routes",
+    "journey-measured-selector-present-0-of-0-declared-selectors",
+    "journey-measured-no-document-overflow-on-1-routes"
+   ],
+   "outcomesProvenance": "copied verbatim out of the lane reading the witness host produced; every string comes from completeSynthesizedJourney and the closed vocabulary in packages/cli/src/witness/journey-synthesis/vocabulary.ts. No pass verb appears in any of them.",
+   "routesReached": {
+    "declaredByCrawl": [
+     "/",
+     "/assets/icon.png",
+     "/styles.7af5efa7635d003dad98.css"
+    ],
+    "reachedCount": 0,
+    "routeTheApplicationSettledOn": "/login",
+    "galleryRouteReached": false
+   },
+   "runningApplication": {
+    "title": "PiGallery 2",
+    "baseHref": "/",
+    "baseResolved": "http://127.0.0.1:32701/",
+    "appRootPresent": true,
+    "appRootChildElementCount": 1,
+    "serverInjectDefined": true,
+    "galleryComponentPresent": false,
+    "gridPresent": false,
+    "photoTiles": 0,
+    "photoImages": 0,
+    "thumbnailSrcs": [],
+    "navbarPresent": false,
+    "visibleText": "",
+    "location": "/login"
+   },
+   "consoleMessagesVerbatim": [
+    "error: Failed to find a valid digest in the 'integrity' attribute for resource 'https://unpkg.com/leaflet@1.3.4/dist/leaflet.css' with computed SHA-512 integrity 'z4PhNX7vuL3xVChQ1m2AB9Yg5AULVxXcg/SpIdNs6c5H0NE8XYXysP+DGNKHfuwvY7kxvUdBeoGlODJ6+SfaPg=='. The resource has been blocked.",
+    "error: ERROR Error: Uncaught (in promise): Error: Cannot find module './messages.en-US.xlf'\nError: Cannot find module './messages.en-US.xlf'\n    at U (http://127.0.0.1:32701/main.4b2fa472bc230245.js:1:271)\n    at I (http://127.0.0.1:32701/main.4b2fa472bc230245.js:1:220)\n    at Object.c7 [as useFactory] (ht"
+   ],
+   "consoleMessagesTruncation": "each console message is truncated to 300 characters by the witness driver (t009d-live-witness.mjs), unchanged from T009d. The truncation is the driver's, not this record's.",
+   "pageErrorsVerbatim": [],
+   "requestsObserved": [
+    "GET 200 http://127.0.0.1:32701/",
+    "GET 204 https://unpkg.com/leaflet@1.3.4/dist/leaflet.css",
+    "GET 204 https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/css/bootstrap3/bootstrap-switch.css",
+    "GET 200 http://127.0.0.1:32701/assets/icon.png",
+    "GET 200 http://127.0.0.1:32701/runtime.411b0840ac02ba1a.js",
+    "GET 200 http://127.0.0.1:32701/styles.aac6e848cd321373.css",
+    "GET 200 http://127.0.0.1:32701/polyfills.5e5c92c3fb2e7264.js",
+    "GET 200 http://127.0.0.1:32701/main.4b2fa472bc230245.js",
+    "GET 200 http://127.0.0.1:32701/open-iconic.3205870011f84472.woff",
+    "GET 200 http://127.0.0.1:32701/assets/icon.png"
+   ],
+   "successfulNonLoopback": 0,
+   "mockedNonLoopback": 2,
+   "witnessWallSeconds": 31.026,
+   "laneReading": ".versionless/work/angular-pigallery2/logs/t009e-lane-migrated.json",
+   "laneReadingSha256": "4ed53f55d32ba6b1b97df1f952b74dc03940a56afa001087a9783facf9972f85"
+  }
+ },
+ "parity": {
+  "identical": true,
+  "comparedOn": "the ordered list of outcome strings each lane produced, string for string, plus the per-journey measured counts behind them. Same comparison T009d made.",
+  "outcomesBaselineOnly": [],
+  "outcomesMigratedOnly": [],
+  "differingOutcomes": [],
+  "changedFromT009d": "T009d reported identical false, on two outcome strings. This unit reports identical TRUE. Nothing about the migrated lane's health justifies that flip.",
+  "readThisTheRightWayRound": [
+   "IDENTICAL: TRUE IS NOT GOOD NEWS HERE. The flag flipped because the migrated lane started FAILING DIFFERENTLY, not because it started working.",
+   "In T009d the migrated lane never navigated, so it \"reached\" the declared route \"/\" and scored routes-reached 1 against the baseline's 0. That mismatch is what made identical false.",
+   "In T009e the migrated lane bootstraps and its router navigates itself to /login. It therefore leaves \"/\" - exactly as the baseline leaves \"/\" for /gallery/ - and scores routes-reached 0 too. Two lanes, one healthy and one broken, produce the same six strings.",
+   "The outcome vocabulary is counting route departures. It cannot see WHERE either lane went, and it cannot see that one arrived at a gallery with three photo tiles while the other arrived at a login screen that rendered nothing at all.",
+   "The finding therefore lives in runningApplication and requestsObserved, not in parity - and this record exists partly to say so in a place a downstream consumer cannot miss."
+  ],
+  "countsCompared": {
+   "routesDeclared": {
+    "baseline": 3,
+    "migrated": 3,
+    "equal": true
+   },
+   "routesReached": {
+    "baseline": 0,
+    "migrated": 0,
+    "equal": true,
+    "note": "equal, and equal for opposite reasons. See readThisTheRightWayRound."
+   },
+   "selectorsPresent": {
+    "baseline": 0,
+    "migrated": 0,
+    "equal": true
+   },
+   "routesWithoutOverflow": {
+    "baseline": 1,
+    "migrated": 1,
+    "equal": true
+   }
+  },
+  "applicationSurfaceCompared": {
+   "title": {
+    "baseline": "PiGallery 2",
+    "migrated": "PiGallery 2",
+    "equal": true,
+    "note": "server-rendered by the EJS template, so identical on any lane."
+   },
+   "routeSettledOn": {
+    "baseline": "/gallery/",
+    "migrated": "/login",
+    "equal": false,
+    "note": "THE headline difference, and one no outcome string carries."
+   },
+   "appRootChildElementCount": {
+    "baseline": 2,
+    "migrated": 1,
+    "equal": false
+   },
+   "galleryComponentPresent": {
+    "baseline": true,
+    "migrated": false,
+    "equal": false
+   },
+   "gridPresent": {
+    "baseline": true,
+    "migrated": false,
+    "equal": false
+   },
+   "navbarPresent": {
+    "baseline": true,
+    "migrated": false,
+    "equal": false
+   },
+   "photoTiles": {
+    "baseline": 3,
+    "migrated": 0,
+    "equal": false
+   },
+   "visibleTextEmpty": {
+    "baseline": false,
+    "migrated": true,
+    "equal": false
+   },
+   "serverInjectDefined": {
+    "baseline": true,
+    "migrated": true,
+    "equal": true
+   },
+   "apiCallsMade": {
+    "baseline": [
+     "GET /api/notifications",
+     "GET /api/gallery/content/"
+    ],
+    "migrated": [],
+    "equal": false,
+    "note": "STILL zero on the migrated lane. The fix moved the failure later in the startup sequence but not past the point where the application talks to its own backend."
+   },
+   "pageErrors": {
+    "baseline": [],
+    "migrated": [],
+    "equal": true,
+    "note": "both empty. The migrated lane's failure is a caught-and-logged Angular ERROR, not an uncaught page error - which is exactly why nothing but reading the console catches it."
+   }
+  }
+ },
+ "finding": {
+  "one": "THE STANDARD STEP CLOSED THE DEFECT IT NAMES. @angular/localize@13.4.0 + one import line in polyfills.ts removed \"ReferenceError: $localize is not defined\" entirely, without touching a byte of the application: the main bundle sha256 is unchanged. T009d's open question - is @angular/localize/init sufficient to fix the $localize defect - is answered YES.",
+  "two": "IT DID NOT MAKE THE LANE WORK. Sufficient for the defect is not sufficient for the migration. Behind the first i18n defect sat a second one, and the lane still cannot show a gallery.",
+  "secondDefect": {
+   "errorVerbatim": "error: ERROR Error: Uncaught (in promise): Error: Cannot find module './messages.en-US.xlf'\nError: Cannot find module './messages.en-US.xlf'\n    at U (http://127.0.0.1:32701/main.4b2fa472bc230245.js:1:271)\n    at I (http://127.0.0.1:32701/main.4b2fa472bc230245.js:1:220)\n    at Object.c7 [as useFactory] (ht",
+   "verbatimNote": "that is the console message exactly as the witness host recorded it, including the driver's 300-character truncation mid-word at \"(ht\". Nothing was cleaned up.",
+   "whereItComesFrom": {
+    "file": ".versionless/work/angular-pigallery2/13cell/frontend/app/app.module.ts",
+    "lines": "114-123 and 217-221",
+    "sourceVerbatim": "export function translationsFactory(locale: string) {\n  locale = locale || 'en'; // default to english if no locale\n\n  // default locale, nothing to translate\n  if (locale === 'en') {\n    return '';\n  }\n  return require(`raw-loader!../translate/messages.${locale}.xlf`);\n}",
+    "wiredAs": "{provide: TRANSLATIONS, useFactory: translationsFactory, deps: [LOCALE_ID]} - so the factory runs the first time anything injects TRANSLATIONS, which @ngx-translate/i18n-polyfill's I18n service does."
+   },
+   "mechanism": [
+    "The guard is an exact string test against 'en'. On the baseline lane LOCALE_ID really is 'en', because the era build was invoked with the ViewEngine flag --i18n-locale en; the factory short-circuits and returns an empty string, and nothing is ever required.",
+    "Angular 13 has no --i18n-locale flag - T009b already recorded the four --i18n-* flags as dropped with no v13 equivalent, as migration-delta material. With no flag, LOCALE_ID falls back to Angular's built-in default, 'en-US'. 'en-US' !== 'en', the guard misses, and the factory reaches the require.",
+    "frontend/translate/ contains messages.en.xlf, messages.fr.xlf, messages.hu.xlf and messages.ru.xlf. There is no messages.en-US.xlf, so webpack's generated require-context throws 'Cannot find module' at runtime, inside DI, and the component being constructed never renders."
+   ],
+   "whyThisIsTheSameFamily": "Both defects are the Angular 9+ i18n rearchitecture arriving late. The first is the runtime tag the new compiler emits and no longer defines for you; the second is a locale the old CLI used to set for you and the new one does not. T009b saw the i18n flags disappear at build time and recorded it; this unit is where that build-time delta becomes a runtime failure.",
+   "notFixedHere": "deliberately. The packet permits exactly two edits - the dependency and the polyfill import - and forbids anything broader, because the claim under test is that the STANDARD step closes the defect. Setting LOCALE_ID, adding a messages.en-US.xlf, or relaxing the guard are all application changes and a different claim for a different unit.",
+   "probableShapeOfTheRealFix": "stated as a hypothesis, NOT as a measurement: provide LOCALE_ID as 'en', or widen the factory guard to startsWith('en'). Neither was attempted and neither is established by anything in this record."
+  },
+  "three": "THE PARITY FLAG WENT GREEN WHILE THE LANE STAYED BROKEN. This is the most transferable thing in the record. A closed outcome vocabulary that counts route departures scored a login-screen-that-renders-nothing identically to a working gallery. Downstream pricing must read runningApplication and apiCallsMade, not parity.identical.",
+  "four": "DETERMINISM SURVIVED THE FIX. Two independent rebuilds, 13/13 files byte-identical, same webpack hash. Whatever else is wrong with this lane, it is not flaky."
+ },
+ "machineTimes": {
+  "ngAddSeconds": 25,
+  "rebuildSeconds": {
+   "run1": 7,
+   "run2": 4
+  },
+  "backendStartSeconds": {
+   "baseline": 2,
+   "migrated": 2
+  },
+  "witnessSeconds": {
+   "baseline": 1.329,
+   "migrated": 31.026
+  },
+  "migratedWitnessNote": "the migrated lane's ~31s is again almost entirely the two bounded 15s waits timing out - but this time with a RUNNING application on the other side of them."
+ },
+ "reproduce": [
+  "cd <repo>",
+  "# 1. the fix - the canonical CLI path, one consented fetch",
+  "export PATH=<repo>/.versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64/bin:$PATH",
+  "cd <repo>/.versionless/work/angular-pigallery2/13cell",
+  "VERSIONLESS_NETWORK_MODE=consented VERSIONLESS_CONSENT_ID=VL-LEGACY-CORPUS-2026-08-10 node node_modules/.bin/ng add @angular/localize@13.4.0 --skip-confirmation",
+  "# 2. rebuild twice and byte-compare",
+  "sh <repo>/.versionless/work/angular-pigallery2/logs/t009e-migrated-build.sh",
+  "# 3. re-witness both lanes, serialized, baseline first (it derives the plan)",
+  "cd <repo>",
+  "sh .versionless/work/angular-pigallery2/logs/t009e-backend.sh setup baseline <repo>/.versionless/work/angular-pigallery2/baseline/t009b-baseline-run1",
+  "sh .versionless/work/angular-pigallery2/logs/t009e-backend.sh start baseline",
+  "node --experimental-strip-types .versionless/work/angular-pigallery2/logs/t009d-live-witness.mjs baseline http://127.0.0.1:32701 <logs>/t009e-plan.json derive <logs>/t009e-lane-baseline.json",
+  "sh .versionless/work/angular-pigallery2/logs/t009e-backend.sh stop baseline",
+  "sh .versionless/work/angular-pigallery2/logs/t009e-backend.sh setup migrated <repo>/.versionless/work/angular-pigallery2/13cell/t009e-migrated-run1",
+  "sh .versionless/work/angular-pigallery2/logs/t009e-backend.sh start migrated",
+  "node --experimental-strip-types .versionless/work/angular-pigallery2/logs/t009d-live-witness.mjs migrated http://127.0.0.1:32701 <logs>/t009e-plan.json replay <logs>/t009e-lane-migrated.json",
+  "sh .versionless/work/angular-pigallery2/logs/t009e-backend.sh stop migrated",
+  "# 4. emit",
+  "T009E_HEAD=$(git rev-parse HEAD) node .versionless/work/angular-pigallery2/logs/t009e-emit-live-witness.cjs"
+ ],
+ "notEstablished": [
+  "THE MIGRATED LANE IS NOT FIXED. This record establishes that ONE named defect is closed. It establishes the opposite of a working lane: no gallery, no navbar, no grid, zero photo tiles, zero API calls, empty visible text. Nobody may read \"identical: true\" here as a migration that works.",
+  "THE SECOND DEFECT IS DIAGNOSED FROM THE ERROR AND THE SOURCE, NOT FROM A FIX. The mechanism above (LOCALE_ID en-US vs the factory's 'en' guard) is read off the verbatim error string, the application source at app.module.ts:114-123, the contents of frontend/translate/, and T009b's already-recorded loss of the --i18n-* flags. No build was made with a corrected locale, so it is NOT established that setting LOCALE_ID to 'en' makes the lane work, or that a THIRD defect does not sit behind the second. T009d made exactly this mistake's opposite number and named it; the same caution applies here.",
+  "WHY THE LANE LANDS ON /login RATHER THAN /gallery/ IS NOT ESTABLISHED. It is recorded as measured. Whether the login redirect is itself a consequence of the translations failure, a separate auth-bootstrap difference, or ordinary routing before the failure, was not investigated.",
+  "A THREE-IMAGE GENERATED GALLERY IS NOT THE FLEET'S MEDIA DIVERSITY. Three 64x48 solid-colour PNGs, no EXIF, no GPS, no faces, no video, no nested directories. Nothing here speaks about EXIF parsing, orientation, date grouping, maps, person detection or transcoding.",
+  "AUTH SURFACES ARE UNTESTED even though the migrated lane landed on /login. authenticationRequired was false and unAuthenticatedUserRole was Admin; no login was performed and no credential was entered on either lane.",
+  "THE DATABASE WAS THE MEMORY BACKEND, NOT SQLITE - identical on both lanes, so it cannot produce the lane difference, but search, sharing and face surfaces were disabled by the application itself on both.",
+  "ONE JOURNEY, ONE PASS PER LANE, ONE HOST. Nothing here establishes witness determinism across repeated runs (the BUILD determinism claim is separate and is established, twice over).",
+  "THE BASELINE LANE IS STILL NOT CERTIFIED WORKING. It mounts, routes to /gallery/, calls its API twice and renders three photo TILES - photoImages is 0, so no thumbnail is established as generated or displayed. Nothing was clicked.",
+  "NO SCREENSHOT, NO PIXEL COMPARISON, NO ACCESSIBILITY READING, NO PERFORMANCE READING.",
+  "THE BACKEND IS THE ERA BACKEND ON BOTH LANES. Nothing here says anything about an Angular 13 frontend against a migrated backend; no backend migration exists.",
+  "THE CONSOLE MESSAGES ARE TRUNCATED AT 300 CHARACTERS by the reused driver. The full stack below \"at Object.c7 [as useFactory] (ht\" was never captured, on either lane, in either unit.",
+  "NOTHING HERE RE-ESTABLISHES T009a, T009b or T009c. The baseline lane output was consumed as-is and not rebuilt."
+ ],
+ "supersedes": {
+  "record": null,
+  "what": "NOTHING. This record does not supersede evidence/runs/angular-13cell/pigallery2-live-witness.json - it EXTENDS it. T009d's catch stands exactly as published: at the build it witnessed, $localize was undefined and the lane never bootstrapped. This unit changed the build, so it reports on a different artefact.",
+  "closesOpenQuestionFrom": "evidence/runs/angular-13cell/pigallery2-live-witness.json notEstablished item \"THE MIGRATED LANE'S DEFECT IS NAMED, NOT DIAGNOSED TO ITS ROOT ... It does not establish that adding @angular/localize/init is sufficient to make the lane work, because that build was not attempted here.\" Answered: sufficient to close the $localize defect, NOT sufficient to make the lane work."
+ },
+ "nextUnit": "T010 freeze supersession inherits a live-backend parity claim that is numerically GREEN and substantively NEGATIVE. Two things must travel with it: (a) the pigallery2 Angular 13 lane builds deterministically, bootstraps after the standard localize step, and still cannot render its gallery, blocked on a second i18n defect that is named here; (b) parity.identical proved capable of reading true across a working and a broken lane, so any gate that consumes it alone is not measuring what it thinks it is measuring.",
+ "integrity": {
+  "algorithm": "sha256",
+  "digestOf": "JSON.stringify of this document with the integrity field absent",
+  "recompute": "node -e \"const c=require('crypto'),r=require('./evidence/runs/angular-13cell/pigallery2-live-witness-2.json');delete r.integrity;console.log(c.createHash('sha256').update(JSON.stringify(r)).digest('hex'))\"",
+  "sha256": "717bd47da4e19f8a93c95f49420ec3fa113f36b5b605ccd89e1803a767d8d6ea"
+ }
+}

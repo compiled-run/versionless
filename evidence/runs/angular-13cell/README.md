@@ -1,11 +1,20 @@
 # Angular 13 cell — pigallery2
 
-Three records, in order. **T009a** (`pigallery2-compile.json`) established that the app
+Five records, in order. **T009a** (`pigallery2-compile.json`) established that the app
 *compiles* at the cell. **T009b** (`pigallery2-lanes.json`) established that both ends of
 the migration *build reproducibly*. **T009c** (`pigallery2-witness-parity.json`) served
 both lanes to real Chromium on loopback and compared what they measured — and found the
 ceiling: pigallery2's `index.html` is an Express EJS template, so with no backend nothing
-past the loading shell can be reached at all.
+past the loading shell can be reached at all. **T009d**
+(`pigallery2-live-witness.json`) stood that backend up and caught the migrated lane dying
+on `ReferenceError: $localize is not defined` before bootstrap. **T009e**
+(`pigallery2-live-witness-2.json`) applied the standard `ng add @angular/localize` fix,
+rebuilt, and re-witnessed: the defect is closed, a second i18n defect sits behind it, and
+the parity flag went **green on a lane that still does not work**.
+
+> **If you read only one number in this directory, do not let it be
+> `pigallery2-live-witness-2.json` → `parity.identical: true`.** It is true, and the
+> Angular 13 lane is broken. See T009e below.
 
 ---
 
@@ -470,3 +479,194 @@ ran the **era backend**: nothing here speaks about a migrated backend, which doe
 
 **Next unit:** T010, the freeze supersession — now inheriting a live-backend parity claim
 that is real and **negative**.
+
+---
+
+## T009e — the standard fix closes the defect, and the lane still does not work
+
+`pigallery2-live-witness-2.json` · schema `versionless.angular-13cell-live-witness.v1` ·
+sha256 `717bd47da4e19f8a93c95f49420ec3fa113f36b5b605ccd89e1803a767d8d6ea`
+
+T009d closed with an explicit open question in its own `notEstablished`: *"it does not
+establish that adding `@angular/localize/init` is sufficient to make the lane work,
+because that build was not attempted here."* This unit attempts exactly that build —
+nothing more — and re-witnesses **both** lanes against the same era backend in the same
+session, so the baseline reading is fresh rather than carried over.
+
+### The fix: migration-delta item 8
+
+Applied by the **canonical CLI path**, not a hand edit — Angular CLI 13.3.11 in the cell
+offered `ng add` and ran its own schematic:
+
+```sh
+VERSIONLESS_NETWORK_MODE=consented VERSIONLESS_CONSENT_ID=VL-LEGACY-CORPUS-2026-08-10 \
+  node node_modules/.bin/ng add @angular/localize@13.4.0 --skip-confirmation
+```
+
+The schematic changed exactly two files (diffed against a pre-run snapshot;
+`angular.json` and `tsconfig.13cell.build.json` are byte-identical to before):
+
+1. `package.json` devDependencies — `+ "@angular/localize": "^13.4.0"`, resolved to
+   exactly **13.4.0**.
+2. `frontend/polyfills.ts` — `+ import '@angular/localize/init';` at the top.
+
+The lock delta is **additive only**: `@angular/localize` plus five transitive additions,
+nothing removed, no existing pin moved (Angular still 13.4.0, CLI 13.3.11, rxjs 6.6.7,
+TypeScript 4.6.4). That one npm fetch is the only network access this unit made.
+
+**Why this step exists.** Angular 9 moved template i18n from a compile-time ViewEngine
+transform to a *runtime* tagged-template function named `$localize`. From v9 on the AOT
+compiler emits `` $localize`…` `` constants into the `consts` of any component carrying
+i18n attributes — whether or not the app ever translates anything. `@angular/core` does
+not define the tag; only importing `@angular/localize/init` before bootstrap installs it
+onto the global scope.
+
+### The rebuild: the application did not change at all
+
+Two runs of T009b's exact command, byte-compared. **13/13 files identical**, same webpack
+hash `365f7a87a2b00d00` (was `d2bb139c5bbeebb0`). Determinism survived the fix.
+
+The headline is the hash that *didn't* move:
+
+| artefact | before (T009b) | after (T009e) |
+|---|---|---|
+| `main.*.js` | `main.4b2fa472bc230245.js` | **same name, same sha256** `aa66f5cc…2d04f` |
+| `polyfills.*.js` | `polyfills.907de136ddb20602.js` | `polyfills.5e5c92c3fb2e7264.js` |
+| `$localize` in `main.js` | 215 occurrences | **215 occurrences** |
+| `$localize` in `polyfills.js` | 0 | **2** — including `a.$localize=u`, the global assignment |
+
+Not one byte of the application changed. The 215 references in `main.js` are *correct*,
+not leftovers: the compiler emits the tag, the polyfill defines it. The first emitted tag
+sits at `main.…js` offset **241780**, inside the `app-login` component's `consts` — within
+eight bytes of the column `241772` T009d's `ReferenceError` named. The catch and the fix
+point at the same place in the same bundle.
+
+### The re-witness: same recipe, fresh readings for both lanes
+
+Same era Node v10.24.1 backend on `127.0.0.1:32701`, same three generated PNGs
+(sha256-verified, not regenerated), same driver — `t009d-live-witness.mjs` **reused
+byte-for-byte**, since it takes every path as an argument. `successfulNonLoopback: 0` on
+both lanes, structurally. The baseline pass **reproduced T009d exactly** (same six outcome
+strings, same surface, `/gallery/`, three photo tiles, both API calls 200), which is what
+makes any change in the migrated lane attributable to the rebuild.
+
+| | baseline (Angular 8.1.2) | migrated (Angular 13.4.0, fixed) |
+|---|---|---|
+| `$localize` error | — | **gone** |
+| application bootstrapped | yes | **yes** (was *no*) |
+| route it settled on | `/gallery/` | **`/login`** (was `/`) |
+| API calls made | `/api/notifications`, `/api/gallery/content/` — 200 | **none** |
+| gallery / grid / navbar | present | absent |
+| photo tiles | **3** | **0** |
+| visible text | "3 Images / 3 items" … | **empty** |
+
+**Defect one is closed.** `"$localize is not defined"` appears nowhere in the migrated
+lane's console this session, and the lane's router now navigates — which it cannot do
+unless the module bootstrapped.
+
+**Defect two is behind it.** Chromium's verbatim console error, truncation and all:
+
+```
+ERROR Error: Uncaught (in promise): Error: Cannot find module './messages.en-US.xlf'
+Error: Cannot find module './messages.en-US.xlf'
+    at U (http://127.0.0.1:32701/main.4b2fa472bc230245.js:1:271)
+    at I (http://127.0.0.1:32701/main.4b2fa472bc230245.js:1:220)
+    at Object.c7 [as useFactory] (ht
+```
+
+It comes from the application's own `translationsFactory`
+(`app.module.ts:114-123`, wired as `{provide: TRANSLATIONS, useFactory: …, deps: [LOCALE_ID]}`):
+
+```ts
+locale = locale || 'en';
+if (locale === 'en') { return ''; }
+return require(`raw-loader!../translate/messages.${locale}.xlf`);
+```
+
+The guard is an **exact string test against `'en'`**. On the baseline lane `LOCALE_ID`
+really is `en`, because the era build was invoked with `--i18n-locale en` — the factory
+short-circuits and nothing is ever required. Angular 13 has **no `--i18n-locale` flag**
+(T009b already recorded the four `--i18n-*` flags as dropped with no v13 equivalent), so
+`LOCALE_ID` falls back to Angular's default `'en-US'`, the guard misses, and webpack's
+require-context throws for a file that does not exist — `frontend/translate/` holds
+`en`, `fr`, `hu`, `ru` and no `en-US`.
+
+Both defects are the same family: the Angular 9+ i18n rearchitecture arriving late. The
+first is the runtime tag the new compiler emits and no longer defines for you; the second
+is a locale the old CLI used to set for you and the new one does not. T009b watched those
+flags disappear at build time; this is where that delta becomes a runtime failure.
+
+**Nothing further was repaired.** The packet permits exactly the two edits above, because
+the claim under test is that the *standard* step closes the defect. Setting `LOCALE_ID`,
+adding `messages.en-US.xlf`, or widening the guard are application changes and a
+different claim for a different unit — and none of them is established here.
+
+### The trap: `parity.identical` went **true** while the lane stayed broken
+
+Carry this further than the pigallery2 result. In T009d the migrated lane never
+navigated, so it "reached" the declared route `/` and scored `route-reached-1-of-3`
+against the baseline's `0` — that mismatch is what made `identical: false`. In T009e the
+migrated lane bootstraps and routes itself to `/login`, so it *leaves* `/` exactly as the
+baseline leaves `/` for `/gallery/`, and scores `0` too. **All six outcome strings now
+match, string for string.**
+
+The outcome vocabulary counts route *departures*. It cannot see where either lane went,
+and it cannot see that one arrived at a gallery with three photo tiles while the other
+arrived at a login screen that rendered nothing at all. Both lanes also report
+`pageErrors: []`, because the migrated failure is a caught-and-logged Angular `ERROR`, not
+an uncaught page error.
+
+Anything downstream that prices a pigallery2 claim on `parity.identical` alone would price
+this lane **green**. Read `lanes.*.runningApplication` and
+`parity.applicationSurfaceCompared.apiCallsMade` instead.
+
+### Reproduce
+
+```sh
+export PATH=<repo>/.versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64/bin:$PATH
+cd <repo>/.versionless/work/angular-pigallery2/13cell
+VERSIONLESS_NETWORK_MODE=consented VERSIONLESS_CONSENT_ID=VL-LEGACY-CORPUS-2026-08-10 \
+  node node_modules/.bin/ng add @angular/localize@13.4.0 --skip-confirmation
+sh <repo>/.versionless/work/angular-pigallery2/logs/t009e-migrated-build.sh   # 2 builds, byte-compared
+
+cd <repo>
+sh .versionless/work/angular-pigallery2/logs/t009e-backend.sh setup baseline <repo>/.versionless/work/angular-pigallery2/baseline/t009b-baseline-run1
+sh .versionless/work/angular-pigallery2/logs/t009e-backend.sh start baseline
+node --experimental-strip-types .versionless/work/angular-pigallery2/logs/t009d-live-witness.mjs \
+  baseline http://127.0.0.1:32701 <logs>/t009e-plan.json derive <logs>/t009e-lane-baseline.json
+sh .versionless/work/angular-pigallery2/logs/t009e-backend.sh stop baseline
+# ... then the same three steps for `migrated` (dist → t009e-migrated-run1), with `replay`
+T009E_HEAD=$(git rev-parse HEAD) node .versionless/work/angular-pigallery2/logs/t009e-emit-live-witness.cjs
+```
+
+`t009e-backend.sh` is `t009d-backend.sh` with **exactly two path substitutions** — serve
+roots become `serve/e-<lane>` and the log becomes `t009e-backend-<lane>.log` — so T009d's
+own artefacts are left untouched. `diff` the two scripts to see that and nothing else.
+
+Integrity:
+
+```sh
+node -e "const c=require('crypto'),r=require('./evidence/runs/angular-13cell/pigallery2-live-witness-2.json');delete r.integrity;console.log(c.createHash('sha256').update(JSON.stringify(r)).digest('hex'))"
+# 717bd47da4e19f8a93c95f49420ec3fa113f36b5b605ccd89e1803a767d8d6ea
+```
+
+### What T009e does not establish
+
+`notEstablished` in the JSON is the binding list. In short: **the migrated lane is not
+fixed** — one named defect is closed, and the record establishes the *opposite* of a
+working lane (no gallery, no navbar, no grid, zero tiles, zero API calls, empty text).
+The second defect is **diagnosed from the verbatim error and the application source, not
+from a fix**: no build was made with a corrected locale, so it is not established that
+setting `LOCALE_ID` to `en` makes the lane work, or that a *third* defect does not sit
+behind the second — T009d named the mirror image of exactly this caution, and it applies
+here. Why the lane lands on `/login` rather than `/gallery/` is recorded as measured, not
+explained. The console messages are truncated at 300 characters by the reused driver, so
+the full stack was never captured. Everything T009d disclaims still holds: three
+generated PNGs are not media diversity, auth is off, the database is in-memory, one
+journey and one pass per lane, no screenshots or pixels, era backend on both lanes.
+T009d's record is **not superseded and was not edited** — this unit changed the build, so
+it reports on a different artefact. No `packages/**` file was written.
+
+**Next unit:** T010, the freeze supersession, inheriting a live-backend parity claim that
+is numerically **green** and substantively **negative** — and the harder lesson that
+`parity.identical` proved able to read `true` across one working and one broken lane.
