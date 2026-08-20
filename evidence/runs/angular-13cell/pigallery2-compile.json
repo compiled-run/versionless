@@ -1,0 +1,361 @@
+{
+  "schemaVersion": "versionless.angular-13cell-compile.v1",
+  "unit": "bank-demo-fleet-pipeline-p2/T009a-pigallery2-13cell-compile",
+  "goal": "next-tranche-strategy",
+  "measuredAt": "2026-08-20",
+  "consent": {
+    "mode": "consented",
+    "id": "VL-LEGACY-CORPUS-2026-08-10",
+    "fetched": [
+      "npm registry: the Angular 13.4.0 / @angular/cli 13.3.11 / @angular-devkit/build-angular 13.3.11 closure, the four legacy Angular libraries, and pigallery2 1.7.0 runtime deps typeconfig@1.0.7 and rxjs-compat@6.6.7"
+    ],
+    "notFetched": [
+      "the Node 16.20.2 runtime - reused from .versionless/cache/angular-jira-clone-runtime, no download"
+    ]
+  },
+  "question": [
+    "Spike A (evidence/spikes/ngcc-1213-feasibility/verdict.json) left two open questions gating the Angular 13 cell:",
+    "(1) where does the ngcc properties override live in a real cell, given the spike applied `-p module main` at a command line and the Angular CLI drives ngcc itself?",
+    "(2) does pigallery2 1.7.0's own source AOT-compile at Angular 13.4.0 / Node 16 / rxjs 6? The spike proved the three no-successor libraries consumable but never compiled the app."
+  ],
+  "cell": {
+    "id": "angular-13.4.0-node16-rxjs6",
+    "angular": "13.4.0",
+    "node": "v16.20.2",
+    "nodeArch": "darwin-arm64",
+    "npm": "8.19.4",
+    "rxjs": "6.6.7",
+    "typescript": "4.6.4",
+    "angularCompilerCli": "13.4.0",
+    "angularCli": "13.3.11",
+    "angularDevkitBuildAngular": "13.3.11",
+    "zoneJs": "0.11.8",
+    "tslib": "2.6.3",
+    "rxjsCompat": "6.6.7",
+    "provenance": "all versions read verbatim from .versionless/work/angular-pigallery2/13cell/package-lock.json after install",
+    "pinsHeld": [
+      "rxjs never left 6.x (6.6.7); rxjs-compat pinned to the same 6.6.7 minor",
+      "Angular framework never left 13.4.0. The CLI/devkit line has no 13.4.0 release - 13.3.11 is the last of the 13 CLI line and peers @angular/compiler-cli ^13.0.0."
+    ]
+  },
+  "runtime": {
+    "materializedAt": ".versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64",
+    "tarball": ".versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64.tar.gz",
+    "tarballSha256": "6a5c4108475871362d742b988566f3fe307f6a67ce14634eb3fbceb4f9eea88c",
+    "howObtained": "copied from the already-cached .versionless/cache/angular-jira-clone-runtime/node-v16.20.2-darwin-arm64 - no network fetch was needed or performed",
+    "verified": "node -v -> v16.20.2, npm -v -> 8.19.4",
+    "declaredRangeSatisfied": "Angular 13's engines.node ^12.20.0 || ^14.15.0 || >=16.10.0"
+  },
+  "workArea": {
+    "path": ".versionless/work/angular-pigallery2/13cell",
+    "choice": "a NEW sibling '13cell/' beside pigallery2's baseline, NOT an extension of .versionless/work/spike-ngcc-1213/a13rx6",
+    "choiceReason": "a13rx6 is a 3-import probe closure; this unit needs the whole application closure (25 runtime deps, the CLI, the devkit) and must not disturb the spike’s published measurement area",
+    "sources": {
+      "frontend/": "copied verbatim from .versionless/work/angular-pigallery2/baseline/frontend (pigallery2 1.7.0), minus emitted *.js/*.js.map",
+      "common/": "copied verbatim from the same baseline; the frontend reaches into it by relative path"
+    },
+    "recipeFiles": [
+      "package.json - the cell manifest",
+      ".npmrc - legacy-peer-deps=true",
+      "tsconfig.13cell.json - the AOT tsconfig",
+      "tsconfig.13cell.strict.json - a secondary stricter-than-app reading",
+      "ngcc.config.js.held - the override that turned out NOT to be needed; kept, disabled, as the counterfactual"
+    ],
+    "install": {
+      "command": "npm install (Node 16.20.2, npm 8.19.4, legacy-peer-deps)",
+      "exitCode": 0,
+      "packagesAdded": 935,
+      "wallSeconds": 16.05,
+      "legacyPeerDepsReason": "@ngx-translate/i18n-polyfill@1.0.0 declares peer @angular/core ^7.0.0 and ERESOLVEs against 13.4.0 under npm 8 strict peers. The package is nonetheless consumable - see ngcc.libraries below.",
+      "dependenciesAddedAfterFirstCompile": [
+        "typeconfig@1.0.7 - named by TS2307 on common/config/public/Config.ts; a declared pigallery2 1.7.0 runtime dependency this probe manifest had omitted",
+        "rxjs-compat@6.6.7 - named by TS2305 on rxjs/Observable; a declared pigallery2 1.7.0 devDependency (6.5.2) this probe manifest had omitted, pinned up to the cell’s rxjs minor"
+      ]
+    }
+  },
+  "ngcc": {
+    "openQuestionAnswered": "spike-A open question (1): where does the ngcc properties override live in a real cell?",
+    "answer": "NOWHERE. No override is required under a CLI-driven build. The Angular CLI does not use ngcc’s standalone default property order; it passes webpack’s resolve.mainFields as --properties, which for a browser build is [es2015, browser, module, main]. That order already places `module` ahead of `main`, which is exactly what the spike achieved by hand with `ngcc -p module main`. The spike’s failure mode is an artifact of invoking ngcc standalone, where DEFAULT_PROPERTIES_TO_CONSIDER puts `main` first.",
+    "answerProvenance": [
+      "node_modules/@ngtools/webpack/src/ivy/plugin.js:56 - `const mainFields = webpackOptions.resolve?.mainFields?.flat() ?? []`",
+      "node_modules/@ngtools/webpack/src/ivy/plugin.js:69 - `new NgccProcessor(compilerNgccModule, mainFields, ...)`",
+      "node_modules/@ngtools/webpack/src/ngcc_processor.js:118-130 - spawns ngccMainFilePath with --source <node_modules> --properties <...mainFields> --first-only --create-ivy-entry-points --async --tsconfig <tsConfigPath> --use-program-dependencies",
+      "node_modules/@angular-devkit/build-angular/src/webpack/utils/helpers.js:290-297 - getMainFieldsAndConditionNames() returns [es2015, browser, module, main] for a browser build (es2020 unshifted when target >= ES2020)"
+    ],
+    "ngccConfigJsFinding": "A project-root ngcc.config.js IS honoured on this path - ngcc_processor.js:80 reads <projectRoot>/ngcc.config.js and folds its bytes into the run-hash that decides whether to skip an ngcc pass. So the file is the right home for an override IF one is ever needed. For this closure it is not, so it is committed disabled as ngcc.config.js.held rather than left in place pretending to be load-bearing.",
+    "invocation": {
+      "shape": "the CLI’s own argv, reproduced verbatim from ngcc_processor.js:118-130",
+      "command": "node node_modules/@angular/compiler-cli/bundles/ngcc/main-ngcc.js --source node_modules --properties es2015 browser module main --first-only --create-ivy-entry-points --async --tsconfig tsconfig.13cell.json --use-program-dependencies",
+      "ngccConfigJsPresent": false,
+      "note": "run as a CONTROL with no ngcc.config.js in place, precisely to test whether the CLI property order alone suffices. It does.",
+      "exitCode": 0,
+      "wallSeconds": 1.62,
+      "stdout": [
+        "Warning: Entry point 'ng2-slim-loading-bar' contains deep imports into rxjs/Subject, rxjs/Observable. This is probably not a problem, but may cause the compilation of entry points to be out of order.",
+        "Processing legacy \"View Engine\" libraries:",
+        "- ng2-slim-loading-bar [module/esm5]",
+        "- @ngx-translate/i18n-polyfill [es2015/esm2015]",
+        "- jw-bootstrap-switch-ng2 [es2015/esm2015]",
+        "Encourage the library authors to publish an Ivy distribution."
+      ],
+      "rxjsNote": "the rxjs deep-import line is a WARNING, not the exit-1 hard error ngcc 13 raises under rxjs 7. This is the spike’s rxjs-major condition confirmed at application scale."
+    },
+    "libraries": [
+      {
+        "name": "@yaga/leaflet-ng2",
+        "version": "1.1.0",
+        "classification": "Ivy-native, never an ngcc case",
+        "ngccProcessed": false,
+        "propertyUsed": null,
+        "typingsChecked": true,
+        "typingsCheckMethod": "read node_modules/@yaga/leaflet-ng2/lib/yaga.module.d.ts directly; did NOT rely on ngcc’s exit code",
+        "typingsFinding": "YagaModule’s .d.ts already carries `static ɵmod: i0.ɵɵNgModuleDeclaration<YagaModule, [23 directives], never, [23 directives]>` and `static ɵinj: i0.ɵɵInjectorDeclaration<YagaModule>`. Ivy declarations present, complete, and listing all 23 exported directives.",
+        "typingsOk": true,
+        "ngccMarker": null,
+        "ivyNgccEntryPointsCreated": 0,
+        "exitZeroTrapAvoided": "the spike documented exit-0-with-broken-typing for the OTHER library. Here exit 0 plus zero work is the correct outcome and the typings read proves it, rather than the exit code asserting it.",
+        "consumedByApp": "yes - AppModule imports YagaModule and the map templates bind yaga-map, yaga-tile-layer, yaga-marker, yaga-popup and friends; all resolved with zero NG8001/NG8002 in the final AOT run."
+      },
+      {
+        "name": "ng2-slim-loading-bar",
+        "version": "4.0.0",
+        "classification": "ViewEngine, the conditional library the spike flagged",
+        "ngccProcessed": true,
+        "propertyUsed": "module (esm5)",
+        "propertyNotUsed": "main (bundles/index.umd.js, a webpack bundle ngcc cannot reflect)",
+        "whyModuleWon": "the package declares only `main` and `module`; the CLI property order [es2015, browser, module, main] reaches `module` first and --first-only stops there. No override needed.",
+        "typingsChecked": true,
+        "typingsCheckMethod": "grepped node_modules/ng2-slim-loading-bar/index.d.ts for forRoot and the Ivy statics BEFORE and AFTER the ngcc run",
+        "typingsBefore": "static forRoot(): ModuleWithProviders;   // no generic, no Ivy statics - the broken shape",
+        "typingsAfter": "static forRoot(): ModuleWithProviders<SlimLoadingBarModule>;  plus ɵfac: ɵɵFactoryDeclaration, ɵmod: ɵɵNgModuleDeclaration<SlimLoadingBarModule, [SlimLoadingBarComponent], never, [SlimLoadingBarComponent]>, ɵinj: ɵɵInjectorDeclaration",
+        "typingsOk": true,
+        "ngccMarker": {
+          "module": "13.4.0",
+          "typings": "13.4.0"
+        },
+        "consumedByApp": "yes - SlimLoadingBarModule.forRoot() in AppModule imports; no NG6005 in the final AOT run."
+      },
+      {
+        "name": "jw-bootstrap-switch-ng2",
+        "version": "2.0.5",
+        "classification": "ViewEngine, classic ng-packagr layout",
+        "ngccProcessed": true,
+        "propertyUsed": "es2015 (fesm2015)",
+        "typingsChecked": true,
+        "typingsCheckMethod": "read the __processed_by_ivy_ngcc__ marker in package.json",
+        "typingsOk": true,
+        "ngccMarker": {
+          "es2015": "13.4.0",
+          "fesm2015": "13.4.0",
+          "typings": "13.4.0"
+        },
+        "consumedByApp": "yes - JwBootstrapSwitchNg2Module in AppModule imports; bsSwitch bindings across the settings templates all resolved."
+      },
+      {
+        "name": "@ngx-translate/i18n-polyfill",
+        "version": "1.0.0",
+        "classification": "ViewEngine - a FOURTH legacy library the sealed pigallery2 receipt did not name",
+        "newFinding": true,
+        "newFindingNote": "The sealed holdout receipt names three no-successor pre-Ivy libraries. This closure has four. @ngx-translate/i18n-polyfill@1.0.0 (published 2018, last release, peer @angular/core ^7.0.0) ships the classic ng-packagr ViewEngine layout with a .metadata.json and is back-compiled by ngcc exactly like jw-bootstrap-switch-ng2. It ERESOLVEs under npm 8 strict peers and needs legacy-peer-deps, but it is fully consumable at the cell. It costs the cell nothing beyond the peer-resolution flag - but it is a fourth data point for the fleet estimate, and it was invisible until the app closure was installed rather than a 3-import probe.",
+        "ngccProcessed": true,
+        "propertyUsed": "es2015 (fesm2015)",
+        "typingsChecked": true,
+        "typingsCheckMethod": "read the __processed_by_ivy_ngcc__ marker in package.json",
+        "typingsOk": true,
+        "ngccMarker": {
+          "es2015": "13.4.0",
+          "fesm2015": "13.4.0",
+          "typings": "13.4.0"
+        },
+        "consumedByApp": "yes - I18n is a provider in AppModule and is injected across the settings components; resolved with zero diagnostics."
+      }
+    ],
+    "supportingLibrariesRepinned": {
+      "note": "not ngcc cases - Ivy-native Angular-13-era releases substituted for the Angular-8-era versions pigallery2 1.7.0 declares. This is ordinary migration arithmetic, recorded so the compile result is reproducible.",
+      "ngx-bootstrap": "5.1.0 -> 8.0.0",
+      "ngx-toastr": "10.0.4 -> 14.3.0",
+      "ngx-clipboard": "12.2.0 -> 15.1.0",
+      "ng2-cookies": "1.0.12 (unchanged - plain JS, no Angular surface)"
+    }
+  },
+  "aot": {
+    "openQuestionAnswered": "spike-A open question (2): does pigallery2's own source compile at 13?",
+    "answer": "YES. Clean AOT compile at the honest cell after three source edits, each named verbatim by the diagnostic that demanded it and each covered by an official Angular migration.",
+    "tool": "node node_modules/@angular/compiler-cli/bundles/src/bin/ngc.js -p tsconfig.13cell.json",
+    "entryPoint": "frontend/main.ts - the application’s real entry, reaching AppModule and its 44 declarations, 15 imported modules and 21 providers through the module graph. Not a probe.",
+    "tsconfigDeltasFromApp": [
+      "target es5 -> es2017 (Angular 13 removed ES5 output and differential loading)",
+      "module es2015 -> es2020",
+      "everything else preserved from pigallery2's own tsconfig.json + frontend/tsconfig.app.json, including noImplicitAny: true and NO fullTemplateTypeCheck / strictTemplates, so this measures the app rather than a stricter cell"
+    ],
+    "exitCode": 0,
+    "diagnosticCount": 0,
+    "emittedJsFiles": 121,
+    "wallSeconds": 1.78,
+    "progression": [
+      {
+        "run": 1,
+        "exitCode": 1,
+        "diagnosticCount": 4,
+        "note": "before typeconfig/rxjs-compat were installed",
+        "codes": {
+          "TS2307": 1,
+          "TS2339": 1,
+          "TS2305": 1,
+          "TS2314": 1
+        }
+      },
+      {
+        "run": 2,
+        "exitCode": 1,
+        "diagnosticCount": 2,
+        "note": "after installing the two dependencies the diagnostics named",
+        "codes": {
+          "TS2339": 1,
+          "TS2314": 1
+        }
+      },
+      {
+        "run": 3,
+        "exitCode": 1,
+        "diagnosticCount": 13,
+        "note": "after the two TS fixes. Diagnostic count ROSE: TypeScript diagnostics gate before Angular semantic diagnostics, so clearing the TS layer let the compiler reach template code it had not yet read - exactly the behaviour the sealed holdout receipt predicts.",
+        "codes": {
+          "NG2007": 1,
+          "NG8002": 12
+        }
+      },
+      {
+        "run": 4,
+        "exitCode": 0,
+        "diagnosticCount": 0,
+        "note": "after the @Directive() the NG2007 named. All 12 NG8002s were cascade from that single root."
+      }
+    ],
+    "diagnosticsEncountered": [
+      {
+        "code": "TS2307",
+        "file": "common/config/public/Config.ts:2:31",
+        "text": "Cannot find module 'typeconfig/src/WebConfigLoader' or its corresponding type declarations.",
+        "classification": "cell issue - probe manifest omission",
+        "resolution": "installed typeconfig@1.0.7, a declared pigallery2 1.7.0 runtime dependency",
+        "appSourceChanged": false
+      },
+      {
+        "code": "TS2305",
+        "file": "frontend/app/ui/faces/faces.component.ts:6:9",
+        "text": "Module '\"rxjs/Observable\"' has no exported member 'Observable'.",
+        "classification": "cell issue - probe manifest omission",
+        "resolution": "installed rxjs-compat@6.6.7, a declared pigallery2 1.7.0 devDependency (6.5.2), pinned up to the cell rxjs minor. rxjs itself stayed at 6.6.7.",
+        "appSourceChanged": false
+      },
+      {
+        "code": "TS2339",
+        "file": "frontend/app/ui/gallery/overlay.service.ts:27:19",
+        "text": "Property 'msOverflowStyle' does not exist on type 'CSSStyleDeclaration'.",
+        "classification": "app-source issue - TypeScript lib.dom era drift, unrelated to Angular or Ivy",
+        "resolution": "cast to `(outer.style as any).msOverflowStyle`. lib.dom dropped the IE/WinJS vendor property between TS 3.4 (the app's compiler) and TS 4.6 (the cell's).",
+        "appSourceChanged": true
+      },
+      {
+        "code": "TS2314",
+        "file": "frontend/app/app.routing.ts:71:25",
+        "text": "Generic type 'ModuleWithProviders<T>' requires 1 type argument(s).",
+        "classification": "app-source issue - a known Angular 9 breaking change with an official codemod",
+        "resolution": "ModuleWithProviders -> ModuleWithProviders<RouterModule>. Identical to what the official `migration-v9-module-with-providers` schematic emits.",
+        "appSourceChanged": true
+      },
+      {
+        "code": "NG2007",
+        "file": "frontend/app/ui/settings/_abstract/abstract.settings.component.ts:14:23",
+        "text": "Class is using Angular features but is not decorated. Please add an explicit Angular decorator.",
+        "classification": "app-source issue - the Angular 9 undecorated-classes breaking change, with an official codemod, and the single root cause of 12 of the 13 run-3 diagnostics",
+        "resolution": "added `@Directive()` above the abstract SettingsComponent base class, which is what the diagnostic asks for and what the official `migration-v9-undecorated-classes-with-decorated-fields` schematic emits.",
+        "appSourceChanged": true,
+        "cascadeCleared": 12
+      },
+      {
+        "code": "NG8002",
+        "file": "frontend/app/ui/admin/admin.component.html (12 sites, lines 47-68)",
+        "text": "Can't bind to 'simplifiedMode' since it isn't a known property of 'app-settings-*'.",
+        "classification": "CASCADE, not an independent issue - the @Input() simplifiedMode lives on the undecorated abstract base, so every one of the 12 settings components inherited an unanalysable input until NG2007 was fixed. All 12 vanished with the single @Directive().",
+        "resolution": "none required beyond the NG2007 fix",
+        "appSourceChanged": false
+      }
+    ],
+    "appSourceEditsRequired": {
+      "count": 3,
+      "files": [
+        ".versionless/work/angular-pigallery2/13cell/frontend/app/app.routing.ts",
+        ".versionless/work/angular-pigallery2/13cell/frontend/app/ui/gallery/overlay.service.ts",
+        ".versionless/work/angular-pigallery2/13cell/frontend/app/ui/settings/_abstract/abstract.settings.component.ts"
+      ],
+      "character": "all three are single-line, mechanical, named verbatim by the diagnostic that demanded them; two of the three (ModuleWithProviders, undecorated classes) have official Angular v9 migration schematics that emit exactly these edits.",
+      "character_caveat": "they are still app-source edits. A migration engine must be able to make them; none of them is a cell configuration knob."
+    },
+    "strictReading": {
+      "note": "a SECONDARY, deliberately stricter-than-the-app reading, taken with fullTemplateTypeCheck: true. Recorded because it prices the gap between \"compiles\" and \"compiles under modern template checking\" - it is NOT the cell claim.",
+      "tsconfig": "tsconfig.13cell.strict.json",
+      "exitCode": 1,
+      "takenAt": "run 3 state, before the @Directive() fix",
+      "shape": "NG2007 plus TS2341 \"Property is private and only accessible within class\" at template binding sites (media.lightbox, controls.lightbox and others) - private members bound from templates, which ViewEngine tolerated and Ivy full template type checking does not.",
+      "status": "NOT re-measured after the run-4 fixes; the count under fullTemplateTypeCheck at the clean state is unmeasured."
+    }
+  },
+  "machineTimes": {
+    "unit": "seconds, wall clock, this host (darwin-arm64)",
+    "nodeRuntimeMaterialization": 1.1,
+    "npmInstall": 16.05,
+    "npmInstallIncremental": 3,
+    "ngccCliShapedRun": 1.62,
+    "ngcRun1": 1.44,
+    "ngcRun2": 1.33,
+    "ngcRun3": 1.46,
+    "ngcRun4Clean": 1.78,
+    "ngcStrict": 1.4,
+    "totalMeasuredMachineTime": 29.2,
+    "comment": "The whole cell - install, ngcc across the closure, and a full AOT compile of a 44-component application - costs under 30 seconds of machine time on a warm npm cache. ngcc is 1.6s of it. The Angular 13 cell is cheap to run; its cost was always the claims surgery, not the compile."
+  },
+  "notEstablished": [
+    "This proves COMPILE-AT-CELL only. It does not establish a migration. No migration was performed by the engine; the three source edits were applied by hand as a measurement of what a migration would have to do.",
+    "It does not establish runtime behaviour. Nothing was bundled, served, loaded in a browser, or executed. `ngc` emitted 121 JS files; not one of them was run.",
+    "It does not establish the witness. No holdout witness was run, and this record does not retry, weaken, or touch the sealed pigallery2 RED at the Angular 16 cell, which stands as published.",
+    "It does not establish a full `ng build`. The CLI’s ngcc invocation was reproduced verbatim from @ngtools/webpack’s own source and executed, but no webpack browser build was run end to end. pigallery2’s AppModule uses a `require('raw-loader!...')` translations factory and its angular.json styles reference bootstrap and open-iconic, neither installed here - those are bundler-stage concerns this unit did not price.",
+    "It does not establish the test or e2e closure. tsconfig.13cell.json excludes frontend/test.ts and **/*.spec.ts; the karma/protractor closure at the cell is unmeasured.",
+    "It does not establish the backend. pigallery2 is a full-stack app; only frontend/ and common/ were compiled. The backend TypeScript, typeorm 0.2.18, sqlite3 4.0.9 and the gulp build were not touched.",
+    "It does not establish that the repinned supporting libraries (ngx-bootstrap 8, ngx-toastr 14.3, ngx-clipboard 15.1) are behaviour-compatible with the Angular-8-era versions pigallery2 declares. They type-check and their directives resolve; nothing more is claimed.",
+    "It does not establish the fullTemplateTypeCheck story. The strict reading was taken at an intermediate state and shows private-member template bindings that would need work; the clean-state strict count is unmeasured.",
+    "It does not establish anything about Node eras other than 16.20.2, nor about the Angular 12.2.17 fallback cell, which this unit did not re-run.",
+    "It changes no engine claim, no support boundary and no freeze. No packages/** file was read into or written by this unit."
+  ],
+  "answersToSpikeOpenQuestions": {
+    "openQuestion1-ngccOverrideLocation": "ANSWERED. No override is needed on the CLI path: @ngtools/webpack passes webpack resolve.mainFields ([es2015, browser, module, main]) as ngcc --properties, which already prefers `module` over `main`. The spike’s `-p module main` was a hand reproduction of the CLI default, not a deviation from it. A project-root ngcc.config.js IS the honoured home should an override ever be needed (ngcc_processor.js reads it into its run-hash), and one is committed disabled at .versionless/work/angular-pigallery2/13cell/ngcc.config.js.held as the counterfactual. T001’s \"1-2 units to plumb the ngcc override\" can be released.",
+    "openQuestion2-appCompiles": "ANSWERED YES, at a price of three mechanical source edits. pigallery2 1.7.0’s frontend AOT-compiles at Angular 13.4.0 / Node 16.20.2 / rxjs 6.6.7 with exit 0, zero diagnostics and 121 emitted files. The four legacy libraries are not the obstacle; the obstacle was three ordinary Angular-9-era migration items, two of which have official codemods.",
+    "openQuestion3-rxjs6Viability": "ANSWERED for this closure. rxjs stayed at 6.6.7 throughout and nothing in the migrated pigallery2 tree demanded rxjs 7. One addition was needed: rxjs-compat@6.6.7, because the app deep-imports rxjs/Observable - which pigallery2 1.7.0 already declared. The Angular 12 fallback cell is not needed on rxjs grounds.",
+    "openQuestion4-fleetPrevalence": "PARTIALLY MOVED, in the unhelpful direction. This closure contains FOUR ViewEngine/legacy Angular libraries, not the three the sealed receipt names - @ngx-translate/i18n-polyfill@1.0.0 was invisible until the full application closure was installed. The fourth was consumable, but it is evidence that per-app legacy-library counts read off a receipt are floors, not totals."
+  },
+  "reproduce": {
+    "runtime": ".versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64/bin",
+    "workArea": ".versionless/work/angular-pigallery2/13cell",
+    "steps": [
+      "export PATH=<repo>/.versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64/bin:$PATH",
+      "cd <repo>/.versionless/work/angular-pigallery2/13cell",
+      "VERSIONLESS_NETWORK_MODE=consented VERSIONLESS_CONSENT_ID=VL-LEGACY-CORPUS-2026-08-10 npm ci",
+      "node node_modules/@angular/compiler-cli/bundles/ngcc/main-ngcc.js --source node_modules --properties es2015 browser module main --first-only --create-ivy-entry-points --async --tsconfig tsconfig.13cell.json --use-program-dependencies",
+      "node node_modules/@angular/compiler-cli/bundles/src/bin/ngc.js -p tsconfig.13cell.json    # expect exit 0, 0 diagnostics"
+    ],
+    "logs": ".versionless/work/angular-pigallery2/13cell/logs/ (npm-install.log, ngcc-cli-control.log, ngcc-cli-run2.log, ngc-aot-run1..4.log, ngc-aot-strict.log)",
+    "unversioned": "the work area and cache are unversioned scratch; this JSON record and its README are the committed artefact"
+  },
+  "priorEvidence": {
+    "spikeVerdict": "evidence/spikes/ngcc-1213-feasibility/verdict.json",
+    "sealedHoldoutRed": "evidence/runs/holdout-angular-pigallery2/receipt.json (canonical digest 39a133ff97c37622a4a1821f20e7c442c9bc22ed7597a3e73cbd31323ab2bb10) - untouched, unweakened, and not retried by this unit",
+    "repoHeadAtMeasurement": "ba60af8e9ad72a9009b2c2d16e0fb1d64767814a"
+  },
+  "integrity": {
+    "algorithm": "sha256",
+    "sha256": "3508bd8c396e9ac8306d49cb0b4c7e9f0ac31f30d6b5fffe29d242450ec4c4c8",
+    "digestOf": "JSON.stringify of this document with the integrity field absent",
+    "recompute": "node -e \"const c=require('crypto'),r=require('./evidence/runs/angular-13cell/pigallery2-compile.json');delete r.integrity;console.log(c.createHash('sha256').update(JSON.stringify(r)).digest('hex'))\""
+  }
+}
