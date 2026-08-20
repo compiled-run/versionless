@@ -1,0 +1,9 @@
+{
+	"applications": [
+		{
+			"id": "angular-kubernetes-dashboard",
+			"root": ".versionless/cache/angular-kubernetes-dashboard-stage-t678/acquisition/source",
+			"framework": "angular"
+		}
+	]
+}

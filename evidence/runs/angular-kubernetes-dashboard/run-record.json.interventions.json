@@ -2,10 +2,10 @@
 	"schemaVersion": "versionless.intervention-count.v1",
 	"flow": "intervention-count",
 	"application": ".versionless/cache/angular-kubernetes-dashboard-stage-t678/acquisition/source",
-	"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t012b1/angular-kubernetes-dashboard",
+	"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t012b2/angular-kubernetes-dashboard",
 	"runRecord": "evidence/runs/angular-kubernetes-dashboard/run-record.json",
 	"writeSet": [
-		"../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t012b1/angular-kubernetes-dashboard",
+		"../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t012b2/angular-kubernetes-dashboard",
 		"evidence/runs/angular-kubernetes-dashboard/run-record.json",
 		"evidence/runs/angular-kubernetes-dashboard/run-record.json.interventions.json",
 		".versionless/stage/witness-real-app",
@@ -16,8 +16,8 @@
 	"mutatedPathsOutsideWriteSet": [],
 	"authoringPathsTouched": [],
 	"interventionCount": 0,
-	"exitCode": 2,
-	"terminalClassification": "refused:ingest.revision-not-determined",
+	"exitCode": 1,
+	"terminalClassification": "defect:install",
 	"attempts": [
 		{
 			"argv": [
@@ -26,22 +26,24 @@
 				"run",
 				".versionless/cache/angular-kubernetes-dashboard-stage-t678/acquisition/source",
 				"--out",
-				"/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t012b1/angular-kubernetes-dashboard",
+				"/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t012b2/angular-kubernetes-dashboard",
 				"--record",
 				"evidence/runs/angular-kubernetes-dashboard/run-record.json",
 				"--allow-install-scripts",
 				"--allow-peer-conflicts",
 				"--allow-remote-tarballs",
 				"--cell",
-				"angular-13.4.0"
+				"angular-13.4.0",
+				"--revision",
+				"e75ebcf688d3b7edff2a050332c8e86ca1e47e12"
 			],
-			"exitCode": 2,
+			"exitCode": 1,
 			"signal": null,
 			"hang": false,
-			"stdoutBytes": 3255,
+			"stdoutBytes": 7418,
 			"stderrBytes": 0,
-			"startedAt": "2026-08-20T09:19:54.129Z",
-			"endedAt": "2026-08-20T09:19:54.555Z"
+			"startedAt": "2026-08-20T09:25:55.356Z",
+			"endedAt": "2026-08-20T09:26:08.475Z"
 		}
 	],
 	"observation": {
@@ -51,8 +53,8 @@
 		},
 		"stageBudgetMs": 900000,
 		"trackedPathsSource": "git",
-		"pathsObservedBefore": 4611,
-		"pathsObservedAfter": 4611,
+		"pathsObservedBefore": 4622,
+		"pathsObservedAfter": 9417,
 		"authoringHomes": [
 			"fixtures/**",
 			"packages/cli/src/fixture/**",

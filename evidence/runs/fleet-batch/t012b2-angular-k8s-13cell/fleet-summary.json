@@ -1,0 +1,95 @@
+{
+	"schemaVersion": "versionless.fleet-batch.v1",
+	"flow": "batch",
+	"name": "t012b2-angular-k8s-13cell",
+	"startedAt": "2026-08-20T09:25:54.488Z",
+	"endedAt": "2026-08-20T09:26:12.747Z",
+	"machineTimeMs": 18258,
+	"declared": {
+		"applicationsFrom": [
+			"evidence/runs/fleet-batch/t012b2-angular-k8s.json"
+		],
+		"laneRoot": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t012b2",
+		"forwarded": [
+			"--allow-install-scripts",
+			"--allow-peer-conflicts",
+			"--allow-remote-tarballs",
+			"--cell",
+			"angular-13.4.0",
+			"--revision",
+			"e75ebcf688d3b7edff2a050332c8e86ca1e47e12"
+		],
+		"concurrency": "one application at a time, in the order declared; nothing in this batch ran in parallel",
+		"publish": "declared"
+	},
+	"totals": {
+		"applications": 1,
+		"proven": 0,
+		"refused": 0,
+		"refusedByCode": {},
+		"defects": 1,
+		"interventionCount": 0,
+		"interventionCountNotAsserted": 0
+	},
+	"unattended": {
+		"state": false,
+		"statement": "This batch is not described as unattended: 1 application(s) reached a defect classification."
+	},
+	"applications": [
+		{
+			"id": "angular-kubernetes-dashboard",
+			"framework": "angular",
+			"applicationRoot": ".versionless/cache/angular-kubernetes-dashboard-stage-t678/acquisition/source",
+			"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t012b2/angular-kubernetes-dashboard",
+			"runRecordPath": "evidence/runs/angular-kubernetes-dashboard/run-record.json",
+			"interventionRecordPath": "evidence/runs/angular-kubernetes-dashboard/run-record.json.interventions.json",
+			"terminalClassification": "defect:install",
+			"interventionCount": 0,
+			"exitCode": 1,
+			"refusal": null,
+			"elapsedMs": 15747
+		}
+	],
+	"publish": {
+		"declared": true,
+		"steps": [
+			{
+				"step": "pack",
+				"command": "pnpm exec vp pack",
+				"status": "skipped",
+				"exitCode": null,
+				"detail": "packages/cli/dist is not older than the sources it is built from"
+			},
+			{
+				"step": "trust:generate",
+				"command": "npm run trust:generate -- --offline --policy trust/policy.json --output evidence/trust/current",
+				"status": "ran",
+				"exitCode": 0,
+				"detail": "the step exited 0"
+			},
+			{
+				"step": "trust:verify",
+				"command": "npm run trust:verify -- --offline",
+				"status": "ran",
+				"exitCode": 0,
+				"detail": "the step exited 0"
+			},
+			{
+				"step": "report:coverage",
+				"command": "report:coverage --offline --verify-only",
+				"status": "ran",
+				"exitCode": 0,
+				"detail": "the step exited 0"
+			}
+		]
+	},
+	"notEstablished": [
+		"A count of refusal sites is not a count of refusable applications. What this summary tallies is the outcome each named application reached on this host, in this order, once.",
+		"A refusal is an outcome rather than a failure of the run. The refusing roots are counted at the cost they actually took.",
+		"The fleet here is whatever list this command was handed. It is not a random sample of any target fleet and it carries whatever selection that list carries.",
+		"The timings are one host, one process, a warm page cache and one repetition. They are a reading of this machine rather than a specification.",
+		"An intervention count of zero is the out-of-band harness reporting that no path outside the declared write set changed and that one process was spawned. It is not a statement that any application in this batch produced a working build.",
+		"Applications ran one at a time. Nothing here establishes what any of these outcomes would have been under a loop that fanned out, and the witness surface is the reason this one does not.",
+		"The publish steps below, when declared, report what each command exited with. A regenerated report is a re-derivation of what the evidence on disk already carried; it is not certification, and no authenticity claim rides along with it."
+	]
+}
