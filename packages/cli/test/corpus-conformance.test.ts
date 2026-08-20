@@ -26,7 +26,7 @@ describe('corpus conformance CLI', () => {
 			// 12 sealed corpus applications + 1 run-record application
 			// (`react-flame-v2-4-0`), which `corpus:verify` adjudicates alongside
 			// the sealed members rather than counting separately.
-			sourceApplications: 13,
+			sourceApplications: 15,
 		});
 	});
 

@@ -42,6 +42,7 @@ import {
 	readLaneRuntimeAfterFailure,
 	type LaneRuntime,
 	type LaneRuntimePlan,
+	type TargetRuntimeDecision,
 } from './install.ts';
 import { LANE_BUILD_DIRECTORY } from './lane.ts';
 import { refuse } from './refusals.ts';
@@ -365,20 +366,52 @@ export function buildNotRequested(reason: string): BuildRecord {
 /**
  * Run the build this stage planned. A non-zero exit is a defect.
  *
- * `runtime` is the era-cell stage's provision, carried this far so the build
- * child runs in the runtime that stage named instead of in whatever the
- * invoking `PATH` happens to hold. It matters most where it is least visible:
+ * `runtime` is the plan the pipeline composed for the *target* of the migration
+ * — the Angular target cell's own `nodeLine`, or the host when the composed
+ * lane's toolchain admits it — carried this far so the build child runs in the
+ * runtime the lane it is about to build requires, rather than in the era of the
+ * source tree or in whatever the invoking `PATH` happens to hold. `target` is
+ * the decision behind it, consulted only to refuse by name when this host
+ * cannot be that runtime. It matters most where it is least visible:
  * the Angular CLI 13 this repository's Angular lanes carry warns and proceeds
  * on an even Node major above 16 rather than refusing it, so a build under the
  * wrong runtime does not fail at the CLI — it fails somewhere inside webpack
  * with a diagnostic that names neither Node nor the cell.
  */
+/**
+ * Refuse, by name, a build whose target names a runtime this host cannot be.
+ *
+ * Both walls are returned outcomes rather than attempts. The measured one is
+ * the first: T045-b3 handed a Vite 8 lane a Node 16 runtime and got
+ * `ReferenceError: CustomEvent is not defined` out of Vite's own CLI — an
+ * unnamed defect standing in for a requirement both halves of this pipeline
+ * already knew. A build that cannot start is not a defect in the application,
+ * and this says so before spawning anything.
+ */
+function refuseUnsatisfiedTarget(target: TargetRuntimeDecision, laneDir: string): never {
+	if (target.basis === 'angular-target-cell')
+		refuse({
+			code: 'build.target-runtime-not-installed',
+			message: `Build: the lane at ${laneDir} was composed against a target cell that publishes its own Node line, and no runtime of that line is on this host. ${target.reading} This stage opens no network, so a runtime this host does not carry is a refusal rather than a fetch; provide the runtime, or declare a cell this host can supply with --cell.`,
+			stage: 'build',
+			origin: 'pipeline',
+		});
+	refuse({
+		code: 'build.host-runtime-below-target-requirement',
+		message: `Build: the migrated lane's own toolchain requires a Node line this host does not run. ${target.reading} ${target.requirement?.basis ?? ''} The era of the source tree is not the era of the lane: the lane is what this pipeline composed, and it is the lane's requirement that decides which runtime it may be built in. Build on a host running a Node line the toolchain admits rather than have this stage attempt a build the toolchain refuses to start.`,
+		stage: 'build',
+		origin: 'pipeline',
+	});
+}
+
 export async function runLaneBuild(
 	laneDir: string,
 	configuration = 'vite.config.ts',
 	environment: NodeJS.ProcessEnv = process.env,
 	runtime: LaneRuntimePlan = INHERITED_LANE_RUNTIME,
+	target: TargetRuntimeDecision | null = null,
 ): Promise<BuildRecord> {
+	if (target !== null && target.satisfied === false) refuseUnsatisfiedTarget(target, laneDir);
 	const plan = await planLaneBuild(laneDir, configuration);
 	const inherited = laneRuntimeEnvironment(runtime, environment);
 	const [binary, ...args] = plan.command as readonly [string, ...string[]];

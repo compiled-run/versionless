@@ -61,6 +61,14 @@ import * as path from 'pathe';
 import { parseURL } from 'ufo';
 import { sha256 } from '../../../core/src/receipts/canonicalize.ts';
 import { directoryExists, fileExists, readJsonFile } from './analyze.ts';
+import {
+	leadingMajor,
+	provisionRuntime,
+	readHostCell,
+	RUNNING_PROCESS,
+	RUNNING_PROCESS_LOCATION,
+	type HostCellReading,
+} from './era-cell.ts';
 import { refuse } from './refusals.ts';
 
 const run = promisify(execFile);
@@ -957,12 +965,58 @@ export const SANDBOX_KEPT_VARIABLES: readonly string[] = Object.freeze(['PATH'])
 export type LaneRuntimePlan = Readonly<{
 	/** `provisioned` when a cell runtime's `bin` is prepended; `host` when the invoking `PATH` is passed through untouched. */
 	source: 'provisioned' | 'host';
-	/** The supplier the era-cell stage named, or `null` when this stage was handed no provision. */
+	/**
+	 * The supplier of the runtime this plan chose, or `null` when this stage was
+	 * handed no provision at all.
+	 *
+	 * It is the era-cell stage's supplier exactly when the era-cell stage's
+	 * provision is the one the target wants. When the two diverge — the source
+	 * tree declares one era and the migrated lane's target requires another —
+	 * this names the target's, and `eraDeclared` names the era's beside it.
+	 */
 	cellSupplier: string | null;
-	/** The version the era-cell stage read for that provision, or `null`. */
+	/** The version read for that provision, or `null`. */
 	cellVersion: string | null;
 	/** The runtime directory whose `bin` is prepended to `PATH`, or `null` when none is. */
 	pathPrefix: string | null;
+	/**
+	 * The runtime the source tree's era declared, when it is *not* the runtime
+	 * above.
+	 *
+	 * Absent — not null — whenever there is no divergence to report, so every
+	 * row published before this field existed for a lane whose era and target
+	 * agree is byte-identical to the row published after it.
+	 */
+	eraDeclared?: EraDeclaredRuntime;
+}>;
+
+/**
+ * The runtime the era-cell stage read off the source tree, carried beside the
+ * one the lane was actually given.
+ *
+ * T045-b3 measured what its absence costs. `react-your-spotify-1-5-0`'s
+ * `client/Dockerfile` reads `FROM node:16-alpine`, the era-cell stage read that
+ * truthfully, and Node 16.20.2 was handed to a lane whose composed manifest
+ * declares Vite 8 — which refuses Node 16 by name. The build row recorded the
+ * runtime it ran in and said nothing about the reading that chose it, so the
+ * contradiction between the source's era and the target's requirement was
+ * invisible on the record even though both halves of it were known.
+ */
+export type EraDeclaredRuntime = Readonly<{
+	/** `read` when a declaration in the tree named a Node major, `not-read` otherwise. */
+	outcome: 'read' | 'not-read';
+	/** Which declaration it was read from, e.g. `Dockerfile*#FROM a node image`. */
+	source: string | null;
+	/** What that declaration literally says, e.g. `node:16-alpine`. */
+	declared: string | null;
+	/** The supplier the era-cell stage provisioned for it. */
+	supplier: string | null;
+	/** The version that provision names. */
+	version: string | null;
+	/** Where that runtime sits, as the era-cell record spells it. */
+	location: string | null;
+	/** What this field is, and what it is not. */
+	note: string;
 }>;
 
 /**
@@ -995,6 +1049,8 @@ export type LaneRuntime = Readonly<{
 	cellSupplier: string | null;
 	cellVersion: string | null;
 	pathPrefix: string | null;
+	/** The era the source tree declared, when it is not the runtime above. */
+	eraDeclared?: EraDeclaredRuntime;
 	/** `node -v` read through the child's own environment, or `null`. */
 	resolvedVersion: string | null;
 	/** What this reading establishes, and what it does not. */
@@ -1025,6 +1081,272 @@ export async function planLaneRuntime(
 		cellSupplier: provision.supplier,
 		cellVersion: provision.version,
 		pathPrefix: prepends ? provision.location : null,
+	});
+}
+
+/**
+ * A Node line the migrated lane's own toolchain requires, as this repository
+ * measured it.
+ *
+ * There is exactly one entry and it is a measurement rather than a table. The
+ * temptation is to write a Node-per-Vite-major matrix from memory; this file
+ * does not, because a requirement nobody here measured would be an invention
+ * with the authority of a reading. A toolchain major that is not this one
+ * yields no requirement at all, and the decision below says so in those words
+ * rather than assuming it inherits this one's.
+ */
+export type TargetToolchainRequirement = Readonly<{
+	/** The toolchain and major the lane declares, e.g. `vite@8`. */
+	toolchain: string;
+	/** What the lane manifest literally declares for it. */
+	declared: string;
+	/** Where that declaration was read. */
+	readFrom: string;
+	/** The Node lines it admits, as the toolchain itself states them. */
+	admits: string;
+	/** The measurement this requirement is, verbatim. */
+	basis: string;
+}>;
+
+/**
+ * Vite 8's Node requirement, quoted from the run that measured it.
+ *
+ * `react-your-spotify-1-5-0` was installed and built under Node 16.20.2 —
+ * the era its own `client/Dockerfile` declares — with a lane manifest the
+ * pipeline had just rewritten to Vite 8. Vite said so itself before dying, and
+ * this is that sentence.
+ */
+export const VITE_8_NODE_REQUIREMENT =
+	'You are using Node.js 16.20.2. Vite requires Node.js version 20.19+ or 22.12+. Please upgrade your Node.js version.';
+
+/** The toolchain package whose declaration in the lane manifest is read. */
+const LANE_TOOLCHAIN_PACKAGE = 'vite';
+
+/** The one toolchain major this repository has a measured Node requirement for. */
+const MEASURED_TOOLCHAIN_MAJOR = 8;
+
+/**
+ * Whether a Node version satisfies the measured Vite 8 requirement.
+ *
+ * The two admitted lines are the two the toolchain names — `20.19+` and
+ * `22.12+` — read as literally as they are written: a `20.x` below `.19` is not
+ * admitted, `21.x` is admitted by neither clause, and everything from `22.12`
+ * upwards is. `null` is a version string this function could not read, which is
+ * not the same answer as `false` and is never treated as one.
+ */
+export function nodeVersionAdmittedByVite8(version: string): boolean | null {
+	const read = /^v?(\d+)\.(\d+)\./.exec(version.trim());
+	if (read === null) return null;
+	const major = Number.parseInt(read[1] as string, 10);
+	const minor = Number.parseInt(read[2] as string, 10);
+	if (major === 20) return minor >= 19;
+	if (major === 22) return minor >= 12;
+	return major >= 23;
+}
+
+/**
+ * The Node requirement the composed lane's own toolchain declares, read off the
+ * lane manifest the install stage is about to resolve.
+ *
+ * The lane manifest is the honest source for this: it is what the plan and
+ * apply stages composed, and the build script it declares is the command the
+ * build stage runs. Reading the *source* tree here would repeat the error this
+ * whole seam exists to fix.
+ */
+export async function readLaneToolchainRequirement(
+	laneDir: string,
+): Promise<TargetToolchainRequirement | null> {
+	const manifest = await readJsonFile(path.join(laneDir, 'package.json'));
+	if (manifest === null) return null;
+	const development = (manifest.devDependencies ?? {}) as Record<string, unknown>;
+	const runtimeDependencies = (manifest.dependencies ?? {}) as Record<string, unknown>;
+	const field = Object.hasOwn(development, LANE_TOOLCHAIN_PACKAGE)
+		? 'devDependencies'
+		: Object.hasOwn(runtimeDependencies, LANE_TOOLCHAIN_PACKAGE)
+			? 'dependencies'
+			: null;
+	if (field === null) return null;
+	const declared = (field === 'devDependencies' ? development : runtimeDependencies)[
+		LANE_TOOLCHAIN_PACKAGE
+	];
+	if (typeof declared !== 'string') return null;
+	const major = leadingMajor(declared);
+	if (major !== MEASURED_TOOLCHAIN_MAJOR) return null;
+	return Object.freeze({
+		toolchain: `${LANE_TOOLCHAIN_PACKAGE}@${String(major)}`,
+		declared,
+		readFrom: `the lane manifest package.json#${field}.${LANE_TOOLCHAIN_PACKAGE}`,
+		admits: 'Node 20.19+ or 22.12+',
+		basis: `evidence/runs/react-your-spotify-1-5-0/run-record.json records this toolchain refusing an era runtime in its own words: "${VITE_8_NODE_REQUIREMENT}" No requirement is read here for any other ${LANE_TOOLCHAIN_PACKAGE} major, because this repository has measured none.`,
+	});
+}
+
+/**
+ * Which runtime the *target* of the composed plan needs, and whether this host
+ * can be it.
+ *
+ * This is the correction T045-b3 measured. The era-cell stage reads the era of
+ * the **source** tree, truthfully, and until this function existed that reading
+ * was what the install and build children were handed. But those children do
+ * not run the source tree: they run the lane the plan and apply stages just
+ * composed, whose toolchain the migration chose. `react-your-spotify-1-5-0`
+ * declared `FROM node:16-alpine`, was given Node 16, and its Vite 8 lane died
+ * with `ReferenceError: CustomEvent is not defined` — while `react-cra-redux`,
+ * the same adapter and the same Vite, built and went proven for no reason other
+ * than that its tree happened to declare no era at all. An application was
+ * penalised for declaring its era more precisely than one that declared none.
+ *
+ * Three shapes, and each says which it is rather than falling through a default:
+ *
+ * - **An Angular target cell.** The frozen adapter publishes the cell's own
+ *   `nodeLine`; a runtime of it is provisioned through the very machinery the
+ *   era-cell stage provisions with. The Angular case is *already* correct on
+ *   disk today, but by coincidence of values — the 13 cell's `nodeLine` happens
+ *   to equal what angular2-hn's era declares. After this it is correct because
+ *   the target wants it.
+ * - **A lane toolchain requirement.** The composed lane declares its own build
+ *   tool, and the one this repository has measured a Node line for says so
+ *   itself. The host either satisfies it — in which case the host is the
+ *   runtime, which is exactly the path `react-flame-v2-4-0` and
+ *   `react-cra-redux` already took — or it does not, and the build stage
+ *   refuses by name rather than attempting a build that cannot start.
+ * - **Nothing measured.** No target cell and no measured toolchain requirement:
+ *   the era-cell provision stands, which is the behaviour every caller had
+ *   before this function existed, and `satisfied` is `null` rather than `true`.
+ */
+export type TargetRuntimeBasis =
+	| 'angular-target-cell'
+	| 'lane-toolchain-requirement'
+	| 'no-measured-requirement';
+
+export type TargetRuntimeDecision = Readonly<{
+	basis: TargetRuntimeBasis;
+	/** The Node major the target names, when it names one. */
+	targetNodeMajor: number | null;
+	/** The toolchain requirement read off the lane manifest, when there is one. */
+	requirement: TargetToolchainRequirement | null;
+	/**
+	 * Whether the runtime this host can give the lane meets the target's
+	 * requirement. `null` is "no requirement was read", which is not "yes".
+	 */
+	satisfied: boolean | null;
+	/** The plan the install and build children are handed. */
+	chosen: LaneRuntimePlan;
+	/** What was read, in one sentence, for the row and for a refusal to quote. */
+	reading: string;
+}>;
+
+/** What the era-cell stage read, narrowed to what this decision consults. */
+export type EraRuntimeReading = Readonly<{
+	provision: Readonly<{ supplier: string; version: string; location: string }> | null;
+	/** The architecture the era-cell stage settled on for this application. */
+	architecture: string | null;
+	outcome: 'read' | 'not-read' | null;
+	declared: string | null;
+	readFrom: string | null;
+}>;
+
+export type TargetLaneRuntimeOptions = Readonly<{
+	/** The lineage the plan stage composed for, or `null` when it composed none. */
+	lineage: string | null;
+	/** The Angular target cell the plan resolved, with the Node line it publishes. */
+	targetCell: Readonly<{ id: string; nodeLine: string; nodeMajor: number }> | null;
+	/** The composed lane on disk, or `null` when no lane was written. */
+	laneDir: string | null;
+	era: EraRuntimeReading;
+	/** The host reading the era-cell stage already took, re-read only if absent. */
+	host?: HostCellReading | null;
+}>;
+
+const ERA_DECLARED_NOTE =
+	"The runtime the era-cell stage read off the source tree and provisioned for it. It is recorded because it is not the runtime the lane was given: the lane is the migrated one, and the runtime above is the one that lane's target requires. Nothing here says the era reading was wrong — it is a true reading of a different tree.";
+
+/** The era reading as a recorded divergence, or `undefined` when it agrees. */
+function eraDeclaredBeside(
+	era: EraRuntimeReading,
+	chosen: LaneRuntimePlan,
+): EraDeclaredRuntime | undefined {
+	const provision = era.provision;
+	if (provision === null) return undefined;
+	if (provision.supplier === chosen.cellSupplier && provision.version === chosen.cellVersion)
+		return undefined;
+	return Object.freeze({
+		outcome: era.outcome === 'read' ? ('read' as const) : ('not-read' as const),
+		source: era.readFrom,
+		declared: era.declared,
+		supplier: provision.supplier,
+		version: provision.version,
+		location: provision.location,
+		note: ERA_DECLARED_NOTE,
+	});
+}
+
+/** The plan for a lane whose target runtime is the one this process runs. */
+async function hostLaneRuntime(host: HostCellReading): Promise<LaneRuntimePlan> {
+	return await planLaneRuntime({
+		supplier: RUNNING_PROCESS,
+		version: host.runningNodeVersion,
+		location: RUNNING_PROCESS_LOCATION,
+	});
+}
+
+/** Decide the runtime plan from the target of the composed plan. */
+export async function planTargetLaneRuntime(
+	options: TargetLaneRuntimeOptions,
+): Promise<TargetRuntimeDecision> {
+	const host = options.host ?? (await readHostCell());
+	const architecture = options.era.architecture ?? host.architecture;
+	const withEra = (
+		basis: TargetRuntimeBasis,
+		rest: Omit<TargetRuntimeDecision, 'basis'>,
+	): TargetRuntimeDecision => {
+		const eraDeclared = eraDeclaredBeside(options.era, rest.chosen);
+		return Object.freeze({
+			...rest,
+			basis,
+			chosen: Object.freeze({
+				...rest.chosen,
+				...(eraDeclared === undefined ? {} : { eraDeclared }),
+			}),
+		});
+	};
+	const targetCell = options.targetCell;
+	if (options.lineage === 'angular' && targetCell !== null) {
+		const provisioned = provisionRuntime(host, targetCell.nodeMajor, architecture);
+		if (provisioned === null)
+			return withEra('angular-target-cell', {
+				targetNodeMajor: targetCell.nodeMajor,
+				requirement: null,
+				satisfied: false,
+				chosen: await hostLaneRuntime(host),
+				reading: `The plan stage composed this lane against ${targetCell.id}, whose published nodeLine is ${targetCell.nodeLine}, and no Node ${String(targetCell.nodeMajor)} runtime is present on ${host.platform}-${architecture} at any location this pipeline reads (${host.suppliers.join(', ')}).`,
+			});
+		return withEra('angular-target-cell', {
+			targetNodeMajor: targetCell.nodeMajor,
+			requirement: null,
+			satisfied: true,
+			chosen: await planLaneRuntime(provisioned.provision),
+			reading: `The plan stage composed this lane against ${targetCell.id}, whose published nodeLine is ${targetCell.nodeLine}. A Node ${String(targetCell.nodeMajor)} runtime for it was ${provisioned.outcome === 'provisioned' ? 'provisioned from' : 'already present at'} ${provisioned.provision.supplier} ${provisioned.provision.version}.`,
+		});
+	}
+	const requirement =
+		options.laneDir === null ? null : await readLaneToolchainRequirement(options.laneDir);
+	if (requirement !== null) {
+		const satisfied = nodeVersionAdmittedByVite8(host.runningNodeVersion);
+		return withEra('lane-toolchain-requirement', {
+			targetNodeMajor: leadingMajor(host.runningNodeVersion),
+			requirement,
+			satisfied,
+			chosen: await hostLaneRuntime(host),
+			reading: `The composed lane declares ${requirement.toolchain} (${requirement.declared}, read from ${requirement.readFrom}), which admits ${requirement.admits}. This host runs ${host.runningNodeVersion}, which ${satisfied === true ? 'that admits' : satisfied === false ? 'that does not admit' : 'this stage could not read a major and minor out of'}.`,
+		});
+	}
+	return withEra('no-measured-requirement', {
+		targetNodeMajor: null,
+		requirement: null,
+		satisfied: null,
+		chosen: await planLaneRuntime(options.era.provision),
+		reading: `The ${options.lineage ?? 'unplanned'} lane names no target cell this pipeline reads a Node line from${options.laneDir === null ? ' and no lane manifest was composed' : `, and its manifest declares no ${LANE_TOOLCHAIN_PACKAGE} major this repository has measured a Node requirement for`}. The era-cell stage's own provision stands, which is what every stage was handed before the target was consulted at all.`,
 	});
 }
 
@@ -1067,6 +1389,22 @@ async function resolvedNodeVersion(environment: NodeJS.ProcessEnv): Promise<stri
  * spawned with rather than from the plan, so the row reports a measurement of
  * the child's world instead of repeating the intention behind it.
  */
+/**
+ * The divergence, spelled once, for the two claims that have to state it.
+ *
+ * Empty for every plan that carries no `eraDeclared`, which is what keeps the
+ * claim strings on an undiverged row exactly the strings they were.
+ */
+function eraDivergenceSentence(plan: LaneRuntimePlan): string {
+	const era = plan.eraDeclared;
+	if (era === undefined) return '';
+	const read =
+		era.source === null
+			? `The era-cell stage provisioned ${String(era.supplier)} ${String(era.version)} for this tree`
+			: `The era-cell stage read ${String(era.source)}, which says ${String(era.declared)}, and provisioned ${String(era.supplier)} ${String(era.version)} for it`;
+	return ` ${read} — a different runtime from the one above. The lane this pipeline installs and builds is the *migrated* lane, so the runtime it is given is the one that lane's target requires; the era reading is recorded beside it under \`eraDeclared\` rather than handed to the child. Both readings are true and they are about different trees.`;
+}
+
 export async function readLaneRuntime(
 	plan: LaneRuntimePlan,
 	environment: NodeJS.ProcessEnv,
@@ -1077,13 +1415,20 @@ export async function readLaneRuntime(
 		cellSupplier: plan.cellSupplier,
 		cellVersion: plan.cellVersion,
 		pathPrefix: plan.pathPrefix,
+		...(plan.eraDeclared === undefined ? {} : { eraDeclared: plan.eraDeclared }),
 		resolvedVersion,
 		claim:
-			plan.source === 'provisioned'
-				? `The child was spawned with ${String(plan.pathPrefix)}/bin first on PATH, so \`node\` — and every shim in the lane's own \`node_modules/.bin\` that starts \`#!/usr/bin/env node\` — resolved to the ${String(plan.cellSupplier)} runtime the era-cell stage named (${String(plan.cellVersion)}). \`resolvedVersion\` is \`node -v\` read through that same environment${resolvedVersion === null ? ', and it read nothing: `node` was not resolvable there' : ''}. It does not establish that a tool the build script invokes by an absolute path of its own resolved through PATH too.`
-				: plan.cellSupplier === null
-					? `Nothing was prepended to PATH and this stage was handed no era-cell provision, so the child inherited the invoking PATH unchanged. \`resolvedVersion\` is \`node -v\` read through that environment${resolvedVersion === null ? ', and it read nothing: `node` was not resolvable there' : ''}; which runtime that is was decided outside this pipeline.`
-					: `Nothing was prepended to PATH. The era-cell stage named ${plan.cellSupplier} ${String(plan.cellVersion)}, whose location is not a runtime directory carrying bin/node that this checkout can resolve — the running process supplies itself, and a version manager spells its location relative to its own root — so the child inherited the invoking PATH unchanged rather than being given a guessed directory. \`resolvedVersion\` is \`node -v\` read through that environment${resolvedVersion === null ? ', and it read nothing: `node` was not resolvable there' : ''}.`,
+			plan.eraDeclared !== undefined
+				? `${
+						plan.source === 'provisioned'
+							? `The child was spawned with ${String(plan.pathPrefix)}/bin first on PATH, so \`node\` resolved to the ${String(plan.cellSupplier)} runtime this pipeline provisioned for the migrated lane's target (${String(plan.cellVersion)}).`
+							: "Nothing was prepended to PATH: the runtime the migrated lane's target requires is the one this process already runs, so the child inherited the invoking PATH unchanged."
+					}${eraDivergenceSentence(plan)} \`resolvedVersion\` is \`node -v\` read through that same environment${resolvedVersion === null ? ', and it read nothing: `node` was not resolvable there' : ''}. It does not establish that a tool the build script invokes by an absolute path of its own resolved through PATH too.`
+				: plan.source === 'provisioned'
+					? `The child was spawned with ${String(plan.pathPrefix)}/bin first on PATH, so \`node\` — and every shim in the lane's own \`node_modules/.bin\` that starts \`#!/usr/bin/env node\` — resolved to the ${String(plan.cellSupplier)} runtime the era-cell stage named (${String(plan.cellVersion)}). \`resolvedVersion\` is \`node -v\` read through that same environment${resolvedVersion === null ? ', and it read nothing: `node` was not resolvable there' : ''}. It does not establish that a tool the build script invokes by an absolute path of its own resolved through PATH too.`
+					: plan.cellSupplier === null
+						? `Nothing was prepended to PATH and this stage was handed no era-cell provision, so the child inherited the invoking PATH unchanged. \`resolvedVersion\` is \`node -v\` read through that environment${resolvedVersion === null ? ', and it read nothing: `node` was not resolvable there' : ''}; which runtime that is was decided outside this pipeline.`
+						: `Nothing was prepended to PATH. The era-cell stage named ${plan.cellSupplier} ${String(plan.cellVersion)}, whose location is not a runtime directory carrying bin/node that this checkout can resolve — the running process supplies itself, and a version manager spells its location relative to its own root — so the child inherited the invoking PATH unchanged rather than being given a guessed directory. \`resolvedVersion\` is \`node -v\` read through that environment${resolvedVersion === null ? ', and it read nothing: `node` was not resolvable there' : ''}.`,
 	});
 }
 
@@ -1104,12 +1449,13 @@ export function laneRuntimeUnmeasured(plan: LaneRuntimePlan, why: string): LaneR
 		cellSupplier: plan.cellSupplier,
 		cellVersion: plan.cellVersion,
 		pathPrefix: plan.pathPrefix,
+		...(plan.eraDeclared === undefined ? {} : { eraDeclared: plan.eraDeclared }),
 		resolvedVersion: null,
 		claim: `The four fields above are the runtime plan this stage handed the child: ${
 			plan.source === 'provisioned'
 				? `${String(plan.pathPrefix)}/bin was put first on the child's PATH`
 				: 'nothing was prepended and the child inherited the invoking PATH'
-		}. \`resolvedVersion\` is null because the measurement did not complete — ${why} — so no version is recorded here at all, and none is inferred from the plan: what \`node\` resolved to for this child is not established.`,
+		}.${eraDivergenceSentence(plan)} \`resolvedVersion\` is null because the measurement did not complete — ${why} — so no version is recorded here at all, and none is inferred from the plan: what \`node\` resolved to for this child is not established.`,
 	});
 }
 

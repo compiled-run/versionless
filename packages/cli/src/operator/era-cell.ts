@@ -722,6 +722,17 @@ export const WORKSPACE_RUNTIME_CACHE = '.versionless/cache';
 /** The supplier name for the process this stage is running in. */
 export const RUNNING_PROCESS = 'running-process';
 
+/**
+ * How the running process spells its own location.
+ *
+ * It is a sentence about itself rather than a path, and that is load-bearing
+ * downstream: `planLaneRuntime` asks a provision whether its location names a
+ * runtime tree carrying `bin/node` in this checkout, and this one deliberately
+ * does not, so the running process resolves to the inherited `PATH` instead of
+ * to a directory nobody read.
+ */
+export const RUNNING_PROCESS_LOCATION = 'the process this stage is running in';
+
 /** The supplier name for runtimes the workspace already materialised. */
 export const WORKSPACE_RUNTIME_SUPPLIER = 'workspace-runtime-cache';
 
@@ -895,7 +906,7 @@ export async function readHostCell(
 			platform,
 			architecture,
 			supplier: RUNNING_PROCESS,
-			location: 'the process this stage is running in',
+			location: RUNNING_PROCESS_LOCATION,
 		}),
 	];
 	const workspaceRuntimes = await readWorkspaceRuntimes(workspaceRoot);
@@ -1118,6 +1129,72 @@ export function translationFor(host: HostCellReading, architecture: string): str
 	if (host.platform === 'darwin' && host.architecture === 'arm64' && architecture === 'x64')
 		return 'rosetta-2';
 	return null;
+}
+
+/**
+ * The runtimes this host carries for one Node major on one architecture.
+ *
+ * The filter is the one `establishEraCell` has always applied, lifted out so
+ * that a caller asking the same question of a *different* Node major — the one
+ * the migrated lane's target names rather than the one the source tree's era
+ * declares — asks it through this machinery instead of writing a second reading
+ * of the host that could drift from this one.
+ */
+export function provisionableRuntimes(
+	host: HostCellReading,
+	nodeMajor: number,
+	architecture: string,
+): readonly InstalledRuntime[] {
+	return host.installed.filter(
+		(runtime) =>
+			runtime.major === nodeMajor &&
+			runtime.architecture === architecture &&
+			runtime.platform === host.platform,
+	);
+}
+
+/**
+ * Pick one of them, the way this stage has always picked: the running process
+ * when it is itself a match, and otherwise the first candidate in supplier
+ * order.
+ *
+ * `outcome` distinguishes the two, exactly as the era-cell record does:
+ * `already-present` is the running process supplying itself, `provisioned` is a
+ * runtime read out of some other supplier.
+ *
+ * One reading is worth recording about the workspace cache this most often
+ * resolves to. Its directory is named `angular-13-cell-runtime`, and that name
+ * is a historical label from the unit that first materialised a Node 16 there —
+ * not a lineage claim. What the cache holds is bytes: a `node-v16.20.2-…` tree
+ * that any lineage's cell may legitimately be provisioned from. The name is
+ * left alone deliberately: renaming it would move every published `pathPrefix`
+ * in `evidence/runs/**` and buy nothing but a tidier word.
+ */
+export function provisionRuntime(
+	host: HostCellReading,
+	nodeMajor: number,
+	architecture: string,
+): Readonly<{
+	runtime: InstalledRuntime;
+	outcome: 'provisioned' | 'already-present';
+	provision: CellProvision;
+	candidates: readonly InstalledRuntime[];
+}> | null {
+	const candidates = provisionableRuntimes(host, nodeMajor, architecture);
+	if (candidates.length === 0) return null;
+	const running = candidates.find((runtime) => runtime.supplier === RUNNING_PROCESS);
+	const chosen = running ?? (candidates[0] as InstalledRuntime);
+	return Object.freeze({
+		runtime: chosen,
+		outcome: running === undefined ? ('provisioned' as const) : ('already-present' as const),
+		provision: Object.freeze({
+			supplier: chosen.supplier,
+			version: chosen.version,
+			location: chosen.location,
+			translation: translationFor(host, architecture),
+		}),
+		candidates,
+	});
 }
 
 function requiredCellOf(
@@ -1406,12 +1483,8 @@ export async function establishEraCell(
 	});
 
 	const translation = translationFor(reading, architecture);
-	const candidates = reading.installed.filter(
-		(runtime) =>
-			runtime.major === nodeMajor &&
-			runtime.architecture === architecture &&
-			runtime.platform === reading.platform,
-	);
+	const provisioned = provisionRuntime(reading, nodeMajor, architecture);
+	const candidates = provisioned?.candidates ?? Object.freeze([]);
 	if (candidates.length === 0 && architecture !== reading.architecture)
 		refuse({
 			code: 'era-cell.arch-not-available',
@@ -1440,26 +1513,25 @@ export async function establishEraCell(
 			origin: 'pipeline',
 		});
 
-	const running = candidates.find((runtime) => runtime.supplier === RUNNING_PROCESS);
-	const chosen = running ?? (candidates[0] as InstalledRuntime);
+	/**
+	 * Both refusals above fire on an empty candidate list, so a reading that
+	 * reaches this line has one. The cast states that rather than re-reading the
+	 * host a second time and getting a second chance to disagree with itself.
+	 */
+	const chosen = provisioned as NonNullable<typeof provisioned>;
 	return Object.freeze({
 		stage: 'era-cell',
 		schemaVersion: ERA_CELL_RECORD_SCHEMA,
 		ran: true,
 		reason: null,
-		outcome: running === undefined ? 'provisioned' : 'already-present',
+		outcome: chosen.outcome,
 		required,
 		determination: Object.freeze({
 			inferred: Object.freeze([...inferred].sort()),
 			declared: Object.freeze([...declared].sort()),
 		}),
 		host: reading,
-		provision: Object.freeze({
-			supplier: chosen.supplier,
-			version: chosen.version,
-			location: chosen.location,
-			translation,
-		}),
+		provision: chosen.provision,
 		refusal: null,
 		notEstablished: ERA_CELL_NOT_ESTABLISHED,
 	});

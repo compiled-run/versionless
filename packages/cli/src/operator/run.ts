@@ -39,13 +39,13 @@ import { acquireBaselineRoot } from './acquire.ts';
 import { analyzeApplication, fileExists } from './analyze.ts';
 import { applyPlan } from './apply.ts';
 import { runLaneBuild } from './build.ts';
-import { establishEraCell, type EraCellDeclarations } from './era-cell.ts';
+import { describedCell, establishEraCell, type EraCellDeclarations } from './era-cell.ts';
 import { ingestApplicationSource, readFrontendRoot, type IngestDeclarations } from './ingest.ts';
 import { writeLaneFiles } from './lane.ts';
 import { readLicenceAtPin, type LicencePolicy } from './license.ts';
 import {
 	laneRuntimeOf,
-	planLaneRuntime,
+	planTargetLaneRuntime,
 	runLaneInstall,
 	type InstallPolicy,
 	type LaneRuntime,
@@ -560,11 +560,15 @@ export async function runFullPipeline(declarations: RunDeclarations): Promise<Ru
 	 * lane whose cell provisioned Node 16 had its closure resolved by whatever
 	 * Node the operator invoked this pipeline with. The claim is now carried to
 	 * the two stages it is about, and recorded on both of their rows.
+	 *
+	 * What it is *not* is the decision of which runtime those two stages get.
+	 * The reading here is of the source tree's era, and the children run the
+	 * migrated lane; the runtime is therefore derived below, after the plan and
+	 * the apply stages have said what that lane is.
 	 */
 	const cell = await runStage(state, 'era-cell', () =>
 		establishEraCell(composeRoot, declarations.eraCell),
 	);
-	const runtime = await planLaneRuntime(cell?.provision ?? null);
 	const planned = await runStage(state, 'plan', () =>
 		planApplication({
 			appRoot: composeRoot,
@@ -597,6 +601,39 @@ export async function runFullPipeline(declarations: RunDeclarations): Promise<Ru
 			},
 		};
 	});
+	/**
+	 * The runtime the two lane stages are given, derived from the **target** of
+	 * the composed plan rather than from the era of the source.
+	 *
+	 * This is the T045-b3 correction and it is a threading change, not a
+	 * reading change: the era-cell row above still says exactly what it said,
+	 * because what it reads is true. What moved is which of the two readings the
+	 * install and build children receive. `react-your-spotify-1-5-0` declared
+	 * `FROM node:16-alpine`, was handed Node 16, and its Vite 8 lane could not
+	 * start; `react-cra-redux`, same adapter and same Vite, went proven only
+	 * because its tree declared no era for the old threading to find.
+	 *
+	 * It is derived here, after `apply`, because that is the first line at which
+	 * the lane exists: the target cell is on the plan record and the toolchain
+	 * requirement is in the lane manifest the apply stage just wrote. A run that
+	 * halted before either simply gets the era-cell provision back, which is
+	 * what the stages that will not run would have been handed anyway.
+	 */
+	const target = await planTargetLaneRuntime({
+		lineage: planned?.plan.lineage ?? null,
+		targetCell:
+			planned?.plan.lineage === 'angular' ? describedCell(planned.plan.cell ?? '') : null,
+		laneDir: applied === null ? null : declarations.out,
+		era: Object.freeze({
+			provision: cell?.provision ?? null,
+			architecture: cell?.required?.architecture ?? null,
+			outcome: cell?.required?.era.outcome ?? null,
+			declared: cell?.required?.era.declared ?? null,
+			readFrom: cell?.required?.era.readFrom ?? null,
+		}),
+		host: cell?.host ?? null,
+	});
+	const runtime = target.chosen;
 	await runStage(state, 'install', () =>
 		runLaneInstall(
 			declarations.out,
@@ -608,7 +645,7 @@ export async function runFullPipeline(declarations: RunDeclarations): Promise<Ru
 		),
 	);
 	const built = await runStage(state, 'build', () =>
-		runLaneBuild(declarations.out, undefined, process.env, runtime),
+		runLaneBuild(declarations.out, undefined, process.env, runtime, target),
 	);
 	await runStage(state, 'witness', () =>
 		runLaneWitness({

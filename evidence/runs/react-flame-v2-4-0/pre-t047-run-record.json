@@ -1,15 +1,15 @@
 {
 	"schema": "versionless.run.v1",
 	"flow": "run",
-	"outcome": "defect",
-	"exitCode": 1,
-	"application": ".versionless/work/react-your-spotify-1-5-0/baseline",
-	"lane": "../../../../../private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t047/lanes/your-spotify",
+	"outcome": "proceeded",
+	"exitCode": 0,
+	"application": ".versionless/work/react-flame-v2-4-0/baseline",
+	"lane": "../../../../../var/folders/pt/xbq_fv915rx9wtnmww8npc0w0000gn/T/tmp.pevI7lNM/lane",
 	"roots": {
-		"source": ".versionless/work/react-your-spotify-1-5-0/baseline",
-		"frontend": ".versionless/work/react-your-spotify-1-5-0/baseline/client",
+		"source": ".versionless/work/react-flame-v2-4-0/baseline",
+		"frontend": ".versionless/work/react-flame-v2-4-0/baseline/client",
 		"frontendSource": "read",
-		"frontendBasis": "client declares react ^18.2.0 (dependencies.react); server declares no framework this stage reads"
+		"frontendBasis": ". declares no framework this stage reads; client declares react ^17.0.2 (dependencies.react)"
 	},
 	"dryRun": false,
 	"stagePlan": [
@@ -44,9 +44,7 @@
 			"forwards": [
 				"--allow-remote-tarballs",
 				"--allow-install-scripts",
-				"--allow-peer-conflicts",
-				"--allow-foreign-lockfile",
-				"--allow-git-dependencies"
+				"--allow-peer-conflicts"
 			]
 		},
 		{
@@ -64,7 +62,7 @@
 			"status": "ran",
 			"record": {
 				"lineage": "react",
-				"frameworkVersionDeclared": "^18.2.0",
+				"frameworkVersionDeclared": "^17.0.2",
 				"detectedFrom": "react",
 				"builder": "react-scripts",
 				"builderSource": "package.json",
@@ -73,9 +71,9 @@
 					"source": "unknown"
 				},
 				"packageManager": {
-					"manager": "yarn",
+					"manager": "npm",
 					"lockfiles": [
-						"yarn.lock"
+						"package-lock.json"
 					],
 					"declared": "unknown"
 				},
@@ -84,7 +82,7 @@
 					"reason": "The frozen React and Next.js adapters publish no target-cell package registry, so no per-package verdict exists for this lineage. Every declared dependency is unknown to the engine rather than accepted by it.",
 					"verdicts": [],
 					"counts": {
-						"unknown": 38
+						"unknown": 29
 					}
 				},
 				"notEstablished": [
@@ -93,8 +91,8 @@
 					"A dependency the cell has no reading for is reported `unknown`. `unknown` is not `supported` and it is not `unsupported`."
 				]
 			},
-			"startedAt": "2026-08-20T14:28:56.391Z",
-			"endedAt": "2026-08-20T14:28:56.392Z"
+			"startedAt": "2026-08-20T13:28:34.370Z",
+			"endedAt": "2026-08-20T13:28:34.371Z"
 		},
 		{
 			"name": "ingest",
@@ -104,30 +102,30 @@
 				"schemaVersion": "versionless.operator-ingest.v1",
 				"ran": true,
 				"reason": null,
-				"id": "client_ts",
+				"id": "client",
 				"idSource": "read",
 				"idReadFrom": "client/package.json#name",
 				"frontendRoot": "client",
 				"frontendRootSource": "read",
-				"frontendRootBasis": "client declares react ^18.2.0 (dependencies.react); server declares no framework this stage reads",
-				"acquisitionRoot": "/Users/jacksm5pro/dev/open-source/versionless/.versionless/work/react-your-spotify-1-5-0/baseline",
+				"frontendRootBasis": ". declares no framework this stage reads; client declares react ^17.0.2 (dependencies.react)",
+				"acquisitionRoot": "/Users/jacksm5pro/dev/open-source/versionless/.versionless/work/react-flame-v2-4-0/baseline",
 				"pin": {
-					"repository": "Yooooomi/your_spotify",
-					"repositoryReadFrom": "evidence/ingests/react-your-spotify-1-5-0/source.json (consent VL-LEGACY-CORPUS-2026-08-10; result source-bound; archive reconciled against the published Git tree and byte-identical across two streams; journalled manifest 9ea682d4d6751716add7915c0023d6c36a047ec0e5c00aef985c5b55ea6607ea is the digest this stage walked)",
-					"ref": "refs/tags/1.5.0",
-					"refReadFrom": "evidence/ingests/react-your-spotify-1-5-0/source.json (consent VL-LEGACY-CORPUS-2026-08-10; result source-bound; archive reconciled against the published Git tree and byte-identical across two streams; journalled manifest 9ea682d4d6751716add7915c0023d6c36a047ec0e5c00aef985c5b55ea6607ea is the digest this stage walked)",
-					"commitSha": "50f6a0d83751f0f3bd5f5d90bf0db9507313a5e9",
+					"repository": "pawelmalak/flame",
+					"repositoryReadFrom": "evidence/ingests/react-flame-v2-4-0/source.json (consent VL-LEGACY-CORPUS-2026-08-10; result source-bound; archive reconciled against the published Git tree and byte-identical across two streams; journalled manifest f17895018611f4d3dfe94411c9f858feb424f036a92537b5611455548fccb2e1 is the digest this stage walked)",
+					"ref": "refs/tags/v2.4.0",
+					"refReadFrom": "evidence/ingests/react-flame-v2-4-0/source.json (consent VL-LEGACY-CORPUS-2026-08-10; result source-bound; archive reconciled against the published Git tree and byte-identical across two streams; journalled manifest f17895018611f4d3dfe94411c9f858feb424f036a92537b5611455548fccb2e1 is the digest this stage walked)",
+					"commitSha": "069b6690d9fa7a24a6e7727386ab85148c89b90e",
 					"commitShaSource": "read",
-					"commitShaReadFrom": "evidence/ingests/react-your-spotify-1-5-0/source.json (consent VL-LEGACY-CORPUS-2026-08-10; result source-bound; archive reconciled against the published Git tree and byte-identical across two streams; journalled manifest 9ea682d4d6751716add7915c0023d6c36a047ec0e5c00aef985c5b55ea6607ea is the digest this stage walked)"
+					"commitShaReadFrom": "evidence/ingests/react-flame-v2-4-0/source.json (consent VL-LEGACY-CORPUS-2026-08-10; result source-bound; archive reconciled against the published Git tree and byte-identical across two streams; journalled manifest f17895018611f4d3dfe94411c9f858feb424f036a92537b5611455548fccb2e1 is the digest this stage walked)"
 				},
 				"tree": {
-					"files": 423,
-					"bytes": 1367711,
-					"normalizedManifestSha256": "9ea682d4d6751716add7915c0023d6c36a047ec0e5c00aef985c5b55ea6607ea"
+					"files": 328,
+					"bytes": 2703661,
+					"normalizedManifestSha256": "f17895018611f4d3dfe94411c9f858feb424f036a92537b5611455548fccb2e1"
 				},
 				"detected": {
 					"lineage": "react",
-					"frameworkVersionDeclared": "^18.2.0",
+					"frameworkVersionDeclared": "^17.0.2",
 					"detectedFrom": "react",
 					"builder": "react-scripts",
 					"builderSource": "package.json",
@@ -136,9 +134,9 @@
 						"source": "unknown"
 					},
 					"packageManager": {
-						"manager": "yarn",
+						"manager": "npm",
 						"lockfiles": [
-							"yarn.lock"
+							"package-lock.json"
 						],
 						"declared": "unknown"
 					},
@@ -147,7 +145,7 @@
 						"reason": "The frozen React and Next.js adapters publish no target-cell package registry, so no per-package verdict exists for this lineage. Every declared dependency is unknown to the engine rather than accepted by it.",
 						"verdicts": [],
 						"counts": {
-							"unknown": 38
+							"unknown": 29
 						}
 					},
 					"notEstablished": [
@@ -161,30 +159,30 @@
 					"schemaVersion": "versionless.license-at-pin.v1",
 					"ran": true,
 					"reason": null,
-					"identifier": "GPL-3.0",
+					"identifier": "MIT",
 					"identifierSource": "observed",
-					"identifierBasis": "verbatim GPL-3.0 text in the repository root LICENSE file at the pinned revision",
-					"copyrightNotice": "Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>",
+					"identifierBasis": "verbatim MIT text in the repository root LICENSE.md file at the pinned revision",
+					"copyrightNotice": "Copyright (c) 2021 Paweł Malak",
 					"manifestLicenseField": null,
 					"artifacts": [
 						{
-							"path": "LICENSE",
+							"path": "LICENSE.md",
 							"role": "repository-root-licence",
-							"gitBlobSha": "3877ae0a7ff6f94ac222fd704e112723db776114",
-							"bytes": 35823,
-							"sha256": "230184f60bae2feaf244f10a8bac053c8ff33a183bcc365b4d8b876d2b7f4809",
-							"firstLine": "GNU GENERAL PUBLIC LICENSE",
-							"permissionGrantPresent": false,
-							"noticeRetentionClausePresent": false,
+							"gitBlobSha": "3f30c481e01e031c354cbb5f525dd157e9b3cb81",
+							"bytes": 1068,
+							"sha256": "fbfe10674aef1e0bf084850644879fa4114d8a98debc5fb8e680f295af169d43",
+							"firstLine": "MIT License",
+							"permissionGrantPresent": true,
+							"noticeRetentionClausePresent": true,
 							"warrantyDisclaimerPresent": true,
 							"licenseField": null
 						},
 						{
 							"path": "client/package.json",
 							"role": "frontend-manifest",
-							"gitBlobSha": "1a25d3f94a40d1ff3040e178d015cb5cfe102a03",
-							"bytes": 1862,
-							"sha256": "ad6d97d8cb1eaa3d01a8050a568b41bd733bcaf5d06808dc3c18fe420c6d1cc9",
+							"gitBlobSha": "ffd61d410c5b11781fc723eae58e8c87c5bde23c",
+							"bytes": 1549,
+							"sha256": "73280363fd95b5afa710b895c8511e7e76fcc80241899480e31ac3c18bdf5343",
 							"firstLine": null,
 							"permissionGrantPresent": null,
 							"noticeRetentionClausePresent": null,
@@ -193,7 +191,7 @@
 						}
 					],
 					"licenceFilesAtRoot": [
-						"LICENSE"
+						"LICENSE.md"
 					],
 					"notEstablished": [
 						"This is a record of the licence text present at the pinned revision. It is not a legal opinion, a licence-compatibility finding, or legal approval.",
@@ -203,8 +201,50 @@
 						"`identifierSource: declared` means an operator supplied the identifier. This stage did not read it and does not corroborate it."
 					]
 				},
-				"closure": null,
-				"closureReason": "the frontend root carries yarn.lock, whose closure is pinned by yarn. This reading is of an npm lockfile and this flow does not translate it onto another package manager's format.",
+				"closure": {
+					"schemaVersion": "versionless.legacy-dependency-closure.v1",
+					"slug": "client",
+					"frontendRoot": "client",
+					"source": {
+						"verifiedSourceRoot": "client",
+						"packageJsonSha256": "73280363fd95b5afa710b895c8511e7e76fcc80241899480e31ac3c18bdf5343",
+						"packageLockSha256": "b0cf64e909becea8c4dcbaf03e5f32ef281b0d6b88cb447b4e659521b1037d36",
+						"packageLockBytes": 1228546
+					},
+					"lockState": {
+						"file": "package-lock.json",
+						"lockfileVersion": 2,
+						"requiresField": true,
+						"committedWithSource": true,
+						"coversDevDependencies": true,
+						"everyEntryHasResolvedUrl": true,
+						"everyEntryHasIntegrityHash": true,
+						"entriesWithoutResolvedUrl": [],
+						"entriesWithoutIntegrityHash": [],
+						"lockfileIntegrityAlgorithms": [
+							"sha1",
+							"sha512"
+						]
+					},
+					"counts": {
+						"declaredDependencies": 28,
+						"declaredDevDependencies": 1,
+						"lockedPlacements": 1500,
+						"distinctNameVersionPairs": 1239,
+						"devPlacements": 1,
+						"optionalPlacements": 2,
+						"bundledPlacements": 0
+					},
+					"registryHosts": {
+						"registry.npmjs.org": 1500
+					},
+					"closureSha256": "949d88e81c5a750a70979380f48709cf93fad984d20fcd6fda75a22c9ae3535f",
+					"nonclaims": [
+						"Per-artifact byte digests were not independently mirrored in this unit; the recorded integrity hashes are the ones the committed lockfile declares.",
+						"A resolvable closure establishes no build, browser behavior, licence compatibility of transitive dependencies, migration feasibility, or production readiness."
+					]
+				},
+				"closureReason": null,
 				"notEstablished": [
 					"An ingest record states what the source on disk says at the revision it was pinned to. It is not an acquisition: nothing here establishes that these bytes are the bytes the named repository publishes at that revision, and no archive was fetched, reconciled against a Git tree, or double-streamed by this stage.",
 					"`normalizedManifestSha256` digests the files this stage walked. Installed packages and Git metadata are not walked, so the digest is comparable with another walk of the same shape and not with a digest taken over a whole archive.",
@@ -216,8 +256,8 @@
 					"A frontend root read by lineage is the one directory among those considered whose manifest declares a framework this stage reads. The basis names every directory considered and what each of their manifests declared; nothing here establishes that the directory chosen is the one its authors would call the application."
 				]
 			},
-			"startedAt": "2026-08-20T14:28:56.392Z",
-			"endedAt": "2026-08-20T14:28:56.423Z"
+			"startedAt": "2026-08-20T13:28:34.371Z",
+			"endedAt": "2026-08-20T13:28:34.404Z"
 		},
 		{
 			"name": "license-at-pin",
@@ -227,30 +267,30 @@
 				"schemaVersion": "versionless.license-at-pin.v1",
 				"ran": true,
 				"reason": null,
-				"identifier": "GPL-3.0",
+				"identifier": "MIT",
 				"identifierSource": "observed",
-				"identifierBasis": "verbatim GPL-3.0 text in the repository root LICENSE file at the pinned revision",
-				"copyrightNotice": "Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>",
+				"identifierBasis": "verbatim MIT text in the repository root LICENSE.md file at the pinned revision",
+				"copyrightNotice": "Copyright (c) 2021 Paweł Malak",
 				"manifestLicenseField": null,
 				"artifacts": [
 					{
-						"path": "LICENSE",
+						"path": "LICENSE.md",
 						"role": "repository-root-licence",
-						"gitBlobSha": "3877ae0a7ff6f94ac222fd704e112723db776114",
-						"bytes": 35823,
-						"sha256": "230184f60bae2feaf244f10a8bac053c8ff33a183bcc365b4d8b876d2b7f4809",
-						"firstLine": "GNU GENERAL PUBLIC LICENSE",
-						"permissionGrantPresent": false,
-						"noticeRetentionClausePresent": false,
+						"gitBlobSha": "3f30c481e01e031c354cbb5f525dd157e9b3cb81",
+						"bytes": 1068,
+						"sha256": "fbfe10674aef1e0bf084850644879fa4114d8a98debc5fb8e680f295af169d43",
+						"firstLine": "MIT License",
+						"permissionGrantPresent": true,
+						"noticeRetentionClausePresent": true,
 						"warrantyDisclaimerPresent": true,
 						"licenseField": null
 					},
 					{
 						"path": "client/package.json",
 						"role": "frontend-manifest",
-						"gitBlobSha": "1a25d3f94a40d1ff3040e178d015cb5cfe102a03",
-						"bytes": 1862,
-						"sha256": "ad6d97d8cb1eaa3d01a8050a568b41bd733bcaf5d06808dc3c18fe420c6d1cc9",
+						"gitBlobSha": "ffd61d410c5b11781fc723eae58e8c87c5bde23c",
+						"bytes": 1549,
+						"sha256": "73280363fd95b5afa710b895c8511e7e76fcc80241899480e31ac3c18bdf5343",
 						"firstLine": null,
 						"permissionGrantPresent": null,
 						"noticeRetentionClausePresent": null,
@@ -259,7 +299,7 @@
 					}
 				],
 				"licenceFilesAtRoot": [
-					"LICENSE"
+					"LICENSE.md"
 				],
 				"notEstablished": [
 					"This is a record of the licence text present at the pinned revision. It is not a legal opinion, a licence-compatibility finding, or legal approval.",
@@ -269,8 +309,8 @@
 					"`identifierSource: declared` means an operator supplied the identifier. This stage did not read it and does not corroborate it."
 				]
 			},
-			"startedAt": "2026-08-20T14:28:56.423Z",
-			"endedAt": "2026-08-20T14:28:56.423Z"
+			"startedAt": "2026-08-20T13:28:34.404Z",
+			"endedAt": "2026-08-20T13:28:34.404Z"
 		},
 		{
 			"name": "era-cell",
@@ -280,26 +320,26 @@
 				"schemaVersion": "versionless.era-cell.v1",
 				"ran": true,
 				"reason": null,
-				"outcome": "provisioned",
+				"outcome": "already-present",
 				"required": {
-					"cell": "node-16",
+					"cell": "react-vite-lane",
 					"cellSource": "inferred",
-					"cellBasis": "the react lineage publishes no target-cell registry, so the cell is the Node line the tree itself declares. Only a Node runtime is named by it.",
+					"cellBasis": "the react lineage publishes no target-cell registry, so no cell is read for it. The cell named here is the lane this pipeline composes: the plan and apply stages write a Vite lane, and the install and build stages run it in the runtime recorded below.",
 					"runtime": {
-						"major": 16,
-						"version": null,
+						"major": 24,
+						"version": "v24.15.0",
 						"source": "inferred",
-						"readFrom": "Dockerfile#FROM line 1",
-						"basis": "Dockerfile#FROM line 1 reads node:16-alpine, naming Node 16. The install and build stages run the lane in a runtime of that major.",
+						"readFrom": "the process this stage is running in — the runtime the install and build stages will run the lane in",
+						"basis": "evidence/runs/operator-flows/lane-install-build.json records a lane of this composition installing 428 packages and building 11 outputs at node v24.15.0 on darwin-arm64.",
 						"claim": "the migrated lane will be installed and built in this runtime",
 						"declaredRange": null,
 						"declaredRangeSource": null,
 						"satisfiedByDeclaredRange": null
 					},
 					"era": {
-						"outcome": "read",
-						"declared": "node:16-alpine",
-						"readFrom": "Dockerfile#FROM line 1",
+						"outcome": "not-read",
+						"declared": null,
+						"readFrom": null,
 						"consultedSources": [
 							{
 								"source": ".nvmrc",
@@ -326,28 +366,10 @@
 								"present": false
 							},
 							{
-								"source": "Dockerfile#FROM line 1",
-								"text": "node:16-alpine",
-								"majors": [
-									16
-								],
-								"present": true
-							},
-							{
-								"source": "Dockerfile.production#FROM line 1",
-								"text": "node:16-alpine",
-								"majors": [
-									16
-								],
-								"present": true
-							},
-							{
-								"source": "Dockerfile.production#FROM line 27",
-								"text": "node:16-alpine",
-								"majors": [
-									16
-								],
-								"present": true
+								"source": "Dockerfile*#FROM a node image",
+								"text": null,
+								"majors": null,
+								"present": false
 							},
 							{
 								"source": ".github/workflows/*#node-version",
@@ -362,11 +384,11 @@
 								"present": false
 							}
 						],
-						"claim": "Dockerfile#FROM line 1 names exactly one Node major and this stage read it as the era this tree declares. It is what the tree says, not a statement that the application was built or run on it."
+						"claim": "nothing in this tree names the toolchain era its authors used, and this stage read none"
 					},
-					"nodeMajor": 16,
+					"nodeMajor": 24,
 					"nodeMajorSource": "inferred",
-					"nodeMajorReadFrom": "Dockerfile#FROM line 1",
+					"nodeMajorReadFrom": "the process this stage is running in — the runtime the install and build stages will run the lane in",
 					"nodeMajorSources": [
 						{
 							"source": ".nvmrc",
@@ -393,28 +415,10 @@
 							"present": false
 						},
 						{
-							"source": "Dockerfile#FROM line 1",
-							"text": "node:16-alpine",
-							"majors": [
-								16
-							],
-							"present": true
-						},
-						{
-							"source": "Dockerfile.production#FROM line 1",
-							"text": "node:16-alpine",
-							"majors": [
-								16
-							],
-							"present": true
-						},
-						{
-							"source": "Dockerfile.production#FROM line 27",
-							"text": "node:16-alpine",
-							"majors": [
-								16
-							],
-							"present": true
+							"source": "Dockerfile*#FROM a node image",
+							"text": null,
+							"majors": null,
+							"present": false
 						},
 						{
 							"source": ".github/workflows/*#node-version",
@@ -535,9 +539,9 @@
 					]
 				},
 				"provision": {
-					"supplier": "workspace-runtime-cache",
-					"version": "v16.20.2",
-					"location": ".versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64",
+					"supplier": "running-process",
+					"version": "v24.15.0",
+					"location": "the process this stage is running in",
 					"translation": null
 				},
 				"refusal": null,
@@ -556,8 +560,8 @@
 					"Satisfaction of a declared range is not corroborated by anything else this tree says. Where other sources name majors, they are listed above with what each literally says, and this stage picks from none of them."
 				]
 			},
-			"startedAt": "2026-08-20T14:28:56.423Z",
-			"endedAt": "2026-08-20T14:28:56.428Z"
+			"startedAt": "2026-08-20T13:28:34.404Z",
+			"endedAt": "2026-08-20T13:28:34.426Z"
 		},
 		{
 			"name": "plan",
@@ -565,7 +569,7 @@
 			"record": {
 				"analysis": {
 					"lineage": "react",
-					"frameworkVersionDeclared": "^18.2.0",
+					"frameworkVersionDeclared": "^17.0.2",
 					"detectedFrom": "react",
 					"builder": "react-scripts",
 					"builderSource": "package.json",
@@ -574,9 +578,9 @@
 						"source": "unknown"
 					},
 					"packageManager": {
-						"manager": "yarn",
+						"manager": "npm",
 						"lockfiles": [
-							"yarn.lock"
+							"package-lock.json"
 						],
 						"declared": "unknown"
 					},
@@ -585,7 +589,7 @@
 						"reason": "The frozen React and Next.js adapters publish no target-cell package registry, so no per-package verdict exists for this lineage. Every declared dependency is unknown to the engine rather than accepted by it.",
 						"verdicts": [],
 						"counts": {
-							"unknown": 38
+							"unknown": 29
 						}
 					},
 					"notEstablished": [
@@ -610,11 +614,11 @@
 							"kind": "workspace",
 							"changed": true,
 							"sha256Before": "",
-							"sha256After": "78452e9e68427e2e15c690ca9d94fe3162eb279a11a4d8cb9cee36537e44b0f2",
-							"source": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <link rel=\"icon\" href=\"/favicon.ico\" />\n    <link rel=\"apple-touch-icon\" href=\"/logo192.png\" />\n    <link rel=\"manifest\" href=\"/manifest.json\" />\n    <script src=\"/variables.js\"></script>\n\n    <title>Your Spotify</title>\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n    <meta name=\"theme-color\" content=\"#000000\" />\n\n    <meta name=\"title\" content=\"Your Spotify\">\n    <meta name=\"description\" content=\"Keep track of your Spotify listening habits with Your Spotify.\">\n\n    <meta property=\"og:type\" content=\"image/png\">\n    <meta property=\"og:title\" content=\"Your Spotify\">\n    <meta property=\"og:image:width\" content=\"1200\">\n    <meta property=\"og:image:height\" content=\"628\">\n    <meta property=\"og:description\" content=\"Keep track of your Spotify listening habits with Your Spotify.\">\n    <meta property=\"og:image\" content=\"http://localhost:8080/static/your_spotify_1200.png\">\n\n    <meta property=\"twitter:card\" content=\"summary\">\n    <meta property=\"twitter:title\" content=\"Your Spotify\">\n    <meta property=\"twitter:description\" content=\"Keep track of your Spotify listening habits with Your Spotify.\">\n    <meta property=\"twitter:image\" content=\"http://localhost:8080/static/your_spotify_1200.png\">\n  </head>\n  <body>\n    <noscript>You need to enable JavaScript to run this app.</noscript>\n    <div id=\"root\"></div>\n    <script type=\"module\" src=\"/src/index.tsx\"></script>\n  </body>\n</html>\n",
+							"sha256After": "2290ae423ec42af7520bd956240a673a69afd2f9be6d62e658bffbbabcaf5c33",
+							"source": "<!DOCTYPE html>\n<html lang=\"en\">\n  <head>\n    <meta charset=\"utf-8\" />\n    <link rel=\"icon\" href=\"/icons/favicon.ico\" />\n    <link\n      rel=\"apple-touch-icon\"\n      href=\"/icons/apple-touch-icon.png\"\n    />\n    <link\n      rel=\"apple-touch-icon\"\n      sizes=\"57x57\"\n      href=\"/icons/apple-touch-icon-57x57.png\"\n    />\n    <link\n      rel=\"apple-touch-icon\"\n      sizes=\"72x72\"\n      href=\"/icons/apple-touch-icon-72x72.png\"\n    />\n    <link\n      rel=\"apple-touch-icon\"\n      sizes=\"76x76\"\n      href=\"/icons/apple-touch-icon-76x76.png\"\n    />\n    <link\n      rel=\"apple-touch-icon\"\n      sizes=\"114x114\"\n      href=\"/icons/apple-touch-icon-114x114.png\"\n    />\n    <link\n      rel=\"apple-touch-icon\"\n      sizes=\"120x120\"\n      href=\"/icons/apple-touch-icon-120x120.png\"\n    />\n    <link\n      rel=\"apple-touch-icon\"\n      sizes=\"144x144\"\n      href=\"/icons/apple-touch-icon-144x144.png\"\n    />\n    <link\n      rel=\"apple-touch-icon\"\n      sizes=\"152x152\"\n      href=\"/icons/apple-touch-icon-152x152.png\"\n    />\n    <link\n      rel=\"apple-touch-icon\"\n      sizes=\"180x180\"\n      href=\"/icons/apple-touch-icon-180x180.png\"\n    />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\" />\n    <meta\n      name=\"description\"\n      content=\"Flame - self-hosted startpage for your server\"\n    />\n    <link rel=\"stylesheet\" href=\"/flame.css\" />\n    <title>Flame</title>\n  </head>\n  <body>\n    <noscript>You need to enable JavaScript to run this app.</noscript>\n    <div id=\"root\"></div>\n    <script type=\"module\" src=\"/src/index.tsx\"></script>\n  </body>\n</html>\n",
 							"changes": [
 								"entry document derived from public/index.html with entry module /src/index.tsx",
-								"create-react-app template placeholders substituted for NODE_ENV, PUBLIC_URL"
+								"create-react-app template placeholders substituted for NODE_ENV, PUBLIC_URL, REACT_APP_VERSION"
 							]
 						}
 					],
@@ -634,8 +638,8 @@
 					]
 				}
 			},
-			"startedAt": "2026-08-20T14:28:56.428Z",
-			"endedAt": "2026-08-20T14:28:56.429Z"
+			"startedAt": "2026-08-20T13:28:34.426Z",
+			"endedAt": "2026-08-20T13:28:34.426Z"
 		},
 		{
 			"name": "apply",
@@ -647,15 +651,15 @@
 						{
 							"path": "index.html",
 							"kind": "workspace",
-							"sha256After": "78452e9e68427e2e15c690ca9d94fe3162eb279a11a4d8cb9cee36537e44b0f2",
+							"sha256After": "2290ae423ec42af7520bd956240a673a69afd2f9be6d62e658bffbbabcaf5c33",
 							"changes": [
 								"entry document derived from public/index.html with entry module /src/index.tsx",
-								"create-react-app template placeholders substituted for NODE_ENV, PUBLIC_URL"
+								"create-react-app template placeholders substituted for NODE_ENV, PUBLIC_URL, REACT_APP_VERSION"
 							]
 						}
 					],
 					"removed": [],
-					"copied": 330,
+					"copied": 191,
 					"notEstablished": [
 						"Writing a changeset into a lane is not a build. Nothing here establishes that the lane installs, compiles, or emits anything.",
 						"Every byte written differs from the application only where a frozen adapter transform decided it should; each is itemised by file and by change.",
@@ -669,15 +673,15 @@
 					"files": [
 						{
 							"path": "vite.config.ts",
-							"sha256": "972145bd978ae2fdbb26d8956fef24036bbffcb1c835274cb60f546f96241091",
+							"sha256": "e9f63997d234fbc6fccb11267987a33a64551fec8279daae46cd4216c45206d0",
 							"changes": [
 								"generated from the frozen create-react-app adapter composition with base \"\", template \"index.html\", output build-vite",
-								"environment inlined for NODE_ENV, PUBLIC_URL"
+								"environment inlined for NODE_ENV, PUBLIC_URL, REACT_APP_VERSION"
 							]
 						},
 						{
 							"path": "package.json",
-							"sha256": "597217de4fea98f797263100c46f9212f44fa86ade1c05fa6465640d21ddd4f8",
+							"sha256": "c1b935aff1296107477e7b3673ca04b4a0a6d0cefb3fea9640a214cd505e7d3f",
 							"changes": [
 								"dependencies.react-scripts ^5.0.1 removed: the lane is built by the frozen create-react-app Vite adapter composition and no longer runs that toolchain",
 								"devDependencies.pathe declared as ^2.0.3: the generated lane configuration imports it, pinned to the range this workspace itself resolves",
@@ -691,8 +695,10 @@
 						}
 					],
 					"unhandled": [
+						"The application carries src/setupProxy.js, a create-react-app development-server proxy. The generated lane configuration is a production build composition and carries no proxy.",
 						"scripts.test invoked the removed origin toolchain (react-scripts test). The lane no longer declares react-scripts, and this rewrite carries no successor for that script, so it is dropped rather than left as a command that cannot run.",
 						"scripts.eject invoked the removed origin toolchain (react-scripts eject). The lane no longer declares react-scripts, and this rewrite carries no successor for that script, so it is dropped rather than left as a command that cannot run.",
+						"eslintConfig extends the create-react-app shareable configuration, which react-scripts supplied. The lane no longer declares that package, so the field is preserved verbatim and the configuration it names is not resolvable in the lane.",
 						"The manifest declares a browserslist. create-react-app fed it to Babel and Autoprefixer; the generated lane configuration declares no build target derived from it, so the lane emits whatever the workspace Vite default targets."
 					],
 					"declaredDifferences": [
@@ -706,8 +712,8 @@
 					]
 				}
 			},
-			"startedAt": "2026-08-20T14:28:56.429Z",
-			"endedAt": "2026-08-20T14:28:56.502Z"
+			"startedAt": "2026-08-20T13:28:34.426Z",
+			"endedAt": "2026-08-20T13:28:34.472Z"
 		},
 		{
 			"name": "install",
@@ -717,34 +723,24 @@
 				"ran": true,
 				"reason": null,
 				"packageManager": "npm",
-				"lockfile": null,
+				"lockfile": "package-lock.json",
 				"closure": "resolve",
 				"policy": {
 					"allowRemoteTarballs": true,
 					"allowInstallScripts": true,
 					"skipInstallScripts": false,
 					"allowPeerConflicts": true,
-					"allowForeignLockfile": true,
-					"allowGitDependencies": true
+					"allowForeignLockfile": false,
+					"allowGitDependencies": false
 				},
-				"foreignLockfileDisregarded": {
-					"policy": "allow-foreign-lockfile",
-					"lockfile": "yarn.lock",
-					"packageManager": "yarn",
-					"lockfilesPresent": [
-						"yarn.lock"
-					],
-					"consulted": false,
-					"consequence": "The allow-foreign-lockfile policy was declared, so this install proceeded without the closure yarn pinned in yarn.lock: the file was left on disk untouched and was not consulted, and npm resolved every dependency fresh from the lane manifest instead. This resolution is NOT pinned by the era lockfile, so the installed closure may drift from the one the era application shipped with, and every claim downstream of this install is bounded by that drift."
-				},
-				"gitDependenciesAllowed": {
-					"policy": "allow-git-dependencies",
-					"readFrom": null,
-					"dependencies": [],
-					"consequence": "The allow-git-dependencies policy was declared, so npm was given --allow-git all and this install could fetch dependencies from git references. No lockfile was read on this run, so no list of them is recorded here: the empty list means nothing was read, not that the closure carries none."
-				},
+				"foreignLockfileDisregarded": null,
+				"gitDependenciesAllowed": null,
 				"remoteTarballDependencies": [],
-				"installScriptPackages": [],
+				"installScriptPackages": [
+					"node_modules/core-js",
+					"node_modules/core-js-pure",
+					"node_modules/fsevents"
+				],
 				"installScripts": {
 					"policy": "allow-install-scripts",
 					"npm": {
@@ -762,7 +758,7 @@
 							"lifecycle": "install"
 						},
 						{
-							"package": "core-js-pure@3.25.5",
+							"package": "core-js-pure@3.31.1",
 							"lifecycle": "postinstall"
 						}
 					],
@@ -777,16 +773,14 @@
 					"--no-fund",
 					"--allow-remote",
 					"all",
-					"--allow-git",
-					"all",
 					"--foreground-scripts",
 					"--dangerously-allow-all-scripts",
 					"--legacy-peer-deps"
 				],
 				"exitCode": 0,
-				"installedPackages": 353,
+				"installedPackages": 116,
 				"sandbox": {
-					"home": "/private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t047/lanes/your-spotify/.install-home",
+					"home": "/var/folders/pt/xbq_fv915rx9wtnmww8npc0w0000gn/T/tmp.pevI7lNM/lane/.install-home",
 					"strippedVariables": [
 						"CLAUDE_CODE_EXECPATH (names the invoking user's home)",
 						"FNM_DIR (names the invoking user's home)",
@@ -805,17 +799,8 @@
 					"cellSupplier": "running-process",
 					"cellVersion": "v24.15.0",
 					"pathPrefix": null,
-					"eraDeclared": {
-						"outcome": "read",
-						"source": "Dockerfile#FROM line 1",
-						"declared": "node:16-alpine",
-						"supplier": "workspace-runtime-cache",
-						"version": "v16.20.2",
-						"location": ".versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64",
-						"note": "The runtime the era-cell stage read off the source tree and provisioned for it. It is recorded because it is not the runtime the lane was given: the lane is the migrated one, and the runtime above is the one that lane's target requires. Nothing here says the era reading was wrong — it is a true reading of a different tree."
-					},
 					"resolvedVersion": "v24.15.0",
-					"claim": "Nothing was prepended to PATH: the runtime the migrated lane's target requires is the one this process already runs, so the child inherited the invoking PATH unchanged. The era-cell stage read Dockerfile#FROM line 1, which says node:16-alpine, and provisioned workspace-runtime-cache v16.20.2 for it — a different runtime from the one above. The lane this pipeline installs and builds is the *migrated* lane, so the runtime it is given is the one that lane's target requires; the era reading is recorded beside it under `eraDeclared` rather than handed to the child. Both readings are true and they are about different trees. `resolvedVersion` is `node -v` read through that same environment. It does not establish that a tool the build script invokes by an absolute path of its own resolved through PATH too."
+					"claim": "Nothing was prepended to PATH. The era-cell stage named running-process v24.15.0, whose location is not a runtime directory carrying bin/node that this checkout can resolve — the running process supplies itself, and a version manager spells its location relative to its own root — so the child inherited the invoking PATH unchanged rather than being given a guessed directory. `resolvedVersion` is `node -v` read through that environment."
 				},
 				"boundary": {
 					"root": "/Users/jacksm5pro/dev/open-source/versionless",
@@ -830,10 +815,6 @@
 					"The sandbox is an environment and a working directory, not a container. It moves every path npm resolves from the environment into the lane and drops inherited variables that name the user’s home or this checkout; it does not stop a script that hard-codes an absolute path, and `PATH` is passed through so the child can find its own node. Writes outside the lane are therefore *detected* — the checkout’s `.git/hooks` and its top level are hashed before and after — and refused by name, not prevented.",
 					"The boundary reading watches two places: the top level of the checkout and `.git/hooks`. A write anywhere else outside the lane — a sibling directory, a deeper path in the checkout, another checkout on this host — is not observed here, and `writesOutsideLane: []` does not establish that none happened.",
 					"`closure: resolve` means the lane manifest declares a build toolchain the recorded lockfile predates, so npm resolved rather than replayed. The application’s own pins still come from the lockfile; what was newly resolved is what the manifest rewrite added, and that resolution is not a pin this repository recorded.",
-					"The `allow-foreign-lockfile` policy was declared and no lockfile was read, so nothing pinned this closure: `closure: resolve` here means npm resolved every dependency fresh from the lane manifest at install time, and the era lockfile on disk played no part in it. The installed closure is therefore not established to be the closure the era application shipped with, and nothing downstream of this install can be read as though it were.",
-					"`remoteTarballDependencies` and `installScriptPackages` are empty because no lockfile was read, not because the closure carries none. The remote-tarball and install-script policies are read out of an npm lockfile, and with no lockfile to read they had nothing to find; what npm resolved may still carry either.",
-					"The `allow-git-dependencies` policy was declared, so part of this closure came out of a git repository rather than out of a registry. What a git reference resolves to is decided by whoever controls that repository at fetch time; a tag or a branch may move, and this stage does not record what it pointed at. The registry guarantees that bound the rest of the closure — a version pin, an integrity hash, the registry's own provenance — are not established for these dependencies.",
-					"The git dependencies recorded beside this policy are the ones the lockfile pins. A dependency reached through a git reference that no lockfile records — a transitive one npm resolved fresh — is not in that list, so the list is what was read rather than everything that was fetched.",
 					"`installScripts.ran` and `installScripts.skipped` are read from what npm printed on this run, and from nothing else. A script npm ran without printing a banner is not in `ran`, and a package npm skipped without listing it is not in `skipped`; neither list is derived from the lockfile, and neither is an inventory of every script the closure carries.",
 					"`installScripts.ran` names the scripts npm reported *starting*. Whether a script completed, and whether a native build it exists to perform produced anything, is not established here — the install’s exit code is the only outcome this stage read.",
 					"`installScripts.ran` includes the lane’s own package’s lifecycle scripts beside its dependencies’: npm prints the same banner for both, and this reading does not separate them. The allowScripts gate applies only to dependencies, so a lane script appearing in `ran` says nothing about whether the gate was open.",
@@ -841,50 +822,94 @@
 					"`installScripts.npm` is `npm --version` read through the environment the install child was given. A null there means the reading did not complete, and the allowance was then emitted in the gated form because that is the only form that grants anything; which npm actually ran this install is not established in that case."
 				]
 			},
-			"startedAt": "2026-08-20T14:28:56.503Z",
-			"endedAt": "2026-08-20T14:29:15.024Z"
+			"startedAt": "2026-08-20T13:28:34.472Z",
+			"endedAt": "2026-08-20T13:28:41.191Z"
 		},
 		{
 			"name": "build",
-			"status": "defect",
-			"reason": "build: npm run build failed in the lane. This is a defect rather than a refusal: the lane was composed and installed and the build still did not complete. Command failed: npm run build\nnpm notice run client_ts@1.5.0 build\nnpm notice run vite build\n<script src=\"/variables.js\"> in \"/index.html\" can't be bundled without type=\"module\" attribute\n\u001b[31m✗\u001b[39m Build failed in 20ms\n\u001b[31merror during build:\n\u001b[31mBuild failed with 1 error:\n\n\u001b[31m[builtin:vite-transform] \u001b[0mplugin `builtin:vite-transform` threw an error\n\nCaused by:\n    Tsconfig not found /private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t047/lanes/tsconfig.json\n\u001b[31m\n    at aggregateBindingErrorsIntoJsError (file:///private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t047/lanes/your-spotify/node_modules/rolldown/dist/shared/error-BuvQYXuZ.mjs:48:18)\n    at unwrapBindingResult (file:///private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t047/lanes/your-spotify/node_modules/rolldown/dist/shared/error-BuvQYXuZ.mjs:18:128)\n    at #build (file:///private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t047/lanes/your-spotify/node_modules/rolldown/dist/shared/rolldown-build-CrPk_lZe.mjs:3246:34)\n    at async buildEnvironment (file:///private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t047/lanes/your-spotify/node_modules/vite/dist/node/chunks/node.js:33253:64)\n    at async Object.build (file:///private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t047/lanes/your-spotify/node_modules/vite/dist/node/chunks/node.js:33675:19)\n    at async Object.buildApp (file:///private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t047/lanes/your-spotify/node_modules/vite/dist/node/chunks/node.js:33672:153)\n    at async CAC.<anonymous> (file:///private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t047/lanes/your-spotify/node_modules/vite/dist/node/cli.js:777:3) {\n  errors: [Getter/Setter]\n}\u001b[39m\n",
-			"runtime": {
-				"source": "host",
-				"cellSupplier": "running-process",
-				"cellVersion": "v24.15.0",
-				"pathPrefix": null,
-				"eraDeclared": {
-					"outcome": "read",
-					"source": "Dockerfile#FROM line 1",
-					"declared": "node:16-alpine",
-					"supplier": "workspace-runtime-cache",
-					"version": "v16.20.2",
-					"location": ".versionless/cache/angular-13-cell-runtime/node-v16.20.2-darwin-arm64",
-					"note": "The runtime the era-cell stage read off the source tree and provisioned for it. It is recorded because it is not the runtime the lane was given: the lane is the migrated one, and the runtime above is the one that lane's target requires. Nothing here says the era reading was wrong — it is a true reading of a different tree."
+			"status": "ran",
+			"record": {
+				"stage": "build",
+				"ran": true,
+				"reason": null,
+				"command": [
+					"npm",
+					"run",
+					"build"
+				],
+				"script": "vite build",
+				"configuration": "vite.config.ts",
+				"outDirectory": "build-vite",
+				"exitCode": 0,
+				"outputFiles": 24,
+				"runtime": {
+					"source": "host",
+					"cellSupplier": "running-process",
+					"cellVersion": "v24.15.0",
+					"pathPrefix": null,
+					"resolvedVersion": "v24.15.0",
+					"claim": "Nothing was prepended to PATH. The era-cell stage named running-process v24.15.0, whose location is not a runtime directory carrying bin/node that this checkout can resolve — the running process supplies itself, and a version manager spells its location relative to its own root — so the child inherited the invoking PATH unchanged rather than being given a guessed directory. `resolvedVersion` is `node -v` read through that environment."
 				},
-				"resolvedVersion": "v24.15.0",
-				"claim": "Nothing was prepended to PATH: the runtime the migrated lane's target requires is the one this process already runs, so the child inherited the invoking PATH unchanged. The era-cell stage read Dockerfile#FROM line 1, which says node:16-alpine, and provisioned workspace-runtime-cache v16.20.2 for it — a different runtime from the one above. The lane this pipeline installs and builds is the *migrated* lane, so the runtime it is given is the one that lane's target requires; the era reading is recorded beside it under `eraDeclared` rather than handed to the child. Both readings are true and they are about different trees. `resolvedVersion` is `node -v` read through that same environment. It does not establish that a tool the build script invokes by an absolute path of its own resolved through PATH too."
+				"notEstablished": [
+					"A completed build establishes that the lane emitted output. It is not a browser proof, a parity reading, or a witness pass; nothing here establishes that the emitted bundle behaves as the application did on its era toolchain.",
+					"The lane resolves the frozen adapter from this workspace by relative path, so this build is reproducible by this pipeline in this checkout. It does not establish that the lane builds anywhere else.",
+					"`outputFiles` counts files below the build directory. It is a count, not a comparison against any previous build."
+				]
 			},
-			"startedAt": "2026-08-20T14:29:15.024Z",
-			"endedAt": "2026-08-20T14:29:15.885Z"
+			"startedAt": "2026-08-20T13:28:41.191Z",
+			"endedAt": "2026-08-20T13:28:42.213Z"
 		},
 		{
 			"name": "witness",
-			"status": "not-run",
-			"reason": "not-run-because: build raised a defect",
-			"startedAt": "2026-08-20T14:29:15.885Z",
-			"endedAt": "2026-08-20T14:29:15.885Z"
+			"status": "ran",
+			"record": {
+				"ran": true,
+				"journeySource": "synthesized-crawl",
+				"replayabilityRatio": 1,
+				"journeysRun": 1,
+				"journeys": [
+					{
+						"lane": "migrated",
+						"name": "bounded crawl of the served lane to depth 2",
+						"source": "crawl",
+						"replayable": true,
+						"ran": true,
+						"routesDeclared": 12,
+						"routesReached": 1,
+						"selectorsDeclared": 0,
+						"selectorsPresent": 0,
+						"outcomes": [
+							"journey-measured-declared-gesture-count-0",
+							"journey-measured-unhandled-construct-count-0",
+							"journey-synthesized-by-crawl-bounded-depth-2-reached-1-routes",
+							"journey-measured-route-reached-1-of-12-declared-routes",
+							"journey-measured-selector-present-0-of-0-declared-selectors",
+							"journey-measured-no-document-overflow-on-1-routes"
+						]
+					}
+				],
+				"locality": {
+					"mode": "offline",
+					"successfulNonLoopback": 0,
+					"osWideIsolation": false
+				},
+				"digest": "35140e87ba151fb8fb466a8c680c8d33d0cf0af4737861526f8f5a4137a274ca",
+				"notEstablished": [
+					"A witnessed lane is a lane whose declared journeys were replayed once each on this host, serialized. Nothing here establishes an outcome under concurrent load.",
+					"Where the journeys were synthesized, they were derived from the application own end-to-end suite or from a bounded loopback crawl. The replayability ratio in the record is a count of derived journeys that name a route to start from, not a measure of coverage.",
+					"The outcome strings on each journey are the closed measurement vocabulary the standalone record publishes, reproduced verbatim so this row can be read without opening it. They are legibility and not a verdict: no string in that vocabulary is a pass, and nothing in this row is decided by reading one.",
+					"`locality.successfulNonLoopback` is the runner’s own count of requests that left both loopback origins. It is copied here, not recomputed: this stage measured nothing and asserts nothing the standalone record does not already state."
+				]
+			},
+			"startedAt": "2026-08-20T13:28:42.213Z",
+			"endedAt": "2026-08-20T13:28:44.864Z"
 		}
 	],
-	"defect": {
-		"stage": "build",
-		"message": "build: npm run build failed in the lane. This is a defect rather than a refusal: the lane was composed and installed and the build still did not complete. Command failed: npm run build\nnpm notice run client_ts@1.5.0 build\nnpm notice run vite build\n<script src=\"/variables.js\"> in \"/index.html\" can't be bundled without type=\"module\" attribute\n\u001b[31m✗\u001b[39m Build failed in 20ms\n\u001b[31merror during build:\n\u001b[31mBuild failed with 1 error:\n\n\u001b[31m[builtin:vite-transform] \u001b[0mplugin `builtin:vite-transform` threw an error\n\nCaused by:\n    Tsconfig not found /private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t047/lanes/tsconfig.json\n\u001b[31m\n    at aggregateBindingErrorsIntoJsError (file:///private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t047/lanes/your-spotify/node_modules/rolldown/dist/shared/error-BuvQYXuZ.mjs:48:18)\n    at unwrapBindingResult (file:///private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t047/lanes/your-spotify/node_modules/rolldown/dist/shared/error-BuvQYXuZ.mjs:18:128)\n    at #build (file:///private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t047/lanes/your-spotify/node_modules/rolldown/dist/shared/rolldown-build-CrPk_lZe.mjs:3246:34)\n    at async buildEnvironment (file:///private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t047/lanes/your-spotify/node_modules/vite/dist/node/chunks/node.js:33253:64)\n    at async Object.build (file:///private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t047/lanes/your-spotify/node_modules/vite/dist/node/chunks/node.js:33675:19)\n    at async Object.buildApp (file:///private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t047/lanes/your-spotify/node_modules/vite/dist/node/chunks/node.js:33672:153)\n    at async CAC.<anonymous> (file:///private/tmp/claude-501/-Users-jacksm5pro-dev-open-source-versionless/de642a89-0fc7-4ff1-a441-d000bfbb7418/scratchpad/t047/lanes/your-spotify/node_modules/vite/dist/node/cli.js:777:3) {\n  errors: [Getter/Setter]\n}\u001b[39m\n"
-	},
 	"report": {
 		"status": "emitted",
 		"slot": "evidence/trust/current/coverage-report.json",
 		"path": "evidence/trust/current/coverage-report.json",
-		"digest": "d0cc045b7da96a8cadd522d298704c2eba8ed00e334fd98cc1f4784154434c7f"
+		"digest": "8a5bb938b8a99e3d0790d5fca032ddd5d7f2f9d51817c2fb7ac92a0099539252"
 	},
 	"notEstablished": [
 		"A stage recorded `ran` returned its own record. What that record establishes is what that stage states, and no more: this row adds no reading of its own on top of it.",
