@@ -276,7 +276,7 @@
   },
   "refusalCensus": {
     "source": "evidence/runs/operator-flows/refusal-census.json",
-    "adapterFreezeComposite": "27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234",
+    "adapterFreezeComposite": "140ce86e163ddbae2ad6f1504022efca9468641cc50fd3dca354c6aba8cbb562",
     "totals": {
       "sites": 192,
       "byOrigin": {
@@ -520,7 +520,7 @@
   ],
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "dc6a8a402701911e4873d75751408e586660c4fcbc35110197ad4b598ce52323",
+    "canonicalDigest": "cff230ac35d267e5272b58d17595b4be82f47019e4e9710d05df095f26b589a9",
     "authenticity": "not-established",
     "certification": "not-claimed"
   }

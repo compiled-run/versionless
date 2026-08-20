@@ -2,10 +2,10 @@
 
 One machine artifact for an enterprise reviewer, derived entirely from canonical receipts the trust package already verified. It states what was proven, on which sources, with which tools, under which commands, and — in the same document — what is unsupported, unknown, or deliberately not claimed.
 
-- Trust manifest canonical SHA-256: `05d9aca5e427e0ab104f0fb74a9c110b2b6edab7a7d5fc5bf54751a49699a6b0`
-- Deterministic core: `6eae139a6ce02c91bb027a1d45d944f16f5add49e8c2f16754a44ef9de1aa185`
+- Trust manifest canonical SHA-256: `31a6c4ef0ce2367f58428717f8d05c22c02b9ff6d93fd2d8f659f57dc64e5321`
+- Deterministic core: `80829ae4131dd3cdd532cb403325cfccb4bf1da948a32498829d690d96ddb597`
 - Corpus conformance: `101412703cc116969dd562a6ea46dde3d05424ad5194e535aca9750e373bc482`
-- Adapter freeze: commit `0ecd410691df10fbc68c9ddcd012dafa86aba536`, composite `27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234`
+- Adapter freeze: commit `ddc2870aa934be7c8bc6caaeca74095d270776d5`, composite `140ce86e163ddbae2ad6f1504022efca9468641cc50fd3dca354c6aba8cbb562`
 - Certification: **not-certified** — This package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation.
 - Integrity: **hash-only; authenticity is not established**; SLSA level: **not-claimed**
 
@@ -35,7 +35,7 @@ Ingested at a pin under recorded consent, with the license text hashed at that p
 
 ## 2. Tool and target versions
 
-Tool: `versionless-local-trust-generator`, adapter frozen at commit `0ecd410691df10fbc68c9ddcd012dafa86aba536` (composite `27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234`), network mode **offline**.
+Tool: `versionless-local-trust-generator`, adapter frozen at commit `ddc2870aa934be7c8bc6caaeca74095d270776d5` (composite `140ce86e163ddbae2ad6f1504022efca9468641cc50fd3dca354c6aba8cbb562`), network mode **offline**.
 
 | Cell | Vertical | Lineage | Runtime | Bundler | Migration track |
 | --- | --- | --- | --- | --- | --- |
@@ -56,11 +56,11 @@ Tool: `versionless-local-trust-generator`, adapter frozen at commit `0ecd410691d
 
 ## 3. Hashes
 
-- `adapter-freeze.json` — `c5d7273e47fecef77d81a908d723c5231951e27f6866175d184c5bbeac1e24a0`
+- `adapter-freeze.json` — `0ffe4eb2552a07dd7db65faa0081f6f42073013d7fb05869c2b1bb798cdd8b51`
 - `dependency-graph.cdx.json` — `de3b1ef9139723e2c6c78058c80db361a30f26f6c3e1be59830ea0b5165f6017`
 - `licenses.json` — `d4044d784816c196415fdca9fd7b734bac809d29428c48e4dfb1c4622c834488`
 - `vulnerabilities.json` — `aa0b0970e2e128e30b044f6107b4b77136d759b0a2ee3af9d37c883fa6b8298d`
-- `provenance.json` — `6996f65e5ac3baf9b53e69cfa767ccc44433639f7196b09bcdc99eb47c3e15c7`
+- `provenance.json` — `e80f52609d9a5e8d2d423c476489403097b1f0fba035bff0dcb9d5fa668d9ad1`
 - `matrix.json` — `3dca11f639d90e4519cf914274fced24580db5b121043a28b0c4f4de5e65a39d`
 - `controls.json` — `a5e61dcace162ce814347f931b6f4e4f59934ea1312df79d9c817c19e0e9bef4`
 - `retention.json` — `f1a7f91607bca1de4cc15e2523a3d0791116acc9cfdf853c68b9b35aa2c07568`

@@ -8,11 +8,11 @@
     "slsaLevel": "not-claimed"
   },
   "derivedFrom": {
-    "trustManifestCanonicalDigest": "05d9aca5e427e0ab104f0fb74a9c110b2b6edab7a7d5fc5bf54751a49699a6b0",
-    "deterministicCoreDigest": "6eae139a6ce02c91bb027a1d45d944f16f5add49e8c2f16754a44ef9de1aa185",
+    "trustManifestCanonicalDigest": "31a6c4ef0ce2367f58428717f8d05c22c02b9ff6d93fd2d8f659f57dc64e5321",
+    "deterministicCoreDigest": "80829ae4131dd3cdd532cb403325cfccb4bf1da948a32498829d690d96ddb597",
     "corpusConformanceDigest": "101412703cc116969dd562a6ea46dde3d05424ad5194e535aca9750e373bc482",
-    "adapterFreezeComposite": "27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234",
-    "adapterFreezeCommit": "0ecd410691df10fbc68c9ddcd012dafa86aba536"
+    "adapterFreezeComposite": "140ce86e163ddbae2ad6f1504022efca9468641cc50fd3dca354c6aba8cbb562",
+    "adapterFreezeCommit": "ddc2870aa934be7c8bc6caaeca74095d270776d5"
   },
   "sourcesAndRights": [
     {
@@ -222,8 +222,8 @@
   "toolAndTargetVersions": {
     "tool": {
       "generator": "versionless-local-trust-generator",
-      "adapterFreezeCommit": "0ecd410691df10fbc68c9ddcd012dafa86aba536",
-      "adapterFreezeComposite": "27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234",
+      "adapterFreezeCommit": "ddc2870aa934be7c8bc6caaeca74095d270776d5",
+      "adapterFreezeComposite": "140ce86e163ddbae2ad6f1504022efca9468641cc50fd3dca354c6aba8cbb562",
       "networkMode": "offline"
     },
     "cells": [
@@ -345,7 +345,7 @@
     "artifacts": [
       {
         "path": "adapter-freeze.json",
-        "sha256": "c5d7273e47fecef77d81a908d723c5231951e27f6866175d184c5bbeac1e24a0"
+        "sha256": "0ffe4eb2552a07dd7db65faa0081f6f42073013d7fb05869c2b1bb798cdd8b51"
       },
       {
         "path": "dependency-graph.cdx.json",
@@ -361,7 +361,7 @@
       },
       {
         "path": "provenance.json",
-        "sha256": "6996f65e5ac3baf9b53e69cfa767ccc44433639f7196b09bcdc99eb47c3e15c7"
+        "sha256": "e80f52609d9a5e8d2d423c476489403097b1f0fba035bff0dcb9d5fa668d9ad1"
       },
       {
         "path": "matrix.json",

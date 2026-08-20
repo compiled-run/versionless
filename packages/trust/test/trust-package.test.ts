@@ -1892,10 +1892,11 @@ snapshots:
 			crossProven: { entries: Array<{ lineage: string; capability: string }> };
 		};
 		// Twelve from the first two tranches, twelve more from the authorized T021
-		// Angular reopen, nine more from the authorized T024 one. Neither reopen
-		// bought coverage: every one of the thirty-three is still
+		// Angular reopen, nine more from the authorized T024 one, three more from
+		// the authorized T010 Angular 13 target-cell supersession. No reopen
+		// bought coverage: every one of the thirty-six is still
 		// single-application and still out of the matrix.
-		expect(capabilities.experimental.entries).toHaveLength(33);
+		expect(capabilities.experimental.entries).toHaveLength(36);
 		expect(capabilities.experimental.pendingEvidence).toContain('T006');
 		expect(capabilities.crossProven.entries.map((entry) => entry.capability)).toContain(
 			'react-cra-vite-adapter',
@@ -1906,12 +1907,21 @@ snapshots:
 			entries: unknown[];
 			reactSubtreeUnchanged: boolean;
 		}>;
-		expect(reopens.map((reopen) => reopen.task)).toEqual(['T021', 'T024']);
+		expect(reopens.map((reopen) => reopen.task)).toEqual(['T021', 'T024', 'T010']);
 		expect(reopens[0]?.capabilitiesExtracted).toBe(12);
 		expect(reopens[0]?.entries).toHaveLength(12);
 		expect(reopens[1]?.capabilitiesExtracted).toBe(9);
 		expect(reopens[1]?.entries).toHaveLength(9);
-		expect(reopens.every((reopen) => reopen.reactSubtreeUnchanged)).toBe(true);
+		expect(reopens[2]?.capabilitiesExtracted).toBe(3);
+		expect(reopens[2]?.entries).toHaveLength(3);
+		// The React subtree was byte-identical across T021 and T024 and it is NOT
+		// across T010: the format epoch moved eight React files for whitespace
+		// with no capability behind it. The invariant is therefore pinned per
+		// reopen at its true value rather than relaxed to something every reopen
+		// can satisfy — a vacuous check here would buy a prettier freeze record
+		// by making the record unable to say the one uncomfortable thing it has
+		// to say.
+		expect(reopens.map((reopen) => reopen.reactSubtreeUnchanged)).toEqual([true, true, false]);
 		// Both Angular holdouts are carried, and the second one's outcome is the
 		// measured state rather than a pass: a freeze record that summarised a
 		// green build with no witness behind it as a success would be the single

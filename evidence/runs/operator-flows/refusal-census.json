@@ -1,7 +1,7 @@
 {
 	"schemaVersion": "versionless.refusal-census.v1",
 	"generatedBy": "versionless refusal-census",
-	"adapterFreezeComposite": "27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234",
+	"adapterFreezeComposite": "140ce86e163ddbae2ad6f1504022efca9468641cc50fd3dca354c6aba8cbb562",
 	"roots": [
 		"packages/cli/src/operator",
 		"packages/frameworks/react",

@@ -7,7 +7,7 @@ import { TRUST_SCHEMA, asRecord, asString } from './schema.ts';
  * The freeze is a claim about exact bytes, so it is pinned to an exact commit
  * rather than to a branch name that can move underneath it.
  */
-export const ADAPTER_FREEZE_COMMIT = '0ecd410691df10fbc68c9ddcd012dafa86aba536' as const;
+export const ADAPTER_FREEZE_COMMIT = 'ddc2870aa934be7c8bc6caaeca74095d270776d5' as const;
 
 /**
  * The frozen subtrees, in the exact order the composite fingerprint hashes them.
@@ -18,8 +18,8 @@ export const ADAPTER_FREEZE_COMMIT = '0ecd410691df10fbc68c9ddcd012dafa86aba536' 
  * order is part of the claim, not an incidental detail of how it was computed.
  */
 export const ADAPTER_FREEZE_SUBTREES = [
-	{ path: 'packages/frameworks/react', treeOid: '972ca80155bbc2a6eb3779943cd481b71d35e803' },
-	{ path: 'packages/frameworks/angular', treeOid: '4b6e2f4494d98582e4fe9b420c2b412059dc0720' },
+	{ path: 'packages/frameworks/react', treeOid: 'ad28e7c430b78e040a0609c24d7665601e480771' },
+	{ path: 'packages/frameworks/angular', treeOid: 'd20a740dd03179df6c8c7990dbe39e1e94e31316' },
 	{ path: 'packages/core/src/migrations', treeOid: '5237ce5990af3623206bcd2301047a59c80731cf' },
 	{ path: 'packages/core/src/bundlers', treeOid: 'cec2f0b56fbb7897f38d579be805e19982380ca6' },
 	{ path: 'packages/core/src/analysis', treeOid: '262dc8b7528c92883c2300914eb7d42579fb856b' },
@@ -34,41 +34,42 @@ export const ADAPTER_FREEZE_SUBTREES = [
  * recompute it from a checkout without this package.
  */
 export const ADAPTER_FREEZE_COMPOSITE =
-	'27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234' as const;
+	'140ce86e163ddbae2ad6f1504022efca9468641cc50fd3dca354c6aba8cbb562' as const;
 
 /**
  * The freeze this record supersedes, retained by reference.
  *
- * The f1a63359 composite over the five subtrees at commit 852079a1 was the
- * prior freeze. It was legitimately reopened (T024, board-authorized
- * 2026-08-14) on the Angular subtree alone, to chase the eShopOnContainers
- * WebSPA Angular holdout after the frozen adapter refused it at install: four
- * units extracted nine generic capabilities and composition repairs from that
- * chase (commits 82f48ab, 7543e0e, 8c6a8da, 0ecd410), none of which branches on
- * the holdout's identity. Only the Angular subtree moved
- * (1f63f32c -> 4b6e2f44); the React, migrations, bundlers, and analysis
- * subtrees stayed byte-identical, and the React subtree is still the
- * 972ca801 tree the 4df7bc96 freeze published. The prior composite is recorded
- * as superseded rather than deleted so the freeze history stays legible and
- * each holdout receipt's frozenAdapterFingerprint still points at the boundary
- * it actually ran against — the pigallery2 record still names f1a63359 and the
- * eShop record still names it as the composite that refused it. The chain
- * d9f75ef6 (commit 57b308a) -> 5de7df56 (commit cce34175) -> 4df7bc96 (commit
- * c695a586) -> f1a63359 (commit 852079a1) -> 27741d9c stays traceable, every
- * link recorded at the point the adapters were reopened and why.
+ * The 27741d9c composite over the five subtrees at commit 0ecd4106 was the
+ * prior freeze. It was reopened once, under the single supersession the
+ * bank-demo-fleet-pipeline goal authorizes for T010, to publish Angular 13.4.0
+ * as a plannable target cell. Two subtrees moved and three did not: Angular
+ * moved for capability work and for the format epoch together, React moved for
+ * the format epoch alone — the first time in this chain the React tree has
+ * moved at all, and it moved for whitespace — and migrations, bundlers and
+ * analysis are re-frozen byte-identical at the oids they already carried. The
+ * prior composite is recorded as superseded rather than deleted so the freeze
+ * history stays legible and each holdout receipt's frozenAdapterFingerprint
+ * still points at the boundary it actually ran against — the pigallery2 record
+ * still names f1a63359 and the eShop record and its witness still name
+ * 27741d9c as the composite they ran against. The chain d9f75ef6 (commit
+ * 57b308a) -> 5de7df56 (commit cce34175) -> 4df7bc96 (commit c695a586) ->
+ * f1a63359 (commit 852079a1) -> 27741d9c (commit 0ecd4106) -> 140ce86e (commit
+ * ddc2870a) stays traceable, every link recorded at the point the adapters were
+ * reopened and why.
  */
 export const ADAPTER_FREEZE_SUPERSEDES = {
-	composite: 'f1a63359210b87c04408b27cf8c40e88e1b47d44bcc7f5a9be20d9478dc71012',
-	commit: '852079a1d163617f810dba7e8b3509bc8e25343a',
+	composite: '27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234',
+	commit: '0ecd410691df10fbc68c9ddcd012dafa86aba536',
 	state: 'superseded' as const,
 	reopenReason:
-		'Authorized Angular-subtree reopen for the eShopOnContainers WebSPA holdout chase (T024, board-authorized 2026-08-14): nine generic capabilities and composition repairs were extracted from the falsification across commits 82f48ab, 7543e0e, 8c6a8da and 0ecd410, and the adapter was re-frozen at composite 27741d9c. Only the Angular subtree moved (1f63f32c -> 4b6e2f44); React stayed byte-identical at 972ca801, as did migrations, bundlers and analysis. What the chase bought is stated exactly: the holdout is no longer refused at install, its migrated production build now completes twice byte-identically, and the T024 u6 Witness — run after this re-freeze, against the bytes that build emitted — is green on the anonymous catalog surface, so it is published as a pass on that bounded surface and not as a pass on the application, with identity, basket, orders, campaigns and the SignalR hub never exercised. The pigallery2 RED and the declared pre-Ivy-only-dependency support boundary are untouched by this reopen. f1a63359 had itself superseded 4df7bc96 (commit c695a586), which superseded 5de7df56 (commit cce34175), which superseded the tranche-one d9f75ef6 freeze (commit 57b308a).',
+		'Authorized freeze supersession for the bank-demo-fleet-pipeline T010 Angular-13 target-cell tranche — the ONE supersession that goal authorizes, and the only reopen of the 27741d9c freeze. Seven units carried it: u1 and u2 threaded --cell from the CLI into the plan and analyze stages and pinned the describable-is-not-plannable seam, and u3, u5b, u6 and u7 published ANGULAR_13_BROWSER_CELL and the three i18n capabilities (all under run bank-demo-fleet-pipeline-p2b); u9 ran the repository-wide format epoch and regenerated the refusal census in the same unit (run bank-demo-fleet-pipeline-p2c). The adapter state those units left is commit ddc2870aa934be7c8bc6caaeca74095d270776d5, which this record names as ADAPTER_FREEZE_COMMIT and which is deliberately a different commit from the one carrying this record, exactly as 0ecd4106 related to the T024 commits. Two of the five subtrees moved and three did not, and the reasons are kept apart rather than averaged. packages/frameworks/angular moved 4b6e2f44 -> d20a740d for BOTH reasons: the 13-cell capability work (ANGULAR_13_BROWSER_CELL with its narrow eleven-entry ecosystem table, the three value-carrying --i18n-* RemovedCliFlag rows, the new locale-id-provider capability, and the widened template-i18n-runtime gate) AND the format epoch. packages/frameworks/react moved 972ca801 -> ad28e7c4 for FORMATTING ALONE — 8 files, whitespace (line re-wrapping, trailing commas and quote normalisation the formatter emits), no capability — which is why this is the first reopen in the chain to publish reactSubtreeUnchanged: false, and it is false for a cosmetic reason with nothing a user can run behind it. packages/core/src/migrations (5237ce59), packages/core/src/bundlers (cec2f0b5) and packages/core/src/analysis (262dc8b7) are byte-identical, took zero formatter changes, and are re-frozen at those same oids. One sealed surface moved under this reopen, once, and it is recorded rather than absorbed: the sealed 16-path pigallery2 changeset changed when the three value-carrying --i18n-* rows landed, because pigallery2’s run-dev and build-stats scripts are ng-first and carry --i18n-locale and --i18n-file, so the sealed migration had been preserving scripts that die at Angular 16 on Unknown option. The PM authorized that single movement as a defect fix rather than a re-baseline: the byte-identity Angular operator/driver digest moved 2b85d619 -> a044d716, and the holdout receipts’ HISTORY pins were not touched — the pigallery2 receipt still names composite f1a63359 and the eShop receipt and its witness still name 27741d9c, because those are the boundaries they actually ran against. The format epoch was run to fixpoint rather than once: vp fmt over packages/ needed two passes, because the formatter is not idempotent on one signature in angular-target-cell.ts (a line break only), and it is the second pass that makes vp fmt --check clean. What the reopen bought is angular-13.4.0 as a plannable, refusal-honest target: a declared cell id now reaches the plan and analyze stages instead of silently aligning the manifest to Angular 16, an id no adapter publishes is a named refusal rather than a fallback, and the cell carries a narrow evidence-backed ecosystem table read verbatim from one installed closure. What it did NOT buy is stated with the same precision: no community-layer coverage for Angular 13 beyond what the T009 proving run measured — no registry survey was performed for this cell, a package the table does not name is reported unknown rather than fine, and the cell’s own nonclaims declare that gap; and no composed localize capability — the widened template-i18n-runtime gate reads a supplied closure reading homed on its own input and is deliberately left uncomposed pending the tiny-translator ownership decision. 27741d9c had itself superseded f1a63359 (commit 852079a1), which superseded 4df7bc96 (commit c695a586), which superseded 5de7df56 (commit cce34175), which superseded the tranche-one d9f75ef6 freeze (commit 57b308a).',
 	chain: [
 		'd9f75ef677cb850f664cc188abf77b8ebfd24e84cb58d147b74e9bbaa143eb77',
 		'5de7df565fb8e445a45f9f8f43eac27b80b71189d59e4df243e93471406a260c',
 		'4df7bc961033fc5856b4d58e0bca9f11ad2aa9d43aaaee726956f34d209b37e7',
 		'f1a63359210b87c04408b27cf8c40e88e1b47d44bcc7f5a9be20d9478dc71012',
 		'27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234',
+		'140ce86e163ddbae2ad6f1504022efca9468641cc50fd3dca354c6aba8cbb562',
 	],
 } as const;
 
@@ -166,6 +167,23 @@ export const ADAPTER_FREEZE_EXPERIMENTAL_CAPABILITIES = [
 	{ lineage: 'angular', capability: 'rxjs-prototype-patch-and-tilde-sass-composition' },
 	{ lineage: 'angular', capability: 'http-client-call-surface' },
 	{ lineage: 'angular', capability: 'package-exports-republished-subpath' },
+	/**
+	 * The three capabilities the T010 Angular 13 target-cell reopen produced.
+	 * One is new and two are extensions of capabilities the T024 slice already
+	 * carries, and the difference is kept visible rather than folded into a
+	 * single number: `locale-id-provider` is a capability that did not exist
+	 * before this reopen, `workspace-script-flags-i18n-value-flags` widens the
+	 * existing `workspace-script-flags` capability to value-carrying --i18n-*
+	 * rows, and `template-i18n-runtime-closure-reading` widens the existing
+	 * template-i18n-runtime gate to admit a supplied closure reading as an
+	 * input. All three were written against one application — pigallery2 1.7.0
+	 * lifted onto Angular 13.4.0 in the T009 proving run — so all three stay in
+	 * the experimental column. The reopen published a cell, not a second
+	 * application for anything.
+	 */
+	{ lineage: 'angular', capability: 'locale-id-provider' },
+	{ lineage: 'angular', capability: 'workspace-script-flags-i18n-value-flags' },
+	{ lineage: 'angular', capability: 'template-i18n-runtime-closure-reading' },
 ] as const;
 
 /**
@@ -178,7 +196,7 @@ export const ADAPTER_FREEZE_EXPERIMENTAL_CAPABILITIES = [
  * two freezes to find out.
  */
 export const ADAPTER_FREEZE_T021_EXPERIMENTAL_CAPABILITIES =
-	ADAPTER_FREEZE_EXPERIMENTAL_CAPABILITIES.slice(-21, -9);
+	ADAPTER_FREEZE_EXPERIMENTAL_CAPABILITIES.slice(-24, -12);
 
 /**
  * The exact subset the T024 Angular reopen produced, kept countable the same
@@ -190,7 +208,20 @@ export const ADAPTER_FREEZE_T021_EXPERIMENTAL_CAPABILITIES =
  * application, so both slices are wholly inside the experimental column.
  */
 export const ADAPTER_FREEZE_T024_EXPERIMENTAL_CAPABILITIES =
-	ADAPTER_FREEZE_EXPERIMENTAL_CAPABILITIES.slice(-9);
+	ADAPTER_FREEZE_EXPERIMENTAL_CAPABILITIES.slice(-12, -3);
+
+/**
+ * The exact subset the T010 Angular 13 target-cell reopen produced, kept
+ * countable the same way and for the same reason.
+ *
+ * The three reopens now read off the freeze without prose: T021 bought twelve
+ * capabilities and no artifact, T024 bought nine and a repeatable production
+ * build, T010 bought three — one new capability and two widenings — and a
+ * published target cell. None of the three bought a second application, so all
+ * three slices are wholly inside the experimental column.
+ */
+export const ADAPTER_FREEZE_T010_EXPERIMENTAL_CAPABILITIES =
+	ADAPTER_FREEZE_EXPERIMENTAL_CAPABILITIES.slice(-3);
 
 /**
  * The capabilities that survived a second independent application.
@@ -279,6 +310,21 @@ export function adapterFreezeRecord(): Record<string, unknown> {
 				outcome:
 					'The chased application is no longer refused at install, its migrated production build now completes twice with byte-identical output, and the T024 u6 Witness run after this re-freeze is green on its anonymous catalog surface. The reopen bought nine generic capabilities, a repeatable build, and a browser proof bounded to that one surface — not a pass on the application, and not a second application for any capability.',
 				reactSubtreeUnchanged: true,
+			},
+			{
+				task: 'T010',
+				subtree: 'packages/frameworks/angular and packages/frameworks/react',
+				authorization:
+					'the ONE freeze supersession authorized by the bank-demo-fleet-pipeline goal, to publish Angular 13.4.0 as a plannable target cell (T010, PM rulings 2026-08-20)',
+				commits: ['f032aec', '7367e2e', 'ddc2870'],
+				capabilitiesExtracted: ADAPTER_FREEZE_T010_EXPERIMENTAL_CAPABILITIES.length,
+				entries: ADAPTER_FREEZE_T010_EXPERIMENTAL_CAPABILITIES.map((entry) => ({
+					...entry,
+				})),
+				state: 'all-single-application-experimental',
+				outcome:
+					'angular-13.4.0 is now a published, plannable, refusal-honest target: a declared cell id reaches the plan and analyze stages instead of silently aligning the manifest to Angular 16, an unpublished id is a named refusal rather than a fallback, and the cell carries a narrow eleven-entry ecosystem table read verbatim from one installed closure. The reopen bought three capabilities — one new (locale-id-provider) and two widenings of existing ones — and no second application for any of them. It did not buy community-layer coverage for Angular 13 beyond what the T009 proving run measured (no registry survey was performed; unnamed packages are reported unknown, and the cell says so in its own nonclaims), and it did not buy a composed localize capability (the widened template-i18n-runtime gate is deliberately uncomposed). The Angular subtree moved for capability work AND formatting; the React subtree moved for formatting alone.',
+				reactSubtreeUnchanged: false,
 			},
 		],
 		angularHoldouts: [

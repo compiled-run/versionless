@@ -4,7 +4,7 @@ What the fleet pipeline proved, per application, against the sealed baseline it 
 
 - Schema: `versionless.coverage-report.v1`
 - Certification state: **not-certified**
-- Canonical SHA-256: `dc6a8a402701911e4873d75751408e586660c4fcbc35110197ad4b598ce52323`
+- Canonical SHA-256: `cff230ac35d267e5272b58d17595b4be82f47019e4e9710d05df095f26b589a9`
 - Integrity: hash-only; authenticity is not established
 
 Every green cell below is filtered out of the Judge counting ledger the corpus derived and cross-checked against that corpus numerator and denominator. No cell is listed by hand, and a cell edited into this record fails re-derivation.
@@ -75,7 +75,7 @@ An application admitted through `versionless run` is recorded proven only if its
 
 ## 5. Refusal census
 
-Source: `evidence/runs/operator-flows/refusal-census.json`, taken under adapter freeze composite `27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234`.
+Source: `evidence/runs/operator-flows/refusal-census.json`, taken under adapter freeze composite `140ce86e163ddbae2ad6f1504022efca9468641cc50fd3dca354c6aba8cbb562`.
 
 - `byClassification`: {"defect":5,"refusal":137,"unclassified":50}
 - `byOrigin`: {"frozen-adapter":101,"pipeline":91}

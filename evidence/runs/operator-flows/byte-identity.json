@@ -2,7 +2,7 @@
 	"schemaVersion": "versionless.operator-flow-byte-identity.v1",
 	"unit": "lrapr-t009/u2-operator-cli-flows",
 	"purpose": "The operator flows compose the frozen public APIs rather than re-implementing them. This record measures that claim on the overlap between the operator path and the fixture-driven path, one application per lineage.",
-	"adapterFreezeComposite": "27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234",
+	"adapterFreezeComposite": "140ce86e163ddbae2ad6f1504022efca9468641cc50fd3dca354c6aba8cbb562",
 	"angular": {
 		"application": "pigallery2 1.7.0 (Angular holdout corpus, at its pinned revision)",
 		"operatorPath": "packages/cli/src/operator/plan.ts composeAngularPlan",

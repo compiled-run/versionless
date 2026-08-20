@@ -4,13 +4,13 @@
     {
       "name": "packages/cli/dist/cli.js",
       "digest": {
-        "sha256": "7c25c62d6861f083a84a19957d37ba4bbe42ddee577a0fe4f2a9c841d505ac0b"
+        "sha256": "f19a08af20ceb0532c51f8e6056ab7e7be5364263dadb17e442af777decd2cf9"
       }
     },
     {
       "name": "packages/cli/dist/index.js",
       "digest": {
-        "sha256": "6ab0de11fd61e7feeac43fa9654ebf5353dcbbe2192a9effd8a2a37732d3c7f1"
+        "sha256": "5927d2441689f2c25164f2453139270256e2ca17e3109d6f4a99457a4632529b"
       }
     },
     {
@@ -26,9 +26,9 @@
       }
     },
     {
-      "name": "packages/cli/dist/verify-D8HOIONm.js",
+      "name": "packages/cli/dist/verify-CwxZAoKx.js",
       "digest": {
-        "sha256": "4b2faaa716fa1ae81e7e44fdb7d6ea302d3e689b68ae23ed883418d0490c843e"
+        "sha256": "d53bb4bd3368c6ef7d6e5fafdcf5bc97c7320e03ad4454c29dde3247ef8ecea9"
       }
     },
     {
@@ -46,7 +46,7 @@
     {
       "name": "packages/frameworks/angular/dist/index.js",
       "digest": {
-        "sha256": "f1a8b65391df4b36a88651400e16750a4b5b709d614f98754645fbd114fb10fc"
+        "sha256": "a40a05b15047e7d72df517fa4f8a63039ba0791bb0a59f1aec11f87f51b4a9e0"
       }
     },
     {
@@ -76,7 +76,7 @@
     {
       "name": "packages/trust/dist/index.js",
       "digest": {
-        "sha256": "54219b6be24aa743c05c901d640149eec8f320729470a54efe16fe0cb37205e9"
+        "sha256": "0145c9814c91e8c83a4a42ed650071f5e2b4dd8bba795f6f804037806a4432d3"
       }
     }
   ],
@@ -366,11 +366,11 @@
       "byproducts": [
         {
           "path": "packages/cli/dist/cli.js",
-          "sha256": "7c25c62d6861f083a84a19957d37ba4bbe42ddee577a0fe4f2a9c841d505ac0b"
+          "sha256": "f19a08af20ceb0532c51f8e6056ab7e7be5364263dadb17e442af777decd2cf9"
         },
         {
           "path": "packages/cli/dist/index.js",
-          "sha256": "6ab0de11fd61e7feeac43fa9654ebf5353dcbbe2192a9effd8a2a37732d3c7f1"
+          "sha256": "5927d2441689f2c25164f2453139270256e2ca17e3109d6f4a99457a4632529b"
         },
         {
           "path": "packages/cli/dist/real-app-run-KaFDPenF.js",
@@ -381,8 +381,8 @@
           "sha256": "249c29dca323db9c409c0368eccca55bb72b7fce93b5f51c7712d4776bb98d32"
         },
         {
-          "path": "packages/cli/dist/verify-D8HOIONm.js",
-          "sha256": "4b2faaa716fa1ae81e7e44fdb7d6ea302d3e689b68ae23ed883418d0490c843e"
+          "path": "packages/cli/dist/verify-CwxZAoKx.js",
+          "sha256": "d53bb4bd3368c6ef7d6e5fafdcf5bc97c7320e03ad4454c29dde3247ef8ecea9"
         },
         {
           "path": "packages/core/dist/index.js",
@@ -394,7 +394,7 @@
         },
         {
           "path": "packages/frameworks/angular/dist/index.js",
-          "sha256": "f1a8b65391df4b36a88651400e16750a4b5b709d614f98754645fbd114fb10fc"
+          "sha256": "a40a05b15047e7d72df517fa4f8a63039ba0791bb0a59f1aec11f87f51b4a9e0"
         },
         {
           "path": "packages/frameworks/angularjs/dist/index.js",
@@ -414,7 +414,7 @@
         },
         {
           "path": "packages/trust/dist/index.js",
-          "sha256": "54219b6be24aa743c05c901d640149eec8f320729470a54efe16fe0cb37205e9"
+          "sha256": "0145c9814c91e8c83a4a42ed650071f5e2b4dd8bba795f6f804037806a4432d3"
         }
       ]
     }

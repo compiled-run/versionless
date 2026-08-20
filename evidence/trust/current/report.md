@@ -1,8 +1,8 @@
 # Versionless project trust package
 
-- Canonical SHA-256: `05d9aca5e427e0ab104f0fb74a9c110b2b6edab7a7d5fc5bf54751a49699a6b0`
-- Deterministic core: `6eae139a6ce02c91bb027a1d45d944f16f5add49e8c2f16754a44ef9de1aa185`
-- Generated observation: `2026-08-20T08:35:46.448Z`
+- Canonical SHA-256: `31a6c4ef0ce2367f58428717f8d05c22c02b9ff6d93fd2d8f659f57dc64e5321`
+- Deterministic core: `80829ae4131dd3cdd532cb403325cfccb4bf1da948a32498829d690d96ddb597`
+- Generated observation: `2026-08-20T09:05:48.949Z`
 - Vulnerability input freshness: **verified** (seven-day maximum age)
 - Integrity: **hash-only; authenticity is not established**
 - Assurance: **this package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation**
@@ -15,7 +15,7 @@
 - [SLSA/in-toto-shaped provenance](provenance.json) — shape only; no SLSA level or signer authenticity is claimed.
 - [Supported corpus/runtime/bundler matrix](matrix.json) — unsupported and untested cells remain visible.
 - [Capability-coverage map](capability-coverage.json) — every exported migration capability with its proving applications and derived generality classification; single-application capabilities are named experimental, not claimed general.
-- [Adapter freeze record](adapter-freeze.json) — the migration engine adapter surface is frozen at commit `0ecd410691df10fbc68c9ddcd012dafa86aba536` with composite SHA-256 `27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234`; the receipts, corpus, and witness registries are deliberately **outside** the freeze so holdout evidence can still be published additively.
+- [Adapter freeze record](adapter-freeze.json) — the migration engine adapter surface is frozen at commit `ddc2870aa934be7c8bc6caaeca74095d270776d5` with composite SHA-256 `140ce86e163ddbae2ad6f1504022efca9468641cc50fd3dca354c6aba8cbb562`; the receipts, corpus, and witness registries are deliberately **outside** the freeze so holdout evidence can still be published additively.
 - [Corpus conformance](corpus-conformance.json) — `101412703cc116969dd562a6ea46dde3d05424ad5194e535aca9750e373bc482`; 20 verified verticals grouped into exactly 13 source applications; zero designated pilots are verified.
 - The immutable Killed by Google Next.js 12 Pages/webpack production vertical is verified only for its exact fixture; synthetic Next.js 12 Pages, 13 transition/App, and 14 App classification lanes remain **not-tested**, and generic Next.js support is not claimed.
 - [Static script/resource surface](script-surface.json) — truthfully remains scoped to the prior nine verticals, two applications, and eighteen exact static deployment entrypoints; T220 is **not included** because its script surface was not separately observed; dynamic script insertion: **not-tested**; payment-page applicability: **not established**; PCI compliance is **not claimed**.
@@ -82,10 +82,10 @@ The dependency graph is a rooted complete inventory. Exact transitive dependency
 
 ## Adapter freeze and capability status
 
-Frozen at commit `0ecd410691df10fbc68c9ddcd012dafa86aba536`; composite SHA-256 `27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234` over the newline-terminated `<path> <tree-oid>` lines below, in order.
+Frozen at commit `ddc2870aa934be7c8bc6caaeca74095d270776d5`; composite SHA-256 `140ce86e163ddbae2ad6f1504022efca9468641cc50fd3dca354c6aba8cbb562` over the newline-terminated `<path> <tree-oid>` lines below, in order.
 
-- `packages/frameworks/react` `972ca80155bbc2a6eb3779943cd481b71d35e803`
-- `packages/frameworks/angular` `4b6e2f4494d98582e4fe9b420c2b412059dc0720`
+- `packages/frameworks/react` `ad28e7c430b78e040a0609c24d7665601e480771`
+- `packages/frameworks/angular` `d20a740dd03179df6c8c7990dbe39e1e94e31316`
 - `packages/core/src/migrations` `5237ce5990af3623206bcd2301047a59c80731cf`
 - `packages/core/src/bundlers` `cec2f0b56fbb7897f38d579be805e19982380ca6`
 - `packages/core/src/analysis` `262dc8b7528c92883c2300914eb7d42579fb856b`
@@ -133,6 +133,9 @@ Proven on exactly one application and therefore **experimental / out-of-matrix**
 - angular: `rxjs-prototype-patch-and-tilde-sass-composition`
 - angular: `http-client-call-surface`
 - angular: `package-exports-republished-subpath`
+- angular: `locale-id-provider`
+- angular: `workspace-script-flags-i18n-value-flags`
+- angular: `template-i18n-runtime-closure-reading`
 
 Both Angular holdouts were ingested under the mandatory license-text-at-pin pre-screen and run. pigallery2 1.7.0 is **RED**, at the declared pre-Ivy-only-dependency support boundary above. The eShopOnContainers WebSPA was **RED at install** under the superseded `f1a63359` composite; after the authorized T024 reopen its migrated production build completes twice byte-identically, and the T024 u6 Witness — run after the re-freeze, against the bytes that build emitted — is green across two lanes observed twice each on one behaviour parity digest, with a mutation-red and byte-restore proof and zero successful non-loopback requests. That Witness covers the **anonymous catalog surface only**: identity, basket, orders and campaigns are out of surface, the SignalR hub was never reached, and text entry and drag were not tested, so the entry is published under its exact receipt outcome `witness-passed-on-bounded-anonymous-catalog-surface` — a **pass on a bounded surface** — and never as a generic pass. Both Angular-subtree reopens are recorded in the freeze's supersession record, and every capability either of them produced is in the experimental list above.
 
