@@ -1,0 +1,422 @@
+{
+  "schemaVersion": "versionless.angular-13cell-witness-parity.v1",
+  "unit": "bank-demo-fleet-pipeline-p2/T009c-pigallery2-witness-parity",
+  "goal": "next-tranche-strategy",
+  "measuredAt": "2026-08-20",
+  "repoHeadAtMeasurement": "1aebe583eba96f7d43f1b9bd424222a3ae2f96fe",
+  "host": "darwin-arm64 (Apple silicon)",
+  "question": [
+    "T009b proved both ends of the pigallery2 migration BUILD, and that each end builds twice to the same bytes. Its own notEstablished said, in as many words, that nothing there spoke about runtime behaviour.",
+    "This unit asks the next question and only the next question: served on loopback with real Chromium, do the two lanes MEASURE the same on the surfaces a bounded crawl can reach? It does not ask whether the application works, because a static serve of this application cannot answer that - see the finding."
+  ],
+  "consent": {
+    "mode": "offline",
+    "fetched": [],
+    "notFetched": [
+      "nothing was fetched. Both lane outputs were already on disk from T009b, and the Chromium the witness launched is the host Playwright install at ~/Library/Caches/ms-playwright/chromium-1208."
+    ],
+    "disclosedNonLoopback": {
+      "count": 4,
+      "what": "The FIRST pass of the corroboration probe (t009c-shell-probe.mjs, before it was patched) launched Chromium through a plain playwright context instead of the witness host's, so it did not inherit the host's request interception. Two stylesheet links in pigallery2's own index.html - https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.4/css/bootstrap3/bootstrap-switch.css and https://unpkg.com/leaflet@1.3.4/dist/leaflet.css - were therefore fetched for real, once per lane.",
+      "consequence": "None for the published measurement. Those four requests were made by a diagnostic that is not the measurement, and they happened AFTER the witness run had already completed. The probe was then re-run with a 204-fulfilling route on every non-loopback URL, and it is that second, loopback-clean pass whose readings appear in this record (probeLocality.mockedNonLoopback 2, successfulNonLoopback 0 per lane).",
+      "whyRecorded": "A locality claim that is only audited when it holds is not audited. It is written down because it happened."
+    }
+  },
+  "witnessRun": {
+    "flow": "witness-real-app-synthesized",
+    "commandVerbatim": "node --experimental-strip-types packages/cli/src/cli.ts witness:real-app --app pigallery2 --framework angular --baseline <repo>/.versionless/work/angular-pigallery2/baseline/t009b-baseline-run1 --migrated <repo>/.versionless/work/angular-pigallery2/13cell/t009b-migrated-run1 --out <repo>/evidence/runs/witness-synthesized/angular-pigallery2-v1-7-0",
+    "cliStdoutVerbatim": "{\"result\":\"pass\",\"journeySource\":\"synthesized-crawl\",\"overridden\":false,\"replayabilityRatio\":1,\"digest\":\"4c4b58ae762cef22c9c086890abe3800a76c9231e312aa78063de99ad55e1b4e\"}",
+    "record": "evidence/runs/witness-synthesized/angular-pigallery2-v1-7-0/record.json",
+    "recordSchemaVersion": "versionless.witness-real-app-synthesized.v1",
+    "canonicalDigest": "4c4b58ae762cef22c9c086890abe3800a76c9231e312aa78063de99ad55e1b4e",
+    "journeySource": "synthesized-crawl",
+    "selection": {
+      "journeySource": "synthesized-crawl",
+      "overridden": false,
+      "reason": "no-hand-authored-driver-registered",
+      "registeredDriver": null
+    },
+    "selectionMeaning": "selection.reason is no-hand-authored-driver-registered and registeredDriver is null, measured rather than asserted: packages/cli/src/witness/ carries no pigallery2-run.ts, so the synthesized path is the default here and no --journeys override was passed.",
+    "synthesized": {
+      "ran": 1,
+      "replayabilityRatio": 1,
+      "replayable": 1,
+      "total": 1,
+      "unhandledByKind": {}
+    },
+    "execution": {
+      "journeysRun": 2,
+      "lanesRun": 2,
+      "mode": "serialized-one-lane-one-journey"
+    },
+    "serialization": "One CLI invocation, one lane at a time, one journey at a time (execution.mode serialized-one-lane-one-journey). The two lanes were never in flight together and no second witness process was started.",
+    "likeForLikeBy": "construction, not by discipline. runSynthesizedWitnessRealApp derives the journey ONCE, from the first declared lane (baseline), and replays that same emission against every lane. Both lanes therefore ran the identical journey under the identical crawl bounds - maxDepth 2, maxRoutes 12, requestTimeoutMs 5000, the CRAWL_DEFAULT_BOUNDS the CLI exposes no override for.",
+    "crawlBounds": {
+      "maxDepth": 2,
+      "maxRoutes": 12,
+      "requestTimeoutMs": 5000
+    },
+    "chromium": {
+      "resolvedBy": "packages/cli/src/witness/browser.ts - chromium.executablePath() from the host's own Playwright provisioning, no fixture cache fallback",
+      "executable": "/Users/jacksm5pro/Library/Caches/ms-playwright/chromium-1208/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+      "real": true,
+      "headless": true
+    },
+    "loopbackEnforcement": "structural, in packages/cli/src/witness/playwright-host.ts: context.route('**/*') continues a request only when isWitnessLoopbackUrl() holds, and fulfils every other request locally with 204 while incrementing mockedNonLoopback. The two CDN stylesheets in pigallery2's index.html were mocked, not fetched. That is why successfulNonLoopback is 0 rather than merely reported as 0."
+  },
+  "lanes": {
+    "baseline": {
+      "lane": "baseline",
+      "what": "pigallery2 1.7.0 built at its own era: Angular 8.1.2 / TypeScript 3.4.5 under Node v10.24.1.",
+      "laneRoot": ".versionless/work/angular-pigallery2/baseline/t009b-baseline-run1",
+      "servedFrom": "t009b-baseline-run1",
+      "servedFromEvidence": "evidence/runs/angular-13cell/pigallery2-lanes.json - the T009b output directory, unmodified. No file in it was touched by this unit.",
+      "witnessRecord": "evidence/runs/witness-synthesized/angular-pigallery2-v1-7-0/record.json",
+      "witnessRecordDigest": "4c4b58ae762cef22c9c086890abe3800a76c9231e312aa78063de99ad55e1b4e",
+      "witnessRecordDigestScope": "canonical sha256 of the whole synthesized-witness record, which covers both lanes because both lanes were witnessed in one serialized run",
+      "laneSemanticDigest": "b6b7cdec01d7a725c9eb7aaf3d5f1f8fd8052827ebda504588ebcd591a79c6da",
+      "journeySource": "synthesized-crawl",
+      "journeysRun": 1,
+      "journeys": [
+        {
+          "name": "bounded crawl of the served lane to depth 2",
+          "source": "crawl",
+          "specFile": null,
+          "replayable": true,
+          "ran": true,
+          "routesDeclared": 3,
+          "routesReached": 1,
+          "selectorsDeclared": 0,
+          "selectorsPresent": 0,
+          "routesWithoutOverflow": 1,
+          "outcomes": [
+            "journey-measured-declared-gesture-count-0",
+            "journey-measured-unhandled-construct-count-0",
+            "journey-synthesized-by-crawl-bounded-depth-2-reached-1-routes",
+            "journey-measured-route-reached-1-of-3-declared-routes",
+            "journey-measured-selector-present-0-of-0-declared-selectors",
+            "journey-measured-no-document-overflow-on-1-routes"
+          ]
+        }
+      ],
+      "outcomes": [
+        "journey-measured-declared-gesture-count-0",
+        "journey-measured-unhandled-construct-count-0",
+        "journey-synthesized-by-crawl-bounded-depth-2-reached-1-routes",
+        "journey-measured-route-reached-1-of-3-declared-routes",
+        "journey-measured-selector-present-0-of-0-declared-selectors",
+        "journey-measured-no-document-overflow-on-1-routes"
+      ],
+      "outcomesProvenance": "copied verbatim out of the witness record lane, not retyped. Every string is in the closed measured-pins vocabulary; no pass verb appears in any of them.",
+      "successfulNonLoopback": 0,
+      "crawlDeclaredRoutes": [
+        "/",
+        "/assets/icon.png",
+        "/styles.7af5efa7635d003dad98.css"
+      ],
+      "crawlVisited": [
+        {
+          "route": "/",
+          "depth": 0,
+          "status": 200,
+          "contentType": "text/html"
+        },
+        {
+          "route": "/%3C%=%20clientConfig.urlBase%20%%3E/",
+          "depth": 1,
+          "status": 400,
+          "contentType": "text/plain"
+        },
+        {
+          "route": "/assets/icon.png",
+          "depth": 1,
+          "status": 200,
+          "contentType": "image/png"
+        },
+        {
+          "route": "/styles.7af5efa7635d003dad98.css",
+          "depth": 1,
+          "status": 200,
+          "contentType": "text/css"
+        }
+      ],
+      "crawlRefusedNonLoopbackOrigins": [
+        "https://cdnjs.cloudflare.com",
+        "https://unpkg.com"
+      ],
+      "servedShell": {
+        "documentStatus": 200,
+        "title": "Loading..",
+        "baseHrefVerbatim": "<%= clientConfig.urlBase %>/",
+        "baseHrefResolvedTo": "http://127.0.0.1:<port>/%3C%=%20clientConfig.urlBase%20%%3E/",
+        "appRootPresent": true,
+        "appRootChildElementCount": 1,
+        "visibleText": "Loading...",
+        "serverInjectDefined": false,
+        "documentScrollHeight": 720,
+        "documentClientHeight": 720,
+        "bundleScriptsRequested": [
+          "runtime.465c2333d355155ec5f3.js",
+          "polyfills-es5.2f461ca8b99523f633b4.js",
+          "polyfills.6ce7c8613dd7f1c39c89.js",
+          "main.8d7a6399e761b63341dc.js"
+        ],
+        "bundleScriptsResolvedTo": [
+          "http://127.0.0.1:<port>/%3C%=%20clientConfig.urlBase%20%%3E/runtime.465c2333d355155ec5f3.js",
+          "http://127.0.0.1:<port>/%3C%=%20clientConfig.urlBase%20%%3E/polyfills-es5.2f461ca8b99523f633b4.js",
+          "http://127.0.0.1:<port>/%3C%=%20clientConfig.urlBase%20%%3E/polyfills.6ce7c8613dd7f1c39c89.js",
+          "http://127.0.0.1:<port>/%3C%=%20clientConfig.urlBase%20%%3E/main.8d7a6399e761b63341dc.js"
+        ],
+        "bundleScriptStatuses": "400 on every one - see the finding block",
+        "pageErrorsVerbatim": [
+          "pageerror: SyntaxError: Unexpected token '<'"
+        ],
+        "probeLocality": {
+          "mockedNonLoopback": 2,
+          "successfulNonLoopback": 0
+        }
+      }
+    },
+    "migrated": {
+      "lane": "migrated",
+      "what": "pigallery2 1.7.0 built at the honest cell: Angular 13.4.0 / TypeScript 4.6.4 under Node v16.20.2.",
+      "laneRoot": ".versionless/work/angular-pigallery2/13cell/t009b-migrated-run1",
+      "servedFrom": "t009b-migrated-run1",
+      "servedFromEvidence": "evidence/runs/angular-13cell/pigallery2-lanes.json - the T009b output directory, unmodified. No file in it was touched by this unit.",
+      "witnessRecord": "evidence/runs/witness-synthesized/angular-pigallery2-v1-7-0/record.json",
+      "witnessRecordDigest": "4c4b58ae762cef22c9c086890abe3800a76c9231e312aa78063de99ad55e1b4e",
+      "witnessRecordDigestScope": "canonical sha256 of the whole synthesized-witness record, which covers both lanes because both lanes were witnessed in one serialized run",
+      "laneSemanticDigest": "1b995322a179234aedd31725f5a5f3648e199a101a5e6f9a6b418d905f5503b2",
+      "journeySource": "synthesized-crawl",
+      "journeysRun": 1,
+      "journeys": [
+        {
+          "name": "bounded crawl of the served lane to depth 2",
+          "source": "crawl",
+          "specFile": null,
+          "replayable": true,
+          "ran": true,
+          "routesDeclared": 3,
+          "routesReached": 1,
+          "selectorsDeclared": 0,
+          "selectorsPresent": 0,
+          "routesWithoutOverflow": 1,
+          "outcomes": [
+            "journey-measured-declared-gesture-count-0",
+            "journey-measured-unhandled-construct-count-0",
+            "journey-synthesized-by-crawl-bounded-depth-2-reached-1-routes",
+            "journey-measured-route-reached-1-of-3-declared-routes",
+            "journey-measured-selector-present-0-of-0-declared-selectors",
+            "journey-measured-no-document-overflow-on-1-routes"
+          ]
+        }
+      ],
+      "outcomes": [
+        "journey-measured-declared-gesture-count-0",
+        "journey-measured-unhandled-construct-count-0",
+        "journey-synthesized-by-crawl-bounded-depth-2-reached-1-routes",
+        "journey-measured-route-reached-1-of-3-declared-routes",
+        "journey-measured-selector-present-0-of-0-declared-selectors",
+        "journey-measured-no-document-overflow-on-1-routes"
+      ],
+      "outcomesProvenance": "copied verbatim out of the witness record lane, not retyped. Every string is in the closed measured-pins vocabulary; no pass verb appears in any of them.",
+      "successfulNonLoopback": 0,
+      "crawlDeclaredRoutes": [
+        "/",
+        "/assets/icon.png",
+        "/styles.aac6e848cd321373.css"
+      ],
+      "crawlVisited": [
+        {
+          "route": "/",
+          "depth": 0,
+          "status": 200,
+          "contentType": "text/html"
+        },
+        {
+          "route": "/%3C%=%20clientConfig.urlBase%20%%3E/",
+          "depth": 1,
+          "status": 400,
+          "contentType": "text/plain"
+        },
+        {
+          "route": "/assets/icon.png",
+          "depth": 1,
+          "status": 200,
+          "contentType": "image/png"
+        },
+        {
+          "route": "/styles.aac6e848cd321373.css",
+          "depth": 1,
+          "status": 200,
+          "contentType": "text/css"
+        }
+      ],
+      "crawlRefusedNonLoopbackOrigins": [
+        "https://cdnjs.cloudflare.com",
+        "https://unpkg.com"
+      ],
+      "servedShell": {
+        "documentStatus": 200,
+        "title": "Loading..",
+        "baseHrefVerbatim": "<%= clientConfig.urlBase %>/",
+        "baseHrefResolvedTo": "http://127.0.0.1:<port>/%3C%=%20clientConfig.urlBase%20%%3E/",
+        "appRootPresent": true,
+        "appRootChildElementCount": 1,
+        "visibleText": "Loading...",
+        "serverInjectDefined": false,
+        "documentScrollHeight": 720,
+        "documentClientHeight": 720,
+        "bundleScriptsRequested": [
+          "runtime.db24d125644157a2.js",
+          "polyfills.907de136ddb20602.js",
+          "main.4b2fa472bc230245.js"
+        ],
+        "bundleScriptsResolvedTo": [
+          "http://127.0.0.1:<port>/%3C%=%20clientConfig.urlBase%20%%3E/runtime.db24d125644157a2.js",
+          "http://127.0.0.1:<port>/%3C%=%20clientConfig.urlBase%20%%3E/polyfills.907de136ddb20602.js",
+          "http://127.0.0.1:<port>/%3C%=%20clientConfig.urlBase%20%%3E/main.4b2fa472bc230245.js"
+        ],
+        "bundleScriptStatuses": "400 on every one - see the finding block",
+        "pageErrorsVerbatim": [
+          "pageerror: SyntaxError: Unexpected token '<'"
+        ],
+        "probeLocality": {
+          "mockedNonLoopback": 2,
+          "successfulNonLoopback": 0
+        }
+      }
+    }
+  },
+  "parity": {
+    "identical": true,
+    "comparedOn": "the ordered list of outcome strings each lane produced, string for string, plus the per-journey measured counts behind them",
+    "outcomesBaselineOnly": [],
+    "outcomesMigratedOnly": [],
+    "differingOutcomes": [],
+    "countsCompared": {
+      "routesDeclared": {
+        "baseline": 3,
+        "migrated": 3,
+        "equal": true
+      },
+      "routesReached": {
+        "baseline": 1,
+        "migrated": 1,
+        "equal": true
+      },
+      "selectorsPresent": {
+        "baseline": 0,
+        "migrated": 0,
+        "equal": true
+      },
+      "routesWithoutOverflow": {
+        "baseline": 1,
+        "migrated": 1,
+        "equal": true
+      }
+    },
+    "shellCompared": {
+      "title": {
+        "baseline": "Loading..",
+        "migrated": "Loading..",
+        "equal": true
+      },
+      "appRootChildElementCount": {
+        "baseline": 1,
+        "migrated": 1,
+        "equal": true
+      },
+      "visibleText": {
+        "baseline": "Loading...",
+        "migrated": "Loading...",
+        "equal": true
+      },
+      "documentOverflow": {
+        "baseline": "720/720",
+        "migrated": "720/720",
+        "equal": true
+      },
+      "serverInjectDefined": {
+        "baseline": false,
+        "migrated": false,
+        "equal": true
+      }
+    },
+    "knownDifferencesThatAreNotBehaviour": [
+      "The content-hashed asset filenames differ between the lanes (styles.7af5efa7635d003dad98.css vs styles.aac6e848cd321373.css, and so on). That is a build-naming difference T009b already inventoried; it changes the crawl route STRINGS but not the route COUNT and not any outcome.",
+      "The Angular 13 lane inlines critical CSS into a <style> block and loads its stylesheet with media=print/onload, and emits type=module scripts with no differential polyfills-es5 bundle. Both are Angular 13 default build behaviour. Neither reached a measured outcome, because neither bundle loaded - see the finding."
+    ],
+    "whatThisParityIsAbout": "The two lanes produced the SAME six outcome strings, in the same order, with the same counts behind them, on the surfaces a bounded loopback crawl reached. Read the finding and notEstablished before reading that as \"the migration is behaviour-preserving\": the surfaces reached here are the static shell, and no application code executed on either lane."
+  },
+  "finding": {
+    "id": "pigallery2-index-html-is-an-express-ejs-template-not-a-static-document",
+    "severity": "bounds the claim, does not invalidate it",
+    "whatWasObserved": [
+      "Both lanes' index.html carry, verbatim and unrendered, `<base href=\"<%= clientConfig.urlBase %>/\">` and an inline `var ServerInject = {user:  <%- JSON.stringify(user); %>, ConfigInject: <%- JSON.stringify(clientConfig); %>}`.",
+      "These are EJS expressions. pigallery2 renders index.html through its Express backend at request time; the Angular CLI copies the template through the build untouched, at BOTH eras, which is why the two lanes carry the same placeholders.",
+      "Served statically, Chromium resolves document.baseURI to http://127.0.0.1:<port>/%3C%=%20clientConfig.urlBase%20%%3E/ , so every relative bundle URL resolves under that non-existent prefix and the static server answers 400. Measured on both lanes: runtime, polyfills, main and the stylesheet all 400.",
+      "The inline ServerInject script is not valid JavaScript with the EJS unrendered; Chromium raised, verbatim on both lanes: `SyntaxError: Unexpected token '<'`. globalThis.ServerInject is undefined.",
+      "Consequence: the Angular application never bootstrapped on either lane. What was measured on both lanes is the static loading shell the template ships - <app-pi-gallery2> with its one placeholder child, the icon, and the text \"Loading...\"."
+    ],
+    "isThisARunnerDefect": false,
+    "whyNot": [
+      "The generic runner SERVED both lanes without complaint: the document is 200 text/html, and every asset addressed at its real path is 200 (assets/icon.png, the hashed stylesheet). The crawl issued 4 requests per lane and got the answers the tree actually contains.",
+      "The 400s are the application asking for a path that does not exist, because the application asked the SERVER to fill in the prefix. A runner that guessed a base href would be inventing a deployment the application never declared.",
+      "The two repairs available - rewriting the built index.html, or standing up the Express backend - are the two things this unit is forbidden to do, and correctly so: the first is hand-editing an emitted artefact, the second is a backend nobody has frozen."
+    ],
+    "whatItWouldTake": "A pigallery2 witness that reaches the gallery needs the app's own Express server serving the built frontend, seeded with a frozen media tree and a frozen config - the live-backend seam packages/cli/src/witness/live-backend.ts already exists for exactly this class of application. That is a separate unit with its own consent and its own freeze, not a parameter of this one."
+  },
+  "machineTimes": {
+    "witnessRunSeconds": 3.7,
+    "witnessRunNote": "wall clock for the whole CLI invocation: crawl derivation on the baseline lane, then two serialized Chromium launches, one per lane.",
+    "corroborationProbeSeconds": "under 10 per pass"
+  },
+  "reproduce": {
+    "witness": [
+      "cd <repo>",
+      "node --experimental-strip-types packages/cli/src/cli.ts witness:real-app --app pigallery2 --framework angular \\",
+      "  --baseline <repo>/.versionless/work/angular-pigallery2/baseline/t009b-baseline-run1 \\",
+      "  --migrated <repo>/.versionless/work/angular-pigallery2/13cell/t009b-migrated-run1 \\",
+      "  --out <repo>/evidence/runs/witness-synthesized/angular-pigallery2-v1-7-0",
+      "# expect journeySource synthesized-crawl, replayabilityRatio 1, digest 4c4b58ae76..."
+    ],
+    "corroboration": [
+      "node --experimental-strip-types .versionless/work/angular-pigallery2/logs/t009c-shell-probe.mjs \\",
+      "  <repo>/.versionless/work/angular-pigallery2/baseline/t009b-baseline-run1 \\",
+      "  <repo>/.versionless/work/angular-pigallery2/13cell/t009b-migrated-run1",
+      "# read-only; serves each lane on loopback, 204s every non-loopback URL, reports the shell"
+    ],
+    "emit": [
+      "T009C_HEAD=$(git rev-parse HEAD) node .versionless/work/angular-pigallery2/logs/t009c-emit-parity.cjs",
+      "# this record is emitted, never hand-edited"
+    ],
+    "scratchFiles": [
+      ".versionless/work/angular-pigallery2/logs/t009c-shell-probe.mjs - the corroboration probe",
+      ".versionless/work/angular-pigallery2/logs/t009c-shell-probe.json - its loopback-clean output",
+      ".versionless/work/angular-pigallery2/logs/t009c-emit-parity.cjs - the emitter for this record"
+    ]
+  },
+  "notEstablished": [
+    "NOTHING HERE IS ABOUT THE GALLERY. pigallery2 is a client-server application: the Angular frontend is served, configured and API-fed by its own Express BACKEND, which this unit did not start and was forbidden to stub. A static loopback serve of the built frontend can establish that the tree serves, that the document parses, and that whatever renders without application code renders the same on both lanes. It cannot establish login, listing, thumbnailing, search, sharing, settings, or any other behaviour that needs an API response.",
+    "It is stronger than \"the API calls would fail\". On this application the DOCUMENT itself is a server-rendered EJS template, so with no backend the base href stays unrendered, no bundle loads, and no application code runs at all on either lane. The measured surface is the static loading shell. See the finding block.",
+    "Therefore parity.identical true means: the two lanes measured the same on the surfaces reached. It does NOT mean the Angular 13 build of pigallery2 behaves like the Angular 8 build. No line of pigallery2 executed in this run.",
+    "The journey was synthesized by a bounded crawl, not authored by anyone. pigallery2 1.7.0 ships no Cypress and no Playwright suite in the baseline tree, so no suite reading was available; the crawl knows which routes the served document links to, not which of them matter.",
+    "The crawl reached 1 of 3 declared routes. The two it did not reach are an image and a stylesheet - routes only in the sense that the document links to them - and they were not reachable by clicking a link on the page, which is the only way the replay navigates.",
+    "One journey, one pass, one host. Nothing here establishes determinism across repeated witness runs (no --run-twice equivalent exists on the synthesized path), and nothing establishes an outcome under concurrent load.",
+    "No screenshot, no pixel comparison, no accessibility reading, no performance reading. The measured pins are the six outcome strings and the counts behind them.",
+    "This record does not re-establish anything T009b established. The lane outputs were consumed as-is and not rebuilt; their byte-identity across double builds is T009b's claim, carried forward by reference."
+  ],
+  "priorEvidence": {
+    "evidence/runs/angular-13cell/pigallery2-compile.json": "T009a - pigallery2 1.7.0 AOT-compiles at the Angular 13.4.0 cell",
+    "evidence/runs/angular-13cell/pigallery2-lanes.json": "T009b - both lanes build, each twice, byte-identically; 13 files per lane",
+    "evidence/runs/witness-synthesized/react-papercups-v1-0-0/record.json": "T020 - the synthesized-witness precedent this record follows for outcome vocabulary and record shape"
+  },
+  "nextUnit": "T010 freeze supersession. It inherits a parity claim that is real but shallow, and one named finding: any pigallery2 claim past the loading shell needs the live-backend seam, not another static serve.",
+  "integrity": {
+    "algorithm": "sha256",
+    "sha256": "2941b0b43646b81ba8c8bc75fa628736d9af6850c21268e7917d325d0378cb6a",
+    "digestOf": "JSON.stringify of this document with the integrity field absent",
+    "recompute": "node -e \"const c=require('crypto'),r=require('./evidence/runs/angular-13cell/pigallery2-witness-parity.json');delete r.integrity;console.log(c.createHash('sha256').update(JSON.stringify(r)).digest('hex'))\""
+  }
+}

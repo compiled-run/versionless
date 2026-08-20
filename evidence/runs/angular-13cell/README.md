@@ -1,8 +1,11 @@
 # Angular 13 cell — pigallery2
 
-Two records, in order. **T009a** (`pigallery2-compile.json`) established that the app
+Three records, in order. **T009a** (`pigallery2-compile.json`) established that the app
 *compiles* at the cell. **T009b** (`pigallery2-lanes.json`) established that both ends of
-the migration *build reproducibly*. Neither establishes runtime behaviour or parity.
+the migration *build reproducibly*. **T009c** (`pigallery2-witness-parity.json`) served
+both lanes to real Chromium on loopback and compared what they measured — and found the
+ceiling: pigallery2's `index.html` is an Express EJS template, so with no backend nothing
+past the loading shell can be reached at all.
 
 ---
 
@@ -216,3 +219,147 @@ by this unit.
 
 **Next unit:** the witness — serve one artefact from each lane and compare observed
 browser behaviour. That is the unit that can speak about parity; this one cannot.
+
+
+---
+
+## T009c — the witness, and what a static serve can reach
+
+`pigallery2-witness-parity.json` (schema `versionless.angular-13cell-witness-parity.v1`,
+sha256 `2941b0b4…78cb6a`) is T009b's named next unit: serve one artefact from each lane
+and compare observed browser behaviour.
+
+Both lanes were witnessed through the real CLI in **one serialized invocation** — the
+synthesized-witness path, real Chromium from the host Playwright install, one lane at a
+time and one journey at a time:
+
+```sh
+node --experimental-strip-types packages/cli/src/cli.ts witness:real-app \
+  --app pigallery2 --framework angular \
+  --baseline <repo>/.versionless/work/angular-pigallery2/baseline/t009b-baseline-run1 \
+  --migrated <repo>/.versionless/work/angular-pigallery2/13cell/t009b-migrated-run1 \
+  --out <repo>/evidence/runs/witness-synthesized/angular-pigallery2-v1-7-0
+# {"result":"pass","journeySource":"synthesized-crawl","overridden":false,
+#  "replayabilityRatio":1,"digest":"4c4b58ae76…"}
+```
+
+`selection.reason` is `no-hand-authored-driver-registered` with `registeredDriver: null`
+— measured, not asserted: there is no `pigallery2-run.ts` in `packages/cli/src/witness/`,
+so the synthesized path is the default here and no `--journeys` override was passed.
+pigallery2 1.7.0 ships no Cypress and no Playwright suite, so the fallback fired and the
+journey was derived by a bounded crawl.
+
+**Like-for-like is structural, not a discipline.** `runSynthesizedWitnessRealApp` derives
+the journey *once*, from the first declared lane, and replays that same emission against
+every lane, under `CRAWL_DEFAULT_BOUNDS` (depth 2, 12 routes, 5 s) that the CLI exposes
+no override for. Both lanes therefore ran the identical journey.
+
+### The result
+
+| | baseline (ng 8) | migrated (ng 13) |
+|---|---|---|
+| journeySource | `synthesized-crawl` | `synthesized-crawl` |
+| journeys run | 1 | 1 |
+| routes declared / reached | 3 / 1 | 3 / 1 |
+| selectors present | 0 of 0 | 0 of 0 |
+| `successfulNonLoopback` | **0** | **0** |
+| lane semantic digest | `b6b7cdec…` | `1b995322…` |
+
+Six outcome strings per lane, **identical string for string and in the same order**, all
+in the closed measured-pins vocabulary, no pass verb anywhere:
+
+```
+journey-measured-declared-gesture-count-0
+journey-measured-unhandled-construct-count-0
+journey-synthesized-by-crawl-bounded-depth-2-reached-1-routes
+journey-measured-route-reached-1-of-3-declared-routes
+journey-measured-selector-present-0-of-0-declared-selectors
+journey-measured-no-document-overflow-on-1-routes
+```
+
+The lane semantic digests differ because they hash the content-hashed asset filenames,
+which T009b already inventoried as differing. No outcome differs.
+
+### The finding: `index.html` is a server template, not a document
+
+Read this before reading `identical: true` as good news.
+
+Both lanes' `index.html` carry, verbatim and unrendered, `<base href="<%= clientConfig.urlBase %>/">`
+and an inline `var ServerInject = {user: <%- JSON.stringify(user); %>, …}`. These are EJS
+expressions — pigallery2 renders `index.html` through its **Express backend** at request
+time, and the Angular CLI copies the template through the build untouched at *both* eras.
+
+Served statically, Chromium resolves `document.baseURI` to
+`http://127.0.0.1:<port>/%3C%=%20clientConfig.urlBase%20%%3E/`, so every relative bundle
+URL resolves under a prefix that does not exist. Measured on both lanes: `runtime`,
+`polyfills`, `main` and the stylesheet all **400**. The inline script is not valid
+JavaScript with the EJS unrendered, and Chromium raised, verbatim on both lanes:
+
+```
+SyntaxError: Unexpected token '<'
+```
+
+**The Angular application never bootstrapped on either lane.** What was measured is the
+static loading shell the template ships — `<app-pi-gallery2>` with its one placeholder
+child, the icon, and the text `Loading...`.
+
+This is **not** a defect in the generic runner, and it is recorded as not one. The runner
+served both lanes: the document is 200 `text/html`, and every asset addressed at its real
+path is 200. The 400s are the application asking for a path it expected the *server* to
+fill in. The two available repairs — rewriting the built `index.html`, or standing up the
+Express backend — are exactly the two moves this unit is forbidden to make, and rightly:
+one is hand-editing an emitted artefact, the other is a backend nobody has frozen. A
+pigallery2 witness that reaches the gallery needs the existing
+`packages/cli/src/witness/live-backend.ts` seam, a frozen media tree and a frozen config.
+That is a separate unit.
+
+### Locality, including the part that went wrong
+
+`successfulNonLoopback: 0` is structural, not merely reported:
+`packages/cli/src/witness/playwright-host.ts` routes `**/*` and continues a request only
+when `isWitnessLoopbackUrl()` holds, fulfilling everything else locally with 204. The two
+CDN stylesheets pigallery2's `index.html` links (`cdnjs.cloudflare.com`, `unpkg.com`)
+were mocked, not fetched.
+
+Disclosed in the record: the **first** pass of the corroboration probe launched Chromium
+through a plain Playwright context instead of the witness host's, and so fetched those
+two stylesheets for real, once per lane — **4 non-loopback requests**, after the witness
+run had already finished, by a diagnostic that is not the measurement. The probe was
+re-run with a 204-fulfilling route and it is that loopback-clean pass whose readings are
+published. A locality claim that is only audited when it holds is not audited.
+
+### Reproduce
+
+```sh
+# the witness (above), then the read-only corroboration probe:
+node --experimental-strip-types .versionless/work/angular-pigallery2/logs/t009c-shell-probe.mjs \
+  <repo>/.versionless/work/angular-pigallery2/baseline/t009b-baseline-run1 \
+  <repo>/.versionless/work/angular-pigallery2/13cell/t009b-migrated-run1
+
+# the parity record is emitted, never hand-edited:
+T009C_HEAD=$(git rev-parse HEAD) node .versionless/work/angular-pigallery2/logs/t009c-emit-parity.cjs
+```
+
+Integrity:
+
+```sh
+node -e "const c=require('crypto'),r=require('./evidence/runs/angular-13cell/pigallery2-witness-parity.json');delete r.integrity;console.log(c.createHash('sha256').update(JSON.stringify(r)).digest('hex'))"
+# 2941b0b43646b81ba8c8bc75fa628736d9af6850c21268e7917d325d0378cb6a
+```
+
+### What T009c does not establish
+
+`notEstablished` in the JSON is the binding list. In short: **nothing here is about the
+gallery.** No line of pigallery2 executed. `parity.identical: true` means the two lanes
+measured the same *on the surfaces reached*, and the surfaces reached are the static
+loading shell — not login, listing, thumbnailing, search, sharing or settings, all of
+which need the Express backend this unit did not start and was forbidden to stub. The
+journey was synthesized by a crawl nobody authored; one journey, one pass, one host, so
+no determinism claim and no concurrency claim. No screenshots, no pixels, no
+accessibility or performance reading. T009b's build claims are carried by reference, not
+re-established: the lane outputs were consumed as-is and never rebuilt or edited. No
+`packages/**` file was written by this unit.
+
+**Next unit:** T010, the freeze supersession. It inherits a parity claim that is real but
+shallow, plus one named finding — any pigallery2 claim past the loading shell needs the
+live-backend seam, not another static serve.
