@@ -961,6 +961,22 @@ function renderApplied(
 			? `install: ${(install.command ?? []).join(' ')} — ${String(install.installedPackages ?? 0)} package(s) in the lane closure`
 			: `install: not run — ${install.reason ?? ''}`,
 	);
+	/**
+	 * What the install-script declaration bought, on the line under the command
+	 * that carried it. The record has always named the policy; what it could not
+	 * say until T032 is which scripts npm ran and which it skipped, and an
+	 * operator reading a wall of install output is exactly who needs that said
+	 * rather than implied by a flag.
+	 */
+	if (install.installScripts !== null) {
+		const scripts = install.installScripts;
+		lines.push(
+			`  install scripts: ${scripts.policy} under npm ${scripts.npm.version ?? 'unread'} — ${String(scripts.ran.length)} ran, ${String(scripts.skipped.length)} skipped by npm`,
+		);
+		for (const entry of scripts.ran) lines.push(`    ran ${entry.package} ${entry.lifecycle}`);
+		for (const entry of scripts.skipped)
+			lines.push(`    skipped ${entry.package} ${entry.lifecycle}`);
+	}
 	lines.push(
 		build.ran
 			? `build: ${(build.command ?? []).join(' ')} — ${String(build.outputFiles ?? 0)} file(s) under ${build.outDirectory ?? ''}`

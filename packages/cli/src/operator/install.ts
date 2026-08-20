@@ -35,6 +35,17 @@
  * hand back as `defect:install` with npm's output buried in it. It is a
  * declaration like the other four.
  *
+ * The install-script policy was, until T032, a recorded claim rather than a
+ * delivered one. Declaring it put `--foreground-scripts` on the command, and
+ * `--foreground-scripts` decides only where the output of a script npm has
+ * *already chosen to run* is printed. npm 12 blocks a **dependency's** install
+ * scripts behind the `allowScripts` field and skips them silently, so a lane
+ * installed under a declared allowance got a tree whose dependency scripts npm
+ * had never run, and the row said the allowance was taken. What is emitted now
+ * is the allowance npm actually honours, chosen per npm major, and the row
+ * carries npm's own account of which scripts ran and which it skipped instead
+ * of the declaration standing in for the outcome.
+ *
  * One measured wall here is a refusal with *no* policy behind it. An install
  * whose closure pins a registry this run cannot reach — measured as
  * `CERT_HAS_EXPIRED` against `registry.npm.taobao.org` — has no honest "proceed
@@ -274,6 +285,309 @@ const GIT_DEPENDENCY_NOT_ESTABLISHED: readonly string[] = Object.freeze([
 	`The git dependencies recorded beside this policy are the ones the lockfile pins. A dependency reached through a git reference that no lockfile records — a transitive one npm resolved fresh — is not in that list, so the list is what was read rather than everything that was fetched.`,
 ]);
 
+/**
+ * The declared name of the install-script policy, as an operator declares it.
+ *
+ * A constant for the same reason the other two are: the name is written onto
+ * the install row beside the reading of what the declaration actually bought.
+ */
+export const INSTALL_SCRIPT_POLICY = 'allow-install-scripts';
+
+/** The declared name of its opposite. */
+export const INSTALL_SCRIPT_SKIP_POLICY = 'skip-install-scripts';
+
+/**
+ * The npm the install child actually ran, read rather than assumed.
+ *
+ * `version` is `npm --version` taken through the very environment the child is
+ * given, so it is a measurement of the child's world and not of this process's.
+ * `major` is the first component of it, and both are `null` when the reading
+ * did not complete — which is a different fact from "npm 12", and this stage
+ * never promotes one into the other.
+ */
+export type NpmRelease = Readonly<{ version: string | null; major: number | null }>;
+
+/** The release reading for a child whose npm was never asked. */
+export const UNREAD_NPM_RELEASE: NpmRelease = Object.freeze({ version: null, major: null });
+
+/**
+ * The npm major from which a *dependency's* install scripts are gated.
+ *
+ * Measured on this host, on the two majors this pipeline actually runs. npm
+ * 12.0.1: a dependency whose install script is not covered by the `allowScripts`
+ * field in the project's `package.json` has that script **silently skipped**,
+ * and npm ends the install with a `npm warn install-scripts` block naming the
+ * packages it skipped. npm 8.19.4: no such gate exists at all — a dependency's
+ * install script runs under the flags this stage already passed.
+ *
+ * The boundary is drawn at 12 because 12 is where the gate was measured. npm 9,
+ * 10 and 11 were not measured on this host and are treated as ungated, which is
+ * the reading that cannot invent an allowance: an npm in that range that *does*
+ * gate will report its skips in the `npm warn install-scripts` block, and this
+ * stage reads that block onto the row rather than assuming the gate away.
+ */
+export const NPM_ALLOW_SCRIPTS_MAJOR = 12;
+
+/**
+ * What `--allow-install-scripts` is worth on a gated npm, and why.
+ *
+ * `--foreground-scripts` only decides where the output of a script npm has
+ * *already decided to run* is printed. It grants nothing. Until this was
+ * measured the install-script allowance carried that flag and nothing else, so
+ * on npm 12 a declared allowance produced a tree whose dependency scripts npm
+ * had silently skipped, and the row recorded the allowance as though it had
+ * been delivered.
+ *
+ * Three forms of allowance exist on npm 12, and only one of them can be spelled
+ * on the command line of a project-scoped install:
+ *
+ * - `--allow-scripts <list>` is **an error** here. Measured: `npm install
+ *   --allow-scripts=depwithscript` in a directory with a `package.json` exits
+ *   with `npm error code EALLOWSCRIPTS`, `--allow-scripts is not allowed in
+ *   project-scoped installs`. It is npm's flag for `npx`, `npm exec` and global
+ *   installs, and it is not available to this stage at all.
+ * - The `allowScripts` field in the lane's own `package.json`, or an `.npmrc`
+ *   entry, carries a per-package list. Deriving that list means deriving it
+ *   from the lockfile's `hasInstallScript` markings — a second inference path,
+ *   and one this module already records as incomplete (`installScriptPackages`
+ *   is what the lockfile *declares*, and a lockfile that does not mark a script
+ *   yields a finding this stage did not make). An allowance silently narrowed
+ *   by an incomplete reading is the same defect in a new place: the operator
+ *   declared that this closure's scripts may run, and would have got the
+ *   scripts this stage happened to notice.
+ * - `--dangerously-allow-all-scripts` bypasses the `allowScripts` policy
+ *   entirely and runs every dependency install script. That is precisely what
+ *   the declaration means, it is one flag on the command the row already
+ *   records, and it invents nothing.
+ *
+ * So the fleet-wide declaration is what is emitted, and it is emitted only on
+ * the majors that have the gate. On an ungated npm there is nothing to bypass
+ * and the flag would be npm-12 vocabulary on a row npm 8 wrote, so it is not
+ * passed: measured, npm 8.19.4 runs a dependency's `postinstall` under
+ * `--foreground-scripts` alone.
+ */
+export function installScriptAllowanceFlags(npm: NpmRelease): readonly string[] {
+	const gated = npm.major === null || npm.major >= NPM_ALLOW_SCRIPTS_MAJOR;
+	return Object.freeze(
+		gated
+			? ['--foreground-scripts', '--dangerously-allow-all-scripts']
+			: ['--foreground-scripts'],
+	);
+}
+
+/** One install script npm reported starting, as npm named it. */
+export type InstallScriptRun = Readonly<{
+	/** The package spec npm printed, `name@version`. */
+	package: string;
+	/** The lifecycle npm named: `preinstall`, `install`, `postinstall`, `prepare`. */
+	lifecycle: string;
+}>;
+
+/** One install script npm reported skipping, as npm named it. */
+export type InstallScriptSkip = Readonly<{
+	package: string;
+	lifecycle: string;
+	/** The script npm quoted as the one it did not run. */
+	command: string;
+}>;
+
+/**
+ * The install-script lifecycles npm gates and reports.
+ *
+ * Named rather than matched loosely, because the reading below picks a package
+ * spec and a lifecycle out of lines that also carry arbitrary shell commands,
+ * and a loose match would read `echo DEP2-INSTALL` as a package running a
+ * script called `DEP2-INSTALL`.
+ */
+const INSTALL_SCRIPT_LIFECYCLES = 'preinstall|install|postinstall|prepare|prepublish';
+
+/**
+ * A script npm reported starting, in both spellings npm has used for it.
+ *
+ * npm 12 under `--foreground-scripts`: `npm notice run pkg@1.0.0 postinstall`.
+ * npm 8 under the same flag: `> pkg@1.0.0 postinstall`. Both are followed by a
+ * second line carrying the shell command itself, which this deliberately does
+ * not match: the package spec is required to carry an `@`, and the line is
+ * required to be exactly two tokens, so `npm notice run echo DEP2-INSTALL` and
+ * `> node -e "…" && echo …` are read as the command lines they are.
+ */
+const INSTALL_SCRIPT_RAN_LINE = new RegExp(
+	`^(?:npm notice run |> )((?:@[^\\s/]+/)?[^\\s@][^\\s]*@[^\\s]+) (${INSTALL_SCRIPT_LIFECYCLES})$`,
+);
+
+/**
+ * A script npm 12 reported skipping, out of the block it ends the install with:
+ *
+ * ```
+ * npm warn install-scripts 2 packages had install scripts blocked because they are not covered by allowScripts:
+ * npm warn install-scripts   @scope/dep2@2.1.0 (install: echo DEP2-INSTALL)
+ * ```
+ */
+const INSTALL_SCRIPT_SKIPPED_LINE = new RegExp(
+	`^npm warn install-scripts\\s+((?:@[^\\s/]+/)?[^\\s@][^\\s]*@[^\\s]+) \\((${INSTALL_SCRIPT_LIFECYCLES}): (.*)\\)$`,
+);
+
+/** The count npm states at the head of that block, which is read as a check. */
+const INSTALL_SCRIPT_SKIPPED_HEADER =
+	/^npm warn install-scripts (\d+) packages? had install scripts blocked/;
+
+/**
+ * What npm said it ran and what npm said it skipped, read out of its output.
+ *
+ * `reportedSkipped` is npm's own count from the head of its skip block, kept
+ * beside the entries this parsed out of it so a reading that missed a line is
+ * visible as a disagreement rather than as a shorter list.
+ */
+export type InstallScriptActivity = Readonly<{
+	ran: readonly InstallScriptRun[];
+	skipped: readonly InstallScriptSkip[];
+	reportedSkipped: number | null;
+}>;
+
+/** Read npm's own account of which install scripts ran and which it skipped. */
+export function readInstallScriptActivity(output: string): InstallScriptActivity {
+	const ran: InstallScriptRun[] = [];
+	const skipped: InstallScriptSkip[] = [];
+	let reportedSkipped: number | null = null;
+	for (const raw of output.split('\n')) {
+		const line = raw.replace(/\r$/, '');
+		const started = INSTALL_SCRIPT_RAN_LINE.exec(line);
+		if (started !== null) {
+			ran.push(Object.freeze({ package: started[1] ?? '', lifecycle: started[2] ?? '' }));
+			continue;
+		}
+		const blocked = INSTALL_SCRIPT_SKIPPED_LINE.exec(line);
+		if (blocked !== null) {
+			skipped.push(
+				Object.freeze({
+					package: blocked[1] ?? '',
+					lifecycle: blocked[2] ?? '',
+					command: blocked[3] ?? '',
+				}),
+			);
+			continue;
+		}
+		const header = INSTALL_SCRIPT_SKIPPED_HEADER.exec(line);
+		if (header !== null && reportedSkipped === null)
+			reportedSkipped = Number.parseInt(header[1] ?? '', 10);
+	}
+	return Object.freeze({
+		ran: Object.freeze(ran),
+		skipped: Object.freeze(skipped),
+		reportedSkipped:
+			reportedSkipped === null || Number.isNaN(reportedSkipped) ? null : reportedSkipped,
+	});
+}
+
+/** Which install-script declaration an install ran under. */
+export type InstallScriptStance =
+	| typeof INSTALL_SCRIPT_POLICY
+	| typeof INSTALL_SCRIPT_SKIP_POLICY
+	| 'none-declared';
+
+/**
+ * What the install-script policy actually delivered, on the row that claims it.
+ *
+ * This exists because the row used to claim an allowance instead of reading
+ * one. `ran` and `skipped` are npm's own account of this install, taken out of
+ * the output npm printed while it ran; neither is derived from the lockfile,
+ * and `installScriptPackages` beside them stays what it always was — the
+ * packages the *lockfile declares* carry a script, which is a different reading
+ * with a different failure mode.
+ */
+export type InstallScriptReading = Readonly<{
+	/** The declaration this install ran under, by the name it is declared under. */
+	policy: InstallScriptStance;
+	/** The npm the child resolved, read through the child's own environment. */
+	npm: NpmRelease;
+	/** The flags that declaration put on the command, and nothing else. */
+	flags: readonly string[];
+	/** Where `ran` and `skipped` were read from. */
+	readFrom: string;
+	ran: readonly InstallScriptRun[];
+	skipped: readonly InstallScriptSkip[];
+	/** npm's own count of what it skipped, or `null` when it stated none. */
+	reportedSkipped: number | null;
+	/** What this reading establishes, stated where the row is read. */
+	claim: string;
+}>;
+
+const INSTALL_SCRIPT_READ_FROM =
+	"npm's own stdout and stderr for this install: the per-script banners --foreground-scripts prints, and the `npm warn install-scripts` block a gated npm ends the install with.";
+
+/** The install-script stance an executed plan ran under. */
+export function installScriptStance(policy: InstallPolicy): InstallScriptStance {
+	if (policy.allowInstallScripts) return INSTALL_SCRIPT_POLICY;
+	if (policy.skipInstallScripts) return INSTALL_SCRIPT_SKIP_POLICY;
+	return 'none-declared';
+}
+
+function installScriptClaim(
+	stance: InstallScriptStance,
+	npm: NpmRelease,
+	activity: InstallScriptActivity,
+	lockfile: string | null,
+): string {
+	const read = npm.version === null ? 'npm’s version could not be read' : `npm ${npm.version}`;
+	const counts = `npm reported ${String(activity.ran.length)} script(s) started and ${String(activity.skipped.length)} skipped by policy.`;
+	if (stance === INSTALL_SCRIPT_SKIP_POLICY)
+		return `The \`${INSTALL_SCRIPT_SKIP_POLICY}\` policy was declared, so npm was given --ignore-scripts and no install script ran at all — the lane's own included. --ignore-scripts is a blanket skip rather than the allowScripts gate, and npm prints no per-package list for it, so \`skipped\` is empty because there was nothing to read rather than because npm skipped nothing. \`installScriptPackages\` beside this row is what the lockfile declares, which is not a reading of what npm did. Read at ${read}. ${counts}`;
+	if (stance === 'none-declared')
+		return `No install-script policy was declared, so this stage's refusing default stood: npm was given --ignore-scripts and no install script ran, the lane's own included. Reaching here without a declaration means the stage found nothing to refuse over — either the lockfile marked no package as carrying an install script, or ${lockfile === null ? 'no lockfile was read at all, which is this run’s case' : `${lockfile} marked none`}. \`skipped\` is empty for the same reason it is under the skip policy: --ignore-scripts produces no per-package list. Read at ${read}. ${counts}`;
+	const gated = npm.major === null || npm.major >= NPM_ALLOW_SCRIPTS_MAJOR;
+	return gated
+		? `The \`${INSTALL_SCRIPT_POLICY}\` policy was declared and npm was given ${installScriptAllowanceFlags(npm).join(' ')}. On npm ${String(NPM_ALLOW_SCRIPTS_MAJOR)} and above a dependency's install scripts are blocked behind the \`allowScripts\` field and skipped **silently** unless a matching entry exists; --foreground-scripts decides only where the output of a script npm already chose to run is printed, so it grants nothing. --dangerously-allow-all-scripts bypasses that policy outright, which is what this declaration means: the operator declared that this closure's install scripts may run. \`ran\` and \`skipped\` are npm's own account of what followed, not this stage's expectation of it. Read at ${read}. ${counts}`
+		: `The \`${INSTALL_SCRIPT_POLICY}\` policy was declared and ${read} was read through the child's own environment. This npm has no \`allowScripts\` gate: a dependency's install scripts run under --foreground-scripts alone, so no allowance flag was passed and there is none to pass. \`skipped\` is empty because this npm skips nothing by policy — not because a skip list was read and found empty. \`ran\` is what npm printed as it started each script. ${counts}`;
+}
+
+/** The install-script reading for an install that ran, from npm's own output. */
+export function readInstallScripts(
+	policy: InstallPolicy,
+	npm: NpmRelease,
+	flags: readonly string[],
+	output: string,
+	lockfile: string | null,
+): InstallScriptReading {
+	const stance = installScriptStance(policy);
+	const activity = readInstallScriptActivity(output);
+	return Object.freeze({
+		policy: stance,
+		npm,
+		flags: Object.freeze([...flags]),
+		readFrom: INSTALL_SCRIPT_READ_FROM,
+		ran: activity.ran,
+		skipped: activity.skipped,
+		reportedSkipped: activity.reportedSkipped,
+		claim: installScriptClaim(stance, npm, activity, lockfile),
+	});
+}
+
+/**
+ * What the install-script reading does not establish, on every row that carries
+ * one.
+ *
+ * The first two are the boundaries of reading a child's output at all. The
+ * third is the one a reader would otherwise get wrong: npm prints the same
+ * banner for the lane's own lifecycle scripts as for its dependencies', and
+ * only the dependencies' are gated.
+ */
+const INSTALL_SCRIPT_NOT_ESTABLISHED: readonly string[] = Object.freeze([
+	'`installScripts.ran` and `installScripts.skipped` are read from what npm printed on this run, and from nothing else. A script npm ran without printing a banner is not in `ran`, and a package npm skipped without listing it is not in `skipped`; neither list is derived from the lockfile, and neither is an inventory of every script the closure carries.',
+	'`installScripts.ran` names the scripts npm reported *starting*. Whether a script completed, and whether a native build it exists to perform produced anything, is not established here — the install’s exit code is the only outcome this stage read.',
+	'`installScripts.ran` includes the lane’s own package’s lifecycle scripts beside its dependencies’: npm prints the same banner for both, and this reading does not separate them. The allowScripts gate applies only to dependencies, so a lane script appearing in `ran` says nothing about whether the gate was open.',
+]);
+
+/**
+ * What a run that took the install-script allowance additionally does not know.
+ *
+ * Appended only when the allowance was declared, because the npm-major boundary
+ * only decides anything for a run that asked for scripts to run.
+ */
+const INSTALL_SCRIPT_ALLOWANCE_NOT_ESTABLISHED: readonly string[] = Object.freeze([
+	`Which allowance this stage emits is decided by the npm major, and only two majors were measured on this host: npm 12.0.1, which gates a dependency's install scripts behind \`allowScripts\`, and npm 8.19.4, which has no such gate. npm 9, 10 and 11 were not measured; every npm below ${String(NPM_ALLOW_SCRIPTS_MAJOR)} is treated as ungated. An npm in that unmeasured range that does gate would report its skips in \`installScripts.skipped\`, so the reading stays honest, but this stage would not have granted the allowance it was asked for.`,
+	'`installScripts.npm` is `npm --version` read through the environment the install child was given. A null there means the reading did not complete, and the allowance was then emitted in the gated form because that is the only form that grants anything; which npm actually ran this install is not established in that case.',
+]);
+
 function hostOf(value: string): string | null {
 	if (!value.startsWith('http://') && !value.startsWith('https://')) return null;
 	const parsed = parseURL(value);
@@ -383,6 +697,15 @@ export type InstallPlan = Readonly<{
 	foreignLockfileDisregarded: ForeignLockfileDisregard | null;
 	/** The git dependencies a declared policy admitted, or `null`. */
 	gitDependenciesAllowed: GitDependencyAllowance | null;
+	/**
+	 * The npm this plan was built for, read through the child's environment.
+	 *
+	 * It decides which install-script allowance is spelled on the command, so
+	 * it is carried on the plan rather than consulted twice.
+	 */
+	npm: NpmRelease;
+	/** The flags the install-script declaration put on the command. */
+	installScriptFlags: readonly string[];
 	command: readonly string[];
 }>;
 
@@ -398,6 +721,14 @@ export async function planLaneInstall(
 	policy: InstallPolicy = DEFAULT_INSTALL_POLICY,
 	environment: NodeJS.ProcessEnv = process.env,
 	closure: ClosureMode = 'replay',
+	/**
+	 * The npm the child will run, already read. It is a parameter rather than a
+	 * reading taken here because nothing runs in this function, which is the
+	 * property that lets a refusal arrive before the network is touched. Unread,
+	 * the plan is built for a gated npm — the only shape that grants anything —
+	 * and the row says the version was not established rather than naming one.
+	 */
+	npm: NpmRelease = UNREAD_NPM_RELEASE,
 ): Promise<InstallPlan> {
 	if (policy.allowInstallScripts && policy.skipInstallScripts)
 		refuse({
@@ -518,6 +849,14 @@ export async function planLaneInstall(
 	 * asked for — recorded as `resolve`, so the row says what actually happened.
 	 */
 	const resolvedClosure: ClosureMode = disregarded === null ? closure : 'resolve';
+	/**
+	 * The install-script declaration, spelled in the form the npm that will run
+	 * it actually honours. `--foreground-scripts` alone was what this stage used
+	 * to spell it as, and on a gated npm that spelled nothing at all.
+	 */
+	const installScriptFlags = policy.allowInstallScripts
+		? installScriptAllowanceFlags(npm)
+		: Object.freeze(['--ignore-scripts']);
 	const command = [
 		'npm',
 		resolvedClosure === 'replay' ? 'ci' : 'install',
@@ -525,7 +864,7 @@ export async function planLaneInstall(
 		'--no-fund',
 		...(policy.allowRemoteTarballs ? ['--allow-remote', 'all'] : []),
 		...(policy.allowGitDependencies ? ['--allow-git', 'all'] : []),
-		...(policy.allowInstallScripts ? ['--foreground-scripts'] : ['--ignore-scripts']),
+		...installScriptFlags,
 		...(policy.allowPeerConflicts ? ['--legacy-peer-deps'] : []),
 	];
 	return Object.freeze({
@@ -544,8 +883,33 @@ export async function planLaneInstall(
 		gitDependenciesAllowed: policy.allowGitDependencies
 			? gitDependencyAllowance(findings)
 			: null,
+		npm,
+		installScriptFlags,
 		command: Object.freeze(command),
 	});
+}
+
+/**
+ * The npm the child's own environment resolves, read the way its Node is.
+ *
+ * `npm --version` through the environment the install child is given, for the
+ * same reason `readLaneRuntime` takes `node -v` there: a plan that prepended a
+ * cell's `bin` is not evidence that the cell's npm is what answers, and the
+ * install-script allowance this stage spells depends on which npm does. A
+ * reading that does not complete returns `UNREAD_NPM_RELEASE` rather than
+ * falling back to this process's own npm, which is a different npm.
+ */
+export async function readNpmRelease(environment: NodeJS.ProcessEnv): Promise<NpmRelease> {
+	let version: string;
+	try {
+		const { stdout } = await run('npm', ['--version'], { env: environment });
+		version = stdout.trim();
+	} catch {
+		return UNREAD_NPM_RELEASE;
+	}
+	if (version === '') return UNREAD_NPM_RELEASE;
+	const major = Number.parseInt(version.split('.')[0] ?? '', 10);
+	return Object.freeze({ version, major: Number.isNaN(major) ? null : major });
 }
 
 /**
@@ -1020,6 +1384,17 @@ export type InstallRecord = Readonly<{
 	gitDependenciesAllowed: GitDependencyAllowance | null;
 	remoteTarballDependencies: readonly string[];
 	installScriptPackages: readonly string[];
+	/**
+	 * Which install scripts npm ran and which it skipped, read from npm.
+	 *
+	 * `null` only when this stage did not run, because a stage that ran always
+	 * had an install-script stance — including the undeclared default, which is
+	 * `--ignore-scripts` and is recorded as `none-declared` rather than left
+	 * unsaid. This is the reading `installScriptPackages` above is not: that
+	 * list is what the lockfile *declares*, and until this field existed the row
+	 * carried the declaration and no account of what the declaration bought.
+	 */
+	installScripts: InstallScriptReading | null;
 	command: readonly string[] | null;
 	exitCode: number | null;
 	/** Packages present in the lane's installed closure afterwards. */
@@ -1055,6 +1430,7 @@ export function installNotRequested(reason: string): InstallRecord {
 		gitDependenciesAllowed: null,
 		remoteTarballDependencies: Object.freeze([]),
 		installScriptPackages: Object.freeze([]),
+		installScripts: null,
 		command: null,
 		exitCode: null,
 		installedPackages: null,
@@ -1258,18 +1634,33 @@ export async function runLaneInstall(
 	 * a reading of the child rather than a restatement of a caller's intent.
 	 */
 	const inherited = laneRuntimeEnvironment(runtime, environment);
-	const plan = await planLaneInstall(laneDir, policy, inherited, closure);
+	/**
+	 * Which npm is about to run, read before the plan is built.
+	 *
+	 * The sandbox passes `PATH` through verbatim, so the npm this resolves is
+	 * the npm the install child resolves. It is read here rather than assumed
+	 * because the install-script allowance has two spellings and only one of
+	 * them is honest on each npm major.
+	 */
+	const npm = await readNpmRelease(inherited);
+	const plan = await planLaneInstall(laneDir, policy, inherited, closure, npm);
 	const sandbox = planInstallSandbox(laneDir, inherited, boundaryRoot);
 	for (const directory of sandbox.directories) await mkdir(directory, { recursive: true });
 	const before = await snapshotInstallBoundary(boundaryRoot, laneDir);
 	const [binary, ...args] = plan.command as readonly [string, ...string[]];
 	let failure: unknown = null;
+	/**
+	 * npm's own account of the install, kept rather than discarded: it is where
+	 * the per-script banners and the skipped-package block are read from.
+	 */
+	let output = '';
 	try {
-		await run(binary, args, {
+		const result = await run(binary, args, {
 			cwd: laneDir,
 			env: sandbox.environment,
 			maxBuffer: 64 * 1024 * 1024,
 		});
+		output = `${result.stdout}\n${result.stderr}`;
 	} catch (error) {
 		failure = error;
 	}
@@ -1341,6 +1732,13 @@ export async function runLaneInstall(
 		gitDependenciesAllowed: plan.gitDependenciesAllowed,
 		remoteTarballDependencies: plan.findings?.remoteTarballDependencies ?? Object.freeze([]),
 		installScriptPackages: plan.findings?.installScriptPackages ?? Object.freeze([]),
+		installScripts: readInstallScripts(
+			policy,
+			plan.npm,
+			plan.installScriptFlags,
+			output,
+			plan.lockfile,
+		),
 		command: plan.command,
 		exitCode: 0,
 		installedPackages: await installedPackageCount(laneDir),
@@ -1359,6 +1757,8 @@ export async function runLaneInstall(
 			...INSTALL_NOT_ESTABLISHED,
 			...(plan.foreignLockfileDisregarded === null ? [] : FOREIGN_LOCKFILE_NOT_ESTABLISHED),
 			...(plan.gitDependenciesAllowed === null ? [] : GIT_DEPENDENCY_NOT_ESTABLISHED),
+			...INSTALL_SCRIPT_NOT_ESTABLISHED,
+			...(policy.allowInstallScripts ? INSTALL_SCRIPT_ALLOWANCE_NOT_ESTABLISHED : []),
 		]),
 	});
 }

@@ -15,11 +15,16 @@ import {
 	planInstallSandbox,
 	planLaneInstall,
 	planLaneRuntime,
+	installScriptAllowanceFlags,
+	NPM_ALLOW_SCRIPTS_MAJOR,
+	readInstallScriptActivity,
 	readLockfileFindings,
 	readNpmFailure,
+	readNpmRelease,
 	refuseNamedNpmFailure,
 	REGISTRY_UNREACHABLE_CODES,
 	runLaneInstall,
+	UNREAD_NPM_RELEASE,
 	type InstallPolicy,
 } from '../src/operator/install.ts';
 import {
@@ -602,13 +607,17 @@ describe('the install sandbox', () => {
 			/**
 			 * The same `postinstall`, carried twice.
 			 *
-			 * npm 12 blocks a *dependency's* install script behind its own
-			 * `allowScripts` allowlist — `pwn@1.0.0 … blocked because they are not
-			 * covered by allowScripts` — which this stage's `--foreground-scripts`
-			 * does not grant, so the tarball's copy is refused by npm before this
-			 * boundary is reached. The lane's own script is one npm does run, and
-			 * the boundary is a property of the install child rather than of which
-			 * package's script fired inside it.
+			 * It was written twice because of the defect T032 fixed: npm 12 blocks
+			 * a *dependency's* install script behind its own `allowScripts`
+			 * allowlist — `pwn@1.0.0 … blocked because they are not covered by
+			 * allowScripts` — and `--foreground-scripts`, which was all this stage
+			 * used to pass, grants nothing. The tarball's copy was therefore
+			 * skipped by npm before this boundary was ever reached, and only the
+			 * lane's own script fired. The allowance now emitted is the one npm
+			 * honours, so *both* copies run and the escape is reproduced by the
+			 * dependency it was measured on. Either way the boundary is a property
+			 * of the install child rather than of which package's script fired
+			 * inside it, so this refusal is reached from both.
 			 */
 			await writeFile(
 				path.join(lane, 'package.json'),
@@ -665,6 +674,367 @@ describe('the install sandbox', () => {
 			await rm(root, { recursive: true, force: true });
 		}
 	}, 120_000);
+});
+
+/**
+ * The install-script allowance, made true.
+ *
+ * `--allow-install-scripts` used to put `--foreground-scripts` on the command
+ * and nothing else, and `--foreground-scripts` decides only where the output of
+ * a script npm has *already chosen to run* is printed. Measured on this host at
+ * npm 12.0.1: a dependency whose install script is not covered by `allowScripts`
+ * has it silently skipped, and npm ends the install with a
+ * `npm warn install-scripts` block naming what it skipped. So a lane installed
+ * under a declared allowance carried a row claiming an allowance the install had
+ * not delivered.
+ *
+ * Three things are tested here, and none of them reaches a registry: the flags
+ * the declaration now emits per npm major, the reading of npm's own account of
+ * what ran and what it skipped, and both of those end to end through a shim npm
+ * that prints exactly what the two majors this pipeline runs were measured
+ * printing.
+ */
+describe('the install-script allowance and what it delivered', () => {
+	/**
+	 * A shim `npm` that answers `--version` with a stated version and prints the
+	 * output the real npm of that major was measured printing on this host.
+	 *
+	 * `gates-dependencies` is npm 12.0.1: `npm notice run <pkg> <lifecycle>`
+	 * banners when the allowance is carried, and the `npm warn install-scripts`
+	 * block when it is not. `runs-dependencies` is npm 8.19.4, which has no gate
+	 * at all and prints the older `> <pkg> <lifecycle>` banner. Both write every
+	 * argument they were handed to a file, so what this stage actually spelled on
+	 * the command line is read rather than asserted from the plan.
+	 */
+	async function shimNpm(
+		version: string,
+		behaviour: 'gates-dependencies' | 'runs-dependencies',
+	): Promise<Readonly<{ directory: string; argumentsFile: string }>> {
+		const directory = await temporaryDirectory();
+		const argumentsFile = path.join(directory, 'arguments.txt');
+		const binary = path.join(directory, 'npm');
+		await writeFile(
+			binary,
+			`${[
+				'#!/bin/sh',
+				`if [ "$1" = "--version" ]; then echo "${version}"; exit 0; fi`,
+				`: > "${argumentsFile}"`,
+				`for argument in "$@"; do echo "$argument" >> "${argumentsFile}"; done`,
+				'mkdir -p node_modules/dep',
+				'case " $* " in',
+				'  *" --ignore-scripts "*) ;;',
+				...(behaviour === 'gates-dependencies'
+					? [
+							'  *" --dangerously-allow-all-scripts "*)',
+							'    echo "npm notice run dep@1.0.0 postinstall" >&2',
+							'    echo "npm notice run node ./p.js && echo BUILT" >&2',
+							'    echo "BUILT"',
+							'    ;;',
+							'  *)',
+							'    echo "npm warn install-scripts 1 package had install scripts blocked because they are not covered by allowScripts:" >&2',
+							'    echo "npm warn install-scripts   dep@1.0.0 (postinstall: node ./p.js && echo BUILT)" >&2',
+							'    echo "npm warn install-scripts" >&2',
+							'    ;;',
+						]
+					: [
+							'  *)',
+							'    echo ""',
+							'    echo "> dep@1.0.0 postinstall"',
+							'    echo "> node ./p.js && echo BUILT"',
+							'    echo ""',
+							'    echo "BUILT"',
+							'    ;;',
+						]),
+				'esac',
+				'echo "added 1 package in 100ms"',
+				'exit 0',
+			].join('\n')}\n`,
+		);
+		await chmod(binary, 0o755);
+		return Object.freeze({ directory, argumentsFile });
+	}
+
+	/** A checkout-shaped root carrying a lane whose lockfile marks one script. */
+	async function laneWithAnInstallScript(): Promise<Readonly<{ root: string; lane: string }>> {
+		const root = await temporaryDirectory();
+		const lane = path.join(root, 'lane');
+		await mkdir(lane, { recursive: true });
+		await writeFile(
+			path.join(lane, 'package.json'),
+			`${JSON.stringify({ name: 'lane', version: '1.0.0', dependencies: { dep: '1.0.0' } })}\n`,
+		);
+		await writeFile(
+			path.join(lane, 'package-lock.json'),
+			`${JSON.stringify({
+				name: 'lane',
+				version: '1.0.0',
+				lockfileVersion: 3,
+				packages: {
+					'': { name: 'lane', version: '1.0.0', dependencies: { dep: '1.0.0' } },
+					'node_modules/dep': {
+						version: '1.0.0',
+						resolved: 'https://registry.npmjs.org/dep/-/dep-1.0.0.tgz',
+						hasInstallScript: true,
+					},
+				},
+			})}\n`,
+		);
+		return Object.freeze({ root, lane });
+	}
+
+	async function argumentsHandedToNpm(file: string): Promise<string[]> {
+		return (await readFile(file, 'utf8')).split('\n').filter((line) => line !== '');
+	}
+
+	/**
+	 * The flag table, stated once. An unread npm gets the gated spelling because
+	 * that is the only spelling that grants anything at all, and the row says the
+	 * version was not established rather than naming one.
+	 */
+	it('spells the allowance in the form the npm about to run it honours', () => {
+		expect(installScriptAllowanceFlags({ version: '12.0.1', major: 12 })).toEqual([
+			'--foreground-scripts',
+			'--dangerously-allow-all-scripts',
+		]);
+		expect(installScriptAllowanceFlags({ version: '13.2.0', major: 13 })).toContain(
+			'--dangerously-allow-all-scripts',
+		);
+		expect(installScriptAllowanceFlags({ version: '8.19.4', major: 8 })).toEqual([
+			'--foreground-scripts',
+		]);
+		expect(installScriptAllowanceFlags(UNREAD_NPM_RELEASE)).toContain(
+			'--dangerously-allow-all-scripts',
+		);
+		expect(NPM_ALLOW_SCRIPTS_MAJOR).toBe(12);
+	});
+
+	/**
+	 * The reading, against npm's own bytes.
+	 *
+	 * Every line here was copied out of a real install on this host. The two that
+	 * matter most are the ones a looser reading gets wrong: the second banner line
+	 * carries the shell command rather than a package, so `npm notice run echo
+	 * DEP2-INSTALL` must not be read as `echo` running a script called
+	 * `DEP2-INSTALL`.
+	 */
+	it('reads npm 12’s own account of what ran and what it skipped', () => {
+		const activity = readInstallScriptActivity(
+			[
+				'npm notice run @scope/dep2@2.1.0 install',
+				'npm notice run echo DEP2-INSTALL',
+				'DEP2-INSTALL',
+				'npm notice run depwithscript@1.0.0 postinstall',
+				"npm notice run node -e \"require('fs').writeFileSync('DEP_RAN.txt','yes')\" && echo DEP-POSTINSTALL-EXECUTED",
+				'DEP-POSTINSTALL-EXECUTED',
+				'',
+				'added 2 packages in 134ms',
+			].join('\n'),
+		);
+		expect(activity.ran).toEqual([
+			{ package: '@scope/dep2@2.1.0', lifecycle: 'install' },
+			{ package: 'depwithscript@1.0.0', lifecycle: 'postinstall' },
+		]);
+		expect(activity.skipped).toEqual([]);
+		expect(activity.reportedSkipped).toBeNull();
+	});
+
+	it('reads npm 12’s skipped-package block, and npm’s own count of it', () => {
+		const activity = readInstallScriptActivity(
+			[
+				'added 2 packages in 102ms',
+				'npm warn install-scripts 2 packages had install scripts blocked because they are not covered by allowScripts:',
+				'npm warn install-scripts   @scope/dep2@2.1.0 (install: echo DEP2-INSTALL)',
+				'npm warn install-scripts   depwithscript@1.0.0 (postinstall: node -e "x" && echo y)',
+				'npm warn install-scripts',
+				'npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.',
+			].join('\n'),
+		);
+		expect(activity.ran).toEqual([]);
+		expect(activity.reportedSkipped).toBe(2);
+		expect(activity.skipped).toEqual([
+			{ package: '@scope/dep2@2.1.0', lifecycle: 'install', command: 'echo DEP2-INSTALL' },
+			{
+				package: 'depwithscript@1.0.0',
+				lifecycle: 'postinstall',
+				command: 'node -e "x" && echo y',
+			},
+		]);
+	});
+
+	/** npm 8 prints the older banner, and this reads that one too. */
+	it('reads npm 8’s banner, which is the only account that npm gives', () => {
+		const activity = readInstallScriptActivity(
+			[
+				'',
+				'> @scope/dep2@2.1.0 install',
+				'> echo DEP2-INSTALL',
+				'',
+				'DEP2-INSTALL',
+				'',
+				'> app2@1.0.0 postinstall',
+				'> echo ROOT-POSTINSTALL',
+				'',
+				'added 2 packages in 93ms',
+			].join('\n'),
+		);
+		expect(activity.ran).toEqual([
+			{ package: '@scope/dep2@2.1.0', lifecycle: 'install' },
+			{ package: 'app2@1.0.0', lifecycle: 'postinstall' },
+		]);
+		expect(activity.skipped).toEqual([]);
+	});
+
+	/** A reading that cannot be taken is null, not this process's own npm. */
+	it('reports an unread npm as unread rather than as the host’s', async () => {
+		expect(await readNpmRelease({ PATH: '/nonexistent-versionless-probe' })).toEqual(
+			UNREAD_NPM_RELEASE,
+		);
+	});
+
+	/**
+	 * End to end at the gated major: the allowance reaches npm's command line,
+	 * npm runs the dependency's script, and the row reads that from npm rather
+	 * than restating the declaration.
+	 */
+	it('carries the allowance npm 12 honours, and records what npm then ran', async () => {
+		const { root, lane } = await laneWithAnInstallScript();
+		const npm = await shimNpm('12.0.1', 'gates-dependencies');
+		try {
+			const record = await runLaneInstall(
+				lane,
+				policy({ allowInstallScripts: true }),
+				{ PATH: `${npm.directory}${path.delimiter}${process.env.PATH ?? ''}` },
+				'replay',
+				root,
+			);
+			/** The flag is on the command npm was actually handed, not only on the plan. */
+			expect(await argumentsHandedToNpm(npm.argumentsFile)).toContain(
+				'--dangerously-allow-all-scripts',
+			);
+			expect(record.command).toContain('--dangerously-allow-all-scripts');
+			expect(record.command).toContain('--foreground-scripts');
+			const scripts = record.installScripts;
+			expect(scripts?.policy).toBe('allow-install-scripts');
+			expect(scripts?.npm).toEqual({ version: '12.0.1', major: 12 });
+			expect(scripts?.ran).toEqual([{ package: 'dep@1.0.0', lifecycle: 'postinstall' }]);
+			expect(scripts?.skipped).toEqual([]);
+			expect(scripts?.claim).toContain('allowScripts');
+			/** The lockfile's own finding is still the lockfile's, and stays beside it. */
+			expect(record.installScriptPackages).toEqual(['node_modules/dep']);
+		} finally {
+			await rm(root, { recursive: true, force: true });
+			await rm(npm.directory, { recursive: true, force: true });
+		}
+	}, 60_000);
+
+	/**
+	 * The honesty floor, and the reason the reading exists rather than a
+	 * calculation over the lockfile.
+	 *
+	 * npm 9, 10 and 11 were not measured on this host, so this stage treats every
+	 * npm below 12 as ungated. An npm in that range that gates anyway gets no
+	 * allowance flag — and the row then says so in npm's own words, because
+	 * `skipped` is read out of npm's block instead of being assumed empty.
+	 */
+	it('records a skip it did not expect, rather than claiming the allowance held', async () => {
+		const { root, lane } = await laneWithAnInstallScript();
+		const npm = await shimNpm('11.4.0', 'gates-dependencies');
+		try {
+			const record = await runLaneInstall(
+				lane,
+				policy({ allowInstallScripts: true }),
+				{ PATH: `${npm.directory}${path.delimiter}${process.env.PATH ?? ''}` },
+				'replay',
+				root,
+			);
+			expect(record.command).not.toContain('--dangerously-allow-all-scripts');
+			const scripts = record.installScripts;
+			expect(scripts?.ran).toEqual([]);
+			expect(scripts?.skipped).toEqual([
+				{
+					package: 'dep@1.0.0',
+					lifecycle: 'postinstall',
+					command: 'node ./p.js && echo BUILT',
+				},
+			]);
+			expect(scripts?.reportedSkipped).toBe(1);
+		} finally {
+			await rm(root, { recursive: true, force: true });
+			await rm(npm.directory, { recursive: true, force: true });
+		}
+	}, 60_000);
+
+	/**
+	 * The 13 cell's npm. npm 8 has no `allowScripts` gate, so there is no
+	 * allowance to emit and none is emitted — and no allowScripts vocabulary
+	 * reaches a row npm 8 wrote.
+	 */
+	it('emits no allowScripts vocabulary at an npm that has no such gate', async () => {
+		const { root, lane } = await laneWithAnInstallScript();
+		const npm = await shimNpm('8.19.4', 'runs-dependencies');
+		try {
+			const record = await runLaneInstall(
+				lane,
+				policy({ allowInstallScripts: true }),
+				{ PATH: `${npm.directory}${path.delimiter}${process.env.PATH ?? ''}` },
+				'replay',
+				root,
+			);
+			const handed = await argumentsHandedToNpm(npm.argumentsFile);
+			expect(handed).toContain('--foreground-scripts');
+			expect(handed).not.toContain('--dangerously-allow-all-scripts');
+			const scripts = record.installScripts;
+			expect(scripts?.policy).toBe('allow-install-scripts');
+			expect(scripts?.npm).toEqual({ version: '8.19.4', major: 8 });
+			expect(scripts?.flags).toEqual(['--foreground-scripts']);
+			expect(scripts?.ran).toEqual([{ package: 'dep@1.0.0', lifecycle: 'postinstall' }]);
+			expect(scripts?.skipped).toEqual([]);
+			expect(scripts?.claim).not.toContain('dangerously');
+			expect(scripts?.claim).toContain('no `allowScripts` gate');
+			/** The npm-major caveat is on the row too, where the allowance is. */
+			expect(record.notEstablished.some((line) => line.includes('npm 9, 10 and 11'))).toBe(
+				true,
+			);
+		} finally {
+			await rm(root, { recursive: true, force: true });
+			await rm(npm.directory, { recursive: true, force: true });
+		}
+	}, 60_000);
+
+	/**
+	 * The opposite declaration. `--ignore-scripts` is a blanket skip rather than
+	 * the gate, and npm prints no per-package list for it — so the row records an
+	 * empty `skipped` and says, in those words, that it is empty because there was
+	 * nothing to read.
+	 */
+	it('records the declared skip as a blanket one, with nothing read into it', async () => {
+		const { root, lane } = await laneWithAnInstallScript();
+		const npm = await shimNpm('12.0.1', 'gates-dependencies');
+		try {
+			const record = await runLaneInstall(
+				lane,
+				policy({ skipInstallScripts: true }),
+				{ PATH: `${npm.directory}${path.delimiter}${process.env.PATH ?? ''}` },
+				'replay',
+				root,
+			);
+			expect(record.command).toContain('--ignore-scripts');
+			const scripts = record.installScripts;
+			expect(scripts?.policy).toBe('skip-install-scripts');
+			expect(scripts?.flags).toEqual(['--ignore-scripts']);
+			expect(scripts?.ran).toEqual([]);
+			expect(scripts?.skipped).toEqual([]);
+			expect(scripts?.claim).toContain('blanket skip');
+			expect(scripts?.claim).toContain('nothing to read');
+			/** The allowance caveat is absent, because no allowance was declared. */
+			expect(record.notEstablished.some((line) => line.includes('npm 9, 10 and 11'))).toBe(
+				false,
+			);
+		} finally {
+			await rm(root, { recursive: true, force: true });
+			await rm(npm.directory, { recursive: true, force: true });
+		}
+	}, 60_000);
 });
 
 describe('build stage', () => {
