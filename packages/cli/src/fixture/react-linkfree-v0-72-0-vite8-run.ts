@@ -384,10 +384,7 @@ export type BuildLevelParity = Readonly<{
  * which shared paths are byte identical. Nothing here observes behaviour, and
  * nothing here may be read as behavioural parity.
  */
-export function buildLevelParity(
-	baseline: LaneInventory,
-	target: LaneInventory,
-): BuildLevelParity {
+export function buildLevelParity(baseline: LaneInventory, target: LaneInventory): BuildLevelParity {
 	const baselineByPath = new Map(baseline.files.map((file) => [file.path, file.sha256]));
 	const targetByPath = new Map(target.files.map((file) => [file.path, file.sha256]));
 	const shared = [...baselineByPath.keys()]
@@ -723,7 +720,8 @@ export async function main(): Promise<void> {
 					directory: 'data/',
 					baselineFiles: baseline.first.files.filter((file) => isCorpusPath(file.path))
 						.length,
-					targetFiles: target.first.files.filter((file) => isCorpusPath(file.path)).length,
+					targetFiles: target.first.files.filter((file) => isCorpusPath(file.path))
+						.length,
 					sharedPaths: parity.sharedPaths.filter((file) => isCorpusPath(file)).length,
 					byteIdenticalSharedPaths: parity.byteIdenticalSharedPaths.filter((file) =>
 						isCorpusPath(file),
@@ -746,9 +744,7 @@ export async function main(): Promise<void> {
 				).length,
 				profileDataFilesCopiedIntoBuildNote:
 					'A count of byte-identical shared paths under the corpus directory, which is how both lanes carry the corpus: create-react-app copies the public directory and the adapter’s public-directory capability replicates that copy. No file in it is named here.',
-				generatedIndexBytes: await byteLength(
-					path.join(targetRoot, 'public/list.json'),
-				),
+				generatedIndexBytes: await byteLength(path.join(targetRoot, 'public/list.json')),
 			},
 		},
 		gates: {

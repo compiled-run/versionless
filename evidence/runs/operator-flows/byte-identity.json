@@ -15,8 +15,8 @@
 			"deepImportReadings = the driver's reading of the applied lane's installed closure",
 			"eraClosureTypePackages = the driver's reading of the era lane's installed closure"
 		],
-		"operatorDigest": "2b85d619387263e1974ec5ee3c13ac3429548405a988b504a650b575a780d6e3",
-		"driverDigest": "2b85d619387263e1974ec5ee3c13ac3429548405a988b504a650b575a780d6e3",
+		"operatorDigest": "a044d716cdf2813a86f4f7d167311f869e267bd92119dd80c82c9da942362ba1",
+		"driverDigest": "a044d716cdf2813a86f4f7d167311f869e267bd92119dd80c82c9da942362ba1",
 		"identical": true,
 		"applicationFilesScanned": 214,
 		"applicationFilesChanged": 6,

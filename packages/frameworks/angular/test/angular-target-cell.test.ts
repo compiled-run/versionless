@@ -1,6 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import {
+	ANGULAR_13_BROWSER_CELL,
+	ANGULAR_13_ECOSYSTEM_PACKAGES,
 	ANGULAR_16_BROWSER_CELL,
+	ANGULAR_TARGET_CELLS,
 	alignAngularPackageManifest,
 	alignedVersionRange,
 	buildStampContradictions,
@@ -71,9 +74,9 @@ describe('Angular target cell', () => {
 				'part of the toolchain angular-16-browser-builder generates, so it was left at its ' +
 				'era range',
 		]);
-		expect(
-			alignment.changes.find((change) => change.name === 'karma')?.reason,
-		).toBe('aligned to the test toolchain angular-16-browser-builder generates');
+		expect(alignment.changes.find((change) => change.name === 'karma')?.reason).toBe(
+			'aligned to the test toolchain angular-16-browser-builder generates',
+		);
 	});
 
 	it('aligns the test toolchain the line generates, because an era one cannot resolve', () => {
@@ -81,9 +84,9 @@ describe('Angular target cell', () => {
 		expect(alignedVersionRange('karma-jasmine-html-reporter', ANGULAR_16_BROWSER_CELL)).toBe(
 			'~2.1.0',
 		);
-		expect(alignedVersionRange('karma-coverage-istanbul-reporter', ANGULAR_16_BROWSER_CELL)).toBe(
-			null,
-		);
+		expect(
+			alignedVersionRange('karma-coverage-istanbul-reporter', ANGULAR_16_BROWSER_CELL),
+		).toBe(null);
 	});
 
 	it('leaves a manifest already on the cell byte-equal and reports no change', () => {
@@ -129,15 +132,19 @@ describe('Angular target cell ecosystem table', () => {
 			'@datorama/akita': '^7.1.1',
 		});
 		expect(alignment.manifest['devDependencies']).toEqual({ '@storybook/angular': '^7.6.24' });
-		expect(alignment.changes.find((change) => change.name === 'ng-zorro-antd')?.reason).toContain(
-			'aligned to the community layer angular-16-browser-builder declares',
-		);
+		expect(
+			alignment.changes.find((change) => change.name === 'ng-zorro-antd')?.reason,
+		).toContain('aligned to the community layer angular-16-browser-builder declares');
 	});
 
 	it('leaves a package the table does not name exactly as the manifest declared it', () => {
 		const alignment = alignAngularPackageManifest(
 			{
-				dependencies: { 'ngx-clipboard': '^12.2.0', lodash: '4.17.21', 'ng-zorro-antd': '^13.1.0' },
+				dependencies: {
+					'ngx-clipboard': '^12.2.0',
+					lodash: '4.17.21',
+					'ng-zorro-antd': '^13.1.0',
+				},
 			},
 			ANGULAR_16_BROWSER_CELL,
 		);
@@ -171,18 +178,31 @@ describe('Angular target cell ecosystem table', () => {
 		expect(alignment.declaredDifferences).toEqual([]);
 	});
 
-	it('carries a registry reading for every entry, so no version is a guess', () => {
+	/**
+	 * The invariant is over every published cell rather than over the Angular 16
+	 * table alone: a cell added later carries an ecosystem table of its own, and
+	 * the rule that no entry in it may be a bare version without a reading beside
+	 * it is a rule about the surface, not about one table.
+	 */
+	it('carries a reading for every entry of every cell, so no version is a guess', () => {
+		expect(ANGULAR_TARGET_CELLS.length).toBeGreaterThan(0);
 		const unevidenced: string[] = [];
-		for (const [name, entry] of Object.entries(ANGULAR_16_BROWSER_CELL.ecosystemPackages)) {
-			if (entry.fact.trim().length < 40) unevidenced.push(name);
-			if (entry.kind === 'aligned' && !entry.range.includes('.')) unevidenced.push(name);
-		}
+		for (const cell of ANGULAR_TARGET_CELLS)
+			for (const [name, entry] of Object.entries(cell.ecosystemPackages)) {
+				if (entry.fact.trim().length < 40) unevidenced.push(`${cell.id}: ${name}`);
+				if (entry.kind === 'aligned' && !entry.range.includes('.'))
+					unevidenced.push(`${cell.id}: ${name}`);
+			}
 		expect(unevidenced).toEqual([]);
 	});
 
 	it('reads an entry only through the disposition, never as a bare range', () => {
-		expect(ecosystemDispositionOf('ng-zorro-antd', ANGULAR_16_BROWSER_CELL)?.kind).toBe('aligned');
-		expect(ecosystemDispositionOf('tslint', ANGULAR_16_BROWSER_CELL)?.kind).toBe('no-successor');
+		expect(ecosystemDispositionOf('ng-zorro-antd', ANGULAR_16_BROWSER_CELL)?.kind).toBe(
+			'aligned',
+		);
+		expect(ecosystemDispositionOf('tslint', ANGULAR_16_BROWSER_CELL)?.kind).toBe(
+			'no-successor',
+		);
 		expect(ecosystemDispositionOf('lodash', ANGULAR_16_BROWSER_CELL)).toBeNull();
 		expect(alignedVersionRange('tslint', ANGULAR_16_BROWSER_CELL)).toBeNull();
 	});
@@ -250,7 +270,9 @@ describe('the peer-strictness refinement', () => {
 		 * necessary here, so each excluded stamp has to be one this cell refuses.
 		 */
 		for (const excluded of toastr.excludedByBuildStamp ?? [])
-			expect(cellAcceptsBuildStamp(ANGULAR_16_BROWSER_CELL.angularLine, excluded)).toBe(false);
+			expect(cellAcceptsBuildStamp(ANGULAR_16_BROWSER_CELL.angularLine, excluded)).toBe(
+				false,
+			);
 		expect(toastr.fact).toContain('>=16.0.0-0');
 	});
 
@@ -285,7 +307,9 @@ describe('the family prefix and the per-package reading that overrides it', () =
 		expect(alignedVersionRange('@angular-devkit/build-angular', ANGULAR_16_BROWSER_CELL)).toBe(
 			'^16.2.0',
 		);
-		expect(alignedVersionRange('@angular-devkit/core', ANGULAR_16_BROWSER_CELL)).toBe('^16.2.0');
+		expect(alignedVersionRange('@angular-devkit/core', ANGULAR_16_BROWSER_CELL)).toBe(
+			'^16.2.0',
+		);
 		expect(familyPrefixOf('@angular-devkit/build-optimizer', ANGULAR_16_BROWSER_CELL)).toBe(
 			'@angular-devkit/',
 		);
@@ -294,7 +318,9 @@ describe('the family prefix and the per-package reading that overrides it', () =
 
 	it('stands down for a package that left the version train, rather than naming a version nobody published', () => {
 		for (const departed of ['@angular-devkit/build-optimizer', '@angular/http']) {
-			expect(ecosystemDispositionOf(departed, ANGULAR_16_BROWSER_CELL)?.kind).toBe('no-successor');
+			expect(ecosystemDispositionOf(departed, ANGULAR_16_BROWSER_CELL)?.kind).toBe(
+				'no-successor',
+			);
 			expect(alignedVersionRange(departed, ANGULAR_16_BROWSER_CELL)).toBeNull();
 		}
 	});
@@ -333,7 +359,9 @@ describe('the family prefix and the per-package reading that overrides it', () =
 		expect(overrides.map((override) => override.name)).toContain('@angular/http');
 		for (const override of overrides) {
 			expect(override.writes).not.toBe(override.familyRange);
-			expect(alignedVersionRange(override.name, ANGULAR_16_BROWSER_CELL)).toBe(override.writes);
+			expect(alignedVersionRange(override.name, ANGULAR_16_BROWSER_CELL)).toBe(
+				override.writes,
+			);
 			expect(override.name.startsWith(override.prefix)).toBe(true);
 		}
 	});
@@ -388,7 +416,9 @@ describe('the community readings behind a resolvable Angular 16 closure', () => 
 		const change = alignment.changes.find((entry) => entry.name === 'ngx-toastr');
 		expect(change?.from).toBe('10.0.4');
 		expect(change?.to).toBe('^17.0.2');
-		expect(change?.reason).toContain('aligned to the community layer angular-16-browser-builder');
+		expect(change?.reason).toContain(
+			'aligned to the community layer angular-16-browser-builder',
+		);
 		expect(alignment.declaredDifferences).toEqual([]);
 	});
 
@@ -436,9 +466,9 @@ describe('the compile-stage readings behind an open-ended peer range', () => {
 		if (disposition?.kind !== 'aligned') return;
 		expect(disposition.range).toBe('^11.0.2');
 		expect(disposition.buildStamp?.compiledWith).toBe('16.1.4');
-		expect(cellAcceptsBuildStamp(ANGULAR_16_BROWSER_CELL.angularLine, disposition.buildStamp!)).toBe(
-			true,
-		);
+		expect(
+			cellAcceptsBuildStamp(ANGULAR_16_BROWSER_CELL.angularLine, disposition.buildStamp!),
+		).toBe(true);
 		/**
 		 * The peers are what chose the line here, so the reading has to state them:
 		 * the 11.x line declares ^16.0.0 where 12.0.0 declares ^17.0.0. Nothing is
@@ -546,5 +576,125 @@ describe('the compile-stage readings behind an open-ended peer range', () => {
 			alignment.manifest['devDependencies'] as Record<string, string>,
 		))
 			expect(alignedVersionRange(name, ANGULAR_16_BROWSER_CELL)).toBe(range);
+	});
+});
+
+/**
+ * The Angular 13 cell — the ngcc-bearing target.
+ *
+ * The assertions mirror the Angular 16 ones where the shape is the same, and
+ * they part company exactly where the evidence does: this table is one
+ * installed closure rather than a registry survey, so what is pinned here is
+ * that the cell says so out loud, not that the table is complete.
+ */
+describe('the Angular 13 cell', () => {
+	it('is published as a target cell, appended rather than substituted', () => {
+		expect(ANGULAR_TARGET_CELLS).toContain(ANGULAR_13_BROWSER_CELL);
+		expect(ANGULAR_TARGET_CELLS).toContain(ANGULAR_16_BROWSER_CELL);
+		/** Ids are how every consumer names a cell, so they must be unique. */
+		const ids = ANGULAR_TARGET_CELLS.map((cell) => cell.id);
+		expect(new Set(ids).size).toBe(ids.length);
+	});
+
+	it('declares the cell the T009 proving run measured, pin for pin', () => {
+		expect(ANGULAR_13_BROWSER_CELL.id).toBe('angular-13.4.0');
+		expect(ANGULAR_13_BROWSER_CELL.angularLine).toBe('13.4');
+		/** The builder identity is carried across the hop, not swapped. */
+		expect(ANGULAR_13_BROWSER_CELL.builder).toBe('@angular-devkit/build-angular:browser');
+		expect(ANGULAR_13_BROWSER_CELL.builder).toBe(ANGULAR_16_BROWSER_CELL.builder);
+		expect(ANGULAR_13_BROWSER_CELL.nodeLine).toBe('16.20.2');
+		expect(ANGULAR_13_BROWSER_CELL.typescriptRange).toBe('~4.6.4');
+		expect(alignedVersionRange('typescript', ANGULAR_13_BROWSER_CELL)).toBe('~4.6.4');
+		expect(alignedVersionRange('rxjs', ANGULAR_13_BROWSER_CELL)).toBe('~6.6.7');
+		expect(alignedVersionRange('@angular/core', ANGULAR_13_BROWSER_CELL)).toBe('^13.4.0');
+		/**
+		 * The CLI line has no 13.4.0 release, so the family range the framework
+		 * gets would name a version nobody published. The exact reading wins.
+		 */
+		expect(alignedVersionRange('@angular/cli', ANGULAR_13_BROWSER_CELL)).toBe('~13.3.11');
+	});
+
+	it('reads the four libraries the closure carried, ngcc case or not', () => {
+		for (const name of [
+			'ng2-slim-loading-bar',
+			'jw-bootstrap-switch-ng2',
+			'@ngx-translate/i18n-polyfill',
+			'@yaga/leaflet-ng2',
+		]) {
+			const disposition = ecosystemDispositionOf(name, ANGULAR_13_BROWSER_CELL);
+			expect(disposition?.kind).toBe('aligned');
+			/** Every fact names the evidence file it was read from. */
+			expect(disposition?.fact).toContain(
+				'evidence/runs/angular-13cell/pigallery2-compile.json',
+			);
+		}
+		/**
+		 * The three the Angular 16 cell drops as no-successor are consumable
+		 * here, and that difference is the reason this cell exists.
+		 */
+		for (const name of ['ng2-slim-loading-bar', 'jw-bootstrap-switch-ng2', '@yaga/leaflet-ng2'])
+			expect(ecosystemDispositionOf(name, ANGULAR_16_BROWSER_CELL)?.kind).toBe(
+				'no-successor',
+			);
+		expect(
+			ecosystemDispositionOf('ng2-slim-loading-bar', ANGULAR_13_BROWSER_CELL)?.fact,
+		).toContain('ngcc');
+	});
+
+	it('is narrow, and says so where a reader will meet the hole', () => {
+		/** A package no reading covered is absent, never guessed at. */
+		expect(ecosystemDispositionOf('lodash', ANGULAR_13_BROWSER_CELL)).toBeNull();
+		expect(
+			ecosystemDispositionOf('@ng-bootstrap/ng-bootstrap', ANGULAR_13_BROWSER_CELL),
+		).toBeNull();
+		expect(Object.keys(ANGULAR_13_ECOSYSTEM_PACKAGES).length).toBeLessThan(
+			Object.keys(ANGULAR_16_BROWSER_CELL.ecosystemPackages).length,
+		);
+		const gap = ANGULAR_13_BROWSER_CELL.nonclaims.find((claim) => claim.includes('unknown'));
+		expect(gap).toBeDefined();
+		expect(gap).toContain('UNASSESSED');
+		/** The test closure was excluded from the proving run, so it is unaligned. */
+		expect(ANGULAR_13_BROWSER_CELL.testPackages).toEqual({});
+		expect(ANGULAR_13_BROWSER_CELL.nonclaims.some((claim) => claim.includes('karma'))).toBe(
+			true,
+		);
+		expect(alignedVersionRange('karma', ANGULAR_13_BROWSER_CELL)).toBeNull();
+	});
+
+	it('names the load-bearing pins in its rationale rather than only in its tables', () => {
+		const rationale = ANGULAR_13_BROWSER_CELL.rationale.join(' ');
+		expect(rationale).toContain('6.6.7');
+		expect(rationale).toContain('16.20.2');
+		expect(rationale).toContain('13.3.11');
+		expect(rationale).toContain('ngcc');
+	});
+
+	it('finds no contradiction between the Angular 13 table and the cell', () => {
+		expect(buildStampContradictions(ANGULAR_13_BROWSER_CELL)).toEqual([]);
+		expect(familyPrefixedEcosystemReadings(ANGULAR_13_BROWSER_CELL)).toEqual([]);
+	});
+
+	it('aligns a manifest to the 13 cell without reaching for a 16 range', () => {
+		const alignment = alignAngularPackageManifest(
+			{
+				dependencies: {
+					'@angular/core': '8.1.2',
+					'ng2-slim-loading-bar': '4.0.0',
+					'ngx-bootstrap': '5.1.0',
+					rxjs: '6.5.2',
+					lodash: '4.17.21',
+				},
+			},
+			ANGULAR_13_BROWSER_CELL,
+		);
+		expect(alignment.manifest['dependencies']).toEqual({
+			'@angular/core': '^13.4.0',
+			'ng2-slim-loading-bar': '4.0.0',
+			'ngx-bootstrap': '8.0.0',
+			rxjs: '~6.6.7',
+			lodash: '4.17.21',
+		});
+		/** Nothing is dropped: this cell read no package it had to refuse. */
+		expect(alignment.declaredDifferences).toEqual([]);
 	});
 });

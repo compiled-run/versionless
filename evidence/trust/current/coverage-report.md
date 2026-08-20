@@ -4,7 +4,7 @@ What the fleet pipeline proved, per application, against the sealed baseline it 
 
 - Schema: `versionless.coverage-report.v1`
 - Certification state: **not-certified**
-- Canonical SHA-256: `fda5d591f0547c4770a688a8a39c36cdce6f2f26f303ba0e7ca09761080a03d8`
+- Canonical SHA-256: `dc6a8a402701911e4873d75751408e586660c4fcbc35110197ad4b598ce52323`
 - Integrity: hash-only; authenticity is not established
 
 Every green cell below is filtered out of the Judge counting ledger the corpus derived and cross-checked against that corpus numerator and denominator. No cell is listed by hand, and a cell edited into this record fails re-derivation.
@@ -13,7 +13,7 @@ Every green cell below is filtered out of the Judge counting ledger the corpus d
 
 - angular: **4 counted of 4** proven cells
 - react: **6 counted of 6** proven cells
-- capabilities: **8 cross-proven** and 50 experimental of 58 enumerated capabilities, at a cross-proven threshold of 2
+- capabilities: **8 cross-proven** and 51 experimental of 59 enumerated capabilities, at a cross-proven threshold of 2
 
 A capability is claimed general, and therefore in the matrix, only once at least 2 independent applications prove it. The capabilities below are proven on fewer than that and are out of the matrix; they are named rather than silently claimed.
 

@@ -60,11 +60,15 @@ export async function readPackageSurface(
 	name: string,
 ): Promise<PackageSurfaceReading> {
 	const directory = path.join(tree, 'node_modules', name);
-	const manifest: unknown = JSON.parse(await readFile(path.join(directory, 'package.json'), 'utf8'));
+	const manifest: unknown = JSON.parse(
+		await readFile(path.join(directory, 'package.json'), 'utf8'),
+	);
 	const record = manifest as Readonly<{ version?: unknown; exports?: unknown }>;
 	const exportsField = record.exports;
 	if (typeof exportsField !== 'object' || exportsField === null)
-		throw new Error(`${name} publishes no exports map, so its entry points cannot be enumerated`);
+		throw new Error(
+			`${name} publishes no exports map, so its entry points cannot be enumerated`,
+		);
 	const entryPoints: EntryPointSurface[] = [];
 	for (const [subpath, target] of Object.entries(exportsField as ExportsMap)) {
 		if (subpath.includes('*')) continue;
@@ -123,7 +127,11 @@ export function readPatchedCallDiagnostics(
 			property,
 			receiverType,
 		});
-		if (!list.some((entry) => entry.line === diagnostic.line && entry.column === diagnostic.column))
+		if (
+			!list.some(
+				(entry) => entry.line === diagnostic.line && entry.column === diagnostic.column,
+			)
+		)
 			list.push(diagnostic);
 		found.set(file, list);
 	}
@@ -189,7 +197,9 @@ export async function applyRound(
 			await writeFile(file, migration.source);
 			rxjsChanged.push(name);
 			for (const change of migration.changes)
-				rxjsChanges.push(`${name} line ${String(change.line)}: ${change.from} → ${change.to}`);
+				rxjsChanges.push(
+					`${name} line ${String(change.line)}: ${change.from} → ${change.to}`,
+				);
 		}
 		outcomes.push({
 			capability: `rxjs-prototype-patch-migration (rxjs@${rxjs.version})`,

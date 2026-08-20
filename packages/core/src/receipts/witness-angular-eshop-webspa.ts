@@ -284,9 +284,7 @@ export function witnessAngularEshopWebspaRawDigest(run: WitnessAngularEshopWebsp
  * settled, the routes navigated, the events the application fired, and the
  * policy the bytes were served under. All four runs must agree.
  */
-export function witnessAngularEshopWebspaBehaviorDigest(
-	run: WitnessAngularEshopWebspaRun,
-): string {
+export function witnessAngularEshopWebspaBehaviorDigest(run: WitnessAngularEshopWebspaRun): string {
 	const served = (run['servedStatic'] ?? {}) as Record<string, unknown>;
 	return sha256(
 		canonicalize({
@@ -313,9 +311,7 @@ export function witnessAngularEshopWebspaBehaviorDigest(
 	);
 }
 
-export function witnessAngularEshopWebspaDigest(
-	receipt: WitnessAngularEshopWebspaReceipt,
-): string {
+export function witnessAngularEshopWebspaDigest(receipt: WitnessAngularEshopWebspaReceipt): string {
 	const { integrity, ...rest } = receipt;
 	void integrity;
 	return sha256(canonicalize(rest));
@@ -335,7 +331,8 @@ export function parseWitnessAngularEshopWebspaReceipt(
 	if (receipt.app !== WITNESS_ANGULAR_ESHOP_WEBSPA_APP) fail('eShop WebSPA Witness app differs');
 	if (receipt.adapterComposite !== WITNESS_ANGULAR_ESHOP_WEBSPA_ADAPTER_COMPOSITE)
 		fail('eShop WebSPA Witness adapter composite differs');
-	if (receipt.runs.length !== 4) fail('eShop WebSPA Witness must record two lanes observed twice');
+	if (receipt.runs.length !== 4)
+		fail('eShop WebSPA Witness must record two lanes observed twice');
 	const projection = receipt.projection;
 	if (
 		projection.state !== 'frozen-synthetic-loopback-projection' ||
@@ -368,8 +365,7 @@ export function parseWitnessAngularEshopWebspaReceipt(
 			fail('eShop WebSPA Witness run reached a non-loopback origin');
 		const held = semantic.get(run.lane);
 		if (held === undefined) semantic.set(run.lane, run.semanticDigest);
-		else if (held !== run.semanticDigest)
-			fail('eShop WebSPA Witness repeated pass differs');
+		else if (held !== run.semanticDigest) fail('eShop WebSPA Witness repeated pass differs');
 	}
 	if (semantic.size !== 2) fail('eShop WebSPA Witness did not observe both lanes');
 	if (new Set(receipt.runs.map((run) => run.behaviorDigest)).size !== 1)

@@ -105,7 +105,10 @@ export async function runCommand(
 const escapeCharacter = '\u001B';
 
 const ansiEscape = createRegExp(
-	exactly(escapeCharacter).and(exactly('[')).and(oneOrMore(charIn('0123456789;'))).and(exactly('m')),
+	exactly(escapeCharacter)
+		.and(exactly('['))
+		.and(oneOrMore(charIn('0123456789;')))
+		.and(exactly('m')),
 	['g'],
 );
 
@@ -217,7 +220,8 @@ export async function buildBaselineLane(
 		[skipYarnCorepackCheck]: '1',
 	});
 	const log = stripAnsi(`${outcome.stdout}${outcome.stderr}`);
-	if (outcome.exitCode !== 0) return { result: 'failed', exitCode: outcome.exitCode, log, inventory: null };
+	if (outcome.exitCode !== 0)
+		return { result: 'failed', exitCode: outcome.exitCode, log, inventory: null };
 	await rename(staging, absolute);
 	return { result: 'built', exitCode: 0, log, inventory: await laneInventory(absolute) };
 }
@@ -227,10 +231,7 @@ export async function buildBaselineLane(
  * composition. Nothing about the invocation is holdout-specific: it is the same
  * `vite build --config <fixture config>` the proven fixtures use.
  */
-export async function buildTargetLane(
-	outDirectory: string,
-	root = targetRoot,
-): Promise<LaneBuild> {
+export async function buildTargetLane(outDirectory: string, root = targetRoot): Promise<LaneBuild> {
 	const absolute = path.join(root, outDirectory);
 	await rm(absolute, { recursive: true, force: true });
 	const outcome = await runCommand(
@@ -366,11 +367,14 @@ export function summarizeLane(first: LaneBuild, second: LaneBuild): LaneRun {
 		first,
 		second,
 		deterministic:
-			built && first.inventory !== null && first.inventory.digest === second.inventory?.digest,
+			built &&
+			first.inventory !== null &&
+			first.inventory.digest === second.inventory?.digest,
 		stable:
 			first.result === second.result &&
 			first.exitCode === second.exitCode &&
-			canonicalize(parseBuildDemands(first.log)) === canonicalize(parseBuildDemands(second.log)),
+			canonicalize(parseBuildDemands(first.log)) ===
+				canonicalize(parseBuildDemands(second.log)),
 	};
 }
 

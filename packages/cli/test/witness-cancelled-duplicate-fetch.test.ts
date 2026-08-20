@@ -7,11 +7,7 @@ const origin = 'http://127.0.0.1:54321';
 const GIF = '/assets/transparent.gif';
 const category = [{ method: 'GET', path: GIF, reason: 'net::ERR_ABORTED' }] as const;
 
-const finished = (
-	path: string,
-	status = 200,
-	method = 'GET',
-): WitnessObservedRequestOutcome => ({
+const finished = (path: string, status = 200, method = 'GET'): WitnessObservedRequestOutcome => ({
 	url: `${origin}${path}`,
 	method,
 	outcome: 'finished',
@@ -19,11 +15,7 @@ const finished = (
 	reason: null,
 });
 
-const failed = (
-	path: string,
-	reason: string,
-	method = 'GET',
-): WitnessObservedRequestOutcome => ({
+const failed = (path: string, reason: string, method = 'GET'): WitnessObservedRequestOutcome => ({
 	url: `${origin}${path}`,
 	method,
 	outcome: 'failed',
@@ -34,7 +26,12 @@ const failed = (
 describe('corroborated cancelled-duplicate-fetch category', () => {
 	it('admits a cancelled fetch the same page also fetched successfully, and records the corroboration', () => {
 		const inventory = buildCancelledDuplicateFetchInventory(
-			[finished('/index.html'), finished(GIF), failed(GIF, 'net::ERR_ABORTED'), finished(GIF)],
+			[
+				finished('/index.html'),
+				finished(GIF),
+				failed(GIF, 'net::ERR_ABORTED'),
+				finished(GIF),
+			],
 			origin,
 			category,
 		);

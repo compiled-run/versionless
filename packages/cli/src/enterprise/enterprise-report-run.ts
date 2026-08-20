@@ -56,7 +56,9 @@ export async function runEnterpriseReport(
 	const inputs: EnterpriseSurfaceInputs = {
 		root,
 		output,
-		manifest: (await readJson('manifest.json')) as unknown as EnterpriseSurfaceInputs['manifest'],
+		manifest: (await readJson(
+			'manifest.json',
+		)) as unknown as EnterpriseSurfaceInputs['manifest'],
 		/**
 		 * Re-derived with the run records, exactly as `generate.ts` and
 		 * `verify.ts` read them. The published enterprise report is a function of

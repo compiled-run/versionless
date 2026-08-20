@@ -1,8 +1,8 @@
 # Versionless project trust package
 
-- Canonical SHA-256: `f61abb7a2efbe2dd97b45efae6f793cbb167deb85edba79a381f7108bab72ed7`
-- Deterministic core: `d3137e504d866573235987505329b9f9e3f6f1b88ad19e793d6274cd80ba7f3b`
-- Generated observation: `2026-08-20T07:05:44.945Z`
+- Canonical SHA-256: `05d9aca5e427e0ab104f0fb74a9c110b2b6edab7a7d5fc5bf54751a49699a6b0`
+- Deterministic core: `6eae139a6ce02c91bb027a1d45d944f16f5add49e8c2f16754a44ef9de1aa185`
+- Generated observation: `2026-08-20T08:35:46.448Z`
 - Vulnerability input freshness: **verified** (seven-day maximum age)
 - Integrity: **hash-only; authenticity is not established**
 - Assurance: **this package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation**
@@ -141,8 +141,8 @@ Both Angular holdouts were ingested under the mandatory license-text-at-pin pre-
 The map is the machine-readable evidence record [capability-coverage.json](capability-coverage.json); classification is derived from the count of distinct independent applications and is never hand-set. A capability is claimed **general** only once at least 2 independent applications prove it.
 
 - React lineage: 1/8 capabilities cross-proven.
-- Angular lineage: 7/50 capabilities cross-proven.
-- Total: **8 cross-proven (in-matrix)**, **50 experimental (out-of-matrix)** across 58 enumerated capabilities.
+- Angular lineage: 7/51 capabilities cross-proven.
+- Total: **8 cross-proven (in-matrix)**, **51 experimental (out-of-matrix)** across 59 enumerated capabilities.
 
 Cross-proven on at least two independent applications, and therefore in the matrix:
 
@@ -207,6 +207,7 @@ Proven on fewer than two independent applications — single-application or unpr
 - angular: `superseded-era-lockfile` — 1 application(s) (angular-eshop-webspa)
 - angular: `workspace-script-flags` — 1 application(s) (angular-eshop-webspa)
 - angular: `departed-dom-lib-member` — 1 application(s) (angular-pigallery2)
+- angular: `locale-id-provider` — 0 application(s) (unproven coverage)
 
 ## Known gaps
 

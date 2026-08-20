@@ -234,7 +234,10 @@ describe('jira-clone mutation seam', () => {
 });
 
 describe('jira-clone published Witness receipts', () => {
-	const publishedDirectory = resolve(import.meta.dirname, '../../../evidence/runs/witness-angular-jira-clone');
+	const publishedDirectory = resolve(
+		import.meta.dirname,
+		'../../../evidence/runs/witness-angular-jira-clone',
+	);
 
 	it('publishes both canonical receipts', async () => {
 		for (const name of ['receipt.json', 'receipt.md'])
@@ -295,9 +298,9 @@ describe('jira-clone published Witness receipts', () => {
 describe('jira-clone direct Witness command', () => {
 	it('rejects incomplete modes without launching a browser', async () => {
 		await expect(main([])).rejects.toThrow('--run-twice');
-		await expect(main(['--publish', 'evidence/runs/witness-angular-jira-clone'])).rejects.toThrow(
-			'--run-twice',
-		);
+		await expect(
+			main(['--publish', 'evidence/runs/witness-angular-jira-clone']),
+		).rejects.toThrow('--run-twice');
 	});
 
 	it('refuses to publish anywhere but the canonical evidence directory', async () => {

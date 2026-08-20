@@ -8,10 +8,7 @@ import {
 	type CorpusConformance,
 	verifyCorpusConformanceDigest,
 } from '../../core/src/corpus/conformance.ts';
-import {
-	assertEnterpriseSurfaceHonesty,
-	verifyEnterpriseSurfaces,
-} from './enterprise.ts';
+import { assertEnterpriseSurfaceHonesty, verifyEnterpriseSurfaces } from './enterprise.ts';
 import { compareUtf16CodeUnits } from '../../core/src/bundlers/vite8-adapter.ts';
 import { assertSyntheticEvidence } from '../../core/src/policy/payment-signals.ts';
 import { canonicalize, sha256 } from '../../core/src/receipts/canonicalize.ts';
@@ -997,8 +994,9 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 		if (
 			papercupsCell === undefined ||
 			papercupsApplication === undefined ||
-			canonicalize(asRecord(papercupsApplication, 'React Papercups application').verticals) !==
-				canonicalize([REACT_PAPERCUPS_FIXTURE]) ||
+			canonicalize(
+				asRecord(papercupsApplication, 'React Papercups application').verticals,
+			) !== canonicalize([REACT_PAPERCUPS_FIXTURE]) ||
 			papercupsCell.state !== 'verified' ||
 			papercupsCell.scope !== 'fixture-specific-create-react-app-to-vite8' ||
 			papercupsCell.genericReactSupport !== 'not-claimed' ||
@@ -1104,7 +1102,9 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 					overall: { ready: 3, total: 12 },
 				})
 		)
-			throw new Error('Angular factoriolab matrix cell is not derived from corpus conformance');
+			throw new Error(
+				'Angular factoriolab matrix cell is not derived from corpus conformance',
+			);
 	} else if (factoriolabCell !== undefined || factoriolabVertical !== undefined)
 		throw new Error('Angular factoriolab evidence is claimed outside its transaction state');
 	const jiraCloneCell = cells.get(ANGULAR_JIRA_CLONE_FIXTURE);
@@ -1147,7 +1147,9 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 					overall: { ready: 3, total: 12 },
 				})
 		)
-			throw new Error('Angular jira-clone matrix cell is not derived from corpus conformance');
+			throw new Error(
+				'Angular jira-clone matrix cell is not derived from corpus conformance',
+			);
 	} else if (jiraCloneCell !== undefined || jiraCloneVertical !== undefined)
 		throw new Error('Angular jira-clone evidence is claimed outside its transaction state');
 	const memosCell = cells.get(REACT_MEMOS_FIXTURE);
@@ -1251,9 +1253,7 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 					overall: { ready: 3, total: 12 },
 				})
 		)
-			throw new Error(
-				'KilledByGoogle v3 matrix cell is not derived from corpus conformance',
-			);
+			throw new Error('KilledByGoogle v3 matrix cell is not derived from corpus conformance');
 	} else if (killedbygoogleV3Cell !== undefined || killedbygoogleV3Vertical !== undefined)
 		throw new Error('KilledByGoogle v3 evidence is claimed outside its transaction state');
 	const linkfreeCell = cells.get(REACT_LINKFREE_FIXTURE);
@@ -1395,7 +1395,9 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 				'Angular Super Productivity matrix cell is not derived from corpus conformance',
 			);
 	} else if (superProductivityCell !== undefined || superProductivityVertical !== undefined)
-		throw new Error('Angular Super Productivity evidence is claimed outside its transaction state');
+		throw new Error(
+			'Angular Super Productivity evidence is claimed outside its transaction state',
+		);
 	const phonecat = cells.get('angular-phonecat');
 	if (
 		phonecat?.framework !== 'angularjs' ||
@@ -1465,7 +1467,9 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 		!report.includes('script-surface.json') ||
 		!report.includes('runtime-script-observation.json') ||
 		!report.includes('adapter-freeze.json') ||
-		!report.includes(asString(asRecord(emittedFreeze.freeze, 'freeze').composite, 'composite')) ||
+		!report.includes(
+			asString(asRecord(emittedFreeze.freeze, 'freeze').composite, 'composite'),
+		) ||
 		!report.includes(emittedConformance.integrity.canonicalDigest)
 	)
 		throw new Error('Derived Markdown is not linked to the trust manifest');
@@ -1504,7 +1508,9 @@ export async function verifyTrustPackage(options: VerifyTrustOptions): Promise<{
 			? !report.includes('Harness qualification: **0/4**')
 			: false) ||
 		(papercupsIntegrated
-			? !report.includes('Papercups v1.0.0 create-react-app→Vite 8 direct-Witness browser proof')
+			? !report.includes(
+					'Papercups v1.0.0 create-react-app→Vite 8 direct-Witness browser proof',
+				)
 			: report.includes(
 					'Papercups v1.0.0 create-react-app→Vite 8 direct-Witness browser proof',
 				)) ||

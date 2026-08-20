@@ -97,7 +97,8 @@ function readArgument(module: SemanticModule, typeReference: AstNode): Reading |
 	if (body === null || body.type !== 'ClassBody') return null;
 	const declaration = module.parentOf(body);
 	if (declaration === null) return null;
-	if (declaration.type !== 'ClassDeclaration' && declaration.type !== 'ClassExpression') return null;
+	if (declaration.type !== 'ClassDeclaration' && declaration.type !== 'ClassExpression')
+		return null;
 	const id = declaration.id;
 	if (id === null || id === undefined || id.type !== 'Identifier') return null;
 	return { argument: id.name, readFrom: 'enclosing-class' };

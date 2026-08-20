@@ -40,7 +40,10 @@ describe('builder package declaration', () => {
 
 	it('declares the builder package a lifted workspace names and the manifest lacks', () => {
 		const declaration = declareBuilderPackages(
-			{ dependencies: { '@angular/core': '^16.2.0' }, devDependencies: { '@angular/cli': '^16.2.0' } },
+			{
+				dependencies: { '@angular/core': '^16.2.0' },
+				devDependencies: { '@angular/cli': '^16.2.0' },
+			},
 			workspace,
 			ANGULAR_16_BROWSER_CELL,
 		);
@@ -92,8 +95,8 @@ describe('builder package declaration', () => {
 	it('contributes nothing from a document it cannot read, rather than inventing a hole', () => {
 		expect(workspaceBuilderPackages('not json at all')).toEqual({});
 		expect(workspaceBuilderPackages('{"projects": 3}')).toEqual({});
-		expect(declareBuilderPackages({}, 'not json', ANGULAR_16_BROWSER_CELL).declarations).toEqual(
-			[],
-		);
+		expect(
+			declareBuilderPackages({}, 'not json', ANGULAR_16_BROWSER_CELL).declarations,
+		).toEqual([]);
 	});
 });

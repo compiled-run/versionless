@@ -271,7 +271,7 @@ export async function verifyWitnessReactPapercups(
 	const receipt = parseWitnessReactPapercupsReceipt(
 		JSON.parse(await readFile(join(output, 'receipt.json'), 'utf8')),
 	);
-	assertLinkedWitnessProvenanceEquivalent(receipt.provenance, expectedProvenance, "Papercups");
+	assertLinkedWitnessProvenanceEquivalent(receipt.provenance, expectedProvenance, 'Papercups');
 	const canonicalBytes = await readFile(join(root, receipt.canonicalReceipt.path));
 	if (sha256(canonicalBytes) !== receipt.canonicalReceipt.sha256)
 		throw new Error('Papercups canonical receipt bytes drifted');
@@ -305,7 +305,9 @@ export async function main(args = process.argv.slice(2)): Promise<void> {
 		);
 		return;
 	}
-	throw new Error('Papercups Witness runner requires --run-twice --publish <dir> or --verify <dir>');
+	throw new Error(
+		'Papercups Witness runner requires --run-twice --publish <dir> or --verify <dir>',
+	);
 }
 
 if (basename(process.argv[1] ?? '') === 'react-papercups-run.ts')

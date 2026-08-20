@@ -105,7 +105,10 @@ describe('loopback-backend bucketing accepts the live localhost backend origin',
 		);
 		expect(backendOrigin).toBe('http://localhost:3001');
 		expect(inventory.admitted).toBe(2);
-		expect(inventory.observed.map((entry) => entry.path).sort()).toEqual(['/checkAuth', '/login']);
+		expect(inventory.observed.map((entry) => entry.path).sort()).toEqual([
+			'/checkAuth',
+			'/login',
+		]);
 	});
 
 	it('still rejects a third loopback origin that is neither static nor backend', () => {

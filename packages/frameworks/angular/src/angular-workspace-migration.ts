@@ -230,13 +230,15 @@ function planWrapperAbsorption(
 				);
 				continue;
 			}
-			analyses.set(fragmentPath, analyzeCustomWebpackFragment(fragmentPath, source, official));
+			analyses.set(
+				fragmentPath,
+				analyzeCustomWebpackFragment(fragmentPath, source, official),
+			);
 		}
 	}
 	for (const analysis of analyses.values())
 		if (!analysis.absorbable)
-			for (const blocker of analysis.blockers)
-				blockers.push(`${analysis.path}: ${blocker}`);
+			for (const blocker of analysis.blockers) blockers.push(`${analysis.path}: ${blocker}`);
 	return Object.freeze({
 		absorbed: sawWrapper && blockers.length === 0,
 		analyses: Object.freeze([...analyses.values()]),
@@ -376,7 +378,8 @@ export function migrateAngularWorkspace(
 			? { absorbed: false, analyses: [], blockers: [], releasedPackages: [] }
 			: planWrapperAbsorption(projects, fragments);
 	unhandled.push(...absorption.blockers);
-	if (absorption.absorbed) for (const name of absorption.releasedPackages) removedPackages.add(name);
+	if (absorption.absorbed)
+		for (const name of absorption.releasedPackages) removedPackages.add(name);
 	if (projects !== null) {
 		const migratedProjects: JsonObject = {};
 		for (const [projectName, projectValue] of Object.entries(projects)) {

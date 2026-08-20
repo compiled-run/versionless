@@ -71,12 +71,27 @@ type BehaviorRecord = Readonly<{
 		reorderChanges: readonly string[];
 	}>;
 	build: Readonly<{
-		builds: readonly Readonly<{ name: string; outputRoot: string; exitStatus: number; egressAttempts: number }>[];
+		builds: readonly Readonly<{
+			name: string;
+			outputRoot: string;
+			exitStatus: number;
+			egressAttempts: number;
+		}>[];
 	}>;
 	behavior: Readonly<{
 		route: string;
-		control: Readonly<{ root: string; status: string; pageErrors: number; splitConsoleErrors: number }>;
-		migrated: Readonly<{ root: string; status: string; pageErrors: number; splitConsoleErrors: number }>;
+		control: Readonly<{
+			root: string;
+			status: string;
+			pageErrors: number;
+			splitConsoleErrors: number;
+		}>;
+		migrated: Readonly<{
+			root: string;
+			status: string;
+			pageErrors: number;
+			splitConsoleErrors: number;
+		}>;
 		regression: Readonly<{ site: string; priorPageErrorsPerLoad: number; meaning: string }>;
 	}>;
 }>;
@@ -99,9 +114,9 @@ export async function buildRebindLaneRecord(): Promise<SealedRecord> {
 	 * has to be read rather than asserted.
 	 */
 	const manifestOf = async (root: string): Promise<Readonly<Record<string, unknown>>> =>
-		JSON.parse(await readFile(path.join(STAGE_DIRECTORY, root, 'ngsw.json'), 'utf8')) as Readonly<
-			Record<string, unknown>
-		>;
+		JSON.parse(
+			await readFile(path.join(STAGE_DIRECTORY, root, 'ngsw.json'), 'utf8'),
+		) as Readonly<Record<string, unknown>>;
 	const firstManifest = await manifestOf(CANONICAL_ROOT);
 	const secondManifest = await manifestOf(REPEATED_ROOT);
 	const manifestKeysDiffering = [
@@ -141,7 +156,9 @@ export async function buildRebindLaneRecord(): Promise<SealedRecord> {
 	const emittedFontLinksMatchSource =
 		canonical(emittedFontLinks.map(unescaped)) === canonical([...sourceFontLinks]);
 	const eraFaithfulSeam =
-		fontFaceRules(emittedIndex) === 0 && emittedFontLinksMatchSource && sourceFontLinks.length > 0;
+		fontFaceRules(emittedIndex) === 0 &&
+		emittedFontLinksMatchSource &&
+		sourceFontLinks.length > 0;
 
 	// The worker chunks, carried across from u23's own emission points.
 	const supersededRecord = JSON.parse(
@@ -190,7 +207,7 @@ export async function buildRebindLaneRecord(): Promise<SealedRecord> {
 			'on undefined — a defect a green build cannot report, measured in a browser by u20c2e against ' +
 			'dist-23 and dist-25 on the same host and day. This record rebinds the migrated lane to ' +
 			'dist-25: the u20c2e round assembled the migrated tree with the reorder in it, disabled the ' +
-			'Angular 16 font inliner with u23\'s capability, and rebuilt twice under the offline egress ' +
+			"Angular 16 font inliner with u23's capability, and rebuilt twice under the offline egress " +
 			'guard into dist-25 and dist-26. The two builds make no egress attempt, are green, emit the ' +
 			'same 62-artifact worker-complete census u23 measured, and agree with each other file for ' +
 			'file except the one clock field in the generated service-worker manifest. The compiled ' +
@@ -268,7 +285,7 @@ export async function buildRebindLaneRecord(): Promise<SealedRecord> {
 				'The template-binding-reorder is among the migrated application-source changes carried ' +
 				'into this lane: the `<split>` element in work-view-page.component.html binds its two ' +
 				'element inputs before the position input, which is the source form of the fix read out ' +
-				'of the booting bytes above. The counts are u20c2e\'s scan of the assembled tree, carried ' +
+				"of the booting bytes above. The counts are u20c2e's scan of the assembled tree, carried " +
 				'by reference.',
 		},
 		builds: behavior.build.builds,
@@ -324,7 +341,9 @@ export async function buildRebindLaneRecord(): Promise<SealedRecord> {
 			byteIdenticalToSuperseded: namesUnchanged.length - changedAgainstSuperseded.length,
 			changedAgainstSuperseded,
 			renamedAgainstSuperseded: {
-				gone: [...supersededDigests.keys()].filter((name) => !firstDigests.has(name)).sort(),
+				gone: [...supersededDigests.keys()]
+					.filter((name) => !firstDigests.has(name))
+					.sort(),
 				new: [...firstDigests.keys()].filter((name) => !supersededDigests.has(name)).sort(),
 			},
 			reading:
@@ -360,12 +379,12 @@ export async function buildRebindLaneRecord(): Promise<SealedRecord> {
 		},
 		notEstablished: [
 			'The regression-gone fact is not re-measured here. It is the u20c2e behavior proof, carried ' +
-				'by reference and bound by that record\'s digest and byte sha256; nothing in this round ' +
+				"by reference and bound by that record's digest and byte sha256; nothing in this round " +
 				'loads a browser.',
 			'No witness journey was run in this round by design. Whether the application runs, mounts or ' +
 				'keeps what a user types is not established here — that is the bound browser proof this ' +
 				'lane is the input to.',
-			'The offline egress facts are u20c2e\'s, read from its build record. This round re-reads the ' +
+			"The offline egress facts are u20c2e's, read from its build record. This round re-reads the " +
 				'emitted trees; it did not itself run the two builds under the guard.',
 			'The era lane was not rebuilt, re-measured or touched by this round.',
 		],

@@ -220,7 +220,10 @@ export function applySuggestedExportRenames(
 		const binding = module.symbolOf(localNode);
 		const references = aliased ? [] : (binding?.references ?? []);
 		if (!aliased && binding === null) {
-			refuse(line, `${imported} is imported without an alias and its binding does not resolve`);
+			refuse(
+				line,
+				`${imported} is imported without an alias and its binding does not resolve`,
+			);
 			continue;
 		}
 		if (!aliased && !isFreeRootName(module, suggested) && suggested !== imported) {

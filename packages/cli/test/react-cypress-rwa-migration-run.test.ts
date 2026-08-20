@@ -1,7 +1,10 @@
 import { readFile } from 'node:fs/promises';
 import * as path from 'pathe';
 import { describe, expect, test } from 'vitest';
-import { craPrefixedEnvironment, craEnvironmentPrefix } from '../../../fixtures/react-cypress-rwa/vite.config.ts';
+import {
+	craPrefixedEnvironment,
+	craEnvironmentPrefix,
+} from '../../../fixtures/react-cypress-rwa/vite.config.ts';
 import {
 	laneDigestIsReproducible,
 	laneDigestScheme,
@@ -64,7 +67,10 @@ type BuildProfile = Readonly<{
 
 async function readBuildProfile(): Promise<BuildProfile> {
 	return JSON.parse(
-		await readFile(path.join(repositoryRoot, 'evidence/runs/react-cypress-rwa/build-profile.json'), 'utf8'),
+		await readFile(
+			path.join(repositoryRoot, 'evidence/runs/react-cypress-rwa/build-profile.json'),
+			'utf8',
+		),
 	) as BuildProfile;
 }
 
@@ -116,13 +122,24 @@ describe('cypress-realworld-app holdout: lane orchestration primitives', () => {
 	});
 
 	test('strips the colour codes a terminal build log carries', () => {
-		expect(stripAnsi(`${String.fromCharCode(27)}[31mred${String.fromCharCode(27)}[0m`)).toBe('red');
+		expect(stripAnsi(`${String.fromCharCode(27)}[31mred${String.fromCharCode(27)}[0m`)).toBe(
+			'red',
+		);
 	});
 
 	test('two identical failures are a stable measurement, two different ones are not', () => {
-		const failure = (log: string): LaneBuild => ({ result: 'failed', exitCode: 1, log, inventory: null });
-		expect(summarizeLane(failure(capturedFailureLog), failure(capturedFailureLog)).stable).toBe(true);
-		expect(summarizeLane(failure(capturedFailureLog), failure(capturedFailureLog)).deterministic).toBe(false);
+		const failure = (log: string): LaneBuild => ({
+			result: 'failed',
+			exitCode: 1,
+			log,
+			inventory: null,
+		});
+		expect(summarizeLane(failure(capturedFailureLog), failure(capturedFailureLog)).stable).toBe(
+			true,
+		);
+		expect(
+			summarizeLane(failure(capturedFailureLog), failure(capturedFailureLog)).deterministic,
+		).toBe(false);
 		expect(
 			summarizeLane(
 				failure(capturedFailureLog),
@@ -135,7 +152,13 @@ describe('cypress-realworld-app holdout: lane orchestration primitives', () => {
 		expect(craEnvironmentPrefix).toBe('REACT_APP_');
 		expect(
 			craPrefixedEnvironment(
-				['# a comment', '', 'SEED_USERBASE_SIZE=5', 'REACT_APP_PORT=3000', 'REACT_APP_NAME="quoted"'].join('\n'),
+				[
+					'# a comment',
+					'',
+					'SEED_USERBASE_SIZE=5',
+					'REACT_APP_PORT=3000',
+					'REACT_APP_NAME="quoted"',
+				].join('\n'),
 			),
 		).toEqual({ REACT_APP_NAME: 'quoted', REACT_APP_PORT: '3000' });
 	});
@@ -173,7 +196,9 @@ describe('cypress-realworld-app holdout: the recorded falsification run', () => 
 		expect(profile.role).toBe('holdout');
 		expect(profile.migratedLane.genericCapabilitiesOnly).toBe(true);
 		expect(profile.migratedLane.holdoutSpecificConfiguration).toBe('none');
-		expect(profile.dependencyAcquisition.bothLanesInstalledFromTheSameFrozenLockfile).toBe(true);
+		expect(profile.dependencyAcquisition.bothLanesInstalledFromTheSameFrozenLockfile).toBe(
+			true,
+		);
 	});
 
 	test('the freeze held: no adapter byte changed and the red was not patched around', async () => {
@@ -189,7 +214,9 @@ describe('cypress-realworld-app holdout: the recorded falsification run', () => 
 
 	test('the finding names the missing capability and the file that demands it', async () => {
 		const profile = await readBuildProfile();
-		expect(profile.falsificationFinding.missingCapability).toBe('non-UTF-8 module source decoding');
+		expect(profile.falsificationFinding.missingCapability).toBe(
+			'non-UTF-8 module source decoding',
+		);
 		expect(profile.falsificationFinding.exactDemand.module).toBe(
 			'node_modules/faker/lib/locales/it/name/first_name.js',
 		);

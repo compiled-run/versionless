@@ -298,10 +298,7 @@ type ChainReading =
  * module writes through the global, and a computed member means the key is not
  * in the source to be read.
  */
-function readDereferenceChain(
-	module: ReturnType<typeof parseModule>,
-	node: AstNode,
-): ChainReading {
+function readDereferenceChain(module: ReturnType<typeof parseModule>, node: AstNode): ChainReading {
 	const path: string[] = [];
 	let current = node;
 	for (;;) {
@@ -361,9 +358,7 @@ function isTypeofOperand(module: ReturnType<typeof parseModule>, node: AstNode):
  * one refused evaluation-time reach is refused entirely, because a shim that
  * answers the read and not the call would move the crash rather than remove it.
  */
-export function readRuntimeGlobalReferences(
-	files: readonly InstalledFile[],
-): RuntimeGlobalReading {
+export function readRuntimeGlobalReferences(files: readonly InstalledFile[]): RuntimeGlobalReading {
 	const dereferences = new Map<string, RuntimeGlobalDereference[]>();
 	const deferred = new Set<string>();
 	const hardRefusals = new Map<string, string>();
@@ -378,7 +373,11 @@ export function readRuntimeGlobalReferences(
 				deferred.add(name);
 				continue;
 			}
-			if (!scopeIsEvaluatedAtLoad(reference.scope as unknown as { kind: string; parent: unknown })) {
+			if (
+				!scopeIsEvaluatedAtLoad(
+					reference.scope as unknown as { kind: string; parent: unknown },
+				)
+			) {
 				deferred.add(name);
 				continue;
 			}
@@ -424,7 +423,8 @@ export function readRuntimeGlobalReferences(
 				name,
 				containers: Object.freeze(
 					[...containers].sort(
-						(left, right) => left.split('.').length - right.split('.').length ||
+						(left, right) =>
+							left.split('.').length - right.split('.').length ||
 							compareStrings(left, right),
 					),
 				),
@@ -515,7 +515,9 @@ export function supplyNodeCoreRuntimeGlobals(
 			);
 		for (const container of global.containers) {
 			lines.push(`${containerAccess(container)} ??= {};`);
-			changes.push(`${container} supplied as an empty object when the host binds nothing there`);
+			changes.push(
+				`${container} supplied as an empty object when the host binds nothing there`,
+			);
 		}
 		lines.push('');
 	}
@@ -609,7 +611,7 @@ export function declarePolyfillEntryPoint(
 				unhandled.push(
 					`${at} is a string, the form the modern builder schema replaced with an array. ` +
 						`${entryPoint} was not declared there, because converting the option is the ` +
-						'workspace migration\'s decision and this capability does not make it a second time',
+						"workspace migration's decision and this capability does not make it a second time",
 				);
 				migratedTargets[targetName] = targetValue;
 				continue;
@@ -629,7 +631,10 @@ export function declarePolyfillEntryPoint(
 			}
 			const updated = [entryPoint, ...(current as readonly string[])];
 			changes.push({ path: at, from: JSON.stringify(current), to: JSON.stringify(updated) });
-			migratedTargets[targetName] = { ...(target as JsonObject), options: { ...options, polyfills: updated } };
+			migratedTargets[targetName] = {
+				...(target as JsonObject),
+				options: { ...options, polyfills: updated },
+			};
 		}
 		migratedProjects[projectName] = { ...project, [architectKey]: migratedTargets };
 	}

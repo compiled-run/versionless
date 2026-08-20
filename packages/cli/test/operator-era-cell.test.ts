@@ -26,7 +26,6 @@ import {
 	ERA_NOT_READ_CLAIM,
 	LANE_RUNTIME_BASIS,
 	LANE_RUNTIME_READ_FROM,
-	NGCC_ANGULAR_13_CELL,
 	NODE_MAJOR_SOURCE_SLOTS,
 	declaredRangeAdmitsMajor,
 	describedCell,
@@ -45,6 +44,7 @@ import {
 	type InstalledRuntime,
 } from '../src/operator/era-cell.ts';
 import {
+	ANGULAR_13_BROWSER_CELL,
 	ANGULAR_16_BROWSER_CELL,
 	ANGULAR_TARGET_CELLS,
 } from '../../frameworks/angular/src/index.ts';
@@ -301,20 +301,32 @@ describe('era-cell — a cell the host already carries', () => {
 			expect(record.provision?.version).toBe('v16.20.2');
 
 			/**
-			 * The ngcc-feasible Angular 13 cell is describable as a target. Nothing
-			 * here provisions its toolchain: what is recorded is the Node runtime.
+			 * The ngcc-bearing Angular 13 cell is describable as a target because
+			 * an adapter publishes it, and the description is derived from that
+			 * publication rather than hand-written beside it. Nothing here
+			 * provisions its toolchain: what is recorded is the Node runtime, and
+			 * the Node line is the adapter cell's own declaration.
 			 */
 			const thirteen = await establishEraCell(
 				application,
-				declaring({ cell: NGCC_ANGULAR_13_CELL.id }),
+				declaring({ cell: ANGULAR_13_BROWSER_CELL.id }),
 				host,
 			);
 			expect(thirteen.required?.cell).toBe('angular-13.4.0');
 			expect(thirteen.required?.cellSource).toBe('declared');
 			expect(thirteen.required?.nodeMajor).toBe(16);
-			expect(thirteen.required?.cellBasis).toContain('ngcc-1213-feasibility');
-			expect(NGCC_ANGULAR_13_CELL.published).toBe(false);
-			expect(NGCC_ANGULAR_13_CELL.provides).toContain('not installed');
+			expect(thirteen.required?.cellBasis).toContain(
+				'published by the frozen Angular adapter',
+			);
+			const described = describedCell('angular-13.4.0');
+			expect(described?.published).toBe(true);
+			expect(described?.nodeLine).toBe(ANGULAR_13_BROWSER_CELL.nodeLine);
+			/**
+			 * What the deleted hand-written entry used to say in `provides` — that
+			 * this stage installs no Angular 13 toolchain — the derived one says
+			 * for every cell, because it is true of every cell.
+			 */
+			expect(described?.provides).toContain('not by this one');
 		} finally {
 			await rm(directory, { recursive: true, force: true });
 		}
@@ -330,7 +342,7 @@ describe('era-cell — a cell the host already carries', () => {
 			try {
 				await establishEraCell(
 					application,
-					declaring({ cell: NGCC_ANGULAR_13_CELL.id }),
+					declaring({ cell: ANGULAR_13_BROWSER_CELL.id }),
 					host,
 				);
 			} catch (error) {
@@ -773,11 +785,22 @@ describe('era-cell — what the host reading is', () => {
 describe('era-cell — the stage in the pipeline', () => {
 	it('is a declared pipeline stage and a described set of cells', () => {
 		expect(PIPELINE_STAGES).toContain('era-cell');
-		expect(DESCRIBED_CELLS.map((cell) => cell.id)).toContain('angular-16-browser-builder');
-		expect(DESCRIBED_CELLS.map((cell) => cell.id)).toContain('angular-13.4.0');
+		const ids = DESCRIBED_CELLS.map((cell) => cell.id);
+		expect(ids).toContain('angular-16-browser-builder');
+		expect(ids).toContain('angular-13.4.0');
+		/**
+		 * One id, one description. `describedCell()` resolves by `.find()`, so a
+		 * duplicate id would be resolved by list order rather than by truth — the
+		 * exact latent lie a hand-written entry beside the derived ones creates
+		 * the moment an adapter publishes the same cell.
+		 */
+		expect(new Set(ids).size).toBe(ids.length);
 		for (const cell of DESCRIBED_CELLS) {
 			expect(cell.nodeMajor).toBeGreaterThan(0);
 			expect(cell.describedBy.length).toBeGreaterThan(0);
+			/** Every entry is derived from a publication, so every one is published. */
+			expect(cell.published).toBe(true);
+			expect(describedCell(cell.id)).toBe(cell);
 		}
 	});
 

@@ -72,9 +72,11 @@ describe('tiny-translator migrated lane', () => {
 		const written = await readRecord(MIGRATED_LANE_FILE);
 		const { digest, ...body } = written;
 		const { createHash } = await import('node:crypto');
-		expect(createHash('sha256').update(`${JSON.stringify(body, null, 2)}\n`).digest('hex')).toBe(
-			digest,
-		);
+		expect(
+			createHash('sha256')
+				.update(`${JSON.stringify(body, null, 2)}\n`)
+				.digest('hex'),
+		).toBe(digest);
 	});
 
 	it('reports the same counts the retained build log carries', async () => {

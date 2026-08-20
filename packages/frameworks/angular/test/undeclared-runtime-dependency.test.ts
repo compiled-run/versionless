@@ -144,7 +144,9 @@ describe('closing undeclared runtime dependencies in the application manifest', 
 		expect(declaration?.field).toBe('dependencies');
 		expect(declaration?.name).toBe('@ctrl/tinycolor');
 		expect(declaration?.range).toBe('^4.2.0');
-		expect(declaration?.reason).toContain('themed-widgets@16.2.2 imports it as @ctrl/tinycolor');
+		expect(declaration?.reason).toContain(
+			'themed-widgets@16.2.2 imports it as @ctrl/tinycolor',
+		);
 		expect(declaration?.reason).toContain('engines.node ">=14"');
 		expect(declaration?.reason).toContain('registry.npmjs.org');
 		expect(declared.manifest['dependencies']).toEqual({

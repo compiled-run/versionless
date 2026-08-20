@@ -27,7 +27,9 @@ const fork: SuccessorForkPackage = Object.freeze({
 	}),
 });
 
-const cellWith = (dispositions: Readonly<Record<string, SuccessorForkPackage>>): AngularTargetCell =>
+const cellWith = (
+	dispositions: Readonly<Record<string, SuccessorForkPackage>>,
+): AngularTargetCell =>
 	Object.freeze({
 		id: 'test-cell',
 		angularLine: '16.2',
@@ -118,9 +120,7 @@ describe('successor fork manifest alignment', () => {
 		expect(dependencies['any-widget']).toBeUndefined();
 		expect(dependencies['@second/widget']).toBe('^4.0.0');
 		expect(Object.keys(dependencies)).toEqual(['@second/widget', 'other']);
-		expect(
-			aligned.changes.find((change) => change.name === 'any-widget')?.to,
-		).toBeNull();
+		expect(aligned.changes.find((change) => change.name === 'any-widget')?.to).toBeNull();
 		expect(aligned.declaredDifferences.join('\n')).toContain(
 			'dependencies.any-widget was replaced by @second/widget ^4.0.0',
 		);
@@ -170,7 +170,9 @@ describe('successor fork imports', () => {
 		expect(migration.changed).toBe(false);
 		expect(migration.source).toContain("from 'any-widget'");
 		expect(migration.unhandled).toHaveLength(1);
-		expect(migration.unhandled[0]).toContain('exports no RemovedThing from its root entry point');
+		expect(migration.unhandled[0]).toContain(
+			'exports no RemovedThing from its root entry point',
+		);
 	});
 
 	it('refuses every import when the lineage does not verify', () => {
@@ -191,7 +193,10 @@ describe('successor fork imports', () => {
 		const migration = migrateSuccessorForkImports(
 			'src/app/ui.module.ts',
 			importing('WidgetModule'),
-			reading(fork, [], { complete: false, incompleteReason: 'a star re-export was not followed' }),
+			reading(fork, [], {
+				complete: false,
+				incompleteReason: 'a star re-export was not followed',
+			}),
 		);
 		expect(migration.changed).toBe(false);
 		expect(migration.unhandled[0]).toContain('could not be read in full');

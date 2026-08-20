@@ -71,12 +71,12 @@ export const CHANGESET_FILE = 'u17-composed-changeset.json';
  * restated here rather than left in the ingest for a reader to go and find.
  */
 export const ERA_VARIANT =
-	'The plain `ng build --prod --aot` variant. This application has two materially different production artifacts: the plain one, and the one the repository\'s own `build-prod-<lang>` chain produces by rewriting the literal %BASE_HREF% in src/environments/environment.prod.ts, compiling one locale from a committed XLIFF, and copying an ngsw-worker.js beside a generated ngsw.json. The plain variant registers a service worker at the un-substituted literal \'%BASE_HREF%ngsw-worker.js\' and ships no worker for it to find. This lane\'s parity story is the plain variant, because it is the one the migrated lane could ever be compared against: the locale chain is a repository script, not a build the adapter migrates.';
+	"The plain `ng build --prod --aot` variant. This application has two materially different production artifacts: the plain one, and the one the repository's own `build-prod-<lang>` chain produces by rewriting the literal %BASE_HREF% in src/environments/environment.prod.ts, compiling one locale from a committed XLIFF, and copying an ngsw-worker.js beside a generated ngsw.json. The plain variant registers a service worker at the un-substituted literal '%BASE_HREF%ngsw-worker.js' and ships no worker for it to find. This lane's parity story is the plain variant, because it is the one the migrated lane could ever be compared against: the locale chain is a repository script, not a build the adapter migrates.";
 
 export const ERA_NOT_ESTABLISHED: readonly string[] = Object.freeze([
 	'Byte stability across two consecutive builds on one host is repeatability, not reproducibility: nothing here establishes that another host, another day or another clock would emit the same bytes.',
 	'No browser opened these bundles. Nothing about their behaviour is observed.',
-	'The plain variant\'s service-worker registration points at an un-substituted literal and no worker ships beside it. That is recorded as found; it is not repaired and not masked.',
+	"The plain variant's service-worker registration points at an un-substituted literal and no worker ships beside it. That is recorded as found; it is not repaired and not masked.",
 	'The bundle requests https://fonts.googleapis.com/icon?family=Material+Icons unconditionally on load. No lane here made that request, so nothing is established about what happens when it fails.',
 ]);
 
@@ -109,7 +109,7 @@ export function buildEraLaneRecord(input: LaneInput): SealedRecord {
 			command: 'ng build --prod --aot --output-path=dist/rebuild-<n>',
 			builder: 'Angular CLI 1.5.4 over webpack 3.8.1',
 			honestLabel:
-				'era-declared, not repository-pinned. The repository states no Node version anywhere; Node 8.9.3 was the active LTS two days before the pinned commit and satisfies the CLI\'s own >= 6.9.0 floor.',
+				"era-declared, not repository-pinned. The repository states no Node version anywhere; Node 8.9.3 was the active LTS two days before the pinned commit and satisfies the CLI's own >= 6.9.0 floor.",
 		},
 		source: {
 			repository: 'martinroob/tiny-translator',
@@ -208,9 +208,7 @@ export async function composeMigration(tree: string): Promise<AngularMigration> 
  * after; the sources themselves are not copied into evidence, because the tree
  * they came from is identified by commit sha and archive digest already.
  */
-export function buildChangesetRecord(
-	migration: AngularMigration,
-): SealedRecord {
+export function buildChangesetRecord(migration: AngularMigration): SealedRecord {
 	return sealRecord({
 		schemaVersion: 'versionless.angular-tiny-translator-composed-changeset.v1',
 		unit: UNIT,

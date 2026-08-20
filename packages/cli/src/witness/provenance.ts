@@ -63,7 +63,9 @@ export async function verifyLinkedWitnessProvenance(
 		devDependencies?: Record<string, string>;
 	};
 	if (packageJson.devDependencies?.['@async/witness'] !== VENDORED_WITNESS_SPECIFIER)
-		throw new Error(`vendored Witness dependency must be exactly ${VENDORED_WITNESS_SPECIFIER}`);
+		throw new Error(
+			`vendored Witness dependency must be exactly ${VENDORED_WITNESS_SPECIFIER}`,
+		);
 	const vendorRoot = dirname(
 		await realpath(join(root, 'node_modules/@async/witness/package.json')),
 	);
@@ -175,9 +177,7 @@ export function assertLinkedWitnessProvenanceEquivalent(
 		recordedCommit === compared.sourceCommit ? null : 'commit',
 	].filter((field): field is string => field !== null);
 	if (differences.length > 0)
-		throw new Error(
-			`${label} Witness provenance identity differs: ${differences.join(', ')}`,
-		);
+		throw new Error(`${label} Witness provenance identity differs: ${differences.join(', ')}`);
 	return {
 		compared,
 		recorded: {

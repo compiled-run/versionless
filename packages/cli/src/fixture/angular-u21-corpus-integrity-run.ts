@@ -32,7 +32,12 @@
 import { readFile, readdir, writeFile } from 'node:fs/promises';
 import * as path from 'pathe';
 import { canonical, sha256 } from './angular-factoriolab-migration-run.ts';
-import { inventoryOf, sealRecord, type DistEntry, type SealedRecord } from './angular-factoriolab-build-lanes-run.ts';
+import {
+	inventoryOf,
+	sealRecord,
+	type DistEntry,
+	type SealedRecord,
+} from './angular-factoriolab-build-lanes-run.ts';
 
 const repositoryRoot = path.resolve(import.meta.dirname, '../../../..');
 
@@ -237,9 +242,12 @@ export function readFontLocality(emittedHtml: string): Readonly<{
 }> {
 	const hosts = [
 		...new Set(
-			['fonts.googleapis.com', 'fonts.gstatic.com', 'use.typekit.net', 'p.typekit.net'].filter(
-				(host) => emittedHtml.includes(host),
-			),
+			[
+				'fonts.googleapis.com',
+				'fonts.gstatic.com',
+				'use.typekit.net',
+				'p.typekit.net',
+			].filter((host) => emittedHtml.includes(host)),
 		),
 	].sort();
 	let rules = 0;
@@ -248,7 +256,11 @@ export function readFontLocality(emittedHtml: string): Readonly<{
 		rules += 1;
 		index = emittedHtml.indexOf('@font-face', index + 1);
 	}
-	return Object.freeze({ hosts: Object.freeze(hosts), inlinedFontFaceRules: rules, inlined: rules > 0 });
+	return Object.freeze({
+		hosts: Object.freeze(hosts),
+		inlinedFontFaceRules: rules,
+		inlined: rules > 0,
+	});
 }
 
 async function readTextOrNull(file: string): Promise<string | null> {
@@ -266,7 +278,8 @@ export function sourceFontLinks(html: string): readonly string[] {
 		let index = html.indexOf(`https://${host}`);
 		while (index !== -1) {
 			let end = index;
-			while (end < html.length && !['"', "'", ' ', '>', ')'].includes(html[end] ?? '')) end += 1;
+			while (end < html.length && !['"', "'", ' ', '>', ')'].includes(html[end] ?? ''))
+				end += 1;
 			links.push(html.slice(index, end));
 			index = html.indexOf(`https://${host}`, end);
 		}
@@ -303,9 +316,11 @@ const LANE_PROBES: readonly LaneProbe[] = Object.freeze([
 	{
 		lane: 'angular-factoriolab',
 		evidenceDirectory: 'evidence/runs/angular-factoriolab',
-		sourceIndex: '.versionless/cache/angular-factoriolab-source/verify/extracted/src/index.html',
+		sourceIndex:
+			'.versionless/cache/angular-factoriolab-source/verify/extracted/src/index.html',
 		emitted: '.versionless/stage/angular-factoriolab-m2/dist-a/index.html',
-		published: 'the m2 migrated build and parity records, and the witness receipt that binds them',
+		published:
+			'the m2 migrated build and parity records, and the witness receipt that binds them',
 	},
 	{
 		lane: 'angular-jira-clone',
@@ -520,7 +535,9 @@ export async function main(): Promise<void> {
 		.filter((entry) => {
 			const left = entry.era.map((item) => eraByPath.get(item.path) ?? '').sort();
 			const right = entry.migrated.map((item) => migratedByPath.get(item.path) ?? '').sort();
-			return left.length === right.length && left.every((value, index) => value === right[index]);
+			return (
+				left.length === right.length && left.every((value, index) => value === right[index])
+			);
 		})
 		.map((entry) => entry.emissionPoint);
 	const publishedIdentical = [...(parityRecord['identicalPayloads'] as readonly string[])];
@@ -549,8 +566,7 @@ export async function main(): Promise<void> {
 				'`byteDelta` is arithmetic over file sizes, which the defect never touched.',
 			],
 			conclusionRecheck: {
-				method:
-					'identicalPayloads recomputed from sha256(bytes) of both retained trees, grouped by the same emission point as the original',
+				method: 'identicalPayloads recomputed from sha256(bytes) of both retained trees, grouped by the same emission point as the original',
 				publishedCount: publishedIdentical.length,
 				recomputedCount: recomputedIdentical.length,
 				agrees: conclusionHolds,
@@ -604,7 +620,7 @@ export async function main(): Promise<void> {
 export const FIXED_AT =
 	'packages/cli/src/fixture/angular-factoriolab-build-lanes-run.ts, in `inventoryOf`: the digest is now taken ' +
 	'over the file bytes. The shared hasher in angular-factoriolab-migration-run.ts accepts a byte array so that ' +
-	"passing bytes is the natural call and passing a decoded string is the odd one. `packages/cli/test/" +
+	'passing bytes is the natural call and passing a decoded string is the odd one. `packages/cli/test/' +
 	'digest-byte-fidelity.test.ts` pins the walker against a fixture whose bytes make the three candidate answers ' +
 	'three different digests, so a regression to latin1 — or to a lossy UTF-8 read — fails rather than publishing ' +
 	'a wrong number that still compares equal to itself.';
@@ -618,7 +634,7 @@ export const NOT_ESTABLISHED: readonly string[] = Object.freeze([
 export const WITNESS_BINDING =
 	'The published factoriolab witness receipt (packages/core/src/receipts/witness-angular-factoriolab.ts) binds ' +
 	'all three build-lane records, each by the seal digest the record computed over its own body and by the sha256 ' +
-	'of the record file\'s exact bytes. It does *not* bind any artifact digest from inside those records. Both ' +
+	"of the record file's exact bytes. It does *not* bind any artifact digest from inside those records. Both " +
 	'bindings still verify against the originals, which this unit left untouched, so the receipt is not broken and ' +
 	'is deliberately not re-published here. What the Judge should see plainly is the transitive consequence: the ' +
 	'receipt binds bytes that contain affected values, so a reader who follows the chain from the witness proof ' +

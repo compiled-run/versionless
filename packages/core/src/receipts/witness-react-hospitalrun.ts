@@ -13,8 +13,7 @@ import type {
 	WitnessServiceWorkerRequestTally,
 } from './witness-real-app.ts';
 
-export const WITNESS_REACT_HOSPITALRUN_SCHEMA =
-	'versionless.witness-react-hospitalrun.v1' as const;
+export const WITNESS_REACT_HOSPITALRUN_SCHEMA = 'versionless.witness-react-hospitalrun.v1' as const;
 export const WITNESS_REACT_HOSPITALRUN_RECEIPT_PATH =
 	'evidence/runs/witness-react-hospitalrun/receipt.json' as const;
 export const REACT_HOSPITALRUN_FIXTURE = 'react-hospitalrun' as const;
@@ -74,7 +73,8 @@ export const WITNESS_REACT_HOSPITALRUN_CONSOLE_ERRORS = Object.freeze({
 	]),
 	migrated: Object.freeze([
 		Object.freeze({
-			message: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
+			message:
+				'Failed to load resource: the server responded with a status of 404 (Not Found)',
 			count: 4,
 		}),
 	]),
@@ -111,7 +111,13 @@ export const WITNESS_REACT_HOSPITALRUN_FAILED_REQUESTS = Object.freeze({
 
 const swPath = '/service-worker.js';
 const swAttempt = (count: number): WitnessServiceWorkerRequestTally[] => [
-	{ source: 'browser', phase: 'request', urlPath: swPath, detail: { serviceWorker: false }, count },
+	{
+		source: 'browser',
+		phase: 'request',
+		urlPath: swPath,
+		detail: { serviceWorker: false },
+		count,
+	},
 	{
 		source: 'context-route',
 		phase: 'start',
@@ -687,7 +693,10 @@ export function renderWitnessReactHospitalrunReceipt(
 	const swAnswer = (lane: 'baseline' | 'migrated'): string =>
 		WITNESS_REACT_HOSPITALRUN_SERVICE_WORKER_REQUESTS[lane]
 			.filter((entry) => entry.phase === 'response')
-			.map((entry) => `${entry.count}x \`${entry.urlPath ?? ''}\` -> ${String(entry.detail.status)}`)
+			.map(
+				(entry) =>
+					`${entry.count}x \`${entry.urlPath ?? ''}\` -> ${String(entry.detail.status)}`,
+			)
 			.join(', ');
 	const failedRequestLine = (lane: 'baseline' | 'migrated'): string =>
 		receipt.failedRequests[lane]

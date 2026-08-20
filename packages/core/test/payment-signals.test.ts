@@ -697,9 +697,12 @@ describe('synthetic evidence policy', () => {
 
 		test('keeps refusing the object ID outside a revision-context key', () => {
 			for (const key of ['commit', 'tree', 'sha', 'archiveSha256', 'revisionCopy'])
-				expect(findSensitiveSignals(conformance({ [key]: hospitalrunRevision }))).toContainEqual(
-					{ path: `$.applications[0].source.${key}`, kind: 'pan-like-value' },
-				);
+				expect(
+					findSensitiveSignals(conformance({ [key]: hospitalrunRevision })),
+				).toContainEqual({
+					path: `$.applications[0].source.${key}`,
+					kind: 'pan-like-value',
+				});
 		});
 
 		test('keeps refusing the object ID outside a source application source record', () => {
@@ -763,7 +766,8 @@ describe('synthetic evidence policy', () => {
 				commit: freezeCommit,
 				algorithm: 'sha256',
 				composite: 'a'.repeat(64),
-				preimage: 'newline-terminated `<path> <tree-oid>` lines in the listed subtree order',
+				preimage:
+					'newline-terminated `<path> <tree-oid>` lines in the listed subtree order',
 				subtrees: [{ path: 'packages/frameworks/react', treeOid: 'b'.repeat(40) }],
 				state: 'frozen',
 				claim: 'The migration engine adapter surface is byte-stable at this commit.',

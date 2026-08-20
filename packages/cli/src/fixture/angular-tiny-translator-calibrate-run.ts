@@ -31,7 +31,11 @@ export async function calibrateAngularTinyTranslatorLane(
 		lane,
 		pass: 1,
 		laneRoot: laneRoots[lane],
-		receiptRoot: join(root, '.versionless/stage/witness-angular-tiny-translator-calibrate', lane),
+		receiptRoot: join(
+			root,
+			'.versionless/stage/witness-angular-tiny-translator-calibrate',
+			lane,
+		),
 	})) as WitnessAngularTinyTranslatorRun;
 	process.stdout.write(
 		`${canonicalize({

@@ -34,9 +34,9 @@ const output = join(root, 'evidence/runs/witness-react-memos-v0-1-3');
 describe('Memos direct Witness command', () => {
 	it('rejects incomplete modes without launching a browser', async () => {
 		await expect(main([])).rejects.toThrow('--run-twice');
-		await expect(main(['--publish', 'evidence/runs/witness-react-memos-v0-1-3'])).rejects.toThrow(
-			'--run-twice',
-		);
+		await expect(
+			main(['--publish', 'evidence/runs/witness-react-memos-v0-1-3']),
+		).rejects.toThrow('--run-twice');
 	});
 
 	it('refuses to publish anywhere but the canonical evidence directory', async () => {
@@ -49,7 +49,10 @@ describe('Memos direct Witness command', () => {
 		const receipt = parseWitnessReactMemosReceipt(
 			JSON.parse(await readFile(join(output, 'receipt.json'), 'utf8')),
 		);
-		expect(new Set(receipt.runs.map(witnessReactMemosBehaviorDigest))).toHaveProperty('size', 1);
+		expect(new Set(receipt.runs.map(witnessReactMemosBehaviorDigest))).toHaveProperty(
+			'size',
+			1,
+		);
 		for (const run of receipt.runs)
 			expect(run.semanticDigest).toBe(witnessReactMemosRawDigest(run));
 		await expect(verifyWitnessReactMemos(output)).resolves.toEqual(receipt);

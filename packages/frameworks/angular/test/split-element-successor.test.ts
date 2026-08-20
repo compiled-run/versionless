@@ -120,7 +120,9 @@ describe('checkElementSplit', () => {
 
 	it('refuses when the tree still declares the element the split claims is gone', () => {
 		const still = { ...chips, replacedStillDeclared: true };
-		expect(checkElementSplit(split, still).join(' ')).toContain('still declares <mat-chip-list>');
+		expect(checkElementSplit(split, still).join(' ')).toContain(
+			'still declares <mat-chip-list>',
+		);
 	});
 
 	it('refuses a claimed input-bearing successor the text-input directive contradicts', () => {
@@ -154,7 +156,12 @@ describe('checkElementSplit', () => {
 
 describe('resolveSplitElementSuccessors', () => {
 	it('resolves a list hosting the text input onto the component that input is typed to', () => {
-		const result = resolveSplitElementSuccessors('a.component.html', inputBearing, split, chips);
+		const result = resolveSplitElementSuccessors(
+			'a.component.html',
+			inputBearing,
+			split,
+			chips,
+		);
 		expect(result.unhandled).toEqual([]);
 		expect(result.changes).toEqual([
 			{
@@ -175,7 +182,12 @@ describe('resolveSplitElementSuccessors', () => {
 	});
 
 	it('resolves a list carrying neither fact onto the container the others extend', () => {
-		const result = resolveSplitElementSuccessors('b.component.html', staticDisplay, split, chips);
+		const result = resolveSplitElementSuccessors(
+			'b.component.html',
+			staticDisplay,
+			split,
+			chips,
+		);
 		expect(result.unhandled).toEqual([]);
 		expect(result.changes[0]?.shape).toBe('general');
 		expect(result.changes[0]?.children).toEqual([]);
@@ -215,7 +227,9 @@ describe('resolveSplitElementSuccessors', () => {
 		].join('\n');
 		const result = resolveSplitElementSuccessors('e.component.html', both, split, chips);
 		expect(result.changed).toBe(false);
-		expect(result.unhandled.join(' ')).toContain('the facts match two documented shapes at once');
+		expect(result.unhandled.join(' ')).toContain(
+			'the facts match two documented shapes at once',
+		);
 	});
 
 	it('refuses a list carrying a binding the chosen successor does not declare', () => {
@@ -226,16 +240,21 @@ describe('resolveSplitElementSuccessors', () => {
 	});
 
 	it('leaves universal attributes alone rather than refusing on them', () => {
-		const universal = ['<mat-chip-list class="x" aria-label="y"></mat-chip-list>', ''].join('\n');
+		const universal = ['<mat-chip-list class="x" aria-label="y"></mat-chip-list>', ''].join(
+			'\n',
+		);
 		const result = resolveSplitElementSuccessors('g.component.html', universal, split, chips);
 		expect(result.unhandled).toEqual([]);
 		expect(result.source).toContain('<mat-chip-set class="x" aria-label="y">');
 	});
 
 	it('refuses a child the queried component does not extend', () => {
-		const strange = ['<mat-chip-list>', '  <mat-chip-option></mat-chip-option>', '</mat-chip-list>', ''].join(
-			'\n',
-		);
+		const strange = [
+			'<mat-chip-list>',
+			'  <mat-chip-option></mat-chip-option>',
+			'</mat-chip-list>',
+			'',
+		].join('\n');
 		const result = resolveSplitElementSuccessors('h.component.html', strange, split, chips);
 		expect(result.changed).toBe(false);
 		expect(result.unhandled.join(' ')).toContain('which MatChip does not extend');
@@ -243,7 +262,12 @@ describe('resolveSplitElementSuccessors', () => {
 
 	it('writes nothing when the reading is of a different split', () => {
 		const other: ElementSplitReading = { ...chips, replaced: 'mat-chip-thing' };
-		const result = resolveSplitElementSuccessors('i.component.html', staticDisplay, split, other);
+		const result = resolveSplitElementSuccessors(
+			'i.component.html',
+			staticDisplay,
+			split,
+			other,
+		);
 		expect(result.changed).toBe(false);
 		expect(result.unhandled).toHaveLength(1);
 	});

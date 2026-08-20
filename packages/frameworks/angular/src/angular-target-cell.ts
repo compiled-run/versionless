@@ -241,13 +241,15 @@ export const ANGULAR_16_ECOSYSTEM_PACKAGES: EcosystemPackages = Object.freeze({
 		buildStamp: Object.freeze({
 			libraryVersion: '15.1.2',
 			compiledWith: '16.0.6',
-			readFrom: 'https://unpkg.com/@ng-bootstrap/ng-bootstrap@15.1.2/fesm2022/ng-bootstrap.mjs',
+			readFrom:
+				'https://unpkg.com/@ng-bootstrap/ng-bootstrap@15.1.2/fesm2022/ng-bootstrap.mjs',
 		}),
 		excludedByBuildStamp: Object.freeze([
 			Object.freeze({
 				libraryVersion: '16.0.0',
 				compiledWith: '17.0.0',
-				readFrom: 'https://unpkg.com/@ng-bootstrap/ng-bootstrap@16.0.0/fesm2022/ng-bootstrap.mjs',
+				readFrom:
+					'https://unpkg.com/@ng-bootstrap/ng-bootstrap@16.0.0/fesm2022/ng-bootstrap.mjs',
 			}),
 		]),
 	}),
@@ -342,13 +344,15 @@ export const ANGULAR_16_ECOSYSTEM_PACKAGES: EcosystemPackages = Object.freeze({
 		buildStamp: Object.freeze({
 			libraryVersion: '6.3.12',
 			compiledWith: '13.3.12',
-			readFrom: 'https://unpkg.com/@ngx-formly/material@6.3.12/fesm2020/ngx-formly-material.mjs',
+			readFrom:
+				'https://unpkg.com/@ngx-formly/material@6.3.12/fesm2020/ngx-formly-material.mjs',
 		}),
 		excludedByBuildStamp: Object.freeze([
 			Object.freeze({
 				libraryVersion: '7.1.0',
 				compiledWith: '18.2.13',
-				readFrom: 'https://unpkg.com/@ngx-formly/material@7.1.0/fesm2022/ngx-formly-material.mjs',
+				readFrom:
+					'https://unpkg.com/@ngx-formly/material@7.1.0/fesm2022/ngx-formly-material.mjs',
 			}),
 		]),
 	}),
@@ -424,7 +428,7 @@ export const ANGULAR_16_ECOSYSTEM_PACKAGES: EcosystemPackages = Object.freeze({
 	}),
 	'@yaga/leaflet-ng2': Object.freeze({
 		kind: 'no-successor',
-		fact: '@yaga/leaflet-ng2 published thirteen versions and the newest of them is 1.1.0, published 2021-05-22; it is the `latest` dist-tag and no line exists after it. Every one of those versions declares peer @angular/core ">=2.0.0" — an unbounded range written before Angular 5 shipped — so the resolver admits the package against Angular 16 and says nothing, and the refusal arrives from the compiler instead: `Property \'addData\' in type \'GeoJSONDirective<T>\' is not assignable to the same property in base type \'GeoJSON<any, Geometry>\'` in lib/geojson.directive.d.ts. Moving to the newest line does not answer it. 1.1.0 declares that member as `addData(data: GeoJSONFeature<GeometryObject, T>): Layer` exactly as 1.0.0 does, narrowing the base signature of the @types/leaflet it still depends on at ^1.2.8, so the TS2416 the era pin produces is present on the newest published version too. The second reading is the one that closes the question rather than merely failing to open it: 1.1.0 was built against Angular 12 (its devDependencies pin @angular/* ^12.0.0) in *full* compilation mode — lib/geojson.directive.js emits `ɵɵdefineDirective` and `ɵɵProvidersFeature` calls directly, and the package ships no `ɵɵngDeclare*` partial declarations and no ViewEngine metadata.json. Those instruction calls are the private, version-locked API of the @angular/core the library was compiled with; the Angular Package Format requires partial declarations precisely so that a *consuming* linker can re-emit them for its own version, and there is nothing here for this cell\'s linker to link. So there is no line to align to: not a newer one, because none exists, and not the newest one, because it neither fixes the declaration nor is published in a form this cell consumes. The package is dropped as a declared difference. Doing so turns `YagaModule` in frontend/app/app.module.ts and `MapComponent` in the two map components into source demands the compiler states by name; choosing a replacement Angular Leaflet library is a source decision this table does not make, and no verified fork of yagajs/leaflet-ng2 was found to make it under the successor-fork rule. Read from https://registry.npmjs.org/@yaga/leaflet-ng2 and from the published tarballs of 1.0.0 and 1.1.0 under consent VL-LEGACY-CORPUS-2026-08-10 on 2026-08-14.',
+		fact: "@yaga/leaflet-ng2 published thirteen versions and the newest of them is 1.1.0, published 2021-05-22; it is the `latest` dist-tag and no line exists after it. Every one of those versions declares peer @angular/core \">=2.0.0\" — an unbounded range written before Angular 5 shipped — so the resolver admits the package against Angular 16 and says nothing, and the refusal arrives from the compiler instead: `Property 'addData' in type 'GeoJSONDirective<T>' is not assignable to the same property in base type 'GeoJSON<any, Geometry>'` in lib/geojson.directive.d.ts. Moving to the newest line does not answer it. 1.1.0 declares that member as `addData(data: GeoJSONFeature<GeometryObject, T>): Layer` exactly as 1.0.0 does, narrowing the base signature of the @types/leaflet it still depends on at ^1.2.8, so the TS2416 the era pin produces is present on the newest published version too. The second reading is the one that closes the question rather than merely failing to open it: 1.1.0 was built against Angular 12 (its devDependencies pin @angular/* ^12.0.0) in *full* compilation mode — lib/geojson.directive.js emits `ɵɵdefineDirective` and `ɵɵProvidersFeature` calls directly, and the package ships no `ɵɵngDeclare*` partial declarations and no ViewEngine metadata.json. Those instruction calls are the private, version-locked API of the @angular/core the library was compiled with; the Angular Package Format requires partial declarations precisely so that a *consuming* linker can re-emit them for its own version, and there is nothing here for this cell's linker to link. So there is no line to align to: not a newer one, because none exists, and not the newest one, because it neither fixes the declaration nor is published in a form this cell consumes. The package is dropped as a declared difference. Doing so turns `YagaModule` in frontend/app/app.module.ts and `MapComponent` in the two map components into source demands the compiler states by name; choosing a replacement Angular Leaflet library is a source decision this table does not make, and no verified fork of yagajs/leaflet-ng2 was found to make it under the successor-fork rule. Read from https://registry.npmjs.org/@yaga/leaflet-ng2 and from the published tarballs of 1.0.0 and 1.1.0 under consent VL-LEGACY-CORPUS-2026-08-10 on 2026-08-14.",
 	}),
 	'jw-bootstrap-switch-ng2': Object.freeze({
 		kind: 'no-successor',
@@ -465,7 +469,7 @@ export const ANGULAR_16_ECOSYSTEM_PACKAGES: EcosystemPackages = Object.freeze({
 	}),
 	'rxjs-tslint': Object.freeze({
 		kind: 'no-successor',
-		fact: 'rxjs-tslint stops at 0.1.8 and is a TSLint rule set, so it shares TSLint\'s fate: there is no release of it for any lint line this cell carries. It is dropped with the rest of the TSLint toolchain rather than pinned beside a lint target that no longer exists.',
+		fact: "rxjs-tslint stops at 0.1.8 and is a TSLint rule set, so it shares TSLint's fate: there is no release of it for any lint line this cell carries. It is dropped with the rest of the TSLint toolchain rather than pinned beside a lint target that no longer exists.",
 	}),
 	'@sentry/angular': Object.freeze({
 		kind: 'aligned',
@@ -601,8 +605,164 @@ export const ANGULAR_16_BROWSER_CELL: AngularTargetCell = Object.freeze({
 	]),
 });
 
+/**
+ * The community layer as one *installed closure* carried it for Angular 13,
+ * read from the T009 proving run recorded in
+ * `evidence/runs/angular-13cell/pigallery2-compile.json` and its README.
+ *
+ * This table is deliberately a different kind of reading from
+ * {@link ANGULAR_16_ECOSYSTEM_PACKAGES}, and the difference is the honest part
+ * of it. The Angular 16 table is a registry survey: fifty packages, each read
+ * by asking `registry.npmjs.org` which lines that package published and which
+ * of them this cell accepts. Nothing of the sort was performed for Angular 13.
+ * What was performed is one installation — pigallery2 1.7.0 lifted onto Angular
+ * 13.4.0 / Node v16.20.2 / rxjs 6.6.7 — followed by an `ngcc` pass and an `ngc`
+ * AOT program that exited 0 with 0 diagnostics, and every entry below is a
+ * reading of the version *that closure resolved*, taken verbatim from the
+ * installed `package-lock.json`.
+ *
+ * So each `fact` says what was measured and where, and none of them claims a
+ * line was selected against the alternatives, because no alternatives were
+ * read. The table is narrow on purpose: a package absent from it is one this
+ * cell has read nothing about, which {@link ecosystemDispositionOf} reports as
+ * nothing and the operator surface reports as `unknown`. That is a declared
+ * hole, not a silent pass — see this cell’s `nonclaims`.
+ *
+ * The four Angular-facing libraries come in two shapes the evidence separates
+ * by name. Three are pre-Ivy ViewEngine packages that are consumable here only
+ * because `@angular/compiler-cli` 13.4.0 still ships a real `ngcc` entry point
+ * and back-compiles them in place; one is Ivy-native and was never an ngcc
+ * case. The three repins beside them are ordinary migration arithmetic the same
+ * run recorded, and the four toolchain pins are the cell’s own resolved
+ * versions, restated here so the surface that answers "what did the cell read
+ * about this package" can answer it with the reading rather than with a range.
+ */
+export const ANGULAR_13_ECOSYSTEM_PACKAGES: EcosystemPackages = Object.freeze({
+	'ng2-slim-loading-bar': Object.freeze({
+		kind: 'aligned',
+		range: '4.0.0',
+		fact: 'ng2-slim-loading-bar 4.0.0 — the version an Angular 8-era workspace already pins, and the newest the package ever published — was measured consumable at this cell rather than dropped. In the installed closure of the T009a proving run (evidence/runs/angular-13cell/pigallery2-compile.json § ngcc.libraries) @angular/compiler-cli 13.4.0 ngcc back-compiled it from its `module` (esm5) property: the CLI passes webpack’s resolve.mainFields [es2015, browser, module, main] as --properties and --first-only stops at `module`, so no ngcc.config.js override was needed. The typings were read before and after the pass rather than inferred from an exit code — `static forRoot(): ModuleWithProviders` became `ModuleWithProviders<SlimLoadingBarModule>` beside ɵfac, ɵmod and ɵinj statics — and the AOT program then compiled SlimLoadingBarModule.forRoot() with zero NG6005. The reading is of this closure at this version: no other line of this package was read, and this range is carried because it was measured working here, not because a newer one was excluded.',
+	}),
+	'jw-bootstrap-switch-ng2': Object.freeze({
+		kind: 'aligned',
+		range: '2.0.5',
+		fact: 'jw-bootstrap-switch-ng2 2.0.5 — the era pin and the newest version published — is a pre-Ivy ViewEngine package in the classic ng-packagr layout, and it was measured consumable at this cell after ngcc back-compiled it from its es2015 (fesm2015) property. The check is the package’s own __processed_by_ivy_ngcc__ marker read off disk after the pass ({es2015: 13.4.0, fesm2015: 13.4.0, typings: 13.4.0}), not the ngcc exit code, and the AOT program then resolved JwBootstrapSwitchNg2Module and the bsSwitch bindings across the settings templates with zero diagnostics. Read from the installed closure of the T009a proving run, evidence/runs/angular-13cell/pigallery2-compile.json § ngcc.libraries. No other line of this package was read.',
+	}),
+	'@ngx-translate/i18n-polyfill': Object.freeze({
+		kind: 'aligned',
+		range: '1.0.0',
+		fact: '@ngx-translate/i18n-polyfill 1.0.0 (published 2018, the last release) is a pre-Ivy ViewEngine package that ships a .metadata.json, and it was measured consumable at this cell after ngcc back-compiled it from its es2015 (fesm2015) property; the __processed_by_ivy_ngcc__ marker read off disk afterwards carries {es2015: 13.4.0, fesm2015: 13.4.0, typings: 13.4.0}, and the I18n provider it supplies resolved across the settings components with zero diagnostics. Two conditions of this reading are recorded because they are conditions and not properties of the package: it declares a stale peer @angular/core ^7.0.0 and therefore ERESOLVEs under npm 8 strict peers, so the closure was installed with legacy-peer-deps=true; and it is a FOURTH pre-Ivy library, one the sealed pigallery2 holdout receipt does not name, which was invisible until the whole application closure was installed rather than a three-import probe. Read from the installed closure of the T009a proving run, evidence/runs/angular-13cell/pigallery2-compile.json § ngcc.libraries.',
+	}),
+	'@yaga/leaflet-ng2': Object.freeze({
+		kind: 'aligned',
+		range: '1.1.0',
+		fact: '@yaga/leaflet-ng2 1.1.0 is Ivy-native and was never an ngcc case at this cell: ngcc processed nothing for it and created no Ivy entry points, and the reading that establishes it is the published typings rather than that silence — lib/yaga.module.d.ts already carries `static ɵmod: i0.ɵɵNgModuleDeclaration<YagaModule, [23 directives], never, [23 directives]>` and `static ɵinj: i0.ɵɵInjectorDeclaration<YagaModule>`, complete and listing all 23 exported directives. YagaModule is imported by the application module and the yaga-map / yaga-tile-layer / yaga-marker / yaga-popup bindings in the map templates all resolved with zero NG8001 and zero NG8002 in the final AOT run. Read from the installed closure of the T009a proving run, evidence/runs/angular-13cell/pigallery2-compile.json § ngcc.libraries. This is a reading of this Angular line only: the same version is refused at the Angular 16 cell, whose linker cannot consume the full-compilation-mode instructions it publishes.',
+	}),
+	'ngx-bootstrap': Object.freeze({
+		kind: 'aligned',
+		range: '8.0.0',
+		fact: 'ngx-bootstrap 8.0.0 is an Angular-13-era Ivy-native release substituted for the 5.1.0 an Angular 8-era workspace declares. It is not an ngcc case and it is not a survey result: it is the version the T009a closure resolved and compiled with, recorded so the compile reading is reproducible, and the record files it as ordinary migration arithmetic rather than as a registry selection. Read verbatim from the installed package-lock.json of the T009 proving run, evidence/runs/angular-13cell/pigallery2-compile.json § ngcc.supportingLibrariesRepinned. Nothing here establishes that this line is behaviour-compatible with the Angular-8-era line it replaces: it type-checks and its directives resolve, and that is the whole of the claim.',
+	}),
+	'ngx-toastr': Object.freeze({
+		kind: 'aligned',
+		range: '14.3.0',
+		fact: 'ngx-toastr 14.3.0 is an Angular-13-era Ivy-native release substituted for the 10.0.4 an Angular 8-era workspace declares. It is not an ngcc case and no other line of the package was read: this is the version the T009a closure resolved and compiled with, read verbatim from the installed package-lock.json and recorded in evidence/runs/angular-13cell/pigallery2-compile.json § ngcc.supportingLibrariesRepinned as ordinary migration arithmetic. Nothing here establishes behaviour compatibility with the era line — it type-checks and its directives resolve, and that is all that was measured.',
+	}),
+	'ngx-clipboard': Object.freeze({
+		kind: 'aligned',
+		range: '15.1.0',
+		fact: 'ngx-clipboard 15.1.0 is an Angular-13-era Ivy-native release substituted for the 12.2.0 an Angular 8-era workspace declares. It is not an ngcc case and no other line of the package was read: this is the version the T009a closure resolved and compiled with, read verbatim from the installed package-lock.json and recorded in evidence/runs/angular-13cell/pigallery2-compile.json § ngcc.supportingLibrariesRepinned as ordinary migration arithmetic. Nothing here establishes behaviour compatibility with the era line — it type-checks and its directives resolve, and that is all that was measured.',
+	}),
+	rxjs: Object.freeze({
+		kind: 'aligned',
+		range: '~6.6.7',
+		fact: 'rxjs 6.6.7 is the pin this whole cell is held together by, and it was measured rather than chosen: ngcc 13 raises a hard exit-1 error against an rxjs 7 closure, and under 6.6.7 the same pass emitted only a warning — "Entry point \'ng2-slim-loading-bar\' contains deep imports into rxjs/Subject, rxjs/Observable" — and then exited 0. That is the spike’s rxjs-major condition confirmed at application scale rather than at probe scale. 6.6.7 is the version the installed package-lock.json of the T009 proving run carried, read verbatim, and evidence/runs/angular-13cell/pigallery2-compile.json § cell.pinsHeld records it as a pin the run never left. rxjs-compat is pinned to the same minor by this cell for the same reading.',
+	}),
+	typescript: Object.freeze({
+		kind: 'aligned',
+		range: '~4.6.4',
+		fact: 'typescript 4.6.4 is the compiler the T009 proving run used to reach `ngc` exit 0 with 0 diagnostics, read verbatim from the installed package-lock.json and recorded in evidence/runs/angular-13cell/pigallery2-compile.json § cell. Its era drift is measured as well as its version: lib.dom between TS 3.4 and TS 4.6 dropped the IE/WinJS `msOverflowStyle` vendor property, which the run recorded as one of the three single-line application source edits the lift required. Neither the Angular 13 line’s full accepted TypeScript range nor any other 4.x line was read here.',
+	}),
+	'zone.js': Object.freeze({
+		kind: 'aligned',
+		range: '~0.11.8',
+		fact: 'zone.js 0.11.8 is the version the installed closure of the T009 proving run resolved, read verbatim from its package-lock.json and recorded in evidence/runs/angular-13cell/pigallery2-compile.json § cell. It is a reading of what this cell installed, not a survey of what the 0.11 line published or of what Angular 13.4.0 would otherwise accept.',
+	}),
+	tslib: Object.freeze({
+		kind: 'aligned',
+		range: '^2.6.3',
+		fact: 'tslib 2.6.3 is the version the installed closure of the T009 proving run resolved, read verbatim from its package-lock.json and recorded in evidence/runs/angular-13cell/pigallery2-compile.json § cell. It is a reading of what this cell installed, not a survey of the 2.x line and not a claim about the lowest 2.x this Angular line accepts.',
+	}),
+});
+
+/**
+ * Angular 13 with the `browser` builder — the ngcc-bearing cell.
+ *
+ * This cell exists because the Angular 16 cell drops three pre-Ivy ViewEngine
+ * libraries as `no-successor`, and dropping them is a real difference rather
+ * than a repair: nothing on the 16 line converts a ViewEngine library, because
+ * `@angular/compiler-cli` 16 ships `ngcc` only as a stub. Angular 13.4.0 still
+ * ships a real `ngcc` entry point, and the T009 proving run measured what that
+ * buys — the same three libraries, plus a fourth the sealed holdout receipt did
+ * not name, back-compiled in place and consumed by an AOT program that exited 0
+ * with 0 diagnostics.
+ *
+ * The price is recorded with the purchase. Holding ngcc means holding rxjs at
+ * 6.x, because ngcc 13 refuses an rxjs 7 closure outright; and the Node line is
+ * v16.20.2 because that is the runtime the reading was taken on. The evidence
+ * chain is `evidence/runs/angular-13cell/` — T009a compile, T009b the
+ * reproducible lane pair, T009c–f the witness — and every number this cell
+ * states comes from it rather than from a registry.
+ */
+export const ANGULAR_13_BROWSER_CELL: AngularTargetCell = Object.freeze({
+	id: 'angular-13.4.0',
+	angularLine: '13.4',
+	builder: '@angular-devkit/build-angular:browser',
+	nodeLine: '16.20.2',
+	typescriptRange: '~4.6.4',
+	packages: Object.freeze({
+		'@angular/cli': '~13.3.11',
+		'@angular-devkit/build-angular': '~13.3.11',
+		rxjs: '~6.6.7',
+		'rxjs-compat': '~6.6.7',
+		'zone.js': '~0.11.8',
+		tslib: '^2.6.3',
+		typescript: '~4.6.4',
+	}),
+	families: Object.freeze({
+		'@angular/': '^13.4.0',
+		'@angular-devkit/': '^13.3.11',
+		'@schematics/': '^13.3.11',
+	}),
+	/**
+	 * Empty, and stated rather than omitted: the proving run’s tsconfig excluded
+	 * `frontend/test.ts` and every `**\/*.spec.ts`, so the karma and protractor
+	 * closure at this cell was never installed and never run. An empty table
+	 * leaves every test package at its era range and reports it, which is what
+	 * this cell has evidence for.
+	 */
+	testPackages: Object.freeze({}),
+	ecosystemPackages: ANGULAR_13_ECOSYSTEM_PACKAGES,
+	rationale: Object.freeze([
+		'Angular 13.4.0 is the framework version the T009 proving run measured, and the reason to name it is ngcc: @angular/compiler-cli 13.4.0 still ships a real ngcc entry point, so the pre-Ivy ViewEngine libraries the Angular 16 cell drops as no-successor are back-compiled in place and consumed instead. Recorded in evidence/runs/angular-13cell/pigallery2-compile.json.',
+		'rxjs is held at 6.6.7, and that is the price of the line above rather than a preference: ngcc 13 raises a hard exit-1 error against an rxjs 7 closure, where 6.6.7 produced a deep-import warning and exit 0 at application scale. rxjs-compat is pinned to the same minor because the run installed it there.',
+		'The Node line is 16.20.2 because that is the runtime the readings were taken on — a native darwin-arm64 v16.20.2 with npm 8.19.4 — and not because any wider Node range was read for this Angular line.',
+		'The CLI and devkit are pinned at 13.3.11 rather than at the framework version, because the CLI line has no 13.4.0 release: 13.3.11 is the last of the Angular 13 CLI line and peers @angular/compiler-cli ^13.0.0. Naming the framework version here would write a range nobody published, and the package manager refuses the whole tree with ETARGET before a single peer is read.',
+		'The `browser` builder is carried across the hop rather than swapped: it is the builder the era workspace already declares and the one the migrated lane built with under `ng build --configuration production` in the T009b lane pair, which built byte-identically twice.',
+	]),
+	nonclaims: Object.freeze([
+		'The ecosystem table for this cell is NARROW, and the gap is the first thing a reader is owed: it carries only the packages one installed closure — pigallery2 1.7.0 lifted onto this cell in the T009 proving run — actually resolved. The community layer beyond those entries is UNASSESSED for this cell. No registry survey was performed for Angular 13, so a library not named in the table is one this cell has read nothing about: readCellVerdicts reports it `unknown`, which is that surface working as documented and not a verdict that the library is fine here.',
+		'Every entry is a reading of one closure at one version, not a selection against alternatives. No newer or older line of any of these packages was read, so nothing here says a given range is the newest this cell accepts — only that this version was installed and compiled at this cell.',
+		'The test toolchain is not declared at all. The proving run’s tsconfig excluded frontend/test.ts and every *.spec.ts, so the karma and protractor closure at this cell is unmeasured; testPackages is empty and every test package is left at its era range and reported rather than aligned to a version nobody here read.',
+		'The three ViewEngine entries are consumable only because a real ngcc runs over them. That is a property of @angular/compiler-cli 13.4.0, not of this table: nothing in this repository installs the Angular 13 toolchain or performs the ngcc pass. Declaring a cell installs nothing and resolves nothing — the version ranges here are requests written into a manifest, not observed registry contents.',
+		'Nothing here establishes that an application aligned to this cell compiles, builds, or behaves as it did on its era cell. The measured lift needed three mechanical single-line source edits — ModuleWithProviders<T>, an undecorated abstract base class, and a lib.dom vendor property — and this table makes none of them.',
+		'The three repinned supporting libraries are not claimed to be behaviour-compatible with the Angular-8-era versions they replace. They type-check and their directives resolve; nothing more was measured, and the evidence record says so in its own notEstablished list.',
+	]),
+});
+
 export const ANGULAR_TARGET_CELLS: readonly AngularTargetCell[] = Object.freeze([
 	ANGULAR_16_BROWSER_CELL,
+	ANGULAR_13_BROWSER_CELL,
 ]);
 
 export type PackageManifest = Readonly<Record<string, unknown>>;
@@ -684,8 +844,8 @@ export function cellAcceptsBuildStamp(angularLine: string, stamp: AngularBuildSt
  */
 export function buildStampContradictions(cell: AngularTargetCell): readonly string[] {
 	const problems: string[] = [];
-	for (const [name, disposition] of Object.entries(cell.ecosystemPackages).sort(([left], [right]) =>
-		compareStrings(left, right),
+	for (const [name, disposition] of Object.entries(cell.ecosystemPackages).sort(
+		([left], [right]) => compareStrings(left, right),
 	)) {
 		if (disposition.kind !== 'aligned') continue;
 		const { buildStamp, excludedByBuildStamp } = disposition;
@@ -840,9 +1000,12 @@ export function familyPrefixOf(name: string, cell: AngularTargetCell): string | 
  * either table can be checked against the other: an entry that agrees with its
  * family range is not an override and does not appear.
  */
-export function familyPrefixedEcosystemReadings(
-	cell: AngularTargetCell,
-): readonly Readonly<{ name: string; prefix: string; familyRange: string; writes: string | null }>[] {
+export function familyPrefixedEcosystemReadings(cell: AngularTargetCell): readonly Readonly<{
+	name: string;
+	prefix: string;
+	familyRange: string;
+	writes: string | null;
+}>[] {
 	const overrides: Readonly<{
 		name: string;
 		prefix: string;
@@ -1081,7 +1244,7 @@ function unreadDeclarationReason(
 		);
 	return (
 		`${field}.${name} is declared at ${from} and ${cell.id} has read no line for it: it is named ` +
-		'by none of the cell\'s exact ranges, its generated test toolchain or its community layer, ' +
+		"by none of the cell's exact ranges, its generated test toolchain or its community layer, " +
 		'and no family prefix it writes matches the name. The era declaration was carried into the ' +
 		'migrated manifest unchanged, which is the only honest edit for a package nobody read — and ' +
 		'it is reported here rather than left silent, because an era pin standing beside an aligned ' +

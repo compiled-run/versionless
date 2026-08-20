@@ -22,7 +22,11 @@ import {
 	type SealedRecord,
 } from './angular-factoriolab-build-lanes-run.ts';
 import { CONSENT } from './angular-tiny-translator-lanes-run.ts';
-import { APPLIED_TREE, EVIDENCE_DIRECTORY, STAGE_DIRECTORY } from './angular-tiny-translator-apply-run.ts';
+import {
+	APPLIED_TREE,
+	EVIDENCE_DIRECTORY,
+	STAGE_DIRECTORY,
+} from './angular-tiny-translator-apply-run.ts';
 
 export const UNIT = 'lrapr-t006/u17c-tiny-translator-green-parity';
 export const GREEN_LANE_FILE = 'u17c-green-lane.json';
@@ -79,7 +83,7 @@ export const RESIDUAL_DEMANDS: readonly ResidualDemand[] = Object.freeze([
 		observed:
 			"src/app/model/asynchronous-file-reader.service.ts:33:57 - error TS2322: Type 'string | ArrayBuffer' is not assignable to type 'string'.",
 		neededTransform:
-			"Not a package change at all: the DOM typings the compiler ships widened `FileReader.result` to `string | ArrayBuffer | null` to describe what the API always did. The application reads a file as text and so its result really is a string, but nothing in the type says so. The honest answers are a narrowing at the use site or a declared assertion; either is a call-site transform, and neither is a version mapping.",
+			'Not a package change at all: the DOM typings the compiler ships widened `FileReader.result` to `string | ArrayBuffer | null` to describe what the API always did. The application reads a file as text and so its result really is a string, but nothing in the type says so. The honest answers are a narrowing at the use site or a declared assertion; either is a call-site transform, and neither is a version mapping.',
 	},
 ]);
 
@@ -169,7 +173,8 @@ export async function buildGreenLaneRecord(): Promise<SealedRecord> {
 			{
 				name: 'barrel-entry-point-split',
 				package: '@versionless/angular',
-				answers: "the @angular/material barrel demand, and the injection-token demand that followed it",
+				answers:
+					'the @angular/material barrel demand, and the injection-token demand that followed it',
 				mechanism:
 					"The installed package's own exports map is enumerated, each entry point's declaration file is parsed, and every barrel symbol is mapped to the shallowest entry point whose surface carries it. A symbol on no surface is refused by name and its whole declaration is left alone. Nothing about @angular/material is written into the capability: the same reading of a package that kept its barrel reports nothing to split.",
 				applicationFilesChanged: 8,
@@ -177,7 +182,8 @@ export async function buildGreenLaneRecord(): Promise<SealedRecord> {
 			{
 				name: 'node-core-binding-migration',
 				package: '@versionless/angular',
-				answers: "the application half of the `util` demand — 16 modules importing isNullOrUndefined, isString and format",
+				answers:
+					'the application half of the `util` demand — 16 modules importing isNullOrUndefined, isString and format',
 				mechanism:
 					"Each binding is expanded into the ECMAScript that Node documents it as: `isNullOrUndefined(x)` becomes `(x == null)`, `isString(x)` becomes `(typeof x === 'string')`, and every expansion mentions its argument exactly once so no call can be evaluated twice. `format` is expanded as a directive reading — a literal %s-only format string becomes a template literal — and refused for every other directive. A module with one reference the table cannot expand keeps its import and every call site.",
 				applicationFilesChanged: 16,
@@ -185,7 +191,8 @@ export async function buildGreenLaneRecord(): Promise<SealedRecord> {
 			{
 				name: 'declared browser dependency for `util`',
 				package: 'the application manifest',
-				answers: "the library half of the `util` demand — ngx-i18nsupport-lib 1.10.2's own `require('util')`",
+				answers:
+					"the library half of the `util` demand — ngx-i18nsupport-lib 1.10.2's own `require('util')`",
 				mechanism:
 					"No application transform reaches a published library's own imports, and no shim was authored for it. The workspace declares `util@^0.12.5` — the published browser implementation of the core module — as an explicit dependency, so ordinary node resolution answers the library's require and the declaration is visible in the manifest rather than hidden in a bundler alias. It is scoped to the specifier rather than to the dependency, because the browser builder exposes no issuer-scoped alias; the only importer left after the call-site transform is ngx-i18nsupport-lib, and that is a fact about this closure rather than a guarantee the mechanism enforces.",
 				applicationFilesChanged: 0,
@@ -205,14 +212,12 @@ export async function buildGreenLaneRecord(): Promise<SealedRecord> {
 				{
 					round: 1,
 					diagnosticsRead: 'build-1.stderr.log (the u17b build)',
-					moved:
-						'rxjs: 10 files, 51 changes. barrel: 8 files, 8 declarations split. util: 16 files, 50 call sites and imports.',
+					moved: 'rxjs: 10 files, 51 changes. barrel: 8 files, 8 declarations split. util: 16 files, 50 call sites and imports.',
 				},
 				{
 					round: 2,
 					diagnosticsRead: 'build-2.stderr.log',
-					moved:
-						'rxjs: 2 files, 5 changes — the call sites that were typed `any` until round 1 fixed the call before them. The other two capabilities found nothing left to do, which is the check that they are idempotent.',
+					moved: 'rxjs: 2 files, 5 changes — the call sites that were typed `any` until round 1 fixed the call before them. The other two capabilities found nothing left to do, which is the check that they are idempotent.',
 				},
 			],
 		},
@@ -235,8 +240,7 @@ export async function buildGreenLaneRecord(): Promise<SealedRecord> {
 			diagnosticListSha256: build.sha256,
 		})),
 		determinism: {
-			claim:
-				'build-3 and build-4 ran the same command over the same bytes with no edit between them and produced the same exit status and the same diagnostic list, digest for digest.',
+			claim: 'build-3 and build-4 ran the same command over the same bytes with no edit between them and produced the same exit status and the same diagnostic list, digest for digest.',
 			runs: 2,
 			identical: builds[2]?.sha256 === builds[3]?.sha256,
 		},

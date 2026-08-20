@@ -1153,8 +1153,9 @@ export function parseWitnessAngularJiraCloneReceipt(
 			run.servedStatic.byteIdentical !== true ||
 			run.scrollSurface !== undefined ||
 			run.interactions.length === 0 ||
-			[...new Set(run.interactions.map((interaction) => interaction.kind))].sort().join(',') !==
-				'click,drag,hover,press,type' ||
+			[...new Set(run.interactions.map((interaction) => interaction.kind))]
+				.sort()
+				.join(',') !== 'click,drag,hover,press,type' ||
 			!exact(run.witnessRecord.trackedEventCounts, receipt.trackedEvents) ||
 			run.semanticDigest !== witnessAngularJiraCloneRawDigest(run) ||
 			run.behaviorDigest !== witnessAngularJiraCloneBehaviorDigest(run)

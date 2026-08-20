@@ -272,10 +272,7 @@ export async function deriveHoldoutReactCypressRwaReceipt(
 	}
 	const profile = record(
 		JSON.parse(
-			await readFile(
-				join(root, HOLDOUT_REACT_CYPRESS_RWA_RUN_EVIDENCE[0]!.path),
-				'utf8',
-			),
+			await readFile(join(root, HOLDOUT_REACT_CYPRESS_RWA_RUN_EVIDENCE[0]!.path), 'utf8'),
 		),
 		'build profile',
 	);
@@ -311,7 +308,8 @@ export async function deriveHoldoutReactCypressRwaReceipt(
 		count(migrated.attempts, 'migrated attempts') !== 2 ||
 		flag(baseline.byteStableAcrossRebuilds, 'baseline byte stability') !== true ||
 		flag(migrated.stableAcrossAttempts, 'migrated stability') !== true ||
-		text(first.digest, 'baseline first digest') !== text(second.digest, 'baseline second digest')
+		text(first.digest, 'baseline first digest') !==
+			text(second.digest, 'baseline second digest')
 	)
 		throw new Error('Cypress RWA holdout lane outcomes differ');
 	const finding = record(profile.falsificationFinding, 'falsification finding');
@@ -1092,7 +1090,10 @@ export async function deriveHoldoutReactCypressRwaRerunReceipt(
 				),
 				lockfileSha256: text(lockfile.sha256, 're-run lockfile digest'),
 				manifestSha256: text(manifest.sha256, 're-run manifest digest'),
-				statement: text(acquisition.lanesShareOneDependencyClosure, 're-run shared closure'),
+				statement: text(
+					acquisition.lanesShareOneDependencyClosure,
+					're-run shared closure',
+				),
 			},
 			baseline: {
 				outcome: 'green',
@@ -1133,7 +1134,10 @@ export async function deriveHoldoutReactCypressRwaRerunReceipt(
 			baselineAttempts: count(baseline.builds, 're-run baseline builds'),
 			baselineDigestsIdentical: first.digest === second.digest,
 			migratedAttempts: count(migrated.attempts, 're-run migrated attempts'),
-			migratedDemandsIdentical: flag(migrated.stableAcrossAttempts, 're-run migrated stability'),
+			migratedDemandsIdentical: flag(
+				migrated.stableAcrossAttempts,
+				're-run migrated stability',
+			),
 			demandDigest: sha256(canonicalize(demands)),
 		},
 		finding: {
@@ -1175,7 +1179,10 @@ export async function deriveHoldoutReactCypressRwaRerunReceipt(
 				construct: text(reached.construct, 're-run application construct'),
 				note: text(reached.note, 're-run application importer note'),
 			},
-			whyThisIsNotAnAdapterBug: text(finding.whyThisIsNotAnAdapterBug, 're-run adapter reasoning'),
+			whyThisIsNotAnAdapterBug: text(
+				finding.whyThisIsNotAnAdapterBug,
+				're-run adapter reasoning',
+			),
 			actionTaken: text(finding.actionTaken, 're-run action taken'),
 		},
 		observedButNotFatal: {
@@ -1204,9 +1211,10 @@ export async function deriveHoldoutReactCypressRwaRerunReceipt(
 		parity: {
 			comparable: false,
 			reason: text(parity.reason, 're-run parity reason'),
-			declaredDifferences: array(parity.declaredDifferences, 're-run declared differences').map(
-				(value) => text(value, 're-run declared difference'),
-			),
+			declaredDifferences: array(
+				parity.declaredDifferences,
+				're-run declared differences',
+			).map((value) => text(value, 're-run declared difference')),
 		},
 		nonclaims: array(parity.nonClaims, 're-run non-claims').map((value) =>
 			text(value, 're-run non-claim'),
@@ -1228,7 +1236,10 @@ export async function deriveHoldoutReactCypressRwaRerunReceipt(
 export function parseHoldoutReactCypressRwaRerunReceipt(
 	value: unknown,
 ): HoldoutReactCypressRwaRerunReceipt {
-	const receipt = record(value, 're-run receipt') as unknown as HoldoutReactCypressRwaRerunReceipt;
+	const receipt = record(
+		value,
+		're-run receipt',
+	) as unknown as HoldoutReactCypressRwaRerunReceipt;
 	if (
 		receipt.schemaVersion !== HOLDOUT_REACT_CYPRESS_RWA_RERUN_SCHEMA ||
 		receipt.role !== 'holdout' ||
@@ -1413,7 +1424,9 @@ export async function verifyHoldoutReactCypressRwaRerunEvidence(rootDir = '.'): 
 	);
 	const derived = await deriveHoldoutReactCypressRwaRerunReceipt(root);
 	if (canonicalize(published) !== canonicalize(derived))
-		throw new Error('Cypress RWA holdout re-run receipt does not match its committed run evidence');
+		throw new Error(
+			'Cypress RWA holdout re-run receipt does not match its committed run evidence',
+		);
 	if (
 		(await readFile(join(root, HOLDOUT_REACT_CYPRESS_RWA_RERUN_MARKDOWN_PATH), 'utf8')) !==
 		renderHoldoutReactCypressRwaRerunReceipt(published)

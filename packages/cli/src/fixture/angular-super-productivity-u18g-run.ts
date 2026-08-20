@@ -72,10 +72,7 @@ function typesOf(value: unknown): string | null {
  * no declaration entry is recorded as such rather than guessed at — an untyped
  * import raises no TS1259 and demands nothing.
  */
-async function readExportAssignment(
-	tree: string,
-	name: string,
-): Promise<ExportAssignmentReading> {
+async function readExportAssignment(tree: string, name: string): Promise<ExportAssignmentReading> {
 	const root = path.join(tree, 'node_modules', name);
 	const absent: ExportAssignmentReading = Object.freeze({
 		package: name,
@@ -86,7 +83,9 @@ async function readExportAssignment(
 		complete: false,
 	});
 	if (!existsSync(path.join(root, 'package.json'))) return absent;
-	const manifest = JSON.parse(await readFile(path.join(root, 'package.json'), 'utf8')) as Readonly<{
+	const manifest = JSON.parse(
+		await readFile(path.join(root, 'package.json'), 'utf8'),
+	) as Readonly<{
 		version?: unknown;
 		types?: unknown;
 		typings?: unknown;
@@ -103,8 +102,7 @@ async function readExportAssignment(
 	// `index.d.ts`, which is what node's own resolution falls back to.
 	const fallback = existsSync(path.join(root, 'index.d.ts')) ? 'index.d.ts' : null;
 	const entry = declared ?? fallback;
-	if (entry === null)
-		return Object.freeze({ ...absent, version, complete: true });
+	if (entry === null) return Object.freeze({ ...absent, version, complete: true });
 	const file = path.join(root, entry);
 	if (!existsSync(file)) return Object.freeze({ ...absent, version });
 	const source = await readFile(file, 'utf8');
@@ -134,8 +132,7 @@ export async function interopRound(tree: string = APPLIED_TREE): Promise<Capabil
 	for (const reading of readings)
 		for (const site of reading.defaultImports) wanted.add(packageOfSpecifier(site.specifier));
 	const packages: ExportAssignmentReading[] = [];
-	for (const name of [...wanted].sort())
-		packages.push(await readExportAssignment(tree, name));
+	for (const name of [...wanted].sort()) packages.push(await readExportAssignment(tree, name));
 
 	const config = path.join(tree, 'tsconfig.json');
 	const migration = enableSyntheticDefaultImports(
@@ -221,7 +218,10 @@ export async function voidExecutorRound(
 }
 
 export async function main(): Promise<void> {
-	const log = await readFile(path.join(STAGE_DIRECTORY, process.argv[2] ?? 'build-5.log'), 'utf8');
+	const log = await readFile(
+		path.join(STAGE_DIRECTORY, process.argv[2] ?? 'build-5.log'),
+		'utf8',
+	);
 	const outcomes: CapabilityOutcome[] = [...(await applyRound())];
 	outcomes.push(await interopRound());
 	outcomes.push(await voidExecutorRound(log));

@@ -258,8 +258,10 @@ function effectOf(source: string, statement: AstNode, parameter: string | null):
 	const field = thisMember(expression.left);
 	const property = trailingProperty(expression.left);
 	if (field === null && property !== 'disabled')
-		return 'it assigns to something other than a field of this instance or a `disabled` ' +
-			'property of an element';
+		return (
+			'it assigns to something other than a field of this instance or a `disabled` ' +
+			'property of an element'
+		);
 	if (!isBooleanOf(expression.right, parameter))
 		return field === null
 			? 'it assigns a value this capability cannot read as a boolean to a `disabled` property'
@@ -270,7 +272,8 @@ function effectOf(source: string, statement: AstNode, parameter: string | null):
 
 /** The parameter name of a method, when it takes exactly one plain identifier. */
 function soleParameterName(value: AstNode): string | null {
-	if (value.type !== 'FunctionExpression' && value.type !== 'ArrowFunctionExpression') return null;
+	if (value.type !== 'FunctionExpression' && value.type !== 'ArrowFunctionExpression')
+		return null;
 	const first = value.params[0];
 	if (first === undefined) return null;
 	return first.type === 'Identifier' ? first.name : null;
@@ -283,7 +286,8 @@ type MethodNode = Extract<AstNode, { type: 'MethodDefinition' }>;
 function enclosingClass(module: SemanticModule, node: AstNode): ClassNode | null {
 	let current: AstNode | null = node;
 	while (current !== null) {
-		if (current.type === 'ClassDeclaration' || current.type === 'ClassExpression') return current;
+		if (current.type === 'ClassDeclaration' || current.type === 'ClassExpression')
+			return current;
 		current = module.parentOf(current);
 	}
 	return null;
@@ -418,7 +422,7 @@ export function declareLegacyCallSetDisabledState(input: {
 					`custom ${CONTROL_VALUE_ACCESSOR_TYPE} implementations read across ` +
 					`${String(input.modules.length)} modules, none declares a ` +
 					`\`${SET_DISABLED_STATE_METHOD}\` that does anything but toggle its disabled state, ` +
-					'so Angular 15\'s attach-time call is unobservable here and restoring the era guard ' +
+					"so Angular 15's attach-time call is unobservable here and restoring the era guard " +
 					'would be a provider answering a question this application does not ask',
 			],
 			frozen,
@@ -453,10 +457,10 @@ export function declareLegacyCallSetDisabledState(input: {
 					(roots.length === 0
 						? `none of the ${String(input.modules.length)} modules read carries an ` +
 							`@${NG_MODULE_DECORATOR} literal with a \`bootstrap\` property, so this ` +
-							'capability cannot say which providers are the application\'s root providers'
+							"capability cannot say which providers are the application's root providers"
 						: `${String(roots.length)} modules carry a bootstrapping @${NG_MODULE_DECORATOR} ` +
 							`literal (${names.join(', ')}), and choosing between them is the ` +
-							'application\'s decision rather than this capability\'s'),
+							"application's decision rather than this capability's"),
 			],
 			frozen,
 		);

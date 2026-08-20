@@ -32,7 +32,11 @@ import {
 } from '../../../frameworks/angular/src/index.ts';
 import { readDeepImportReading } from './angular-tiny-translator-final-run.ts';
 import { canonical, sha256 } from './angular-factoriolab-migration-run.ts';
-import { sealRecord, verifySealedRecord, type SealedRecord } from './angular-factoriolab-build-lanes-run.ts';
+import {
+	sealRecord,
+	verifySealedRecord,
+	type SealedRecord,
+} from './angular-factoriolab-build-lanes-run.ts';
 import { applyMigration, type Application } from './angular-tiny-translator-apply-run.ts';
 
 const repositoryRoot = path.resolve(import.meta.dirname, '../../../..');
@@ -55,7 +59,10 @@ export const ERA_CLOSURE_TREE = path.join(
 );
 
 /** The migrated lane, beside the baseline lane the previous unit built. */
-export const STAGE_DIRECTORY = path.join(repositoryRoot, '.versionless/work/angular-pigallery2/target');
+export const STAGE_DIRECTORY = path.join(
+	repositoryRoot,
+	'.versionless/work/angular-pigallery2/target',
+);
 /** The pinned revision with the changeset written into it; the build tree. */
 export const APPLIED_TREE = path.join(STAGE_DIRECTORY, 'app');
 
@@ -78,7 +85,10 @@ export const MIGRATION_RECORD_FILE = 'u3-source-migration.json';
  * A migration handed only `frontend/` would scan a strict subset of what the
  * compiler reads.
  */
-export const APPLICATION_SOURCE_DIRECTORIES: readonly string[] = Object.freeze(['frontend', 'common']);
+export const APPLICATION_SOURCE_DIRECTORIES: readonly string[] = Object.freeze([
+	'frontend',
+	'common',
+]);
 
 /**
  * The build log the previous migrated run wrote, and which this one reads.

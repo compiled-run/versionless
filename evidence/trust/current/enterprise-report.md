@@ -2,8 +2,8 @@
 
 One machine artifact for an enterprise reviewer, derived entirely from canonical receipts the trust package already verified. It states what was proven, on which sources, with which tools, under which commands, and — in the same document — what is unsupported, unknown, or deliberately not claimed.
 
-- Trust manifest canonical SHA-256: `f61abb7a2efbe2dd97b45efae6f793cbb167deb85edba79a381f7108bab72ed7`
-- Deterministic core: `d3137e504d866573235987505329b9f9e3f6f1b88ad19e793d6274cd80ba7f3b`
+- Trust manifest canonical SHA-256: `05d9aca5e427e0ab104f0fb74a9c110b2b6edab7a7d5fc5bf54751a49699a6b0`
+- Deterministic core: `6eae139a6ce02c91bb027a1d45d944f16f5add49e8c2f16754a44ef9de1aa185`
 - Corpus conformance: `101412703cc116969dd562a6ea46dde3d05424ad5194e535aca9750e373bc482`
 - Adapter freeze: commit `0ecd410691df10fbc68c9ddcd012dafa86aba536`, composite `27741d9c8bfac1b6bb0b330423b1cf258fcde722f548ecb9cf8b389cc98e4234`
 - Certification: **not-certified** — This package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation.
@@ -67,7 +67,7 @@ Tool: `versionless-local-trust-generator`, adapter frozen at commit `0ecd410691d
 - `corpus-conformance.json` — `39d2b7eb3040517f867c28a4f546a9ff6c0661c9b8e0ba4ad7ea54f05a709d9d`
 - `script-surface.json` — `e10f554b46ddb275a94da16b89c3c265789724ad67aba3e5e5dddc8f0fa6b502`
 - `runtime-script-observation.json` — `086e0c84d48c7f53a814f67a51b7c25239b6f413306361fde1cfdfc3a0f1afc2`
-- `capability-coverage.json` — `d4a40ba7e520e5c104cbe0346e8b5eb38cedf60a46b9370a7bedfc5d09a02db1`
+- `capability-coverage.json` — `fb290d0204b4e8737d08c982834649abe1c54c6dbf49e228f2cd9e2e1abcdd10`
 
 Receipt inventory (27 preserved receipts):
 
@@ -208,7 +208,7 @@ Every green cell below is filtered out of the Judge counting ledger the corpus d
 
 ### Out of matrix
 
-A capability is claimed general, and therefore in the matrix, only once at least 2 independent applications prove it. The capabilities below are proven on fewer than that and are out of the matrix; they are named rather than silently claimed. 50 of 58 enumerated capabilities are out of the matrix; 8 are cross-proven and in it.
+A capability is claimed general, and therefore in the matrix, only once at least 2 independent applications prove it. The capabilities below are proven on fewer than that and are out of the matrix; they are named rather than silently claimed. 51 of 59 enumerated capabilities are out of the matrix; 8 are cross-proven and in it.
 
 - react: `react-cra-process-global`
 - react: `react-next-static-adapter`
@@ -260,6 +260,7 @@ A capability is claimed general, and therefore in the matrix, only once at least
 - angular: `superseded-era-lockfile`
 - angular: `workspace-script-flags`
 - angular: `departed-dom-lib-member`
+- angular: `locale-id-provider`
 
 ## 8. Deviations recorded, not masked
 
@@ -313,7 +314,7 @@ Every claim restates a score or digest the corpus derived; every non-claim is ca
 
 - 6 of 6 React-lineage cells and 4 of 4 Angular-lineage cells carry a Judge-accepted direct-Witness browser proof against the frozen adapter, each on its own immutable source application.
 - Every number above is derived from the Judge counting ledger inside `corpus-conformance.json` (`101412703cc116969dd562a6ea46dde3d05424ad5194e535aca9750e373bc482`); the cells are enumerated in this record and each names the receipt it was counted off.
-- 8 of 58 enumerated migration capabilities are cross-proven on at least two independent applications and are therefore in the matrix.
+- 8 of 59 enumerated migration capabilities are cross-proven on at least two independent applications and are therefore in the matrix.
 - Every artifact in this package is bound by SHA-256 to the trust manifest, and the derived documents are re-derived from the same canonical receipts at verification time.
 - The two published holdouts that did not end RED are reported with the exact outcome string their receipts carry, and both are counted in no lineage numerator.
 
@@ -325,7 +326,7 @@ Every claim restates a score or digest the corpus derived; every non-claim is ca
 - Locality is Versionless-spawned processes and browser routing and process-scoped: OS-wide isolation is **false** and is not claimed.
 - Neither holdout is counted in any lineage numerator. This holdout passed, and it is still counted in no lineage numerator: a passing holdout shows the frozen adapter carrying one further application, not a migrated-application product count. It is published rather than folded into any numerator. Never counted in any lineage numerator by this record. The migrated production build is green and repeatable, and the Witness is green on the anonymous catalog surface — twice per lane, one parity digest, with a mutation-red and byte-restore proof under it. What that leaves unproven is stated beside it: every surface outside the anonymous catalog: identity is out of surface and basket, orders and campaigns are out of surface behind it, the SignalR hub was never reached, and text entry and drag were not tested — those surfaces are unproven rather than proven absent. Whether a holdout proven on a bounded surface should ever reach a numerator is the Judge's decision, taken on the Judge's ledger and not here. The install RED under the frozen f1a63359 composite is retained beside all of it as the record of what the frozen adapter did.
 - The eShopOnContainers WebSPA holdout is published as `witness-passed-on-bounded-anonymous-catalog-surface` and is never restated in any shorter or more general form. The surfaces it does not cover are named: identity (out-of-surface), basket (out-of-surface), orders (out-of-surface), campaigns (out-of-surface), signalr (not-reached), text-entry (not-tested), drag (not-tested).
-- 50 of 58 enumerated capabilities are proven on fewer than two independent applications and are **out of the matrix**; nothing general is claimed for them.
+- 51 of 59 enumerated capabilities are proven on fewer than two independent applications and are **out of the matrix**; nothing general is claimed for them.
 - Static script-surface evidence claims no payment-page applicability (**not-established**), no dynamic script insertion coverage (**not-tested**), and no PCI compliance (**not-claimed**).
 - Runtime script observation is scoped to the exact qualified journeys: global dynamic-insertion coverage is **not-established** and PCI compliance is **not-claimed**.
 - The Angular 16 pre-Ivy-only-dependency cell is declared **unsupported**. Prevalence is published as **5-of-6** and is never rounded up to include the sixth application, whose condition is a different one: The no-successor pre-Ivy condition was observed in 5 of 6 independently selected webpack-era Angular applications: 1 tested-and-failed and 4 screened-and-failed. The sixth, eShopOnContainers, carries a first-party-successor removal, which is a distinct condition and is not counted in the 5.

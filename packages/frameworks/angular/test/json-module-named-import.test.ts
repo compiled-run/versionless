@@ -27,16 +27,21 @@ describe('json module named import', () => {
 		expect(isJsonSpecifier('../../package.json')).toBe(true);
 		expect(isJsonSpecifier('../../package')).toBe(false);
 		expect(defaultLocalFor('../../package.json', new Set())).toBe('packageJson');
-		expect(defaultLocalFor('../../package.json', new Set(['packageJson']))).toBe('packageJson2');
+		expect(defaultLocalFor('../../package.json', new Set(['packageJson']))).toBe(
+			'packageJson2',
+		);
 		expect(defaultLocalFor('./i18n/en-GB.json', new Set())).toBe('enGBJson');
 	});
 
 	it('rewrites the named import into a default import and a destructuring', () => {
 		const migration = rewriteJsonNamedImports(
 			'src/environments/environment.ts',
-			["import {version} from '../../package.json';", '', 'export const environment = {version};', ''].join(
-				'\n',
-			),
+			[
+				"import {version} from '../../package.json';",
+				'',
+				'export const environment = {version};',
+				'',
+			].join('\n'),
 			reading,
 		);
 		expect(migration.changed).toBe(true);

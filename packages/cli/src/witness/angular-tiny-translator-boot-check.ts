@@ -81,9 +81,7 @@ function normalizeOrigin(text: string, origin: string): string {
  * policy imposed here would produce console errors of its own that the caller
  * would then have to account for.
  */
-export async function observeAngularTinyTranslatorBoot(
-	laneRoot: string,
-): Promise<BootObservation> {
+export async function observeAngularTinyTranslatorBoot(laneRoot: string): Promise<BootObservation> {
 	const staticServer = await startStaticServer(laneRoot);
 	const host = createPlaywrightWitnessHost({ chromiumExecutable });
 	const pageErrors: string[] = [];

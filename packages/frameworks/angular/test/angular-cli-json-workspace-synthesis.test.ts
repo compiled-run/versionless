@@ -20,7 +20,11 @@ const eraWorkspace = JSON.stringify(
 			{
 				root: 'src',
 				outDir: 'dist',
-				assets: ['assets', 'favicon.ico', { glob: '**/*', input: 'extra', output: '/extra' }],
+				assets: [
+					'assets',
+					'favicon.ico',
+					{ glob: '**/*', input: 'extra', output: '/extra' },
+				],
 				index: 'index.html',
 				main: 'main.ts',
 				polyfills: 'polyfills.ts',
@@ -115,7 +119,10 @@ describe('Angular CLI 1.x workspace synthesis', () => {
 		const configurations = build['configurations'] as JsonObject;
 		expect(Object.keys(configurations).sort()).toEqual(['production', 'staging']);
 		expect((configurations['production'] as JsonObject)['fileReplacements']).toEqual([
-			{ replace: 'src/environments/environment.ts', with: 'src/environments/environment.prod.ts' },
+			{
+				replace: 'src/environments/environment.ts',
+				with: 'src/environments/environment.prod.ts',
+			},
 		]);
 		expect(configurations['production']).toMatchObject({
 			/**
@@ -230,8 +237,9 @@ describe('Angular CLI 1.x workspace synthesis', () => {
 		});
 		const synthesis = synthesizeAngularWorkspace(twoApps, ANGULAR_16_BROWSER_CELL);
 		expect(synthesis.unhandled.join('\n')).toContain('more than one app would claim it');
-		expect(Object.keys((JSON.parse(synthesis.config) as JsonObject)['projects'] as JsonObject))
-			.toEqual([]);
+		expect(
+			Object.keys((JSON.parse(synthesis.config) as JsonObject)['projects'] as JsonObject),
+		).toEqual([]);
 	});
 
 	it('names each app of a multi-app workspace by its own name field', () => {
@@ -250,7 +258,10 @@ describe('Angular CLI 1.x workspace synthesis', () => {
 
 	it('refuses a document that is not in the pre-angular.json format', () => {
 		expect(() =>
-			synthesizeAngularWorkspace(JSON.stringify({ version: 1, projects: {} }), ANGULAR_16_BROWSER_CELL),
+			synthesizeAngularWorkspace(
+				JSON.stringify({ version: 1, projects: {} }),
+				ANGULAR_16_BROWSER_CELL,
+			),
 		).toThrow(/carries no apps\[\] array/);
 	});
 });
@@ -278,13 +289,15 @@ describe('the composed era migration on a CLI 1.x workspace', () => {
 		const workspaceFile = migration.files.find((entry) => entry.path === 'angular.json');
 		expect(workspaceFile).toBeDefined();
 		expect(workspaceFile?.changed).toBe(true);
-		expect(workspaceFile?.changes[0]).toContain('synthesized angular.json from .angular-cli.json');
+		expect(workspaceFile?.changes[0]).toContain(
+			'synthesized angular.json from .angular-cli.json',
+		);
 		expect(migration.removedFiles).toContain('.angular-cli.json');
 		expect(migration.removedFiles).toContain('tslint.json');
 		const parsed = JSON.parse(workspaceFile?.source ?? '{}') as JsonObject;
-		const architect = (
-			((parsed['projects'] as JsonObject)['any-project'] as JsonObject)['architect'] as JsonObject
-		);
+		const architect = ((parsed['projects'] as JsonObject)['any-project'] as JsonObject)[
+			'architect'
+		] as JsonObject;
 		expect(Object.keys(architect).sort()).toEqual(['build', 'test']);
 		expect(migration.declaredDifferences.join('\n')).toContain('carries no TSLint line');
 	});

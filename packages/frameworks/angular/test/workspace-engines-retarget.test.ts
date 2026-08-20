@@ -94,7 +94,10 @@ describe('retargeting a workspace manifest onto the cell’s Node line', () => {
 	});
 
 	it('writes whatever Node line the cell declares, with nothing about it here', () => {
-		const result = retargetWorkspaceEngines({ engines: { node: '>= 6.9 <11.0' } }, NODE_18_CELL);
+		const result = retargetWorkspaceEngines(
+			{ engines: { node: '>= 6.9 <11.0' } },
+			NODE_18_CELL,
+		);
 		expect(result.manifest['engines']).toEqual({ node: '^18.19.0' });
 		expect(result.retarget?.to).toBe('^18.19.0');
 	});
@@ -115,7 +118,10 @@ describe('retargeting a workspace manifest onto the cell’s Node line', () => {
 		expect(result.retarget).toBeNull();
 		expect(result.manifest['engines']).toBeUndefined();
 		expect(result.unhandled).toEqual([]);
-		const noNode = retargetWorkspaceEngines({ engines: { npm: '>=6' } }, ANGULAR_16_BROWSER_CELL);
+		const noNode = retargetWorkspaceEngines(
+			{ engines: { npm: '>=6' } },
+			ANGULAR_16_BROWSER_CELL,
+		);
 		expect(noNode.retarget).toBeNull();
 		expect(noNode.manifest['engines']).toEqual({ npm: '>=6' });
 		expect(noNode.unhandled).toEqual([]);

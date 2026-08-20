@@ -175,11 +175,7 @@ function callSiteOf(module: SemanticModule, node: AstNode): AstNode | null {
 	return parent.callee === node ? parent : null;
 }
 
-function refuse(
-	path: string,
-	source: string,
-	unhandled: readonly string[],
-): CoreBindingMigration {
+function refuse(path: string, source: string, unhandled: readonly string[]): CoreBindingMigration {
 	return Object.freeze({
 		path,
 		source,
@@ -300,7 +296,8 @@ export function migrateNodeCoreBindings(
 		for (const [index, piece] of pieces.entries()) {
 			text += templateChunk(piece);
 			const argument = rest[index];
-			if (argument !== undefined) text += `\${String(${source.slice(argument.start, argument.end)})}`;
+			if (argument !== undefined)
+				text += `\${String(${source.slice(argument.start, argument.end)})}`;
 		}
 		text += '`';
 		edits.push({ start: call.start, end: call.end, text });

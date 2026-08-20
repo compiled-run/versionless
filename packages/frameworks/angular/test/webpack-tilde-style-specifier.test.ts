@@ -54,9 +54,12 @@ describe('webpack tilde style specifier', () => {
 			closure,
 		);
 		expect(migration.source).toBe(
-			["@use '@scope/ui/tokens';", "@forward '@scope/ui/theming';", "@import 'icons/css/icons.min.css';", ''].join(
-				'\n',
-			),
+			[
+				"@use '@scope/ui/tokens';",
+				"@forward '@scope/ui/theming';",
+				"@import 'icons/css/icons.min.css';",
+				'',
+			].join('\n'),
 		);
 		expect(migration.changes).toHaveLength(3);
 	});
@@ -138,7 +141,8 @@ describe('webpack tilde style specifier', () => {
 			"@import '~mapped/known';\n@import '~mapped/unknown';\n",
 			{
 				carries: () => false,
-				entryPoint: (specifier) => (specifier === 'mapped/known' ? 'mapped/_known.scss' : null),
+				entryPoint: (specifier) =>
+					specifier === 'mapped/known' ? 'mapped/_known.scss' : null,
 			},
 		);
 		expect(migration.source).toBe("@import 'mapped/known';\n@import '~mapped/unknown';\n");

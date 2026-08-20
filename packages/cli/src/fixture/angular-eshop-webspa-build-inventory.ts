@@ -75,7 +75,10 @@ export async function inventoryOf(directory: string, dirLabel: string): Promise<
 }
 
 /** What the two inventories say about each other, file by file. */
-export function compareInventories(runA: BuildInventory, runB: BuildInventory): InventoryComparison {
+export function compareInventories(
+	runA: BuildInventory,
+	runB: BuildInventory,
+): InventoryComparison {
 	const a = new Map(runA.entries.map((entry) => [entry.path, entry] as const));
 	const b = new Map(runB.entries.map((entry) => [entry.path, entry] as const));
 	const onlyInRunA = [...a.keys()].filter((key) => !b.has(key)).sort();

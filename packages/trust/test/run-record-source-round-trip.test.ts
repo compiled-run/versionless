@@ -98,7 +98,9 @@ describe('runRecordSource — the source block a run record states about itself'
 
 	it('reads a blank string as an absence rather than as a stated value', () => {
 		const derived = runRecordSource(
-			sourced({ pin: { repository: '   ', ref: 'refs/heads/main', commitSha: 'a'.repeat(40) } }),
+			sourced({
+				pin: { repository: '   ', ref: 'refs/heads/main', commitSha: 'a'.repeat(40) },
+			}),
 		);
 		expect(derived.statusReason).toBe('run-record-states-no-source:pin.repository');
 	});
@@ -143,7 +145,6 @@ describe('a run-record row round-trips generate → verify', () => {
 			canonicalize(withRecords.applications),
 		);
 		/** Every derived row states its source; that is the admission bar. */
-		for (const row of derivedRows)
-			expect(row.source).toMatchObject({ basis: 'run-record' });
+		for (const row of derivedRows) expect(row.source).toMatchObject({ basis: 'run-record' });
 	});
 });

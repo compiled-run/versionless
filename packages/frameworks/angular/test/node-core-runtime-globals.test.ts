@@ -91,14 +91,15 @@ describe('readRuntimeGlobalReferences', () => {
 		expect(called.refused[0]).toContain('its member hrtime is called at module evaluation');
 
 		const computed = readRuntimeGlobalReferences([
-			{ path: 'b.js', source: ['var key = "NODE_DEBUG";', 'var mode = process[key];'].join('\n') },
+			{
+				path: 'b.js',
+				source: ['var key = "NODE_DEBUG";', 'var mode = process[key];'].join('\n'),
+			},
 		]);
 		expect(computed.proven).toEqual([]);
 		expect(computed.refused[0]).toContain('computed member');
 
-		const written = readRuntimeGlobalReferences([
-			{ path: 'c.js', source: 'process = {};' },
-		]);
+		const written = readRuntimeGlobalReferences([{ path: 'c.js', source: 'process = {};' }]);
 		expect(written.proven).toEqual([]);
 		expect(written.refused[0]).toContain('assigns to it at evaluation');
 
@@ -113,7 +114,9 @@ describe('readRuntimeGlobalReferences', () => {
 		const reading = readRuntimeGlobalReferences([
 			{
 				path: 'node_modules/util/util.js',
-				source: ['var mode = process.env.NODE_DEBUG;', 'var at = process.hrtime();'].join('\n'),
+				source: ['var mode = process.env.NODE_DEBUG;', 'var at = process.hrtime();'].join(
+					'\n',
+				),
 			},
 		]);
 		expect(reading.proven).toEqual([]);
@@ -127,7 +130,7 @@ describe('supplyNodeCoreRuntimeGlobals', () => {
 		const supplied = supplyNodeCoreRuntimeGlobals(declarationOf(UTIL_TOP_LEVEL_READ));
 		const shim = supplied.shim ?? '';
 		expect(supplied.globals.map((entry) => entry.name)).toEqual(['process']);
-		expect(shim).toContain("runtimeGlobals[\"process\"] ??= {};");
+		expect(shim).toContain('runtimeGlobals["process"] ??= {};');
 		expect(shim).toContain('(runtimeGlobals["process"] as RuntimeGlobalObject)["env"] ??= {};');
 		expect(shim).toContain('node_modules/util/util.js line 3');
 		expect(shim).toContain('util@0.12.5');
@@ -177,7 +180,10 @@ const workspace = (polyfills: unknown): string =>
 							builder: '@angular-devkit/build-angular:browser',
 							options: { main: 'src/main.ts', polyfills },
 						},
-						lint: { builder: '@angular-eslint/builder:lint', options: { lintFilePatterns: [] } },
+						lint: {
+							builder: '@angular-eslint/builder:lint',
+							options: { lintFilePatterns: [] },
+						},
 					},
 				},
 			},

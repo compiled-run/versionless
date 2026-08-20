@@ -95,13 +95,15 @@ export const WITNESS_REACT_LINKFREE_VIEWPORT = Object.freeze({ width: 1280, heig
 export const WITNESS_REACT_LINKFREE_CONSOLE_ERRORS = Object.freeze({
 	baseline: Object.freeze([
 		Object.freeze({
-			message: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
+			message:
+				'Failed to load resource: the server responded with a status of 404 (Not Found)',
 			count: 2,
 		}),
 	]),
 	migrated: Object.freeze([
 		Object.freeze({
-			message: 'Failed to load resource: the server responded with a status of 404 (Not Found)',
+			message:
+				'Failed to load resource: the server responded with a status of 404 (Not Found)',
 			count: 2,
 		}),
 	]),
@@ -370,13 +372,17 @@ export type WitnessReactLinkfreeReceipt = {
 		dynamicSegment: '/:username';
 		navigations: number;
 	};
-	readiness: { reactLineage: { ready: 1; total: 4; counted: false }; overall: { ready: 3; total: 12 } };
+	readiness: {
+		reactLineage: { ready: 1; total: 4; counted: false };
+		overall: { ready: 3; total: 12 };
+	};
 	locality: { mode: 'offline'; successfulNonLoopback: 0; osWideIsolation: false };
 	nonclaims: string[];
 	integrity: { algorithm: 'sha256'; canonicalDigest: string };
 };
 
-const exact = (left: unknown, right: unknown): boolean => canonicalize(left) === canonicalize(right);
+const exact = (left: unknown, right: unknown): boolean =>
+	canonicalize(left) === canonicalize(right);
 
 export function witnessReactLinkfreeRawDigest(
 	run: WitnessReactLinkfreeRun | WitnessRealAppRun,
@@ -778,7 +784,9 @@ export function witnessReactLinkfreeAggregateMember(digestValue: string) {
 export async function verifyWitnessReactLinkfreeEvidence(rootDir = '.') {
 	const rootPath = resolve(rootDir);
 	const receiptPath = join(rootPath, WITNESS_REACT_LINKFREE_RECEIPT_PATH);
-	const receipt = parseWitnessReactLinkfreeReceipt(JSON.parse(await readFile(receiptPath, 'utf8')));
+	const receipt = parseWitnessReactLinkfreeReceipt(
+		JSON.parse(await readFile(receiptPath, 'utf8')),
+	);
 	const canonicalBytes = await readFile(join(rootPath, receipt.canonicalReceipt.path));
 	if (sha256(canonicalBytes) !== receipt.canonicalReceipt.sha256)
 		throw new Error('React LinkFree canonical receipt bytes drifted');
@@ -798,5 +806,10 @@ export async function verifyWitnessReactLinkfreeEvidence(rootDir = '.') {
 		renderWitnessReactLinkfreeReceipt(receipt)
 	)
 		throw new Error('React LinkFree human Witness receipt differs');
-	return { valid: true as const, digest: receipt.integrity.canonicalDigest, artifacts: 0, receipt };
+	return {
+		valid: true as const,
+		digest: receipt.integrity.canonicalDigest,
+		artifacts: 0,
+		receipt,
+	};
 }

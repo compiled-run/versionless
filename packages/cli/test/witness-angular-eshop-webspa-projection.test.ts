@@ -21,7 +21,12 @@ import { angularEshopWebspaWitnessSpec } from '../src/witness/angular-eshop-webs
 const root = resolve(import.meta.dirname, '../../..');
 const get = async (pathname: string, search = ''): Promise<{ status: number; body: unknown }> => {
 	const projection = createEshopWebspaProjection();
-	const response = await projection.api({ method: 'GET', pathname, search, body: Buffer.alloc(0) });
+	const response = await projection.api({
+		method: 'GET',
+		pathname,
+		search,
+		body: Buffer.alloc(0),
+	});
 	if (response === null) return { status: 0, body: null };
 	return {
 		status: response.status,
@@ -131,6 +136,8 @@ describe('eShop WebSPA Witness specification', () => {
 
 	it('addresses the application by its own class names', () => {
 		for (const selector of Object.values(WITNESS_ANGULAR_ESHOP_WEBSPA_SELECTORS))
-			expect(selector.includes('data-testid') || selector.includes('versionless')).toBe(false);
+			expect(selector.includes('data-testid') || selector.includes('versionless')).toBe(
+				false,
+			);
 	});
 });

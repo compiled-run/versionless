@@ -174,7 +174,12 @@ export async function probeCypressRwaLane(lane: string): Promise<void> {
 			legs.push({ waitFor: selector, label, outcome: 'visible' });
 			return true;
 		} catch {
-			legs.push({ waitFor: selector, label, outcome: 'ABSENT', url: new URL(page.url()).pathname });
+			legs.push({
+				waitFor: selector,
+				label,
+				outcome: 'ABSENT',
+				url: new URL(page.url()).pathname,
+			});
 			return false;
 		}
 	};
@@ -193,22 +198,46 @@ export async function probeCypressRwaLane(lane: string): Promise<void> {
 		await typeIfPresent('[data-test=signup-last-name] input', actor.lastName, 'fill-last');
 		await typeIfPresent('[data-test=signup-username] input', actor.username, 'fill-username');
 		await typeIfPresent('[data-test=signup-password] input', actor.password, 'fill-password');
-		await typeIfPresent('[data-test=signup-confirmPassword] input', actor.password, 'fill-confirm');
+		await typeIfPresent(
+			'[data-test=signup-confirmPassword] input',
+			actor.password,
+			'fill-confirm',
+		);
 		await clickIfPresent('[data-test=signup-submit]', 'click-signup-submit');
 		await waitFor('[data-test=signin-username]', 'back-to-signin-after-signup');
 		await snapshot('after-signup');
 		// Signin
-		await typeIfPresent('[data-test=signin-username] input', actor.username, 'fill-signin-username');
-		await typeIfPresent('[data-test=signin-password] input', actor.password, 'fill-signin-password');
+		await typeIfPresent(
+			'[data-test=signin-username] input',
+			actor.username,
+			'fill-signin-username',
+		);
+		await typeIfPresent(
+			'[data-test=signin-password] input',
+			actor.password,
+			'fill-signin-password',
+		);
 		await clickIfPresent('[data-test=signin-submit]', 'click-signin-submit');
 		await delay(2_500);
 		await snapshot('after-signin');
 		// Onboarding
 		if (await waitFor('[data-test=user-onboarding-next]', 'onboarding-dialog', 8_000)) {
 			await clickIfPresent('[data-test=user-onboarding-next]', 'onboarding-next-1');
-			await typeIfPresent('[data-test=bankaccount-bankName-input] input', 'Versionless Bank', 'bank-name');
-			await typeIfPresent('[data-test=bankaccount-routingNumber-input] input', '987654321', 'routing');
-			await typeIfPresent('[data-test=bankaccount-accountNumber-input] input', '123456789', 'account');
+			await typeIfPresent(
+				'[data-test=bankaccount-bankName-input] input',
+				'Versionless Bank',
+				'bank-name',
+			);
+			await typeIfPresent(
+				'[data-test=bankaccount-routingNumber-input] input',
+				'987654321',
+				'routing',
+			);
+			await typeIfPresent(
+				'[data-test=bankaccount-accountNumber-input] input',
+				'123456789',
+				'account',
+			);
 			await clickIfPresent('[data-test=bankaccount-submit]', 'bank-submit');
 			await delay(1_500);
 			await snapshot('after-bank');
@@ -225,10 +254,26 @@ export async function probeCypressRwaLane(lane: string): Promise<void> {
 		await clickIfPresent('[data-test=sidenav-user-settings]', 'nav-settings');
 		await waitFor('[data-test=user-settings-firstName-input]', 'settings-form', 8_000);
 		await snapshot('settings');
-		await typeIfPresent('[data-test=user-settings-firstName-input]', 'VersionlessEdited', 'settings-first');
-		await typeIfPresent('[data-test=user-settings-lastName-input]', 'ProverEdited', 'settings-last');
-		await typeIfPresent('[data-test=user-settings-email-input]', 'prover@versionless.test', 'settings-email');
-		await typeIfPresent('[data-test=user-settings-phoneNumber-input]', '6155551234', 'settings-phone');
+		await typeIfPresent(
+			'[data-test=user-settings-firstName-input]',
+			'VersionlessEdited',
+			'settings-first',
+		);
+		await typeIfPresent(
+			'[data-test=user-settings-lastName-input]',
+			'ProverEdited',
+			'settings-last',
+		);
+		await typeIfPresent(
+			'[data-test=user-settings-email-input]',
+			'prover@versionless.test',
+			'settings-email',
+		);
+		await typeIfPresent(
+			'[data-test=user-settings-phoneNumber-input]',
+			'6155551234',
+			'settings-phone',
+		);
 		await clickIfPresent('[data-test=user-settings-submit]', 'settings-submit');
 		await delay(1_500);
 		flushNet('settings-submit');

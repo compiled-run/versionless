@@ -48,3 +48,4 @@ export * from './workspace-script-flags.ts';
 export * from './use-position-symbol-successor.ts';
 export * from './removed-static-module-method.ts';
 export * from './http-client-call-surface.ts';
+export * from './locale-id-provider.ts';

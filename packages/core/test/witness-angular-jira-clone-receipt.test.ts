@@ -257,12 +257,7 @@ function run(lane: 'baseline' | 'migrated', pass: 1 | 2): WitnessAngularJiraClon
 }
 
 function receipt(): WitnessAngularJiraCloneReceipt {
-	const runs = [
-		run('baseline', 1),
-		run('baseline', 2),
-		run('migrated', 1),
-		run('migrated', 2),
-	];
+	const runs = [run('baseline', 1), run('baseline', 2), run('migrated', 1), run('migrated', 2)];
 	const sealed: WitnessAngularJiraCloneReceipt = {
 		schemaVersion: WITNESS_ANGULAR_JIRA_CLONE_SCHEMA,
 		result: 'pass',
@@ -440,11 +435,7 @@ describe('Angular jira-clone direct Witness schema', () => {
 
 	it('rejects a route sequence that a modal quietly pushed to', () => {
 		const copy = receipt();
-		copy.runs[0]!.routes = [
-			'/project/board',
-			'/project/board',
-			'/project/board/issue/SEED-1',
-		];
+		copy.runs[0]!.routes = ['/project/board', '/project/board', '/project/board/issue/SEED-1'];
 		expect(() => parseWitnessAngularJiraCloneReceipt(resealedDeep(copy))).toThrow(
 			/route sequence differs/,
 		);
@@ -691,8 +682,7 @@ describe('Angular jira-clone non-loopback seam evidence', () => {
 
 	it('rejects a receipt that claims a successful non-loopback request', () => {
 		const copy = receipt();
-		for (const entry of copy.runs)
-			entry.mockedNonLoopbackSeams.successfulNonLoopback = 1 as 0;
+		for (const entry of copy.runs) entry.mockedNonLoopbackSeams.successfulNonLoopback = 1 as 0;
 		expect(() => parseWitnessAngularJiraCloneReceipt(resealedDeep(copy))).toThrow(
 			/mocked non-loopback seam inventory differs/,
 		);

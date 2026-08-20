@@ -501,8 +501,12 @@ describe('Angular TinyTranslator direct Witness receipt schema', () => {
 		// A lane whose framework words the same refusal differently keeps the
 		// parity digest — the amendment — and the membership is still checked
 		// exactly against the published per-lane inventory elsewhere.
-		copy.consoleErrorInventory!.expected = [{ message: 'a differently worded refusal', count: 1 }];
-		copy.consoleErrorInventory!.observed = [{ message: 'a differently worded refusal', count: 1 }];
+		copy.consoleErrorInventory!.expected = [
+			{ message: 'a differently worded refusal', count: 1 },
+		];
+		copy.consoleErrorInventory!.observed = [
+			{ message: 'a differently worded refusal', count: 1 },
+		];
 		copy.consoleErrorInventory!.total = 1;
 		expect(witnessAngularTinyTranslatorBehaviorDigest(copy)).not.toBe(digest);
 		copy.consoleErrorInventory!.total = 0;

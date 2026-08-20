@@ -204,9 +204,7 @@ export type WorkspaceApplication = Readonly<{
 type Json = Readonly<Record<string, unknown>>;
 
 const objectAt = (value: unknown): Json | null =>
-	typeof value === 'object' && value !== null && !Array.isArray(value)
-		? (value as Json)
-		: null;
+	typeof value === 'object' && value !== null && !Array.isArray(value) ? (value as Json) : null;
 
 /**
  * Apply the font-inlining-disable capability to the staged workspace, exactly

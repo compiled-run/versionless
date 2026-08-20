@@ -327,13 +327,15 @@ export function readDirectiveBindingDependencies(
 		const declaration = node;
 		const selector = selectorOf(module, declaration, core);
 		if (selector === null) return;
-		const component = declaration.id?.type === 'Identifier' ? declaration.id.name : '(anonymous)';
+		const component =
+			declaration.id?.type === 'Identifier' ? declaration.id.name : '(anonymous)';
 		const renderers = rendererMembersOf(module, declaration, core);
 		/** member name -> template-facing input name, for every `@Input()` member. */
 		const inputByMember = new Map<string, string>();
 		const setters: Readonly<{ member: string; input: string; body: AstNode }>[] = [];
 		for (const member of declaration.body.body) {
-			if (member.type !== 'PropertyDefinition' && member.type !== 'MethodDefinition') continue;
+			if (member.type !== 'PropertyDefinition' && member.type !== 'MethodDefinition')
+				continue;
 			const name = memberName(member);
 			if (name === null) continue;
 			const alias = inputAliasOf(module, member, core);
@@ -354,7 +356,9 @@ export function readDirectiveBindingDependencies(
 				.map((derefed) => inputByMember.get(derefed) as string);
 			const unique = [...new Set(dependsOn)].sort(compareStrings);
 			if (unique.length > 0)
-				setterDependencies.push(Object.freeze({ input: setter.input, dependsOn: Object.freeze(unique) }));
+				setterDependencies.push(
+					Object.freeze({ input: setter.input, dependsOn: Object.freeze(unique) }),
+				);
 		}
 		readings.push(
 			Object.freeze({
@@ -392,7 +396,9 @@ function parseSelector(selector: string): readonly SelectorTerm[] | null {
 			rest = rest.slice(elementMatch[0].length);
 		}
 		while (rest.length > 0) {
-			const attributeMatch = /^\[([\w-]+)(?:[~^$*|]?=(?:"[^"]*"|'[^']*'|[^\]]*))?\]/u.exec(rest);
+			const attributeMatch = /^\[([\w-]+)(?:[~^$*|]?=(?:"[^"]*"|'[^']*'|[^\]]*))?\]/u.exec(
+				rest,
+			);
 			if (attributeMatch === null) return null;
 			attributes.push(attributeMatch[1] as string);
 			rest = rest.slice(attributeMatch[0].length);
@@ -413,10 +419,7 @@ function elementBindingNames(element: TmplAstElement): ReadonlySet<string> {
 }
 
 /** Whether an element matches one of a selector's terms. */
-function elementMatchesSelector(
-	element: TmplAstElement,
-	terms: readonly SelectorTerm[],
-): boolean {
+function elementMatchesSelector(element: TmplAstElement, terms: readonly SelectorTerm[]): boolean {
 	const names = elementBindingNames(element);
 	return terms.some(
 		(term) =>
@@ -519,7 +522,8 @@ export function reorderTemplateBindings(
 		});
 		if (matched.length === 0) continue;
 		const directiveInputs = new Set<string>();
-		for (const reading of matched) for (const input of reading.inputs) directiveInputs.add(input);
+		for (const reading of matched)
+			for (const input of reading.inputs) directiveInputs.add(input);
 		const slots: Slot[] = [];
 		let ambiguous = false;
 		for (const input of element.inputs) {
@@ -531,7 +535,9 @@ export function reorderTemplateBindings(
 			}
 			const start = input.sourceSpan.start.offset;
 			const end = input.sourceSpan.end.offset;
-			slots.push(Object.freeze({ name: input.name, start, end, text: source.slice(start, end) }));
+			slots.push(
+				Object.freeze({ name: input.name, start, end, text: source.slice(start, end) }),
+			);
 		}
 		if (ambiguous || slots.length < 2) continue;
 		const indexByName = new Map(slots.map((slot, index) => [slot.name, index]));
@@ -555,9 +561,11 @@ export function reorderTemplateBindings(
 			unhandled.push(
 				`${path} line ${String(line)}: <${element.name}> binds ${slots
 					.map((slot) => slot.name)
-					.join(', ')} whose setter dependencies (${[...new Set(edgeLabels)].sort(compareStrings).join(
-					'; ',
-				)}) form a cycle; no binding order satisfies them all, so the site was left unchanged`,
+					.join(', ')} whose setter dependencies (${[...new Set(edgeLabels)]
+					.sort(compareStrings)
+					.join(
+						'; ',
+					)}) form a cycle; no binding order satisfies them all, so the site was left unchanged`,
 			);
 			continue;
 		}
@@ -574,7 +582,10 @@ export function reorderTemplateBindings(
 				kind: 'template-binding-reorder',
 				line,
 				element: element.name,
-				directive: matched.map((reading) => reading.component).sort(compareStrings).join(', '),
+				directive: matched
+					.map((reading) => reading.component)
+					.sort(compareStrings)
+					.join(', '),
 				before: Object.freeze(slots.map((slot) => slot.name)),
 				after: Object.freeze(order.map((slotIndex) => (slots[slotIndex] as Slot).name)),
 				edges: Object.freeze([...new Set(edgeLabels)].sort(compareStrings)),

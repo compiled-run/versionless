@@ -116,9 +116,14 @@ describe('the install refusal is a reading of the frozen cell, not an accident',
 	 * belongs to is the one that says the absence was the defect.
 	 */
 	it('carries a reading for each package that refused, of the kind the bytes support', () => {
-		const bootstrap = ecosystemDispositionOf('@ng-bootstrap/ng-bootstrap', ANGULAR_16_BROWSER_CELL);
+		const bootstrap = ecosystemDispositionOf(
+			'@ng-bootstrap/ng-bootstrap',
+			ANGULAR_16_BROWSER_CELL,
+		);
 		expect(bootstrap?.kind).toBe('aligned');
-		expect(alignedVersionRange('@ng-bootstrap/ng-bootstrap', ANGULAR_16_BROWSER_CELL)).toBe('^15.1.2');
+		expect(alignedVersionRange('@ng-bootstrap/ng-bootstrap', ANGULAR_16_BROWSER_CELL)).toBe(
+			'^15.1.2',
+		);
 		expect(bootstrap?.fact).toContain('^16.0.0');
 		const preboot = ecosystemDispositionOf('preboot', ANGULAR_16_BROWSER_CELL);
 		expect(preboot?.kind).toBe('no-successor');
@@ -134,7 +139,9 @@ describe('the install refusal is a reading of the frozen cell, not an accident',
 		expect((alignment.manifest['dependencies'] as Record<string, string>)['ts-helpers']).toBe(
 			'1.1.2',
 		);
-		const surfaced = alignment.unhandled.filter((line) => line.startsWith('dependencies.ts-helpers'));
+		const surfaced = alignment.unhandled.filter((line) =>
+			line.startsWith('dependencies.ts-helpers'),
+		);
 		expect(surfaced).toHaveLength(1);
 		expect(surfaced[0]).toContain('declared at 1.1.2');
 		expect(surfaced[0]).toContain('has read no line for it');
@@ -184,13 +191,18 @@ describe('the @angular/http seam answer', () => {
 
 	it('refuses a symbol no successor is written down for, by name', () => {
 		const source = "import { HttpModule, JsonpModule } from '@angular/http';\n";
-		const result = succeedRemovedEntryPointSymbols('shared.module.ts', source, ANGULAR_HTTP_SUCCESSORS, [
-			SUCCESSOR_SURFACE,
-		]);
-		expect(result.changed).toBe(false);
-		expect(result.unhandled.some((reason) => reason.includes('no successor is written down for JsonpModule'))).toBe(
-			true,
+		const result = succeedRemovedEntryPointSymbols(
+			'shared.module.ts',
+			source,
+			ANGULAR_HTTP_SUCCESSORS,
+			[SUCCESSOR_SURFACE],
 		);
+		expect(result.changed).toBe(false);
+		expect(
+			result.unhandled.some((reason) =>
+				reason.includes('no successor is written down for JsonpModule'),
+			),
+		).toBe(true);
 	});
 
 	it('writes down no claim for JsonpModule, because its successor is not a rename', () => {
@@ -198,8 +210,10 @@ describe('the @angular/http seam answer', () => {
 		expect(SEAM_ANSWER.claimsNotWrittenDown.join(' ')).toContain('HttpClientJsonpModule');
 	});
 
-	it('leaves the frozen adapter table untouched — the claims are the driver\'s', () => {
-		expect(DOCUMENTED_SYMBOL_SUCCESSORS.some((claim) => claim.specifier === '@angular/http')).toBe(false);
+	it("leaves the frozen adapter table untouched — the claims are the driver's", () => {
+		expect(
+			DOCUMENTED_SYMBOL_SUCCESSORS.some((claim) => claim.specifier === '@angular/http'),
+		).toBe(false);
 		for (const claim of ANGULAR_HTTP_SUCCESSORS) expect(claim.specifier).toBe('@angular/http');
 	});
 
@@ -340,7 +354,9 @@ describe('the T024 u4 wiring: where the exports reading is taken, and why there'
 		try {
 			await writeFile(
 				path.join(tree, 'package.json'),
-				JSON.stringify({ dependencies: { alpha: '^1.0.0', beta: '^2.0.0', gamma: '^3.0.0' } }),
+				JSON.stringify({
+					dependencies: { alpha: '^1.0.0', beta: '^2.0.0', gamma: '^3.0.0' },
+				}),
 			);
 			const install = async (
 				name: string,
@@ -350,7 +366,8 @@ describe('the T024 u4 wiring: where the exports reading is taken, and why there'
 				const at = path.join(tree, 'node_modules', name);
 				await mkdir(at, { recursive: true });
 				await writeFile(path.join(at, 'package.json'), JSON.stringify(manifest));
-				if (stylesheet !== undefined) await writeFile(path.join(at, 'theme.scss'), stylesheet);
+				if (stylesheet !== undefined)
+					await writeFile(path.join(at, 'theme.scss'), stylesheet);
 			};
 			await install(
 				'alpha',
@@ -416,7 +433,8 @@ describe('the T024 u4 green', () => {
 		expect(OUTPUT_INVENTORY.carriedByteIdentical.length).toBe(19);
 		expect(OUTPUT_INVENTORY.differingFromBaseline.length).toBe(6);
 		expect(
-			OUTPUT_INVENTORY.carriedByteIdentical.length + OUTPUT_INVENTORY.differingFromBaseline.length,
+			OUTPUT_INVENTORY.carriedByteIdentical.length +
+				OUTPUT_INVENTORY.differingFromBaseline.length,
 		).toBe(OUTPUT_INVENTORY.files);
 	});
 
@@ -459,7 +477,10 @@ describe('the twice-build comparison', () => {
 		}) as unknown as Parameters<typeof compareInventories>[0];
 
 	it('calls two runs identical only when every path and every digest matches', () => {
-		const runA = inventory('run1', [entry('main.aaa.js', 10, 'd1'), entry('index.html', 5, 'd2')]);
+		const runA = inventory('run1', [
+			entry('main.aaa.js', 10, 'd1'),
+			entry('index.html', 5, 'd2'),
+		]);
 		expect(compareInventories(runA, inventory('run2', [...runA.entries]))).toEqual({
 			byteIdentical: true,
 			onlyInRunA: [],
@@ -488,10 +509,7 @@ describe('the twice-build comparison', () => {
 	it('agrees with the record this unit published for the two runs it ran', async () => {
 		const record = JSON.parse(
 			await readFile(
-				path.join(
-					INGEST_DIRECTORY,
-					'migration/u4-t024-build-inventory-run1-vs-run2.json',
-				),
+				path.join(INGEST_DIRECTORY, 'migration/u4-t024-build-inventory-run1-vs-run2.json'),
 				'utf8',
 			),
 		) as Record<string, unknown>;

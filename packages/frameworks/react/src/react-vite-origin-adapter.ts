@@ -209,7 +209,9 @@ export type ViteOriginConfigFacts = Readonly<{
 type EstreeNode = Readonly<Record<string, unknown>>;
 
 function nodeType(value: unknown): string {
-	return typeof value === 'object' && value !== null && typeof (value as EstreeNode)['type'] === 'string'
+	return typeof value === 'object' &&
+		value !== null &&
+		typeof (value as EstreeNode)['type'] === 'string'
 		? ((value as EstreeNode)['type'] as string)
 		: '';
 }
@@ -242,7 +244,10 @@ function staticKeyName(property: EstreeNode): string | null {
  * counted rather than guessed at, so a caller can see that the file withheld
  * something.
  */
-export function analyzeViteOriginConfig(code: string, id = 'vite.config.ts'): ViteOriginConfigFacts {
+export function analyzeViteOriginConfig(
+	code: string,
+	id = 'vite.config.ts',
+): ViteOriginConfigFacts {
 	const module = analyze(code, { path: id, lang: 'ts', sourceType: 'module' });
 	const errors = module.diagnostics.filter((entry) => entry.severity === 'error');
 	if (errors.length > 0)
@@ -259,7 +264,10 @@ export function analyzeViteOriginConfig(code: string, id = 'vite.config.ts'): Vi
 	module.walk({
 		ImportDeclaration(node) {
 			const source = (node as unknown as EstreeNode)['source'];
-			const value = typeof source === 'object' && source !== null ? (source as EstreeNode)['value'] : null;
+			const value =
+				typeof source === 'object' && source !== null
+					? (source as EstreeNode)['value']
+					: null;
 			if (typeof value === 'string' && !value.startsWith('.') && !path.isAbsolute(value))
 				packages.add(value);
 		},
@@ -340,7 +348,9 @@ export function planViteOriginConfig(facts: ViteOriginConfigFacts): ViteOriginCo
 				`cannot say what they configure. Rewrite them as literal keys or translate the ` +
 				`configuration by hand.`,
 		);
-	const unsupported = facts.optionKeys.filter((key) => !Object.hasOwn(viteOriginOptionRules, key));
+	const unsupported = facts.optionKeys.filter(
+		(key) => !Object.hasOwn(viteOriginOptionRules, key),
+	);
 	if (unsupported.length > 0)
 		throw new Error(
 			`Vite origin migration: the era configuration declares the option(s) ` +
@@ -380,7 +390,10 @@ export function planViteOriginConfig(facts: ViteOriginConfigFacts): ViteOriginCo
 }
 
 /** Plan the lift of an era Vite configuration straight from its source. */
-export function planViteOriginConfigSource(code: string, id = 'vite.config.ts'): ViteOriginConfigPlan {
+export function planViteOriginConfigSource(
+	code: string,
+	id = 'vite.config.ts',
+): ViteOriginConfigPlan {
 	return planViteOriginConfig(analyzeViteOriginConfig(code, id));
 }
 
@@ -407,7 +420,9 @@ export type ViteModuleResolver = (specifier: string) => string;
 
 /** A resolver that searches the application's own dependency closure. */
 export function viteApplicationModuleResolver(applicationRoot: string): ViteModuleResolver {
-	const applicationRequire = createRequire(path.join(path.resolve(applicationRoot), 'package.json'));
+	const applicationRequire = createRequire(
+		path.join(path.resolve(applicationRoot), 'package.json'),
+	);
 	return (specifier) => applicationRequire.resolve(specifier);
 }
 
@@ -520,7 +535,12 @@ export function scanRemovedViteClientApis(code: string, id = 'module.ts'): ViteC
 			const args = call['arguments'];
 			const calleeSpan = span(callee as EstreeNode);
 			const callSpan = span(call);
-			if (!Array.isArray(args) || args.length !== 1 || calleeSpan === null || callSpan === null) {
+			if (
+				!Array.isArray(args) ||
+				args.length !== 1 ||
+				calleeSpan === null ||
+				callSpan === null
+			) {
 				diagnostics.push(
 					`import.meta.globEager at offset ${callSpan?.start ?? -1} does not have the single-argument shape this capability rewrites`,
 				);

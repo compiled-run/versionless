@@ -101,7 +101,8 @@ describe('recomputing a published inventory against its retained tree', () => {
 
 describe('reading a document for the build-time font inliner', () => {
 	it('does not mistake the application’s own link element for an inlined fetch', () => {
-		const era = '<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">';
+		const era =
+			'<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">';
 		const reading = readFontLocality(era);
 		expect(reading.hosts).toEqual(['fonts.googleapis.com']);
 		expect(reading.inlinedFontFaceRules).toBe(0);
@@ -157,7 +158,9 @@ describe('the published u21 digest corrections', () => {
 		for (const relative of corrections) {
 			const record = await read(relative);
 			const superseded = record['supersedes'] as Record<string, string>;
-			const originalBytes = await readFile(path.join(repositoryRoot, superseded['path'] ?? ''));
+			const originalBytes = await readFile(
+				path.join(repositoryRoot, superseded['path'] ?? ''),
+			);
 			/**
 			 * The whole point of superseding by reference is that the original is
 			 * not edited. If either binding stopped matching, this unit mutated a

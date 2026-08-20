@@ -141,12 +141,16 @@ describe('era configuration plan', () => {
 
 	test('refuses a computed option key rather than planning around it', () => {
 		expect(() =>
-			planViteOriginConfigSource(`const k = "base";\nexport default { root: ".", [k]: "/" };\n`),
+			planViteOriginConfigSource(
+				`const k = "base";\nexport default { root: ".", [k]: "/" };\n`,
+			),
 		).toThrow(/computed/);
 	});
 
 	test('refuses an unparseable configuration rather than planning an empty one', () => {
-		expect(() => planViteOriginConfigSource('export default {{{')).toThrow(/could not be parsed/);
+		expect(() => planViteOriginConfigSource('export default {{{')).toThrow(
+			/could not be parsed/,
+		);
 	});
 
 	test('the superseded standalone refresh plugin translates to no target package', () => {
@@ -203,7 +207,8 @@ describe('removed Vite client APIs', () => {
 		// module parsed as plain JavaScript reports its first `as` cast as a
 		// syntax error, and the capability then refuses a build for a reason that
 		// is not true. The language now comes from the file name.
-		const tsx = 'const root = document.getElementById("root") as HTMLElement;\nexport default <div />;\n';
+		const tsx =
+			'const root = document.getElementById("root") as HTMLElement;\nexport default <div />;\n';
 		expect(scanRemovedViteClientApis(tsx, 'main.tsx').diagnostics).toEqual([]);
 		const ts = 'export const n = 1 as number;\n';
 		expect(scanRemovedViteClientApis(ts, 'main.ts').diagnostics).toEqual([]);
@@ -295,7 +300,10 @@ describe('the adapter plugin set', () => {
 		const [clientApi] = createViteOriginAdapter({
 			observeClientApis: (record) => records.push(record),
 		});
-		clientApi.transform("export const a = import.meta.globEager('./a/*.ts');\n", '/app/src/a.ts');
+		clientApi.transform(
+			"export const a = import.meta.globEager('./a/*.ts');\n",
+			'/app/src/a.ts',
+		);
 		expect(records).toHaveLength(1);
 	});
 
@@ -305,6 +313,8 @@ describe('the adapter plugin set', () => {
 		// computed before the build so an untranslatable configuration means no
 		// build is attempted at all.
 		const plugins = createViteOriginAdapter();
-		expect(plugins.map((plugin) => plugin.name)).not.toContain('versionless-vite-origin-config');
+		expect(plugins.map((plugin) => plugin.name)).not.toContain(
+			'versionless-vite-origin-config',
+		);
 	});
 });

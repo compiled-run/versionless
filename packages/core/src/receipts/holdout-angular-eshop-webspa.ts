@@ -472,7 +472,8 @@ function record(value: unknown, label: string): Record<string, unknown> {
 }
 
 function text(value: unknown, label: string): string {
-	if (typeof value !== 'string' || value.length === 0) throw new Error(`${label} is not a string`);
+	if (typeof value !== 'string' || value.length === 0)
+		throw new Error(`${label} is not a string`);
 	return value;
 }
 
@@ -483,9 +484,7 @@ function count(value: unknown, label: string): number {
 }
 
 /** The canonical digest of an entry, taken with the digest field emptied. */
-export function holdoutAngularEshopWebspaDigest(
-	receipt: HoldoutAngularEshopWebspaReceipt,
-): string {
+export function holdoutAngularEshopWebspaDigest(receipt: HoldoutAngularEshopWebspaReceipt): string {
 	const copy = structuredClone(receipt);
 	copy.integrity.canonicalDigest = '';
 	return sha256(canonicalize(copy));
@@ -508,7 +507,9 @@ export function holdoutAngularEshopWebspaInventoryDigest(
 		canonicalize(
 			[...entries]
 				.map((entry) => ({ path: entry.path, sha256: entry.sha256 }))
-				.sort((left, right) => (left.path < right.path ? -1 : left.path > right.path ? 1 : 0)),
+				.sort((left, right) =>
+					left.path < right.path ? -1 : left.path > right.path ? 1 : 0,
+				),
 		),
 	);
 }
@@ -577,7 +578,9 @@ export async function deriveHoldoutAngularEshopWebspaReceipt(
 		targetBuild.attempted !== false ||
 		count(laneInstall.packagesInstalled, 'eShop WebSPA packages installed') !== 0
 	)
-		throw new Error('eShop WebSPA install RED under the frozen composite is no longer recorded');
+		throw new Error(
+			'eShop WebSPA install RED under the frozen composite is no longer recorded',
+		);
 	if (
 		!text(migration.holdoutPosition, 'eShop WebSPA holdout position').includes(
 			HOLDOUT_ANGULAR_ESHOP_WEBSPA_FROZEN_FINGERPRINT,
@@ -597,7 +600,9 @@ export async function deriveHoldoutAngularEshopWebspaReceipt(
 		greenInstall.narrowingApplied !== false ||
 		count(changesetCounts.handEdits, 'eShop WebSPA hand edits') !== 0
 	)
-		throw new Error('eShop WebSPA green build record no longer states a repeatable clean build');
+		throw new Error(
+			'eShop WebSPA green build record no longer states a repeatable clean build',
+		);
 	if (
 		!Array.isArray(greenBuild.remainingDiagnostics) ||
 		greenBuild.remainingDiagnostics.length !== 0
@@ -692,12 +697,16 @@ export async function deriveHoldoutAngularEshopWebspaReceipt(
 			sha256: text(item.sha256, `eShop WebSPA build inventory entry[${index}].sha256`),
 		};
 	});
-	if (holdoutAngularEshopWebspaInventoryDigest(inventoryEntries) !== witness.lanes.migrated.sha256)
+	if (
+		holdoutAngularEshopWebspaInventoryDigest(inventoryEntries) !== witness.lanes.migrated.sha256
+	)
 		throw new Error(
 			'eShop WebSPA Witness served migrated bytes that are not the published green build output',
 		);
 	if (inventoryEntries.length !== witness.lanes.migrated.files)
-		throw new Error('eShop WebSPA Witness migrated lane file count differs from the built output');
+		throw new Error(
+			'eShop WebSPA Witness migrated lane file count differs from the built output',
+		);
 
 	const firstRun = witness.runs[0]!;
 	if (!Array.isArray(firstRun['assertions']))
@@ -767,7 +776,9 @@ export async function deriveHoldoutAngularEshopWebspaReceipt(
 				'This candidate did not clear the pre-Ivy screen on its own reading. The T022 follow-up ruling overturned that verdict under the successor-across-names rule — @angular/http has a published first-party Ivy successor — and the original screen text was left exactly as written. The pass is a ruling, and it is published as one.',
 		},
 		runEvidence: HOLDOUT_ANGULAR_ESHOP_WEBSPA_RUN_EVIDENCE.map((entry) => ({ ...entry })),
-		witnessEvidence: HOLDOUT_ANGULAR_ESHOP_WEBSPA_WITNESS_EVIDENCE.map((entry) => ({ ...entry })),
+		witnessEvidence: HOLDOUT_ANGULAR_ESHOP_WEBSPA_WITNESS_EVIDENCE.map((entry) => ({
+			...entry,
+		})),
 		frozenAdapter: {
 			compositeFingerprintAtIngestion: HOLDOUT_ANGULAR_ESHOP_WEBSPA_FROZEN_FINGERPRINT,
 			bytesChangedAtIngestion: 0,
@@ -807,7 +818,9 @@ export async function deriveHoldoutAngularEshopWebspaReceipt(
 				unit: HOLDOUT_ANGULAR_ESHOP_WEBSPA_RED_UNIT,
 				composite: HOLDOUT_ANGULAR_ESHOP_WEBSPA_FROZEN_FINGERPRINT,
 				stage: 'install',
-				installAttempts: Array.isArray(laneInstall.attempts) ? laneInstall.attempts.length : 0,
+				installAttempts: Array.isArray(laneInstall.attempts)
+					? laneInstall.attempts.length
+					: 0,
 				packagesInstalled: 0,
 				gapsItemised: Array.isArray(migration.gaps) ? migration.gaps.length : 0,
 				buildAttempted: false,
@@ -1162,9 +1175,7 @@ ${receipt.nonclaims.map((claim) => `- ${claim}`).join('\n')}
  * adapter states, the Witness state and the surface the Witness covered, so
  * that no consumer of the ledger can read a bounded pass as a whole one.
  */
-export function holdoutAngularEshopWebspaCorpusRecord(
-	receipt: HoldoutAngularEshopWebspaReceipt,
-) {
+export function holdoutAngularEshopWebspaCorpusRecord(receipt: HoldoutAngularEshopWebspaReceipt) {
 	return {
 		id: 'holdout-angular-eshop-webspa',
 		application: receipt.application,
@@ -1181,7 +1192,8 @@ export function holdoutAngularEshopWebspaCorpusRecord(
 			task: receipt.frozenAdapter.authorizedReopen.task,
 			subtree: receipt.frozenAdapter.authorizedReopen.subtree,
 			capabilitiesExtracted: receipt.frozenAdapter.authorizedReopen.capabilitiesExtracted,
-			angularSubtreeOidAtGreen: receipt.frozenAdapter.authorizedReopen.angularSubtreeOidAtGreen,
+			angularSubtreeOidAtGreen:
+				receipt.frozenAdapter.authorizedReopen.angularSubtreeOidAtGreen,
 			refreezeComposite: receipt.frozenAdapter.authorizedReopen.refreezeComposite,
 			outcomeAfterReopen: receipt.holdoutOutcome,
 		},

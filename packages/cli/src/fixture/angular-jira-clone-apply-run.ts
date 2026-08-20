@@ -180,7 +180,9 @@ export async function readClosure(
 ): Promise<ClosureReading> {
 	const parsed: unknown = JSON.parse(manifestSource);
 	if (typeof parsed !== 'object' || parsed === null)
-		throw new Error('Angular jira-clone closure reading: the closure manifest is not an object');
+		throw new Error(
+			'Angular jira-clone closure reading: the closure manifest is not an object',
+		);
 	const dependencies = (parsed as Record<string, unknown>)['dependencies'];
 	const names =
 		typeof dependencies === 'object' && dependencies !== null
@@ -192,7 +194,10 @@ export async function readClosure(
 	const bundlesRead: { name: string; directory: string | null; bundles: number }[] = [];
 	for (const name of names) {
 		const directory = path.join(closureRoot, 'node_modules', name);
-		const packageManifest = await readIfPresent(path.join(directory, 'package.json'), 'package.json');
+		const packageManifest = await readIfPresent(
+			path.join(directory, 'package.json'),
+			'package.json',
+		);
 		if (packageManifest === null) {
 			absentFromClosure.push(name);
 			continue;
@@ -311,13 +316,13 @@ export async function readMigrationInput(
  * exactly how a "generic" adapter quietly becomes an application-specific one.
  */
 export const KNOWN_RESIDUE: readonly string[] = Object.freeze([
-	'The modal-data migration replaces `@Input()` fields on a content component with injected `NZ_MODAL_DATA` fields but does not touch the module\'s import list, so `src/app/project/components/issues/issue-modal/issue-modal.component.ts` keeps importing `Input` from @angular/core with nothing left in the module that uses it. TypeScript does not error on an unused import specifier under this workspace\'s configuration and the emitted bundles do not carry it, so both lanes build. It is visible in the diff and is recorded here rather than hand-patched: removing it would be a change no capability made, and a hand-patch on top of a mechanical changeset is how a generic adapter quietly becomes an application-specific one. The other two content components did not declare their fields with `@Input()`, so neither of them carries the residue.',
+	"The modal-data migration replaces `@Input()` fields on a content component with injected `NZ_MODAL_DATA` fields but does not touch the module's import list, so `src/app/project/components/issues/issue-modal/issue-modal.component.ts` keeps importing `Input` from @angular/core with nothing left in the module that uses it. TypeScript does not error on an unused import specifier under this workspace's configuration and the emitted bundles do not carry it, so both lanes build. It is visible in the diff and is recorded here rather than hand-patched: removing it would be a change no capability made, and a hand-patch on top of a mechanical changeset is how a generic adapter quietly becomes an application-specific one. The other two content components did not declare their fields with `@Input()`, so neither of them carries the residue.",
 ]);
 
 const CELL_REUSE: readonly string[] = Object.freeze([
 	'The target cell angular-16-browser-builder is the same cell factoriolab was migrated onto. It was not re-derived for this application and nothing here re-establishes its rationale.',
-	'The ecosystem table this application needed was added to the cell rather than to this fixture, because a community library\'s Angular-major line is a fact about the Angular ecosystem. It is keyed by package name and applies to any manifest; nothing in it names this application.',
-	'Both lanes of this cell run on Node 16.20.2, which is what this application\'s own .nvmrc pins as a major and what the era baseline already used. The migrated lane therefore changes the framework without also changing the runtime.',
+	"The ecosystem table this application needed was added to the cell rather than to this fixture, because a community library's Angular-major line is a fact about the Angular ecosystem. It is keyed by package name and applies to any manifest; nothing in it names this application.",
+	"Both lanes of this cell run on Node 16.20.2, which is what this application's own .nvmrc pins as a major and what the era baseline already used. The migrated lane therefore changes the framework without also changing the runtime.",
 ]);
 
 const NOT_ESTABLISHED: readonly string[] = Object.freeze([
@@ -372,10 +377,11 @@ export function buildAppliedMigrationRecord(input: {
 			meaning:
 				'Two of the capabilities in this changeset read published packages rather than application source. This is what they were handed, and by which rule.',
 			selectionRule:
-				'The runtime dependencies the installed tree\'s own manifest declares — the direct edges a production build resolves — read from the closure staged beside the pinned tree. Development dependencies and transitive packages are not read.',
+				"The runtime dependencies the installed tree's own manifest declares — the direct edges a production build resolves — read from the closure staged beside the pinned tree. Development dependencies and transitive packages are not read.",
 			bundleRule: `Per package, the newest of ${BUNDLE_DIRECTORIES.join(', ')} that carries at least one ${BUNDLE_EXTENSION} bundle, and every such bundle in it. The reader parses what it is handed and throws on bytes that are not a module, so the format it can read is chosen deliberately rather than discovered by failure.`,
 			packagesRead: closure.installedPackages.length,
-			packagesWithBundles: closure.bundlesRead.filter((entry) => entry.directory !== null).length,
+			packagesWithBundles: closure.bundlesRead.filter((entry) => entry.directory !== null)
+				.length,
 			bundlesParsed: closure.bundlesRead.reduce((total, entry) => total + entry.bundles, 0),
 			packagesWithExportsMap: closure.packageExports.length,
 			absentFromClosure: closure.absentFromClosure,

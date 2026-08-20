@@ -88,7 +88,10 @@ async function inventory(directory: string): Promise<{ files: number; sha256: st
  * and the core schema pin.
  */
 async function bindProjection(): Promise<string> {
-	const bytes = await readFile(join(root, WITNESS_ANGULAR_ESHOP_WEBSPA_PROJECTION_SEED_FIXTURE), 'utf8');
+	const bytes = await readFile(
+		join(root, WITNESS_ANGULAR_ESHOP_WEBSPA_PROJECTION_SEED_FIXTURE),
+		'utf8',
+	);
 	const committed = JSON.parse(bytes) as Record<string, unknown> & { sha256?: unknown };
 	const { sha256: committedDigest, ...seed } = committed;
 	const digest = eshopWebspaSeedDigest();
@@ -329,7 +332,7 @@ export async function runWitnessAngularEshopWebspa(): Promise<WitnessAngularEsho
 		locality: { mode: 'offline', successfulNonLoopback: 0, osWideIsolation: false },
 		nonclaims: [
 			'This is one Angular holdout under direct Witness. It does not establish generic Angular support, a designated pilot, or readiness beyond this exact lineage cell, and it is not counted in any lineage numerator.',
-			"The API this journey talks to is a frozen synthetic same-origin loopback projection authored for this fixture, NOT the eShopOnContainers .NET microservices. No captured production payload, no real catalogue, no real account and no real user data are involved, and nothing here is evidence about those services.",
+			'The API this journey talks to is a frozen synthetic same-origin loopback projection authored for this fixture, NOT the eShopOnContainers .NET microservices. No captured production payload, no real catalogue, no real account and no real user data are involved, and nothing here is evidence about those services.',
 			'The synthetic catalogue deliberately does not reproduce the upstream seed data, so nothing here should be read as evidence about the real catalog service or its contents.',
 			'Identity is out of surface. No IdentityServer is projected, Login is never exercised, and every surface behind it — basket, orders, campaigns, the SignalR hub — is unproven rather than proven absent.',
 			'Text entry and drag are not tested, because the anonymous catalog surface offers neither.',
@@ -343,7 +346,10 @@ export async function runWitnessAngularEshopWebspa(): Promise<WitnessAngularEsho
 	parseWitnessAngularEshopWebspaReceipt(receipt);
 	await mkdir(evidenceDirectory, { recursive: true });
 	await writeFile(join(evidenceDirectory, 'witness-journeys.json'), `${canonicalize(runs)}\n`);
-	await writeFile(join(evidenceDirectory, 'witness-mutation.json'), `${canonicalize(mutation)}\n`);
+	await writeFile(
+		join(evidenceDirectory, 'witness-mutation.json'),
+		`${canonicalize(mutation)}\n`,
+	);
 	await writeFile(
 		join(evidenceDirectory, 'witness-projection-ledger.json'),
 		`${canonicalize({

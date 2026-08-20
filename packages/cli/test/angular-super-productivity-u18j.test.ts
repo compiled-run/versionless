@@ -23,13 +23,19 @@ describe('tsconfig include matching', () => {
 	it('matches a `**` pattern across any number of segments and no segment at all', () => {
 		expect(matchesIncludePattern('src/**/*.worker.ts', 'src/app/core/lz.worker.ts')).toBe(true);
 		expect(matchesIncludePattern('src/**/*.worker.ts', 'src/lz.worker.ts')).toBe(true);
-		expect(matchesIncludePattern('src/**/*.worker.ts', 'src/app/a/b/c/lz.worker.ts')).toBe(true);
+		expect(matchesIncludePattern('src/**/*.worker.ts', 'src/app/a/b/c/lz.worker.ts')).toBe(
+			true,
+		);
 	});
 
 	it('refuses a file the pattern does not reach', () => {
-		expect(matchesIncludePattern('src/**/*.worker.ts', 'src/app/core/lz.service.ts')).toBe(false);
+		expect(matchesIncludePattern('src/**/*.worker.ts', 'src/app/core/lz.service.ts')).toBe(
+			false,
+		);
 		expect(matchesIncludePattern('src/**/*.worker.ts', 'e2e/app/lz.worker.ts')).toBe(false);
-		expect(matchesIncludePattern('src/**/*.worker.ts', 'src/app/core/lz.worker.tsx')).toBe(false);
+		expect(matchesIncludePattern('src/**/*.worker.ts', 'src/app/core/lz.worker.tsx')).toBe(
+			false,
+		);
 	});
 
 	it('keeps a single `*` inside one segment', () => {
@@ -100,7 +106,9 @@ describe('super-productivity u18j worker-chunk and parity round', () => {
 			expect(log['errors']).toBe(0);
 			expect(log['artifactsEmitted']).toBe(parity['migratedLogicalNames']);
 		}
-		expect(section(await record(), 'determinism')['files']).toBe(parity['migratedLogicalNames']);
+		expect(section(await record(), 'determinism')['files']).toBe(
+			parity['migratedLogicalNames'],
+		);
 	});
 
 	it('states determinism as a comparison it made, modulo one named field', async () => {
@@ -114,7 +122,10 @@ describe('super-productivity u18j worker-chunk and parity round', () => {
 
 	it('adds no accommodation and carries the whole inventory forward unchanged', async () => {
 		const accommodations = section(await record(), 'accommodations');
-		const previous = section(await read('u18i-closure-correction-green.json'), 'accommodations');
+		const previous = section(
+			await read('u18i-closure-correction-green.json'),
+			'accommodations',
+		);
 		expect(accommodations['addedThisRound']).toBe(0);
 		expect(accommodations['carriedForward']).toBe(previous['carriedForward']);
 		expect(String(accommodations['inventoryComplete'])).toContain('19');
@@ -170,12 +181,16 @@ describe('super-productivity u18j worker-chunk and parity round', () => {
 		expect(added.length).toBeGreaterThan(0);
 		for (const capability of added) {
 			expect(capability['appNameBranches']).toBe(0);
-			expect(String(capability['file']).startsWith('packages/frameworks/angular/src/')).toBe(true);
-			expect(String(capability['test']).startsWith('packages/frameworks/angular/test/')).toBe(true);
-			expect(String(capability['reading']).length).toBeGreaterThan(400);
-			expect((capability['refusesRatherThanGuesses'] as readonly string[]).length).toBeGreaterThan(
-				2,
+			expect(String(capability['file']).startsWith('packages/frameworks/angular/src/')).toBe(
+				true,
 			);
+			expect(String(capability['test']).startsWith('packages/frameworks/angular/test/')).toBe(
+				true,
+			);
+			expect(String(capability['reading']).length).toBeGreaterThan(400);
+			expect(
+				(capability['refusesRatherThanGuesses'] as readonly string[]).length,
+			).toBeGreaterThan(2);
 			expect(capability['ruledAccommodation']).toBe(false);
 		}
 	});
@@ -192,9 +207,9 @@ describe('super-productivity u18j worker-chunk and parity round', () => {
 			expect(String(outcome['driver']).startsWith('packages/cli/src/fixture/')).toBe(true);
 		}
 		const changed = section(section(await record(), 'applicationFilesChanged'), 'thisUnit');
-		expect(outcomes.flatMap((outcome) => outcome['filesChanged'] as readonly string[]).sort()).toEqual(
-			[...(changed['capabilityDrivenFiles'] as readonly string[])].sort(),
-		);
+		expect(
+			outcomes.flatMap((outcome) => outcome['filesChanged'] as readonly string[]).sort(),
+		).toEqual([...(changed['capabilityDrivenFiles'] as readonly string[])].sort());
 	});
 
 	it('does not claim the workers run, only that they are emitted', async () => {

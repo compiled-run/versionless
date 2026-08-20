@@ -77,7 +77,8 @@ export function readModuleImports(module: SemanticModule, specifier: string): Mo
 		if (record.specifier !== specifier) continue;
 		present = true;
 		const declaration = importDeclarationOf(module, record.node);
-		if (declaration !== null && !declarations.includes(declaration)) declarations.push(declaration);
+		if (declaration !== null && !declarations.includes(declaration))
+			declarations.push(declaration);
 		const local = record.local;
 		if (local === null) continue;
 		if (record.isNamespace) {

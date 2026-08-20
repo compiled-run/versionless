@@ -129,8 +129,7 @@ export const ANGULAR_TINY_TRANSLATOR_MIGRATED_LANE_CHAIN = Object.freeze([
 			'a driven browser: a translation typed into the editor never reaches the outer control, and the export carries the original text under a changed state',
 	}),
 	Object.freeze({
-		record:
-			'evidence/runs/angular-tiny-translator-v0-12-0/u19k-cva-legacy-disabled-state-lane.json',
+		record: 'evidence/runs/angular-tiny-translator-v0-12-0/u19k-cva-legacy-disabled-state-lane.json',
 		root: 'dist-13',
 		published:
 			'the lane that mounts AND keeps what is typed into it: the discriminator that caught the loss agrees across both lanes',
@@ -185,8 +184,7 @@ export const WITNESS_ANGULAR_TINY_TRANSLATOR_RECORDED_AMENDMENTS = Object.freeze
 			'`dist-7` throws before Angular bootstraps, and `dist-11` — which mounts — silently discards a typed translation',
 		amendment:
 			'the binding moved twice, each time by reference and each time forced by a browser measurement; the chain is published in full and its end has moved once more since',
-		record:
-			'evidence/runs/angular-tiny-translator-v0-12-0/u19k-cva-legacy-disabled-state-lane.json',
+		record: 'evidence/runs/angular-tiny-translator-v0-12-0/u19k-cva-legacy-disabled-state-lane.json',
 	}),
 	Object.freeze({
 		subject: 'the font seam across the migration',
@@ -218,7 +216,8 @@ export const WITNESS_ANGULAR_TINY_TRANSLATOR_RECORDED_AMENDMENTS = Object.freeze
 export const WITNESS_ANGULAR_TINY_TRANSLATOR_MIGRATION_FINDINGS = Object.freeze([
 	Object.freeze({
 		finding: 'the migrated bundle threw `process is not defined` before Angular bootstrapped',
-		invisibleTo: 'both build lanes — green, deterministic and byte-stable over the same artifact',
+		invisibleTo:
+			'both build lanes — green, deterministic and byte-stable over the same artifact',
 		foundBy: 'a browser load of the canonical output root',
 		cause: 'the era build inlined Node core globals the Angular 16 browser builder does not',
 		repair: 'the node-core-runtime-globals coherence capability, generic and cell-driven',
@@ -229,10 +228,8 @@ export const WITNESS_ANGULAR_TINY_TRANSLATOR_MIGRATION_FINDINGS = Object.freeze(
 		invisibleTo: 'both build lanes',
 		foundBy: 'a browser load of the next canonical output root',
 		cause: "this application's templates are i18n-marked, and the Angular 16 compiler emits `$localize` tagged templates the bundle evaluates at run time where the era compiler substituted translations into its factories",
-		repair:
-			"the template-i18n-runtime capability, which reads the markers out of the compiler's own parse and declares the package and entry point the target cell publishes",
-		record:
-			'evidence/runs/angular-tiny-translator-v0-12-0/u19f-localize-boot-green-lane.json',
+		repair: "the template-i18n-runtime capability, which reads the markers out of the compiler's own parse and declares the package and entry point the target cell publishes",
+		record: 'evidence/runs/angular-tiny-translator-v0-12-0/u19f-localize-boot-green-lane.json',
 	}),
 	Object.freeze({
 		finding:
@@ -242,8 +239,7 @@ export const WITNESS_ANGULAR_TINY_TRANSLATOR_MIGRATION_FINDINGS = Object.freeze(
 		foundBy:
 			"the journey's own settled-reaction anchor: the application enables its undo control exactly when it has taken an edit, and on the migrated lane it never did",
 		cause: "the application's own `setDisabledState` rebuilds the `FormGroup` its debounced subscription watches; Angular 16 calls that method on every accessor as it attaches a control, and Angular 5 called it only for a control already disabled, so the latent bug never fired on the era cell. Both rival hypotheses were refuted by measurement — our own rxjs pipe translation by a positive control that emitted on time, and a dual-rxjs interaction by a closure census finding one runtime-reachable copy",
-		repair:
-			"the forms-legacy-call-set-disabled-state capability, which declares the vendor's own `callSetDisabledState: 'whenDisabledForLegacyCode'` switch on the modules that attach accessors and leaves the defective accessor exactly as its authors wrote it",
+		repair: "the forms-legacy-call-set-disabled-state capability, which declares the vendor's own `callSetDisabledState: 'whenDisabledForLegacyCode'` switch on the modules that attach accessors and leaves the defective accessor exactly as its authors wrote it",
 		record: 'evidence/runs/angular-tiny-translator-v0-12-0/u19i-data-loss-cause.json',
 	}),
 	Object.freeze({
@@ -1326,10 +1322,9 @@ export function parseWitnessAngularTinyTranslatorReceipt(
 		receipt.fileReaderArbitration.inBehaviorDigest !== true ||
 		// The arbitration is the journey's own reading, not a second claim beside
 		// it: it has to be the parity the runs measured, in both lanes.
-		!exact(
-			receipt.accommodations.journeyObligations,
-			[receipt.fileReaderArbitration.obligation],
-		) ||
+		!exact(receipt.accommodations.journeyObligations, [
+			receipt.fileReaderArbitration.obligation,
+		]) ||
 		receipt.fileReaderArbitration.parsedUnits !==
 			baseline.applicationJourney.fileReaderParity.parsedUnits ||
 		receipt.fileReaderArbitration.parsedDigest !==

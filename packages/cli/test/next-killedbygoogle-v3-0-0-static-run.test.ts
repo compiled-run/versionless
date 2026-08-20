@@ -101,7 +101,9 @@ describe('the killedbygoogle LEGACY-NEXT build lanes', () => {
 			observation.eraLane.buildIdentifiers[1],
 		);
 		expect(observation.eraLane.deterministicModuloBuildIdentifier).toBe(true);
-		expect(observation.eraLane.normalizedDigest).toBe(observation.eraLane.secondNormalizedDigest);
+		expect(observation.eraLane.normalizedDigest).toBe(
+			observation.eraLane.secondNormalizedDigest,
+		);
 	});
 
 	test('reports the migrated lane as byte-stable across two builds', async () => {
@@ -165,7 +167,9 @@ describe('the killedbygoogle LEGACY-NEXT build lanes', () => {
 });
 
 describe('the lane classification and parity helpers', () => {
-	const inventory = (files: readonly Readonly<{ path: string; sha256: string }>[]): LaneInventory => ({
+	const inventory = (
+		files: readonly Readonly<{ path: string; sha256: string }>[],
+	): LaneInventory => ({
 		digest: 'unused',
 		files: files.map((file) => ({ ...file, bytes: 1 })),
 	});
@@ -180,7 +184,10 @@ describe('the lane classification and parity helpers', () => {
 			]),
 		);
 		expect(classified.documents).toEqual(['index.html']);
-		expect(classified.bundledAssets).toEqual(['_next/static/chunks/main.js', 'assets/index-abc.js']);
+		expect(classified.bundledAssets).toEqual([
+			'_next/static/chunks/main.js',
+			'assets/index-abc.js',
+		]);
 		expect(classified.publicAssets).toEqual(['favicon.png']);
 	});
 

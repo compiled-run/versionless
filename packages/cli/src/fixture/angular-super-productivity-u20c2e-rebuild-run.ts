@@ -78,7 +78,11 @@ export async function readReorderInBundle(outputRoot: string): Promise<ReorderRe
 }
 
 export async function runRebuild(): Promise<
-	Readonly<{ round: FontRound['application']; builds: FontRound['builds']; reorder: ReorderReading }>
+	Readonly<{
+		round: FontRound['application'];
+		builds: FontRound['builds'];
+		reorder: ReorderReading;
+	}>
 > {
 	await assembleMigratedTree();
 	const application = await applyFontInliningDisable(APPLIED_TREE);

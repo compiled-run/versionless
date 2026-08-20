@@ -180,9 +180,7 @@ describe('u18h manual-migration-step table', () => {
 	});
 
 	it('records the one site a capability answered as not a step', () => {
-		const capability = MANUAL_STEPS.filter(
-			(step) => step.before === '' && step.after === '',
-		);
+		const capability = MANUAL_STEPS.filter((step) => step.before === '' && step.after === '');
 		expect(capability).toHaveLength(1);
 		expect(capability[0]?.id).toBe('subject-next-argument');
 		expect(capability[0]?.reason).toContain('capability');
@@ -341,13 +339,17 @@ describe('super-productivity u18h accommodation round', () => {
 
 	it('keeps the accommodation payload out of the product surface', async () => {
 		const record = await read('u18h-capability-round.json');
-		const where = String((record['ruling'] as Readonly<Record<string, string>>)['whereTheyLive']);
+		const where = String(
+			(record['ruling'] as Readonly<Record<string, string>>)['whereTheyLive'],
+		);
 		expect(where).toContain('fixtures/angular-super-productivity-v2-13-15');
 		expect(where).toContain('packages/cli/src/fixture');
 		const changes = record['adapterChanges'] as readonly Readonly<Record<string, unknown>>[];
 		for (const change of changes) {
 			expect(change['appNameBranches']).toBe(0);
-			expect(String(change['file']).startsWith('packages/frameworks/angular/src/')).toBe(true);
+			expect(String(change['file']).startsWith('packages/frameworks/angular/src/')).toBe(
+				true,
+			);
 		}
 	});
 

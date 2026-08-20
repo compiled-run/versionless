@@ -1105,21 +1105,23 @@ snapshots:
 					overall: { ready: 3, total: 12 },
 				},
 			});
-			expect(matrix.cells.find((cell) => cell.id === 'react-linkfree-v0-72-0')).toMatchObject({
-				framework: 'react',
-				state: 'verified',
-				scope: 'fixture-specific-create-react-app-5-to-vite8',
-				genericReactSupport: 'not-claimed',
-				browserProof: 'verified-direct-witness',
-				// The synthetic corpus is published on the cell rather than
-				// left inside the receipt: it is the boundary of the claim.
-				corpusRuling: { ruling: 'synthetic-corpus', realProfileDataRendered: false },
-				scrollSurface: 'measured-genuine-viewport-scroll',
-				readinessScoreboard: {
-					reactLineage: { ready: 1, total: 4, counted: false },
-					overall: { ready: 3, total: 12 },
+			expect(matrix.cells.find((cell) => cell.id === 'react-linkfree-v0-72-0')).toMatchObject(
+				{
+					framework: 'react',
+					state: 'verified',
+					scope: 'fixture-specific-create-react-app-5-to-vite8',
+					genericReactSupport: 'not-claimed',
+					browserProof: 'verified-direct-witness',
+					// The synthetic corpus is published on the cell rather than
+					// left inside the receipt: it is the boundary of the claim.
+					corpusRuling: { ruling: 'synthetic-corpus', realProfileDataRendered: false },
+					scrollSurface: 'measured-genuine-viewport-scroll',
+					readinessScoreboard: {
+						reactLineage: { ready: 1, total: 4, counted: false },
+						overall: { ready: 3, total: 12 },
+					},
 				},
-			});
+			);
 			expect(conformance.integrity.canonicalDigest).toHaveLength(64);
 			const report = await readFile(path.join(fixture.current, 'report.md'), 'utf8');
 			expect(report).toContain(
@@ -1141,9 +1143,8 @@ snapshots:
 			// lineage scores cannot be read as an absence of contrary evidence. The
 			// third one is the first whose migrated build is green, and the report
 			// has to carry what is still missing from it in the same breath.
-			const holdouts = (
-				conformance.coverage.productionReadiness as Record<string, unknown>
-			).holdouts as Array<Record<string, unknown>>;
+			const holdouts = (conformance.coverage.productionReadiness as Record<string, unknown>)
+				.holdouts as Array<Record<string, unknown>>;
 			expect(holdouts).toHaveLength(3);
 			expect(holdouts[0]).toMatchObject({
 				id: 'holdout-react-cypress-rwa',
@@ -1215,7 +1216,9 @@ snapshots:
 			);
 			expect(report).toContain(ANGULAR_PRE_IVY_BOUNDARY_POPULATION_STATEMENT);
 			expect(report).toContain('Reading rule `successor-across-names`');
-			expect(report).toContain('Reading rule `declared-but-never-imported-is-not-active-use`');
+			expect(report).toContain(
+				'Reading rule `declared-but-never-imported-is-not-active-use`',
+			);
 			const scriptSurface = JSON.parse(
 				await readFile(path.join(fixture.current, 'script-surface.json'), 'utf8'),
 			) as { summary: Record<string, unknown>; boundaries: Record<string, unknown> };
@@ -1927,9 +1930,7 @@ snapshots:
 		// The freeze record states the Witness AND its boundary. Recording the
 		// green without the surface it covers would be the single most flattering
 		// edit available here.
-		expect(String(angularHoldouts[1]?.reason)).toContain(
-			'the anonymous catalog surface only',
-		);
+		expect(String(angularHoldouts[1]?.reason)).toContain('the anonymous catalog surface only');
 		expect(String(angularHoldouts[1]?.reason)).toContain('refused at install');
 		expect(String(angularHoldouts[1]?.reason)).toContain('counted in no numerator');
 		expect(verifyAdapterFreezeRecord(record)).toEqual(record);

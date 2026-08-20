@@ -49,7 +49,10 @@ describe('LinkFree create-react-app 5 to Vite 8 build lanes', () => {
 		// Both lanes carry the same corpus, byte for byte: one digest says so
 		// without naming a single contributor.
 		expect(profile.builds.baseline.first.corpus.aggregateSha256).toBe(corpus.aggregateSha256);
-		const raw = await readFile('evidence/runs/react-linkfree-v0-72-0/build-profile.json', 'utf8');
+		const raw = await readFile(
+			'evidence/runs/react-linkfree-v0-72-0/build-profile.json',
+			'utf8',
+		);
 		expect(raw.includes(`"${corpus.directory}`)).toBe(true);
 		expect(raw.split(`"${corpus.directory}`).length - 1).toBe(
 			raw.split(`"directory": "${corpus.directory}"`).length - 1,
@@ -84,7 +87,8 @@ describe('LinkFree create-react-app 5 to Vite 8 build lanes', () => {
 		]);
 		// The codegen's own output is the file the record names, not a copy of it.
 		expect(profile.declaredBuildSteps.codegenPrebuild.emittedSha256).toBe(
-			target.applicationFilesChanged?.find((file) => file.path === 'public/list.json')?.sha256,
+			target.applicationFilesChanged?.find((file) => file.path === 'public/list.json')
+				?.sha256,
 		);
 	});
 

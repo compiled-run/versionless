@@ -162,7 +162,9 @@ describe('HospitalRun direct Witness receipt', () => {
 				),
 			).toHaveLength(WITNESS_REACT_HOSPITALRUN_REGISTRATION_ATTEMPTS);
 			expect(run.blockedServiceWorkerRuntime.requestTally).toEqual(
-				expect.arrayContaining([...WITNESS_REACT_HOSPITALRUN_SERVICE_WORKER_REQUESTS[run.lane]]),
+				expect.arrayContaining([
+					...WITNESS_REACT_HOSPITALRUN_SERVICE_WORKER_REQUESTS[run.lane],
+				]),
 			);
 			for (const checkpoint of run.blockedServiceWorkerRuntime.checkpoints) {
 				expect(checkpoint.registrations).toBe(0);

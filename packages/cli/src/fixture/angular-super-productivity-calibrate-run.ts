@@ -171,12 +171,14 @@ export async function calibrateAngularSuperProductivityLane(
 			legs[stage] = {
 				indexedDb: await host.indexedDbKeys().then(
 					(inventory) => inventory,
-					(error: unknown) => `refused: ${error instanceof Error ? error.message : String(error)}`,
+					(error: unknown) =>
+						`refused: ${error instanceof Error ? error.message : String(error)}`,
 				),
 				localStorage: await host.browserStorageKeys(),
 				taskTitles: await host.groupedText(titleProbe).then(
 					(groups) => groups,
-					(error: unknown) => `refused: ${error instanceof Error ? error.message : String(error)}`,
+					(error: unknown) =>
+						`refused: ${error instanceof Error ? error.message : String(error)}`,
 				),
 				scroll: await host.viewportScroll(),
 			};
@@ -197,16 +199,24 @@ export async function calibrateAngularSuperProductivityLane(
 		// and the settings change all happen here, and the reload is last.
 		const readIcon = async (): Promise<unknown> =>
 			host
-				.groupedText({ group: 'main-header .play-btn', name: 'mat-icon', item: 'mat-icon' } as const)
+				.groupedText({
+					group: 'main-header .play-btn',
+					name: 'mat-icon',
+					item: 'mat-icon',
+				} as const)
 				.then(
 					(groups) => groups.flatMap((group) => group.items),
-					(error: unknown) => `refused: ${error instanceof Error ? error.message : String(error)}`,
+					(error: unknown) =>
+						`refused: ${error instanceof Error ? error.message : String(error)}`,
 				);
 		const readTitles = async (): Promise<unknown> =>
-			host.groupedText({ group: 'task', name: '.task-title', item: '.task-title' } as const).then(
-				(groups) => groups.map((group) => group.name),
-				(error: unknown) => `refused: ${error instanceof Error ? error.message : String(error)}`,
-			);
+			host
+				.groupedText({ group: 'task', name: '.task-title', item: '.task-title' } as const)
+				.then(
+					(groups) => groups.map((group) => group.name),
+					(error: unknown) =>
+						`refused: ${error instanceof Error ? error.message : String(error)}`,
+				);
 		const cb: Record<string, unknown> = {};
 		// Assigned before the drives so a step that throws still leaves every
 		// reading taken up to that point in the printed record, rather than losing
@@ -260,7 +270,9 @@ export async function calibrateAngularSuperProductivityLane(
 				await context.expect.page.count(page, selector, 0);
 				return 0;
 			} catch (error: unknown) {
-				return (error instanceof Error ? error.message : String(error)).split('\n')[0]!.trim();
+				return (error instanceof Error ? error.message : String(error))
+					.split('\n')[0]!
+					.trim();
 			}
 		};
 		cb['icon-before-start'] = await readIcon();
@@ -306,9 +318,10 @@ export async function calibrateAngularSuperProductivityLane(
 				await new Promise<void>((settle) => void setTimeout(settle, 1_200));
 				cb['order-after-drag-up'] = await readTitles();
 			}
-			cb['indexeddb-after-drag'] = await host
-				.indexedDbKeys()
-				.then((i) => i, (e: unknown) => `refused: ${e instanceof Error ? e.message : String(e)}`);
+			cb['indexeddb-after-drag'] = await host.indexedDbKeys().then(
+				(i) => i,
+				(e: unknown) => `refused: ${e instanceof Error ? e.message : String(e)}`,
+			);
 		} catch (error: unknown) {
 			cb['drag-error'] = error instanceof Error ? error.message : String(error);
 		}
@@ -335,11 +348,14 @@ export async function calibrateAngularSuperProductivityLane(
 			host
 				.renderedStyles([
 					{ label: 'body-palette', selector: 'body', properties: [...paletteProps] },
-					{ label: 'drawer-palette', selector: 'mat-drawer-container', properties: [...paletteProps] },
+					{
+						label: 'drawer-palette',
+						selector: 'mat-drawer-container',
+						properties: [...paletteProps],
+					},
 				])
 				.then(
-					(probes) =>
-						probes.map((p) => ({ label: p.label, properties: p.properties })),
+					(probes) => probes.map((p) => ({ label: p.label, properties: p.properties })),
 					(e: unknown) => `refused: ${e instanceof Error ? e.message : String(e)}`,
 				);
 		// The box PageHandle exposes NO evaluate/fill primitive, so the count is
@@ -380,9 +396,7 @@ export async function calibrateAngularSuperProductivityLane(
 					(g) => g.map((x) => x.name),
 					(e: unknown) => `refused: ${e instanceof Error ? e.message : String(e)}`,
 				);
-		const ckPath =
-			process.env.LEG_D_CK ??
-			join(receiptDir, 'leg-d-checkpoints.log');
+		const ckPath = process.env.LEG_D_CK ?? join(receiptDir, 'leg-d-checkpoints.log');
 		const ck = (m: string): void => {
 			try {
 				appendFileSync(ckPath, `${new Date().toISOString()} [${lane}] ${m}\n`);
@@ -406,7 +420,9 @@ export async function calibrateAngularSuperProductivityLane(
 				await page.click(selector, { timeoutMs: 4_000 });
 				return 'clicked';
 			} catch (error: unknown) {
-				const msg = (error instanceof Error ? error.message : String(error)).split('\n')[0]!;
+				const msg = (error instanceof Error ? error.message : String(error)).split(
+					'\n',
+				)[0]!;
 				ck(`click failed: ${selector} — ${msg}`);
 				return `failed: ${msg}`;
 			}
@@ -430,14 +446,20 @@ export async function calibrateAngularSuperProductivityLane(
 			dd['title-input-count'] = titleCount;
 			if (titleCount > 0) {
 				try {
-					await page.type(titleInput, 'Witness leg-d project', { redact: false, timeoutMs: 4_000 });
+					await page.type(titleInput, 'Witness leg-d project', {
+						redact: false,
+						timeoutMs: 4_000,
+					});
 					dd['title-typed'] = true;
 				} catch (error: unknown) {
-					dd['title-typed'] = `failed: ${error instanceof Error ? error.message : String(error)}`;
+					dd['title-typed'] =
+						`failed: ${error instanceof Error ? error.message : String(error)}`;
 				}
 				await new Promise<void>((settle) => void setTimeout(settle, 500));
 				ck('title set, clicking save');
-				dd['save-clicked'] = await clickIfPresent('dialog-create-project button[type=submit]');
+				dd['save-clicked'] = await clickIfPresent(
+					'dialog-create-project button[type=submit]',
+				);
 				await new Promise<void>((settle) => void setTimeout(settle, 1_500));
 			} else {
 				dd['title-input'] = 'absent';
@@ -483,7 +505,8 @@ export async function calibrateAngularSuperProductivityLane(
 					await page.type(colorInput, '#ff0000', { redact: false, timeoutMs: 4_000 });
 					dd['color-type-attempt'] = 'typed';
 				} catch (error: unknown) {
-					dd['color-type-attempt'] = `failed: ${error instanceof Error ? error.message : String(error)}`;
+					dd['color-type-attempt'] =
+						`failed: ${error instanceof Error ? error.message : String(error)}`;
 				}
 				await new Promise<void>((settle) => void setTimeout(settle, 400));
 				dd['palette-after-color-type'] = await readPalette();
@@ -494,7 +517,8 @@ export async function calibrateAngularSuperProductivityLane(
 					}
 					dd['color-press-attempt'] = 'pressed';
 				} catch (error: unknown) {
-					dd['color-press-attempt'] = `failed: ${error instanceof Error ? error.message : String(error)}`;
+					dd['color-press-attempt'] =
+						`failed: ${error instanceof Error ? error.message : String(error)}`;
 				}
 				await new Promise<void>((settle) => void setTimeout(settle, 400));
 				dd['palette-after-color-press'] = await readPalette();

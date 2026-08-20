@@ -177,10 +177,8 @@ export const ADAPTER_FREEZE_EXPERIMENTAL_CAPABILITIES = [
  * RED. A reader who wants to know what the reopen bought does not have to diff
  * two freezes to find out.
  */
-export const ADAPTER_FREEZE_T021_EXPERIMENTAL_CAPABILITIES = ADAPTER_FREEZE_EXPERIMENTAL_CAPABILITIES.slice(
-	-21,
-	-9,
-);
+export const ADAPTER_FREEZE_T021_EXPERIMENTAL_CAPABILITIES =
+	ADAPTER_FREEZE_EXPERIMENTAL_CAPABILITIES.slice(-21, -9);
 
 /**
  * The exact subset the T024 Angular reopen produced, kept countable the same
@@ -191,9 +189,8 @@ export const ADAPTER_FREEZE_T021_EXPERIMENTAL_CAPABILITIES = ADAPTER_FREEZE_EXPE
  * bought nine and a repeatable production build. Neither bought a second
  * application, so both slices are wholly inside the experimental column.
  */
-export const ADAPTER_FREEZE_T024_EXPERIMENTAL_CAPABILITIES = ADAPTER_FREEZE_EXPERIMENTAL_CAPABILITIES.slice(
-	-9,
-);
+export const ADAPTER_FREEZE_T024_EXPERIMENTAL_CAPABILITIES =
+	ADAPTER_FREEZE_EXPERIMENTAL_CAPABILITIES.slice(-9);
 
 /**
  * The capabilities that survived a second independent application.
@@ -256,23 +253,31 @@ export function adapterFreezeRecord(): Record<string, unknown> {
 			{
 				task: 'T021',
 				subtree: 'packages/frameworks/angular',
-				authorization: 'board-authorized Angular-subtree reopen for the pigallery2 1.7.0 holdout chase (2026-08-13)',
+				authorization:
+					'board-authorized Angular-subtree reopen for the pigallery2 1.7.0 holdout chase (2026-08-13)',
 				commits: ['283d27f', '03b34ae', 'e6a219e', '8126736'],
 				capabilitiesExtracted: ADAPTER_FREEZE_T021_EXPERIMENTAL_CAPABILITIES.length,
-				entries: ADAPTER_FREEZE_T021_EXPERIMENTAL_CAPABILITIES.map((entry) => ({ ...entry })),
+				entries: ADAPTER_FREEZE_T021_EXPERIMENTAL_CAPABILITIES.map((entry) => ({
+					...entry,
+				})),
 				state: 'all-single-application-experimental',
-				outcome: 'The chased application stayed RED. The reopen bought twelve generic capabilities and a declared support boundary, not a green holdout.',
+				outcome:
+					'The chased application stayed RED. The reopen bought twelve generic capabilities and a declared support boundary, not a green holdout.',
 				reactSubtreeUnchanged: true,
 			},
 			{
 				task: 'T024',
 				subtree: 'packages/frameworks/angular',
-				authorization: 'board-authorized Angular-subtree reopen for the eShopOnContainers WebSPA holdout chase (2026-08-14)',
+				authorization:
+					'board-authorized Angular-subtree reopen for the eShopOnContainers WebSPA holdout chase (2026-08-14)',
 				commits: ['82f48ab', '7543e0e', '8c6a8da', '0ecd410'],
 				capabilitiesExtracted: ADAPTER_FREEZE_T024_EXPERIMENTAL_CAPABILITIES.length,
-				entries: ADAPTER_FREEZE_T024_EXPERIMENTAL_CAPABILITIES.map((entry) => ({ ...entry })),
+				entries: ADAPTER_FREEZE_T024_EXPERIMENTAL_CAPABILITIES.map((entry) => ({
+					...entry,
+				})),
 				state: 'all-single-application-experimental',
-				outcome: 'The chased application is no longer refused at install, its migrated production build now completes twice with byte-identical output, and the T024 u6 Witness run after this re-freeze is green on its anonymous catalog surface. The reopen bought nine generic capabilities, a repeatable build, and a browser proof bounded to that one surface — not a pass on the application, and not a second application for any capability.',
+				outcome:
+					'The chased application is no longer refused at install, its migrated production build now completes twice with byte-identical output, and the T024 u6 Witness run after this re-freeze is green on its anonymous catalog surface. The reopen bought nine generic capabilities, a repeatable build, and a browser proof bounded to that one surface — not a pass on the application, and not a second application for any capability.',
 				reactSubtreeUnchanged: true,
 			},
 		],
@@ -290,7 +295,8 @@ export function adapterFreezeRecord(): Record<string, unknown> {
 				state: 'attempted',
 				application: 'eShopOnContainers WebSPA (netcore2.2, src/Web/WebSPA)',
 				outcome: 'witness-passed-on-bounded-anonymous-catalog-surface',
-				preScreen: 'mandatory license-text-at-pin pre-screen; the pre-Ivy screen verdict on this candidate was overturned by the T022 follow-up ruling under the successor-across-names rule',
+				preScreen:
+					'mandatory license-text-at-pin pre-screen; the pre-Ivy screen verdict on this candidate was overturned by the T022 follow-up ruling under the successor-across-names rule',
 				reason: 'The replacement Angular holdout was refused at install by the frozen f1a63359 adapter, and that RED stands as history. After the authorized T024 reopen its migrated production build completes and repeats byte-identically, and the T024 u6 Witness — run after this re-freeze, on two lanes observed twice each — measures one behaviour parity digest with a mutation-red and byte-restore proof under it. The Witness covers the anonymous catalog surface only: identity, basket, orders and campaigns are out of surface, the SignalR hub was never reached, and text entry and drag were not tested. It is counted in no numerator, and it is published as a pass on that bounded surface rather than as a pass on the application.',
 				boundary: 'none declared by this holdout',
 			},

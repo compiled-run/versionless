@@ -169,7 +169,8 @@ function nextCallOf(module: SemanticModule, use: AstNode): number | null {
 	if (member === null || member.type !== 'MemberExpression') return null;
 	if (member.object !== use || member.computed === true) return null;
 	const property: AstNode | null = member.property;
-	if (property === null || property.type !== 'Identifier' || property.name !== 'next') return null;
+	if (property === null || property.type !== 'Identifier' || property.name !== 'next')
+		return null;
 	const call = module.parentOf(member);
 	if (call === null || call.type !== 'CallExpression' || call.callee !== member) return null;
 	return (call.arguments as readonly AstNode[]).length;
@@ -218,7 +219,9 @@ export function parameteriseVoidSubjects(path: string, source: string): VoidSubj
 		if (owned.scope === 'module-local') {
 			const symbol = module.symbolOf(owned.name);
 			if (symbol === null || symbol === undefined) {
-				unhandled.push(`${at}: the declaration this subject initialises resolves to no binding`);
+				unhandled.push(
+					`${at}: the declaration this subject initialises resolves to no binding`,
+				);
 				return;
 			}
 			uses = referencesTo(module, symbol).filter((use) => use !== owned.name);

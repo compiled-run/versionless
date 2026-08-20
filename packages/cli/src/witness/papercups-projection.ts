@@ -315,7 +315,10 @@ export function createPapercupsProjection(): PapercupsProjection {
 							status: 'ok',
 							response: {},
 							broadcasts: [
-								{ event: 'shout', payload: { ...reply } as Record<string, unknown> },
+								{
+									event: 'shout',
+									payload: { ...reply } as Record<string, unknown>,
+								},
 							],
 						};
 			}
@@ -330,7 +333,10 @@ export function createPapercupsProjection(): PapercupsProjection {
 			}
 			if (event === 'watch:one' || event === 'watch:many')
 				return { status: 'ok', response: {} };
-			return { status: 'error', response: { reason: `unsupported event: ${topic} ${event}` } };
+			return {
+				status: 'error',
+				response: { reason: `unsupported event: ${topic} ${event}` },
+			};
 		},
 	};
 	return {

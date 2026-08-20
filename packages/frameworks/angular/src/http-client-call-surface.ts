@@ -67,7 +67,10 @@ import {
 const CAPABILITY = 'HttpClient call surface';
 
 /** The entry points a `map` operator may be imported through. */
-export const RXJS_OPERATOR_SPECIFIERS: readonly string[] = Object.freeze(['rxjs/operators', 'rxjs']);
+export const RXJS_OPERATOR_SPECIFIERS: readonly string[] = Object.freeze([
+	'rxjs/operators',
+	'rxjs',
+]);
 
 /**
  * One member of an installed successor class, read from its own declaration.
@@ -245,11 +248,7 @@ function pipeCallOf(module: SemanticModule, operatorCall: AstNode): AstNode | nu
  * flow, never from the value, never from a default, and never from the shape of
  * a consumer somewhere else in the tree.
  */
-function declaredElementType(
-	module: SemanticModule,
-	source: string,
-	from: AstNode,
-): string | null {
+function declaredElementType(module: SemanticModule, source: string, from: AstNode): string | null {
 	let previous = from;
 	let current = module.parentOf(from);
 	while (current !== null) {
@@ -263,7 +262,10 @@ function declaredElementType(
 			if (annotation === null || annotation.type !== 'TSTypeAnnotation') return null;
 			const reference = annotation.typeAnnotation;
 			if (reference.type !== 'TSTypeReference') return null;
-			if (reference.typeName.type !== 'Identifier' || reference.typeName.name !== 'Observable')
+			if (
+				reference.typeName.type !== 'Identifier' ||
+				reference.typeName.name !== 'Observable'
+			)
 				return null;
 			const supplied = reference.typeArguments ?? null;
 			if (supplied === null || supplied.type !== 'TSTypeParameterInstantiation') return null;
@@ -414,7 +416,8 @@ export function migrateHttpClientCallSurface(
 				);
 			const key = receiverKey(owner);
 			const property = module.parentOf(owner)?.type === 'TSParameterProperty';
-			if (key === null) return refuse(`${claim.client.from} annotates a parameter with no name`);
+			if (key === null)
+				return refuse(`${claim.client.from} annotates a parameter with no name`);
 			clientReceivers.add(property ? `this.${key}` : key);
 			edits.push({ start: node.start, end: node.end, text: claim.client.to });
 			changes.push({
@@ -434,7 +437,9 @@ export function migrateHttpClientCallSurface(
 	const headerReceivers = new Set<string>();
 	if (headerBinding !== undefined) {
 		if (!reading.rootExports.includes(claim.headers.to))
-			return refuse(`'${claim.package}'@${reading.version} does not publish ${claim.headers.to}`);
+			return refuse(
+				`'${claim.package}'@${reading.version} does not publish ${claim.headers.to}`,
+			);
 		if (headerSurface === undefined || !headerSurface.complete)
 			return refuse(
 				`no complete declaration of ${claim.headers.to} was read, so whether its mutators ` +
@@ -444,7 +449,8 @@ export function migrateHttpClientCallSurface(
 			return refuse(`${claim.headers.to} is already bound in this module's root scope`);
 		for (const node of referencesTo(module, headerBinding)) {
 			const parent = module.parentOf(node);
-			if (parent === null) return refuse(`${claim.headers.from} is used in no position at all`);
+			if (parent === null)
+				return refuse(`${claim.headers.from} is used in no position at all`);
 			if (parent.type === 'NewExpression' && parent.callee === node) {
 				edits.push({ start: node.start, end: node.end, text: claim.headers.to });
 				const assignment = module.parentOf(parent);
@@ -540,7 +546,11 @@ export function migrateHttpClientCallSurface(
 			if (callee.property.type !== 'Identifier') return;
 			const key = receiverKey(callee.object);
 			if (key === null || !clientReceivers.has(key)) return;
-			clientCalls.push({ call: node, member: callee.property, memberName: callee.property.name });
+			clientCalls.push({
+				call: node,
+				member: callee.property,
+				memberName: callee.property.name,
+			});
 		});
 	}
 	for (const site of clientCalls) {
@@ -637,7 +647,10 @@ export function migrateHttpClientCallSurface(
 					if (!operators.has(module.symbolOf(argument.callee))) continue;
 					const only = (argument.arguments as readonly AstNode[])[0];
 					if (only === undefined) continue;
-					if (only.type !== 'ArrowFunctionExpression' && only.type !== 'FunctionExpression')
+					if (
+						only.type !== 'ArrowFunctionExpression' &&
+						only.type !== 'FunctionExpression'
+					)
 						continue;
 					callback = only;
 				}
@@ -648,7 +661,8 @@ export function migrateHttpClientCallSurface(
 			if (binding !== null)
 				for (const reference of referencesTo(module, binding)) {
 					const member = module.parentOf(reference);
-					if (member === null || member.type !== 'MemberExpression' || member.computed) continue;
+					if (member === null || member.type !== 'MemberExpression' || member.computed)
+						continue;
 					if (member.property.type !== 'Identifier') continue;
 					if (member.property.name !== claim.response.bodyAccessor) continue;
 					const accessorCall = module.parentOf(member);
@@ -688,7 +702,7 @@ export function migrateHttpClientCallSurface(
 				from: `${claim.client.from}.${site.memberName}(…)`,
 				to: `${claim.client.to}.${site.memberName}<${element}>(…)`,
 				detail:
-					'the emitted type is the application\'s own declared return type for the flow, read ' +
+					"the emitted type is the application's own declared return type for the flow, read " +
 					'from the function the call is returned from',
 			});
 		}
@@ -712,7 +726,8 @@ export function migrateHttpClientCallSurface(
 				);
 			const owner = annotationOwner(module, parent);
 			const callback = owner === null ? null : isParameterOf(module, owner);
-			const operatorCall = callback === null ? null : operatorCallOf(module, callback, operators);
+			const operatorCall =
+				callback === null ? null : operatorCallOf(module, callback, operators);
 			if (operatorCall === null || pipeCallOf(module, operatorCall) === null)
 				return refuse(
 					`${claim.response.from} annotates something at line ` +

@@ -23,8 +23,18 @@ describe('parameteriseVoidPromiseExecutors', () => {
 		const result = parameteriseVoidPromiseExecutors('google-api.service.ts', service);
 		expect(result.unhandled).toEqual([]);
 		expect(result.changes).toEqual([
-			{ kind: 'promise-executor-void-parameter', line: 4, parameter: 'resolve', callSites: 1 },
-			{ kind: 'promise-executor-void-parameter', line: 8, parameter: 'resolve', callSites: 1 },
+			{
+				kind: 'promise-executor-void-parameter',
+				line: 4,
+				parameter: 'resolve',
+				callSites: 1,
+			},
+			{
+				kind: 'promise-executor-void-parameter',
+				line: 8,
+				parameter: 'resolve',
+				callSites: 1,
+			},
 		]);
 		expect(result.source.match(/new Promise<void>\(/gu)).toHaveLength(2);
 		expect(result.source).not.toContain('new Promise((resolve)');

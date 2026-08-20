@@ -83,8 +83,7 @@ describe('killedbygoogle v3 Witness receipt', () => {
 			expect(run.routes).toHaveLength(
 				run.lane === 'baseline'
 					? WITNESS_NEXT_KILLEDBYGOOGLE_V3_ROUTER_HISTORY_DIFFERENCE.eraRecordedNavigations
-					: WITNESS_NEXT_KILLEDBYGOOGLE_V3_ROUTER_HISTORY_DIFFERENCE
-							.migratedRecordedNavigations,
+					: WITNESS_NEXT_KILLEDBYGOOGLE_V3_ROUTER_HISTORY_DIFFERENCE.migratedRecordedNavigations,
 			);
 	});
 

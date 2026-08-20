@@ -61,9 +61,11 @@ describe('the Next static lift table', () => {
 describe('the analyzer-driven surface scan', () => {
 	test('rewrites a component import to its lifted module and leaves the binding alone', () => {
 		const lifted = liftNextStaticModule(
-			["import Head from 'next/head';", 'export const a = <Head><title>x</title></Head>;', ''].join(
-				'\n',
-			),
+			[
+				"import Head from 'next/head';",
+				'export const a = <Head><title>x</title></Head>;',
+				'',
+			].join('\n'),
 			'page.tsx',
 		);
 		expect(lifted).toContain(`import Head from "${nextStaticHeadModuleId}"`);
@@ -90,7 +92,9 @@ describe('the analyzer-driven surface scan', () => {
 	test('refuses to erase a framework import whose binding is used as a value', () => {
 		expect(() =>
 			liftNextStaticModule(
-				["import App from 'next/app';", 'export default class extends App {}', ''].join('\n'),
+				["import App from 'next/app';", 'export default class extends App {}', ''].join(
+					'\n',
+				),
 				'app.tsx',
 			),
 		).toThrow(/referenced from a value position/);
@@ -98,7 +102,7 @@ describe('the analyzer-driven surface scan', () => {
 
 	test('sees a framework specifier only where the parse puts one', () => {
 		const source = [
-			'// import Head from \'next/head\';',
+			"// import Head from 'next/head';",
 			'export const note = "next/link is not imported here";',
 			'',
 		].join('\n');
@@ -109,7 +113,10 @@ describe('the analyzer-driven surface scan', () => {
 	test('names the refused framework module rather than failing generically', () => {
 		for (const specifier of Object.keys(nextStaticUnsupportedSpecifiers))
 			expect(() =>
-				liftNextStaticModule(`import x from '${specifier}';\nexport default x;\n`, 'page.tsx'),
+				liftNextStaticModule(
+					`import x from '${specifier}';\nexport default x;\n`,
+					'page.tsx',
+				),
 			).toThrow(specifier);
 	});
 
@@ -126,7 +133,10 @@ describe('the analyzer-driven surface scan', () => {
 
 	test('refuses an asset module import the legacy loader configuration resolved', () => {
 		expect(() =>
-			liftNextStaticModule("import Logo from './logo.svg';\nexport default Logo;\n", 'page.tsx'),
+			liftNextStaticModule(
+				"import Logo from './logo.svg';\nexport default Logo;\n",
+				'page.tsx',
+			),
 		).toThrow(/SVG loader/);
 	});
 
@@ -195,7 +205,9 @@ describe('entry and document synthesis', () => {
 
 describe('the compile-time environment', () => {
 	test('defines every key the framework inlines, plus the object itself', () => {
-		expect(nextProcessEnvironmentDefines({ mode: 'production', NODE_ENV: 'production' })).toEqual({
+		expect(
+			nextProcessEnvironmentDefines({ mode: 'production', NODE_ENV: 'production' }),
+		).toEqual({
 			'process.env.NODE_ENV': '"production"',
 			'process.env.mode': '"production"',
 			'process.env': '{"NODE_ENV":"production","mode":"production"}',
@@ -208,7 +220,10 @@ describe('the next/babel preset translation', () => {
 		const plan = planNextBabelPresetSource(
 			JSON.stringify({
 				presets: [
-					['next/babel', { 'preset-react': { runtime: 'automatic', importSource: '@x/react' } }],
+					[
+						'next/babel',
+						{ 'preset-react': { runtime: 'automatic', importSource: '@x/react' } },
+					],
 				],
 				plugins: ['@emotion/babel-plugin'],
 			}),
@@ -230,7 +245,10 @@ describe('the next/babel preset translation', () => {
 			'@babel/preset-env',
 		);
 		expect(() =>
-			planNextBabelPreset({ presets: ['next/babel'], plugins: ['babel-plugin-styled-components'] }),
+			planNextBabelPreset({
+				presets: ['next/babel'],
+				plugins: ['babel-plugin-styled-components'],
+			}),
 		).toThrow('babel-plugin-styled-components');
 	});
 
@@ -246,7 +264,9 @@ describe('the adapter plugin set', () => {
 		expect(
 			plugin.transform("import Head from 'next/head';\n", '/app/node_modules/thing/index.js'),
 		).toBeNull();
-		expect(plugin.transform("import Head from 'next/head';\n", '/app/pages/index.tsx')).not.toBeNull();
+		expect(
+			plugin.transform("import Head from 'next/head';\n", '/app/pages/index.tsx'),
+		).not.toBeNull();
 	});
 
 	test('the lift plugin reports the surface it lifted', () => {

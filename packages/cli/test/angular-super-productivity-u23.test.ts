@@ -42,7 +42,9 @@ describe('emitted-name elision', () => {
 
 	it('leaves a name that carries no hash alone', () => {
 		expect(logicalNameOf('ngsw.json')).toBe('ngsw.json');
-		expect(logicalNameOf('assets/icons/favicon-16x16.png')).toBe('assets/icons/favicon-16x16.png');
+		expect(logicalNameOf('assets/icons/favicon-16x16.png')).toBe(
+			'assets/icons/favicon-16x16.png',
+		);
 		expect(logicalNameOf('safety-worker.js')).toBe('safety-worker.js');
 		/** A short word made of hex characters is a word, not a hash. */
 		expect(logicalNameOf('face.css')).toBe('face.css');
@@ -156,7 +158,9 @@ describe('super-productivity u23 offline-faithful rebuild', () => {
 		const supersedes = section(await record(), 'supersedes');
 		expect(supersedes['record']).toBe('u18j-worker-chunks-parity.json');
 		expect(supersedes['by']).toBe('reference');
-		expect(supersedes['bytesSha256']).toBe(sha256(await bytesOf('u18j-worker-chunks-parity.json')));
+		expect(supersedes['bytesSha256']).toBe(
+			sha256(await bytesOf('u18j-worker-chunks-parity.json')),
+		);
 	});
 
 	it('says what it did not establish, witness work included', async () => {

@@ -17,11 +17,28 @@
  * did. So this capability closes it, and only where the application's own bytes
  * say it is open:
  *
- * - **Only when the templates ask.** The marker is read out of the parsed
- *   templates — `i18n` on an element, or `i18n-<attribute>` on one of its
- *   attributes — and an application with no marker anywhere gets no package
- *   declared and no polyfill entry. A polyfill nothing asks for is bundle weight
- *   and a claim about the application that its own templates contradict.
+ * - **Only when something the application owns asks.** Two readings admit, and
+ *   both are readings rather than inferences. The first is the parsed templates —
+ *   `i18n` on an element, or `i18n-<attribute>` on one of its attributes. The
+ *   second is the application's *emitted bundle*: a count of `$localize`
+ *   references somebody read out of the bytes the target line's compiler
+ *   produced, supplied as a {@link LocalizeClosureReading}. With neither reading
+ *   present nothing is declared. A polyfill nothing asks for is bundle weight and
+ *   a claim about the application that its own bytes contradict.
+ * - **Why the second reading exists, measured.** pigallery2 carries **zero**
+ *   template markers and its migrated Angular 13 bundle carries **215**
+ *   `$localize` references in `main.js`; served live, it died on
+ *   `ReferenceError: $localize is not defined` before Angular bootstrapped
+ *   (`evidence/runs/angular-13cell/pigallery2-live-witness.json`). The markers are
+ *   in the application's own `.ts` — `$localize` tags an Angular 13 compiler emits
+ *   for constructs a template parse does not see — so a gate that reads only
+ *   templates refuses an application whose bundle is provably broken without the
+ *   runtime. The second reading closes that hole with a measurement.
+ * - **Never from the cell.** The closure reading arrives supplied and is never
+ *   derived from the target cell's major. "An Ivy cell, therefore probably" would
+ *   declare `@angular/localize` on every plan on the line: bundle weight plus a
+ *   claim the application's bytes do not support. A caller that has not read a
+ *   bundle supplies no reading and gets no declaration from one.
  * - **Only when the target line emits the tags.** `$localize` is an Ivy-era
  *   emission. A cell on a pre-Ivy line compiles the same markers to substituted
  *   factories, so the global is never referenced, and declaring the package
@@ -74,6 +91,27 @@ export type TemplateI18nReading = Readonly<{
 	markedTemplates: readonly string[];
 	/** Every template read, marked or not. */
 	templatesRead: number;
+}>;
+
+/**
+ * What an application's emitted bundle says about `$localize`, as read.
+ *
+ * This is a reading of bytes a compiler produced, not of the source it was
+ * produced from, and it is supplied rather than taken: nothing in this package
+ * builds an application. The count is what a reader counted — `grep -o` over an
+ * emitted chunk, a closure scan, a bundler's own module graph — and `readFrom`
+ * is that reader saying, in its own words, which bytes it counted and how, so
+ * the number can be checked against the same place it came from.
+ *
+ * A count of zero is a reading too, and it is not the same thing as no reading:
+ * it says somebody looked at the bundle and found no reference, which is a
+ * refusal with evidence behind it rather than a refusal for want of evidence.
+ */
+export type LocalizeClosureReading = Readonly<{
+	/** How many `$localize` references the bytes read carry. */
+	occurrences: number;
+	/** Which bytes were read and how, in the reader's own words. */
+	readFrom: string;
 }>;
 
 /** Whether one attribute name is one of Angular's i18n markers. */
@@ -134,8 +172,14 @@ export type TemplateI18nRuntimeDeclaration = Readonly<{
 	change: LocalizeDependencyChange | null;
 	/** The polyfill entry point to declare, or null when nothing is declared. */
 	entryPoint: typeof LOCALIZE_POLYFILL_ENTRY_POINT | null;
-	/** The reading the decision rests on. */
+	/** The template reading the decision rests on. */
 	reading: TemplateI18nReading;
+	/**
+	 * The emitted-bundle reading the decision rests on, or null when the caller
+	 * supplied none. Carried back so a reader can tell a bundle that was read and
+	 * found empty from a bundle nobody read.
+	 */
+	closure: LocalizeClosureReading | null;
 	/** What declaring this changes about the application, stated. */
 	declaredDifferences: readonly string[];
 	/** Everything refused, by name and with its reason. */
@@ -145,6 +189,7 @@ export type TemplateI18nRuntimeDeclaration = Readonly<{
 function refusal(
 	manifest: string,
 	reading: TemplateI18nReading,
+	closure: LocalizeClosureReading | null,
 	why: string,
 ): TemplateI18nRuntimeDeclaration {
 	return Object.freeze({
@@ -153,14 +198,46 @@ function refusal(
 		change: null,
 		entryPoint: null,
 		reading,
+		closure,
 		declaredDifferences: Object.freeze([]),
 		unhandled: Object.freeze([why]),
 	});
 }
 
 /**
- * Declare the `$localize` runtime for an application whose templates ask for it
+ * The evidence clause of the declared difference: which reading admitted, and
+ * what it counted. Both readings are stated when both are present, because a
+ * reader owed the claim is owed every measurement behind it.
+ */
+function admittingEvidence(
+	reading: TemplateI18nReading,
+	closure: LocalizeClosureReading | null,
+	angularLine: string,
+): string {
+	const clauses: string[] = [];
+	if (reading.markers.length > 0)
+		clauses.push(
+			`${String(reading.markers.length)} i18n markers across ` +
+				`${String(reading.markedTemplates.length)} of this application's ` +
+				`${String(reading.templatesRead)} templates compile to \`$localize\` tagged templates ` +
+				`on Angular ${angularLine}`,
+		);
+	if (closure !== null && closure.occurrences > 0)
+		clauses.push(
+			`${String(closure.occurrences)} \`$localize\` references were counted in this ` +
+				`application's emitted bundle (${closure.readFrom})`,
+		);
+	return clauses.join(', and ');
+}
+
+/**
+ * Declare the `$localize` runtime for an application whose own bytes ask for it
  * on a line whose compiler emits it.
+ *
+ * Either reading admits: the templates the application owns, or a supplied
+ * reading of the bundle they compiled to. Neither is inferred from the cell, and
+ * with neither present this stands down exactly as it did when the templates
+ * were the only reading it had.
  *
  * The manifest half is all this returns for the workspace: the entry point is
  * handed back by name for the caller to declare through
@@ -172,35 +249,49 @@ export function declareTemplateI18nRuntime(input: {
 	manifest: string;
 	templates: readonly AngularTemplateSource[];
 	cell: AngularTargetCell;
+	/**
+	 * What somebody read in the application's emitted bundle. Optional, and
+	 * absent means unread rather than empty: this capability builds nothing and
+	 * invents no count.
+	 */
+	closure?: LocalizeClosureReading | null;
 }): TemplateI18nRuntimeDeclaration {
 	const reading = readTemplateI18nMarkers(input.templates);
-	if (reading.markers.length === 0)
+	const closure = input.closure ?? null;
+	if (reading.markers.length === 0 && (closure === null || closure.occurrences === 0))
 		return refusal(
 			input.manifest,
 			reading,
+			closure,
 			`${LOCALIZE_PACKAGE} was not declared: none of the ${String(reading.templatesRead)} ` +
-				'templates read carries an `i18n` or `i18n-<attribute>` marker, so this application ' +
-				'compiles to no `$localize` tagged template and a runtime for one would be a ' +
-				'polyfill nothing in the bundle asks for',
+				'templates read carries an `i18n` or `i18n-<attribute>` marker, and ' +
+				(closure === null
+					? "no reading of this application's emitted bundle was supplied to say otherwise"
+					: `the supplied reading of its emitted bundle (${closure.readFrom}) counted no ` +
+						'`$localize` reference') +
+				', so nothing here says this application compiles to a `$localize` tagged template ' +
+				'and a runtime for one would be a polyfill nothing in the bundle asks for',
 		);
 	const major = majorOf(input.cell.angularLine);
 	if (major === null || major < LOCALIZE_EMITTING_ANGULAR_MAJOR)
 		return refusal(
 			input.manifest,
 			reading,
+			closure,
 			`${LOCALIZE_PACKAGE} was not declared: the declared cell is on Angular ` +
 				`${input.cell.angularLine}, whose compiler substitutes translations into the ` +
-				'factories it emits rather than emitting `$localize` tagged templates, so the ' +
-				'marked templates reference no runtime global on this line',
+				'factories it emits rather than emitting `$localize` tagged templates, so nothing ' +
+				'this application compiles on this line references the runtime global',
 		);
 	const range = alignedVersionRange(LOCALIZE_PACKAGE, input.cell);
 	if (range === null)
 		return refusal(
 			input.manifest,
 			reading,
+			closure,
 			`${LOCALIZE_PACKAGE} was not declared: the declared cell ${input.cell.id} carries no ` +
 				'range for it and none for the `@angular/` family, and picking a version for a ' +
-				'framework package is the cell\'s decision rather than this capability\'s',
+				"framework package is the cell's decision rather than this capability's",
 		);
 	const parsed = parseStrictJson(input.manifest, 'template i18n runtime');
 	const dependencies = objectAt(parsed['dependencies']);
@@ -208,6 +299,7 @@ export function declareTemplateI18nRuntime(input: {
 		return refusal(
 			input.manifest,
 			reading,
+			closure,
 			`${LOCALIZE_PACKAGE} was not declared: the application manifest carries no ` +
 				'`dependencies` object, so there is nothing here this capability can read as the ' +
 				'declared closure it would be adding to',
@@ -217,6 +309,7 @@ export function declareTemplateI18nRuntime(input: {
 		return refusal(
 			input.manifest,
 			reading,
+			closure,
 			`${LOCALIZE_PACKAGE} was not declared: the manifest already carries it as something ` +
 				'other than a version range, and overwriting a declaration this capability cannot ' +
 				'read would discard a decision somebody else made',
@@ -225,13 +318,10 @@ export function declareTemplateI18nRuntime(input: {
 		`globalThis.$localize exists in this application's browser context where it did not ` +
 			`before. ${LOCALIZE_PACKAGE} is declared at ${range} and its published ` +
 			`\`${LOCALIZE_POLYFILL_ENTRY_POINT}\` entry point installs the runtime before \`main\`, ` +
-			`because ${String(reading.markers.length)} i18n markers across ` +
-			`${String(reading.markedTemplates.length)} of this application's ` +
-			`${String(reading.templatesRead)} templates compile to \`$localize\` tagged templates ` +
-			`on Angular ${input.cell.angularLine}. With no translations loaded the runtime ` +
-			'evaluates each tag to its source message, which is the text the template already ' +
-			'carries — the application renders its own strings, not translated ones, and this ' +
-			'capability loads no locale.',
+			`because ${admittingEvidence(reading, closure, input.cell.angularLine)}. With no ` +
+			'translations loaded the runtime evaluates each tag to its source message, which is the ' +
+			'text the application already carries — the application renders its own strings, not ' +
+			'translated ones, and this capability loads no locale.',
 	];
 	if (current === range)
 		return Object.freeze({
@@ -240,6 +330,7 @@ export function declareTemplateI18nRuntime(input: {
 			change: null,
 			entryPoint: LOCALIZE_POLYFILL_ENTRY_POINT,
 			reading,
+			closure,
 			declaredDifferences: Object.freeze(declaredDifferences),
 			unhandled: Object.freeze([]),
 		});
@@ -254,6 +345,7 @@ export function declareTemplateI18nRuntime(input: {
 			return refusal(
 				input.manifest,
 				reading,
+				closure,
 				`${LOCALIZE_PACKAGE} was not declared: \`dependencies.${name}\` is not a version ` +
 					'range, so rewriting this manifest would rewrite a declaration this capability ' +
 					'cannot read',
@@ -271,6 +363,7 @@ export function declareTemplateI18nRuntime(input: {
 		}),
 		entryPoint: LOCALIZE_POLYFILL_ENTRY_POINT,
 		reading,
+		closure,
 		declaredDifferences: Object.freeze(declaredDifferences),
 		unhandled: Object.freeze([]),
 	});

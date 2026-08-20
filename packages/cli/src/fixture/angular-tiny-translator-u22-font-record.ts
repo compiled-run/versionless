@@ -32,7 +32,11 @@ import {
 	type SealedRecord,
 } from './angular-factoriolab-build-lanes-run.ts';
 import { CONSENT } from './angular-tiny-translator-lanes-run.ts';
-import { APPLIED_TREE, EVIDENCE_DIRECTORY, STAGE_DIRECTORY } from './angular-tiny-translator-apply-run.ts';
+import {
+	APPLIED_TREE,
+	EVIDENCE_DIRECTORY,
+	STAGE_DIRECTORY,
+} from './angular-tiny-translator-apply-run.ts';
 import { inventoryOf } from './angular-tiny-translator-final-record.ts';
 import { observeAngularTinyTranslatorBoot } from '../witness/angular-tiny-translator-boot-check.ts';
 import {
@@ -78,7 +82,9 @@ export async function buildFontLaneRecord(): Promise<SealedRecord> {
 		'utf8',
 	);
 	const boot = await observeAngularTinyTranslatorBoot(path.join(STAGE_DIRECTORY, CANONICAL_ROOT));
-	const fontLinks = linkHrefs(emittedIndex).filter((href) => href.includes('fonts.googleapis.com'));
+	const fontLinks = linkHrefs(emittedIndex).filter((href) =>
+		href.includes('fonts.googleapis.com'),
+	);
 	const sourceFontLinks = linkHrefs(sourceIndex).filter((href) =>
 		href.includes('fonts.googleapis.com'),
 	);
@@ -95,7 +101,7 @@ export async function buildFontLaneRecord(): Promise<SealedRecord> {
 		meaning:
 			'The Angular 16 browser builder inlines every Google Fonts stylesheet an application links, ' +
 			'and it does it by fetching the stylesheet from the font host while the build runs. u19k ' +
-			"published a lane built that way without knowing it. This round turns the inliner off with " +
+			'published a lane built that way without knowing it. This round turns the inliner off with ' +
 			'the landed capability and rebuilds twice, and it measures the fetch rather than reasoning ' +
 			'about it: every build here runs under an in-process guard that records and refuses any ' +
 			'connection to a non-loopback address. The control build — the workspace exactly as u19k ' +

@@ -101,7 +101,9 @@ describe('cypress-realworld-app holdout falsification receipt', () => {
 
 	it('names the missing capability with the bytes that caused it', async () => {
 		const receipt = await published();
-		expect(receipt.finding.missingCapability).toBe(HOLDOUT_REACT_CYPRESS_RWA_MISSING_CAPABILITY);
+		expect(receipt.finding.missingCapability).toBe(
+			HOLDOUT_REACT_CYPRESS_RWA_MISSING_CAPABILITY,
+		);
 		expect(receipt.finding.exactDemand.code).toBe('UNLOADABLE_DEPENDENCY');
 		expect(receipt.finding.exactDemand.compilerText).toBe('stream did not contain valid UTF-8');
 		expect(receipt.finding.offendingFile.package).toBe('faker@5.5.3');

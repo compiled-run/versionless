@@ -188,9 +188,9 @@ describe('the two opt-in mechanisms, as this application declares them', () => {
 	it('declares the download surface, which is the only thing that accepts one', () => {
 		expect(spec.downloads).toBe('capture');
 		expect(WITNESS_ANGULAR_TINY_TRANSLATOR_DOWNLOAD_SURFACE.expectedDownloads).toBe(1);
-		expect(
-			witnessBrowserContextOptions({ downloads: spec.downloads }).acceptDownloads,
-		).toBe(true);
+		expect(witnessBrowserContextOptions({ downloads: spec.downloads }).acceptDownloads).toBe(
+			true,
+		);
 	});
 
 	it('builds a file-input inventory the receipt schema accepts', () => {

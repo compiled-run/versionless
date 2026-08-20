@@ -143,13 +143,15 @@ export const WITNESS_NEXT_KILLEDBYGOOGLE_V3_MOCKED_SEAMS = Object.freeze({
  * appearance and every journey answer are identical in both lanes.
  */
 export const WITNESS_NEXT_KILLEDBYGOOGLE_V3_SCRIPT_EXECUTION_DIFFERENCE = Object.freeze({
-	difference: 'parser-inserted third-party scripts execute in the era lane and not after the lift',
+	difference:
+		'parser-inserted third-party scripts execute in the era lane and not after the lift',
 	eraFetched: 3,
 	migratedFetched: 1,
 	alwaysFetched: 'http://cdn.carbonads.com/carbon.js',
 	presentInBothRenderedDocuments: 3,
 	cause: 'The era lane statically renders the analytics tag into <head> and the card script into the body, where the HTML parser inserts and therefore executes them. After the lift the same two elements are produced by React during render, and a script element inserted by React is never executed by the browser. The advertising script is appended imperatively by the application itself with document.createElement in both lanes, so it runs in both.',
-	visibleConsequence: 'none measured: the rendered list, the resolved appearance of every probe and every journey answer are identical in both lanes',
+	visibleConsequence:
+		'none measured: the rendered list, the resolved appearance of every probe and every journey answer are identical in both lanes',
 	masked: false,
 });
 
@@ -166,13 +168,15 @@ export const WITNESS_NEXT_KILLEDBYGOOGLE_V3_SCRIPT_EXECUTION_DIFFERENCE = Object
  * relaxed until both fit.
  */
 export const WITNESS_NEXT_KILLEDBYGOOGLE_V3_ROUTER_HISTORY_DIFFERENCE = Object.freeze({
-	difference: 'the era lane records one client-router history entry the lifted lane has no router to record',
+	difference:
+		'the era lane records one client-router history entry the lifted lane has no router to record',
 	eraRecordedNavigations: 2,
 	migratedRecordedNavigations: 1,
-	sharedNavigation: 'the journey\'s own document reload, recorded by both lanes',
+	sharedNavigation: "the journey's own document reload, recorded by both lanes",
 	distinctRoutesInEitherLane: 1,
 	route: '/',
-	visibleConsequence: 'none measured: both lanes stay on the same URL throughout, and the rendered list, the resolved appearance of every probe and every journey answer are identical',
+	visibleConsequence:
+		'none measured: both lanes stay on the same URL throughout, and the rendered list, the resolved appearance of every probe and every journey answer are identical',
 	masked: false,
 });
 
@@ -726,10 +730,7 @@ function assertRenderedStyles(
 		throw new Error(`KilledByGoogle v3 rendered-style evidence differs: ${label}`);
 }
 
-const counts = (
-	value: WitnessNextKilledbygoogleV3Counts | undefined,
-	records: number,
-): boolean =>
+const counts = (value: WitnessNextKilledbygoogleV3Counts | undefined, records: number): boolean =>
 	value !== undefined &&
 	value.records === records &&
 	value.listItems === records + WITNESS_NEXT_KILLEDBYGOOGLE_V3_AD_LIST_ITEMS;
@@ -966,8 +967,7 @@ export function parseWitnessNextKilledbygoogleV3Receipt(
 				run.routes.length !==
 				(run.lane === 'baseline'
 					? WITNESS_NEXT_KILLEDBYGOOGLE_V3_ROUTER_HISTORY_DIFFERENCE.eraRecordedNavigations
-					: WITNESS_NEXT_KILLEDBYGOOGLE_V3_ROUTER_HISTORY_DIFFERENCE
-							.migratedRecordedNavigations),
+					: WITNESS_NEXT_KILLEDBYGOOGLE_V3_ROUTER_HISTORY_DIFFERENCE.migratedRecordedNavigations),
 		) ||
 		receipt.buildLanes?.baseline?.files !== 41 ||
 		receipt.buildLanes.baseline.digest !==
@@ -1041,8 +1041,13 @@ export function renderWitnessNextKilledbygoogleV3Receipt(
 		.map(
 			(instance) =>
 				`${instance.lane} pass ${instance.pass}: ${instance.observed
-					.map((observed) => `${observed.requests}x ${observed.path} (${observed.statuses.join('/')})`)
-					.join('; ')}${instance.absent.length === 0 ? '' : `; absent ${instance.absent.map((entry) => entry.path).join(', ')}`}`,
+					.map(
+						(observed) =>
+							`${observed.requests}x ${observed.path} (${observed.statuses.join('/')})`,
+					)
+					.join(
+						'; ',
+					)}${instance.absent.length === 0 ? '' : `; absent ${instance.absent.map((entry) => entry.path).join(', ')}`}`,
 		)
 		.join(' | ');
 	const trackedEvents = Object.entries(receipt.trackedEvents)

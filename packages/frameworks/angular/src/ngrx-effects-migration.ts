@@ -308,7 +308,11 @@ export function migrateNgrxEffectDecorators(path: string, source: string): NgrxE
 			end: property.valueSpan[0],
 			text: `${factory}(() => `,
 		});
-		edits.push({ start: property.valueSpan[1], end: property.valueSpan[1], text: `${options})` });
+		edits.push({
+			start: property.valueSpan[1],
+			end: property.valueSpan[1],
+			text: `${options})`,
+		});
 		const decorator = source.slice(property.decoratorSpan[0], property.decoratorSpan[1]);
 		changes.push({
 			kind: 'ngrx-effect-decorator',
@@ -349,12 +353,16 @@ export function migrateNgrxEffectDecorators(path: string, source: string): NgrxE
 		);
 		return unchanged(unhandled);
 	}
-	const kept = namedSpecifiers.filter((entry) => entry.local !== local).map((entry) => entry.text);
+	const kept = namedSpecifiers
+		.filter((entry) => entry.local !== local)
+		.map((entry) => entry.text);
 	if (factoryLocal === undefined) kept.push(EFFECT_FACTORY);
 	const first = namedSpecifiers[0] as (typeof namedSpecifiers)[number];
 	const last = namedSpecifiers[namedSpecifiers.length - 1] as (typeof namedSpecifiers)[number];
 	edits.push({ start: first.span[0], end: last.span[1], text: kept.join(', ') });
-	const ordered = [...edits].sort((left, right) => right.start - left.start || right.end - left.end);
+	const ordered = [...edits].sort(
+		(left, right) => right.start - left.start || right.end - left.end,
+	);
 	let migrated = source;
 	for (const edit of ordered)
 		migrated = `${migrated.slice(0, edit.start)}${edit.text}${migrated.slice(edit.end)}`;

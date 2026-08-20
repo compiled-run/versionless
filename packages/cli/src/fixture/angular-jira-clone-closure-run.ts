@@ -72,7 +72,9 @@ export function acquiredArtifacts(lockfile: string): readonly LockEntry[] {
 		entries.push({ path: key, url, integrity });
 	}
 	return Object.freeze(
-		entries.sort((left, right) => (left.path < right.path ? -1 : left.path > right.path ? 1 : 0)),
+		entries.sort((left, right) =>
+			left.path < right.path ? -1 : left.path > right.path ? 1 : 0,
+		),
 	);
 }
 
@@ -217,15 +219,16 @@ export function buildClosureRecord(input: {
 			node: 'v16.20.2',
 			architecture: 'darwin-arm64, native — no translation layer',
 			npm: '8.19.4 (bundled with the runtime)',
-			builder: '@angular-devkit/build-angular:browser (Angular 16.2), the builder the absorption restored',
+			builder:
+				'@angular-devkit/build-angular:browser (Angular 16.2), the builder the absorption restored',
 			environment: { NG_CLI_ANALYTICS: 'false' },
 		},
 		acquisition: {
-			purpose: 'Install the declared Angular 16.2 dependency closure the migrated manifest asks for.',
+			purpose:
+				'Install the declared Angular 16.2 dependency closure the migrated manifest asks for.',
 			consentId: CONSENT_ID,
 			networkMode: 'consented',
-			method:
-				'npm install --no-audit --no-fund (no lockfile carried over: the era lockfileVersion 2 pins the Angular 13 closure)',
+			method: 'npm install --no-audit --no-fund (no lockfile carried over: the era lockfileVersion 2 pins the Angular 13 closure)',
 			outcome: input.installExitStatus === 0 ? 'succeeded' : 'failed',
 			exitStatus: input.installExitStatus,
 			packagesAdded: input.packagesAdded,
@@ -278,7 +281,8 @@ export function warningKindsOf(log: string): readonly string[] {
 async function readNumberFrom(file: string, prefix: string): Promise<number> {
 	const text = await readFile(file, 'utf8');
 	const line = text.split('\n').find((entry) => entry.startsWith(prefix));
-	if (line === undefined) throw new Error(`Angular closure record: no "${prefix}" line in ${file}`);
+	if (line === undefined)
+		throw new Error(`Angular closure record: no "${prefix}" line in ${file}`);
 	const value = Number.parseInt(line.slice(prefix.length), 10);
 	if (Number.isNaN(value)) throw new Error(`Angular closure record: "${line}" is not a status`);
 	return value;
@@ -300,7 +304,10 @@ export async function main(): Promise<void> {
 	const records = buildClosureRecord({
 		manifest: await read('app/package.json'),
 		lockfile: await read('app/package-lock.json'),
-		installExitStatus: await readNumberFrom(path.join(STAGE_DIRECTORY, 'install-1.exit'), 'EXIT='),
+		installExitStatus: await readNumberFrom(
+			path.join(STAGE_DIRECTORY, 'install-1.exit'),
+			'EXIT=',
+		),
 		installStderrWarningKinds: warningKindsOf(await read('install-1.stderr.log')),
 		buildExitStatus: await readNumberFrom(path.join(STAGE_DIRECTORY, 'build-1.exit'), 'EXIT='),
 		buildErrorLines: buildErrorLinesOf(await read('build-1.stderr.log')),

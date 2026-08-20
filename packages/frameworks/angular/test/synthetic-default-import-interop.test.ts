@@ -74,7 +74,10 @@ describe('readModuleInterop', () => {
 	});
 
 	it('does not count a namespace import that is only read through', () => {
-		const reading = readModuleInterop('a.ts', "import * as ns from 'pkg';\nexport const x = ns.y;\n");
+		const reading = readModuleInterop(
+			'a.ts',
+			"import * as ns from 'pkg';\nexport const x = ns.y;\n",
+		);
 		expect(reading.calledNamespaceImports).toEqual([]);
 	});
 });
@@ -139,9 +142,9 @@ describe('enableSyntheticDefaultImports', () => {
 		const result = enableSyntheticDefaultImports(tsconfig, [], []);
 		expect(result.changed).toBe(false);
 		expect(result.config).toBe(tsconfig);
-		expect(
-			result.unhandled.some((entry) => entry.includes('nothing demands the flag')),
-		).toBe(true);
+		expect(result.unhandled.some((entry) => entry.includes('nothing demands the flag'))).toBe(
+			true,
+		);
 	});
 
 	it('does not overturn an explicit false', () => {
@@ -160,7 +163,9 @@ describe('enableSyntheticDefaultImports', () => {
 		const result = enableSyntheticDefaultImports(declared, readings(), [clipboard]);
 		expect(result.changed).toBe(false);
 		expect(
-			result.unhandled.some((entry) => entry.includes('implies allowSyntheticDefaultImports')),
+			result.unhandled.some((entry) =>
+				entry.includes('implies allowSyntheticDefaultImports'),
+			),
 		).toBe(true);
 	});
 

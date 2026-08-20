@@ -77,7 +77,11 @@ describe('pigallery2 Angular holdout migration record', () => {
 	it('names the three install gaps by package, and each is now a reading the cell carries', () => {
 		const install = GAPS.filter((gap) => gap.stage === 'install');
 		expect(install).toHaveLength(3);
-		for (const name of ['@angular-devkit/build-optimizer', 'ng2-slim-loading-bar', 'ngx-toastr']) {
+		for (const name of [
+			'@angular-devkit/build-optimizer',
+			'ng2-slim-loading-bar',
+			'ngx-toastr',
+		]) {
 			expect(install.some((gap) => gap.site.includes(name))).toBe(true);
 			expect(Object.keys(ANGULAR_16_ECOSYSTEM_PACKAGES)).toContain(name);
 		}
@@ -109,7 +113,9 @@ describe('pigallery2 Angular holdout migration record', () => {
 			expect((gap?.closedBy ?? '').length).toBeGreaterThan(200);
 		}
 		expect(GAPS.find((gap) => gap.id === 'G5')?.observed).toContain('NG2007');
-		expect(GAPS.find((gap) => gap.id === 'G6')?.observed).toContain("Can't resolve 'raw-loader'");
+		expect(GAPS.find((gap) => gap.id === 'G6')?.observed).toContain(
+			"Can't resolve 'raw-loader'",
+		);
 		expect(GAPS.find((gap) => gap.id === 'G7')?.observed).toContain('TS2339');
 	});
 
@@ -122,9 +128,15 @@ describe('pigallery2 Angular holdout migration record', () => {
 	it('states the remaining wall as the three no-successor libraries, with the options open', () => {
 		expect(U4_WALL.diagnostics).toBeLessThan(U4_WALL.before);
 		expect(U4_WALL.wall.length).toBeGreaterThan(3);
-		for (const name of ['@yaga/leaflet-ng2', 'ng2-slim-loading-bar', 'jw-bootstrap-switch-ng2']) {
+		for (const name of [
+			'@yaga/leaflet-ng2',
+			'ng2-slim-loading-bar',
+			'jw-bootstrap-switch-ng2',
+		]) {
 			expect(U4_WALL.wall.some((entry) => entry.includes(name))).toBe(true);
-			expect(ecosystemDispositionOf(name, ANGULAR_16_BROWSER_CELL)?.kind).toBe('no-successor');
+			expect(ecosystemDispositionOf(name, ANGULAR_16_BROWSER_CELL)?.kind).toBe(
+				'no-successor',
+			);
 		}
 		expect(U4_WALL.options).toHaveLength(3);
 		expect(U4_WALL.notEstablished.join(' ')).toContain('No stub, shim, module declaration');
@@ -147,16 +159,18 @@ describe('pigallery2 Angular holdout migration record', () => {
 		expect(alignedVersionRange('ngx-bootstrap', ANGULAR_16_BROWSER_CELL)).toBe('^11.0.2');
 		expect(alignedVersionRange('xlf-google-translate', ANGULAR_16_BROWSER_CELL)).toBe('^1.0.4');
 		for (const dropped of ['@yaga/leaflet-ng2', 'jw-bootstrap-switch-ng2']) {
-			expect(ecosystemDispositionOf(dropped, ANGULAR_16_BROWSER_CELL)?.kind).toBe('no-successor');
+			expect(ecosystemDispositionOf(dropped, ANGULAR_16_BROWSER_CELL)?.kind).toBe(
+				'no-successor',
+			);
 			expect(alignedVersionRange(dropped, ANGULAR_16_BROWSER_CELL)).toBeNull();
 		}
 		const bootstrap = ecosystemDispositionOf('ngx-bootstrap', ANGULAR_16_BROWSER_CELL);
 		expect(bootstrap?.kind).toBe('aligned');
 		if (bootstrap?.kind !== 'aligned' || bootstrap.buildStamp === undefined) return;
 		expect(bootstrap.buildStamp.compiledWith).toBe('16.1.4');
-		expect(cellAcceptsBuildStamp(ANGULAR_16_BROWSER_CELL.angularLine, bootstrap.buildStamp)).toBe(
-			true,
-		);
+		expect(
+			cellAcceptsBuildStamp(ANGULAR_16_BROWSER_CELL.angularLine, bootstrap.buildStamp),
+		).toBe(true);
 	});
 
 	it('records the engines retarget as the capability the era declaration demanded', () => {
@@ -200,9 +214,13 @@ describe('pigallery2 Angular holdout migration record', () => {
 			);
 		/** New findings are named rather than folded into a count. */
 		expect(build.newFindingsThisUnitProduced.length).toBeGreaterThanOrEqual(4);
-		expect(build.newFindingsThisUnitProduced.some((entry) => entry.includes('leaflet'))).toBe(true);
+		expect(build.newFindingsThisUnitProduced.some((entry) => entry.includes('leaflet'))).toBe(
+			true,
+		);
 		expect(
-			build.newFindingsThisUnitProduced.some((entry) => entry.includes('undeclared-runtime-dependency')),
+			build.newFindingsThisUnitProduced.some((entry) =>
+				entry.includes('undeclared-runtime-dependency'),
+			),
 		).toBe(true);
 	});
 
@@ -214,7 +232,9 @@ describe('pigallery2 Angular holdout migration record', () => {
 		expect(install.installedVersions['xlf-google-translate']).toBe('1.0.4');
 		/** The two dropped packages are absent from the closure, not held back. */
 		for (const dropped of ['@yaga/leaflet-ng2', 'jw-bootstrap-switch-ng2'])
-			expect(install.absentFromTheClosure.some((entry) => entry.startsWith(dropped))).toBe(true);
+			expect(install.absentFromTheClosure.some((entry) => entry.startsWith(dropped))).toBe(
+				true,
+			);
 		/** The lockfile attempts that measured nothing are recorded as measuring nothing. */
 		expect(install.attemptsBeforeTheLockfileWasMovedOut.reading).toContain(
 			'not counted as one',
@@ -248,7 +268,9 @@ describe('pigallery2 Angular holdout migration record', () => {
 		expect(PROBE_DIAGNOSTIC_COUNTS['TS2307']).toBe(4);
 		expect(INSTALL_STAGE_CLOSURE.laneBuild.moduleNotFound).toHaveLength(3);
 		expect(
-			INSTALL_STAGE_CLOSURE.laneBuild.moduleNotFound.some((entry) => entry.includes('toastr')),
+			INSTALL_STAGE_CLOSURE.laneBuild.moduleNotFound.some((entry) =>
+				entry.includes('toastr'),
+			),
 		).toBe(false);
 	});
 

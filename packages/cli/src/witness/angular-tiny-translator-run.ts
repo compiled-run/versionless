@@ -156,7 +156,11 @@ async function run(command: string, args: readonly string[], cwd: string): Promi
 		child.on('close', (code) =>
 			code === 0
 				? settle()
-				: fail(new Error(`TinyTranslator regeneration command failed: ${command} (${code})`)),
+				: fail(
+						new Error(
+							`TinyTranslator regeneration command failed: ${command} (${code})`,
+						),
+					),
 		);
 	});
 }
@@ -368,8 +372,7 @@ export async function runWitnessAngularTinyTranslator(): Promise<WitnessAngularT
 		process.env.NPM_CONFIG_OFFLINE !== 'true'
 	)
 		throw new Error('TinyTranslator Witness requires dual offline controls');
-	if (await exists(witnessEvidence))
-		throw new Error('TinyTranslator Witness output collision');
+	if (await exists(witnessEvidence)) throw new Error('TinyTranslator Witness output collision');
 	const provenance = await verifyLinkedWitnessProvenance(root);
 	const canonicalReceipts = await bindCanonicalReceipts();
 	const lanes = await stageInputs();
@@ -498,7 +501,11 @@ export async function verifyWitnessAngularTinyTranslator(
 	const receipt = parseWitnessAngularTinyTranslatorReceipt(
 		JSON.parse(await readFile(join(output, 'receipt.json'), 'utf8')),
 	);
-	assertLinkedWitnessProvenanceEquivalent(receipt.provenance, expectedProvenance, "TinyTranslator");
+	assertLinkedWitnessProvenanceEquivalent(
+		receipt.provenance,
+		expectedProvenance,
+		'TinyTranslator',
+	);
 	for (const bound of receipt.canonicalReceipts)
 		if (sha256(await readFile(join(root, bound.path))) !== bound.sha256)
 			throw new Error(`TinyTranslator bound build receipt bytes drifted: ${bound.path}`);

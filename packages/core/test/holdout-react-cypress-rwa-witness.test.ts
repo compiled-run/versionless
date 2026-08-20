@@ -15,7 +15,9 @@ const root = resolve(import.meta.dirname, '../../..');
 
 async function published(): Promise<HoldoutReactCypressRwaWitnessReceipt> {
 	return parseHoldoutReactCypressRwaWitnessReceipt(
-		JSON.parse(await readFile(resolve(root, HOLDOUT_REACT_CYPRESS_RWA_WITNESS_RECEIPT_PATH), 'utf8')),
+		JSON.parse(
+			await readFile(resolve(root, HOLDOUT_REACT_CYPRESS_RWA_WITNESS_RECEIPT_PATH), 'utf8'),
+		),
 	);
 }
 
@@ -75,10 +77,13 @@ describe('cypress-realworld-app holdout PASS receipt (frozen-adapter re-run)', (
 		const flipped = structuredClone(receipt);
 		(flipped as { holdoutOutcome: string }).holdoutOutcome = 'failed';
 		flipped.integrity.canonicalDigest = holdoutReactCypressRwaWitnessDigest(flipped);
-		expect(() => parseHoldoutReactCypressRwaWitnessReceipt(flipped)).toThrow(/identity differs/);
+		expect(() => parseHoldoutReactCypressRwaWitnessReceipt(flipped)).toThrow(
+			/identity differs/,
+		);
 
 		const trivial = structuredClone(receipt);
-		trivial.journey.lanes.migrated.semanticDigest = trivial.journey.lanes.baseline.semanticDigest;
+		trivial.journey.lanes.migrated.semanticDigest =
+			trivial.journey.lanes.baseline.semanticDigest;
 		trivial.integrity.canonicalDigest = holdoutReactCypressRwaWitnessDigest(trivial);
 		expect(() => parseHoldoutReactCypressRwaWitnessReceipt(trivial)).toThrow(
 			/journey evidence differs/,

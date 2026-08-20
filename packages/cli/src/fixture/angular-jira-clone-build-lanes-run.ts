@@ -100,7 +100,8 @@ export function buildLaneRecords(input: {
 			architecture: 'darwin-arm64, native — no translation layer',
 			npm: '8.19.4 (bundled with the runtime)',
 			command: 'npx ng build --configuration production',
-			builder: '@angular-builders/custom-webpack:browser over ./webpack.config.js (Angular CLI 13.2.5)',
+			builder:
+				'@angular-builders/custom-webpack:browser over ./webpack.config.js (Angular CLI 13.2.5)',
 		},
 		source: {
 			repository: 'trungvose/jira-clone-angular',
@@ -135,7 +136,8 @@ export function buildLaneRecords(input: {
 			architecture: 'darwin-arm64, native — no translation layer',
 			npm: '8.19.4 (bundled with the runtime)',
 			intendedCommand: 'ng build --configuration production (never reached)',
-			builder: '@angular-devkit/build-angular:browser (Angular 16.2), the builder the absorption restored',
+			builder:
+				'@angular-devkit/build-angular:browser (Angular 16.2), the builder the absorption restored',
 		},
 		acquisition: {
 			purpose:
@@ -143,7 +145,8 @@ export function buildLaneRecords(input: {
 			consentId: CONSENT,
 			networkMode: 'consented',
 			method: 'npm install --no-audit --no-fund (no lockfile carried over: the era lockfileVersion 2 pins the Angular 13 closure)',
-			outcome: 'failed — npm ERESOLVE, no package was downloaded and no node_modules was written',
+			outcome:
+				'failed — npm ERESOLVE, no package was downloaded and no node_modules was written',
 			migratedManifestSha256: input.migratedManifestSha256,
 			urlsAcquired: [],
 			urlsAcquiredNote:
@@ -189,7 +192,10 @@ export async function main(): Promise<void> {
 	const eraFirst = await inventoryOf(path.join(ERA_REBUILD_DIRECTORY, 'dist-1'));
 	const eraSecond = await inventoryOf(path.join(ERA_REBUILD_DIRECTORY, 'dist-2'));
 	const eraIngest = await inventoryOf(ERA_INGEST_DIST);
-	const stderr = await readFile(path.join(MIGRATED_STAGE_DIRECTORY, 'install-1.stderr.log'), 'utf8');
+	const stderr = await readFile(
+		path.join(MIGRATED_STAGE_DIRECTORY, 'install-1.stderr.log'),
+		'utf8',
+	);
 	const manifest = await readFile(
 		path.join(MIGRATED_STAGE_DIRECTORY, 'migrated/package.json'),
 		'utf8',

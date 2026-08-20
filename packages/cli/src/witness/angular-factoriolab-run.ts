@@ -306,7 +306,7 @@ export async function verifyWitnessAngularFactoriolab(
 	const receipt = parseWitnessAngularFactoriolabReceipt(
 		JSON.parse(await readFile(join(output, 'receipt.json'), 'utf8')),
 	);
-	assertLinkedWitnessProvenanceEquivalent(receipt.provenance, expectedProvenance, "factoriolab");
+	assertLinkedWitnessProvenanceEquivalent(receipt.provenance, expectedProvenance, 'factoriolab');
 	for (const bound of receipt.canonicalReceipts)
 		if (sha256(await readFile(join(root, bound.path))) !== bound.sha256)
 			throw new Error(`factoriolab bound build receipt bytes drifted: ${bound.path}`);
@@ -334,7 +334,9 @@ export async function main(args = process.argv.slice(2)): Promise<void> {
 		return;
 	}
 	if (verifyIndex >= 0 && args[verifyIndex + 1]) {
-		const receipt = await verifyWitnessAngularFactoriolab(resolve(root, args[verifyIndex + 1]!));
+		const receipt = await verifyWitnessAngularFactoriolab(
+			resolve(root, args[verifyIndex + 1]!),
+		);
 		process.stdout.write(
 			`${canonicalize({ result: receipt.result, digest: receipt.integrity.canonicalDigest })}\n`,
 		);

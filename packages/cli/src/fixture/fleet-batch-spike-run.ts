@@ -402,7 +402,9 @@ export type PruneSafetyRecord = Readonly<{
 async function verifyReceiptOnce(): Promise<Record<string, unknown>> {
 	try {
 		const { ms, value } = await timed(async () =>
-			verifyReceipt(path.join(repositoryRoot, PRUNE_PROOF_RECEIPT), { requireAggregate: true }),
+			verifyReceipt(path.join(repositoryRoot, PRUNE_PROOF_RECEIPT), {
+				requireAggregate: true,
+			}),
 		);
 		return { state: 'pass', digest: value.digest, artifacts: value.artifacts, ms };
 	} catch (error) {
@@ -433,9 +435,13 @@ export async function proveDisposableWorkDirectory(): Promise<PruneSafetyRecord>
 	const workDirectory = path.join(repositoryRoot, PRUNE_PROOF_WORK_DIRECTORY);
 	const setAside = `${workDirectory}.set-aside-by-spike-b`;
 	if (!(await directoryExists(workDirectory)))
-		throw new Error(`prune proof: ${PRUNE_PROOF_WORK_DIRECTORY} is not present in this checkout`);
+		throw new Error(
+			`prune proof: ${PRUNE_PROOF_WORK_DIRECTORY} is not present in this checkout`,
+		);
 	if (await directoryExists(setAside))
-		throw new Error(`prune proof: ${setAside} already exists; a previous run did not restore it`);
+		throw new Error(
+			`prune proof: ${setAside} already exists; a previous run did not restore it`,
+		);
 	const entriesBefore = (await readdir(workDirectory)).sort();
 	const bytesBefore = await directoryBytes(workDirectory);
 	const before = await verifyReceiptOnce();
@@ -470,8 +476,7 @@ export async function proveDisposableWorkDirectory(): Promise<PruneSafetyRecord>
 		application: PRUNE_PROOF_APPLICATION,
 		receipt: PRUNE_PROOF_RECEIPT,
 		workDirectory: PRUNE_PROOF_WORK_DIRECTORY,
-		method:
-			'verifyReceipt(receipt, { requireAggregate: true }) — the same function `versionless receipt:verify` calls — is run three times: with the work directory in place, with it renamed to a sibling set-aside path inside the same unversioned scratch tree, and again after it is renamed back. The absence of the directory is checked inside the middle window rather than assumed, the restore runs in a finally block, and the restored listing is compared entry by entry against the listing taken before the move. Nothing is deleted.',
+		method: 'verifyReceipt(receipt, { requireAggregate: true }) — the same function `versionless receipt:verify` calls — is run three times: with the work directory in place, with it renamed to a sibling set-aside path inside the same unversioned scratch tree, and again after it is renamed back. The absence of the directory is checked inside the middle window rather than assumed, the restore runs in a finally block, and the restored listing is compared entry by entry against the listing taken before the move. Nothing is deleted.',
 		workDirectoryBytes: bytesBefore,
 		workDirectoryEntriesBefore: Object.freeze(entriesBefore),
 		workDirectoryEntriesAfterRestore: Object.freeze(entriesAfter),
@@ -602,32 +607,27 @@ const PARALLELISM: readonly ParallelismReading[] = Object.freeze([
 	Object.freeze({
 		stage: 'analyze',
 		classification: 'parallelizable across processes',
-		reason:
-			'Detection reads declarations out of the application tree and writes nothing into it. Two detections of two applications share no mutable state.',
+		reason: 'Detection reads declarations out of the application tree and writes nothing into it. Two detections of two applications share no mutable state.',
 	}),
 	Object.freeze({
 		stage: 'plan',
 		classification: 'parallelizable across processes',
-		reason:
-			'Composition reads the tree and returns a changeset; the flow writes nothing into the application it read.',
+		reason: 'Composition reads the tree and returns a changeset; the flow writes nothing into the application it read.',
 	}),
 	Object.freeze({
 		stage: 'migrate',
 		classification: 'parallelizable across processes, one lane per application',
-		reason:
-			'The apply flow refuses a lane inside the application and refuses a lane that already carries files, so two concurrent migrations with distinct lanes cannot reach the same bytes.',
+		reason: 'The apply flow refuses a lane inside the application and refuses a lane that already carries files, so two concurrent migrations with distinct lanes cannot reach the same bytes.',
 	}),
 	Object.freeze({
 		stage: 'witness browser passes',
 		classification: 'witness-serialized on one host; not measured by this spike',
-		reason:
-			'The determinism-under-load finding carried over from the previous goal (T010/T011) is that the gates come back green when the passes run serially and fail when they run in parallel on one host. Multi-host is therefore the only witness throughput lever, and no projection here may assume this stage parallelizes.',
+		reason: 'The determinism-under-load finding carried over from the previous goal (T010/T011) is that the gates come back green when the passes run serially and fail when they run in parallel on one host. Multi-host is therefore the only witness throughput lever, and no projection here may assume this stage parallelizes.',
 	}),
 	Object.freeze({
 		stage: 'install and migrated build',
 		classification: 'not measured by this spike',
-		reason:
-			'Acquisition and build were outside the timed region. Their behaviour under concurrency is not established here.',
+		reason: 'Acquisition and build were outside the timed region. Their behaviour under concurrency is not established here.',
 	}),
 ]);
 
@@ -686,8 +686,7 @@ export async function measureFleet(): Promise<{
 			whyItMatters:
 				'The recorded per-vertical cost of roughly 9–10 units conflates authoring with execution. What is timed here is only the operator surface, which is the part a batch runner repeats unattended; the unmeasured stages above are where the recorded per-vertical cost mostly sits.',
 		}),
-		method:
-			'Each stage is `runOperatorCommand` from packages/cli/src/operator/flows.ts, called exactly as a shell operator would call it, timed with process.hrtime.bigint() around the awaited call and nothing else. The read-only stages are timed over three repetitions and reported as a median and a best; the write stage runs once per application, because the apply flow refuses a lane that already carries files. No authoring, editing or waiting happens inside a timed region.',
+		method: 'Each stage is `runOperatorCommand` from packages/cli/src/operator/flows.ts, called exactly as a shell operator would call it, timed with process.hrtime.bigint() around the awaited call and nothing else. The read-only stages are timed over three repetitions and reported as a median and a best; the write stage runs once per application, because the apply flow refuses a lane that already carries files. No authoring, editing or waiting happens inside a timed region.',
 		repetitions: REPETITIONS,
 		apps: Object.freeze(apps),
 		totals: Object.freeze({
@@ -787,13 +786,17 @@ export async function renderFleetSummary(
 	lines.push('');
 	lines.push('## Per-application machine time');
 	lines.push('');
-	lines.push('| application | lineage | analyze | plan | migrate | one operator pass | outcome |');
+	lines.push(
+		'| application | lineage | analyze | plan | migrate | one operator pass | outcome |',
+	);
 	lines.push('|---|---|---|---|---|---|---|');
 	for (const app of summary.apps) {
 		const cell = (stage: StageName): string => {
 			const measurement = app.stages.find((entry) => entry.stage === stage);
 			if (measurement === undefined) return 'not-run';
-			return measurement.runs.length === 0 ? measurement.outcome : msLine(measurement.medianMs);
+			return measurement.runs.length === 0
+				? measurement.outcome
+				: msLine(measurement.medianMs);
 		};
 		lines.push(
 			`| \`${app.id}\` | ${app.lineage} | ${cell('analyze')} | ${cell('plan')} | ${cell(

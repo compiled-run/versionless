@@ -176,7 +176,7 @@ const CAPABILITY_INPUTS: readonly CapabilityRecordInput[] = [
 		attribution: 'direct-invocation',
 		coverage: 'proven',
 		evidence: ['packages/cli/src/fixture/react-cypress-rwa-calibrate-run.ts'],
-		note: 'webpack 4 / process-browser functional process global parity, analyzer-driven from the bundle\'s own process.<member> usage. Proven on one create-react-app application whose migrated Vite bundle threw `process is not defined` at module evaluation and now boots; experimental until a second create-react-app application proves it.',
+		note: "webpack 4 / process-browser functional process global parity, analyzer-driven from the bundle's own process.<member> usage. Proven on one create-react-app application whose migrated Vite bundle threw `process is not defined` at module evaluation and now boots; experimental until a second create-react-app application proves it.",
 	},
 	{
 		name: 'react-next-static-adapter',
@@ -475,7 +475,7 @@ const CAPABILITY_INPUTS: readonly CapabilityRecordInput[] = [
 		attribution: 'direct-invocation',
 		coverage: 'proven',
 		evidence: ['packages/cli/src/fixture/angular-tiny-translator-localize-run.ts'],
-		note: 'Template i18n localize runtime declaration; only the tiny-translator localization application exercises it. Audited class (a) by the T021 G5 wiring repair — the era composition already holds the manifest, the templates and the cell it needs — and deliberately not composed there: it also hands back a polyfill entry point that has to be declared into the builder target, and that seam collides with the hand-composed tiny-translator localize lane. Which of the two owns the declaration is an open decision.',
+		note: "Template i18n localize runtime declaration; only the tiny-translator localization application exercises it. T010 u7 widened its trigger to admit a second reading beside the parsed template markers: a supplied LocalizeClosureReading counting `$localize` references in the application's emitted bundle. The measurement that forced it is pigallery2 — zero template markers, 215 `$localize` references in the migrated `main.js`, and a live lane that died on `ReferenceError: $localize is not defined` before Angular bootstrapped. Either reading admits, both absent stands down, and neither is inferred from the cell major: declaring the package on every Ivy-line plan would be bundle weight plus a claim the application's bytes do not support. Audited class (a) by the T021 G5 wiring repair — the era composition already holds the manifest, the templates and the cell it needs — and deliberately not composed there: it also hands back a polyfill entry point that has to be declared into the builder target, and that seam collides with the hand-composed tiny-translator localize lane. Which of the two owns the declaration is an open decision.",
 	},
 	{
 		name: 'rxjs-prototype-patch-migration',
@@ -750,7 +750,7 @@ const CAPABILITY_INPUTS: readonly CapabilityRecordInput[] = [
 		attribution: 'orchestrated-construct-gated',
 		coverage: 'proven',
 		evidence: ['packages/cli/src/fixture/angular-pigallery2-migration-run.ts'],
-		note: "Workspace-manifest engines.node retarget; composed into migrateAngularCliEraWorkspace by T021 u3 and gated on the construct — it fires only where the manifest declares an engines.node range that excludes the target cell's own Node line, and stands down on a workspace declaring no engines, on one whose declaration already admits the cell, and on a range shape it cannot read. The range written is derived from the cell (the caret on its declared Node line); no version appears in the capability. Only the pigallery2 holdout carries the construct: its era engines.node \">= 6.9 <11.0\" excluded Node 16.20.2 and every install under the migrated manifest reported EBADENGINE against the workspace itself.",
+		note: 'Workspace-manifest engines.node retarget; composed into migrateAngularCliEraWorkspace by T021 u3 and gated on the construct — it fires only where the manifest declares an engines.node range that excludes the target cell\'s own Node line, and stands down on a workspace declaring no engines, on one whose declaration already admits the cell, and on a range shape it cannot read. The range written is derived from the cell (the caret on its declared Node line); no version appears in the capability. Only the pigallery2 holdout carries the construct: its era engines.node ">= 6.9 <11.0" excluded Node 16.20.2 and every install under the migrated manifest reported EBADENGINE against the workspace itself.',
 	},
 	{
 		name: 'undecorated-angular-base-class',
@@ -799,7 +799,7 @@ const CAPABILITY_INPUTS: readonly CapabilityRecordInput[] = [
 		attribution: 'orchestrated-construct-gated',
 		coverage: 'proven',
 		evidence: ['packages/cli/src/fixture/angular-eshop-webspa-migration-run.ts'],
-		note: "Removal of a static module configuration method the aligned line no longer declares — `NgbModule.forRoot()`, dropped by ng-bootstrap 4.0 when the module became import-direct — composed into migrateAngularCliEraWorkspace by T024 u2 and gated on a reading of the installed `.d.ts`: a line that still declares the method is refused, an incomplete reading is refused, a call carrying arguments is refused because the configuration it passed has nowhere to go, and a call outside an NgModule `imports` array is refused because what the value is for at that position is not read. One application supplies the reading; its migrated build is not established here.",
+		note: 'Removal of a static module configuration method the aligned line no longer declares — `NgbModule.forRoot()`, dropped by ng-bootstrap 4.0 when the module became import-direct — composed into migrateAngularCliEraWorkspace by T024 u2 and gated on a reading of the installed `.d.ts`: a line that still declares the method is refused, an incomplete reading is refused, a call carrying arguments is refused because the configuration it passed has nowhere to go, and a call outside an NgModule `imports` array is refused because what the value is for at that position is not read. One application supplies the reading; its migrated build is not established here.',
 	},
 	{
 		name: 'http-client-call-surface',
@@ -854,6 +854,24 @@ const CAPABILITY_INPUTS: readonly CapabilityRecordInput[] = [
 		coverage: 'proven',
 		evidence: ['packages/cli/src/fixture/angular-pigallery2-migration-run.ts'],
 		note: "lib.dom.d.ts drift accommodation; composed into migrateAngularCliEraWorkspace by T021 u4 through the same supply-gated seam unparameterised-base-class uses — a caller that has not compiled the tree supplies no TS2339 positions and gets no transform. It acts only where the compiler resolved the receiver to CSSStyleDeclaration and the member is spelled as a vendor-prefixed CSS property, and it widens that one receiver at that one access to CSSStyleDeclaration & Record<string, string>, leaving the emitted JavaScript unchanged. The capability carries no list of departed properties: the property is the compiler's word. A stale position refuses, which is also what makes a second application a no-op. One application carries the construct, whose migrated build is RED.",
+	},
+	{
+		name: 'locale-id-provider',
+		lineage: 'angular',
+		package: '@versionless/angular',
+		entryPoints: [
+			'provideEraLocaleId',
+			'readEraLocaleFlagValue',
+			'eraLocaleReadingOfRemovedFlag',
+			'modulesProvideLocaleId',
+			'isWritableLocaleValue',
+			'localeIdProviderSource',
+		],
+		provenApps: [],
+		attribution: 'unproven',
+		coverage: 'unproven',
+		evidence: ['packages/frameworks/angular/src/angular-cli-era-migration.ts'],
+		note: "Translation of the removed `--i18n-locale` flag into the root injector, composed into migrateAngularCliEraWorkspace by T010 u7 as the last per-module capability — after every capability that can reshape a module literal or the module's own `@angular/core` import, so its refuse-if-already-provided detection reads the providers array the pipeline finally leaves. It is supply-gated on an EraLocaleReading of the era build's own argv and parses nothing without one: the locale is never derived from the cell, from the application's translation files or from the host, because a locale nobody measured is a claim about what the application was built for. It writes `{provide: LOCALE_ID, useValue: '<value>'}` first in the bootstrapping module's providers — first so it cannot overrule a provider the module reaches later — spelled as that module already spells the token, once, and only on a cell past Angular 12. provenApps is empty and that is the honest reading: no recorded application migration has run through it as a composed capability. The defect it automates was measured — pigallery2's Angular 13 lane resolved LOCALE_ID to the framework default en-US and threw `Cannot find module './messages.en-US.xlf'` in the browser against a build that reported zero errors — but that repair was a hand edit in the live-witness lane, which is a rationale for the capability and not a proving application.",
 	},
 	{
 		name: 'angular-cli-era-migration',
@@ -974,7 +992,9 @@ export function verifyCapabilityCoverage(value: unknown): CapabilityCoverage {
 		if (capability.proofCount !== proofCount)
 			throw new Error(`Capability ${name} proof count does not match its applications`);
 		if (capability.classification !== classification)
-			throw new Error(`Capability ${name} classification is not derived from its proof count`);
+			throw new Error(
+				`Capability ${name} classification is not derived from its proof count`,
+			);
 		if (classification === 'cross-proven' && proofCount < CROSS_PROVEN_THRESHOLD)
 			throw new Error(`Capability ${name} is cross-proven on fewer than two applications`);
 		if (capability.coverage === 'unproven' && proofCount !== 0)
@@ -988,11 +1008,17 @@ export function verifyCapabilityCoverage(value: unknown): CapabilityCoverage {
 	}
 	const summary = asRecordOf(root.summary, 'capability-coverage summary');
 	if (summary.total !== root.capabilities.length)
-		throw new Error('Capability-coverage summary total does not match the enumerated capabilities');
+		throw new Error(
+			'Capability-coverage summary total does not match the enumerated capabilities',
+		);
 	if (summary.crossProven !== crossProven)
-		throw new Error('Capability-coverage summary cross-proven count does not match the derivation');
+		throw new Error(
+			'Capability-coverage summary cross-proven count does not match the derivation',
+		);
 	if (summary.experimental !== root.capabilities.length - crossProven)
-		throw new Error('Capability-coverage summary experimental count does not match the derivation');
+		throw new Error(
+			'Capability-coverage summary experimental count does not match the derivation',
+		);
 	const reactReported = asRecordOf(summary.react, 'react summary');
 	const angularReported = asRecordOf(summary.angular, 'angular summary');
 	if (
@@ -1006,6 +1032,8 @@ export function verifyCapabilityCoverage(value: unknown): CapabilityCoverage {
 		angularReported.crossProven !== angularSummary.crossProven ||
 		angularReported.experimental !== angularSummary.total - angularSummary.crossProven
 	)
-		throw new Error('Capability-coverage Angular lineage summary does not match the derivation');
+		throw new Error(
+			'Capability-coverage Angular lineage summary does not match the derivation',
+		);
 	return value as CapabilityCoverage;
 }

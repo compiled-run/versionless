@@ -232,7 +232,9 @@ export function parameteriseBaseClasses(
 			refuse(line, `'${base}' at this position does not resolve to a binding`);
 			continue;
 		}
-		const record = module.imports.find((entry) => entry.local !== null && entry.local === binding);
+		const record = module.imports.find(
+			(entry) => entry.local !== null && entry.local === binding,
+		);
 		if (record === undefined) {
 			refuse(
 				line,

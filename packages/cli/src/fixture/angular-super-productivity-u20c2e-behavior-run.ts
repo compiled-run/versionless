@@ -61,7 +61,12 @@ function isSplitError(text: string): boolean {
 	);
 }
 
-function readLane(root: string, status: string, failure: string, receiptPath: string): LaneBehavior {
+function readLane(
+	root: string,
+	status: string,
+	failure: string,
+	receiptPath: string,
+): LaneBehavior {
 	const receipt =
 		receiptPath === ''
 			? null
@@ -70,7 +75,8 @@ function readLane(root: string, status: string, failure: string, receiptPath: st
 				});
 	const page = receipt?.boxes?.[0]?.pages?.[0];
 	const pageErrors = (page?.['pageErrors'] as readonly unknown[] | undefined) ?? [];
-	const consoleMessages = (page?.['consoleMessages'] as readonly ConsoleMessage[] | undefined) ?? [];
+	const consoleMessages =
+		(page?.['consoleMessages'] as readonly ConsoleMessage[] | undefined) ?? [];
 	const splitConsoleErrors = consoleMessages.filter((message) =>
 		isSplitError(String(message.text ?? '')),
 	);

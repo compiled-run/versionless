@@ -30,9 +30,7 @@ async function published(): Promise<HoldoutReactCypressRwaRerunReceipt> {
 	);
 }
 
-function resealed(
-	receipt: HoldoutReactCypressRwaRerunReceipt,
-): HoldoutReactCypressRwaRerunReceipt {
+function resealed(receipt: HoldoutReactCypressRwaRerunReceipt): HoldoutReactCypressRwaRerunReceipt {
 	const copy = structuredClone(receipt);
 	copy.integrity.canonicalDigest = holdoutReactCypressRwaRerunDigest(copy);
 	return copy;
@@ -149,7 +147,9 @@ describe('cypress-realworld-app holdout re-run falsification receipt', () => {
 		expect(rerunRecord.frozenAdapterFingerprint).toBe(
 			HOLDOUT_REACT_CYPRESS_RWA_RERUN_FROZEN_FINGERPRINT,
 		);
-		expect(rerunRecord.supersedes).toBe(HOLDOUT_REACT_CYPRESS_RWA_RERUN_SUPERSEDED_RECEIPT_PATH);
+		expect(rerunRecord.supersedes).toBe(
+			HOLDOUT_REACT_CYPRESS_RWA_RERUN_SUPERSEDED_RECEIPT_PATH,
+		);
 		expect(rerunRecord.digest).toBe(receipt.integrity.canonicalDigest);
 	});
 
@@ -203,7 +203,9 @@ describe('cypress-realworld-app holdout re-run falsification receipt', () => {
 		const receipt = await published();
 		const tampered = structuredClone(receipt);
 		tampered.finding.verdict = 'the frozen adapter carries this application';
-		expect(() => parseHoldoutReactCypressRwaRerunReceipt(tampered)).toThrow(/integrity differs/);
+		expect(() => parseHoldoutReactCypressRwaRerunReceipt(tampered)).toThrow(
+			/integrity differs/,
+		);
 	});
 
 	it('refuses to derive from edited re-run evidence', async () => {
@@ -217,7 +219,10 @@ describe('cypress-realworld-app holdout re-run falsification receipt', () => {
 				path.join(directory, 'evidence/runs/react-cypress-rwa'),
 				{ recursive: true },
 			);
-			const profile = path.join(directory, HOLDOUT_REACT_CYPRESS_RWA_RERUN_RUN_EVIDENCE[0]!.path);
+			const profile = path.join(
+				directory,
+				HOLDOUT_REACT_CYPRESS_RWA_RERUN_RUN_EVIDENCE[0]!.path,
+			);
 			const value = JSON.parse(await readFile(profile, 'utf8')) as {
 				migratedLane: { result: string };
 			};

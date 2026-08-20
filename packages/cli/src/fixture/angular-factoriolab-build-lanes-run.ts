@@ -119,7 +119,10 @@ export type Parity = Readonly<{
  * its content is byte-identical. An emission point present in one lane and not
  * the other is reported by name rather than folded into a total.
  */
-export function compareInventories(era: readonly DistEntry[], migrated: readonly DistEntry[]): Parity {
+export function compareInventories(
+	era: readonly DistEntry[],
+	migrated: readonly DistEntry[],
+): Parity {
 	const group = (entries: readonly DistEntry[]): Map<string, DistEntry[]> => {
 		const grouped = new Map<string, DistEntry[]>();
 		for (const entry of entries) {
@@ -142,7 +145,9 @@ export function compareInventories(era: readonly DistEntry[], migrated: readonly
 		if (left.length === 0) onlyInMigrated.push(point);
 		const leftDigests = new Set(left.map((entry) => entry.sha256));
 		const bytesIdentical =
-			left.length > 0 && right.length > 0 && right.every((entry) => leftDigests.has(entry.sha256));
+			left.length > 0 &&
+			right.length > 0 &&
+			right.every((entry) => leftDigests.has(entry.sha256));
 		if (bytesIdentical) identicalPayloads.push(point);
 		const total = (group: readonly DistEntry[]): number =>
 			group.reduce((sum, entry) => sum + entry.bytes, 0);
@@ -203,10 +208,7 @@ export async function main(): Promise<void> {
 	const eraFirst = await inventoryOf(path.join(ERA_REBUILD_DIRECTORY, 'dist-1'));
 	const eraSecond = await inventoryOf(path.join(ERA_REBUILD_DIRECTORY, 'dist-2'));
 	const eraIngest = await inventoryOf(
-		path.join(
-			repositoryRoot,
-			'.versionless/cache/angular-factoriolab-baseline/app/dist-a1',
-		),
+		path.join(repositoryRoot, '.versionless/cache/angular-factoriolab-baseline/app/dist-a1'),
 	);
 	const migratedFirst = await inventoryOf(path.join(MIGRATED_STAGE_DIRECTORY, 'dist-a'));
 	const migratedSecond = await inventoryOf(path.join(MIGRATED_STAGE_DIRECTORY, 'dist-b'));
@@ -230,7 +232,8 @@ export async function main(): Promise<void> {
 		schemaVersion: 'versionless.angular-factoriolab-era-baseline.v1',
 		unit: UNIT,
 		consentId: CONSENT,
-		result: eraFirst.length > 0 && isByteStable(eraFirst, eraSecond) ? 'byte-stable' : 'unstable',
+		result:
+			eraFirst.length > 0 && isByteStable(eraFirst, eraSecond) ? 'byte-stable' : 'unstable',
 		cell: {
 			node: 'v12.14.1',
 			architecture: 'darwin-x64 under Rosetta 2 on an arm64 host (arch -x86_64)',
@@ -279,9 +282,11 @@ export async function main(): Promise<void> {
 			method: 'npm install (no lockfile carried over; the era lockfileVersion 1 pins the Angular 10 closure)',
 			hosts,
 			packagesLocked: packages.length,
-			packagesWithResolvedUrl: packages.filter((entry) => entry[1].resolved !== undefined).length,
-			packagesWithIntegrityDigest: packages.filter((entry) => entry[1].integrity !== undefined)
+			packagesWithResolvedUrl: packages.filter((entry) => entry[1].resolved !== undefined)
 				.length,
+			packagesWithIntegrityDigest: packages.filter(
+				(entry) => entry[1].integrity !== undefined,
+			).length,
 			integrityAlgorithm: 'sha512, on every locked package',
 			lockfileVersion: 2,
 			lockfileSha256: sha256(
@@ -292,13 +297,11 @@ export async function main(): Promise<void> {
 		},
 		firstAttempt: {
 			outcome: 'failed',
-			reason:
-				'The dependency closure would not resolve at all: the era jasmine-core ~3.5.0 sits below the >=3.8 peer that karma-jasmine-html-reporter ^1.5.0 now floats to. The era test toolchain blocks the install the build cell needs, which is why the target cell now declares one.',
+			reason: 'The dependency closure would not resolve at all: the era jasmine-core ~3.5.0 sits below the >=3.8 peer that karma-jasmine-html-reporter ^1.5.0 now floats to. The era test toolchain blocks the install the build cell needs, which is why the target cell now declares one.',
 		},
 		secondAttempt: {
 			outcome: 'failed',
-			reason:
-				"With the closure installed, the production build stopped on @ngrx/effects: TS2305, Module '@ngrx/effects' has no exported member 'Effect'. NgRx removed the decorator in 15. This is the shape m1's source-level count could not see.",
+			reason: "With the closure installed, the production build stopped on @ngrx/effects: TS2305, Module '@ngrx/effects' has no exported member 'Effect'. NgRx removed the decorator in 15. This is the shape m1's source-level count could not see.",
 		},
 		builds: [
 			{ run: 1, status: 0, files: migratedFirst.length },
@@ -328,7 +331,11 @@ export async function main(): Promise<void> {
 		onlyInMigrated: parity.onlyInMigrated,
 		entries: parity.entries.map((entry) => ({
 			emissionPoint: entry.emissionPoint,
-			era: entry.era.map((file) => ({ path: file.path, bytes: file.bytes, sha256: file.sha256 })),
+			era: entry.era.map((file) => ({
+				path: file.path,
+				bytes: file.bytes,
+				sha256: file.sha256,
+			})),
 			migrated: entry.migrated.map((file) => ({
 				path: file.path,
 				bytes: file.bytes,

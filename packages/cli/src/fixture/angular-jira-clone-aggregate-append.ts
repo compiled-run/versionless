@@ -97,11 +97,13 @@ export async function appendAngularJiraCloneAggregateMembers(rootDir = root): Pr
 	)
 		throw new Error('Angular jira-clone append does not derive the browser-proof state');
 	const staged = `${target}.t005.tmp`;
-	if (await exists(staged)) throw new Error('Angular jira-clone aggregate staging residue exists');
+	if (await exists(staged))
+		throw new Error('Angular jira-clone aggregate staging residue exists');
 	try {
 		await writeFile(staged, `${JSON.stringify(composed, null, 2)}\n`, { flag: 'wx' });
 		const restaged = record(JSON.parse(await readFile(staged, 'utf8')), 'staged document');
-		if (!Array.isArray(restaged.fixtures)) throw new Error('Angular jira-clone staging differs');
+		if (!Array.isArray(restaged.fixtures))
+			throw new Error('Angular jira-clone staging differs');
 		const restagedState = deriveCorpusTransactionState(
 			restaged.fixtures.map((item) => record(item, 'staged member')),
 		);

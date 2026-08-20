@@ -247,8 +247,7 @@ export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_MIGRATION_FINDINGS = Object.free
 		foundBy:
 			'a census of the emitted inventory against the era lane’s: 58 artifacts where the era lane emitted its workers, and no chunk under either worker’s logical name',
 		cause: 'the era CLI carried a webpack 4 worker plugin that treated `new Worker(‘./x.worker’, …)` as a worker request; webpack 5 dropped it for a module-graph rule that recognises exactly one spelling, `new Worker(new URL(‘./x.worker’, import.meta.url), …)`, and a plain string is an ordinary argument to that rule',
-		repair:
-			'the web-worker-url-specifier capability, an analyzer-driven rewrite of the era construction into the URL form, provable from the workspace’s own `webWorkerTsConfig` declaration',
+		repair: 'the web-worker-url-specifier capability, an analyzer-driven rewrite of the era construction into the URL form, provable from the workspace’s own `webWorkerTsConfig` declaration',
 		record: 'evidence/runs/angular-super-productivity-v2-13-15/u18j-worker-chunks-parity.json',
 	}),
 	Object.freeze({
@@ -259,8 +258,7 @@ export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_MIGRATION_FINDINGS = Object.free
 		foundBy:
 			'a reading of the emitted document against the application’s own source, then a control build of the same workspace under an egress guard, which died naming the stylesheet it could not retrieve',
 		cause: 'the modern browser builder’s `optimization` defaults to on and its `fonts.inline` member defaults to on inside it; the devkit’s own schema documents the option as requiring internet access, and the era Angular CLI 8.3 builder had no such capability',
-		repair:
-			'the font-inlining-disable capability, generic over builder and declared value, which restores the era behaviour: the document ships the application’s own `<link>` and the browser fetches the stylesheet at run time',
+		repair: 'the font-inlining-disable capability, generic over builder and declared value, which restores the era behaviour: the document ships the application’s own `<link>` and the browser fetches the stylesheet at run time',
 		record: 'evidence/runs/angular-super-productivity-v2-13-15/u23-offline-font-lane.json',
 	}),
 ]);
@@ -348,7 +346,8 @@ export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_TYPEFACE = 'Roboto' as const;
 export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_SERVICE_WORKER = Object.freeze({
 	state: 'declared-real-ngsw-in-both-lanes-settled-state-measured-at-witness-time',
 	script: 'ngsw-worker.js',
-	registration: 'ServiceWorkerModule.register(‘ngsw-worker.js’, {enabled: environment.production}) in the application’s own root module, and both lanes build the production configuration',
+	registration:
+		'ServiceWorkerModule.register(‘ngsw-worker.js’, {enabled: environment.production}) in the application’s own root module, and both lanes build the production configuration',
 	manifest: 'ngsw.json',
 	shippedWorkerFiles: Object.freeze(['ngsw-worker.js', 'safety-worker.js']),
 	config: 'ngsw-config.json',
@@ -457,7 +456,8 @@ export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_ROUTE_SHAPE = Object.freeze({
 		'/worklog',
 	]),
 	parameterised: Object.freeze(['/daily-summary']),
-	wildcard: 'the application declares a `**` route onto the work view; it is not an admissible recorded route',
+	wildcard:
+		'the application declares a `**` route onto the work view; it is not an admissible recorded route',
 });
 
 /**
@@ -480,7 +480,8 @@ export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_ROUTE_SHAPE = Object.freeze({
  */
 export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_PERSISTENCE = Object.freeze({
 	store: 'browser-indexed-db-through-localforage',
-	service: 'the application’s own DatabaseService over localforage, plus a namespaced localStorage surface',
+	service:
+		'the application’s own DatabaseService over localforage, plus a namespaced localStorage surface',
 	databaseName: 'SUP',
 	storeName: 'SUP_STORE',
 	driverPreference: Object.freeze(['INDEXEDDB', 'WEBSQL', 'LOCALSTORAGE']),
@@ -762,8 +763,10 @@ export const WITNESS_ANGULAR_SUPER_PRODUCTIVITY_MIGRATED_LANE_REGRESSION = Objec
 	pageErrorsPerLoad: 1,
 	consoleErrorsPerLoad: 2,
 	baselineOccurrences: 0,
-	invisibleTo: 'both build lanes — the migrated lane is green at 62 artifacts and the input setter is never executed by a build',
-	foundBy: 'the leg (a)/(e) calibration pass, driven through both lanes with the page-error and console tallies read off the box receipt',
+	invisibleTo:
+		'both build lanes — the migrated lane is green at 62 artifacts and the input setter is never executed by a build',
+	foundBy:
+		'the leg (a)/(e) calibration pass, driven through both lanes with the page-error and console tallies read off the box receipt',
 	admittedIntoInventory: false,
 	why: 'an expected-console-error inventory accounts for understood diagnostics; admitting an unrepaired regression into one would retire the only mechanism that reports it',
 	masked: false,
@@ -1277,10 +1280,7 @@ export type WitnessAngularSuperProductivityReceipt = {
 	>;
 	migratedLaneChain: typeof ANGULAR_SUPER_PRODUCTIVITY_MIGRATED_LANE_CHAIN;
 	migrationFindings: typeof WITNESS_ANGULAR_SUPER_PRODUCTIVITY_MIGRATION_FINDINGS;
-	typefaceDegradations: Record<
-		'baseline' | 'migrated',
-		WitnessAngularSuperProductivityTypeface
-	>;
+	typefaceDegradations: Record<'baseline' | 'migrated', WitnessAngularSuperProductivityTypeface>;
 	renderedStyleParity: {
 		state: 'measured-resolved-styles-with-declared-differences';
 		probes: number;
@@ -1387,9 +1387,7 @@ export function witnessAngularSuperProductivityBehaviorDigest(
 	declaredDifferenceLabels: readonly string[] = [],
 ): string {
 	const typed = run as WitnessAngularSuperProductivityRun;
-	const journey = typed.applicationJourney as
-		| WitnessAngularSuperProductivityJourney
-		| undefined;
+	const journey = typed.applicationJourney as WitnessAngularSuperProductivityJourney | undefined;
 	const seams = run.mockedNonLoopbackSeams;
 	return sha256(
 		canonicalize({
@@ -1805,7 +1803,8 @@ function assertSettings(
 		settings.projectSwitch.newProjectTitle.length === 0 ||
 		settings.projectSwitch.currentTitleBefore.length === 0 ||
 		// The create grew the side-nav project list by exactly one.
-		settings.projectSwitch.projectCountAfter !== settings.projectSwitch.projectCountBefore + 1 ||
+		settings.projectSwitch.projectCountAfter !==
+			settings.projectSwitch.projectCountBefore + 1 ||
 		// The switch flipped the current-project title to the project the create
 		// named, so the title changed and it changed to the new project.
 		settings.projectSwitch.currentTitleBefore === settings.projectSwitch.currentTitleAfter ||
@@ -1845,9 +1844,7 @@ function assertRouteShape(routes: string[], label: string): void {
 		if (!hash.startsWith(shape.prefix))
 			throw new Error(`Angular Super Productivity route is not a hash route: ${route}`);
 		const [named = ''] = hash.slice(1).split('?');
-		const parameterisedParent = parameterised.find((parent) =>
-			named.startsWith(`${parent}/`),
-		);
+		const parameterisedParent = parameterised.find((parent) => named.startsWith(`${parent}/`));
 		if (!known.includes(named) && parameterisedParent === undefined)
 			throw new Error(`Angular Super Productivity route is not a declared route: ${route}`);
 	}
@@ -1880,9 +1877,7 @@ export function assertWitnessAngularSuperProductivityServiceWorker(
 	label: string,
 ): void {
 	const declared = WITNESS_ANGULAR_SUPER_PRODUCTIVITY_SERVICE_WORKER;
-	const names = (
-		events: WitnessServiceWorkerTelemetry['workerEvents'],
-	): boolean =>
+	const names = (events: WitnessServiceWorkerTelemetry['workerEvents']): boolean =>
 		events.length !== 0 &&
 		events.every((event) =>
 			event.kind === 'registration'
@@ -1911,8 +1906,7 @@ export function assertWitnessAngularSuperProductivityServiceWorker(
 			[...declared.shippedWorkerFiles].sort(),
 		) ||
 		worker.outputFiles.some(
-			(file) =>
-				!sha256Digest(file.beforeSha256) || file.beforeSha256 !== file.afterSha256,
+			(file) => !sha256Digest(file.beforeSha256) || file.beforeSha256 !== file.afterSha256,
 		) ||
 		!names(worker.workerEvents)
 	)
@@ -1924,7 +1918,10 @@ export function assertWitnessAngularSuperProductivityServiceWorker(
  * has to be a genuine gesture the driver confirmed moved the viewport; an
  * absence has to be a per-route measurement that never overflowed.
  */
-function assertScroll(scroll: WitnessAngularSuperProductivityScroll | undefined, label: string): void {
+function assertScroll(
+	scroll: WitnessAngularSuperProductivityScroll | undefined,
+	label: string,
+): void {
 	if (scroll === undefined)
 		throw new Error(`Angular Super Productivity scroll measurement is missing: ${label}`);
 	if (scroll.state === 'measured-genuine-viewport-scroll') {
@@ -2060,19 +2057,18 @@ export function parseWitnessAngularSuperProductivityReceipt(
 		receipt.migratedLaneChain.at(-1)?.record !==
 			receipt.canonicalReceipts.find((bound) => bound.lane === 'migrated')?.path ||
 		receipt.migratedLaneChain.at(-1)?.contradictedBy !== null ||
-		!exact(
-			receipt.migrationFindings,
-			WITNESS_ANGULAR_SUPER_PRODUCTIVITY_MIGRATION_FINDINGS,
-		) ||
+		!exact(receipt.migrationFindings, WITNESS_ANGULAR_SUPER_PRODUCTIVITY_MIGRATION_FINDINGS) ||
 		!exact(receipt.typefaceDegradations?.baseline, baseline.applicationJourney.typeface) ||
 		!exact(receipt.typefaceDegradations.migrated, migrated.applicationJourney.typeface) ||
 		// Both lanes are served the same answered stylesheet, so the degradation is
 		// one fact measured twice rather than a difference across the lift.
 		!exact(receipt.typefaceDegradations.baseline, receipt.typefaceDegradations.migrated) ||
-		receipt.renderedStyleParity?.state !== 'measured-resolved-styles-with-declared-differences' ||
+		receipt.renderedStyleParity?.state !==
+			'measured-resolved-styles-with-declared-differences' ||
 		receipt.renderedStyleParity.probes !==
 			WITNESS_ANGULAR_SUPER_PRODUCTIVITY_STYLE_PROBES.length ||
-		receipt.renderedStyleParity.rule !== WITNESS_ANGULAR_SUPER_PRODUCTIVITY_STYLE_DIFFERENCE_RULE ||
+		receipt.renderedStyleParity.rule !==
+			WITNESS_ANGULAR_SUPER_PRODUCTIVITY_STYLE_DIFFERENCE_RULE ||
 		receipt.renderedStyleParity.otherProbesAgree !== true ||
 		!exact(receipt.persistence, WITNESS_ANGULAR_SUPER_PRODUCTIVITY_PERSISTENCE) ||
 		!exact(receipt.routeShape, WITNESS_ANGULAR_SUPER_PRODUCTIVITY_ROUTE_SHAPE) ||
@@ -2251,9 +2247,7 @@ export function assertAngularSuperProductivityBoundBuildReceipt(
 		);
 	if (bound.lane === 'baseline') {
 		const supersedes = parsed.supersedes as Record<string, unknown> | undefined;
-		const corrections = parsed.corrections as
-			| Array<Record<string, unknown>>
-			| undefined;
+		const corrections = parsed.corrections as Array<Record<string, unknown>> | undefined;
 		const correction = corrections?.[0];
 		if (
 			supersedes?.path !== bound.corrects.path ||

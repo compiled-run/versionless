@@ -39,10 +39,9 @@ function frame(overrides: Partial<PhoenixFrame> = {}): PhoenixFrame {
 }
 
 function socketUrl(): string {
-	return withQuery(
-		joinURL(server!.origin.replace('http://', 'ws://'), PAPERCUPS_SOCKET_PATH),
-		{ vsn: PHOENIX_SERIALIZER_VSN },
-	);
+	return withQuery(joinURL(server!.origin.replace('http://', 'ws://'), PAPERCUPS_SOCKET_PATH), {
+		vsn: PHOENIX_SERIALIZER_VSN,
+	});
 }
 
 async function exchange(pushes: PhoenixFrame[], expected: number): Promise<PhoenixFrame[]> {
@@ -70,10 +69,7 @@ async function exchange(pushes: PhoenixFrame[], expected: number): Promise<Phoen
 	});
 }
 
-async function upgradeStatus(
-	target: string,
-	options: { key?: string } = {},
-): Promise<string> {
+async function upgradeStatus(target: string, options: { key?: string } = {}): Promise<string> {
 	const host = parseURL(server!.origin).host ?? '127.0.0.1';
 	const [hostname, port] = host.split(':');
 	const client = connect({ host: hostname ?? '127.0.0.1', port: Number(port) });
@@ -268,9 +264,7 @@ describe('Phoenix v2 socket stub over the bounded loopback upgrade seam', () => 
 	});
 
 	it('refuses an unknown socket path, a bad handshake and an unsupported version', async () => {
-		expect(await upgradeStatus('/socket/longpoll?vsn=2.0.0')).toBe(
-			'HTTP/1.1 404 Not Found',
-		);
+		expect(await upgradeStatus('/socket/longpoll?vsn=2.0.0')).toBe('HTTP/1.1 404 Not Found');
 		expect(await upgradeStatus(`${PAPERCUPS_SOCKET_PATH}?vsn=1.0.0`)).toBe(
 			'HTTP/1.1 400 Bad Request',
 		);

@@ -87,7 +87,9 @@ describe('cypress-rwa two-lane parity + pass-twice determinism gate', () => {
 		// Determinism folded into the semantic digest, which is distinct per lane.
 		expect(verdict.lanes.baseline.deterministic).toBe(true);
 		expect(verdict.lanes.migrated.deterministic).toBe(true);
-		expect(verdict.lanes.baseline.semanticDigest).not.toBe(verdict.lanes.migrated.semanticDigest);
+		expect(verdict.lanes.baseline.semanticDigest).not.toBe(
+			verdict.lanes.migrated.semanticDigest,
+		);
 		expect(verdict.lanes.baseline.legs).toEqual({ ok: 51, total: 51 });
 	});
 
@@ -184,15 +186,16 @@ describe('cypress-rwa two-lane parity + pass-twice determinism gate', () => {
 		];
 		// Inject a forbidden seed marker into a recorded string.
 		(passes[0]!.behavior.backend[0] as { path: string }).path = '/checkAuth?pw=s3cret';
-		expect(() => summarizeWitnessReactCypressRwaTwoLaneParity(passes)).toThrow(/redaction|undeclared/);
+		expect(() => summarizeWitnessReactCypressRwaTwoLaneParity(passes)).toThrow(
+			/redaction|undeclared/,
+		);
 	});
 
 	it('rejects a trivially-equal parity where the two lanes are byte-identical', () => {
 		const passes = fourPasses();
 		// Force the migrated lane to carry the baseline's byte identity: parity would
 		// then be trivial (same build), which the gate refuses.
-		for (const index of [2, 3])
-			passes[index]!.presentation = { ...passes[0]!.presentation };
+		for (const index of [2, 3]) passes[index]!.presentation = { ...passes[0]!.presentation };
 		expect(() => summarizeWitnessReactCypressRwaTwoLaneParity(passes)).toThrow(/trivial/);
 	});
 

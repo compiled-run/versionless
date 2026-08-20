@@ -77,7 +77,10 @@ function fakeIndexedDb(
 							keyPath: store.keyPath,
 							autoIncrement: store.autoIncrement,
 							getAllKeys: () =>
-								request(store.keys, options.readFails === true ? 'error' : 'success'),
+								request(
+									store.keys,
+									options.readFails === true ? 'error' : 'success',
+								),
 						};
 					},
 				}),
@@ -234,10 +237,16 @@ describe('the IndexedDB key reader', () => {
 
 	it('reports a failed open and a failed read as failures rather than as emptiness', async () => {
 		await expect(
-			withIndexedDb(fakeIndexedDb(LOCALFORAGE, { openFails: true }), readWitnessIndexedDbKeys),
+			withIndexedDb(
+				fakeIndexedDb(LOCALFORAGE, { openFails: true }),
+				readWitnessIndexedDbKeys,
+			),
 		).rejects.toThrow(/could not open a database/);
 		await expect(
-			withIndexedDb(fakeIndexedDb(LOCALFORAGE, { readFails: true }), readWitnessIndexedDbKeys),
+			withIndexedDb(
+				fakeIndexedDb(LOCALFORAGE, { readFails: true }),
+				readWitnessIndexedDbKeys,
+			),
 		).rejects.toThrow(/could not read a store/);
 	});
 
@@ -386,16 +395,23 @@ describe('the succeeding-service-worker shape', () => {
 			workerEvents: unknown[];
 		};
 		const cases: Array<[string, (built: Loose) => void]> = [
-			['two checkpoints', (built) => void (built.checkpoints = built.checkpoints.slice(0, 2))],
+			[
+				'two checkpoints',
+				(built) => void (built.checkpoints = built.checkpoints.slice(0, 2)),
+			],
 			[
 				'a checkpoint that never settled',
 				(built) => void (built.checkpoints[0]!.telemetry.state = 'timeout'),
 			],
 			[
 				'a registration naming another script',
-				(built) => void (built.checkpoints[0]!.telemetry.registration.scriptPath = '/sw.js'),
+				(built) =>
+					void (built.checkpoints[0]!.telemetry.registration.scriptPath = '/sw.js'),
 			],
-			['a registration with no scope', (built) => void (built.checkpoints[0]!.telemetry.registration.scope = null)],
+			[
+				'a registration with no scope',
+				(built) => void (built.checkpoints[0]!.telemetry.registration.scope = null),
+			],
 			['no shipped worker files', (built) => void (built.outputFiles = [])],
 			[
 				'a worker file the run rewrote',
@@ -442,14 +458,18 @@ describe('the succeeding-service-worker shape', () => {
 		expect(() =>
 			evidence({
 				after: OUTPUT_FILES.map((file) =>
-					file.path === 'ngsw-worker.js' ? { ...file, sha256: sha256('rewritten') } : file,
+					file.path === 'ngsw-worker.js'
+						? { ...file, sha256: sha256('rewritten') }
+						: file,
 				),
 			}),
 		).toThrow(/changed during the run: ngsw-worker\.js/);
-		expect(() => evidence({ shippedWorkerFiles: ['ngsw-worker.js', 'absent-worker.js'] })).toThrow(
-			/absent from the served tree: absent-worker\.js/,
+		expect(() =>
+			evidence({ shippedWorkerFiles: ['ngsw-worker.js', 'absent-worker.js'] }),
+		).toThrow(/absent from the served tree: absent-worker\.js/);
+		expect(() => evidence({ shippedWorkerFiles: [] })).toThrow(
+			/no distinct shipped worker files/,
 		);
-		expect(() => evidence({ shippedWorkerFiles: [] })).toThrow(/no distinct shipped worker files/);
 		expect(() =>
 			evidence({ shippedWorkerFiles: ['ngsw-worker.js', 'ngsw-worker.js'] }),
 		).toThrow(/no distinct shipped worker files/);

@@ -96,9 +96,9 @@ describe('package exports resolution', () => {
 
 	it('resolves nothing for a subpath the map does not expose', () => {
 		expect(resolvePackageExport(library.exports, './style/index.min.css')).toBeNull();
-		expect(resolvePackageExport(library.exports, './tooltip/style/index.min.css', ['less'])).toBe(
-			'./tooltip/style/index.min.css.less',
-		);
+		expect(
+			resolvePackageExport(library.exports, './tooltip/style/index.min.css', ['less']),
+		).toBe('./tooltip/style/index.min.css.less');
 	});
 
 	it('takes the aggregate carrying the blocked import’s own extension chain, never a variant', () => {
@@ -145,7 +145,9 @@ describe('exports-map-blocked style imports', () => {
 		const migration = migratePackageStyleImports('src/styles.scss', eraStyleSheet, library);
 		const [payload, ...removals] = migration.declaredDifferences;
 		expect(payload).toContain('6 ng-zorro-antd stylesheet import(s) were replaced');
-		expect(payload).toContain('ships 563200 bytes of stylesheet where it previously shipped 54999');
+		expect(payload).toContain(
+			'ships 563200 bytes of stylesheet where it previously shipped 54999',
+		);
 		expect(payload).toContain('a witness arbitrates that');
 		expect(removals).toHaveLength(COMPONENTS.length);
 		expect(removals[0]).toContain(
@@ -187,11 +189,7 @@ describe('exports-map-blocked style imports', () => {
 			version: toastr.version,
 			exports: { './toastr': { default: './toastr.css' } },
 		};
-		const migration = migratePackageStyleImports(
-			'Client/globals.scss',
-			eraGlobals,
-			neither,
-		);
+		const migration = migratePackageStyleImports('Client/globals.scss', eraGlobals, neither);
 		expect(migration.changed).toBe(false);
 		expect(migration.source).toBe(eraGlobals);
 		expect(migration.unhandled).toEqual([
@@ -228,7 +226,10 @@ describe('exports-map-blocked style imports', () => {
 	it('takes the republished key over the aggregate, because it is the same bytes', () => {
 		const alsoRepublished: PackageExportsReading = {
 			...library,
-			exports: { ...(library.exports as object), './style/index': { style: './style/index.min.css' } },
+			exports: {
+				...(library.exports as object),
+				'./style/index': { style: './style/index.min.css' },
+			},
 		};
 		const migration = migratePackageStyleImports(
 			'src/styles.scss',

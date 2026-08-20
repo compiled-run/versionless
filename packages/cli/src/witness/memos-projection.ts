@@ -177,8 +177,7 @@ export const MEMOS_SEED_AMENDMENT = Object.freeze({
 	unit: 'lrapr-t006/u12b-memos-seed-and-witness',
 	authority: 'PM ruling recorded in the T006 unit log: the seed amendment is authorized',
 	scope: 'credentials-only — the seeded owner email, the owner name derived from it, and the owner passphrase',
-	reason:
-		"the pinned pages/Signin.tsx validates BOTH fields with {minLength:4,maxLength:24,noSpace,noChinese} before calling api.login, so the frozen pair (34-character email, 26-character password) was refused by the application's own client-side validator and no journey could open the GET /api/user/me gate: signup is closed because the seed holds an OWNER and /api/status reports one, and the dev prefill is disabled because profile.mode is 'prod'",
+	reason: "the pinned pages/Signin.tsx validates BOTH fields with {minLength:4,maxLength:24,noSpace,noChinese} before calling api.login, so the frozen pair (34-character email, 26-character password) was refused by the application's own client-side validator and no journey could open the GET /api/user/me gate: signup is closed because the seed holds an OWNER and /api/status reports one, and the dev prefill is disabled because profile.mode is 'prod'",
 	supersededOwnerEmail: 'owner@versionless-evidence.invalid',
 	supersededOwnerPassword: 'synthetic-owner-passphrase',
 	supersededSeedSha256: 'cf422f2cda23b4c777d27b2bccd68a24b53cac027dbe57347e1b150fc8cdb7ff',

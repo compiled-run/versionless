@@ -351,8 +351,11 @@ export function scanNextStaticSurface(code: string, id = 'module.tsx'): NextStat
 				if (typeof name === 'string') live.push(name);
 				continue;
 			}
-			const valueReferences = symbol.references.filter((reference) => !reference.inTypePosition);
-			if (valueReferences.length > 0 && typeof symbol.name === 'string') live.push(symbol.name);
+			const valueReferences = symbol.references.filter(
+				(reference) => !reference.inTypePosition,
+			);
+			if (valueReferences.length > 0 && typeof symbol.name === 'string')
+				live.push(symbol.name);
 		}
 		if (live.length > 0) {
 			diagnostics.push(
@@ -746,7 +749,10 @@ function presetOptions(entry: unknown): Record<string, unknown> {
  * A configuration naming any preset other than `next/babel`, or carrying a
  * plugin outside the table above, is refused rather than partially read.
  */
-export function planNextBabelPreset(configuration: unknown, origin = '.babelrc'): NextBabelPresetPlan {
+export function planNextBabelPreset(
+	configuration: unknown,
+	origin = '.babelrc',
+): NextBabelPresetPlan {
 	if (typeof configuration !== 'object' || configuration === null)
 		throw new Error(`Next static migration: ${origin} is not a Babel configuration object.`);
 	const record = configuration as Record<string, unknown>;
@@ -767,7 +773,10 @@ export function planNextBabelPreset(configuration: unknown, origin = '.babelrc')
 
 	const unknownPlugins = plugins
 		.map((entry) => presetName(entry))
-		.filter((name): name is string => name !== null && !Object.hasOwn(nextBabelOmittedPlugins, name))
+		.filter(
+			(name): name is string =>
+				name !== null && !Object.hasOwn(nextBabelOmittedPlugins, name),
+		)
 		.sort(compareUtf16CodeUnits);
 	if (unknownPlugins.length > 0)
 		throw new Error(
@@ -806,7 +815,10 @@ export function planNextBabelPreset(configuration: unknown, origin = '.babelrc')
 }
 
 /** Parse and translate a `.babelrc` document. */
-export function planNextBabelPresetSource(source: string, origin = '.babelrc'): NextBabelPresetPlan {
+export function planNextBabelPresetSource(
+	source: string,
+	origin = '.babelrc',
+): NextBabelPresetPlan {
 	let parsed: unknown;
 	try {
 		parsed = JSON.parse(source);
@@ -889,7 +901,11 @@ export function createNextStaticLiftPlugin(
 				// A parse failure is not this capability's business: Vite's own
 				// pipeline reports it with far better provenance. Only a genuine
 				// framework-surface refusal is raised here.
-				if (scan.imports.length === 0 && scan.rewrites.length === 0 && !code.includes('next'))
+				if (
+					scan.imports.length === 0 &&
+					scan.rewrites.length === 0 &&
+					!code.includes('next')
+				)
 					return null;
 				throw new Error(
 					`Next static migration: ${file} uses a Next.js surface this adapter does not ` +

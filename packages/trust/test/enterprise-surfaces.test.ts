@@ -31,7 +31,9 @@ async function surfaceInputs(output: string): Promise<EnterpriseSurfaceInputs> {
 	return {
 		root,
 		output,
-		manifest: (await readJson('manifest.json')) as unknown as EnterpriseSurfaceInputs['manifest'],
+		manifest: (await readJson(
+			'manifest.json',
+		)) as unknown as EnterpriseSurfaceInputs['manifest'],
 		conformance: await analyzeCorpusConformance({ rootDir: root }),
 		capabilityCoverage: buildCapabilityCoverage(),
 		matrix: await readJson('matrix.json'),
@@ -113,8 +115,8 @@ describe('enterprise claims surfaces', () => {
 	it('marks every single-application capability out of the matrix', async () => {
 		const { report } = await deriveEnterpriseSurfaces(await surfaceInputs(published));
 		const capabilities = report.results.supportMatrix.outOfMatrixCapabilities;
-		expect(capabilities.experimental).toBe(50);
-		expect(capabilities.entries).toHaveLength(50);
+		expect(capabilities.experimental).toBe(51);
+		expect(capabilities.entries).toHaveLength(51);
 	});
 
 	it('refuses a hand-edited machine artifact', async () => {
@@ -122,9 +124,16 @@ describe('enterprise claims surfaces', () => {
 			const file = path.join(dir, ENTERPRISE_REPORT_JSON);
 			const document = JSON.parse(await readFile(file, 'utf8')) as Record<string, unknown>;
 			const results = document.results as Record<string, Record<string, never>>;
-			const counted = (results.supportMatrix as unknown as Record<string, Record<string, { cells: unknown[] }>>)
-				.counted!;
-			counted.angular!.cells.push({ ...(counted.angular!.cells[0] as object), cell: 'invented' });
+			const counted = (
+				results.supportMatrix as unknown as Record<
+					string,
+					Record<string, { cells: unknown[] }>
+				>
+			).counted!;
+			counted.angular!.cells.push({
+				...(counted.angular!.cells[0] as object),
+				cell: 'invented',
+			});
 			await writeFile(file, `${JSON.stringify(document, null, 2)}\n`);
 			await expect(verifyEnterpriseSurfaces(await surfaceInputs(dir))).rejects.toThrow(
 				/does not match independent re-derivation/,
@@ -136,7 +145,10 @@ describe('enterprise claims surfaces', () => {
 		await withCopy(async (dir) => {
 			const file = path.join(dir, ENTERPRISE_REPORT_MARKDOWN);
 			const text = await readFile(file, 'utf8');
-			await writeFile(file, text.replace('6/6 counted green cells', '7/7 counted green cells'));
+			await writeFile(
+				file,
+				text.replace('6/6 counted green cells', '7/7 counted green cells'),
+			);
 			await expect(verifyEnterpriseSurfaces(await surfaceInputs(dir))).rejects.toThrow(
 				/does not match independent re-derivation/,
 			);
@@ -147,7 +159,10 @@ describe('enterprise claims surfaces', () => {
 		const { markdown } = await deriveEnterpriseSurfaces(await surfaceInputs(published));
 		expect(() => assertEnterpriseSurfaceHonesty(markdown, 'fixture')).not.toThrow();
 		expect(() =>
-			assertEnterpriseSurfaceHonesty(`${markdown}\n\nVersionless is production-ready.`, 'fixture'),
+			assertEnterpriseSurfaceHonesty(
+				`${markdown}\n\nVersionless is production-ready.`,
+				'fixture',
+			),
 		).toThrow(/blanket-support language/);
 		expect(() =>
 			assertEnterpriseSurfaceHonesty(

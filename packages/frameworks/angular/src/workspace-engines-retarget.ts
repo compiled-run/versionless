@@ -146,7 +146,10 @@ function comparatorsOf(alternative: string): readonly Comparator[] {
 			index += 1;
 		if (index >= alternative.length) break;
 		const operatorStart = index;
-		while (index < alternative.length && OPERATOR_CHARACTERS.includes(alternative[index] as string))
+		while (
+			index < alternative.length &&
+			OPERATOR_CHARACTERS.includes(alternative[index] as string)
+		)
 			index += 1;
 		const operator = alternative.slice(operatorStart, index);
 		while (index < alternative.length && SEPARATORS.includes(alternative[index] as string))

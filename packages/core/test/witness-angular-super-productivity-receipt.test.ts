@@ -246,8 +246,16 @@ function run(lane: 'baseline' | 'migrated', pass: 1 | 2): WitnessAngularSuperPro
 				surface: ANGULAR_SUPER_PRODUCTIVITY_APP,
 				pointer: 'genuine-dragula-pointer-down-move-up',
 				movedTask: 'Witness task alpha',
-				renderedOrderBefore: ['Witness task alpha', 'Witness task beta', 'Witness task gamma'],
-				renderedOrderAfter: ['Witness task beta', 'Witness task alpha', 'Witness task gamma'],
+				renderedOrderBefore: [
+					'Witness task alpha',
+					'Witness task beta',
+					'Witness task gamma',
+				],
+				renderedOrderAfter: [
+					'Witness task beta',
+					'Witness task alpha',
+					'Witness task gamma',
+				],
 				storeOrderAfter: ['Witness task beta', 'Witness task alpha', 'Witness task gamma'],
 			},
 			timeTracking: {
@@ -327,7 +335,9 @@ function fixture(): WitnessAngularSuperProductivityReceipt {
 		provenance: { unit: 'synthetic-round-trip' },
 		canonicalReceipts: structuredClone([...ANGULAR_SUPER_PRODUCTIVITY_CANONICAL_RECEIPTS]),
 		determinism: structuredClone(WITNESS_ANGULAR_SUPER_PRODUCTIVITY_DETERMINISM),
-		sassRandomBoundary: structuredClone(WITNESS_ANGULAR_SUPER_PRODUCTIVITY_SASS_RANDOM_BOUNDARY),
+		sassRandomBoundary: structuredClone(
+			WITNESS_ANGULAR_SUPER_PRODUCTIVITY_SASS_RANDOM_BOUNDARY,
+		),
 		runs,
 		mutation: {
 			failure: 'witness-semantic-assertion',
@@ -353,7 +363,9 @@ function fixture(): WitnessAngularSuperProductivityReceipt {
 		serviceWorker: structuredClone(WITNESS_ANGULAR_SUPER_PRODUCTIVITY_SERVICE_WORKER),
 		serviceWorkerParity: { baseline: parity('baseline'), migrated: parity('migrated') },
 		migratedLaneChain: structuredClone([...ANGULAR_SUPER_PRODUCTIVITY_MIGRATED_LANE_CHAIN]),
-		migrationFindings: structuredClone([...WITNESS_ANGULAR_SUPER_PRODUCTIVITY_MIGRATION_FINDINGS]),
+		migrationFindings: structuredClone([
+			...WITNESS_ANGULAR_SUPER_PRODUCTIVITY_MIGRATION_FINDINGS,
+		]),
 		typefaceDegradations: {
 			baseline: runs[0]!.applicationJourney.typeface,
 			migrated: runs[2]!.applicationJourney.typeface,
@@ -412,9 +424,9 @@ describe('Angular Super Productivity Witness receipt', () => {
 			witnessAngularSuperProductivityDigest(receipt),
 		);
 		expect(new Set(receipt.runs.map((entry) => entry.behaviorDigest)).size).toBe(1);
-		expect(witnessAngularSuperProductivityAggregateMember(receipt.integrity.canonicalDigest)).toMatchObject(
-			{ framework: 'angular', result: 'pass' },
-		);
+		expect(
+			witnessAngularSuperProductivityAggregateMember(receipt.integrity.canonicalDigest),
+		).toMatchObject({ framework: 'angular', result: 'pass' });
 		expect(renderWitnessAngularSuperProductivityReceipt(receipt)).toContain(
 			'Super Productivity v2.13.15',
 		);
@@ -445,7 +457,10 @@ describe('Angular Super Productivity Witness receipt', () => {
 		const property = Object.keys(agreeing.properties)[0]!;
 		agreeing.properties[property] = `${agreeing.properties[property]}-moved`;
 		expect(
-			witnessAngularSuperProductivityBehaviorDigest(propertyChanged, DECLARED_DIFFERENCE_LABELS),
+			witnessAngularSuperProductivityBehaviorDigest(
+				propertyChanged,
+				DECLARED_DIFFERENCE_LABELS,
+			),
 		).not.toBe(witnessAngularSuperProductivityBehaviorDigest(base, DECLARED_DIFFERENCE_LABELS));
 	});
 
@@ -473,7 +488,9 @@ describe('Angular Super Productivity Witness receipt', () => {
 			const receipt = fixture();
 			mutate(receipt);
 			receipt.integrity.canonicalDigest = witnessAngularSuperProductivityDigest(receipt);
-			expect(() => parseWitnessAngularSuperProductivityReceipt(receipt)).toThrow('binding differs');
+			expect(() => parseWitnessAngularSuperProductivityReceipt(receipt)).toThrow(
+				'binding differs',
+			);
 		}
 	});
 
@@ -769,9 +786,9 @@ describe('Angular Super Productivity Witness receipt', () => {
 		expect(() => parseWitnessAngularSuperProductivityReceipt(receipt)).toThrow(
 			'not a declared route',
 		);
-		expect(
-			parseWitnessAngularSuperProductivityReceipt(fixture()).runs[0]!.routes,
-		).toContain('#/daily-summary/2019-12-05');
+		expect(parseWitnessAngularSuperProductivityReceipt(fixture()).runs[0]!.routes).toContain(
+			'#/daily-summary/2019-12-05',
+		);
 	});
 
 	it('rejects persistence that lost a key or names the wrong store', () => {
@@ -864,8 +881,9 @@ describe('Angular Super Productivity Witness receipt', () => {
 		expect(chain).toHaveLength(3);
 		expect(chain.at(-1)!.contradictedBy).toBeNull();
 		expect(chain.at(-1)!.record).toBe(
-			ANGULAR_SUPER_PRODUCTIVITY_CANONICAL_RECEIPTS.find((bound) => bound.lane === 'migrated')!
-				.path,
+			ANGULAR_SUPER_PRODUCTIVITY_CANONICAL_RECEIPTS.find(
+				(bound) => bound.lane === 'migrated',
+			)!.path,
 		);
 		// Every superseded link in the chain names what its successor could not see.
 		for (const link of chain.slice(0, -1)) expect(link.contradictedBy).not.toBeNull();
@@ -875,7 +893,9 @@ describe('Angular Super Productivity Witness receipt', () => {
 		const payload = await readFile(
 			path.join(root, WITNESS_ANGULAR_SUPER_PRODUCTIVITY_ACCOMMODATION_PAYLOAD.path),
 		);
-		expect(sha256(payload)).toBe(WITNESS_ANGULAR_SUPER_PRODUCTIVITY_ACCOMMODATION_PAYLOAD.sha256);
+		expect(sha256(payload)).toBe(
+			WITNESS_ANGULAR_SUPER_PRODUCTIVITY_ACCOMMODATION_PAYLOAD.sha256,
+		);
 		expect(payload.length).toBe(WITNESS_ANGULAR_SUPER_PRODUCTIVITY_ACCOMMODATION_PAYLOAD.bytes);
 		expect(WITNESS_ANGULAR_SUPER_PRODUCTIVITY_ACCOMMODATIONS.manualMigrationSteps).toBe(19);
 		expect(WITNESS_ANGULAR_SUPER_PRODUCTIVITY_ACCOMMODATIONS.distinctDecisions).toBe(8);
@@ -886,6 +906,8 @@ describe('Angular Super Productivity Witness receipt', () => {
 	it('carries every migration finding with the record it was measured in', () => {
 		expect(WITNESS_ANGULAR_SUPER_PRODUCTIVITY_MIGRATION_FINDINGS.length).toBeGreaterThan(0);
 		for (const finding of WITNESS_ANGULAR_SUPER_PRODUCTIVITY_MIGRATION_FINDINGS)
-			expect(finding.record).toMatch(/^evidence\/runs\/angular-super-productivity-v2-13-15\//);
+			expect(finding.record).toMatch(
+				/^evidence\/runs\/angular-super-productivity-v2-13-15\//,
+			);
 	});
 });

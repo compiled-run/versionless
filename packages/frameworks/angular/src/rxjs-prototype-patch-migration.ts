@@ -208,7 +208,9 @@ function refused(path: string, source: string, reasons: readonly string[]): Rxjs
 		source,
 		changed: false,
 		changes: Object.freeze([]),
-		unhandled: Object.freeze([...new Set(reasons.map((reason) => `${path}: ${reason}`))].sort(compareStrings)),
+		unhandled: Object.freeze(
+			[...new Set(reasons.map((reason) => `${path}: ${reason}`))].sort(compareStrings),
+		),
 	});
 }
 

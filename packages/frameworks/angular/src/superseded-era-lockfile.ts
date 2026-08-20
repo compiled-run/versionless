@@ -221,7 +221,9 @@ export function lockfileContradictions(
 			Object.freeze({ name: resolution.name, locked: resolution.version, declared }),
 		);
 	}
-	return Object.freeze(contradictions.sort((left, right) => compareStrings(left.name, right.name)));
+	return Object.freeze(
+		contradictions.sort((left, right) => compareStrings(left.name, right.name)),
+	);
 }
 
 /** How many contradictions a declared difference names before it summarises. */
@@ -233,7 +235,10 @@ function describeSupersession(
 ): string {
 	const named = contradictions
 		.slice(0, NAMED_CONTRADICTIONS)
-		.map((entry) => `${entry.name} is locked at ${entry.locked} and now declared ${entry.declared}`)
+		.map(
+			(entry) =>
+				`${entry.name} is locked at ${entry.locked} and now declared ${entry.declared}`,
+		)
 		.join('; ');
 	const rest =
 		contradictions.length > NAMED_CONTRADICTIONS

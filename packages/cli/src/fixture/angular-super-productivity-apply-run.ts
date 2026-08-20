@@ -15,10 +15,19 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import * as path from 'pathe';
 import { canonical, sha256 } from './angular-factoriolab-migration-run.ts';
-import { sealRecord, verifySealedRecord, type SealedRecord } from './angular-factoriolab-build-lanes-run.ts';
+import {
+	sealRecord,
+	verifySealedRecord,
+	type SealedRecord,
+} from './angular-factoriolab-build-lanes-run.ts';
 import { applyMigration, type Application } from './angular-tiny-translator-apply-run.ts';
 import type { AngularMigration } from '../../../frameworks/angular/src/index.ts';
-import { composeMigration, CONSENT, EVIDENCE_DIRECTORY, SOURCE_TREE } from './angular-super-productivity-lanes-run.ts';
+import {
+	composeMigration,
+	CONSENT,
+	EVIDENCE_DIRECTORY,
+	SOURCE_TREE,
+} from './angular-super-productivity-lanes-run.ts';
 
 const repositoryRoot = path.resolve(import.meta.dirname, '../../../..');
 

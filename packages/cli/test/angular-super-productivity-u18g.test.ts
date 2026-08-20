@@ -162,7 +162,9 @@ describe('super-productivity u18g capability round', () => {
 		expect(changes.length).toBeGreaterThan(0);
 		for (const change of changes) {
 			expect(change['appNameBranches']).toBe(0);
-			expect(String(change['file']).startsWith('packages/frameworks/angular/src/')).toBe(true);
+			expect(String(change['file']).startsWith('packages/frameworks/angular/src/')).toBe(
+				true,
+			);
 		}
 	});
 

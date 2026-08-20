@@ -78,7 +78,10 @@ async function stageInputs(): Promise<{
 	lanes: Record<'baseline' | 'migrated', string>;
 	staged: Record<'baseline' | 'migrated', LinkfreeStagedCorpus>;
 }> {
-	const lanes = { baseline: join(stageRoot, 'lanes/baseline'), migrated: join(stageRoot, 'lanes/migrated') };
+	const lanes = {
+		baseline: join(stageRoot, 'lanes/baseline'),
+		migrated: join(stageRoot, 'lanes/migrated'),
+	};
 	const staged: Record<'baseline' | 'migrated', LinkfreeStagedCorpus> = {} as Record<
 		'baseline' | 'migrated',
 		LinkfreeStagedCorpus
@@ -316,7 +319,7 @@ export async function verifyWitnessReactLinkfree(
 	const receipt = parseWitnessReactLinkfreeReceipt(
 		JSON.parse(await readFile(join(output, 'receipt.json'), 'utf8')),
 	);
-	assertLinkedWitnessProvenanceEquivalent(receipt.provenance, expectedProvenance, "LinkFree");
+	assertLinkedWitnessProvenanceEquivalent(receipt.provenance, expectedProvenance, 'LinkFree');
 	const canonicalBytes = await readFile(join(root, receipt.canonicalReceipt.path));
 	if (sha256(canonicalBytes) !== receipt.canonicalReceipt.sha256)
 		throw new Error('LinkFree canonical receipt bytes drifted');
@@ -350,7 +353,9 @@ export async function main(args = process.argv.slice(2)): Promise<void> {
 		);
 		return;
 	}
-	throw new Error('LinkFree Witness runner requires --run-twice --publish <dir> or --verify <dir>');
+	throw new Error(
+		'LinkFree Witness runner requires --run-twice --publish <dir> or --verify <dir>',
+	);
 }
 
 if (basename(process.argv[1] ?? '') === 'react-linkfree-run.ts')

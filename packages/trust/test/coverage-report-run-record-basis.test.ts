@@ -83,8 +83,7 @@ describe('run records as corpus admission evidence', () => {
 			});
 			expect(records[0]?.licence).toEqual({
 				identifier: 'MIT',
-				artifactSha256:
-					'fbfe10674aef1e0bf084850644879fa4114d8a98debc5fb8e680f295af169d43',
+				artifactSha256: 'fbfe10674aef1e0bf084850644879fa4114d8a98debc5fb8e680f295af169d43',
 			});
 			expect(records[0]?.terminalClassification).toBe('proven');
 			expect(records[0]?.runRecordPath).toBe(

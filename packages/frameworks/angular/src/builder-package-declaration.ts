@@ -25,7 +25,11 @@
  * record exists to rule out.
  */
 
-import { alignedVersionRange, compareStrings, type AngularTargetCell } from './angular-target-cell.ts';
+import {
+	alignedVersionRange,
+	compareStrings,
+	type AngularTargetCell,
+} from './angular-target-cell.ts';
 
 export type BuilderPackageDeclaration = Readonly<{
 	field: 'devDependencies';
@@ -99,7 +103,12 @@ export function workspaceBuilderPackages(
 
 function declaredRanges(manifest: Readonly<Record<string, unknown>>): ReadonlySet<string> {
 	const names = new Set<string>();
-	for (const field of ['dependencies', 'devDependencies', 'peerDependencies', 'optionalDependencies']) {
+	for (const field of [
+		'dependencies',
+		'devDependencies',
+		'peerDependencies',
+		'optionalDependencies',
+	]) {
 		const record = manifest[field];
 		if (!isRecord(record)) continue;
 		for (const name of Object.keys(record)) names.add(name);
@@ -151,7 +160,12 @@ export function declareBuilderPackages(
 				`named no builder at all, so nothing declared it`,
 		});
 	}
-	if (declarations.length === 0) return Object.freeze({ manifest, declarations: Object.freeze([]), unhandled: Object.freeze(unhandled) });
+	if (declarations.length === 0)
+		return Object.freeze({
+			manifest,
+			declarations: Object.freeze([]),
+			unhandled: Object.freeze(unhandled),
+		});
 	const ordered: Record<string, string> = {};
 	for (const name of Object.keys(devDependencies).sort(compareStrings))
 		ordered[name] = devDependencies[name] as string;

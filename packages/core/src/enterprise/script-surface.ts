@@ -771,7 +771,9 @@ export async function verifyScriptSurfaceAgainstDeclaration(
 	if (emitted.schemaVersion !== config.schemaVersion)
 		throw new Error('Emitted script surface and its declaration disagree on the schema');
 	if (emitted.verticals.length !== config.verticals.length)
-		throw new Error('Emitted script surface and its declaration disagree on the vertical count');
+		throw new Error(
+			'Emitted script surface and its declaration disagree on the vertical count',
+		);
 	for (const [index, vertical] of config.verticals.entries()) {
 		const emittedVertical = emitted.verticals[index];
 		if (emittedVertical === undefined || emittedVertical.id !== vertical.id)

@@ -703,9 +703,12 @@ describe('missing-export tolerance for a self-inconsistent dependency ES module'
 	});
 
 	test('one dangling specifier of a mixed import is split out, the rest kept', () => {
-		const code = 'import def, { alive, marker_Widget } from "./present.js";\nexport function u(){return alive(def);}\n';
+		const code =
+			'import def, { alive, marker_Widget } from "./present.js";\nexport function u(){return alive(def);}\n';
 		const result = craNeutralizeDanglingImports(code, dangling, (specifier) =>
-			specifier === './present.js' ? { names: new Set(['alive', 'default']), hasStar: false } : null,
+			specifier === './present.js'
+				? { names: new Set(['alive', 'default']), hasStar: false }
+				: null,
 		);
 		expect(result).not.toBeNull();
 		expect(result?.code).toContain('import def, { alive } from "./present.js";');
@@ -716,7 +719,8 @@ describe('missing-export tolerance for a self-inconsistent dependency ES module'
 		// `realThing` dangles, but it is dereferenced while the module evaluates, so
 		// undefined would be observable — a real application-visible error, left for
 		// the bundler to report rather than papered over.
-		const code = 'import { realThing } from "./present.js";\nexport const size = realThing.length;\n';
+		const code =
+			'import { realThing } from "./present.js";\nexport const size = realThing.length;\n';
 		expect(
 			craNeutralizeDanglingImports(code, dangling, (specifier) =>
 				specifier === './present.js' ? { names: new Set(['alive']), hasStar: false } : null,
@@ -725,19 +729,25 @@ describe('missing-export tolerance for a self-inconsistent dependency ES module'
 	});
 
 	test('a present export is left exactly as written', () => {
-		const code = 'import { alive } from "./present.js";\nexport function f(){ return alive(); }\n';
+		const code =
+			'import { alive } from "./present.js";\nexport function f(){ return alive(); }\n';
 		expect(craNeutralizeDanglingImports(code, dangling, present)).toBeNull();
 	});
 
 	test('an unresolved export-star target forbids proving absence', () => {
-		const code = 'import { maybe } from "./present.js";\nexport function f(){ return maybe; }\n';
+		const code =
+			'import { maybe } from "./present.js";\nexport function f(){ return maybe; }\n';
 		expect(
-			craNeutralizeDanglingImports(code, dangling, () => ({ names: new Set(), hasStar: true })),
+			craNeutralizeDanglingImports(code, dangling, () => ({
+				names: new Set(),
+				hasStar: true,
+			})),
 		).toBeNull();
 	});
 
 	test('an unresolvable or bare-package target is never rewritten', () => {
-		const code = 'import { thing } from "some-package";\nexport function f(){ return thing; }\n';
+		const code =
+			'import { thing } from "some-package";\nexport function f(){ return thing; }\n';
 		expect(craNeutralizeDanglingImports(code, dangling, () => null)).toBeNull();
 	});
 
@@ -747,7 +757,10 @@ describe('missing-export tolerance for a self-inconsistent dependency ES module'
 		// First-party source with a dangling import is a real defect and is not
 		// touched; the bundler still reports it.
 		expect(
-			plugin.transform('import { x } from "./m.js";\nexport function f(){return x;}', '/app/src/a.js'),
+			plugin.transform(
+				'import { x } from "./m.js";\nexport function f(){return x;}',
+				'/app/src/a.js',
+			),
 		).toBeNull();
 		expect(plugin.transform('const noImports = 1;', '/app/node_modules/dep/a.js')).toBeNull();
 	});
@@ -776,14 +789,19 @@ describe('missing-export tolerance for a self-inconsistent dependency ES module'
 			expect(transformed).not.toBeNull();
 			expect(transformed?.code).toContain('import "./Widget.js";');
 			expect(transformed?.code).toContain('const marker_Widget = void 0;');
-			expect(records).toEqual([{ id: importer, specifier: './Widget.js', name: 'marker_Widget' }]);
+			expect(records).toEqual([
+				{ id: importer, specifier: './Widget.js', name: 'marker_Widget' },
+			]);
 			// A sibling that really exports the name is left alone.
-			const clean = 'import { IS_TIMEOUT } from "./Widget.js";\nexport const x = IS_TIMEOUT;\n';
+			const clean =
+				'import { IS_TIMEOUT } from "./Widget.js";\nexport const x = IS_TIMEOUT;\n';
 			expect(plugin.transform(clean, importer)).toBeNull();
-			expect(craResolveRelativeModule(importer, './Widget.js')).toBe(path.join(dep, 'Widget.js'));
-			expect(craReadModuleExportSurface(path.join(dep, 'Widget.js'))?.names.has('IS_TIMEOUT')).toBe(
-				true,
+			expect(craResolveRelativeModule(importer, './Widget.js')).toBe(
+				path.join(dep, 'Widget.js'),
 			);
+			expect(
+				craReadModuleExportSurface(path.join(dep, 'Widget.js'))?.names.has('IS_TIMEOUT'),
+			).toBe(true);
 			expect(craModuleExportSurface('export const a = 1;')?.names.has('a')).toBe(true);
 		} finally {
 			await rm(root, { recursive: true, force: true });
@@ -845,7 +863,9 @@ describe('missing-export tolerance for a self-inconsistent dependency ES module'
 	}
 
 	test('an unadapted build refuses the dangling import rolldown cannot link', async () => {
-		await expect(buildDanglingProbe(false)).rejects.toThrow(/marker_Widget|not exported|MISSING_EXPORT/);
+		await expect(buildDanglingProbe(false)).rejects.toThrow(
+			/marker_Widget|not exported|MISSING_EXPORT/,
+		);
 	});
 
 	test('the adapted build links, and the dangling marker is undefined at runtime', async () => {
@@ -1141,9 +1161,9 @@ describe('JSX in application-source JavaScript', () => {
 
 	test('a query suffix does not hide the extension', () => {
 		expect(craModuleIsJsxCapableApplicationSource('/app/src/index.js?used')).toBe(true);
-		expect(
-			craModuleIsJsxCapableApplicationSource('/app/node_modules/x/index.js?used'),
-		).toBe(false);
+		expect(craModuleIsJsxCapableApplicationSource('/app/node_modules/x/index.js?used')).toBe(
+			false,
+		);
 	});
 
 	test('the plugin raises the module type and changes no code', () => {
@@ -1229,10 +1249,19 @@ describe('create-react-app public directory', () => {
 		await expect(plugin.closeBundle.handler()).rejects.toThrow('outDir is unresolved');
 	});
 	test('the composed adapter excludes the template by default', () => {
-		const [decode, jsx, transform, sloppy, missingExport, nodeCore, define, output, processGlobal] =
-			createCraViteAdapter({
-				publicDirectory: tmpdir(),
-			});
+		const [
+			decode,
+			jsx,
+			transform,
+			sloppy,
+			missingExport,
+			nodeCore,
+			define,
+			output,
+			processGlobal,
+		] = createCraViteAdapter({
+			publicDirectory: tmpdir(),
+		});
 		expect(decode.name).toBe('versionless-cra-non-utf8-module-source');
 		expect(decode.enforce).toBe('pre');
 		// Decoding acts on bytes and leads; the module type is decided next,

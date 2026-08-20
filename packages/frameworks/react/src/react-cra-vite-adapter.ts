@@ -1150,7 +1150,8 @@ export function craNeutralizeDanglingImports(
 		if (record.name === null || record.name === 'default') continue;
 		if (record.local === null) continue;
 		if (!record.specifier.startsWith('.')) continue;
-		if (!surfaces.has(record.specifier)) surfaces.set(record.specifier, resolve(record.specifier));
+		if (!surfaces.has(record.specifier))
+			surfaces.set(record.specifier, resolve(record.specifier));
 		const surface = surfaces.get(record.specifier) ?? null;
 		if (surface === null || surface.hasStar) continue;
 		if (surface.names.has(record.name)) continue;
@@ -1173,16 +1174,23 @@ export function craNeutralizeDanglingImports(
 		const kept = declaration.specifiers.filter((specifier) => !dropped.has(specifier));
 		const source = code.slice(declaration.source.start, declaration.source.end);
 		const importText =
-			kept.length > 0 ? `import ${craImportClause(kept)} from ${source};` : `import ${source};`;
+			kept.length > 0
+				? `import ${craImportClause(kept)} from ${source};`
+				: `import ${source};`;
 		const bindings = neutralizedSpecifiers
 			.map((specifier) => `const ${specifier.local.name} = ${craDanglingBindingValue};`)
 			.join(' ');
-		edits.push({ start: declaration.start, end: declaration.end, text: `${importText} ${bindings}` });
+		edits.push({
+			start: declaration.start,
+			end: declaration.end,
+			text: `${importText} ${bindings}`,
+		});
 	}
 
 	edits.sort((left, right) => right.start - left.start);
 	let output = code;
-	for (const edit of edits) output = `${output.slice(0, edit.start)}${edit.text}${output.slice(edit.end)}`;
+	for (const edit of edits)
+		output = `${output.slice(0, edit.start)}${edit.text}${output.slice(edit.end)}`;
 	return Object.freeze({ code: output, neutralized });
 }
 

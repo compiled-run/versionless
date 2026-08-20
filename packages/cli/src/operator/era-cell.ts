@@ -122,33 +122,25 @@ function cellOfAdapterCell(cell: AngularTargetCell): DescribedCell | null {
 }
 
 /**
- * The ngcc-bearing Angular 13 cell, described rather than published.
+ * Every cell this stage can name.
  *
- * `evidence/spikes/ngcc-1213-feasibility/verdict.json` measured it: all three
- * pre-Ivy libraries in the holdout are consumable at Angular 13.4.0 because
- * `@angular/compiler-cli` 13.4.0 still ships a real ngcc entry point, at the
- * price of holding rxjs at 6.x. No adapter in this repository publishes it, so
- * it is never the default for a lineage — `--cell` declares it, and this stage
- * then reads the Node line the spike recorded for it.
+ * The list is derived from the adapter registry and nothing else, so a cell is
+ * describable here exactly when an adapter publishes it. It used to carry one
+ * hand-written entry beside the derived ones — the ngcc-bearing Angular 13
+ * cell, described from `evidence/spikes/ngcc-1213-feasibility/verdict.json`
+ * while no adapter published it. The frozen Angular adapter now publishes
+ * `angular-13.4.0` as an `AngularTargetCell`, so that entry is gone rather than
+ * flipped: keeping both would put two entries with one id in this list, which
+ * `describedCell()` would resolve by order rather than by truth. What the
+ * hand-written entry said about the cell — that it is ngcc-bearing, that
+ * holding ngcc means holding rxjs at 6.x, and that nothing here installs the
+ * Angular 13 toolchain — is said by the published cell’s own rationale and
+ * nonclaims, which is where a claim about a cell belongs.
  */
-export const NGCC_ANGULAR_13_CELL: DescribedCell = Object.freeze({
-	id: 'angular-13.4.0',
-	lineage: 'angular' as const,
-	nodeLine: '16.20.2',
-	nodeMajor: 16,
-	describedBy:
-		'described by evidence/spikes/ngcc-1213-feasibility/verdict.json, which names angular-13.4.0 the honest cell — @angular/compiler-cli 13.4.0 still ships a real ngcc bin and back-compiles the pre-Ivy libraries, and the cell Node runtime it recorded is v16.20.2. No adapter in this repository publishes this cell as a migration target.',
-	published: false,
-	provides:
-		'the Node runtime the cell declares. The Angular 13 toolchain itself, and the rxjs 6 pin the spike recorded as its price, are not installed or written by this stage.',
-});
-
-/** Every cell this stage can name, adapter-published ones first. */
 export const DESCRIBED_CELLS: readonly DescribedCell[] = Object.freeze([
 	...ANGULAR_TARGET_CELLS.map(cellOfAdapterCell).filter(
 		(cell): cell is DescribedCell => cell !== null,
 	),
-	NGCC_ANGULAR_13_CELL,
 ]);
 
 export function describedCell(id: string): DescribedCell | null {

@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { ANGULAR_16_BROWSER_CELL, type AngularTargetCell } from '../src/angular-target-cell.ts';
+import {
+	ANGULAR_13_BROWSER_CELL,
+	ANGULAR_16_BROWSER_CELL,
+	type AngularTargetCell,
+} from '../src/angular-target-cell.ts';
 import {
 	LOCALIZE_PACKAGE,
 	LOCALIZE_POLYFILL_ENTRY_POINT,
@@ -116,8 +120,109 @@ describe('declareTemplateI18nRuntime', () => {
 		expect(declaration.manifest).toBe(MANIFEST);
 		expect(declaration.change).toBeNull();
 		expect(declaration.entryPoint).toBeNull();
+		expect(declaration.closure).toBeNull();
 		expect(declaration.unhandled).toHaveLength(1);
 		expect(declaration.unhandled[0]).toContain('polyfill nothing in the bundle asks for');
+		expect(declaration.unhandled[0]).toContain(
+			"no reading of this application's emitted bundle was supplied",
+		);
+	});
+
+	it('admits a zero-marker application on a supplied reading of its emitted bundle', () => {
+		const closure = {
+			occurrences: 215,
+			readFrom: 'grep -c on the emitted main.*.js of the migrated browser build',
+		};
+		const declaration = declareTemplateI18nRuntime({
+			manifest: MANIFEST,
+			templates: templatesOf(UNMARKED_TEMPLATE),
+			cell: ANGULAR_16_BROWSER_CELL,
+			closure,
+		});
+		expect(declaration.declared).toBe(true);
+		expect(declaration.reading.markers).toEqual([]);
+		expect(declaration.closure).toEqual(closure);
+		expect(declaration.entryPoint).toBe(LOCALIZE_POLYFILL_ENTRY_POINT);
+		expect(declaration.change).toEqual({
+			field: 'dependencies',
+			name: LOCALIZE_PACKAGE,
+			from: null,
+			to: '^16.2.0',
+		});
+		const manifest = JSON.parse(declaration.manifest) as {
+			dependencies: Record<string, string>;
+		};
+		expect(manifest.dependencies[LOCALIZE_PACKAGE]).toBe('^16.2.0');
+		expect(declaration.declaredDifferences).toHaveLength(1);
+		expect(declaration.declaredDifferences[0]).toContain(
+			'215 `$localize` references were counted',
+		);
+		expect(declaration.declaredDifferences[0]).toContain(closure.readFrom);
+		expect(declaration.unhandled).toEqual([]);
+	});
+
+	it('states both readings in the declared difference when both are present', () => {
+		const declaration = declareTemplateI18nRuntime({
+			manifest: MANIFEST,
+			templates: templatesOf(MARKED_TEMPLATE),
+			cell: ANGULAR_16_BROWSER_CELL,
+			closure: { occurrences: 4, readFrom: 'the emitted bundle' },
+		});
+		expect(declaration.declared).toBe(true);
+		expect(declaration.declaredDifferences[0]).toContain('2 i18n markers across');
+		expect(declaration.declaredDifferences[0]).toContain(
+			'4 `$localize` references were counted',
+		);
+	});
+
+	it('refuses on a bundle somebody read and found empty, and says the bundle was read', () => {
+		const declaration = declareTemplateI18nRuntime({
+			manifest: MANIFEST,
+			templates: templatesOf(UNMARKED_TEMPLATE),
+			cell: ANGULAR_16_BROWSER_CELL,
+			closure: { occurrences: 0, readFrom: 'a scan of the emitted browser bundle' },
+		});
+		expect(declaration.declared).toBe(false);
+		expect(declaration.manifest).toBe(MANIFEST);
+		expect(declaration.entryPoint).toBeNull();
+		expect(declaration.closure).toEqual({
+			occurrences: 0,
+			readFrom: 'a scan of the emitted browser bundle',
+		});
+		expect(declaration.unhandled[0]).toContain('a scan of the emitted browser bundle');
+		expect(declaration.unhandled[0]).toContain('counted no `$localize` reference');
+		expect(declaration.unhandled[0]).toContain('polyfill nothing in the bundle asks for');
+	});
+
+	/**
+	 * R5. An Ivy-era cell is the condition under which the tags would be emitted,
+	 * never the evidence that this application emits any. A capability that read
+	 * the cell instead of the bytes would declare the package on every plan on the
+	 * line.
+	 */
+	it('declares nothing on an Angular 13 cell that is handed neither reading', () => {
+		const declaration = declareTemplateI18nRuntime({
+			manifest: MANIFEST,
+			templates: templatesOf(UNMARKED_TEMPLATE),
+			cell: ANGULAR_13_BROWSER_CELL,
+		});
+		expect(declaration.declared).toBe(false);
+		expect(declaration.manifest).toBe(MANIFEST);
+		expect(declaration.change).toBeNull();
+		expect(declaration.entryPoint).toBeNull();
+		expect(declaration.unhandled[0]).toContain('polyfill nothing in the bundle asks for');
+	});
+
+	it('declares nothing for an application that supplies no templates at all and no reading', () => {
+		const declaration = declareTemplateI18nRuntime({
+			manifest: MANIFEST,
+			templates: [],
+			cell: ANGULAR_13_BROWSER_CELL,
+			closure: null,
+		});
+		expect(declaration.declared).toBe(false);
+		expect(declaration.reading.templatesRead).toBe(0);
+		expect(declaration.entryPoint).toBeNull();
 	});
 
 	it('refuses a pre-Ivy cell, whose compiler emits no tagged template to answer', () => {

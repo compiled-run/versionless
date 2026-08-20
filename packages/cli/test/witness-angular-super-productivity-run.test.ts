@@ -70,9 +70,11 @@ describe('the Super Productivity journey wiring', () => {
 		expect(spec.initialRoute).toBe(journey.initialRoute);
 		expect(journey.initialRoute).toBe('/#/work-view');
 		expect(WITNESS_ANGULAR_SUPER_PRODUCTIVITY_ROUTE_SHAPE.known).toContain('/work-view');
-		expect(journey.initialRoute.startsWith(`/${WITNESS_ANGULAR_SUPER_PRODUCTIVITY_ROUTE_SHAPE.prefix}`)).toBe(
-			true,
-		);
+		expect(
+			journey.initialRoute.startsWith(
+				`/${WITNESS_ANGULAR_SUPER_PRODUCTIVITY_ROUTE_SHAPE.prefix}`,
+			),
+		).toBe(true);
 		// After the deep-linked load: the leg-(e) reload (two — the document commit
 		// and the router's own hash settle each record one) and the two leg-(d)
 		// hash navigations (into `#/project-settings` and back to `#/work-view`).
@@ -127,7 +129,9 @@ describe('the console and failed-request inventories', () => {
 			migrated: [],
 		});
 		expect(spec.consoleErrorInventory).toBe(WITNESS_ANGULAR_SUPER_PRODUCTIVITY_CONSOLE_ERRORS);
-		expect(spec.failedRequestInventory).toBe(WITNESS_ANGULAR_SUPER_PRODUCTIVITY_FAILED_REQUESTS);
+		expect(spec.failedRequestInventory).toBe(
+			WITNESS_ANGULAR_SUPER_PRODUCTIVITY_FAILED_REQUESTS,
+		);
 	});
 
 	it('keeps the measured migrated-lane regression OUT of the inventory', () => {
@@ -175,9 +179,11 @@ describe('the two journey legs', () => {
 		// Every key the create added is one of the application's own namespaced
 		// documents rather than something the harness put there.
 		for (const key of after)
-			expect(key.startsWith(WITNESS_ANGULAR_SUPER_PRODUCTIVITY_PERSISTENCE.localStorageKeyPrefix)).toBe(
-				true,
-			);
+			expect(
+				key.startsWith(
+					WITNESS_ANGULAR_SUPER_PRODUCTIVITY_PERSISTENCE.localStorageKeyPrefix,
+				),
+			).toBe(true);
 	});
 
 	it('pins the localStorage census the schema requires a namespaced member of', () => {
@@ -185,7 +191,9 @@ describe('the two journey legs', () => {
 		expect([...journey.localStorageKeysAfterJourney]).toEqual(['SUP_LAST_ACTIVE']);
 		expect(
 			journey.localStorageKeysAfterJourney.some((key) =>
-				key.startsWith(WITNESS_ANGULAR_SUPER_PRODUCTIVITY_PERSISTENCE.localStorageKeyPrefix),
+				key.startsWith(
+					WITNESS_ANGULAR_SUPER_PRODUCTIVITY_PERSISTENCE.localStorageKeyPrefix,
+				),
 			),
 		).toBe(true);
 	});
@@ -256,7 +264,9 @@ describe('the drag surface and the deliberate absences', () => {
 		expect(reorder.dropTarget).toContain('task:nth-of-type(1)');
 		// The after-order is a genuine permutation of the before-order: same
 		// multiset, different sequence, and the moved task is one the list held.
-		expect([...reorder.renderedOrderAfter].sort()).toEqual([...reorder.renderedOrderBefore].sort());
+		expect([...reorder.renderedOrderAfter].sort()).toEqual(
+			[...reorder.renderedOrderBefore].sort(),
+		);
 		expect(reorder.renderedOrderAfter).not.toEqual(reorder.renderedOrderBefore);
 		expect(reorder.renderedOrderBefore).toContain(reorder.movedTask);
 		// The two pinned titles are exactly the two tasks legs (a) and (b) create.
@@ -327,9 +337,15 @@ describe('the drag surface and the deliberate absences', () => {
 		expect(settings.theme.control).toContain('mat-select');
 		// The shifted rgb differs across lanes, and that is a declared difference,
 		// not a failure: baseline emits a bare triple, migrated an rgba().
-		expect(settings.theme.measuredBaselineBefore).not.toBe(settings.theme.measuredMigratedBefore);
-		expect(settings.theme.measuredBaselineBefore).not.toBe(settings.theme.measuredBaselineAfter);
-		expect(settings.theme.measuredMigratedBefore).not.toBe(settings.theme.measuredMigratedAfter);
+		expect(settings.theme.measuredBaselineBefore).not.toBe(
+			settings.theme.measuredMigratedBefore,
+		);
+		expect(settings.theme.measuredBaselineBefore).not.toBe(
+			settings.theme.measuredBaselineAfter,
+		);
+		expect(settings.theme.measuredMigratedBefore).not.toBe(
+			settings.theme.measuredMigratedAfter,
+		);
 		expect(settings.theme.laneDifference.length).toBeGreaterThan(0);
 		// The `b` shortcut had no visible toggle in the observed state, recorded as
 		// a measured limitation rather than claimed as an effect.
@@ -416,9 +432,9 @@ describe('leg (d) drive-side wiring', () => {
 		expect(settings.projectSwitch.projectList).toBe('side-nav .project');
 		// The switch control is the second member of exactly the list the count
 		// grows, so the count and the switch cannot be reading different surfaces.
-		expect(settings.projectSwitch.switchControl.startsWith(settings.projectSwitch.projectList)).toBe(
-			true,
-		);
+		expect(
+			settings.projectSwitch.switchControl.startsWith(settings.projectSwitch.projectList),
+		).toBe(true);
 	});
 
 	it('expands the same theme config-section its driven controls are scoped to', () => {

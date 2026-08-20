@@ -176,7 +176,10 @@ describe('absorption through the workspace migration', () => {
 			{ 'webpack.config.js': TAILWIND_FRAGMENT },
 		);
 		const config: {
-			projects: Record<string, { architect: Record<string, { builder: string; options?: object }> }>;
+			projects: Record<
+				string,
+				{ architect: Record<string, { builder: string; options?: object }> }
+			>;
 		} = JSON.parse(migration.config);
 		const build = config.projects['any-project']?.architect['build'];
 		expect(build?.builder).toBe(OFFICIAL);
@@ -185,7 +188,9 @@ describe('absorption through the workspace migration', () => {
 			'@angular-devkit/build-angular:dev-server',
 		);
 		expect(migration.removedPackages).toContain('@angular-builders/custom-webpack');
-		expect(migration.absorbedFragments.map((entry) => entry.path)).toEqual(['webpack.config.js']);
+		expect(migration.absorbedFragments.map((entry) => entry.path)).toEqual([
+			'webpack.config.js',
+		]);
 	});
 
 	it('leaves the wrapper in place when the fragment was not supplied', () => {
@@ -222,7 +227,11 @@ describe('absorption through the workspace migration', () => {
 describe('workspace keys the CLI renamed', () => {
 	it('rewrites cli.defaultCollection to cli.schematicCollections', () => {
 		const migration = migrateAngularWorkspace(
-			JSON.stringify({ version: 1, projects: {}, cli: { analytics: false, defaultCollection: '@x/y' } }),
+			JSON.stringify({
+				version: 1,
+				projects: {},
+				cli: { analytics: false, defaultCollection: '@x/y' },
+			}),
 			ANGULAR_16_BROWSER_CELL,
 		);
 		const config: { cli: Record<string, unknown> } = JSON.parse(migration.config);

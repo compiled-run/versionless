@@ -154,8 +154,9 @@ describe('synthetic Papercups API projection', () => {
 		expect(messages[1]!.user_id).toBe(PAPERCUPS_USER.id);
 		expect(projection.replies()).toHaveLength(1);
 		expect(
-			projection.conversations('?status=open').find((row) => row.id === 'conversation-assigned')
-				?.messages,
+			projection
+				.conversations('?status=open')
+				.find((row) => row.id === 'conversation-assigned')?.messages,
 		).toHaveLength(2);
 	});
 
@@ -182,17 +183,18 @@ describe('synthetic Papercups API projection', () => {
 				conversation_id: 'conversation-missing',
 			}).status,
 		).toBe('error');
-		expect(
-			first.channel.event(PAPERCUPS_NOTIFICATION_TOPIC, 'unsupported', {}).status,
-		).toBe('error');
+		expect(first.channel.event(PAPERCUPS_NOTIFICATION_TOPIC, 'unsupported', {}).status).toBe(
+			'error',
+		);
 		expect(
 			first.channel.event(PAPERCUPS_NOTIFICATION_TOPIC, 'read', {
 				conversation_id: 'conversation-unassigned',
 			}).status,
 		).toBe('ok');
 		expect(
-			first.channel.event(PAPERCUPS_NOTIFICATION_TOPIC, 'watch:many', { conversation_ids: [] })
-				.status,
+			first.channel.event(PAPERCUPS_NOTIFICATION_TOPIC, 'watch:many', {
+				conversation_ids: [],
+			}).status,
 		).toBe('ok');
 	});
 

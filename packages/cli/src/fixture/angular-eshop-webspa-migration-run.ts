@@ -53,7 +53,11 @@ import {
 	type WorkspaceFile,
 } from '../../../frameworks/angular/src/index.ts';
 import { canonical, sha256 } from './angular-factoriolab-migration-run.ts';
-import { sealRecord, verifySealedRecord, type SealedRecord } from './angular-factoriolab-build-lanes-run.ts';
+import {
+	sealRecord,
+	verifySealedRecord,
+	type SealedRecord,
+} from './angular-factoriolab-build-lanes-run.ts';
 import { applyMigration, type Application } from './angular-tiny-translator-apply-run.ts';
 import { readEraClosureTypePackages } from './angular-pigallery2-migration-run.ts';
 
@@ -88,7 +92,10 @@ export const ERA_CLOSURE_TREE = path.join(
 );
 
 /** The migrated lane, beside the baseline lane the previous unit built. */
-export const STAGE_DIRECTORY = path.join(repositoryRoot, '.versionless/work/angular-eshop-webspa/target');
+export const STAGE_DIRECTORY = path.join(
+	repositoryRoot,
+	'.versionless/work/angular-eshop-webspa/target',
+);
 /** The pinned revision with the changeset written into it; the build tree. */
 export const APPLIED_TREE = path.join(STAGE_DIRECTORY, 'app');
 
@@ -154,7 +161,8 @@ async function workspacePathsBelow(directory: string, root: string): Promise<str
 	for (const entry of (await readdir(directory, { withFileTypes: true })).sort((left, right) =>
 		left.name < right.name ? -1 : 1,
 	)) {
-		if (entry.name === 'node_modules' || entry.name === '.git' || entry.name === 'wwwroot') continue;
+		if (entry.name === 'node_modules' || entry.name === '.git' || entry.name === 'wwwroot')
+			continue;
 		const item = path.join(directory, entry.name);
 		if (entry.isDirectory()) {
 			paths.push(...(await workspacePathsBelow(item, root)));
@@ -353,7 +361,10 @@ export async function readSuccessorClassSurface(
 			if (!inside) {
 				if (!text.startsWith('export declare class ') && !text.startsWith('declare class '))
 					continue;
-				if (headToken(text.slice(text.indexOf('class ') + 'class '.length), ' <{') !== symbol)
+				if (
+					headToken(text.slice(text.indexOf('class ') + 'class '.length), ' <{') !==
+					symbol
+				)
 					continue;
 				inside = true;
 				complete = true;
@@ -368,7 +379,12 @@ export async function readSuccessorClassSurface(
 			if (depth <= 0) break;
 			if (open === null && before === 1) {
 				const name = headToken(text, ' (<:;=?');
-				if (name !== '' && !name.startsWith('/') && !name.startsWith('*') && text.includes('('))
+				if (
+					name !== '' &&
+					!name.startsWith('/') &&
+					!name.startsWith('*') &&
+					text.includes('(')
+				)
 					open = name;
 			}
 			if (
@@ -473,15 +489,15 @@ export function readRxjsPatchDiagnostics(log: string): readonly RxjsPatchDiagnos
 		const file = parts.slice(0, -2).join(':').trim();
 		if (!Number.isInteger(column) || !Number.isInteger(lineNumber) || file === '') continue;
 		const list = byPath.get(file) ?? [];
-		list.push(
-			Object.freeze({ line: lineNumber, column, property, receiverType: receiver }),
-		);
+		list.push(Object.freeze({ line: lineNumber, column, property, receiverType: receiver }));
 		byPath.set(file, list);
 	}
 	return Object.freeze(
 		[...byPath.entries()]
 			.sort((left, right) => (left[0] < right[0] ? -1 : 1))
-			.map((entry) => Object.freeze({ path: entry[0], diagnostics: Object.freeze(entry[1]) })),
+			.map((entry) =>
+				Object.freeze({ path: entry[0], diagnostics: Object.freeze(entry[1]) }),
+			),
 	);
 }
 
@@ -522,7 +538,8 @@ async function stylesheetSizes(directory: string): Promise<Record<string, number
 				await walk(item);
 				continue;
 			}
-			if (!entry.isFile() || !STYLESHEET_EXTENSIONS.includes(path.extname(entry.name))) continue;
+			if (!entry.isFile() || !STYLESHEET_EXTENSIONS.includes(path.extname(entry.name)))
+				continue;
 			sizes[path.relative(directory, item)] = (await stat(item)).size;
 		}
 	};
@@ -791,11 +808,14 @@ export async function readCrossPackageRootSurface(
 	if (existsSync(declaration)) {
 		const source = await readFile(declaration, 'utf8');
 		for (const line of source.split('\n')) {
-			const match = /^export\s+declare\s+(?:abstract\s+)?(?:class|function|const|enum)\s+([A-Za-z0-9_$]+)/.exec(
+			const match =
+				/^export\s+declare\s+(?:abstract\s+)?(?:class|function|const|enum)\s+([A-Za-z0-9_$]+)/.exec(
+					line,
+				);
+			if (match?.[1] !== undefined) names.add(match[1]);
+			const type = /^export\s+(?:declare\s+)?(?:type|interface)\s+([A-Za-z0-9_$]+)/.exec(
 				line,
 			);
-			if (match?.[1] !== undefined) names.add(match[1]);
-			const type = /^export\s+(?:declare\s+)?(?:type|interface)\s+([A-Za-z0-9_$]+)/.exec(line);
 			if (type?.[1] !== undefined) names.add(type[1]);
 			const named = /^export\s*\{([^}]*)\}/.exec(line);
 			if (named?.[1] !== undefined)
@@ -872,7 +892,7 @@ export const ERA_WORKSPACE_FACTS: readonly string[] = Object.freeze([
 	'`webpack@^4.17.1` declared as a *runtime* dependency (`dependencies`, not `devDependencies`) although no application module imports it — a build tool in the runtime closure.',
 	'`preboot@6.0.0-beta.5` declared and never imported; there is no `main.server.ts` and no server module anywhere in the tree, so the server-side-render toolchain it belongs to was never wired up.',
 	'A second workspace project, `WebSPA-e2e`, whose only targets are the protractor e2e runner and a TSLint lint target, plus a TSLint lint target on `WebSPA` itself.',
-	'The production build is driven by the application\'s own npm script `build:prod`, whose string is `ng build --prod --aot --extract-css` — CLI 6 flag spellings, two of which the modern CLI no longer accepts.',
+	"The production build is driven by the application's own npm script `build:prod`, whose string is `ng build --prod --aot --extract-css` — CLI 6 flag spellings, two of which the modern CLI no longer accepts.",
 	'`ts-helpers@1.1.2`, `@types/protractor@4.0.0` and `@types/core-js@2.5.0` — three era type/helper packages whose upstreams stopped publishing.',
 ]);
 

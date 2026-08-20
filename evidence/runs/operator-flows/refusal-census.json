@@ -10,7 +10,7 @@
 		"packages/core/src/bundlers",
 		"packages/core/src/analysis"
 	],
-	"filesScanned": 84,
+	"filesScanned": 85,
 	"summary": {
 		"sites": 192,
 		"byOrigin": {
@@ -620,7 +620,7 @@
 			"stage": "era-cell",
 			"stageBasis": "the era-cell stage determines the toolchain cell and reads what this host can supply here.",
 			"file": "packages/cli/src/operator/era-cell.ts",
-			"line": 1138,
+			"line": 1130,
 			"enclosing": "requiredCellOf"
 		},
 		{
@@ -638,7 +638,7 @@
 			"stage": "era-cell",
 			"stageBasis": "the era-cell stage determines the toolchain cell and reads what this host can supply here.",
 			"file": "packages/cli/src/operator/era-cell.ts",
-			"line": 1208,
+			"line": 1200,
 			"enclosing": "establishEraCell"
 		},
 		{
@@ -660,7 +660,7 @@
 			"stage": "era-cell",
 			"stageBasis": "the era-cell stage determines the toolchain cell and reads what this host can supply here.",
 			"file": "packages/cli/src/operator/era-cell.ts",
-			"line": 1256,
+			"line": 1248,
 			"enclosing": "establishEraCell"
 		},
 		{
@@ -679,7 +679,7 @@
 			"stage": "era-cell",
 			"stageBasis": "the era-cell stage determines the toolchain cell and reads what this host can supply here.",
 			"file": "packages/cli/src/operator/era-cell.ts",
-			"line": 1301,
+			"line": 1293,
 			"enclosing": "establishEraCell"
 		},
 		{
@@ -698,7 +698,7 @@
 			"stage": "era-cell",
 			"stageBasis": "the era-cell stage determines the toolchain cell and reads what this host can supply here.",
 			"file": "packages/cli/src/operator/era-cell.ts",
-			"line": 1307,
+			"line": 1299,
 			"enclosing": "establishEraCell"
 		},
 		{
@@ -718,7 +718,7 @@
 			"stage": "era-cell",
 			"stageBasis": "the era-cell stage determines the toolchain cell and reads what this host can supply here.",
 			"file": "packages/cli/src/operator/era-cell.ts",
-			"line": 1325,
+			"line": 1317,
 			"enclosing": "establishEraCell"
 		},
 		{
@@ -737,7 +737,7 @@
 			"stage": "era-cell",
 			"stageBasis": "the era-cell stage determines the toolchain cell and reads what this host can supply here.",
 			"file": "packages/cli/src/operator/era-cell.ts",
-			"line": 1362,
+			"line": 1354,
 			"enclosing": "establishEraCell"
 		},
 		{
@@ -759,7 +759,7 @@
 			"stage": "era-cell",
 			"stageBasis": "the era-cell stage determines the toolchain cell and reads what this host can supply here.",
 			"file": "packages/cli/src/operator/era-cell.ts",
-			"line": 1424,
+			"line": 1416,
 			"enclosing": "establishEraCell"
 		},
 		{
@@ -781,7 +781,7 @@
 			"stage": "era-cell",
 			"stageBasis": "the era-cell stage determines the toolchain cell and reads what this host can supply here.",
 			"file": "packages/cli/src/operator/era-cell.ts",
-			"line": 1435,
+			"line": 1427,
 			"enclosing": "establishEraCell"
 		},
 		{
@@ -1058,7 +1058,7 @@
 		},
 		{
 			"code": "ingest.frontend-root-ambiguous",
-			"message": "Ingest: ${String(subdirectories.length)} immediate subdirectories carry a package.json (${subdirectories .map((candidate) => candidate.directory) .join(', ')}), so which one is the application is not something this stage reads. Declare it with --frontend-root <dir>.",
+			"message": "Ingest: ${String(subdirectories.length)} immediate subdirectories carry a package.json (${subdirectories .map((candidate) => candidate.directory) .join( ', ', )}), so which one is the application is not something this stage reads. Declare it with --frontend-root <dir>.",
 			"messageForm": "composed",
 			"staticSegments": [
 				"Ingest:",
@@ -1090,7 +1090,7 @@
 			"stage": "ingest",
 			"stageBasis": "the ingest stage admits an application source through this module.",
 			"file": "packages/cli/src/operator/ingest.ts",
-			"line": 594,
+			"line": 596,
 			"enclosing": "readFrontendRoot"
 		},
 		{
@@ -1108,7 +1108,7 @@
 			"stage": "ingest",
 			"stageBasis": "the ingest stage admits an application source through this module.",
 			"file": "packages/cli/src/operator/ingest.ts",
-			"line": 630,
+			"line": 632,
 			"enclosing": "ingestApplicationSource"
 		},
 		{
@@ -1126,7 +1126,7 @@
 			"stage": "ingest",
 			"stageBasis": "the ingest stage admits an application source through this module.",
 			"file": "packages/cli/src/operator/ingest.ts",
-			"line": 646,
+			"line": 648,
 			"enclosing": "ingestApplicationSource"
 		},
 		{
@@ -1144,7 +1144,7 @@
 			"stage": "ingest",
 			"stageBasis": "the ingest stage admits an application source through this module.",
 			"file": "packages/cli/src/operator/ingest.ts",
-			"line": 693,
+			"line": 697,
 			"enclosing": "ingestApplicationSource"
 		},
 		{
@@ -1162,7 +1162,7 @@
 			"stage": "ingest",
 			"stageBasis": "the ingest stage admits an application source through this module.",
 			"file": "packages/cli/src/operator/ingest.ts",
-			"line": 719,
+			"line": 723,
 			"enclosing": "ingestApplicationSource"
 		},
 		{
@@ -1180,7 +1180,7 @@
 			"stage": "ingest",
 			"stageBasis": "the ingest stage admits an application source through this module.",
 			"file": "packages/cli/src/operator/ingest.ts",
-			"line": 750,
+			"line": 754,
 			"enclosing": "ingestApplicationSource"
 		},
 		{
@@ -1199,7 +1199,7 @@
 			"stage": "ingest",
 			"stageBasis": "the ingest stage admits an application source through this module.",
 			"file": "packages/cli/src/operator/ingest.ts",
-			"line": 768,
+			"line": 772,
 			"enclosing": "ingestApplicationSource"
 		},
 		{
@@ -1218,7 +1218,7 @@
 			"stage": "ingest",
 			"stageBasis": "the ingest stage admits an application source through this module.",
 			"file": "packages/cli/src/operator/ingest.ts",
-			"line": 799,
+			"line": 803,
 			"enclosing": "ingestApplicationSource"
 		},
 		{
@@ -1708,7 +1708,7 @@
 			"stage": "arguments",
 			"stageBasis": "the run flow composes every stage in order here; what it raises of its own is about the chaining, before any stage decides anything.",
 			"file": "packages/cli/src/operator/run.ts",
-			"line": 481,
+			"line": 477,
 			"enclosing": "applied"
 		},
 		{
@@ -2364,7 +2364,7 @@
 			"stage": "plan",
 			"stageBasis": "imported by angular-cli-era-migration.ts, which is the entry point planApplication composes for the Angular lineage.",
 			"file": "packages/frameworks/angular/src/angular-cli-era-migration.ts",
-			"line": 596,
+			"line": 631,
 			"enclosing": "migrateAngularCliEraWorkspace"
 		},
 		{
@@ -2381,7 +2381,7 @@
 			"stage": "plan",
 			"stageBasis": "imported by angular-cli-era-migration.ts, which is the entry point planApplication composes for the Angular lineage.",
 			"file": "packages/frameworks/angular/src/angular-cli-json-workspace-synthesis.ts",
-			"line": 308,
+			"line": 314,
 			"enclosing": "synthesizeAngularWorkspace"
 		},
 		{
@@ -2399,7 +2399,7 @@
 			"stage": "plan",
 			"stageBasis": "imported by angular-cli-era-migration.ts, which is the entry point planApplication composes for the Angular lineage.",
 			"file": "packages/frameworks/angular/src/angular-cli-json-workspace-synthesis.ts",
-			"line": 310,
+			"line": 318,
 			"enclosing": "synthesizeAngularWorkspace"
 		},
 		{
@@ -2436,7 +2436,7 @@
 			"stage": "plan",
 			"stageBasis": "imported by angular-cli-era-migration.ts, which is the entry point planApplication composes for the Angular lineage.",
 			"file": "packages/frameworks/angular/src/angular-target-cell.ts",
-			"line": 894,
+			"line": 1057,
 			"enclosing": "dependencyRecord"
 		},
 		{
@@ -2455,7 +2455,7 @@
 			"stage": "plan",
 			"stageBasis": "imported by angular-cli-era-migration.ts, which is the entry point planApplication composes for the Angular lineage.",
 			"file": "packages/frameworks/angular/src/angular-target-cell.ts",
-			"line": 898,
+			"line": 1061,
 			"enclosing": "dependencyRecord"
 		},
 		{
@@ -2511,7 +2511,7 @@
 			"stage": "plan",
 			"stageBasis": "imported by angular-cli-era-migration.ts, which is the entry point planApplication composes for the Angular lineage.",
 			"file": "packages/frameworks/angular/src/application-source-dependency.ts",
-			"line": 345,
+			"line": 350,
 			"enclosing": "declareApplicationSourceDependencies"
 		},
 		{
@@ -2589,7 +2589,7 @@
 			"stage": "not-reached",
 			"stageBasis": "exported from the package barrel but composed by no operator stage: the flows compose craEntryDocument, planViteOriginConfigSource and migrateAngularCliEraWorkspace, and none of them reaches this module.",
 			"file": "packages/frameworks/angular/src/split-element-successor.ts",
-			"line": 407,
+			"line": 417,
 			"enclosing": "resolveSplitElementSuccessors"
 		},
 		{
@@ -2623,7 +2623,7 @@
 			"stage": "plan",
 			"stageBasis": "imported by angular-cli-era-migration.ts, which is the entry point planApplication composes for the Angular lineage.",
 			"file": "packages/frameworks/angular/src/undeclared-runtime-dependency.ts",
-			"line": 146,
+			"line": 148,
 			"enclosing": "readInstalledPackage"
 		},
 		{
@@ -2640,7 +2640,7 @@
 			"stage": "plan",
 			"stageBasis": "imported by angular-cli-era-migration.ts, which is the entry point planApplication composes for the Angular lineage.",
 			"file": "packages/frameworks/angular/src/undeclared-runtime-dependency.ts",
-			"line": 312,
+			"line": 328,
 			"enclosing": "declareUndeclaredRuntimeDependencies"
 		},
 		{
@@ -3000,7 +3000,7 @@
 			"stage": "build",
 			"stageBasis": "carries the create-react-app process-global plugin, which runs inside the lane build.",
 			"file": "packages/frameworks/react/src/react-cra-process-global.ts",
-			"line": 567,
+			"line": 587,
 			"enclosing": "handler"
 		},
 		{
@@ -3283,7 +3283,7 @@
 			"stage": "not-reached",
 			"stageBasis": "the Next.js lineage is refused by planApplication before any adapter is composed.",
 			"file": "packages/frameworks/react/src/react-next-static-adapter.ts",
-			"line": 409,
+			"line": 412,
 			"enclosing": "liftNextStaticModule"
 		},
 		{
@@ -3301,7 +3301,7 @@
 			"stage": "not-reached",
 			"stageBasis": "the Next.js lineage is refused by planApplication before any adapter is composed.",
 			"file": "packages/frameworks/react/src/react-next-static-adapter.ts",
-			"line": 751,
+			"line": 757,
 			"enclosing": "planNextBabelPreset"
 		},
 		{
@@ -3323,7 +3323,7 @@
 			"stage": "not-reached",
 			"stageBasis": "the Next.js lineage is refused by planApplication before any adapter is composed.",
 			"file": "packages/frameworks/react/src/react-next-static-adapter.ts",
-			"line": 761,
+			"line": 767,
 			"enclosing": "planNextBabelPreset"
 		},
 		{
@@ -3344,7 +3344,7 @@
 			"stage": "not-reached",
 			"stageBasis": "the Next.js lineage is refused by planApplication before any adapter is composed.",
 			"file": "packages/frameworks/react/src/react-next-static-adapter.ts",
-			"line": 773,
+			"line": 782,
 			"enclosing": "planNextBabelPreset"
 		},
 		{
@@ -3362,7 +3362,7 @@
 			"stage": "not-reached",
 			"stageBasis": "the Next.js lineage is refused by planApplication before any adapter is composed.",
 			"file": "packages/frameworks/react/src/react-next-static-adapter.ts",
-			"line": 814,
+			"line": 826,
 			"enclosing": "planNextBabelPresetSource"
 		},
 		{
@@ -3381,7 +3381,7 @@
 			"stage": "not-reached",
 			"stageBasis": "the Next.js lineage is refused by planApplication before any adapter is composed.",
 			"file": "packages/frameworks/react/src/react-next-static-adapter.ts",
-			"line": 894,
+			"line": 910,
 			"enclosing": "transform"
 		},
 		{
@@ -3400,7 +3400,7 @@
 			"stage": "plan-or-build",
 			"stageBasis": "carries planViteOriginConfigSource, which composeReactPlan calls at plan time for a Vite-origin tree, and the Vite-origin adapter plugins, which run inside a build.",
 			"file": "packages/frameworks/react/src/react-vite-origin-adapter.ts",
-			"line": 331,
+			"line": 339,
 			"enclosing": "planViteOriginConfig"
 		},
 		{
@@ -3420,7 +3420,7 @@
 			"stage": "plan-or-build",
 			"stageBasis": "carries planViteOriginConfigSource, which composeReactPlan calls at plan time for a Vite-origin tree, and the Vite-origin adapter plugins, which run inside a build.",
 			"file": "packages/frameworks/react/src/react-vite-origin-adapter.ts",
-			"line": 337,
+			"line": 345,
 			"enclosing": "planViteOriginConfig"
 		},
 		{
@@ -3441,7 +3441,7 @@
 			"stage": "plan-or-build",
 			"stageBasis": "carries planViteOriginConfigSource, which composeReactPlan calls at plan time for a Vite-origin tree, and the Vite-origin adapter plugins, which run inside a build.",
 			"file": "packages/frameworks/react/src/react-vite-origin-adapter.ts",
-			"line": 345,
+			"line": 355,
 			"enclosing": "planViteOriginConfig"
 		},
 		{
@@ -3463,7 +3463,7 @@
 			"stage": "plan-or-build",
 			"stageBasis": "carries planViteOriginConfigSource, which composeReactPlan calls at plan time for a Vite-origin tree, and the Vite-origin adapter plugins, which run inside a build.",
 			"file": "packages/frameworks/react/src/react-vite-origin-adapter.ts",
-			"line": 357,
+			"line": 367,
 			"enclosing": "planViteOriginConfig"
 		},
 		{
@@ -3481,7 +3481,7 @@
 			"stage": "plan-or-build",
 			"stageBasis": "carries planViteOriginConfigSource, which composeReactPlan calls at plan time for a Vite-origin tree, and the Vite-origin adapter plugins, which run inside a build.",
 			"file": "packages/frameworks/react/src/react-vite-origin-adapter.ts",
-			"line": 425,
+			"line": 440,
 			"enclosing": "resolveVitePreprocessor"
 		},
 		{
@@ -3506,7 +3506,7 @@
 			"stage": "plan-or-build",
 			"stageBasis": "carries planViteOriginConfigSource, which composeReactPlan calls at plan time for a Vite-origin tree, and the Vite-origin adapter plugins, which run inside a build.",
 			"file": "packages/frameworks/react/src/react-vite-origin-adapter.ts",
-			"line": 429,
+			"line": 444,
 			"enclosing": "resolveVitePreprocessor"
 		},
 		{
@@ -3527,7 +3527,7 @@
 			"stage": "plan-or-build",
 			"stageBasis": "carries planViteOriginConfigSource, which composeReactPlan calls at plan time for a Vite-origin tree, and the Vite-origin adapter plugins, which run inside a build.",
 			"file": "packages/frameworks/react/src/react-vite-origin-adapter.ts",
-			"line": 553,
+			"line": 573,
 			"enclosing": "rewriteRemovedViteClientApis"
 		}
 	],
@@ -3646,7 +3646,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/http-client-call-surface.ts",
-			"line": 346,
+			"line": 348,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3655,7 +3655,7 @@
 			"messageForm": "static",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/http-client-call-surface.ts",
-			"line": 351,
+			"line": 353,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3664,7 +3664,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/http-client-call-surface.ts",
-			"line": 359,
+			"line": 361,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3673,7 +3673,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/http-client-call-surface.ts",
-			"line": 361,
+			"line": 363,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3682,7 +3682,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/http-client-call-surface.ts",
-			"line": 366,
+			"line": 368,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3691,7 +3691,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/http-client-call-surface.ts",
-			"line": 385,
+			"line": 387,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3700,7 +3700,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/http-client-call-surface.ts",
-			"line": 392,
+			"line": 394,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3709,7 +3709,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/http-client-call-surface.ts",
-			"line": 396,
+			"line": 398,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3718,7 +3718,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/http-client-call-surface.ts",
-			"line": 401,
+			"line": 403,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3727,7 +3727,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/http-client-call-surface.ts",
-			"line": 410,
+			"line": 412,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3736,7 +3736,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/http-client-call-surface.ts",
-			"line": 417,
+			"line": 420,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3745,7 +3745,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/http-client-call-surface.ts",
-			"line": 437,
+			"line": 440,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3754,7 +3754,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/http-client-call-surface.ts",
-			"line": 439,
+			"line": 444,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3763,7 +3763,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/http-client-call-surface.ts",
-			"line": 444,
+			"line": 449,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3772,7 +3772,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/http-client-call-surface.ts",
-			"line": 447,
+			"line": 453,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3781,7 +3781,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/http-client-call-surface.ts",
-			"line": 460,
+			"line": 466,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3790,7 +3790,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/http-client-call-surface.ts",
-			"line": 473,
+			"line": 479,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3799,7 +3799,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/http-client-call-surface.ts",
-			"line": 499,
+			"line": 505,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3808,7 +3808,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/http-client-call-surface.ts",
-			"line": 508,
+			"line": 514,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3817,7 +3817,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/http-client-call-surface.ts",
-			"line": 550,
+			"line": 560,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3826,7 +3826,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/http-client-call-surface.ts",
-			"line": 564,
+			"line": 574,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3835,7 +3835,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/http-client-call-surface.ts",
-			"line": 575,
+			"line": 585,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3844,7 +3844,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/http-client-call-surface.ts",
-			"line": 588,
+			"line": 598,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3853,7 +3853,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/http-client-call-surface.ts",
-			"line": 663,
+			"line": 677,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3862,7 +3862,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/http-client-call-surface.ts",
-			"line": 709,
+			"line": 723,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3871,7 +3871,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/http-client-call-surface.ts",
-			"line": 717,
+			"line": 732,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3880,7 +3880,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/modal-content-params-migration.ts",
-			"line": 457,
+			"line": 466,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3889,7 +3889,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/modal-content-params-migration.ts",
-			"line": 464,
+			"line": 473,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3898,7 +3898,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/modal-content-params-migration.ts",
-			"line": 472,
+			"line": 481,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3907,7 +3907,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/modal-content-params-migration.ts",
-			"line": 488,
+			"line": 497,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3916,7 +3916,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/modal-content-params-migration.ts",
-			"line": 495,
+			"line": 504,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3925,7 +3925,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/modal-content-params-migration.ts",
-			"line": 502,
+			"line": 513,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3934,7 +3934,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/node-core-binding-migration.ts",
-			"line": 206,
+			"line": 202,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3943,7 +3943,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/node-core-binding-migration.ts",
-			"line": 208,
+			"line": 204,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3952,7 +3952,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/node-core-binding-migration.ts",
-			"line": 237,
+			"line": 233,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -3961,7 +3961,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/node-core-binding-migration.ts",
-			"line": 322,
+			"line": 319,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -4024,7 +4024,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/rxjs-prototype-patch-migration.ts",
-			"line": 308,
+			"line": 310,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -4033,7 +4033,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/rxjs-prototype-patch-migration.ts",
-			"line": 335,
+			"line": 337,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -4186,7 +4186,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/suggested-export-rename.ts",
-			"line": 227,
+			"line": 230,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -4231,7 +4231,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/unparameterised-base-class.ts",
-			"line": 237,
+			"line": 239,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -4240,7 +4240,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/unparameterised-base-class.ts",
-			"line": 245,
+			"line": 247,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -4249,7 +4249,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/unparameterised-base-class.ts",
-			"line": 258,
+			"line": 260,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -4258,7 +4258,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/unparameterised-base-class.ts",
-			"line": 263,
+			"line": 265,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -4267,7 +4267,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/unparameterised-base-class.ts",
-			"line": 267,
+			"line": 269,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -4276,7 +4276,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/unparameterised-base-class.ts",
-			"line": 275,
+			"line": 277,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -4285,7 +4285,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/unparameterised-base-class.ts",
-			"line": 283,
+			"line": 285,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -4294,7 +4294,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/unparameterised-base-class.ts",
-			"line": 292,
+			"line": 294,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -4303,7 +4303,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/unparameterised-base-class.ts",
-			"line": 300,
+			"line": 302,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -4312,7 +4312,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/unparameterised-base-class.ts",
-			"line": 308,
+			"line": 310,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -4321,7 +4321,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/unparameterised-base-class.ts",
-			"line": 317,
+			"line": 319,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -4330,7 +4330,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/unparameterised-base-class.ts",
-			"line": 325,
+			"line": 327,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -4339,7 +4339,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/unparameterised-base-class.ts",
-			"line": 334,
+			"line": 336,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -4348,7 +4348,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/unparameterised-base-class.ts",
-			"line": 342,
+			"line": 344,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -4357,7 +4357,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/unparameterised-base-class.ts",
-			"line": 347,
+			"line": 349,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -4366,7 +4366,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/use-position-symbol-successor.ts",
-			"line": 469,
+			"line": 474,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -4375,7 +4375,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/use-position-symbol-successor.ts",
-			"line": 481,
+			"line": 486,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -4384,7 +4384,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/use-position-symbol-successor.ts",
-			"line": 485,
+			"line": 492,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -4393,7 +4393,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/use-position-symbol-successor.ts",
-			"line": 492,
+			"line": 499,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -4402,7 +4402,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/use-position-symbol-successor.ts",
-			"line": 517,
+			"line": 524,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -4411,7 +4411,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/use-position-symbol-successor.ts",
-			"line": 524,
+			"line": 531,
 			"enclosing": "recorded through a local helper"
 		},
 		{
@@ -4420,7 +4420,7 @@
 			"messageForm": "composed",
 			"origin": "frozen-adapter",
 			"file": "packages/frameworks/angular/src/use-position-symbol-successor.ts",
-			"line": 657,
+			"line": 664,
 			"enclosing": "recorded through a local helper"
 		}
 	],

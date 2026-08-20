@@ -48,9 +48,7 @@ export async function readTemplates(root: string): Promise<readonly AngularTempl
 		}
 	};
 	await walk(path.join(root, 'src'));
-	return Object.freeze(
-		templates.sort((left, right) => (left.path < right.path ? -1 : 1)),
-	);
+	return Object.freeze(templates.sort((left, right) => (left.path < right.path ? -1 : 1)));
 }
 
 export type LocalizeRound = Readonly<{

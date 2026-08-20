@@ -150,8 +150,7 @@ export function readModuleInterop(path: string, source: string): ModuleInteropRe
 					parent.callee === use
 				);
 			});
-			if (callee)
-				called.push({ path, line, specifier: record.specifier, local: name });
+			if (callee) called.push({ path, line, specifier: record.specifier, local: name });
 			continue;
 		}
 		if (record.name !== 'default') continue;

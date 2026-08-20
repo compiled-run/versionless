@@ -88,7 +88,9 @@ async function run(
 		child.stdout.on('data', () => undefined);
 		child.on('error', reject);
 		child.on('close', (code) =>
-			code === 0 ? resolve() : reject(new Error(`${command} exited ${code}: ${errors.join('')}`)),
+			code === 0
+				? resolve()
+				: reject(new Error(`${command} exited ${code}: ${errors.join('')}`)),
 		);
 	});
 }
@@ -129,7 +131,10 @@ export async function laneInventory(directory: string): Promise<LaneInventory> {
 }
 
 /** Build the Vite 8 target lane once into its own output directory. */
-export async function buildTargetLane(outDirectory: string, root = targetRoot): Promise<LaneInventory> {
+export async function buildTargetLane(
+	outDirectory: string,
+	root = targetRoot,
+): Promise<LaneInventory> {
 	const absolute = path.join(root, outDirectory);
 	await run(viteBinary, ['build', '--config', viteConfig, '--outDir', absolute], root);
 	return laneInventory(absolute);
@@ -145,7 +150,11 @@ export async function buildBaselineLane(
 	root = baselineRoot,
 ): Promise<LaneInventory> {
 	const absolute = path.join(root, outDirectory);
-	await run(eraNodeBinary, ['node_modules/vite/bin/vite.js', 'build', '--outDir', absolute], root);
+	await run(
+		eraNodeBinary,
+		['node_modules/vite/bin/vite.js', 'build', '--outDir', absolute],
+		root,
+	);
 	return laneInventory(absolute);
 }
 
@@ -193,7 +202,10 @@ export async function applicationFilesChanged(
 	const digestsOf = async (root: string): Promise<Map<string, string>> => {
 		const map = new Map<string, string>();
 		for (const file of await filesBelow(root))
-			map.set(path.relative(root, file).split(path.sep).join('/'), sha256(await readFile(file)));
+			map.set(
+				path.relative(root, file).split(path.sep).join('/'),
+				sha256(await readFile(file)),
+			);
 		return map;
 	};
 	const source = await digestsOf(before);

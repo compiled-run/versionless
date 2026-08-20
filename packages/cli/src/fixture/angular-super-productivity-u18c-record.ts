@@ -16,9 +16,16 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import * as path from 'pathe';
 import { canonical, sha256 } from './angular-factoriolab-migration-run.ts';
-import { sealRecord, verifySealedRecord, type SealedRecord } from './angular-factoriolab-build-lanes-run.ts';
+import {
+	sealRecord,
+	verifySealedRecord,
+	type SealedRecord,
+} from './angular-factoriolab-build-lanes-run.ts';
 import { CONSENT, EVIDENCE_DIRECTORY } from './angular-super-productivity-lanes-run.ts';
-import { DIAGNOSTIC_COUNTS as U18B_DIAGNOSTIC_COUNTS, type BuildDemand } from './angular-super-productivity-migrated-lane-run.ts';
+import {
+	DIAGNOSTIC_COUNTS as U18B_DIAGNOSTIC_COUNTS,
+	type BuildDemand,
+} from './angular-super-productivity-migrated-lane-run.ts';
 
 export const UNIT = 'lrapr-t006/u18c-fork-kind-wiring-attempt';
 export const RECORD_FILE = 'u18c-capability-round.json';
@@ -70,7 +77,8 @@ export const CAPABILITY_OUTCOMES: readonly Readonly<Record<string, unknown>>[] =
 			'TS2345 fell from 19 to 1. The one that remains is a chart options literal and is a different demand entirely.',
 	}),
 	Object.freeze({
-		capability: 'successor-fork-package (ng-pick-datetime → @danielmoncada/angular-datetime-picker@16.1.0)',
+		capability:
+			'successor-fork-package (ng-pick-datetime → @danielmoncada/angular-datetime-picker@16.1.0)',
 		firedOn:
 			'2 modules. The successor’s root declaration was read by following its whole-module re-exports: 35 names, complete. All three symbols this application imports — DateTimeAdapter, OwlDateTimeModule, OwlNativeDateTimeModule — are on it.',
 		filesChanged: 2,
@@ -91,7 +99,8 @@ export const CAPABILITY_OUTCOMES: readonly Readonly<Record<string, unknown>>[] =
 	}),
 	Object.freeze({
 		capability: 'webpack-tilde-style-specifier, carrying the fork rename',
-		firedOn: '1 stylesheet: the ~-prefixed picker stylesheet, renamed and un-prefixed in one edit against the path the closure carries.',
+		firedOn:
+			'1 stylesheet: the ~-prefixed picker stylesheet, renamed and un-prefixed in one edit against the path the closure carries.',
 		filesChanged: 1,
 		refused: 5,
 		refusalsAre:
@@ -132,7 +141,8 @@ export const REMAINING_DEMANDS: readonly BuildDemand[] = Object.freeze([
 		file: 'src/app/features/issue/jira/jira-api.service.ts:22',
 		symbol: "import { … } from 'rxjs/internal-compatibility'",
 		library: 'rxjs 6.5 → 7.8',
-		observed: "jira-api.service.ts:22:27 - error TS2307: Cannot find module 'rxjs/internal-compatibility'.",
+		observed:
+			"jira-api.service.ts:22:27 - error TS2307: Cannot find module 'rxjs/internal-compatibility'.",
 		neededTransform:
 			'Unchanged from u18b and unattempted here. The RxJS table collapses the deep *type* modules onto the package root; this entry point is not one of them, and what it exported has no single successor until the symbols this module names are read against the installed root surface.',
 	}),
@@ -191,8 +201,7 @@ export function buildRecord(): SealedRecord {
 			applied: '.versionless/stage/angular-super-productivity-v2-13-15-u18b/app',
 			from: '.versionless/cache/angular-super-productivity-v2-13-15-source/verify/extracted',
 			commit: '2943c5c4f13c3ce4dece0abf4f9c39739dde4192',
-			reuse:
-				'The stage tree u18b staged was reused rather than re-materialised, and the recomposed changeset was written over it from the pinned source. Every file the changeset changes is rewritten from the pristine tree on each application, so the bytes here are the composition’s and not a residue of the previous attempt.',
+			reuse: 'The stage tree u18b staged was reused rather than re-materialised, and the recomposed changeset was written over it from the pinned source. Every file the changeset changes is rewritten from the pristine tree on each application, so the bytes here are the composition’s and not a residue of the previous attempt.',
 		},
 		cell: {
 			node: 'v16.20.2',
@@ -247,8 +256,7 @@ export function buildRecord(): SealedRecord {
 				NG8004: '29 → 18',
 			},
 			rose: {
-				TS2339:
-					'10 → 17, and the rise is not a regression. The template type-checker now reaches the formly component whose base class is unparameterised, so five member accesses that were previously behind an unresolvable module are now diagnosed by name. The demand is the same one u18b itemised; more of it is visible.',
+				TS2339: '10 → 17, and the rise is not a regression. The template type-checker now reaches the formly component whose base class is unparameterised, so five member accesses that were previously behind an unresolvable module are now diagnosed by name. The demand is the same one u18b itemised; more of it is visible.',
 				TS2322: '6 → 7, for the same reason: an effects module the compiler now reaches.',
 			},
 		},

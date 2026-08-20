@@ -392,7 +392,7 @@ export async function verifyWitnessNextKilledByGoogle(
 	const receipt = parseWitnessNextKilledByGoogleReceipt(
 		JSON.parse(await readFile(join(output, 'receipt.json'), 'utf8')),
 	);
-	assertLinkedWitnessProvenanceEquivalent(receipt.provenance, provenance, "KilledByGoogle");
+	assertLinkedWitnessProvenanceEquivalent(receipt.provenance, provenance, 'KilledByGoogle');
 	if (
 		sha256(await readFile(join(root, receipt.canonicalReceipt.path))) !==
 		receipt.canonicalReceipt.sha256

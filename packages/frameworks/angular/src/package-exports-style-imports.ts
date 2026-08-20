@@ -121,8 +121,7 @@ function resolveTarget(
 	conditions: readonly string[],
 	star: string | null,
 ): string | null {
-	if (typeof target === 'string')
-		return star === null ? target : target.split('*').join(star);
+	if (typeof target === 'string') return star === null ? target : target.split('*').join(star);
 	if (Array.isArray(target)) {
 		for (const entry of target as readonly unknown[]) {
 			const resolved = resolveTarget(entry, conditions, star);
@@ -319,7 +318,11 @@ export function migratePackageStyleImports(
 				specifierStart: source.indexOf(specifier, start),
 				subpath: split.subpath,
 				line: lineOf(source, start),
-				resolved: resolvePackageExport(reading.exports, split.subpath, STYLE_EXPORT_CONDITIONS),
+				resolved: resolvePackageExport(
+					reading.exports,
+					split.subpath,
+					STYLE_EXPORT_CONDITIONS,
+				),
 			}),
 		);
 	}
@@ -334,7 +337,10 @@ export function migratePackageStyleImports(
 	 * package in this stylesheet has one, because mixing a repair with the
 	 * aggregate substitution below would import the same rules twice.
 	 */
-	const republished = blocked.map((site) => ({ site, key: republishedSubpath(reading, site.subpath) }));
+	const republished = blocked.map((site) => ({
+		site,
+		key: republishedSubpath(reading, site.subpath),
+	}));
 	if (republished.every((entry) => entry.key !== null)) {
 		const repairs = republished.map((entry) => {
 			const specifier = `${reading.name}/${packageRelative(entry.key as string)}`;
@@ -415,7 +421,7 @@ export function migratePackageStyleImports(
 	}, 0);
 	const payload =
 		aggregateBytes === null || replacedBytes === null
-			? 'The migrated application ships the package\'s whole stylesheet where it previously ' +
+			? "The migrated application ships the package's whole stylesheet where it previously " +
 				'shipped the subset it named; the closure was not measured, so the change is not ' +
 				'stated in bytes here.'
 			: `The migrated application ships ${aggregateBytes} bytes of stylesheet where it ` +

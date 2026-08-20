@@ -85,9 +85,10 @@ describe('Papercups direct Witness receipt', () => {
 				run.zeroServiceWorkerRuntime.emittedOutputFiles.map((file) => file.path),
 			),
 		).toEqual([['service-worker.js'], ['service-worker.js']]);
-		expect(
-			migrated.map((run) => run.zeroServiceWorkerRuntime.emittedOutputFiles),
-		).toEqual([[], []]);
+		expect(migrated.map((run) => run.zeroServiceWorkerRuntime.emittedOutputFiles)).toEqual([
+			[],
+			[],
+		]);
 		expect(receipt.zeroServiceWorker.emittedOutputFiles.map((file) => file.path)).toEqual([
 			'service-worker.js',
 		]);
@@ -133,7 +134,9 @@ describe('Papercups direct Witness receipt', () => {
 	it('rejects a CacheStorage name hidden from the checkpoints', async () => {
 		const receipt = await published();
 		const tampered = structuredClone(receipt);
-		tampered.zeroServiceWorker.checkpoints[0]!.cacheNames = ['papercups-precache'] as unknown as [];
+		tampered.zeroServiceWorker.checkpoints[0]!.cacheNames = [
+			'papercups-precache',
+		] as unknown as [];
 		expect(() => parseWitnessReactPapercupsReceipt(resealed(tampered))).toThrow(
 			/zero-service-worker/,
 		);
@@ -305,7 +308,11 @@ describe('Papercups corpus transaction state', () => {
 			...(await preAppendFixtures()),
 			migrationMember,
 			witnessReactPapercupsAggregateMember(receipt.integrity.canonicalDigest),
-			{ ...migrationMember, id: 'react-papercups-shadow', receipt: 'evidence/runs/shadow.json' },
+			{
+				...migrationMember,
+				id: 'react-papercups-shadow',
+				receipt: 'evidence/runs/shadow.json',
+			},
 		];
 		expect(() => deriveCorpusTransactionState(fixtures)).toThrow(/Papercups/);
 	});

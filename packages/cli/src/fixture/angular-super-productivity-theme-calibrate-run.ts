@@ -91,7 +91,9 @@ export async function calibrateAngularSuperProductivityTheme(
 			new Promise<void>((settle) => void setTimeout(settle, ms));
 		const readPalette = async (): Promise<unknown> =>
 			host
-				.renderedStyles([{ label: 'body', selector: 'body', properties: [...PALETTE_PROPS] }])
+				.renderedStyles([
+					{ label: 'body', selector: 'body', properties: [...PALETTE_PROPS] },
+				])
 				.then(
 					(probes) => probes[0]?.properties ?? null,
 					(e: unknown) => `refused: ${e instanceof Error ? e.message : String(e)}`,
@@ -151,17 +153,23 @@ export async function calibrateAngularSuperProductivityTheme(
 		out['dialog-count'] = await readCount('dialog-create-project');
 		out['title-typed'] = await (async (): Promise<string> => {
 			try {
-				await page.type('dialog-create-project input:not([type=color])', 'Witness leg-d project', {
-					redact: false,
-					timeoutMs: 4_000,
-				});
+				await page.type(
+					'dialog-create-project input:not([type=color])',
+					'Witness leg-d project',
+					{
+						redact: false,
+						timeoutMs: 4_000,
+					},
+				);
 				return 'typed';
 			} catch (error: unknown) {
 				return `failed: ${(error instanceof Error ? error.message : String(error)).split('\n')[0]!}`;
 			}
 		})();
 		await wait(400);
-		out['dialog-save-clicked'] = await clickIfPresent('dialog-create-project button[type=submit]');
+		out['dialog-save-clicked'] = await clickIfPresent(
+			'dialog-create-project button[type=submit]',
+		);
 		await wait(1_500);
 		out['project-count-after'] = await readCount('side-nav .project');
 		out['project-titles-after'] = await readProjectTitles();
@@ -265,7 +273,9 @@ export async function calibrateAngularSuperProductivityTheme(
 export async function main(args = process.argv.slice(2)): Promise<void> {
 	const lane = args[0];
 	if (lane !== 'baseline' && lane !== 'migrated')
-		throw new Error('Super Productivity theme calibration requires a lane: baseline or migrated');
+		throw new Error(
+			'Super Productivity theme calibration requires a lane: baseline or migrated',
+		);
 	await calibrateAngularSuperProductivityTheme(lane);
 }
 

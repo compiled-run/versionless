@@ -76,9 +76,9 @@ describe('fleet batch dry run — the prune-safety proof', () => {
 			expect(verifications[key]).toBeDefined();
 		if (prune.verdict === 'yes') {
 			expect(verifications.withWorkDirectorySetAside?.state).toBe('pass');
-			expect(verifications.withWorkDirectorySetAside?.workDirectoryAbsentDuringVerification).toBe(
-				true,
-			);
+			expect(
+				verifications.withWorkDirectorySetAside?.workDirectoryAbsentDuringVerification,
+			).toBe(true);
 			expect(verifications.withWorkDirectorySetAside?.digest).toBe(
 				verifications.before?.digest,
 			);
@@ -97,7 +97,10 @@ describe('fleet batch dry run — the human rendering', () => {
 	it('passes the enterprise surface honesty guard as written to disk', async () => {
 		const rendered = await readFile(path.join(EVIDENCE_DIRECTORY, README_FILE), 'utf8');
 		expect(() => {
-			assertEnterpriseSurfaceHonesty(rendered, 'evidence/spikes/fleet-batch-dryrun/README.md');
+			assertEnterpriseSurfaceHonesty(
+				rendered,
+				'evidence/spikes/fleet-batch-dryrun/README.md',
+			);
 		}).not.toThrow();
 	});
 

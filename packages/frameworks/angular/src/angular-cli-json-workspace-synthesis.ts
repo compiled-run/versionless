@@ -196,11 +196,17 @@ export function isAngularCliOneWorkspace(document: unknown): boolean {
  * `input` is app-root-relative and its `glob`/`output` carry across unchanged,
  * and a style or script object's `lazy: true` became `inject: false`.
  */
-function translateAsset(root: string, entry: unknown, index: number, path: string): {
+function translateAsset(
+	root: string,
+	entry: unknown,
+	index: number,
+	path: string,
+): {
 	value: unknown;
 	unhandled: string | null;
 } {
-	if (typeof entry === 'string') return { value: joinWorkspacePath(root, entry), unhandled: null };
+	if (typeof entry === 'string')
+		return { value: joinWorkspacePath(root, entry), unhandled: null };
 	const object = objectAt(entry);
 	if (object === null)
 		return {
@@ -305,7 +311,9 @@ export function synthesizeAngularWorkspace(
 	const parsed: unknown = JSON.parse(source);
 	const workspace = objectAt(parsed);
 	if (workspace === null)
-		throw new Error('Angular CLI 1.x workspace synthesis: the configuration is not a JSON object');
+		throw new Error(
+			'Angular CLI 1.x workspace synthesis: the configuration is not a JSON object',
+		);
 	if (!isAngularCliOneWorkspace(workspace))
 		throw new Error(
 			'Angular CLI 1.x workspace synthesis: the configuration carries no apps[] array, ' +
@@ -327,7 +335,9 @@ export function synthesizeAngularWorkspace(
 	const workspaceName = typeof project?.['name'] === 'string' ? project['name'] : null;
 	const apps = arrayAt(workspace['apps']) ?? [];
 	if (apps.length === 0)
-		unhandled.push(`${sourcePath} declares an empty apps[] array, so no project was synthesized`);
+		unhandled.push(
+			`${sourcePath} declares an empty apps[] array, so no project was synthesized`,
+		);
 	if (apps.length > 1 && workspaceName !== null)
 		declaredDifferences.push(
 			`${sourcePath} declares ${apps.length} apps under the single workspace name ${workspaceName}; ` +
@@ -335,7 +345,9 @@ export function synthesizeAngularWorkspace(
 		);
 
 	const karmaConfig = objectAt(objectAt(workspace['test'])?.['karma'] ?? null)?.['config'];
-	const protractorConfig = objectAt(objectAt(workspace['e2e'])?.['protractor'] ?? null)?.['config'];
+	const protractorConfig = objectAt(objectAt(workspace['e2e'])?.['protractor'] ?? null)?.[
+		'config'
+	];
 	const lintEntries = arrayAt(workspace['lint']) ?? [];
 	const styleExt = objectAt(workspace['defaults'])?.['styleExt'];
 
@@ -514,7 +526,10 @@ export function synthesizeAngularWorkspace(
 			to: JSON.stringify(baseOptimization),
 		});
 		declaredDifferences.push(
-			fontInliningDifference(`projects.${appName}.architect.build.options.optimization`, cell),
+			fontInliningDifference(
+				`projects.${appName}.architect.build.options.optimization`,
+				cell,
+			),
 		);
 		const build: JsonObject = {
 			builder: '@angular-devkit/build-angular:browser',
@@ -536,8 +551,10 @@ export function synthesizeAngularWorkspace(
 			if (testTsConfig !== null) testOptions['tsConfig'] = testTsConfig;
 			if (typeof karmaConfig === 'string')
 				testOptions['karmaConfig'] = joinWorkspacePath('', karmaConfig);
-			if (buildOptions['assets'] !== undefined) testOptions['assets'] = buildOptions['assets'];
-			if (buildOptions['styles'] !== undefined) testOptions['styles'] = buildOptions['styles'];
+			if (buildOptions['assets'] !== undefined)
+				testOptions['assets'] = buildOptions['assets'];
+			if (buildOptions['styles'] !== undefined)
+				testOptions['styles'] = buildOptions['styles'];
 			if (buildOptions['scripts'] !== undefined)
 				testOptions['scripts'] = buildOptions['scripts'];
 			architect['test'] = {

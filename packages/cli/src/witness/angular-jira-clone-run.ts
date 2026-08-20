@@ -360,7 +360,7 @@ export async function verifyWitnessAngularJiraClone(
 	const receipt = parseWitnessAngularJiraCloneReceipt(
 		JSON.parse(await readFile(join(output, 'receipt.json'), 'utf8')),
 	);
-	assertLinkedWitnessProvenanceEquivalent(receipt.provenance, expectedProvenance, "jira-clone");
+	assertLinkedWitnessProvenanceEquivalent(receipt.provenance, expectedProvenance, 'jira-clone');
 	for (const bound of receipt.canonicalReceipts)
 		if (sha256(await readFile(join(root, bound.path))) !== bound.sha256)
 			throw new Error(`jira-clone bound build receipt bytes drifted: ${bound.path}`);
@@ -394,7 +394,9 @@ export async function main(args = process.argv.slice(2)): Promise<void> {
 		);
 		return;
 	}
-	throw new Error('jira-clone Witness runner requires --run-twice --publish <dir> or --verify <dir>');
+	throw new Error(
+		'jira-clone Witness runner requires --run-twice --publish <dir> or --verify <dir>',
+	);
 }
 
 if (basename(process.argv[1] ?? '') === 'angular-jira-clone-run.ts')

@@ -83,13 +83,18 @@ export function sassEntryPointOf(manifest: ExportsMap, subpath: string): string 
  */
 export function resolveSassSpecifier(specifier: string, modulesRoot: string): string | null {
 	const segments = specifier.split('/');
-	const packageName = specifier.startsWith('@') ? segments.slice(0, 2).join('/') : segments[0] ?? '';
+	const packageName = specifier.startsWith('@')
+		? segments.slice(0, 2).join('/')
+		: (segments[0] ?? '');
 	const subpath = specifier.slice(packageName.length);
 	const manifestPath = path.join(modulesRoot, packageName, 'package.json');
 	if (existsSync(manifestPath)) {
 		const manifest: unknown = JSON.parse(readFileSync(manifestPath, 'utf8'));
 		if (typeof manifest === 'object' && manifest !== null) {
-			const answered = sassEntryPointOf(manifest as ExportsMap, subpath === '' ? '.' : `.${subpath}`);
+			const answered = sassEntryPointOf(
+				manifest as ExportsMap,
+				subpath === '' ? '.' : `.${subpath}`,
+			);
 			if (answered !== null) return path.join(modulesRoot, packageName, answered);
 		}
 	}
@@ -125,7 +130,8 @@ export async function readImportedSassSurface(
 	const queue: string[] = [];
 	for (const match of source.matchAll(/@import\s+['"]([^'"\n]+)['"]/gu)) {
 		const specifier = match[1];
-		if (specifier === undefined || specifier.startsWith('.') || specifier.startsWith('/')) continue;
+		if (specifier === undefined || specifier.startsWith('.') || specifier.startsWith('/'))
+			continue;
 		const resolved = resolveSassSpecifier(specifier, modulesRoot);
 		if (resolved !== null) queue.push(resolved);
 	}
@@ -209,7 +215,8 @@ export async function jsonNamedImportRound(tree: string = APPLIED_TREE): Promise
 			if (!existsSync(target)) return null;
 			try {
 				const value: unknown = JSON.parse(readFileSync(target, 'utf8'));
-				if (typeof value !== 'object' || value === null || Array.isArray(value)) return null;
+				if (typeof value !== 'object' || value === null || Array.isArray(value))
+					return null;
 				reading.push(
 					`${file}: '${specifier}' resolved to ${path.relative(APPLIED_TREE, target)}, ` +
 						`${String(Object.keys(value).length)} top-level key(s)`,
@@ -255,9 +262,8 @@ export async function urlRebaseRound(tree: string = APPLIED_TREE): Promise<Round
 	const entries = new Set<string>();
 	const projects = (workspace as { projects?: Record<string, unknown> }).projects ?? {};
 	for (const project of Object.values(projects)) {
-		const styles = (
-			project as { architect?: { build?: { options?: { styles?: unknown } } } }
-		).architect?.build?.options?.styles;
+		const styles = (project as { architect?: { build?: { options?: { styles?: unknown } } } })
+			.architect?.build?.options?.styles;
 		if (!Array.isArray(styles)) continue;
 		for (const style of styles) if (typeof style === 'string') entries.add(style);
 	}
@@ -284,7 +290,10 @@ export async function urlRebaseRound(tree: string = APPLIED_TREE): Promise<Round
 				path.join(path.dirname(base), `_${path.basename(base)}.scss`),
 			].find((option) => existsSync(path.join(tree, option)));
 			if (candidate === undefined) continue;
-			importedBy.set(candidate, (importedBy.get(candidate) ?? new Set()).add(path.dirname(next.root)));
+			importedBy.set(
+				candidate,
+				(importedBy.get(candidate) ?? new Set()).add(path.dirname(next.root)),
+			);
 			queue.push(Object.freeze({ file: candidate, root: next.root }));
 		}
 	}
@@ -296,7 +305,9 @@ export async function urlRebaseRound(tree: string = APPLIED_TREE): Promise<Round
 		const source = await readFile(absolute, 'utf8');
 		const reading: StylesheetTreeReading = Object.freeze({
 			carries: (treePath: string): boolean => existsSync(path.join(tree, treePath)),
-			entryDirectories: Object.freeze([...(importedBy.get(partial) ?? new Set<string>())].sort()),
+			entryDirectories: Object.freeze(
+				[...(importedBy.get(partial) ?? new Set<string>())].sort(),
+			),
 		});
 		const migration = rebaseStylesheetUrls(partial, source, reading);
 		unhandled.push(...migration.unhandled);

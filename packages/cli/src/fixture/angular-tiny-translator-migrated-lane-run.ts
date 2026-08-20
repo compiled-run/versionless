@@ -23,7 +23,11 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import * as path from 'pathe';
 import { canonical, sha256 } from './angular-factoriolab-migration-run.ts';
-import { sealRecord, verifySealedRecord, type SealedRecord } from './angular-factoriolab-build-lanes-run.ts';
+import {
+	sealRecord,
+	verifySealedRecord,
+	type SealedRecord,
+} from './angular-factoriolab-build-lanes-run.ts';
 import { CONSENT } from './angular-tiny-translator-lanes-run.ts';
 import {
 	APPLIED_TREE,
@@ -78,8 +82,7 @@ export const BUILD_DEMANDS: readonly BuildDemand[] = Object.freeze([
 	},
 	{
 		file: 'src/app/rxjs-operators.ts (the patch imports) and 37 call sites in src/app/configure-auto-translate-page/configure-auto-translate-page.component.ts, src/app/model/auto-translate-google.service.ts, src/app/model/auto-translate-service-api.ts, src/app/model/normalized-message.ts, src/app/model/tiny-translator.service.ts, src/app/model/translation-file.ts, src/app/normalized-message-input/normalized-message-input.component.ts, src/app/translate-unit-list/translate-unit-list.component.ts, src/app/translate-unit/translate-unit.component.ts',
-		symbol:
-			"import 'rxjs/add/operator/map' and its eighteen siblings; the .map(), .catch(), .debounceTime() … call sites they enabled",
+		symbol: "import 'rxjs/add/operator/map' and its eighteen siblings; the .map(), .catch(), .debounceTime() … call sites they enabled",
 		library: 'rxjs 5.5.2 → 7.8',
 		observed:
 			"src/app/translate-unit/translate-unit.component.ts:393:64 - error TS2339: Property 'map' does not exist on type 'Observable<boolean>'. (37 TS2339 diagnostics: 25 map, and catch, debounceTime, delay, filter, pairwise and their siblings)",
@@ -146,8 +149,7 @@ export function buildMigratedLaneRecord(input: LaneInput): SealedRecord {
 				'Install the declared Angular 16.2 dependency closure the migrated manifest asks for.',
 			consentId: CONSENT,
 			networkMode: 'consented',
-			method:
-				'npm install --no-audit --no-fund, run twice. The era yarn.lock was not carried: it pins the Angular 5 closure, and npm does not read it. The first run installed the manifest as the changeset first wrote it; the second run installed the builder package that the builder-package-declaration capability then added, and is the closure the build ran against.',
+			method: 'npm install --no-audit --no-fund, run twice. The era yarn.lock was not carried: it pins the Angular 5 closure, and npm does not read it. The first run installed the manifest as the changeset first wrote it; the second run installed the builder package that the builder-package-declaration capability then added, and is the closure the build ran against.',
 			outcome: 'succeeded',
 			exitStatus: 0,
 			firstInstallPackagesAdded: input.firstInstallPackages,
@@ -158,7 +160,7 @@ export function buildMigratedLaneRecord(input: LaneInput): SealedRecord {
 			hosts: ['registry.npmjs.org'],
 			warningKinds: ['EBADENGINE', 'deprecated'],
 			warningNote:
-				'The install emitted engine and deprecation warnings only. Two packages declare a Node line this cell does not meet — karma-cli@1.0.1 and node-releases@2.0.53 — and npm was not run with engine-strict, so each was installed with a warning rather than refused. karma-cli is an era range the cell\'s test table does not reach; node-releases is a transitive dependency this cell does not name.',
+				"The install emitted engine and deprecation warnings only. Two packages declare a Node line this cell does not meet — karma-cli@1.0.1 and node-releases@2.0.53 — and npm was not run with engine-strict, so each was installed with a warning rather than refused. karma-cli is an era range the cell's test table does not reach; node-releases is a transitive dependency this cell does not name.",
 			registryReadings: [
 				'@angular/http: latest 7.2.16, deprecated on the registry with "Package no longer supported. Use @angular/common instead". No 8.x and no 16.x line exists, so the @angular/ family range this cell writes named a version that was never published. Recorded in the cell as no-successor and dropped from the manifest; nothing in this application imported it.',
 				'@angular/flex-layout: latest 15.0.0-beta.42, the newest version on any line and the `latest` dist-tag, deprecated on the registry. Its peers — @angular/core, @angular/common and @angular/platform-browser ">=15.0.2", @angular/cdk ">=15.0.0", rxjs "^6.5.3 || ^7.4.0" — are all satisfied by this cell, and it declares no engines.node, so the cell\'s mechanical rule selects it and the manifest carries ^15.0.0-beta.42 rather than a 16.x that does not exist.',
@@ -180,7 +182,7 @@ export function buildMigratedLaneRecord(input: LaneInput): SealedRecord {
 		},
 		parity: null,
 		parityNote:
-			'No parity is recorded and none is claimed. A build-level parity statement compares two artifacts, and this lane emitted none. The era lane\'s inventory stands on its own in u17-era-baseline.json.',
+			"No parity is recorded and none is claimed. A build-level parity statement compares two artifacts, and this lane emitted none. The era lane's inventory stands on its own in u17-era-baseline.json.",
 		notEstablished: [
 			'The build is red. Nothing here establishes that this application can be carried to Angular 16, only what it would take to find out.',
 			'A resolved closure is not a working one: 1405 packages resolved and installed, and nothing here observes any of them running.',

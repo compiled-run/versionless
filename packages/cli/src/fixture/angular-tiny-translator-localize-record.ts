@@ -45,7 +45,8 @@ export async function readAcquiredPackage(
 		packages?: Record<string, LockfilePackage>;
 	};
 	const entry = lock.packages?.[`node_modules/${name}`];
-	if (entry === undefined) throw new Error(`TinyTranslator localize record: ${name} not installed`);
+	if (entry === undefined)
+		throw new Error(`TinyTranslator localize record: ${name} not installed`);
 	return Object.freeze({
 		name,
 		version: entry.version ?? 'unknown',
@@ -179,7 +180,7 @@ export async function buildLocalizeLaneRecord(): Promise<SealedRecord> {
 			consoleErrors: boot.consoleErrors,
 			cause:
 				'The application registers a service worker at the literal `%BASE_HREF%ngsw-worker.js`. ' +
-				"Upstream substitutes that placeholder in a separate `replace` npm script that its " +
+				'Upstream substitutes that placeholder in a separate `replace` npm script that its ' +
 				'`build-prod-<lang>` chain runs and that `ng build` alone never runs, and the plain ' +
 				'variant ships no worker script at any path, so the registration could not succeed ' +
 				'even with the placeholder resolved. The era build has the same defect, measured in ' +

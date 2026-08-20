@@ -174,7 +174,9 @@ describe('Angular jira-clone build lanes', () => {
 	it('supersedes the mj1 records by name rather than replacing them silently', async () => {
 		const closure = await readRecord(CLOSURE_RECORD_FILE);
 		const migration = await readRecord(MIGRATION_RECORD_FILE);
-		expect((closure['supersedes'] as Record<string, string>)['record']).toBe(MIGRATED_LANE_FILE);
+		expect((closure['supersedes'] as Record<string, string>)['record']).toBe(
+			MIGRATED_LANE_FILE,
+		);
 		expect((migration['supersedes'] as Record<string, string>)['record']).toBe(
 			'mj1-source-migration.json',
 		);

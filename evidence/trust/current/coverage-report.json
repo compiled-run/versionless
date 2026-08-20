@@ -27,9 +27,9 @@
       }
     ],
     "capabilities": {
-      "total": 58,
+      "total": 59,
       "crossProven": 8,
-      "experimental": 50,
+      "experimental": 51,
       "crossProvenThreshold": 2,
       "note": "A capability is claimed general, and therefore in the matrix, only once at least 2 independent applications prove it. The capabilities below are proven on fewer than that and are out of the matrix; they are named rather than silently claimed."
     },
@@ -520,7 +520,7 @@
   ],
   "integrity": {
     "algorithm": "sha256",
-    "canonicalDigest": "fda5d591f0547c4770a688a8a39c36cdce6f2f26f303ba0e7ca09761080a03d8",
+    "canonicalDigest": "dc6a8a402701911e4873d75751408e586660c4fcbc35110197ad4b598ce52323",
     "authenticity": "not-established",
     "certification": "not-claimed"
   }

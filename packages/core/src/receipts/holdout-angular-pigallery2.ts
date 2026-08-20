@@ -248,12 +248,14 @@ function record(value: unknown, label: string): Record<string, unknown> {
 }
 
 function text(value: unknown, label: string): string {
-	if (typeof value !== 'string' || value.length === 0) throw new Error(`${label} is not a string`);
+	if (typeof value !== 'string' || value.length === 0)
+		throw new Error(`${label} is not a string`);
 	return value;
 }
 
 function count(value: unknown, label: string): number {
-	if (typeof value !== 'number' || !Number.isInteger(value)) throw new Error(`${label} is not an integer`);
+	if (typeof value !== 'number' || !Number.isInteger(value))
+		throw new Error(`${label} is not an integer`);
 	return value;
 }
 
@@ -302,7 +304,9 @@ export async function deriveHoldoutAngularPigallery2Receipt(
 	if (freeze.compositeFingerprint !== HOLDOUT_ANGULAR_PIGALLERY2_FROZEN_FINGERPRINT)
 		throw new Error('pigallery2 holdout was not measured under the recorded frozen composite');
 	if (migration.outcome !== 'red-migration-gaps-itemised' || targetBuild.produced !== false)
-		throw new Error('pigallery2 holdout attempt record no longer states a RED with no artifact');
+		throw new Error(
+			'pigallery2 holdout attempt record no longer states a RED with no artifact',
+		);
 	for (const entry of HOLDOUT_ANGULAR_PIGALLERY2_WALL) {
 		if (!wallText.includes(entry.library) || !wallText.includes(entry.lastPublishedVersion))
 			throw new Error(`pigallery2 wall record omits ${entry.library}`);
@@ -418,8 +422,10 @@ export async function deriveHoldoutAngularPigallery2Receipt(
 export function parseHoldoutAngularPigallery2Receipt(
 	value: unknown,
 ): HoldoutAngularPigallery2Receipt {
-	const receipt = record(value, 'pigallery2 holdout receipt') as unknown as
-		HoldoutAngularPigallery2Receipt;
+	const receipt = record(
+		value,
+		'pigallery2 holdout receipt',
+	) as unknown as HoldoutAngularPigallery2Receipt;
 	if (
 		receipt.schemaVersion !== HOLDOUT_ANGULAR_PIGALLERY2_SCHEMA ||
 		receipt.role !== 'holdout' ||

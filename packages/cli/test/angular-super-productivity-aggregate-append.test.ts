@@ -91,8 +91,12 @@ describe('Angular Super Productivity aggregate append', () => {
 		);
 		const parsed = JSON.parse(published) as { fixtures: Array<Record<string, unknown>> };
 		expect(parsed.fixtures).toHaveLength(27);
-		expect(parsed.fixtures.at(-1)?.receipt).toBe(WITNESS_ANGULAR_SUPER_PRODUCTIVITY_RECEIPT_PATH);
-		await expect(appendAngularSuperProductivityAggregateMembers(repositoryRoot)).resolves.toEqual({
+		expect(parsed.fixtures.at(-1)?.receipt).toBe(
+			WITNESS_ANGULAR_SUPER_PRODUCTIVITY_RECEIPT_PATH,
+		);
+		await expect(
+			appendAngularSuperProductivityAggregateMembers(repositoryRoot),
+		).resolves.toEqual({
 			kind: 'angular-super-productivity-browser-proof',
 			receipts: 27,
 			appended: false,
@@ -146,9 +150,9 @@ describe('Angular Super Productivity aggregate append', () => {
 			expect(deriveCorpusTransactionState(await fixtures(directory)).kind).toBe(
 				'react-linkfree-browser-proof',
 			);
-			await expect(
-				appendAngularSuperProductivityAggregateMembers(directory),
-			).rejects.toThrow(/TinyTranslator browser-proof predecessor/);
+			await expect(appendAngularSuperProductivityAggregateMembers(directory)).rejects.toThrow(
+				/TinyTranslator browser-proof predecessor/,
+			);
 			expect(await fixtures(directory)).toHaveLength(25);
 		} finally {
 			await rm(directory, { recursive: true, force: true });
@@ -163,9 +167,9 @@ describe('Angular Super Productivity aggregate append', () => {
 				...current,
 				{ ...members.witness, framework: 'react' },
 			]);
-			await expect(
-				appendAngularSuperProductivityAggregateMembers(directory),
-			).rejects.toThrow(/Angular Super Productivity aggregate membership/);
+			await expect(appendAngularSuperProductivityAggregateMembers(directory)).rejects.toThrow(
+				/Angular Super Productivity aggregate membership/,
+			);
 		} finally {
 			await rm(directory, { recursive: true, force: true });
 		}

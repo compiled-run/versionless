@@ -16,11 +16,13 @@ import { captureMintedUserId } from '../src/fixture/react-cypress-rwa-calibrate-
 const STATIC = 'http://localhost:5321';
 const BACKEND = 'http://localhost:3001';
 
-const outcome = (
-	method: string,
-	url: string,
-	status: number,
-): WitnessObservedRequestOutcome => ({ method, url, status, outcome: 'finished', reason: null });
+const outcome = (method: string, url: string, status: number): WitnessObservedRequestOutcome => ({
+	method,
+	url,
+	status,
+	outcome: 'finished',
+	reason: null,
+});
 
 /**
  * The backend ledger one journey pass produces, parameterized by the created
@@ -88,7 +90,10 @@ describe('cypress-rwa calibrate driver — minted-id capture + normalization', (
 	it('returns null when no user PATCH reached the backend', () => {
 		expect(
 			captureMintedUserId(
-				[outcome('GET', `${BACKEND}/checkAuth`, 200), outcome('POST', `${BACKEND}/login`, 200)],
+				[
+					outcome('GET', `${BACKEND}/checkAuth`, 200),
+					outcome('POST', `${BACKEND}/login`, 200),
+				],
 				BACKEND,
 			),
 		).toBeNull();
@@ -123,7 +128,9 @@ describe('cypress-rwa calibrate driver — minted-id capture + normalization', (
 	it('admits every observed endpoint into the declared backend category', () => {
 		const behavior = behaviorFromLedger('edZNfbrD5');
 		const declared = new Set(
-			WITNESS_REACT_CYPRESS_RWA_BACKEND_CATEGORY.map((entry) => `${entry.method} ${entry.path}`),
+			WITNESS_REACT_CYPRESS_RWA_BACKEND_CATEGORY.map(
+				(entry) => `${entry.method} ${entry.path}`,
+			),
 		);
 		for (const entry of behavior.backend)
 			expect(declared.has(`${entry.method} ${entry.path}`)).toBe(true);

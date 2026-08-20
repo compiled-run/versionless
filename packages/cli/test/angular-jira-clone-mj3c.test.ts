@@ -91,7 +91,10 @@ describe('Angular jira-clone applied changeset', () => {
 		});
 		expect(verifyAppliedMigrationRecord(record)).toBe(record);
 		expect(() =>
-			verifyAppliedMigrationRecord({ ...record, unit: 'other' } as unknown as MigrationRecord),
+			verifyAppliedMigrationRecord({
+				...record,
+				unit: 'other',
+			} as unknown as MigrationRecord),
 		).toThrow(/digest differs/);
 	});
 
@@ -158,9 +161,9 @@ describe('Angular jira-clone applied changeset', () => {
 		const declared = (record['migration'] as Record<string, readonly string[]>)[
 			'declaredDifferences'
 		] as readonly string[];
-		expect(declared.some((line) => /ships 550342 bytes of stylesheet where it/.test(line))).toBe(
-			true,
-		);
+		expect(
+			declared.some((line) => /ships 550342 bytes of stylesheet where it/.test(line)),
+		).toBe(true);
 		expect(
 			declared.some((line) => line.includes('dependencies.@ctrl/tinycolor was added')),
 		).toBe(true);
@@ -193,14 +196,30 @@ describe('Angular jira-clone applied changeset', () => {
 
 describe('Angular jira-clone acquisition delta', () => {
 	const before = [
-		{ path: 'node_modules/a', url: 'https://registry.npmjs.org/a/-/a-1.0.0.tgz', integrity: 'sha512-a' },
-		{ path: 'node_modules/b', url: 'https://registry.npmjs.org/b/-/b-1.0.0.tgz', integrity: 'sha512-b' },
+		{
+			path: 'node_modules/a',
+			url: 'https://registry.npmjs.org/a/-/a-1.0.0.tgz',
+			integrity: 'sha512-a',
+		},
+		{
+			path: 'node_modules/b',
+			url: 'https://registry.npmjs.org/b/-/b-1.0.0.tgz',
+			integrity: 'sha512-b',
+		},
 	];
 
 	it('reports an added entry, a moved one and a dropped one apart from each other', () => {
 		const delta = acquisitionDelta(before, [
-			{ path: 'node_modules/a', url: 'https://registry.npmjs.org/a/-/a-2.0.0.tgz', integrity: 'sha512-a2' },
-			{ path: 'node_modules/c', url: 'https://registry.npmjs.org/c/-/c-1.0.0.tgz', integrity: 'sha512-c' },
+			{
+				path: 'node_modules/a',
+				url: 'https://registry.npmjs.org/a/-/a-2.0.0.tgz',
+				integrity: 'sha512-a2',
+			},
+			{
+				path: 'node_modules/c',
+				url: 'https://registry.npmjs.org/c/-/c-1.0.0.tgz',
+				integrity: 'sha512-c',
+			},
 		]);
 		expect(delta.added.map((entry) => entry.path)).toEqual(['node_modules/c']);
 		expect(delta.changed).toEqual([
@@ -266,7 +285,9 @@ describe('Angular jira-clone mj3c lane records', () => {
 		const acquisition = record['acquisition'] as Record<string, unknown>;
 		const added = acquisition['added'] as readonly Record<string, string>[];
 		const tinycolor = added.find((entry) => entry['path'] === 'node_modules/@ctrl/tinycolor');
-		expect(tinycolor?.['url']).toBe('https://registry.npmjs.org/@ctrl/tinycolor/-/tinycolor-4.2.0.tgz');
+		expect(tinycolor?.['url']).toBe(
+			'https://registry.npmjs.org/@ctrl/tinycolor/-/tinycolor-4.2.0.tgz',
+		);
 		expect(tinycolor?.['integrity']).toMatch(/^sha(256|512)-/);
 		for (const entry of added) {
 			expect(entry['url']).toMatch(/^https:\/\/registry\.npmjs\.org\//);

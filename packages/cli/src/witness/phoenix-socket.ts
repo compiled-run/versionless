@@ -49,7 +49,8 @@ export type PhoenixChannelProjection = {
 
 function reference(value: unknown, label: string): string | null {
 	if (value === null || value === undefined) return null;
-	if (typeof value !== 'string') throw new Error(`Phoenix frame ${label} must be a string or null`);
+	if (typeof value !== 'string')
+		throw new Error(`Phoenix frame ${label} must be a string or null`);
 	return value;
 }
 

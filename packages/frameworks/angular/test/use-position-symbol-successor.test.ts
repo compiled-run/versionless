@@ -69,7 +69,8 @@ describe('use position symbol successor', () => {
 	});
 
 	it('refuses the type position the documented table states no rule for', () => {
-		const source = "import { Response } from '@angular/http';\nexport const r: Response = null;\n";
+		const source =
+			"import { Response } from '@angular/http';\nexport const r: Response = null;\n";
 		const migration = succeedRemovedSymbolUses('a.ts', source, claims, [reading]);
 		expect(migration.changed).toBe(false);
 		expect(migration.unhandled.join(' ')).toContain('type-reference');
@@ -147,7 +148,9 @@ describe('use position symbol successor', () => {
 			'}',
 			'',
 		].join('\n');
-		const migration = succeedRemovedSymbolUses('security.service.ts', source, claims, [reading]);
+		const migration = succeedRemovedSymbolUses('security.service.ts', source, claims, [
+			reading,
+		]);
 		expect(migration.changed).toBe(false);
 		expect(migration.unhandled.join(' ')).toContain('constructor-parameter-type');
 		expect(migration.unhandled.join(' ')).toContain('hands over the parsed body');
@@ -179,7 +182,8 @@ describe('use position symbol successor', () => {
 	});
 
 	it('refuses every claim when the removed specifier still resolves', () => {
-		const source = "import { Response } from '@angular/http';\nexport const r: Response = null;\n";
+		const source =
+			"import { Response } from '@angular/http';\nexport const r: Response = null;\n";
 		const still: RootSurfaceReading = Object.freeze({ ...reading, specifierResolves: true });
 		const migration = succeedRemovedSymbolUses('a.ts', source, TYPE_POSITION_CLAIMS, [still]);
 		expect(migration.changed).toBe(false);
@@ -187,26 +191,30 @@ describe('use position symbol successor', () => {
 	});
 
 	it('refuses when no surface was read, and when the reading is incomplete', () => {
-		const source = "import { Response } from '@angular/http';\nexport const r: Response = null;\n";
+		const source =
+			"import { Response } from '@angular/http';\nexport const r: Response = null;\n";
 		expect(
 			succeedRemovedSymbolUses('a.ts', source, TYPE_POSITION_CLAIMS, []).unhandled.join(' '),
-		).toContain(
-			'no successor surface was read',
-		);
+		).toContain('no successor surface was read');
 		const partial: RootSurfaceReading = Object.freeze({ ...reading, complete: false });
 		expect(
-			succeedRemovedSymbolUses('a.ts', source, TYPE_POSITION_CLAIMS, [partial]).unhandled.join(' '),
+			succeedRemovedSymbolUses('a.ts', source, TYPE_POSITION_CLAIMS, [
+				partial,
+			]).unhandled.join(' '),
 		).toContain('is incomplete');
 	});
 
 	it('refuses a successor the installed surface does not publish', () => {
-		const source = "import { Response } from '@angular/http';\nexport const r: Response = null;\n";
+		const source =
+			"import { Response } from '@angular/http';\nexport const r: Response = null;\n";
 		const without: RootSurfaceReading = Object.freeze({
 			...reading,
 			rootExports: Object.freeze(['HttpClient']),
 		});
 		expect(
-			succeedRemovedSymbolUses('a.ts', source, TYPE_POSITION_CLAIMS, [without]).unhandled.join(' '),
+			succeedRemovedSymbolUses('a.ts', source, TYPE_POSITION_CLAIMS, [
+				without,
+			]).unhandled.join(' '),
 		).toContain('does not publish HttpResponse');
 	});
 

@@ -160,7 +160,10 @@ export async function assembleMigratedTree(options: AssembleOptions = {}): Promi
 	const build2 = await logOf('u18d');
 	stages.push({
 		round: 'u18d',
-		outcomes: [outcome(await tildeRound(tree)), outcome(await suggestedRenameRound(build2, tree))],
+		outcomes: [
+			outcome(await tildeRound(tree)),
+			outcome(await suggestedRenameRound(build2, tree)),
+		],
 	});
 
 	// u18e: the generic base-class parameterisation and declared-member renames.
@@ -187,7 +190,10 @@ export async function assembleMigratedTree(options: AssembleOptions = {}): Promi
 	const build5 = await logOf('u18g');
 	stages.push({
 		round: 'u18g',
-		outcomes: [outcome(await interopRound(tree)), outcome(await voidExecutorRound(build5, tree))],
+		outcomes: [
+			outcome(await interopRound(tree)),
+			outcome(await voidExecutorRound(build5, tree)),
+		],
 	});
 
 	// u18h: the void-subject round, the manual steps and the electron redirect —

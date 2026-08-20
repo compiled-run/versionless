@@ -170,7 +170,8 @@ function createResolver(
 				const starIndex = pattern.indexOf('*');
 				if (starIndex < 0) {
 					if (pattern !== specifier) continue;
-					for (const target of targets) candidates.push(normalizePath(`${base}/${target}`));
+					for (const target of targets)
+						candidates.push(normalizePath(`${base}/${target}`));
 					continue;
 				}
 				const prefix = pattern.slice(0, starIndex);
@@ -381,12 +382,17 @@ function planKey(path: string, className: string): string {
 function exportedClass(module: SemanticModule, name: string): AstNode | null {
 	for (const statement of module.ast.body as readonly AstNode[]) {
 		const declaration =
-			statement.type === 'ExportNamedDeclaration' || statement.type === 'ExportDefaultDeclaration'
+			statement.type === 'ExportNamedDeclaration' ||
+			statement.type === 'ExportDefaultDeclaration'
 				? statement.declaration
 				: statement;
 		if (declaration === null || declaration === undefined) continue;
 		if (declaration.type !== 'ClassDeclaration') continue;
-		if (declaration.id !== null && declaration.id.type === 'Identifier' && declaration.id.name === name)
+		if (
+			declaration.id !== null &&
+			declaration.id.type === 'Identifier' &&
+			declaration.id.name === name
+		)
 			return declaration;
 	}
 	return null;
@@ -438,7 +444,10 @@ function bindImport(
 	});
 }
 
-type ContentRewrite = Readonly<{ edits: readonly SourceEdit[]; changes: readonly ModalContentParamsChange[] }>;
+type ContentRewrite = Readonly<{
+	edits: readonly SourceEdit[];
+	changes: readonly ModalContentParamsChange[];
+}>;
 
 /**
  * Rewrite one content component to inject exactly the fields the modal
@@ -492,7 +501,9 @@ function rewriteContentComponent(
 			return null;
 		}
 		if (member.static) {
-			refuse(`${plan.path}: ${plan.className}.${field} is static, so a modal cannot supply it`);
+			refuse(
+				`${plan.path}: ${plan.className}.${field} is static, so a modal cannot supply it`,
+			);
 			return null;
 		}
 		for (const decorator of member.decorators ?? []) {
@@ -515,7 +526,8 @@ function rewriteContentComponent(
 			edits.push({ start: member.value.start, end: member.value.end, text: injection });
 		else {
 			const annotation = (member as { typeAnnotation?: AstNode }).typeAnnotation;
-			const at = annotation === undefined || annotation === null ? member.key.end : annotation.end;
+			const at =
+				annotation === undefined || annotation === null ? member.key.end : annotation.end;
 			edits.push({ start: at, end: at, text: ` = ${injection}` });
 		}
 		changes.push({
@@ -687,13 +699,21 @@ export function migrateModalContentParams(
 		}
 		plans.set(
 			key,
-			Object.freeze({ path: first.contentPath, className: first.contentClass, fields: first.fields }),
+			Object.freeze({
+				path: first.contentPath,
+				className: first.contentClass,
+				fields: first.fields,
+			}),
 		);
 		accepted.push(...calls);
 	}
 	const editsByPath = new Map<string, SourceEdit[]>();
 	const changesByPath = new Map<string, ModalContentParamsChange[]>();
-	const push = (path: string, edits: readonly SourceEdit[], changes: readonly ModalContentParamsChange[]): void => {
+	const push = (
+		path: string,
+		edits: readonly SourceEdit[],
+		changes: readonly ModalContentParamsChange[],
+	): void => {
 		editsByPath.set(path, [...(editsByPath.get(path) ?? []), ...edits]);
 		changesByPath.set(path, [...(changesByPath.get(path) ?? []), ...changes]);
 	};
@@ -703,7 +723,9 @@ export function migrateModalContentParams(
 		const source = sourceOf.get(plan.path);
 		if (analyzed === null || source === undefined) continue;
 		const refused: string[] = [];
-		const rewrite = rewriteContentComponent(plan, source, analyzed, (reason) => refused.push(reason));
+		const rewrite = rewriteContentComponent(plan, source, analyzed, (reason) =>
+			refused.push(reason),
+		);
 		if (rewrite === null) {
 			for (const call of accepted.filter(
 				(entry) => planKey(entry.contentPath, entry.contentClass) === key,
@@ -739,7 +761,8 @@ export function migrateModalContentParams(
 	}
 	const files = modules.map((module) => {
 		const edits = editsByPath.get(module.path) ?? [];
-		const migrated = edits.length === 0 ? module.source : applySourceEdits(module.source, edits);
+		const migrated =
+			edits.length === 0 ? module.source : applySourceEdits(module.source, edits);
 		const changes = [...(changesByPath.get(module.path) ?? [])].sort(
 			(left, right) => left.line - right.line || compareStrings(left.from, right.from),
 		);

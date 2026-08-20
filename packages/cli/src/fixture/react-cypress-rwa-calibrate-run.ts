@@ -134,7 +134,8 @@ function bucketRequests(
 			const path = parsed.pathname || '/';
 			const key = `${outcome.method} ${path}`;
 			const existing = backend.get(key);
-			if (existing === undefined) backend.set(key, { count: 1, statuses: [outcome.status ?? 0] });
+			if (existing === undefined)
+				backend.set(key, { count: 1, statuses: [outcome.status ?? 0] });
 			else {
 				existing.count += 1;
 				if (!existing.statuses.includes(outcome.status ?? 0))
@@ -168,7 +169,7 @@ function pageSummary(receiptPath: string): PageSummary | null {
 	const page = receipt.boxes?.[0]?.pages?.[0];
 	if (page === undefined) return null;
 	return {
-		navigations: (page.navigations as Array<{ url: string }> | undefined ?? []).map(
+		navigations: ((page.navigations as Array<{ url: string }> | undefined) ?? []).map(
 			(navigation) => {
 				const parsed = parseURL(navigation.url);
 				return `${parsed.pathname}${parsed.hash}`;
@@ -179,9 +180,10 @@ function pageSummary(receiptPath: string): PageSummary | null {
 				([name, events]) => [name, events.length],
 			),
 		),
-		consoleErrors: (page.consoleMessages as Array<{ level: string }> | undefined)?.filter(
-			(message) => message.level === 'error',
-		).length ?? 0,
+		consoleErrors:
+			(page.consoleMessages as Array<{ level: string }> | undefined)?.filter(
+				(message) => message.level === 'error',
+			).length ?? 0,
 		pageErrors: (page.pageErrors as unknown[] | undefined)?.length ?? 0,
 		failedRequests: (page.failedRequests as unknown[] | undefined)?.length ?? 0,
 	};
@@ -197,7 +199,11 @@ function pageSummary(receiptPath: string): PageSummary | null {
  * records or dropped with the query string, so this is the only capture.
  */
 const patchUserPath = createRegExp(
-	exactly('/users/').and(oneOrMore(charIn('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-')).as('id')),
+	exactly('/users/').and(
+		oneOrMore(charIn('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-')).as(
+			'id',
+		),
+	),
 );
 
 export function captureMintedUserId(
@@ -260,7 +266,12 @@ export async function calibrateCypressRwaLane(
 					contentType: 'image/svg+xml',
 					body: Buffer.from(NON_LOOPBACK_PLACEHOLDER_SVG),
 				};
-			return { action: 'fulfill', status: 204, contentType: 'text/plain', body: Buffer.alloc(0) };
+			return {
+				action: 'fulfill',
+				status: 204,
+				contentType: 'text/plain',
+				body: Buffer.alloc(0),
+			};
 		},
 	});
 	const steps: Array<{ name: string; outcome: string }> = [];
@@ -321,8 +332,16 @@ export async function calibrateCypressRwaLane(
 		await click('onboarding-next-1', '[data-test=user-onboarding-next]');
 		await anchor('bank-form', '[data-test=bankaccount-bankName-input] input');
 		await type('bank-name', '[data-test=bankaccount-bankName-input] input', 'Versionless Bank');
-		await type('bank-routing', '[data-test=bankaccount-routingNumber-input] input', '987654321');
-		await type('bank-account', '[data-test=bankaccount-accountNumber-input] input', '123456789');
+		await type(
+			'bank-routing',
+			'[data-test=bankaccount-routingNumber-input] input',
+			'987654321',
+		);
+		await type(
+			'bank-account',
+			'[data-test=bankaccount-accountNumber-input] input',
+			'123456789',
+		);
 		await click('bank-submit', '[data-test=bankaccount-submit]');
 		await anchor('onboarding-done', '[data-test=user-onboarding-next]');
 		await click('onboarding-next-2', '[data-test=user-onboarding-next]');
@@ -333,7 +352,11 @@ export async function calibrateCypressRwaLane(
 		await anchor('home', '[data-test=sidenav-user-settings]');
 		await click('nav-settings', '[data-test=sidenav-user-settings]');
 		await anchor('settings-form', '[data-test=user-settings-email-input]');
-		await type('settings-email', '[data-test=user-settings-email-input]', 'prover@versionless.test');
+		await type(
+			'settings-email',
+			'[data-test=user-settings-email-input]',
+			'prover@versionless.test',
+		);
 		await type('settings-phone', '[data-test=user-settings-phoneNumber-input]', '6155551234');
 		await click('settings-submit', '[data-test=user-settings-submit]');
 
@@ -372,7 +395,10 @@ export async function calibrateCypressRwaLane(
 		await click('public-tab', '[data-test=nav-public-tab]');
 		await anchor('public-feed', '[data-test=transaction-list]');
 		await click('contacts-tab', '[data-test=nav-contacts-tab]');
-		await anchor('contacts-feed', '[data-test=transaction-list], [data-test=empty-list-header]');
+		await anchor(
+			'contacts-feed',
+			'[data-test=transaction-list], [data-test=empty-list-header]',
+		);
 		await click('personal-tab-2', '[data-test=nav-personal-tab]');
 		await anchor('personal-feed-2', '[data-test=transaction-list]');
 
@@ -529,7 +555,9 @@ export async function calibrateCypressRwaParity(): Promise<{
 	const passes: CypressRwaPassMeasurement[] = [];
 	for (const lane of ['baseline', 'migrated'] as const)
 		for (const pass of [1, 2] as const) passes.push(await calibrateCypressRwaLane(lane, pass));
-	const parity = summarizeWitnessReactCypressRwaTwoLaneParity(passes.map((entry) => entry.measured));
+	const parity = summarizeWitnessReactCypressRwaTwoLaneParity(
+		passes.map((entry) => entry.measured),
+	);
 	const evidenceDir = join(root, 'evidence/runs/react-cypress-rwa');
 	await mkdir(evidenceDir, { recursive: true });
 	await writeFile(

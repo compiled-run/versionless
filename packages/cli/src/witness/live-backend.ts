@@ -167,10 +167,7 @@ async function delay(ms: number): Promise<void> {
 }
 
 async function applySeed(laneRoot: string, spec: LiveBackendSpec): Promise<void> {
-	const copies = [
-		{ from: spec.seed.snapshot, to: spec.seed.store },
-		...(spec.prepare ?? []),
-	];
+	const copies = [{ from: spec.seed.snapshot, to: spec.seed.store }, ...(spec.prepare ?? [])];
 	for (const copy of copies) {
 		const to = resolve(laneRoot, copy.to);
 		await mkdir(dirname(to), { recursive: true });
@@ -288,7 +285,9 @@ export function buildLoopbackBackendInventory(
 		if (!outcome.url.startsWith(origin)) {
 			if (!isWitnessLoopbackUrl(outcome.url))
 				throw new Error(`live backend run reached a non-loopback origin: ${outcome.url}`);
-			throw new Error(`live backend run reached an unexpected loopback origin: ${outcome.url}`);
+			throw new Error(
+				`live backend run reached an unexpected loopback origin: ${outcome.url}`,
+			);
 		}
 		const path = originRelativePath(outcome.url, origin);
 		const key = backendKey(outcome.method, path);
@@ -355,7 +354,10 @@ export type WitnessCapturedMint = WitnessJourneyPlaceholderDeclaration & { value
  * substring of another cannot be half-replaced, and a token that already appears
  * literally in the un-normalized evidence is rejected as ambiguous.
  */
-export function normalizeJourneyPlaceholders<T>(evidence: T, mints: readonly WitnessCapturedMint[]): T {
+export function normalizeJourneyPlaceholders<T>(
+	evidence: T,
+	mints: readonly WitnessCapturedMint[],
+): T {
 	if (mints.length === 0) return structuredClone(evidence);
 	const serialized = JSON.stringify(evidence);
 	if (serialized === undefined)
@@ -366,7 +368,9 @@ export function normalizeJourneyPlaceholders<T>(evidence: T, mints: readonly Wit
 		if (mint.value.length === 0 || mint.token.length === 0)
 			throw new Error('journey placeholder declares an empty value or token');
 		if (text.includes(mint.token))
-			throw new Error(`journey placeholder token collides with recorded evidence: ${mint.token}`);
+			throw new Error(
+				`journey placeholder token collides with recorded evidence: ${mint.token}`,
+			);
 	}
 	for (const mint of ordered) text = text.split(mint.value).join(mint.token);
 	return JSON.parse(text) as T;

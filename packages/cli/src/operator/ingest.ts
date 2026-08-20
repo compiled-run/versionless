@@ -587,7 +587,9 @@ export async function readFrontendRoot(
 			code: 'ingest.frontend-root-ambiguous',
 			message: `Ingest: ${String(subdirectories.length)} immediate subdirectories carry a package.json (${subdirectories
 				.map((candidate) => candidate.directory)
-				.join(', ')}), so which one is the application is not something this stage reads. Declare it with --frontend-root <dir>.`,
+				.join(
+					', ',
+				)}), so which one is the application is not something this stage reads. Declare it with --frontend-root <dir>.`,
 			stage: 'ingest',
 			origin: 'pipeline',
 		});
@@ -652,7 +654,9 @@ export async function ingestApplicationSource(
 
 	const frontendManifestPath = path.join(frontendRoot, 'package.json');
 	const manifestName =
-		typeof manifest.name === 'string' && manifest.name.trim() !== '' ? manifest.name.trim() : null;
+		typeof manifest.name === 'string' && manifest.name.trim() !== ''
+			? manifest.name.trim()
+			: null;
 
 	const tree = await readTree(sourceRoot);
 	/**

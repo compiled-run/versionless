@@ -32,9 +32,7 @@ async function published(): Promise<WitnessAngularFactoriolabReceipt> {
  * sealed, so no test below can be passing because a stale hash caught the edit
  * first. Each one has to be caught by the evidence check it targets.
  */
-function resealedDeep(
-	receipt: WitnessAngularFactoriolabReceipt,
-): WitnessAngularFactoriolabReceipt {
+function resealedDeep(receipt: WitnessAngularFactoriolabReceipt): WitnessAngularFactoriolabReceipt {
 	const copy = structuredClone(receipt);
 	for (const run of copy.runs) {
 		run.semanticDigest = witnessAngularFactoriolabRawDigest(run);
@@ -67,7 +65,8 @@ describe('Angular factoriolab direct Witness receipt', () => {
 		expect(receipt.canonicalReceipts.map((bound) => bound.path)).toEqual(
 			ANGULAR_FACTORIOLAB_CANONICAL_RECEIPTS.map((bound) => bound.path),
 		);
-		for (const run of receipt.runs) expect(run.routes).toEqual([...WITNESS_ANGULAR_FACTORIOLAB_ROUTES]);
+		for (const run of receipt.runs)
+			expect(run.routes).toEqual([...WITNESS_ANGULAR_FACTORIOLAB_ROUTES]);
 	});
 
 	it('holds every lane and pass to one behavior digest', async () => {
@@ -258,7 +257,12 @@ describe('Angular factoriolab cancelled-duplicate-fetch category', () => {
 		const receipt = await published();
 		const copy = structuredClone(receipt);
 		copy.runs[0]!.failedRequestInventory.observed = [
-			{ method: 'GET', path: '/assets/transparent.gif', reason: 'net::ERR_ABORTED', count: 1 },
+			{
+				method: 'GET',
+				path: '/assets/transparent.gif',
+				reason: 'net::ERR_ABORTED',
+				count: 1,
+			},
 		];
 		copy.runs[0]!.failedRequestInventory.total = 1;
 		expect(() => parseWitnessAngularFactoriolabReceipt(resealedDeep(copy))).toThrow(

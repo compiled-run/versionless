@@ -162,10 +162,9 @@ describe('operator run — the lane is materialized unless the opt-out is declar
 	}
 
 	it('copies the application into the lane by default, so install reads its lockfile', async () => {
-		const { area, app, source } = await frontendCopy(
-			{ 'yarn.lock': '\n' },
-			['package-lock.json'],
-		);
+		const { area, app, source } = await frontendCopy({ 'yarn.lock': '\n' }, [
+			'package-lock.json',
+		]);
 		try {
 			const lane = path.join(area, 'lane');
 			const { record, exitCode } = await runPipeline([
@@ -220,7 +219,13 @@ describe('operator run — the lane is materialized unless the opt-out is declar
 
 	it('gives the apply stage both lane declarations and no other stage either', async () => {
 		const lane = await laneDirectory();
-		const { record } = await runPipeline([MYCRYPTO, '--out', lane, '--dry-run', '--compose-only']);
+		const { record } = await runPipeline([
+			MYCRYPTO,
+			'--out',
+			lane,
+			'--dry-run',
+			'--compose-only',
+		]);
 		const forwards = new Map(record.stagePlan.map((row) => [row.name, row.forwards]));
 		expect(forwards.get('apply')).toContain('--compose-only');
 		expect(forwards.get('install')).not.toContain('--compose-only');
@@ -255,7 +260,9 @@ describe('operator run — the two roots are printed side by side', () => {
 			expect(record.refusal?.stage).toBe('ingest');
 			expect(record.refusal?.code).toBe('ingest.frontend-root-declares-no-framework');
 			expect(record.roots.frontendSource).toBe('not-read');
-			expect(record.roots.frontendBasis).toContain('the ingest stage below states which refusal');
+			expect(record.roots.frontendBasis).toContain(
+				'the ingest stage below states which refusal',
+			);
 		} finally {
 			await rm(area, { recursive: true, force: true });
 		}

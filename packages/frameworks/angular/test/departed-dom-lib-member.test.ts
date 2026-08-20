@@ -37,7 +37,9 @@ describe('departed DOM lib member', () => {
 
 	it('is idempotent: the position it already answered is no longer where the member is written', () => {
 		const once = accommodateDepartedDomMembers('overlay.service.ts', source, [diagnostic]);
-		const twice = accommodateDepartedDomMembers('overlay.service.ts', once.source, [diagnostic]);
+		const twice = accommodateDepartedDomMembers('overlay.service.ts', once.source, [
+			diagnostic,
+		]);
 		expect(twice.changed).toBe(false);
 		expect(twice.source).toBe(once.source);
 		expect(twice.unhandled.join(' ')).toContain("is not where 'msOverflowStyle' is written");
@@ -48,7 +50,9 @@ describe('departed DOM lib member', () => {
 			{ ...diagnostic, member: 'visibility', line: 4, column: 17 },
 		]);
 		expect(migrated.changed).toBe(false);
-		expect(migrated.unhandled.join(' ')).toContain('not spelled as a vendor-prefixed CSS property');
+		expect(migrated.unhandled.join(' ')).toContain(
+			'not spelled as a vendor-prefixed CSS property',
+		);
 	});
 
 	it('passes over a diagnostic whose receiver is not a style declaration', () => {
@@ -75,7 +79,12 @@ describe('departed DOM lib member', () => {
 		].join('\n');
 		const read = readMissingMembers(log);
 		expect(read.get('frontend/app/ui/gallery/overlay.service.ts')).toEqual([
-			{ line: 27, column: 19, member: 'msOverflowStyle', declaredType: 'CSSStyleDeclaration' },
+			{
+				line: 27,
+				column: 19,
+				member: 'msOverflowStyle',
+				declaredType: 'CSSStyleDeclaration',
+			},
 		]);
 	});
 

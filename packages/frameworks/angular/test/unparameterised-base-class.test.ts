@@ -69,7 +69,8 @@ describe('readUnparameterisedBaseClasses', () => {
 	});
 
 	it('reads nothing from a line whose type prints no parameter list', () => {
-		const log = "Error: a.ts:1:1 - error TS2314: Generic type 'Store' requires 1 type argument(s).";
+		const log =
+			"Error: a.ts:1:1 - error TS2314: Generic type 'Store' requires 1 type argument(s).";
 		expect(readUnparameterisedBaseClasses(log).size).toBe(0);
 	});
 });
@@ -122,7 +123,7 @@ describe('parameteriseBaseClasses', () => {
 		expect(result.source).toContain(
 			"import {FormlyFieldConfig, FieldTypeConfig} from '@ngx-formly/core';",
 		);
-		expect(result.source).not.toContain("import {FieldTypeConfig} from");
+		expect(result.source).not.toContain('import {FieldTypeConfig} from');
 		expect(result.changes[0]?.importAdded).toBe(false);
 	});
 
@@ -170,12 +171,7 @@ describe('parameteriseBaseClasses', () => {
 
 	it('refuses a companion the closure did not find', () => {
 		const none: GenericBaseClassReading = Object.freeze({ ...formly, companion: null });
-		const result = parameteriseBaseClasses(
-			'x.component.ts',
-			bare,
-			[bareDiagnostic],
-			[none],
-		);
+		const result = parameteriseBaseClasses('x.component.ts', bare, [bareDiagnostic], [none]);
 		expect(result.changed).toBe(false);
 		expect(result.unhandled[0]).toContain('publishes no companion type');
 	});
@@ -190,12 +186,7 @@ describe('parameteriseBaseClasses', () => {
 				members: Object.freeze([]),
 			}),
 		});
-		const result = parameteriseBaseClasses(
-			'x.component.ts',
-			bare,
-			[bareDiagnostic],
-			[empty],
-		);
+		const result = parameteriseBaseClasses('x.component.ts', bare, [bareDiagnostic], [empty]);
 		expect(result.changed).toBe(false);
 		expect(result.unhandled[0]).toContain('declares no members of its own');
 	});

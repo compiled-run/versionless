@@ -117,7 +117,8 @@ function requireArgument(node: AstNode): AstNode | null {
  */
 export function inlineLoaderPackages(request: string): readonly string[] {
 	let head = request;
-	while (head.startsWith('!') || head.startsWith('-!')) head = head.slice(head.startsWith('-!') ? 2 : 1);
+	while (head.startsWith('!') || head.startsWith('-!'))
+		head = head.slice(head.startsWith('-!') ? 2 : 1);
 	const segments = head.split('!');
 	if (segments.length < 2) return Object.freeze([]);
 	const packages: string[] = [];
@@ -155,10 +156,14 @@ export function readApplicationPackageUses(
 			);
 		}
 		for (const statement of parsed.ast.body) {
-			if (statement.type !== 'ExportAllDeclaration' && statement.type !== 'ExportNamedDeclaration')
+			if (
+				statement.type !== 'ExportAllDeclaration' &&
+				statement.type !== 'ExportNamedDeclaration'
+			)
 				continue;
 			const source = statement.source;
-			if (source === null || source === undefined || typeof source.value !== 'string') continue;
+			if (source === null || source === undefined || typeof source.value !== 'string')
+				continue;
 			const name = packageNameOfSpecifier(source.value);
 			if (name === null) continue;
 			uses.push(
@@ -342,7 +347,9 @@ export function declareApplicationSourceDependencies(
 		if (Object.keys(entries).length === 0) continue;
 		const current = next[field];
 		if (current !== undefined && (typeof current !== 'object' || current === null))
-			throw new Error(`Application source dependency declaration: "${field}" is not an object`);
+			throw new Error(
+				`Application source dependency declaration: "${field}" is not an object`,
+			);
 		const merged: Record<string, unknown> = {
 			...(current as Record<string, unknown> | undefined),
 			...entries,

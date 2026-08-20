@@ -116,7 +116,9 @@ describe('assembles the known tree from source and committed transforms', () => 
 describe('the reorder fix is present in the assembled and built lane', () => {
 	it('names the reordered split template among the migrated application changes', async () => {
 		const changed = section(await record(), 'applicationFilesChanged');
-		expect(changed['reorderFile']).toBe('src/app/pages/work-view/work-view-page.component.html');
+		expect(changed['reorderFile']).toBe(
+			'src/app/pages/work-view/work-view-page.component.html',
+		);
 		expect((changed['reorderChanges'] as readonly string[]).length).toBeGreaterThan(0);
 		expect((changed['reorderChanges'] as readonly string[]).join(' ')).toContain('splitPos');
 	});

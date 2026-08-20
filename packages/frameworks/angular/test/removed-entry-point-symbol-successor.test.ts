@@ -61,7 +61,9 @@ describe('succeedRemovedEntryPointSymbols', () => {
 			DOCUMENTED_SYMBOL_SUCCESSORS,
 			[rxjs],
 		);
-		expect(result.source).toContain("import {combineLatest, Observable, throwError} from 'rxjs';");
+		expect(result.source).toContain(
+			"import {combineLatest, Observable, throwError} from 'rxjs';",
+		);
 		expect(result.source).toContain("import {catchError, first} from 'rxjs/operators';");
 	});
 
@@ -92,7 +94,9 @@ describe('succeedRemovedEntryPointSymbols', () => {
 			[still],
 		);
 		expect(result.changed).toBe(false);
-		expect(result.unhandled.join(' ')).toContain('publishes fromPromise, so the name did not go away');
+		expect(result.unhandled.join(' ')).toContain(
+			'publishes fromPromise, so the name did not go away',
+		);
 	});
 
 	it('refuses when the tree still answers the removed specifier', () => {
@@ -120,7 +124,10 @@ describe('succeedRemovedEntryPointSymbols', () => {
 	});
 
 	it('refuses a call at an arity the claim was not written for', () => {
-		const twoArguments = service.replace('fromPromise(promise)', 'fromPromise(promise, scheduler)');
+		const twoArguments = service.replace(
+			'fromPromise(promise)',
+			'fromPromise(promise, scheduler)',
+		);
 		const result = succeedRemovedEntryPointSymbols(
 			'jira-api.service.ts',
 			twoArguments,
@@ -155,7 +162,9 @@ describe('succeedRemovedEntryPointSymbols', () => {
 			[rxjs],
 		);
 		expect(result.changed).toBe(false);
-		expect(result.unhandled.join(' ')).toContain('no successor is written down for subscribeToResult');
+		expect(result.unhandled.join(' ')).toContain(
+			'no successor is written down for subscribeToResult',
+		);
 	});
 
 	it('refuses a namespace binding, whose members cannot be resolved by name', () => {

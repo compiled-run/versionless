@@ -168,7 +168,8 @@ export function buildMigrationRecord(
 		consentId,
 		result: 'source-migration-recorded',
 		supersedes: SUPERSEDES,
-		adapterApplication: 'second — the same @versionless/angular adapter, a different application',
+		adapterApplication:
+			'second — the same @versionless/angular adapter, a different application',
 		source: {
 			repository: 'trungvose/jira-clone-angular',
 			commit: JIRA_CLONE_COMMIT,

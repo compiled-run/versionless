@@ -21,8 +21,7 @@ async function readRecord(file: string): Promise<Record<string, unknown>> {
 	>;
 }
 
-const entry = (name: string, digest: string) =>
-	({ path: name, sha256: digest, bytes: 1 }) as const;
+const entry = (name: string, digest: string) => ({ path: name, sha256: digest, bytes: 1 }) as const;
 
 describe('super-productivity era baseline lane', () => {
 	it('calls an unstable pair unstable and never claims byte stability for it', () => {
@@ -77,9 +76,11 @@ describe('super-productivity era baseline lane', () => {
 	it('seals both records with digests recomputable from their own bodies', async () => {
 		for (const file of [ERA_LANE_FILE, CHANGESET_FILE]) {
 			const { digest, ...body } = await readRecord(file);
-			expect(createHash('sha256').update(`${JSON.stringify(body, null, 2)}\n`).digest('hex')).toBe(
-				digest,
-			);
+			expect(
+				createHash('sha256')
+					.update(`${JSON.stringify(body, null, 2)}\n`)
+					.digest('hex'),
+			).toBe(digest);
 		}
 	});
 });

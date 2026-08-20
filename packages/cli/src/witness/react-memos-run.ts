@@ -394,7 +394,7 @@ export async function verifyWitnessReactMemos(
 	const receipt = parseWitnessReactMemosReceipt(
 		JSON.parse(await readFile(join(output, 'receipt.json'), 'utf8')),
 	);
-	assertLinkedWitnessProvenanceEquivalent(receipt.provenance, expectedProvenance, "Memos");
+	assertLinkedWitnessProvenanceEquivalent(receipt.provenance, expectedProvenance, 'Memos');
 	const canonicalBytes = await readFile(join(root, receipt.canonicalReceipt.path));
 	if (sha256(canonicalBytes) !== receipt.canonicalReceipt.sha256)
 		throw new Error('Memos build-lane receipt bytes drifted');

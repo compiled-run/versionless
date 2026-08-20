@@ -33,8 +33,10 @@ describe('capability-coverage map', () => {
 			'utf8',
 		);
 		const named = new Set(coverage.capabilities.map((capability) => capability.name));
-		for (const module of angularBarrelModules(reactBarrel)) expect(named.has(module)).toBe(true);
-		for (const module of angularBarrelModules(angularBarrel)) expect(named.has(module)).toBe(true);
+		for (const module of angularBarrelModules(reactBarrel))
+			expect(named.has(module)).toBe(true);
+		for (const module of angularBarrelModules(angularBarrel))
+			expect(named.has(module)).toBe(true);
 		expect(coverage.summary.react.total).toBe(angularBarrelModules(reactBarrel).length);
 		expect(coverage.summary.angular.total).toBe(angularBarrelModules(angularBarrel).length);
 	});
@@ -86,8 +88,9 @@ describe('capability-coverage map', () => {
 		const coverage = structuredClone(buildCapabilityCoverage()) as unknown as {
 			capabilities: Array<Record<string, unknown>>;
 		};
-		const target = coverage.capabilities.find((capability) => capability.provenApps &&
-			(capability.provenApps as string[]).length > 0);
+		const target = coverage.capabilities.find(
+			(capability) => capability.provenApps && (capability.provenApps as string[]).length > 0,
+		);
 		expect(target).toBeDefined();
 		(target as Record<string, unknown>).coverage = 'unproven';
 		expect(() => verifyCapabilityCoverage(coverage)).toThrow(/unproven yet lists applications/);
@@ -95,7 +98,10 @@ describe('capability-coverage map', () => {
 
 	it('publishes the machine-readable evidence record that matches the derivation', async () => {
 		const emitted = JSON.parse(
-			await readFile(path.join(repoRoot, 'evidence/trust/current/capability-coverage.json'), 'utf8'),
+			await readFile(
+				path.join(repoRoot, 'evidence/trust/current/capability-coverage.json'),
+				'utf8',
+			),
 		);
 		expect(() => verifyCapabilityCoverage(emitted)).not.toThrow();
 		expect(emitted).toEqual(buildCapabilityCoverage());

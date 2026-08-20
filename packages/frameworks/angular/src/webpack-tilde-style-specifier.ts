@@ -122,7 +122,8 @@ export function sassCandidates(specifier: string): readonly string[] {
 export function resolveInClosure(specifier: string, closure: ClosureFileReading): string | null {
 	const exported = closure.entryPoint?.(specifier) ?? null;
 	if (exported !== null) return exported;
-	for (const candidate of sassCandidates(specifier)) if (closure.carries(candidate)) return candidate;
+	for (const candidate of sassCandidates(specifier))
+		if (closure.carries(candidate)) return candidate;
 	return null;
 }
 

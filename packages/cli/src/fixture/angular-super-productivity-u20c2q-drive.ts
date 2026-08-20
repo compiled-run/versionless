@@ -36,17 +36,17 @@ const declaredDifferenceLabels = WITNESS_ANGULAR_SUPER_PRODUCTIVITY_MEASURED_STY
 	(difference) => difference.label,
 );
 
-async function driveLane(
-	lane: 'baseline' | 'migrated',
-	pass: 1 | 2,
-): Promise<void> {
+async function driveLane(lane: 'baseline' | 'migrated', pass: 1 | 2): Promise<void> {
 	process.stdout.write(`\n===== ${lane} pass ${pass} =====\n`);
 	try {
 		const raw = await executeAngularSuperProductivityWitnessRun({
 			lane,
 			pass,
 			laneRoot: laneRoots[lane],
-			receiptRoot: join(root, '.versionless/stage/witness-super-productivity-u20c2q/receipts'),
+			receiptRoot: join(
+				root,
+				'.versionless/stage/witness-super-productivity-u20c2q/receipts',
+			),
 		});
 		const run = raw as WitnessAngularSuperProductivityRun;
 		const rawDigest = witnessAngularSuperProductivityRawDigest(run);
@@ -55,10 +55,7 @@ async function driveLane(
 			declaredDifferenceLabels,
 		);
 		if (process.env.SP_DUMP)
-			writeFileSync(
-				join(process.env.SP_DUMP, `${lane}-run.json`),
-				`${canonicalize(run)}\n`,
-			);
+			writeFileSync(join(process.env.SP_DUMP, `${lane}-run.json`), `${canonicalize(run)}\n`);
 		process.stdout.write(
 			`${canonicalize({
 				result: run.result,
@@ -73,9 +70,7 @@ async function driveLane(
 			})}\n`,
 		);
 	} catch (error) {
-		process.stdout.write(
-			`RED: ${error instanceof Error ? error.message : String(error)}\n`,
-		);
+		process.stdout.write(`RED: ${error instanceof Error ? error.message : String(error)}\n`);
 		if (error instanceof Error && error.stack) process.stdout.write(`${error.stack}\n`);
 	}
 }

@@ -9,7 +9,14 @@ import {
 /** The installed surface, as the closure reader would hand it over. */
 const rxjs: RxjsSurfaceReading = Object.freeze({
 	version: '7.8.2',
-	rootExports: Object.freeze(['Observable', 'Subject', 'combineLatest', 'forkJoin', 'of', 'throwError']),
+	rootExports: Object.freeze([
+		'Observable',
+		'Subject',
+		'combineLatest',
+		'forkJoin',
+		'of',
+		'throwError',
+	]),
 	operatorExports: Object.freeze(['catchError', 'debounceTime', 'map', 'tap']),
 });
 
@@ -21,7 +28,8 @@ const at = (
 	occurrence = 1,
 ): PatchedCallDiagnostic => {
 	let index = -1;
-	for (let seen = 0; seen < occurrence; seen += 1) index = source.indexOf(`.${property}(`, index + 1);
+	for (let seen = 0; seen < occurrence; seen += 1)
+		index = source.indexOf(`.${property}(`, index + 1);
 	const before = source.slice(0, index + 1);
 	const lines = before.split('\n');
 	return Object.freeze({

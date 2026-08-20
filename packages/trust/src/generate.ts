@@ -735,10 +735,7 @@ export function packagePurl(name: string, version: string): string {
  * says where it actually comes from, and carries no `purl` at all — its identity
  * travels in the SHA-256 of the tarball beside it.
  */
-function componentProperty(
-	component: Record<string, unknown>,
-	name: string,
-): string | undefined {
+function componentProperty(component: Record<string, unknown>, name: string): string | undefined {
 	if (component.properties === undefined) return undefined;
 	if (!Array.isArray(component.properties))
 		throw new Error('CycloneDX component properties are malformed');
@@ -1607,7 +1604,10 @@ export function validateCycloneDx17(
 				 */
 				if (coordinateKind !== 'file')
 					throw new Error('CycloneDX coordinate kind is unsupported');
-				if (component.purl !== undefined || ref !== vendoredComponentReference(name, version))
+				if (
+					component.purl !== undefined ||
+					ref !== vendoredComponentReference(name, version)
+				)
 					throw new Error('CycloneDX vendored reference is malformed');
 				const tarball = componentProperty(component, 'versionless:tarball');
 				const hashes = Array.isArray(component.hashes) ? component.hashes : [];

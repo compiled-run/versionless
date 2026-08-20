@@ -39,7 +39,9 @@ export async function reactHospitalrunAggregateMembers(rootDir = root): Promise<
 }> {
 	const verified = await verifyWitnessReactHospitalrunEvidence(rootDir);
 	return {
-		migration: reactHospitalrunAggregateMember(verified.receipt.canonicalReceipt.canonicalDigest),
+		migration: reactHospitalrunAggregateMember(
+			verified.receipt.canonicalReceipt.canonicalDigest,
+		),
 		witness: witnessReactHospitalrunAggregateMember(verified.digest),
 	};
 }
@@ -94,7 +96,9 @@ export async function appendReactHospitalrunAggregateMembers(rootDir = root): Pr
 	}
 	if (present.length !== 0) throw new Error('React HospitalRun aggregate is partially appended');
 	if (deriveCorpusTransactionState(fixtures).kind !== 'react-papercups-browser-proof')
-		throw new Error('React HospitalRun append requires the Papercups browser-proof predecessor');
+		throw new Error(
+			'React HospitalRun append requires the Papercups browser-proof predecessor',
+		);
 	const composed = {
 		...aggregate,
 		fixtures: [...fixtures, members.migration, members.witness],

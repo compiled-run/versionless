@@ -71,9 +71,9 @@ describe('application source dependency', () => {
 			ANGULAR_16_BROWSER_CELL,
 			[],
 		);
-		expect(
-			declared.declarations.some((entry) => entry.name === '@yaga/leaflet-ng2'),
-		).toBe(false);
+		expect(declared.declarations.some((entry) => entry.name === '@yaga/leaflet-ng2')).toBe(
+			false,
+		);
 		expect(declared.unhandled.join(' ')).toContain('@yaga/leaflet-ng2');
 		expect(declared.unhandled.join(' ')).toContain('found no line of it to declare');
 	});
@@ -90,12 +90,9 @@ describe('application source dependency', () => {
 
 	it('is idempotent: a manifest it already closed carries no second declaration', () => {
 		const uses = readApplicationPackageUses(modules);
-		const once = declareApplicationSourceDependencies(
-			manifest,
-			uses,
-			ANGULAR_16_BROWSER_CELL,
-			['@types/leaflet'],
-		);
+		const once = declareApplicationSourceDependencies(manifest, uses, ANGULAR_16_BROWSER_CELL, [
+			'@types/leaflet',
+		]);
 		const twice = declareApplicationSourceDependencies(
 			once.manifest,
 			uses,

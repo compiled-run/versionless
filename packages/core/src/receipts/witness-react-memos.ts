@@ -124,8 +124,7 @@ export const REACT_MEMOS_SEED_AMENDMENT = Object.freeze({
 	unit: 'lrapr-t006/u12b-memos-seed-and-witness',
 	scope: 'credentials-only — the seeded owner email, the owner name derived from it, and the owner passphrase',
 	supersededSeedSha256: 'cf422f2cda23b4c777d27b2bccd68a24b53cac027dbe57347e1b150fc8cdb7ff',
-	supersededBehaviorDigest:
-		'1672b43f0f01379b74890013cf145ed87164873cff037d4b6ace072a1fa79493',
+	supersededBehaviorDigest: '1672b43f0f01379b74890013cf145ed87164873cff037d4b6ace072a1fa79493',
 });
 
 /** Both lanes are observed at this size, so every extent below is comparable. */
@@ -422,7 +421,8 @@ export type WitnessReactMemosReceipt = {
 	integrity: { algorithm: 'sha256'; canonicalDigest: string };
 };
 
-const exact = (left: unknown, right: unknown): boolean => canonicalize(left) === canonicalize(right);
+const exact = (left: unknown, right: unknown): boolean =>
+	canonicalize(left) === canonicalize(right);
 
 export function witnessReactMemosRawDigest(run: WitnessReactMemosRun | WitnessRealAppRun): string {
 	const { pass: _pass, result: _result, semanticDigest: _semanticDigest, ...raw } = run;
@@ -514,7 +514,9 @@ export function witnessReactMemosDigest(receipt: WitnessReactMemosReceipt): stri
 function assertRouterRoutes(routes: readonly string[], label: string): void {
 	for (const route of routes)
 		if (!WITNESS_REACT_MEMOS_ROUTER_ROUTES.includes(route))
-			throw new Error(`React Memos recorded a route outside its own router: ${label} ${route}`);
+			throw new Error(
+				`React Memos recorded a route outside its own router: ${label} ${route}`,
+			);
 }
 
 function assertConsoleErrorInventory(
@@ -593,7 +595,10 @@ function assertRenderedStyles(
  * claim. Every visited stage is required to have been measured and to have come
  * back non-overflowing.
  */
-function assertScrollAbsence(absence: WitnessMeasuredScrollAbsence | undefined, label: string): void {
+function assertScrollAbsence(
+	absence: WitnessMeasuredScrollAbsence | undefined,
+	label: string,
+): void {
 	if (
 		absence === undefined ||
 		absence.state !== 'measured-no-overflowing-document' ||
@@ -871,5 +876,10 @@ export async function verifyWitnessReactMemosEvidence(rootDir = '.') {
 		renderWitnessReactMemosReceipt(receipt)
 	)
 		throw new Error('React Memos human Witness receipt differs');
-	return { valid: true as const, digest: receipt.integrity.canonicalDigest, artifacts: 0, receipt };
+	return {
+		valid: true as const,
+		digest: receipt.integrity.canonicalDigest,
+		artifacts: 0,
+		receipt,
+	};
 }

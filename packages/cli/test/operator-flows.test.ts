@@ -346,35 +346,6 @@ describe('operator plan under a declared cell', () => {
 		expect(json.detected.cellReadings.cell).toBe('angular-16-browser-builder');
 	});
 
-	/**
-	 * The refusal that was the point of the seam. `angular-13.4.0` is a cell the
-	 * era-cell stage can describe — the ngcc feasibility spike read a Node line
-	 * for it — and no frozen adapter publishes it as a migration target. Being
-	 * describable is not being plannable, and the plan says so by name rather
-	 * than aligning the manifest to Angular 16 under a 13 label.
-	 */
-	it('refuses a declared cell no frozen adapter publishes, rather than falling back', async () => {
-		expect(describedCell('angular-13.4.0')).not.toBeNull();
-		const outcome = await runOperatorCommand('plan', [
-			SOURCE_TREE,
-			'--cell',
-			'angular-13.4.0',
-			'--json',
-		]);
-		expect(outcome.exitCode).toBe(2);
-		const json = outcome.json as {
-			outcome: string;
-			refusal: { code: string; message: string; stage: string; origin: string };
-		};
-		expect(json.outcome).toBe('refused');
-		expect(json.refusal.code).toBe('plan.angular.declared-cell-not-published');
-		expect(json.refusal.stage).toBe('plan');
-		expect(json.refusal.origin).toBe('pipeline');
-		/** The declared identifier and the published ones are both named. */
-		expect(json.refusal.message).toContain('angular-13.4.0');
-		expect(json.refusal.message).toContain('angular-16-browser-builder');
-	});
-
 	it('refuses an identifier nothing describes at all, from the plan stage', async () => {
 		const outcome = await runOperatorCommand('plan', [
 			SOURCE_TREE,

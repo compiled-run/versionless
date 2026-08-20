@@ -252,7 +252,9 @@ describe('the IndexedDB key reader, with exactly one vertical declaring it', () 
 	it('is declared by exactly one published application spec', () => {
 		expect(witnessRealAppSpecs.length).toBeGreaterThan(0);
 		expect(
-			witnessRealAppSpecs.filter((spec) => spec.indexedDb !== undefined).map((spec) => spec.app),
+			witnessRealAppSpecs
+				.filter((spec) => spec.indexedDb !== undefined)
+				.map((spec) => spec.app),
 		).toEqual(['angular-super-productivity']);
 	});
 

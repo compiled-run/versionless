@@ -98,7 +98,12 @@ export function reactCypressRwaWitnessSpec(): AppSpec {
 					contentType: 'image/svg+xml',
 					body: Buffer.from(CYPRESS_RWA_PLACEHOLDER_SVG),
 				};
-			return { action: 'fulfill', status: 204, contentType: 'text/plain', body: Buffer.alloc(0) };
+			return {
+				action: 'fulfill',
+				status: 204,
+				contentType: 'text/plain',
+				body: Buffer.alloc(0),
+			};
 		},
 		journey: async (context, page, _transportEvidence, lifecycle) => {
 			await page.trackEvents('click', 'input', 'change', 'keydown', 'mouseover');

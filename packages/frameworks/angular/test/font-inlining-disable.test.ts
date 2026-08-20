@@ -13,13 +13,11 @@ const workspaceWith = (build: Record<string, unknown>): string =>
 	JSON.stringify({ version: 1, projects: { app: { architect: { build } } } }, null, 2);
 
 const buildTargetOf = (config: string): Record<string, unknown> =>
-	(
-		(
-			(JSON.parse(config) as Record<string, Record<string, Record<string, unknown>>>)[
-				'projects'
-			]?.['app']?.['architect'] as Record<string, Record<string, unknown>>
-		)?.['build'] ?? {}
-	) as Record<string, unknown>;
+	((
+		(JSON.parse(config) as Record<string, Record<string, Record<string, unknown>>>)[
+			'projects'
+		]?.['app']?.['architect'] as Record<string, Record<string, unknown>>
+	)?.['build'] ?? {}) as Record<string, unknown>;
 
 describe('the builders that carry a fonts option', () => {
 	it('names the browser-family builders and no others', () => {
@@ -65,7 +63,10 @@ describe('the optimization value the migrated workspace should carry', () => {
 
 	it('keeps every member a declared object already carries', () => {
 		expect(
-			fontInliningDisabled({ scripts: false, styles: { minify: true, inlineCritical: false } }),
+			fontInliningDisabled({
+				scripts: false,
+				styles: { minify: true, inlineCritical: false },
+			}),
 		).toEqual({
 			scripts: false,
 			styles: { minify: true, inlineCritical: false },
@@ -105,7 +106,7 @@ describe('the workspace migration applies it generically', () => {
 			}),
 			ANGULAR_16_BROWSER_CELL,
 		);
-		expect((buildTargetOf(migration.config)['options'] as Record<string, unknown>)).toEqual({
+		expect(buildTargetOf(migration.config)['options'] as Record<string, unknown>).toEqual({
 			main: 'src/main.ts',
 			optimization: { scripts: true, styles: true, fonts: { inline: false } },
 		});
@@ -150,7 +151,9 @@ describe('the workspace migration applies it generically', () => {
 		 */
 		expect(configurations['staging']).toEqual({ sourceMap: true });
 		expect(migration.declaredDifferences).toHaveLength(1);
-		expect(migration.declaredDifferences[0]).toContain('configurations.production.optimization');
+		expect(migration.declaredDifferences[0]).toContain(
+			'configurations.production.optimization',
+		);
 	});
 
 	it('leaves a builder with no fonts option untouched', () => {
@@ -179,10 +182,11 @@ describe('the workspace migration applies it generically', () => {
 			ANGULAR_16_BROWSER_CELL,
 		);
 		const architect = (
-			(JSON.parse(migration.config) as Record<string, Record<string, Record<string, unknown>>>)[
-				'projects'
-			]?.['app']?.['architect'] as Record<string, Record<string, Record<string, unknown>>>
-		);
+			JSON.parse(migration.config) as Record<string, Record<string, Record<string, unknown>>>
+		)['projects']?.['app']?.['architect'] as Record<
+			string,
+			Record<string, Record<string, unknown>>
+		>;
 		expect(architect['test']?.['options']).toEqual({ main: 'src/test.ts' });
 		expect(architect['serve']?.['options']).toEqual({ browserTarget: 'app:build' });
 		expect(architect['server']?.['options']).toEqual({
@@ -200,7 +204,7 @@ describe('the workspace migration applies it generically', () => {
 			}),
 			ANGULAR_16_BROWSER_CELL,
 		);
-		expect((buildTargetOf(migration.config)['options'] as Record<string, unknown>)).toEqual({
+		expect(buildTargetOf(migration.config)['options'] as Record<string, unknown>).toEqual({
 			main: 'src/main.ts',
 			optimization: { fonts: { inline: false } },
 		});

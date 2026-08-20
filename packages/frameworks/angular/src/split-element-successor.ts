@@ -44,7 +44,15 @@
  */
 
 import { parseTemplate, TmplAstElement, type TmplAstNode } from '@angular/compiler';
-import { charNotIn, createRegExp, digit, exactly, maybe, oneOrMore, whitespace } from 'magic-regexp';
+import {
+	charNotIn,
+	createRegExp,
+	digit,
+	exactly,
+	maybe,
+	oneOrMore,
+	whitespace,
+} from 'magic-regexp';
 import { compareStrings } from './angular-target-cell.ts';
 import { applySourceEdits, lineOf, type SourceEdit } from './semantic-module.ts';
 
@@ -401,7 +409,9 @@ export function resolveSplitElementSuccessors(
 		]);
 	const mismatches = checkElementSplit(split, reading);
 	if (mismatches.length > 0)
-		return unchanged(mismatches.map((reason) => `${path}: ${reason}, so nothing was rewritten`));
+		return unchanged(
+			mismatches.map((reason) => `${path}: ${reason}, so nothing was rewritten`),
+		);
 	const parsed = parseTemplate(source, path, { preserveWhitespaces: true });
 	if (parsed.errors !== null && parsed.errors.length > 0)
 		throw new Error(
@@ -420,7 +430,9 @@ export function resolveSplitElementSuccessors(
 		const at = `${path} line ${String(line)}`;
 		const resolution = resolveShape(source, element, split, reading);
 		if (resolution.kind === 'refused') {
-			unhandled.push(`${at}: <${split.replaced}> was left as it is because ${resolution.reason}`);
+			unhandled.push(
+				`${at}: <${split.replaced}> was left as it is because ${resolution.reason}`,
+			);
 			continue;
 		}
 		const successor = componentNamed(reading, resolution.component);

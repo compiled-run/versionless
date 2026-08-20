@@ -52,9 +52,7 @@ export type PapercupsBuildProfileVerification = Readonly<{
  * surface. Anything that names this application there is a scope violation,
  * so the fixture asserts its own absence.
  */
-export async function applicationNamedProductSymbols(
-	needle: string,
-): Promise<readonly string[]> {
+export async function applicationNamedProductSymbols(needle: string): Promise<readonly string[]> {
 	const lowered = needle.toLowerCase();
 	const offenders: string[] = [];
 	for (const entry of await readdir(reactAdapterRoot, { withFileTypes: true })) {

@@ -14,9 +14,7 @@ const mask = Buffer.from([0x12, 0x34, 0x56, 0x78]);
 
 describe('bounded loopback WebSocket frame codec', () => {
 	it('derives the RFC 6455 accept key and handshake response', () => {
-		expect(webSocketAcceptKey('dGhlIHNhbXBsZSBub25jZQ==')).toBe(
-			's3pPLMBiTxaQ9kYGzzhZRbK+xOo=',
-		);
+		expect(webSocketAcceptKey('dGhlIHNhbXBsZSBub25jZQ==')).toBe('s3pPLMBiTxaQ9kYGzzhZRbK+xOo=');
 		expect(webSocketHandshakeResponse('dGhlIHNhbXBsZSBub25jZQ==').toString('utf8')).toBe(
 			'HTTP/1.1 101 Switching Protocols\r\nUpgrade: websocket\r\nConnection: Upgrade\r\nSec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=\r\n\r\n',
 		);
@@ -81,7 +79,10 @@ describe('bounded loopback WebSocket frame codec', () => {
 			}),
 		).toThrow('four bytes');
 		expect(() =>
-			encodeWebSocketFrame(WEBSOCKET_OPCODES.text, Buffer.alloc(WEBSOCKET_MAX_FRAME_BYTES + 1)),
+			encodeWebSocketFrame(
+				WEBSOCKET_OPCODES.text,
+				Buffer.alloc(WEBSOCKET_MAX_FRAME_BYTES + 1),
+			),
 		).toThrow('ceiling');
 	});
 });

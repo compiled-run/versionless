@@ -118,7 +118,7 @@ export async function buildCvaLaneRecord(): Promise<SealedRecord> {
 			applicationLogicChanged: false,
 			note:
 				'One file changed: the module that bootstraps, which gained an import and two ' +
-				"configured module factories. No application logic was rewritten and the accessor whose " +
+				'configured module factories. No application logic was rewritten and the accessor whose ' +
 				'`setDisabledState` rebuilds its own form keeps the defect u19i attributed — the ' +
 				"migration's job here is to stop the framework calling it at a moment the era framework " +
 				'never did.',
@@ -227,7 +227,9 @@ export async function main(): Promise<void> {
 	const record = verifySealedRecord(await buildCvaLaneRecord());
 	await mkdir(EVIDENCE_DIRECTORY, { recursive: true });
 	await writeFile(path.join(EVIDENCE_DIRECTORY, CVA_LANE_FILE), canonical(record));
-	process.stdout.write(`cva lane ${String(record['result'])}, digest ${record.digest.slice(0, 12)}\n`);
+	process.stdout.write(
+		`cva lane ${String(record['result'])}, digest ${record.digest.slice(0, 12)}\n`,
+	);
 }
 
 if (process.argv[1]?.endsWith('angular-tiny-translator-cva-record.ts'))

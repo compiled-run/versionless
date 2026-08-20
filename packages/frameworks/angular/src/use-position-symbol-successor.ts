@@ -200,7 +200,7 @@ export const ANGULAR_HTTP_USE_POSITION_SUCCESSORS: readonly DocumentedUsePositio
 				'`Response` is not generic and `HttpResponse<T>` is with no default, so the bare name is ' +
 				'not a type at all and any argument written for it is one nobody read. And the value being ' +
 				'annotated is no longer a response: `Http` emitted a `Response` to call `.json()` on, ' +
-				'`HttpClient` emits the parsed body unless the caller asks for `observe: \'response\'`, so ' +
+				"`HttpClient` emits the parsed body unless the caller asks for `observe: 'response'`, so " +
 				'an annotation naming the successor class states something about the value that is false. ' +
 				'This was measured rather than reasoned: writing `HttpResponse<any>` into the four ' +
 				'type-position sites of the eShopOnContainers WebSPA holdout compiled the declaration and ' +
@@ -247,9 +247,14 @@ export const ANGULAR_HTTP_USE_POSITION_SUCCESSORS: readonly DocumentedUsePositio
 			rules: Object.freeze([]),
 			removal: Object.freeze({
 				positions: Object.freeze(['ng-module-imports-member' as const]),
-				provides: Object.freeze(['Jsonp', 'JSONPBackend', 'JSONPConnection', 'BrowserJsonp']),
+				provides: Object.freeze([
+					'Jsonp',
+					'JSONPBackend',
+					'JSONPConnection',
+					'BrowserJsonp',
+				]),
 				reason:
-					'`JsonpModule` has no successor by rename. Angular\'s JSONP support moved to ' +
+					"`JsonpModule` has no successor by rename. Angular's JSONP support moved to " +
 					'`HttpClientJsonpModule`, which requires `HttpClientModule` beside it and changes how a ' +
 					'JSONP request is written at the call site, so it is a different module and not a new ' +
 					'spelling of this one. Where the only thing an application does with `JsonpModule` is ' +
@@ -478,7 +483,9 @@ export function succeedRemovedSymbolUses(
 			(entry) => entry.package === root && entry.specifier === specifier,
 		);
 		if (reading === undefined) {
-			refuse(`no successor surface was read for '${root}', so ${specifier} was left as it is`);
+			refuse(
+				`no successor surface was read for '${root}', so ${specifier} was left as it is`,
+			);
 			continue;
 		}
 		if (!reading.complete) {
@@ -565,7 +572,7 @@ export function succeedRemovedSymbolUses(
 			if (uses.length === 0) {
 				refusals.push(
 					`${entry.name} is imported and never used, and this capability rewrites uses; ` +
-						'removing an unused binding is a different capability\'s decision',
+						"removing an unused binding is a different capability's decision",
 				);
 				continue;
 			}

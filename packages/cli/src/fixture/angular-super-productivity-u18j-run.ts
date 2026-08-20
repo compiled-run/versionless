@@ -59,13 +59,15 @@ export function matchesIncludePattern(pattern: string, candidate: string): boole
 				return false;
 			}
 			if (textIndex === text.length) return false;
-			if (character === '?' || character === text[textIndex]) return walk(globIndex + 1, textIndex + 1);
+			if (character === '?' || character === text[textIndex])
+				return walk(globIndex + 1, textIndex + 1);
 			return false;
 		};
 		return walk(0, 0);
 	};
 	const walk = (patternIndex: number, candidateIndex: number): boolean => {
-		if (patternIndex === patternSegments.length) return candidateIndex === candidateSegments.length;
+		if (patternIndex === patternSegments.length)
+			return candidateIndex === candidateSegments.length;
 		const segment = patternSegments[patternIndex];
 		if (segment === undefined) return false;
 		if (segment === '**') {
@@ -134,7 +136,8 @@ export async function modulesUnder(tree: string, root: string): Promise<readonly
 				await walk(child);
 				continue;
 			}
-			if (MODULE_EXTENSIONS.some((extension) => entry.name.endsWith(extension))) found.push(child);
+			if (MODULE_EXTENSIONS.some((extension) => entry.name.endsWith(extension)))
+				found.push(child);
 		}
 	};
 	await walk(root);

@@ -23,7 +23,10 @@ describe('papercups create-react-app to Vite 8 build profile', () => {
 				lockfile: { matchesFixture: boolean; lockfileVersion: number };
 				lifecycleScripts: string;
 			};
-			builds: { baseline: { bundler: string }; target: { bundler: string; webpackExecuted: boolean } };
+			builds: {
+				baseline: { bundler: string };
+				target: { bundler: string; webpackExecuted: boolean };
+			};
 			parity: { runtimeEquivalence: string };
 		};
 		expect(profile.dependencyAcquisition.consentId).toBe('VL-LEGACY-CORPUS-2026-08-10');
@@ -40,7 +43,10 @@ describe('papercups create-react-app to Vite 8 build profile', () => {
 	test('the run receipt keeps every browser gate unproven', async () => {
 		const receipt = JSON.parse(
 			await readFile('evidence/runs/react-papercups-v1-0-0/t004-run.json', 'utf8'),
-		) as { verification: Record<string, unknown>; migration: { applicationNamedProductBranches: number } };
+		) as {
+			verification: Record<string, unknown>;
+			migration: { applicationNamedProductBranches: number };
+		};
 		expect(receipt.verification.journeys).toBe('not-run');
 		expect(receipt.verification.mutation).toBe('not-run');
 		expect(receipt.verification.locality).toBe('not-run');

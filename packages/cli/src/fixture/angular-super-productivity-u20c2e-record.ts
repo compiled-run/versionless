@@ -23,7 +23,11 @@ import { readdir, readFile, mkdir, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import * as path from 'pathe';
 import { canonical, sha256 } from './angular-factoriolab-migration-run.ts';
-import { sealRecord, verifySealedRecord, type SealedRecord } from './angular-factoriolab-build-lanes-run.ts';
+import {
+	sealRecord,
+	verifySealedRecord,
+	type SealedRecord,
+} from './angular-factoriolab-build-lanes-run.ts';
 import { CONSENT, EVIDENCE_DIRECTORY } from './angular-super-productivity-lanes-run.ts';
 import { APPLIED_TREE, STAGE_DIRECTORY } from './angular-super-productivity-apply-run.ts';
 import { assembleMigratedTree } from './angular-super-productivity-assemble.ts';
@@ -52,7 +56,8 @@ async function sourceDigest(tree: string): Promise<Readonly<{ files: number; dig
 			else if (entry.isFile()) entries.push(full);
 		}
 	};
-	for (const root of roots) if (existsSync(path.join(tree, root))) await walk(path.join(tree, root));
+	for (const root of roots)
+		if (existsSync(path.join(tree, root))) await walk(path.join(tree, root));
 	for (const file of workspaceFiles)
 		if (existsSync(path.join(tree, file))) entries.push(path.join(tree, file));
 	const hash = createHash('sha256');
@@ -71,9 +76,13 @@ async function sourceDigest(tree: string): Promise<Readonly<{ files: number; dig
 async function buildOutcome(
 	name: string,
 	outputRoot: string,
-): Promise<Readonly<{ name: string; outputRoot: string; exitStatus: number; egressAttempts: number }>> {
+): Promise<
+	Readonly<{ name: string; outputRoot: string; exitStatus: number; egressAttempts: number }>
+> {
 	const exit = Number.parseInt(
-		(await readFile(path.join(STAGE_DIRECTORY, `${name}.exit`), 'utf8').catch(() => 'NaN')).trim(),
+		(
+			await readFile(path.join(STAGE_DIRECTORY, `${name}.exit`), 'utf8').catch(() => 'NaN')
+		).trim(),
 		10,
 	);
 	const egressText = await readFile(
@@ -91,8 +100,8 @@ function laneBehavior(lane: LaneBehavior): Readonly<Record<string, unknown>> {
 		status: lane.status,
 		pageErrors: lane.pageErrors.length,
 		splitConsoleErrors: lane.splitConsoleErrors.length,
-		splitConsoleMessages: lane.splitConsoleErrors.map((message) =>
-			String(message.text ?? '').split('\n')[0],
+		splitConsoleMessages: lane.splitConsoleErrors.map(
+			(message) => String(message.text ?? '').split('\n')[0],
 		),
 	});
 }
@@ -133,7 +142,8 @@ export function buildU20c2eRecord(input: RecordInput): SealedRecord {
 			note: 'u23 built the offline-faithful lane before the template-binding-reorder existed; its dist-23/dist-24 bytes are immutable and dist-23 is read here as the behavior control. This lane rebuilds into dist-25/dist-26 and adds the reorder fix and its runtime proof.',
 		},
 		assembly: {
-			entrypoint: 'assembleMigratedTree in packages/cli/src/fixture/angular-super-productivity-assemble.ts',
+			entrypoint:
+				'assembleMigratedTree in packages/cli/src/fixture/angular-super-productivity-assemble.ts',
 			evidenceFree:
 				'The entrypoint writes no evidence record and no round file; its only side effect is the migrated tree. The u18*-* records stay reproducible because their drivers still call the same exported round functions with the same defaults.',
 			stages: input.stages,
@@ -165,7 +175,7 @@ export function buildU20c2eRecord(input: RecordInput): SealedRecord {
 			command:
 				'node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng.js build --configuration production',
 			offlineGuard:
-				'Both builds ran under u22\'s in-process egress guard with the font inliner disabled; a non-loopback connection would have been refused and recorded.',
+				"Both builds ran under u22's in-process egress guard with the font inliner disabled; a non-loopback connection would have been refused and recorded.",
 			builds: [input.build25, input.build26],
 			reorderInBundle: {
 				mainChunk: input.reorder.mainChunk,
@@ -175,7 +185,7 @@ export function buildU20c2eRecord(input: RecordInput): SealedRecord {
 			},
 		},
 		behavior: {
-			host: 'Playwright chromium headless shell, offline, Roboto stylesheet answered in-context with an empty body — the calibration driver\'s host, pointed at these roots.',
+			host: "Playwright chromium headless shell, offline, Roboto stylesheet answered in-context with an empty body — the calibration driver's host, pointed at these roots.",
 			route: '/#/work-view',
 			control: laneBehavior(input.control),
 			migrated: laneBehavior(input.migrated),
@@ -202,7 +212,9 @@ export async function main(): Promise<void> {
 	const secondDigest = await sourceDigest(APPLIED_TREE);
 
 	const reorderEntry = firstAssembly.migration.files.find((file) => file.path === REORDER_FILE);
-	const reorderChanges = (reorderEntry?.changes ?? []).filter((change) => /reorder/i.test(change));
+	const reorderChanges = (reorderEntry?.changes ?? []).filter((change) =>
+		/reorder/i.test(change),
+	);
 	const manualStepsApplied = firstAssembly.manualSteps.filter((step) => step.applied).length;
 
 	const build25 = await buildOutcome('build-25', 'dist-25');

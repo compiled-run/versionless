@@ -84,7 +84,11 @@ const PINNED_REVISION = '069b6690d9fa7a24a6e7727386ab85148c89b90e';
  */
 const sourcedStageRecords: Readonly<Record<string, Record<string, unknown>>> = Object.freeze({
 	ingest: {
-		pin: { repository: 'acme/some-application', ref: 'refs/tags/v1.0.0', commitSha: PINNED_REVISION },
+		pin: {
+			repository: 'acme/some-application',
+			ref: 'refs/tags/v1.0.0',
+			commitSha: PINNED_REVISION,
+		},
 	},
 	'license-at-pin': {
 		identifier: 'MIT',
@@ -107,7 +111,11 @@ const runRecord = (overrides: Partial<CoverageRunRecord> = {}): CoverageRunRecor
 	framework: 'react',
 	outcome: 'proceeded',
 	stages: allNineRan,
-	pin: { repository: 'acme/some-application', ref: 'refs/tags/v1.0.0', commitSha: PINNED_REVISION },
+	pin: {
+		repository: 'acme/some-application',
+		ref: 'refs/tags/v1.0.0',
+		commitSha: PINNED_REVISION,
+	},
 	licence: { identifier: 'MIT', artifactSha256: LICENCE_SHA256 },
 	...overrides,
 });
@@ -129,8 +137,8 @@ describe('coverage report — the sealed baseline, read once', () => {
 			angular: { ready: 4, total: 4 },
 		});
 		expect(report.sealedBaseline.capabilities.crossProven).toBe(8);
-		expect(report.sealedBaseline.capabilities.total).toBe(58);
-		expect(report.sealedBaseline.capabilities.experimental).toBe(50);
+		expect(report.sealedBaseline.capabilities.total).toBe(59);
+		expect(report.sealedBaseline.capabilities.experimental).toBe(51);
 		expect(report.derivation).toBe(matrix.derivation);
 		expect(report.sealedBaseline.demoted).toEqual(matrix.demoted);
 		expect(report.sealedBaseline.boundaryPrevalence.published).toBe(

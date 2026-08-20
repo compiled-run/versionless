@@ -54,7 +54,11 @@ describe('buildLoopbackBackendInventory', () => {
 		expect(checkAuth?.requests).toBe(2);
 		expect(checkAuth?.statuses).toEqual([200, 401]);
 		// A declared endpoint the run never hit is recorded absent, not hidden.
-		expect(inventory.absent.some((entry) => entry.path === '/transactions/{created-transaction-id}')).toBe(true);
+		expect(
+			inventory.absent.some(
+				(entry) => entry.path === '/transactions/{created-transaction-id}',
+			),
+		).toBe(true);
 	});
 
 	it('fails on a backend request outside the declared category', () => {

@@ -90,7 +90,10 @@ export async function appendReactLinkfreeAggregateMembers(rootDir = root): Promi
 		);
 	const composed = { ...aggregate, fixtures: [...fixtures, members.witness] };
 	const state = deriveCorpusTransactionState(composed.fixtures);
-	if (state.kind !== 'react-linkfree-browser-proof' || state.receipts !== composed.fixtures.length)
+	if (
+		state.kind !== 'react-linkfree-browser-proof' ||
+		state.receipts !== composed.fixtures.length
+	)
 		throw new Error('React LinkFree append does not derive the browser-proof state');
 	const staged = `${target}.t006.tmp`;
 	if (await exists(staged)) throw new Error('React LinkFree aggregate staging residue exists');

@@ -354,7 +354,10 @@ export async function stageLinkfreeWitnessLane(options: {
 	const replaced = (path: string): boolean =>
 		path === GENERATED_INDEX || path.startsWith(`${CORPUS_DIRECTORY}/`);
 	const bundlerAuthored = emitted.filter((file) => !replaced(file.path));
-	if (canonicalize(bundlerAuthored) !== canonicalize(staged.filter((file) => !replaced(file.path))))
+	if (
+		canonicalize(bundlerAuthored) !==
+		canonicalize(staged.filter((file) => !replaced(file.path)))
+	)
 		throw new Error('LinkFree staging changed a bundler-authored byte');
 	return {
 		policy: 'synthetic-profile-corpus-through-the-applications-own-codegen',

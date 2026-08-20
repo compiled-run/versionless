@@ -140,7 +140,8 @@ function readSite(
 	module: SemanticModule,
 	reference: AstNode,
 ): Readonly<{ site: Site }> | Readonly<{ refusal: string }> {
-	if (reference.type !== 'Identifier') return { refusal: 'the flagged position is not an identifier' };
+	if (reference.type !== 'Identifier')
+		return { refusal: 'the flagged position is not an identifier' };
 	const symbol = module.symbolOf(reference);
 	if (symbol === null)
 		return { refusal: `the flagged identifier ${reference.name} resolves to no binding` };
@@ -160,7 +161,11 @@ function readSite(
 				'to guard after',
 		};
 	const declaration = module.parentOf(declarator);
-	if (declaration === null || declaration.type !== 'VariableDeclaration' || declaration.kind !== 'const')
+	if (
+		declaration === null ||
+		declaration.type !== 'VariableDeclaration' ||
+		declaration.kind !== 'const'
+	)
 		return {
 			refusal:
 				`${reference.name} is not declared \`const\`, so a guard on it would not narrow its ` +

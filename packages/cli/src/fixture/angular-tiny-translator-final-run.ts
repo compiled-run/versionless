@@ -51,7 +51,9 @@ export async function readReachableSpecifiers(
 	);
 	const exportsField = (manifest as Readonly<{ exports?: unknown }>).exports;
 	if (typeof exportsField !== 'object' || exportsField === null)
-		throw new Error(`${name} publishes no exports map, so its reachable subpaths cannot be read`);
+		throw new Error(
+			`${name} publishes no exports map, so its reachable subpaths cannot be read`,
+		);
 	const specifiers: string[] = [];
 	for (const subpath of Object.keys(exportsField as Readonly<Record<string, unknown>>)) {
 		if (subpath.includes('*')) continue;
@@ -101,14 +103,21 @@ export function readWidenedAssignmentDiagnostics(
 			sourceType,
 			targetType,
 		});
-		if (!list.some((entry) => entry.line === diagnostic.line && entry.column === diagnostic.column))
+		if (
+			!list.some(
+				(entry) => entry.line === diagnostic.line && entry.column === diagnostic.column,
+			)
+		)
 			list.push(diagnostic);
 		found.set(file, list);
 	}
 	return found;
 }
 
-async function filesWithSuffix(root: string, suffixes: readonly string[]): Promise<readonly string[]> {
+async function filesWithSuffix(
+	root: string,
+	suffixes: readonly string[],
+): Promise<readonly string[]> {
 	const found: string[] = [];
 	const walk = async (directory: string): Promise<void> => {
 		for (const entry of await readdir(directory, { withFileTypes: true })) {
@@ -154,7 +163,9 @@ export async function applyFinalRound(
 	const outcomes: CapabilityOutcome[] = [];
 
 	if (diagnosticsLog !== null) {
-		const diagnostics = readWidenedAssignmentDiagnostics(await readFile(diagnosticsLog, 'utf8'));
+		const diagnostics = readWidenedAssignmentDiagnostics(
+			await readFile(diagnosticsLog, 'utf8'),
+		);
 		const changed: string[] = [];
 		const changes: string[] = [];
 		const differences: string[] = [];

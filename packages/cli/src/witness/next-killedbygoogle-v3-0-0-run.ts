@@ -190,9 +190,12 @@ export async function runWitnessNextKilledbygoogleV3(): Promise<WitnessNextKille
 		process.env.NPM_CONFIG_OFFLINE !== 'true'
 	)
 		throw new Error('KilledByGoogle v3 Witness requires dual offline controls');
-	if (await exists(witnessEvidence)) throw new Error('KilledByGoogle v3 Witness output collision');
+	if (await exists(witnessEvidence))
+		throw new Error('KilledByGoogle v3 Witness output collision');
 	const provenance = await verifyLinkedWitnessProvenance(root);
-	const canonicalBytes = await readFile(join(root, NEXT_KILLEDBYGOOGLE_V3_CANONICAL_RECEIPT.path));
+	const canonicalBytes = await readFile(
+		join(root, NEXT_KILLEDBYGOOGLE_V3_CANONICAL_RECEIPT.path),
+	);
 	const canonical = JSON.parse(canonicalBytes.toString('utf8')) as {
 		schemaVersion?: unknown;
 		revision?: unknown;
@@ -296,7 +299,7 @@ export async function runWitnessNextKilledbygoogleV3(): Promise<WitnessNextKille
 			'This is one Next lineage under direct Witness and does not establish generic Next support. The lift is only defensible because this application is single-route, zero-API and server-free, and nothing here generalises to API routes, middleware, server rendering, next/image, next/dynamic or next/router.',
 			'The Next lineage readiness score is unchanged; this vertical is not counted before Judge audit.',
 			'Document bytes are not compared and no byte parity is claimed. The era lane delivers the whole application inside its document and the migrated lane delivers a mount element and a module that builds it, which is the central difference of the lift; the oracle used here is the settled DOM and the behaviour on top of it.',
-			'The era lane records one client-router history entry after hydration that the lifted lane has no router to record. Both entries name the same URL, the journey never navigates anywhere, and each lane\'s navigation count is asserted exactly rather than relaxed to fit both.',
+			"The era lane records one client-router history entry after hydration that the lifted lane has no router to record. Both entries name the same URL, the journey never navigates anywhere, and each lane's navigation count is asserted exactly rather than relaxed to fit both.",
 			'The era lane fetches three third-party destinations and the migrated lane fetches one. That difference is recorded rather than normalised away: the two scripts the era document has the parser insert are produced by React after the lift, and a script element React inserts is never executed by the browser.',
 			'No third-party destination was contacted. Every request outside the bounded loopback origin was answered by the harness inside the browser context, so no advertising, analytics or card endpoint received a request and successfulNonLoopback is zero.',
 			'Emotion styling parity is a measurement, not an inference: seven laid-out elements were read for resolved appearance in both lanes and required to agree. The generated class names differ between the lanes because the lift drops Emotion’s Babel plugin, and that difference is in the shipped bytes rather than in what the browser resolved.',
@@ -335,7 +338,11 @@ export async function verifyWitnessNextKilledbygoogleV3(
 	const receipt = parseWitnessNextKilledbygoogleV3Receipt(
 		JSON.parse(await readFile(join(output, 'receipt.json'), 'utf8')),
 	);
-	assertLinkedWitnessProvenanceEquivalent(receipt.provenance, expectedProvenance, "KilledByGoogle v3");
+	assertLinkedWitnessProvenanceEquivalent(
+		receipt.provenance,
+		expectedProvenance,
+		'KilledByGoogle v3',
+	);
 	const canonicalBytes = await readFile(join(root, receipt.canonicalReceipt.path));
 	if (sha256(canonicalBytes) !== receipt.canonicalReceipt.sha256)
 		throw new Error('KilledByGoogle v3 canonical receipt bytes drifted');
@@ -363,7 +370,9 @@ export async function main(args = process.argv.slice(2)): Promise<void> {
 		return;
 	}
 	if (verifyIndex >= 0 && args[verifyIndex + 1]) {
-		const receipt = await verifyWitnessNextKilledbygoogleV3(resolve(root, args[verifyIndex + 1]!));
+		const receipt = await verifyWitnessNextKilledbygoogleV3(
+			resolve(root, args[verifyIndex + 1]!),
+		);
 		process.stdout.write(
 			`${canonicalize({ result: receipt.result, digest: receipt.integrity.canonicalDigest })}\n`,
 		);

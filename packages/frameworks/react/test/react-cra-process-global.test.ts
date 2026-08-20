@@ -52,7 +52,9 @@ describe('CRA process global — reading the bundle', () => {
 	});
 
 	test('a bare value use and typeof are referenced but name no member', () => {
-		const reading = readProcessGlobalUsage('if (typeof process !== "undefined") sink(process);');
+		const reading = readProcessGlobalUsage(
+			'if (typeof process !== "undefined") sink(process);',
+		);
 		expect(reading.referenced).toBe(true);
 		expect(reading.members).toEqual([]);
 		expect(reading.bareReferences.length).toBe(2);
@@ -88,9 +90,15 @@ describe('CRA process global — reading the bundle', () => {
 			readProcessGlobalUsage('process.nextTick(fn); const b = process.browser;', 'b.js'),
 			readProcessGlobalUsage('const v2 = process.version;', 'c.js'),
 		]);
-		expect(merged.members.map((usage) => usage.member)).toEqual(['browser', 'nextTick', 'version']);
+		expect(merged.members.map((usage) => usage.member)).toEqual([
+			'browser',
+			'nextTick',
+			'version',
+		]);
 		expect(merged.members.find((usage) => usage.member === 'nextTick')?.called).toBe(true);
-		expect(merged.members.find((usage) => usage.member === 'version')?.references.length).toBe(2);
+		expect(merged.members.find((usage) => usage.member === 'version')?.references.length).toBe(
+			2,
+		);
 	});
 });
 
@@ -234,7 +242,8 @@ describe('CRA process global — document injection', () => {
 	});
 
 	test('falls back to before the head close when there is no module script', () => {
-		const bare = '<html>\n  <head>\n    <title>x</title>\n  </head>\n  <body></body>\n</html>\n';
+		const bare =
+			'<html>\n  <head>\n    <title>x</title>\n  </head>\n  <body></body>\n</html>\n';
 		const injected = injectProcessGlobalShim(bare, 'globalThis.process = {};');
 		expect(injected.indexOf('<script>')).toBeLessThan(injected.indexOf('</head>'));
 	});
@@ -258,10 +267,14 @@ describe('CRA process global — the Vite plugin', () => {
 				'<!DOCTYPE html>\n<html>\n  <head>\n    <script type="module" src="/assets/index.js"></script>\n  </head>\n  <body></body>\n</html>\n',
 			);
 			const observed: CraProcessGlobalRecord[] = [];
-			const plugin = createCraProcessGlobalPlugin({ observe: (record) => observed.push(record) });
+			const plugin = createCraProcessGlobalPlugin({
+				observe: (record) => observed.push(record),
+			});
 			plugin.configResolved({ build: { outDir } });
 			expect(plugin.transform('const v = process.version;', '/app/src/a.ts')).toBeNull();
-			expect(plugin.transform('process.nextTick(fn);', '/app/node_modules/dep/b.js')).toBeNull();
+			expect(
+				plugin.transform('process.nextTick(fn);', '/app/node_modules/dep/b.js'),
+			).toBeNull();
 			expect(plugin.transform('export const x = 1;', '/app/src/c.ts')).toBeNull();
 			await plugin.closeBundle.handler();
 			const html = await readFile(path.join(outDir, 'index.html'), 'utf8');

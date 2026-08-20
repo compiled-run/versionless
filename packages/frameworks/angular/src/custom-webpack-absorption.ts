@@ -115,7 +115,13 @@ export const NATIVE_STYLE_PIPELINES: Readonly<Record<string, NativeStylePipeline
 	}),
 });
 
-type JsonLike = string | number | boolean | null | readonly JsonLike[] | { [key: string]: JsonLike };
+type JsonLike =
+	| string
+	| number
+	| boolean
+	| null
+	| readonly JsonLike[]
+	| { [key: string]: JsonLike };
 
 type Node = Readonly<Record<string, unknown>>;
 
@@ -295,7 +301,9 @@ function classifyPostcssRule(
 				kind: 'postcss-syntax',
 				detail: value,
 				provided: why !== undefined,
-				why: why ?? `the target builder does not state that it handles the ${value} syntax natively`,
+				why:
+					why ??
+					`the target builder does not state that it handles the ${value} syntax natively`,
 			});
 			continue;
 		}
@@ -452,13 +460,13 @@ export function analyzeCustomWebpackFragment(
 						why: `the rule sets \`${name}\`, which this capability cannot judge`,
 					});
 				const scope = ruleValue['test'];
-					capabilities.push({
-						kind: 'webpack-rule-scope',
-						detail: typeof scope === 'string' ? scope : JSON.stringify(scope ?? null),
-						provided: true,
-						why: 'the scope only says which files the rule applied to; the builder’s own style pipeline covers every style file it compiles, so a narrower scope cannot add a capability',
-					});
-					capabilities.push(...classifyPostcssRule(ruleValue, pipeline));
+				capabilities.push({
+					kind: 'webpack-rule-scope',
+					detail: typeof scope === 'string' ? scope : JSON.stringify(scope ?? null),
+					provided: true,
+					why: 'the scope only says which files the rule applied to; the builder’s own style pipeline covers every style file it compiles, so a narrower scope cannot add a capability',
+				});
+				capabilities.push(...classifyPostcssRule(ruleValue, pipeline));
 			}
 		}
 	}

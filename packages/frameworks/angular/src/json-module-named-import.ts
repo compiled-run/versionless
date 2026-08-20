@@ -85,7 +85,8 @@ export function readNamedBindings(clause: string): readonly JsonNamedBinding[] |
 		if (words.length === 3 && words[1] === 'as') {
 			const exported = words[0] ?? '';
 			const local = words[2] ?? '';
-			if (!/^[A-Za-z_$][\w$]*$/u.test(exported) || !/^[A-Za-z_$][\w$]*$/u.test(local)) return null;
+			if (!/^[A-Za-z_$][\w$]*$/u.test(exported) || !/^[A-Za-z_$][\w$]*$/u.test(local))
+				return null;
 			bindings.push(Object.freeze({ exported, local }));
 			continue;
 		}
@@ -113,7 +114,9 @@ export function defaultLocalFor(specifier: string, taken: ReadonlySet<string>): 
 	const camel = stem
 		.split(/[^A-Za-z0-9]+/u)
 		.filter((part) => part !== '')
-		.map((part, index) => (index === 0 ? part : `${part.charAt(0).toUpperCase()}${part.slice(1)}`))
+		.map((part, index) =>
+			index === 0 ? part : `${part.charAt(0).toUpperCase()}${part.slice(1)}`,
+		)
 		.join('');
 	const base = /^[A-Za-z_$]/u.test(camel) ? camel : `json${camel}`;
 	let candidate = base;
@@ -195,7 +198,9 @@ export function rewriteJsonNamedImports(
 		const quote = declaration.includes(`'${specifier}'`) ? "'" : '"';
 		const clauseText = bindings
 			.map((binding) =>
-				binding.exported === binding.local ? binding.local : `${binding.exported}: ${binding.local}`,
+				binding.exported === binding.local
+					? binding.local
+					: `${binding.exported}: ${binding.local}`,
 			)
 			.join(', ');
 		edits.push({

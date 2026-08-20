@@ -43,7 +43,9 @@ describe('superseded era lockfile', () => {
 				'node_modules/webpack/node_modules/glob': { version: '7.2.3' },
 			},
 		});
-		expect(readNpmLockfileResolutions(source)).toEqual([{ name: '@angular/core', version: '6.1.4' }]);
+		expect(readNpmLockfileResolutions(source)).toEqual([
+			{ name: '@angular/core', version: '6.1.4' },
+		]);
 	});
 
 	it('refuses a document that is not an npm lockfile rather than reading nothing from it', () => {
@@ -72,7 +74,7 @@ describe('superseded era lockfile', () => {
 		expect(result.unhandled).toEqual([]);
 	});
 
-	it('retains a lockfile that still agrees with the manifest, because it is that manifest\'s own resolution', () => {
+	it("retains a lockfile that still agrees with the manifest, because it is that manifest's own resolution", () => {
 		const agreeing = JSON.stringify({
 			lockfileVersion: 1,
 			dependencies: { '@angular/core': { version: '16.2.12' }, rxjs: { version: '7.8.1' } },
@@ -94,7 +96,9 @@ describe('superseded era lockfile', () => {
 			migratedManifest,
 		);
 		expect(result.superseded).toEqual([]);
-		expect(result.unhandled.join(' ')).toContain('yarn.lock is a lockfile this migration does not read');
+		expect(result.unhandled.join(' ')).toContain(
+			'yarn.lock is a lockfile this migration does not read',
+		);
 		expect(result.unhandled.join(' ')).toContain('could not be read as an npm lockfile');
 	});
 

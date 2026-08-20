@@ -43,7 +43,10 @@ import {
 	type SemanticModule,
 	type SourceEdit,
 } from './semantic-module.ts';
-import { NG_MODULE_DECORATOR_NAME, NG_MODULE_DECORATOR_PACKAGE } from './use-position-symbol-successor.ts';
+import {
+	NG_MODULE_DECORATOR_NAME,
+	NG_MODULE_DECORATOR_PACKAGE,
+} from './use-position-symbol-successor.ts';
 
 const CAPABILITY = 'Removed static module method';
 
@@ -161,7 +164,8 @@ export function removeRemovedStaticModuleMethods(
 			if (node.type !== 'CallExpression') return;
 			const callee = node.callee;
 			if (callee.type !== 'MemberExpression' || callee.computed || callee.optional) return;
-			if (callee.property.type !== 'Identifier' || callee.property.name !== claim.method) return;
+			if (callee.property.type !== 'Identifier' || callee.property.name !== claim.method)
+				return;
 			if (!denotesExport(module, callee.object, imports, claim.symbol)) return;
 			calls.push(Object.freeze({ call: node, receiver: callee.object }));
 		});

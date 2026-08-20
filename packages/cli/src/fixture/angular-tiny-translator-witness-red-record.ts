@@ -185,7 +185,11 @@ async function measureLane(
 	}
 	const { origin, ...observation } = await readPassReceipt(receiptRoot, lane);
 	return {
-		refusal: refusal.split(root).join('{repository-root}').split(origin).join(ORIGIN_PLACEHOLDER),
+		refusal: refusal
+			.split(root)
+			.join('{repository-root}')
+			.split(origin)
+			.join(ORIGIN_PLACEHOLDER),
 		observation,
 	};
 }

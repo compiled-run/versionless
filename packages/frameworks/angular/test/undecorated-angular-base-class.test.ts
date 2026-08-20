@@ -40,7 +40,9 @@ describe('undecorated Angular base class', () => {
 		expect(migrated.source).toContain(
 			"import {Input, OnDestroy, OnInit, Output, ViewChild, Directive} from '@angular/core';",
 		);
-		expect(migrated.source).toContain('@Directive()\nexport abstract class SettingsComponent<T>');
+		expect(migrated.source).toContain(
+			'@Directive()\nexport abstract class SettingsComponent<T>',
+		);
 		expect(migrated.changes).toHaveLength(1);
 		const [change] = migrated.changes;
 		expect(change?.className).toBe('SettingsComponent');

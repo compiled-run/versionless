@@ -56,7 +56,11 @@ describe('stylesheet url rebase', () => {
 
 	it('leaves a url that already resolves from the partial exactly as written', () => {
 		const source = 'src: url(local.woff2);\n';
-		const migration = rebaseStylesheetUrls('src/styles/font/material-icons.scss', source, reading);
+		const migration = rebaseStylesheetUrls(
+			'src/styles/font/material-icons.scss',
+			source,
+			reading,
+		);
 		expect(migration.changed).toBe(false);
 		expect(migration.source).toBe(source);
 		expect(migration.unhandled).toEqual([]);
@@ -69,7 +73,11 @@ describe('stylesheet url rebase', () => {
 			'c { background: url(https://example.test/x.png); }',
 			'',
 		].join('\n');
-		const migration = rebaseStylesheetUrls('src/styles/font/material-icons.scss', source, reading);
+		const migration = rebaseStylesheetUrls(
+			'src/styles/font/material-icons.scss',
+			source,
+			reading,
+		);
 		expect(migration.changed).toBe(false);
 		expect(migration.unhandled).toEqual([]);
 	});

@@ -171,7 +171,9 @@ async function readBuild(index: number): Promise<BuildReading> {
 	return Object.freeze({
 		name: `build-${String(index)}`,
 		exitStatus: Number.parseInt(
-			(await readFile(path.join(STAGE_DIRECTORY, `build-${String(index)}.exit`), 'utf8')).trim(),
+			(
+				await readFile(path.join(STAGE_DIRECTORY, `build-${String(index)}.exit`), 'utf8')
+			).trim(),
 			10,
 		),
 		diagnostics: log.match(DIAGNOSTIC)?.length ?? 0,
@@ -193,11 +195,13 @@ export async function buildFinalLaneRecord(): Promise<SealedRecord> {
 		schemaVersion: 'versionless.angular-tiny-translator-final-lane.v1',
 		unit: UNIT,
 		consentId: CONSENT,
-		result: identical ? 'green-deterministic-parity-by-logical-name' : 'green-not-deterministic',
+		result: identical
+			? 'green-deterministic-parity-by-logical-name'
+			: 'green-not-deterministic',
 		meaning:
 			'The four demands u17c itemised are answered by capabilities that read the installed ' +
 			'closure and the compiler. Answering them uncovered a fifth — the webpack `~` prefix in ' +
-			'this application\'s stylesheets — which is answered by a fifth capability, and the ' +
+			"this application's stylesheets — which is answered by a fifth capability, and the " +
 			'production build then went green. Two builds over the same bytes emitted the same ' +
 			'inventory, file for file and digest for digest. Parity against the era lane is stated ' +
 			'at the level the two artifacts can be compared at, and its limits are named.',
@@ -227,7 +231,8 @@ export async function buildFinalLaneRecord(): Promise<SealedRecord> {
 			{
 				name: 'entry-components-removal',
 				package: '@versionless/angular',
-				answers: 'the `entryComponents` demand — a property Angular 13 removed from the NgModule type',
+				answers:
+					'the `entryComponents` demand — a property Angular 13 removed from the NgModule type',
 				mechanism:
 					'The property has no successor, so the only question is whether dropping it is an equivalence, and the capability answers that before it edits. The decorator is located by resolving the binding `@angular/core` exported as `NgModule`; the literal is read only when every one of its properties is a plain named data property; and the drop happens only when every component `entryComponents` names is also named — as a resolved binding, not as a spelling — by `declarations` or `bootstrap` of the same literal. A component reachable through neither is refused by name and the property is left where it is.',
 				applicationFilesChanged: 1,
@@ -235,15 +240,17 @@ export async function buildFinalLaneRecord(): Promise<SealedRecord> {
 			{
 				name: 'module-with-providers-type-argument',
 				package: '@versionless/angular',
-				answers: 'the bare `ModuleWithProviders` demand — a type that stopped defaulting its parameter in Angular 10',
+				answers:
+					'the bare `ModuleWithProviders` demand — a type that stopped defaulting its parameter in Angular 10',
 				mechanism:
-					"The argument is never guessed. It is read from the one place the source states it: the receiver of the static call the annotated variable is initialised by — `RouterModule.forRoot(...)` states `RouterModule` — or the class a static method with the annotation is declared on. The receiver has to be an identifier the module resolves to a binding, so a namespace member or an unbound name is refused. An annotation in any other position is refused by name, because nothing in the source says which module it configures. An annotation that already carries an argument is not a site.",
+					'The argument is never guessed. It is read from the one place the source states it: the receiver of the static call the annotated variable is initialised by — `RouterModule.forRoot(...)` states `RouterModule` — or the class a static method with the annotation is declared on. The receiver has to be an identifier the module resolves to a binding, so a namespace member or an unbound name is refused. An annotation in any other position is refused by name, because nothing in the source says which module it configures. An annotation that already carries an argument is not a site.',
 				applicationFilesChanged: 1,
 			},
 			{
 				name: 'widened-union-narrowing',
 				package: '@versionless/angular',
-				answers: "the `FileReader.result` demand — a DOM declaration TypeScript widened under the application",
+				answers:
+					'the `FileReader.result` demand — a DOM declaration TypeScript widened under the application',
 				mechanism:
 					"Diagnostic-driven, the way the RxJS migration is: the compiler's own TS2322 supplies the position, the union the expression has and the type the position wants, and nothing about the DOM is written into the capability. The narrowing is a runtime `typeof` guard rather than an assertion, and it is only written when the shape makes it total — the flagged expression is a reference to a `const` declared directly in a block, the guard covers every statement after that declaration to the end of the block, every reference to the binding is inside that region, and the wanted type is a `typeof`-testable member of the named union. Everything else is refused by name.",
 				applicationFilesChanged: 1,
@@ -252,7 +259,7 @@ export async function buildFinalLaneRecord(): Promise<SealedRecord> {
 				name: 'webpack-tilde-style-specifier',
 				package: '@versionless/angular',
 				answers:
-					"the fifth family, invisible until the four above cleared: six stylesheet at-rules still asking webpack to resolve a module through the `~` prefix",
+					'the fifth family, invisible until the four above cleared: six stylesheet at-rules still asking webpack to resolve a module through the `~` prefix',
 				mechanism:
 					"The successor is the same specifier without the prefix, so the transform is one character and the whole of the capability is the check in front of it. The prefix is dropped only when the installed closure carries a file sass would resolve the un-prefixed specifier to, tried in sass's own order — the exact path, the partial, each of sass's extensions, and the directory index. The closure is asked, not assumed: the caller supplies the single question `does the closure carry this path`, so the transform is a pure function of the module and the reading. A tilde import the closure cannot answer is refused by name rather than un-prefixed into a different failure.",
 				applicationFilesChanged: 5,
@@ -268,14 +275,13 @@ export async function buildFinalLaneRecord(): Promise<SealedRecord> {
 				{
 					round: 1,
 					diagnosticsRead: 'build-4.stderr.log (the u17c build)',
-					moved:
-						'deep-import: 1 file. entryComponents: 1 file. ModuleWithProviders: 1 file. narrowing: 1 file. The four TypeScript demands cleared together.',
+					moved: 'deep-import: 1 file. entryComponents: 1 file. ModuleWithProviders: 1 file. narrowing: 1 file. The four TypeScript demands cleared together.',
 				},
 				{
 					round: 2,
-					diagnosticsRead: 'build-5.stderr.log — zero TypeScript diagnostics, and the sass pipeline failing on six tilde specifiers',
-					moved:
-						'tilde: 5 files, 6 at-rules. The other four capabilities found nothing left to do, which is the check that they are idempotent.',
+					diagnosticsRead:
+						'build-5.stderr.log — zero TypeScript diagnostics, and the sass pipeline failing on six tilde specifiers',
+					moved: 'tilde: 5 files, 6 at-rules. The other four capabilities found nothing left to do, which is the check that they are idempotent.',
 				},
 			],
 		},
@@ -317,7 +323,7 @@ export async function buildFinalLaneRecord(): Promise<SealedRecord> {
 		notEstablished: [
 			'Nothing was executed. The build is green and two artifacts exist; no browser opened either of them and no journey was driven.',
 			'Byte parity is not claimed and is not available. The two builders are eleven majors apart.',
-			"The `typeof` guard the narrowing inserted carries a declared difference: where `FileReader.result` is not a string, the two statements it guards no longer run. The application reads the file with `readAsText`, and nothing in this lane observes that at run time.",
+			'The `typeof` guard the narrowing inserted carries a declared difference: where `FileReader.result` is not a string, the two statements it guards no longer run. The application reads the file with `readAsText`, and nothing in this lane observes that at run time.',
 			'`SwUpdate.available` and `UpdateAvailableEvent` are deprecated on the installed surface. The redirection made the import resolve; it did not move the call site off the deprecated member, and no capability in this unit claims to have.',
 			"The spec files were rewritten where the same capabilities applied to them, and the production build does not compile them. Whether this application's tests pass is not established here.",
 			'The era inventory this lane compares against was emitted by the era lane for the plain variant. The application also publishes four localised variants, and none of them was built on either side.',

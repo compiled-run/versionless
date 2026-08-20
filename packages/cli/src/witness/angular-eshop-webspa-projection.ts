@@ -369,9 +369,19 @@ export function createEshopWebspaProjection(): EshopWebspaProjection {
 					json(200, ESHOP_WEBSPA_CONFIGURATION),
 				);
 			if (pathname === BRANDS_PATH && request.method === 'GET')
-				return record(request, 'catalog.brands', 'served', json(200, ESHOP_WEBSPA_SEED.brands));
+				return record(
+					request,
+					'catalog.brands',
+					'served',
+					json(200, ESHOP_WEBSPA_SEED.brands),
+				);
 			if (pathname === TYPES_PATH && request.method === 'GET')
-				return record(request, 'catalog.types', 'served', json(200, ESHOP_WEBSPA_SEED.types));
+				return record(
+					request,
+					'catalog.types',
+					'served',
+					json(200, ESHOP_WEBSPA_SEED.types),
+				);
 
 			const query = parseQuery(request.search);
 			const pageIndex = numberFrom(query['pageIndex'], 0);

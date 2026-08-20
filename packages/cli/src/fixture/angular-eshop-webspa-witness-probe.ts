@@ -54,10 +54,12 @@ async function probeLane(lane: Lane): Promise<void> {
 				items: all('.esh-catalog-item').length,
 				names: texts('.esh-catalog-name span'),
 				prices: texts('.esh-catalog-price span'),
-				brandOptions: all('.esh-catalog-label[data-title="brand"] option').map((element) => [
-					(element as HTMLOptionElement).value,
-					(element.textContent ?? '').trim(),
-				]),
+				brandOptions: all('.esh-catalog-label[data-title="brand"] option').map(
+					(element) => [
+						(element as HTMLOptionElement).value,
+						(element.textContent ?? '').trim(),
+					],
+				),
 				typeOptions: all('.esh-catalog-label[data-title="type"] option').map((element) => [
 					(element as HTMLOptionElement).value,
 					(element.textContent ?? '').trim(),

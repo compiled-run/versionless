@@ -41,9 +41,10 @@ describe('migrateNodeCoreBindings', () => {
 
 	it('evaluates a call-expression argument exactly once', () => {
 		const migration = migrate(
-			["import {isNullOrUndefined} from 'util';", 'export const x = isNullOrUndefined(load());'].join(
-				'\n',
-			),
+			[
+				"import {isNullOrUndefined} from 'util';",
+				'export const x = isNullOrUndefined(load());',
+			].join('\n'),
 		);
 		expect(migration.source).toContain('export const x = (load() == null);');
 		expect(migration.source.match(/load\(\)/gu)).toHaveLength(1);
@@ -67,21 +68,26 @@ describe('migrateNodeCoreBindings', () => {
 			'export const line = `total: ${String(this.total)}\\nfailed: ${String(this.failed)}`;',
 		);
 		expect(migration.declaredDifferences).toHaveLength(1);
-		expect(migration.declaredDifferences[0]).toContain('inspected before and is stringified now');
+		expect(migration.declaredDifferences[0]).toContain(
+			'inspected before and is stringified now',
+		);
 	});
 
 	it('escapes template syntax the era format string carried literally', () => {
 		const migration = migrate(
-			["import {format} from 'util';", "export const line = format('cost ${x} `q` %s', v);"].join(
-				'\n',
-			),
+			[
+				"import {format} from 'util';",
+				"export const line = format('cost ${x} `q` %s', v);",
+			].join('\n'),
 		);
 		expect(migration.source).toContain('`cost \\${x} \\`q\\` ${String(v)}`');
 	});
 
 	it('declares no difference for a format call with no arguments to interpolate', () => {
 		const migration = migrate(
-			["import {format} from 'util';", "export const line = format('nothing to fill');"].join('\n'),
+			["import {format} from 'util';", "export const line = format('nothing to fill');"].join(
+				'\n',
+			),
 		);
 		expect(migration.source).toContain('export const line = `nothing to fill`;');
 		expect(migration.declaredDifferences).toEqual([]);
@@ -118,9 +124,10 @@ describe('migrateNodeCoreBindings', () => {
 	});
 
 	it('refuses a format call whose format string is not a literal', () => {
-		const source = ["import {format} from 'util';", 'export const line = format(template, v);'].join(
-			'\n',
-		);
+		const source = [
+			"import {format} from 'util';",
+			'export const line = format(template, v);',
+		].join('\n');
 		expect(migrate(source).changed).toBe(false);
 		expect(migrate(source).unhandled.join(' ')).toContain('cannot read at rest');
 	});
@@ -136,7 +143,9 @@ describe('migrateNodeCoreBindings', () => {
 	});
 
 	it('refuses a namespace import of the core module', () => {
-		const source = ["import * as util from 'util';", 'export const x = util.isString(v);'].join('\n');
+		const source = ["import * as util from 'util';", 'export const x = util.isString(v);'].join(
+			'\n',
+		);
 		const migration = migrate(source);
 		expect(migration.changed).toBe(false);
 		expect(migration.unhandled.join(' ')).toContain('namespace binding');

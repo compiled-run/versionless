@@ -33,8 +33,7 @@ import {
  * This module is the schema and its parser only. No journey ran to produce this
  * unit's evidence; the runner and its published receipt are a separate unit.
  */
-export const WITNESS_REACT_CYPRESS_RWA_SCHEMA =
-	'versionless.witness-react-cypress-rwa.v1' as const;
+export const WITNESS_REACT_CYPRESS_RWA_SCHEMA = 'versionless.witness-react-cypress-rwa.v1' as const;
 export const WITNESS_REACT_CYPRESS_RWA_RECEIPT_PATH =
 	'evidence/runs/witness-react-cypress-rwa/receipt.json' as const;
 export const REACT_CYPRESS_RWA_FIXTURE = 'react-cypress-rwa' as const;
@@ -625,7 +624,10 @@ export type WitnessReactCypressRwaLaneParity = {
 export type WitnessReactCypressRwaTwoLaneParity = {
 	result: 'parity';
 	behaviorDigest: string;
-	lanes: { baseline: WitnessReactCypressRwaLaneParity; migrated: WitnessReactCypressRwaLaneParity };
+	lanes: {
+		baseline: WitnessReactCypressRwaLaneParity;
+		migrated: WitnessReactCypressRwaLaneParity;
+	};
 	behaviorParity: true;
 	lanesAreDistinctBuilds: true;
 };
@@ -689,7 +691,9 @@ export function summarizeWitnessReactCypressRwaTwoLaneParity(
 		if (!expected.delete(key))
 			throw new Error(`Cypress RWA calibration pass is unexpected or duplicated: ${key}`);
 		assertMeasuredPassClean(pass, key);
-		semanticByLane.get(pass.lane)!.set(pass.pass, witnessReactCypressRwaMeasuredSemanticDigest(pass));
+		semanticByLane
+			.get(pass.lane)!
+			.set(pass.pass, witnessReactCypressRwaMeasuredSemanticDigest(pass));
 		behaviors.add(witnessReactCypressRwaMeasuredBehaviorDigest(pass));
 	}
 	if (expected.size !== 0)

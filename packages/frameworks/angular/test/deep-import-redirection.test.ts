@@ -20,7 +20,11 @@ const reading: DeepImportReading = Object.freeze({
 				'.',
 				'export declare class WorkerUpdate {}\nexport declare interface UpdateEvent {}\n',
 			),
-			readEntryPointSurface('@scope/worker', './config', 'export declare class WorkerConfig {}\n'),
+			readEntryPointSurface(
+				'@scope/worker',
+				'./config',
+				'export declare class WorkerConfig {}\n',
+			),
 		]),
 	}),
 	reachableSpecifiers: Object.freeze([

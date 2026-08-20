@@ -394,9 +394,7 @@ export function witnessAngularFactoriolabBehaviorDigest(
 	);
 }
 
-export function witnessAngularFactoriolabDigest(
-	receipt: WitnessAngularFactoriolabReceipt,
-): string {
+export function witnessAngularFactoriolabDigest(receipt: WitnessAngularFactoriolabReceipt): string {
 	const copy = structuredClone(receipt);
 	copy.integrity.canonicalDigest = '';
 	return sha256(canonicalize(copy));
@@ -533,7 +531,10 @@ function assertCancelledDuplicateFetches(
  * exceeded its `clientHeight` would mean a scroll surface existed and went
  * unexercised, which fails rather than passes quietly.
  */
-function assertScrollAbsence(absence: WitnessMeasuredScrollAbsence | undefined, label: string): void {
+function assertScrollAbsence(
+	absence: WitnessMeasuredScrollAbsence | undefined,
+	label: string,
+): void {
 	if (
 		absence === undefined ||
 		absence.state !== 'measured-no-overflowing-document' ||
@@ -629,8 +630,9 @@ export function parseWitnessAngularFactoriolabReceipt(
 			run.servedStatic.byteIdentical !== true ||
 			run.scrollSurface !== undefined ||
 			run.interactions.length === 0 ||
-			[...new Set(run.interactions.map((interaction) => interaction.kind))].sort().join(',') !==
-				'click,hover,press,type' ||
+			[...new Set(run.interactions.map((interaction) => interaction.kind))]
+				.sort()
+				.join(',') !== 'click,hover,press,type' ||
 			run.semanticDigest !== witnessAngularFactoriolabRawDigest(run) ||
 			run.behaviorDigest !== witnessAngularFactoriolabBehaviorDigest(run) ||
 			!exact(run.routes, WITNESS_ANGULAR_FACTORIOLAB_ROUTES)
@@ -763,7 +765,9 @@ export async function verifyWitnessAngularFactoriolabEvidence(rootDir = '.') {
 			digest?: unknown;
 		};
 		if (parsed.schemaVersion !== bound.schemaVersion || parsed.digest !== bound.digest)
-			throw new Error(`Angular factoriolab bound build receipt identity differs: ${bound.path}`);
+			throw new Error(
+				`Angular factoriolab bound build receipt identity differs: ${bound.path}`,
+			);
 	}
 	if (
 		(await readFile(join(dirname(receiptPath), 'receipt.md'), 'utf8')) !==

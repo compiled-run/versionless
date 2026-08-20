@@ -35,7 +35,8 @@ export const HOLDOUT_REACT_CYPRESS_RWA_WITNESS_MARKDOWN_PATH =
 	'evidence/runs/holdout-react-cypress-rwa/green-2026-08-13/receipt.md' as const;
 export const HOLDOUT_REACT_CYPRESS_RWA_WITNESS_FIXTURE = 'react-cypress-rwa' as const;
 export const HOLDOUT_REACT_CYPRESS_RWA_WITNESS_APPLICATION = 'cypress-realworld-app' as const;
-export const HOLDOUT_REACT_CYPRESS_RWA_WITNESS_UNIT = 'lrapr-t019/u1-refreeze-rerun-publish' as const;
+export const HOLDOUT_REACT_CYPRESS_RWA_WITNESS_UNIT =
+	'lrapr-t019/u1-refreeze-rerun-publish' as const;
 
 /**
  * The composite fingerprint over the five frozen subtrees, at the boundary this
@@ -298,8 +299,10 @@ export async function deriveHoldoutReactCypressRwaWitnessReceipt(
 		throw new Error('Cypress RWA witness holdout parity document must carry four passes');
 	const measuredPasses = parityDoc.passes.map((pass, index) => {
 		const entry = witnessRecord(pass, `pass[${index}]`);
-		return witnessRecord(entry.measured, `pass[${index}].measured`) as unknown as
-			WitnessReactCypressRwaMeasuredPass;
+		return witnessRecord(
+			entry.measured,
+			`pass[${index}].measured`,
+		) as unknown as WitnessReactCypressRwaMeasuredPass;
 	});
 	// Recompute the two-lane parity + pass-twice determinism verdict from the
 	// measured passes: this reproves 51/51 both lanes, one behaviour digest, each
@@ -322,7 +325,9 @@ export async function deriveHoldoutReactCypressRwaWitnessReceipt(
 	// count taken from any pass are the canonical, lane-independent values.
 	const navigations = [...behavior.navigations];
 	if (canonicalize(navigations) !== canonicalize([...WITNESS_REACT_CYPRESS_RWA_ROUTES]))
-		throw new Error('Cypress RWA witness holdout navigations differ from the pinned route sequence');
+		throw new Error(
+			'Cypress RWA witness holdout navigations differ from the pinned route sequence',
+		);
 
 	const lane = (
 		name: 'baseline' | 'migrated',
@@ -386,7 +391,10 @@ export async function deriveHoldoutReactCypressRwaWitnessReceipt(
 			bundler: witnessText(migratedLane.bundler, 'migrated bundler'),
 			attempts: witnessCount(migratedLane.attempts, 'migrated attempts'),
 			deterministic: true,
-			modulesTransformed: witnessCount(migratedLane.modulesTransformed, 'modules transformed'),
+			modulesTransformed: witnessCount(
+				migratedLane.modulesTransformed,
+				'modules transformed',
+			),
 			transformPhase: witnessText(migratedLane.transformPhase, 'transform phase'),
 			emit: witnessText(migratedLane.emit, 'emit phase'),
 			outputFiles: witnessCount(migratedLane.outputFiles, 'output files'),
@@ -433,11 +441,14 @@ export async function deriveHoldoutReactCypressRwaWitnessReceipt(
 		sha256(holdoutReactCypressRwaWitnessPreimage(receipt.frozenAdapter.subtrees)) !==
 		receipt.frozenAdapter.compositeFingerprint
 	)
-		throw new Error('Cypress RWA witness holdout composite does not match its declared subtrees');
+		throw new Error(
+			'Cypress RWA witness holdout composite does not match its declared subtrees',
+		);
 	if (
 		receipt.journey.lanes.baseline.legs.ok !== receipt.journey.lanes.baseline.legs.total ||
 		receipt.journey.lanes.migrated.legs.ok !== receipt.journey.lanes.migrated.legs.total ||
-		receipt.journey.lanes.baseline.semanticDigest === receipt.journey.lanes.migrated.semanticDigest
+		receipt.journey.lanes.baseline.semanticDigest ===
+			receipt.journey.lanes.migrated.semanticDigest
 	)
 		throw new Error('Cypress RWA witness holdout journey evidence is inconsistent');
 	receipt.integrity.canonicalDigest = holdoutReactCypressRwaWitnessDigest(receipt);

@@ -49,9 +49,7 @@ describe('LinkFree direct Witness command', () => {
 	it('keeps the committed synthetic corpus byte identical to its generator', async () => {
 		const inventory = await verifyLinkfreeSyntheticCorpus(root);
 		expect(inventory.files).toHaveLength(LINKFREE_SYNTHETIC_PROFILES.length);
-		const committed = (
-			await readdir(join(root, LINKFREE_SYNTHETIC_CORPUS_DIRECTORY))
-		).sort();
+		const committed = (await readdir(join(root, LINKFREE_SYNTHETIC_CORPUS_DIRECTORY))).sort();
 		expect(committed).toEqual(
 			linkfreeSyntheticCorpusDocuments()
 				.map((document) => document.path)
@@ -65,7 +63,8 @@ describe('LinkFree direct Witness command', () => {
 			expect(profile.username).toBe(`synthetic-${profile.name.toLowerCase()}`);
 			expect(profile.avatar).toContain(`/synthetic/${profile.username}.png`);
 			expect(profile.bio).toContain('Not a person');
-			for (const link of profile.links) expect(link.url).toContain('https://example.invalid/');
+			for (const link of profile.links)
+				expect(link.url).toContain('https://example.invalid/');
 		}
 	});
 
@@ -87,7 +86,10 @@ describe('LinkFree direct Witness command', () => {
 		const corpus = JSON.parse(
 			await readFile(join(artifacts, 'witness-synthetic-corpus.json'), 'utf8'),
 		) as {
-			staged: Record<string, { corpus: { aggregateSha256: string }; bundlerAuthoredPaths: number }>;
+			staged: Record<
+				string,
+				{ corpus: { aggregateSha256: string }; bundlerAuthoredPaths: number }
+			>;
 		};
 		expect(journeys).toHaveLength(4);
 		expect(mutation.intendedFailure).toBe(true);

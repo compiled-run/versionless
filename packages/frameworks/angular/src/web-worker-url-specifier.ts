@@ -170,7 +170,7 @@ export function rewriteWorkerUrlSpecifiers(
 		if (resolved === null) {
 			unhandled.push(
 				`${at}: '${specifier}' resolves to no worker source the tree carries under the ` +
-					'workspace\'s worker tsconfig, so the chunk the URL form asks for would have nothing ' +
+					"workspace's worker tsconfig, so the chunk the URL form asks for would have nothing " +
 					'to compile.',
 			);
 			return;
@@ -181,8 +181,8 @@ export function rewriteWorkerUrlSpecifiers(
 				`${at}: the construction of '${specifier}' declares ` +
 					`${workerType === null ? 'no readable options `type`' : `type: '${workerType}'`}, and ` +
 					'this capability writes the URL form only where the options already say the worker is ' +
-					'a module. Deciding the emitted chunk\'s format is the application\'s call, not this ' +
-					'rewrite\'s.',
+					"a module. Deciding the emitted chunk's format is the application's call, not this " +
+					"rewrite's.",
 			);
 			return;
 		}

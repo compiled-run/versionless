@@ -28,8 +28,17 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import * as path from 'pathe';
 import { canonical, sha256 } from './angular-factoriolab-migration-run.ts';
-import { sealRecord, verifySealedRecord, type SealedRecord } from './angular-factoriolab-build-lanes-run.ts';
-import { CONSENT, COMMIT, UNIT, APPLICATION_SUBPATH } from './angular-eshop-webspa-migration-run.ts';
+import {
+	sealRecord,
+	verifySealedRecord,
+	type SealedRecord,
+} from './angular-factoriolab-build-lanes-run.ts';
+import {
+	CONSENT,
+	COMMIT,
+	UNIT,
+	APPLICATION_SUBPATH,
+} from './angular-eshop-webspa-migration-run.ts';
 
 const repositoryRoot = path.resolve(import.meta.dirname, '../../../..');
 
@@ -46,7 +55,11 @@ export const ATTEMPT_FILE = path.join(INGEST_DIRECTORY, 'attempt.json');
  * the first conflict it finds, so a lane that stops on one gap has not thereby
  * established that the others are absent — nor that they are present in a log.
  */
-export type GapEvidence = 'lane-log' | 'era-closure-declaration' | 'migrated-manifest-reading' | 'seam-refusal';
+export type GapEvidence =
+	| 'lane-log'
+	| 'era-closure-declaration'
+	| 'migrated-manifest-reading'
+	| 'seam-refusal';
 
 /**
  * One thing the frozen engine could not carry, stated so that answering it needs
@@ -91,7 +104,8 @@ export const GAPS: readonly MigrationGap[] = Object.freeze([
 		id: 'G1',
 		stage: 'install' as const,
 		site: '@ng-bootstrap/ng-bootstrap',
-		subject: 'dependencies.@ng-bootstrap/ng-bootstrap "3.1.0", carried through the alignment unchanged and unreported',
+		subject:
+			'dependencies.@ng-bootstrap/ng-bootstrap "3.1.0", carried through the alignment unchanged and unreported',
 		library: '@ng-bootstrap/ng-bootstrap 3.1.0 -> the line that declares an Angular 16 peer',
 		evidence: 'lane-log' as const,
 		observed:
@@ -107,7 +121,8 @@ export const GAPS: readonly MigrationGap[] = Object.freeze([
 		id: 'G2',
 		stage: 'install' as const,
 		site: 'preboot',
-		subject: 'dependencies.preboot "6.0.0-beta.5", carried through the alignment unchanged and unreported',
+		subject:
+			'dependencies.preboot "6.0.0-beta.5", carried through the alignment unchanged and unreported',
 		library: 'preboot 6.0.0-beta.5 -> the line that declares an Angular 16 peer',
 		evidence: 'era-closure-declaration' as const,
 		observed:
@@ -123,7 +138,8 @@ export const GAPS: readonly MigrationGap[] = Object.freeze([
 		id: 'G3',
 		stage: 'source' as const,
 		site: 'Client/modules/shared/shared.module.ts, Client/modules/shared/services/security.service.ts, Client/modules/basket/basket.service.ts, Client/modules/catalog/catalog.service.ts, Client/modules/campaigns/campaigns.service.ts, Client/modules/orders/orders.service.ts',
-		subject: '`@angular/http` imported at 6 sites — HttpModule and JsonpModule in an NgModule `imports` array, Http/Response/Headers in one service, and Response alone in four more',
+		subject:
+			'`@angular/http` imported at 6 sites — HttpModule and JsonpModule in an NgModule `imports` array, Http/Response/Headers in one service, and Response alone in four more',
 		library: '@angular/http, removed by Angular after the 7 line',
 		evidence: 'seam-refusal' as const,
 		observed:
@@ -133,13 +149,14 @@ export const GAPS: readonly MigrationGap[] = Object.freeze([
 		whyTheEngineCannotCarryIt:
 			'The only public frozen surface that answers "this specifier is gone and the name lives somewhere else now" is `succeedRemovedEntryPointSymbols`, and its claim type `DocumentedSymbolSuccessor` carries an `arity`: the successor is written down as a replacement for a **call** of a stated shape, and the capability refuses every use of the symbol that is not the callee of a call. That gate is not an accident — its own documentation states that half a rewrite is worse than none — and it is exactly wrong for this package. None of @angular/http\'s five symbols is a creation function: `Http` is a constructor-injected service, `Response` is a type written in a type position, `Headers` is constructed with `new`, and `HttpModule`/`JsonpModule` are NgModule values named inside an `imports` array literal. The seam reached its per-symbol gates — the reading is complete, `@angular/http` is confirmed unreachable in the target closure, and `@angular/common/http`@16.2.12 publishes HttpClient, HttpHeaders, HttpResponse and HttpClientModule — and refused on call shape at every site. Beside it, `declareApplicationSourceDependencies` reports the same package from the other direction: the cell dropped the declaration as `no-successor` and the source still names it, so the migrated tree declares a package it imports at six sites.',
 		neededTransform:
-			'A value-position successor capability: one that carries a symbol whose successor is a **class, type or NgModule value** rather than a call, and that can move it across package boundaries to an entry point of a package the cell already carries. It needs three things the call-shaped seam does not have — a use-position classifier (type reference, `new` target, array element, constructor parameter type), a per-symbol notion of what a successor substitution means in each of those positions, and a refusal for a symbol with no successor at all. `JsonpModule` is that last case and is the reason the capability cannot be a rename table: Angular\'s JSONP successor is `HttpClientJsonpModule`, which requires `HttpClientModule` beside it and changes how a JSONP request is written at the call site.',
+			"A value-position successor capability: one that carries a symbol whose successor is a **class, type or NgModule value** rather than a call, and that can move it across package boundaries to an entry point of a package the cell already carries. It needs three things the call-shaped seam does not have — a use-position classifier (type reference, `new` target, array element, constructor parameter type), a per-symbol notion of what a successor substitution means in each of those positions, and a refusal for a symbol with no successor at all. `JsonpModule` is that last case and is the reason the capability cannot be a rename table: Angular's JSONP successor is `HttpClientJsonpModule`, which requires `HttpClientModule` beside it and changes how a JSONP request is written at the call site.",
 	}),
 	Object.freeze({
 		id: 'G4',
 		stage: 'build' as const,
 		site: 'package.json scripts.build:prod',
-		subject: '"ng build --prod --aot --extract-css", carried through the migration byte-identical',
+		subject:
+			'"ng build --prod --aot --extract-css", carried through the migration byte-identical',
 		library: '@angular/cli 6 -> 16 flag surface',
 		evidence: 'migrated-manifest-reading' as const,
 		observed:
@@ -149,19 +166,20 @@ export const GAPS: readonly MigrationGap[] = Object.freeze([
 		whyTheEngineCannotCarryIt:
 			'No capability in the frozen Angular subtree reads `scripts` on a package manifest. The only occurrences of the key are in `angular-cli-json-workspace-synthesis.ts`, where `scripts` names the build option of that name in a CLI 1.x `apps[]` entry — a different thing entirely. The engine migrates the workspace the build is configured by and leaves the command line that invokes it where it was.',
 		neededTransform:
-			'A script-surface capability that reads the npm scripts naming the workspace\'s own CLI binary and retargets removed flags against the cell\'s CLI line — `--prod` to `--configuration production`, `--extract-css` dropped where the workspace no longer declares it. It has a natural refusal: a script whose command it cannot parse is reported rather than rewritten.',
+			"A script-surface capability that reads the npm scripts naming the workspace's own CLI binary and retargets removed flags against the cell's CLI line — `--prod` to `--configuration production`, `--extract-css` dropped where the workspace no longer declares it. It has a natural refusal: a script whose command it cannot parse is reported rather than rewritten.",
 	}),
 	Object.freeze({
 		id: 'G5',
 		stage: 'install' as const,
 		site: 'package-lock.json',
-		subject: 'the era lockfile, lockfileVersion 1, 902 top-level entries, left in the tree beside a manifest that now asks for Angular 16',
+		subject:
+			'the era lockfile, lockfileVersion 1, 902 top-level entries, left in the tree beside a manifest that now asks for Angular 16',
 		library: 'npm 5 lockfile v1 -> npm 8',
 		evidence: 'lane-log' as const,
 		observed:
 			'npm WARN old lockfile ... npm ERR! code ERESOLVE / ERESOLVE could not resolve / Found: @angular-devkit/build-angular@0.7.5 / dev @angular-devkit/build-angular@"^16.2.0" from the root project / Conflicting peer dependency: typescript@5.1.6 (migration/u5-lane-install-attempt1-era-lockfile.log)',
 		whyTheEraToolchainAccepted:
-			'The lockfile is the era closure\'s own resolution and is exactly what made the baseline install reproducible.',
+			"The lockfile is the era closure's own resolution and is exactly what made the baseline install reproducible.",
 		whyTheEngineCannotCarryIt:
 			'`AngularMigration.removedFiles` names `tslint.json` and nothing else. The engine has a capability that decides a configuration file should no longer exist — `tslintConfigRemovals` — and no capability that decides the era *lockfile* has been superseded by the manifest it just rewrote. The lane applied the established precedent instead (the pigallery2 migrated lane, and the super-productivity lane before it, move the era lockfile out and retain it), and the retained copy is byte-identical to the one removed: sha256 fafdef05d482aba0427d7f1036cbf3b17101783fca0194b61f6d1cbc140816e0, the same digest the baseline unit recorded for the authored lock.',
 		neededTransform:
@@ -193,7 +211,7 @@ export const CAPABILITY_COMPOSITION = Object.freeze({
 	stoodDown: Object.freeze([
 		'angular-cli-json-workspace-synthesis — correctly. `isAngularCliOneWorkspace` reads the document\'s shape rather than a version number, and this workspace is an angular.json with a projects map. That it is `"version": 1` — the first angular.json generation the CLI ever wrote — did not confuse it, which is the interesting part: v1 here means the first angular.json, not the pre-angular.json .angular-cli.json format the synthesis capability exists for.',
 		'workspace-engines-retarget — correctly. The manifest declares no engines field, and the capability refuses to add a constraint the workspace never made.',
-		'builder-package-declaration — nothing to declare: the migrated workspace\'s surviving targets name @angular-devkit/build-angular, which the manifest already declares.',
+		"builder-package-declaration — nothing to declare: the migrated workspace's surviving targets name @angular-devkit/build-angular, which the manifest already declares.",
 		'unparameterised-base-class and departed-dom-lib-member — both supply-gated on compiler coordinates, and this unit supplied none, because the migrated tree has never been compiled on the target line. A tree that supplies no diagnostics has none transformed.',
 		'deep-import-redirection, package-exports-style-imports, template-binding-reorder — offered no readings, so nothing was redirected, resolved or reordered.',
 		'entry-components-removal, ngrx-effects-migration, sentry-v8-migration, modal-content-params-migration, promise-executor-void-parameter, undecorated-angular-base-class, custom-webpack-absorption, rxjs-prototype-patch reporting — each read the tree for its own construct and found none. This application declares no entryComponents, no NgRx, no Sentry, no ngx-bootstrap modal, no zero-argument promise executor, no undecorated Angular base class, no custom-webpack builder and no rxjs/add patch import.',
@@ -212,11 +230,11 @@ export const CAPABILITY_COMPOSITION = Object.freeze({
  */
 export const HOP_CLASS_FINDINGS: readonly string[] = Object.freeze([
 	'`angular.json` "version": 1 — the first angular.json the CLI ever wrote (CLI 6), a generation older than any workspace a counted Angular vertical covers. It cost nothing: the workspace migration reads shapes rather than a version field, and the synthesis capability that exists for the *pre*-angular.json format correctly stood down. A new gap class was expected here and there is none, which is worth recording as precisely as a failure.',
-	'A community layer two majors deeper. The pigallery2 holdout\'s install gaps were packages the cell had read and found no successor for; this application\'s install gaps are packages the cell has never read at all (@ng-bootstrap/ng-bootstrap, preboot). The failure mode is different and worse: a no-successor drop is loud, an unread package is silent, and silence is what put an Angular 6 peer in front of npm.',
+	"A community layer two majors deeper. The pigallery2 holdout's install gaps were packages the cell had read and found no successor for; this application's install gaps are packages the cell has never read at all (@ng-bootstrap/ng-bootstrap, preboot). The failure mode is different and worse: a no-successor drop is loud, an unread package is silent, and silence is what put an Angular 6 peer in front of npm.",
 	'@angular/http is a hop-length artefact. The package was removed after Angular 7, so a workspace on 8 or later cannot carry it and pigallery2 (8.1.2) only *declared* it — this application declares it and imports it. Anything below the 8 line meets this package as source rather than as a manifest line.',
-	'TypeScript 2.9.2 -> ~5.1.3 is three of the four largest TypeScript breaks in one step, and the tsconfig migration wrote ES2022/ES2022/useDefineForClassFields:false without hesitation. Whether the application\'s own constructs survive that is not established by this unit: the lane never reached a compiler, so no TS-construct gap class can be named either way, and none is claimed.',
-	'RxJS 6.2.2 -> ~7.8.0. Four `Subject` declarations were parameterised `<void>` on the evidence of their own zero-argument `next` calls, and no `rxjs/add` patch import exists in this application to refuse — so the RxJS 5-shaped gap class the source migration is armed for did not arise. What a 6.2 -> 7.8 hop does to this application\'s operator usage is, again, a compiler question the lane never reached.',
-	'The npm-script surface (G4) is the one gap class that is purely a function of hop length: the CLI flags this application\'s own build script writes were removed at the 11 and 12 lines, both of which sit between this application\'s era and the cell.',
+	"TypeScript 2.9.2 -> ~5.1.3 is three of the four largest TypeScript breaks in one step, and the tsconfig migration wrote ES2022/ES2022/useDefineForClassFields:false without hesitation. Whether the application's own constructs survive that is not established by this unit: the lane never reached a compiler, so no TS-construct gap class can be named either way, and none is claimed.",
+	"RxJS 6.2.2 -> ~7.8.0. Four `Subject` declarations were parameterised `<void>` on the evidence of their own zero-argument `next` calls, and no `rxjs/add` patch import exists in this application to refuse — so the RxJS 5-shaped gap class the source migration is armed for did not arise. What a 6.2 -> 7.8 hop does to this application's operator usage is, again, a compiler question the lane never reached.",
+	"The npm-script surface (G4) is the one gap class that is purely a function of hop length: the CLI flags this application's own build script writes were removed at the 11 and 12 lines, both of which sit between this application's era and the cell.",
 ]);
 
 /** The migrated install: what was attempted, and what refused. */
@@ -229,8 +247,10 @@ export const LANE_INSTALL = Object.freeze({
 			attempt: 1,
 			command: 'npm install',
 			exitStatus: 1,
-			refusal: 'ERESOLVE naming @angular-devkit/build-angular@0.7.5 as "Found" — the era lockfile\'s pin, read from the v1 package-lock.json still in the tree',
-			reading: 'G5. Recorded as a finding rather than discarded: the changeset does not declare the era lockfile superseded.',
+			refusal:
+				'ERESOLVE naming @angular-devkit/build-angular@0.7.5 as "Found" — the era lockfile\'s pin, read from the v1 package-lock.json still in the tree',
+			reading:
+				'G5. Recorded as a finding rather than discarded: the changeset does not declare the era lockfile superseded.',
 			log: 'migration/u5-lane-install-attempt1-era-lockfile.log',
 		}),
 		Object.freeze({
@@ -239,7 +259,8 @@ export const LANE_INSTALL = Object.freeze({
 			eraLockfileHandling:
 				'moved out of the lane before the install and retained at .versionless/work/angular-eshop-webspa/target/logs/era-package-lock.json, byte-identical to the one removed (sha256 fafdef05d482aba0427d7f1036cbf3b17101783fca0194b61f6d1cbc140816e0). This mirrors what the pigallery2 migrated lane did.',
 			exitStatus: 1,
-			refusal: 'ERESOLVE on @ng-bootstrap/ng-bootstrap@3.1.0, peer @angular/common "^6.1.0" against the @angular/common@16.2.12 the root project asks for',
+			refusal:
+				'ERESOLVE on @ng-bootstrap/ng-bootstrap@3.1.0, peer @angular/common "^6.1.0" against the @angular/common@16.2.12 the root project asks for',
 			reading: 'G1. Nothing was linked; the lane has no node_modules.',
 			log: 'migration/u5-lane-install-red.log',
 		}),
@@ -270,7 +291,7 @@ export const SEAM_ANSWER = Object.freeze({
 	refusals: 8,
 	gatesPassed: Object.freeze([
 		'a reading was supplied for the pair (@angular/common/http, @angular/http)',
-		'the reading is complete — 47 names read from @angular/common@16.2.12\'s http entry-point declaration',
+		"the reading is complete — 47 names read from @angular/common@16.2.12's http entry-point declaration",
 		'@angular/http does not resolve in the target closure, so the diagnostic describes this closure',
 		'the declaration at every site carries only named bindings — no default and no namespace import',
 		'the successor root publishes HttpClient, HttpHeaders, HttpResponse and HttpClientModule, and publishes none of Http, Headers, Response or HttpModule',
@@ -301,12 +322,10 @@ export function buildMigrationBlock(): Record<string, unknown> {
 		boardTask: 'T023',
 		stage: 'stage-4 — the FROZEN-ENGINE MIGRATION of the committed Angular holdout',
 		outcome: 'red-migration-gaps-itemised',
-		result:
-			'RED. The frozen engine composed a changeset for an application it had never seen and wrote it into a migrated lane; the migrated closure is refused at dependency resolution by an era-pinned community package the cell has never read, and the measured @angular/http question is answered No with the exact gate that refused it. No compiler ran, no bundle was emitted, and nothing was chased.',
+		result: 'RED. The frozen engine composed a changeset for an application it had never seen and wrote it into a migrated lane; the migrated closure is refused at dependency resolution by an era-pinned community package the cell has never read, and the measured @angular/http question is answered No with the exact gate that refused it. No compiler ran, no bundle was emitted, and nothing was chased.',
 		startedAt: '2026-08-14T05:00:00Z',
 		completedAt: '2026-08-14T05:20:00Z',
-		scope:
-			'Composed changeset from the read-only corpus, applied into a migrated lane, era lockfile moved out and retained, migrated install attempted twice in the cell the target declares, and the @angular/http driver seam probed through public frozen APIs. No target build was reached. No application source was edited by hand. No .NET service, no database and no listener was started; nothing was left running.',
+		scope: 'Composed changeset from the read-only corpus, applied into a migrated lane, era lockfile moved out and retained, migrated install attempted twice in the cell the target declares, and the @angular/http driver seam probed through public frozen APIs. No target build was reached. No application source was edited by hand. No .NET service, no database and no listener was started; nothing was left running.',
 		holdoutPosition:
 			'The replacement Angular holdout. This application was never ingested, fixtured, adapted, witnessed or receipted in this repository before T023. The engine subtrees were frozen before this unit began and are frozen after it: composite f1a63359210b87c04408b27cf8c40e88e1b47d44bcc7f5a9be20d9478dc71012.',
 		application: {
@@ -349,7 +368,7 @@ export function buildMigrationBlock(): Record<string, unknown> {
 		notEstablished: [
 			'No target build was produced, so there is no parity claim, no determinism claim, no output inventory and no readiness claim. The absence of those blocks is the honest shape of this result.',
 			'No compiler read this application on the target line. Every gap stated at the `build` stage is a reading of the migrated tree, not a diagnostic, and each says so in its `evidence` field. No TypeScript-construct, template or RxJS-operator gap class is named, because none was observed.',
-			'G2 is read off the era closure\'s own declaration rather than off a log. npm refuses at the first conflict it resolves and never reached preboot; that the log does not name it establishes nothing about whether it would refuse.',
+			"G2 is read off the era closure's own declaration rather than off a log. npm refuses at the first conflict it resolves and never reached preboot; that the log does not name it establishes nothing about whether it would refuse.",
 			'The seam reading was taken from a scratch tree carrying the successor package alone, because the lane closure does not exist. It is a reading of what @angular/common@16.2.12 publishes, and nothing more.',
 			'`packagesInstalled: 0` is not a statement that this manifest cannot install. It is a statement that this manifest, unforced and unnarrowed, was refused — and that no forced or narrowed variant was attempted in its place.',
 			'Nothing in this record establishes that answering G1 and G2 would let the tree compile. The gaps behind an install refusal are unmeasured by definition.',
@@ -385,8 +404,8 @@ export const GAP_DISPOSITIONS = Object.freeze([
 	Object.freeze({
 		id: 'G3',
 		state: 'open' as const,
-		by: 'nothing — deliberately out of this unit\'s scope',
-		what: 'The value-position successor capability is not written. The migrated build now reaches the compiler and states the gap in its own words: six TS2307 "Cannot find module \'@angular/http\'" and two webpack "Can\'t resolve \'@angular/http\'", at exactly the six sites the T023 seam probe named. The gap is unchanged and is now evidenced by a compiler rather than by a seam probe.',
+		by: "nothing — deliberately out of this unit's scope",
+		what: "The value-position successor capability is not written. The migrated build now reaches the compiler and states the gap in its own words: six TS2307 \"Cannot find module '@angular/http'\" and two webpack \"Can't resolve '@angular/http'\", at exactly the six sites the T023 seam probe named. The gap is unchanged and is now evidenced by a compiler rather than by a seam probe.",
 	}),
 	Object.freeze({
 		id: 'G4',
@@ -411,7 +430,7 @@ export const RERUN = Object.freeze({
 		record: 'migration/u1-t024-composed-changeset.json',
 		applied: 'migration/u1-t024-source-migration.json',
 		recordNote:
-			'The runner writes its output under the u5 names; those two files were restored to the bytes T023 sealed and the re-run\'s own are kept beside them under u1-t024 names, so the red record still points at the red changeset it describes.',
+			"The runner writes its output under the u5 names; those two files were restored to the bytes T023 sealed and the re-run's own are kept beside them under u1-t024 names, so the red record still points at the red changeset it describes.",
 		filesWritten: 11,
 		applicationFilesChanged: 8,
 		applicationFilesScanned: 84,
@@ -433,7 +452,7 @@ export const RERUN = Object.freeze({
 			'none — the era lockfile was restored into the lane before the run precisely so the changeset would be the thing that removed it, and it was. No file was moved by the lane.',
 		log: 'migration/u1-t024-lane-install.log',
 		reading:
-			'The install wall is cleared. G1 and G5 are what cleared it: the ERESOLVE that stopped T023 was @ng-bootstrap/ng-bootstrap@3.1.0\'s ^6.1.0 peer, and the attempt before it was the era lockfile. The closure npm resolved agrees with the readings that chose it — @ng-bootstrap/ng-bootstrap 15.1.2, @angular/common 16.2.12, typescript 5.1.6 — and npm auto-installed the two peers the reading said it would supply, @angular/localize 16.2.12 and @popperjs/core 2.11.8, the latter beside the era popper.js 1.16.1 the workspace still declares under its old name.',
+			"The install wall is cleared. G1 and G5 are what cleared it: the ERESOLVE that stopped T023 was @ng-bootstrap/ng-bootstrap@3.1.0's ^6.1.0 peer, and the attempt before it was the era lockfile. The closure npm resolved agrees with the readings that chose it — @ng-bootstrap/ng-bootstrap 15.1.2, @angular/common 16.2.12, typescript 5.1.6 — and npm auto-installed the two peers the reading said it would supply, @angular/localize 16.2.12 and @popperjs/core 2.11.8, the latter beside the era popper.js 1.16.1 the workspace still declares under its old name.",
 	}),
 	build: Object.freeze({
 		command: 'npm run build:prod',
@@ -448,14 +467,14 @@ export const RERUN = Object.freeze({
 			'error NG8002': 3,
 			'error NG1010': 1,
 			'webpack Module not found': 2,
-			'sass Can\'t find stylesheet to import': 2,
+			"sass Can't find stylesheet to import": 2,
 		}),
 		constructClassesBehindTheWall: Object.freeze([
-			'G3 itself, stated by the compiler for the first time: TS2307 "Cannot find module \'@angular/http\' or its corresponding type declarations" at shared.module.ts:5, security.service.ts:2, basket.service.ts:2, catalog.service.ts:2, campaigns.service.ts:2 and orders.service.ts:2, plus two webpack "Can\'t resolve \'@angular/http\'" module-not-found errors. Every NG6002 and NG8002 below is downstream of the one NG1010 this produces on SharedModule.',
-			'A community-library *surface* class the version reading cannot answer: "Property \'forRoot\' does not exist on type \'typeof NgbModule\'" at shared.module.ts:32. @ng-bootstrap/ng-bootstrap dropped the NgbModule.forRoot() static after the era 3.x line, so aligning the package — which is what makes the tree installable — turns a call site into a source demand. This is a new construct class for this application and it is named rather than fixed here.',
-			'An RxJS 5-shaped static this hop removes: "Property \'throw\' does not exist on type \'typeof Observable\'" at orders.component.ts:49, orders-new.component.ts:57 and catalog.component.ts:117. The source-migration capability rewrites patch *imports*; a static call on the Observable namespace is a different construct and no capability reads it.',
+			"G3 itself, stated by the compiler for the first time: TS2307 \"Cannot find module '@angular/http' or its corresponding type declarations\" at shared.module.ts:5, security.service.ts:2, basket.service.ts:2, catalog.service.ts:2, campaigns.service.ts:2 and orders.service.ts:2, plus two webpack \"Can't resolve '@angular/http'\" module-not-found errors. Every NG6002 and NG8002 below is downstream of the one NG1010 this produces on SharedModule.",
+			"A community-library *surface* class the version reading cannot answer: \"Property 'forRoot' does not exist on type 'typeof NgbModule'\" at shared.module.ts:32. @ng-bootstrap/ng-bootstrap dropped the NgbModule.forRoot() static after the era 3.x line, so aligning the package — which is what makes the tree installable — turns a call site into a source demand. This is a new construct class for this application and it is named rather than fixed here.",
+			"An RxJS 5-shaped static this hop removes: \"Property 'throw' does not exist on type 'typeof Observable'\" at orders.component.ts:49, orders-new.component.ts:57 and catalog.component.ts:117. The source-migration capability rewrites patch *imports*; a static call on the Observable namespace is a different construct and no capability reads it.",
 			'A webpack tilde stylesheet specifier the composition never offered to the capability that exists for it: Client/globals.scss:2 `@import "~bootstrap/scss/bootstrap"` fails with "Can\'t find stylesheet to import". migrateWebpackTildeStyleSpecifiers is exported from the adapter and is not wired into migrateAngularCliEraWorkspace, and it is closure-gated, so the composition would have to hand it a reading of the installed tree. That is a wiring gap rather than a missing capability, and it is recorded as one.',
-			'One TS2339 that is a consequence rather than a class: "Property \'json\' does not exist on type \'unknown\'" at security.service.ts:229, which is what the era @angular/http Response type used to answer.',
+			"One TS2339 that is a consequence rather than a class: \"Property 'json' does not exist on type 'unknown'\" at security.service.ts:229, which is what the era @angular/http Response type used to answer.",
 		]),
 		notEstablished: Object.freeze([
 			'One build was attempted and one is recorded. There is no second run, so no determinism or byte-stability claim is made.',
@@ -464,7 +483,7 @@ export const RERUN = Object.freeze({
 		]),
 	}),
 	greenVerticalSurfacing:
-		'No counted vertical\'s changeset shifted. The silence fix adds `unhandled` lines and changes no edit, and the two new capabilities are supply-gated: a driver that hands over no lockfile bytes has no lockfile removed, and a workspace migration that removed no builder option has no script flag dropped. The full node suite is green before and after (2336 tests before, 2358 after, the difference being this unit\'s own tests), and the one recorded expectation that moved is the adapter unit test for an unread `pako` declaration, which now asserts the surfacing instead of the silence.',
+		"No counted vertical's changeset shifted. The silence fix adds `unhandled` lines and changes no edit, and the two new capabilities are supply-gated: a driver that hands over no lockfile bytes has no lockfile removed, and a workspace migration that removed no builder option has no script flag dropped. The full node suite is green before and after (2336 tests before, 2358 after, the difference being this unit's own tests), and the one recorded expectation that moved is the adapter unit test for an unread `pako` declaration, which now asserts the surfacing instead of the silence.",
 });
 
 export function buildRerunBlock(): Record<string, unknown> {
@@ -473,8 +492,7 @@ export function buildRerunBlock(): Record<string, unknown> {
 		boardTask: 'T024',
 		stage: 'stage-1 — close G1/G2/G4/G5 generically and re-run the holdout lane',
 		outcome: 'install-green-build-red-itemised',
-		result:
-			'The install wall is cleared without a forced flag, a relaxed peer or a narrowed manifest: 1689 packages, exit 0. The first build this application has ever been given on the target line was attempted once and is RED, and its diagnostics are itemised below. G1, G2, G4 and G5 are closed by transforms that read the workspace rather than this application; G3 is untouched and is now stated by a compiler instead of by a probe.',
+		result: 'The install wall is cleared without a forced flag, a relaxed peer or a narrowed manifest: 1689 packages, exit 0. The first build this application has ever been given on the target line was attempted once and is RED, and its diagnostics are itemised below. G1, G2, G4 and G5 are closed by transforms that read the workspace rather than this application; G3 is untouched and is now stated by a compiler instead of by a probe.',
 		authorization:
 			'An authorized reopen of the frozen adapter subtrees for this unit only. The React subtree is untouched at 972ca80155bbc2a6eb3779943cd481b71d35e803.',
 		consentId: CONSENT,
@@ -496,7 +514,7 @@ export function buildRerunBlock(): Record<string, unknown> {
 			'migration/u1-t024-source-migration.json',
 		],
 		notEstablished: [
-			'Closing four gaps is not a green migration. This application does not build, and the record above says so with the compiler\'s own words.',
+			"Closing four gaps is not a green migration. This application does not build, and the record above says so with the compiler's own words.",
 			'A registry reading is a reading of published bytes, not a behavioural claim. Nothing establishes that @ng-bootstrap/ng-bootstrap 15.1.2 renders what 3.1.0 rendered, and the NgbModule.forRoot() refusal is direct evidence that its surface moved.',
 			'Dropping preboot is a declared difference, not a repair. An application that imported it would meet the drop as a source demand; this one does not import it.',
 			'The two new capabilities are proven by one application each. They are recorded experimental in the capability-coverage map for exactly that reason.',
@@ -522,8 +540,7 @@ export function buildCallSurfaceBlock(): Record<string, unknown> {
 		boardTask: 'T024',
 		stage: 'stage-3 — close G6, the HttpClient call surface, and re-run the holdout lane',
 		outcome: 'install-green-build-red-one-remaining-class-beyond-g6',
-		result:
-			'G6 is closed by one capability that carries a removed HTTP client’s call surface as a whole flow: every one of the seven diagnostics u2 recorded — five TS2307, one webpack module-not-found and the TS2339 on `.json` — is gone, and the compiler states no new one. `@angular/http` is no longer named anywhere in the migrated tree. The build is still RED, on one class that is not G6 and was already in u2’s own build log: a stylesheet subpath an exports map no longer publishes under the spelling the era application imported. It is named below and was not chased.',
+		result: 'G6 is closed by one capability that carries a removed HTTP client’s call surface as a whole flow: every one of the seven diagnostics u2 recorded — five TS2307, one webpack module-not-found and the TS2339 on `.json` — is gone, and the compiler states no new one. `@angular/http` is no longer named anywhere in the migrated tree. The build is still RED, on one class that is not G6 and was already in u2’s own build log: a stylesheet subpath an exports map no longer publishes under the spelling the era application imported. It is named below and was not chased.',
 		authorization:
 			'An authorized reopen of the frozen adapter subtrees for this unit only. The React subtree is untouched at 972ca80155bbc2a6eb3779943cd481b71d35e803.',
 		consentId: CONSENT,
@@ -533,9 +550,11 @@ export function buildCallSurfaceBlock(): Record<string, unknown> {
 			'none. Every reading this unit took is a reading of the lane’s own installed closure or of a previous pass’s own build log; no packument and no tarball was fetched.',
 		capabilityAdded: {
 			name: 'http-client-call-surface',
-			entryPoints: ['migrateHttpClientCallSurface', 'readSuccessorClassSurface (driver-side reading)'],
-			shape:
-				'A whole-flow carriage of a removed HTTP client, composed into migrateAngularCliEraWorkspace after the use-position carriage whose refusals it answers, and supply-gated twice over: on the successor package’s installed root surface, and on the installed declarations of the successor classes themselves — read member by member for the type each returns and the option keys each takes. Refusal is per declaration and total.',
+			entryPoints: [
+				'migrateHttpClientCallSurface',
+				'readSuccessorClassSurface (driver-side reading)',
+			],
+			shape: 'A whole-flow carriage of a removed HTTP client, composed into migrateAngularCliEraWorkspace after the use-position carriage whose refusals it answers, and supply-gated twice over: on the successor package’s installed root surface, and on the installed declarations of the successor classes themselves — read member by member for the type each returns and the option keys each takes. Refusal is per declaration and total.',
 			subRules: [
 				'The injected service. `Http` is carried to `HttpClient` only where every reference to it is the declared type of an injected parameter, and the binding it declares is what the call rules below then ride.',
 				'The body accessor and the emitted type, as one edit. `.json()` is removed because the successor emits the parsed body, and the type the flow emits is restated in the same changeset from the application’s own declared `Observable<T>` return type, read from the function the call is returned from. A flow the application never typed is refused, not typed `any` by the capability’s own choice.',
@@ -544,7 +563,7 @@ export function buildCallSurfaceBlock(): Record<string, unknown> {
 				'The response annotation. A `Response` annotating an operator callback parameter in a pipe is carried to `any` — the type the era `Response.json()` returned — and the loss of checking is declared. Any other position refuses the module.',
 			],
 			appliedHere:
-				'Client/modules/shared/services/security.service.ts: Http -> HttpClient, Headers -> HttpHeaders, five discarded appends reassigned, `get(url, { headers, body: \'\' })` -> `request<string[]>(\'GET\', url, { headers, body: \'\' })`, `.json()` removed. Client/modules/{basket,campaigns,catalog,orders}.service.ts: ten `Response` annotations carried to `any` and four now-empty declarations removed.',
+				"Client/modules/shared/services/security.service.ts: Http -> HttpClient, Headers -> HttpHeaders, five discarded appends reassigned, `get(url, { headers, body: '' })` -> `request<string[]>('GET', url, { headers, body: '' })`, `.json()` removed. Client/modules/{basket,campaigns,catalog,orders}.service.ts: ten `Response` annotations carried to `any` and four now-empty declarations removed.",
 		},
 		whyAnyAndNotAType: {
 			question:
@@ -572,15 +591,16 @@ export function buildCallSurfaceBlock(): Record<string, unknown> {
 				'A second run and a byte comparison were not performed and are not claimed: the build does not complete, so there is nothing to compare.',
 			log: 'migration/u3-t024-target-build.log',
 			g6DiagnosticsClosed: [
-				'Client/modules/basket/basket.service.ts:2 TS2307 Cannot find module \'@angular/http\'.',
+				"Client/modules/basket/basket.service.ts:2 TS2307 Cannot find module '@angular/http'.",
 				'Client/modules/campaigns/campaigns.service.ts:2 TS2307.',
 				'Client/modules/catalog/catalog.service.ts:2 TS2307.',
 				'Client/modules/orders/orders.service.ts:2 TS2307.',
 				'Client/modules/shared/services/security.service.ts:2 TS2307.',
-				'./Client/modules/shared/services/security.service.ts:1:0-46 webpack Module not found: Can\'t resolve \'@angular/http\'.',
-				'Client/modules/shared/services/security.service.ts:229 TS2339 Property \'json\' does not exist on type \'unknown\'.',
+				"./Client/modules/shared/services/security.service.ts:1:0-46 webpack Module not found: Can't resolve '@angular/http'.",
+				"Client/modules/shared/services/security.service.ts:229 TS2339 Property 'json' does not exist on type 'unknown'.",
 			],
-			newTypeDiagnostics: 'none. The compiler stated no diagnostic in any file this capability edited.',
+			newTypeDiagnostics:
+				'none. The compiler stated no diagnostic in any file this capability edited.',
 			remainingDiagnostics: [
 				'./Client/globals.scss - Error: Module build failed (sass-loader): Can\'t find stylesheet to import. @import "ngx-toastr/toastr-bs4-alert.scss" (Client/globals.scss 3:9).',
 				'./Client/globals.scss?ngGlobalStyle - the mini-css-extract sibling of the same failure.',
@@ -592,7 +612,8 @@ export function buildCallSurfaceBlock(): Record<string, unknown> {
 			site: 'Client/globals.scss:3',
 			statement:
 				'ngx-toastr@17.0.2 publishes an `exports` map whose keys are extensionless — `"./toastr-bs4-alert": { "default": "./toastr-bs4-alert.scss" }` — so the file exists on disk at node_modules/ngx-toastr/toastr-bs4-alert.scss and the specifier the era application wrote, with its `.scss` extension, is not a subpath the map answers. The sibling `@import "bootstrap/scss/bootstrap"` resolves because bootstrap 4.1.3 publishes no exports map at all. The adapter already carries the capability for this — migratePackageStyleImports, which rewrites a style specifier onto a subpath a package’s exports map does publish — and this driver supplies it no `packageExports` reading, so it stands down. That is a wiring gap in the driver rather than a missing capability, and it is not G6: it was already present in u2’s own build log at lines 41-56, where u2’s remaining-diagnostics list did not record it.',
-			notChasedBecause: 'The unit was scoped to the call surface. Naming a class in the compiler’s words and leaving it is what keeps the next unit’s question honest.',
+			notChasedBecause:
+				'The unit was scoped to the call surface. Naming a class in the compiler’s words and leaving it is what keeps the next unit’s question honest.',
 		},
 		greenVerticals:
 			'No counted vertical’s changeset shifted. The capability is supply-gated on readings no other lane supplies — a successor-class surface reading no other driver takes — and it edits nothing in a module that never imported the removed specifier.',
@@ -697,32 +718,34 @@ export function buildExportsMapBlock(): Record<string, unknown> {
 		boardTask: 'T024',
 		stage: 'stage-4 — close G7 and attempt the holdout build',
 		outcome: 'green-build-twice-byte-identical',
-		result:
-			'G7 is closed and the migrated lane builds. `npm run build:prod` exits 0, emits twenty-five files into `wwwroot`, and a second run of the same command into a separate output is byte-identical to the first — same file names, same digests, no exceptions. The emitted stylesheet carries the toastr rules the blocked import was for, so the repair is a repair and not a silently dropped import. This is the first production build of the eShopOnContainers WebSPA on Angular 16.2 in this repository, and it was reached without one hand edit to application source, one application-name branch, or one weakened check.',
+		result: 'G7 is closed and the migrated lane builds. `npm run build:prod` exits 0, emits twenty-five files into `wwwroot`, and a second run of the same command into a separate output is byte-identical to the first — same file names, same digests, no exceptions. The emitted stylesheet carries the toastr rules the blocked import was for, so the repair is a repair and not a silently dropped import. This is the first production build of the eShopOnContainers WebSPA on Angular 16.2 in this repository, and it was reached without one hand edit to application source, one application-name branch, or one weakened check.',
 		authorization:
 			'An authorized reopen of the frozen adapter subtrees for this unit only. The React subtree is untouched at 972ca80155bbc2a6eb3779943cd481b71d35e803.',
 		consentId: CONSENT,
 		commit: COMMIT,
 		subpath: APPLICATION_SUBPATH,
 		networkAccess:
-			'none. The lane install reported `up to date` against the closure u3 already installed, every reading this unit took is a reading of that closure or of a previous pass\'s own build log, and no packument and no tarball was fetched.',
+			"none. The lane install reported `up to date` against the closure u3 already installed, every reading this unit took is a reading of that closure or of a previous pass's own build log, and no packument and no tarball was fetched.",
 		wiringDecision: {
 			question:
-				'The `packageExports` reading G7 was open on: does it belong in the composition, where every application would get it, or in this lane\'s driver?',
+				"The `packageExports` reading G7 was open on: does it belong in the composition, where every application would get it, or in this lane's driver?",
 			answer: 'driver',
 			reasoning:
-				'The T021-u1 wiring-repair precedent puts a precondition in the composition when it is supply-complete there — derivable from bytes the composition already holds — and in the driver when it needs the lane\'s installed closure. This one needs the closure: an `exports` field is a fact about the package version a lane resolved, and the composition is handed application bytes, not a `node_modules`. It is therefore taken driver-side, by `readPackageExports`, exactly where the T024-u2 successor-class surface reading and the u3 call-surface readings are taken — as the fifth member of this driver\'s `LaneReadings`, from the same tree, under the same gate: a lane with no closure supplies none and the capability stands down.',
+				"The T021-u1 wiring-repair precedent puts a precondition in the composition when it is supply-complete there — derivable from bytes the composition already holds — and in the driver when it needs the lane's installed closure. This one needs the closure: an `exports` field is a fact about the package version a lane resolved, and the composition is handed application bytes, not a `node_modules`. It is therefore taken driver-side, by `readPackageExports`, exactly where the T024-u2 successor-class surface reading and the u3 call-surface readings are taken — as the fifth member of this driver's `LaneReadings`, from the same tree, under the same gate: a lane with no closure supplies none and the capability stands down.",
 			genericity:
-				'The reading names no package. It enumerates the runtime dependencies the lane\'s own migrated manifest declares, reads each installed `package.json`, and keeps the ones that publish an `exports` field at all. A package that publishes none contributes no reading, which is a fact about that package rather than an exception written for it.',
+				"The reading names no package. It enumerates the runtime dependencies the lane's own migrated manifest declares, reads each installed `package.json`, and keeps the ones that publish an `exports` field at all. A package that publishes none contributes no reading, which is a fact about that package rather than an exception written for it.",
 		},
 		capabilityExtended: {
 			name: 'package-exports-style-imports',
-			entryPoints: ['migratePackageStyleImports', 'republishedSubpath', 'readPackageExports (driver-side reading)'],
+			entryPoints: [
+				'migratePackageStyleImports',
+				'republishedSubpath',
+				'readPackageExports (driver-side reading)',
+			],
 			whyExtensionAndNotWiringAlone:
-				'The wiring alone would not have closed G7, and saying so is the finding. Once the reading was supplied the capability did reach this stylesheet and did refuse it, by name: ngx-toastr@17.0.2 publishes no root aggregate `./ngx-toastr.scss`, so the one rule the capability had — substitute the package\'s whole stylesheet for a blocked granular import — had nothing to substitute. The rule it needed is narrower than the one it had, not wider.',
+				"The wiring alone would not have closed G7, and saying so is the finding. Once the reading was supplied the capability did reach this stylesheet and did refuse it, by name: ngx-toastr@17.0.2 publishes no root aggregate `./ngx-toastr.scss`, so the one rule the capability had — substitute the package's whole stylesheet for a blocked granular import — had nothing to substitute. The rule it needed is narrower than the one it had, not wider.",
 			rule: 'republished subpath — the exact successor',
-			shape:
-				'A blocked specifier whose file the exports map still publishes under a different key is rewritten onto that key. The candidate is found by running the map\'s own resolution backwards over its literal keys and keeping those that resolve to exactly the file the blocked import named; pattern keys are not considered, because a pattern that resolved that file would have resolved the blocked subpath itself and nothing would be blocked. Where several literal keys name the one file the first in sort order is taken — they are the same bytes by construction, and taking a stated one keeps the rewrite deterministic.',
+			shape: "A blocked specifier whose file the exports map still publishes under a different key is rewritten onto that key. The candidate is found by running the map's own resolution backwards over its literal keys and keeping those that resolve to exactly the file the blocked import named; pattern keys are not considered, because a pattern that resolved that file would have resolved the blocked subpath itself and nothing would be blocked. Where several literal keys name the one file the first in sort order is taken — they are the same bytes by construction, and taking a stated one keeps the rewrite deterministic.",
 			whyItDeclaresNothing:
 				'The new specifier resolves to the same file the old one named, so not one byte of payload changes and there is nothing to declare. That is what distinguishes it from the aggregate substitution beside it, which does change the payload and says so in bytes.',
 			whyAllOrNothing:
@@ -757,8 +780,8 @@ export function buildExportsMapBlock(): Record<string, unknown> {
 			],
 			remainingDiagnostics: [],
 			remainingWarnings: [
-				'Four dart-sass deprecation warnings for `/` used as division outside `calc()`, in Client/modules/campaigns/campaigns.component.scss, Client/modules/catalog/catalog.component.scss and Client/modules/shared/components/pager/pager.scss. They are the application\'s own SCSS as it was written at the pin and no capability was invented to rewrite it.',
-				'One warning that Client/modules/shared/services/notification.service.ts is part of the TypeScript compilation but unused. It is the application\'s own tsconfig `include` reaching a module nothing imports, and it is left as the application wrote it.',
+				"Four dart-sass deprecation warnings for `/` used as division outside `calc()`, in Client/modules/campaigns/campaigns.component.scss, Client/modules/catalog/catalog.component.scss and Client/modules/shared/components/pager/pager.scss. They are the application's own SCSS as it was written at the pin and no capability was invented to rewrite it.",
+				"One warning that Client/modules/shared/services/notification.service.ts is part of the TypeScript compilation but unused. It is the application's own tsconfig `include` reaching a module nothing imports, and it is left as the application wrote it.",
 			],
 			emittedProof:
 				'The extracted stylesheet carries eighteen distinct `.toast-*` rule selectors, so the repaired import was read and compiled rather than resolving to nothing.',
@@ -769,11 +792,11 @@ export function buildExportsMapBlock(): Record<string, unknown> {
 			name: 'Exports-map stylesheet subpath spelling',
 			site: 'Client/globals.scss:3',
 			closedBy:
-				'A `packageExports` reading of the lane\'s installed closure, taken driver-side, plus the republished-subpath rule the reading then made reachable. Nothing about this application is named in either.',
+				"A `packageExports` reading of the lane's installed closure, taken driver-side, plus the republished-subpath rule the reading then made reachable. Nothing about this application is named in either.",
 			newClassesFound: 'none. No diagnostic remains and no new class was reached.',
 		},
 		greenVerticals:
-			'No counted vertical\'s changeset shifted. The stylesheet capability is gated on a `packageExports` reading no other Angular driver supplies, and the rule added inside it fires only on a blocked import whose file the map republishes — a case no other lane\'s stylesheets contain. The full node suite is green.',
+			"No counted vertical's changeset shifted. The stylesheet capability is gated on a `packageExports` reading no other Angular driver supplies, and the rule added inside it fires only on a blocked import whose file the map republishes — a case no other lane's stylesheets contain. The full node suite is green.",
 		artifacts: {
 			composedChangeset: 'migration/u4-t024-composed-changeset.json',
 			sourceMigration: 'migration/u4-t024-source-migration.json',
@@ -783,7 +806,7 @@ export function buildExportsMapBlock(): Record<string, unknown> {
 			secondBuildLog: 'migration/u4-t024-target-build-run2.log',
 			buildInventory: 'migration/u4-t024-build-inventory-run1-vs-run2.json',
 			priorRedRecordsNote:
-				'The runner writes its output under the u5 names. Those three files were restored to the bytes T023 sealed after this re-run, byte for byte — digests 9867c18e, c90438ca and 5709ccd9 — and this pass\'s own are kept beside them under u4-t024 names. Every earlier red record, u1 through u3, is untouched.',
+				"The runner writes its output under the u5 names. Those three files were restored to the bytes T023 sealed after this re-run, byte for byte — digests 9867c18e, c90438ca and 5709ccd9 — and this pass's own are kept beside them under u4-t024 names. Every earlier red record, u1 through u3, is untouched.",
 		},
 		changesetCounts: {
 			applicationFilesScanned: 84,
@@ -794,7 +817,7 @@ export function buildExportsMapBlock(): Record<string, unknown> {
 			unhandled: 31,
 			declaredDifferences: 17,
 			handEdits: 0,
-			note: 'Exactly one file\'s bytes differ from u3\'s changeset: Client/globals.scss, whose line 3 the new rule rewrote. The counts are otherwise u3\'s, because globals.scss was already counted as changed there — the tilde capability had already dropped the `~` from its sibling bootstrap import. The unhandled and declared-difference totals do not move: this rule declares nothing and refuses nothing.',
+			note: "Exactly one file's bytes differ from u3's changeset: Client/globals.scss, whose line 3 the new rule rewrote. The counts are otherwise u3's, because globals.scss was already counted as changed there — the tilde capability had already dropped the `~` from its sibling bootstrap import. The unhandled and declared-difference totals do not move: this rule declares nothing and refuses nothing.",
 		},
 		notEstablished: [
 			'A build that completes and repeats is not a build that behaves. No test, no journey and no witness has run against this application in either lane, so nothing here establishes parity, rendering or any browser behaviour.',

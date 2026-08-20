@@ -93,9 +93,9 @@ describe('eShop WebSPA holdout Witness', () => {
 			(limit) => limit.surface === 'identity',
 		);
 		expect(identity?.state).toBe('out-of-surface');
-		expect(receipt.nonclaims.some((claim) => claim.includes('Identity is out of surface'))).toBe(
-			true,
-		);
+		expect(
+			receipt.nonclaims.some((claim) => claim.includes('Identity is out of surface')),
+		).toBe(true);
 		expect(
 			receipt.nonclaims.some((claim) => claim.includes('frozen synthetic same-origin')),
 		).toBe(true);
@@ -123,7 +123,10 @@ describe('eShop WebSPA holdout Witness', () => {
 		const receipt = published();
 		expect(() =>
 			parseWitnessAngularEshopWebspaReceipt(
-				reseal({ ...receipt, parity: { ...receipt.parity, behaviorDigest: 'x'.repeat(64) } }),
+				reseal({
+					...receipt,
+					parity: { ...receipt.parity, behaviorDigest: 'x'.repeat(64) },
+				}),
 			),
 		).toThrow();
 		expect(() =>

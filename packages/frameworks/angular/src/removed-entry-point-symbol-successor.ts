@@ -276,7 +276,11 @@ export function succeedRemovedEntryPointSymbols(
 			.join(', ');
 		let end = declaration.end;
 		if (source[end] === ';') end += 1;
-		edits.push({ start: declaration.start, end, text: `import {${inner}} from ${quote}${root}${quote};` });
+		edits.push({
+			start: declaration.start,
+			end,
+			text: `import {${inner}} from ${quote}${root}${quote};`,
+		});
 		for (const entry of resolved) {
 			for (const callee of entry.callees)
 				edits.push({ start: callee.start, end: callee.end, text: entry.claim.to });

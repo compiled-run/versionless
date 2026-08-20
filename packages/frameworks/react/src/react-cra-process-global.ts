@@ -138,7 +138,12 @@ function parseAnalyzableModule(
 	for (const sourceType of ['module', 'script'] as const) {
 		let module: ReturnType<typeof analyze>;
 		try {
-			module = analyze(code, { path: file, lang, sourceType, allowReturnOutsideFunction: true });
+			module = analyze(code, {
+				path: file,
+				lang,
+				sourceType,
+				allowReturnOutsideFunction: true,
+			});
 		} catch {
 			continue;
 		}
@@ -224,7 +229,10 @@ export function readProcessGlobalUsage(code: string, id = 'input.js'): ProcessGl
 		referenced,
 		members: Object.freeze(
 			[...members.keys()].sort(compareStrings).map((member) => {
-				const entry = members.get(member) as { called: boolean; references: ProcessGlobalReference[] };
+				const entry = members.get(member) as {
+					called: boolean;
+					references: ProcessGlobalReference[];
+				};
 				return Object.freeze({
 					member,
 					called: entry.called,
@@ -234,7 +242,9 @@ export function readProcessGlobalUsage(code: string, id = 'input.js'): ProcessGl
 				});
 			}),
 		),
-		bareReferences: Object.freeze([...bareReferences].sort((left, right) => left.line - right.line)),
+		bareReferences: Object.freeze(
+			[...bareReferences].sort((left, right) => left.line - right.line),
+		),
 	});
 }
 
@@ -266,7 +276,10 @@ export function mergeProcessGlobalReadings(
 		referenced,
 		members: Object.freeze(
 			[...members.keys()].sort(compareStrings).map((member) => {
-				const entry = members.get(member) as { called: boolean; references: ProcessGlobalReference[] };
+				const entry = members.get(member) as {
+					called: boolean;
+					references: ProcessGlobalReference[];
+				};
 				return Object.freeze({
 					member,
 					called: entry.called,
@@ -398,7 +411,9 @@ export function craProcessGlobalShim(reading: ProcessGlobalReading): ProcessGlob
 	for (const usage of reading.members) {
 		if (usage.member === PROCESS_NEXT_TICK) {
 			needsNextTick = true;
-			members.push(Object.freeze({ member: usage.member, kind: 'function', called: usage.called }));
+			members.push(
+				Object.freeze({ member: usage.member, kind: 'function', called: usage.called }),
+			);
 			assignments.push("\tif (typeof p.nextTick !== 'function') p.nextTick = nextTick;");
 			continue;
 		}
@@ -406,7 +421,9 @@ export function craProcessGlobalShim(reading: ProcessGlobalReading): ProcessGlob
 		if (supplied === undefined) {
 			// An honest leaf: `process/browser` binds nothing here, so neither does
 			// the shim. Reading it yields `undefined`, the baseline's own value.
-			members.push(Object.freeze({ member: usage.member, kind: 'leaf', called: usage.called }));
+			members.push(
+				Object.freeze({ member: usage.member, kind: 'leaf', called: usage.called }),
+			);
 			if (usage.called) unsupportedCalls.push(usage.member);
 			continue;
 		}
@@ -415,26 +432,29 @@ export function craProcessGlobalShim(reading: ProcessGlobalReading): ProcessGlob
 		);
 		if (supplied.expression === 'noop') needsNoop = true;
 		const key = JSON.stringify(usage.member);
-		assignments.push(
-			`\tif (!(${key} in p)) p[${key}] = ${supplied.expression};`,
-		);
+		assignments.push(`\tif (!(${key} in p)) p[${key}] = ${supplied.expression};`);
 	}
 
 	const body: string[] = [
 		'/* versionless-cra-process-global-shim: create-react-app / webpack 4 process parity.',
 		' * Reproduces the process/browser@0.11.10 surface the bundle actually reaches.',
-		' * Supplied members are derived from the bundle\'s own process.<member> usage;',
+		" * Supplied members are derived from the bundle's own process.<member> usage;",
 		' * members process/browser leaves undefined are left undefined here too. */',
 		'(function () {',
 		'\tvar p = (globalThis.process = globalThis.process || {});',
 	];
 	if (needsNoop) body.push('\tfunction noop() {}');
-	if (needsNextTick) body.push(...PROCESS_NEXT_TICK_SOURCE.split('\n').map((line) => `\t${line}`));
+	if (needsNextTick)
+		body.push(...PROCESS_NEXT_TICK_SOURCE.split('\n').map((line) => `\t${line}`));
 	body.push(...assignments, '})();');
 	const source = body.join('\n');
 
-	const suppliedMembers = members.filter((entry) => entry.kind !== 'leaf').map((entry) => entry.member);
-	const leafMembers = members.filter((entry) => entry.kind === 'leaf').map((entry) => entry.member);
+	const suppliedMembers = members
+		.filter((entry) => entry.kind !== 'leaf')
+		.map((entry) => entry.member);
+	const leafMembers = members
+		.filter((entry) => entry.kind === 'leaf')
+		.map((entry) => entry.member);
 	const declaredDifferences: string[] = [
 		`globalThis.process exists in this application's browser context where it did not before, ` +
 			`installed before the application entry as the webpack 4 / process-browser parity object. ` +
@@ -567,7 +587,10 @@ export function createCraProcessGlobalPlugin(
 				if (!outputDirectory) throw new Error(`${CAPABILITY}: build outDir is unresolved`);
 				const shim = craProcessGlobalShim(mergeProcessGlobalReadings(readings));
 				if (shim.source === null) return;
-				options.observe?.({ members: shim.members, unsupportedCalls: shim.unsupportedCalls });
+				options.observe?.({
+					members: shim.members,
+					unsupportedCalls: shim.unsupportedCalls,
+				});
 				for (const document of await documentsBelow(outputDirectory)) {
 					const html = await readFile(document, 'utf8');
 					if (html.includes('versionless-cra-process-global-shim')) continue;

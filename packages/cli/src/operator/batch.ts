@@ -755,7 +755,9 @@ export function renderFleetSummary(summary: FleetSummary): string {
 		lines.push(`- run record: \`${row.runRecordPath}\``);
 		lines.push(`- harness record: \`${row.interventionRecordPath}\``);
 		if (row.refusal !== null) {
-			lines.push(`- refusal code: \`${row.refusal.code}\` (raised at stage \`${row.refusal.stage}\`)`);
+			lines.push(
+				`- refusal code: \`${row.refusal.code}\` (raised at stage \`${row.refusal.stage}\`)`,
+			);
 			lines.push(`- refusal message: ${row.refusal.message}`);
 		}
 		if (row.detail !== undefined) lines.push(`- detail: ${row.detail}`);

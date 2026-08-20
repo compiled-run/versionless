@@ -185,7 +185,11 @@ describe('cancelled-duplicate-fetch category on a mocked non-loopback seam', () 
 
 	it('leaves the same-origin behavior exactly as it was', () => {
 		const inventory = buildCancelledDuplicateFetchInventory(
-			[outcome(`${origin}${GIF}`), aborted(`${origin}${GIF}`, 'GET'), outcome(`${origin}${GIF}`)],
+			[
+				outcome(`${origin}${GIF}`),
+				aborted(`${origin}${GIF}`, 'GET'),
+				outcome(`${origin}${GIF}`),
+			],
 			origin,
 			[{ method: 'GET', path: GIF, reason: 'net::ERR_ABORTED' }],
 		);
@@ -277,7 +281,10 @@ describe('mocked non-loopback seam inventory', () => {
 
 	it('refuses a category that repeats a member', () => {
 		expect(() =>
-			buildMockedNonLoopbackSeamInventory([], origin, [...category, { method: 'GET', path: TAG }]),
+			buildMockedNonLoopbackSeamInventory([], origin, [
+				...category,
+				{ method: 'GET', path: TAG },
+			]),
 		).toThrow(/repeats a member/);
 	});
 

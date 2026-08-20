@@ -302,24 +302,24 @@ export async function readWitnessIndexedDbKeys(): Promise<WitnessIndexedDbKeyInv
 				const store = transaction.objectStore(storeName);
 				const keys = (await settled(store.getAllKeys())).map(renderKey);
 				// Ordered by UTF-16 code unit rather than by `localeCompare`.
-					// The first spelling of this sort used `localeCompare` and was
-					// wrong twice over: it asks the browser's collator, so the order
-					// depends on an ICU locale nobody declared, and it does not agree
-					// with the order the receipt schemas require — every one of them
-					// checks a published key list against `[...values].sort()`, which
-					// is code-unit order. Super Productivity's own store is where the
-					// disagreement is visible: the collator puts
-					// `SUP_P_DEFAULT_TASK_ATTACHMENT_STATE` before
-					// `SUP_P_DEFAULT_TASKS_STATE` and `SUP_PROJECT_META_LIST` after
-					// both, and code-unit order puts all three the other way round, so
-					// a reading taken through the collator fails the schema that
-					// receives it. Comparing with `<` is exactly what the default sort
-					// does, which is the point.
-					keys.sort((left, right) => {
-						const leftKey = `${left.kind}\0${left.key}`;
-						const rightKey = `${right.kind}\0${right.key}`;
-						return leftKey < rightKey ? -1 : leftKey > rightKey ? 1 : 0;
-					});
+				// The first spelling of this sort used `localeCompare` and was
+				// wrong twice over: it asks the browser's collator, so the order
+				// depends on an ICU locale nobody declared, and it does not agree
+				// with the order the receipt schemas require — every one of them
+				// checks a published key list against `[...values].sort()`, which
+				// is code-unit order. Super Productivity's own store is where the
+				// disagreement is visible: the collator puts
+				// `SUP_P_DEFAULT_TASK_ATTACHMENT_STATE` before
+				// `SUP_P_DEFAULT_TASKS_STATE` and `SUP_PROJECT_META_LIST` after
+				// both, and code-unit order puts all three the other way round, so
+				// a reading taken through the collator fails the schema that
+				// receives it. Comparing with `<` is exactly what the default sort
+				// does, which is the point.
+				keys.sort((left, right) => {
+					const leftKey = `${left.kind}\0${left.key}`;
+					const rightKey = `${right.kind}\0${right.key}`;
+					return leftKey < rightKey ? -1 : leftKey > rightKey ? 1 : 0;
+				});
 				stores.push({
 					name: storeName,
 					keyPath: store.keyPath,
@@ -963,8 +963,7 @@ export function createPlaywrightWitnessHost(options: {
 	 * and both the ledger record and the decoded text come out of that one read.
 	 * Reading later would be reading a file the context may already have removed.
 	 */
-	const capturedDownloads: Array<Promise<{ record: WitnessCapturedDownload; text: string }>> =
-		[];
+	const capturedDownloads: Array<Promise<{ record: WitnessCapturedDownload; text: string }>> = [];
 	const livePages = new Set<Page>();
 	const workerEvents: ServiceWorkerTelemetry['workerEvents'] = [];
 	let observer: Awaited<ReturnType<typeof observeServiceWorkers>> | null = null;
@@ -1313,7 +1312,9 @@ export function createPlaywrightWitnessHost(options: {
 		},
 		indexedDbKeys: async () => {
 			if (options.indexedDb !== 'read-keys')
-				throw new Error('Witness IndexedDB key reading is not declared by this application');
+				throw new Error(
+					'Witness IndexedDB key reading is not declared by this application',
+				);
 			if (livePages.size !== 1)
 				throw new Error('Witness IndexedDB key reading requires exactly one live page');
 			const [page] = livePages;

@@ -218,7 +218,7 @@ export type SingleDataSet = number[];`,
 		after: `        <canvas [type]="pieChartType"
                 [data]="improvementCounts.data"`,
 		reason:
-			"The `chartType` → `type` input rename, at the first of the two pie charts. The rename is " +
+			'The `chartType` → `type` input rename, at the first of the two pie charts. The rename is ' +
 			"in ng2-charts 5's own directive declaration, so it is derivable in principle — but only " +
 			'by a capability that rewrites templates, which this adapter does not have.',
 	},
@@ -294,7 +294,7 @@ import {provideTranslateHttpLoader} from '@ngx-translate/http-loader';`,
   ],`,
 		reason:
 			"The two strings the era's constructor call carried. They are not the package's " +
-			"defaults — it defaults to `/assets/i18n/`, and this application serves from `./` — so " +
+			'defaults — it defaults to `/assets/i18n/`, and this application serves from `./` — so ' +
 			'dropping them would have changed where the translations are fetched from.',
 	},
 	{
@@ -331,10 +331,9 @@ import {provideTranslateHttpLoader} from '@ngx-translate/http-loader';`,
 		family: '@ngrx/effects createEffect result typing',
 		file: 'src/app/features/google/store/google-drive-sync.effects.ts',
 		before: '  initialImport$: any = createEffect(() => this._actions$.pipe(',
-		after:
-			'  initialImport$: any = createEffect(() => <Observable<Action>>this._actions$.pipe(',
+		after: '  initialImport$: any = createEffect(() => <Observable<Action>>this._actions$.pipe(',
 		reason:
-			"The cause is one step further back than the diagnostic: each of these pipelines ends " +
+			'The cause is one step further back than the diagnostic: each of these pipelines ends ' +
 			'in a `concatMap`/`exhaustMap` whose projector is annotated `: any`, and rxjs 7 ' +
 			'resolves `ObservedValueOf<any>` to `unknown`, so the pipeline is `Observable<unknown>` ' +
 			'and @ngrx/effects 16 requires `Observable<Action>`. Removing the `: any` annotations ' +
@@ -347,8 +346,7 @@ import {provideTranslateHttpLoader} from '@ngx-translate/http-loader';`,
 		family: '@ngrx/effects createEffect result typing',
 		file: 'src/app/features/google/store/google-drive-sync.effects.ts',
 		before: '  changeSyncFile$: any = createEffect(() => this._actions$.pipe(',
-		after:
-			'  changeSyncFile$: any = createEffect(() => <Observable<Action>>this._actions$.pipe(',
+		after: '  changeSyncFile$: any = createEffect(() => <Observable<Action>>this._actions$.pipe(',
 		reason:
 			'The second of the three, same shape and same reason: an `: any`-annotated projector, a ' +
 			'pipeline rxjs 7 types as `Observable<unknown>`, and an effect signature that requires ' +
@@ -567,7 +565,10 @@ export async function voidSubjectRound(
 }
 
 export async function main(): Promise<void> {
-	const log = await readFile(path.join(STAGE_DIRECTORY, process.argv[2] ?? 'build-6.log'), 'utf8');
+	const log = await readFile(
+		path.join(STAGE_DIRECTORY, process.argv[2] ?? 'build-6.log'),
+		'utf8',
+	);
 	const outcomes: CapabilityOutcome[] = [...(await applyRound())];
 	outcomes.push(await voidSubjectRound(log));
 

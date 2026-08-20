@@ -57,10 +57,12 @@ const sourceOutputs = {
  * than served, so the browser proof cannot silently stand on a different tree.
  */
 const laneFileCounts = {
-	baseline: ANGULAR_SUPER_PRODUCTIVITY_CANONICAL_RECEIPTS.find((bound) => bound.lane === 'baseline')!
-		.files,
-	migrated: ANGULAR_SUPER_PRODUCTIVITY_CANONICAL_RECEIPTS.find((bound) => bound.lane === 'migrated')!
-		.files,
+	baseline: ANGULAR_SUPER_PRODUCTIVITY_CANONICAL_RECEIPTS.find(
+		(bound) => bound.lane === 'baseline',
+	)!.files,
+	migrated: ANGULAR_SUPER_PRODUCTIVITY_CANONICAL_RECEIPTS.find(
+		(bound) => bound.lane === 'migrated',
+	)!.files,
 } as const;
 
 /**
@@ -122,11 +124,12 @@ async function stageInputs(): Promise<Record<'baseline' | 'migrated', string>> {
  * are recomputed over the mapped run so the two travel with the bytes the
  * receipt actually publishes rather than the intermediate shape.
  */
-function toRun(raw: Awaited<ReturnType<typeof executeAngularSuperProductivityWitnessRun>>): WitnessAngularSuperProductivityRun {
+function toRun(
+	raw: Awaited<ReturnType<typeof executeAngularSuperProductivityWitnessRun>>,
+): WitnessAngularSuperProductivityRun {
 	const candidate = raw as WitnessAngularSuperProductivityRun;
 	const scroll: WitnessAngularSuperProductivityScroll | undefined = candidate.scrollAbsence;
-	if (scroll === undefined)
-		throw new Error('Super Productivity run measured no scroll reading');
+	if (scroll === undefined) throw new Error('Super Productivity run measured no scroll reading');
 	const { scrollAbsence: _absence, ...rest } = candidate;
 	const run: WitnessAngularSuperProductivityRun = {
 		...rest,
@@ -135,7 +138,10 @@ function toRun(raw: Awaited<ReturnType<typeof executeAngularSuperProductivityWit
 		behaviorDigest: '',
 	};
 	run.semanticDigest = witnessAngularSuperProductivityRawDigest(run);
-	run.behaviorDigest = witnessAngularSuperProductivityBehaviorDigest(run, declaredDifferenceLabels);
+	run.behaviorDigest = witnessAngularSuperProductivityBehaviorDigest(
+		run,
+		declaredDifferenceLabels,
+	);
 	return run;
 }
 

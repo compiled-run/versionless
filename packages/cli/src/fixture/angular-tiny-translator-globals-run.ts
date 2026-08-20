@@ -92,9 +92,7 @@ export async function readInstalledNodeCoreModule(
 		return typeof replacement === 'string' ? replacement : key;
 	};
 	const entry =
-		typeof manifest.browser === 'string'
-			? manifest.browser
-			: (manifest.main ?? './index.js');
+		typeof manifest.browser === 'string' ? manifest.browser : (manifest.main ?? './index.js');
 	const files: InstalledFile[] = [];
 	const seen = new Set<string>();
 	const queue = [withExtension(substitute(entry))];
@@ -231,8 +229,7 @@ export function buildRuntimeGlobalsRecord(input: {
 		},
 		builds: input.builds,
 		determinism: {
-			claim:
-				'build-9 and build-10 ran the same command over the same bytes with no edit between them, each into a cleaned output directory, and emitted the same inventory.',
+			claim: 'build-9 and build-10 ran the same command over the same bytes with no edit between them, each into a cleaned output directory, and emitted the same inventory.',
 			runs: 2,
 			identical: input.byteStable,
 			inventorySha256: input.inventorySha256,

@@ -37,9 +37,21 @@
  * cannot parse without guessing — a quoted segment, a flag that may be carrying a
  * separate value — is left byte-identical and named in `unhandled`, because a
  * half-rewritten command line is worse than one that fails honestly.
+ *
+ * The one place a value *is* taken apart is where the guess has been removed:
+ * a removed-CLI-flag row that declares `carriesValue` is a reading of the CLI's
+ * own flag surface saying the next word belongs to that flag, so the flag and
+ * its value are removed together and the whole span is recorded. That is not
+ * available to the builder-option branch, which derives its flags from a
+ * workspace diff and so knows the option's name but not its arity.
  */
 
-import { compareStrings, majorOf, type AngularTargetCell, type PackageManifest } from './angular-target-cell.ts';
+import {
+	compareStrings,
+	majorOf,
+	type AngularTargetCell,
+	type PackageManifest,
+} from './angular-target-cell.ts';
 import { REMOVED_BUILDER_OPTIONS, type ConfigChange } from './angular-workspace-migration.ts';
 
 /** The npm script field this capability reads. */
@@ -68,6 +80,19 @@ export type RemovedCliFlag = Readonly<{
 	 * workspace really declares it.
 	 */
 	requiresConfiguration?: string;
+	/**
+	 * True for a flag that takes a value, written either as `--flag value` or as
+	 * `--flag=value`. A value-carrying flag cannot be dropped by deleting the
+	 * flag word alone: the word after it is not a flag and would be left behind
+	 * as a stray positional argument, which is a second way to break the command
+	 * line rather than a fix for the first. Where this is set the removal
+	 * consumes the value with the flag, and the change record carries the whole
+	 * span so the value that was removed is still readable in the changeset.
+	 *
+	 * Only rows with no successor carry it today: a flag whose value has to be
+	 * re-spelled onto a replacement is a translation this does not do.
+	 */
+	carriesValue?: true;
 	fact: string;
 }>;
 
@@ -79,13 +104,53 @@ export const REMOVED_ANGULAR_CLI_FLAGS: readonly RemovedCliFlag[] = Object.freez
 		requiresConfiguration: 'production',
 		fact: '`--prod` was a shorthand for `--configuration production` and was removed from the Angular CLI after the 11 line; a 12-or-later CLI reports it as an unknown argument and exits before the builder runs. The replacement selects the same configuration by name, which is why the retarget is refused where the migrated workspace does not declare one.',
 	}),
+	Object.freeze({
+		flag: '--i18n-locale',
+		removedAfterMajor: 12,
+		successor: null,
+		carriesValue: true,
+		fact: "`--i18n-locale` named the locale a ViewEngine message-bundle build compiled for. It was removed from the Angular CLI after the 12 line: the 13 browser builder schema declares no `i18nLocale`, so a 13-or-later CLI reports the flag as an unknown argument and exits before the builder runs. There is no successor flag. The locale a build targets is declared in the workspace document, under the project's `i18n` block, and selected by name through `--configuration`; the translation itself is performed by the `$localize` runtime from `@angular/localize`, which is a dependency the application carries rather than a word a command line passes. The flag is dropped together with its value because the value named a locale nothing on the new CLI line reads.",
+	}),
+	Object.freeze({
+		flag: '--i18n-format',
+		removedAfterMajor: 12,
+		successor: null,
+		carriesValue: true,
+		fact: '`--i18n-format` named the message-bundle format — `xlf`, `xlf2`, `xmb` — that a ViewEngine build was to read. It was removed from the Angular CLI after the 12 line: the 13 browser builder schema declares no `i18nFormat`, so a 13-or-later CLI reports the flag as an unknown argument and exits before the builder runs. There is no successor flag. Under `$localize` the format is read from the translation file itself, which the workspace document names per locale, and the extraction side of the pair became `ng extract-i18n --format`. The flag is dropped together with its value because the value named a format nothing on the new CLI line reads.',
+	}),
+	Object.freeze({
+		flag: '--i18n-file',
+		removedAfterMajor: 12,
+		successor: null,
+		carriesValue: true,
+		fact: "`--i18n-file` named the translation bundle a ViewEngine build compiled against. It was removed from the Angular CLI after the 12 line: the 13 browser builder schema declares no `i18nFile`, so a 13-or-later CLI reports the flag as an unknown argument and exits before the builder runs. There is no successor flag. The translation file is declared in the workspace document, under the project's `i18n.locales` block, and consumed by the `$localize` runtime from `@angular/localize` rather than by an argument to `ng build`. The flag is dropped together with its value because the value named a file nothing on the new CLI line reads.",
+	}),
 ]);
+
+/**
+ * `--i18n-missing-translation` is deliberately absent from that list.
+ *
+ * It is the one flag of the i18n family that outlived the ViewEngine bundle
+ * flags: the 13 browser builder schema still declares `i18nMissingTranslation`
+ * as a string enum of `warning | error | ignore`, so a 13 CLI parses it and a
+ * script that passes it still runs. Removing it here because it is spelled
+ * `--i18n-*` would break a working command line on a resemblance, which is
+ * exactly the guess this capability exists to refuse. Its absence is pinned by
+ * a test rather than left to be re-derived from the family name.
+ */
 
 export type ScriptFlagChange = Readonly<{
 	kind: 'removed-builder-flag' | 'retargeted-cli-flag';
 	/** The npm script the flag was written in. */
 	script: string;
-	/** The flag exactly as the era script wrote it. */
+	/**
+	 * The flag exactly as the era script wrote it, including its value where the
+	 * flag carried one: `--i18n-locale en` and `--i18n-format=xlf` are recorded
+	 * whole. The change record is the only surface the removed value survives on
+	 * — the migrated script no longer contains it and the changeset reports the
+	 * document rather than the command — so the span is captured rather than the
+	 * flag word.
+	 */
 	from: string;
 	/** What replaced it, or null when it was dropped. */
 	to: string | null;
@@ -219,7 +284,12 @@ function rewriteSegment(
 			);
 			continue;
 		}
-		const removedFlag = REMOVED_ANGULAR_CLI_FLAGS.find((entry) => entry.flag === token);
+		const joinedFlagName = carriesValue ? (token.split('=')[0] as string) : token;
+		const removedFlag = REMOVED_ANGULAR_CLI_FLAGS.find(
+			(entry) =>
+				entry.flag === token ||
+				(entry.carriesValue === true && entry.flag === joinedFlagName),
+		);
 		if (removedFlag === undefined) {
 			written.push(token);
 			continue;
@@ -242,12 +312,24 @@ function rewriteSegment(
 			);
 			continue;
 		}
+		// A value-carrying flag is removed as a span, not as a word. The joined
+		// form `--i18n-format=xlf` already is one token; the separated form
+		// `--i18n-locale en` needs the following word consumed with it, or that
+		// word survives the removal as a stray positional argument the CLI has
+		// no flag left to attach it to. `separatedValue` is the same reading the
+		// builder-option branch above refuses to act on; here the row itself
+		// declares that the word is a value, so it can be acted on.
+		let from = token;
+		if (removedFlag.carriesValue === true && separatedValue) {
+			from = `${token} ${String(next)}`;
+			index += 1;
+		}
 		if (removedFlag.successor === null) {
 			changes.push(
 				Object.freeze({
 					kind: 'retargeted-cli-flag' as const,
 					script,
-					from: token,
+					from,
 					to: null,
 					reason: removedFlag.fact,
 				}),
@@ -259,7 +341,7 @@ function rewriteSegment(
 			Object.freeze({
 				kind: 'retargeted-cli-flag' as const,
 				script,
-				from: token,
+				from,
 				to: removedFlag.successor,
 				reason: removedFlag.fact,
 			}),

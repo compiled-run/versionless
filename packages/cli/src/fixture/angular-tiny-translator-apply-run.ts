@@ -15,7 +15,11 @@ import { rm, writeFile, mkdir } from 'node:fs/promises';
 import * as path from 'pathe';
 import type { AngularMigration } from '../../../frameworks/angular/src/index.ts';
 import { canonical, sha256 } from './angular-factoriolab-migration-run.ts';
-import { sealRecord, verifySealedRecord, type SealedRecord } from './angular-factoriolab-build-lanes-run.ts';
+import {
+	sealRecord,
+	verifySealedRecord,
+	type SealedRecord,
+} from './angular-factoriolab-build-lanes-run.ts';
 import { CONSENT, composeMigration, SOURCE_TREE } from './angular-tiny-translator-lanes-run.ts';
 
 const repositoryRoot = path.resolve(import.meta.dirname, '../../../..');

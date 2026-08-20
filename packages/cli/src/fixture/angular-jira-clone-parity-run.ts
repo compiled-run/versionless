@@ -64,7 +64,10 @@ import { CONSENT_ID } from './angular-jira-clone-migration-run.ts';
 const repositoryRoot = path.resolve(import.meta.dirname, '../../../..');
 const evidenceDirectory = path.join(repositoryRoot, 'evidence/runs/angular-jira-clone');
 
-export const ERA_CACHE = path.join(repositoryRoot, '.versionless/cache/angular-jira-clone-baseline');
+export const ERA_CACHE = path.join(
+	repositoryRoot,
+	'.versionless/cache/angular-jira-clone-baseline',
+);
 /** The two builds mj1 recorded, and the one this unit added beside them. */
 export const ERA_FIRST_DIST = path.join(ERA_CACHE, 'rebuild/dist-1');
 export const ERA_SECOND_DIST = path.join(ERA_CACHE, 'rebuild/dist-2');
@@ -144,7 +147,10 @@ export function acquisitionDelta(
 		added: Object.freeze(added),
 		changed: Object.freeze(changed),
 		removed: Object.freeze(removed),
-		hosts: acquisitionHosts([...added, ...changed.map((entry) => ({ ...entry, integrity: '' }))]),
+		hosts: acquisitionHosts([
+			...added,
+			...changed.map((entry) => ({ ...entry, integrity: '' })),
+		]),
 		totalAfter: after.length,
 		totalBefore: before.length,
 	});
@@ -268,8 +274,7 @@ export function buildRecords(input: {
 				'Install the one package the undeclared-runtime-dependency capability added to the manifest: @ctrl/tinycolor, which ng-zorro-antd 16.2.2 imports from two of its own bundles and declares in none of its dependency fields.',
 			consentId: CONSENT_ID,
 			networkMode: 'consented',
-			method:
-				'npm install --no-audit --no-fund, against the closure mj2 installed and the lockfile it wrote',
+			method: 'npm install --no-audit --no-fund, against the closure mj2 installed and the lockfile it wrote',
 			outcome: input.installExitStatus === 0 ? 'succeeded' : 'failed',
 			exitStatus: input.installExitStatus,
 			migratedManifestSha256: input.manifestSha256,
@@ -314,7 +319,11 @@ export function buildRecords(input: {
 		onlyInMigrated: parity.onlyInMigrated,
 		entries: parity.entries.map((entry) => ({
 			emissionPoint: entry.emissionPoint,
-			era: entry.era.map((item) => ({ path: item.path, bytes: item.bytes, sha256: item.sha256 })),
+			era: entry.era.map((item) => ({
+				path: item.path,
+				bytes: item.bytes,
+				sha256: item.sha256,
+			})),
 			migrated: entry.migrated.map((item) => ({
 				path: item.path,
 				bytes: item.bytes,
@@ -334,7 +343,8 @@ export function buildRecords(input: {
 async function readExitStatus(file: string): Promise<number> {
 	const text = await readFile(file, 'utf8');
 	const line = text.split('\n').find((entry) => entry.startsWith('EXIT='));
-	if (line === undefined) throw new Error(`Angular jira-clone parity: no "EXIT=" line in ${file}`);
+	if (line === undefined)
+		throw new Error(`Angular jira-clone parity: no "EXIT=" line in ${file}`);
 	const value = Number.parseInt(line.slice('EXIT='.length), 10);
 	if (Number.isNaN(value))
 		throw new Error(`Angular jira-clone parity: "${line}" in ${file} is not a status`);

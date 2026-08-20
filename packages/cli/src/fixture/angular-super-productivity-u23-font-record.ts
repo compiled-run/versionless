@@ -128,7 +128,12 @@ export function logicalNameOf(file: string): string {
 export function firstDifference(
 	left: string,
 	right: string,
-): Readonly<{ offset: number; leftExcerpt: string; rightExcerpt: string; insideBangKeyframes: boolean }> | null {
+): Readonly<{
+	offset: number;
+	leftExcerpt: string;
+	rightExcerpt: string;
+	insideBangKeyframes: boolean;
+}> | null {
 	const shortest = Math.min(left.length, right.length);
 	let offset = 0;
 	while (offset < shortest && left[offset] === right[offset]) offset += 1;
@@ -174,9 +179,9 @@ export async function buildFontLaneRecord(): Promise<SealedRecord> {
 	 * has to be read rather than asserted.
 	 */
 	const manifestOf = async (root: string): Promise<Readonly<Record<string, unknown>>> =>
-		JSON.parse(await readFile(path.join(STAGE_DIRECTORY, root, 'ngsw.json'), 'utf8')) as Readonly<
-			Record<string, unknown>
-		>;
+		JSON.parse(
+			await readFile(path.join(STAGE_DIRECTORY, root, 'ngsw.json'), 'utf8'),
+		) as Readonly<Record<string, unknown>>;
 	const firstManifest = await manifestOf(CANONICAL_ROOT);
 	const secondManifest = await manifestOf(REPEATED_ROOT);
 	const manifestKeysDiffering = [
@@ -241,8 +246,14 @@ export async function buildFontLaneRecord(): Promise<SealedRecord> {
 		supersededMain === undefined || currentMain === undefined
 			? null
 			: firstDifference(
-					await readFile(path.join(STAGE_DIRECTORY, SUPERSEDED_ROOT, supersededMain.path), 'utf8'),
-					await readFile(path.join(STAGE_DIRECTORY, CANONICAL_ROOT, currentMain.path), 'utf8'),
+					await readFile(
+						path.join(STAGE_DIRECTORY, SUPERSEDED_ROOT, supersededMain.path),
+						'utf8',
+					),
+					await readFile(
+						path.join(STAGE_DIRECTORY, CANONICAL_ROOT, currentMain.path),
+						'utf8',
+					),
 				);
 
 	const supersededBytes = await readFile(
@@ -261,7 +272,9 @@ export async function buildFontLaneRecord(): Promise<SealedRecord> {
 	const emittedFontLinksMatchSource =
 		canonical(emittedFontLinks.map(unescaped)) === canonical([...sourceFontLinks]);
 	const eraFaithfulSeam =
-		fontFaceRules(emittedIndex) === 0 && emittedFontLinksMatchSource && sourceFontLinks.length > 0;
+		fontFaceRules(emittedIndex) === 0 &&
+		emittedFontLinksMatchSource &&
+		sourceFontLinks.length > 0;
 
 	return sealRecord({
 		schemaVersion: 'versionless.angular-super-productivity-offline-font-lane.v1',
@@ -300,7 +313,7 @@ export async function buildFontLaneRecord(): Promise<SealedRecord> {
 				'declares an `optimization` option with no `fonts` member and would reject the key, and ' +
 				'the shape of whatever `optimization` value the workspace declares. A declared `false` is ' +
 				'left alone so that turning the inliner off can never switch optimisation on; a declared ' +
-				'`true` or an ABSENT option becomes an explicit object carrying the schema\'s own defaults ' +
+				"`true` or an ABSENT option becomes an explicit object carrying the schema's own defaults " +
 				'for scripts and styles plus `fonts.inline: false`, because an absent option is the ' +
 				"schema's `true` and therefore inlines. Base options are written even when they declare " +
 				'nothing; a named configuration is rewritten only when it declares the option itself.',
@@ -380,7 +393,7 @@ export async function buildFontLaneRecord(): Promise<SealedRecord> {
 				'chunks included — is identical between the two runs. This is the same single field u18j ' +
 				'recorded across its three runs.',
 			sassRandomFiles:
-				'None differed BETWEEN this round\'s two runs, which is what u18i and u18j also saw and ' +
+				"None differed BETWEEN this round's two runs, which is what u18i and u18j also saw and " +
 				'is not a claim that the instability cannot appear. It did appear ACROSS the supersede ' +
 				'boundary, and that is reported under `census` rather than hidden: the main chunk this ' +
 				'round emitted is not the one u18j emitted, and the first byte where the two disagree ' +
@@ -408,7 +421,9 @@ export async function buildFontLaneRecord(): Promise<SealedRecord> {
 			byteIdenticalToSuperseded: namesUnchanged.length - changedAgainstSuperseded.length,
 			changedAgainstSuperseded,
 			renamedAgainstSuperseded: {
-				gone: [...supersededDigests.keys()].filter((name) => !firstDigests.has(name)).sort(),
+				gone: [...supersededDigests.keys()]
+					.filter((name) => !firstDigests.has(name))
+					.sort(),
 				new: [...firstDigests.keys()].filter((name) => !supersededDigests.has(name)).sort(),
 			},
 			sassRandomReading:
@@ -498,7 +513,7 @@ export async function buildFontLaneRecord(): Promise<SealedRecord> {
 			'No witness work was done in this round by design. Whether the application runs, mounts or ' +
 				'keeps what a user types is not established here and is not re-established from u18j, ' +
 				'which did not establish it either.',
-			'Logical-name parity against the ERA lane is not re-measured here. It is u18j\'s reading, of ' +
+			"Logical-name parity against the ERA lane is not re-measured here. It is u18j's reading, of " +
 				'a build whose only difference from this one is the emitted document, the manifest and ' +
 				'the confetti literals.',
 			'The Sass instability is attributed from the first differing byte of one pair of chunks. ' +

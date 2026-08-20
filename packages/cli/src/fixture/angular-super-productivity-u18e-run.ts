@@ -49,7 +49,11 @@ async function declarationsBelow(root: string): Promise<readonly string[]> {
 	const found: string[] = [];
 	const walk = async (directory: string): Promise<void> => {
 		for (const entry of await readdir(directory, { withFileTypes: true })) {
-			if (entry.name === 'esm2022' || entry.name === 'fesm2022' || entry.name === 'node_modules')
+			if (
+				entry.name === 'esm2022' ||
+				entry.name === 'fesm2022' ||
+				entry.name === 'node_modules'
+			)
 				continue;
 			const full = path.join(directory, entry.name);
 			if (entry.isDirectory()) await walk(full);
@@ -96,7 +100,8 @@ function splitTopLevel(text: string): readonly string[] {
 	let start = 0;
 	for (let index = 0; index < text.length; index += 1) {
 		const character = text[index];
-		if (character === '<' || character === '(' || character === '{' || character === '[') depth += 1;
+		if (character === '<' || character === '(' || character === '{' || character === '[')
+			depth += 1;
 		else if (character === '>' || character === ')' || character === '}' || character === ']')
 			depth -= 1;
 		else if (character === ',' && depth === 0) {
@@ -128,7 +133,9 @@ function readTypeParameters(declaration: string): readonly BaseTypeParameterRead
 			return Object.freeze({
 				name: (extendsAt === -1 ? beforeDefault : beforeDefault.slice(0, extendsAt)).trim(),
 				constraint:
-					extendsAt === -1 ? null : headOf(beforeDefault.slice(extendsAt + ' extends '.length)),
+					extendsAt === -1
+						? null
+						: headOf(beforeDefault.slice(extendsAt + ' extends '.length)),
 				hasDefault: equals !== -1,
 			});
 		}),
@@ -313,7 +320,8 @@ export async function readTypeMemberSurface(
 				complete = false;
 				break;
 			}
-			for (const member of readMembers(source.slice(brace + 1, close - 1))) members.add(member);
+			for (const member of readMembers(source.slice(brace + 1, close - 1)))
+				members.add(member);
 			const extendsAt = head.indexOf(' extends ');
 			if (extendsAt !== -1)
 				for (const parent of splitTopLevel(head.slice(extendsAt + ' extends '.length)))
@@ -349,7 +357,8 @@ export async function baseClassRound(
 				if (!new RegExp(String.raw`\b${diagnostic.base}\b`, 'u').test(line)) continue;
 				const quote = line.indexOf("'");
 				const end = line.indexOf("'", quote + 1);
-				if (quote !== -1 && end !== -1) wanted.set(diagnostic.base, line.slice(quote + 1, end));
+				if (quote !== -1 && end !== -1)
+					wanted.set(diagnostic.base, line.slice(quote + 1, end));
 			}
 		}
 	}
@@ -455,7 +464,10 @@ export async function memberRenameRound(
 }
 
 export async function main(): Promise<void> {
-	const log = await readFile(path.join(STAGE_DIRECTORY, process.argv[2] ?? 'build-3.log'), 'utf8');
+	const log = await readFile(
+		path.join(STAGE_DIRECTORY, process.argv[2] ?? 'build-3.log'),
+		'utf8',
+	);
 	const outcomes: CapabilityOutcome[] = [...(await applyRound())];
 	outcomes.push(await baseClassRound(log));
 	outcomes.push(await memberRenameRound(log));

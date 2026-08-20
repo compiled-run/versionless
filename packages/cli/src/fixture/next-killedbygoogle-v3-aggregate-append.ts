@@ -54,9 +54,7 @@ export async function nextKilledbygoogleV3AggregateMembers(rootDir = root): Prom
 function killedbygoogleV3Paths(fixtures: Array<Record<string, unknown>>): string[] {
 	return fixtures
 		.map((fixture) => fixture.receipt)
-		.filter(
-			(value): value is string => value === WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH,
-		);
+		.filter((value): value is string => value === WITNESS_NEXT_KILLEDBYGOOGLE_V3_RECEIPT_PATH);
 }
 
 /**

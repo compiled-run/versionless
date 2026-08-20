@@ -1,8 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
-	ANGULAR_16_BROWSER_CELL,
-	type AngularTargetCell,
-} from '../src/angular-target-cell.ts';
+import { ANGULAR_16_BROWSER_CELL, type AngularTargetCell } from '../src/angular-target-cell.ts';
 import { migrateAngularCliEraWorkspace } from '../src/angular-cli-era-migration.ts';
 import { migrateAngularWorkspace } from '../src/angular-workspace-migration.ts';
 import {
@@ -34,7 +31,10 @@ const WORKSPACE = JSON.stringify(
 					build: { builder: '@angular-devkit/build-angular:browser', options: {} },
 					lint: {
 						builder: '@angular-devkit/build-angular:tslint',
-						options: { tsConfig: ['tsconfig.app.json'], exclude: ['**/node_modules/**'] },
+						options: {
+							tsConfig: ['tsconfig.app.json'],
+							exclude: ['**/node_modules/**'],
+						},
 					},
 				},
 			},
@@ -76,8 +76,12 @@ describe('TSLint toolchain removal', () => {
 		const projects = (workspace as Record<string, Record<string, Record<string, unknown>>>)[
 			'projects'
 		];
-		expect(Object.keys((projects?.['any-app']?.['architect'] as object) ?? {})).toEqual(['build']);
-		expect(Object.keys((projects?.['a-second-app']?.['architect'] as object) ?? {})).toEqual([]);
+		expect(Object.keys((projects?.['any-app']?.['architect'] as object) ?? {})).toEqual([
+			'build',
+		]);
+		expect(Object.keys((projects?.['a-second-app']?.['architect'] as object) ?? {})).toEqual(
+			[],
+		);
 		const tslintDifferences = migration.declaredDifferences.filter((line) =>
 			line.includes('TSLint'),
 		);
@@ -139,11 +143,18 @@ describe('TSLint toolchain removal', () => {
 				packageManifest: {
 					path: 'package.json',
 					source: JSON.stringify({
-						devDependencies: { tslint: '~6.1.0', codelyzer: '^6.0.0', eslint: '^8.2.0' },
+						devDependencies: {
+							tslint: '~6.1.0',
+							codelyzer: '^6.0.0',
+							eslint: '^8.2.0',
+						},
 					}),
 				},
 				workspaceConfig: { path: 'angular.json', source: WORKSPACE },
-				tsConfig: { path: 'tsconfig.json', source: JSON.stringify({ compilerOptions: {} }) },
+				tsConfig: {
+					path: 'tsconfig.json',
+					source: JSON.stringify({ compilerOptions: {} }),
+				},
 				sourceModules: [],
 				workspaceFiles: ['angular.json', 'package.json', 'tslint.json'],
 			},
@@ -168,10 +179,14 @@ describe('TSLint toolchain removal', () => {
 			migration.declaredDifferences.filter((line) => line.includes('tslint.json')),
 		).toHaveLength(1);
 		expect(
-			migration.declaredDifferences.some((line) => line.includes('devDependencies.codelyzer')),
+			migration.declaredDifferences.some((line) =>
+				line.includes('devDependencies.codelyzer'),
+			),
 		).toBe(true);
 		expect(
-			migration.declaredDifferences.some((line) => line.includes('devDependencies.tslint was')),
+			migration.declaredDifferences.some((line) =>
+				line.includes('devDependencies.tslint was'),
+			),
 		).toBe(true);
 	});
 
@@ -180,7 +195,10 @@ describe('TSLint toolchain removal', () => {
 			{
 				packageManifest: { path: 'package.json', source: '{}' },
 				workspaceConfig: { path: 'angular.json', source: WORKSPACE },
-				tsConfig: { path: 'tsconfig.json', source: JSON.stringify({ compilerOptions: {} }) },
+				tsConfig: {
+					path: 'tsconfig.json',
+					source: JSON.stringify({ compilerOptions: {} }),
+				},
 				sourceModules: [],
 			},
 			ANGULAR_16_BROWSER_CELL,

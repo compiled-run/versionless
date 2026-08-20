@@ -512,9 +512,7 @@ async function writeAcquiredMonorepoLane(
 	await mkdir(baseline, { recursive: true });
 	await writeSource(baseline, {
 		frontend: 'client',
-		...(options.frontendManifest === undefined
-			? {}
-			: { manifest: options.frontendManifest }),
+		...(options.frontendManifest === undefined ? {} : { manifest: options.frontendManifest }),
 	});
 	/** The repository root is an Express server, and it is not the frontend. */
 	await writeFile(
@@ -579,10 +577,7 @@ describe('operator ingest — the acquisition root and the frontend root are two
 				journal: () => sourceBoundJournal('0'.repeat(64)),
 			});
 			const refusal = await refusalOf(() =>
-				ingestApplicationSource(
-					path.join(baseline, 'client'),
-					DEFAULT_INGEST_DECLARATIONS,
-				),
+				ingestApplicationSource(path.join(baseline, 'client'), DEFAULT_INGEST_DECLARATIONS),
 			);
 			expect(refusal?.code).toBe('ingest.acquisition-journal-does-not-match-the-tree');
 			expect(refusal?.message).toContain('enclosing acquisition tree');
@@ -620,10 +615,10 @@ describe('operator ingest — the acquisition root and the frontend root are two
 			const record = await ingestApplicationSource(baseline, DEFAULT_INGEST_DECLARATIONS);
 			expect(record.id).toBe('react-flame-v2-4-0');
 			expect(record.idSource).toBe('read');
+			expect(record.idReadFrom).toContain('evidence/ingests/react-flame-v2-4-0/source.json');
 			expect(record.idReadFrom).toContain(
-				'evidence/ingests/react-flame-v2-4-0/source.json',
+				'declared by an operator with --id at acquire time',
 			);
-			expect(record.idReadFrom).toContain('declared by an operator with --id at acquire time');
 			expect(record.idReadFrom).toContain('declares no name and this stage read none');
 		} finally {
 			await rm(workspace, { recursive: true, force: true });

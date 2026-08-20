@@ -414,7 +414,11 @@ export async function applicationFilesChanged(
 	for (const [file, digest] of target)
 		if (!source.has(file)) changed.push({ path: file, before: null, after: digest });
 	changed.sort(byPath);
-	return { scope: 'application root, excluding the dependency directory and build outputs', filesCompared: source.size, changed };
+	return {
+		scope: 'application root, excluding the dependency directory and build outputs',
+		filesCompared: source.size,
+		changed,
+	};
 }
 
 export type FrameworkLiftReport = Readonly<{
@@ -575,7 +579,8 @@ export async function runKilledByGoogleLanes(): Promise<KilledByGoogleLanes> {
 export const recordedDifferences: readonly Readonly<{ difference: string; detail: string }>[] =
 	Object.freeze([
 		Object.freeze({
-			difference: 'the delivered document carries the application markup in one lane and not the other',
+			difference:
+				'the delivered document carries the application markup in one lane and not the other',
 			detail:
 				'The era lane statically renders the whole page — every list row, every style rule — ' +
 				'into index.html. The migrated lane delivers a mount element and a module script, and ' +
@@ -584,7 +589,8 @@ export const recordedDifferences: readonly Readonly<{ difference: string; detail
 				'central difference of the whole lift and it is not repaired anywhere below.',
 		}),
 		Object.freeze({
-			difference: 'the head elements are pre-rendered in one lane and installed on mount in the other',
+			difference:
+				'the head elements are pre-rendered in one lane and installed on mount in the other',
 			detail:
 				'Every element the page passes to next/head appears inside <head> in the era ' +
 				'document, counted by the framework in a next-head-count meta tag. After the lift ' +
@@ -605,7 +611,7 @@ export const recordedDifferences: readonly Readonly<{ difference: string; detail
 			detail:
 				'The era export writes _next/data/<build-id>/index.json, the serialised result of ' +
 				'getStaticProps, for the client router to fetch on navigation. The migrated lane ' +
-				'calls the application\'s own getStaticProps as it starts instead, so the data exists ' +
+				"calls the application's own getStaticProps as it starts instead, so the data exists " +
 				'only in memory and no such file is emitted.',
 		}),
 		Object.freeze({
@@ -620,7 +626,8 @@ export const recordedDifferences: readonly Readonly<{ difference: string; detail
 				'produced on the client in both lanes.',
 		}),
 		Object.freeze({
-			difference: 'the carbon ad slot is a runtime insertion in both lanes and is comparable in neither',
+			difference:
+				'the carbon ad slot is a runtime insertion in both lanes and is comparable in neither',
 			detail:
 				'components/Carbon.tsx appends a cdn.carbonads.com script element in an effect. No ' +
 				'lane emits it as build output; the only carbonads text in the era document is a ' +
@@ -766,7 +773,7 @@ export function buildLanesObservation(lanes: KilledByGoogleLanes): BuildLanesObs
 				'bundlers. They are counted, never compared.',
 			publicAssets: lanes.parity,
 			publicAssetNote:
-				'Copied public files are the one part of two bundlers\' output that is legitimately ' +
+				"Copied public files are the one part of two bundlers' output that is legitimately " +
 				'comparable byte for byte, because neither is supposed to transform them.',
 		},
 		recordedDifferences,

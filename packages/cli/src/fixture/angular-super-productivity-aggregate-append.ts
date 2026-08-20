@@ -50,8 +50,7 @@ function superProductivityPaths(fixtures: Array<Record<string, unknown>>): strin
 	return fixtures
 		.map((fixture) => fixture.receipt)
 		.filter(
-			(value): value is string =>
-				value === WITNESS_ANGULAR_SUPER_PRODUCTIVITY_RECEIPT_PATH,
+			(value): value is string => value === WITNESS_ANGULAR_SUPER_PRODUCTIVITY_RECEIPT_PATH,
 		);
 }
 
@@ -96,7 +95,9 @@ export async function appendAngularSuperProductivityAggregateMembers(rootDir = r
 		state.kind !== 'angular-super-productivity-browser-proof' ||
 		state.receipts !== composed.fixtures.length
 	)
-		throw new Error('Angular Super Productivity append does not derive the browser-proof state');
+		throw new Error(
+			'Angular Super Productivity append does not derive the browser-proof state',
+		);
 	const staged = `${target}.t006b.tmp`;
 	if (await exists(staged))
 		throw new Error('Angular Super Productivity aggregate staging residue exists');
@@ -136,7 +137,9 @@ export async function main(args = process.argv.slice(2)): Promise<void> {
 							aggregate.fixtures.map((item) => record(item, 'member')),
 						);
 						if (!APPENDED_KINDS.has(state.kind))
-							throw new Error('Angular Super Productivity aggregate membership is absent');
+							throw new Error(
+								'Angular Super Productivity aggregate membership is absent',
+							);
 						return { kind: state.kind, receipts: state.receipts, appended: false };
 					})()
 				: (() => {

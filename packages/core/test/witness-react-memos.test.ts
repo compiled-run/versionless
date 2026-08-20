@@ -196,8 +196,8 @@ describe('Memos direct Witness receipt', () => {
 	it('rejects a rebound projection digest or a rewritten amendment', async () => {
 		const receipt = await published();
 		const rebound = structuredClone(receipt);
-		rebound.projection.behaviorDigest =
-			receipt.projection.amendment.supersededBehaviorDigest as typeof REACT_MEMOS_PROJECTION_BEHAVIOR_DIGEST;
+		rebound.projection.behaviorDigest = receipt.projection.amendment
+			.supersededBehaviorDigest as typeof REACT_MEMOS_PROJECTION_BEHAVIOR_DIGEST;
 		expect(() => parseWitnessReactMemosReceipt(resealedDeep(rebound))).toThrow(
 			'Witness binding differs',
 		);

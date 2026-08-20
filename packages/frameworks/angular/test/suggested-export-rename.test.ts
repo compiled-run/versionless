@@ -150,7 +150,8 @@ describe('applySuggestedExportRenames', () => {
 	});
 
 	it('refuses a subpath import, whose surface is a different reading', () => {
-		const source = "import {ChartsModule} from 'ng2-charts/extra';\nexport const a = ChartsModule;\n";
+		const source =
+			"import {ChartsModule} from 'ng2-charts/extra';\nexport const a = ChartsModule;\n";
 		const result = applySuggestedExportRenames(
 			'subpath.ts',
 			source,

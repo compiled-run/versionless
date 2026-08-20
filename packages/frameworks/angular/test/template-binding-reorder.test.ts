@@ -37,16 +37,14 @@ const UNSAFE_CALL_SITE = `<split (posChanged)="p=$event"
 
 describe('reading a directive for setter dependencies', () => {
 	it('reads the split shape: which input the setter dereferences, and that they are inputs', () => {
-		const [reading, ...rest] = readDirectiveBindingDependencies('split.component.ts', SPLIT_COMPONENT);
+		const [reading, ...rest] = readDirectiveBindingDependencies(
+			'split.component.ts',
+			SPLIT_COMPONENT,
+		);
 		expect(rest).toEqual([]);
 		expect(reading?.component).toBe('SplitComponent');
 		expect(reading?.selector).toBe('split');
-		expect(reading?.inputs).toEqual([
-			'containerEl',
-			'splitBottomEl',
-			'splitPos',
-			'splitTopEl',
-		]);
+		expect(reading?.inputs).toEqual(['containerEl', 'splitBottomEl', 'splitPos', 'splitTopEl']);
 		expect(reading?.setterDependencies).toEqual([
 			{ input: 'splitPos', dependsOn: ['splitBottomEl', 'splitTopEl'] },
 		]);
@@ -62,7 +60,9 @@ export class SplitComponent {
   @Input() set splitPos(v: number) { this.r.setStyle(this.splitTopEl, 'height', '1px'); }
 }`;
 		const [reading] = readDirectiveBindingDependencies('split.ts', injected);
-		expect(reading?.setterDependencies).toEqual([{ input: 'splitPos', dependsOn: ['splitTopEl'] }]);
+		expect(reading?.setterDependencies).toEqual([
+			{ input: 'splitPos', dependsOn: ['splitTopEl'] },
+		]);
 	});
 
 	it('reads a `.classList` dereference as a throwing dependency', () => {
@@ -157,7 +157,9 @@ describe('reordering a template call site', () => {
 			migration.source.indexOf('[containerEl]'),
 		);
 		// Same set of characters, just reordered — no value was rewritten.
-		expect([...migration.source].sort().join('')).toEqual([...UNSAFE_CALL_SITE].sort().join(''));
+		expect([...migration.source].sort().join('')).toEqual(
+			[...UNSAFE_CALL_SITE].sort().join(''),
+		);
 	});
 
 	it('leaves a call site already in a safe order byte-for-byte unchanged', () => {
@@ -185,7 +187,11 @@ describe('reordering a template call site', () => {
 				setterDependencies: Object.freeze([]),
 			}),
 		];
-		const migration = reorderTemplateBindings('page.html', `<plain [b]="1" [a]="2"></plain>`, inert);
+		const migration = reorderTemplateBindings(
+			'page.html',
+			`<plain [b]="1" [a]="2"></plain>`,
+			inert,
+		);
 		expect(migration.changed).toBe(false);
 		expect(migration.changes).toEqual([]);
 	});
@@ -204,7 +210,11 @@ describe('refusals that leave the template alone', () => {
 				]),
 			}),
 		];
-		const migration = reorderTemplateBindings('page.html', `<cycle [a]="x" [b]="y"></cycle>`, cyclic);
+		const migration = reorderTemplateBindings(
+			'page.html',
+			`<cycle [a]="x" [b]="y"></cycle>`,
+			cyclic,
+		);
 		expect(migration.changed).toBe(false);
 		expect(migration.changes).toEqual([]);
 		expect(migration.unhandled).toHaveLength(1);
@@ -224,7 +234,11 @@ describe('refusals that leave the template alone', () => {
 				]),
 			}),
 		];
-		const migration = reorderTemplateBindings('page.html', `<div [a]="x" [b]="y"></div>`, classSelector);
+		const migration = reorderTemplateBindings(
+			'page.html',
+			`<div [a]="x" [b]="y"></div>`,
+			classSelector,
+		);
 		expect(migration.changed).toBe(false);
 		expect(migration.unhandled).toHaveLength(1);
 		expect(migration.unhandled[0]).toContain('.some-class');
@@ -232,7 +246,11 @@ describe('refusals that leave the template alone', () => {
 
 	it('reports a template that does not parse rather than counting it unchanged', () => {
 		const readings = readDirectiveBindingDependencies('split.component.ts', SPLIT_COMPONENT);
-		const migration = reorderTemplateBindings('page.html', `<split [splitPos]="p" </split`, readings);
+		const migration = reorderTemplateBindings(
+			'page.html',
+			`<split [splitPos]="p" </split`,
+			readings,
+		);
 		expect(migration.changed).toBe(false);
 		expect(migration.unhandled.length).toBeGreaterThan(0);
 	});
@@ -254,6 +272,8 @@ describe('refusals that leave the template alone', () => {
 			attribute,
 		);
 		expect(migration.changed).toBe(true);
-		expect(migration.source.indexOf('[pos]')).toBeGreaterThan(migration.source.indexOf('[topEl]'));
+		expect(migration.source.indexOf('[pos]')).toBeGreaterThan(
+			migration.source.indexOf('[topEl]'),
+		);
 	});
 });

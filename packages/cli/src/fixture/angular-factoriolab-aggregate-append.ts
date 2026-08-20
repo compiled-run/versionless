@@ -47,9 +47,7 @@ export async function angularFactoriolabAggregateMembers(rootDir = root): Promis
 function factoriolabPaths(fixtures: Array<Record<string, unknown>>): string[] {
 	return fixtures
 		.map((fixture) => fixture.receipt)
-		.filter(
-			(value): value is string => value === WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH,
-		);
+		.filter((value): value is string => value === WITNESS_ANGULAR_FACTORIOLAB_RECEIPT_PATH);
 }
 
 /**
@@ -89,7 +87,9 @@ export async function appendAngularFactoriolabAggregateMembers(rootDir = root): 
 		return { kind: state.kind, receipts: state.receipts, appended: false };
 	}
 	if (deriveCorpusTransactionState(fixtures).kind !== 'react-hospitalrun-browser-proof')
-		throw new Error('Angular factoriolab append requires the HospitalRun browser-proof predecessor');
+		throw new Error(
+			'Angular factoriolab append requires the HospitalRun browser-proof predecessor',
+		);
 	const composed = { ...aggregate, fixtures: [...fixtures, members.witness] };
 	const state = deriveCorpusTransactionState(composed.fixtures);
 	if (
@@ -98,7 +98,8 @@ export async function appendAngularFactoriolabAggregateMembers(rootDir = root): 
 	)
 		throw new Error('Angular factoriolab append does not derive the browser-proof state');
 	const staged = `${target}.t005.tmp`;
-	if (await exists(staged)) throw new Error('Angular factoriolab aggregate staging residue exists');
+	if (await exists(staged))
+		throw new Error('Angular factoriolab aggregate staging residue exists');
 	try {
 		await writeFile(staged, `${JSON.stringify(composed, null, 2)}\n`, { flag: 'wx' });
 		const restaged = record(JSON.parse(await readFile(staged, 'utf8')), 'staged document');
@@ -118,7 +119,8 @@ export async function appendAngularFactoriolabAggregateMembers(rootDir = root): 
 }
 
 export async function main(args = process.argv.slice(2)): Promise<void> {
-	if (args.length !== 1) throw new Error('Angular factoriolab aggregate append requires one mode');
+	if (args.length !== 1)
+		throw new Error('Angular factoriolab aggregate append requires one mode');
 	const result =
 		args[0] === '--append'
 			? await appendAngularFactoriolabAggregateMembers()

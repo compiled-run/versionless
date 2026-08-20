@@ -84,8 +84,8 @@ export class CardComponent {
   }
 }
 `);
-		expect(fileAt(migration, 'src/app/content.component.ts')
-			.source).toBe(`import { Component, Input, inject } from '@angular/core';
+		expect(fileAt(migration, 'src/app/content.component.ts').source)
+			.toBe(`import { Component, Input, inject } from '@angular/core';
 import { NzModalRef, NZ_MODAL_DATA } from 'ng-zorro-antd/modal';
 import { Observable } from 'rxjs';
 
@@ -191,7 +191,9 @@ export class ContentComponent {
 	});
 
 	it('rewrites two call sites that supply the same fields to one content component once', () => {
-		const second = callSite.replace('card', 'drawer').replace('CardComponent', 'DrawerComponent');
+		const second = callSite
+			.replace('card', 'drawer')
+			.replace('CardComponent', 'DrawerComponent');
 		const migration = migrateModalContentParams([
 			...tree(),
 			{ path: 'src/app/drawer.component.ts', source: second },
@@ -304,7 +306,10 @@ export class NavComponent {
 	});
 
 	it('refuses a call that already declares the option it would be rewritten into', () => {
-		const contested = callSite.replace('nzWidth: 1040,', "nzWidth: 1040,\n      nzData: { x: 1 },");
+		const contested = callSite.replace(
+			'nzWidth: 1040,',
+			'nzWidth: 1040,\n      nzData: { x: 1 },',
+		);
 		expectUntouched(
 			migrateModalContentParams([
 				{ path: 'src/app/card.component.ts', source: contested },

@@ -49,9 +49,17 @@ const surfaces: readonly SuccessorClassSurfaceReading[] = Object.freeze([
 		version: '16.2.12',
 		symbol: 'HttpHeaders',
 		members: Object.freeze([
-			Object.freeze({ member: 'append', returns: 'HttpHeaders', optionKeys: Object.freeze([]) }),
+			Object.freeze({
+				member: 'append',
+				returns: 'HttpHeaders',
+				optionKeys: Object.freeze([]),
+			}),
 			Object.freeze({ member: 'set', returns: 'HttpHeaders', optionKeys: Object.freeze([]) }),
-			Object.freeze({ member: 'delete', returns: 'HttpHeaders', optionKeys: Object.freeze([]) }),
+			Object.freeze({
+				member: 'delete',
+				returns: 'HttpHeaders',
+				optionKeys: Object.freeze([]),
+			}),
 		]),
 		complete: true,
 	}),
@@ -94,14 +102,18 @@ describe('HttpClient call surface', () => {
 	it('assigns a discarded mutator call back to its receiver', () => {
 		const migration = migrate(
 			'a.ts',
-			service(['    private set() {', "        this.headers.append('Accept', 'text/plain');", '    }']),
+			service([
+				'    private set() {',
+				"        this.headers.append('Accept', 'text/plain');",
+				'    }',
+			]),
 		);
 		expect(migration.source).toContain(
 			"this.headers = this.headers.append('Accept', 'text/plain');",
 		);
-		expect(migration.changes.some((change) => change.kind === 'http-headers-immutable-mutation')).toBe(
-			true,
-		);
+		expect(
+			migration.changes.some((change) => change.kind === 'http-headers-immutable-mutation'),
+		).toBe(true);
 		expect(migration.declaredDifferences.join(' ')).toContain('mutated the receiver');
 	});
 
@@ -116,7 +128,11 @@ describe('HttpClient call surface', () => {
 		);
 		const migration = migrateHttpClientCallSurface(
 			'a.ts',
-			service(['    private set() {', "        this.headers.append('Accept', 'text/plain');", '    }']),
+			service([
+				'    private set() {',
+				"        this.headers.append('Accept', 'text/plain');",
+				'    }',
+			]),
 			ANGULAR_HTTP_CALL_SURFACE,
 			[reading],
 			mutating,
@@ -153,7 +169,9 @@ describe('HttpClient call surface', () => {
 		expect(migration.changes.map((change) => change.kind)).toContain(
 			'http-client-body-accessor-removal',
 		);
-		expect(migration.changes.map((change) => change.kind)).toContain('http-client-element-type');
+		expect(migration.changes.map((change) => change.kind)).toContain(
+			'http-client-element-type',
+		);
 	});
 
 	it('refuses to remove a body accessor from a flow the application never typed', () => {
@@ -181,7 +199,9 @@ describe('HttpClient call surface', () => {
 			]),
 		);
 		expect(migration.source).toContain("this._http.request<string[]>('GET', this.url,");
-		expect(migration.declaredDifferences.join(' ')).toContain('moved rather than the option dropped');
+		expect(migration.declaredDifferences.join(' ')).toContain(
+			'moved rather than the option dropped',
+		);
 	});
 
 	it('leaves a call whose options the successor still publishes on the member it was written on', () => {
@@ -195,9 +215,9 @@ describe('HttpClient call surface', () => {
 			]),
 		);
 		expect(migration.source).toContain('this._http.get<string[]>(');
-		expect(migration.changes.some((change) => change.kind === 'http-client-request-relocation')).toBe(
-			false,
-		);
+		expect(
+			migration.changes.some((change) => change.kind === 'http-client-request-relocation'),
+		).toBe(false);
 	});
 
 	it('refuses a call carrying an option no member of the successor publishes', () => {
@@ -248,7 +268,9 @@ describe('HttpClient call surface', () => {
 		].join('\n');
 		const migration = migrate('a.ts', source);
 		expect(migration.changed).toBe(false);
-		expect(migration.unhandled.join(' ')).toContain('not the parameter of an operator callback');
+		expect(migration.unhandled.join(' ')).toContain(
+			'not the parameter of an operator callback',
+		);
 	});
 
 	it('refuses the module where the removed specifier still resolves', () => {
@@ -279,7 +301,9 @@ describe('HttpClient call surface', () => {
 		const source = ["import { RequestOptions } from '@angular/http';", ''].join('\n');
 		const migration = migrate('a.ts', source);
 		expect(migration.changed).toBe(false);
-		expect(migration.unhandled.join(' ')).toContain('no rule of this capability is written for');
+		expect(migration.unhandled.join(' ')).toContain(
+			'no rule of this capability is written for',
+		);
 	});
 
 	it('leaves a module that never imported the removed specifier alone', () => {

@@ -89,7 +89,8 @@ export async function readSuccessorSurface(
 		const source = await readFile(file, 'utf8');
 		const module = parseModule('Successor surface reading', file, source);
 		for (const entry of module.exports)
-			if (!entry.isStar && entry.name !== null && entry.name !== 'default') names.add(entry.name);
+			if (!entry.isStar && entry.name !== null && entry.name !== 'default')
+				names.add(entry.name);
 		for (const node of module.ast.body) {
 			if (node.type !== 'ExportAllDeclaration') continue;
 			const specifier = node.source.value;
@@ -99,7 +100,9 @@ export async function readSuccessorSurface(
 			}
 			const target = resolve(file, specifier);
 			if (target === null) {
-				unfollowed.push(`${path.relative(directory, file)} re-exports all of ${specifier}, which is not on disk`);
+				unfollowed.push(
+					`${path.relative(directory, file)} re-exports all of ${specifier}, which is not on disk`,
+				);
 				continue;
 			}
 			await visit(target);
@@ -144,7 +147,9 @@ export type CapabilityOutcome = Readonly<{
  * from disk and writes it back, so the order is a statement about which reading
  * is current, not about which transform matters more.
  */
-export async function applyRound(tree: string = APPLIED_TREE): Promise<readonly CapabilityOutcome[]> {
+export async function applyRound(
+	tree: string = APPLIED_TREE,
+): Promise<readonly CapabilityOutcome[]> {
 	const modules = await filesBelow(path.join(tree, 'src'), '.ts');
 	const sheets = await filesBelow(path.join(tree, 'src'), '.scss');
 	const relative = (file: string): string => path.relative(tree, file);

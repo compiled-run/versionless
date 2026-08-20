@@ -96,7 +96,8 @@ export async function main(): Promise<void> {
 	);
 	process.stdout.write(`declared: ${String(round.declaration.declared)}\n`);
 	process.stdout.write(`files changed: ${round.filesChanged.join(', ') || 'none'}\n`);
-	for (const refusal of round.declaration.unhandled) process.stdout.write(`refused: ${refusal}\n`);
+	for (const refusal of round.declaration.unhandled)
+		process.stdout.write(`refused: ${refusal}\n`);
 }
 
 if (process.argv[1]?.endsWith('angular-tiny-translator-cva-run.ts'))

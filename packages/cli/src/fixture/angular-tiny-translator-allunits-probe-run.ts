@@ -26,11 +26,17 @@ import { canonical } from './angular-factoriolab-migration-run.ts';
 
 const root = resolve(import.meta.dirname, '../../../..');
 const STAGE = join(root, '.versionless/stage/angular-tiny-translator-v0-12-0-u17b');
-const FIXTURE = join(root, 'fixtures/angular-tiny-translator-v0-12-0/witness/synthetic-messages.xlf');
+const FIXTURE = join(
+	root,
+	'fixtures/angular-tiny-translator-v0-12-0/witness/synthetic-messages.xlf',
+);
 
 /** The two lanes, each served exactly as its own build emitted it. */
 export const PROBE_LANE_ROOTS = Object.freeze({
-	era: join(root, '.versionless/cache/angular-tiny-translator-v0-12-0-baseline/app/dist/rebuild-1'),
+	era: join(
+		root,
+		'.versionless/cache/angular-tiny-translator-v0-12-0-baseline/app/dist/rebuild-1',
+	),
 	migrated: join(STAGE, 'dist-13'),
 });
 
@@ -186,7 +192,10 @@ export async function probeLane(lane: 'era' | 'migrated'): Promise<LaneProbe> {
 		await page.waitForSelector('#apptitle', { timeout: 60000 });
 		await page.click('a[mat-raised-button]');
 		await page.waitForSelector('#createProjectForm');
-		await page.fill('#createProjectForm input[formControlName=projectName]', 'versionless-witness');
+		await page.fill(
+			'#createProjectForm input[formControlName=projectName]',
+			'versionless-witness',
+		);
 		await page.setInputFiles('input[type=file]', FIXTURE);
 		await page.waitForFunction(() => document.body.innerText.includes('3 entries'), null, {
 			timeout: 60000,
@@ -203,9 +212,13 @@ export async function probeLane(lane: 'era' | 'migrated'): Promise<LaneProbe> {
 		await page.type(TEXTAREA, TYPED);
 		await page.waitForSelector(`${UNDO}:not([disabled])`, { timeout: 30000 });
 		await page.click('button:has(:text-is("mark as translated"))');
-		await page.waitForFunction(() => document.body.innerText.includes('33 % translated'), null, {
-			timeout: 30000,
-		});
+		await page.waitForFunction(
+			() => document.body.innerText.includes('33 % translated'),
+			null,
+			{
+				timeout: 30000,
+			},
+		);
 		stages.push(await read(page, 'after-mark-translated'));
 
 		await page.click('a[href="#/editproject"]');

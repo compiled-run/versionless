@@ -112,7 +112,8 @@ export function differingPaths(
 		const other = right.get(entry.path);
 		if (other === undefined || other !== entry.sha256) differing.push(entry.path);
 	}
-	for (const entry of second) if (!first.some((left) => left.path === entry.path)) differing.push(entry.path);
+	for (const entry of second)
+		if (!first.some((left) => left.path === entry.path)) differing.push(entry.path);
 	return Object.freeze([...new Set(differing)].sort());
 }
 
@@ -129,9 +130,11 @@ export function buildEraLaneRecord(input: LaneInput): SealedRecord {
 			node: input.nodeVersion,
 			architecture: 'darwin-x64 executed on darwin-arm64 through Rosetta 2',
 			packageManager: 'yarn 1.21.1',
-			command: 'node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng build --aot --prod',
+			command:
+				'node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng build --aot --prod',
 			builder: '@angular-devkit/build-angular:browser 0.803.4 over webpack 4',
-			compiler: 'pre-Ivy ViewEngine, AOT — enableIvy appears in none of the 967 blobs and Angular 8.2 defaults to ViewEngine',
+			compiler:
+				'pre-Ivy ViewEngine, AOT — enableIvy appears in none of the 967 blobs and Angular 8.2 defaults to ViewEngine',
 			honestLabel:
 				"repository-declared as to major. .travis.yml pins `node_js: '12'`, which is what this cell runs; the patch level 12.14.1 and yarn 1.21.1 are the ingest's era-consistent choices, because the repository declares neither. The yarn 1.22.11-and-later defect recorded by the ingest — newer yarn walks up the directory tree, finds the host monorepo's packageManager field and demands Corepack — is avoided by the same fix the ingest recorded, not re-discovered.",
 		},
@@ -142,7 +145,8 @@ export function buildEraLaneRecord(input: LaneInput): SealedRecord {
 			provenance:
 				'Restored in this checkout from the u16 ingest: the era dependency closure installed by `yarn install --frozen-lockfile --ignore-scripts --non-interactive` against the committed 466,548-byte yarn.lock, 1061 top-level entries, lockfile unmutated.',
 			variant: ERA_VARIANT,
-			deviation: 'none. Nothing was pinned, patched or worked around in either rebuild, and no source file was modified.',
+			deviation:
+				'none. Nothing was pinned, patched or worked around in either rebuild, and no source file was modified.',
 		},
 		builds: [
 			{ run: 2, status: 0, files: input.first.length, seconds: input.firstSeconds },
@@ -159,7 +163,7 @@ export function buildEraLaneRecord(input: LaneInput): SealedRecord {
 		byteStable: stable,
 		byteStableMeaning: stable
 			? 'The two rebuilds emit the same inventory, file for file and digest for digest, from the restored era closure.'
-			: 'The two rebuilds do not emit the same inventory. Both exited zero and emitted the same file count, and the paths below carry different bytes between them. This is a property of the fixture and its era toolchain that the ingest\'s single build could not have detected; it is recorded, not repaired, and no deviation was introduced to make it go away.',
+			: "The two rebuilds do not emit the same inventory. Both exited zero and emitted the same file count, and the paths below carry different bytes between them. This is a property of the fixture and its era toolchain that the ingest's single build could not have detected; it is recorded, not repaired, and no deviation was introduced to make it go away.",
 		differingPaths: differing,
 		instability: input.instability,
 		inventory: input.first,
@@ -279,11 +283,11 @@ export async function composeMigration(tree: string): Promise<AngularMigration> 
  */
 export const ERA_WORKSPACE_FACTS: readonly string[] = Object.freeze([
 	'ngsw-config.json plus the production `serviceWorker: true` option: the era build emits ngsw-worker.js, safety-worker.js and a generated ngsw.json, and the config file declares an external asset group that prefetches Google Fonts at runtime.',
-	'tsconfig.worker.json wired through the browser builder\'s `webWorkerTsConfig` option: two application web workers (lz, reminder) compile and emit as their own chunks in the era build.',
+	"tsconfig.worker.json wired through the browser builder's `webWorkerTsConfig` option: two application web workers (lz, reminder) compile and emit as their own chunks in the era build.",
 	'`extractCss: true` on the production configuration — a valid key for the Angular 8 browser builder, and one the Angular 13 line removed.',
 	'A second workspace project, sp2-e2e, whose only targets are the protractor e2e runner and a TSLint lint target.',
 	'`cli.defaultCollection: "@ngrx/schematics"`, which names a schematics collection rather than a build input.',
-	'A `jo` devDependency declared as `file:./tools/schematics` — a workspace-local schematics package built by the repository\'s own `buildSchema` script.',
+	"A `jo` devDependency declared as `file:./tools/schematics` — a workspace-local schematics package built by the repository's own `buildSchema` script.",
 ]);
 
 /**
@@ -325,7 +329,9 @@ export function buildChangesetRecord(migration: AngularMigration): SealedRecord 
 }
 
 export async function main(): Promise<void> {
-	const nodeVersion = (await readFile(path.join(BASELINE_DIRECTORY, 'rebuild-node.txt'), 'utf8')).trim();
+	const nodeVersion = (
+		await readFile(path.join(BASELINE_DIRECTORY, 'rebuild-node.txt'), 'utf8')
+	).trim();
 	const first = await inventoryOf(path.join(BASELINE_DIRECTORY, 'dist-run2'));
 	const second = await inventoryOf(path.join(BASELINE_DIRECTORY, 'dist-run3'));
 	const seconds = async (file: string): Promise<number> =>
@@ -362,26 +368,22 @@ export async function main(): Promise<void> {
 export const INSTABILITY: readonly InstabilityFinding[] = Object.freeze([
 	Object.freeze({
 		path: './ngsw.json',
-		observed:
-			'The generated service-worker manifest differs between every pair of builds.',
-		cause:
-			'ngsw.json carries a `timestamp` field that the service-worker builder fills with the wall clock at generation time, and a `hashTable` keyed by the emitted filenames — so it moves both on its own and whenever a hashed filename moves.',
+		observed: 'The generated service-worker manifest differs between every pair of builds.',
+		cause: 'ngsw.json carries a `timestamp` field that the service-worker builder fills with the wall clock at generation time, and a `hashTable` keyed by the emitted filenames — so it moves both on its own and whenever a hashed filename moves.',
 		consequential: false,
 	}),
 	Object.freeze({
 		path: './index.html',
 		observed:
 			'The emitted entry document differs between builds that emit differing main chunks.',
-		cause:
-			'index.html carries the content-hashed filename of the main chunk in its script tag. It is downstream of the main chunk and moves only because that moved.',
+		cause: 'index.html carries the content-hashed filename of the main chunk in its script tag. It is downstream of the main chunk and moves only because that moved.',
 		consequential: false,
 	}),
 	Object.freeze({
 		path: 'main.<contenthash>.js and its .map',
 		observed:
 			'The application chunk carries a different content hash and different bytes on every build, so no two builds even agree on the filename. Three consecutive rebuilds produced three distinct main chunks of three different byte lengths.',
-		cause:
-			'Chased to a single line rather than inferred. The first differing byte between two consecutive main chunks falls inside an inlined component stylesheet, in a `@keyframes bang` rule whose box-shadow list is generated by Sass `random()` — src/app/pages/daily-summary/daily-summary.component.scss line 184, `random($width)-$width / 2 + px random($height)-$height / 1.2 + px hsl(random(360), 100, 50)`. Sass `random()` is unseeded, so node-sass emits different literals on every compile, the component stylesheet is inlined into the application chunk, and the chunk\'s content hash moves with it. The workspace-level styles.css is byte-identical across all three builds, which is consistent: the confetti rule lives in a component stylesheet, not the global one.',
+		cause: "Chased to a single line rather than inferred. The first differing byte between two consecutive main chunks falls inside an inlined component stylesheet, in a `@keyframes bang` rule whose box-shadow list is generated by Sass `random()` — src/app/pages/daily-summary/daily-summary.component.scss line 184, `random($width)-$width / 2 + px random($height)-$height / 1.2 + px hsl(random(360), 100, 50)`. Sass `random()` is unseeded, so node-sass emits different literals on every compile, the component stylesheet is inlined into the application chunk, and the chunk's content hash moves with it. The workspace-level styles.css is byte-identical across all three builds, which is consistent: the confetti rule lives in a component stylesheet, not the global one.",
 		consequential: true,
 	}),
 ]);

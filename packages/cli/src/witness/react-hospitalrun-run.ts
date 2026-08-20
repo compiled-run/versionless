@@ -116,7 +116,9 @@ async function semanticMutation(
 		canonicalize(candidates.map((candidate) => candidate.path).sort()) !==
 			canonicalize([target.path, `${target.path}.map`].sort())
 	)
-		throw new Error('HospitalRun semantic seam is not a single served module and its sourcemap');
+		throw new Error(
+			'HospitalRun semantic seam is not a single served module and its sourcemap',
+		);
 	const before = await readFile(target.path);
 	const mutated = Buffer.from(before);
 	Buffer.alloc(expected.length, 'X').copy(mutated, target.offset);
@@ -274,7 +276,7 @@ export async function verifyWitnessReactHospitalrun(
 	const receipt = parseWitnessReactHospitalrunReceipt(
 		JSON.parse(await readFile(join(output, 'receipt.json'), 'utf8')),
 	);
-	assertLinkedWitnessProvenanceEquivalent(receipt.provenance, expectedProvenance, "HospitalRun");
+	assertLinkedWitnessProvenanceEquivalent(receipt.provenance, expectedProvenance, 'HospitalRun');
 	const canonicalBytes = await readFile(join(root, receipt.canonicalReceipt.path));
 	if (sha256(canonicalBytes) !== receipt.canonicalReceipt.sha256)
 		throw new Error('HospitalRun canonical receipt bytes drifted');

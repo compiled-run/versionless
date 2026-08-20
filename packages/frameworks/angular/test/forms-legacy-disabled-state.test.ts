@@ -1,8 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
-	ANGULAR_16_BROWSER_CELL,
-	type AngularTargetCell,
-} from '../src/angular-target-cell.ts';
+import { ANGULAR_16_BROWSER_CELL, type AngularTargetCell } from '../src/angular-target-cell.ts';
 import {
 	CALL_SET_DISABLED_STATE_OPTION,
 	CALL_SET_DISABLED_STATE_TOKEN,
@@ -92,7 +89,10 @@ describe('forms legacy disabled-state compatibility', () => {
 	});
 
 	it('reads a toggle-only accessor as not legacy, flag and element plumbing alike', () => {
-		const readings = readControlValueAccessors('src/app/toggle/toggle.component.ts', togglingAccessor);
+		const readings = readControlValueAccessors(
+			'src/app/toggle/toggle.component.ts',
+			togglingAccessor,
+		);
 		expect(readings).toHaveLength(1);
 		expect(readings[0]?.declaresSetDisabledState).toBe(true);
 		expect(readings[0]?.effects).toEqual([]);
@@ -114,14 +114,19 @@ describe('forms legacy disabled-state compatibility', () => {
 		expect(declaration.unhandled).toEqual([]);
 		expect(declaration.change?.path).toBe('src/app/app.module.ts');
 		expect(declaration.change?.token).toBe(CALL_SET_DISABLED_STATE_TOKEN);
-		expect(declaration.change?.configuredModules).toEqual(['FormsModule', 'ReactiveFormsModule']);
+		expect(declaration.change?.configuredModules).toEqual([
+			'FormsModule',
+			'ReactiveFormsModule',
+		]);
 		const source = declaration.rootModule?.source ?? '';
 		expect(source).toContain(
 			`  imports: [FormsModule.withConfig({${CALL_SET_DISABLED_STATE_OPTION}: ` +
 				`'${LEGACY_CALL_SET_DISABLED_STATE}'}), ReactiveFormsModule.withConfig({` +
 				`${CALL_SET_DISABLED_STATE_OPTION}: '${LEGACY_CALL_SET_DISABLED_STATE}'})],`,
 		);
-		expect(source).toContain("import {FormsModule, ReactiveFormsModule} from '@angular/forms';");
+		expect(source).toContain(
+			"import {FormsModule, ReactiveFormsModule} from '@angular/forms';",
+		);
 		expect(source).toContain('  bootstrap: [AppComponent]');
 		expect(declaration.declaredDifferences[0]).toContain('NormalizedMessageInputComponent');
 	});
@@ -175,7 +180,10 @@ describe('forms legacy disabled-state compatibility', () => {
 			modules: [
 				{
 					path: 'src/app/app.module.ts',
-					source: rootModule.replace('imports: [FormsModule, ReactiveFormsModule],', 'imports: [],'),
+					source: rootModule.replace(
+						'imports: [FormsModule, ReactiveFormsModule],',
+						'imports: [],',
+					),
 				},
 				{
 					path: 'src/app/normalized-message-input/normalized-message-input.component.ts',

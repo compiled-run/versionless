@@ -154,10 +154,17 @@ function classSites(module: SemanticModule): readonly ClassSite[] {
 	for (const statement of module.ast.body) {
 		if (statement.type === 'ClassDeclaration')
 			sites.push(Object.freeze({ statement, declaration: statement }));
-		if (statement.type !== 'ExportNamedDeclaration' && statement.type !== 'ExportDefaultDeclaration')
+		if (
+			statement.type !== 'ExportNamedDeclaration' &&
+			statement.type !== 'ExportDefaultDeclaration'
+		)
 			continue;
 		const declaration = statement.declaration;
-		if (declaration !== null && declaration !== undefined && declaration.type === 'ClassDeclaration')
+		if (
+			declaration !== null &&
+			declaration !== undefined &&
+			declaration.type === 'ClassDeclaration'
+		)
 			sites.push(Object.freeze({ statement, declaration }));
 	}
 	return Object.freeze(sites);
@@ -168,7 +175,8 @@ function decoratorReference(decorator: DecoratorNode): AstNode | null {
 	const expression = decorator.expression;
 	if (expression === null || expression === undefined) return null;
 	if (expression.type === 'CallExpression') return expression.callee;
-	if (expression.type === 'Identifier' || expression.type === 'MemberExpression') return expression;
+	if (expression.type === 'Identifier' || expression.type === 'MemberExpression')
+		return expression;
 	return null;
 }
 
@@ -247,9 +255,11 @@ export function decorateUndecoratedBaseClasses(
 		const features: string[] = [];
 		for (const clause of declaration.implements ?? [])
 			for (const name of ANGULAR_LIFECYCLE_INTERFACES)
-				if (denotesExport(module, clause.expression, core, name)) features.push(`implements ${name}`);
+				if (denotesExport(module, clause.expression, core, name))
+					features.push(`implements ${name}`);
 		for (const member of declaration.body.body) {
-			if (member.type !== 'PropertyDefinition' && member.type !== 'MethodDefinition') continue;
+			if (member.type !== 'PropertyDefinition' && member.type !== 'MethodDefinition')
+				continue;
 			for (const decorator of member.decorators) {
 				const reference = decoratorReference(decorator);
 				if (reference === null) continue;
@@ -267,7 +277,9 @@ export function decorateUndecoratedBaseClasses(
 				const reference = decoratorReference(decorator);
 				return (
 					reference !== null &&
-					ANGULAR_CLASS_DECORATORS.some((name) => denotesExport(module, reference, core, name))
+					ANGULAR_CLASS_DECORATORS.some((name) =>
+						denotesExport(module, reference, core, name),
+					)
 				);
 			});
 			if (alreadyAngular) continue;

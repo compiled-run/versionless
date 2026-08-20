@@ -27,11 +27,17 @@ import { canonical } from './angular-factoriolab-migration-run.ts';
 
 const root = resolve(import.meta.dirname, '../../../..');
 const STAGE = join(root, '.versionless/stage/angular-tiny-translator-v0-12-0-u17b');
-const FIXTURE = join(root, 'fixtures/angular-tiny-translator-v0-12-0/witness/synthetic-messages.xlf');
+const FIXTURE = join(
+	root,
+	'fixtures/angular-tiny-translator-v0-12-0/witness/synthetic-messages.xlf',
+);
 
 /** The two lanes this discriminator separates. */
 export const BEHAVIOR_LANE_ROOTS = Object.freeze({
-	era: join(root, '.versionless/cache/angular-tiny-translator-v0-12-0-baseline/app/dist/rebuild-1'),
+	era: join(
+		root,
+		'.versionless/cache/angular-tiny-translator-v0-12-0-baseline/app/dist/rebuild-1',
+	),
 	migrated: join(STAGE, 'dist-13'),
 });
 
@@ -69,7 +75,9 @@ async function serveLane(laneRoot: string): Promise<StaticLane> {
 		}
 		try {
 			const raw = await readFile(file);
-			response.writeHead(200, { 'content-type': MIME[extname(file)] ?? 'application/octet-stream' });
+			response.writeHead(200, {
+				'content-type': MIME[extname(file)] ?? 'application/octet-stream',
+			});
 			response.end(raw);
 		} catch (error: unknown) {
 			response.writeHead(500);

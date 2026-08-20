@@ -37,8 +37,7 @@ const RAW_DIGEST = '0e7118cf7427c6062ec2ce19baba570ee7f3bdc9c3129ae1b8d47ea961d5
 /** What the defect published: sha256 of the UTF-8 re-encoding of a latin1 decode. */
 const LATIN1_DIGEST = 'b87c6fb1d167270ef4bb3be16a2512bc094ec2bd968973673264a191bf56bc0d';
 /** What a lossy UTF-8 read would publish, replacement characters and all. */
-const UTF8_ROUNDTRIP_DIGEST =
-	'37154b9b8422ab6f45196ee0ae09971fa95b3fe336a5545f95702316785b2f40';
+const UTF8_ROUNDTRIP_DIGEST = '37154b9b8422ab6f45196ee0ae09971fa95b3fe336a5545f95702316785b2f40';
 
 const temporaries: string[] = [];
 

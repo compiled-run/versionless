@@ -109,7 +109,11 @@ function makeReceipt(): WitnessReactCypressRwaReceipt {
 		framework: 'react',
 		source: { ...REACT_CYPRESS_RWA_SOURCE },
 		provenance: {},
-		canonicalReceipt: { path: 'evidence/x.json', canonicalDigest: digest('c'), sha256: digest('d') },
+		canonicalReceipt: {
+			path: 'evidence/x.json',
+			canonicalDigest: digest('c'),
+			sha256: digest('d'),
+		},
 		runs,
 		mutation: {
 			failure: 'witness-semantic-assertion',
@@ -173,7 +177,9 @@ describe('witness-react-cypress-rwa schema', () => {
 		receipt.runs[1]!.semanticDigest = witnessReactCypressRwaRawDigest(receipt.runs[1]!);
 		receipt.runs[1]!.behaviorDigest = witnessReactCypressRwaBehaviorDigest(receipt.runs[1]!);
 		receipt.integrity.canonicalDigest = witnessReactCypressRwaDigest(receipt);
-		expect(() => parseWitnessReactCypressRwaReceipt(receipt)).toThrow(/pass-twice|behavior|run differs/);
+		expect(() => parseWitnessReactCypressRwaReceipt(receipt)).toThrow(
+			/pass-twice|behavior|run differs/,
+		);
 	});
 
 	it('rejects a seed marker leaking into recorded evidence (redaction)', () => {
@@ -182,7 +188,9 @@ describe('witness-react-cypress-rwa schema', () => {
 		receipt.runs[0]!.semanticDigest = witnessReactCypressRwaRawDigest(receipt.runs[0]!);
 		receipt.runs[0]!.behaviorDigest = witnessReactCypressRwaBehaviorDigest(receipt.runs[0]!);
 		receipt.integrity.canonicalDigest = witnessReactCypressRwaDigest(receipt);
-		expect(() => parseWitnessReactCypressRwaReceipt(receipt)).toThrow(/redaction|behavior|run differs/);
+		expect(() => parseWitnessReactCypressRwaReceipt(receipt)).toThrow(
+			/redaction|behavior|run differs/,
+		);
 	});
 
 	it('rejects a backend request outside the declared category', () => {
@@ -204,7 +212,9 @@ describe('witness-react-cypress-rwa schema', () => {
 		receipt.runs[0]!.semanticDigest = witnessReactCypressRwaRawDigest(receipt.runs[0]!);
 		receipt.runs[0]!.behaviorDigest = witnessReactCypressRwaBehaviorDigest(receipt.runs[0]!);
 		receipt.integrity.canonicalDigest = witnessReactCypressRwaDigest(receipt);
-		expect(() => parseWitnessReactCypressRwaReceipt(receipt)).toThrow(/served-static|run differs/);
+		expect(() => parseWitnessReactCypressRwaReceipt(receipt)).toThrow(
+			/served-static|run differs/,
+		);
 	});
 
 	it('rejects a mutated SPA tree (byteIdentical must hold on the frontend dist)', () => {

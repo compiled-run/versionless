@@ -30,18 +30,18 @@
     ]
   },
   "summary": {
-    "total": 58,
+    "total": 59,
     "crossProven": 8,
-    "experimental": 50,
+    "experimental": 51,
     "react": {
       "total": 8,
       "crossProven": 1,
       "experimental": 7
     },
     "angular": {
-      "total": 50,
+      "total": 51,
       "crossProven": 7,
-      "experimental": 43
+      "experimental": 44
     }
   },
   "capabilities": [
@@ -567,7 +567,7 @@
       "evidence": [
         "packages/cli/src/fixture/angular-tiny-translator-localize-run.ts"
       ],
-      "note": "Template i18n localize runtime declaration; only the tiny-translator localization application exercises it. Audited class (a) by the T021 G5 wiring repair — the era composition already holds the manifest, the templates and the cell it needs — and deliberately not composed there: it also hands back a polyfill entry point that has to be declared into the builder target, and that seam collides with the hand-composed tiny-translator localize lane. Which of the two owns the declaration is an open decision.",
+      "note": "Template i18n localize runtime declaration; only the tiny-translator localization application exercises it. T010 u7 widened its trigger to admit a second reading beside the parsed template markers: a supplied LocalizeClosureReading counting `$localize` references in the application's emitted bundle. The measurement that forced it is pigallery2 — zero template markers, 215 `$localize` references in the migrated `main.js`, and a live lane that died on `ReferenceError: $localize is not defined` before Angular bootstrapped. Either reading admits, both absent stands down, and neither is inferred from the cell major: declaring the package on every Ivy-line plan would be bundle weight plus a claim the application's bytes do not support. Audited class (a) by the T021 G5 wiring repair — the era composition already holds the manifest, the templates and the cell it needs — and deliberately not composed there: it also hands back a polyfill entry point that has to be declared into the builder target, and that seam collides with the hand-composed tiny-translator localize lane. Which of the two owns the declaration is an open decision.",
       "proofCount": 1,
       "classification": "experimental"
     },
@@ -1207,6 +1207,28 @@
       ],
       "note": "lib.dom.d.ts drift accommodation; composed into migrateAngularCliEraWorkspace by T021 u4 through the same supply-gated seam unparameterised-base-class uses — a caller that has not compiled the tree supplies no TS2339 positions and gets no transform. It acts only where the compiler resolved the receiver to CSSStyleDeclaration and the member is spelled as a vendor-prefixed CSS property, and it widens that one receiver at that one access to CSSStyleDeclaration & Record<string, string>, leaving the emitted JavaScript unchanged. The capability carries no list of departed properties: the property is the compiler's word. A stale position refuses, which is also what makes a second application a no-op. One application carries the construct, whose migrated build is RED.",
       "proofCount": 1,
+      "classification": "experimental"
+    },
+    {
+      "name": "locale-id-provider",
+      "lineage": "angular",
+      "package": "@versionless/angular",
+      "entryPoints": [
+        "provideEraLocaleId",
+        "readEraLocaleFlagValue",
+        "eraLocaleReadingOfRemovedFlag",
+        "modulesProvideLocaleId",
+        "isWritableLocaleValue",
+        "localeIdProviderSource"
+      ],
+      "provenApps": [],
+      "attribution": "unproven",
+      "coverage": "unproven",
+      "evidence": [
+        "packages/frameworks/angular/src/angular-cli-era-migration.ts"
+      ],
+      "note": "Translation of the removed `--i18n-locale` flag into the root injector, composed into migrateAngularCliEraWorkspace by T010 u7 as the last per-module capability — after every capability that can reshape a module literal or the module's own `@angular/core` import, so its refuse-if-already-provided detection reads the providers array the pipeline finally leaves. It is supply-gated on an EraLocaleReading of the era build's own argv and parses nothing without one: the locale is never derived from the cell, from the application's translation files or from the host, because a locale nobody measured is a claim about what the application was built for. It writes `{provide: LOCALE_ID, useValue: '<value>'}` first in the bootstrapping module's providers — first so it cannot overrule a provider the module reaches later — spelled as that module already spells the token, once, and only on a cell past Angular 12. provenApps is empty and that is the honest reading: no recorded application migration has run through it as a composed capability. The defect it automates was measured — pigallery2's Angular 13 lane resolved LOCALE_ID to the framework default en-US and threw `Cannot find module './messages.en-US.xlf'` in the browser against a build that reported zero errors — but that repair was a hand edit in the live-witness lane, which is a rationale for the capability and not a proving application.",
+      "proofCount": 0,
       "classification": "experimental"
     },
     {

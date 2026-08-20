@@ -49,7 +49,10 @@ const LANE_ROOTS = {
 	era: join(ERA_APP, 'dist/rebuild-1'),
 	migrated: join(root, '.versionless/stage/angular-tiny-translator-v0-12-0-u17b/dist-11'),
 } as const;
-const FIXTURE = join(root, 'fixtures/angular-tiny-translator-v0-12-0/witness/synthetic-messages.xlf');
+const FIXTURE = join(
+	root,
+	'fixtures/angular-tiny-translator-v0-12-0/witness/synthetic-messages.xlf',
+);
 const COMPONENT = 'src/app/normalized-message-input/normalized-message-input.component.ts';
 
 /**
@@ -160,7 +163,9 @@ async function serveLane(laneRoot: string, patchMain: boolean): Promise<StaticLa
 				patchMain && name.startsWith('main.') && name.endsWith('.js')
 					? Buffer.from(patchMigratedBundle(raw.toString('utf8')), 'utf8')
 					: raw;
-			response.writeHead(200, { 'content-type': MIME[extname(file)] ?? 'application/octet-stream' });
+			response.writeHead(200, {
+				'content-type': MIME[extname(file)] ?? 'application/octet-stream',
+			});
 			response.end(body);
 		} catch (error: unknown) {
 			response.writeHead(500);
@@ -286,8 +291,7 @@ async function readDom(page: Page): Promise<DomReading> {
 		const undo = document.querySelector('#translation button[mat-icon-button]');
 		return {
 			hostClass: host === null ? '' : host.className,
-			textareaDirty:
-				textarea !== null && textarea.className.split(' ').includes('ng-dirty'),
+			textareaDirty: textarea !== null && textarea.className.split(' ').includes('ng-dirty'),
 			textareaValue: textarea instanceof HTMLTextAreaElement ? textarea.value : '',
 			undoDisabled: undo === null ? null : undo.getAttribute('disabled'),
 		};
@@ -380,7 +384,8 @@ async function measureEra(): Promise<EraMeasurement> {
 						scheduledAt: Math.round(record.scheduledAt - since),
 						fired: record.fired,
 						firedAt: record.firedAt.map((at) => Math.round(at - since)),
-						cleared: record.cleared === null ? null : Math.round(record.cleared - since),
+						cleared:
+							record.cleared === null ? null : Math.round(record.cleared - since),
 					})),
 			mark,
 		);
@@ -433,7 +438,8 @@ async function measureMigrated(): Promise<MigratedMeasurement> {
 		await run.page.evaluate(() => {
 			const probe = (globalThis as ProbeWindow).__P;
 			const editable = probe.instances.find((component) => component.readonly !== true);
-			if (editable === undefined) throw new Error('no editable input component was registered');
+			if (editable === undefined)
+				throw new Error('no editable input component was registered');
 			probe.liveForm = editable.form;
 			editable.form.valueChanges.subscribe(() => {
 				probe.ev.push({ k: 'rawValueChangesOnLiveForm', t: Math.round(performance.now()) });
@@ -455,7 +461,9 @@ async function measureMigrated(): Promise<MigratedMeasurement> {
 			const editable = probe.instances.find((component) => component.readonly !== true);
 			const subscribed = probe.subscribedForm;
 			if (editable === undefined || subscribed === undefined)
-				throw new Error('the migrated lane registered no editable component or no subscribed form');
+				throw new Error(
+					'the migrated lane registered no editable component or no subscribed form',
+				);
 			return {
 				componentFormIsTheSubscribedForm: editable.form === subscribed,
 				componentFormControls: Object.keys(editable.form.controls),
@@ -493,7 +501,8 @@ async function measureMigrated(): Promise<MigratedMeasurement> {
 			identity,
 			debounceTimersWhileTyping,
 			propagateChangeCallsFromTyping: events.filter(
-				(event) => event.k === 'valueChanged' && event.t < Math.round(positiveControlAt - mark),
+				(event) =>
+					event.k === 'valueChanged' && event.t < Math.round(positiveControlAt - mark),
 			).length,
 			positiveControlEmittedAfterMs:
 				emit === undefined ? null : Math.round(emit.t - positiveControlAt),
@@ -509,7 +518,8 @@ function slice(text: string, from: string, to: string): string {
 	const start = text.indexOf(from);
 	if (start === -1) throw new Error(`TinyTranslator cause driver could not find: ${from}`);
 	const end = text.indexOf(to, start + from.length);
-	if (end === -1) throw new Error(`TinyTranslator cause driver could not find the end of: ${from}`);
+	if (end === -1)
+		throw new Error(`TinyTranslator cause driver could not find the end of: ${from}`);
 	return text.slice(start, end + to.length);
 }
 
@@ -544,7 +554,8 @@ async function rxjsCensus(appRoot: string): Promise<readonly RxjsInstall[]> {
 					}>
 				).version;
 				const relativePath = child.slice(appRoot.length + 1);
-				const owner = relativePath.split('/node_modules/')[0]?.replace('node_modules/', '') ?? '';
+				const owner =
+					relativePath.split('/node_modules/')[0]?.replace('node_modules/', '') ?? '';
 				found.push({
 					path: relativePath,
 					version,
@@ -582,7 +593,9 @@ async function readStaticEvidence(): Promise<StaticEvidence> {
 	const migratedBundle = await readFile(join(LANE_ROOTS.migrated, migratedBundleName), 'utf8');
 	const version = async (appRoot: string, pkg: string): Promise<string> =>
 		(
-			JSON.parse(await readFile(join(appRoot, 'node_modules', pkg, 'package.json'), 'utf8')) as {
+			JSON.parse(
+				await readFile(join(appRoot, 'node_modules', pkg, 'package.json'), 'utf8'),
+			) as {
 				version: string;
 			}
 		).version;
@@ -593,9 +606,17 @@ async function readStaticEvidence(): Promise<StaticEvidence> {
 			eraSha256: sha256(eraComponent),
 			migratedSha256: sha256(migratedComponent),
 			eraChain: slice(eraComponent, 'this.subscription = this.form.valueChanges', '});'),
-			migratedChain: slice(migratedComponent, 'this.subscription = this.form.valueChanges', '});'),
+			migratedChain: slice(
+				migratedComponent,
+				'this.subscription = this.form.valueChanges',
+				'});',
+			),
 			setDisabledStateEra: slice(eraComponent, 'setDisabledState?(isDisabled', '\n  }'),
-			setDisabledStateMigrated: slice(migratedComponent, 'setDisabledState?(isDisabled', '\n  }'),
+			setDisabledStateMigrated: slice(
+				migratedComponent,
+				'setDisabledState?(isDisabled',
+				'\n  }',
+			),
 			setDisabledStateIdenticalAcrossTheLift:
 				slice(eraComponent, 'setDisabledState?(isDisabled', '\n  }') ===
 				slice(migratedComponent, 'setDisabledState?(isDisabled', '\n  }'),
@@ -614,11 +635,7 @@ async function readStaticEvidence(): Promise<StaticEvidence> {
 				'function setUpControl(control, dir, callSetDisabledState',
 				'\n}',
 			),
-			migratedDefault: slice(
-				migratedForms,
-				'const setDisabledStateDefault =',
-				";\n",
-			).trim(),
+			migratedDefault: slice(migratedForms, 'const setDisabledStateDefault =', ';\n').trim(),
 			/**
 			 * The two bodies above are embedded verbatim; these are the readings
 			 * taken from them. "Passes control.disabled" is the question that
@@ -667,7 +684,8 @@ async function readStaticEvidence(): Promise<StaticEvidence> {
 				'this.valueChanged(e)})}',
 			),
 			compiledSetDisabledState: MIGRATED_PATCH_SITES[1]?.find ?? '',
-			debounceTimeDefinitionsInBundle: migratedBundle.split('function Yd(t,n=Fh){').length - 1,
+			debounceTimeDefinitionsInBundle:
+				migratedBundle.split('function Yd(t,n=Fh){').length - 1,
 		},
 	});
 }

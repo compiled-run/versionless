@@ -52,9 +52,7 @@ export async function angularTinyTranslatorAggregateMembers(rootDir = root): Pro
 function tinyTranslatorPaths(fixtures: Array<Record<string, unknown>>): string[] {
 	return fixtures
 		.map((fixture) => fixture.receipt)
-		.filter(
-			(value): value is string => value === WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH,
-		);
+		.filter((value): value is string => value === WITNESS_ANGULAR_TINY_TRANSLATOR_RECEIPT_PATH);
 }
 
 /**
@@ -118,7 +116,8 @@ export async function appendAngularTinyTranslatorAggregateMembers(rootDir = root
 }
 
 export async function main(args = process.argv.slice(2)): Promise<void> {
-	if (args.length !== 1) throw new Error('Angular TinyTranslator aggregate append requires one mode');
+	if (args.length !== 1)
+		throw new Error('Angular TinyTranslator aggregate append requires one mode');
 	const result =
 		args[0] === '--append'
 			? await appendAngularTinyTranslatorAggregateMembers()
@@ -134,7 +133,9 @@ export async function main(args = process.argv.slice(2)): Promise<void> {
 							aggregate.fixtures.map((item) => record(item, 'member')),
 						);
 						if (!APPENDED_KINDS.has(state.kind))
-							throw new Error('Angular TinyTranslator aggregate membership is absent');
+							throw new Error(
+								'Angular TinyTranslator aggregate membership is absent',
+							);
 						return { kind: state.kind, receipts: state.receipts, appended: false };
 					})()
 				: (() => {

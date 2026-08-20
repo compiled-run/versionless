@@ -162,10 +162,7 @@ describe('Memos pinned API surface enumeration', () => {
 	it.skipIf(!pinnedTreePresent)(
 		'transcribes the sign-in validator from the pinned source rather than remembering it',
 		async () => {
-			const signin = await readFile(
-				join(MEMOS_SOURCE_ROOT, 'src/pages/Signin.tsx'),
-				'utf8',
-			);
+			const signin = await readFile(join(MEMOS_SOURCE_ROOT, 'src/pages/Signin.tsx'), 'utf8');
 			const validator = await readFile(
 				join(MEMOS_SOURCE_ROOT, 'src/helpers/validator.ts'),
 				'utf8',

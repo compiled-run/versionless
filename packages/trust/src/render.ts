@@ -135,7 +135,11 @@ function boundaryAmendmentLines(boundary: Record<string, unknown>): string {
 					published: string;
 					tested: { count: number; applications: string[]; strength: string };
 					screened: { count: number; applications: string[]; strength: string };
-					distinctCondition: { application: string; condition: string; countedInPrevalence: boolean };
+					distinctCondition: {
+						application: string;
+						condition: string;
+						countedInPrevalence: boolean;
+					};
 				};
 				populationStatement: string;
 		  }
@@ -167,7 +171,11 @@ function supportBoundaryLines(conformance: CorpusConformance): string {
 				libraries: number;
 				importSites: number;
 				digest: string;
-				wall: Array<{ library: string; lastPublishedVersion: string; importSites: string[] }>;
+				wall: Array<{
+					library: string;
+					lastPublishedVersion: string;
+					importSites: string[];
+				}>;
 			};
 			const wall = evidence.wall
 				.map(
@@ -255,7 +263,8 @@ export function renderTrustReport(inputs: RenderInputs): string {
 		(item) => item.path === 'evidence/runs/witness-react-linkfree-v0-72-0/receipt.json',
 	);
 	const angularTinyTranslatorWitnessVerified = inputs.manifest.receipts.some(
-		(item) => item.path === 'evidence/runs/witness-angular-tiny-translator-v0-12-0/receipt.json',
+		(item) =>
+			item.path === 'evidence/runs/witness-angular-tiny-translator-v0-12-0/receipt.json',
 	);
 	const angularSuperProductivityWitnessVerified = inputs.manifest.receipts.some(
 		(item) =>

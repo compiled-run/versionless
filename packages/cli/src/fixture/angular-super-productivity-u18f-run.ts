@@ -105,7 +105,8 @@ function splitTopLevel(text: string): readonly string[] {
 	let start = 0;
 	for (let index = 0; index < text.length; index += 1) {
 		const character = text[index];
-		if (character === '<' || character === '(' || character === '{' || character === '[') depth += 1;
+		if (character === '<' || character === '(' || character === '{' || character === '[')
+			depth += 1;
 		else if (character === '>' || character === ')' || character === '}' || character === ']')
 			depth -= 1;
 		else if (character === ',' && depth === 0) {
@@ -125,7 +126,9 @@ function splitTopLevel(text: string): readonly string[] {
  * one of them with the first.
  */
 function classBodyOf(source: string, component: string): string {
-	const match = new RegExp(String.raw`declare (?:abstract )?class ${component}\b`, 'u').exec(source);
+	const match = new RegExp(String.raw`declare (?:abstract )?class ${component}\b`, 'u').exec(
+		source,
+	);
 	if (match === null) return '';
 	const brace = source.indexOf('{', match.index);
 	if (brace === -1) return '';
@@ -219,7 +222,9 @@ export async function readComponentSurfaces(
 			}),
 		);
 	}
-	return Object.freeze(found.sort((left, right) => left.component.localeCompare(right.component)));
+	return Object.freeze(
+		found.sort((left, right) => left.component.localeCompare(right.component)),
+	);
 }
 
 /**
@@ -245,9 +250,10 @@ export async function readTextInputDirective(
 	const element = declaration.split(',')[0]?.trim().split('[')[0]?.trim() ?? '';
 	const attribute = /\[(?<attribute>[^\]]+)\]/u.exec(declaration)?.groups?.['attribute'];
 	if (element === '' || attribute === undefined) return null;
-	const property = new RegExp(String.raw`"(?<property>[\w$]+)":\s*\{\s*"alias":\s*"${attribute}"`, 'u')
-		.exec(source)
-		?.groups?.['property'];
+	const property = new RegExp(
+		String.raw`"(?<property>[\w$]+)":\s*\{\s*"alias":\s*"${attribute}"`,
+		'u',
+	).exec(source)?.groups?.['property'];
 	if (property === undefined) return null;
 	const hostComponent = new RegExp(
 		String.raw`set ${property}\(value:\s*(?<component>[A-Za-z_$][\w$]*)\)`,
@@ -299,7 +305,9 @@ export async function readRootSurface(
 		complete: false,
 	});
 	if (!existsSync(root)) return absent;
-	const manifest = JSON.parse(await readFile(path.join(root, 'package.json'), 'utf8')) as Readonly<{
+	const manifest = JSON.parse(
+		await readFile(path.join(root, 'package.json'), 'utf8'),
+	) as Readonly<{
 		exports?: unknown;
 		types?: unknown;
 		typings?: unknown;
@@ -386,7 +394,9 @@ export async function splitElementRound(
 			if (!elements.includes(split.replaced)) continue;
 			const absolute = path.join(tree, file);
 			if (!existsSync(absolute)) {
-				unhandled.push(`${file}: the diagnostic names a file the applied tree does not carry`);
+				unhandled.push(
+					`${file}: the diagnostic names a file the applied tree does not carry`,
+				);
 				continue;
 			}
 			const source = await readFile(absolute, 'utf8');
@@ -399,7 +409,9 @@ export async function splitElementRound(
 				changes.push(
 					`${file} line ${String(change.line)}: <${change.from}> → <${change.to}> ` +
 						`(${change.shape}, ${change.component})` +
-						(change.children.length > 0 ? `, children ${change.children.join(', ')}` : ''),
+						(change.children.length > 0
+							? `, children ${change.children.join(', ')}`
+							: ''),
 				);
 		}
 	}
@@ -468,7 +480,10 @@ export async function symbolSuccessorRound(
 }
 
 export async function main(): Promise<void> {
-	const log = await readFile(path.join(STAGE_DIRECTORY, process.argv[2] ?? 'build-4.log'), 'utf8');
+	const log = await readFile(
+		path.join(STAGE_DIRECTORY, process.argv[2] ?? 'build-4.log'),
+		'utf8',
+	);
 	const outcomes: CapabilityOutcome[] = [...(await applyRound())];
 	outcomes.push(await splitElementRound(log));
 	outcomes.push(await symbolSuccessorRound(log));

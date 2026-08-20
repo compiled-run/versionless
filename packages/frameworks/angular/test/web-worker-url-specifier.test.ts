@@ -17,9 +17,11 @@ const undeclared: WorkerTreeReading = Object.freeze({
 	workerSourceFor: reading.workerSourceFor,
 });
 
-const migrate = (source: string, tree: WorkerTreeReading = reading): ReturnType<
-	typeof rewriteWorkerUrlSpecifiers
-> => rewriteWorkerUrlSpecifiers('src/app/core/compression/compression.service.ts', source, tree);
+const migrate = (
+	source: string,
+	tree: WorkerTreeReading = reading,
+): ReturnType<typeof rewriteWorkerUrlSpecifiers> =>
+	rewriteWorkerUrlSpecifiers('src/app/core/compression/compression.service.ts', source, tree);
 
 const eraForm = `export class CompressionService {
   private _w: Worker;
@@ -36,9 +38,7 @@ describe('web worker url specifier', () => {
 	it('writes the URL form the bundler detects and keeps the specifier and the options', () => {
 		const migration = migrate(eraForm);
 		expect(migration.changed).toBe(true);
-		expect(migration.source).toContain(
-			"new Worker(new URL('./lz.worker', import.meta.url), {",
-		);
+		expect(migration.source).toContain("new Worker(new URL('./lz.worker', import.meta.url), {");
 		expect(migration.source).toContain("name: 'lz'");
 		expect(migration.source).toContain("type: 'module'");
 		expect(migration.changes).toHaveLength(1);
@@ -49,9 +49,7 @@ describe('web worker url specifier', () => {
 	});
 
 	it('keeps the quote style the module already wrote', () => {
-		const migration = migrate(
-			'const w = new Worker("./lz.worker", {type: "module"});\n',
-		);
+		const migration = migrate('const w = new Worker("./lz.worker", {type: "module"});\n');
 		expect(migration.source).toBe(
 			'const w = new Worker(new URL("./lz.worker", import.meta.url), {type: "module"});\n',
 		);
@@ -65,9 +63,7 @@ describe('web worker url specifier', () => {
 	});
 
 	it('refuses a specifier the tree carries no worker source for', () => {
-		const migration = migrate(
-			"const w = new Worker('./missing.worker', {type: 'module'});\n",
-		);
+		const migration = migrate("const w = new Worker('./missing.worker', {type: 'module'});\n");
 		expect(migration.changed).toBe(false);
 		expect(migration.unhandled.join(' ')).toContain('resolves to no worker source');
 	});
@@ -78,9 +74,7 @@ describe('web worker url specifier', () => {
 		);
 		expect(computed.changed).toBe(false);
 		expect(computed.unhandled.join(' ')).toContain('not a string literal');
-		const template = migrate(
-			'const w = new Worker(`./${kind}.worker`, {type: "module"});\n',
-		);
+		const template = migrate('const w = new Worker(`./${kind}.worker`, {type: "module"});\n');
 		expect(template.changed).toBe(false);
 		expect(template.unhandled.join(' ')).toContain('not a string literal');
 	});

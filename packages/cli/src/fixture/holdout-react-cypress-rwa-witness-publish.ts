@@ -44,7 +44,8 @@ export async function publishHoldoutReactCypressRwaWitnessReceipt(rootDir = root
 }
 
 export async function main(args = process.argv.slice(2)): Promise<void> {
-	if (args.length !== 1) throw new Error('Cypress RWA witness holdout publication requires one mode');
+	if (args.length !== 1)
+		throw new Error('Cypress RWA witness holdout publication requires one mode');
 	const result =
 		args[0] === '--publish'
 			? await publishHoldoutReactCypressRwaWitnessReceipt()

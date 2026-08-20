@@ -110,7 +110,8 @@ export function styleClosure(tree: string): ClosureFileReading {
 			} catch {
 				return null;
 			}
-			if (exports === null || typeof exports !== 'object' || Array.isArray(exports)) return null;
+			if (exports === null || typeof exports !== 'object' || Array.isArray(exports))
+				return null;
 			const entry = (exports as Readonly<Record<string, unknown>>)[`./${subpath}`];
 			if (entry === undefined) return null;
 			const target = resolveCondition(entry, STYLE_CONDITIONS);
@@ -130,10 +131,7 @@ export function styleClosure(tree: string): ClosureFileReading {
  * reader that could not follow that would call a complete surface incomplete,
  * and an incomplete surface refuses every rename for a reason that is not true.
  */
-export async function readExportSurface(
-	tree: string,
-	name: string,
-): Promise<ExportSurfaceReading> {
+export async function readExportSurface(tree: string, name: string): Promise<ExportSurfaceReading> {
 	const directory = path.join(tree, 'node_modules', name);
 	const manifest = JSON.parse(
 		await readFile(path.join(directory, 'package.json'), 'utf8'),
@@ -158,7 +156,8 @@ export async function readExportSurface(
 		const source = await readFile(file, 'utf8');
 		const module = parseModule('Export surface reading', file, source);
 		for (const entry of module.exports)
-			if (!entry.isStar && entry.name !== null && entry.name !== 'default') names.add(entry.name);
+			if (!entry.isStar && entry.name !== null && entry.name !== 'default')
+				names.add(entry.name);
 		for (const node of module.ast.body) {
 			if (node.type !== 'ExportAllDeclaration') continue;
 			const specifier: string = node.source.value;
@@ -299,7 +298,10 @@ export async function main(): Promise<void> {
 		);
 		return;
 	}
-	const log = await readFile(path.join(STAGE_DIRECTORY, process.argv[3] ?? 'build-2.log'), 'utf8');
+	const log = await readFile(
+		path.join(STAGE_DIRECTORY, process.argv[3] ?? 'build-2.log'),
+		'utf8',
+	);
 	const outcomes: CapabilityOutcome[] = [...(await applyRound())];
 	outcomes.push(await tildeRound());
 	outcomes.push(await suggestedRenameRound(log));

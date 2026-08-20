@@ -118,7 +118,8 @@ export function migrateSuccessorForkImports(
 		)
 			continue;
 		const literal = declaration.source;
-		if (literal === null || literal === undefined || typeof literal.value !== 'string') continue;
+		if (literal === null || literal === undefined || typeof literal.value !== 'string')
+			continue;
 		if (literal.value !== fork.name && !literal.value.startsWith(`${fork.name}/`)) continue;
 		const line = lineOf(source, declaration.start);
 		if (!verdict.verified) {

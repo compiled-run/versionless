@@ -39,11 +39,7 @@ import { analyzeApplication, fileExists } from './analyze.ts';
 import { applyPlan } from './apply.ts';
 import { runLaneBuild } from './build.ts';
 import { establishEraCell, type EraCellDeclarations } from './era-cell.ts';
-import {
-	ingestApplicationSource,
-	readFrontendRoot,
-	type IngestDeclarations,
-} from './ingest.ts';
+import { ingestApplicationSource, readFrontendRoot, type IngestDeclarations } from './ingest.ts';
 import { writeLaneFiles } from './lane.ts';
 import { readLicenceAtPin, type LicencePolicy } from './license.ts';
 import { runLaneInstall, type InstallPolicy } from './install.ts';

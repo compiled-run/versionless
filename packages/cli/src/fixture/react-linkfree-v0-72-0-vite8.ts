@@ -233,9 +233,15 @@ export function capabilityContributionsAgreeWithObservations(
 ): boolean {
 	const { measured, contribution } = profile.capabilities;
 	const byName = new Map(contribution.map((entry) => [entry.capability, entry.fired]));
-	if (byName.get('createCraSloppyCommonJsGlobalsPlugin') !== (measured.sloppyCommonJsImplicitGlobals.length > 0))
+	if (
+		byName.get('createCraSloppyCommonJsGlobalsPlugin') !==
+		measured.sloppyCommonJsImplicitGlobals.length > 0
+	)
 		return false;
-	if (byName.get('createCraNonUtf8ModuleSourcePlugin') !== (measured.nonUtf8DecodedModules.length > 0))
+	if (
+		byName.get('createCraNonUtf8ModuleSourcePlugin') !==
+		measured.nonUtf8DecodedModules.length > 0
+	)
 		return false;
 	return byName.get('createCraJavaScriptJsxPlugin') === true;
 }
@@ -266,7 +272,9 @@ export async function verifyLinkfreeBuildProfile(): Promise<LinkfreeBuildProfile
 	if (!purgeDecisionIsMeasured(profile))
 		throw new Error('LinkFree postbuild purge decision is declared but not measured both ways');
 	if (!capabilityContributionsAgreeWithObservations(profile))
-		throw new Error('LinkFree capability contributions disagree with the observations recorded');
+		throw new Error(
+			'LinkFree capability contributions disagree with the observations recorded',
+		);
 	if (
 		profile.parity.level !== 'build-artifacts-only' ||
 		profile.parity.behavioral !== 'not-tested' ||

@@ -35,7 +35,11 @@ const library: PackageSurfaceReading = Object.freeze({
 			'./dialog/testing',
 			declaration(['WidgetDialogHarness']),
 		),
-		readEntryPointSurface('@scope/widgets', './legacy-dialog', declaration(['WidgetLegacyDialog'])),
+		readEntryPointSurface(
+			'@scope/widgets',
+			'./legacy-dialog',
+			declaration(['WidgetLegacyDialog']),
+		),
 	]),
 });
 
@@ -75,9 +79,9 @@ describe('readEntryPointSurface', () => {
 	});
 
 	it('fails naming the entry point when its declaration does not parse', () => {
-		expect(() => readEntryPointSurface('@scope/widgets', './broken', 'export declare class {')).toThrow(
-			/@scope\/widgets\/broken/u,
-		);
+		expect(() =>
+			readEntryPointSurface('@scope/widgets', './broken', 'export declare class {'),
+		).toThrow(/@scope\/widgets\/broken/u);
 	});
 });
 

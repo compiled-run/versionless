@@ -321,7 +321,11 @@ export async function verifyWitnessReactBoilerplate(
 	const receipt = parseWitnessReactBoilerplateReceipt(
 		JSON.parse(await readFile(join(output, 'receipt.json'), 'utf8')),
 	);
-	assertLinkedWitnessProvenanceEquivalent(receipt.provenance, expectedProvenance, "React Boilerplate");
+	assertLinkedWitnessProvenanceEquivalent(
+		receipt.provenance,
+		expectedProvenance,
+		'React Boilerplate',
+	);
 	const canonicalBytes = await readFile(join(root, receipt.canonicalReceipt.path));
 	if (sha256(canonicalBytes) !== receipt.canonicalReceipt.sha256)
 		throw new Error('React Boilerplate Witness canonical receipt bytes drifted');

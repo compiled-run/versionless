@@ -76,9 +76,10 @@ describe('super-productivity u18f capability round', () => {
 		const previous = (await read('u18e-capability-round.json'))[
 			'applicationFilesChanged'
 		] as Readonly<Record<string, unknown>>;
-		expect((changed['differingFromPristine'] as number) - (previous['differingFromPristine'] as number)).toBe(
-			changed['newInThisUnit'],
-		);
+		expect(
+			(changed['differingFromPristine'] as number) -
+				(previous['differingFromPristine'] as number),
+		).toBe(changed['newInThisUnit']);
 		expect(changed['pristineFilesUnderSrc']).toBe(previous['pristineFilesUnderSrc']);
 	});
 
@@ -101,7 +102,9 @@ describe('super-productivity u18f capability round', () => {
 		expect(changes.length).toBeGreaterThan(0);
 		for (const change of changes) {
 			expect(change['appNameBranches']).toBe(0);
-			expect(String(change['file']).startsWith('packages/frameworks/angular/src/')).toBe(true);
+			expect(String(change['file']).startsWith('packages/frameworks/angular/src/')).toBe(
+				true,
+			);
 		}
 	});
 

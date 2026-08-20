@@ -145,7 +145,9 @@ describe('Angular CLI era composed migration', () => {
 		);
 		const manifest = migration.files.find((file) => file.path === 'package.json');
 		expect(manifest?.source).toContain('"@ctrl/tinycolor": "^4.2.0"');
-		expect(manifest?.changes.join('\n')).toContain('added dependencies.@ctrl/tinycolor = ^4.2.0');
+		expect(manifest?.changes.join('\n')).toContain(
+			'added dependencies.@ctrl/tinycolor = ^4.2.0',
+		);
 		expect(migration.declaredDifferences.join('\n')).toContain(
 			'dependencies.@ctrl/tinycolor was added',
 		);
@@ -218,6 +220,123 @@ describe('Angular CLI era composed migration', () => {
 		expect(migration.unhandled.join('\n')).toContain('src/app/any.module.ts line 4: Dialog');
 	});
 
+	/**
+	 * The bootstrapping module an era build bound `LOCALE_ID` into from the
+	 * command line. The base class above it is undecorated and uses `@Input`, so
+	 * the decorator synthesis inserts a line above it — which is what makes the
+	 * `@NgModule` line move, and what makes the reported line a test of ordering
+	 * rather than of arithmetic.
+	 */
+	const BOOTSTRAP_MODULE = [
+		"import { Component, Input, NgModule } from '@angular/core';",
+		'',
+		'export class BaseWidget {',
+		'  @Input() label: string;',
+		'}',
+		'',
+		"@Component({ selector: 'app-root', template: '' })",
+		'export class AppComponent extends BaseWidget {}',
+		'',
+		'@NgModule({',
+		'  declarations: [AppComponent],',
+		'  bootstrap: [AppComponent]',
+		'})',
+		'export class AppModule {}',
+		'',
+	].join('\n');
+
+	const ERA_LOCALE = {
+		locale: 'en',
+		readFrom: 'the era build script `build` passed `--i18n-locale en`',
+	};
+
+	const withModule = (source: string) => ({
+		...input,
+		sourceModules: [{ path: 'src/app/app.module.ts', source }],
+	});
+
+	it('supplies the era locale to the root injector through the full composition', () => {
+		const migration = migrateAngularCliEraWorkspace(
+			{ ...withModule(BOOTSTRAP_MODULE), eraLocale: ERA_LOCALE },
+			ANGULAR_16_BROWSER_CELL,
+		);
+		const migrated = migration.files.find((file) => file.path === 'src/app/app.module.ts');
+		expect(migrated?.changed).toBe(true);
+		expect(migrated?.source).toContain("providers: [{provide: LOCALE_ID, useValue: 'en'}]");
+		expect(migrated?.source).toContain(
+			"import { Component, Input, NgModule, Directive, LOCALE_ID } from '@angular/core';",
+		);
+		expect(migrated?.changes.join('\n')).toContain(
+			"locale-id-provider {provide: LOCALE_ID, useValue: 'en'} first in AppModule's providers, " +
+				'read from the era build script `build` passed `--i18n-locale en` ' +
+				'(providers property added, existing import extended)',
+		);
+	});
+
+	/**
+	 * The ordering claim, stated as the file it produces: the capability runs
+	 * after the decorator synthesis, so the line it reports is the line the
+	 * `@NgModule` decorator ends up on rather than the line it started on, and the
+	 * one `@angular/core` declaration carries both names.
+	 */
+	it('places the locale supply after the capabilities that reshape the module', () => {
+		const migration = migrateAngularCliEraWorkspace(
+			{ ...withModule(BOOTSTRAP_MODULE), eraLocale: ERA_LOCALE },
+			ANGULAR_16_BROWSER_CELL,
+		);
+		const migrated = migration.files.find((file) => file.path === 'src/app/app.module.ts');
+		expect(migrated?.source).toContain('@Directive()\nexport class BaseWidget {');
+		expect(migrated?.source.match(/from '@angular\/core'/g)).toHaveLength(1);
+		const reported = /line (\d+): locale-id-provider/.exec(migrated?.changes.join('\n') ?? '');
+		expect(reported).not.toBeNull();
+		const line = Number((reported as RegExpExecArray)[1]);
+		expect((migrated?.source ?? '').split('\n')[line - 1]).toContain('@NgModule({');
+		// The decorator synthesis moved it: the era file did not carry @NgModule here.
+		expect(BOOTSTRAP_MODULE.split('\n')[line - 1]).not.toContain('@NgModule({');
+	});
+
+	it('writes no provider where the module already binds the token itself', () => {
+		const already = BOOTSTRAP_MODULE.replace(
+			"import { Component, Input, NgModule } from '@angular/core';",
+			"import { Component, Input, LOCALE_ID, NgModule } from '@angular/core';",
+		).replace(
+			'  bootstrap: [AppComponent]',
+			"  providers: [{ provide: LOCALE_ID, useValue: 'de' }],\n  bootstrap: [AppComponent]",
+		);
+		const migration = migrateAngularCliEraWorkspace(
+			{ ...withModule(already), eraLocale: ERA_LOCALE },
+			ANGULAR_16_BROWSER_CELL,
+		);
+		const migrated = migration.files.find((file) => file.path === 'src/app/app.module.ts');
+		expect(migrated?.source).toContain("useValue: 'de'");
+		expect(migrated?.source).not.toContain("useValue: 'en'");
+		expect(migrated?.changes.join('\n')).not.toContain('locale-id-provider');
+	});
+
+	/**
+	 * The composition without the reading is the composition as it was. This is
+	 * the property the sealed fixture path depends on: it supplies no era locale,
+	 * so nothing about the changeset it produces may move.
+	 */
+	it('stands down entirely on a tree that supplies no era locale reading', () => {
+		const withoutReading = migrateAngularCliEraWorkspace(
+			withModule(BOOTSTRAP_MODULE),
+			ANGULAR_16_BROWSER_CELL,
+		);
+		const migrated = withoutReading.files.find((file) => file.path === 'src/app/app.module.ts');
+		expect(migrated?.source).not.toContain('LOCALE_ID');
+		expect(migrated?.source).not.toContain('providers:');
+		expect(migrated?.changes.join('\n')).not.toContain('locale-id-provider');
+		expect(withoutReading.unhandled.join('\n')).not.toContain('locale');
+	});
+
+	it('leaves the whole baseline changeset untouched when no era locale is supplied', () => {
+		const before = migrateAngularCliEraWorkspace(input, ANGULAR_16_BROWSER_CELL);
+		expect(before.applicationFilesChanged).toBe(1);
+		expect(before.workspaceFilesChanged).toBe(3);
+		for (const file of before.files) expect(file.changes.join('\n')).not.toContain('locale-id');
+	});
+
 	it('runs the cross-module modal capability before the per-module ones', () => {
 		const migration = migrateAngularCliEraWorkspace(
 			{
@@ -246,7 +365,9 @@ describe('Angular CLI era composed migration', () => {
 			},
 			ANGULAR_16_BROWSER_CELL,
 		);
-		const content = migration.files.find((file) => file.path === 'src/app/content.component.ts');
+		const content = migration.files.find(
+			(file) => file.path === 'src/app/content.component.ts',
+		);
 		expect(content?.changed).toBe(true);
 		expect(content?.source).toContain('id: string = inject(NZ_MODAL_DATA).id;');
 		const card = migration.files.find((file) => file.path === 'src/app/card.component.ts');

@@ -136,7 +136,8 @@ function balanced(source: string, open: number): Readonly<{ text: string; end: n
 		if (character === '(') depth += 1;
 		if (character === ')') {
 			depth -= 1;
-			if (depth === 0) return Object.freeze({ text: source.slice(open + 1, index), end: index + 1 });
+			if (depth === 0)
+				return Object.freeze({ text: source.slice(open + 1, index), end: index + 1 });
 		}
 	}
 	return null;
@@ -156,7 +157,8 @@ export function readSassMixinDeclarations(source: string): readonly SassMixinDec
 		if (offset === undefined) continue;
 		const afterKeyword = offset + '@mixin'.length;
 		let cursor = afterKeyword;
-		while (cursor < source.length && (source[cursor] === ' ' || source[cursor] === '\t')) cursor += 1;
+		while (cursor < source.length && (source[cursor] === ' ' || source[cursor] === '\t'))
+			cursor += 1;
 		let name = '';
 		while (cursor < source.length && /[\w-]/u.test(source[cursor] ?? '')) {
 			name += source[cursor];
@@ -166,7 +168,12 @@ export function readSassMixinDeclarations(source: string): readonly SassMixinDec
 		while (cursor < source.length && /\s/u.test(source[cursor] ?? '')) cursor += 1;
 		if (source[cursor] !== '(') {
 			declarations.push(
-				Object.freeze({ name, parameters: Object.freeze([]), defaults: 0, restParameter: false }),
+				Object.freeze({
+					name,
+					parameters: Object.freeze([]),
+					defaults: 0,
+					restParameter: false,
+				}),
 			);
 			continue;
 		}
@@ -255,7 +262,8 @@ export function renameHyphenatedSassMixins(
 		if (nameStart < 0) continue;
 		const nameEnd = nameStart + name.length;
 		let cursor = nameEnd;
-		while (cursor < source.length && (source[cursor] === ' ' || source[cursor] === '\t')) cursor += 1;
+		while (cursor < source.length && (source[cursor] === ' ' || source[cursor] === '\t'))
+			cursor += 1;
 		let count = 0;
 		if (source[cursor] === '(') {
 			const list = balanced(source, cursor);

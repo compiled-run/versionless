@@ -138,15 +138,23 @@ export function readInstalledPackage(
 ): InstalledPackage {
 	const parsed: unknown = JSON.parse(manifestSource);
 	if (typeof parsed !== 'object' || parsed === null || Array.isArray(parsed))
-		throw new Error('Undeclared runtime dependency reading: a package manifest is not an object');
+		throw new Error(
+			'Undeclared runtime dependency reading: a package manifest is not an object',
+		);
 	const manifest = parsed as Readonly<Record<string, unknown>>;
 	const name = manifest['name'];
 	const version = manifest['version'];
 	if (typeof name !== 'string')
-		throw new Error('Undeclared runtime dependency reading: a package manifest declares no name');
+		throw new Error(
+			'Undeclared runtime dependency reading: a package manifest declares no name',
+		);
 	const imports: PackageImport[] = [];
 	for (const bundle of bundles) {
-		const module = parseModule('Undeclared runtime dependency reading', bundle.path, bundle.source);
+		const module = parseModule(
+			'Undeclared runtime dependency reading',
+			bundle.path,
+			bundle.source,
+		);
 		for (const record of module.imports)
 			imports.push(Object.freeze({ specifier: record.specifier, from: bundle.path }));
 		for (const statement of module.ast.body as readonly AstNode[]) {
@@ -181,7 +189,10 @@ export function undeclaredRuntimeDependencies(
 			const dependency = packageNameOfSpecifier(record.specifier);
 			if (dependency === null || dependency === importer.name) continue;
 			if (declared.has(dependency)) continue;
-			const entry = byDependency.get(dependency) ?? { specifiers: new Set(), files: new Set() };
+			const entry = byDependency.get(dependency) ?? {
+				specifiers: new Set(),
+				files: new Set(),
+			};
 			entry.specifiers.add(record.specifier);
 			entry.files.add(record.from);
 			byDependency.set(dependency, entry);
@@ -293,7 +304,12 @@ export function declareUndeclaredRuntimeDependencies(
 			`declared to close an undeclared runtime dependency the installed closure supplied by ` +
 			`accident: ${describeHoles(group)}. Version read for ${cell.id}: ${disposition.fact}`;
 		declarations.push(
-			Object.freeze({ field: 'dependencies' as const, name, range: disposition.range, reason }),
+			Object.freeze({
+				field: 'dependencies' as const,
+				name,
+				range: disposition.range,
+				reason,
+			}),
 		);
 		declaredDifferences.push(
 			`dependencies.${name} was added: the migrated workspace declares a package the era ` +
@@ -309,7 +325,9 @@ export function declareUndeclaredRuntimeDependencies(
 		});
 	const current = manifest['dependencies'];
 	if (current !== undefined && (typeof current !== 'object' || current === null))
-		throw new Error('Undeclared runtime dependency declaration: "dependencies" is not an object');
+		throw new Error(
+			'Undeclared runtime dependency declaration: "dependencies" is not an object',
+		);
 	const merged: Record<string, unknown> = {
 		...(current as Record<string, unknown> | undefined),
 		...added,

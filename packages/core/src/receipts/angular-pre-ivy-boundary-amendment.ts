@@ -113,9 +113,10 @@ export const ANGULAR_PRE_IVY_BOUNDARY_READING_RULES = Object.freeze([
 			package: 'preboot',
 			application: 'eShopOnContainers',
 			declaredVersion: '6.0.0-beta.5',
-			verdict: 'declared but never imported — not active use, so it does not fail the boundary',
+			verdict:
+				'declared but never imported — not active use, so it does not fail the boundary',
 			evidence:
-				"The WebSPA compilation graph is 60 TypeScript files rooted at Client/main.ts; main.ts, app.module.ts and shared.module.ts carry no preboot import, and the tree has no server-side-rendering entry (main.server.ts / app.server.module.ts are absent), which is the only thing preboot exists for.",
+				'The WebSPA compilation graph is 60 TypeScript files rooted at Client/main.ts; main.ts, app.module.ts and shared.module.ts carry no preboot import, and the tree has no server-side-rendering entry (main.server.ts / app.server.module.ts are absent), which is the only thing preboot exists for.',
 		}),
 	}),
 ]);
@@ -143,8 +144,7 @@ export const ANGULAR_PRE_IVY_BOUNDARY_PREVALENCE = Object.freeze({
 		count: 1,
 		applications: Object.freeze(['pigallery2']),
 		strength: 'tested-and-failed',
-		method:
-			'ingested at a pin, baseline lane run green in the era toolchain, migrated lane run to a RED with no artifact ever produced',
+		method: 'ingested at a pin, baseline lane run green in the era toolchain, migrated lane run to a RED with no artifact ever produced',
 		evidence: ANGULAR_PRE_IVY_SUPPORT_BOUNDARY.instanceEvidence.receipt,
 	}),
 	screened: Object.freeze({
@@ -156,8 +156,7 @@ export const ANGULAR_PRE_IVY_BOUNDARY_PREVALENCE = Object.freeze({
 			'coreui-free-angular-admin-template',
 		]),
 		strength: 'screened-and-failed',
-		method:
-			'boundary-only gate-zero screen from pinned manifests, npm registry documents and published bytes, with the import site found in the pinned source; never installed, built, migrated or trialled',
+		method: 'boundary-only gate-zero screen from pinned manifests, npm registry documents and published bytes, with the import site found in the pinned source; never installed, built, migrated or trialled',
 		evidence:
 			'docs/goals/legacy-react-angular-production-readiness/notes/t023-candidate-selection.md',
 	}),
@@ -241,7 +240,9 @@ export function assertAngularPreIvyBoundaryAmendment(value: unknown): void {
 			typeof rule.neverAnAdapterCapabilityFact !== 'string' ||
 			rule.neverAnAdapterCapabilityFact.length === 0
 		)
-			throw new Error(`The pre-Ivy boundary reading rule ${expected.id} was stripped or weakened`);
+			throw new Error(
+				`The pre-Ivy boundary reading rule ${expected.id} was stripped or weakened`,
+			);
 	}
 	const prevalence = amendment.prevalence;
 	if (

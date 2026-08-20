@@ -30,10 +30,7 @@ import {
 	type StyleImportChange,
 } from './package-exports-style-imports.ts';
 import { migrateSentryV8Tracing, type SentryV8Change } from './sentry-v8-migration.ts';
-import {
-	removeEntryComponents,
-	type EntryComponentsChange,
-} from './entry-components-removal.ts';
+import { removeEntryComponents, type EntryComponentsChange } from './entry-components-removal.ts';
 import {
 	readDirectiveBindingDependencies,
 	reorderTemplateBindings,
@@ -65,10 +62,7 @@ import {
 	addModuleWithProvidersTypeArgument,
 	type ModuleWithProvidersChange,
 } from './module-with-providers-type-argument.ts';
-import {
-	parameteriseVoidSubjects,
-	type VoidSubjectChange,
-} from './subject-void-type-argument.ts';
+import { parameteriseVoidSubjects, type VoidSubjectChange } from './subject-void-type-argument.ts';
 import {
 	parameteriseVoidPromiseExecutors,
 	type VoidExecutorChange,
@@ -129,6 +123,11 @@ import {
 	type ClosureFileReading,
 	type TildeSpecifierChange,
 } from './webpack-tilde-style-specifier.ts';
+import {
+	provideEraLocaleId,
+	type EraLocaleReading,
+	type LocaleIdProviderChange,
+} from './locale-id-provider.ts';
 
 export type WorkspaceFile = Readonly<{ path: string; source: string }>;
 
@@ -284,6 +283,23 @@ export type AngularMigrationInput = Readonly<{
 	 * result moves the failure rather than answering it.
 	 */
 	styleClosure?: ClosureFileReading;
+	/**
+	 * The locale the *era* build's own command line bound into the root injector
+	 * through `--i18n-locale`, read by whoever could read that command line: the
+	 * flag rewriting for an `ng` script, or the reader of a gulp task or shell
+	 * wrapper for a build the workspace scripts do not describe.
+	 *
+	 * Supplying it is what makes the locale provider reachable. A tree that
+	 * supplies no reading gets no `LOCALE_ID` provider written, which is a
+	 * different thing from having no locale: the flag was removed after the
+	 * Angular 12 line and nothing on the new line puts the value back, so an
+	 * unread locale silently becomes the framework default `en-US`. The value is
+	 * never derived here — not from the cell, not from the application's
+	 * translation files, not from the host — because a locale nobody measured is
+	 * a claim about what the application was built for, and that claim being
+	 * wrong is the whole defect.
+	 */
+	eraLocale?: EraLocaleReading;
 }>;
 
 /**
@@ -449,6 +465,25 @@ function describeBaseClassChange(change: BaseClassParameterisationChange): strin
 	return (
 		`line ${change.line}: ${change.kind} ${change.base}<${change.argument}> from ` +
 		`${change.specifier} (${change.importAdded ? 'import added' : 'existing import extended'})`
+	);
+}
+
+/**
+ * A supplied provider names no predecessor either, and the two facts a reader is
+ * owed beyond the provider itself are where the value was read and which module
+ * received it — the first because the value is a translation of a command line
+ * this migration deleted, the second because `LOCALE_ID` is only the root
+ * injector's to bind.
+ */
+function describeLocaleIdProviderChange(change: LocaleIdProviderChange): string {
+	const notes = [
+		...(change.providersPropertyAdded ? ['providers property added'] : []),
+		...(change.importExtended ? ['existing import extended'] : []),
+	];
+	return (
+		`line ${change.line}: ${change.kind} ${change.provider} first in ${change.moduleClass}'s ` +
+		`providers, read from ${change.readFrom}` +
+		(notes.length === 0 ? '' : ` (${notes.join(', ')})`)
 	);
 }
 
@@ -675,33 +710,25 @@ export function migrateAngularCliEraWorkspace(
 	const tsConfig = migrateAngularTsConfig(input.tsConfig.source, cell);
 	unhandled.push(...tsConfig.unhandled);
 	const files: MigratedFile[] = [
-		file(
-			input.packageManifest,
-			`${JSON.stringify(scripts.manifest, null, 2)}\n`,
-			'workspace',
-			[
-				...aligned.changes.map(describeDependencyChange),
-				...scripts.changes.map(describeScriptFlagChange),
-				...declared.declarations.map(
-					(entry) =>
-						`added ${entry.field}.${entry.name} = ${entry.range} — ${entry.reason}`,
-				),
-				...applicationDependencies.declarations.map(
-					(entry) =>
-						`added ${entry.field}.${entry.name} = ${entry.range} — ${entry.reason}`,
-				),
-				...builders.declarations.map(
-					(entry) =>
-						`added ${entry.field}.${entry.name} = ${entry.range} — ${entry.reason}`,
-				),
-				...(engines.retarget === null
-					? []
-					: [
-							`retargeted ${engines.retarget.field} from ${engines.retarget.from} to ` +
-								`${engines.retarget.to} — ${engines.retarget.reason}`,
-						]),
-			],
-		),
+		file(input.packageManifest, `${JSON.stringify(scripts.manifest, null, 2)}\n`, 'workspace', [
+			...aligned.changes.map(describeDependencyChange),
+			...scripts.changes.map(describeScriptFlagChange),
+			...declared.declarations.map(
+				(entry) => `added ${entry.field}.${entry.name} = ${entry.range} — ${entry.reason}`,
+			),
+			...applicationDependencies.declarations.map(
+				(entry) => `added ${entry.field}.${entry.name} = ${entry.range} — ${entry.reason}`,
+			),
+			...builders.declarations.map(
+				(entry) => `added ${entry.field}.${entry.name} = ${entry.range} — ${entry.reason}`,
+			),
+			...(engines.retarget === null
+				? []
+				: [
+						`retargeted ${engines.retarget.field} from ${engines.retarget.from} to ` +
+							`${engines.retarget.to} — ${engines.retarget.reason}`,
+					]),
+		]),
 		file(
 			synthesis === null
 				? input.workspaceConfig
@@ -812,12 +839,20 @@ export function migrateAngularCliEraWorkspace(
 		const rxjsNamed = rxjsDiagnostics.get(module.path);
 		const rxjsPatches =
 			rxjsNamed === undefined || rxjsNamed.length === 0
-				? { source: departedDomMembers.source, changes: [] as readonly RxjsPipeChange[], unhandled: [] as readonly string[] }
+				? {
+						source: departedDomMembers.source,
+						changes: [] as readonly RxjsPipeChange[],
+						unhandled: [] as readonly string[],
+					}
 				: migrateRxjsPrototypePatches(
 						module.path,
 						departedDomMembers.source,
 						rxjsNamed,
-						input.rxjsSurface ?? { version: 'unread', rootExports: [], operatorExports: [] },
+						input.rxjsSurface ?? {
+							version: 'unread',
+							rootExports: [],
+							operatorExports: [],
+						},
 					);
 		const migrated = migrateAngularSourceModule(module.path, rxjsPatches.source);
 		const effects = migrateNgrxEffectDecorators(module.path, migrated.source);
@@ -912,12 +947,31 @@ export function migrateAngularCliEraWorkspace(
 		 * below both — so it runs after every capability positioned by an offset, and
 		 * it reads its own precondition out of the module the others left.
 		 */
-		const undecorated = decorateUndecoratedBaseClasses(
+		const undecorated = decorateUndecoratedBaseClasses(module.path, voidExecutors.source, cell);
+		/**
+		 * The locale supply is last, after every capability that can change the
+		 * shape of a module literal or of this module's `@angular/core` import.
+		 * That ordering is what its two readings need: it refuses to write where a
+		 * `provide: LOCALE_ID` already exists anywhere in the file, and the
+		 * successor carriage above can put a provider into an `imports` or
+		 * `providers` array — so the array it detects against has to be the one the
+		 * capabilities before it left, not the one the era file wrote. For the same
+		 * reason it spells the token the way the module finally spells it: the
+		 * decorator synthesis directly above extends the `@angular/core`
+		 * declaration this capability would otherwise extend a second time.
+		 *
+		 * It is supply-gated on a reading of the era build's own argv and parses
+		 * nothing without one, so a tree that supplies no locale pays nothing here
+		 * and has nothing written.
+		 */
+		const localeId = provideEraLocaleId(
 			module.path,
-			voidExecutors.source,
+			undecorated.source,
+			input.eraLocale ?? null,
 			cell,
 		);
 		unhandled.push(
+			...localeId.unhandled,
 			...departedDomMembers.unhandled,
 			...rxjsPatches.unhandled,
 			...usePositions.unhandled,
@@ -934,7 +988,7 @@ export function migrateAngularCliEraWorkspace(
 			...voidExecutors.unhandled,
 		);
 		files.push(
-			file(module, undecorated.source, 'application', [
+			file(module, localeId.source, 'application', [
 				...(modalFile?.changes ?? []).map(describeSourceChange),
 				...baseClasses.changes.map(describeBaseClassChange),
 				...departedDomMembers.changes.map(describeDepartedDomMemberChange),
@@ -944,6 +998,7 @@ export function migrateAngularCliEraWorkspace(
 				...callSurface.changes.map(describeHttpCallSurfaceChange),
 				...staticModuleMethods.changes.map(describeStaticModuleMethodChange),
 				...undecorated.changes.map(describeUndecoratedBaseClassChange),
+				...localeId.changes.map(describeLocaleIdProviderChange),
 				...migrated.changes.map(describeSourceChange),
 				...effects.changes.map(describeSourceChange),
 				...sentry.changes.map(describeSourceChange),
@@ -970,7 +1025,11 @@ export function migrateAngularCliEraWorkspace(
 	for (const template of [...(input.templates ?? [])].sort((left, right) =>
 		compareStrings(left.path, right.path),
 	)) {
-		const reordered = reorderTemplateBindings(template.path, template.source, directiveReadings);
+		const reordered = reorderTemplateBindings(
+			template.path,
+			template.source,
+			directiveReadings,
+		);
 		unhandled.push(...reordered.unhandled);
 		files.push(
 			file(
