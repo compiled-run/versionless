@@ -32,30 +32,38 @@ If you've ever been burned by a tool that "succeeded" and quietly broke your app
 
 Some refusals can be lifted with an explicit flag. For example, `--allow-foreign-lockfile` tells it "yes, ignore the yarn lockfile and resolve fresh." But *you* make that call, out loud, and the decision is recorded in the run's receipt. Nothing is ever silently assumed on your behalf.
 
+## Install
+
+```sh
+npm install -g versionless
+```
+
+Requires Node 22 or newer.
+
 ## Try it
 
 Five commands, from "just look at it" to "do the whole thing":
 
 ```sh
 # What is this app? (framework, version, builder, Node era. Read-only.)
-node packages/cli/src/cli.ts analyze <app-root>
+versionless analyze <app-root>
 
 # What *would* you change? (composes the changeset, writes nothing)
-node packages/cli/src/cli.ts plan <app-root>
+versionless plan <app-root>
 
 # Do it: into a separate lane, never into the app itself
-node packages/cli/src/cli.ts migrate <app-root> --out <lane>
+versionless migrate <app-root> --out <lane>
 
 # Run every offline self-check in one summary
-node packages/cli/src/cli.ts verify
+versionless verify
 
 # What is actually supported? (the derived matrix, see below)
-node packages/cli/src/cli.ts supported-matrix
+versionless supported-matrix
 ```
 
 Every command takes `--help` and `--json`. Start with `analyze`: it can't hurt anything, and it'll tell you right away whether versionless recognizes your app.
 
-(Requires Node 24+. On older Node, add `--experimental-strip-types` after `node`.)
+Working from a clone instead? Run `pnpm install && pnpm build`, then use `node packages/cli/dist/cli.js` wherever these examples say `versionless`.
 
 ## What does "supported" mean here?
 

@@ -128,14 +128,24 @@ jobs:
       # builds the very bytes it is about to publish, and trust:verify checks
       # those fresh bytes against the sha256 pins in evidence/trust/current.
       # A build that is not byte-identical to the pinned bundle stops here.
-      - name: Gates (build, lint, test, trust)
+      #
+      # The full vitest suite is deliberately NOT here. It is an evidence
+      # REPLAY: hundreds of its tests re-read consented source archives under
+      # .versionless/cache/ and built lanes under .versionless/work/, which
+      # are machine-local by design and never published. In a fresh checkout
+      # they fail on absence, not on defect (proven by run 32600253830). The
+      # suite is the pre-tag gate, run locally against the exact commit being
+      # tagged; what CI re-verifies is everything a clean checkout can
+      # honestly re-derive: types, lint, a fresh build, and the trust chain
+      # over the committed evidence.
+      - name: Gates (build, types, lint, trust)
         env:
           VERSIONLESS_NETWORK_MODE: offline
           NPM_CONFIG_OFFLINE: 'true'
         run: |
           pnpm run build
+          pnpm exec tsc --noEmit
           pnpm run lint
-          pnpm run test
           npm run trust:verify -- --offline
 
       # Pack once, inspect what was packed, publish that exact file. The scope
