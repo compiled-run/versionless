@@ -1667,12 +1667,12 @@ export async function snapshotInstallBoundary(
 	const root = path.resolve(boundaryRoot);
 	const lane = path.resolve(laneDir);
 	const snapshot = new Map<string, string>();
-	let entries;
-	try {
-		entries = await readdir(root, { withFileTypes: true });
-	} catch {
-		entries = [];
-	}
+	const entries = await readdir(root, { withFileTypes: true }).catch(
+		// A boundary root this host cannot read carries no watched file to hash.
+		// The empty reading is the snapshot; it is not a failure of the install,
+		// and it is the same reading the previous `try`/`catch` produced.
+		() => [],
+	);
 	for (const entry of entries) {
 		if (!entry.isFile()) continue;
 		const digest = await hashIfReadable(path.join(root, entry.name));
