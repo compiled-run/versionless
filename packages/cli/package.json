@@ -3,6 +3,10 @@
 	"version": "0.1.0",
 	"description": "Operator CLI for evidence-backed framework migration analysis.",
 	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/compiled-run/versionless.git"
+	},
 	"bin": {
 		"versionless": "./dist/cli.js"
 	},

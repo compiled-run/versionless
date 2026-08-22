@@ -2,8 +2,8 @@
 
 One machine artifact for an enterprise reviewer, derived entirely from canonical receipts the trust package already verified. It states what was proven, on which sources, with which tools, under which commands, and — in the same document — what is unsupported, unknown, or deliberately not claimed.
 
-- Trust manifest canonical SHA-256: `c03add6639049f0ab86b252a029c4bf4fff6827f87a2dcb4b84f40c97d745e08`
-- Deterministic core: `6ba1e28645c77f1200760ce33d5c6b5f3fd99b3ac99c595783ee7bb48077570f`
+- Trust manifest canonical SHA-256: `52d46caccdaa44918ba395fc720ec7288cd02ea3a3df945f2170b490a3d59afd`
+- Deterministic core: `f098e54ad745eb6eb08a8f6482335c85241eaab62d9008ab32666d066ea000ca`
 - Corpus conformance: `532eb5b705104f9f9af3e0dc8ae028c36b20e3ba4ade4c438533e3f341418965`
 - Adapter freeze: commit `ddc2870aa934be7c8bc6caaeca74095d270776d5`, composite `140ce86e163ddbae2ad6f1504022efca9468641cc50fd3dca354c6aba8cbb562`
 - Certification: **not-certified** — This package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation.
@@ -60,10 +60,10 @@ Tool: `versionless-local-trust-generator`, adapter frozen at commit `ddc2870aa93
 ## 3. Hashes
 
 - `adapter-freeze.json` — `0ffe4eb2552a07dd7db65faa0081f6f42073013d7fb05869c2b1bb798cdd8b51`
-- `dependency-graph.cdx.json` — `76b653a75ddb476319427bf538813377fce47ebe2feea438f82ec42604e0f36d`
-- `licenses.json` — `7d76e8a912109aed014bf2da0624735f57ba4767ff6d918b32ccdb26aadc1b02`
+- `dependency-graph.cdx.json` — `23ef63ee83611cc0dc7223dfcb7b452c8003c00ef8502c04312378896f763db7`
+- `licenses.json` — `b855b63096307b3526a964fb13bdf2903528e5f087acd8379eab99bb49c0c718`
 - `vulnerabilities.json` — `7a5fa5678910a34a7153abe96b404322f729877a67e4188631d66d617af31aca`
-- `provenance.json` — `f1c6946f5f62d938470905f012692554cbe430feb4ee137e9e836e17a2f9d2a5`
+- `provenance.json` — `9431fc011240dc014851f19d77d05bf454af252d50f5bf2f2bacf276650ae7a6`
 - `matrix.json` — `e616fd15930848b2ef5acb0e01efe55de247807e2de6bba39adf7aa58f516d6d`
 - `controls.json` — `a5e61dcace162ce814347f931b6f4e4f59934ea1312df79d9c817c19e0e9bef4`
 - `retention.json` — `f1a7f91607bca1de4cc15e2523a3d0791116acc9cfdf853c68b9b35aa2c07568`
