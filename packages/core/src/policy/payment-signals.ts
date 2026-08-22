@@ -190,6 +190,7 @@ function isReceiptCryptographicDigest(value: string, path: string): boolean {
 type EvidenceContext =
 	| 'ordinary'
 	| 'cyclonedx-components'
+	| 'cyclonedx-metadata'
 	| 'cyclonedx-component'
 	| 'cyclonedx-hashes'
 	| 'cyclonedx-hash'
@@ -511,6 +512,8 @@ function childContext(
 	rootIsAdapterFreeze: boolean,
 ): EvidenceContext {
 	if (rootIsCycloneDx17 && key === 'components') return 'cyclonedx-components';
+	if (rootIsCycloneDx17 && key === 'metadata') return 'cyclonedx-metadata';
+	if (context === 'cyclonedx-metadata' && key === 'component') return 'cyclonedx-component';
 	if (context === 'cyclonedx-component' && key === 'hashes') return 'cyclonedx-hashes';
 	if (rootIsRuntimeObservation && key === 'verticals') return 'runtime-verticals';
 	if (context === 'runtime-vertical' && key === 'lanes') return 'runtime-lanes';
