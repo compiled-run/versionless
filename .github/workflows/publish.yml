@@ -1,0 +1,87 @@
+# npm Trusted Publishing (OIDC) for the versionless package family.
+#
+# No npm tokens anywhere. npmjs.com is configured (once, in the web UI) to
+# trust THIS repo + THIS workflow file; GitHub mints a short-lived OIDC token
+# per run and npm accepts the publish from it, attaching provenance
+# automatically. Requires npm CLI >= 11.5.1 (Node 24 bundles npm 11).
+#
+# One-time setup per package on npmjs.com (no API exists for this; it is a
+# web-UI step): run `node scripts/setup-trusted-publishing.mjs` and follow
+# the printed instructions.
+
+name: publish
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write   # the whole trick: OIDC token for npm, no secrets
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: npm CLI supports trusted publishing?
+        run: |
+          npm --version
+          node -e "const [maj,min,pat]=require('child_process').execSync('npm --version').toString().trim().split('.').map(Number); if (maj<11 || (maj===11 && min<5) || (maj===11 && min===5 && pat<1)) { console.error('npm >= 11.5.1 required for trusted publishing'); process.exit(1) }"
+
+      - name: Install (consented phase)
+        env:
+          VERSIONLESS_NETWORK_MODE: consented
+          VERSIONLESS_CONSENT_ID: ci-publish
+        run: pnpm install --frozen-lockfile
+
+      - name: Gates (build, lint, test, trust)
+        env:
+          VERSIONLESS_NETWORK_MODE: offline
+          NPM_CONFIG_OFFLINE: 'true'
+        run: |
+          pnpm run build
+          pnpm run lint
+          pnpm run test
+          npm run trust:verify -- --offline
+
+      # Publish the public set in dependency order. `pnpm pack` rewrites
+      # workspace:* ranges to the real versions inside the tarball; `npm
+      # publish <tarball>` is the client that speaks OIDC trusted publishing.
+      # Versions already on the registry are skipped, so re-runs are safe.
+      - name: Publish (skip versions already on the registry)
+        run: |
+          set -euo pipefail
+          for dir in \
+            packages/core \
+            packages/frameworks/angularjs \
+            packages/frameworks/angular \
+            packages/frameworks/react \
+            packages/frameworks/nextjs \
+            packages/trust \
+            packages/cli
+          do
+            name=$(node -p "require('./$dir/package.json').name")
+            version=$(node -p "require('./$dir/package.json').version")
+            private=$(node -p "require('./$dir/package.json').private === true")
+            if [ "$private" = "true" ]; then echo "skip $name (private)"; continue; fi
+            if npm view "$name@$version" version >/dev/null 2>&1; then
+              echo "skip $name@$version (already published)"; continue
+            fi
+            echo "publishing $name@$version"
+            (cd "$dir" && pnpm pack)
+            tarball=$(ls "$dir"/*.tgz)
+            npm publish "$tarball" --access public
+            rm -f "$tarball"
+          done
