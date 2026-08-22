@@ -50,24 +50,12 @@ importers:
 
   packages/cli:
     dependencies:
-      '@versionless/angular':
-        specifier: workspace:*
-        version: link:../frameworks/angular
-      '@versionless/angularjs':
-        specifier: workspace:*
-        version: link:../frameworks/angularjs
-      '@versionless/core':
-        specifier: workspace:*
-        version: link:../core
-      '@versionless/nextjs':
-        specifier: workspace:*
-        version: link:../frameworks/nextjs
-      '@versionless/react':
-        specifier: workspace:*
-        version: link:../frameworks/react
-      '@versionless/trust':
-        specifier: workspace:*
-        version: link:../trust
+      '@angular/compiler':
+        specifier: 22.1.0
+        version: 22.1.0
+      '@async/witness':
+        specifier: 0.9.0
+        version: 0.9.0(vite@8.0.16(@types/node@24.12.2))
       playwright:
         specifier: 1.58.2
         version: 1.58.2

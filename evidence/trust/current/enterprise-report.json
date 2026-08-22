@@ -8,8 +8,8 @@
     "slsaLevel": "not-claimed"
   },
   "derivedFrom": {
-    "trustManifestCanonicalDigest": "813e5941b7557f7d3b6ce030e124453aaa510b5a2f1b91830b05165f15886376",
-    "deterministicCoreDigest": "984ff7e3fb42ca510750017ca621207855f2cac067db8eba3db0caa6f639119c",
+    "trustManifestCanonicalDigest": "c03add6639049f0ab86b252a029c4bf4fff6827f87a2dcb4b84f40c97d745e08",
+    "deterministicCoreDigest": "6ba1e28645c77f1200760ce33d5c6b5f3fd99b3ac99c595783ee7bb48077570f",
     "corpusConformanceDigest": "532eb5b705104f9f9af3e0dc8ae028c36b20e3ba4ade4c438533e3f341418965",
     "adapterFreezeComposite": "140ce86e163ddbae2ad6f1504022efca9468641cc50fd3dca354c6aba8cbb562",
     "adapterFreezeCommit": "ddc2870aa934be7c8bc6caaeca74095d270776d5"
@@ -394,11 +394,11 @@
       },
       {
         "path": "dependency-graph.cdx.json",
-        "sha256": "fded98c8ff9cae379bf1473c675e719b723adff25577f1f5e411eb920d9579ce"
+        "sha256": "76b653a75ddb476319427bf538813377fce47ebe2feea438f82ec42604e0f36d"
       },
       {
         "path": "licenses.json",
-        "sha256": "8376c4bbaf8059ce38739afc94e5f13e93c80a38e35cd16960e270b46fbbac8c"
+        "sha256": "7d76e8a912109aed014bf2da0624735f57ba4767ff6d918b32ccdb26aadc1b02"
       },
       {
         "path": "vulnerabilities.json",
@@ -406,7 +406,7 @@
       },
       {
         "path": "provenance.json",
-        "sha256": "ae5fbbe27300db95922a0ebc105093476eff017b6f4fa37dcceed2bdbc008186"
+        "sha256": "f1c6946f5f62d938470905f012692554cbe430feb4ee137e9e836e17a2f9d2a5"
       },
       {
         "path": "matrix.json",
@@ -1971,13 +1971,13 @@
       },
       "licenseCoverage": {
         "spdxExpression": {
-          "verified": 90,
-          "unknown": 109,
+          "verified": 91,
+          "unknown": 108,
           "ambiguous": 0
         },
         "licenseText": {
-          "verified": 78,
-          "unknown": 121,
+          "verified": 79,
+          "unknown": 120,
           "ambiguous": 0
         }
       }

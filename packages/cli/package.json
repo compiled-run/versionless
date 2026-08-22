@@ -1,18 +1,22 @@
 {
 	"name": "versionless",
-	"version": "0.0.1",
+	"version": "0.1.0",
+	"description": "Operator CLI for evidence-backed framework migration analysis.",
+	"license": "MIT",
 	"bin": {
 		"versionless": "./dist/cli.js"
 	},
 	"type": "module",
 	"exports": "./dist/index.js",
+	"files": [
+		"dist"
+	],
+	"engines": {
+		"node": ">=22"
+	},
 	"dependencies": {
-		"@versionless/angular": "workspace:*",
-		"@versionless/angularjs": "workspace:*",
-		"@versionless/core": "workspace:*",
-		"@versionless/nextjs": "workspace:*",
-		"@versionless/react": "workspace:*",
-		"@versionless/trust": "workspace:*",
+		"@angular/compiler": "22.1.0",
+		"@async/witness": "0.9.0",
 		"playwright": "1.58.2",
 		"yuku-analyzer": "0.7.0"
 	}

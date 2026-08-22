@@ -71,11 +71,11 @@
       "type": "application",
       "bom-ref": "workspace:packages/cli",
       "name": "versionless",
-      "version": "0.0.1",
+      "version": "0.1.0",
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "d1aaf112a2c092a377ced3fdd1224a87392ffcb37489a152888d5a7e7a8d618a"
+          "content": "660d4e16db4dc230eaa431db0ee3f7641a5397e2a2aeb46637a38d691d0371e6"
         }
       ],
       "properties": [

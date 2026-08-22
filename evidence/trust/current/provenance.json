@@ -294,7 +294,7 @@
         {
           "uri": "packages/cli/package.json",
           "digest": {
-            "sha256": "d1aaf112a2c092a377ced3fdd1224a87392ffcb37489a152888d5a7e7a8d618a"
+            "sha256": "660d4e16db4dc230eaa431db0ee3f7641a5397e2a2aeb46637a38d691d0371e6"
           }
         },
         {
@@ -348,7 +348,7 @@
         {
           "uri": "pnpm-lock.yaml",
           "digest": {
-            "sha256": "d4d3a8f75460a122934a45551c24e129e751b9a086bdd296ab393a4d8426770f"
+            "sha256": "2ff6d229eeb2ff57f8834bbdabac43ad1e46a1d9de9277c1bc231e4a0d9d176a"
           }
         }
       ]

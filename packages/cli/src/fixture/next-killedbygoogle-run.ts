@@ -151,12 +151,18 @@ const expectedHistoricalAmbientPnpmLock =
 //   evidence/dependencies/angular-contacts/t633-terminal.json
 const expectedVendoringPredecessorAmbientPnpmLock =
 	'ae8c76d3483d5dcd72428ba3a0b9eb0b1731724c14f6f0893ac20972cea5e66a';
-// Current since @async/witness stopped being vendored and became the exact registry pin 0.9.0
-// (T004). The vendored-era state it replaced — a05cd6c698fd531c4dcb6c1117512a0c8ce463cc56edf2e7eccb89585b56066e,
-// 68_172 bytes — is NOT given a named acceptance of its own: unlike the two states above, no
-// published evidence names it once evidence/trust/current is regenerated against this lockfile.
+// Current since packages/cli/package.json dropped its six `@versionless/*` workspace:* deps and
+// declared the four real runtime deps instead (T002 manifest surgery); the pnpm-lock delta is the
+// packages/cli importer block alone — the resolved closure did not move. The two states this
+// replaced are NOT given named acceptances of their own, for the same reason T004 gave: unlike the
+// two named states above, no published evidence names them once evidence/trust/current is
+// regenerated against this lockfile. For the record, they were
+//   a05cd6c698fd531c4dcb6c1117512a0c8ce463cc56edf2e7eccb89585b56066e, 68_172 bytes (vendored-era
+//     @async/witness 0.8.0, retired by T004)
+//   d4d3a8f75460a122934a45551c24e129e751b9a086bdd296ab393a4d8426770f, 67_987 bytes (T004's state,
+//     retired here)
 const expectedCurrentAmbientPnpmLock =
-	'd4d3a8f75460a122934a45551c24e129e751b9a086bdd296ab393a4d8426770f';
+	'2ff6d229eeb2ff57f8834bbdabac43ad1e46a1d9de9277c1bc231e4a0d9d176a';
 const expectedHistoricalCacheKeyCandidates = [
 	{
 		updateOrder: ['fixture/yarn.lock', 'ambient/pnpm-lock.yaml'],
@@ -180,11 +186,11 @@ const expectedVendoringPredecessorCacheKeyCandidates = [
 const expectedCurrentCacheKeyCandidates = [
 	{
 		updateOrder: ['fixture/yarn.lock', 'ambient/pnpm-lock.yaml'],
-		cacheKeySha256: '98915cfdf62149b505fb68c48a8e691ac2623fb2a2f056e234b5915aaa07b937',
+		cacheKeySha256: '38c5800c6632b26d160ec31c6c22188d2114fe2f2bb8c095fd211b18a69fbd18',
 	},
 	{
 		updateOrder: ['ambient/pnpm-lock.yaml', 'fixture/yarn.lock'],
-		cacheKeySha256: '655937df0ce135e157199cc217eaf2d9b5efd05a959699e44b6be50b151c67a3',
+		cacheKeySha256: 'd4e7c3451b99deb0e7572b32b744ca89f735180227ab172b1940ec055994122f',
 	},
 ] as const;
 const expectedPreviousDiagnostic =
@@ -3692,7 +3698,7 @@ export function validateNextServerCacheKeyProvenanceArtifact(
 			canonicalize(expectedVendoringPredecessorCacheKeyCandidates);
 	const currentAmbientBinding =
 		ambientBinding?.sha256 === expectedCurrentAmbientPnpmLock &&
-		ambientBinding.byteLength === 67_987 &&
+		ambientBinding.byteLength === 67_574 &&
 		canonicalize(model.candidates) === canonicalize(expectedCurrentCacheKeyCandidates);
 	if (
 		fixed.nextVersion !== '12.0.10' ||

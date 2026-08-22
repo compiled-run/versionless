@@ -2,8 +2,8 @@
 
 One machine artifact for an enterprise reviewer, derived entirely from canonical receipts the trust package already verified. It states what was proven, on which sources, with which tools, under which commands, and — in the same document — what is unsupported, unknown, or deliberately not claimed.
 
-- Trust manifest canonical SHA-256: `813e5941b7557f7d3b6ce030e124453aaa510b5a2f1b91830b05165f15886376`
-- Deterministic core: `984ff7e3fb42ca510750017ca621207855f2cac067db8eba3db0caa6f639119c`
+- Trust manifest canonical SHA-256: `c03add6639049f0ab86b252a029c4bf4fff6827f87a2dcb4b84f40c97d745e08`
+- Deterministic core: `6ba1e28645c77f1200760ce33d5c6b5f3fd99b3ac99c595783ee7bb48077570f`
 - Corpus conformance: `532eb5b705104f9f9af3e0dc8ae028c36b20e3ba4ade4c438533e3f341418965`
 - Adapter freeze: commit `ddc2870aa934be7c8bc6caaeca74095d270776d5`, composite `140ce86e163ddbae2ad6f1504022efca9468641cc50fd3dca354c6aba8cbb562`
 - Certification: **not-certified** — This package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation.
@@ -60,10 +60,10 @@ Tool: `versionless-local-trust-generator`, adapter frozen at commit `ddc2870aa93
 ## 3. Hashes
 
 - `adapter-freeze.json` — `0ffe4eb2552a07dd7db65faa0081f6f42073013d7fb05869c2b1bb798cdd8b51`
-- `dependency-graph.cdx.json` — `fded98c8ff9cae379bf1473c675e719b723adff25577f1f5e411eb920d9579ce`
-- `licenses.json` — `8376c4bbaf8059ce38739afc94e5f13e93c80a38e35cd16960e270b46fbbac8c`
+- `dependency-graph.cdx.json` — `76b653a75ddb476319427bf538813377fce47ebe2feea438f82ec42604e0f36d`
+- `licenses.json` — `7d76e8a912109aed014bf2da0624735f57ba4767ff6d918b32ccdb26aadc1b02`
 - `vulnerabilities.json` — `7a5fa5678910a34a7153abe96b404322f729877a67e4188631d66d617af31aca`
-- `provenance.json` — `ae5fbbe27300db95922a0ebc105093476eff017b6f4fa37dcceed2bdbc008186`
+- `provenance.json` — `f1c6946f5f62d938470905f012692554cbe430feb4ee137e9e836e17a2f9d2a5`
 - `matrix.json` — `e616fd15930848b2ef5acb0e01efe55de247807e2de6bba39adf7aa58f516d6d`
 - `controls.json` — `a5e61dcace162ce814347f931b6f4e4f59934ea1312df79d9c817c19e0e9bef4`
 - `retention.json` — `f1a7f91607bca1de4cc15e2523a3d0791116acc9cfdf853c68b9b35aa2c07568`
@@ -307,7 +307,7 @@ A capability is claimed general, and therefore in the matrix, only once at least
 - `gitProvenance`: {"state":"unknown","reason":"Git metadata is absent."}
 - `signingIdentity`: {"state":"unknown","reason":"No project signing identity is designated."}
 - `rootLicenseText`: {"state":"unknown","reason":"No root LICENSE file exists."}
-- `licenseCoverage`: {"spdxExpression":{"verified":90,"unknown":109,"ambiguous":0},"licenseText":{"verified":78,"unknown":121,"ambiguous":0}}
+- `licenseCoverage`: {"spdxExpression":{"verified":91,"unknown":108,"ambiguous":0},"licenseText":{"verified":79,"unknown":120,"ambiguous":0}}
 
 ## 10. Claims and non-claims
 

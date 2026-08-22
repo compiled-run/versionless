@@ -10,13 +10,13 @@
   },
   "summary": {
     "spdxExpression": {
-      "verified": 90,
-      "unknown": 109,
+      "verified": 91,
+      "unknown": 108,
       "ambiguous": 0
     },
     "licenseText": {
-      "verified": 78,
-      "unknown": 121,
+      "verified": 79,
+      "unknown": 120,
       "ambiguous": 0
     }
   },
@@ -38,15 +38,21 @@
     },
     {
       "name": "versionless",
-      "version": "0.0.1",
+      "version": "0.1.0",
       "source": "packages/cli/package.json",
       "spdxExpression": {
-        "state": "unknown",
-        "reason": "Matching installed manifest has no SPDX expression."
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": "packages/cli/package.json",
+        "manifestSha256": "660d4e16db4dc230eaa431db0ee3f7641a5397e2a2aeb46637a38d691d0371e6"
       },
       "licenseText": {
-        "state": "unknown",
-        "reason": "License text is absent."
+        "state": "verified",
+        "candidateId": "packages/cli/package.json",
+        "sha256": "7db90b9a8fe8688a2a41873a766eb625ce1e7c1715f282581dd425cf67efc02d",
+        "files": [
+          "LICENSE"
+        ]
       }
     },
     {
