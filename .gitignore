@@ -7,3 +7,6 @@ packages/frameworks/*/dist/
 
 # fable-opus harness state (local only, never pushed)
 .fable-opus/
+
+# Goal boards are local working state, never published
+docs/goals/
