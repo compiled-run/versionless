@@ -1,20 +1,24 @@
-# npm Trusted Publishing (OIDC) for the versionless package family.
+# npm Trusted Publishing (OIDC) for the single `versionless` package.
 #
-# No npm tokens anywhere. npmjs.com is configured (once, in the web UI) to
+# ONE package ships from this repo: `versionless`, packed from packages/cli.
+# It is self-contained: its published manifest declares four exact runtime
+# pins and nothing from the foreign `@versionless` scope, which we do NOT own
+# (its `core` package on the registry belongs to someone else). See
+# docs/goals/npm-single-package-release/notes/T002-manifest-surgery.md.
+#
+# No npm tokens anywhere. npmjs.com is configured once, in the web UI, to
 # trust THIS repo + THIS workflow file; GitHub mints a short-lived OIDC token
 # per run and npm accepts the publish from it, attaching provenance
-# automatically. Requires npm CLI >= 11.5.1 (Node 24 bundles npm 11).
+# automatically. Requires npm CLI >= 11.5.1 (Node 24 bundles npm 11+).
 #
-# One-time setup per package on npmjs.com (no API exists for this; it is a
-# web-UI step): run `node scripts/setup-trusted-publishing.mjs` and follow
-# the printed instructions.
+# One-time setup: run `node scripts/setup-trusted-publishing.mjs` and follow
+# the printed instructions (that step has no API; it is the trust anchor).
 
 name: publish
 
 on:
   push:
     tags: ['v*']
-  workflow_dispatch: {}
 
 permissions:
   contents: read
@@ -40,12 +44,86 @@ jobs:
           npm --version
           node -e "const [maj,min,pat]=require('child_process').execSync('npm --version').toString().trim().split('.').map(Number); if (maj<11 || (maj===11 && min<5) || (maj===11 && min===5 && pat<1)) { console.error('npm >= 11.5.1 required for trusted publishing'); process.exit(1) }"
 
+      # Nothing below this step is worth running if the release is misnamed or
+      # unbindable. Every failure here is loud and unpapered-over on purpose:
+      # provenance is a claim about WHERE this artifact came from, and a claim
+      # we cannot substantiate must stop the job, not degrade to a warning.
+      - name: Preflight (provenance binding, tag/version agreement)
+        env:
+          TAG: ${{ github.ref_name }}
+          EXPECTED_REPO: ${{ github.server_url }}/${{ github.repository }}
+        run: |
+          set -euo pipefail
+          norm() {
+            printf '%s' "$1" \
+              | sed -e 's#^git+##' \
+                    -e 's#^ssh://git@#https://#' \
+                    -e 's#^git@github\.com:#https://github.com/#' \
+                    -e 's#\.git$##' \
+                    -e 's#/*$##'
+          }
+
+          name=$(node -p "require('./packages/cli/package.json').name")
+          version=$(node -p "require('./packages/cli/package.json').version")
+          repo_url=$(node -e "const r=require('./packages/cli/package.json').repository;process.stdout.write(typeof r==='string'?r:(r&&r.url)||'')")
+
+          # 1. repository.url must exist.
+          if [ -z "$repo_url" ]; then
+            echo "PREFLIGHT FAIL: packages/cli/package.json declares no repository.url." >&2
+            echo "  npm publish --provenance binds the tarball to a source repository." >&2
+            echo "  With no binding there is no provenance, and a placeholder URL would" >&2
+            echo "  satisfy this check while pointing at nothing. Add the real field:" >&2
+            echo '    "repository": { "type": "git", "url": "git+'"$EXPECTED_REPO"'.git" },' >&2
+            exit 1
+          fi
+
+          # 2. ...and it must name the repository this run is building from.
+          if [ "$(norm "$repo_url")" != "$(norm "$EXPECTED_REPO")" ]; then
+            echo "PREFLIGHT FAIL: repository.url disagrees with the building repository." >&2
+            echo "  manifest : $repo_url" >&2
+            echo "  building : $EXPECTED_REPO" >&2
+            echo "  npm rejects provenance whose source binding disagrees with the build." >&2
+            echo "  Fix the manifest. Do not relax this check." >&2
+            exit 1
+          fi
+
+          # 3. The tag is the release's name; it must be the manifest's version.
+          case "$TAG" in
+            v*) tag_version=${TAG#v} ;;
+            *)
+              echo "PREFLIGHT FAIL: ref '$TAG' is not a v<version> tag." >&2
+              exit 1
+              ;;
+          esac
+          if [ "$tag_version" != "$version" ]; then
+            echo "PREFLIGHT FAIL: tag says $tag_version, packages/cli/package.json says $version." >&2
+            echo "  Bump the manifest or re-cut the tag. Never publish a version the tag does not name." >&2
+            exit 1
+          fi
+
+          # 4. The registry never overwrites a version. Say so now, loudly,
+          # rather than letting a tag-driven release quietly publish nothing.
+          if npm view "$name@$version" version >/dev/null 2>&1; then
+            echo "PREFLIGHT FAIL: $name@$version is already on the registry." >&2
+            echo "  Bump the version and tag again; npm does not overwrite published versions." >&2
+            exit 1
+          fi
+
+          echo "PREFLIGHT OK: $name@$version  tag=$TAG  repository=$repo_url"
+
+      # The one step in this job allowed to reach the network, and it says so.
+      # pnpm itself does not read these variables; repo tooling invoked during
+      # install does, and the declaration is what makes the phase auditable.
       - name: Install (consented phase)
         env:
           VERSIONLESS_NETWORK_MODE: consented
           VERSIONLESS_CONSENT_ID: ci-publish
         run: pnpm install --frozen-lockfile
 
+      # Load-bearing, not ceremonial: packages/*/dist is gitignored, so CI
+      # builds the very bytes it is about to publish, and trust:verify checks
+      # those fresh bytes against the sha256 pins in evidence/trust/current.
+      # A build that is not byte-identical to the pinned bundle stops here.
       - name: Gates (build, lint, test, trust)
         env:
           VERSIONLESS_NETWORK_MODE: offline
@@ -56,32 +134,35 @@ jobs:
           pnpm run test
           npm run trust:verify -- --offline
 
-      # Publish the public set in dependency order. `pnpm pack` rewrites
-      # workspace:* ranges to the real versions inside the tarball; `npm
-      # publish <tarball>` is the client that speaks OIDC trusted publishing.
-      # Versions already on the registry are skipped, so re-runs are safe.
-      - name: Publish (skip versions already on the registry)
+      # Pack once, inspect what was packed, publish that exact file. The scope
+      # guard is the goal's oracle: a published manifest naming a scope we do
+      # not own is dependency confusion wearing a success costume.
+      - name: Pack and inspect the tarball
+        working-directory: packages/cli
         run: |
           set -euo pipefail
-          for dir in \
-            packages/core \
-            packages/frameworks/angularjs \
-            packages/frameworks/angular \
-            packages/frameworks/react \
-            packages/frameworks/nextjs \
-            packages/trust \
-            packages/cli
-          do
-            name=$(node -p "require('./$dir/package.json').name")
-            version=$(node -p "require('./$dir/package.json').version")
-            private=$(node -p "require('./$dir/package.json').private === true")
-            if [ "$private" = "true" ]; then echo "skip $name (private)"; continue; fi
-            if npm view "$name@$version" version >/dev/null 2>&1; then
-              echo "skip $name@$version (already published)"; continue
-            fi
-            echo "publishing $name@$version"
-            (cd "$dir" && pnpm pack)
-            tarball=$(ls "$dir"/*.tgz)
-            npm publish "$tarball" --access public
-            rm -f "$tarball"
-          done
+          pnpm pack
+          tarball=$(ls -1 versionless-*.tgz)
+          manifest=$(tar -xOzf "$tarball" package/package.json)
+
+          FOREIGN_SCOPE='@versionless'
+          if printf '%s' "$manifest" | grep -qF "${FOREIGN_SCOPE}/"; then
+            echo "PACK FAIL: the packed manifest names the ${FOREIGN_SCOPE} scope, which is not ours." >&2
+            echo "  Publishing this would point installers at a foreign namespace." >&2
+            exit 1
+          fi
+          if printf '%s' "$manifest" | grep -qE '"(workspace|link|file|catalog|jsr):'; then
+            echo "PACK FAIL: the packed manifest carries a specifier no consumer can resolve." >&2
+            exit 1
+          fi
+          if ! tar -tzf "$tarball" | grep -qx 'package/dist/cli.js'; then
+            echo "PACK FAIL: dist/cli.js is missing from the tarball; the bin would not exist." >&2
+            exit 1
+          fi
+
+          echo "TARBALL-CLEAN $tarball"
+          echo "TARBALL=$tarball" >> "$GITHUB_ENV"
+
+      - name: Publish (OIDC trusted publishing, with provenance)
+        working-directory: packages/cli
+        run: npm publish "$TARBALL" --provenance --access public
