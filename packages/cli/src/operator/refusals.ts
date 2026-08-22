@@ -51,6 +51,15 @@ export const PIPELINE_STAGES = [
 	'supported-matrix',
 	'refusal-census',
 	/**
+	 * The fleet loop, reading the manifest it was handed before any application
+	 * is invoked. It is a stage of its own rather than part of `arguments`
+	 * because its refusals are about the fleet declaration itself — a manifest
+	 * that will not read, an entry that names no application — and the sealed
+	 * census already records six sites under this name, with `batch.`-namespaced
+	 * codes, exactly as `supported-matrix` and `refusal-census` are namespaced.
+	 */
+	'batch',
+	/**
 	 * Deriving a witness journey for an application nobody has read. It is a
 	 * stage of its own rather than part of `verify` because its refusal is a
 	 * different fact: `verify` refuses a check it cannot run, and this refuses

@@ -366,7 +366,12 @@ function changedPaths(before: Snapshot, after: Snapshot): readonly string[] {
 	return changed.sort();
 }
 
-type RunReading = Readonly<{ outcome?: unknown; refusal?: unknown; stages?: unknown }>;
+type RunReading = Readonly<{
+	outcome?: unknown;
+	refusal?: unknown;
+	defect?: unknown;
+	stages?: unknown;
+}>;
 
 /**
  * The terminal classification, read from the run's own record.
@@ -392,7 +397,7 @@ export function classifyTerminal(
 		return `refused:${code}`;
 	}
 	if (outcome === 'defect') {
-		const defect = (reading as { defect?: unknown }).defect;
+		const defect = reading.defect;
 		const stage =
 			typeof defect === 'object' && defect !== null && 'stage' in defect
 				? String((defect as { stage: unknown }).stage)
