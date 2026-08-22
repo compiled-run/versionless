@@ -8,7 +8,7 @@
 		"build": "vp pack",
 		"fmt": "vp fmt",
 		"lint": "vp lint",
-		"test": "vp test --project node",
+		"test": "vp test --project 'node-*'",
 		"fixture:ingest": "node --experimental-strip-types packages/cli/src/cli.ts fixture:ingest",
 		"fixture:verify": "node --experimental-strip-types packages/cli/src/cli.ts fixture:verify",
 		"receipt:verify": "node --experimental-strip-types packages/cli/src/cli.ts receipt:verify",

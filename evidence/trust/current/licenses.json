@@ -29,7 +29,7 @@
         "state": "verified",
         "value": "MIT",
         "candidateId": "package.json",
-        "manifestSha256": "cfd2b0ceb3e0d9f9a89d863405ea43f0394eb91f756cc402907cd72521fbf806"
+        "manifestSha256": "c528f14935ff1c3f847afc60bf0220603085793f003c7ad6b972e07503f0553d"
       },
       "licenseText": {
         "state": "unknown",

@@ -67,17 +67,79 @@ export default defineConfig({
 		}),
 	],
 	test: {
+		// One project per package so every test is badged by component in the
+		// vitest UI/reporters. Selected together via --project 'node-*'.
 		projects: [
 			{
 				test: {
-					name: 'node',
+					name: 'node-core',
 					environment: 'node',
 					testTimeout: 120_000,
 					hookTimeout: 120_000,
-					include: [
-						'packages/*/test/**/*.test.ts',
-						'packages/frameworks/*/test/**/*.test.ts',
-					],
+					include: ['packages/core/test/**/*.test.ts'],
+				},
+			},
+			{
+				test: {
+					name: 'node-trust',
+					environment: 'node',
+					testTimeout: 120_000,
+					hookTimeout: 120_000,
+					include: ['packages/trust/test/**/*.test.ts'],
+				},
+			},
+			{
+				test: {
+					name: 'node-cli',
+					environment: 'node',
+					testTimeout: 120_000,
+					hookTimeout: 120_000,
+					include: ['packages/cli/test/**/*.test.ts'],
+				},
+			},
+			{
+				test: {
+					name: 'node-guard',
+					environment: 'node',
+					testTimeout: 120_000,
+					hookTimeout: 120_000,
+					include: ['packages/node-guard/test/**/*.test.ts'],
+				},
+			},
+			{
+				test: {
+					name: 'node-angular',
+					environment: 'node',
+					testTimeout: 120_000,
+					hookTimeout: 120_000,
+					include: ['packages/frameworks/angular/test/**/*.test.ts'],
+				},
+			},
+			{
+				test: {
+					name: 'node-angularjs',
+					environment: 'node',
+					testTimeout: 120_000,
+					hookTimeout: 120_000,
+					include: ['packages/frameworks/angularjs/test/**/*.test.ts'],
+				},
+			},
+			{
+				test: {
+					name: 'node-react',
+					environment: 'node',
+					testTimeout: 120_000,
+					hookTimeout: 120_000,
+					include: ['packages/frameworks/react/test/**/*.test.ts'],
+				},
+			},
+			{
+				test: {
+					name: 'node-nextjs',
+					environment: 'node',
+					testTimeout: 120_000,
+					hookTimeout: 120_000,
+					include: ['packages/frameworks/nextjs/test/**/*.test.ts'],
 				},
 			},
 		],

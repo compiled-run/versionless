@@ -33,7 +33,7 @@ const expectedSandbox = 'allow-forms allow-scripts allow-modals allow-same-origi
 // The fixture admits exactly one root-manifest state. Re-pinned from
 // 6acf2dd25ff7d909046736b8b78f0ca11f07e938b724756a57a00d51e5751d82 when the root manifest
 // vendored @async/witness (T037/T039); the pre-vendoring bytes no longer exist in the tree.
-const rootPackageSha256 = 'cfd2b0ceb3e0d9f9a89d863405ea43f0394eb91f756cc402907cd72521fbf806';
+const rootPackageSha256 = 'c528f14935ff1c3f847afc60bf0220603085793f003c7ad6b972e07503f0553d';
 const compilerPackageSha256 = '61514eabbcc40eef72135429ea3a5303dae6d67eb42b208fe9420b14067777db';
 const t153 = {
 	'receipt.json': '4d0dbd3961a7f0d8200ecbeb810284611927cdf90e18ff311a4ab0c6839ad19e',

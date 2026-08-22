@@ -23,7 +23,7 @@
 
 ## Verification
 
-- Run `pnpm exec tsc --noEmit`, `pnpm exec vp fmt`, `pnpm exec vp lint`, `pnpm exec vp pack`, and `pnpm exec vp test --project node` after source changes.
+- Run `pnpm exec tsc --noEmit`, `pnpm exec vp fmt`, `pnpm exec vp lint`, `pnpm exec vp pack`, and `pnpm exec vp test --project 'node-*'` after source changes.
 - Run fixture and receipt verification offline after the one explicitly consented ingest step.
 - Do not claim a migration, runtime, bundler, or compliance cell is supported until its build, browser journey, locality checks, artifacts, and receipt independently verify.
 
