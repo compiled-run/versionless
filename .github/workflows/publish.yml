@@ -169,7 +169,11 @@ jobs:
             echo "PACK FAIL: the packed manifest carries a specifier no consumer can resolve." >&2
             exit 1
           fi
-          if ! tar -tzf "$tarball" | grep -qx 'package/dist/cli.js'; then
+          # Read the listing fully before testing membership: grep -q on a live
+          # tar pipe closes it early, GNU tar dies on SIGPIPE with exit 2, and
+          # pipefail turns a FOUND file into a false "missing" (run 32601598581).
+          listing=$(tar -tzf "$tarball")
+          if ! printf '%s\n' "$listing" | grep -qx 'package/dist/cli.js'; then
             echo "PACK FAIL: dist/cli.js is missing from the tarball; the bin would not exist." >&2
             exit 1
           fi
