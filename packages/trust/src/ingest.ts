@@ -57,7 +57,9 @@ export interface LockPackagesOptions {
 /**
  * Read every resolved package out of a pnpm lockfile.
  *
- * A registry entry is its key: `name@version`. A `file:` entry is not — its key
+ * A registry entry is its key: `name@version`, which is every entry in this
+ * repository's lockfile since `@async/witness` stopped being vendored. A `file:`
+ * entry is not — its key
  * carries an installation instruction where the version belongs, so the version
  * is read from the entry's own `version:` line and the instruction is reduced to
  * the two facts that survive being copied to another machine: which committed

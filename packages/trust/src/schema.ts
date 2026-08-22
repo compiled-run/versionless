@@ -29,12 +29,18 @@ export interface TrustIngestRecord {
 /**
  * A resolved package in the lockfile.
  *
- * Almost every entry is a registry coordinate and needs nothing but a name and a
- * version — the registry is what makes those two strings identify bytes. One
- * entry is not: `@async/witness` is installed from a `pnpm pack` tarball
- * committed under `vendor/`, and for that one a name and a version identify
- * nothing on their own, because no registry will ever be asked to resolve them.
+ * Every entry is a registry coordinate and needs nothing but a name and a
+ * version — the registry is what makes those two strings identify bytes. That
+ * includes `@async/witness`, which used to be the one exception: it was
+ * installed from a `pnpm pack` tarball committed under `vendor/`, and for that
+ * one a name and a version identified nothing on their own, because no registry
+ * would ever be asked to resolve them. `@async/witness@0.9.0` is published, the
+ * manifest pins it exactly, and the vendored tarball is gone, so the inventory
+ * carries it as the plain registry coordinate it now is.
  *
+ * The non-registry shape below is kept rather than deleted, because the lockfile
+ * decides which shape is used and nothing stops a future `file:` entry from
+ * appearing; what it must not do is silently degrade to a name and a version.
  * So a non-registry coordinate carries what a registry would otherwise supply:
  * `kind: 'file'` says out loud that this is not a registry resolution,
  * `tarball` names the committed artifact as a repository-relative path, and

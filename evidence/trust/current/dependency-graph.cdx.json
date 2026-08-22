@@ -11,7 +11,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "c528f14935ff1c3f847afc60bf0220603085793f003c7ad6b972e07503f0553d"
+          "content": "cfe4d2845a6139e51ab169037592a3f4045bd07090d2e8f41c0059985229b698"
         }
       ],
       "properties": [
@@ -53,7 +53,7 @@
       "hashes": [
         {
           "alg": "SHA-256",
-          "content": "c528f14935ff1c3f847afc60bf0220603085793f003c7ad6b972e07503f0553d"
+          "content": "cfe4d2845a6139e51ab169037592a3f4045bd07090d2e8f41c0059985229b698"
         }
       ],
       "properties": [
@@ -280,27 +280,14 @@
     },
     {
       "type": "library",
-      "bom-ref": "vendor:@async/witness@0.8.0",
+      "bom-ref": "pkg:npm/%40async/witness@0.9.0",
       "name": "@async/witness",
-      "version": "0.8.0",
-      "hashes": [
-        {
-          "alg": "SHA-256",
-          "content": "c15d44fac722e7f0eb1366301d093ce43910e914606fa25d83ea1c08a47f2201"
-        }
-      ],
+      "version": "0.9.0",
+      "purl": "pkg:npm/%40async/witness@0.9.0",
       "properties": [
         {
           "name": "versionless:source",
           "value": "pnpm-lock.yaml"
-        },
-        {
-          "name": "versionless:coordinate-kind",
-          "value": "file"
-        },
-        {
-          "name": "versionless:tarball",
-          "value": "vendor/async-witness-0.8.0.tgz"
         }
       ]
     },
@@ -2750,7 +2737,7 @@
         "workspace:packages/node-guard",
         "workspace:packages/trust",
         "pkg:npm/%40angular/compiler@22.1.0",
-        "vendor:@async/witness@0.8.0",
+        "pkg:npm/%40async/witness@0.9.0",
         "pkg:npm/%40emnapi/core@1.10.0",
         "pkg:npm/%40emnapi/runtime@1.10.0",
         "pkg:npm/%40emnapi/wasi-threads@1.2.1",
@@ -2971,7 +2958,7 @@
       "ref": "pkg:npm/%40angular/compiler@22.1.0"
     },
     {
-      "ref": "vendor:@async/witness@0.8.0"
+      "ref": "pkg:npm/%40async/witness@0.9.0"
     },
     {
       "ref": "pkg:npm/%40emnapi/core@1.10.0"

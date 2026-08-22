@@ -2,9 +2,9 @@
   "schemaVersion": "versionless.trust.v1",
   "freshness": {
     "state": "verified",
-    "observedAt": "2026-08-19T01:54:49.845Z",
+    "observedAt": "2026-08-22T03:34:11.117Z",
     "maximumAgeDays": 7,
-    "freshUntil": "2026-08-26T01:54:49.845Z"
+    "freshUntil": "2026-08-29T03:34:11.117Z"
   },
   "packages": [
     {
@@ -15,10 +15,7 @@
     },
     {
       "name": "@async/witness",
-      "version": "0.8.0",
-      "kind": "file",
-      "tarball": "vendor/async-witness-0.8.0.tgz",
-      "sha256": "c15d44fac722e7f0eb1366301d093ce43910e914606fa25d83ea1c08a47f2201",
+      "version": "0.9.0",
       "state": "verified",
       "vulnerabilities": []
     },
@@ -1188,7 +1185,7 @@
     }
   ],
   "cisaKev": {
-    "entries": 1670,
+    "entries": 1674,
     "source": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json"
   },
   "osv": {
@@ -1198,13 +1195,13 @@
   "sourceObservations": [
     {
       "kind": "osv-batch",
-      "observedAt": "2026-08-19T01:54:49.845Z",
+      "observedAt": "2026-08-22T03:34:11.117Z",
       "sha256": "b3ff824cc2b5fc956c5c584f05c79f31160c737f58d8678e4e31e227ae4a2117"
     },
     {
       "kind": "cisa-kev",
-      "observedAt": "2026-08-19T01:54:49.845Z",
-      "sha256": "a1833018cf3f6029aaec9ba12ee52915c609a3a39f03e12820771121a804ef6c"
+      "observedAt": "2026-08-22T03:34:11.117Z",
+      "sha256": "137884960e3f801665bfa47694e703fbc4dd1c738df5e0e5af12d325a5f8a9d5"
     }
   ],
   "ingest": {
@@ -1213,15 +1210,15 @@
     "consent": {
       "allowNetwork": true,
       "mode": "consented",
-      "consentId": "AGENTS-utilities-trust-refresh"
+      "consentId": "witness-0.9-adoption"
     },
     "sources": [
       {
         "kind": "osv-batch",
         "url": "https://api.osv.dev/v1/querybatch",
         "method": "POST",
-        "observedAt": "2026-08-19T01:54:49.845Z",
-        "requestSha256": "a503cb3e1b0a3eebbf565c906055ca799342a7587051a842ebba7c2e78d8f244",
+        "observedAt": "2026-08-22T03:34:11.117Z",
+        "requestSha256": "a043a3208bdd5193c110e855b8570968639c94df25eebe2b2a96bee834944c87",
         "responsePath": "osv.json",
         "sha256": "b3ff824cc2b5fc956c5c584f05c79f31160c737f58d8678e4e31e227ae4a2117"
       },
@@ -1229,9 +1226,9 @@
         "kind": "cisa-kev",
         "url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
         "method": "GET",
-        "observedAt": "2026-08-19T01:54:49.845Z",
+        "observedAt": "2026-08-22T03:34:11.117Z",
         "responsePath": "cisa-kev.json",
-        "sha256": "a1833018cf3f6029aaec9ba12ee52915c609a3a39f03e12820771121a804ef6c"
+        "sha256": "137884960e3f801665bfa47694e703fbc4dd1c738df5e0e5af12d325a5f8a9d5"
       }
     ]
   }

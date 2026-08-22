@@ -151,8 +151,12 @@ const expectedHistoricalAmbientPnpmLock =
 //   evidence/dependencies/angular-contacts/t633-terminal.json
 const expectedVendoringPredecessorAmbientPnpmLock =
 	'ae8c76d3483d5dcd72428ba3a0b9eb0b1731724c14f6f0893ac20972cea5e66a';
+// Current since @async/witness stopped being vendored and became the exact registry pin 0.9.0
+// (T004). The vendored-era state it replaced — a05cd6c698fd531c4dcb6c1117512a0c8ce463cc56edf2e7eccb89585b56066e,
+// 68_172 bytes — is NOT given a named acceptance of its own: unlike the two states above, no
+// published evidence names it once evidence/trust/current is regenerated against this lockfile.
 const expectedCurrentAmbientPnpmLock =
-	'a05cd6c698fd531c4dcb6c1117512a0c8ce463cc56edf2e7eccb89585b56066e';
+	'd4d3a8f75460a122934a45551c24e129e751b9a086bdd296ab393a4d8426770f';
 const expectedHistoricalCacheKeyCandidates = [
 	{
 		updateOrder: ['fixture/yarn.lock', 'ambient/pnpm-lock.yaml'],
@@ -176,11 +180,11 @@ const expectedVendoringPredecessorCacheKeyCandidates = [
 const expectedCurrentCacheKeyCandidates = [
 	{
 		updateOrder: ['fixture/yarn.lock', 'ambient/pnpm-lock.yaml'],
-		cacheKeySha256: '023652bbcc92f4de735e3e30446fcdc6dcb41e3bbc0f651bd236e792ed863b1e',
+		cacheKeySha256: '98915cfdf62149b505fb68c48a8e691ac2623fb2a2f056e234b5915aaa07b937',
 	},
 	{
 		updateOrder: ['ambient/pnpm-lock.yaml', 'fixture/yarn.lock'],
-		cacheKeySha256: '906bba8598f806f62350582d43d03ce906d4f654ab98e78089a588b421c83eb9',
+		cacheKeySha256: '655937df0ce135e157199cc217eaf2d9b5efd05a959699e44b6be50b151c67a3',
 	},
 ] as const;
 const expectedPreviousDiagnostic =
@@ -3688,7 +3692,7 @@ export function validateNextServerCacheKeyProvenanceArtifact(
 			canonicalize(expectedVendoringPredecessorCacheKeyCandidates);
 	const currentAmbientBinding =
 		ambientBinding?.sha256 === expectedCurrentAmbientPnpmLock &&
-		ambientBinding.byteLength === 68_172 &&
+		ambientBinding.byteLength === 67_987 &&
 		canonicalize(model.candidates) === canonicalize(expectedCurrentCacheKeyCandidates);
 	if (
 		fixed.nextVersion !== '12.0.10' ||

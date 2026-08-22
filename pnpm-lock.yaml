@@ -12,8 +12,8 @@ importers:
         specifier: 22.1.0
         version: 22.1.0
       '@async/witness':
-        specifier: file:vendor/async-witness-0.8.0.tgz
-        version: file:vendor/async-witness-0.8.0.tgz(vite@8.0.16(@types/node@24.12.2))
+        specifier: 0.9.0
+        version: 0.9.0(vite@8.0.16(@types/node@24.12.2))
       '@types/node':
         specifier: 24.12.2
         version: 24.12.2
@@ -130,9 +130,8 @@ packages:
     resolution: {integrity: sha512-WCmuPnuXgqnqrkbrwqQRyldi1k3rlzNLVDl8ntINF7XWuJh0KfQLEkRK0FCCmBztWJkbGug4RBVnKTWlKhRzCQ==}
     engines: {node: ^22.22.3 || ^24.15.0 || >=26.0.0}
 
-  '@async/witness@file:vendor/async-witness-0.8.0.tgz':
-    resolution: {integrity: sha512-gRc6cWWuj2FrpIhfoBaQ6p6DZGo/4zUJhx4QNSw/ZJ3FsffLRzeo5jt069E2fW52KglsUfHmZvzyoXYzy+oWng==, tarball: file:vendor/async-witness-0.8.0.tgz}
-    version: 0.8.0
+  '@async/witness@0.9.0':
+    resolution: {integrity: sha512-NDCPV/0pdBe2LkSp53obN+QHSw7MtHbRT0lrSGDvx2g+6gX/kpD3ITlwPovsKY8NDQdOjzKtBCxYbkYzlRBZHw==}
     engines: {node: '>=22'}
     hasBin: true
     peerDependencies:
@@ -1287,7 +1286,7 @@ snapshots:
     dependencies:
       tslib: 2.8.1
 
-  '@async/witness@file:vendor/async-witness-0.8.0.tgz(vite@8.0.16(@types/node@24.12.2))':
+  '@async/witness@0.9.0(vite@8.0.16(@types/node@24.12.2))':
     dependencies:
       mitt: 3.0.1
       pathe: 2.0.3

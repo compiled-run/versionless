@@ -29,7 +29,7 @@
         "state": "verified",
         "value": "MIT",
         "candidateId": "package.json",
-        "manifestSha256": "c528f14935ff1c3f847afc60bf0220603085793f003c7ad6b972e07503f0553d"
+        "manifestSha256": "cfe4d2845a6139e51ab169037592a3f4045bd07090d2e8f41c0059985229b698"
       },
       "licenseText": {
         "state": "unknown",
@@ -174,10 +174,7 @@
     },
     {
       "name": "@async/witness",
-      "version": "0.8.0",
-      "kind": "file",
-      "tarball": "vendor/async-witness-0.8.0.tgz",
-      "sha256": "c15d44fac722e7f0eb1366301d093ce43910e914606fa25d83ea1c08a47f2201",
+      "version": "0.9.0",
       "source": "pnpm-lock.yaml",
       "spdxExpression": {
         "state": "unknown",

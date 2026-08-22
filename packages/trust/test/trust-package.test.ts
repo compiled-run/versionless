@@ -66,7 +66,10 @@ const offline = { VERSIONLESS_NETWORK_MODE: 'offline' };
 /**
  * 187 before `@async/witness` was vendored; 189 after. The tarball brought the
  * package itself and `mitt@3.0.1` into the resolved closure, and both are now in
- * the inventory rather than filtered out of it. Production code derives this
+ * the inventory rather than filtered out of it. Unvendoring for the published
+ * `@async/witness@0.9.0` left the count at 189: the same two packages are
+ * resolved, from the registry instead of from a committed tarball. Production
+ * code derives this
  * number from the lockfile — it is pinned here, and only here, so that a change
  * to the closure has to be stated rather than absorbed.
  */

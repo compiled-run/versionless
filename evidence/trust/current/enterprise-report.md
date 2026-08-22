@@ -2,8 +2,8 @@
 
 One machine artifact for an enterprise reviewer, derived entirely from canonical receipts the trust package already verified. It states what was proven, on which sources, with which tools, under which commands, and — in the same document — what is unsupported, unknown, or deliberately not claimed.
 
-- Trust manifest canonical SHA-256: `052da685635abb0cc205916d554773b58326fed3202038484fcdd843e84f5a6f`
-- Deterministic core: `edcf6c2ec22121c0e4251fd193eba373ada966da959d4a956ca0d07ca9daf692`
+- Trust manifest canonical SHA-256: `813e5941b7557f7d3b6ce030e124453aaa510b5a2f1b91830b05165f15886376`
+- Deterministic core: `984ff7e3fb42ca510750017ca621207855f2cac067db8eba3db0caa6f639119c`
 - Corpus conformance: `532eb5b705104f9f9af3e0dc8ae028c36b20e3ba4ade4c438533e3f341418965`
 - Adapter freeze: commit `ddc2870aa934be7c8bc6caaeca74095d270776d5`, composite `140ce86e163ddbae2ad6f1504022efca9468641cc50fd3dca354c6aba8cbb562`
 - Certification: **not-certified** — This package is evidence, not certification, legal assurance, PCI compliance, or SOC 2 attestation.
@@ -60,10 +60,10 @@ Tool: `versionless-local-trust-generator`, adapter frozen at commit `ddc2870aa93
 ## 3. Hashes
 
 - `adapter-freeze.json` — `0ffe4eb2552a07dd7db65faa0081f6f42073013d7fb05869c2b1bb798cdd8b51`
-- `dependency-graph.cdx.json` — `655b3e6941a42a687d8f76cc82491c0274e0fd86b2b771a032fad5fc526c0c36`
-- `licenses.json` — `b2d77ee0b44c91f04e56658d0df53a85e4ed0c1c4283b3aca67941982c98ab81`
-- `vulnerabilities.json` — `aa0b0970e2e128e30b044f6107b4b77136d759b0a2ee3af9d37c883fa6b8298d`
-- `provenance.json` — `e99c66e028437a3dada2a3851c044111575028a2a9309554040e1b4d4c9167b2`
+- `dependency-graph.cdx.json` — `fded98c8ff9cae379bf1473c675e719b723adff25577f1f5e411eb920d9579ce`
+- `licenses.json` — `8376c4bbaf8059ce38739afc94e5f13e93c80a38e35cd16960e270b46fbbac8c`
+- `vulnerabilities.json` — `7a5fa5678910a34a7153abe96b404322f729877a67e4188631d66d617af31aca`
+- `provenance.json` — `ae5fbbe27300db95922a0ebc105093476eff017b6f4fa37dcceed2bdbc008186`
 - `matrix.json` — `e616fd15930848b2ef5acb0e01efe55de247807e2de6bba39adf7aa58f516d6d`
 - `controls.json` — `a5e61dcace162ce814347f931b6f4e4f59934ea1312df79d9c817c19e0e9bef4`
 - `retention.json` — `f1a7f91607bca1de4cc15e2523a3d0791116acc9cfdf853c68b9b35aa2c07568`

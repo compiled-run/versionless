@@ -288,7 +288,7 @@
         {
           "uri": "package.json",
           "digest": {
-            "sha256": "c528f14935ff1c3f847afc60bf0220603085793f003c7ad6b972e07503f0553d"
+            "sha256": "cfe4d2845a6139e51ab169037592a3f4045bd07090d2e8f41c0059985229b698"
           }
         },
         {
@@ -348,7 +348,7 @@
         {
           "uri": "pnpm-lock.yaml",
           "digest": {
-            "sha256": "a05cd6c698fd531c4dcb6c1117512a0c8ce463cc56edf2e7eccb89585b56066e"
+            "sha256": "d4d3a8f75460a122934a45551c24e129e751b9a086bdd296ab393a4d8426770f"
           }
         }
       ]
