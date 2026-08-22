@@ -209,7 +209,12 @@ type EvidenceContext =
 	| 'corpus-conformance-application'
 	| 'corpus-conformance-application-source'
 	| 'adapter-freeze-record'
-	| 'adapter-freeze-supersedes';
+	| 'adapter-freeze-supersedes'
+	| 'license-entries'
+	| 'license-entry'
+	| 'license-evidence'
+	| 'license-candidates'
+	| 'license-candidate';
 
 const runtimeObservationSchema = 'versionless.runtime-script-observation.v1';
 const runtimeObservationRootKeys = new Set([
@@ -277,6 +282,7 @@ const corpusConformanceRootKeys = new Set([
  * source application. Nothing outside this closed list admits an object id.
  */
 const corpusProvenanceRevisionKeys = new Set(['revision', 'parentRevision', 'targetRevision']);
+const licenseInventorySchema = 'versionless.trust.v1';
 const t124Repository = 'codyogden/killedbygoogle';
 const t124Commit = '56809c31592e6ca1edce8af9bfe842fbcdf71f4d';
 const t124Tree = 'b8ac7b4fc3a1e12240f1848f6e8d98c1c7d80763';
@@ -308,11 +314,15 @@ function isLowercaseHex(value: unknown, length: number, requireLetter = false): 
 	return !requireLetter || hasLetter;
 }
 
-function isPortableOfficialTreePath(value: unknown): value is string {
+function isPortableRelativePath(value: unknown): value is string {
 	if (typeof value !== 'string' || !value || path.isAbsolute(value) || value.includes('\\'))
 		return false;
 	const segments = value.split('/');
 	return segments.every((segment) => segment && segment !== '.' && segment !== '..');
+}
+
+function isPlainRecord(value: unknown): value is Record<string, unknown> {
+	return value !== null && typeof value === 'object' && !Array.isArray(value);
 }
 
 function isT124OfficialTreeRow(value: unknown): value is Record<string, unknown> {
@@ -322,7 +332,7 @@ function isT124OfficialTreeRow(value: unknown): value is Record<string, unknown>
 	if (
 		keys.length !== t124OfficialTreeRowKeys.size ||
 		keys.some((key) => !t124OfficialTreeRowKeys.has(key)) ||
-		!isPortableOfficialTreePath(row.path) ||
+		!isPortableRelativePath(row.path) ||
 		!isLowercaseHex(row.sha, 40)
 	)
 		return false;
@@ -501,6 +511,61 @@ function isAdapterFreezeDocument(value: Record<string, unknown>): boolean {
 	);
 }
 
+/**
+ * Recognises the derived license-inventory document.
+ *
+ * The inventory names every installed manifest it read, and it names it by
+ * identity: the portable repository-relative path of that `package.json`. When
+ * a package is installed more than once under different peer contexts, pnpm
+ * disambiguates the virtual-store directory with a content-addressed peers
+ * hash, and that hash's hex characters can carry a long digit run — vite-plus
+ * 0.1.20's `..._23737d34d6e60106aa83877780586629` carries a fourteen-digit one —
+ * that the digit-run detector cannot tell from a primary account number. The
+ * document is recognised by its derived substructure, the way the adapter-freeze
+ * record is: the `versionless.trust.v1` schema, a coverage record counting
+ * workspace manifests and resolved packages, a root license-text record, a
+ * summary carrying both license-state tallies, and a non-empty entries array
+ * every member of which is a license row — a name, a version, a source, and
+ * both stated license evidence records. No other trust artifact publishes that
+ * combination. Recognition is substructural rather than a closed root-key list
+ * so that a tampered artifact carrying an extra root key is still refused by the
+ * detector its tampering actually trips — the portable-evidence check — instead
+ * of being reported as a card number.
+ */
+function isLicenseEntry(value: unknown): boolean {
+	if (!isPlainRecord(value)) return false;
+	const spdxExpression = value.spdxExpression;
+	const licenseText = value.licenseText;
+	return (
+		typeof value.name === 'string' &&
+		typeof value.version === 'string' &&
+		typeof value.source === 'string' &&
+		isPlainRecord(spdxExpression) &&
+		typeof spdxExpression.state === 'string' &&
+		isPlainRecord(licenseText) &&
+		typeof licenseText.state === 'string'
+	);
+}
+
+function isLicenseInventoryDocument(value: Record<string, unknown>): boolean {
+	const coverage = value.coverage;
+	const summary = value.summary;
+	const entries = value.entries;
+	return (
+		value.schemaVersion === licenseInventorySchema &&
+		isPlainRecord(value.rootLicenseText) &&
+		isPlainRecord(coverage) &&
+		typeof coverage.workspaceManifests === 'number' &&
+		typeof coverage.resolvedPackages === 'number' &&
+		isPlainRecord(summary) &&
+		isPlainRecord(summary.spdxExpression) &&
+		isPlainRecord(summary.licenseText) &&
+		Array.isArray(entries) &&
+		entries.length > 0 &&
+		entries.every(isLicenseEntry)
+	);
+}
+
 function childContext(
 	context: EvidenceContext,
 	key: string,
@@ -510,6 +575,7 @@ function childContext(
 	rootIsT138Provenance: boolean,
 	rootIsCorpusConformance: boolean,
 	rootIsAdapterFreeze: boolean,
+	rootIsLicenseInventory: boolean,
 ): EvidenceContext {
 	if (rootIsCycloneDx17 && key === 'components') return 'cyclonedx-components';
 	if (rootIsCycloneDx17 && key === 'metadata') return 'cyclonedx-metadata';
@@ -528,6 +594,10 @@ function childContext(
 	if (rootIsAdapterFreeze && key === 'freeze') return 'adapter-freeze-record';
 	if (context === 'adapter-freeze-record' && key === 'supersedes')
 		return 'adapter-freeze-supersedes';
+	if (rootIsLicenseInventory && key === 'entries') return 'license-entries';
+	if (context === 'license-entry' && (key === 'spdxExpression' || key === 'licenseText'))
+		return 'license-evidence';
+	if (context === 'license-evidence' && key === 'candidates') return 'license-candidates';
 	return 'ordinary';
 }
 
@@ -540,6 +610,8 @@ function arrayItemContext(context: EvidenceContext): EvidenceContext {
 	if (context === 't124-official-tree') return 't124-official-tree-row';
 	if (context === 't138-official-tree') return 't138-official-tree-row';
 	if (context === 'corpus-conformance-applications') return 'corpus-conformance-application';
+	if (context === 'license-entries') return 'license-entry';
+	if (context === 'license-candidates') return 'license-candidate';
 	return 'ordinary';
 }
 
@@ -628,6 +700,37 @@ function isAdapterFreezeCommitObjectId(
 	);
 }
 
+/**
+ * Admits the installed-manifest identity a license inventory entry publishes.
+ *
+ * A license row is only auditable if it says which installed `package.json` it
+ * read, and that identity is a portable repository-relative path ending in
+ * `package.json`. Under pnpm those paths run through the virtual store, whose
+ * directory names carry a content-addressed peers hash when one package is
+ * installed under several peer contexts — and such a hash can hold a
+ * fourteen-digit run the primary-account-number detector cannot distinguish
+ * from a card number. Substituting or eliding the path would falsify which
+ * manifest the license claim was derived from, so the admission is exactly as
+ * narrow as the identity: the value must be a portable relative POSIX path with
+ * no absolute, backslash, `.` or `..` segment, it must end in `package.json`,
+ * it must sit under an ambiguous candidate's `id` key or an evidence record's
+ * `candidateId` key, and that key must sit inside a document whose root is
+ * exactly the license-inventory shape. A bare digit run, a path under any other
+ * key, and any such path in any other document all keep tripping the detector.
+ */
+function isLicenseInstalledManifestIdentity(
+	value: string,
+	key: string,
+	context: EvidenceContext,
+): boolean {
+	return (
+		((context === 'license-candidate' && key === 'id') ||
+			(context === 'license-evidence' && key === 'candidateId')) &&
+		isPortableRelativePath(value) &&
+		path.basename(value) === 'package.json'
+	);
+}
+
 function collectSensitiveSignals(
 	value: unknown,
 	path: string,
@@ -648,6 +751,7 @@ function collectSensitiveSignals(
 		const rootIsT138ImmutableFixture = path === '$' && isT138ImmutableFixtureDocument(record);
 		const rootIsCorpusConformance = path === '$' && isCorpusConformanceDocument(record);
 		const rootIsAdapterFreeze = path === '$' && isAdapterFreezeDocument(record);
+		const rootIsLicenseInventory = path === '$' && isLicenseInventoryDocument(record);
 		if (
 			path === '$' &&
 			targetsT138ProvenanceContext(record) &&
@@ -675,7 +779,8 @@ function collectSensitiveSignals(
 					isT124OfficialTreeObjectId(child, key, context) ||
 					isT138OfficialTreeObjectId(child, key, context) ||
 					isCorpusProvenanceRevisionObjectId(child, key, context) ||
-					isAdapterFreezeCommitObjectId(child, key, context);
+					isAdapterFreezeCommitObjectId(child, key, context) ||
+					isLicenseInstalledManifestIdentity(child, key, context);
 				if (!digest && panLike.test(child))
 					findings.push({ path: childPath, kind: 'pan-like-value' });
 			} else {
@@ -692,6 +797,7 @@ function collectSensitiveSignals(
 						rootIsT138Provenance,
 						rootIsCorpusConformance,
 						rootIsAdapterFreeze,
+						rootIsLicenseInventory,
 					),
 				);
 			}

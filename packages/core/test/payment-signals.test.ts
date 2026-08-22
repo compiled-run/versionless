@@ -860,4 +860,189 @@ describe('synthetic evidence policy', () => {
 				expect(() => assertSyntheticEvidence(unsafe)).toThrow('Sensitive material refused');
 		});
 	});
+
+	/**
+	 * A license row is only auditable if it names the installed `package.json` it
+	 * was read from. Under pnpm a package installed under several peer contexts
+	 * lands in virtual-store directories disambiguated by a content-addressed
+	 * peers hash, and that hash can carry a long digit run — vite-plus 0.1.20's
+	 * `..._23737d34d6e60106aa83877780586629` carries a fourteen-digit one — that
+	 * the primary-account-number detector cannot tell from a card number. Eliding
+	 * or substituting the path would falsify which manifest the license claim came
+	 * from, so the admission is pinned from both sides: the identity is accepted
+	 * under an ambiguous candidate's `id` and a verified record's `candidateId`,
+	 * and every neighbouring shape still trips.
+	 */
+	describe('license inventory installed-manifest identities', () => {
+		const peerHashedIdentity =
+			'.versionless/cache/pnpm-virtual-store/vite-plus@0.1.20_@types+node@24.12.2_jiti@2.7.0_typescript@5.9.3_vite@8.0.16_@types+nod_23737d34d6e60106aa83877780586629/node_modules/vite-plus/package.json';
+		const peerHashDigitRun = '83877780586629';
+		const plainIdentity =
+			'.versionless/cache/pnpm-virtual-store/vite-plus@0.1.20_@types+node@24.12.2_typescript@5.9.3_vite@8.0.16_@types+node@24.12.2_/node_modules/vite-plus/package.json';
+		const candidate = (identity: string, extra: Record<string, unknown> = {}) => ({
+			id: identity,
+			manifestSha256: 'a'.repeat(64),
+			spdxExpression: 'MIT',
+			licenseTexts: [{ id: 'LICENSE', sha256: 'b'.repeat(64) }],
+			...extra,
+		});
+		const licenses = (entries: Array<Record<string, unknown>>) => ({
+			schemaVersion: 'versionless.trust.v1',
+			coverage: { workspaceManifests: 1, resolvedPackages: entries.length },
+			rootLicenseText: { state: 'unknown', reason: 'No root LICENSE file exists.' },
+			summary: {
+				spdxExpression: { verified: 0, unknown: 0, ambiguous: entries.length },
+				licenseText: { verified: 0, unknown: 0, ambiguous: entries.length },
+			},
+			entries,
+		});
+		const ambiguousEntry = (extra: Record<string, unknown> = {}) => {
+			const candidates = [candidate(peerHashedIdentity), candidate(plainIdentity)];
+			return {
+				name: 'vite-plus',
+				version: '0.1.20',
+				source: 'pnpm-lock.yaml',
+				spdxExpression: { state: 'ambiguous', candidates },
+				licenseText: { state: 'ambiguous', candidates },
+				...extra,
+			};
+		};
+
+		test('admits the peer-hashed identity under candidate IDs and verified candidate IDs', () => {
+			expect(peerHashedIdentity.includes(peerHashDigitRun)).toBe(true);
+			expect(peerHashDigitRun).toHaveLength(14);
+			expect(() => assertSyntheticEvidence(licenses([ambiguousEntry()]))).not.toThrow();
+			expect(() =>
+				assertSyntheticEvidence(
+					licenses([
+						{
+							name: 'vite-plus',
+							version: '0.1.20',
+							source: 'pnpm-lock.yaml',
+							spdxExpression: {
+								state: 'verified',
+								value: 'MIT',
+								candidateId: peerHashedIdentity,
+								manifestSha256: 'a'.repeat(64),
+							},
+							licenseText: {
+								state: 'verified',
+								candidateId: peerHashedIdentity,
+								sha256: 'b'.repeat(64),
+								files: ['LICENSE'],
+							},
+						},
+					]),
+				),
+			).not.toThrow();
+		});
+
+		test('keeps refusing the identity in an ordinary field of the same document', () => {
+			for (const key of ['source', 'identity', 'idCopy'])
+				expect(
+					findSensitiveSignals(licenses([ambiguousEntry({ [key]: peerHashedIdentity })])),
+				).toContainEqual({ path: `$.entries[0].${key}`, kind: 'pan-like-value' });
+			const onCandidate = licenses([ambiguousEntry()]);
+			const candidates = (
+				(onCandidate.entries[0] as Record<string, unknown>).spdxExpression as {
+					candidates: Array<Record<string, unknown>>;
+				}
+			).candidates;
+			candidates[0]!.origin = peerHashedIdentity;
+			expect(findSensitiveSignals(onCandidate)).toContainEqual({
+				path: '$.entries[0].spdxExpression.candidates[0].origin',
+				kind: 'pan-like-value',
+			});
+			const nestedText = licenses([ambiguousEntry()]);
+			(
+				(
+					(nestedText.entries[0] as Record<string, unknown>).spdxExpression as {
+						candidates: Array<Record<string, unknown>>;
+					}
+				).candidates[0]!.licenseTexts as Array<Record<string, unknown>>
+			)[0]!.id = peerHashedIdentity;
+			expect(findSensitiveSignals(nestedText)).toContainEqual({
+				path: '$.entries[0].spdxExpression.candidates[0].licenseTexts[0].id',
+				kind: 'pan-like-value',
+			});
+		});
+
+		test('keeps refusing every candidate ID that is not a portable installed-manifest path', () => {
+			for (const value of [
+				peerHashDigitRun,
+				'4111111111111111',
+				peerHashedIdentity.replace('/package.json', ''),
+				peerHashedIdentity.replace('/package.json', '/package.json.bak'),
+				`/${peerHashedIdentity}`,
+				peerHashedIdentity.replaceAll('/', '\\'),
+				peerHashedIdentity.replace('/node_modules/', '/../node_modules/'),
+			]) {
+				const document = licenses([ambiguousEntry()]);
+				(
+					(document.entries[0] as Record<string, unknown>).spdxExpression as {
+						candidates: Array<Record<string, unknown>>;
+					}
+				).candidates[0]!.id = value;
+				expect(findSensitiveSignals(document)).toContainEqual({
+					path: '$.entries[0].spdxExpression.candidates[0].id',
+					kind: 'pan-like-value',
+				});
+			}
+		});
+
+		test('keeps refusing the identity outside the license-inventory document', () => {
+			for (const unsafe of [
+				{ entries: [ambiguousEntry()] },
+				{ wrapper: licenses([ambiguousEntry()]) },
+				{ ...licenses([ambiguousEntry()]), schemaVersion: 'versionless.trust.v2' },
+				(() => {
+					const document = licenses([ambiguousEntry()]) as Record<string, unknown>;
+					delete document.rootLicenseText;
+					return document;
+				})(),
+				(() => {
+					const document = licenses([ambiguousEntry()]);
+					(document.summary as Record<string, unknown>).licenseText = 'not-tested';
+					return document;
+				})(),
+				(() => {
+					const document = licenses([ambiguousEntry()]);
+					(document.coverage as Record<string, unknown>).resolvedPackages = '1';
+					return document;
+				})(),
+				(() => {
+					const document = licenses([ambiguousEntry()]);
+					delete (document.entries[0] as Record<string, unknown>).source;
+					return document;
+				})(),
+				(() => {
+					const document = licenses([ambiguousEntry()]);
+					(
+						(document.entries[0] as Record<string, unknown>).licenseText as Record<
+							string,
+							unknown
+						>
+					).state = 1;
+					return document;
+				})(),
+			])
+				expect(() => assertSyntheticEvidence(unsafe)).toThrow('Sensitive material refused');
+		});
+
+		/**
+		 * Recognition is substructural, not a closed root-key list, so an artifact
+		 * that a tamper test decorates with a stray root key is still the license
+		 * inventory. That is deliberate: the trust package's portable-evidence
+		 * bypass suite injects exactly such a key, and it must be refused by the
+		 * detector its injection trips rather than reported as a card number.
+		 */
+		test('keeps recognising the inventory when a stray root key is added', () => {
+			expect(() =>
+				assertSyntheticEvidence({
+					...licenses([ambiguousEntry()]),
+					injectedTrace: 'cache/host/license',
+				}),
+			).not.toThrow();
+		});
+	});
 });
