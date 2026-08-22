@@ -1,6 +1,6 @@
 {
   "schemaVersion": "versionless.trust.v1",
-  "canonicalDigest": "aeb4b0e379fcf4ddc92722f7820cb7575cdab869d43c25e5a191b843998a2a2a",
+  "canonicalDigest": "10a089a2f5e0ab23825297414f92d4d7abcc7675d612cc33fd38c34ea57f9327",
   "integrity": {
     "algorithm": "sha256",
     "authenticity": "not-established",
@@ -225,7 +225,7 @@
     }
   ],
   "observation": {
-    "generatedAt": "2026-08-22T05:13:33.658Z",
+    "generatedAt": "2026-08-22T05:22:30.901Z",
     "vulnerabilityFreshness": "verified"
   },
   "derivedReport": "report.md"
