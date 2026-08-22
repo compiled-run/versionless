@@ -2,7 +2,7 @@
   "schemaVersion": "versionless.trust.v1",
   "coverage": {
     "workspaceManifests": 10,
-    "resolvedPackages": 189
+    "resolvedPackages": 230
   },
   "rootLicenseText": {
     "state": "unknown",
@@ -10,14 +10,14 @@
   },
   "summary": {
     "spdxExpression": {
-      "verified": 91,
-      "unknown": 108,
-      "ambiguous": 0
+      "verified": 124,
+      "unknown": 107,
+      "ambiguous": 9
     },
     "licenseText": {
-      "verified": 79,
-      "unknown": 120,
-      "ambiguous": 0
+      "verified": 112,
+      "unknown": 119,
+      "ambiguous": 9
     }
   },
   "entries": [
@@ -29,7 +29,7 @@
         "state": "verified",
         "value": "MIT",
         "candidateId": "package.json",
-        "manifestSha256": "cfe4d2845a6139e51ab169037592a3f4045bd07090d2e8f41c0059985229b698"
+        "manifestSha256": "1fe5dafb67255ddc09580561c8c53ce34b6c8c163565024591f4e23a61c27d71"
       },
       "licenseText": {
         "state": "unknown",
@@ -183,12 +183,38 @@
       "version": "0.9.0",
       "source": "pnpm-lock.yaml",
       "spdxExpression": {
-        "state": "unknown",
-        "reason": "Matching installed manifest has no SPDX expression."
+        "state": "ambiguous",
+        "candidates": [
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/@async+witness@0.9.0_vite@8.0.16_@types+node@24.12.2_/node_modules/@async/witness/package.json",
+            "manifestSha256": "008a69d1effe3eb7a9d2146e2e0869620d5a102be40cd3b5523834c19167fbdf",
+            "spdxExpression": null,
+            "licenseTexts": []
+          },
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/@async+witness@0.9.0_vite@8.0.16_@types+node@24.12.2_jiti@2.7.0_yaml@2.9.0_/node_modules/@async/witness/package.json",
+            "manifestSha256": "008a69d1effe3eb7a9d2146e2e0869620d5a102be40cd3b5523834c19167fbdf",
+            "spdxExpression": null,
+            "licenseTexts": []
+          }
+        ]
       },
       "licenseText": {
-        "state": "unknown",
-        "reason": "Matching installed license text unavailable."
+        "state": "ambiguous",
+        "candidates": [
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/@async+witness@0.9.0_vite@8.0.16_@types+node@24.12.2_/node_modules/@async/witness/package.json",
+            "manifestSha256": "008a69d1effe3eb7a9d2146e2e0869620d5a102be40cd3b5523834c19167fbdf",
+            "spdxExpression": null,
+            "licenseTexts": []
+          },
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/@async+witness@0.9.0_vite@8.0.16_@types+node@24.12.2_jiti@2.7.0_yaml@2.9.0_/node_modules/@async/witness/package.json",
+            "manifestSha256": "008a69d1effe3eb7a9d2146e2e0869620d5a102be40cd3b5523834c19167fbdf",
+            "spdxExpression": null,
+            "licenseTexts": []
+          }
+        ]
       }
     },
     {
@@ -1340,17 +1366,57 @@
       "version": "4.1.5",
       "source": "pnpm-lock.yaml",
       "spdxExpression": {
-        "state": "verified",
-        "value": "MIT",
-        "candidateId": ".versionless/cache/pnpm-virtual-store/@vitest+mocker@4.1.5_vite@8.0.16_@types+node@24.12.2_/node_modules/@vitest/mocker/package.json",
-        "manifestSha256": "8d64d50873b739ab72bc72d15a880b7c1b8953c82b928b79ab7bd2e3c2a4bf18"
+        "state": "ambiguous",
+        "candidates": [
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/@vitest+mocker@4.1.5_vite@8.0.16_@types+node@24.12.2_/node_modules/@vitest/mocker/package.json",
+            "manifestSha256": "8d64d50873b739ab72bc72d15a880b7c1b8953c82b928b79ab7bd2e3c2a4bf18",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENSE",
+                "sha256": "04575fc5bfae19a9b63100f8691f901a2e15a399011ac02db435a9ef27295551"
+              }
+            ]
+          },
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/@vitest+mocker@4.1.5_vite@8.0.16_@types+node@24.12.2_jiti@2.7.0_yaml@2.9.0_/node_modules/@vitest/mocker/package.json",
+            "manifestSha256": "8d64d50873b739ab72bc72d15a880b7c1b8953c82b928b79ab7bd2e3c2a4bf18",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENSE",
+                "sha256": "04575fc5bfae19a9b63100f8691f901a2e15a399011ac02db435a9ef27295551"
+              }
+            ]
+          }
+        ]
       },
       "licenseText": {
-        "state": "verified",
-        "candidateId": ".versionless/cache/pnpm-virtual-store/@vitest+mocker@4.1.5_vite@8.0.16_@types+node@24.12.2_/node_modules/@vitest/mocker/package.json",
-        "sha256": "04575fc5bfae19a9b63100f8691f901a2e15a399011ac02db435a9ef27295551",
-        "files": [
-          "LICENSE"
+        "state": "ambiguous",
+        "candidates": [
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/@vitest+mocker@4.1.5_vite@8.0.16_@types+node@24.12.2_/node_modules/@vitest/mocker/package.json",
+            "manifestSha256": "8d64d50873b739ab72bc72d15a880b7c1b8953c82b928b79ab7bd2e3c2a4bf18",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENSE",
+                "sha256": "04575fc5bfae19a9b63100f8691f901a2e15a399011ac02db435a9ef27295551"
+              }
+            ]
+          },
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/@vitest+mocker@4.1.5_vite@8.0.16_@types+node@24.12.2_jiti@2.7.0_yaml@2.9.0_/node_modules/@vitest/mocker/package.json",
+            "manifestSha256": "8d64d50873b739ab72bc72d15a880b7c1b8953c82b928b79ab7bd2e3c2a4bf18",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENSE",
+                "sha256": "04575fc5bfae19a9b63100f8691f901a2e15a399011ac02db435a9ef27295551"
+              }
+            ]
+          }
         ]
       }
     },
@@ -1454,17 +1520,57 @@
       "version": "0.1.20",
       "source": "pnpm-lock.yaml",
       "spdxExpression": {
-        "state": "verified",
-        "value": "MIT",
-        "candidateId": ".versionless/cache/pnpm-virtual-store/@voidzero-dev+vite-plus-core@0.1.20_@types+node@24.12.2_typescript@5.9.3/node_modules/@voidzero-dev/vite-plus-core/package.json",
-        "manifestSha256": "e957aa55a336859a02f257626e2d3f123ac8bd22ba79ba54d97f4b9fcdbe73e7"
+        "state": "ambiguous",
+        "candidates": [
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/@voidzero-dev+vite-plus-core@0.1.20_@types+node@24.12.2_jiti@2.7.0_typescript@5.9.3_yaml@2.9.0/node_modules/@voidzero-dev/vite-plus-core/package.json",
+            "manifestSha256": "e957aa55a336859a02f257626e2d3f123ac8bd22ba79ba54d97f4b9fcdbe73e7",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENSE",
+                "sha256": "78848ab0d08ad2db12478cec1a92f92e7a30224a9dae53563ee8d4810a7ccc30"
+              }
+            ]
+          },
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/@voidzero-dev+vite-plus-core@0.1.20_@types+node@24.12.2_typescript@5.9.3/node_modules/@voidzero-dev/vite-plus-core/package.json",
+            "manifestSha256": "e957aa55a336859a02f257626e2d3f123ac8bd22ba79ba54d97f4b9fcdbe73e7",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENSE",
+                "sha256": "78848ab0d08ad2db12478cec1a92f92e7a30224a9dae53563ee8d4810a7ccc30"
+              }
+            ]
+          }
+        ]
       },
       "licenseText": {
-        "state": "verified",
-        "candidateId": ".versionless/cache/pnpm-virtual-store/@voidzero-dev+vite-plus-core@0.1.20_@types+node@24.12.2_typescript@5.9.3/node_modules/@voidzero-dev/vite-plus-core/package.json",
-        "sha256": "78848ab0d08ad2db12478cec1a92f92e7a30224a9dae53563ee8d4810a7ccc30",
-        "files": [
-          "LICENSE"
+        "state": "ambiguous",
+        "candidates": [
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/@voidzero-dev+vite-plus-core@0.1.20_@types+node@24.12.2_jiti@2.7.0_typescript@5.9.3_yaml@2.9.0/node_modules/@voidzero-dev/vite-plus-core/package.json",
+            "manifestSha256": "e957aa55a336859a02f257626e2d3f123ac8bd22ba79ba54d97f4b9fcdbe73e7",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENSE",
+                "sha256": "78848ab0d08ad2db12478cec1a92f92e7a30224a9dae53563ee8d4810a7ccc30"
+              }
+            ]
+          },
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/@voidzero-dev+vite-plus-core@0.1.20_@types+node@24.12.2_typescript@5.9.3/node_modules/@voidzero-dev/vite-plus-core/package.json",
+            "manifestSha256": "e957aa55a336859a02f257626e2d3f123ac8bd22ba79ba54d97f4b9fcdbe73e7",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENSE",
+                "sha256": "78848ab0d08ad2db12478cec1a92f92e7a30224a9dae53563ee8d4810a7ccc30"
+              }
+            ]
+          }
         ]
       }
     },
@@ -1553,17 +1659,57 @@
       "version": "0.1.20",
       "source": "pnpm-lock.yaml",
       "spdxExpression": {
-        "state": "verified",
-        "value": "MIT",
-        "candidateId": ".versionless/cache/pnpm-virtual-store/@voidzero-dev+vite-plus-test@0.1.20_@types+node@24.12.2_typescript@5.9.3_vite@8.0.16_@types+node@24.12.2_/node_modules/@voidzero-dev/vite-plus-test/package.json",
-        "manifestSha256": "7a223c7d67fbeb349eadb92243f2a946e83273a6ed408d05b7a55681ca6d5aba"
+        "state": "ambiguous",
+        "candidates": [
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/@voidzero-dev+vite-plus-test@0.1.20_@types+node@24.12.2_jiti@2.7.0_typescript@5.9.3_vit_da01cd498533da46045e896831cdca92/node_modules/@voidzero-dev/vite-plus-test/package.json",
+            "manifestSha256": "7a223c7d67fbeb349eadb92243f2a946e83273a6ed408d05b7a55681ca6d5aba",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENSE",
+                "sha256": "e5ca8aaa14709b23d8c5a71836c24ca2d62c7b645ef142e84b4d30ca9941c9f1"
+              }
+            ]
+          },
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/@voidzero-dev+vite-plus-test@0.1.20_@types+node@24.12.2_typescript@5.9.3_vite@8.0.16_@types+node@24.12.2_/node_modules/@voidzero-dev/vite-plus-test/package.json",
+            "manifestSha256": "7a223c7d67fbeb349eadb92243f2a946e83273a6ed408d05b7a55681ca6d5aba",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENSE",
+                "sha256": "e5ca8aaa14709b23d8c5a71836c24ca2d62c7b645ef142e84b4d30ca9941c9f1"
+              }
+            ]
+          }
+        ]
       },
       "licenseText": {
-        "state": "verified",
-        "candidateId": ".versionless/cache/pnpm-virtual-store/@voidzero-dev+vite-plus-test@0.1.20_@types+node@24.12.2_typescript@5.9.3_vite@8.0.16_@types+node@24.12.2_/node_modules/@voidzero-dev/vite-plus-test/package.json",
-        "sha256": "e5ca8aaa14709b23d8c5a71836c24ca2d62c7b645ef142e84b4d30ca9941c9f1",
-        "files": [
-          "LICENSE"
+        "state": "ambiguous",
+        "candidates": [
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/@voidzero-dev+vite-plus-test@0.1.20_@types+node@24.12.2_jiti@2.7.0_typescript@5.9.3_vit_da01cd498533da46045e896831cdca92/node_modules/@voidzero-dev/vite-plus-test/package.json",
+            "manifestSha256": "7a223c7d67fbeb349eadb92243f2a946e83273a6ed408d05b7a55681ca6d5aba",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENSE",
+                "sha256": "e5ca8aaa14709b23d8c5a71836c24ca2d62c7b645ef142e84b4d30ca9941c9f1"
+              }
+            ]
+          },
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/@voidzero-dev+vite-plus-test@0.1.20_@types+node@24.12.2_typescript@5.9.3_vite@8.0.16_@types+node@24.12.2_/node_modules/@voidzero-dev/vite-plus-test/package.json",
+            "manifestSha256": "7a223c7d67fbeb349eadb92243f2a946e83273a6ed408d05b7a55681ca6d5aba",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENSE",
+                "sha256": "e5ca8aaa14709b23d8c5a71836c24ca2d62c7b645ef142e84b4d30ca9941c9f1"
+              }
+            ]
+          }
         ]
       }
     },
@@ -1895,6 +2041,44 @@
       }
     },
     {
+      "name": "ansis",
+      "version": "4.3.1",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "ISC",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/ansis@4.3.1/node_modules/ansis/package.json",
+        "manifestSha256": "1cc4e60111e4c14b67795ab998e27f56f9fe2ed5faba8f126750e034608b082b"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/ansis@4.3.1/node_modules/ansis/package.json",
+        "sha256": "d80713a740590fd03323d00397b0a21a1093ba4c0149d7e5a3849735c6084ae4",
+        "files": [
+          "LICENSE"
+        ]
+      }
+    },
+    {
+      "name": "args-tokenizer",
+      "version": "0.3.0",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/args-tokenizer@0.3.0/node_modules/args-tokenizer/package.json",
+        "manifestSha256": "42454d7df5e4670a3f3f28f8edeabaaea20598c9e0d66b146f44682201552fe3"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/args-tokenizer@0.3.0/node_modules/args-tokenizer/package.json",
+        "sha256": "6f19d2838107e748c332694053d997351e290af6c25976a31f7e5d94ef8f37db",
+        "files": [
+          "LICENSE"
+        ]
+      }
+    },
+    {
       "name": "assertion-error",
       "version": "2.0.1",
       "source": "pnpm-lock.yaml",
@@ -1908,6 +2092,82 @@
         "state": "verified",
         "candidateId": ".versionless/cache/pnpm-virtual-store/assertion-error@2.0.1/node_modules/assertion-error/package.json",
         "sha256": "2130216d5ab4c02134f8247f32999feda0abe1eaf028218baeac445c19ce4cea",
+        "files": [
+          "LICENSE"
+        ]
+      }
+    },
+    {
+      "name": "bumpp",
+      "version": "10.4.1",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/bumpp@10.4.1/node_modules/bumpp/package.json",
+        "manifestSha256": "0d75d2398ee385196f4f1ebca0da9e8a2ad26f0578a053c4c3d9e1a2f3d8a794"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/bumpp@10.4.1/node_modules/bumpp/package.json",
+        "sha256": "a26310b47a240c0daef8652ce9cc4365153d69b3e71a8779ebdc68722179921f",
+        "files": [
+          "LICENSE"
+        ]
+      }
+    },
+    {
+      "name": "bundle-name",
+      "version": "4.1.0",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/bundle-name@4.1.0/node_modules/bundle-name/package.json",
+        "manifestSha256": "8aab8e5167a83765db8857c31b88c7f2b39dd63841eb8fda0ab9ceeb15904462"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/bundle-name@4.1.0/node_modules/bundle-name/package.json",
+        "sha256": "5c932d88256b4ab958f64a856fa48e8bd1f55bc1d96b8149c65689e0c61789d3",
+        "files": [
+          "license"
+        ]
+      }
+    },
+    {
+      "name": "c12",
+      "version": "3.3.4",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/c12@3.3.4/node_modules/c12/package.json",
+        "manifestSha256": "83d56a57b3d3e4664fea52438101626a8b0b56662727954af7f24b1d1f4c57f0"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/c12@3.3.4/node_modules/c12/package.json",
+        "sha256": "46231df5a7733c3f52f11b71f3df61813007745b62b09031acfb45fb42d75082",
+        "files": [
+          "LICENSE"
+        ]
+      }
+    },
+    {
+      "name": "cac",
+      "version": "6.7.14",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/cac@6.7.14/node_modules/cac/package.json",
+        "manifestSha256": "8677bbbe7404ce455200b5f088a45f841bd8a40e7d63475ac711b631516ddcdf"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/cac@6.7.14/node_modules/cac/package.json",
+        "sha256": "709131d7af352b81204ada2a3d812e245a83576e327b364f92ba24c578ba9408",
         "files": [
           "LICENSE"
         ]
@@ -1933,6 +2193,101 @@
       }
     },
     {
+      "name": "changelogen",
+      "version": "0.6.2",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/changelogen@0.6.2/node_modules/changelogen/package.json",
+        "manifestSha256": "e0e1a5be66bb7960c8464cc5ef3615b12f46aa3ebbd090d93c3615641a242f29"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/changelogen@0.6.2/node_modules/changelogen/package.json",
+        "sha256": "46231df5a7733c3f52f11b71f3df61813007745b62b09031acfb45fb42d75082",
+        "files": [
+          "LICENSE"
+        ]
+      }
+    },
+    {
+      "name": "chokidar",
+      "version": "5.0.0",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/chokidar@5.0.0/node_modules/chokidar/package.json",
+        "manifestSha256": "cb75ae8c3a8ac02e09efc5886a75a87256474ac8349ceea731ec389c03a70d96"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/chokidar@5.0.0/node_modules/chokidar/package.json",
+        "sha256": "bdfd5e0edb6089e6586c8f15e6a86fab83ffbeeda3b3b7b33734ccb8c5906965",
+        "files": [
+          "LICENSE"
+        ]
+      }
+    },
+    {
+      "name": "confbox",
+      "version": "0.2.4",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/confbox@0.2.4/node_modules/confbox/package.json",
+        "manifestSha256": "eb47edeadede9479597593fc79789426d09c90f10368a47726620438eed9d18d"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/confbox@0.2.4/node_modules/confbox/package.json",
+        "sha256": "c6e83b9be7af3b907525722dadbd781848162e4fbfcbe20324f7a237d91ee0f3",
+        "files": [
+          "LICENSE"
+        ]
+      }
+    },
+    {
+      "name": "consola",
+      "version": "3.4.2",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/consola@3.4.2/node_modules/consola/package.json",
+        "manifestSha256": "53e4b4053b58f62c0af88dc35efbe8711910f99d50a3df8de05b2e94bce4abce"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/consola@3.4.2/node_modules/consola/package.json",
+        "sha256": "df0e3cef4a42bae7db60ee33c3409a63df5f4dc40291d3627fbf52dfbd44e8a7",
+        "files": [
+          "LICENSE"
+        ]
+      }
+    },
+    {
+      "name": "convert-gitmoji",
+      "version": "0.1.5",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/convert-gitmoji@0.1.5/node_modules/convert-gitmoji/package.json",
+        "manifestSha256": "da9c184f2ad44eea78033bba04fe287ecde43869a2429328e200c50bad8d5fa8"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/convert-gitmoji@0.1.5/node_modules/convert-gitmoji/package.json",
+        "sha256": "0f9469cfa9a750fa129aea83a111b1f881a793909c53ad82c7b74135e52cc93b",
+        "files": [
+          "LICENSE.md"
+        ]
+      }
+    },
+    {
       "name": "convert-source-map",
       "version": "2.0.0",
       "source": "pnpm-lock.yaml",
@@ -1952,6 +2307,101 @@
       }
     },
     {
+      "name": "default-browser-id",
+      "version": "5.0.1",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/default-browser-id@5.0.1/node_modules/default-browser-id/package.json",
+        "manifestSha256": "33d93cd9f507c701ecf0551213ddd0f22fba3ee958be14c4ef7045be79520f3c"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/default-browser-id@5.0.1/node_modules/default-browser-id/package.json",
+        "sha256": "5c932d88256b4ab958f64a856fa48e8bd1f55bc1d96b8149c65689e0c61789d3",
+        "files": [
+          "license"
+        ]
+      }
+    },
+    {
+      "name": "default-browser",
+      "version": "5.5.1",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/default-browser@5.5.1/node_modules/default-browser/package.json",
+        "manifestSha256": "13a8cc1c9348cbc58c1b1093ce68ab89fa04e025454cf55b055a0ccc0a08cdbf"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/default-browser@5.5.1/node_modules/default-browser/package.json",
+        "sha256": "5c932d88256b4ab958f64a856fa48e8bd1f55bc1d96b8149c65689e0c61789d3",
+        "files": [
+          "license"
+        ]
+      }
+    },
+    {
+      "name": "define-lazy-prop",
+      "version": "3.0.0",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/define-lazy-prop@3.0.0/node_modules/define-lazy-prop/package.json",
+        "manifestSha256": "178f70857bc4e5186ba8efb7a1e7d93d1c821fbf3bd3651f885dad08505fa795"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/define-lazy-prop@3.0.0/node_modules/define-lazy-prop/package.json",
+        "sha256": "5c932d88256b4ab958f64a856fa48e8bd1f55bc1d96b8149c65689e0c61789d3",
+        "files": [
+          "license"
+        ]
+      }
+    },
+    {
+      "name": "defu",
+      "version": "6.1.7",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/defu@6.1.7/node_modules/defu/package.json",
+        "manifestSha256": "a2cf72e05920ca73e75922ddc8696cdc58c7d5dd6f3e013b5a494f4011bfbeb7"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/defu@6.1.7/node_modules/defu/package.json",
+        "sha256": "46231df5a7733c3f52f11b71f3df61813007745b62b09031acfb45fb42d75082",
+        "files": [
+          "LICENSE"
+        ]
+      }
+    },
+    {
+      "name": "destr",
+      "version": "2.0.5",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/destr@2.0.5/node_modules/destr/package.json",
+        "manifestSha256": "5a2d60148ed6f5fee2ee4c069ad8d445edafca6846bad19edb8a572053d70b5e"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/destr@2.0.5/node_modules/destr/package.json",
+        "sha256": "46231df5a7733c3f52f11b71f3df61813007745b62b09031acfb45fb42d75082",
+        "files": [
+          "LICENSE"
+        ]
+      }
+    },
+    {
       "name": "detect-libc",
       "version": "2.1.2",
       "source": "pnpm-lock.yaml",
@@ -1965,6 +2415,25 @@
         "state": "verified",
         "candidateId": ".versionless/cache/pnpm-virtual-store/detect-libc@2.1.2/node_modules/detect-libc/package.json",
         "sha256": "b40930bbcf80744c86c46a12bc9da056641d722716c378f5659b9e555ef833e1",
+        "files": [
+          "LICENSE"
+        ]
+      }
+    },
+    {
+      "name": "dotenv",
+      "version": "17.4.2",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "BSD-2-Clause",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/dotenv@17.4.2/node_modules/dotenv/package.json",
+        "manifestSha256": "7e57c7c7b3c5fe5dd127091aeacadec3e144fd290988c61c184876c1b8bda819"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/dotenv@17.4.2/node_modules/dotenv/package.json",
+        "sha256": "74b629b24865e1e83c5277ee84590b7937644d6fd959d0c7bdce758676cd2ced",
         "files": [
           "LICENSE"
         ]
@@ -2009,6 +2478,25 @@
       }
     },
     {
+      "name": "escalade",
+      "version": "3.2.0",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/escalade@3.2.0/node_modules/escalade/package.json",
+        "manifestSha256": "acd22b264ecbea162e320a360dab0ad0f3e5438fa4382288df844fa08b484e73"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/escalade@3.2.0/node_modules/escalade/package.json",
+        "sha256": "9a9edad7baae52622bddf3c15b2ef8a33d2c89f2d25408ad13e8a7481c6b0c97",
+        "files": [
+          "license"
+        ]
+      }
+    },
+    {
       "name": "estree-walker",
       "version": "3.0.3",
       "source": "pnpm-lock.yaml",
@@ -2041,6 +2529,25 @@
         "state": "verified",
         "candidateId": ".versionless/cache/pnpm-virtual-store/expect-type@1.4.0/node_modules/expect-type/package.json",
         "sha256": "7c6cc83c84eaa249a85bf12fe3eedd831bb50c696e8890b5248223ae68c7b408",
+        "files": [
+          "LICENSE"
+        ]
+      }
+    },
+    {
+      "name": "exsolve",
+      "version": "1.1.1",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/exsolve@1.1.1/node_modules/exsolve/package.json",
+        "manifestSha256": "4a4e01e5d072700e621702dfe39c3ac227bc1a4aad66e0747de030a7e2329ebd"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/exsolve@1.1.1/node_modules/exsolve/package.json",
+        "sha256": "d37af134e0d0b998393188394202052e2ff6cd5d18efb2fcc81ba7b00ad77b75",
         "files": [
           "LICENSE"
         ]
@@ -2100,6 +2607,120 @@
         "sha256": "2a8a5d6197bb97a018b8a190dd3ed853d750ca87c8e80c17aad41d6c6ff448e1",
         "files": [
           "LICENSE"
+        ]
+      }
+    },
+    {
+      "name": "giget",
+      "version": "3.3.1",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/giget@3.3.1/node_modules/giget/package.json",
+        "manifestSha256": "f7b5658d27ef43051b31bc6dd0ed4f7f04ba0eac788ae5232554692b57311335"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/giget@3.3.1/node_modules/giget/package.json",
+        "sha256": "858a63872e40ca764098e48cfcec054efaa1330dfa6c7d5c0b3fdcb3a44a9d95",
+        "files": [
+          "LICENSE"
+        ]
+      }
+    },
+    {
+      "name": "is-docker",
+      "version": "3.0.0",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/is-docker@3.0.0/node_modules/is-docker/package.json",
+        "manifestSha256": "927cc3f8e5e49d545679ebe9be754137f805a0f7f82de14a80492c3b627ca688"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/is-docker@3.0.0/node_modules/is-docker/package.json",
+        "sha256": "5c932d88256b4ab958f64a856fa48e8bd1f55bc1d96b8149c65689e0c61789d3",
+        "files": [
+          "license"
+        ]
+      }
+    },
+    {
+      "name": "is-inside-container",
+      "version": "1.0.0",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/is-inside-container@1.0.0/node_modules/is-inside-container/package.json",
+        "manifestSha256": "b030fc11899d813c3fab0dbb09639eab25f8a5d4af24d3854f1329bc0255bc2f"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/is-inside-container@1.0.0/node_modules/is-inside-container/package.json",
+        "sha256": "5c932d88256b4ab958f64a856fa48e8bd1f55bc1d96b8149c65689e0c61789d3",
+        "files": [
+          "license"
+        ]
+      }
+    },
+    {
+      "name": "is-wsl",
+      "version": "3.1.1",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/is-wsl@3.1.1/node_modules/is-wsl/package.json",
+        "manifestSha256": "d4b5a0df9783c78951de0dbd94832822d0660e553b0b5e2ffc0e19e5721a5af5"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/is-wsl@3.1.1/node_modules/is-wsl/package.json",
+        "sha256": "5c932d88256b4ab958f64a856fa48e8bd1f55bc1d96b8149c65689e0c61789d3",
+        "files": [
+          "license"
+        ]
+      }
+    },
+    {
+      "name": "jiti",
+      "version": "2.7.0",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/jiti@2.7.0/node_modules/jiti/package.json",
+        "manifestSha256": "aab8aafc42d9aeec14a6e2fe0e15ea1514c0c205a624055a7e776f2ec456283c"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/jiti@2.7.0/node_modules/jiti/package.json",
+        "sha256": "46231df5a7733c3f52f11b71f3df61813007745b62b09031acfb45fb42d75082",
+        "files": [
+          "LICENSE"
+        ]
+      }
+    },
+    {
+      "name": "jsonc-parser",
+      "version": "3.3.1",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/jsonc-parser@3.3.1/node_modules/jsonc-parser/package.json",
+        "manifestSha256": "a7a9192caaac00d9330592f4fd572908bee037518128a0fc3db96d2cd652e2b5"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/jsonc-parser@3.3.1/node_modules/jsonc-parser/package.json",
+        "sha256": "c3a24c02d678e5f0711623dcf3ab3f243b273c2633f638a1fa8e35fb7c7f8e4d",
+        "files": [
+          "LICENSE.md"
         ]
       }
     },
@@ -2276,17 +2897,57 @@
       "version": "0.11.0",
       "source": "pnpm-lock.yaml",
       "spdxExpression": {
-        "state": "verified",
-        "value": "MIT",
-        "candidateId": ".versionless/cache/pnpm-virtual-store/magic-regexp@0.11.0_rolldown@1.0.3_vite@8.0.16_@types+node@24.12.2_/node_modules/magic-regexp/package.json",
-        "manifestSha256": "4f6d55f1265e5338e5325d26bf6d7746938f1308a8eb043a6f4a675af9f7f2c9"
+        "state": "ambiguous",
+        "candidates": [
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/magic-regexp@0.11.0_rolldown@1.0.3_vite@8.0.16_@types+node@24.12.2_/node_modules/magic-regexp/package.json",
+            "manifestSha256": "4f6d55f1265e5338e5325d26bf6d7746938f1308a8eb043a6f4a675af9f7f2c9",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENCE",
+                "sha256": "f1d5e25fdad81ebcf6b351fb09e6943b01f928b71cf1b0d7d8158e75183e61ff"
+              }
+            ]
+          },
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/magic-regexp@0.11.0_rolldown@1.0.3_vite@8.0.16_@types+node@24.12.2_jiti@2.7.0_yaml@2.9.0_/node_modules/magic-regexp/package.json",
+            "manifestSha256": "4f6d55f1265e5338e5325d26bf6d7746938f1308a8eb043a6f4a675af9f7f2c9",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENCE",
+                "sha256": "f1d5e25fdad81ebcf6b351fb09e6943b01f928b71cf1b0d7d8158e75183e61ff"
+              }
+            ]
+          }
+        ]
       },
       "licenseText": {
-        "state": "verified",
-        "candidateId": ".versionless/cache/pnpm-virtual-store/magic-regexp@0.11.0_rolldown@1.0.3_vite@8.0.16_@types+node@24.12.2_/node_modules/magic-regexp/package.json",
-        "sha256": "f1d5e25fdad81ebcf6b351fb09e6943b01f928b71cf1b0d7d8158e75183e61ff",
-        "files": [
-          "LICENCE"
+        "state": "ambiguous",
+        "candidates": [
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/magic-regexp@0.11.0_rolldown@1.0.3_vite@8.0.16_@types+node@24.12.2_/node_modules/magic-regexp/package.json",
+            "manifestSha256": "4f6d55f1265e5338e5325d26bf6d7746938f1308a8eb043a6f4a675af9f7f2c9",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENCE",
+                "sha256": "f1d5e25fdad81ebcf6b351fb09e6943b01f928b71cf1b0d7d8158e75183e61ff"
+              }
+            ]
+          },
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/magic-regexp@0.11.0_rolldown@1.0.3_vite@8.0.16_@types+node@24.12.2_jiti@2.7.0_yaml@2.9.0_/node_modules/magic-regexp/package.json",
+            "manifestSha256": "4f6d55f1265e5338e5325d26bf6d7746938f1308a8eb043a6f4a675af9f7f2c9",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENCE",
+                "sha256": "f1d5e25fdad81ebcf6b351fb09e6943b01f928b71cf1b0d7d8158e75183e61ff"
+              }
+            ]
+          }
         ]
       }
     },
@@ -2329,6 +2990,25 @@
       }
     },
     {
+      "name": "mri",
+      "version": "1.2.0",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/mri@1.2.0/node_modules/mri/package.json",
+        "manifestSha256": "aa262c911b04e093f9293a3e01083d3e771e1253c1356a0dd2beee4159fb9e74"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/mri@1.2.0/node_modules/mri/package.json",
+        "sha256": "306fa513e39b23a6e8747520de761809d206b99800ef41907b530226574c59ae",
+        "files": [
+          "license.md"
+        ]
+      }
+    },
+    {
       "name": "mrmime",
       "version": "2.0.1",
       "source": "pnpm-lock.yaml",
@@ -2367,6 +3047,25 @@
       }
     },
     {
+      "name": "node-fetch-native",
+      "version": "1.6.7",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/node-fetch-native@1.6.7/node_modules/node-fetch-native/package.json",
+        "manifestSha256": "4004b1f38434b03353f4cb7f301287f4c2b8e88297a33c4f71415e98def8d984"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/node-fetch-native@1.6.7/node_modules/node-fetch-native/package.json",
+        "sha256": "22a1b925621a4fb60cb9df9914612f12482e275c9f545035599fc528b4979da9",
+        "files": [
+          "LICENSE"
+        ]
+      }
+    },
+    {
       "name": "obug",
       "version": "2.1.4",
       "source": "pnpm-lock.yaml",
@@ -2382,6 +3081,63 @@
         "sha256": "ee48679d379ca6b4493d5e231094d85f818dd9be40b1a4f234fb7ff657ee35d9",
         "files": [
           "LICENSE"
+        ]
+      }
+    },
+    {
+      "name": "ofetch",
+      "version": "1.5.1",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/ofetch@1.5.1/node_modules/ofetch/package.json",
+        "manifestSha256": "218ed51c844bfbfe7f3b44477277919e87572097f61437b0d5b31878e2805b58"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/ofetch@1.5.1/node_modules/ofetch/package.json",
+        "sha256": "46231df5a7733c3f52f11b71f3df61813007745b62b09031acfb45fb42d75082",
+        "files": [
+          "LICENSE"
+        ]
+      }
+    },
+    {
+      "name": "ohash",
+      "version": "2.0.12",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/ohash@2.0.12/node_modules/ohash/package.json",
+        "manifestSha256": "d19ecffe989da6710978f4d59b9de1feb8f26bdc74b2ffb3aa1ec2a1b8c162ad"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/ohash@2.0.12/node_modules/ohash/package.json",
+        "sha256": "46231df5a7733c3f52f11b71f3df61813007745b62b09031acfb45fb42d75082",
+        "files": [
+          "LICENSE"
+        ]
+      }
+    },
+    {
+      "name": "open",
+      "version": "10.2.0",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/open@10.2.0/node_modules/open/package.json",
+        "manifestSha256": "8a9d1ff0ffca5c9dc0ea110eab8ef7a5bf7d83fdf5c54ea801a1acbb9d38c13d"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/open@10.2.0/node_modules/open/package.json",
+        "sha256": "5c932d88256b4ab958f64a856fa48e8bd1f55bc1d96b8149c65689e0c61789d3",
+        "files": [
+          "license"
         ]
       }
     },
@@ -2443,6 +3199,25 @@
       }
     },
     {
+      "name": "package-manager-detector",
+      "version": "1.8.0",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/package-manager-detector@1.8.0/node_modules/package-manager-detector/package.json",
+        "manifestSha256": "d0f0d249f71cfb0563914aa3f98eeb771715f1dfa29b6b899ffa88ab9a7515ca"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/package-manager-detector@1.8.0/node_modules/package-manager-detector/package.json",
+        "sha256": "05c365176db3cc00e951c44b921c809c75b8e99d2d724f7daf00381e26fb0850",
+        "files": [
+          "LICENSE"
+        ]
+      }
+    },
+    {
       "name": "pathe",
       "version": "2.0.3",
       "source": "pnpm-lock.yaml",
@@ -2456,6 +3231,25 @@
         "state": "verified",
         "candidateId": ".versionless/cache/pnpm-virtual-store/pathe@2.0.3/node_modules/pathe/package.json",
         "sha256": "52e92576851154bad7737e90cc72818936f43665cb0e3f7428ed8edc8cc5709b",
+        "files": [
+          "LICENSE"
+        ]
+      }
+    },
+    {
+      "name": "perfect-debounce",
+      "version": "2.1.0",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/perfect-debounce@2.1.0/node_modules/perfect-debounce/package.json",
+        "manifestSha256": "9dbfb0e1f08095716c25b918b07691064234ea6d784f233c0daabff5bc4881d9"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/perfect-debounce@2.1.0/node_modules/perfect-debounce/package.json",
+        "sha256": "46231df5a7733c3f52f11b71f3df61813007745b62b09031acfb45fb42d75082",
         "files": [
           "LICENSE"
         ]
@@ -2513,6 +3307,25 @@
         "state": "verified",
         "candidateId": ".versionless/cache/pnpm-virtual-store/pixelmatch@7.2.0/node_modules/pixelmatch/package.json",
         "sha256": "cfec0482fb785fe27e3b368a2d9e84bf7a61b275e83ec582bf288e98cd530bb0",
+        "files": [
+          "LICENSE"
+        ]
+      }
+    },
+    {
+      "name": "pkg-types",
+      "version": "2.3.1",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/pkg-types@2.3.1/node_modules/pkg-types/package.json",
+        "manifestSha256": "dadc2a40de2fb021a122fb0a9e5e85cfa42d2c3f972750ac1fdd2bc92342b1b0"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/pkg-types@2.3.1/node_modules/pkg-types/package.json",
+        "sha256": "cb00dc7c358014d300dba2462e57d3f477299c169c7ab14d8fe5e347eca44f48",
         "files": [
           "LICENSE"
         ]
@@ -2595,6 +3408,44 @@
       }
     },
     {
+      "name": "rc9",
+      "version": "3.0.1",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/rc9@3.0.1/node_modules/rc9/package.json",
+        "manifestSha256": "bc851ef7f3a19ed46361d3d9c689274301f5aa43b2e7b0339acfbdb92024225c"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/rc9@3.0.1/node_modules/rc9/package.json",
+        "sha256": "688222000d499a064a7feb8fa0bb2a3dded5a182f90ef9de986bf7307d777a26",
+        "files": [
+          "LICENSE"
+        ]
+      }
+    },
+    {
+      "name": "readdirp",
+      "version": "5.1.1",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/readdirp@5.1.1/node_modules/readdirp/package.json",
+        "manifestSha256": "e4243493fb09c5a7b68b2128892b6e2fa3bbc1422030a2a777975fba3a1784f6"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/readdirp@5.1.1/node_modules/readdirp/package.json",
+        "sha256": "dffec71d93f273d2af7b54c6c7e7e70b3289c632ec0d7253210ec21ac336d5ac",
+        "files": [
+          "LICENSE"
+        ]
+      }
+    },
+    {
       "name": "regexp-tree",
       "version": "0.1.27",
       "source": "pnpm-lock.yaml",
@@ -2627,6 +3478,63 @@
         "state": "verified",
         "candidateId": ".versionless/cache/pnpm-virtual-store/rolldown@1.0.3/node_modules/rolldown/package.json",
         "sha256": "23ecfff35a5a2e80d92142f75228912c3b1abc4b5a8337a821ff4397e2f9f734",
+        "files": [
+          "LICENSE"
+        ]
+      }
+    },
+    {
+      "name": "run-applescript",
+      "version": "7.1.0",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/run-applescript@7.1.0/node_modules/run-applescript/package.json",
+        "manifestSha256": "6b82907e9fcc0cdb36c40abdc2a9ca0dcd51a8799a668ecff05a0bcd37e0d8be"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/run-applescript@7.1.0/node_modules/run-applescript/package.json",
+        "sha256": "5c932d88256b4ab958f64a856fa48e8bd1f55bc1d96b8149c65689e0c61789d3",
+        "files": [
+          "license"
+        ]
+      }
+    },
+    {
+      "name": "scule",
+      "version": "1.3.0",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/scule@1.3.0/node_modules/scule/package.json",
+        "manifestSha256": "9d9505251d225d9a1247dc8c912c7bd2914faa0426ea5d035729f1ba58228830"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/scule@1.3.0/node_modules/scule/package.json",
+        "sha256": "46231df5a7733c3f52f11b71f3df61813007745b62b09031acfb45fb42d75082",
+        "files": [
+          "LICENSE"
+        ]
+      }
+    },
+    {
+      "name": "semver",
+      "version": "7.8.5",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "ISC",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/semver@7.8.5/node_modules/semver/package.json",
+        "manifestSha256": "7c94cb7f2a53c27b20d76386ec144c062894dbcc909cfabd0f728c37874b1776"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/semver@7.8.5/node_modules/semver/package.json",
+        "sha256": "4ec3d4c66cd87f5c8d8ad911b10f99bf27cb00cdfcff82621956e379186b016b",
         "files": [
           "LICENSE"
         ]
@@ -2698,6 +3606,25 @@
       "licenseText": {
         "state": "unknown",
         "reason": "Matching installed license text unavailable."
+      }
+    },
+    {
+      "name": "std-env",
+      "version": "3.10.0",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/std-env@3.10.0/node_modules/std-env/package.json",
+        "manifestSha256": "47978ed306b2a6054d237c3d48f37681aac1de0648ab1544fc6ce44295024a83"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/std-env@3.10.0/node_modules/std-env/package.json",
+        "sha256": "a6f36438e46fb911859f3b9c4cad045ba64e1af3d8f4512c60258fa2d7552d28",
+        "files": [
+          "LICENCE"
+        ]
       }
     },
     {
@@ -2933,17 +3860,57 @@
       "version": "3.3.0",
       "source": "pnpm-lock.yaml",
       "spdxExpression": {
-        "state": "verified",
-        "value": "MIT",
-        "candidateId": ".versionless/cache/pnpm-virtual-store/unplugin@3.3.0_rolldown@1.0.3_vite@8.0.16_@types+node@24.12.2_/node_modules/unplugin/package.json",
-        "manifestSha256": "a75f0ea98d04404084ac157c457fddc0683b514fd7b27b72da28b6fd252f1b37"
+        "state": "ambiguous",
+        "candidates": [
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/unplugin@3.3.0_rolldown@1.0.3_vite@8.0.16_@types+node@24.12.2_/node_modules/unplugin/package.json",
+            "manifestSha256": "a75f0ea98d04404084ac157c457fddc0683b514fd7b27b72da28b6fd252f1b37",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENSE",
+                "sha256": "2ef2cbeeb84d5e7a92d208426ef4f841b5447ae0a9e661ffb0983e8985a9f469"
+              }
+            ]
+          },
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/unplugin@3.3.0_rolldown@1.0.3_vite@8.0.16_@types+node@24.12.2_jiti@2.7.0_yaml@2.9.0_/node_modules/unplugin/package.json",
+            "manifestSha256": "a75f0ea98d04404084ac157c457fddc0683b514fd7b27b72da28b6fd252f1b37",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENSE",
+                "sha256": "2ef2cbeeb84d5e7a92d208426ef4f841b5447ae0a9e661ffb0983e8985a9f469"
+              }
+            ]
+          }
+        ]
       },
       "licenseText": {
-        "state": "verified",
-        "candidateId": ".versionless/cache/pnpm-virtual-store/unplugin@3.3.0_rolldown@1.0.3_vite@8.0.16_@types+node@24.12.2_/node_modules/unplugin/package.json",
-        "sha256": "2ef2cbeeb84d5e7a92d208426ef4f841b5447ae0a9e661ffb0983e8985a9f469",
-        "files": [
-          "LICENSE"
+        "state": "ambiguous",
+        "candidates": [
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/unplugin@3.3.0_rolldown@1.0.3_vite@8.0.16_@types+node@24.12.2_/node_modules/unplugin/package.json",
+            "manifestSha256": "a75f0ea98d04404084ac157c457fddc0683b514fd7b27b72da28b6fd252f1b37",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENSE",
+                "sha256": "2ef2cbeeb84d5e7a92d208426ef4f841b5447ae0a9e661ffb0983e8985a9f469"
+              }
+            ]
+          },
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/unplugin@3.3.0_rolldown@1.0.3_vite@8.0.16_@types+node@24.12.2_jiti@2.7.0_yaml@2.9.0_/node_modules/unplugin/package.json",
+            "manifestSha256": "a75f0ea98d04404084ac157c457fddc0683b514fd7b27b72da28b6fd252f1b37",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENSE",
+                "sha256": "2ef2cbeeb84d5e7a92d208426ef4f841b5447ae0a9e661ffb0983e8985a9f469"
+              }
+            ]
+          }
         ]
       }
     },
@@ -2952,17 +3919,57 @@
       "version": "0.1.20",
       "source": "pnpm-lock.yaml",
       "spdxExpression": {
-        "state": "verified",
-        "value": "MIT",
-        "candidateId": ".versionless/cache/pnpm-virtual-store/vite-plus@0.1.20_@types+node@24.12.2_typescript@5.9.3_vite@8.0.16_@types+node@24.12.2_/node_modules/vite-plus/package.json",
-        "manifestSha256": "e38fcc5ec262d5618b13a7b6c9553ff36d75714527e1af0d79d30ee4913b5bdb"
+        "state": "ambiguous",
+        "candidates": [
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/vite-plus@0.1.20_@types+node@24.12.2_jiti@2.7.0_typescript@5.9.3_vite@8.0.16_@types+nod_23737d34d6e60106aa83877780586629/node_modules/vite-plus/package.json",
+            "manifestSha256": "e38fcc5ec262d5618b13a7b6c9553ff36d75714527e1af0d79d30ee4913b5bdb",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENSE",
+                "sha256": "3b5b9cb33602d6eca8822a0b323c41b25d35b78f4da2c9c3f6697451a208f6ac"
+              }
+            ]
+          },
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/vite-plus@0.1.20_@types+node@24.12.2_typescript@5.9.3_vite@8.0.16_@types+node@24.12.2_/node_modules/vite-plus/package.json",
+            "manifestSha256": "e38fcc5ec262d5618b13a7b6c9553ff36d75714527e1af0d79d30ee4913b5bdb",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENSE",
+                "sha256": "3b5b9cb33602d6eca8822a0b323c41b25d35b78f4da2c9c3f6697451a208f6ac"
+              }
+            ]
+          }
+        ]
       },
       "licenseText": {
-        "state": "verified",
-        "candidateId": ".versionless/cache/pnpm-virtual-store/vite-plus@0.1.20_@types+node@24.12.2_typescript@5.9.3_vite@8.0.16_@types+node@24.12.2_/node_modules/vite-plus/package.json",
-        "sha256": "3b5b9cb33602d6eca8822a0b323c41b25d35b78f4da2c9c3f6697451a208f6ac",
-        "files": [
-          "LICENSE"
+        "state": "ambiguous",
+        "candidates": [
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/vite-plus@0.1.20_@types+node@24.12.2_jiti@2.7.0_typescript@5.9.3_vite@8.0.16_@types+nod_23737d34d6e60106aa83877780586629/node_modules/vite-plus/package.json",
+            "manifestSha256": "e38fcc5ec262d5618b13a7b6c9553ff36d75714527e1af0d79d30ee4913b5bdb",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENSE",
+                "sha256": "3b5b9cb33602d6eca8822a0b323c41b25d35b78f4da2c9c3f6697451a208f6ac"
+              }
+            ]
+          },
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/vite-plus@0.1.20_@types+node@24.12.2_typescript@5.9.3_vite@8.0.16_@types+node@24.12.2_/node_modules/vite-plus/package.json",
+            "manifestSha256": "e38fcc5ec262d5618b13a7b6c9553ff36d75714527e1af0d79d30ee4913b5bdb",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENSE",
+                "sha256": "3b5b9cb33602d6eca8822a0b323c41b25d35b78f4da2c9c3f6697451a208f6ac"
+              }
+            ]
+          }
         ]
       }
     },
@@ -2971,17 +3978,57 @@
       "version": "8.0.16",
       "source": "pnpm-lock.yaml",
       "spdxExpression": {
-        "state": "verified",
-        "value": "MIT",
-        "candidateId": ".versionless/cache/pnpm-virtual-store/vite@8.0.16_@types+node@24.12.2/node_modules/vite/package.json",
-        "manifestSha256": "a2b943431b51bfcc2e9386eecf8b4b3f6e4bf443e56d17b1f4c8495a61b4050c"
+        "state": "ambiguous",
+        "candidates": [
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/vite@8.0.16_@types+node@24.12.2_jiti@2.7.0_yaml@2.9.0/node_modules/vite/package.json",
+            "manifestSha256": "a2b943431b51bfcc2e9386eecf8b4b3f6e4bf443e56d17b1f4c8495a61b4050c",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENSE.md",
+                "sha256": "21d9391f0a581d83e5f4faceac10136ef6b90588ef10ef7fb681a228044cc562"
+              }
+            ]
+          },
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/vite@8.0.16_@types+node@24.12.2/node_modules/vite/package.json",
+            "manifestSha256": "a2b943431b51bfcc2e9386eecf8b4b3f6e4bf443e56d17b1f4c8495a61b4050c",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENSE.md",
+                "sha256": "21d9391f0a581d83e5f4faceac10136ef6b90588ef10ef7fb681a228044cc562"
+              }
+            ]
+          }
+        ]
       },
       "licenseText": {
-        "state": "verified",
-        "candidateId": ".versionless/cache/pnpm-virtual-store/vite@8.0.16_@types+node@24.12.2/node_modules/vite/package.json",
-        "sha256": "21d9391f0a581d83e5f4faceac10136ef6b90588ef10ef7fb681a228044cc562",
-        "files": [
-          "LICENSE.md"
+        "state": "ambiguous",
+        "candidates": [
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/vite@8.0.16_@types+node@24.12.2_jiti@2.7.0_yaml@2.9.0/node_modules/vite/package.json",
+            "manifestSha256": "a2b943431b51bfcc2e9386eecf8b4b3f6e4bf443e56d17b1f4c8495a61b4050c",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENSE.md",
+                "sha256": "21d9391f0a581d83e5f4faceac10136ef6b90588ef10ef7fb681a228044cc562"
+              }
+            ]
+          },
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/vite@8.0.16_@types+node@24.12.2/node_modules/vite/package.json",
+            "manifestSha256": "a2b943431b51bfcc2e9386eecf8b4b3f6e4bf443e56d17b1f4c8495a61b4050c",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENSE.md",
+                "sha256": "21d9391f0a581d83e5f4faceac10136ef6b90588ef10ef7fb681a228044cc562"
+              }
+            ]
+          }
         ]
       }
     },
@@ -2990,17 +4037,57 @@
       "version": "4.1.5",
       "source": "pnpm-lock.yaml",
       "spdxExpression": {
-        "state": "verified",
-        "value": "MIT",
-        "candidateId": ".versionless/cache/pnpm-virtual-store/vitest@4.1.5_@types+node@24.12.2_vite@8.0.16_@types+node@24.12.2_/node_modules/vitest/package.json",
-        "manifestSha256": "2003da5a6f67c6b1001c6a5ac04d0f8107ba2b525ff502bb9abd6a9562a02049"
+        "state": "ambiguous",
+        "candidates": [
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/vitest@4.1.5_@types+node@24.12.2_vite@8.0.16_@types+node@24.12.2_/node_modules/vitest/package.json",
+            "manifestSha256": "2003da5a6f67c6b1001c6a5ac04d0f8107ba2b525ff502bb9abd6a9562a02049",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENSE.md",
+                "sha256": "881d660c26831481b697e39724d4a35c9f86e07b67156d4aeb693a0b39910435"
+              }
+            ]
+          },
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/vitest@4.1.5_@types+node@24.12.2_vite@8.0.16_@types+node@24.12.2_jiti@2.7.0_yaml@2.9.0_/node_modules/vitest/package.json",
+            "manifestSha256": "2003da5a6f67c6b1001c6a5ac04d0f8107ba2b525ff502bb9abd6a9562a02049",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENSE.md",
+                "sha256": "881d660c26831481b697e39724d4a35c9f86e07b67156d4aeb693a0b39910435"
+              }
+            ]
+          }
+        ]
       },
       "licenseText": {
-        "state": "verified",
-        "candidateId": ".versionless/cache/pnpm-virtual-store/vitest@4.1.5_@types+node@24.12.2_vite@8.0.16_@types+node@24.12.2_/node_modules/vitest/package.json",
-        "sha256": "881d660c26831481b697e39724d4a35c9f86e07b67156d4aeb693a0b39910435",
-        "files": [
-          "LICENSE.md"
+        "state": "ambiguous",
+        "candidates": [
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/vitest@4.1.5_@types+node@24.12.2_vite@8.0.16_@types+node@24.12.2_/node_modules/vitest/package.json",
+            "manifestSha256": "2003da5a6f67c6b1001c6a5ac04d0f8107ba2b525ff502bb9abd6a9562a02049",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENSE.md",
+                "sha256": "881d660c26831481b697e39724d4a35c9f86e07b67156d4aeb693a0b39910435"
+              }
+            ]
+          },
+          {
+            "id": ".versionless/cache/pnpm-virtual-store/vitest@4.1.5_@types+node@24.12.2_vite@8.0.16_@types+node@24.12.2_jiti@2.7.0_yaml@2.9.0_/node_modules/vitest/package.json",
+            "manifestSha256": "2003da5a6f67c6b1001c6a5ac04d0f8107ba2b525ff502bb9abd6a9562a02049",
+            "spdxExpression": "MIT",
+            "licenseTexts": [
+              {
+                "id": "LICENSE.md",
+                "sha256": "881d660c26831481b697e39724d4a35c9f86e07b67156d4aeb693a0b39910435"
+              }
+            ]
+          }
         ]
       }
     },
@@ -3056,6 +4143,44 @@
         "state": "verified",
         "candidateId": ".versionless/cache/pnpm-virtual-store/ws@8.21.2/node_modules/ws/package.json",
         "sha256": "2b29dcfe0d6471f7e8c92c5fb38c9f93edee10330937055440192f1832b1ecef",
+        "files": [
+          "LICENSE"
+        ]
+      }
+    },
+    {
+      "name": "wsl-utils",
+      "version": "0.1.0",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "MIT",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/wsl-utils@0.1.0/node_modules/wsl-utils/package.json",
+        "manifestSha256": "9264babcccf6d4078ee736390fb2d25d531a6ba014542fdb85000a5bf4bf2e0d"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/wsl-utils@0.1.0/node_modules/wsl-utils/package.json",
+        "sha256": "5c932d88256b4ab958f64a856fa48e8bd1f55bc1d96b8149c65689e0c61789d3",
+        "files": [
+          "license"
+        ]
+      }
+    },
+    {
+      "name": "yaml",
+      "version": "2.9.0",
+      "source": "pnpm-lock.yaml",
+      "spdxExpression": {
+        "state": "verified",
+        "value": "ISC",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/yaml@2.9.0/node_modules/yaml/package.json",
+        "manifestSha256": "20b8b197cbd10dad245d45e463dfe58e4c8c25a47e24bc4256ad9ab58bf35683"
+      },
+      "licenseText": {
+        "state": "verified",
+        "candidateId": ".versionless/cache/pnpm-virtual-store/yaml@2.9.0/node_modules/yaml/package.json",
+        "sha256": "5bba27375d93e9119f76c1015f7672cf9ad5f70952296e0842fb2243d6376869",
         "files": [
           "LICENSE"
         ]

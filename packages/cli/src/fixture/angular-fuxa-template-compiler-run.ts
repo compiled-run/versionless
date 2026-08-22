@@ -34,9 +34,11 @@ const expectedSandbox = 'allow-forms allow-scripts allow-modals allow-same-origi
 // 6acf2dd25ff7d909046736b8b78f0ca11f07e938b724756a57a00d51e5751d82 when the root manifest
 // vendored @async/witness (T037/T039), and again from
 // c528f14935ff1c3f847afc60bf0220603085793f003c7ad6b972e07503f0553d when the vendored tarball
-// was dropped for the published @async/witness 0.9.0 registry pin (T004); neither superseded
-// manifest's bytes exist in the tree, and no published evidence names them.
-const rootPackageSha256 = 'cfe4d2845a6139e51ab169037592a3f4045bd07090d2e8f41c0059985229b698';
+// was dropped for the published @async/witness 0.9.0 registry pin (T004), and again from
+// cfe4d2845a6139e51ab169037592a3f4045bd07090d2e8f41c0059985229b698 when the root manifest
+// gained the release tooling (bumpp + changelogen devDependencies and the release scripts);
+// no superseded manifest's bytes exist in the tree, and no published evidence names them.
+const rootPackageSha256 = '1fe5dafb67255ddc09580561c8c53ce34b6c8c163565024591f4e23a61c27d71';
 const compilerPackageSha256 = '61514eabbcc40eef72135429ea3a5303dae6d67eb42b208fe9420b14067777db';
 const t153 = {
 	'receipt.json': '4d0dbd3961a7f0d8200ecbeb810284611927cdf90e18ff311a4ab0c6839ad19e',

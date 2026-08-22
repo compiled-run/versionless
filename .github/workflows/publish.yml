@@ -27,10 +27,14 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       id-token: write   # the whole trick: OIDC token for npm, no secrets
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Full history: the release notes cover previous-release..HEAD~1 and
+          # refuse to ship unless every commit in that range appears in them.
+          fetch-depth: 0
 
       - uses: pnpm/action-setup@v4
 
@@ -166,3 +170,36 @@ jobs:
       - name: Publish (OIDC trusted publishing, with provenance)
         working-directory: packages/cli
         run: npm publish "$TARBALL" --provenance --access public
+
+      # The GitHub Release, created only after npm accepted the publish.
+      # changelogen writes the sections it can parse; scripts/release-notes.mjs
+      # appends every commit changelogen dropped and refuses to write the file
+      # unless the two together account for the whole range. The range runs
+      # from the previous release tag (or the first commit, for the first
+      # release) to HEAD~1: the tagged commit is the version bump itself, and
+      # the notes describe the work, not the bump. HEAD~1 is resolved to a SHA
+      # first because changelogen interpolates --to verbatim into the compare
+      # link, and GitHub cannot resolve the literal string "HEAD~1".
+      - name: Generate the release notes
+        run: |
+          set -euo pipefail
+          NOTES_TO=$(git rev-parse --verify HEAD~1)
+          node scripts/release-notes.mjs \
+            --to "$NOTES_TO" \
+            --out "${RUNNER_TEMP}/release-notes.md"
+          {
+            echo "## Release notes"
+            echo
+            cat "${RUNNER_TEMP}/release-notes.md"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Create the GitHub Release
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2.6.2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          body_path: ${{ runner.temp }}/release-notes.md
+          draft: false
+          make_latest: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}

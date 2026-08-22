@@ -17,12 +17,17 @@
 		"runtime-script-observation:verify": "node --experimental-strip-types packages/cli/src/cli.ts runtime-script-observation:verify",
 		"trust:ingest": "node --experimental-strip-types packages/cli/src/cli.ts trust:ingest",
 		"trust:generate": "node --experimental-strip-types packages/cli/src/cli.ts trust:generate",
-		"trust:verify": "node --experimental-strip-types packages/cli/src/cli.ts trust:verify"
+		"trust:verify": "node --experimental-strip-types packages/cli/src/cli.ts trust:verify",
+		"release": "bumpp packages/cli/package.json --no-commit --no-tag --no-push && npm run release:reconcile",
+		"release:reconcile": "VERSIONLESS_NETWORK_MODE=offline npm run trust:generate -- --offline --policy trust/policy.json --output evidence/trust/current && npm run trust:verify -- --offline",
+		"release:notes": "node scripts/release-notes.mjs"
 	},
 	"devDependencies": {
 		"@angular/compiler": "22.1.0",
 		"@async/witness": "0.9.0",
 		"@types/node": "24.12.2",
+		"bumpp": "^10.3.1",
+		"changelogen": "^0.6.2",
 		"magic-regexp": "^0.11.0",
 		"pathe": "^2.0.3",
 		"playwright": "1.58.2",

@@ -160,9 +160,11 @@ const expectedVendoringPredecessorAmbientPnpmLock =
 //   a05cd6c698fd531c4dcb6c1117512a0c8ce463cc56edf2e7eccb89585b56066e, 68_172 bytes (vendored-era
 //     @async/witness 0.8.0, retired by T004)
 //   d4d3a8f75460a122934a45551c24e129e751b9a086bdd296ab393a4d8426770f, 67_987 bytes (T004's state,
-//     retired here)
+//     retired when T002 reshaped the cli manifest)
+//   2ff6d229eeb2ff57f8834bbdabac43ad1e46a1d9de9277c1bc231e4a0d9d176a, 67_574 bytes (T002's state,
+//     retired when the root manifest gained the bumpp + changelogen release tooling)
 const expectedCurrentAmbientPnpmLock =
-	'2ff6d229eeb2ff57f8834bbdabac43ad1e46a1d9de9277c1bc231e4a0d9d176a';
+	'bcfc9d5dffe9a18fe13ae22dd7e743ebdc22dcadaeb50c2971527b7bb3b2c7f0';
 const expectedHistoricalCacheKeyCandidates = [
 	{
 		updateOrder: ['fixture/yarn.lock', 'ambient/pnpm-lock.yaml'],
@@ -186,11 +188,11 @@ const expectedVendoringPredecessorCacheKeyCandidates = [
 const expectedCurrentCacheKeyCandidates = [
 	{
 		updateOrder: ['fixture/yarn.lock', 'ambient/pnpm-lock.yaml'],
-		cacheKeySha256: '38c5800c6632b26d160ec31c6c22188d2114fe2f2bb8c095fd211b18a69fbd18',
+		cacheKeySha256: '4e7ea3e0fe43968870b14a35f91011b64f73c6422e84c7268d079dbd3557e767',
 	},
 	{
 		updateOrder: ['ambient/pnpm-lock.yaml', 'fixture/yarn.lock'],
-		cacheKeySha256: 'd4e7c3451b99deb0e7572b32b744ca89f735180227ab172b1940ec055994122f',
+		cacheKeySha256: '03285ab0f394cb506ad6b4edbbac1ea2d7d3fa0ff73721808974423bcd22fb31',
 	},
 ] as const;
 const expectedPreviousDiagnostic =
@@ -3698,7 +3700,7 @@ export function validateNextServerCacheKeyProvenanceArtifact(
 			canonicalize(expectedVendoringPredecessorCacheKeyCandidates);
 	const currentAmbientBinding =
 		ambientBinding?.sha256 === expectedCurrentAmbientPnpmLock &&
-		ambientBinding.byteLength === 67_574 &&
+		ambientBinding.byteLength === 77_788 &&
 		canonicalize(model.candidates) === canonicalize(expectedCurrentCacheKeyCandidates);
 	if (
 		fixed.nextVersion !== '12.0.10' ||

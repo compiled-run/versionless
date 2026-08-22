@@ -68,12 +68,16 @@ const offline = { VERSIONLESS_NETWORK_MODE: 'offline' };
  * package itself and `mitt@3.0.1` into the resolved closure, and both are now in
  * the inventory rather than filtered out of it. Unvendoring for the published
  * `@async/witness@0.9.0` left the count at 189: the same two packages are
- * resolved, from the registry instead of from a committed tarball. Production
+ * resolved, from the registry instead of from a committed tarball. Adopting the
+ * release tooling took it to 230: `bumpp@10.4.1` and `changelogen@0.6.2` entered
+ * the root devDependencies and brought thirty-nine transitive packages with them
+ * (`c12`, `consola`, `giget`, `jiti`, `ofetch`, `open`, `pkg-types`, `semver`,
+ * `yaml` and the rest of their closure). Nothing left the closure. Production
  * code derives this
  * number from the lockfile — it is pinned here, and only here, so that a change
  * to the closure has to be stated rather than absorbed.
  */
-const expectedResolvedPackages = 189;
+const expectedResolvedPackages = 230;
 const expectedWorkspacePackages = 10;
 const expectedComponents = expectedResolvedPackages + expectedWorkspacePackages;
 

@@ -2,9 +2,9 @@
   "schemaVersion": "versionless.trust.v1",
   "freshness": {
     "state": "verified",
-    "observedAt": "2026-08-22T03:34:11.117Z",
+    "observedAt": "2026-08-22T04:53:10.018Z",
     "maximumAgeDays": 7,
-    "freshUntil": "2026-08-29T03:34:11.117Z"
+    "freshUntil": "2026-08-29T04:53:10.018Z"
   },
   "packages": [
     {
@@ -734,8 +734,44 @@
       "vulnerabilities": []
     },
     {
+      "name": "ansis",
+      "version": "4.3.1",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "args-tokenizer",
+      "version": "0.3.0",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
       "name": "assertion-error",
       "version": "2.0.1",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "bumpp",
+      "version": "10.4.1",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "bundle-name",
+      "version": "4.1.0",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "c12",
+      "version": "3.3.4",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "cac",
+      "version": "6.7.14",
       "state": "verified",
       "vulnerabilities": []
     },
@@ -746,14 +782,80 @@
       "vulnerabilities": []
     },
     {
+      "name": "changelogen",
+      "version": "0.6.2",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "chokidar",
+      "version": "5.0.0",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "confbox",
+      "version": "0.2.4",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "consola",
+      "version": "3.4.2",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "convert-gitmoji",
+      "version": "0.1.5",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
       "name": "convert-source-map",
       "version": "2.0.0",
       "state": "verified",
       "vulnerabilities": []
     },
     {
+      "name": "default-browser-id",
+      "version": "5.0.1",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "default-browser",
+      "version": "5.5.1",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "define-lazy-prop",
+      "version": "3.0.0",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "defu",
+      "version": "6.1.7",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "destr",
+      "version": "2.0.5",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
       "name": "detect-libc",
       "version": "2.1.2",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "dotenv",
+      "version": "17.4.2",
       "state": "verified",
       "vulnerabilities": []
     },
@@ -770,6 +872,12 @@
       "vulnerabilities": []
     },
     {
+      "name": "escalade",
+      "version": "3.2.0",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
       "name": "estree-walker",
       "version": "3.0.3",
       "state": "verified",
@@ -778,6 +886,12 @@
     {
       "name": "expect-type",
       "version": "1.4.0",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "exsolve",
+      "version": "1.1.1",
       "state": "verified",
       "vulnerabilities": []
     },
@@ -796,6 +910,42 @@
     {
       "name": "fsevents",
       "version": "2.3.3",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "giget",
+      "version": "3.3.1",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "is-docker",
+      "version": "3.0.0",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "is-inside-container",
+      "version": "1.0.0",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "is-wsl",
+      "version": "3.1.1",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "jiti",
+      "version": "2.7.0",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "jsonc-parser",
+      "version": "3.3.1",
       "state": "verified",
       "vulnerabilities": []
     },
@@ -890,6 +1040,12 @@
       "vulnerabilities": []
     },
     {
+      "name": "mri",
+      "version": "1.2.0",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
       "name": "mrmime",
       "version": "2.0.1",
       "state": "verified",
@@ -913,8 +1069,32 @@
       ]
     },
     {
+      "name": "node-fetch-native",
+      "version": "1.6.7",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
       "name": "obug",
       "version": "2.1.4",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "ofetch",
+      "version": "1.5.1",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "ohash",
+      "version": "2.0.12",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "open",
+      "version": "10.2.0",
       "state": "verified",
       "vulnerabilities": []
     },
@@ -937,8 +1117,20 @@
       "vulnerabilities": []
     },
     {
+      "name": "package-manager-detector",
+      "version": "1.8.0",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
       "name": "pathe",
       "version": "2.0.3",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "perfect-debounce",
+      "version": "2.1.0",
       "state": "verified",
       "vulnerabilities": []
     },
@@ -957,6 +1149,12 @@
     {
       "name": "pixelmatch",
       "version": "7.2.0",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "pkg-types",
+      "version": "2.3.1",
       "state": "verified",
       "vulnerabilities": []
     },
@@ -985,6 +1183,18 @@
       "vulnerabilities": []
     },
     {
+      "name": "rc9",
+      "version": "3.0.1",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "readdirp",
+      "version": "5.1.1",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
       "name": "regexp-tree",
       "version": "0.1.27",
       "state": "verified",
@@ -993,6 +1203,24 @@
     {
       "name": "rolldown",
       "version": "1.0.3",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "run-applescript",
+      "version": "7.1.0",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "scule",
+      "version": "1.3.0",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "semver",
+      "version": "7.8.5",
       "state": "verified",
       "vulnerabilities": []
     },
@@ -1017,6 +1245,12 @@
     {
       "name": "stackback",
       "version": "0.0.2",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "std-env",
+      "version": "3.10.0",
       "state": "verified",
       "vulnerabilities": []
     },
@@ -1166,6 +1400,18 @@
       "vulnerabilities": []
     },
     {
+      "name": "wsl-utils",
+      "version": "0.1.0",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
+      "name": "yaml",
+      "version": "2.9.0",
+      "state": "verified",
+      "vulnerabilities": []
+    },
+    {
       "name": "yuku-analyzer",
       "version": "0.7.0",
       "state": "verified",
@@ -1189,18 +1435,18 @@
     "source": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json"
   },
   "osv": {
-    "queries": 189,
+    "queries": 230,
     "source": "https://api.osv.dev/v1/querybatch"
   },
   "sourceObservations": [
     {
       "kind": "osv-batch",
-      "observedAt": "2026-08-22T03:34:11.117Z",
-      "sha256": "b3ff824cc2b5fc956c5c584f05c79f31160c737f58d8678e4e31e227ae4a2117"
+      "observedAt": "2026-08-22T04:53:10.018Z",
+      "sha256": "a1a22f47405679a3e73fed8edc022a684c3a293fb4e1297c408e8265ac1a40bf"
     },
     {
       "kind": "cisa-kev",
-      "observedAt": "2026-08-22T03:34:11.117Z",
+      "observedAt": "2026-08-22T04:53:10.018Z",
       "sha256": "137884960e3f801665bfa47694e703fbc4dd1c738df5e0e5af12d325a5f8a9d5"
     }
   ],
@@ -1210,23 +1456,23 @@
     "consent": {
       "allowNetwork": true,
       "mode": "consented",
-      "consentId": "witness-0.9-adoption"
+      "consentId": "release-tooling-adoption"
     },
     "sources": [
       {
         "kind": "osv-batch",
         "url": "https://api.osv.dev/v1/querybatch",
         "method": "POST",
-        "observedAt": "2026-08-22T03:34:11.117Z",
-        "requestSha256": "a043a3208bdd5193c110e855b8570968639c94df25eebe2b2a96bee834944c87",
+        "observedAt": "2026-08-22T04:53:10.018Z",
+        "requestSha256": "e39e20133b1f4de1c6ef1b2f13d74de7b3cc7c31c8948d6b64619259fcf5525b",
         "responsePath": "osv.json",
-        "sha256": "b3ff824cc2b5fc956c5c584f05c79f31160c737f58d8678e4e31e227ae4a2117"
+        "sha256": "a1a22f47405679a3e73fed8edc022a684c3a293fb4e1297c408e8265ac1a40bf"
       },
       {
         "kind": "cisa-kev",
         "url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
         "method": "GET",
-        "observedAt": "2026-08-22T03:34:11.117Z",
+        "observedAt": "2026-08-22T04:53:10.018Z",
         "responsePath": "cisa-kev.json",
         "sha256": "137884960e3f801665bfa47694e703fbc4dd1c738df5e0e5af12d325a5f8a9d5"
       }
