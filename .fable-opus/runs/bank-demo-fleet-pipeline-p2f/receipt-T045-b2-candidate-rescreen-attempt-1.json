@@ -1,8 +1,0 @@
-{
-  "status": "completed",
-  "summary": "Read-only re-screen of the T045 candidate backlog against manifests at their pins, offline. Enumerated 16 live candidates from goal notes, evidence/ingests, evidence/runs, coverage report and both prior goals; disposed of ~40 names with no tree or terminal exclusions. Replayed the shipped ingest frontend-root reading and plan admission rules to derive predicted walls from code, not guesswork. Ranked two zero-cost RUNNABLE-NOW candidates (cra-redux, your-spotify) whose lockfile-foreign rows predate --allow-foreign-lockfile. Found saleor buys a plan refusal, strapi needs no ruling, kubernetes-dashboard is newly consent-blocked, and ionic-conference is a third consent precedent. No published coverage row misclassifies a framework.",
-  "files_changed": [
-    "docs/goals/bank-demo-fleet-pipeline/notes/T045-candidate-screen.md"
-  ],
-  "open_questions": []
-}

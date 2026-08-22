@@ -1,9 +1,0 @@
-{
-	"status": "completed",
-	"summary": "Root-caused the migrated lane's silent translation loss to (c) an app-latent bug exposed: the component's setDisabledState rebuilds this.form without re-subscribing, and Angular 16 calls setDisabledState on every CVA at attach while Angular 5 did not. Measured live in both lanes with counters inserted at four byte-exact sites of the migrated lane's own bundle: typing emits 10x on the live form, 0x on the subscribed form, 0 debounce timers armed, propagateChange never called. Refuted our pipe translation via a positive control (emits in 204ms) and dual-rxjs via a closure/bundle census. Sealed cause record written; no fix applied.",
-	"files_changed": [
-		"packages/cli/src/fixture/angular-tiny-translator-u19i-cause-run.ts",
-		"evidence/runs/angular-tiny-translator-v0-12-0/u19i-data-loss-cause.json"
-	],
-	"open_questions": []
-}

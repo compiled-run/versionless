@@ -1,9 +1,0 @@
-{
-	"agentId": "ab2ccbc4dc59d6e75",
-	"runId": "bank-demo-fleet-pipeline",
-	"unitId": "T005a-ingest-license-cli",
-	"attempt": 1,
-	"toolUseId": "toolu_01PV2WkcaXMnhm9pLgbwmsCe",
-	"bindingRoute": "sole",
-	"startedAt": "2026-08-17T16:41:45.195Z"
-}

@@ -1,9 +1,0 @@
-{
-	"status": "completed",
-	"summary": "Read-only Angular scout. Mined the T011 audit, the retired 6MB spine board, evidence/ingests residue and the T007 holdout note to fix the Angular graveyard, then verified public metadata (gh API reads of LICENSE and package.json bytes at each pinned SHA) for fresh candidates. Delivered a 5-candidate ranked shortlist spanning Angular CLI 1.7, 8, 10 and 13 with pins, license evidence locations, builder/Node/package-manager facts, journey sketches, stub costs and admission risks; a ~25-entry reject list with one-line reasons; and a recommended 3-app first cohort (factoriolab -> jira-clone-angular -> angular-realworld) with a swap rule. Full detail in the message body. No files written, no downloads.",
-	"files_changed": [],
-	"open_questions": [
-		"RealWorld license-at-pin: at 7074a491 (2018-04-17) there is no LICENSE file; MIT appears only in package.json, and the repo's MIT LICENSE is first added 2023-03-16 (bc22bbfd, Copyright 2023 Thinkster). Does that satisfy 'MIT verified at the pinned revision', or is angular-realworld out of the cohort?",
-		"ionic-conference-app v4 (only if promoted): its postinstall runs 'webdriver-manager update', so a faithful npm ci touches the network. Is 'npm ci --ignore-scripts' as a declared deviation acceptable, or must the era baseline reproduce the postinstall?"
-	]
-}

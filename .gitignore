@@ -4,3 +4,6 @@ packages/frameworks/*/dist/
 .versionless/cache/
 .versionless/stage/
 .versionless/work/
+
+# fable-opus harness state (local only, never pushed)
+.fable-opus/

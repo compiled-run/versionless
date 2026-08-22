@@ -1,9 +1,0 @@
-{
-	"agentId": "a91a6beb96f6491a0",
-	"runId": "bank-demo-fleet-pipeline-p2c",
-	"unitId": "T043-a-ingest-ledger-revision",
-	"attempt": 1,
-	"toolUseId": "toolu_01E625yP3D7ciMXLzZEa3oRA",
-	"bindingRoute": "sole",
-	"startedAt": "2026-08-20T09:32:32.918Z"
-}

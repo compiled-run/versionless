@@ -1,9 +1,0 @@
-{
-	"agentId": "a47565f5e2a3c7ab9",
-	"runId": "bank-demo-fleet-pipeline-p1c",
-	"unitId": "T029-ingest-lineage-rebatch",
-	"attempt": 1,
-	"toolUseId": "toolu_015HbDCEMWJ3Wk6euJA9cPzf",
-	"bindingRoute": "sole",
-	"startedAt": "2026-08-17T23:10:06.988Z"
-}

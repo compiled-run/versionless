@@ -1,9 +1,0 @@
-{
-	"agentId": "a53900ee31dca84b3",
-	"runId": "bank-demo-fleet-pipeline-p2c",
-	"unitId": "T012-b2-kubernetes-dashboard",
-	"attempt": 1,
-	"toolUseId": "toolu_01EzdTiRMjr89e1LsTP7B8qj",
-	"bindingRoute": "sole",
-	"startedAt": "2026-08-20T09:24:52.212Z"
-}

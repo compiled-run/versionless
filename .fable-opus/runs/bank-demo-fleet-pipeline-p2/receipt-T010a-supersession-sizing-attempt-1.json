@@ -1,6 +1,0 @@
-{
-	"status": "completed",
-	"summary": "Read-only sizing of the T010 freeze supersession written to docs/goals/bank-demo-fleet-pipeline/notes/T010a-supersession-sizing.md (436 lines). Traced the Angular 16 cell wiring with file:line evidence; found --cell never reaches plan.ts (the real blocker, outside the freeze) and that published:false is not a flag to flip (cellOfAdapterCell auto-publishes; deleting NGCC_ANGULAR_13_CELL is the honest change). Mapped all nine delta items to transforms: five already exist, including departed-dom-lib-member for the as-any cast. Read freeze.ts mechanics and the 5-entry chain. Verified fmt today: 260 files, 82 freeze-locked (angular 74, react 8, core 0). Proposed 11-unit cut with risks ordered.",
-	"files_changed": ["docs/goals/bank-demo-fleet-pipeline/notes/T010a-supersession-sizing.md"],
-	"open_questions": []
-}

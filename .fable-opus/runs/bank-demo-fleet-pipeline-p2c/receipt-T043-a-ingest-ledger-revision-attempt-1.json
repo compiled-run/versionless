@@ -1,8 +1,0 @@
-{
-	"status": "blocked",
-	"summary": "The journal seam already implements all four gates, per-field readFrom basis, and declared-wins; only acquisitionLaneOf is layout-bound to .versionless/work/<id>/baseline. Wiring the cache layout unblocks nothing: the 6 non-empty staged trees under .versionless/cache/<id>/acquisition/source have no source.json journal (their t<NNN>/terminal.json records result terminal-failure and no parity basis, failing gates 1 and 3), and the 15 apps that do have source-bound journals carry an archiveParity.normalizedManifestSha256 computed by bespoke per-unit scripts that is not comparable to normalizedManifest() (factoriolab: journal 706b6a8a vs archive+extracted both 199758a4, bytes provably identical), failing gate 4. No edits made.",
-	"files_changed": [],
-	"open_questions": [
-		"No acquisition ledger on disk beside a staged corpus tree can satisfy gate 3 (parity basis) or gate 4 (journalled digest equals walked tree): the .versionless/cache/<id>/acquisition/source trees have only terminal-failure ledgers with no parity fields, and the full source-bound journals record a normalizedManifestSha256 from a bespoke normalization that no on-disk tree reproduces. Which does the owner want: (a) a unit that mints gate-comparable journals by re-reconciling the already-cached archives offline and writing evidence/ingests/<id>/source.json (needs a decision on whether offline re-reconciliation against the cached git-tree response counts as a parity basis, plus evidence/ingests/** in the file contract), (b) a consented network re-acquire of the staged apps through acquire.ts into proper work lanes, or (c) close item (a) of T043 as not-achievable and move the admission budget to items (b)/(c)?"
-	]
-}

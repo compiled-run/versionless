@@ -1,6 +1,0 @@
---- sh -c 'for p in packages/frameworks/react packages/frameworks/angular packages/core/src/migrations packages/core/src/bundlers packages/core/src/analysis; do echo "$p $(git rev-parse HEAD:$p)"; done | shasum -a 256 | grep -q d9f75ef677cb850f664cc188abf77b8ebfd24e84cb58d147b74e9bbaa143eb77' (exit 0) ---
-
-
---- sh -c 'git diff --name-only -- packages/frameworks packages/core/src/migrations packages/core/src/bundlers packages/core/src/analysis | wc -l | grep -qx "0"' (exit 1) ---
-
-

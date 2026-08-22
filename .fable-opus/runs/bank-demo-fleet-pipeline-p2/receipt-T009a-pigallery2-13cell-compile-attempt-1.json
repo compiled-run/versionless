@@ -1,9 +1,0 @@
-{
-	"status": "completed",
-	"summary": "Answered both spike-A open questions with executed runs. (1) The ngcc -p module main override needs no home: @ngtools/webpack passes webpack mainFields [es2015,browser,module,main] as ngcc --properties, already preferring module over main; proved by running the CLI's exact argv with no ngcc.config.js and reading the emitted typings (not the exit code) for leaflet-ng2 and slim-loading-bar. (2) pigallery2 1.7.0's frontend AOT-compiles at Angular 13.4.0/Node 16.20.2/rxjs 6.6.7: ngc exit 0, 0 diagnostics, 121 files, after 3 diagnostic-named source edits. New findings: a FOURTH ViewEngine library (i18n-polyfill), and non-monotonic diagnostic counts (4->2->13->0). No test required; verify checks the record shape. Full verify chain passes.",
-	"files_changed": [
-		"evidence/runs/angular-13cell/pigallery2-compile.json",
-		"evidence/runs/angular-13cell/README.md"
-	],
-	"open_questions": []
-}
