@@ -2,8 +2,6 @@
   <img src="docs/assets/versionless-mascot.png" alt="The versionless mascot: a happy little file folder on a green scribble" width="280">
 </p>
 
-# versionless
-
 Migrate old React and Angular apps to modern stacks, and *prove* the migrated app still behaves like the original.
 
 ## What is this?
