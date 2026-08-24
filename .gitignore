@@ -10,3 +10,6 @@ packages/frameworks/*/dist/
 
 # Goal boards are local working state, never published
 docs/goals/
+
+# Machine-local Claude config; the skills subtree stays tracked
+.claude/settings.json
