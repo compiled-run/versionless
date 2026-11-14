@@ -31,6 +31,30 @@ describe('framework classification receipt', () => {
 		expect(parseFrameworkClassificationReceipt(first)).toEqual(first);
 	});
 
+	it('accepts Solid, Vue, Svelte, and Qwik adapters paired 1:1 and refuses mismatched pairs', () => {
+		for (const framework of ['solid', 'vue', 'svelte', 'qwik'] as const) {
+			const value = createFrameworkClassificationReceipt({
+				descriptor: { framework, synthetic: true },
+				id: `synthetic-${framework}`,
+				framework,
+				adapter: framework,
+				inventory: { migration: { claimed: false } },
+			});
+			expect(parseFrameworkClassificationReceipt(value).classification).toMatchObject({
+				framework,
+				adapter: framework,
+			});
+			const mismatched = structuredClone(value) as unknown as Record<string, any>;
+			mismatched.classification.adapter = 'generic-react';
+			mismatched.integrity.canonicalDigest = frameworkClassificationDigest(
+				mismatched as never,
+			);
+			expect(() => parseFrameworkClassificationReceipt(mismatched)).toThrow(
+				'framework/adapter mismatch',
+			);
+		}
+	});
+
 	it('refuses framework uplift and every support-strengthening execution state', () => {
 		for (const field of Object.keys(NOT_TESTED_EXECUTION)) {
 			const value = structuredClone(receipt()) as unknown as Record<string, any>;

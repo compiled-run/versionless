@@ -1,0 +1,16 @@
+{
+	"schemaVersion": "versionless.vue-descriptor.v1",
+	"id": "synthetic-vue-3",
+	"synthetic": true,
+	"framework": "vue",
+	"executionRequested": false,
+	"supportClaim": false,
+	"migrationClaimed": false,
+	"packageDetected": true,
+	"major": 3,
+	"home": "frameless",
+	"apis": {
+		"current": ["defineProps array form", "script setup", "valued :/@ shorthands"],
+		"legacy": ["Options API", "Vue 2 SFC"]
+	}
+}

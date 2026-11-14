@@ -1,0 +1,25 @@
+{
+	"schemaVersion": "versionless.solid-descriptor.v1",
+	"id": "synthetic-solid-1",
+	"synthetic": true,
+	"framework": "solid",
+	"executionRequested": false,
+	"supportClaim": false,
+	"migrationClaimed": false,
+	"packageDetected": true,
+	"major": 1,
+	"home": "frameless",
+	"apis": {
+		"current": [
+			"For",
+			"Show",
+			"attr:value",
+			"createSignal",
+			"createStore from solid-js/store",
+			"produce",
+			"reconcile",
+			"untrack"
+		],
+		"legacy": []
+	}
+}

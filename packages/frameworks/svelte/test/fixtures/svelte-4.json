@@ -1,0 +1,16 @@
+{
+	"schemaVersion": "versionless.svelte-descriptor.v1",
+	"id": "synthetic-svelte-4",
+	"synthetic": true,
+	"framework": "svelte",
+	"executionRequested": false,
+	"supportClaim": false,
+	"migrationClaimed": false,
+	"packageDetected": true,
+	"major": 4,
+	"home": "versionless",
+	"apis": {
+		"current": ["$:", "Svelte 4 SFC", "let", "{#each}"],
+		"legacy": ["$derived", "$props", "$state", "untrack"]
+	}
+}

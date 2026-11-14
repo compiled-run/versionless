@@ -104,11 +104,19 @@ importers:
 
   packages/frameworks/nextjs: {}
 
+  packages/frameworks/qwik: {}
+
   packages/frameworks/react:
     dependencies:
       yuku-analyzer:
         specifier: 0.7.0
         version: 0.7.0
+
+  packages/frameworks/solid: {}
+
+  packages/frameworks/svelte: {}
+
+  packages/frameworks/vue: {}
 
   packages/node-guard: {}
 

@@ -15,8 +15,18 @@ export const NOT_TESTED_EXECUTION = {
 	support: 'not-tested',
 } as const;
 
-export type FrameworkKind = 'react' | 'nextjs';
+export type FrameworkKind = 'react' | 'nextjs' | 'solid' | 'vue' | 'svelte' | 'qwik';
+export type FrameworkAdapter = 'generic-react' | 'nextjs' | 'solid' | 'vue' | 'svelte' | 'qwik';
 export type NotTestedExecution = typeof NOT_TESTED_EXECUTION;
+
+export const FRAMEWORK_ADAPTER_BY_KIND = {
+	react: 'generic-react',
+	nextjs: 'nextjs',
+	solid: 'solid',
+	vue: 'vue',
+	svelte: 'svelte',
+	qwik: 'qwik',
+} as const satisfies Record<FrameworkKind, FrameworkAdapter>;
 
 export interface FrameworkClassificationReceipt {
 	schemaVersion: typeof FRAMEWORK_CLASSIFICATION_SCHEMA;
@@ -27,7 +37,7 @@ export interface FrameworkClassificationReceipt {
 	};
 	classification: {
 		framework: FrameworkKind;
-		adapter: 'generic-react' | 'nextjs';
+		adapter: FrameworkAdapter;
 		inventory: Record<string, unknown>;
 	};
 	execution: NotTestedExecution;
@@ -73,11 +83,15 @@ export function frameworkClassificationDigest(receipt: FrameworkClassificationRe
 	return sha256(canonicalize(copy));
 }
 
+function isFrameworkKind(value: unknown): value is FrameworkKind {
+	return typeof value === 'string' && Object.hasOwn(FRAMEWORK_ADAPTER_BY_KIND, value);
+}
+
 export function createFrameworkClassificationReceipt(input: {
 	descriptor: unknown;
 	id: string;
 	framework: FrameworkKind;
-	adapter: 'generic-react' | 'nextjs';
+	adapter: FrameworkAdapter;
 	inventory: Record<string, unknown>;
 }): FrameworkClassificationReceipt {
 	const receipt: FrameworkClassificationReceipt = {
@@ -147,10 +161,8 @@ export function parseFrameworkClassificationReceipt(
 	const classification = record(root.classification, 'classification');
 	exactKeys(classification, ['framework', 'adapter', 'inventory'], 'classification');
 	if (
-		(classification.framework !== 'react' && classification.framework !== 'nextjs') ||
-		(classification.adapter !== 'generic-react' && classification.adapter !== 'nextjs') ||
-		(classification.framework === 'react' && classification.adapter !== 'generic-react') ||
-		(classification.framework === 'nextjs' && classification.adapter !== 'nextjs')
+		!isFrameworkKind(classification.framework) ||
+		classification.adapter !== FRAMEWORK_ADAPTER_BY_KIND[classification.framework]
 	)
 		throw new Error('Framework classification framework/adapter mismatch');
 	record(classification.inventory, 'inventory');
