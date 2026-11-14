@@ -83,6 +83,7 @@ And to be honest about where things stand today: the React line runs end to end 
 - **Never touches your app.** All writes go to the lane. The tool counts its own interventions per run, and a migration only counts as *proven* if that count is zero.
 - **Never phones home quietly.** Network access is opt-in and phase-scoped: fetching an app's source requires an explicit consent flag, and everything after that runs offline.
 - **Never inflates its own numbers.** The trust package cross-checks every published count against the underlying receipts. Failed runs are kept forever as falsification history, right beside the successes.
+- **Does not treat classification as support.** Solid, Vue, Svelte, and Qwik can be classified from explicit synthetic descriptors (`framework:classify`). The receipt records declared major, home, and API names only. Migration is not claimed, and these frameworks are not cells in the derived support matrix.
 
 ## Going deeper
 

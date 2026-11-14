@@ -1,0 +1,16 @@
+{
+	"schemaVersion": "versionless.qwik-descriptor.v1",
+	"id": "synthetic-qwik-2",
+	"synthetic": true,
+	"framework": "qwik",
+	"executionRequested": false,
+	"supportClaim": false,
+	"migrationClaimed": false,
+	"packageDetected": true,
+	"major": 2,
+	"home": "frameless",
+	"apis": {
+		"current": ["@qwik.dev/core"],
+		"legacy": ["@builder.io/qwik"]
+	}
+}

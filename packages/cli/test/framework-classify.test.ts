@@ -68,6 +68,39 @@ describe('framework:classify', () => {
 		});
 	});
 
+	it('classifies Solid, Vue, Svelte, and Qwik homes without claiming migration', async () => {
+		const cases = [
+			['solid', 'solid-1.json', 'frameless'],
+			['solid', 'solid-2.json', 'frameless'],
+			['vue', 'vue-2.json', 'versionless'],
+			['vue', 'vue-3.json', 'frameless'],
+			['svelte', 'svelte-4.json', 'versionless'],
+			['svelte', 'svelte-5.json', 'frameless'],
+			['qwik', 'qwik-1.json', 'versionless'],
+			['qwik', 'qwik-2.json', 'frameless'],
+		] as const;
+		for (const [framework, name, home] of cases) {
+			const descriptor = JSON.parse(
+				await readFile(
+					path.join(root, `packages/frameworks/${framework}/test/fixtures/${name}`),
+					'utf8',
+				),
+			) as Record<string, unknown>;
+			const receipt = classifyFrameworkDescriptor(descriptor);
+			expect(receipt.classification).toMatchObject({
+				framework,
+				adapter: framework,
+				inventory: {
+					framework,
+					home,
+					packageDetected: true,
+					migration: { claimed: false },
+				},
+			});
+			expect(new Set(Object.values(receipt.execution))).toEqual(new Set(['not-tested']));
+		}
+	});
+
 	it('distinguishes explicit generic React without granting Next.js semantics', () => {
 		const receipt = classifyFrameworkDescriptor({
 			schemaVersion: 'versionless.react-descriptor.v1',

@@ -4,9 +4,15 @@ import { isAbsolute, normalize, relative, resolve } from 'pathe';
 import {
 	createFrameworkClassificationReceipt,
 	parseFrameworkClassificationReceipt,
+	type FrameworkAdapter,
 	type FrameworkClassificationReceipt,
+	type FrameworkKind,
 } from '../../core/src/receipts/framework-classification.ts';
 import { classifyNextjsDescriptor } from '../../frameworks/nextjs/src/classify.ts';
+import { classifyQwikDescriptor } from '../../frameworks/qwik/src/classify.ts';
+import { classifySolidDescriptor } from '../../frameworks/solid/src/classify.ts';
+import { classifySvelteDescriptor } from '../../frameworks/svelte/src/classify.ts';
+import { classifyVueDescriptor } from '../../frameworks/vue/src/classify.ts';
 
 const portableIdPattern = createRegExp(
 	oneOrMore(charIn('0123456789-').from('a', 'z')).at.lineStart().at.lineEnd(),
@@ -27,20 +33,34 @@ function exactKeys(
 		throw new Error(`Framework descriptor ${label} fields are invalid`);
 }
 
+function classificationReceipt(
+	result: { descriptor: unknown; id: string; inventory: object },
+	framework: FrameworkKind,
+	adapter: FrameworkAdapter,
+): FrameworkClassificationReceipt {
+	return parseFrameworkClassificationReceipt(
+		createFrameworkClassificationReceipt({
+			descriptor: result.descriptor,
+			id: result.id,
+			framework,
+			adapter,
+			inventory: result.inventory as unknown as Record<string, unknown>,
+		}),
+	);
+}
+
 export function classifyFrameworkDescriptor(value: unknown): FrameworkClassificationReceipt {
 	const root = record(value, 'root');
-	if (root.framework === 'nextjs') {
-		const result = classifyNextjsDescriptor(root);
-		return parseFrameworkClassificationReceipt(
-			createFrameworkClassificationReceipt({
-				descriptor: result.descriptor,
-				id: result.id,
-				framework: 'nextjs',
-				adapter: 'nextjs',
-				inventory: result.inventory as unknown as Record<string, unknown>,
-			}),
-		);
-	}
+	if (root.framework === 'nextjs')
+		return classificationReceipt(classifyNextjsDescriptor(root), 'nextjs', 'nextjs');
+	if (root.framework === 'solid')
+		return classificationReceipt(classifySolidDescriptor(root), 'solid', 'solid');
+	if (root.framework === 'vue')
+		return classificationReceipt(classifyVueDescriptor(root), 'vue', 'vue');
+	if (root.framework === 'svelte')
+		return classificationReceipt(classifySvelteDescriptor(root), 'svelte', 'svelte');
+	if (root.framework === 'qwik')
+		return classificationReceipt(classifyQwikDescriptor(root), 'qwik', 'qwik');
 	if (root.framework !== 'react')
 		throw new Error(`Unsupported framework dispatch: ${String(root.framework)}`);
 	exactKeys(

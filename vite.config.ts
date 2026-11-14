@@ -43,6 +43,10 @@ export default defineConfig({
 		pack('packages/trust', '@versionless/trust', ['@versionless/core']),
 		pack('packages/frameworks/react', '@versionless/react', ['yuku-analyzer']),
 		pack('packages/frameworks/nextjs', '@versionless/nextjs'),
+		pack('packages/frameworks/solid', '@versionless/solid'),
+		pack('packages/frameworks/vue', '@versionless/vue'),
+		pack('packages/frameworks/svelte', '@versionless/svelte'),
+		pack('packages/frameworks/qwik', '@versionless/qwik'),
 		pack('packages/frameworks/angular', '@versionless/angular', [
 			'@angular/compiler',
 			'yuku-analyzer',
@@ -140,6 +144,42 @@ export default defineConfig({
 					testTimeout: 120_000,
 					hookTimeout: 120_000,
 					include: ['packages/frameworks/nextjs/test/**/*.test.ts'],
+				},
+			},
+			{
+				test: {
+					name: 'node-solid',
+					environment: 'node',
+					testTimeout: 120_000,
+					hookTimeout: 120_000,
+					include: ['packages/frameworks/solid/test/**/*.test.ts'],
+				},
+			},
+			{
+				test: {
+					name: 'node-vue',
+					environment: 'node',
+					testTimeout: 120_000,
+					hookTimeout: 120_000,
+					include: ['packages/frameworks/vue/test/**/*.test.ts'],
+				},
+			},
+			{
+				test: {
+					name: 'node-svelte',
+					environment: 'node',
+					testTimeout: 120_000,
+					hookTimeout: 120_000,
+					include: ['packages/frameworks/svelte/test/**/*.test.ts'],
+				},
+			},
+			{
+				test: {
+					name: 'node-qwik',
+					environment: 'node',
+					testTimeout: 120_000,
+					hookTimeout: 120_000,
+					include: ['packages/frameworks/qwik/test/**/*.test.ts'],
 				},
 			},
 		],
